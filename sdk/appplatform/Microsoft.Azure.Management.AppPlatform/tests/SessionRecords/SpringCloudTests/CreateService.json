@@ -1,0 +1,74 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2724/providers/Microsoft.AppPlatform/Spring/appplatform-sdk-test-asc1841?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjcyNC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL1NwcmluZy9hcHBwbGF0Zm9ybS1zZGstdGVzdC1hc2MxODQxP2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"eastus\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "2d4a2377-eba2-432e-94e9-d47bf4ea631a"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "28"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-failure-cause": [
+          "gateway"
+        ],
+        "x-ms-request-id": [
+          "25617b65-9e2b-48bf-b58c-68d6ca5158a7"
+        ],
+        "x-ms-correlation-request-id": [
+          "25617b65-9e2b-48bf-b58c-68d6ca5158a7"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191020T152301Z:25617b65-9e2b-48bf-b58c-68d6ca5158a7"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Sun, 20 Oct 2019 15:23:00 GMT"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "169"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceGroupBeingDeleted\",\r\n    \"message\": \"The resource group 'appplatform-sdk-test-rg2724' is in deprovisioning state and cannot perform this operation.\"\r\n  }\r\n}",
+      "StatusCode": 409
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "685ba005-af8d-4b04-8f16-a7bf38b2eb5a"
+  }
+}

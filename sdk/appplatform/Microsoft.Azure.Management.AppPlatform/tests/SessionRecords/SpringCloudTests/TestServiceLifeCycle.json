@@ -1,0 +1,4172 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourcegroups/appplatform-sdk-test-rg2360?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlZ3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MD9hcGktdmVyc2lvbj0yMDE3LTA1LTEw",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"eastus\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "bbf0dd3c-b6b9-4849-be10-aaaa438ec804"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "28"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "bc6603fd-7535-4a1c-b445-12be03a2ebed"
+        ],
+        "x-ms-correlation-request-id": [
+          "bc6603fd-7535-4a1c-b445-12be03a2ebed"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T011909Z:bc6603fd-7535-4a1c-b445-12be03a2ebed"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:19:09 GMT"
+        ],
+        "Content-Length": [
+          "207"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360\",\r\n  \"name\": \"appplatform-sdk-test-rg2360\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/Spring/appplatform-sdk-test-asc8823?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL1NwcmluZy9hcHBwbGF0Zm9ybS1zZGstdGVzdC1hc2M4ODIzP2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"eastus\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "e6d923c1-0324-4623-a485-6e97f3f561ce"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "28"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationResults/98916a67-6b69-457c-aea5-0896eefaedd0/Spring/appplatform-sdk-test-asc8823?api-version=2019-05-01-preview"
+        ],
+        "x-ms-correlation-request-id": [
+          "4ce3149e-0bda-4b28-a214-afc612b36e19"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "e6d923c1-0324-4623-a485-6e97f3f561ce"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/98916a67-6b69-457c-aea5-0896eefaedd0?api-version=2019-05-01-preview"
+        ],
+        "x-ms-request-id": [
+          "a854559f-a2f8-479f-9d9f-df0495ebd5ca"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T011944Z:4ce3149e-0bda-4b28-a214-afc612b36e19"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:19:44 GMT"
+        ],
+        "Content-Length": [
+          "519"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"configServerProperties\": {\r\n      \"state\": \"NotAvailable\"\r\n    },\r\n    \"trace\": {\r\n      \"state\": \"NotAvailable\",\r\n      \"enabled\": false,\r\n      \"appInsightInstrumentationKey\": null\r\n    },\r\n    \"version\": 2,\r\n    \"serviceId\": \"dcf0a7462bbe448f8257b476608a0e99\"\r\n  },\r\n  \"type\": \"Microsoft.AppPlatform/Spring\",\r\n  \"location\": \"eastus\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/Spring/appplatform-sdk-test-asc8823\",\r\n  \"name\": \"appplatform-sdk-test-asc8823\"\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/98916a67-6b69-457c-aea5-0896eefaedd0?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvOTg5MTZhNjctNmI2OS00NTdjLWFlYTUtMDg5NmVlZmFlZGQwP2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "9bb8f187-4784-4709-96ad-384e67197bfb"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "94b984e0-b07f-4bc4-a33c-0e9df1248980"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "1937311b-e29f-48de-9c34-58b4936adf74"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T012015Z:9bb8f187-4784-4709-96ad-384e67197bfb"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:20:14 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/98916a67-6b69-457c-aea5-0896eefaedd0\",\r\n  \"name\": \"98916a67-6b69-457c-aea5-0896eefaedd0\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:19:15.3787506Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/98916a67-6b69-457c-aea5-0896eefaedd0?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvOTg5MTZhNjctNmI2OS00NTdjLWFlYTUtMDg5NmVlZmFlZGQwP2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "4d074a21-2d36-4003-be3f-8a73d36e3847"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "b02585d4-a6df-49b7-8d7a-f079234753d4"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "33539538-5e89-4aa3-937d-0d5d430ce842"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T012046Z:4d074a21-2d36-4003-be3f-8a73d36e3847"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:20:45 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/98916a67-6b69-457c-aea5-0896eefaedd0\",\r\n  \"name\": \"98916a67-6b69-457c-aea5-0896eefaedd0\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:19:15.3787506Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/98916a67-6b69-457c-aea5-0896eefaedd0?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvOTg5MTZhNjctNmI2OS00NTdjLWFlYTUtMDg5NmVlZmFlZGQwP2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "a6c6edbc-8724-4194-b5e3-8faed597aae8"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11997"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "1e90007a-3b41-44b0-885c-4c005e992742"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "893d79ca-74e5-4a49-a6a3-e2cf8d31725c"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T012116Z:a6c6edbc-8724-4194-b5e3-8faed597aae8"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:21:15 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/98916a67-6b69-457c-aea5-0896eefaedd0\",\r\n  \"name\": \"98916a67-6b69-457c-aea5-0896eefaedd0\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:19:15.3787506Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/98916a67-6b69-457c-aea5-0896eefaedd0?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvOTg5MTZhNjctNmI2OS00NTdjLWFlYTUtMDg5NmVlZmFlZGQwP2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "5b3ab4c6-acd5-40fb-8524-6a3756b5334f"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11996"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "c42226ce-d817-4885-baf5-6adb193c0469"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "bd6f3711-c318-4895-8714-6523d710167f"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T012147Z:5b3ab4c6-acd5-40fb-8524-6a3756b5334f"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:21:46 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/98916a67-6b69-457c-aea5-0896eefaedd0\",\r\n  \"name\": \"98916a67-6b69-457c-aea5-0896eefaedd0\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:19:15.3787506Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/98916a67-6b69-457c-aea5-0896eefaedd0?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvOTg5MTZhNjctNmI2OS00NTdjLWFlYTUtMDg5NmVlZmFlZGQwP2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "b80a755b-eb07-4fa5-90d7-a766820ea88c"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11995"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "8b52dd6a-dbb0-4d75-845d-0c571cc6c2ac"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "37260c8f-cc8e-4fb7-a01d-5cbb32d339c9"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T012218Z:b80a755b-eb07-4fa5-90d7-a766820ea88c"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:22:18 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/98916a67-6b69-457c-aea5-0896eefaedd0\",\r\n  \"name\": \"98916a67-6b69-457c-aea5-0896eefaedd0\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:19:15.3787506Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/98916a67-6b69-457c-aea5-0896eefaedd0?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvOTg5MTZhNjctNmI2OS00NTdjLWFlYTUtMDg5NmVlZmFlZGQwP2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "b8dc66bd-3af2-4dad-801a-d036336c540a"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11994"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "f2f95bbc-9ea0-4ff0-a2d3-61a89b75203e"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "6de7b551-9f5e-4b5d-aa45-17893c9fed33"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T012248Z:b8dc66bd-3af2-4dad-801a-d036336c540a"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:22:48 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/98916a67-6b69-457c-aea5-0896eefaedd0\",\r\n  \"name\": \"98916a67-6b69-457c-aea5-0896eefaedd0\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:19:15.3787506Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/98916a67-6b69-457c-aea5-0896eefaedd0?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvOTg5MTZhNjctNmI2OS00NTdjLWFlYTUtMDg5NmVlZmFlZGQwP2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "6e9afefc-bd38-4fe2-965a-db90cfb6af3a"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11993"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "9be1b322-9b9f-47b8-b387-8ec33322f678"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "ca231167-eb80-45d5-9de0-cee7ec9aa835"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T012319Z:6e9afefc-bd38-4fe2-965a-db90cfb6af3a"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:23:18 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/98916a67-6b69-457c-aea5-0896eefaedd0\",\r\n  \"name\": \"98916a67-6b69-457c-aea5-0896eefaedd0\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:19:15.3787506Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/98916a67-6b69-457c-aea5-0896eefaedd0?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvOTg5MTZhNjctNmI2OS00NTdjLWFlYTUtMDg5NmVlZmFlZGQwP2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "dc1532bb-fb5d-4978-9ae1-e7521ac9eb4f"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11992"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "1b56d536-2f05-4f4f-94bc-f03e8ce87020"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "c111fee8-bd6d-451a-98aa-4c9ece3031f0"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T012350Z:dc1532bb-fb5d-4978-9ae1-e7521ac9eb4f"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:23:49 GMT"
+        ],
+        "Content-Length": [
+          "397"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/98916a67-6b69-457c-aea5-0896eefaedd0\",\r\n  \"name\": \"98916a67-6b69-457c-aea5-0896eefaedd0\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2019-10-21T01:19:15.3787506Z\",\r\n  \"endTime\": \"2019-10-21T01:23:28.0126519Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/Spring/appplatform-sdk-test-asc8823?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL1NwcmluZy9hcHBwbGF0Zm9ybS1zZGstdGVzdC1hc2M4ODIzP2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "8ac92151-ed55-406c-9f83-771ed17756af"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11991"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "c0fb478c-0045-43c1-935e-e4e3c6e6a986"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "468c1995-4b69-4594-a15a-e5e300575283"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T012350Z:8ac92151-ed55-406c-9f83-771ed17756af"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:23:49 GMT"
+        ],
+        "Content-Length": [
+          "520"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"configServerProperties\": {\r\n      \"state\": \"NotAvailable\"\r\n    },\r\n    \"trace\": {\r\n      \"state\": \"NotAvailable\",\r\n      \"enabled\": false,\r\n      \"appInsightInstrumentationKey\": null\r\n    },\r\n    \"version\": 2,\r\n    \"serviceId\": \"dcf0a7462bbe448f8257b476608a0e99\"\r\n  },\r\n  \"type\": \"Microsoft.AppPlatform/Spring\",\r\n  \"location\": \"eastus\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/Spring/appplatform-sdk-test-asc8823\",\r\n  \"name\": \"appplatform-sdk-test-asc8823\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/Spring/appplatform-sdk-test-asc8823?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL1NwcmluZy9hcHBwbGF0Zm9ybS1zZGstdGVzdC1hc2M4ODIzP2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "75514e80-7ab4-4324-a3d6-c264b8675d39"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationResults/86546f31-4ccd-4521-af97-51021fc1b7b7/Spring/appplatform-sdk-test-asc8823?api-version=2019-05-01-preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14999"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "75514e80-7ab4-4324-a3d6-c264b8675d39"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7?api-version=2019-05-01-preview"
+        ],
+        "x-ms-request-id": [
+          "52e456f2-03c7-4db9-845a-7a03e65f04a2"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-correlation-request-id": [
+          "0af4b881-f23f-4b52-b958-dba4001a824b"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T012352Z:0af4b881-f23f-4b52-b958-dba4001a824b"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:23:52 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvODY1NDZmMzEtNGNjZC00NTIxLWFmOTctNTEwMjFmYzFiN2I3P2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "86b71338-fc46-4de5-b7b4-93b984a5d8f3"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "1973816b-7741-4b17-965e-de74cd559f8a"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "c43075b1-6f21-4d27-82f5-92c42033cd05"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T012422Z:86b71338-fc46-4de5-b7b4-93b984a5d8f3"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:24:21 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"name\": \"86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:23:52.1052032Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvODY1NDZmMzEtNGNjZC00NTIxLWFmOTctNTEwMjFmYzFiN2I3P2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "612c6f16-1cf0-4dc1-95f3-5a9aa1f63e70"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "60060eb4-3f76-4199-84af-35463b6db61a"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "6d433d25-b34c-40dd-bef1-0e50bd496597"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T012453Z:612c6f16-1cf0-4dc1-95f3-5a9aa1f63e70"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:24:52 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"name\": \"86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:23:52.1052032Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvODY1NDZmMzEtNGNjZC00NTIxLWFmOTctNTEwMjFmYzFiN2I3P2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "bcdf4884-d358-468b-8457-6daf85697676"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11997"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "a4dcc255-7d14-443a-b923-ec2c383af994"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "299ed546-53d1-4725-a4c2-793804c7c7ee"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T012523Z:bcdf4884-d358-468b-8457-6daf85697676"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:25:22 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"name\": \"86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:23:52.1052032Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvODY1NDZmMzEtNGNjZC00NTIxLWFmOTctNTEwMjFmYzFiN2I3P2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "c5a43227-33e9-4397-8820-f0eb573409b2"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11996"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "6906ec12-f56d-47e4-9dc8-0d36091e0906"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "1b5a5080-9631-4f9e-91c1-cc66174206c3"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T012554Z:c5a43227-33e9-4397-8820-f0eb573409b2"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:25:54 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"name\": \"86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:23:52.1052032Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvODY1NDZmMzEtNGNjZC00NTIxLWFmOTctNTEwMjFmYzFiN2I3P2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "9c9cd0e3-8479-4137-a21b-7ea9440ed6fe"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11995"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "8b173974-989d-49d2-a728-6f56c1994680"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "fd5deafc-f333-4f55-94c2-95560964fed1"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T012625Z:9c9cd0e3-8479-4137-a21b-7ea9440ed6fe"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:26:24 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"name\": \"86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:23:52.1052032Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvODY1NDZmMzEtNGNjZC00NTIxLWFmOTctNTEwMjFmYzFiN2I3P2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "7c5cf6bf-dda1-4c32-a4cb-ed25ae175b43"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11994"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "b163b340-8eb9-4eec-852e-8ed15af9c68b"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "cc7f369a-c7ed-4dcf-9221-c6437747ae01"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T012655Z:7c5cf6bf-dda1-4c32-a4cb-ed25ae175b43"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:26:55 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"name\": \"86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:23:52.1052032Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvODY1NDZmMzEtNGNjZC00NTIxLWFmOTctNTEwMjFmYzFiN2I3P2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "6bc7e947-b97f-412d-8b7a-6cb35bfd26b2"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11993"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "5e947356-52e4-41f5-929c-5a188c7b5bc1"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "23f772ce-04fe-4f96-8422-bda95f1f0000"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T012725Z:6bc7e947-b97f-412d-8b7a-6cb35bfd26b2"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:27:24 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"name\": \"86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:23:52.1052032Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvODY1NDZmMzEtNGNjZC00NTIxLWFmOTctNTEwMjFmYzFiN2I3P2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "40eaa445-adc7-4a26-bfd0-b286b17b51df"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11992"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "1ea8375d-23c6-4eb3-84ab-addc2124cf68"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "9d2ec788-9103-4094-acbc-a47b07a7b813"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T012756Z:40eaa445-adc7-4a26-bfd0-b286b17b51df"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:27:56 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"name\": \"86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:23:52.1052032Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvODY1NDZmMzEtNGNjZC00NTIxLWFmOTctNTEwMjFmYzFiN2I3P2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "6a6cffeb-4a88-4335-96bb-33912c7091a0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11991"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "80a27616-2c81-42d2-a00f-b2a887b2b98b"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "eda16b43-234e-4dc3-94c7-1ff9fe9d5cf4"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T012827Z:6a6cffeb-4a88-4335-96bb-33912c7091a0"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:28:26 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"name\": \"86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:23:52.1052032Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvODY1NDZmMzEtNGNjZC00NTIxLWFmOTctNTEwMjFmYzFiN2I3P2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "31e40ed0-d894-4c33-8dcb-eb8678495f05"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11990"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "17d7bb3e-1e40-4f49-9769-9e4533f43cfa"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "0f66cd52-dc94-4a8a-b174-098edc3863dd"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T012857Z:31e40ed0-d894-4c33-8dcb-eb8678495f05"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:28:57 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"name\": \"86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:23:52.1052032Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvODY1NDZmMzEtNGNjZC00NTIxLWFmOTctNTEwMjFmYzFiN2I3P2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "4e161652-508d-4ce7-b17c-f477211a077f"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11989"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "fe9c94b1-a972-464b-9ec2-a9eaab496cdd"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "1fc24e59-03c4-4c34-baf7-8ecf2516bd75"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T012927Z:4e161652-508d-4ce7-b17c-f477211a077f"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:29:27 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"name\": \"86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:23:52.1052032Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvODY1NDZmMzEtNGNjZC00NTIxLWFmOTctNTEwMjFmYzFiN2I3P2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "10a015b9-a3fb-4fc2-af62-61afcfb1a54c"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11988"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "5cf9247f-dcef-483f-bff3-af1e98bec20d"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "aa99cb93-1d7f-4137-ac37-81d516e7bdf2"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T012958Z:10a015b9-a3fb-4fc2-af62-61afcfb1a54c"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:29:57 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"name\": \"86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:23:52.1052032Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvODY1NDZmMzEtNGNjZC00NTIxLWFmOTctNTEwMjFmYzFiN2I3P2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "f20aefb6-957f-402a-b5f2-ea5090a3b1b5"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11987"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "a142f255-b4c3-4125-963b-1c2cfdf5a33d"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "fb51a3bf-17a2-45fc-95a2-ccb96eda5a00"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T013029Z:f20aefb6-957f-402a-b5f2-ea5090a3b1b5"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:30:28 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"name\": \"86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:23:52.1052032Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvODY1NDZmMzEtNGNjZC00NTIxLWFmOTctNTEwMjFmYzFiN2I3P2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "fa34848f-e1e7-43f1-8b83-5f9ae56203a1"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11986"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "2cc269b5-ad20-4be3-b032-0e8c6db2d1e7"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "0cb77822-2386-42d0-9cf1-43be01a13842"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T013059Z:fa34848f-e1e7-43f1-8b83-5f9ae56203a1"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:30:58 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"name\": \"86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:23:52.1052032Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvODY1NDZmMzEtNGNjZC00NTIxLWFmOTctNTEwMjFmYzFiN2I3P2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "1b4bbe0f-9681-4bd9-bfe3-53fcb4328315"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11985"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "b985e10c-0e75-47e8-ab81-6d4422ea9bf0"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "07ec1943-71c8-4226-969f-075db9956eca"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T013129Z:1b4bbe0f-9681-4bd9-bfe3-53fcb4328315"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:31:28 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"name\": \"86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:23:52.1052032Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvODY1NDZmMzEtNGNjZC00NTIxLWFmOTctNTEwMjFmYzFiN2I3P2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "e740ebc4-cc87-406c-9476-5b0befca2623"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11984"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "aa7bad3b-3a70-4891-9237-9834f87adc1c"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "a844876f-671d-4fe5-842a-d41e5a284a9f"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T013200Z:e740ebc4-cc87-406c-9476-5b0befca2623"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:32:00 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"name\": \"86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:23:52.1052032Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvODY1NDZmMzEtNGNjZC00NTIxLWFmOTctNTEwMjFmYzFiN2I3P2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "ef7249be-4927-46f7-b487-718f42fee9b6"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11983"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "797551fc-da36-4a37-a651-210c093891a1"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "2440e0e5-b69c-45de-9339-491be874f0ce"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T013230Z:ef7249be-4927-46f7-b487-718f42fee9b6"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:32:30 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"name\": \"86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:23:52.1052032Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvODY1NDZmMzEtNGNjZC00NTIxLWFmOTctNTEwMjFmYzFiN2I3P2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "e0ec22c6-6dd6-4720-ab57-ec847cd7db9b"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11982"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "f72e53b3-fe80-425c-8218-bb1399dd2107"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "2a346f05-5e89-4211-88f9-9d134c032312"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T013301Z:e0ec22c6-6dd6-4720-ab57-ec847cd7db9b"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:33:00 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"name\": \"86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:23:52.1052032Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvODY1NDZmMzEtNGNjZC00NTIxLWFmOTctNTEwMjFmYzFiN2I3P2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "ab7b72cc-20fd-4a08-92b0-27d62bc3c285"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11981"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "0f8b2f94-ecb7-48cb-a150-cd32eb760860"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "cd2bef3d-20c9-42c4-81cf-e5b802cd8f52"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T013331Z:ab7b72cc-20fd-4a08-92b0-27d62bc3c285"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:33:31 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"name\": \"86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:23:52.1052032Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvODY1NDZmMzEtNGNjZC00NTIxLWFmOTctNTEwMjFmYzFiN2I3P2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "e68c9ec5-d1f5-40d0-9017-5d75ed07d674"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11980"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "23b1ffa5-ee8e-4aee-ad10-dcbd04336128"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "1bfdaf0c-201f-437a-913c-9945a6a10cc2"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T013402Z:e68c9ec5-d1f5-40d0-9017-5d75ed07d674"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:34:01 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"name\": \"86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:23:52.1052032Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvODY1NDZmMzEtNGNjZC00NTIxLWFmOTctNTEwMjFmYzFiN2I3P2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "47090b60-1e29-41b1-a4e5-5a70de25317e"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11979"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "b1e15f73-20df-4a2f-8fc7-b7f842a94384"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "04ef67a4-7ac5-4188-87f0-70ca0697f47b"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T013432Z:47090b60-1e29-41b1-a4e5-5a70de25317e"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:34:32 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"name\": \"86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:23:52.1052032Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvODY1NDZmMzEtNGNjZC00NTIxLWFmOTctNTEwMjFmYzFiN2I3P2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "36163341-68e9-43ae-ab4e-0d2a5343b28b"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11978"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "131a9a70-00ce-4e98-87b5-c62dfc6c7c3e"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "9df773af-ed75-4110-a903-2e73b89d8bd2"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T013503Z:36163341-68e9-43ae-ab4e-0d2a5343b28b"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:35:02 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"name\": \"86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:23:52.1052032Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvODY1NDZmMzEtNGNjZC00NTIxLWFmOTctNTEwMjFmYzFiN2I3P2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "5050d6a1-8524-4f9b-b91d-72031e8b271d"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11977"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "0cc9f5a1-4013-4306-a941-3b336443480c"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "d9585d31-73be-4736-a87d-99d6971d00ef"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T013533Z:5050d6a1-8524-4f9b-b91d-72031e8b271d"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:35:32 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"name\": \"86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:23:52.1052032Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvODY1NDZmMzEtNGNjZC00NTIxLWFmOTctNTEwMjFmYzFiN2I3P2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "6c6ba3c3-d592-46a5-b373-9f664dbc848e"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11976"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "4d77df21-b3e0-4e2f-a2ca-0677566a5490"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "c9ea8742-e78a-4256-936d-8fee6716284a"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T013604Z:6c6ba3c3-d592-46a5-b373-9f664dbc848e"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:36:04 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"name\": \"86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:23:52.1052032Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvODY1NDZmMzEtNGNjZC00NTIxLWFmOTctNTEwMjFmYzFiN2I3P2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "604674e4-0e54-4cbd-b58c-86d41b7a90ef"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11975"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "6acd5fab-a154-49cb-ad09-2058bf73a7fc"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "3ad36161-59c8-42d0-b4d4-b7b22ab5f91b"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T013634Z:604674e4-0e54-4cbd-b58c-86d41b7a90ef"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:36:34 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"name\": \"86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:23:52.1052032Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvODY1NDZmMzEtNGNjZC00NTIxLWFmOTctNTEwMjFmYzFiN2I3P2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "05e5975c-302c-48da-a0a1-a471ec8722bf"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11974"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "a631b219-32e7-4b25-aeb2-07ba9460d3a5"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "f4e1cd3d-397e-4f3d-ab57-d64bc6305bdc"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T013705Z:05e5975c-302c-48da-a0a1-a471ec8722bf"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:37:05 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"name\": \"86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:23:52.1052032Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvODY1NDZmMzEtNGNjZC00NTIxLWFmOTctNTEwMjFmYzFiN2I3P2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "dca1afad-f988-4f62-a02e-b2ef8852b72d"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11973"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "c332ae2f-0839-4a75-b1a2-026a1461e90a"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "fe80a0bf-b565-40cf-9bd9-f11f8cbdb5ec"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T013735Z:dca1afad-f988-4f62-a02e-b2ef8852b72d"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:37:35 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"name\": \"86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:23:52.1052032Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvODY1NDZmMzEtNGNjZC00NTIxLWFmOTctNTEwMjFmYzFiN2I3P2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "95b360d0-ae0f-45ae-95d8-9333c6a48999"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11972"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "0d21cce6-258b-404c-9cae-26087326617b"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "08d51d3b-fcaf-4918-9043-fcac7f0936ab"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T013806Z:95b360d0-ae0f-45ae-95d8-9333c6a48999"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:38:05 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"name\": \"86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:23:52.1052032Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvODY1NDZmMzEtNGNjZC00NTIxLWFmOTctNTEwMjFmYzFiN2I3P2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "6e362081-add2-436a-81e5-f4c66d5ec4ed"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11971"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "61131c62-ab40-4ee5-8c34-3639eb608133"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "33fa4a96-c7f7-4663-8f35-0ae4927d70e5"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T013836Z:6e362081-add2-436a-81e5-f4c66d5ec4ed"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:38:36 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"name\": \"86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:23:52.1052032Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvODY1NDZmMzEtNGNjZC00NTIxLWFmOTctNTEwMjFmYzFiN2I3P2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "4480f636-7dcc-4fbe-91d8-d6bcadaa3642"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11970"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "683e350f-4299-4e19-b845-6fa2f7ed1597"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "6fbb6c8f-53cc-42c1-855d-f250be570632"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T013907Z:4480f636-7dcc-4fbe-91d8-d6bcadaa3642"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:39:06 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"name\": \"86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:23:52.1052032Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvODY1NDZmMzEtNGNjZC00NTIxLWFmOTctNTEwMjFmYzFiN2I3P2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "df2d9d6c-8146-44ad-95e8-9774ad511b41"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11969"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "2a9f1333-a807-4dd6-9b2e-c1c827efec73"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "e4478f76-c894-4784-b845-9b881f97bb90"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T013937Z:df2d9d6c-8146-44ad-95e8-9774ad511b41"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:39:36 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"name\": \"86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:23:52.1052032Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvODY1NDZmMzEtNGNjZC00NTIxLWFmOTctNTEwMjFmYzFiN2I3P2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "ffc8861b-e126-4b44-9325-1cc5af9eb3ed"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11968"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "44c992d9-e197-44ed-b3ba-2145b155e944"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "3168e114-e413-4749-8a03-49076ad65b91"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T014008Z:ffc8861b-e126-4b44-9325-1cc5af9eb3ed"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:40:08 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"name\": \"86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:23:52.1052032Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvODY1NDZmMzEtNGNjZC00NTIxLWFmOTctNTEwMjFmYzFiN2I3P2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "543b290e-84ff-401c-8d67-4017d14240d0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11967"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "110f5c39-3a92-4722-b4c8-37b866d90110"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "bd900e6f-ae05-46fe-9670-3689ce94d773"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T014038Z:543b290e-84ff-401c-8d67-4017d14240d0"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:40:38 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"name\": \"86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:23:52.1052032Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvODY1NDZmMzEtNGNjZC00NTIxLWFmOTctNTEwMjFmYzFiN2I3P2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "f1ea62fc-50f1-43ce-b790-8dfc6403fccc"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11966"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "9e6c2912-ab69-469c-9100-b3d63a9eba20"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "9fecb7fb-a4e3-4968-8978-4d61f6941790"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T014109Z:f1ea62fc-50f1-43ce-b790-8dfc6403fccc"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:41:08 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"name\": \"86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:23:52.1052032Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvODY1NDZmMzEtNGNjZC00NTIxLWFmOTctNTEwMjFmYzFiN2I3P2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "92366fb5-5eda-4948-93fb-38086942ac5e"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11965"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "5be3b912-6c69-4d4c-8287-a58155814c72"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "c099d4cb-b19e-4f60-b861-f3f37005869b"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T014139Z:92366fb5-5eda-4948-93fb-38086942ac5e"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:41:39 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"name\": \"86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:23:52.1052032Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvODY1NDZmMzEtNGNjZC00NTIxLWFmOTctNTEwMjFmYzFiN2I3P2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "e73478c6-57ed-42fb-a503-98929d8f5f8f"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11964"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "402e1ba6-ad40-4bb7-a817-707314d2a894"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "d5e663cc-f217-4240-ad8b-c40f6cdf6d41"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T014210Z:e73478c6-57ed-42fb-a503-98929d8f5f8f"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:42:09 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"name\": \"86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:23:52.1052032Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvODY1NDZmMzEtNGNjZC00NTIxLWFmOTctNTEwMjFmYzFiN2I3P2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "e22a9dba-37e1-480a-b16a-4eb0fa04f1d5"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11963"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "3f80127a-4cc8-402e-a95a-e4a825e834f3"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "03296d74-c5b6-4b92-8095-3ac0b5c27b04"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T014240Z:e22a9dba-37e1-480a-b16a-4eb0fa04f1d5"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:42:39 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"name\": \"86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:23:52.1052032Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvODY1NDZmMzEtNGNjZC00NTIxLWFmOTctNTEwMjFmYzFiN2I3P2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "34f78fc3-8af2-4870-a75c-c1de6c1bac3a"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11962"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "d5fdd32b-fe42-49ee-a580-63c064bfe73a"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "11493a9d-5239-428a-af23-ad44651a340b"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T014311Z:34f78fc3-8af2-4870-a75c-c1de6c1bac3a"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:43:10 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"name\": \"86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:23:52.1052032Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvODY1NDZmMzEtNGNjZC00NTIxLWFmOTctNTEwMjFmYzFiN2I3P2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "2f8cb931-3b20-405b-a127-b6f45b8a48c4"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11961"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "c7000004-87a2-41f8-b2da-3c43d65dd2c9"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "985c8d12-6203-414b-85b1-4f78b0bf1aba"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T014341Z:2f8cb931-3b20-405b-a127-b6f45b8a48c4"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:43:40 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"name\": \"86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:23:52.1052032Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvODY1NDZmMzEtNGNjZC00NTIxLWFmOTctNTEwMjFmYzFiN2I3P2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "465d1e17-7306-4029-aa9c-240983043792"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11960"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "2e256679-bf6d-46b3-aec3-bb7bcd76e53c"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "12cc4ee1-2caa-4744-9bb0-375436d5c35e"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T014412Z:465d1e17-7306-4029-aa9c-240983043792"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:44:11 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"name\": \"86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2019-10-21T01:23:52.1052032Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uU3RhdHVzL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjMvb3BlcmF0aW9uSWQvODY1NDZmMzEtNGNjZC00NTIxLWFmOTctNTEwMjFmYzFiN2I3P2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "2e52ae8a-8e34-453f-a682-8b5beaceb97c"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11959"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "4e743a89-35d0-419e-8caa-412701612679"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "8afbcaad-b99a-4a64-be7a-61b0b984b286"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T014442Z:2e52ae8a-8e34-453f-a682-8b5beaceb97c"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:44:42 GMT"
+        ],
+        "Content-Length": [
+          "397"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationStatus/appplatform-sdk-test-asc8823/operationId/86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"name\": \"86546f31-4ccd-4521-af97-51021fc1b7b7\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2019-10-21T01:23:52.1052032Z\",\r\n  \"endTime\": \"2019-10-21T01:44:40.6324081Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/locations/eastus/operationResults/86546f31-4ccd-4521-af97-51021fc1b7b7/Spring/appplatform-sdk-test-asc8823?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL2xvY2F0aW9ucy9lYXN0dXMvb3BlcmF0aW9uUmVzdWx0cy84NjU0NmYzMS00Y2NkLTQ1MjEtYWY5Ny01MTAyMWZjMWI3YjcvU3ByaW5nL2FwcHBsYXRmb3JtLXNkay10ZXN0LWFzYzg4MjM/YXBpLXZlcnNpb249MjAxOS0wNS0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11958"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "d2a61d7e-eb94-499d-9674-8a47849a2671"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "a0fb641b-85cc-48cd-b936-4a2f5548f007"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-correlation-request-id": [
+          "11d74e26-88c5-4085-b459-1d2b3faa9a07"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T014443Z:11d74e26-88c5-4085-b459-1d2b3faa9a07"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:44:42 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourceGroups/appplatform-sdk-test-rg2360/providers/Microsoft.AppPlatform/Spring?api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlR3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwcFBsYXRmb3JtL1NwcmluZz9hcGktdmVyc2lvbj0yMDE5LTA1LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "855abebc-aff0-4528-a63b-04f644e5f858"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AppPlatform.AppPlatformManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "d7c05d53-706e-412c-b85b-e85eb20c62de"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "855abebc-aff0-4528-a63b-04f644e5f858"
+        ],
+        "x-rp-server-mvid": [
+          "0aa55a30-5cd5-429c-af4f-e30df7629491"
+        ],
+        "x-ms-request-id": [
+          "a76c2fe9-557e-4ba0-8fb0-d58b67f72007"
+        ],
+        "Server": [
+          "openresty/1.15.8.1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T014444Z:d7c05d53-706e-412c-b85b-e85eb20c62de"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:44:43 GMT"
+        ],
+        "Content-Length": [
+          "12"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": []\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/resourcegroups/appplatform-sdk-test-rg2360?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL3Jlc291cmNlZ3JvdXBzL2FwcHBsYXRmb3JtLXNkay10ZXN0LXJnMjM2MD9hcGktdmVyc2lvbj0yMDE3LTA1LTEw",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "ceddfbb8-f4c4-4cc4-9562-073574b07dd1"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BUFBQTEFURk9STToyRFNESzoyRFRFU1Q6MkRSRzIzNjAtRUFTVFVTIiwiam9iTG9jYXRpb24iOiJlYXN0dXMifQ?api-version=2017-05-10"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14999"
+        ],
+        "x-ms-request-id": [
+          "290697d4-1a3f-4f7f-90ae-a7851669e06f"
+        ],
+        "x-ms-correlation-request-id": [
+          "290697d4-1a3f-4f7f-90ae-a7851669e06f"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T014451Z:290697d4-1a3f-4f7f-90ae-a7851669e06f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:44:50 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BUFBQTEFURk9STToyRFNESzoyRFRFU1Q6MkRSRzIzNjAtRUFTVFVTIiwiam9iTG9jYXRpb24iOiJlYXN0dXMifQ?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCVUZCUVRFRlVSazlTVFRveVJGTkVTem95UkZSRlUxUTZNa1JTUnpJek5qQXRSVUZUVkZWVElpd2lhbTlpVEc5allYUnBiMjRpT2lKbFlYTjBkWE1pZlE/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BUFBQTEFURk9STToyRFNESzoyRFRFU1Q6MkRSRzIzNjAtRUFTVFVTIiwiam9iTG9jYXRpb24iOiJlYXN0dXMifQ?api-version=2017-05-10"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-request-id": [
+          "d509ba07-813b-4f11-b5fb-87b80ea526bf"
+        ],
+        "x-ms-correlation-request-id": [
+          "d509ba07-813b-4f11-b5fb-87b80ea526bf"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T014507Z:d509ba07-813b-4f11-b5fb-87b80ea526bf"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:45:06 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BUFBQTEFURk9STToyRFNESzoyRFRFU1Q6MkRSRzIzNjAtRUFTVFVTIiwiam9iTG9jYXRpb24iOiJlYXN0dXMifQ?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCVUZCUVRFRlVSazlTVFRveVJGTkVTem95UkZSRlUxUTZNa1JTUnpJek5qQXRSVUZUVkZWVElpd2lhbTlpVEc5allYUnBiMjRpT2lKbFlYTjBkWE1pZlE/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BUFBQTEFURk9STToyRFNESzoyRFRFU1Q6MkRSRzIzNjAtRUFTVFVTIiwiam9iTG9jYXRpb24iOiJlYXN0dXMifQ?api-version=2017-05-10"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "x-ms-request-id": [
+          "57e6bed2-0a06-4847-9bc1-d4ed41cb018e"
+        ],
+        "x-ms-correlation-request-id": [
+          "57e6bed2-0a06-4847-9bc1-d4ed41cb018e"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T014522Z:57e6bed2-0a06-4847-9bc1-d4ed41cb018e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:45:22 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BUFBQTEFURk9STToyRFNESzoyRFRFU1Q6MkRSRzIzNjAtRUFTVFVTIiwiam9iTG9jYXRpb24iOiJlYXN0dXMifQ?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCVUZCUVRFRlVSazlTVFRveVJGTkVTem95UkZSRlUxUTZNa1JTUnpJek5qQXRSVUZUVkZWVElpd2lhbTlpVEc5allYUnBiMjRpT2lKbFlYTjBkWE1pZlE/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BUFBQTEFURk9STToyRFNESzoyRFRFU1Q6MkRSRzIzNjAtRUFTVFVTIiwiam9iTG9jYXRpb24iOiJlYXN0dXMifQ?api-version=2017-05-10"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11997"
+        ],
+        "x-ms-request-id": [
+          "541da483-5df7-4500-ab9e-75079a8a912c"
+        ],
+        "x-ms-correlation-request-id": [
+          "541da483-5df7-4500-ab9e-75079a8a912c"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T014538Z:541da483-5df7-4500-ab9e-75079a8a912c"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:45:37 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BUFBQTEFURk9STToyRFNESzoyRFRFU1Q6MkRSRzIzNjAtRUFTVFVTIiwiam9iTG9jYXRpb24iOiJlYXN0dXMifQ?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCVUZCUVRFRlVSazlTVFRveVJGTkVTem95UkZSRlUxUTZNa1JTUnpJek5qQXRSVUZUVkZWVElpd2lhbTlpVEc5allYUnBiMjRpT2lKbFlYTjBkWE1pZlE/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BUFBQTEFURk9STToyRFNESzoyRFRFU1Q6MkRSRzIzNjAtRUFTVFVTIiwiam9iTG9jYXRpb24iOiJlYXN0dXMifQ?api-version=2017-05-10"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11996"
+        ],
+        "x-ms-request-id": [
+          "114946e6-c97f-48f2-9b05-a269761b84b2"
+        ],
+        "x-ms-correlation-request-id": [
+          "114946e6-c97f-48f2-9b05-a269761b84b2"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T014553Z:114946e6-c97f-48f2-9b05-a269761b84b2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:45:53 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BUFBQTEFURk9STToyRFNESzoyRFRFU1Q6MkRSRzIzNjAtRUFTVFVTIiwiam9iTG9jYXRpb24iOiJlYXN0dXMifQ?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCVUZCUVRFRlVSazlTVFRveVJGTkVTem95UkZSRlUxUTZNa1JTUnpJek5qQXRSVUZUVkZWVElpd2lhbTlpVEc5allYUnBiMjRpT2lKbFlYTjBkWE1pZlE/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BUFBQTEFURk9STToyRFNESzoyRFRFU1Q6MkRSRzIzNjAtRUFTVFVTIiwiam9iTG9jYXRpb24iOiJlYXN0dXMifQ?api-version=2017-05-10"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11995"
+        ],
+        "x-ms-request-id": [
+          "e2a93ee2-6f77-4872-b86a-9b9e959497ec"
+        ],
+        "x-ms-correlation-request-id": [
+          "e2a93ee2-6f77-4872-b86a-9b9e959497ec"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T014609Z:e2a93ee2-6f77-4872-b86a-9b9e959497ec"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:46:08 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BUFBQTEFURk9STToyRFNESzoyRFRFU1Q6MkRSRzIzNjAtRUFTVFVTIiwiam9iTG9jYXRpb24iOiJlYXN0dXMifQ?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCVUZCUVRFRlVSazlTVFRveVJGTkVTem95UkZSRlUxUTZNa1JTUnpJek5qQXRSVUZUVkZWVElpd2lhbTlpVEc5allYUnBiMjRpT2lKbFlYTjBkWE1pZlE/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BUFBQTEFURk9STToyRFNESzoyRFRFU1Q6MkRSRzIzNjAtRUFTVFVTIiwiam9iTG9jYXRpb24iOiJlYXN0dXMifQ?api-version=2017-05-10"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11994"
+        ],
+        "x-ms-request-id": [
+          "555e4d26-2f30-4ebb-922c-18e2756e68d4"
+        ],
+        "x-ms-correlation-request-id": [
+          "555e4d26-2f30-4ebb-922c-18e2756e68d4"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T014624Z:555e4d26-2f30-4ebb-922c-18e2756e68d4"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:46:23 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BUFBQTEFURk9STToyRFNESzoyRFRFU1Q6MkRSRzIzNjAtRUFTVFVTIiwiam9iTG9jYXRpb24iOiJlYXN0dXMifQ?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCVUZCUVRFRlVSazlTVFRveVJGTkVTem95UkZSRlUxUTZNa1JTUnpJek5qQXRSVUZUVkZWVElpd2lhbTlpVEc5allYUnBiMjRpT2lKbFlYTjBkWE1pZlE/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11993"
+        ],
+        "x-ms-request-id": [
+          "be105935-6856-4b52-9fb9-6d04ebb5bed9"
+        ],
+        "x-ms-correlation-request-id": [
+          "be105935-6856-4b52-9fb9-6d04ebb5bed9"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T014640Z:be105935-6856-4b52-9fb9-6d04ebb5bed9"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:46:40 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/685ba005-af8d-4b04-8f16-a7bf38b2eb5a/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BUFBQTEFURk9STToyRFNESzoyRFRFU1Q6MkRSRzIzNjAtRUFTVFVTIiwiam9iTG9jYXRpb24iOiJlYXN0dXMifQ?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjg1YmEwMDUtYWY4ZC00YjA0LThmMTYtYTdiZjM4YjJlYjVhL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCVUZCUVRFRlVSazlTVFRveVJGTkVTem95UkZSRlUxUTZNa1JTUnpJek5qQXRSVUZUVkZWVElpd2lhbTlpVEc5allYUnBiMjRpT2lKbFlYTjBkWE1pZlE/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11992"
+        ],
+        "x-ms-request-id": [
+          "cff2bb2d-c6c8-4666-8395-2ff177913b90"
+        ],
+        "x-ms-correlation-request-id": [
+          "cff2bb2d-c6c8-4666-8395-2ff177913b90"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20191021T014640Z:cff2bb2d-c6c8-4666-8395-2ff177913b90"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 21 Oct 2019 01:46:40 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "CreateName": [
+      "appplatform-sdk-test-rg2360",
+      "appplatform-sdk-test-asc8823",
+      "appplatform-sdk-test-app2844"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "685ba005-af8d-4b04-8f16-a7bf38b2eb5a"
+  }
+}
