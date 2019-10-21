@@ -13,7 +13,7 @@ namespace Microsoft.Extensions.Azure
     /// <summary>
     /// Extension methods to add <see cref="QueueClientOptions"/> client to clients builder
     /// </summary>
-    public static class AzureClientBuilderExtensions
+    public static class QueueClientBuilderExtensions
     {
         /// <summary>
         /// Registers a <see cref="QueueServiceClient"/> instance with the provided <paramref name="connectionString"/>

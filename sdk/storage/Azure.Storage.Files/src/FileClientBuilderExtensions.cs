@@ -13,7 +13,7 @@ namespace Microsoft.Extensions.Azure
     /// <summary>
     /// Extension methods to add <see cref="FileServiceClient"/> client to clients builder
     /// </summary>
-    public static class AzureClientBuilderExtensions
+    public static class FileClientBuilderExtensions
     {
         /// <summary>
         /// Registers a <see cref="FileServiceClient"/> instance with the provided <paramref name="connectionString"/>

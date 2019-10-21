@@ -12,7 +12,7 @@ namespace Microsoft.Extensions.Azure
     /// <summary>
     /// Extension methods to add <see cref="SecretClient"/> to clients builder
     /// </summary>
-    public static class AzureClientBuilderExtensions
+    public static class SecretClientBuilderExtensions
     {
         /// <summary>
         /// Registers a <see cref="SecretClient"/> instance with the provided <paramref name="vaultEndpoint"/>
