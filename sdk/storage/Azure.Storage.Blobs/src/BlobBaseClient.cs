@@ -58,12 +58,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="CustomerProvidedKey"/> to be used when sending requests.
         /// </summary>
-        private readonly CustomerProvidedKey? _customerProvidedKey;
+        internal readonly CustomerProvidedKey? _customerProvidedKey;
 
         /// <summary>
         /// The <see cref="CustomerProvidedKey"/> to be used when sending requests.
         /// </summary>
-        public virtual CustomerProvidedKey? CustomerProvidedKey => _customerProvidedKey;
+        internal virtual CustomerProvidedKey? CustomerProvidedKey => _customerProvidedKey;
 
         /// <summary>
         /// The Storage account name corresponding to the blob client.
@@ -183,6 +183,7 @@ namespace Azure.Storage.Blobs.Specialized
             _pipeline = options.Build(conn.Credentials);
             _clientDiagnostics = new ClientDiagnostics(options);
             _customerProvidedKey = options?.CustomerProvidedKey;
+            BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
         }
 
         /// <summary>
@@ -272,6 +273,7 @@ namespace Azure.Storage.Blobs.Specialized
             _pipeline = options.Build(authentication);
             _clientDiagnostics = new ClientDiagnostics(options);
             _customerProvidedKey = options?.CustomerProvidedKey;
+            BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
         }
 
         /// <summary>
@@ -286,18 +288,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        /// <param name="options">
-        /// Optional client options that define the transport pipeline
-        /// policies for authentication, retries, etc., that are applied to
-        /// </param>
-        internal BlobBaseClient(Uri blobUri, HttpPipeline pipeline, BlobClientOptions options = default)
+        /// <param name="clientDiagnostics">Client diagnostics.</param>
+        /// <param name="customerProvidedKey">Customer provided key.</param>
+        internal BlobBaseClient(Uri blobUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
         {
-            options ??= new BlobClientOptions();
-
             _uri = blobUri;
             _pipeline = pipeline;
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _customerProvidedKey = options?.CustomerProvidedKey;
+            _clientDiagnostics = clientDiagnostics;
+            _customerProvidedKey = customerProvidedKey;
         }
         #endregion ctors
 
@@ -326,42 +324,7 @@ namespace Azure.Storage.Blobs.Specialized
         protected virtual BlobBaseClient WithSnapshotCore(string snapshot)
         {
             var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
-            return new BlobBaseClient(builder.ToUri(), Pipeline);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BlobClient"/> class
-        /// with an identical <see cref="Uri"/> source but the specified
-        /// <paramref name="customerProvidedKey"/> customer provided key.
-        /// </summary>
-        /// <param name="customerProvidedKey">
-        /// The customer provided key to be used by the service to encrypt data.
-        /// </param>
-        /// <returns>A new <see cref="BlobClient"/></returns>
-        public virtual BlobBaseClient WithCustomerProvidedKey(CustomerProvidedKey customerProvidedKey) =>
-            WithCustomerProvidedKeyCore(customerProvidedKey);
-
-        /// <summary>
-        /// Creates a new instance of the <see cref="BlobClient"/> class
-        /// with an identical <see cref="Uri"/> source but the specified
-        /// <paramref name="customerProvidedKey"/> customer provided key.
-        /// </summary>
-        /// <param name="customerProvidedKey">
-        /// The customer provided key to be used by the service to encrypt data.
-        /// </param>
-        /// <returns>A new <see cref="BlobClient"/></returns>
-        protected virtual BlobBaseClient WithCustomerProvidedKeyCore(CustomerProvidedKey customerProvidedKey)
-        {
-            var uriBuilder = new UriBuilder(Uri)
-            {
-                Scheme = Constants.Blob.Https,
-                Port = Constants.Blob.HttpsPort
-            };
-            return new BlobBaseClient(
-                uriBuilder.Uri,
-                Pipeline,
-                new BlobClientOptions(customerProvidedKey: customerProvidedKey));
-
+            return new BlobBaseClient(builder.ToUri(), Pipeline, ClientDiagnostics, CustomerProvidedKey);
         }
 
         /// <summary>
@@ -1213,7 +1176,7 @@ namespace Azure.Storage.Blobs.Specialized
         {
             Debug.Assert(singleBlockThreshold <= Constants.Blob.Block.MaxDownloadBytes);
 
-            var client = new BlobBaseClient(Uri, Pipeline);
+            var client = new BlobBaseClient(Uri, Pipeline, ClientDiagnostics, CustomerProvidedKey);
             Task<Response<BlobProperties>> downloadTask =
                 PartitionedDownloader.DownloadAsync(
                     destination,
@@ -2977,9 +2940,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="client">The <see cref="BlobContainerClient"/>.</param>
         /// <param name="blobName">The name of the blob.</param>
         /// <returns>A new <see cref="BlobClient"/> instance.</returns>
-        public static BlobBaseClient GetBlobClient(
+        public static BlobBaseClient GetBlobBaseClient(
             this BlobContainerClient client,
-            string blobName)
-            => new BlobBaseClient(client.Uri.AppendToPath(blobName), client.Pipeline);
+            string blobName) =>
+            new BlobBaseClient(
+                client.Uri.AppendToPath(blobName),
+                client.Pipeline,
+                client.ClientDiagnostics,
+                client.CustomerProvidedKey);
     }
 }
