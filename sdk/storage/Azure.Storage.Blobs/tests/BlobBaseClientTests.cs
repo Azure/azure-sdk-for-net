@@ -416,8 +416,6 @@ namespace Azure.Storage.Blobs.Test
                         await blob.UploadAsync(stream);
                     }
 
-                    var destination = new FileInfo(path);
-
                     // Create a special blob client for downloading that will
                     // assign client request IDs based on the range so that out
                     // of order operations still get predictable IDs and the
@@ -425,13 +423,15 @@ namespace Azure.Storage.Blobs.Test
                     var credential = new StorageSharedKeyCredential(this.TestConfigDefault.AccountName, this.TestConfigDefault.AccountKey);
                     var downloadingBlob = this.InstrumentClient(new BlobClient(blob.Uri, credential, GetOptions(true)));
 
-                    await downloadingBlob.StagedDownloadAsync(
-                        destination,
-                        singleBlockThreshold: singleBlockThreshold,
-                        transferOptions: transferOptions
-                        );
+                    using (FileStream file = File.OpenWrite(path))
+                    {
+                        await downloadingBlob.StagedDownloadAsync(
+                            file,
+                            singleBlockThreshold: singleBlockThreshold,
+                            transferOptions: transferOptions);
+                    }
 
-                    using (FileStream resultStream = destination.OpenRead())
+                    using (FileStream resultStream = File.OpenRead(path))
                     {
                         TestHelper.AssertSequenceEqual(data, resultStream.AsBytes());
                     }
