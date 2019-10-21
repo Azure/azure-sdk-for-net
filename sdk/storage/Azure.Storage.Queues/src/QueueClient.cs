@@ -979,6 +979,78 @@ namespace Azure.Storage.Queues
             .ConfigureAwait(false);
 
         /// <summary>
+        /// Adds a new binary message to the back of a queue, encoded in Base
+        /// 64. The visibility timeout specifies how long the message should be
+        /// invisible to Dequeue and Peek operations. When converted to Base 64,
+        /// the message may not exceed 64KB in size.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-message"/>.
+        /// </summary>
+        /// <param name="messageBytes">
+        /// The message bytes to be encoded in Base 64.
+        /// </param>
+        /// <param name="visibilityTimeout">
+        /// Visibility timeout.  Optional with a default value of 0.  Cannot be larger than 7 days.
+        /// </param>
+        /// <param name="timeToLive">
+        /// Optional. Specifies the time-to-live interval for the message
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/>.
+        /// </param>
+        /// <returns>
+        /// <see cref="Response{SendReceipt}"/>
+        /// </returns>
+        public virtual Response<SendReceipt> SendMessage(
+            byte[] messageBytes,
+            TimeSpan? visibilityTimeout = default,
+            TimeSpan? timeToLive = default,
+            CancellationToken cancellationToken = default) =>
+            SendMessageInternal(
+                Convert.ToBase64String(messageBytes),
+                visibilityTimeout,
+                timeToLive,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Adds a new binary message to the back of a queue, encoded in Base
+        /// 64. The visibility timeout specifies how long the message should be
+        /// invisible to Dequeue and Peek operations. When converted to Base 64,
+        /// the message may not exceed 64KB in size.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-message"/>.
+        /// </summary>
+        /// <param name="messageBytes">
+        /// The message bytes to be encoded in Base 64.
+        /// </param>
+        /// <param name="visibilityTimeout">
+        /// Visibility timeout.  Optional with a default value of 0.  Cannot be larger than 7 days.
+        /// </param>
+        /// <param name="timeToLive">
+        /// Optional. Specifies the time-to-live interval for the message
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/>.
+        /// </param>
+        /// <returns>
+        /// <see cref="Response{SendReceipt}"/>
+        /// </returns>
+        public virtual async Task<Response<SendReceipt>> SendMessageAsync(
+            byte[] messageBytes,
+            TimeSpan? visibilityTimeout = default,
+            TimeSpan? timeToLive = default,
+            CancellationToken cancellationToken = default) =>
+            await SendMessageInternal(
+                Convert.ToBase64String(messageBytes),
+                visibilityTimeout,
+                timeToLive,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
         /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
         /// to Dequeue and Peek operations. The message content must be a UTF-8 encoded string that is up to 64KB in size.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-message"/>.
@@ -1503,6 +1575,84 @@ namespace Azure.Storage.Queues
 
         #region UpdateMessage
         /// <summary>
+        /// Changes a message's visibility timeout and contents. When converted
+        /// to Base 64, the update message may not exceed 64KB in size.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/update-message"/>.
+        /// </summary>
+        /// <param name="messageId">ID of the message to update.</param>
+        /// <param name="popReceipt">
+        /// Required. Specifies the valid pop receipt value returned from an earlier call to the Get Messages or Update Message operation.
+        /// </param>
+        /// <param name="messageBytes">
+        /// The optionally updated message bytes to be encoded in Base 64.
+        /// </param>
+        /// <param name="visibilityTimeout">
+        /// Required. Specifies the new visibility timeout value, in seconds, relative to server time. The new value must be larger than
+        /// or equal to 0, and cannot be larger than 7 days. The visibility timeout of a message cannot be set to a value later than the
+        /// expiry time. A message can be updated until it has been deleted or has expired.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/>.
+        /// </param>
+        /// <returns>
+        /// <see cref="Response{UpdateReceipt}"/>.
+        /// </returns>
+        public virtual Response<UpdateReceipt> UpdateMessage(
+            string messageId,
+            string popReceipt,
+            byte[] messageBytes,
+            TimeSpan visibilityTimeout = default,
+            CancellationToken cancellationToken = default) =>
+            UpdateMessageInternal(
+                messageId,
+                popReceipt,
+                Convert.ToBase64String(messageBytes),
+                visibilityTimeout,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Changes a message's visibility timeout and contents. When converted
+        /// to Base 64, the update message may not exceed 64KB in size.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/update-message"/>.
+        /// </summary>
+        /// <param name="messageId">ID of the message to update.</param>
+        /// <param name="popReceipt">
+        /// Required. Specifies the valid pop receipt value returned from an earlier call to the Get Messages or Update Message operation.
+        /// </param>
+        /// <param name="messageBytes">
+        /// The optionally updated message bytes to be encoded in Base 64.
+        /// </param>
+        /// <param name="visibilityTimeout">
+        /// Required. Specifies the new visibility timeout value, in seconds, relative to server time. The new value must be larger than
+        /// or equal to 0, and cannot be larger than 7 days. The visibility timeout of a message cannot be set to a value later than the
+        /// expiry time. A message can be updated until it has been deleted or has expired.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/>.
+        /// </param>
+        /// <returns>
+        /// <see cref="Response{UpdateReceipt}"/>.
+        /// </returns>
+        public virtual async Task<Response<UpdateReceipt>> UpdateMessageAsync(
+            string messageId,
+            string popReceipt,
+            byte[] messageBytes,
+            TimeSpan visibilityTimeout = default,
+            CancellationToken cancellationToken = default) =>
+            await UpdateMessageInternal(
+                messageId,
+                popReceipt,
+                Convert.ToBase64String(messageBytes),
+                visibilityTimeout,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
         /// Changes a message's visibility timeout and contents. The message content must be a UTF-8 encoded string that is up to 64KB in size.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/update-message"/>.
         /// </summary>
@@ -1531,9 +1681,9 @@ namespace Azure.Storage.Queues
             TimeSpan visibilityTimeout = default,
             CancellationToken cancellationToken = default) =>
             UpdateMessageInternal(
-                messageText,
                 messageId,
                 popReceipt,
+                messageText,
                 visibilityTimeout,
                 false, // async
                 cancellationToken)
@@ -1568,9 +1718,9 @@ namespace Azure.Storage.Queues
             TimeSpan visibilityTimeout = default,
             CancellationToken cancellationToken = default) =>
             await UpdateMessageInternal(
-                messageText,
                 messageId,
                 popReceipt,
+                messageText,
                 visibilityTimeout,
                 true, // async
                 cancellationToken)
@@ -1580,12 +1730,12 @@ namespace Azure.Storage.Queues
         /// Changes a message's visibility timeout and contents. The message content must be a UTF-8 encoded string that is up to 64KB in size.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/update-message"/>.
         /// </summary>
-        /// <param name="messageText">
-        /// Updated message text.
-        /// </param>
         /// <param name="messageId">ID of the message to update.</param>
         /// <param name="popReceipt">
         /// Required. Specifies the valid pop receipt value returned from an earlier call to the Get Messages or Update Message operation.
+        /// </param>
+        /// <param name="messageText">
+        /// Updated message text.
         /// </param>
         /// <param name="visibilityTimeout">
         /// Required. Specifies the new visibility timeout value, in seconds, relative to server time. The new value must be larger than
@@ -1602,9 +1752,9 @@ namespace Azure.Storage.Queues
         /// <see cref="Response{UpdateReceipt}"/>.
         /// </returns>
         private async Task<Response<UpdateReceipt>> UpdateMessageInternal(
-            string messageText,
             string messageId,
             string popReceipt,
+            string messageText,
             TimeSpan visibilityTimeout,
             bool async,
             CancellationToken cancellationToken)

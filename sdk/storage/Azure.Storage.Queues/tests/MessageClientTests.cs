@@ -4,7 +4,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
+using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues.Tests;
 using Azure.Storage.Test;
 using NUnit.Framework;
@@ -62,6 +62,58 @@ namespace Azure.Storage.Queues.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 queue.SendMessageAsync(string.Empty),
                 actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
+        }
+
+        [Test]
+        public async Task Binary_Get()
+        {
+            using (GetNewQueue(out QueueClient queue))
+            {
+                var bytes = new byte[] { 1, 2, 3 };
+                Response<SendReceipt> response = await queue.SendMessageAsync(bytes);
+                QueueMessage message = (await queue.ReceiveMessagesAsync(1)).Value[0];
+                TestHelper.AssertSequenceEqual(bytes, message.GetMessageBytes());
+            }
+        }
+
+        [Test]
+        public async Task Binary_Cached()
+        {
+            using (GetNewQueue(out QueueClient queue))
+            {
+                Response<SendReceipt> response = await queue.SendMessageAsync(new byte[] { 1, 2, 3 });
+                QueueMessage message = (await queue.ReceiveMessagesAsync(1)).Value[0];
+                byte[] bytes = message.GetMessageBytes();
+                Assert.AreSame(bytes, message.GetMessageBytes());
+            }
+
+        }
+
+        [Test]
+        public async Task Binary_Peek()
+        {
+            using (GetNewQueue(out QueueClient queue))
+            {
+                var bytes = new byte[] { 1, 2, 3 };
+                Response<SendReceipt> response = await queue.SendMessageAsync(bytes);
+                PeekedMessage message = (await queue.PeekMessagesAsync(1)).Value[0];
+                TestHelper.AssertSequenceEqual(bytes, message.GetMessageBytes());
+            }
+        }
+
+        [Test]
+        public async Task Binary_Update()
+        {
+            using (GetNewQueue(out QueueClient queue))
+            {
+                var bytes = new byte[] { 1, 2, 3 };
+                Response<SendReceipt> response = await queue.SendMessageAsync(bytes);
+                QueueMessage message = (await queue.ReceiveMessagesAsync(1)).Value[0];
+                bytes = new byte[] { 4, 5, 6 };
+                UpdateReceipt update = await queue.UpdateMessageAsync(message.MessageId, message.PopReceipt, bytes, TimeSpan.Zero);
+                message = (await queue.ReceiveMessagesAsync(1)).Value[0];
+                TestHelper.AssertSequenceEqual(bytes, message.GetMessageBytes());
+            }
         }
 
         [Test]
