@@ -6,7 +6,7 @@ namespace Microsoft.Azure.ContainerRegistry
     /// <summary>
     ///  Helper methods for the Microsoft.Azure.ContainerRegistry Package
     /// </summary>
-    class Helpers
+    internal class Helpers
     {
         static public string EncodeTo64(string toEncode)
         {

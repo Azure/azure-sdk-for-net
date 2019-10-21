@@ -1,10 +1,8 @@
 ﻿using Microsoft.Rest;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -39,17 +37,18 @@ namespace Microsoft.Azure.ContainerRegistry
         #region Instance Variables        
         private string _authHeader { get; set; }
         private LoginMode _mode { get; set; }
-        private string _loginUrl { get; set; }
+        private string _loginServerUrl { get; set; } // does not contain scheme prefix (e.g. "https://")
         private string _username { get; set; }
         private string _password { get; set; }
-        private String _tenant { get; set; }
         private CancellationToken _requestCancellationToken { get; set; }
 
         // Structure : Scope : Token
-        private Dictionary<string, ContainerRegistryAccessToken> _acrAccessTokens;
+        // Key Scope retrieved from header from service which shouldn't change culture.
+        private Dictionary<string, ContainerRegistryAccessToken> _acrAccessTokens = new Dictionary<string, ContainerRegistryAccessToken>(StringComparer.OrdinalIgnoreCase);
 
         // Structure : Method>Operation : Scope
-        private Dictionary<string, string> _acrScopes;
+        // Key contains operation url which could potentially change culture...
+        private Dictionary<string, string> _acrScopes = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
 
         // Internal simplified client for Token Acquisition
         private ContainerRegistryRefreshToken _acrRefresh;
@@ -57,15 +56,6 @@ namespace Microsoft.Azure.ContainerRegistry
 
         #endregion
         
-        // initialization logic helper.
-        private void Initialize()
-        {
-            if (_mode == LoginMode.Basic) // Basic Authentication
-            {
-                _authHeader = Helpers.EncodeTo64($"{_username}:{_password}");
-            }
-        }
-
         #region Constructors
 
         /// <summary>
@@ -83,15 +73,16 @@ namespace Microsoft.Azure.ContainerRegistry
                 throw new ArgumentException("This constructor does not permit AAD Authentication. Please use an appropriate constructor.");
             }
 
-            _acrScopes = new Dictionary<string, string>();
-            _acrAccessTokens = new Dictionary<string, ContainerRegistryAccessToken>();
             _mode = mode;
-            _loginUrl = ProcessLoginUrl(loginUrl);
+            _loginServerUrl = ProcessLoginUrl(loginUrl);
             _username = username;
             _password = password;
             _requestCancellationToken = cancellationToken;
 
-            Initialize();
+            if (_mode == LoginMode.Basic) // Basic Authentication
+            {
+                _authHeader = Helpers.EncodeTo64($"{_username}:{_password}");
+            }
         }
 
         /// <summary>
@@ -101,18 +92,13 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <paramref name="tenant"/> The tenant of the aad access token (optional)
         /// <paramref name="acquireNewAad"/> Callback function to refresh the <paramref name="aadAccessToken">. Without this parameter, the AAD token cannot be refreshed.
         /// </summary>
-        public ContainerRegistryCredentials(string aadAccessToken, string loginUrl, string tenant = null, AuthToken.AcquireCallback acquireNewAad = null, CancellationToken cancellationToken = default)
+        public ContainerRegistryCredentials(string aadAccessToken, string loginUrl, AuthToken.AcquireCallback acquireNewAad = null, CancellationToken cancellationToken = default)
         {
-            _acrScopes = new Dictionary<string, string>();
-            _acrAccessTokens = new Dictionary<string, ContainerRegistryAccessToken>();
             _mode = LoginMode.TokenAad;
-            _loginUrl = ProcessLoginUrl(loginUrl);
+            _loginServerUrl = ProcessLoginUrl(loginUrl);
             _requestCancellationToken = cancellationToken;
             _aadAccess = new AuthToken(aadAccessToken, acquireNewAad);
-            _acrRefresh = new ContainerRegistryRefreshToken(_aadAccess, _loginUrl);
-            _tenant = tenant;
-
-            Initialize();
+            _acrRefresh = new ContainerRegistryRefreshToken(_aadAccess, _loginServerUrl);
         }
 
         #endregion
@@ -120,7 +106,7 @@ namespace Microsoft.Azure.ContainerRegistry
         #region Overrides
 
         /// <summary>
-        /// Called on initialization of the credentials. This sets forth the type of authorization to be used if necessary.
+        /// Called on initialization of client. Sets the Client's LoginUri from the Credentials LoginUrl.
         /// </summary>
         public override void InitializeServiceClient<T>(ServiceClient<T> client)
         {
@@ -132,14 +118,14 @@ namespace Microsoft.Azure.ContainerRegistry
             // if this is an ACRClient, add the loginUri that this credential was created for
             if (client is AzureContainerRegistryClient acrClient)
             {
-                if (acrClient.LoginUri == null)
+                if (string.IsNullOrEmpty(acrClient.LoginUri))
                 {
-                    acrClient.LoginUri = this._loginUrl;
+                    acrClient.LoginUri = $"https://{this._loginServerUrl}";
                 }
                 // if the login uris don't match
-                else if (!acrClient.LoginUri.ToLower().Contains(this._loginUrl.ToLower()))
+                else if (acrClient.LoginUri.ToLowerInvariant() != this._loginServerUrl.ToLowerInvariant())
                 {
-                    throw new ValidationException($"\"{nameof(AzureContainerRegistryClient)}'s\" LoginUrl does not match \"{nameof(ContainerRegistryCredentials)} LoginUrl");
+                    throw new ValidationException($"\"{nameof(AzureContainerRegistryClient)}'s\" LoginUrl: '{acrClient.LoginUri}' does not match \"{nameof(ContainerRegistryCredentials)} LoginUrl: '{this._loginServerUrl}'");
                 }
             } 
         }
@@ -160,7 +146,7 @@ namespace Microsoft.Azure.ContainerRegistry
             }
             else
             {
-                string operation = $"https://{_loginUrl}{request.RequestUri.AbsolutePath}";
+                string operation = $"https://{_loginServerUrl}{request.RequestUri.AbsolutePath}";
                 string scope = await GetScope(operation, request.Method.Method, request.RequestUri.AbsolutePath);
 
                 request.Headers.TryAddWithoutValidation("Authorization", $"Bearer {GetAcrAccessToken(scope)}");
@@ -175,11 +161,17 @@ namespace Microsoft.Azure.ContainerRegistry
 
         private static string ProcessLoginUrl(string loginUrl)
         {
-            // Proofing in case passed in loginurl includes https start.
-            if (loginUrl.ToLower().StartsWith("https://"))
+            // in case passed in loginurl includes https start. We also don't want 'http://' to be in the url.
+            string[] schemes = new string[] { "https://", "http://" };
+            foreach (var scheme in schemes)
             {
-                loginUrl.Substring("https://".Length);
+                if (loginUrl.ToLower().StartsWith(scheme))
+                {
+                    loginUrl.Substring(scheme.Length);
+                    break; // strip at most once.
+                }
             }
+
             if (loginUrl.EndsWith("/"))
             {
                 loginUrl.Substring(0, loginUrl.Length - 1);
@@ -213,11 +205,11 @@ namespace Microsoft.Azure.ContainerRegistry
 
             if (_mode == LoginMode.TokenAad)
             {
-                _acrAccessTokens[scope] = new ContainerRegistryAccessToken(_acrRefresh, scope, _loginUrl);
+                _acrAccessTokens[scope] = new ContainerRegistryAccessToken(_acrRefresh, scope, _loginServerUrl);
             }
             else if (_mode == LoginMode.TokenAuth)
             {
-                _acrAccessTokens[scope] = new ContainerRegistryAccessToken(_username, _password, scope, _loginUrl);
+                _acrAccessTokens[scope] = new ContainerRegistryAccessToken(_username, _password, scope, _loginServerUrl);
             }
 
             return _acrAccessTokens[scope].Value;
@@ -239,12 +231,11 @@ namespace Microsoft.Azure.ContainerRegistry
                 return result;
             }
 
-            HttpClient runtimeClient = new HttpClient();
-            HttpResponseMessage response = null;
             string scope;
             try
             {
-                response = await runtimeClient.SendAsync(new HttpRequestMessage(new HttpMethod(method), operation));
+                HttpClient runtimeClient = new HttpClient();
+                HttpResponseMessage response = await runtimeClient.SendAsync(new HttpRequestMessage(new HttpMethod(method), operation));
                 scope = GetScopeFromHeaders(response.Headers)?? ResolveScopeLocally(path);
                 _acrScopes[methodOperationKey] = scope;
             }
@@ -253,7 +244,6 @@ namespace Microsoft.Azure.ContainerRegistry
                 throw new Exception($"Could not identify appropriate Token scope: {e.Message}");
             }
             return scope;
-
         }
 
         /// <summary>
@@ -322,17 +312,7 @@ namespace Microsoft.Azure.ContainerRegistry
             return toTrim;
         }
 
-        /// <summary>
-        /// Provides cleanup in case Cache is getting large. 
-        ///</summary>
-        private void ClearCache()
-        {
-            _acrAccessTokens.Clear();
-            _acrScopes.Clear();
-        }
-
         #endregion
-
     }
 }
 

@@ -15,7 +15,7 @@
             using (var context = MockContext.Start(GetType(), nameof(GetAcrRefreshTokenFromExchange)))
             {
                 AzureContainerRegistryClient client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
-                var refreshToken = await client.RefreshTokens.GetFromExchangeAsync("access_token", ACRTestUtil.ManagedTestRegistryFullName, null, null, await ACRTestUtil.getAADaccessToken());
+                var refreshToken = await client.RefreshTokens.GetFromExchangeAsync("access_token", ACRTestUtil.ManagedTestRegistryFullName, null, null, await ACRTestUtil.GetAADAccessToken());
                 ValidateRefreshToken(refreshToken.RefreshTokenProperty);
             }
         }
@@ -26,7 +26,7 @@
             using (var context = MockContext.Start(GetType(), nameof(GetAcrAccessToken)))
             {
                 AzureContainerRegistryClient client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
-                var refreshToken = await client.RefreshTokens.GetFromExchangeAsync("access_token", ACRTestUtil.ManagedTestRegistryFullName, null, null, await ACRTestUtil.getAADaccessToken());
+                var refreshToken = await client.RefreshTokens.GetFromExchangeAsync("access_token", ACRTestUtil.ManagedTestRegistryFullName, null, null, await ACRTestUtil.GetAADAccessToken());
                 var accessToken = await client.AccessTokens.GetAsync(ACRTestUtil.ManagedTestRegistryFullName, ACRTestUtil.Scope, refreshToken.RefreshTokenProperty);
                 ValidateAccessToken(accessToken.AccessTokenProperty);
             }
@@ -63,8 +63,8 @@
 
         private void CommonTokenValidation(JwtSecurityToken fields)
         {
-            Assert.Equal("azuresdkunittest.azurecr.io", fields.Audiences.ToList<string>()[0]);
-            Assert.Equal("Azure Container Registry", fields.Issuer);
+            Assert.Equal(ACRTestUtil.ManagedTestRegistryFullName, fields.Audiences.ToList<string>()[0]);
+            Assert.Equal(ACRTestUtil.ACRJWTIssuer, fields.Issuer);
             Assert.Equal("RS256", fields.Header.Alg);
             Assert.Equal("JWT", fields.Header.Typ);
 

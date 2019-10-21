@@ -8,7 +8,7 @@
     using System.Text;
     using System.Threading.Tasks;
     using Xunit;
-
+    using static Microsoft.Azure.ContainerRegistry.ContainerRegistryCredentials;
 
     public class BlobTests
     {
@@ -130,7 +130,43 @@
             }
         }
 
-        public async Task<string> UploadLayer(Stream blob, AzureContainerRegistryClient client, string repository)
+        [Fact]
+        public async Task GetBlobOAuth()
+        {
+            using (var context = MockContext.Start(GetType(), nameof(GetBlobOAuth)))
+            {
+                LoginMode loginMode = LoginMode.TokenAuth; // use oauth - exchange username and password for a refreshtoken
+                AzureContainerRegistryClient client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry, loginMode);
+                Stream blob = await client.Blob.GetAsync(ACRTestUtil.ProdRepository, ProdConfigBlobDigest);
+                StreamReader reader = new StreamReader(blob, Encoding.UTF8);
+                string originalBlob = reader.ReadToEnd();
+                Assert.Equal(ProdConfigBlob, originalBlob);
+            }
+        }
+
+        /// <summary>
+        /// This test should be run only live. 
+        /// HTTP calls made by the clients in <see cref="ContainerRegistryRefreshToken"> and <see cref="ContainerRegistryAccessToken">
+        /// aren't being mocked by the test framework. This leads to issues when trying to refresh AADTokens during "playback" as these 
+        /// clients' requests are always "live".
+        /// </summary>
+        /// <returns></returns>
+        [Fact(Skip="Should be run only live")]
+        public async Task GetBlobAAD()
+        {
+            using (var context = MockContext.Start(GetType(), nameof(GetBlobAAD)))
+            {
+                LoginMode loginMode = LoginMode.TokenAad; // use AAD
+                AzureContainerRegistryClient client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry, loginMode);
+                Stream blob = await client.Blob.GetAsync(ACRTestUtil.ProdRepository, ProdConfigBlobDigest);
+                StreamReader reader = new StreamReader(blob, Encoding.UTF8);
+                string originalBlob = reader.ReadToEnd();
+                Assert.Equal(ProdConfigBlob, originalBlob);
+            }
+        }
+
+        #region Helpers
+        private async Task<string> UploadLayer(Stream blob, AzureContainerRegistryClient client, string repository)
         {
             // Make copy to obtain the ability to rewind the stream
             Stream cpy = new MemoryStream();
@@ -163,24 +199,7 @@
 
         }
 
-        private static string ComputeDigest(string s)
-        {
-            StringBuilder sb = new StringBuilder();
-
-            using (var hash = SHA256.Create())
-            {
-                Encoding enc = Encoding.UTF8;
-                byte[] result = hash.ComputeHash(enc.GetBytes(s));
-
-                foreach (byte b in result)
-                    sb.Append(b.ToString("x2"));
-            }
-
-            return "sha256:" + sb.ToString();
-
-        }
-
-        public static Stream GenerateStreamFromString(string s)
+        private static Stream GenerateStreamFromString(string s)
         {
             var stream = new MemoryStream();
             var writer = new StreamWriter(stream);
@@ -189,5 +208,6 @@
             stream.Position = 0;
             return stream;
         }
+        #endregion
     }
 }

@@ -39,7 +39,6 @@ namespace Microsoft.Azure.ContainerRegistry
             }
             await base.ProcessHttpRequestAsync(request, cancellationToken);
         }
-
     }
 
     /// <summary>
@@ -48,7 +47,6 @@ namespace Microsoft.Azure.ContainerRegistry
     /// </summary>
     public class AuthToken
     {
-
         public delegate string AcquireCallback();
         protected static readonly JwtSecurityTokenHandler JwtSecurityClient = new JwtSecurityTokenHandler();
 
@@ -133,6 +131,7 @@ namespace Microsoft.Azure.ContainerRegistry
             InitializeToken(tempRefreshFunction);
         }
     }
+
     /// <summary>
     /// An ACR access token that refreshes from an ACR refresh token or username and password.
     /// </summary>
@@ -162,6 +161,7 @@ namespace Microsoft.Azure.ContainerRegistry
             // initialize token and refresh function
             InitializeToken(tempRefreshFunction);
         }
+
         /// <summary>
         /// Construct an ACR access token that refreshes from an ACR refresh token. 
         /// </summary>

@@ -4,13 +4,16 @@
 
 namespace ContainerRegistry.Tests
 {
+    using System;
+    using System.Net;
+    using System.Threading.Tasks;
+    using System.IdentityModel.Tokens.Jwt;
     using Microsoft.Azure.ContainerRegistry;
     using Microsoft.Azure.Management.ContainerRegistry;
     using Microsoft.IdentityModel.Clients.ActiveDirectory;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-    using System.Net;
-    using System.Threading.Tasks;
-    using System;
+    using static Microsoft.Azure.ContainerRegistry.AuthToken;
+    using static Microsoft.Azure.ContainerRegistry.ContainerRegistryCredentials;
 
     public static class ACRTestUtil
     {
@@ -34,9 +37,9 @@ namespace ContainerRegistry.Tests
         public static readonly string ManagedTestRegistryForChanges = "azuresdkunittestupdateable";
         public static readonly string ManagedTestRegistryForChangesFullName = "azuresdkunittestupdateable.azurecr.io";
 
-        public static readonly string Scope = "registry:catalog:*";
-        public static readonly string MediatypeV2Manifest = "application/vnd.docker.distribution.manifest.v2+json";
-        public static readonly string MediatypeV1Manifest = "application/vnd.docker.container.image.v1+json";
+        internal static readonly string Scope = "registry:catalog:*";
+        internal static readonly string MediatypeV2Manifest = "application/vnd.docker.distribution.manifest.v2+json";
+        internal static readonly string MediatypeV1Manifest = "application/vnd.docker.container.image.v1+json";
         internal static readonly string MediatypeOCIManifest = "application/vnd.oci.image.manifest.v1+json";
         internal static readonly string MediatypeOCIIndex = "application/vnd.oci.image.index.v1+json";
         internal static readonly string MediatypeManifestList = "application/vnd.docker.distribution.manifest.list.v2+json";
@@ -45,24 +48,40 @@ namespace ContainerRegistry.Tests
         internal static readonly string BlobTestRepository = "blobland";
         internal static string OCITestRepository = "oras";
 
+        internal static string ACRJWTIssuer = "Azure Container Registry";
+
         /// <summary>
         /// Acquires an ACR client setup for the testing network. Note acquisition of credentials from registry
         /// must be possible for this to work in this way.
         /// </summary>
         /// <param name="registryName"> Registry to be used </param>
         /// <returns></returns>
-        public static async Task<AzureContainerRegistryClient> GetACRClientAsync(MockContext context, string registryName)
+        public static async Task<AzureContainerRegistryClient> GetACRClientAsync(MockContext context, string registryName, LoginMode loginMode = ContainerRegistryCredentials.LoginMode.Basic)
         {
             var registryManagementClient = context.GetServiceClient<ContainerRegistryManagementClient>(handlers: CreateNewRecordedDelegatingHandler());
             var registry = await registryManagementClient.Registries.GetAsync(_testResourceGroup, registryName);
-            var registryCredentials = await registryManagementClient.Registries.ListCredentialsAsync(_testResourceGroup, registryName);
+            
+            ContainerRegistryCredentials credential = null;
 
-            string username = registryCredentials.Username;
-            string password = registryCredentials.Passwords[0].Value;
+            switch (loginMode)
+            {
+                case LoginMode.Basic:
+                case LoginMode.TokenAuth:
+                    var registryCredentials = await registryManagementClient.Registries.ListCredentialsAsync(_testResourceGroup, registryName);
+                    string username = registryCredentials.Username;
+                    string password = registryCredentials.Passwords[0].Value;
+                    credential = new ContainerRegistryCredentials(loginMode, registry.LoginServer, username, password);
+                    break;
+                case LoginMode.TokenAad:
+                    var aadToken = await GetAADAccessToken();
+                    AcquireCallback newAADCallback = () => GetAADAccessToken().GetAwaiter().GetResult();
+                    credential = new ContainerRegistryCredentials(aadToken, registry.LoginServer, newAADCallback);
+                    break;
+                default:
+                    throw new ArgumentException($"Unkown {nameof(LoginMode)}. Expected one of ['{LoginMode.Basic}', '{LoginMode.TokenAuth}', '{LoginMode.TokenAad}'] but got '{loginMode}'");
+            }
 
-            ContainerRegistryCredentials credential = new ContainerRegistryCredentials(ContainerRegistryCredentials.LoginMode.Basic, registry.LoginServer, username, password);
             var acrClient = context.GetServiceClientWithCredentials<AzureContainerRegistryClient>(credential, CreateNewRecordedDelegatingHandler());
-            acrClient.LoginUri = "https://" + registry.LoginServer;
             return acrClient;
         }
 
@@ -80,7 +99,7 @@ namespace ContainerRegistry.Tests
         /// Note that the the service principal in question must have access to the azuresdkunittest registry or any specified as prod in the future.
         /// </summary>
 
-        public static async Task<string> getAADaccessToken()
+        public static async Task<string> GetAADAccessToken()
         {
             TestEnvironment testEnvironment = TestEnvironmentFactory.GetTestEnvironment();
             string tenantId = testEnvironment.ConnectionString.KeyValuePairs[ConnectionStringKeys.AADTenantKey];
@@ -88,8 +107,12 @@ namespace ContainerRegistry.Tests
             string authSecret = testEnvironment.ConnectionString.KeyValuePairs[ConnectionStringKeys.ServicePrincipalSecretKey];
 
             // Addresses issues from pipeline having no credentials to obtain AAD token. 
+            // Return Dummy token.
             if (String.IsNullOrEmpty(tenantId) || String.IsNullOrEmpty(authClientId) || String.IsNullOrEmpty(authSecret)) {
-                return "standintokenforpipeline";
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var token = tokenHandler.CreateJwtSecurityToken(ACRJWTIssuer, ManagedTestRegistryFullName, null, null, DateTime.UtcNow.AddHours(5), null, null);
+                return tokenHandler.WriteToken(token);
+
             }
 
             var context = new AuthenticationContext("https://login.microsoftonline.com/" + tenantId + "/oauth2/v2.0/token");
@@ -102,6 +125,5 @@ namespace ContainerRegistry.Tests
         {
             return new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK, IsPassThrough = true };
         }
-
     }
 }
