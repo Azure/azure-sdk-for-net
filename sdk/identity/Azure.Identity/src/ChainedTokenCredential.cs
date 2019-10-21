@@ -15,22 +15,17 @@ namespace Azure.Identity
     /// </summary>
     public class ChainedTokenCredential : TokenCredential
     {
-        private readonly ReadOnlyMemory<TokenCredential> _sources;
+        private readonly Exception[] _unavailableExceptions;
+        private readonly TokenCredential[] _sources;
 
         /// <summary>
         /// Creates an instance with the specified <see cref="TokenCredential"/> sources.
         /// </summary>
         /// <param name="sources">The ordered chain of <see cref="TokenCredential"/> implementations to tried when calling <see cref="GetToken"/> or <see cref="GetTokenAsync"/></param>
-        public ChainedTokenCredential(params TokenCredential[] sources) : this(new ReadOnlyMemory<TokenCredential>(sources))
+        public ChainedTokenCredential(params TokenCredential[] sources)
         {
-        }
+            if (sources is null) throw new ArgumentNullException(nameof(sources));
 
-        /// <summary>
-        /// Creates an instance with the specified <see cref="TokenCredential"/> sources.
-        /// </summary>
-        /// <param name="sources">The ordered chain of <see cref="TokenCredential"/> implementations to tried when calling <see cref="GetToken"/> or <see cref="GetTokenAsync"/></param>
-        internal ChainedTokenCredential(ReadOnlyMemory<TokenCredential> sources)
-        {
             if (sources.Length == 0)
             {
                 throw new ArgumentException("sources must not be empty", nameof(sources));
@@ -38,49 +33,87 @@ namespace Azure.Identity
 
             for (int i = 0; i < sources.Length; i++)
             {
-                if (sources.Span[i] == null)
+                if (sources[i] == null)
                 {
                     throw new ArgumentException("sources must not contain null", nameof(sources));
                 }
-            }
 
+            }
             _sources = sources;
+
+            _unavailableExceptions = new Exception[_sources.Length];
         }
 
         /// <summary>
-        /// Sequencially calls <see cref="TokenCredential.GetToken"/> on all the specified sources, returning the first non default <see cref="AccessToken"/>.
+        /// Sequencially calls <see cref="TokenCredential.GetToken"/> on all the specified sources, returning the first successfully retured <see cref="AccessToken"/>.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The first non default <see cref="AccessToken"/> returned by the specified sources.  If all credentials in the chain return default a default <see cref="AccessToken"/> is returned.</returns>
+        /// <returns>The first <see cref="AccessToken"/> returned by the specified sources. Any credential which raises a <see cref="CredentialUnavailableException"/> will be skipped.</returns>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            AccessToken token = new AccessToken();
-
-            for (int i = 0; i < _sources.Length && token.Token == null; i++)
+            for (int i = 0; i < _sources.Length; i++)
             {
-                token = _sources.Span[i].GetToken(requestContext, cancellationToken);
+                if (_unavailableExceptions[i] == null)
+                {
+                    try
+                    {
+                        return _sources[i].GetToken(requestContext, cancellationToken);
+                    }
+                    catch (CredentialUnavailableException e)
+                    {
+                        _unavailableExceptions[i] = e;
+                    }
+                    catch (Exception e)
+                    {
+                        Exception[] aggEx = new Exception[i + 1];
+
+                        Array.Copy(_unavailableExceptions, 0, aggEx, 0, i);
+
+                        aggEx[i] = e;
+
+                        throw new AggregateAuthenticationException(Constants.AggregateCredentialFailedErrorMessage, new ReadOnlyMemory<object>(_sources, 0, i + 1), aggEx);
+                    }
+                }
             }
 
-            return token;
+            throw new AggregateAuthenticationException(Constants.AggregateAllUnavailableErrorMessage, _sources, _unavailableExceptions);
         }
 
         /// <summary>
-        /// Sequencially calls <see cref="TokenCredential.GetTokenAsync"/> on all the specified sources, returning the first non default <see cref="AccessToken"/>.
+        /// Sequencially calls <see cref="TokenCredential.GetToken"/> on all the specified sources, returning the first successfully retured <see cref="AccessToken"/>.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The first non default <see cref="AccessToken"/> returned by the specified sources.  If all credentials in the chain return default a default <see cref="AccessToken"/> is returned.</returns>
+        /// <returns>The first <see cref="AccessToken"/> returned by the specified sources. Any credential which raises a <see cref="CredentialUnavailableException"/> will be skipped.</returns>
         public override async Task<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            AccessToken token = new AccessToken();
-
-            for (int i = 0; i < _sources.Length && token.Token == null; i++)
+            for (int i = 0; i < _sources.Length; i++)
             {
-                token = await _sources.Span[i].GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false);
+                if (_unavailableExceptions[i] == null)
+                {
+                    try
+                    {
+                        return await _sources[i].GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false);
+                    }
+                    catch (CredentialUnavailableException e)
+                    {
+                        _unavailableExceptions[i] = e;
+                    }
+                    catch (Exception e)
+                    {
+                        Exception[] aggEx = new Exception[i + 1];
+
+                        Array.Copy(_unavailableExceptions, 0, aggEx, 0, i);
+
+                        aggEx[i] = e;
+
+                        throw new AggregateAuthenticationException(Constants.AggregateCredentialFailedErrorMessage, new ReadOnlyMemory<object>(_sources, 0, i + 1), aggEx);
+                    }
+                }
             }
 
-            return token;
+            throw new AggregateAuthenticationException(Constants.AggregateAllUnavailableErrorMessage, _sources, _unavailableExceptions);
         }
     }
 }

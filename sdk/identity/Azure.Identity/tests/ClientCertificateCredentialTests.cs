@@ -11,60 +11,30 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Testing;
+using Azure.Identity.Tests.Mock;
 using NUnit.Framework;
 
-namespace Azure.Identity.Tests.Mock
+namespace Azure.Identity.Tests
 {
-    public class AadIdentityClientTests : ClientTestBase
+    public class ClientCertificateCredentialTests : ClientTestBase
     {
-        public AadIdentityClientTests(bool isAsync) : base(isAsync)
+        public ClientCertificateCredentialTests(bool isAsync) : base(isAsync)
         {
         }
 
         [Test]
-        public async Task VerifyClientClientSecretRequestAsync()
+        public void VerifyCtorParametersValidation()
         {
-            var response = new MockResponse(200);
+            var tenantId = Guid.NewGuid().ToString();
 
-            var expectedToken = "mock-msi-access-token";
+            var clientId = Guid.NewGuid().ToString();
 
-            response.SetContent($"{{ \"access_token\": \"{expectedToken}\", \"expires_in\": 3600 }}");
+            var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+            var mockCert = new X509Certificate2(certificatePath, "password");
 
-            var mockTransport = new MockTransport(response);
-
-            var options = new TokenCredentialOptions() { Transport = mockTransport };
-
-            var expectedTenantId = Guid.NewGuid().ToString();
-
-            var expectedClientId = Guid.NewGuid().ToString();
-
-            var expectedClientSecret = "secret";
-
-            AadIdentityClient client = InstrumentClient(new AadIdentityClient(options: options));
-
-            AccessToken actualToken = await client.AuthenticateAsync(expectedTenantId, expectedClientId, expectedClientSecret, MockScopes.Default);
-
-            Assert.AreEqual(expectedToken, actualToken.Token);
-
-            MockRequest request = mockTransport.SingleRequest;
-
-            Assert.IsTrue(request.Content.TryComputeLength(out long contentLen));
-
-            var content = new byte[contentLen];
-
-            await request.Content.WriteToAsync(new MemoryStream(content), default);
-
-            Assert.IsTrue(TryParseFormEncodedBody(content, out Dictionary<string, string> parsedBody));
-
-            Assert.IsTrue(parsedBody.TryGetValue("response_type", out string responseType) && responseType == "token");
-
-            Assert.IsTrue(parsedBody.TryGetValue("grant_type", out string grantType) && grantType == "client_credentials");
-
-            Assert.IsTrue(parsedBody.TryGetValue("client_id", out string actualClientId) && actualClientId == expectedClientId);
-
-            Assert.IsTrue(parsedBody.TryGetValue("client_secret", out string actualClientSecret) && actualClientSecret == "secret");
-
-            Assert.IsTrue(parsedBody.TryGetValue("scope", out string actualScope) && actualScope == MockScopes.Default.ToString());
+            Assert.Throws<ArgumentNullException>(() => new ClientCertificateCredential(null, clientId, mockCert));
+            Assert.Throws<ArgumentNullException>(() => new ClientCertificateCredential(tenantId, null, mockCert));
+            Assert.Throws<ArgumentNullException>(() => new ClientCertificateCredential(tenantId, clientId, null));
         }
 
         [Test]
@@ -87,9 +57,9 @@ namespace Azure.Identity.Tests.Mock
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
             var mockCert = new X509Certificate2(certificatePath, "password");
 
-            AadIdentityClient client = InstrumentClient(new AadIdentityClient(options: options));
+            ClientCertificateCredential credential = InstrumentClient(new ClientCertificateCredential(expectedTenantId, expectedClientId, mockCert, options));
 
-            AccessToken actualToken = await client.AuthenticateAsync(expectedTenantId, expectedClientId, mockCert, MockScopes.Default);
+            AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
             Assert.AreEqual(expectedToken, actualToken.Token);
 
@@ -144,7 +114,8 @@ namespace Azure.Identity.Tests.Mock
                 Assert.IsTrue(json.RootElement.TryGetProperty("iss", out JsonElement issProp) && issProp.GetString() == expectedClientId);
                 Assert.IsTrue(json.RootElement.TryGetProperty("sub", out JsonElement subProp) && subProp.GetString() == expectedClientId);
                 Assert.IsTrue(json.RootElement.TryGetProperty("nbf", out JsonElement nbfProp) && nbfProp.GetInt64() <= DateTimeOffset.UtcNow.ToUnixTimeSeconds());
-                Assert.IsTrue(json.RootElement.TryGetProperty("exp", out JsonElement expProp) && expProp.GetInt64() > DateTimeOffset.UtcNow.ToUnixTimeSeconds()); ;
+                Assert.IsTrue(json.RootElement.TryGetProperty("exp", out JsonElement expProp) && expProp.GetInt64() > DateTimeOffset.UtcNow.ToUnixTimeSeconds());
+                ;
             }
 
             // verify the JWT signature
@@ -176,5 +147,6 @@ namespace Azure.Identity.Tests.Mock
 
             return true;
         }
+
     }
 }

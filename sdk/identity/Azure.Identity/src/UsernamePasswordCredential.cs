@@ -22,9 +22,7 @@ namespace Azure.Identity
     public class UsernamePasswordCredential : TokenCredential
     {
         private readonly IPublicClientApplication _pubApp = null;
-        private readonly HttpPipeline _pipeline = null;
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly TokenCredentialOptions _options;
+        private readonly CredentialPipeline _pipeline = null;
         private readonly string _username = null;
         private readonly SecureString _password;
 
@@ -46,7 +44,7 @@ namespace Azure.Identity
         /// <param name="tenantId">The Azure Active Directory tenant (directory) ID or name.</param>
         /// <param name="clientId">The client (application) ID of an App Registration in the tenant.</param>
         public UsernamePasswordCredential(string username, string password, string tenantId, string clientId)
-            : this(username, password, clientId, tenantId, null)
+            : this(username, password, clientId, tenantId, (TokenCredentialOptions)null)
         {
 
         }
@@ -61,18 +59,19 @@ namespace Azure.Identity
         /// <param name="clientId">The client (application) ID of an App Registration in the tenant.</param>
         /// <param name="options">The client options for the newly created UsernamePasswordCredential</param>
         public UsernamePasswordCredential(string username, string password, string tenantId, string clientId, TokenCredentialOptions options)
+            : this(username, password, tenantId, clientId, CredentialPipeline.GetInstance(options))
+        {
+        }
+
+        internal UsernamePasswordCredential(string username, string password, string tenantId, string clientId, CredentialPipeline pipeline)
         {
             _username = username ?? throw new ArgumentNullException(nameof(username));
 
             _password = (password != null) ? password.ToSecureString() : throw new ArgumentNullException(nameof(password));
 
-            _options = options ?? new TokenCredentialOptions();
+            _pipeline = pipeline;
 
-            _pipeline = HttpPipelineBuilder.Build(_options);
-
-            _clientDiagnostics = new ClientDiagnostics(options);
-
-            _pubApp = PublicClientApplicationBuilder.Create(clientId).WithHttpClientFactory(new HttpPipelineClientFactory(_pipeline)).WithTenantId(tenantId).Build();
+            _pubApp = _pipeline.CreateMsalPublicClient(clientId, tenantId);
         }
 
         /// <summary>
@@ -96,9 +95,7 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override async Task<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Identity.UsernamePasswordCredential.GetToken");
-
-            scope.Start();
+            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("Azure.Identity.UsernamePasswordCredential.GetToken", requestContext);
 
             try
             {
@@ -108,9 +105,7 @@ namespace Azure.Identity
             }
             catch (Exception e)
             {
-                scope.Failed(e);
-
-                throw;
+                throw scope.Failed(e);
             }
         }
     }

@@ -35,13 +35,20 @@ namespace Azure.Identity
         private readonly AadIdentityClient _client;
 
         /// <summary>
+        /// Protected constructor for mocking.
+        /// </summary>
+        protected ClientCertificateCredential()
+        {
+        }
+
+        /// <summary>
         /// Creates an instance of the ClientCertificateCredential with the details needed to authenticate against Azure Active Directory with the specified certificate.
         /// </summary>
         /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientCertificate">The authentication X509 Certificate of the service principal</param>
         public ClientCertificateCredential(string tenantId, string clientId, X509Certificate2 clientCertificate)
-            : this(tenantId, clientId, clientCertificate, null)
+            : this(tenantId, clientId, clientCertificate, (TokenCredentialOptions)null)
         {
         }
 
@@ -53,6 +60,12 @@ namespace Azure.Identity
         /// <param name="clientCertificate">The authentication X509 Certificate of the service principal</param>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
         public ClientCertificateCredential(string tenantId, string clientId, X509Certificate2 clientCertificate, TokenCredentialOptions options)
+            : this(tenantId, clientId, clientCertificate, CredentialPipeline.GetInstance(options))
+
+        {
+        }
+
+        internal ClientCertificateCredential(string tenantId, string clientId, X509Certificate2 clientCertificate, CredentialPipeline pipeline)
         {
             TenantId = tenantId ?? throw new ArgumentNullException(nameof(tenantId));
 
@@ -60,7 +73,7 @@ namespace Azure.Identity
 
             ClientCertificate = clientCertificate ?? throw new ArgumentNullException(nameof(clientCertificate));
 
-            _client = (options != null) ? new AadIdentityClient(options) : AadIdentityClient.SharedClient;
+            _client = new AadIdentityClient(pipeline);
         }
 
         /// <summary>
@@ -71,7 +84,16 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return _client.Authenticate(TenantId, ClientId, ClientCertificate, requestContext.Scopes, cancellationToken);
+            using CredentialDiagnosticScope scope = _client.Pipeline.StartGetTokenScope("Azure.Identity.ClientCertificateCredential.GetToken", requestContext);
+
+            try
+            {
+                return _client.Authenticate(TenantId, ClientId, ClientCertificate, requestContext.Scopes, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                throw scope.Failed(e);
+            }
         }
 
         /// <summary>
@@ -82,7 +104,16 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override async Task<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return await _client.AuthenticateAsync(TenantId, ClientId, ClientCertificate, requestContext.Scopes, cancellationToken).ConfigureAwait(false);
+            using CredentialDiagnosticScope scope = _client.Pipeline.StartGetTokenScope("Azure.Identity.ClientCertificateCredential.GetToken", requestContext);
+
+            try
+            {
+                return await _client.AuthenticateAsync(TenantId, ClientId, ClientCertificate, requestContext.Scopes, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                throw scope.Failed(e);
+            }
         }
     }
 }

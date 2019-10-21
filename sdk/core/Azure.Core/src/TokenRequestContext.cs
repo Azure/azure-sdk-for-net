@@ -13,14 +13,21 @@ namespace Azure.Core
         /// Creates a new TokenRequest with the specified scopes.
         /// </summary>
         /// <param name="scopes">The scopes required for the token.</param>
-        public TokenRequestContext(string[] scopes)
+        /// <param name="parentRequestId">The <see cref="Request.ClientRequestId"/> of the request requiring a token for authentication, if applicable.</param>
+        public TokenRequestContext(string[] scopes, string? parentRequestId = default)
         {
             Scopes = scopes;
+            ParentRequestId = parentRequestId;
         }
 
         /// <summary>
         /// The scopes required for the token.
         /// </summary>
         public string[] Scopes { get; }
+
+        /// <summary>
+        /// The <see cref="Request.ClientRequestId"/> of the request requiring a token for authentication, if applicable.
+        /// </summary>
+        public string? ParentRequestId { get; }
     }
 }

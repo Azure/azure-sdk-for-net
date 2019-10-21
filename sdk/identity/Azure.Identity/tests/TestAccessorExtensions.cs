@@ -20,14 +20,6 @@ namespace Azure.Identity.Tests
             typeof(ClientSecretCredential).GetField("_client", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(credential, client);
         }
 
-        public static ManagedIdentityClient _client(this ManagedIdentityCredential credential)
-        {
-            return typeof(ManagedIdentityCredential).GetField("_client", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(credential) as ManagedIdentityClient;
-        }
-        public static void _client(this ManagedIdentityCredential credential, ManagedIdentityClient client)
-        {
-            typeof(ManagedIdentityCredential).GetField("_client", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(credential, client);
-        }
         public static SecureString ToSecureString(this string plainString)
         {
             if (plainString == null)

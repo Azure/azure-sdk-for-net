@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Identity.Tests
 {
-    public class TokenCredentialProviderTests
+    public class ChainedTokenCredentialTests
     {
         public class MockException : Exception
         {
@@ -29,14 +29,14 @@ namespace Azure.Identity.Tests
 
             public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
             {
-                return _scope == requestContext.Scopes[0] ? new AccessToken(_token, DateTimeOffset.MaxValue) : default;
+                return _scope == requestContext.Scopes[0] ? new AccessToken(_token, DateTimeOffset.MaxValue) : throw new CredentialUnavailableException("unavailable");
             }
 
             public override async Task<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
             {
                 await Task.CompletedTask;
 
-                return _scope == requestContext.Scopes[0] ? new AccessToken(_token, DateTimeOffset.MaxValue) : default;
+                return _scope == requestContext.Scopes[0] ? new AccessToken(_token, DateTimeOffset.MaxValue) : throw new CredentialUnavailableException("unavailable");
             }
         }
 
@@ -56,11 +56,11 @@ namespace Azure.Identity.Tests
         [Test]
         public void CtorInvalidInput()
         {
-            Assert.Throws<ArgumentException>(() => new ChainedTokenCredential(null));
-
-            Assert.Throws<ArgumentException>(() => new ChainedTokenCredential((TokenCredential)null));
+            Assert.Throws<ArgumentNullException>(() => new ChainedTokenCredential(null));
 
             Assert.Throws<ArgumentException>(() => new ChainedTokenCredential());
+
+            Assert.Throws<ArgumentException>(() => new ChainedTokenCredential((TokenCredential)null));
 
             Assert.Throws<ArgumentException>(() => new ChainedTokenCredential(new TokenCredential[] { }));
         }
@@ -77,7 +77,7 @@ namespace Azure.Identity.Tests
             Assert.AreEqual("tokenA", (await provider.GetTokenAsync(new TokenRequestContext(new string[] { "scopeA" }))).Token);
             Assert.AreEqual("tokenB", (await provider.GetTokenAsync(new TokenRequestContext(new string[] { "scopeB" }))).Token);
             Assert.AreEqual("tokenC", (await provider.GetTokenAsync(new TokenRequestContext(new string[] { "scopeC" }))).Token);
-            Assert.IsNull((await provider.GetTokenAsync(new TokenRequestContext(new string[] { "scopeD" }))).Token);
+            Assert.CatchAsync<AuthenticationFailedException>(async () => await provider.GetTokenAsync(new TokenRequestContext(new string[] { "ScopeD" })));
         }
 
         [Test]
@@ -89,8 +89,8 @@ namespace Azure.Identity.Tests
             var provider = new ChainedTokenCredential(cred1, cred2, cred3);
 
             Assert.AreEqual("tokenA", (await provider.GetTokenAsync(new TokenRequestContext(new string[] { "scopeA" }))).Token);
-            Assert.ThrowsAsync<MockException>(async () => await provider.GetTokenAsync(new TokenRequestContext(new string[] { "ScopeB" })));
-            Assert.ThrowsAsync<MockException>(async () => await provider.GetTokenAsync(new TokenRequestContext(new string[] { "ScopeC" })));
+            Assert.CatchAsync<AuthenticationFailedException>(async () => await provider.GetTokenAsync(new TokenRequestContext(new string[] { "ScopeB" })));
+            Assert.CatchAsync<AuthenticationFailedException>(async () => await provider.GetTokenAsync(new TokenRequestContext(new string[] { "ScopeC" })));
         }
     }
 }
