@@ -193,7 +193,7 @@ namespace Azure.Storage.Files.Test
                 var smbProperties = new FileSmbProperties
                 {
                     FilePermissionKey = createPermissionResponse.Value.FilePermissionKey,
-                    FileAttributes = NtfsFileAttributes.Parse("Archive|ReadOnly"),
+                    FileAttributes = FileExtensions.ToFileAttributes("Archive|ReadOnly"),
                     FileCreationTime = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
                     FileLastWriteTime = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero),
                 };
@@ -470,7 +470,7 @@ namespace Azure.Storage.Files.Test
                 var smbProperties = new FileSmbProperties
                 {
                     FilePermissionKey = createPermissionResponse.Value.FilePermissionKey,
-                    FileAttributes = NtfsFileAttributes.Parse("Archive|ReadOnly"),
+                    FileAttributes = FileExtensions.ToFileAttributes("Archive|ReadOnly"),
                     FileCreationTime = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
                     FileLastWriteTime = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero),
                 };

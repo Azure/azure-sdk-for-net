@@ -2,10 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
 using System.Text;
 using Azure.Storage.Files.Models;
 
@@ -14,44 +10,40 @@ namespace Azure.Storage.Files.Models
     /// <summary>
     /// NTFS file attributes for Files and Directories.
     /// </summary>
-    public class NtfsFileAttributes
+    [Flags]
+    public enum NtfsFileAttributes
     {
-        /// <summary>
-        /// The File or Directory has no NTFS attributes.
-        /// </summary>
-        public bool None { get; set; }
-
         /// <summary>
         /// The File or Directory is read-only.
         /// </summary>
-        public bool ReadOnly { get; set; }
+        ReadOnly = 1,
 
         /// <summary>
         /// The File or Directory is hidden, and thus is not included in an ordinary directory listing.
         /// </summary>
-        public bool Hidden { get; set; }
+        Hidden = 2,
 
         /// <summary>
         /// The File or Directory is a systemfile.  That is, the file is part of the operating system
         /// or is used exclusively by the operating system.
         /// </summary>
-        public bool System { get; set; }
+        System = 4,
 
         /// <summary>
         /// The file  or directory is a standard file that has no special attributes. This attribute is
         /// valid only if it is used alone.
         /// </summary>
-        public bool Normal { get; set; }
+        None = 8,
 
         /// <summary>
         /// The file is a directory.
         /// </summary>
-        public bool Directory { get; set; }
+        Directory = 16,
 
         /// <summary>
         /// The file is a candidate for backup or removal.
         /// </summary>
-        public bool Archive { get; set; }
+        Archive = 32,
 
         /// <summary>
         /// The file or directory is temporary. A temporary file contains data that is needed while an
@@ -60,152 +52,111 @@ namespace Azure.Storage.Files.Models
         /// flushing the data back to mass storage. A temporary file should be deleted by
         /// the application as soon as it is no longer needed.
         /// </summary>
-        public bool Temporary { get; set; }
+        Temporary = 64,
 
         /// <summary>
         /// The file or directory is offline. The data of the file is not immediately available.
         /// </summary>
-        public bool Offline { get; set; }
+        Offline = 128,
 
         /// <summary>
         /// The file or directory will not be indexed by the operating system's content indexing service.
         /// </summary>
-        public bool NotContentIndexed { get; set; }
+        NotContentIndexed = 256,
 
         /// <summary>
         /// The file or directory is excluded from the data integrity scan. When this value
         /// is applied to a directory, by default, all new files and subdirectories within
         /// that directory are excluded from data integrity.
         /// </summary>
-        public bool NoScrubData { get; set; }
+        NoScrubData = 512
+    }
+}
 
-        /// <summary>
-        /// Checks if two FileNtfsAttributes are equal.
-        /// </summary>
-        /// <param name="other">The other instance to compare to.</param>
-        /// <returns></returns>
-        public override bool Equals(object other)
-            => other is NtfsFileAttributes attributes && Equals(attributes);
-
-        /// <summary>
-        /// Checks if two FileNtfsAttributes are equal to each other.
-        /// </summary>
-        /// <param name="other">TThe other instance to compare to.</param>
-        /// <returns></returns>
-        public bool Equals(NtfsFileAttributes other)
-            => None == other.None
-               && ReadOnly == other.ReadOnly
-               && Hidden == other.Hidden
-               && System == other.System
-               && Normal == other.Normal
-               && Directory == other.Directory
-               && Archive == other.Archive
-               && Temporary == other.Temporary
-               && Offline == other.Offline
-               && NotContentIndexed == other.NotContentIndexed
-               && NoScrubData == other.NoScrubData;
-
-        /// <summary>
-        /// Get a hash code for the FileNtfsAttributes.
-        /// </summary>
-        /// <returns>Hash code for the FileNtfsAttributes.</returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() =>
-            (None ? 0b00000000001 : 0) +
-            (ReadOnly ? 0b00000000010 : 0) +
-            (Hidden ? 0b00000000100 : 0) +
-            (System ? 0b00000001000 : 0) +
-            (Normal ? 0b00000010000 : 0) +
-            (Directory ? 0b00000100000 : 0) +
-            (Archive ? 0b00001000000 : 0) +
-            (Temporary ? 0b00010000000 : 0) +
-            (Offline ? 0b00100000000 : 0) +
-            (NotContentIndexed ? 0b01000000000 : 0) +
-            (NoScrubData ? 0b10000000000 : 0);
-
+namespace Azure.Storage.Files
+{
+    /// <summary>
+    /// File enum extensions.
+    /// </summary>
+    internal static partial class FileExtensions
+    {
         /// <summary>
         /// ToString
         /// </summary>
         /// <returns>string</returns>
-        public override string ToString()
+        public static string ToAttributesString(this NtfsFileAttributes attributes)
         {
             var stringBuilder = new StringBuilder();
 
-            if (None)
+            if ((attributes & NtfsFileAttributes.ReadOnly) == NtfsFileAttributes.ReadOnly)
             {
-                stringBuilder.Append(nameof(None) + "|");
+                AppendAttribute(nameof(NtfsFileAttributes.ReadOnly), stringBuilder);
             }
-
-            if (ReadOnly)
+            if ((attributes & NtfsFileAttributes.Hidden) == NtfsFileAttributes.Hidden)
             {
-                stringBuilder.Append(nameof(ReadOnly) + "|");
+                AppendAttribute(nameof(NtfsFileAttributes.Hidden), stringBuilder);
             }
-
-            if (Hidden)
+            if ((attributes & NtfsFileAttributes.System) == NtfsFileAttributes.System)
             {
-                stringBuilder.Append(nameof(Hidden) + "|");
+                AppendAttribute(nameof(NtfsFileAttributes.System), stringBuilder);
             }
-
-            if (System)
+            if ((attributes & NtfsFileAttributes.None) == NtfsFileAttributes.None)
             {
-                stringBuilder.Append(nameof(System) + "|");
+                AppendAttribute(nameof(NtfsFileAttributes.None), stringBuilder);
             }
-
-            if (Normal)
+            if ((attributes & NtfsFileAttributes.Directory) == NtfsFileAttributes.Directory)
             {
-                stringBuilder.Append(nameof(Normal) + "|");
+                AppendAttribute(nameof(NtfsFileAttributes.Directory), stringBuilder);
             }
-
-            if (Directory)
+            if ((attributes & NtfsFileAttributes.Archive) == NtfsFileAttributes.Archive)
             {
-                stringBuilder.Append(nameof(Directory) + "|");
+                AppendAttribute(nameof(NtfsFileAttributes.Archive), stringBuilder);
             }
-
-            if (Archive)
+            if ((attributes & NtfsFileAttributes.Temporary) == NtfsFileAttributes.Temporary)
             {
-                stringBuilder.Append(nameof(Archive) + "|");
+                AppendAttribute(nameof(NtfsFileAttributes.Temporary), stringBuilder);
             }
-
-            if (Temporary)
+            if ((attributes & NtfsFileAttributes.Offline) == NtfsFileAttributes.Offline)
             {
-                stringBuilder.Append(nameof(Temporary) + "|");
+                AppendAttribute(nameof(NtfsFileAttributes.Offline), stringBuilder);
             }
-
-            if (Offline)
+            if ((attributes & NtfsFileAttributes.NotContentIndexed) == NtfsFileAttributes.NotContentIndexed)
             {
-                stringBuilder.Append(nameof(Offline) + "|");
+                AppendAttribute(nameof(NtfsFileAttributes.NotContentIndexed), stringBuilder);
             }
-
-            if (NotContentIndexed)
+            if ((attributes & NtfsFileAttributes.NoScrubData) == NtfsFileAttributes.NoScrubData)
             {
-                stringBuilder.Append(nameof(NotContentIndexed) + "|");
+                AppendAttribute(nameof(NtfsFileAttributes.NoScrubData), stringBuilder);
             }
-
-            if (NoScrubData)
-            {
-                stringBuilder.Append(nameof(NoScrubData) + "|");
-            }
-
             if (stringBuilder[stringBuilder.Length - 1] == '|')
             {
                 stringBuilder.Remove(stringBuilder.Length - 1, 1);
             }
-
             return stringBuilder.ToString();
         }
 
         /// <summary>
-        /// Parses a NTFS attributes string to a nullable FileNtfsAttributes
+        /// Helper method to append attribute name to stringbuilder.
+        /// </summary>
+        /// <param name="attributeName">name of attribute</param>
+        /// <param name="stringBuilder">stringbuilder reference</param>
+        private static void AppendAttribute(string attributeName, StringBuilder stringBuilder)
+        {
+            stringBuilder.Append(attributeName);
+            stringBuilder.Append("|");
+        }
+
+        /// <summary>
+        /// Parses a NTFS attributes string to a nullable FileNtfsAttributes.
         /// </summary>
         /// <param name="attributesString">string to parse</param>
         /// <returns></returns>
-        public static NtfsFileAttributes Parse(string attributesString)
+        public static NtfsFileAttributes? ToFileAttributes(string attributesString)
         {
             if (attributesString == null)
             {
                 return null;
             }
-            var attributes = new NtfsFileAttributes();
             var splitString = attributesString.Split('|');
 
             if (splitString.Length == 0)
@@ -213,49 +164,50 @@ namespace Azure.Storage.Files.Models
                 throw Errors.InvalidArgument(attributesString);
             }
 
+            NtfsFileAttributes attributes = default;
             foreach (var s in splitString)
             {
                 var trimmed = s.Trim();
 
-                if (trimmed.Equals(nameof(ReadOnly), StringComparison.InvariantCultureIgnoreCase))
+                if (trimmed.Equals(nameof(NtfsFileAttributes.ReadOnly), StringComparison.InvariantCultureIgnoreCase))
                 {
-                    attributes.ReadOnly = true;
+                    attributes |= NtfsFileAttributes.ReadOnly;
                 }
-                else if (trimmed.Equals(nameof(Hidden), StringComparison.InvariantCultureIgnoreCase))
+                else if (trimmed.Equals(nameof(NtfsFileAttributes.Hidden), StringComparison.InvariantCultureIgnoreCase))
                 {
-                    attributes.Hidden = true;
+                    attributes |= NtfsFileAttributes.Hidden;
                 }
-                else if (trimmed.Equals(nameof(System), StringComparison.InvariantCultureIgnoreCase))
+                else if (trimmed.Equals(nameof(NtfsFileAttributes.System), StringComparison.InvariantCultureIgnoreCase))
                 {
-                    attributes.System = true;
+                    attributes |= NtfsFileAttributes.System;
                 }
-                else if (trimmed.Equals(nameof(Normal), StringComparison.InvariantCultureIgnoreCase))
+                else if (trimmed.Equals(nameof(NtfsFileAttributes.None), StringComparison.InvariantCultureIgnoreCase))
                 {
-                    attributes.Normal = true;
+                    attributes |= NtfsFileAttributes.None;
                 }
-                else if (trimmed.Equals(nameof(Directory), StringComparison.InvariantCultureIgnoreCase))
+                else if (trimmed.Equals(nameof(NtfsFileAttributes.Directory), StringComparison.InvariantCultureIgnoreCase))
                 {
-                    attributes.Directory = true;
+                    attributes |= NtfsFileAttributes.Directory;
                 }
-                else if (trimmed.Equals(nameof(Archive), StringComparison.InvariantCultureIgnoreCase))
+                else if (trimmed.Equals(nameof(NtfsFileAttributes.Archive), StringComparison.InvariantCultureIgnoreCase))
                 {
-                    attributes.Archive = true;
+                    attributes |= NtfsFileAttributes.Archive;
                 }
-                else if (trimmed.Equals(nameof(Temporary), StringComparison.InvariantCultureIgnoreCase))
+                else if (trimmed.Equals(nameof(NtfsFileAttributes.Temporary), StringComparison.InvariantCultureIgnoreCase))
                 {
-                    attributes.Temporary = true;
+                    attributes |= NtfsFileAttributes.Temporary;
                 }
-                else if (trimmed.Equals(nameof(Offline), StringComparison.InvariantCultureIgnoreCase))
+                else if (trimmed.Equals(nameof(NtfsFileAttributes.Offline), StringComparison.InvariantCultureIgnoreCase))
                 {
-                    attributes.Offline = true;
+                    attributes |= NtfsFileAttributes.Offline;
                 }
-                else if (trimmed.Equals(nameof(NotContentIndexed), StringComparison.InvariantCultureIgnoreCase))
+                else if (trimmed.Equals(nameof(NtfsFileAttributes.NotContentIndexed), StringComparison.InvariantCultureIgnoreCase))
                 {
-                    attributes.NotContentIndexed = true;
+                    attributes |= NtfsFileAttributes.NotContentIndexed;
                 }
-                else if (trimmed.Equals(nameof(NoScrubData), StringComparison.InvariantCultureIgnoreCase))
+                else if (trimmed.Equals(nameof(NtfsFileAttributes.NoScrubData), StringComparison.InvariantCultureIgnoreCase))
                 {
-                    attributes.NoScrubData = true;
+                    attributes |= NtfsFileAttributes.NoScrubData;
                 }
                 else
                 {
@@ -264,21 +216,5 @@ namespace Azure.Storage.Files.Models
             }
             return attributes;
         }
-
-        /// <summary>
-        /// Check if two FileNtfsAttributes instances are equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(NtfsFileAttributes left, NtfsFileAttributes right) => left.Equals(right);
-
-        /// <summary>
-        /// Check if two FileNtfsAttributes instances are not equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(NtfsFileAttributes left, NtfsFileAttributes right) => !(left == right);
     }
 }
