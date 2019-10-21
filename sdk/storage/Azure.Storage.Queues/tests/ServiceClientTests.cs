@@ -190,7 +190,6 @@ namespace Azure.Storage.Queues.Test
                 IList<QueueItem> queues = await EnsurePropagatedAsync(
                     async () => await service.GetQueuesAsync().ToListAsync(),
                     queues => queues.Count > 0);
-                Assert.AreEqual(1, queues.Count);
             }
             return testExceptionPolicy;
         }
