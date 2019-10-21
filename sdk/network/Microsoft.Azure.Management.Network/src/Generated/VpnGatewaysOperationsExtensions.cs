@@ -343,52 +343,6 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Updates virtual wan vpn gateway tags.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name of the VpnGateway.
-            /// </param>
-            /// <param name='gatewayName'>
-            /// The name of the gateway.
-            /// </param>
-            /// <param name='vpnGatewayParameters'>
-            /// Parameters supplied to update a virtual wan vpn gateway tags.
-            /// </param>
-            public static VpnGateway BeginUpdateTags(this IVpnGatewaysOperations operations, string resourceGroupName, string gatewayName, TagsObject vpnGatewayParameters)
-            {
-                return operations.BeginUpdateTagsAsync(resourceGroupName, gatewayName, vpnGatewayParameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates virtual wan vpn gateway tags.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name of the VpnGateway.
-            /// </param>
-            /// <param name='gatewayName'>
-            /// The name of the gateway.
-            /// </param>
-            /// <param name='vpnGatewayParameters'>
-            /// Parameters supplied to update a virtual wan vpn gateway tags.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<VpnGateway> BeginUpdateTagsAsync(this IVpnGatewaysOperations operations, string resourceGroupName, string gatewayName, TagsObject vpnGatewayParameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.BeginUpdateTagsWithHttpMessagesAsync(resourceGroupName, gatewayName, vpnGatewayParameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Deletes a virtual wan vpn gateway.
             /// </summary>
             /// <param name='operations'>

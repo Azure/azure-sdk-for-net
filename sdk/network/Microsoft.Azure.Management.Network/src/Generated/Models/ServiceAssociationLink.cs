@@ -116,10 +116,10 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Etag { get; private set; }
 
         /// <summary>
-        /// Gets or sets resource type.
+        /// Gets resource type.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
+        public string Type { get; private set; }
 
     }
 }
