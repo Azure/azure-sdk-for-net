@@ -9,7 +9,7 @@ namespace Azure.Messaging.EventHubs
 {
     /// <summary>
     ///   The position of events in an Event Hub partition, typically used in the creation of
-    ///   an <see cref="EventHubProducer" />.
+    ///   an <see cref="EventHubConsumerClient" />.
     /// </summary>
     ///
     public sealed class EventPosition
@@ -30,7 +30,7 @@ namespace Azure.Messaging.EventHubs
 
         /// <summary>
         ///   Corresponds to the end of the partition, where no more events are currently enqueued.  Use this
-        ///   position to begin receiving from the next event to be enqueued in the partition after an <see cref="EventHubConsumer"/>
+        ///   position to begin receiving from the next event to be enqueued in the partition after an <see cref="EventHubConsumerClient"/>
         ///   is created with this position.
         /// </summary>
         ///
