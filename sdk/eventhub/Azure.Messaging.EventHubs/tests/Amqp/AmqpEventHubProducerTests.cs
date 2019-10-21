@@ -7,11 +7,9 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Messaging.EventHubs.Amqp;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Errors;
-using Azure.Messaging.EventHubs.Metadata;
 using Microsoft.Azure.Amqp;
 using Moq;
 using Moq.Protected;
@@ -33,8 +31,8 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         public static IEnumerable<object[]> RetryOptionTestCases()
         {
-            yield return new object[] { new RetryOptions { MaximumRetries = 3, Delay = TimeSpan.FromMilliseconds(1), MaximumDelay = TimeSpan.FromMilliseconds(10), Mode = RetryMode.Fixed }};
-            yield return new object[] { new RetryOptions { MaximumRetries = 0, Delay = TimeSpan.FromMilliseconds(1), MaximumDelay = TimeSpan.FromMilliseconds(10), Mode = RetryMode.Fixed }};
+            yield return new object[] { new RetryOptions { MaximumRetries = 3, Delay = TimeSpan.FromMilliseconds(1), MaximumDelay = TimeSpan.FromMilliseconds(10), Mode = RetryMode.Fixed } };
+            yield return new object[] { new RetryOptions { MaximumRetries = 0, Delay = TimeSpan.FromMilliseconds(1), MaximumDelay = TimeSpan.FromMilliseconds(10), Mode = RetryMode.Fixed } };
         }
 
         /// <summary>
@@ -396,7 +394,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     ItExpr.IsAny<Func<AmqpMessage>>(),
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<CancellationToken>())
-                .Callback<Func<AmqpMessage>, string, CancellationToken>( (factory, key, token) => messageFactory = factory)
+                .Callback<Func<AmqpMessage>, string, CancellationToken>((factory, key, token) => messageFactory = factory)
                 .Returns(Task.CompletedTask);
 
             await producer.Object.SendAsync(events, new SendOptions { PartitionKey = partitonKey }, CancellationToken.None);
@@ -582,7 +580,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     ItExpr.IsAny<Func<AmqpMessage>>(),
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<CancellationToken>())
-                .Callback<Func<AmqpMessage>, string, CancellationToken>( (factory, key, token) => messageFactory = factory)
+                .Callback<Func<AmqpMessage>, string, CancellationToken>((factory, key, token) => messageFactory = factory)
                 .Returns(Task.CompletedTask);
 
             using TransportEventBatch transportBatch = await producer.Object.CreateBatchAsync(options, default);

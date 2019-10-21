@@ -20,17 +20,17 @@ namespace Azure.Identity
         /// <summary>
         /// Gets the Azure Active Directory tenant (directory) Id of the service principal
         /// </summary>
-        public string TenantId { get; }
+        internal string TenantId { get; }
 
         /// <summary>
         /// Gets the client (application) ID of the service principal
         /// </summary>
-        public string ClientId { get; }
+        internal string ClientId { get; }
 
         /// <summary>
         /// Gets the client secret that was generated for the App Registration used to authenticate the client.
         /// </summary>
-        public string ClientSecret { get; }
+        internal string ClientSecret { get; }
 
         /// <summary>
         /// Creates an instance of the ClientSecretCredential with the details needed to authenticate against Azure Active Directory with a client secret.
@@ -50,7 +50,7 @@ namespace Azure.Identity
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientSecret">A client secret that was generated for the App Registration used to authenticate the client.</param>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
-        public ClientSecretCredential(string tenantId, string clientId, string clientSecret, AzureCredentialOptions options)
+        public ClientSecretCredential(string tenantId, string clientId, string clientSecret, TokenCredentialOptions options)
         {
             TenantId = tenantId;
             ClientId = clientId;

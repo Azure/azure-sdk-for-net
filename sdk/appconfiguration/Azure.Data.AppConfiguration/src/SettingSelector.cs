@@ -22,12 +22,12 @@ namespace Azure.Data.AppConfiguration
         /// Keys that will be used to filter.
         /// </summary>
         /// <remarks>See the documentation for this client library for details on the format of filter expressions.</remarks>
-        public IList<string> Keys { get; set; }
+        public IList<string> Keys { get; }
         /// <summary>
         /// Labels that will be used to filter.
         /// </summary>
         /// <remarks>See the documentation for this client library for details on the format of filter expressions.</remarks>
-        public IList<string> Labels { get; set; }
+        public IList<string> Labels { get; }
         /// <summary>
         /// Allows requesting a specific set of fields.
         /// </summary>

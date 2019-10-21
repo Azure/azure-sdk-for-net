@@ -166,6 +166,7 @@ directive:
     $.put.responses["201"].description = "Success";
     $.put.responses["201"]["x-az-response-name"] = "ShareInfo";
     $.get.responses["200"]["x-az-response-name"] = "ShareProperties";
+    $.get.responses["200"].headers["x-ms-share-quota"]["x-ms-client-name"] = "QuotaInGB";
 ```
 
 ### /{shareName}?restype=share&comp=snapshot
@@ -437,6 +438,7 @@ directive:
     $.head.responses["200"].headers["Content-Language"].collectionFormat = "csv";
     $.head.responses["200"].headers["Content-Language"].items = { "type": "string" };
     $.head.responses["200"].headers["x-ms-copy-status"]["x-ms-enum"].name = "CopyStatus";
+    delete $.head.responses["200"].headers["x-ms-type"];
     $.head.responses["200"]["x-az-response-name"] = "RawStorageFileProperties";
     $.head.responses["200"]["x-az-public"] = false;
     $.head.responses.default = {
@@ -624,6 +626,18 @@ directive:
     }
 ```
 
+### ShareItemProperties properties renaming
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.ShareItemProperties
+  transform: >
+    $.properties.QuotaInGB = $.properties.Quota;
+    $.properties.QuotaInGB.xml = { "name": "Quota"};
+    delete $.properties.Quota;
+```
+
+
 ### FilePermission
 ``` yaml
 directive:
@@ -684,6 +698,8 @@ directive:
     $.CorsRule["x-ms-client-name"] = "FileCorsRule";
     $.CorsRule.xml = { "name": "CorsRule"};
     $.FileServiceProperties.properties.Cors.xml.name = "Cors";
+    $.RetentionPolicy["x-ms-client-name"] = "FileRetentionPolicy";
+    $.RetentionPolicy.xml = { "name": "RetentionPolicy"};
 ```
 
 ### Access Policy properties renaming
@@ -704,4 +720,23 @@ directive:
     $.properties.Permissions.xml = { "name": "Permission"};
     delete $.properties.Permission;
     $.required = ["StartsOn", "ExpiresOn", "Permissions"];
+```
+
+### ShareQuota properties renaming
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.ShareQuota
+  transform: >
+    $["x-ms-client-name"] = "quotaInGB";
+```
+
+### SignedIdentifier
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.SignedIdentifier
+  transform: >
+    $["x-ms-client-name"] = "FileSignedIdentifier";
+    $.xml = {"name": "SignedIdentifier"};
 ```

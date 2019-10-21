@@ -30,8 +30,8 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         public static IEnumerable<object[]> RetryOptionTestCases()
         {
-            yield return new object[] { new RetryOptions { MaximumRetries = 3, Delay = TimeSpan.FromMilliseconds(1), MaximumDelay = TimeSpan.FromMilliseconds(10), Mode = RetryMode.Fixed }};
-            yield return new object[] { new RetryOptions { MaximumRetries = 0, Delay = TimeSpan.FromMilliseconds(1), MaximumDelay = TimeSpan.FromMilliseconds(10), Mode = RetryMode.Fixed }};
+            yield return new object[] { new RetryOptions { MaximumRetries = 3, Delay = TimeSpan.FromMilliseconds(1), MaximumDelay = TimeSpan.FromMilliseconds(10), Mode = RetryMode.Fixed } };
+            yield return new object[] { new RetryOptions { MaximumRetries = 0, Delay = TimeSpan.FromMilliseconds(1), MaximumDelay = TimeSpan.FromMilliseconds(10), Mode = RetryMode.Fixed } };
         }
 
         /// <summary>
@@ -273,15 +273,15 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(credential => credential.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.Is<CancellationToken>(value => value == cancellationSource.Token)))
                 .Returns(Task.FromResult(new AccessToken(tokenValue, DateTimeOffset.MaxValue)));
 
-             mockScope
-                .Setup(scope => scope.OpenConsumerLinkAsync(
-                    It.IsAny<string>(),
-                    It.IsAny<string>(),
-                    It.IsAny<EventPosition>(),
-                    It.IsAny<EventHubConsumerOptions>(),
-                    It.IsAny<TimeSpan>(),
-                    It.IsAny<CancellationToken>()))
-                .Throws(retriableException);
+            mockScope
+               .Setup(scope => scope.OpenConsumerLinkAsync(
+                   It.IsAny<string>(),
+                   It.IsAny<string>(),
+                   It.IsAny<EventPosition>(),
+                   It.IsAny<EventHubConsumerOptions>(),
+                   It.IsAny<TimeSpan>(),
+                   It.IsAny<CancellationToken>()))
+               .Throws(retriableException);
 
             var consumer = new AmqpEventHubConsumer(eventHub, consumerGroup, partition, eventPosition, options, mockScope.Object, Mock.Of<AmqpMessageConverter>(), retryPolicy, null);
             Assert.That(async () => await consumer.ReceiveAsync(100, null, cancellationSource.Token), Throws.InstanceOf(retriableException.GetType()));

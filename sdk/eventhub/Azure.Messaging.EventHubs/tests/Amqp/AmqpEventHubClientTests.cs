@@ -31,8 +31,8 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         public static IEnumerable<object[]> RetryOptionTestCases()
         {
-            yield return new object[] { new RetryOptions { MaximumRetries = 3, Delay = TimeSpan.FromMilliseconds(1), MaximumDelay = TimeSpan.FromMilliseconds(10), Mode = RetryMode.Fixed }};
-            yield return new object[] { new RetryOptions { MaximumRetries = 0, Delay = TimeSpan.FromMilliseconds(1), MaximumDelay = TimeSpan.FromMilliseconds(10), Mode = RetryMode.Fixed }};
+            yield return new object[] { new RetryOptions { MaximumRetries = 3, Delay = TimeSpan.FromMilliseconds(1), MaximumDelay = TimeSpan.FromMilliseconds(10), Mode = RetryMode.Fixed } };
+            yield return new object[] { new RetryOptions { MaximumRetries = 0, Delay = TimeSpan.FromMilliseconds(1), MaximumDelay = TimeSpan.FromMilliseconds(10), Mode = RetryMode.Fixed } };
         }
 
         /// <summary>
@@ -402,9 +402,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(converter => converter.CreatePartitionPropertiesRequest(It.Is<string>(value => value == eventHubName), It.Is<string>(value => value == partitionId), It.Is<string>(value => value == tokenValue)))
                 .Returns(default(AmqpMessage));
 
-             mockScope
-                .Setup(scope => scope.OpenManagementLinkAsync(It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
-                .Throws(retriableException);
+            mockScope
+               .Setup(scope => scope.OpenManagementLinkAsync(It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+               .Throws(retriableException);
 
             var client = new InjectableMockClient("my.eventhub.com", eventHubName, mockCredential.Object, new EventHubClientOptions(), retryPolicy, mockScope.Object, mockConverter.Object);
             Assert.That(async () => await client.GetPartitionPropertiesAsync(partitionId, cancellationSource.Token), Throws.InstanceOf(retriableException.GetType()));

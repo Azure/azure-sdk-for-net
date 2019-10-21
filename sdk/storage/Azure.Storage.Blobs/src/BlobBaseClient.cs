@@ -410,7 +410,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// the blob's data.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
 #pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
@@ -430,7 +430,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// the blob's data.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
 #pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
@@ -454,7 +454,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// the blob's data.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<BlobDownloadInfo> Download(
@@ -480,7 +480,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// the blob's data.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
 #pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
@@ -512,7 +512,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// the service returns the MD5 hash for the range, as long as the
         /// range is less than or equal to 4 MB in size.  If this value is
         /// specified without <paramref name="range"/> or set to true when the
-        /// range exceeds 4 MB in size, a <see cref="StorageRequestFailedException"/>
+        /// range exceeds 4 MB in size, a <see cref="RequestFailedException"/>
         /// is thrown.
         /// </param>
         /// <param name="cancellationToken">
@@ -525,7 +525,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// the blob's data.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<BlobDownloadInfo> Download(
@@ -561,7 +561,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// the service returns the MD5 hash for the range, as long as the
         /// range is less than or equal to 4 MB in size.  If this value is
         /// specified without <paramref name="range"/> or set to true when the
-        /// range exceeds 4 MB in size, a <see cref="StorageRequestFailedException"/>
+        /// range exceeds 4 MB in size, a <see cref="RequestFailedException"/>
         /// is thrown.
         /// </param>
         /// <param name="cancellationToken">
@@ -574,7 +574,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// the blob's data.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<BlobDownloadInfo>> DownloadAsync(
@@ -609,7 +609,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// the service returns the MD5 hash for the range, as long as the
         /// range is less than or equal to 4 MB in size.  If this value is
         /// specified without <paramref name="range"/> or set to true when the
-        /// range exceeds 4 MB in size, a <see cref="StorageRequestFailedException"/>
+        /// range exceeds 4 MB in size, a <see cref="RequestFailedException"/>
         /// is thrown.
         /// </param>
         /// <param name="async">
@@ -625,7 +625,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// the blob's data.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<BlobDownloadInfo>> DownloadInternal(
@@ -710,7 +710,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// the service returns the MD5 hash for the range, as long as the
         /// range is less than or equal to 4 MB in size.  If this value is
         /// specified without <paramref name="range"/> or set to true when the
-        /// range exceeds 4 MB in size, a <see cref="StorageRequestFailedException"/>
+        /// range exceeds 4 MB in size, a <see cref="RequestFailedException"/>
         /// is thrown.
         /// </param>
         /// <param name="startOffset">
@@ -729,7 +729,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// the blob's data.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<(Response<FlattenedDownloadProperties>, Stream)> StartDownloadAsync(
@@ -789,7 +789,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// blob's properties.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
 #pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
@@ -809,7 +809,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// blob's properties.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
 #pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
@@ -829,7 +829,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// blob's properties.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
 #pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
@@ -849,7 +849,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// blob's properties.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
 #pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
@@ -874,7 +874,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// blob's properties.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
 #pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
@@ -904,7 +904,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// blob's properties.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
 #pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
@@ -934,7 +934,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// blob's properties.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
 #pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
@@ -964,7 +964,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// blob's properties.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
 #pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
@@ -1002,17 +1002,17 @@ namespace Azure.Storage.Blobs.Specialized
         /// blob's properties.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<BlobProperties> Download(
             Stream destination,
             BlobAccessConditions? accessConditions = default,
             ///// <param name="progressHandler">
-            ///// Optional <see cref="IProgress{StorageProgress}"/> to provide
+            ///// Optional <see cref="IProgress{Long}"/> to provide
             ///// progress updates about data transfers.
             ///// </param>
-            //IProgress<StorageProgress> progressHandler = default,
+            //IProgress<long> progressHandler = default,
             StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default) =>
             StagedDownloadAsync(
@@ -1049,17 +1049,17 @@ namespace Azure.Storage.Blobs.Specialized
         /// blob's properties.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<BlobProperties> Download(
             FileInfo destination,
             BlobAccessConditions? accessConditions = default,
             ///// <param name="progressHandler">
-            ///// Optional <see cref="IProgress{StorageProgress}"/> to provide
+            ///// Optional <see cref="IProgress{Long}"/> to provide
             ///// progress updates about data transfers.
             ///// </param>
-            //IProgress<StorageProgress> progressHandler = default,
+            //IProgress<long> progressHandler = default,
             StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default) =>
             StagedDownloadAsync(
@@ -1096,17 +1096,17 @@ namespace Azure.Storage.Blobs.Specialized
         /// blob's properties.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Task<Response<BlobProperties>> DownloadAsync(
             Stream destination,
             BlobAccessConditions? accessConditions = default,
             ///// <param name="progressHandler">
-            ///// Optional <see cref="IProgress{StorageProgress}"/> to provide
+            ///// Optional <see cref="IProgress{Long}"/> to provide
             ///// progress updates about data transfers.
             ///// </param>
-            //IProgress<StorageProgress> progressHandler = default,
+            //IProgress<long> progressHandler = default,
             StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default) =>
             StagedDownloadAsync(
@@ -1142,17 +1142,17 @@ namespace Azure.Storage.Blobs.Specialized
         /// blob's properties.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Task<Response<BlobProperties>> DownloadAsync(
             FileInfo destination,
             BlobAccessConditions? accessConditions = default,
             ///// <param name="progressHandler">
-            ///// Optional <see cref="IProgress{StorageProgress}"/> to provide
+            ///// Optional <see cref="IProgress{Long}"/> to provide
             ///// progress updates about data transfers.
             ///// </param>
-            //IProgress<StorageProgress> progressHandler = default,
+            //IProgress<long> progressHandler = default,
             StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default) =>
             StagedDownloadAsync(
@@ -1195,17 +1195,17 @@ namespace Azure.Storage.Blobs.Specialized
         /// blob's properties.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         internal Task<Response<BlobProperties>> StagedDownloadAsync(
             Stream destination,
             BlobAccessConditions? blobAccessConditions = default,
             ///// <param name="progressHandler">
-            ///// Optional <see cref="IProgress{StorageProgress}"/> to provide
+            ///// Optional <see cref="IProgress{Long}"/> to provide
             ///// progress updates about data transfers.
             ///// </param>
-            //IProgress<StorageProgress> progressHandler,
+            //IProgress<long> progressHandler,
             long singleBlockThreshold = Constants.Blob.Block.MaxDownloadBytes,
             StorageTransferOptions transferOptions = default,
             bool async = true,
@@ -1313,17 +1313,17 @@ namespace Azure.Storage.Blobs.Specialized
         /// blob's properties.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         internal Task<Response<BlobProperties>> StagedDownloadAsync(
             FileInfo destination,
             BlobAccessConditions? accessConditions = default,
             ///// <param name="progressHandler">
-            ///// Optional <see cref="IProgress{StorageProgress}"/> to provide
+            ///// Optional <see cref="IProgress{Long}"/> to provide
             ///// progress updates about data transfers.
             ///// </param>
-            //IProgress<StorageProgress> progressHandler,
+            //IProgress<long> progressHandler,
             long singleBlockThreshold = Constants.Blob.Block.MaxDownloadBytes,
             StorageTransferOptions transferOptions = default,
             bool async = true,
@@ -1407,7 +1407,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// state of the copy operation.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual CopyFromUriOperation StartCopyFromUri(
@@ -1488,7 +1488,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// state of the copy operation.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<CopyFromUriOperation> StartCopyFromUriAsync(
@@ -1572,7 +1572,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// state of the copy operation.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<BlobCopyInfo>> StartCopyFromUriInternal(
@@ -1654,7 +1654,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Response"/> on successfully aborting.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response AbortCopyFromUri(
@@ -1690,7 +1690,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Response"/> on successfully aborting.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response> AbortCopyFromUriAsync(
@@ -1729,7 +1729,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Response"/> on successfully aborting.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response> AbortCopyFromUriInternal(
@@ -1799,7 +1799,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Response"/> on successfully deleting.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response Delete(
@@ -1839,7 +1839,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Response"/> on successfully deleting.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response> DeleteAsync(
@@ -1879,7 +1879,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Response"/> on successfully deleting.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<bool> DeleteIfExists(
@@ -1919,7 +1919,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Response"/> on successfully deleting.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<bool>> DeleteIfExistsAsync(
@@ -1962,7 +1962,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Response"/> on successfully deleting.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<bool>> DeleteIfExistsInternal(
@@ -1982,7 +1982,7 @@ namespace Azure.Storage.Blobs.Specialized
                     .ConfigureAwait(false);
                 return Response.FromValue(true, response);
             }
-            catch (StorageRequestFailedException storageRequestFailedException)
+            catch (RequestFailedException storageRequestFailedException)
             when (storageRequestFailedException.ErrorCode == Constants.Blob.NotFound)
             {
                 return Response.FromValue(false, default);
@@ -2021,7 +2021,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Response"/> on successfully deleting.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response> DeleteInternal(
@@ -2085,7 +2085,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Response"/> on successfully deleting.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response Undelete(
@@ -2110,7 +2110,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Response"/> on successfully deleting.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response> UndeleteAsync(
@@ -2138,7 +2138,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Response"/> on successfully deleting.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response> UndeleteInternal(
@@ -2194,7 +2194,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// blob's properties.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<BlobProperties> GetProperties(
@@ -2227,7 +2227,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// blob's properties.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<BlobProperties>> GetPropertiesAsync(
@@ -2263,7 +2263,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// blob's properties.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<BlobProperties>> GetPropertiesInternal(
@@ -2335,7 +2335,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<BlobInfo> SetHttpHeaders(
@@ -2371,7 +2371,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<BlobInfo>> SetHttpHeadersAsync(
@@ -2410,7 +2410,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<BlobInfo>> SetHttpHeadersInternal(
@@ -2495,7 +2495,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<BlobInfo> SetMetadata(
@@ -2531,7 +2531,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<BlobInfo>> SetMetadataAsync(
@@ -2570,7 +2570,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<BlobInfo>> SetMetadataInternal(
@@ -2651,7 +2651,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// new blob snapshot.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<BlobSnapshotInfo> CreateSnapshot(
@@ -2687,7 +2687,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// new blob snapshot.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<BlobSnapshotInfo>> CreateSnapshotAsync(
@@ -2726,7 +2726,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// new blob snapshot.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<BlobSnapshotInfo>> CreateSnapshotInternal(
@@ -2812,7 +2812,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Response"/> on successfully setting the tier.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response SetAccessTier(
@@ -2862,7 +2862,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Response"/> on successfully setting the tier.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response> SetAccessTierAsync(
@@ -2915,7 +2915,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Response"/> on successfully setting the tier.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response> SetAccessTierInternal(

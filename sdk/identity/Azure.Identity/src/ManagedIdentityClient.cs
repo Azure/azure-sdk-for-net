@@ -33,7 +33,7 @@ namespace Azure.Identity
         private static MsiType s_msiType;
         private static Uri s_endpoint;
 
-        private readonly AzureCredentialOptions _options;
+        private readonly TokenCredentialOptions _options;
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
 
@@ -41,9 +41,9 @@ namespace Azure.Identity
         {
         }
 
-        public ManagedIdentityClient(AzureCredentialOptions options = null)
+        public ManagedIdentityClient(TokenCredentialOptions options = null)
         {
-            _options = options ?? new AzureCredentialOptions();
+            _options = options ?? new TokenCredentialOptions();
 
             _pipeline = HttpPipelineBuilder.Build(_options);
             _clientDiagnostics = new ClientDiagnostics(_options);

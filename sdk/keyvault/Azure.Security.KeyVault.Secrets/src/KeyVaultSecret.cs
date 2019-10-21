@@ -21,7 +21,7 @@ namespace Azure.Security.KeyVault.Secrets
         }
 
         /// <summary>
-        /// Initializes a new instance of the Secret class.
+        /// Initializes a new instance of the <see cref="KeyVaultSecret"/> class.
         /// </summary>
         /// <param name="name">The name of the secret.</param>
         /// <param name="value">The value of the secret.</param>

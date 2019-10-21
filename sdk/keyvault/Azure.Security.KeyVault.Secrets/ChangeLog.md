@@ -10,6 +10,8 @@
 - On `DeletedSecret`, `DeletedDate` has been renamed to `DeletedOn`.
 - `SecretClient.GetSecrets` and `SecretClient.GetSecretVersions` have been renamed to `SecretClient.GetPropertiesOfSecrets` and `SecretClient.GetPropertiesOfSecretVersions` respectively.
 - `SecretClient.RestoreSecret` has been renamed to `SecretClient.RestoreSecretBackup` to better associate it with `SecretClient.BackupSecret`.
+- `SecretClient.DeleteSecret` has been renamed to `SecretClient.StartDeleteSecret` and now returns a `DeleteSecretOperation` to track this long-running operation.
+- `SecretClient.RecoverDeletedSecret` has been renamed to `SecretClient.StartRecoverDeletedSecret` and now returns a `RecoverDeletedSecretOperation` to track this long-running operation.
 
 ### Major changes
 

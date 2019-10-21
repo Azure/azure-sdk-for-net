@@ -21,7 +21,8 @@ namespace Azure.Core
         /// </summary>
         public virtual bool IsRetriableException(Exception exception)
         {
-            return (exception is IOException);
+            return (exception is IOException) ||
+                   (exception is RequestFailedException requestFailed && requestFailed.Status == 0);
         }
 
         /// <summary>

@@ -15,6 +15,8 @@
 - On `DeletedKey`, `DeletedDate` has been renamed to `DeletedOn`.
 - `KeyClient.GetKeys` and `KeyClient.GetKeyVersions` have been renamed to `KeyClient.GetPropertiesOfKeys` and `KeyClient.GetPropertiesOfKeyVersions` respectively.
 - `KeyClient.RestoreKey` has been renamed to `KeyClient.RestoreKeyBackup` to better associate it with `KeyClient.BackupKey`.
+- `KeyClient.DeleteKey` has been renamed to `KeyClient.StartDeleteKey` and now returns a `DeleteKeyOperation` to track this long-running operation.
+- `KeyClient.RecoverDeletedKey` has been renamed to `KeyClient.StartRecoverDeletedKey` and now returns a `RecoverDeletedKeyOperation` to track this long-running operation.
 - `KeyCreateOptions` has been renamed to `CreateKeyOptions`.
 - `EcCreateKeyOptions` has been renamed to `CreateEcKeyOptions`.
 - `CreateEcKeyOptions.Curve` has been renamed to `CurveName` to be consistent.

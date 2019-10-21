@@ -181,9 +181,7 @@ namespace Azure.Storage.Blobs.Test
                     {
                         File.WriteAllBytes(path, data);
 
-                        var file = new FileInfo(path);
-
-                        await blob.UploadAsync(file);
+                        await blob.UploadAsync(path);
                     }
                     finally
                     {
@@ -221,9 +219,7 @@ namespace Azure.Storage.Blobs.Test
                     {
                         File.WriteAllBytes(path, data);
 
-                        var file = new FileInfo(path);
-
-                        await blob.UploadAsync(file);
+                        await blob.UploadAsync(path);
                     }
                     finally
                     {
@@ -260,11 +256,9 @@ namespace Azure.Storage.Blobs.Test
                     {
                         File.WriteAllBytes(path, data);
 
-                        var file = new FileInfo(path);
-
                         var options = new StorageTransferOptions { MaximumConcurrency = maximumThreadCount };
 
-                        await Verify(blob.UploadAsync(file, transferOptions: options));
+                        await Verify(blob.UploadAsync(path, transferOptions: options));
 
                         async Task Verify(Task<Response<BlobContentInfo>> upload)
                         {
@@ -310,10 +304,8 @@ namespace Azure.Storage.Blobs.Test
                     {
                         File.WriteAllBytes(path, data);
 
-                        var file = new FileInfo(path);
-
                         await blob.UploadAsync(
-                            file,
+                            path,
                             accessTier: AccessTier.Cool);
                     }
                     finally
@@ -347,18 +339,15 @@ namespace Azure.Storage.Blobs.Test
                     {
                         File.WriteAllBytes(path, data);
 
-                        var file = new FileInfo(path);
-
                         var options = new StorageTransferOptions { MaximumConcurrency = maximumThreadCount };
 
                         // Assert
-                        await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                        await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                             blob.UploadAsync(
-                            file,
+                            path,
                             transferOptions: options,
                             accessTier: AccessTier.P10),
                             e => Assert.AreEqual(BlobErrorCode.InvalidHeaderValue.ToString(), e.ErrorCode));
-
                     }
                     finally
                     {
@@ -386,11 +375,9 @@ namespace Azure.Storage.Blobs.Test
                 {
                     File.WriteAllBytes(path, data);
 
-                    var file = new FileInfo(path);
-
-                    await Verify(blob.UploadAsync(file));
-                    await Verify(blob.UploadAsync(file, CancellationToken.None));
-                    await Verify(blob.UploadAsync(file, metadata: default));
+                    await Verify(blob.UploadAsync(path));
+                    await Verify(blob.UploadAsync(path, CancellationToken.None));
+                    await Verify(blob.UploadAsync(path, metadata: default));
 
                     async Task Verify(Task<Response<BlobContentInfo>> upload)
                     {
@@ -483,7 +470,7 @@ namespace Azure.Storage.Blobs.Test
                     using (var stream = new MemoryStream(data))
                     {
                         await blob.StagedUploadAsync(
-                            file: new FileInfo(path),
+                            path: path,
                             blobHttpHeaders: default,
                             metadata: default,
                             blobAccessConditions: default,

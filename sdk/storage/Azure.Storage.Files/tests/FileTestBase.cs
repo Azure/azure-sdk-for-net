@@ -123,44 +123,53 @@ namespace Azure.Storage.Files.Tests
                 TestConfigDefault.AccountKey);
 
         public SasQueryParameters GetNewAccountSasCredentials(StorageSharedKeyCredential sharedKeyCredentials = default)
-            => new AccountSasBuilder
+        {
+            var builder = new AccountSasBuilder
             {
                 Protocol = SasProtocol.None,
                 Services = AccountSasServices.Files,
                 ResourceTypes = AccountSasResourceTypes.Container,
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
-                Permissions = new FileAccountSasPermissions { Create = true, Delete = true }.ToString(),
                 IPRange = new SasIPRange(IPAddress.None, IPAddress.None)
-            }.ToSasQueryParameters(sharedKeyCredentials);
+            };
+            builder.SetPermissions(AccountSasPermissions.Create | AccountSasPermissions.Delete);
+            return builder.ToSasQueryParameters(sharedKeyCredentials);
+        }
 
         public SasQueryParameters GetNewFileServiceSasCredentialsShare(string shareName, StorageSharedKeyCredential sharedKeyCredentials = default)
-            => new FileSasBuilder
+        {
+            var builder = new FileSasBuilder
             {
                 ShareName = shareName,
                 Protocol = SasProtocol.None,
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
-                Permissions = new ShareSasPermissions { Read = true, Write = true, List = true, Create = true, Delete = true }.ToString(),
                 IPRange = new SasIPRange(IPAddress.None, IPAddress.None)
-            }.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
+            };
+            builder.SetPermissions(ShareSasPermissions.All);
+            return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
+        }
 
         public SasQueryParameters GetNewFileServiceSasCredentialsFile(string shareName, string filePath, StorageSharedKeyCredential sharedKeyCredentials = default)
-            => new FileSasBuilder
+        {
+            var builder = new FileSasBuilder
             {
                 ShareName = shareName,
                 FilePath = filePath,
                 Protocol = SasProtocol.None,
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
-                Permissions = new FileSasPermissions { Read = true, Write = true, Create = true, Delete = true }.ToString(),
                 IPRange = new SasIPRange(IPAddress.None, IPAddress.None)
-            }.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
+            };
+            builder.SetPermissions(FileSasPermissions.All);
+            return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
+        }
 
-        public SignedIdentifier[] BuildSignedIdentifiers() =>
+        public FileSignedIdentifier[] BuildSignedIdentifiers() =>
             new[]
             {
-                new SignedIdentifier
+                new FileSignedIdentifier
                 {
                     Id = GetNewString(),
                     AccessPolicy =
@@ -218,7 +227,7 @@ namespace Azure.Storage.Files.Tests
 
             public DisposingShare(ShareClient share, IDictionary<string, string> metadata)
             {
-                share.CreateAsync(metadata: metadata, quotaInBytes: 1).Wait();
+                share.CreateAsync(metadata: metadata, quotaInGB: 1).Wait();
 
                 ShareClient = share;
             }

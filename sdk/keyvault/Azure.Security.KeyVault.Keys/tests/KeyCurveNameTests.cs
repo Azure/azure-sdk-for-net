@@ -39,7 +39,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public void FindsOidValue(string oidValue, string expectedName)
         {
             Oid oid = new Oid(oidValue);
-            ref readonly KeyCurveName actual = ref KeyCurveName.FromOid(oid, 0);
+            KeyCurveName actual = KeyCurveName.FromOid(oid, 0);
 
             Assert.AreEqual(expectedName, actual.ToString());
         }
@@ -61,7 +61,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public void FindsOidFriendName(string oidFriendlyName, int keySize, string expectedName)
         {
             Oid oid = new Oid(null, oidFriendlyName);
-            ref readonly KeyCurveName actual = ref KeyCurveName.FromOid(oid, keySize);
+            KeyCurveName actual = KeyCurveName.FromOid(oid, keySize);
 
             Assert.AreEqual(expectedName, actual.ToString());
         }

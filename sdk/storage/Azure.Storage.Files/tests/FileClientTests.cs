@@ -276,7 +276,7 @@ namespace Azure.Storage.Files.Test
                 FileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     file.CreateAsync(maxSize: Constants.KB),
                     e => Assert.AreEqual("ParentNotFound", e.ErrorCode.Split('\n')[0]));
             }
@@ -309,7 +309,7 @@ namespace Azure.Storage.Files.Test
                 IDictionary<string, string> metadata = BuildMetadata();
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     file.SetMetadataAsync(metadata),
                     e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
             }
@@ -390,7 +390,7 @@ namespace Azure.Storage.Files.Test
                 FileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     file.GetPropertiesAsync(),
                     e =>
                     {
@@ -544,7 +544,7 @@ namespace Azure.Storage.Files.Test
                 FileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     file.SetHttpHeadersAsync(
                         httpHeaders: new FileHttpHeaders
                         {
@@ -581,7 +581,7 @@ namespace Azure.Storage.Files.Test
                 FileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     file.DeleteAsync(),
                     e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
             }
@@ -651,7 +651,7 @@ namespace Azure.Storage.Files.Test
             using (GetNewFile(out FileClient file))
             {
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     file.StartCopyAsync(sourceUri: s_invalidUri),
                     e => Assert.AreEqual("CannotVerifyCopySource", e.ErrorCode.Split('\n')[0]));
             }
@@ -687,7 +687,7 @@ namespace Azure.Storage.Files.Test
                     // Assert
                     Assert.IsNotNull(response.Headers.RequestId);
                 }
-                catch (StorageRequestFailedException e) when (e.ErrorCode == "NoPendingCopyOperation")
+                catch (RequestFailedException e) when (e.ErrorCode == "NoPendingCopyOperation")
                 {
                     // This exception is intentionally.  It is difficult to test AbortCopyAsync() in a deterministic way.
                     // this.WarnCopyCompletedTooQuickly();
@@ -705,7 +705,7 @@ namespace Azure.Storage.Files.Test
                 await file.CreateAsync(maxSize: Constants.MB);
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     file.AbortCopyAsync("id"),
                     e => Assert.AreEqual("InvalidQueryParameterValue", e.ErrorCode.Split('\n')[0]));
             }
@@ -851,7 +851,7 @@ namespace Azure.Storage.Files.Test
                 FileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     file.GetRangeListAsync(range: new HttpRange(0, Constants.MB)),
                     e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
             }
@@ -886,7 +886,7 @@ namespace Azure.Storage.Files.Test
                 using (var stream = new MemoryStream(data))
                 {
                     // Act
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     file.UploadRangeAsync(
                         writeType: FileRangeWriteType.Update,
                         range: new HttpRange(Constants.KB, Constants.KB),
@@ -992,8 +992,8 @@ namespace Azure.Storage.Files.Test
                 await file.CreateAsync(maxSize: fileSize);
 
                 var data = GetRandomBuffer(dataSize);
-                var progressList = new List<StorageProgress>();
-                var progressHandler = new Progress<StorageProgress>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
+                var progressList = new List<long>();
+                var progressHandler = new Progress<long>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
 
                 // Act
                 using (var stream = new FaultyStream(new MemoryStream(data), 256 * Constants.KB, 1, new Exception("Simulated stream fault")))
@@ -1012,7 +1012,7 @@ namespace Azure.Storage.Files.Test
 
                     await WaitForProgressAsync(progressList, data.LongLength);
                     Assert.IsTrue(progressList.Count > 1, "Too few progress received");
-                    Assert.GreaterOrEqual(data.LongLength, progressList.Last().BytesTransferred, "Final progress has unexpected value");
+                    Assert.GreaterOrEqual(data.LongLength, progressList.Last(), "Final progress has unexpected value");
                 }
 
                 // Assert
@@ -1097,7 +1097,7 @@ namespace Azure.Storage.Files.Test
 
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     destFile.UploadRangeFromUriAsync(
                     sourceUri: destFile.Uri,
                     range: destRange,
@@ -1143,7 +1143,7 @@ namespace Azure.Storage.Files.Test
                 FileClient file = InstrumentClient(directory.GetFileClient(GetNewDirectoryName()));
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     file.GetHandlesAsync().ToListAsync(),
                     actualException => Assert.AreEqual("ResourceNotFound", actualException.ErrorCode));
 
@@ -1173,7 +1173,7 @@ namespace Azure.Storage.Files.Test
                 FileClient file = InstrumentClient(directory.GetFileClient(GetNewDirectoryName()));
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     file.ForceCloseAllHandlesAsync(),
                     actualException => Assert.AreEqual("ResourceNotFound", actualException.ErrorCode));
 
@@ -1189,7 +1189,7 @@ namespace Azure.Storage.Files.Test
                 FileClient file = InstrumentClient(directory.GetFileClient(GetNewDirectoryName()));
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     file.ForceCloseHandleAsync("nonExistantHandleId"),
                     actualException => Assert.AreEqual("InvalidHeaderValue", actualException.ErrorCode));
 
