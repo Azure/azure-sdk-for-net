@@ -375,10 +375,10 @@ namespace Azure.Storage
 
             public const string ClearMessagesOperationName =
                 "Azure.Storage.Queues.QueueClient.ClearMessages";
-            public const string EnqueueMessageOperationName =
-                "Azure.Storage.Queues.QueueClient.EnqueueMessage";
-            public const string DequeueMessageOperationName =
-                "Azure.Storage.Queues.QueueClient.DequeueMessages";
+            public const string SendMessageOperationName =
+                "Azure.Storage.Queues.QueueClient.SendMessage";
+            public const string ReceiveMessagesOperationName =
+                "Azure.Storage.Queues.QueueClient.ReceiveMessages";
             public const string PeekMessagesOperationName =
                 "Azure.Storage.Queues.QueueClient.PeekMessages";
             public const string DeleteMessageOperationName =
