@@ -37,7 +37,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             EcCryptographyProvider client = new EcCryptographyProvider(new KeyVaultKey { Key = jwk });
 
-            Assert.IsFalse(client.SupportsOperation(KeyOperation.Sign));
+            // The provider caches the original allow key operations to facilitate tracing. Operation will still be sent to the service.
+            Assert.IsTrue(client.SupportsOperation(KeyOperation.Sign));
         }
 
         [Test]

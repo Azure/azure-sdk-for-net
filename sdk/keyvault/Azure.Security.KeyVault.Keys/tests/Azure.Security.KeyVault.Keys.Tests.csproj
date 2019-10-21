@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <Import Project="..\..\..\core\Azure.Core\tests\TestFramework.props" />
+  <Import Project="..\..\Azure.Security.KeyVault.Shared\tests\Azure.Security.KeyVault.Shared.Tests.projitems" Label="Shared" />
 
   <ItemGroup>
     <PackageReference Include="nunit" />
