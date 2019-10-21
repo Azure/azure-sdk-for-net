@@ -26,7 +26,7 @@ namespace Sql.Tests
             {
                 SqlManagementClient sqlClient = Context.GetClient<SqlManagementClient>();
                 ResourceGroup resourceGroup = Context.CreateResourceGroup();
-                ManagedInstance managedInstance = CreateManagedInstance(Context, sqlClient, resourceGroup);
+                ManagedInstance managedInstance = CreateManagedInstance(Context, sqlClient, resourceGroup, "ShortTermRetentionOnLiveDatabase");
 
                 // Create managed database
                 //
@@ -71,7 +71,7 @@ namespace Sql.Tests
             {
                 SqlManagementClient sqlClient = Context.GetClient<SqlManagementClient>();
                 ResourceGroup resourceGroup = Context.CreateResourceGroup();
-                ManagedInstance managedInstance = CreateManagedInstance(Context, sqlClient, resourceGroup);
+                ManagedInstance managedInstance = CreateManagedInstance(Context, sqlClient, resourceGroup, "ShortTermRetentionOnDroppedDatabase");
 
                 // Create managed database
                 //
@@ -158,7 +158,7 @@ namespace Sql.Tests
             {
                 SqlManagementClient sqlClient = Context.GetClient<SqlManagementClient>();
                 ResourceGroup resourceGroup = Context.CreateResourceGroup();
-                ManagedInstance managedInstance = CreateManagedInstance(Context, sqlClient, resourceGroup);
+                ManagedInstance managedInstance = CreateManagedInstance(Context, sqlClient, resourceGroup, "RestorableDroppedManagedDatabasesTests");
 
                 // Create managed database
                 //
@@ -373,7 +373,7 @@ namespace Sql.Tests
 
         private const string _testPrefix = "manageddatabaserestorescenariotest-";
 
-        private ManagedInstance CreateManagedInstance(SqlManagementTestContext context, SqlManagementClient sqlClient, ResourceGroup resourceGroup)
+        private ManagedInstance CreateManagedInstance(SqlManagementTestContext context, SqlManagementClient sqlClient, ResourceGroup resourceGroup, string callingMethodName = "CreateManagedInstance")
         {
             // Create vnet and get the subnet id
             VirtualNetwork vnet = ManagedInstanceTestFixture.CreateVirtualNetwork(context, resourceGroup, TestEnvironmentUtilities.DefaultLocationId);
@@ -382,7 +382,7 @@ namespace Sql.Tests
             sku.Name = "MIGP8G4";
             sku.Tier = "GeneralPurpose";
             ManagedInstance managedInstance = sqlClient.ManagedInstances.CreateOrUpdate(resourceGroup.Name,
-                _testPrefix + SqlManagementTestUtilities.GenerateName(), new ManagedInstance()
+                _testPrefix + SqlManagementTestUtilities.GenerateName(methodName: callingMethodName), new ManagedInstance()
                 {
                     AdministratorLogin = SqlManagementTestUtilities.DefaultLogin,
                     AdministratorLoginPassword = SqlManagementTestUtilities.DefaultPassword,
