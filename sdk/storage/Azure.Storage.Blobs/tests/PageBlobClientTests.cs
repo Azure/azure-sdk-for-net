@@ -855,11 +855,13 @@ namespace Azure.Storage.Blobs.Test
                         lease: true);
 
                     // Act
-                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                        blob.GetPageRangesAsync(
-                            range: new HttpRange(0, Constants.KB),
-                            conditions: accessConditions),
-                        actualException => Assert.IsTrue(true));
+                    Assert.CatchAsync<Exception>(
+                        async () =>
+                        {
+                            var _ = (await blob.GetPageRangesAsync(
+                                range: new HttpRange(0, Constants.KB),
+                                conditions: accessConditions)).Value;
+                        });
                 }
             }
         }
@@ -1011,12 +1013,14 @@ namespace Azure.Storage.Blobs.Test
                         lease: true);
 
                     // Act
-                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                        blob.GetPageRangesDiffAsync(
-                            range: new HttpRange(0, Constants.KB),
-                            previousSnapshot: prevSnapshot,
-                            conditions: accessConditions),
-                        e => Assert.IsTrue(true));
+                    Assert.CatchAsync<Exception>(
+                        async () =>
+                        {
+                            var _ = (await blob.GetPageRangesDiffAsync(
+                                range: new HttpRange(0, Constants.KB),
+                                previousSnapshot: prevSnapshot,
+                                conditions: accessConditions)).Value;
+                        });
                 }
             }
         }

@@ -320,9 +320,12 @@ namespace Azure.Storage.Blobs.Test
                     BlobRequestConditions accessConditions = BuildAccessConditions(parameters);
 
                     // Act
-                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                        blob.DownloadAsync(conditions: accessConditions),
-                        e => { });
+                    Assert.CatchAsync<Exception>(
+                        async () =>
+                        {
+                            var _ = (await blob.DownloadAsync(
+                                conditions: accessConditions)).Value;
+                        });
                 }
             }
         }
@@ -1441,9 +1444,12 @@ namespace Azure.Storage.Blobs.Test
                     BlobRequestConditions accessConditions = BuildAccessConditions(parameters);
 
                     // Act
-                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                        blob.GetPropertiesAsync(conditions: accessConditions),
-                        e => { });
+                    Assert.CatchAsync<Exception>(
+                        async () =>
+                        {
+                            var _ = (await blob.GetPropertiesAsync(
+                                conditions: accessConditions)).Value;
+                        });
                 }
             }
         }

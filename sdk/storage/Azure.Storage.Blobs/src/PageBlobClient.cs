@@ -1194,7 +1194,11 @@ namespace Azure.Storage.Blobs.Specialized
                         operationName: Constants.Blob.Page.GetPageRangesOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
-                    return Response.FromValue(new PageRangesInfo(response.Value), response.GetRawResponse());
+
+                    // Return an exploding Response on 304
+                    return response.IsUnavailable() ?
+                        response.GetRawResponse().AsNoBodyResponse<PageRangesInfo>() :
+                        Response.FromValue(new PageRangesInfo(response.Value), response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -1398,7 +1402,11 @@ namespace Azure.Storage.Blobs.Specialized
                         operationName: Constants.Blob.Page.GetPageRangesDiffOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
-                    return Response.FromValue(new PageRangesInfo(response.Value), response.GetRawResponse());
+
+                    // Return an exploding Response on 304
+                    return response.IsUnavailable() ?
+                        response.GetRawResponse().AsNoBodyResponse<PageRangesInfo>() :
+                        Response.FromValue(new PageRangesInfo(response.Value), response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {

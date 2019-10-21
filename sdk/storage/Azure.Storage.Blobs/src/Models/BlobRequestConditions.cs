@@ -5,8 +5,6 @@ using System;
 using System.Text;
 using Azure.Storage.Blobs.Models;
 
-#pragma warning disable SA1402  // File may only contain a single type
-
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
@@ -75,30 +73,5 @@ namespace Azure.Storage.Blobs.Models
                 conditions.Append(nameof(LeaseId)).Append('=').Append(LeaseId).Append(';');
             }
         }
-    }
-}
-
-namespace Azure.Storage.Blobs
-{
-    /// <summary>
-    /// Blob extension methods.
-    /// </summary>
-    internal static partial class BlobExtensions
-    {
-        /// <summary>
-        /// Convert a base RequestConditions to BlobRequestConditions.
-        /// </summary>
-        /// <param name="conditions">The <see cref="RequestConditions"/>.</param>
-        /// <returns>The <see cref="BlobRequestConditions"/>.</returns>
-        internal static BlobRequestConditions ToBlobRequestConditions(this RequestConditions conditions) =>
-            conditions == null ?
-                null :
-                new BlobRequestConditions
-                {
-                    IfMatch = conditions.IfMatch,
-                    IfNoneMatch = conditions.IfNoneMatch,
-                    IfModifiedSince = conditions.IfModifiedSince,
-                    IfUnmodifiedSince = conditions.IfUnmodifiedSince
-                };
     }
 }

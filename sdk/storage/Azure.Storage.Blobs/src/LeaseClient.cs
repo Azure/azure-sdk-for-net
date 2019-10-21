@@ -237,7 +237,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A non-infinite lease can be between 15 and 60 seconds.
         /// A lease duration cannot be changed using <see cref="RenewAsync"/> or <see cref="ChangeAsync"/>.
         /// </param>
-        /// <param name="RequestConditions">
+        /// <param name="conditions">
         /// Optional <see cref="RequestConditions"/> to add
         /// conditions on acquiring a lease.
         /// </param>
@@ -257,7 +257,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         private async Task<Response<BlobLease>> AcquireInternal(
             TimeSpan duration,
-            RequestConditions RequestConditions,
+            RequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -282,10 +282,10 @@ namespace Azure.Storage.Blobs.Specialized
                             Uri,
                             duration: serviceDuration,
                             proposedLeaseId: LeaseId,
-                            ifModifiedSince: RequestConditions?.IfModifiedSince,
-                            ifUnmodifiedSince: RequestConditions?.IfUnmodifiedSince,
-                            ifMatch: RequestConditions?.IfMatch,
-                            ifNoneMatch: RequestConditions?.IfNoneMatch,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch,
+                            ifNoneMatch: conditions?.IfNoneMatch,
                             async: async,
                             operationName: Constants.Blob.Lease.AcquireOperationName,
                             cancellationToken: cancellationToken)
@@ -293,11 +293,11 @@ namespace Azure.Storage.Blobs.Specialized
                     }
                     else
                     {
-                        if (RequestConditions?.IfMatch != default || RequestConditions?.IfNoneMatch != default)
+                        if (conditions?.IfMatch != default || conditions?.IfNoneMatch != default)
                         {
                             throw BlobErrors.BlobConditionsMustBeDefault(
-                                nameof(RequestConditions.IfMatch),
-                                nameof(RequestConditions.IfNoneMatch));
+                                nameof(conditions.IfMatch),
+                                nameof(conditions.IfNoneMatch));
                         }
                         return await BlobRestClient.Container.AcquireLeaseAsync(
                             ClientDiagnostics,
@@ -305,8 +305,8 @@ namespace Azure.Storage.Blobs.Specialized
                             Uri,
                             duration: serviceDuration,
                             proposedLeaseId: LeaseId,
-                            ifModifiedSince: RequestConditions?.IfModifiedSince,
-                            ifUnmodifiedSince: RequestConditions?.IfUnmodifiedSince,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             async: async,
                             operationName: Constants.Blob.Lease.AcquireOperationName,
                             cancellationToken: cancellationToken)
@@ -411,7 +411,7 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
         /// </summary>
-        /// <param name="RequestConditions">
+        /// <param name="conditions">
         /// Optional <see cref="RequestConditions"/> to add
         /// conditions on renewing a lease.
         /// </param>
@@ -430,7 +430,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<BlobLease>> RenewInternal(
-            RequestConditions RequestConditions,
+            RequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -441,7 +441,7 @@ namespace Azure.Storage.Blobs.Specialized
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(LeaseId)}: {LeaseId}\n" +
-                    $"{nameof(RequestConditions)}: {RequestConditions}");
+                    $"{nameof(conditions)}: {conditions}");
                 try
                 {
                     if (BlobClient != null)
@@ -451,10 +451,10 @@ namespace Azure.Storage.Blobs.Specialized
                             Pipeline,
                             Uri,
                             leaseId: LeaseId,
-                            ifModifiedSince: RequestConditions?.IfModifiedSince,
-                            ifUnmodifiedSince: RequestConditions?.IfUnmodifiedSince,
-                            ifMatch: RequestConditions?.IfMatch,
-                            ifNoneMatch: RequestConditions?.IfNoneMatch,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch,
+                            ifNoneMatch: conditions?.IfNoneMatch,
                             async: async,
                             operationName: Constants.Blob.Lease.RenewOperationName,
                             cancellationToken: cancellationToken)
@@ -462,19 +462,19 @@ namespace Azure.Storage.Blobs.Specialized
                     }
                     else
                     {
-                        if (RequestConditions?.IfMatch != default || RequestConditions?.IfNoneMatch != default)
+                        if (conditions?.IfMatch != default || conditions?.IfNoneMatch != default)
                         {
                             throw BlobErrors.BlobConditionsMustBeDefault(
-                                nameof(RequestConditions.IfMatch),
-                                nameof(RequestConditions.IfNoneMatch));
+                                nameof(conditions.IfMatch),
+                                nameof(conditions.IfNoneMatch));
                         }
                         return await BlobRestClient.Container.RenewLeaseAsync(
                             ClientDiagnostics,
                             Pipeline,
                             Uri,
                             leaseId: LeaseId,
-                            ifModifiedSince: RequestConditions?.IfModifiedSince,
-                            ifUnmodifiedSince: RequestConditions?.IfUnmodifiedSince,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             async: async,
                             operationName: Constants.Blob.Lease.RenewOperationName,
                             cancellationToken: cancellationToken)
@@ -756,7 +756,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <see cref="RequestFailedException"/> will be thrown if the
         /// proposed lease ID is not in the correct format.
         /// </param>
-        /// <param name="RequestConditions">
+        /// <param name="conditions">
         /// Optional <see cref="RequestConditions"/> to add
         /// conditions on changing a lease.
         /// </param>
@@ -776,7 +776,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         private async Task<Response<BlobLease>> ChangeInternal(
             string proposedId,
-            RequestConditions RequestConditions,
+            RequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -789,7 +789,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(LeaseId)}: {LeaseId}\n" +
                     $"{nameof(proposedId)}: {proposedId}\n" +
-                    $"{nameof(RequestConditions)}: {RequestConditions}");
+                    $"{nameof(conditions)}: {conditions}");
                 try
                 {
                     if (BlobClient != null)
@@ -800,10 +800,10 @@ namespace Azure.Storage.Blobs.Specialized
                             Uri,
                             leaseId: LeaseId,
                             proposedLeaseId: proposedId,
-                            ifModifiedSince: RequestConditions?.IfModifiedSince,
-                            ifUnmodifiedSince: RequestConditions?.IfUnmodifiedSince,
-                            ifMatch: RequestConditions?.IfMatch,
-                            ifNoneMatch: RequestConditions?.IfNoneMatch,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch,
+                            ifNoneMatch: conditions?.IfNoneMatch,
                             async: async,
                             operationName: Constants.Blob.Lease.ChangeOperationName,
                             cancellationToken: cancellationToken)
@@ -811,11 +811,11 @@ namespace Azure.Storage.Blobs.Specialized
                     }
                     else
                     {
-                        if (RequestConditions?.IfMatch != default || RequestConditions?.IfNoneMatch != default)
+                        if (conditions?.IfMatch != default || conditions?.IfNoneMatch != default)
                         {
                             throw BlobErrors.BlobConditionsMustBeDefault(
-                                nameof(RequestConditions.IfMatch),
-                                nameof(RequestConditions.IfNoneMatch));
+                                nameof(conditions.IfMatch),
+                                nameof(conditions.IfNoneMatch));
                         }
                         return await BlobRestClient.Container.ChangeLeaseAsync(
                             ClientDiagnostics,
@@ -823,8 +823,8 @@ namespace Azure.Storage.Blobs.Specialized
                             Uri,
                             leaseId: LeaseId,
                             proposedLeaseId: proposedId,
-                            ifModifiedSince: RequestConditions?.IfModifiedSince,
-                            ifUnmodifiedSince: RequestConditions?.IfUnmodifiedSince,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             async: async,
                             operationName: Constants.Blob.Lease.ChangeOperationName,
                             cancellationToken: cancellationToken)
@@ -987,7 +987,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// is not provided, a fixed-duration lease breaks after the remaining
         /// lease period elapses, and an infinite lease breaks immediately.
         /// </param>
-        /// <param name="RequestConditions">
+        /// <param name="conditions">
         /// Optional <see cref="RequestConditions"/> to add
         /// conditions on breaking a lease.
         /// </param>
@@ -1007,7 +1007,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         private async Task<Response<BlobLease>> BreakInternal(
             TimeSpan? breakPeriod,
-            RequestConditions RequestConditions,
+            RequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1020,7 +1020,7 @@ namespace Azure.Storage.Blobs.Specialized
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(breakPeriod)}: {breakPeriod}\n" +
-                    $"{nameof(RequestConditions)}: {RequestConditions}");
+                    $"{nameof(conditions)}: {conditions}");
                 try
                 {
                     if (BlobClient != null)
@@ -1030,10 +1030,10 @@ namespace Azure.Storage.Blobs.Specialized
                             Pipeline,
                             Uri,
                             breakPeriod: serviceBreakPeriod,
-                            ifModifiedSince: RequestConditions?.IfModifiedSince,
-                            ifUnmodifiedSince: RequestConditions?.IfUnmodifiedSince,
-                            ifMatch: RequestConditions?.IfMatch,
-                            ifNoneMatch: RequestConditions?.IfNoneMatch,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch,
+                            ifNoneMatch: conditions?.IfNoneMatch,
                             async: async,
                             operationName: Constants.Blob.Lease.BreakOperationName,
                             cancellationToken: cancellationToken)
@@ -1042,19 +1042,19 @@ namespace Azure.Storage.Blobs.Specialized
                     }
                     else
                     {
-                        if (RequestConditions?.IfMatch != default || RequestConditions?.IfNoneMatch != default)
+                        if (conditions?.IfMatch != default || conditions?.IfNoneMatch != default)
                         {
                             throw BlobErrors.BlobConditionsMustBeDefault(
-                                nameof(RequestConditions.IfMatch),
-                                nameof(RequestConditions.IfNoneMatch));
+                                nameof(conditions.IfMatch),
+                                nameof(conditions.IfNoneMatch));
                         }
                         return (await BlobRestClient.Container.BreakLeaseAsync(
                             ClientDiagnostics,
                             Pipeline,
                             Uri,
                             breakPeriod: serviceBreakPeriod,
-                            ifModifiedSince: RequestConditions?.IfModifiedSince,
-                            ifUnmodifiedSince: RequestConditions?.IfUnmodifiedSince,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             async: async,
                             operationName: Constants.Blob.Lease.BreakOperationName,
                             cancellationToken: cancellationToken)

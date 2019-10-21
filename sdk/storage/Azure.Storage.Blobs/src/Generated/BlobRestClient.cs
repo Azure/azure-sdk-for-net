@@ -283,6 +283,10 @@ namespace Azure.Storage.Blobs
                         // Create the response
                         return Response.FromValue(_value, response);
                     }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Blobs.Models.BlobServiceProperties>(response);
+                    }
                     default:
                     {
                         // Create the result
@@ -413,6 +417,10 @@ namespace Azure.Storage.Blobs
 
                         // Create the response
                         return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Blobs.Models.BlobServiceStatistics>(response);
                     }
                     default:
                     {
@@ -567,6 +575,10 @@ namespace Azure.Storage.Blobs
 
                         // Create the response
                         return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Blobs.Models.BlobContainersSegment>(response);
                     }
                     default:
                     {
@@ -843,6 +855,10 @@ namespace Azure.Storage.Blobs
 
                         // Create the response
                         return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Blobs.Models.AccountInfo>(response);
                     }
                     default:
                     {
@@ -1352,6 +1368,10 @@ namespace Azure.Storage.Blobs
                         // Create the response
                         return Response.FromValue(_value, response);
                     }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Blobs.Models.FlattenedContainerItem>(response);
+                    }
                     default:
                     {
                         // Create the result
@@ -1815,6 +1835,10 @@ namespace Azure.Storage.Blobs
 
                         // Create the response
                         return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Blobs.Models.BlobContainerAccessPolicy>(response);
                     }
                     default:
                     {
@@ -2999,6 +3023,10 @@ namespace Azure.Storage.Blobs
                         // Create the response
                         return Response.FromValue(_value, response);
                     }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Blobs.Models.BlobsFlatSegment>(response);
+                    }
                     default:
                     {
                         // Create the result
@@ -3159,6 +3187,10 @@ namespace Azure.Storage.Blobs
 
                         // Create the response
                         return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Blobs.Models.BlobsHierarchySegment>(response);
                     }
                     default:
                     {
@@ -3624,17 +3656,7 @@ namespace Azure.Storage.Blobs
                     }
                     case 304:
                     {
-                        // Create the result
-                        Azure.Storage.Blobs.Models.ConditionNotMetError _value = new Azure.Storage.Blobs.Models.ConditionNotMetError();
-
-                        // Get response headers
-                        string _header;
-                        if (response.Headers.TryGetValue("x-ms-error-code", out _header))
-                        {
-                            _value.ErrorCode = _header;
-                        }
-
-                        throw _value.CreateException(response);
+                        return new Azure.NoBodyResponse<Azure.Storage.Blobs.Models.FlattenedDownloadProperties>(response);
                     }
                     default:
                     {
@@ -3955,17 +3977,7 @@ namespace Azure.Storage.Blobs
                     }
                     case 304:
                     {
-                        // Create the result
-                        Azure.Storage.Blobs.Models.ConditionNotMetError _value = new Azure.Storage.Blobs.Models.ConditionNotMetError();
-
-                        // Get response headers
-                        string _header;
-                        if (response.Headers.TryGetValue("x-ms-error-code", out _header))
-                        {
-                            _value.ErrorCode = _header;
-                        }
-
-                        throw _value.CreateException(response);
+                        return new Azure.NoBodyResponse<Azure.Storage.Blobs.Models.BlobProperties>(response);
                     }
                     default:
                     {
@@ -4528,6 +4540,10 @@ namespace Azure.Storage.Blobs
 
                         // Create the response
                         return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Blobs.Models.BlobGetAccessControlResult>(response);
                     }
                     default:
                     {
@@ -8488,17 +8504,7 @@ namespace Azure.Storage.Blobs
                     }
                     case 304:
                     {
-                        // Create the result
-                        Azure.Storage.Blobs.Models.ConditionNotMetError _value = new Azure.Storage.Blobs.Models.ConditionNotMetError();
-
-                        // Get response headers
-                        string _header;
-                        if (response.Headers.TryGetValue("x-ms-error-code", out _header))
-                        {
-                            _value.ErrorCode = _header;
-                        }
-
-                        throw _value.CreateException(response);
+                        return new Azure.NoBodyResponse<Azure.Storage.Blobs.Models.PageRangesInfoInternal>(response);
                     }
                     default:
                     {
@@ -8696,17 +8702,7 @@ namespace Azure.Storage.Blobs
                     }
                     case 304:
                     {
-                        // Create the result
-                        Azure.Storage.Blobs.Models.ConditionNotMetError _value = new Azure.Storage.Blobs.Models.ConditionNotMetError();
-
-                        // Get response headers
-                        string _header;
-                        if (response.Headers.TryGetValue("x-ms-error-code", out _header))
-                        {
-                            _value.ErrorCode = _header;
-                        }
-
-                        throw _value.CreateException(response);
+                        return new Azure.NoBodyResponse<Azure.Storage.Blobs.Models.PageRangesInfoInternal>(response);
                     }
                     default:
                     {
@@ -11307,6 +11303,10 @@ namespace Azure.Storage.Blobs
                         // Create the response
                         return Response.FromValue(_value, response);
                     }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Blobs.Models.GetBlockListOperation>(response);
+                    }
                     default:
                     {
                         // Create the result
@@ -12384,6 +12384,10 @@ namespace Azure.Storage.Blobs
 
                         // Create the response
                         return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Blobs.Models.DirectoryGetAccessControlResult>(response);
                     }
                     default:
                     {

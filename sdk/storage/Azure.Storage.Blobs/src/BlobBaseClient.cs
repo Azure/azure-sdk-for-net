@@ -612,6 +612,12 @@ namespace Azure.Storage.Blobs.Specialized
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
+                    // Return an exploding Response on 304
+                    if (response.IsUnavailable())
+                    {
+                        return response.GetRawResponse().AsNoBodyResponse<BlobDownloadInfo>();
+                    }
+
                     // Wrap the response Content in a RetriableStream so we
                     // can return it before it's finished downloading, but still
                     // allow retrying if it fails.
@@ -733,7 +739,9 @@ namespace Azure.Storage.Blobs.Specialized
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
 
-            Pipeline.LogTrace($"Response: {response.GetRawResponse().Status}, ContentLength: {response.Value.ContentLength}");
+            // Watch out for exploding Responses
+            long length = response.IsUnavailable() ? 0 : response.Value.ContentLength;
+            Pipeline.LogTrace($"Response: {response.GetRawResponse().Status}, ContentLength: {length}");
 
             return (response, stream);
         }
@@ -1220,6 +1228,12 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 Response<BlobDownloadInfo> response = await client.DownloadInternal(
                     range: default, conditions, default, async, cancellationToken).ConfigureAwait(false);
+
+                // Return an exploding Response on 304
+                if (response.IsUnavailable())
+                {
+                    return response.GetRawResponse().AsNoBodyResponse<BlobDownloadInfo>();
+                }
 
                 if (async)
                 {
