@@ -140,7 +140,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
                 client.ApiVersion = Constants.DefaultAPIVersion;
                 client.Caches.Flush(this.fixture.ResourceGroup.Name, this.fixture.Cache.Name);
                 this.fixture.CacheHelper.StoragecacheManagementClient = client;
-                this.fixture.CacheHelper.WaitForCacheState(this.fixture.CacheHelper.GetCacheHealthgState, this.fixture.Cache.Name, "Healthy").GetAwaiter().GetResult();
+                this.fixture.CacheHelper.WaitForCacheState(this.fixture.CacheHelper.GetCacheHealthState, this.fixture.Cache.Name, "Healthy").GetAwaiter().GetResult();
             }
         }
 

@@ -124,7 +124,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
                 client.ApiVersion = Constants.DefaultAPIVersion;
                 this.fixture.CacheHelper.StoragecacheManagementClient = client;
                 var storageTarget = this.AddClfsStorageAccount(context, "3", wait: false);
-                var response = this.fixture.CacheHelper.GetstorageTarget(this.fixture.Cache.Name, storageTarget.Name);
+                var response = this.fixture.CacheHelper.GetStorageTarget(this.fixture.Cache.Name, storageTarget.Name);
                 Assert.Equal(storageTarget.Name, response.Name);
                 Assert.Equal(storageTarget.Id, response.Id, ignoreCase: true);
                 Assert.Equal(storageTarget.TargetType, response.TargetType);
@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
                 var storageTarget = this.AddClfsStorageAccount(context, "4");
                 this.fixture.CacheHelper.DeleteStorageTarget(this.fixture.Cache.Name, storageTarget.Name, this.testOutputHelper);
                 TestUtilities.Wait(new TimeSpan(0, 0, 60));
-                CloudErrorException ex = Assert.Throws<CloudErrorException>(() => this.fixture.CacheHelper.GetstorageTarget(this.fixture.Cache.Name, storageTarget.Name, true));
+                CloudErrorException ex = Assert.Throws<CloudErrorException>(() => this.fixture.CacheHelper.GetStorageTarget(this.fixture.Cache.Name, storageTarget.Name, true));
                 this.testOutputHelper.WriteLine($"{ex.Body.Error.Message}");
                 Assert.Contains("NotFound", ex.Body.Error.Code);
             }

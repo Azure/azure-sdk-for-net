@@ -47,10 +47,10 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
         /// Initializes a new instance of the <see cref="CacheHelper"/> class.
         /// </summary>
         /// <param name="subscription_id">Subscription id.</param>
-        /// <param name="client">Cache management client.</param>
-        /// <param name="resourceGroup">Resource group.</param>
-        /// <param name="virtualNetwork">Virtual network.</param>
-        /// <param name="subnet">Subnet for cache.</param>
+        /// <param name="client">Object representing a cache management client.</param>
+        /// <param name="resourceGroup">Object representing a resource group.</param>
+        /// <param name="virtualNetwork">Object representing a virtual network.</param>
+        /// <param name="subnet">Object representing a subnet for cache.</param>
         public CacheHelper(string subscription_id, StorageCacheManagementClient client, ResourceGroup resourceGroup, VirtualNetwork virtualNetwork, Subnet subnet)
         {
             this.StoragecacheManagementClient = client;
@@ -156,7 +156,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
         /// </summary>
         /// <param name="name">Name of the cache.</param>
         /// <returns>Cache health.</returns>
-        public string GetCacheHealthgState(string name)
+        public string GetCacheHealthState(string name)
         {
             try
             {
@@ -177,7 +177,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
         public void CheckCacheState(string name)
         {
             this.WaitForCacheState(this.GetCacheProvisioningState, name, "Succeeded").GetAwaiter().GetResult();
-            this.WaitForCacheState(this.GetCacheHealthgState, name, "Healthy").GetAwaiter().GetResult();
+            this.WaitForCacheState(this.GetCacheHealthState, name, "Healthy").GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
         /// <param name="storageTargetName">Storage target name.</param>
         /// <param name="raise">Raise exception.</param>
         /// <returns>Storage target.</returns>
-        public StorageTarget GetstorageTarget(string cacheName, string storageTargetName, bool raise = false)
+        public StorageTarget GetStorageTarget(string cacheName, string storageTargetName, bool raise = false)
         {
             StorageTarget storageTarget;
             try
@@ -219,7 +219,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
         /// </summary>
         /// <param name="cacheName">Storage cache name.</param>
         /// <param name="storageTargetName">Storage target name.</param>
-        /// <param name="testOutputHelper">Test output helper.</param>
+        /// <param name="testOutputHelper">Object representing a ITestOutputHelper.</param>
         public void DeleteStorageTarget(string cacheName, string storageTargetName, ITestOutputHelper testOutputHelper = null)
         {
             this.StoragecacheManagementClient.StorageTargets.Delete(this.resourceGroup.Name, cacheName, storageTargetName);
@@ -232,14 +232,14 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
         /// </summary>
         /// <param name="storageAccountName">Storage account name.</param>
         /// <param name="containerName"> Storage container name.</param>
-        /// <param name="namepacePath"> namepace path.</param>
+        /// <param name="namespacePath"> namepace path.</param>
         /// <param name="subscriptionId">Subscription id.</param>
         /// <param name="resourceGroupName">Resource group name.</param>
         /// <returns>CLFS storage target parameters.</returns>
         public StorageTarget CreateClfsStorageTargetParameters(
             string storageAccountName,
             string containerName,
-            string namepacePath,
+            string namespacePath,
             string subscriptionId = null,
             string resourceGroupName = null)
         {
@@ -256,7 +256,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
 
             NamespaceJunction namespaceJunction = new NamespaceJunction()
             {
-                NamespacePath = namepacePath,
+                NamespacePath = namespacePath,
                 TargetPath = "/",
             };
 
@@ -275,8 +275,8 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
         /// </summary>
         /// <param name="cacheName">Storage cache name.</param>
         /// <param name="storageTargetName">Storage target name.</param>
-        /// <param name="storageTargetParameters">Storage target parameters.</param>
-        /// <param name="testOutputHelper">test output helper.</param>
+        /// <param name="storageTargetParameters">Object representing a Storage target parameters.</param>
+        /// <param name="testOutputHelper">Object representing a ITestOutputHelper.</param>
         /// <param name="wait">Wait for storage target to deploy.</param>
         /// <returns>CLFS storage target.</returns>
         public StorageTarget CreateStorageTarget(
@@ -306,7 +306,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
         /// <param name="cacheName">Name of the cache.</param>
         /// <param name="storageTargetName">Name of the storage target.</param>
         /// <param name="state">Expected sate of the storage target.</param>
-        /// <param name="testOutputHelper">Test output helper.</param>
+        /// <param name="testOutputHelper">Object representing a Storage target parameters.</param>
         /// <param name="polling_delay">Delay between cache polling.</param>
         /// <param name="timeout">Timeout for cache polling.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
@@ -317,7 +317,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
                 string currentState = null;
                 while (!string.Equals(currentState, state))
                 {
-                    currentState = this.GetstorageTarget(cacheName, storageTargetName).ProvisioningState;
+                    currentState = this.GetStorageTarget(cacheName, storageTargetName).ProvisioningState;
                     if (testOutputHelper != null)
                     {
                         testOutputHelper.WriteLine($"Waiting for successful deploy of storage target {storageTargetName}, current state is {currentState}");
@@ -347,7 +347,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
         /// <param name="timeout">Timeout for polling.</param>
         /// <param name="polling_delay">Delay between polling.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        public async Task WaitForCacheState(Func<string, string> operation, string name, string state, int timeout = 900, int polling_delay = 60)
+        public async Task WaitForCacheState(Func<string, string> operation, string name, string state, int timeout = 1200, int polling_delay = 120)
         {
             var waitTask = Task.Run(async () =>
             {
@@ -369,7 +369,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
                     this.ProvisioningState = currentState;
                 }
 
-                if (operation == this.GetCacheHealthgState)
+                if (operation == this.GetCacheHealthState)
                 {
                     this.CacheHealth = currentState;
                 }

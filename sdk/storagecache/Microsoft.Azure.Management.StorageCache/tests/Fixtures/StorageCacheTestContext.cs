@@ -87,17 +87,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
         {
             ResourceManagementClient resourceClient = this.GetClient<ResourceManagementClient>();
             ResourceGroup resourceGroup = null;
-            try
-            {
-                resourceGroup = resourceClient.ResourceGroups.Get(resourceGroupName);
-            }
-            catch (CloudException ex)
-            {
-                if (ex.Body.Code != "ResourceGroupNotFound")
-                {
-                    throw;
-                }
-            }
+            resourceGroup = GetResourceGroupIfExists(resourceGroupName);
 
             if (resourceGroup == null)
             {
@@ -116,7 +106,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
         /// <summary>
         /// Get or create virtual network.
         /// </summary>
-        /// <param name="resourceGroup">The name of the resource group.</param>
+        /// <param name="resourceGroup">Object representing a resource group.</param>
         /// <param name="virtualNetworkName">The name of the virtual network.</param>
         /// <returns>VirtualNetwork object.</returns>
         public VirtualNetwork GetOrCreateVirtualNetwork(ResourceGroup resourceGroup, string virtualNetworkName)
@@ -154,8 +144,8 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
         /// <summary>
         /// Get Or create subnet.
         /// </summary>
-        /// <param name="resourceGroup">The name of the resource group.</param>
-        /// <param name="virtualNetwork">The name of the virtual network.</param>
+        /// <param name="resourceGroup">Object representing a resource group.</param>
+        /// <param name="virtualNetwork">Object representing a virtual network.</param>
         /// <param name="subnetName">The name of the subnet.</param>
         /// <returns>Subnet object.</returns>
         public Subnet GetOrCreateSubnet(ResourceGroup resourceGroup, VirtualNetwork virtualNetwork, string subnetName)
@@ -191,7 +181,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
         /// <summary>
         /// Get cache if exists.
         /// </summary>
-        /// <param name="resourceGroup">The name of the resource group.</param>
+        /// <param name="resourceGroup">Object representing a resource group.</param>
         /// <param name="cacheName">The name of the cache.</param>
         /// <returns>Cache object if cache exists else null.</returns>
         public Cache GetCacheIfExists(ResourceGroup resourceGroup, string cacheName)
@@ -227,9 +217,9 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
             {
                 return resourceManagementClient.ResourceGroups.Get(resourceGroupName);
             }
-            catch (CloudErrorException ex)
+            catch (CloudException ex)
             {
-                if (ex.Body.Error.Code == "ResourceNotFound")
+                if (ex.Body.Code == "ResourceGroupNotFound")
                 {
                     return null;
                 }
@@ -256,7 +246,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
         /// <summary>
         /// Add role assignment by role name.
         /// </summary>
-        /// <param name="context">Context.</param>
+        /// <param name="context">Object representing a StorageCacheTestContext.</param>
         /// <param name="scope">The scope of the role assignment to create.</param>
         /// <param name="roleName">The role name.</param>
         /// <param name="assignmentName">The name of the role assignment to create.</param>

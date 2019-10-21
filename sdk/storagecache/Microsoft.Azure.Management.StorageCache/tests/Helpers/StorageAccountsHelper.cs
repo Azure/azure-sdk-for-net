@@ -26,8 +26,8 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="StorageAccountsHelper"/> class.
         /// </summary>
-        /// <param name="client">Storage management client.</param>
-        /// <param name="resourceGroup">Resource group.</param>
+        /// <param name="client">Object representing a storage management client.</param>
+        /// <param name="resourceGroup">Object representing a resource group.</param>
         public StorageAccountsHelper(StorageManagementClient client, ResourceGroup resourceGroup)
         {
             this.storageManagementClient = client;
