@@ -1068,10 +1068,6 @@ namespace Azure.Data.AppConfiguration.Tests
                 Assert.IsTrue(settings.Any(s => s.Key == "ab,cd"));
                 Assert.IsTrue(settings.Any(s => s.Key == "wx,yz"));
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
             finally
             {
                 await service.DeleteAsync(abcSetting.Key);
