@@ -9,16 +9,16 @@ using System.Threading.Tasks;
 namespace Microsoft.Azure.ContainerRegistry
 {
     /// <summary>
-    /// Simple authentication class for use with Token related api calls for determining scopes and other such things
+    /// Simple authentication class for use in clients used by Token classes.
     /// </summary>
-    public class TokenCredentials : ServiceClientCredentials
+    internal class TokenCredentials : ServiceClientCredentials
     {
         private string _authHeader { get; set; }
 
         /*To be used for General Login Scheme*/
         public TokenCredentials(string username, string password)
         {
-            _authHeader = EncodeTo64(username + ":" + password);
+            _authHeader = Helpers.EncodeTo64($"{username}:{password}");
         }
 
         /*To be used for exchanging AAD Tokens for ACR Tokens*/
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.ContainerRegistry
         {
             if (request == null)
             {
-                throw new ArgumentNullException("request");
+                throw new ArgumentNullException(nameof(request));
             }
             if (_authHeader != null)
             {
@@ -40,32 +40,24 @@ namespace Microsoft.Azure.ContainerRegistry
             await base.ProcessHttpRequestAsync(request, cancellationToken);
         }
 
-        static public string EncodeTo64(string toEncode)
-        {
-            byte[] toEncodeAsBytes = System.Text.ASCIIEncoding.ASCII.GetBytes(toEncode);
-            string returnValue = System.Convert.ToBase64String(toEncodeAsBytes);
-            return returnValue;
-        }
     }
 
     /// <summary>
-    /// This allows us to have refresh token chains. For example if an access token needs a refresh
-    /// it can use the refresh token which can be refreshed using an aad access token which can be
-    /// refreshed using an aad refresh token which can be obtained using service principals.This
-    /// will all be done internally and thus abstracts much of the checking away.
+    /// AuthToken class for chaining token refreshes. It abstracts checking and refresh logic and allows for chained token refreshing.
+    /// See subclasses <see cref="ContainerRegistryRefreshToken"/> and <see cref="ContainerRegistryAccessToken"> for more information
     /// </summary>
     public class AuthToken
     {
 
-        public delegate string acquireCallback();
-        private static readonly JwtSecurityTokenHandler JwtSecurityClient = new JwtSecurityTokenHandler();
+        public delegate string AcquireCallback();
+        protected static readonly JwtSecurityTokenHandler JwtSecurityClient = new JwtSecurityTokenHandler();
 
         // Constant to refresh tokens slightly before they are to expire guarding against possible latency related crashes
-        private TimeSpan LATENCY_SAFETY { get; set; } = TimeSpan.FromMinutes(2);
+        private readonly TimeSpan LatencySafety = TimeSpan.FromMinutes(2);
 
         public string Value { get; set; }
         public DateTime Expiration { get; set; }
-        public acquireCallback RefreshFn { get; set; }
+        protected AcquireCallback RefreshFunction;
 
         public AuthToken(string token)
         {
@@ -73,9 +65,9 @@ namespace Microsoft.Azure.ContainerRegistry
             Expiration = JwtSecurityClient.ReadToken(Value).ValidTo;
         }
 
-        public AuthToken(string token, acquireCallback refreshFn) : this(token)
+        public AuthToken(string token, AcquireCallback refreshFunction) : this(token)
         {
-            RefreshFn = refreshFn;
+            RefreshFunction = refreshFunction;
         }
 
         //Extensibility purposes
@@ -85,11 +77,11 @@ namespace Microsoft.Azure.ContainerRegistry
         /* Returns true if refresh was successful. */
         public bool Refresh()
         {
-            if (RefreshFn == null)
+            if (RefreshFunction == null)
             {
                 return false;
             }
-            Value = RefreshFn();
+            Value = RefreshFunction();
             Expiration = JwtSecurityClient.ReadToken(Value).ValidTo;
 
             return true;
@@ -97,7 +89,7 @@ namespace Microsoft.Azure.ContainerRegistry
 
         public bool NeedsRefresh()
         {
-            return Expiration < DateTime.UtcNow.Add(LATENCY_SAFETY);
+            return Expiration < DateTime.UtcNow.Add(LatencySafety);
         }
 
         // Returns true if token is ready for use or false if token was expired and unable to refresh
@@ -107,67 +99,90 @@ namespace Microsoft.Azure.ContainerRegistry
                 return Refresh();
             return true;
         }
-    }
-    /// <summary>
-    /// Refreshing this requires an aad access token. This provides the built in exchange functionality.
-    /// </summary>
 
-    public class AcrRefreshToken : AuthToken
-    {
-        private AzureContainerRegistryClient _authClient;
-        public AcrRefreshToken(string token) : base(token) { }
-        public AcrRefreshToken(AuthToken aadToken, string loginUrl)
+        protected void InitializeToken(AcquireCallback refreshFunction)
         {
-            _authClient = new AzureContainerRegistryClient(new TokenCredentials())
+            Value = refreshFunction();
+            Expiration = JwtSecurityClient.ReadToken(Value).ValidTo;
+            RefreshFunction = refreshFunction;
+        }
+    }
+
+    /// <summary>
+    /// An ACR refresh token that refreshes from an AAD access token. Provides built in token exchange functionality.
+    /// </summary>
+    public class ContainerRegistryRefreshToken : AuthToken
+    {
+        private AzureContainerRegistryClient authClient;
+        public ContainerRegistryRefreshToken(AuthToken aadToken, string loginUrl)
+        {
+            // setup refresh function to retrieve acrtoken with aadtoken
+            authClient = new AzureContainerRegistryClient(new TokenCredentials())
             {
-                LoginUri = "https://" + loginUrl
+                LoginUri = $"https://{loginUrl}"
             };
-            RefreshFn = () =>
+
+            string tempRefreshFunction()
             {
                 // Note: should be using real new access token
                 aadToken.CheckAndRefresh();
-                return _authClient.RefreshTokens.GetFromExchangeAsync("access_token", loginUrl, "", null, aadToken.Value).GetAwaiter().GetResult().RefreshTokenProperty;
-            };
-            Refresh();
-        }
-        public AcrRefreshToken(string token, acquireCallback refreshFn) : base(token, refreshFn) { }
+                return authClient.RefreshTokens.GetFromExchangeAsync("access_token", loginUrl, "", null, aadToken.Value).GetAwaiter().GetResult().RefreshTokenProperty;
+            }
 
+            // initialize token and refresh function
+            InitializeToken(tempRefreshFunction);
+        }
     }
     /// <summary>
-    /// Refreshing this requires an ACR refresh token or username and password. Both constructors are provided.
+    /// An ACR access token that refreshes from an ACR refresh token or username and password.
     /// </summary>
-    public class AcrAccessToken : AuthToken
+    public class ContainerRegistryAccessToken : AuthToken
     {
-        private AzureContainerRegistryClient _authClient;
+        private AzureContainerRegistryClient authClient;
         public string Scope { get; set; }
-        public AcrAccessToken(string token) : base(token) { }
-        public AcrAccessToken(string token, acquireCallback refreshFn) : base(token, refreshFn) { }
-        public AcrAccessToken(AcrRefreshToken acrRefresh, string scope, string loginUrl)
+        /// <summary>
+        /// Construct an ACR access token that refreshes from an ACR refresh token.
+        /// </summary>
+        /// <param name="acrRefresh"></param>
+        /// <param name="scope"></param>
+        /// <param name="loginUrl"></param>
+        public ContainerRegistryAccessToken(ContainerRegistryRefreshToken refreshToken, string scope, string loginUrl)
         {
             Scope = scope;
-            _authClient = new AzureContainerRegistryClient(new TokenCredentials())
+            authClient = new AzureContainerRegistryClient(new TokenCredentials())
             {
-                LoginUri = "https://" + loginUrl
+                LoginUri = $"https://{loginUrl}"
             };
-            RefreshFn = () =>
+            string tempRefreshFunction()
             {
-                acrRefresh.CheckAndRefresh();
-                return _authClient.AccessTokens.GetAsync(loginUrl, scope, acrRefresh.Value).GetAwaiter().GetResult().AccessTokenProperty;
+                refreshToken.CheckAndRefresh();
+                return authClient.AccessTokens.GetAsync(loginUrl, scope, refreshToken.Value).GetAwaiter().GetResult().AccessTokenProperty;
             };
-            Refresh();
+
+            // initialize token and refresh function
+            InitializeToken(tempRefreshFunction);
         }
-        public AcrAccessToken(string username, string password, string scope, string loginUrl)
+        /// <summary>
+        /// Construct an ACR access token that refreshes from an ACR refresh token. 
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <param name="scope"></param>
+        /// <param name="loginUrl"></param>
+        public ContainerRegistryAccessToken(string username, string password, string scope, string loginUrl)
         {
             Scope = scope;
-            _authClient = new AzureContainerRegistryClient(new TokenCredentials(username, password))
+            authClient = new AzureContainerRegistryClient(new TokenCredentials(username, password))
             {
-                LoginUri = "https://" + loginUrl
+                LoginUri = $"https://{loginUrl}"
             };
-            RefreshFn = () =>
+            string tempRefreshFunction()
             {
-                return _authClient.AccessTokens.GetFromLoginAsync(loginUrl, scope).GetAwaiter().GetResult().AccessTokenProperty;
+                return authClient.AccessTokens.GetFromLoginAsync(loginUrl, scope).GetAwaiter().GetResult().AccessTokenProperty;
             };
-            Refresh();
+
+            // initialize token and refresh function
+            InitializeToken(tempRefreshFunction);
         }
     }
 }

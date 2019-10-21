@@ -8,11 +8,13 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// </summary>
         public static explicit operator V2Manifest(ManifestWrapper v)
         {
-            var manifest = new V2Manifest();
-            manifest.Layers = v.Layers;
-            manifest.SchemaVersion = v.SchemaVersion;
-            manifest.Config = v.Config;
-            manifest.MediaType = v.MediaType;
+            var manifest = new V2Manifest
+            {
+                Layers = v.Layers,
+                SchemaVersion = v.SchemaVersion,
+                Config = v.Config,
+                MediaType = v.MediaType
+            };
             return manifest;
         }
     }
@@ -20,18 +22,20 @@ namespace Microsoft.Azure.ContainerRegistry.Models
     public partial class V1Manifest : Manifest
     {
         /// <summary>
-        /// Provides a method to convert ManifestWrapper to V21Manifest
+        /// Provides a method to convert ManifestWrapper to V1Manifest
         /// </summary>
         public static explicit operator V1Manifest(ManifestWrapper v)
         {
-            var manifest = new V1Manifest();
-            manifest.Architecture = v.Architecture;
-            manifest.FsLayers = manifest.FsLayers;
-            manifest.History = v.History;
-            manifest.Name = v.Name;
-            manifest.Signatures = v.Signatures;
-            manifest.Tag = v.Tag;
-            manifest.SchemaVersion = v.SchemaVersion;
+            var manifest = new V1Manifest
+            {
+                Architecture = v.Architecture,
+                FsLayers = v.FsLayers,
+                History = v.History,
+                Name = v.Name,
+                Signatures = v.Signatures,
+                Tag = v.Tag,
+                SchemaVersion = v.SchemaVersion
+            };
             return manifest;
         }
     }
@@ -43,10 +47,12 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// </summary>
         public static explicit operator ManifestList(ManifestWrapper v)
         {
-            var manifest = new ManifestList();
-            manifest.Manifests = v.Manifests;
-            manifest.SchemaVersion = v.SchemaVersion;
-            manifest.MediaType = v.MediaType;
+            var manifest = new ManifestList
+            {
+                Manifests = v.Manifests,
+                SchemaVersion = v.SchemaVersion,
+                MediaType = v.MediaType
+            };
             return manifest;
         }
     }
@@ -58,10 +64,12 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// </summary>
         public static explicit operator OCIIndex(ManifestWrapper v)
         {
-            var manifest = new OCIIndex();
-            manifest.Manifests = v.Manifests;
-            manifest.SchemaVersion = v.SchemaVersion;
-            manifest.Annotations = v.Annotations;
+            var manifest = new OCIIndex
+            {
+                Manifests = v.Manifests,
+                SchemaVersion = v.SchemaVersion,
+                Annotations = v.Annotations
+            };
             return manifest;
         }
     }
@@ -73,11 +81,13 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// </summary>
         public static explicit operator OCIManifest(ManifestWrapper v)
         {
-            var manifest = new OCIManifest();
-            manifest.Layers = v.Layers;
-            manifest.SchemaVersion = v.SchemaVersion;
-            manifest.Config = v.Config;
-            manifest.Annotations = v.Annotations;
+            var manifest = new OCIManifest
+            {
+                Layers = v.Layers,
+                SchemaVersion = v.SchemaVersion,
+                Config = v.Config,
+                Annotations = v.Annotations
+            };
             return manifest;
         }
     }

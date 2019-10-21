@@ -6,7 +6,7 @@ namespace Microsoft.Azure.ContainerRegistry
     public partial class AzureContainerRegistryClient : ServiceClient<AzureContainerRegistryClient>, IAzureContainerRegistryClient, IAzureClient
     {
 
-        // MANUALLY ADDED FOR INTERNAL TEST PURPOSES
+        // MANUALLY ADDED FOR INTERNAL TEST PURPOSES / FOR TESTING FRAMEWORK USE ONLY
         /// <summary>
         /// Initializes a new instance of the AzureContainerRegistryClient class.
         /// </summary>
@@ -27,11 +27,11 @@ namespace Microsoft.Azure.ContainerRegistry
         {
             if (loginUri == null)
             {
-                throw new System.ArgumentNullException("loginUri");
+                throw new System.ArgumentNullException(nameof(loginUri));
             }
 
             BaseUri = "{url}";
-            Credentials = credentials ?? throw new System.ArgumentNullException("credentials");
+            Credentials = credentials ?? throw new System.ArgumentNullException(nameof(credentials));
             if (Credentials != null)
 
             {
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.ContainerRegistry
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureContainerRegistryClient class.
+        /// Initializes a new instance of the AzureContainerRegistryClient class. Allows users to specify a loginUrl
         /// </summary>
         /// <param name='loginUrl'>
         /// Required The base URl of the Azure Container Registry Service
@@ -57,24 +57,26 @@ namespace Microsoft.Azure.ContainerRegistry
         /// </exception>
         public AzureContainerRegistryClient(string loginUrl, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
-            //Removes issues with clients potentially setting an incorrect / at the end
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+
+            // prevents issues if caller sets an incorrect '/' at the end
             if (loginUrl.EndsWith("/")) {
                 loginUrl = loginUrl.Substring(0, loginUrl.Length - 1);
             }
 
-            //Removes issues with clients forgetting to set the http entry point
+            // prevents issues if caller does not prefix url with "http" 
             if (!loginUrl.ToLower().StartsWith("http"))
             {
-                loginUrl = "https://" + loginUrl;
+                loginUrl = $"https://{loginUrl}";
             }
 
+            // set fields / properties
             LoginUri = loginUrl;
-
-            Credentials = credentials ?? throw new System.ArgumentNullException("credentials");
-            if (Credentials != null)
-            {
-                Credentials.InitializeServiceClient(this);
-            }
+            Credentials = credentials; 
+            Credentials.InitializeServiceClient(this);
         }
     }
 

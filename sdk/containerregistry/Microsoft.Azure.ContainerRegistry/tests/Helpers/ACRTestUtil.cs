@@ -60,7 +60,7 @@ namespace ContainerRegistry.Tests
             string username = registryCredentials.Username;
             string password = registryCredentials.Passwords[0].Value;
 
-            AcrClientCredentials credential = new AcrClientCredentials(AcrClientCredentials.LoginMode.Basic, registry.LoginServer, username, password);
+            ContainerRegistryCredentials credential = new ContainerRegistryCredentials(ContainerRegistryCredentials.LoginMode.Basic, registry.LoginServer, username, password);
             var acrClient = context.GetServiceClientWithCredentials<AzureContainerRegistryClient>(credential, CreateNewRecordedDelegatingHandler());
             acrClient.LoginUri = "https://" + registry.LoginServer;
             return acrClient;
