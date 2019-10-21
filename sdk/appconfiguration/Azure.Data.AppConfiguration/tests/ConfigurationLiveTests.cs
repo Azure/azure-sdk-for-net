@@ -1058,8 +1058,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.SetAsync(abcSetting);
                 await service.SetAsync(xyzSetting);
 
-                var selector = new SettingSelector(key:null);
-                selector.Keys.Add("ab,cd");
+                var selector = new SettingSelector("ab,cd");
                 selector.Keys.Add("wz,yz");
 
                 ConfigurationSetting[] settings = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
@@ -1094,10 +1093,6 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 Assert.GreaterOrEqual(settings.Length, 0);
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
             finally
             {
                 await service.DeleteAsync(abcSetting.Key);
@@ -1127,10 +1122,6 @@ namespace Azure.Data.AppConfiguration.Tests
                 Assert.IsTrue(settings.Any(s => s.Key == "abc"));
                 Assert.IsTrue(settings.Any(s => s.Key == "xyz"));
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
             finally
             {
                 await service.DeleteAsync(abcSetting.Key);
@@ -1159,10 +1150,6 @@ namespace Azure.Data.AppConfiguration.Tests
                 Assert.GreaterOrEqual(settings.Length, 2);
                 Assert.IsTrue(settings.Any(s => s.Label == "abc"));
                 Assert.IsTrue(settings.Any(s => s.Label == "xyz"));
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
             }
             finally
             {
