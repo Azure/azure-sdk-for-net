@@ -982,7 +982,7 @@ namespace Azure.Storage.Blobs.Test
                 await blob.CreateSnapshotAsync();
 
                 // Act
-                await blob.DeleteAsync(deleteOptions: DeleteSnapshotsOption.Only);
+                await blob.DeleteAsync(snapshotsOption: DeleteSnapshotsOption.OnlySnapshots);
 
                 // Assert
                 Response<BlobProperties> response = await blob.GetPropertiesAsync();

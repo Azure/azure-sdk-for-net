@@ -526,6 +526,9 @@ directive:
   where: $.parameters.DeleteSnapshots
   transform: >
     $["x-ms-enum"].name = "DeleteSnapshotsOption";
+    $.enum = [ "none", "include", "only" ];
+    $["x-ms-enum"].values = [ { name: "none", value: null }, { name: "IncludeSnapshots", value: "include" }, { name: "OnlySnapshots", value: "only" }];
+    $["x-az-enum-skip-value"] = "none";
 - from: swagger-document
   where: $.parameters.SequenceNumberAction
   transform: >
