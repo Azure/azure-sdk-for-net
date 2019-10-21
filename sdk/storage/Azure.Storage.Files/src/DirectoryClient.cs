@@ -273,6 +273,28 @@ namespace Azure.Storage.Files
         #endregion ctors
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="DirectoryClient"/>
+        /// class with an identical <see cref="Uri"/> source but the specified
+        /// <paramref name="snapshot"/> timestamp.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/snapshot-share"/>.
+        /// </summary>
+        /// <remarks>
+        /// Pass null or empty string to remove the snapshot returning a URL to the base directory.
+        /// </remarks>
+        /// <param name="snapshot">
+        /// The snapshot identifier.
+        /// </param>
+        /// <returns>
+        /// A new <see cref="DirectoryClient"/> instance.
+        /// </returns>
+        public virtual DirectoryClient WithSnapshot(string snapshot)
+        {
+            var p = new FileUriBuilder(Uri) { Snapshot = snapshot };
+            return new DirectoryClient(p.ToUri(), Pipeline, ClientDiagnostics);
+        }
+
+        /// <summary>
         /// Creates a new <see cref="FileClient"/> object by appending
         /// <paramref name="fileName"/> to the end of <see cref="Uri"/>.  The
         /// new <see cref="FileClient"/> uses the same request policy
@@ -578,11 +600,6 @@ namespace Azure.Storage.Files
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-directory-properties"/>.
         /// </summary>
-        /// <param name="shareSnapshot">
-        /// Optionally specifies the share snapshot to retrieve the directory properties
-        /// from. For more information on working with share snapshots, see
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/snapshot-share"/>.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -596,10 +613,8 @@ namespace Azure.Storage.Files
         /// a failure occurs.
         /// </remarks>
         public virtual Response<StorageDirectoryProperties> GetProperties(
-            string shareSnapshot = default,
             CancellationToken cancellationToken = default) =>
             GetPropertiesInternal(
-                shareSnapshot,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -612,11 +627,6 @@ namespace Azure.Storage.Files
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-directory-properties"/>.
         /// </summary>
-        /// <param name="shareSnapshot">
-        /// Optionally specifies the share snapshot to retrieve the directory properties
-        /// from. For more information on working with share snapshots, see
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/snapshot-share"/>.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -630,10 +640,8 @@ namespace Azure.Storage.Files
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<StorageDirectoryProperties>> GetPropertiesAsync(
-            string shareSnapshot = default,
             CancellationToken cancellationToken = default) =>
             await GetPropertiesInternal(
-                shareSnapshot,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -646,11 +654,6 @@ namespace Azure.Storage.Files
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-directory-properties"/>.
         /// </summary>
-        /// <param name="shareSnapshot">
-        /// Optionally specifies the share snapshot to retrieve the directory properties
-        /// from. For more information on working with share snapshots, see
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/snapshot-share"/>.
-        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -667,7 +670,6 @@ namespace Azure.Storage.Files
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<StorageDirectoryProperties>> GetPropertiesInternal(
-            string shareSnapshot,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -676,15 +678,13 @@ namespace Azure.Storage.Files
                 Pipeline.LogMethodEnter(
                     nameof(DirectoryClient),
                     message:
-                    $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(shareSnapshot)}: {shareSnapshot}");
+                    $"{nameof(Uri)}: {Uri}");
                 try
                 {
                     Response<RawStorageDirectoryProperties> response = await FileRestClient.Directory.GetPropertiesAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
-                        sharesnapshot: shareSnapshot,
                         async: async,
                         operationName: Constants.File.Directory.GetPropertiesOperationName,
                         cancellationToken: cancellationToken)
@@ -987,9 +987,6 @@ namespace Azure.Storage.Files
         /// Optional string that filters the results to return only
         /// files and directories whose name begins with the specified prefix.
         /// </param>
-        /// <param name="shareSnapshot">
-        /// Optional share snapshot to query.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1004,9 +1001,8 @@ namespace Azure.Storage.Files
         /// </remarks>
         public virtual Pageable<StorageFileItem> GetFilesAndDirectories(
             string prefix = default,
-            string shareSnapshot = default,
             CancellationToken cancellationToken = default) =>
-            new GetFilesAndDirectoriesAsyncCollection(this, prefix, shareSnapshot).ToSyncCollection(cancellationToken);
+            new GetFilesAndDirectoriesAsyncCollection(this, prefix).ToSyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetFilesAndDirectoriesAsync"/> operation returns an
@@ -1019,9 +1015,6 @@ namespace Azure.Storage.Files
         /// <param name="prefix">
         /// Optional string that filters the results to return only
         /// files and directories whose name begins with the specified prefix.
-        /// </param>
-        /// <param name="shareSnapshot">
-        /// Optional share snapshot to query.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1037,9 +1030,8 @@ namespace Azure.Storage.Files
         /// </remarks>
         public virtual AsyncPageable<StorageFileItem> GetFilesAndDirectoriesAsync(
             string prefix = default,
-            string shareSnapshot = default,
             CancellationToken cancellationToken = default) =>
-            new GetFilesAndDirectoriesAsyncCollection(this, prefix, shareSnapshot).ToAsyncCollection(cancellationToken);
+            new GetFilesAndDirectoriesAsyncCollection(this, prefix).ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetFilesAndDirectoriesInternal"/> operation returns a
@@ -1060,9 +1052,6 @@ namespace Azure.Storage.Files
         /// <param name="prefix">
         /// Optional string that filters the results to return only
         /// files and directories whose name begins with the specified prefix.
-        /// </param>
-        /// <param name="shareSnapshot">
-        /// Optional share snapshot to query.
         /// </param>
         /// <param name="pageSizeHint">
         /// Gets or sets a value indicating the size of the page that should be
@@ -1086,7 +1075,6 @@ namespace Azure.Storage.Files
         internal async Task<Response<FilesAndDirectoriesSegment>> GetFilesAndDirectoriesInternal(
             string marker,
             string prefix,
-            string shareSnapshot,
             int? pageSizeHint,
             bool async,
             CancellationToken cancellationToken)
@@ -1098,8 +1086,7 @@ namespace Azure.Storage.Files
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(marker)}: {marker}\n" +
-                    $"{nameof(prefix)}: {prefix}\n" +
-                    $"{nameof(shareSnapshot)}: {shareSnapshot}");
+                    $"{nameof(prefix)}: {prefix}");
                 try
                 {
                     return await FileRestClient.Directory.ListFilesAndDirectoriesSegmentAsync(
@@ -1109,7 +1096,6 @@ namespace Azure.Storage.Files
                         marker: marker,
                         prefix: prefix,
                         maxresults: pageSizeHint,
-                        sharesnapshot: shareSnapshot,
                         async: async,
                         operationName: Constants.File.Directory.ListFilesAndDirectoriesSegmentOperationName,
                         cancellationToken: cancellationToken)
@@ -1228,8 +1214,6 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            // TODO Support share snapshot
-
             using (Pipeline.BeginLoggingScope(nameof(DirectoryClient)))
             {
                 Pipeline.LogMethodEnter(
@@ -1529,8 +1513,6 @@ namespace Azure.Storage.Files
             CancellationToken cancellationToken,
             string operationName = Constants.File.Directory.ForceCloseAllHandlesOperationName)
         {
-            // TODO Support share snapshot
-
             using (Pipeline.BeginLoggingScope(nameof(DirectoryClient)))
             {
                 Pipeline.LogMethodEnter(
