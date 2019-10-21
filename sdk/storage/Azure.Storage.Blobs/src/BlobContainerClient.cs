@@ -1988,12 +1988,12 @@ namespace Azure.Storage.Blobs
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
-        /// <see cref="DeleteSnapshotsOption.Include"/>.
+        /// <see cref="DeleteSnapshotsOption.IncludeSnapshots"/>.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob" />.
         /// </summary>
         /// <param name="blobName">The name of the blob to delete.</param>
-        /// <param name="deleteOptions">
+        /// <param name="snapshotsOption">
         /// Specifies options for deleting blob snapshots.
         /// </param>
         /// <param name="accessConditions">
@@ -2014,12 +2014,12 @@ namespace Azure.Storage.Blobs
         [ForwardsClientCalls]
         public virtual Response DeleteBlob(
             string blobName,
-            DeleteSnapshotsOption? deleteOptions = default,
+            DeleteSnapshotsOption snapshotsOption = default,
             BlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
             GetBlobClient(blobName)
                 .Delete(
-                    deleteOptions,
+                    snapshotsOption,
                     accessConditions,
                     cancellationToken);
 
@@ -2030,12 +2030,12 @@ namespace Azure.Storage.Blobs
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
-        /// <see cref="DeleteSnapshotsOption.Include"/>.
+        /// <see cref="DeleteSnapshotsOption.IncludeSnapshots"/>.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob" />.
         /// </summary>
         /// <param name="blobName">The name of the blob to delete.</param>
-        /// <param name="deleteOptions">
+        /// <param name="snapshotsOption">
         /// Specifies options for deleting blob snapshots.
         /// </param>
         /// <param name="accessConditions">
@@ -2056,12 +2056,12 @@ namespace Azure.Storage.Blobs
         [ForwardsClientCalls]
         public virtual async Task<Response> DeleteBlobAsync(
             string blobName,
-            DeleteSnapshotsOption? deleteOptions = default,
+            DeleteSnapshotsOption snapshotsOption = default,
             BlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
             await GetBlobClient(blobName)
                 .DeleteAsync(
-                    deleteOptions,
+                    snapshotsOption,
                     accessConditions,
                     cancellationToken)
                     .ConfigureAwait(false);
@@ -2073,12 +2073,12 @@ namespace Azure.Storage.Blobs
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
-        /// <see cref="DeleteSnapshotsOption.Include"/>.
+        /// <see cref="DeleteSnapshotsOption.IncludeSnapshots"/>.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob" />.
         /// </summary>
         /// <param name="blobName">The name of the blob to delete.</param>
-        /// <param name="deleteOptions">
+        /// <param name="snapshotsOption">
         /// Specifies options for deleting blob snapshots.
         /// </param>
         /// <param name="accessConditions">
@@ -2099,12 +2099,12 @@ namespace Azure.Storage.Blobs
         [ForwardsClientCalls]
         public virtual Response<bool> DeleteBlobIfExists(
             string blobName,
-            DeleteSnapshotsOption? deleteOptions = default,
+            DeleteSnapshotsOption snapshotsOption = default,
             BlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
                 GetBlobClient(blobName).
                 DeleteIfExists(
-                    deleteOptions,
+                    snapshotsOption,
                     accessConditions ?? default,
                     cancellationToken);
 
@@ -2115,12 +2115,12 @@ namespace Azure.Storage.Blobs
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
-        /// <see cref="DeleteSnapshotsOption.Include"/>.
+        /// <see cref="DeleteSnapshotsOption.IncludeSnapshots"/>.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob" />.
         /// </summary>
         /// <param name="blobName">The name of the blob to delete.</param>
-        /// <param name="deleteOptions">
+        /// <param name="snapshotsOption">
         /// Specifies options for deleting blob snapshots.
         /// </param>
         /// <param name="accessConditions">
@@ -2141,11 +2141,11 @@ namespace Azure.Storage.Blobs
         [ForwardsClientCalls]
         public virtual async Task<Response<bool>> DeleteBlobIfExistsAsync(
             string blobName,
-            DeleteSnapshotsOption? deleteOptions = default,
+            DeleteSnapshotsOption snapshotsOption = default,
             BlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
             await GetBlobClient(blobName).DeleteIfExistsAsync(
-                    deleteOptions,
+                    snapshotsOption,
                     accessConditions ?? default,
                     cancellationToken)
                     .ConfigureAwait(false);

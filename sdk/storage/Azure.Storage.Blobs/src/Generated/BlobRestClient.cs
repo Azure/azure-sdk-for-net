@@ -17220,14 +17220,19 @@ namespace Azure.Storage.Blobs.Models
     public enum DeleteSnapshotsOption
     {
         /// <summary>
+        /// none
+        /// </summary>
+        None,
+
+        /// <summary>
         /// include
         /// </summary>
-        Include,
+        IncludeSnapshots,
 
         /// <summary>
         /// only
         /// </summary>
-        Only
+        OnlySnapshots
     }
 }
 
@@ -17241,8 +17246,9 @@ namespace Azure.Storage.Blobs
             {
                 return value switch
                 {
-                    Azure.Storage.Blobs.Models.DeleteSnapshotsOption.Include => "include",
-                    Azure.Storage.Blobs.Models.DeleteSnapshotsOption.Only => "only",
+                    Azure.Storage.Blobs.Models.DeleteSnapshotsOption.None => null,
+                    Azure.Storage.Blobs.Models.DeleteSnapshotsOption.IncludeSnapshots => "include",
+                    Azure.Storage.Blobs.Models.DeleteSnapshotsOption.OnlySnapshots => "only",
                     _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.DeleteSnapshotsOption value.")
                 };
             }
@@ -17251,8 +17257,9 @@ namespace Azure.Storage.Blobs
             {
                 return value switch
                 {
-                    "include" => Azure.Storage.Blobs.Models.DeleteSnapshotsOption.Include,
-                    "only" => Azure.Storage.Blobs.Models.DeleteSnapshotsOption.Only,
+                    null => Azure.Storage.Blobs.Models.DeleteSnapshotsOption.None,
+                    "include" => Azure.Storage.Blobs.Models.DeleteSnapshotsOption.IncludeSnapshots,
+                    "only" => Azure.Storage.Blobs.Models.DeleteSnapshotsOption.OnlySnapshots,
                     _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.DeleteSnapshotsOption value.")
                 };
             }
