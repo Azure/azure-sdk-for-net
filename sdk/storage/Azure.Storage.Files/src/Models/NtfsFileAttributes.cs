@@ -33,7 +33,7 @@ namespace Azure.Storage.Files.Models
         /// The file  or directory is a standard file that has no special attributes. This attribute is
         /// valid only if it is used alone.
         /// </summary>
-        Normal = 8,
+        None = 8,
 
         /// <summary>
         /// The file is a directory.
@@ -90,49 +90,60 @@ namespace Azure.Storage.Files
 
             if ((attributes & NtfsFileAttributes.ReadOnly) == NtfsFileAttributes.ReadOnly)
             {
-                stringBuilder.Append(nameof(NtfsFileAttributes.ReadOnly) + "|");
+                AppendAttribute(nameof(NtfsFileAttributes.ReadOnly), stringBuilder);
             }
             if ((attributes & NtfsFileAttributes.Hidden) == NtfsFileAttributes.Hidden)
             {
-                stringBuilder.Append(nameof(NtfsFileAttributes.Hidden) + "|");
+                AppendAttribute(nameof(NtfsFileAttributes.Hidden), stringBuilder);
             }
             if ((attributes & NtfsFileAttributes.System) == NtfsFileAttributes.System)
             {
-                stringBuilder.Append(nameof(NtfsFileAttributes.System) + "|");
+                AppendAttribute(nameof(NtfsFileAttributes.System), stringBuilder);
             }
-            if ((attributes & NtfsFileAttributes.Normal) == NtfsFileAttributes.Normal)
+            if ((attributes & NtfsFileAttributes.None) == NtfsFileAttributes.None)
             {
-                stringBuilder.Append(nameof(NtfsFileAttributes.Normal) + "|");
+                AppendAttribute(nameof(NtfsFileAttributes.None), stringBuilder);
             }
             if ((attributes & NtfsFileAttributes.Directory) == NtfsFileAttributes.Directory)
             {
-                stringBuilder.Append(nameof(NtfsFileAttributes.Directory) + "|");
+                AppendAttribute(nameof(NtfsFileAttributes.Directory), stringBuilder);
             }
             if ((attributes & NtfsFileAttributes.Archive) == NtfsFileAttributes.Archive)
             {
-                stringBuilder.Append(nameof(NtfsFileAttributes.Archive) + "|");
+                AppendAttribute(nameof(NtfsFileAttributes.Archive), stringBuilder);
             }
             if ((attributes & NtfsFileAttributes.Temporary) == NtfsFileAttributes.Temporary)
             {
-                stringBuilder.Append(nameof(NtfsFileAttributes.Temporary) + "|");
+                AppendAttribute(nameof(NtfsFileAttributes.Temporary), stringBuilder);
             }
             if ((attributes & NtfsFileAttributes.Offline) == NtfsFileAttributes.Offline)
             {
-                stringBuilder.Append(nameof(NtfsFileAttributes.Offline) + "|");
+                AppendAttribute(nameof(NtfsFileAttributes.Offline), stringBuilder);
             }
             if ((attributes & NtfsFileAttributes.NotContentIndexed) == NtfsFileAttributes.NotContentIndexed)
             {
-                stringBuilder.Append(nameof(NtfsFileAttributes.NotContentIndexed) + "|");
+                AppendAttribute(nameof(NtfsFileAttributes.NotContentIndexed), stringBuilder);
             }
             if ((attributes & NtfsFileAttributes.NoScrubData) == NtfsFileAttributes.NoScrubData)
             {
-                stringBuilder.Append(nameof(NtfsFileAttributes.NoScrubData) + "|");
+                AppendAttribute(nameof(NtfsFileAttributes.NoScrubData), stringBuilder);
             }
             if (stringBuilder[stringBuilder.Length - 1] == '|')
             {
                 stringBuilder.Remove(stringBuilder.Length - 1, 1);
             }
             return stringBuilder.ToString();
+        }
+
+        /// <summary>
+        /// Helper method to append attribute name to stringbuilder.
+        /// </summary>
+        /// <param name="attributeName">name of attribute</param>
+        /// <param name="stringBuilder">stringbuilder reference</param>
+        private static void AppendAttribute(string attributeName, StringBuilder stringBuilder)
+        {
+            stringBuilder.Append(attributeName);
+            stringBuilder.Append("|");
         }
 
         /// <summary>
@@ -170,9 +181,9 @@ namespace Azure.Storage.Files
                 {
                     attributes |= NtfsFileAttributes.System;
                 }
-                else if (trimmed.Equals(nameof(NtfsFileAttributes.Normal), StringComparison.InvariantCultureIgnoreCase))
+                else if (trimmed.Equals(nameof(NtfsFileAttributes.None), StringComparison.InvariantCultureIgnoreCase))
                 {
-                    attributes |= NtfsFileAttributes.Normal;
+                    attributes |= NtfsFileAttributes.None;
                 }
                 else if (trimmed.Equals(nameof(NtfsFileAttributes.Directory), StringComparison.InvariantCultureIgnoreCase))
                 {
