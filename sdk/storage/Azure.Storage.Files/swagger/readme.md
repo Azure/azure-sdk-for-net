@@ -740,3 +740,12 @@ directive:
     $["x-ms-client-name"] = "FileSignedIdentifier";
     $.xml = {"name": "SignedIdentifier"};
 ```
+
+### Hide DeleteSnapshotsOptionType
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.DeleteSnapshots
+  transform: >
+    $["x-az-public"] = false;
+```

@@ -5960,7 +5960,7 @@ namespace Azure.Storage.Files.Models
     /// <summary>
     /// Specifies the option include to delete the base share and all of its snapshots.
     /// </summary>
-    public enum DeleteSnapshotsOptionType
+    internal enum DeleteSnapshotsOptionType
     {
         /// <summary>
         /// include

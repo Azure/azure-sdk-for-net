@@ -685,6 +685,10 @@ namespace Azure.Storage.Files
         /// <param name="shareName">
         /// The name of the share to delete.
         /// </param>
+        /// <param name="includeSnapshots">
+        /// A value indicating whether to delete a share's snapshots in addition
+        /// to the share itself.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -699,8 +703,9 @@ namespace Azure.Storage.Files
         [ForwardsClientCalls]
         public virtual Response DeleteShare(
             string shareName,
+            bool includeSnapshots = true,
             CancellationToken cancellationToken = default) =>
-            GetShareClient(shareName).Delete(cancellationToken: cancellationToken);
+            GetShareClient(shareName).Delete(includeSnapshots, cancellationToken);
 
         /// <summary>
         /// Marks the specified share or share snapshot for deletion.
@@ -712,6 +717,10 @@ namespace Azure.Storage.Files
         /// </summary>
         /// <param name="shareName">
         /// The name of the share to delete.
+        /// </param>
+        /// <param name="includeSnapshots">
+        /// A value indicating whether to delete a share's snapshots in addition
+        /// to the share itself.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -727,9 +736,10 @@ namespace Azure.Storage.Files
         [ForwardsClientCalls]
         public virtual async Task<Response> DeleteShareAsync(
             string shareName,
+            bool includeSnapshots = true,
             CancellationToken cancellationToken = default) =>
             await GetShareClient(shareName)
-                .DeleteAsync(cancellationToken: cancellationToken)
+                .DeleteAsync(includeSnapshots, cancellationToken)
                 .ConfigureAwait(false);
         #endregion DeleteShare
     }
