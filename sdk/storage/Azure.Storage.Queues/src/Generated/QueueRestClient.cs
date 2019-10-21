@@ -2148,7 +2148,7 @@ namespace Azure.Storage.Queues
                         }
                         if (response.Headers.TryGetValue("x-ms-time-next-visible", out _header))
                         {
-                            _value.TimeNextVisible = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                            _value.NextVisibleOn = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
 
                         // Create the response
@@ -2363,24 +2363,24 @@ namespace Azure.Storage.Queues.Models
         public string MessageId { get; internal set; }
 
         /// <summary>
+        /// The content of the Message.
+        /// </summary>
+        public string MessageText { get; internal set; }
+
+        /// <summary>
         /// The time the Message was inserted into the Queue.
         /// </summary>
-        public System.DateTimeOffset InsertionTime { get; internal set; }
+        public System.DateTimeOffset? InsertedOn { get; internal set; }
 
         /// <summary>
         /// The time that the Message will expire and be automatically deleted.
         /// </summary>
-        public System.DateTimeOffset ExpirationTime { get; internal set; }
+        public System.DateTimeOffset? ExpiresOn { get; internal set; }
 
         /// <summary>
         /// The number of times the message has been dequeued.
         /// </summary>
         public long DequeueCount { get; internal set; }
-
-        /// <summary>
-        /// The content of the Message.
-        /// </summary>
-        public string MessageText { get; internal set; }
 
         /// <summary>
         /// Prevent direct instantiation of PeekedMessage instances.
@@ -2403,25 +2403,25 @@ namespace Azure.Storage.Queues.Models
             {
                 _value.MessageId = _child.Value;
             }
+            _child = element.Element(System.Xml.Linq.XName.Get("MessageText", ""));
+            if (_child != null)
+            {
+                _value.MessageText = _child.Value;
+            }
             _child = element.Element(System.Xml.Linq.XName.Get("InsertionTime", ""));
             if (_child != null)
             {
-                _value.InsertionTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _value.InsertedOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("ExpirationTime", ""));
             if (_child != null)
             {
-                _value.ExpirationTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _value.ExpiresOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("DequeueCount", ""));
             if (_child != null)
             {
                 _value.DequeueCount = long.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("MessageText", ""));
-            if (_child != null)
-            {
-                _value.MessageText = _child.Value;
             }
             CustomizeFromXml(element, _value);
             return _value;
@@ -2440,18 +2440,18 @@ namespace Azure.Storage.Queues.Models
         /// </summary>
         public static PeekedMessage PeekedMessage(
             string messageId,
-            System.DateTimeOffset insertionTime,
-            System.DateTimeOffset expirationTime,
+            string messageText,
             long dequeueCount,
-            string messageText)
+            System.DateTimeOffset? insertedOn = default,
+            System.DateTimeOffset? expiresOn = default)
         {
             return new PeekedMessage()
             {
                 MessageId = messageId,
-                InsertionTime = insertionTime,
-                ExpirationTime = expirationTime,
-                DequeueCount = dequeueCount,
                 MessageText = messageText,
+                DequeueCount = dequeueCount,
+                InsertedOn = insertedOn,
+                ExpiresOn = expiresOn,
             };
         }
     }
@@ -3169,7 +3169,7 @@ namespace Azure.Storage.Queues.Models
         /// <summary>
         /// A GMT date/time value, to the second. All primary writes preceding this value are guaranteed to be available for read operations at the secondary. Primary writes after this point in time may or may not be available for reads.
         /// </summary>
-        public System.DateTimeOffset LastSyncTime { get; internal set; }
+        public System.DateTimeOffset? LastSyncedOn { get; internal set; }
 
         /// <summary>
         /// Prevent direct instantiation of QueueGeoReplication instances.
@@ -3195,7 +3195,7 @@ namespace Azure.Storage.Queues.Models
             _child = element.Element(System.Xml.Linq.XName.Get("LastSyncTime", ""));
             if (_child != null)
             {
-                _value.LastSyncTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _value.LastSyncedOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
             }
             CustomizeFromXml(element, _value);
             return _value;
@@ -3214,12 +3214,12 @@ namespace Azure.Storage.Queues.Models
         /// </summary>
         public static QueueGeoReplication QueueGeoReplication(
             Azure.Storage.Queues.Models.QueueGeoReplicationStatus status,
-            System.DateTimeOffset lastSyncTime)
+            System.DateTimeOffset? lastSyncedOn = default)
         {
             return new QueueGeoReplication()
             {
                 Status = status,
-                LastSyncTime = lastSyncTime,
+                LastSyncedOn = lastSyncedOn,
             };
         }
     }
@@ -3390,34 +3390,34 @@ namespace Azure.Storage.Queues.Models
         public string MessageId { get; internal set; }
 
         /// <summary>
-        /// The time the Message was inserted into the Queue.
-        /// </summary>
-        public System.DateTimeOffset InsertionTime { get; internal set; }
-
-        /// <summary>
-        /// The time that the Message will expire and be automatically deleted.
-        /// </summary>
-        public System.DateTimeOffset ExpirationTime { get; internal set; }
-
-        /// <summary>
         /// This value is required to delete the Message. If deletion fails using this popreceipt then the message has been dequeued by another client.
         /// </summary>
         public string PopReceipt { get; internal set; }
 
         /// <summary>
+        /// The content of the Message.
+        /// </summary>
+        public string MessageText { get; internal set; }
+
+        /// <summary>
         /// The time that the message will again become visible in the Queue.
         /// </summary>
-        public System.DateTimeOffset TimeNextVisible { get; internal set; }
+        public System.DateTimeOffset? NextVisibleOn { get; internal set; }
+
+        /// <summary>
+        /// The time the Message was inserted into the Queue.
+        /// </summary>
+        public System.DateTimeOffset? InsertedOn { get; internal set; }
+
+        /// <summary>
+        /// The time that the Message will expire and be automatically deleted.
+        /// </summary>
+        public System.DateTimeOffset? ExpiresOn { get; internal set; }
 
         /// <summary>
         /// The number of times the message has been dequeued.
         /// </summary>
         public long DequeueCount { get; internal set; }
-
-        /// <summary>
-        /// The content of the Message.
-        /// </summary>
-        public string MessageText { get; internal set; }
 
         /// <summary>
         /// Prevent direct instantiation of QueueMessage instances.
@@ -3440,35 +3440,35 @@ namespace Azure.Storage.Queues.Models
             {
                 _value.MessageId = _child.Value;
             }
-            _child = element.Element(System.Xml.Linq.XName.Get("InsertionTime", ""));
-            if (_child != null)
-            {
-                _value.InsertionTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("ExpirationTime", ""));
-            if (_child != null)
-            {
-                _value.ExpirationTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
             _child = element.Element(System.Xml.Linq.XName.Get("PopReceipt", ""));
             if (_child != null)
             {
                 _value.PopReceipt = _child.Value;
             }
+            _child = element.Element(System.Xml.Linq.XName.Get("MessageText", ""));
+            if (_child != null)
+            {
+                _value.MessageText = _child.Value;
+            }
             _child = element.Element(System.Xml.Linq.XName.Get("TimeNextVisible", ""));
             if (_child != null)
             {
-                _value.TimeNextVisible = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _value.NextVisibleOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("InsertionTime", ""));
+            if (_child != null)
+            {
+                _value.InsertedOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("ExpirationTime", ""));
+            if (_child != null)
+            {
+                _value.ExpiresOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("DequeueCount", ""));
             if (_child != null)
             {
                 _value.DequeueCount = long.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("MessageText", ""));
-            if (_child != null)
-            {
-                _value.MessageText = _child.Value;
             }
             CustomizeFromXml(element, _value);
             return _value;
@@ -3487,22 +3487,22 @@ namespace Azure.Storage.Queues.Models
         /// </summary>
         public static QueueMessage QueueMessage(
             string messageId,
-            System.DateTimeOffset insertionTime,
-            System.DateTimeOffset expirationTime,
             string popReceipt,
-            System.DateTimeOffset timeNextVisible,
+            string messageText,
             long dequeueCount,
-            string messageText)
+            System.DateTimeOffset? nextVisibleOn = default,
+            System.DateTimeOffset? insertedOn = default,
+            System.DateTimeOffset? expiresOn = default)
         {
             return new QueueMessage()
             {
                 MessageId = messageId,
-                InsertionTime = insertionTime,
-                ExpirationTime = expirationTime,
                 PopReceipt = popReceipt,
-                TimeNextVisible = timeNextVisible,
-                DequeueCount = dequeueCount,
                 MessageText = messageText,
+                DequeueCount = dequeueCount,
+                NextVisibleOn = nextVisibleOn,
+                InsertedOn = insertedOn,
+                ExpiresOn = expiresOn,
             };
         }
     }
@@ -4383,7 +4383,7 @@ namespace Azure.Storage.Queues.Models
         /// <summary>
         /// A UTC date/time value that represents when the message will be visible on the queue.
         /// </summary>
-        public System.DateTimeOffset TimeNextVisible { get; internal set; }
+        public System.DateTimeOffset NextVisibleOn { get; internal set; }
 
         /// <summary>
         /// Prevent direct instantiation of UpdateReceipt instances.
@@ -4402,12 +4402,12 @@ namespace Azure.Storage.Queues.Models
         /// </summary>
         public static UpdateReceipt UpdateReceipt(
             string popReceipt,
-            System.DateTimeOffset timeNextVisible)
+            System.DateTimeOffset nextVisibleOn)
         {
             return new UpdateReceipt()
             {
                 PopReceipt = popReceipt,
-                TimeNextVisible = timeNextVisible,
+                NextVisibleOn = nextVisibleOn,
             };
         }
     }

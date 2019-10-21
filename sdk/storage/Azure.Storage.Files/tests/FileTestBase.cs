@@ -203,9 +203,9 @@ namespace Azure.Storage.Files.Tests
         {
             Assert.IsNotNull(fileSmbProperties.FileAttributes);
             Assert.IsNotNull(fileSmbProperties.FilePermissionKey);
-            Assert.IsNotNull(fileSmbProperties.FileCreationTime);
-            Assert.IsNotNull(fileSmbProperties.FileLastWriteTime);
-            Assert.IsNotNull(fileSmbProperties.FileChangeTime);
+            Assert.IsNotNull(fileSmbProperties.FileCreatedOn);
+            Assert.IsNotNull(fileSmbProperties.FileLastWrittenOn);
+            Assert.IsNotNull(fileSmbProperties.FileChangedOn);
             Assert.IsNotNull(fileSmbProperties.FileId);
             Assert.IsNotNull(fileSmbProperties.ParentId);
         }
@@ -213,10 +213,10 @@ namespace Azure.Storage.Files.Tests
         internal static void AssertPropertiesEqual(FileSmbProperties left, FileSmbProperties right)
         {
             Assert.AreEqual(left.FileAttributes, right.FileAttributes);
-            Assert.AreEqual(left.FileCreationTime, right.FileCreationTime);
-            Assert.AreEqual(left.FileChangeTime, right.FileChangeTime);
+            Assert.AreEqual(left.FileCreatedOn, right.FileCreatedOn);
+            Assert.AreEqual(left.FileChangedOn, right.FileChangedOn);
             Assert.AreEqual(left.FileId, right.FileId);
-            Assert.AreEqual(left.FileLastWriteTime, right.FileLastWriteTime);
+            Assert.AreEqual(left.FileLastWrittenOn, right.FileLastWrittenOn);
             Assert.AreEqual(left.FilePermissionKey, right.FilePermissionKey);
             Assert.AreEqual(left.ParentId, right.ParentId);
         }

@@ -167,6 +167,7 @@ directive:
   where: $["x-ms-paths"]["/{queueName}/messages/{messageid}?popreceipt={popReceipt}&visibilitytimeout={visibilityTimeout}"]
   transform: >
     $.put.responses["204"]["x-az-response-name"] = "UpdateReceipt";
+    $.put.responses["204"].headers["x-ms-time-next-visible"]["x-ms-client-name"] = "NextVisibleOn";
 ```
 
 ### QueueErrorCode
@@ -195,6 +196,9 @@ directive:
             const path = def["$ref"].replace(/[#].*$/, "#/definitions/QueueGeoReplication");
             $.QueueServiceStatistics.properties.GeoReplication = {"$ref": path};
         }
+        $.QueueGeoReplication.properties.LastSyncedOn = $.QueueGeoReplication.properties.LastSyncTime;
+        delete $.QueueGeoReplication.properties.LastSyncTime;
+        $.QueueGeoReplication.properties.LastSyncedOn.xml = { "name": "LastSyncTime" };
     }
 ```
 
@@ -245,6 +249,22 @@ directive:
     if (!$.QueueMessage) {
         $.QueueMessage = $.DequeuedMessageItem;
         delete $.DequeuedMessageItem;
+
+        $.QueueMessage.properties.NextVisibleOn = $.QueueMessage.properties.TimeNextVisible;
+        $.QueueMessage.properties.NextVisibleOn.xml = {"name": "TimeNextVisible"};
+        delete $.QueueMessage.properties.TimeNextVisible;
+
+        $.QueueMessage.properties.InsertedOn = $.QueueMessage.properties.InsertionTime;
+        $.QueueMessage.properties.InsertedOn.xml = {"name": "InsertionTime"};
+        delete $.QueueMessage.properties.InsertionTime;
+
+        $.QueueMessage.properties.ExpiresOn = $.QueueMessage.properties.ExpirationTime;
+        $.QueueMessage.properties.ExpiresOn.xml = {"name": "ExpirationTime"};
+        delete $.QueueMessage.properties.ExpirationTime;
+
+        const count = $.QueueMessage.properties.DequeueCount;
+        delete $.QueueMessage.properties.DequeueCount;
+        $.QueueMessage.properties.DequeueCount = count;
     }
 - from: swagger-document
   where: $.definitions.DequeuedMessagesList
@@ -276,6 +296,25 @@ directive:
     }
 ```
 
+### EnqueuedMessage
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.EnqueuedMessage
+  transform: >
+    $.properties.NextVisibleOn = $.properties.TimeNextVisible;
+    $.properties.NextVisibleOn.xml = {"name": "TimeNextVisible"};
+    delete $.properties.TimeNextVisible;
+
+    $.properties.InsertedOn = $.properties.InsertionTime;
+    $.properties.InsertedOn.xml = {"name": "InsertionTime"};
+    delete $.properties.InsertionTime;
+
+    $.properties.ExpiresOn = $.properties.ExpirationTime;
+    $.properties.ExpiresOn.xml = {"name": "ExpirationTime"};
+    delete $.properties.ExpirationTime;
+```
+
 ### PeekedMessage
 ``` yaml
 directive:
@@ -285,6 +324,18 @@ directive:
     if (!$.PeekedMessage) {
         $.PeekedMessage = $.PeekedMessageItem;
         delete $.PeekedMessageItem;
+
+        $.PeekedMessage.properties.InsertedOn = $.PeekedMessage.properties.InsertionTime;
+        $.PeekedMessage.properties.InsertedOn.xml = {"name": "InsertionTime"};
+        delete $.PeekedMessage.properties.InsertionTime;
+
+        $.PeekedMessage.properties.ExpiresOn = $.PeekedMessage.properties.ExpirationTime;
+        $.PeekedMessage.properties.ExpiresOn.xml = {"name": "ExpirationTime"};
+        delete $.PeekedMessage.properties.ExpirationTime;
+
+        const count = $.PeekedMessage.properties.DequeueCount;
+        delete $.PeekedMessage.properties.DequeueCount;
+        $.PeekedMessage.properties.DequeueCount = count;
     }
 - from: swagger-document
   where: $.definitions.PeekedMessagesList
