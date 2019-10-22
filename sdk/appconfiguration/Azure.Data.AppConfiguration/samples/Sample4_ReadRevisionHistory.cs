@@ -31,45 +31,28 @@ namespace Azure.Data.AppConfiguration.Samples
             var client = new ConfigurationClient(connectionString);
 
             // Create the Configuration Settings to be stored in the Configuration Store.
-            var productionEndpoint = new ConfigurationSetting("endpoint", "https://production.endpoint.com", "production");
-            var productionInstances = new ConfigurationSetting("instances", "1", "production");
-
-            await client.SetAsync(productionEndpoint);
-            await client.SetAsync(productionInstances);
+            var setting = new ConfigurationSetting("revised_setting", "v1");
+            await client.SetAsync(setting);
 
             // Create a first revision.
-            productionEndpoint.Value = "https://production.endpoint.com/v1";
-            productionInstances.Value = "5";
-            await client.SetAsync(productionEndpoint);
-            await client.SetAsync(productionInstances);
+            setting.Value = "v2";
+            await client.SetAsync(setting);
 
             // Create a second revision.
-            productionEndpoint.Value = "https://production.endpoint.com/v2";
-            productionInstances.Value = "10";
-            await client.SetAsync(productionEndpoint);
-            await client.SetAsync(productionInstances);
+            setting.Value = "v3";
+            await client.SetAsync(setting);
 
             // Retrieve revisions for just the endpoint setting.
-            var endpointSettingSelector = new SettingSelector("endpoint", "production");
+            var selector = new SettingSelector("revised_setting");
 
             Debug.WriteLine("Revisions of production endpoint setting: ");
-            await foreach (ConfigurationSetting settingVersion in client.GetRevisionsAsync(endpointSettingSelector))
-            {
-                Debug.WriteLine($"Setting was {settingVersion} at {settingVersion.LastModified}.");
-            }
-
-            // Retrieve revisions for both production settings.
-            var productionSettingSelector = new SettingSelector(SettingSelector.Any, "production");
-
-            Debug.WriteLine("Revisions of production settings: ");
-            await foreach (ConfigurationSetting settingVersion in client.GetRevisionsAsync(productionSettingSelector))
+            await foreach (ConfigurationSetting settingVersion in client.GetRevisionsAsync(selector))
             {
                 Debug.WriteLine($"Setting was {settingVersion} at {settingVersion.LastModified}.");
             }
 
             // Once we don't need the Configuration Settings, we can delete them.
-            await client.DeleteAsync(productionEndpoint.Key, productionEndpoint.Label);
-            await client.DeleteAsync(productionInstances.Key, productionInstances.Label);
+            await client.DeleteAsync(setting.Key, setting.Label);
         }
     }
 }
