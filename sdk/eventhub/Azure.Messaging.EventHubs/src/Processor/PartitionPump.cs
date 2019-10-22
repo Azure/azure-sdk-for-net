@@ -212,7 +212,10 @@ namespace Azure.Messaging.EventHubs.Processor
                         // only known by the pump.  In this case, we expect the processor-provided reason to be null, and
                         // the private CloseReason is used instead.
 
-                        await PartitionProcessor.CloseAsync(Context, reason ?? CloseReason).ConfigureAwait(false);
+                        if (OwnerEventProcessor.ProcessingForPartitionStoppedAsync != null)
+                        {
+                            await OwnerEventProcessor.ProcessingForPartitionStoppedAsync(Context, reason ?? CloseReason).ConfigureAwait(false);
+                        }
                     }
                 }
                 finally

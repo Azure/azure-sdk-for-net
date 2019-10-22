@@ -16,19 +16,5 @@ namespace Azure.Messaging.EventHubs.Processor
     ///
     public abstract class BasePartitionProcessor
     {
-        /// <summary>
-        ///   Closes the partition processor.
-        /// </summary>
-        ///
-        /// <param name="partitionContext">Contains information about the partition from which events are sourced and provides a means of creating checkpoints for that partition.</param>
-        /// <param name="reason">The reason why the partition processor is being closed.</param>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
-        public virtual Task CloseAsync(PartitionContext partitionContext,
-                                       PartitionProcessorCloseReason reason)
-        {
-            return Task.CompletedTask;
-        }
     }
 }

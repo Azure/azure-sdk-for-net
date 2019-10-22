@@ -63,6 +63,12 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   TODO.
         /// </summary>
         ///
+        private Action<PartitionContext, PartitionProcessorCloseReason> OnClose { get; }
+
+        /// <summary>
+        ///   TODO.
+        /// </summary>
+        ///
         private Action<PartitionContext, IEnumerable<EventData>> OnProcessEvents { get; }
 
         /// <summary>
@@ -80,7 +86,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.</param>
         /// <param name="options">The set of options to use for the event processors.</param>
         /// <param name="onInitialize">A callback action to be called on <see cref="EventProcessor.InitializeProcessingForPartitionAsync" />.</param>
-        /// <param name="onClose">A callback action to be called on <see cref="PartitionProcessor.CloseAsync" />.</param>
+        /// <param name="onClose">A callback action to be called on <see cref="EventProcessor.ProcessingForPartitionStoppedAsync" />.</param>
         /// <param name="onProcessEvents">A callback action to be called on <see cref="EventProcessor.ProcessEventsAsync" />.</param>
         /// <param name="onProcessException">A callback action to be called on <see cref="EventProcessor.ProcessExceptionAsync" />.</param>
         ///
@@ -96,11 +102,7 @@ namespace Azure.Messaging.EventHubs.Tests
             ConsumerGroup = consumerGroup;
             InnerClient = client;
 
-            PartitionProcessorFactory = partitionContext =>
-                new PartitionProcessor
-                (
-                    onClose
-                );
+            PartitionProcessorFactory = partitionContext => new PartitionProcessor();
 
             InnerPartitionManager = partitionManager ?? new InMemoryPartitionManager();
 
@@ -115,6 +117,7 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             OnInitialize = onInitialize;
+            OnClose = onClose;
             OnProcessEvents = onProcessEvents;
             OnProcessException = onProcessException;
 
@@ -145,6 +148,15 @@ namespace Azure.Messaging.EventHubs.Tests
                     eventProcessor.InitializeProcessingForPartitionAsync = (partitionContext) =>
                     {
                         OnInitialize(partitionContext);
+                        return Task.CompletedTask;
+                    };
+                }
+
+                if (OnClose != null)
+                {
+                    eventProcessor.ProcessingForPartitionStoppedAsync = (partitionContext, reason) =>
+                    {
+                        OnClose(partitionContext, reason);
                         return Task.CompletedTask;
                     };
                 }
@@ -312,45 +324,11 @@ namespace Azure.Messaging.EventHubs.Tests
         private class PartitionProcessor : BasePartitionProcessor
         {
             /// <summary>
-            ///   A callback action to be called on <see cref="CloseAsync" />.
-            /// </summary>
-            ///
-            private Action<PartitionContext, PartitionProcessorCloseReason> OnClose { get; }
-
-            /// <summary>
             ///   Initializes a new instance of the <see cref="PartitionProcessor"/> class.
             /// </summary>
             ///
             public PartitionProcessor()
             {
-            }
-
-            /// <summary>
-            ///   Initializes a new instance of the <see cref="PartitionProcessor"/> class.
-            /// </summary>
-            ///
-            /// <param name="onInitialize">A callback action to be called on <see cref="InitializeAsync" />.</param>
-            /// <param name="onClose">A callback action to be called on <see cref="CloseAsync" />.</param>
-            ///
-            public PartitionProcessor(Action<PartitionContext, PartitionProcessorCloseReason> onClose = null)
-            {
-                OnClose = onClose;
-            }
-
-            /// <summary>
-            ///   Closes the partition processor.
-            /// </summary>
-            ///
-            /// <param name="partitionContext">Contains information about the partition from which events are sourced and provides a means of creating checkpoints for that partition.</param>
-            /// <param name="reason">The reason why the partition processor is being closed.</param>
-            ///
-            /// <returns>A task to be resolved on when the operation has completed.</returns>
-            ///
-            public override Task CloseAsync(PartitionContext partitionContext,
-                                            PartitionProcessorCloseReason reason)
-            {
-                OnClose?.Invoke(partitionContext, reason);
-                return Task.CompletedTask;
             }
         }
 

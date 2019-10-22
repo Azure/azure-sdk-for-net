@@ -85,7 +85,7 @@ namespace Azure.Messaging.EventHubs.Samples
                 var eventProcessor = new EventProcessor(EventHubConsumer.DefaultConsumerGroupName, client, factory, partitionManager, eventProcessorOptions);
 
                 int totalEventsCount = 0;
-                int initializedPartitionsCount = 0;
+                int partitionsBeingProcessedCount = 0;
 
                 // TODO: explain callbacks setup.
 
@@ -94,10 +94,24 @@ namespace Azure.Messaging.EventHubs.Samples
                     // This is the last piece of code guaranteed to run before event processing, so all initialization
                     // must be done by the moment this method returns.
 
-                    Interlocked.Increment(ref initializedPartitionsCount);
+                    Interlocked.Increment(ref partitionsBeingProcessedCount);
 
                     Console.WriteLine($"\tPartition '{ partitionContext.PartitionId }': partition processing has started.");
                     Console.WriteLine();
+
+                    // This method is asynchronous, which means it's expected to return a Task.
+
+                    return Task.CompletedTask;
+                };
+
+                eventProcessor.ProcessingForPartitionStoppedAsync = (PartitionContext partitionContext, PartitionProcessorCloseReason reason) =>
+                {
+                    // The code to be run just before stopping processing events for a partition.  This is the right place to dispose
+                    // of objects that will no longer be used.
+
+                    Interlocked.Decrement(ref partitionsBeingProcessedCount);
+
+                    Console.WriteLine($"\tPartition '{ partitionContext.PartitionId }': partition processing has stopped. Reason: { reason }.");
 
                     // This method is asynchronous, which means it's expected to return a Task.
 
@@ -160,7 +174,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
                 var partitionsCount = (await client.GetPartitionIdsAsync()).Length;
 
-                while (initializedPartitionsCount < partitionsCount)
+                while (partitionsBeingProcessedCount < partitionsCount)
                 {
                     await Task.Delay(500, cancellationSource.Token);
                 }
@@ -230,15 +244,6 @@ namespace Azure.Messaging.EventHubs.Samples
         ///
         private class SamplePartitionProcessor : BasePartitionProcessor
         {
-            /// <summary>Keeps track of the amount of active SamplePartitionProcessors.</summary>
-            private static int s_activeInstancesCount = 0;
-
-            /// <summary>
-            ///   Keeps track of the amount of active SamplePartitionProcessors.
-            /// </summary>
-            ///
-            public static int ActiveInstancesCount  => s_activeInstancesCount;
-
             /// <summary>
             ///   Initializes a new instance of the <see cref="SamplePartitionProcessor"/> class.
             /// </summary>
@@ -246,30 +251,6 @@ namespace Azure.Messaging.EventHubs.Samples
             public SamplePartitionProcessor()
             {
                 Console.WriteLine($"\tPartition processor successfully created.");
-            }
-
-            /// <summary>
-            ///   Closes the partition processor.
-            /// </summary>
-            ///
-            /// <param name="partitionContext">Contains information about the partition from which events are sourced and provides a means of creating checkpoints for that partition.</param>
-            /// <param name="reason">The reason why the partition processor is being closed.</param>
-            ///
-            /// <returns>A task to be resolved on when the operation has completed.</returns>
-            ///
-            public override Task CloseAsync(PartitionContext partitionContext,
-                                            PartitionProcessorCloseReason reason)
-            {
-                // The code to be run when closing the partition processor.  This is the right place to dispose
-                // of objects that will no longer be used.
-
-                Interlocked.Decrement(ref s_activeInstancesCount);
-
-                Console.WriteLine($"\tPartition '{ partitionContext.PartitionId }': partition processor successfully closed. Reason: { reason }.");
-
-                // This method is asynchronous, which means it's expected to return a Task.
-
-                return Task.CompletedTask;
             }
         }
     }
