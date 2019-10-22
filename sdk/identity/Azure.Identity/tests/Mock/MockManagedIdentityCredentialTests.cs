@@ -23,7 +23,7 @@ namespace Azure.Identity.Tests.Mock
 
             var cancellation = new CancellationTokenSource();
 
-            Task<AccessToken> getTokenComplete = credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), cancellation.Token);
+            ValueTask<AccessToken> getTokenComplete = credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), cancellation.Token);
 
             cancellation.Cancel();
 
