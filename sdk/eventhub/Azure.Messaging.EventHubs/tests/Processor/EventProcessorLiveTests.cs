@@ -116,10 +116,10 @@ namespace Azure.Messaging.EventHubs.Tests
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
                             onClose: (partitionContext, reason) =>
-                                {
-                                    closeCalls.AddOrUpdate(partitionContext.PartitionId, 1, (partitionId, value) => value + 1);
-                                    closeReasons[partitionContext.PartitionId] = reason;
-                                }
+                            {
+                                closeCalls.AddOrUpdate(partitionContext.PartitionId, 1, (partitionId, value) => value + 1);
+                                closeReasons[partitionContext.PartitionId] = reason;
+                            }
                         );
 
                     eventProcessorManager.AddEventProcessors(1);
@@ -180,7 +180,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
-                            onProcessEvents: (partitionContext, events, cancellationToken) =>
+                            onProcessEvents: (partitionContext, events) =>
                             {
                                 // Make it a list so we can safely enumerate it.
 
@@ -286,7 +286,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
-                            onProcessEvents: (partitionContext, events, cancellationToken) =>
+                            onProcessEvents: (partitionContext, events) =>
                                 receivedEventSets.Add(events)
                         );
 
@@ -451,7 +451,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
-                            onProcessEvents: (partitionContext, events, cancellationToken) =>
+                            onProcessEvents: (partitionContext, events) =>
                             {
                                 // Make it a list so we can safely enumerate it.
 
@@ -586,7 +586,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
                             partitionManager,
-                            onProcessEvents: (partitionContext, events, cancellationToken) =>
+                            onProcessEvents: (partitionContext, events) =>
                             {
                                 // Make it a list so we can safely enumerate it.
 
@@ -681,7 +681,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
                             partitionManager,
-                            onProcessEvents: (partitionContext, events, cancellationToken) =>
+                            onProcessEvents: (partitionContext, events) =>
                             {
                                 // Make it a list so we can safely enumerate it.
 
@@ -779,7 +779,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
                             options: new EventProcessorOptions { InitialEventPosition = EventPosition.FromEnqueuedTime(enqueuedTime) },
-                            onProcessEvents: (partitionContext, events, cancellationToken) =>
+                            onProcessEvents: (partitionContext, events) =>
                             {
                                 // Make it a list so we can safely enumerate it.
 
@@ -842,7 +842,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             options: new EventProcessorOptions { MaximumReceiveWaitTime = TimeSpan.FromSeconds(maximumWaitTimeInSecs) },
                             onInitialize: partitionContext =>
                                 timestamps.TryAdd(partitionContext.PartitionId, new List<DateTimeOffset> { DateTimeOffset.UtcNow }),
-                            onProcessEvents: (partitionContext, events, cancellationToken) =>
+                            onProcessEvents: (partitionContext, events) =>
                                 timestamps.AddOrUpdate
                                     (
                                         // The key already exists, so the 'addValue' factory will never be called.
@@ -942,7 +942,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
                             options: new EventProcessorOptions { MaximumMessageCount = maximumMessageCount },
-                            onProcessEvents: (partitionContext, events, cancellationToken) =>
+                            onProcessEvents: (partitionContext, events) =>
                             {
                                 // Make it a list so we can safely enumerate it.
 

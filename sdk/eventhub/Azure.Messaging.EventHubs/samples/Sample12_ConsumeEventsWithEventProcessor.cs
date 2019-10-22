@@ -84,6 +84,31 @@ namespace Azure.Messaging.EventHubs.Samples
 
                 var eventProcessor = new EventProcessor(EventHubConsumer.DefaultConsumerGroupName, client, factory, partitionManager, eventProcessorOptions);
 
+                int totalEventsCount = 0;
+
+                // TODO: explain callbacks setup.
+
+                eventProcessor.ProcessEventsAsync = (PartitionContext partitionContext, IEnumerable<EventData> events) =>
+                {
+                    // Here the user can specify what to do with the events received from the event processor.  We are counting how
+                    // many events were received across all partitions so we can check whether all sent events were received.
+                    //
+                    // It's important to notice that this method is called even when no events are received after the maximum wait time, which
+                    // can be specified by the user in the event processor options.  In this case, the IEnumerable events is empty, but not null.
+
+                    int eventsCount = events.Count();
+
+                    if (eventsCount > 0)
+                    {
+                        Interlocked.Add(ref totalEventsCount, eventsCount);
+                        Console.WriteLine($"\tPartition '{ partitionContext.PartitionId }': { eventsCount } event(s) received.");
+                    }
+
+                    // This method is asynchronous, which means it's expected to return a Task.
+
+                    return Task.CompletedTask;
+                };
+
                 // Once started, the event processor will start to claim partitions and receive events from them.
 
                 Console.WriteLine("Starting the event processor.");
@@ -150,7 +175,7 @@ namespace Azure.Messaging.EventHubs.Samples
                 // Print out the amount of events that we received.
 
                 Console.WriteLine();
-                Console.WriteLine($"Amount of events received: { SamplePartitionProcessor.TotalEventsCount }. Expected: { expectedAmountOfEvents }.");
+                Console.WriteLine($"Amount of events received: { totalEventsCount }. Expected: { expectedAmountOfEvents }.");
             }
 
             // At this point, our client and producer have passed their "using" scope and have safely been disposed of.  We
@@ -177,20 +202,11 @@ namespace Azure.Messaging.EventHubs.Samples
             /// <summary>Keeps track of the amount of active SamplePartitionProcessors.</summary>
             private static int s_activeInstancesCount = 0;
 
-            /// <summary>Keeps track of the amount of received events across all existing instances of this class.</summary>
-            private static int s_totalEventsCount = 0;
-
             /// <summary>
             ///   Keeps track of the amount of active SamplePartitionProcessors.
             /// </summary>
             ///
             public static int ActiveInstancesCount  => s_activeInstancesCount;
-
-            /// <summary>
-            ///   Keeps track of the amount of received events across all existing instances of this class.
-            /// </summary>
-            ///
-            public static int TotalEventsCount => s_totalEventsCount;
 
             /// <summary>
             ///   Initializes a new instance of the <see cref="SamplePartitionProcessor"/> class.
@@ -242,39 +258,6 @@ namespace Azure.Messaging.EventHubs.Samples
                 Interlocked.Decrement(ref s_activeInstancesCount);
 
                 Console.WriteLine($"\tPartition '{ partitionContext.PartitionId }': partition processor successfully closed. Reason: { reason }.");
-
-                // This method is asynchronous, which means it's expected to return a Task.
-
-                return Task.CompletedTask;
-            }
-
-            /// <summary>
-            ///   Processes a set of received <see cref="EventData" />.
-            /// </summary>
-            ///
-            /// <param name="partitionContext">Contains information about the partition from which events are sourced and provides a means of creating checkpoints for that partition.</param>
-            /// <param name="events">The received events to be processed.</param>
-            /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.  It's not used in this sample.</param>
-            ///
-            /// <returns>A task to be resolved on when the operation has completed.</returns>
-            ///
-            public override Task ProcessEventsAsync(PartitionContext partitionContext,
-                                                    IEnumerable<EventData> events,
-                                                    CancellationToken cancellationToken)
-            {
-                // Here the user can specify what to do with the events received from the event processor.  We are counting how
-                // many events were received across all instances of this class so we can check whether all sent events were received.
-                //
-                // It's important to notice that this method is called even when no events are received after the maximum wait time, which
-                // can be specified by the user in the event processor options.  In this case, the IEnumerable events is empty, but not null.
-
-                int eventsCount = events.Count();
-
-                if (eventsCount > 0)
-                {
-                    Interlocked.Add(ref s_totalEventsCount, eventsCount);
-                    Console.WriteLine($"\tPartition '{ partitionContext.PartitionId }': { eventsCount } event(s) received.");
-                }
 
                 // This method is asynchronous, which means it's expected to return a Task.
 

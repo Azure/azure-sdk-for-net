@@ -103,6 +103,12 @@ namespace Azure.Messaging.EventHubs.Processor
         private Task RunningTask { get; set; }
 
         /// <summary>
+        ///   TODO.
+        /// </summary>
+        ///
+        public Func<PartitionContext, IEnumerable<EventData>, Task> ProcessEventsAsync { internal get; set; }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="EventProcessor"/> class.
         /// </summary>
         ///
@@ -477,7 +483,7 @@ namespace Azure.Messaging.EventHubs.Processor
                     options.InitialEventPosition = EventPosition.FromSequenceNumber(initialSequenceNumber.Value);
                 }
 
-                var partitionPump = new PartitionPump(InnerClient, ConsumerGroup, partitionContext, partitionProcessor, options);
+                var partitionPump = new PartitionPump(this, InnerClient, ConsumerGroup, partitionContext, partitionProcessor, options);
 
                 await partitionPump.StartAsync().ConfigureAwait(false);
 

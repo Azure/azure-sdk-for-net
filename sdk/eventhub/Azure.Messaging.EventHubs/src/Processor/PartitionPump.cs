@@ -31,6 +31,12 @@ namespace Azure.Messaging.EventHubs.Processor
         public bool IsRunning => RunningTask != null && !RunningTask.IsCompleted;
 
         /// <summary>
+        ///   TODO
+        /// </summary>
+        ///
+        private EventProcessor OwnerEventProcessor { get; }
+
+        /// <summary>
         ///   The client used to interact with the Azure Event Hubs service.
         /// </summary>
         ///
@@ -90,18 +96,21 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Initializes a new instance of the <see cref="PartitionPump"/> class.
         /// </summary>
         ///
+        /// <param name="eventProcessor">TODO.</param>
         /// <param name="eventHubClient">The client used to interact with the Azure Event Hubs service.</param>
         /// <param name="consumerGroup">The name of the consumer group this partition pump is associated with.  Events are read in the context of this group.</param>
         /// <param name="partitionContext">The context of the Event Hub partition this partition pump is associated with.  Events will be read only from this partition.</param>
         /// <param name="partitionProcessor">A partition processor used to process events and errors.  Its implementation must be provided by the caller.</param>
         /// <param name="options">The set of options to use for this partition pump.</param>
         ///
-        internal PartitionPump(EventHubClient eventHubClient,
+        internal PartitionPump(EventProcessor eventProcessor,
+                               EventHubClient eventHubClient,
                                string consumerGroup,
                                PartitionContext partitionContext,
                                BasePartitionProcessor partitionProcessor,
                                EventProcessorOptions options)
         {
+            OwnerEventProcessor = eventProcessor;
             InnerClient = eventHubClient;
             ConsumerGroup = consumerGroup;
             Context = partitionContext;
@@ -251,7 +260,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                     try
                     {
-                        await PartitionProcessor.ProcessEventsAsync(Context, receivedEvents, cancellationToken).ConfigureAwait(false);
+                        await OwnerEventProcessor.ProcessEventsAsync(Context, receivedEvents).ConfigureAwait(false);
                     }
                     catch (Exception partitionProcessorException)
                     {

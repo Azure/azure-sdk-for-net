@@ -199,13 +199,6 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 return Task.CompletedTask;
             }
-
-            public override Task ProcessEventsAsync(PartitionContext partitionContext,
-                                                    IEnumerable<EventData> events,
-                                                    CancellationToken cancellationToken)
-            {
-                return Task.CompletedTask;
-            }
         }
     }
 }
