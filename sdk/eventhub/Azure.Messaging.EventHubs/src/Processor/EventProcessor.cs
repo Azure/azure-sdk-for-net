@@ -14,7 +14,7 @@ namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
     ///   Receives <see cref="EventData" /> as they are available for a partition, in the context of a consumer group, and routes
-    ///   them to a partition processor instance to be processed.
+    ///   them to be processed by a function provided by the user.
     /// </summary>
     ///
     public class EventProcessor
@@ -58,12 +58,6 @@ namespace Azure.Messaging.EventHubs.Processor
         /// </summary>
         ///
         private string ConsumerGroup { get; }
-
-        /// <summary>
-        ///   A factory used to create partition processors.
-        /// </summary>
-        ///
-        private Func<PartitionContext, BasePartitionProcessor> PartitionProcessorFactory { get; }
 
         /// <summary>
         ///   Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.
@@ -132,7 +126,6 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <param name="consumerGroup">The name of the consumer group this event processor is associated with.  Events are read in the context of this group.</param>
         /// <param name="eventHubClient">The client used to interact with the Azure Event Hubs service.</param>
-        /// <param name="partitionProcessorFactory">Creates a partition processor instance for the associated <see cref="PartitionContext" />.</param>
         /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.</param>
         /// <param name="options">The set of options to use for this event processor.</param>
         ///
@@ -144,18 +137,15 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         public EventProcessor(string consumerGroup,
                               EventHubClient eventHubClient,
-                              Func<PartitionContext, BasePartitionProcessor> partitionProcessorFactory,
                               PartitionManager partitionManager,
                               EventProcessorOptions options = default)
         {
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
             Argument.AssertNotNull(eventHubClient, nameof(eventHubClient));
-            Argument.AssertNotNull(partitionProcessorFactory, nameof(partitionProcessorFactory));
             Argument.AssertNotNull(partitionManager, nameof(partitionManager));
 
             InnerClient = eventHubClient;
             ConsumerGroup = consumerGroup;
-            PartitionProcessorFactory = partitionProcessorFactory;
             Manager = partitionManager;
             Options = options?.Clone() ?? new EventProcessorOptions();
 
@@ -491,7 +481,6 @@ namespace Azure.Messaging.EventHubs.Processor
 
             try
             {
-                BasePartitionProcessor partitionProcessor = PartitionProcessorFactory(partitionContext);
                 EventProcessorOptions options = Options.Clone();
 
                 // Ovewrite the initial event position in case a checkpoint exists.
@@ -501,7 +490,7 @@ namespace Azure.Messaging.EventHubs.Processor
                     options.InitialEventPosition = EventPosition.FromSequenceNumber(initialSequenceNumber.Value);
                 }
 
-                var partitionPump = new PartitionPump(this, InnerClient, ConsumerGroup, partitionContext, partitionProcessor, options);
+                var partitionPump = new PartitionPump(this, InnerClient, ConsumerGroup, partitionContext, options);
 
                 await partitionPump.StartAsync().ConfigureAwait(false);
 

@@ -17,12 +17,6 @@ namespace Azure.Messaging.EventHubs.Tests
     internal class EventProcessorManager
     {
         /// <summary>
-        ///   A factory used to create partition processors.
-        /// </summary>
-        ///
-        private Func<PartitionContext, PartitionProcessor> PartitionProcessorFactory { get; }
-
-        /// <summary>
         ///   The name of the consumer group the event processors are associated with.  Events will be
         ///   read only in the context of this group.
         /// </summary>
@@ -102,8 +96,6 @@ namespace Azure.Messaging.EventHubs.Tests
             ConsumerGroup = consumerGroup;
             InnerClient = client;
 
-            PartitionProcessorFactory = partitionContext => new PartitionProcessor();
-
             InnerPartitionManager = partitionManager ?? new InMemoryPartitionManager();
 
             // In case it has not been specified, set the maximum receive wait time to 2 seconds because the default
@@ -138,7 +130,6 @@ namespace Azure.Messaging.EventHubs.Tests
                     (
                         ConsumerGroup,
                         InnerClient,
-                        PartitionProcessorFactory,
                         InnerPartitionManager,
                         Options
                     );
@@ -318,21 +309,6 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   A test helper class derived from <see cref="BasePartitionProcessor" />.
-        /// </summary>
-        ///
-        private class PartitionProcessor : BasePartitionProcessor
-        {
-            /// <summary>
-            ///   Initializes a new instance of the <see cref="PartitionProcessor"/> class.
-            /// </summary>
-            ///
-            public PartitionProcessor()
-            {
-            }
-        }
-
-        /// <summary>
         ///   Allows the load balance update and ownership expiration time spans to be overriden
         ///   for testing purposes.
         /// </summary>
@@ -363,15 +339,13 @@ namespace Azure.Messaging.EventHubs.Tests
             ///
             /// <param name="consumerGroup">The name of the consumer group this event processor is associated with.  Events are read in the context of this group.</param>
             /// <param name="eventHubClient">The client used to interact with the Azure Event Hubs service.</param>
-            /// <param name="partitionProcessorFactory">Creates a partition processor instance for the associated <see cref="PartitionContext" />.</param>
             /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.</param>
             /// <param name="options">The set of options to use for this event processor.</param>
             ///
             public ShortWaitTimeMock(string consumerGroup,
                                      EventHubClient eventHubClient,
-                                     Func<PartitionContext, PartitionProcessor> partitionProcessorFactory,
                                      PartitionManager partitionManager,
-                                     EventProcessorOptions options) : base(consumerGroup, eventHubClient, partitionProcessorFactory, partitionManager, options)
+                                     EventProcessorOptions options) : base(consumerGroup, eventHubClient, partitionManager, options)
             {
             }
         }

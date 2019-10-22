@@ -46,19 +46,8 @@ namespace Azure.Messaging.EventHubs.Samples
             await using (var client = new EventHubClient(connectionString, eventHubName))
             {
                 // An event processor is associated with a specific Event Hub and a consumer group.  It receives events from
-                // multiple partitions in the Event Hub, passing them to the user for processing.  It's worth mentioning that
-                // an event processor is a generic class, and it takes a partition processor as its underlying type.
+                // multiple partitions in the Event Hub, passing them to the user for processing.
                 //
-                // A partition processor is associated with a specific partition and is responsible for processing events when
-                // requested by the event processor.  In order to use it as the event processor's underlying type, two conditions
-                // must be met:
-                //
-                //     - It must be a class derived from BasePartitionProcessor.
-                //
-                //     - It must have a parameterless constructor.
-                //
-                // We'll be using a SamplePartitionProcessor, whose implementation can be found at the end of this sample.
-
                 // A partition manager may create checkpoints and list/claim partition ownership.  The user can implement their
                 // own partition manager by creating a subclass from the PartitionManager abstract class.  Here we are creating
                 // a new instance of an InMemoryPartitionManager, provided by the Azure.Messaging.EventHubs.Processor namespace.
@@ -76,18 +65,14 @@ namespace Azure.Messaging.EventHubs.Samples
                     MaximumReceiveWaitTime = TimeSpan.FromSeconds(1)
                 };
 
-                // TODO: remove placeholder factory.  This will be discarded soon.
-
-                Func<PartitionContext, BasePartitionProcessor> factory = _ => new SamplePartitionProcessor();
-
                 // Let's finally create our event processor.  We're using the default consumer group that was created with the Event Hub.
 
-                var eventProcessor = new EventProcessor(EventHubConsumer.DefaultConsumerGroupName, client, factory, partitionManager, eventProcessorOptions);
+                var eventProcessor = new EventProcessor(EventHubConsumer.DefaultConsumerGroupName, client, partitionManager, eventProcessorOptions);
 
                 int totalEventsCount = 0;
                 int partitionsBeingProcessedCount = 0;
 
-                // TODO: explain callbacks setup.
+                // TODO: explain callbacks setup once the public API is finished for the next preview.
 
                 eventProcessor.InitializeProcessingForPartitionAsync = (PartitionContext partitionContext) =>
                 {
@@ -97,7 +82,6 @@ namespace Azure.Messaging.EventHubs.Samples
                     Interlocked.Increment(ref partitionsBeingProcessedCount);
 
                     Console.WriteLine($"\tPartition '{ partitionContext.PartitionId }': partition processing has started.");
-                    Console.WriteLine();
 
                     // This method is asynchronous, which means it's expected to return a Task.
 
@@ -164,10 +148,9 @@ namespace Azure.Messaging.EventHubs.Samples
                 Console.WriteLine("Event processor started.");
                 Console.WriteLine();
 
-                // Wait until the event processor has claimed ownership of all partitions in the Event Hub.  There should be a single
-                // active partition processor per owned partition.  This may take some time as there's a 10 seconds interval between
-                // claims.  To be sure that we do not block forever in case the event processor fails, we will specify a fairly long
-                // time to wait and then cancel waiting.
+                // Wait until the event processor has claimed ownership of all partitions in the Event Hub.  This may take some time
+                // as there's a 10 seconds interval between claims.  To be sure that we do not block forever in case the event processor
+                // fails, we will specify a fairly long time to wait and then cancel waiting.
 
                 CancellationTokenSource cancellationSource = new CancellationTokenSource();
                 cancellationSource.CancelAfter(TimeSpan.FromSeconds(400));
@@ -193,6 +176,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
                 await using (EventHubProducer producer = client.CreateProducer())
                 {
+                    Console.WriteLine();
                     Console.WriteLine("Sending events to the Event Hub.");
                     Console.WriteLine();
 
@@ -227,31 +211,6 @@ namespace Azure.Messaging.EventHubs.Samples
             // have no further obligations.
 
             Console.WriteLine();
-        }
-
-        /// <summary>
-        ///   A sample class derived from <see cref="BasePartitionProcessor" />.  It makes use of static integers to count
-        ///   the amount of received events across all existing instances of this class, as well as the amount of active
-        ///   SamplePartitionProcessors.
-        /// </summary>
-        ///
-        /// <remarks>
-        ///   All implemented methods are asynchronous, which means they're expected to return a Task.  This approach is
-        ///   specially useful when the processing is done by thread-blocking services.
-        ///   The implementations found in this sample are synchronous and simply return a <see cref="Task.CompletedTask" />
-        ///   to match the return type.
-        /// </remarks>
-        ///
-        private class SamplePartitionProcessor : BasePartitionProcessor
-        {
-            /// <summary>
-            ///   Initializes a new instance of the <see cref="SamplePartitionProcessor"/> class.
-            /// </summary>
-            ///
-            public SamplePartitionProcessor()
-            {
-                Console.WriteLine($"\tPartition processor successfully created.");
-            }
         }
     }
 }

@@ -56,12 +56,6 @@ namespace Azure.Messaging.EventHubs.Processor
         private PartitionContext Context { get; }
 
         /// <summary>
-        ///   Processes events and errors.
-        /// </summary>
-        ///
-        private BasePartitionProcessor PartitionProcessor { get; }
-
-        /// <summary>
         ///   The set of options to use for this partition pump.
         /// </summary>
         ///
@@ -100,21 +94,18 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="eventHubClient">The client used to interact with the Azure Event Hubs service.</param>
         /// <param name="consumerGroup">The name of the consumer group this partition pump is associated with.  Events are read in the context of this group.</param>
         /// <param name="partitionContext">The context of the Event Hub partition this partition pump is associated with.  Events will be read only from this partition.</param>
-        /// <param name="partitionProcessor">A partition processor used to process events and errors.  Its implementation must be provided by the caller.</param>
         /// <param name="options">The set of options to use for this partition pump.</param>
         ///
         internal PartitionPump(EventProcessor eventProcessor,
                                EventHubClient eventHubClient,
                                string consumerGroup,
                                PartitionContext partitionContext,
-                               BasePartitionProcessor partitionProcessor,
                                EventProcessorOptions options)
         {
             OwnerEventProcessor = eventProcessor;
             InnerClient = eventHubClient;
             ConsumerGroup = consumerGroup;
             Context = partitionContext;
-            PartitionProcessor = partitionProcessor;
             Options = options;
         }
 
