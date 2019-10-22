@@ -19,7 +19,7 @@ using NUnit.Framework;
 namespace Azure.Storage.Test.Shared
 {
     [Category("Live")]
-    [Ignore("blobs")]
+    [TestFixture, Ignore("blobs")]
     public abstract class BlobTestBase : StorageTestBase
     {
         public readonly string ReceivedETag = "\"received\"";
