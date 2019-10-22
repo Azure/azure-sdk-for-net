@@ -25,6 +25,11 @@ namespace Azure.Messaging.EventHubs.Amqp
     internal class AmqpEventHubClient : TransportEventHubClient
     {
         /// <summary>
+        /// The default scope used for token authentication with EventHubs.
+        /// </summary>
+        private const string EventHubsScope = "https://eventhubs.azure.net/.default";
+
+        /// <summary>
         ///   The buffer to apply when considering refreshing; credentials that expire less than this duration will be refreshed.
         /// </summary>
         ///
@@ -510,7 +515,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             if ((string.IsNullOrEmpty(activeToken.Token)) || (activeToken.ExpiresOn <= DateTimeOffset.UtcNow.Add(CredentialRefreshBuffer)))
             {
-                activeToken = await Credential.GetTokenAsync(new TokenRequestContext(Array.Empty<string>()), cancellationToken).ConfigureAwait(false);
+                activeToken = await Credential.GetTokenAsync(new TokenRequestContext(new string[] { EventHubsScope }), cancellationToken).ConfigureAwait(false);
 
                 if ((string.IsNullOrEmpty(activeToken.Token)))
                 {
