@@ -748,20 +748,31 @@ namespace Azure.Data.AppConfiguration.Tests
         public async Task GetBatchSettingPagination()
         {
             ConfigurationClient service = GetClient();
-
             const int expectedEvents = 105;
+            var lables = new List<string>();
             var key = await SetMultipleKeys(service, expectedEvents);
-
-            int resultsReturned = 0;
-            SettingSelector selector = new SettingSelector(key);
-
-            await foreach (ConfigurationSetting item in service.GetSettingsAsync(selector, CancellationToken.None))
+            try
             {
-                Assert.AreEqual("test_value", item.Value);
-                resultsReturned++;
-            }
 
-            Assert.AreEqual(expectedEvents, resultsReturned);
+                int resultsReturned = 0;
+                SettingSelector selector = new SettingSelector(key);
+
+                await foreach (ConfigurationSetting item in service.GetSettingsAsync(selector, CancellationToken.None))
+                {
+                    Assert.AreEqual("test_value", item.Value);
+                    lables.Add(item.Label);
+                    resultsReturned++;
+                }
+
+                Assert.AreEqual(expectedEvents, resultsReturned);
+            }
+            finally
+            {
+                const string batchKey = "BatchKey";
+
+                lables.ForEach(async label => await service.DeleteAsync(key, label));
+                await service.DeleteAsync(batchKey);
+            }
         }
 
         [Test]
