@@ -183,6 +183,11 @@ namespace Azure.Storage
                 public const string LogsName = "$logs";
 
                 /// <summary>
+                /// The Azure Storage name used to identify a storage account's web content container.
+                /// </summary>
+                public const string WebName = "$web";
+
+                /// <summary>
                 /// The Azure Storage error codes for Blob Container Client.
                 /// </summary>
                 public const string AlreadyExists = "ContainerAlreadyExists";
@@ -288,6 +293,11 @@ namespace Azure.Storage
 
             public const string SetHttpHeadersOperationName =
                 "Azure.Storage.Files.FileClient.SetHttpHeaders";
+            public const string ForceCloseAllHandlesOperationName =
+                "Azure.Storage.Files.FileClient.ForceCloseAllHandles";
+            public const string ForceCloseHandleOperationName =
+                "Azure.Storage.Files.FileClient.ForceCloseHandle";
+
             internal static class Directory
             {
                 public const string CreateOperationName =
@@ -304,8 +314,10 @@ namespace Azure.Storage
                     "Azure.Storage.Files.DirectoryClient.ListFilesAndDirectoriesSegment";
                 public const string GetHandlesOperationName =
                     "Azure.Storage.Files.DirectoryClient.ListHandles";
-                public const string ForceCloseHandlesOperationName =
-                    "Azure.Storage.Files.DirectoryClient.ForceCloseHandles";
+                public const string ForceCloseAllHandlesOperationName =
+                    "Azure.Storage.Files.DirectoryClient.ForceCloseAllHandles";
+                public const string ForceCloseHandleOperationName =
+                    "Azure.Storage.Files.DirectoryClient.ForceCloseHandle";
             }
 
             internal static class Service
@@ -363,10 +375,10 @@ namespace Azure.Storage
 
             public const string ClearMessagesOperationName =
                 "Azure.Storage.Queues.QueueClient.ClearMessages";
-            public const string EnqueueMessageOperationName =
-                "Azure.Storage.Queues.QueueClient.EnqueueMessage";
-            public const string DequeueMessageOperationName =
-                "Azure.Storage.Queues.QueueClient.DequeueMessages";
+            public const string SendMessageOperationName =
+                "Azure.Storage.Queues.QueueClient.SendMessage";
+            public const string ReceiveMessagesOperationName =
+                "Azure.Storage.Queues.QueueClient.ReceiveMessages";
             public const string PeekMessagesOperationName =
                 "Azure.Storage.Queues.QueueClient.PeekMessages";
             public const string DeleteMessageOperationName =
@@ -416,10 +428,10 @@ namespace Azure.Storage
                 public const string PermissionsUpper = "SP";
                 public const string Signature = "sig";
                 public const string SignatureUpper = "SIG";
-                public const string KeyOid = "skoid";
-                public const string KeyOidUpper = "SKOID";
-                public const string KeyTid = "sktid";
-                public const string KeyTidUpper = "SKTID";
+                public const string KeyObjectId = "skoid";
+                public const string KeyObjectIdUpper = "SKOID";
+                public const string KeyTenantId = "sktid";
+                public const string KeyTenantIdUpper = "SKTID";
                 public const string KeyStart = "skt";
                 public const string KeyStartUpper = "SKT";
                 public const string KeyExpiry = "ske";
@@ -459,7 +471,7 @@ namespace Azure.Storage
             internal static class AccountResources
             {
                 public const char Service = 's';
-                public const char BlobContainer = 'c';
+                public const char Container = 'c';
                 public const char Object = 'o';
             }
         }
@@ -475,8 +487,8 @@ namespace Azure.Storage
 
         internal static class GeoRedundantRead
         {
-            internal const string AlternateHostKey = "Azure.Storage.Common.GeoRedundantReadPolicy.AlternateHostKey";
-            internal const string ResourceNotReplicated = "Azure.Storage.Common.GeoRedundantReadPolicy.ResourceNotReplicated";
+            internal const string AlternateHostKey = "Azure.Storage.GeoRedundantReadPolicy.AlternateHostKey";
+            internal const string ResourceNotReplicated = "Azure.Storage.GeoRedundantReadPolicy.ResourceNotReplicated";
         }
 
         internal static class HttpStatusCode

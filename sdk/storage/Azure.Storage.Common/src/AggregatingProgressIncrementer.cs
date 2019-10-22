@@ -6,7 +6,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Azure.Storage.Common
+namespace Azure.Storage
 {
     /// <summary>
     /// An accumulator for request and response data transfers.
@@ -14,12 +14,11 @@ namespace Azure.Storage.Common
     internal sealed class AggregatingProgressIncrementer : IProgress<long>
     {
         private long _currentValue;
-        private bool _currentValueHasValue;
-        private readonly IProgress<StorageProgress> _innerHandler;
+        private readonly IProgress<long> _innerHandler;
 
         public Stream CreateProgressIncrementingStream(Stream stream) => _innerHandler != null && stream != null ? new ProgressIncrementingStream(stream, this) : stream;
 
-        public AggregatingProgressIncrementer(IProgress<StorageProgress> innerHandler) => _innerHandler = innerHandler;
+        public AggregatingProgressIncrementer(IProgress<long> innerHandler) => _innerHandler = innerHandler;
 
         /// <summary>
         /// Increments the current value and reports it to the progress handler
@@ -28,17 +27,8 @@ namespace Azure.Storage.Common
         public void Report(long bytes)
         {
             Interlocked.Add(ref _currentValue, bytes);
-            Volatile.Write(ref _currentValueHasValue, true);
 
-            if (_innerHandler != null)
-            {
-                StorageProgress current = Current;
-
-                if (current != null)
-                {
-                    _innerHandler.Report(current);
-                }
-            }
+            _innerHandler?.Report(Current);
         }
 
         /// <summary>
@@ -46,9 +36,8 @@ namespace Azure.Storage.Common
         /// </summary>
         public void Reset()
         {
-            var currentActual = Volatile.Read(ref _currentValue);
-
-            Report(-currentActual);
+            Volatile.Write(ref _currentValue, 0);
+            Report(0);
         }
 
         /// <summary>
@@ -57,22 +46,13 @@ namespace Azure.Storage.Common
         public static AggregatingProgressIncrementer None { get; } = new AggregatingProgressIncrementer(default);
 
         /// <summary>
-        /// Returns a StorageProgress instance representing the current progress value.
+        /// Returns a long instance representing the current progress value.
         /// </summary>
-        public StorageProgress Current
+        public long Current
         {
             get
             {
-                var result = default(StorageProgress);
-
-                if (_currentValueHasValue)
-                {
-                    var currentActual = Volatile.Read(ref _currentValue);
-
-                    result = new StorageProgress(currentActual);
-                }
-
-                return result;
+                return Volatile.Read(ref _currentValue);
             }
         }
     }

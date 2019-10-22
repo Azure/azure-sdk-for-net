@@ -6,9 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
 using Azure.Storage.Blobs;
+using Azure.Storage.Test;
 using NUnit.Framework;
 
-namespace Azure.Storage.Common.Test
+namespace Azure.Storage.Test
 {
     public class StorageSharedKeyCredentialsTests : CommonTestBase
     {
@@ -39,7 +40,7 @@ namespace Azure.Storage.Common.Test
 
             // Roll the credential to an Invalid value and make sure it fails
             credential.SetAccountKey(Convert.ToBase64String(Encoding.UTF8.GetBytes("Invalid")));
-            Assert.ThrowsAsync<StorageRequestFailedException>(
+            Assert.ThrowsAsync<RequestFailedException>(
                 async () => await service.GetAccountInfoAsync());
 
             // Re-roll the credential and make sure it succeeds again
@@ -75,9 +76,9 @@ namespace Azure.Storage.Common.Test
 
                 // Roll the credential to an Invalid value and make sure it fails
                 credential.SetAccountKey(Convert.ToBase64String(Encoding.UTF8.GetBytes("Invalid")));
-                Assert.ThrowsAsync<StorageRequestFailedException>(
+                Assert.ThrowsAsync<RequestFailedException>(
                     async () => await service.GetAccountInfoAsync());
-                Assert.ThrowsAsync<StorageRequestFailedException>(
+                Assert.ThrowsAsync<RequestFailedException>(
                     async () => await container.GetPropertiesAsync());
 
                 // Re-roll the credential and make sure it succeeds again

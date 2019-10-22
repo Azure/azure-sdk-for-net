@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Azure.Core.Http;
 using Azure.Storage;
 using Azure.Storage.Files;
 using Azure.Storage.Files.Models;
@@ -73,7 +72,6 @@ namespace Azure.Storage.Files.Samples
         /// <summary>
         /// Download a file.
         /// </summary>
-        /// <returns></returns>
         [Test]
         public void Download()
         {
@@ -225,12 +223,12 @@ namespace Azure.Storage.Files.Samples
                 // Try to create the share again
                 share.Create();
             }
-            catch (StorageRequestFailedException ex)
+            catch (RequestFailedException ex)
                 when (ex.ErrorCode == FileErrorCode.ShareAlreadyExists)
             {
                 // Ignore any errors if the share already exists
             }
-            catch (StorageRequestFailedException ex)
+            catch (RequestFailedException ex)
             {
                 Assert.Fail($"Unexpected error: {ex}");
             }

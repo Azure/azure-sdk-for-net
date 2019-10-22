@@ -8,7 +8,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Core;
-using Azure.Messaging.EventHubs.Metadata;
 
 namespace Azure.Messaging.EventHubs.Compatibility
 {
@@ -50,7 +49,6 @@ namespace Azure.Messaging.EventHubs.Compatibility
         ///
         /// <param name="trackOneReceiverFactory">A delegate that can be used for creation of the <see cref="TrackOne.PartitionReceiver" /> to which operations are delegated to.</param>
         /// <param name="retryPolicy">The retry policy to use when creating the <see cref="TrackOne.PartitionReceiver" />.</param>
-        /// <param name="lastEnqueuedEventProperties">The set of properties for the last event enqueued in a partition; if not requested in the consumer options, it is expected that this is <c>null</c>.</param>
         ///
         /// <remarks>
         ///   As an internal type, this class performs only basic sanity checks against its arguments.  It
@@ -62,8 +60,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
         /// </remarks>
         ///
         public TrackOneEventHubConsumer(Func<EventHubRetryPolicy, TrackOne.PartitionReceiver> trackOneReceiverFactory,
-                                        EventHubRetryPolicy retryPolicy,
-                                        LastEnqueuedEventProperties lastEnqueuedEventProperties) : base(lastEnqueuedEventProperties)
+                                        EventHubRetryPolicy retryPolicy)
         {
             Argument.AssertNotNull(trackOneReceiverFactory, nameof(trackOneReceiverFactory));
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
@@ -118,27 +115,20 @@ namespace Azure.Messaging.EventHubs.Compatibility
                                      eventData.SystemProperties.PartitionKey,
                                      (eventData.LastSequenceNumber != default ? eventData.LastSequenceNumber : default(long?)),
                                      (parsedLastOffset >= 0 ? parsedLastOffset : default(long?)),
-                                     (eventData.LastEnqueuedTime != default ? new DateTimeOffset(eventData.LastEnqueuedTime) : default(DateTimeOffset?)));
+                                     (eventData.LastEnqueuedTime != default ? new DateTimeOffset(eventData.LastEnqueuedTime) : default(DateTimeOffset?)),
+                                     (eventData.RetrievalTime != default ? new DateTimeOffset(eventData.RetrievalTime) : default(DateTimeOffset?)));
             }
 
             try
             {
-                IEnumerable<EventData> events = ((await TrackOneReceiver.ReceiveAsync(maximumMessageCount, maximumWaitTime).ConfigureAwait(false))
+                List<EventData> events = ((await TrackOneReceiver.ReceiveAsync(maximumMessageCount, maximumWaitTime).ConfigureAwait(false))
                         ?? Enumerable.Empty<TrackOne.EventData>())
-                    .Select(TransformEvent);
+                    .Select(TransformEvent)
+                    .ToList();
 
-                if ((TrackOneReceiver.ReceiverRuntimeMetricEnabled) && (LastEnqueuedEventInformation != null))
+                if ((TrackOneReceiver.ReceiverRuntimeMetricEnabled) && (events.Count > 0))
                 {
-                    if (!long.TryParse(TrackOneReceiver.RuntimeInfo.LastEnqueuedOffset, out var parsedOffset))
-                    {
-                        parsedOffset = -1;
-                    }
-
-                    LastEnqueuedEventInformation.UpdateMetrics(
-                        TrackOneReceiver.RuntimeInfo.LastSequenceNumber,
-                        ((parsedOffset >= 0) ? parsedOffset : default(long?)),
-                        ((TrackOneReceiver.RuntimeInfo.LastEnqueuedTimeUtc == DateTime.MinValue) ? default(DateTimeOffset?) : new DateTimeOffset(TrackOneReceiver.RuntimeInfo.LastEnqueuedTimeUtc)),
-                        ((TrackOneReceiver.RuntimeInfo.RetrievalTime == DateTime.MinValue) ? default(DateTimeOffset?) : new DateTimeOffset(TrackOneReceiver.RuntimeInfo.RetrievalTime)));
+                    LastReceivedEvent = events[events.Count - 1];
                 }
 
                 return events;

@@ -28,12 +28,12 @@ namespace Azure.Storage.Sas
         /// <summary>
         /// Gets the time at which the key becomes valid.
         /// </summary>
-        public DateTimeOffset KeyStart => _keyStart;
+        public DateTimeOffset KeyStartsOn => _keyStart;
 
         /// <summary>
         /// Gets the time at which the key becomes expires.
         /// </summary>
-        public DateTimeOffset KeyExpiry => _keyExpiry;
+        public DateTimeOffset KeyExpiresOn => _keyExpiry;
 
         /// <summary>
         /// Gets the Storage service that accepts the key.
@@ -63,12 +63,12 @@ namespace Azure.Storage.Sas
         /// </summary>
         internal BlobSasQueryParameters(
             string version,
-            string services,
-            string resourceTypes,
+            AccountSasServices? services,
+            AccountSasResourceTypes? resourceTypes,
             SasProtocol protocol,
-            DateTimeOffset startTime,
-            DateTimeOffset expiryTime,
-            IPRange ipRange,
+            DateTimeOffset startsOn,
+            DateTimeOffset expiresOn,
+            SasIPRange ipRange,
             string identifier,
             string resource,
             string permissions,
@@ -89,8 +89,8 @@ namespace Azure.Storage.Sas
                 services,
                 resourceTypes,
                 protocol,
-                startTime,
-                expiryTime,
+                startsOn,
+                expiresOn,
                 ipRange,
                 identifier,
                 resource,

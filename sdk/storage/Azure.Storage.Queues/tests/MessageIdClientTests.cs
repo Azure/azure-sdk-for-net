@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -24,7 +24,7 @@ namespace Azure.Storage.Queues.Test
             // Arrange
             using (GetNewQueue(out QueueClient queue))
             {
-                Models.EnqueuedMessage enqueuedMessage = (await queue.EnqueueMessageAsync(string.Empty)).Value;
+                Models.SendReceipt enqueuedMessage = (await queue.SendMessageAsync(string.Empty)).Value;
 
                 // Act
                 Response result = await queue.DeleteMessageAsync(enqueuedMessage.MessageId, enqueuedMessage.PopReceipt);
@@ -41,7 +41,7 @@ namespace Azure.Storage.Queues.Test
             using (GetNewQueue(out QueueClient queue))
             {
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     queue.DeleteMessageAsync(GetNewMessageId(), GetNewString()),
                     actualException => Assert.AreEqual("MessageNotFound", actualException.ErrorCode));
             }
@@ -53,7 +53,7 @@ namespace Azure.Storage.Queues.Test
             // Arrange
             using (GetNewQueue(out QueueClient queue))
             {
-                Models.EnqueuedMessage enqueuedMessage = (await queue.EnqueueMessageAsync(string.Empty)).Value;
+                Models.SendReceipt enqueuedMessage = (await queue.SendMessageAsync(string.Empty)).Value;
 
                 // Act
                 Response result = await queue.DeleteMessageAsync(enqueuedMessage.MessageId, enqueuedMessage.PopReceipt);
@@ -73,13 +73,13 @@ namespace Azure.Storage.Queues.Test
                 var message0 = "foo";
                 var message1 = "bar";
 
-                Models.EnqueuedMessage enqueuedMessage = (await queue.EnqueueMessageAsync(message0)).Value;
+                Models.SendReceipt enqueuedMessage = (await queue.SendMessageAsync(message0)).Value;
 
                 // Act
-                Response<Models.UpdatedMessage> result = await queue.UpdateMessageAsync(
-                    message1,
+                Response<Models.UpdateReceipt> result = await queue.UpdateMessageAsync(
                     enqueuedMessage.MessageId,
                     enqueuedMessage.PopReceipt,
+                    message1,
                     new TimeSpan(100));
 
                 // Assert
@@ -96,13 +96,13 @@ namespace Azure.Storage.Queues.Test
                 var message0 = "foo";
                 var message1 = "bar";
 
-                Models.EnqueuedMessage enqueuedMessage = (await queue.EnqueueMessageAsync(message0)).Value;
+                Models.SendReceipt enqueuedMessage = (await queue.SendMessageAsync(message0)).Value;
 
                 // Act
-                Response<Models.UpdatedMessage> result = await queue.UpdateMessageAsync(
-                    message1,
+                Response<Models.UpdateReceipt> result = await queue.UpdateMessageAsync(
                     enqueuedMessage.MessageId,
-                    enqueuedMessage.PopReceipt);
+                    enqueuedMessage.PopReceipt,
+                    message1);
 
                 // Assert
                 Assert.IsNotNull(result.GetRawResponse().Headers.RequestId);
@@ -117,27 +117,27 @@ namespace Azure.Storage.Queues.Test
                 var message0 = "foo";
                 var message1 = "bar";
 
-                await queue.EnqueueMessageAsync(message0);
-                Models.DequeuedMessage message = (await queue.DequeueMessagesAsync(1)).Value.First();
+                await queue.SendMessageAsync(message0);
+                Models.QueueMessage message = (await queue.ReceiveMessagesAsync(1)).Value.First();
 
-                Response<Models.UpdatedMessage> update = await queue.UpdateMessageAsync(
-                    message1,
+                Response<Models.UpdateReceipt> update = await queue.UpdateMessageAsync(
                     message.MessageId,
-                    message.PopReceipt);
+                    message.PopReceipt,
+                    message1);
 
                 Assert.AreNotEqual(update.Value.PopReceipt, message.PopReceipt);
-                Assert.AreNotEqual(update.Value.TimeNextVisible, message.TimeNextVisible);
+                Assert.AreNotEqual(update.Value.NextVisibleOn, message.NextVisibleOn);
 
-                Models.DequeuedMessage newMessage = message.Update(update);
+                Models.QueueMessage newMessage = message.Update(update);
                 Assert.AreEqual(message.MessageId, newMessage.MessageId);
                 Assert.AreEqual(message.MessageText, newMessage.MessageText);
-                Assert.AreEqual(message.InsertionTime, newMessage.InsertionTime);
-                Assert.AreEqual(message.ExpirationTime, newMessage.ExpirationTime);
+                Assert.AreEqual(message.InsertedOn, newMessage.InsertedOn);
+                Assert.AreEqual(message.ExpiresOn, newMessage.ExpiresOn);
                 Assert.AreEqual(message.DequeueCount, newMessage.DequeueCount);
                 Assert.AreNotEqual(message.PopReceipt, newMessage.PopReceipt);
-                Assert.AreNotEqual(message.TimeNextVisible, newMessage.TimeNextVisible);
+                Assert.AreNotEqual(message.NextVisibleOn, newMessage.NextVisibleOn);
                 Assert.AreEqual(update.Value.PopReceipt, newMessage.PopReceipt);
-                Assert.AreEqual(update.Value.TimeNextVisible, newMessage.TimeNextVisible);
+                Assert.AreEqual(update.Value.NextVisibleOn, newMessage.NextVisibleOn);
             }
         }
 
@@ -150,10 +150,10 @@ namespace Azure.Storage.Queues.Test
                 var message0 = "foo";
                 var message1 = "bar";
 
-                Models.EnqueuedMessage enqueuedMessage = (await queue.EnqueueMessageAsync(message0)).Value;
+                Models.SendReceipt enqueuedMessage = (await queue.SendMessageAsync(message0)).Value;
 
                 // Act
-                await queue.UpdateMessageAsync(message1, enqueuedMessage.MessageId, enqueuedMessage.PopReceipt);
+                await queue.UpdateMessageAsync(enqueuedMessage.MessageId, enqueuedMessage.PopReceipt, message1);
 
                 // Assert
                 Response<Models.PeekedMessage[]> peekedMessages = await queue.PeekMessagesAsync(1);
@@ -171,8 +171,8 @@ namespace Azure.Storage.Queues.Test
             using (GetNewQueue(out QueueClient queue))
             {
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    queue.UpdateMessageAsync(string.Empty, GetNewMessageId(), GetNewString()),
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    queue.UpdateMessageAsync(GetNewMessageId(), GetNewString(), string.Empty),
                     actualException => Assert.AreEqual("MessageNotFound", actualException.ErrorCode));
 
             }

@@ -3,16 +3,19 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+
+#pragma warning disable SA1402 // File may only contain a single type
 
 namespace Azure.Storage.Files.Models
 {
     /// <summary>
     /// The SMB properties for a file.
     /// </summary>
-    public struct FileSmbProperties : IEquatable<FileSmbProperties>
+    public class FileSmbProperties
     {
         /// <summary>
         /// The file system attributes for this file.
@@ -27,17 +30,17 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// The creation time of the file.
         /// </summary>
-        public DateTimeOffset? FileCreationTime { get; set; }
+        public DateTimeOffset? FileCreatedOn { get; set; }
 
         /// <summary>
         /// The last write time of the file.
         /// </summary>
-        public DateTimeOffset? FileLastWriteTime { get; set; }
+        public DateTimeOffset? FileLastWrittenOn { get; set; }
 
         /// <summary>
         /// The change time of the file.
         /// </summary>
-        public DateTimeOffset? FileChangeTime { get; internal set; }
+        public DateTimeOffset? FileChangedOn { get; internal set; }
 
         /// <summary>
         /// The fileId of the file.
@@ -49,13 +52,17 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         public string ParentId { get; internal set; }
 
+        internal FileSmbProperties()
+        {
+        }
+
         internal FileSmbProperties(RawStorageFileInfo rawStorageFileInfo)
         {
-            FileAttributes = NtfsFileAttributes.Parse(rawStorageFileInfo.FileAttributes);
+            FileAttributes = FileExtensions.ToFileAttributes(rawStorageFileInfo.FileAttributes);
             FilePermissionKey = rawStorageFileInfo.FilePermissionKey;
-            FileCreationTime = rawStorageFileInfo.FileCreationTime;
-            FileLastWriteTime = rawStorageFileInfo.FileLastWriteTime;
-            FileChangeTime = rawStorageFileInfo.FileChangeTime;
+            FileCreatedOn = rawStorageFileInfo.FileCreationTime;
+            FileLastWrittenOn = rawStorageFileInfo.FileLastWriteTime;
+            FileChangedOn = rawStorageFileInfo.FileChangeTime;
             FileId = rawStorageFileInfo.FileId;
             ParentId = rawStorageFileInfo.FileParentId;
 
@@ -63,44 +70,44 @@ namespace Azure.Storage.Files.Models
 
         internal FileSmbProperties(RawStorageFileProperties rawStorageFileProperties)
         {
-            FileAttributes = NtfsFileAttributes.Parse(rawStorageFileProperties.FileAttributes);
+            FileAttributes = FileExtensions.ToFileAttributes(rawStorageFileProperties.FileAttributes);
             FilePermissionKey = rawStorageFileProperties.FilePermissionKey;
-            FileCreationTime = rawStorageFileProperties.FileCreationTime;
-            FileLastWriteTime = rawStorageFileProperties.FileLastWriteTime;
-            FileChangeTime = rawStorageFileProperties.FileChangeTime;
+            FileCreatedOn = rawStorageFileProperties.FileCreationTime;
+            FileLastWrittenOn = rawStorageFileProperties.FileLastWriteTime;
+            FileChangedOn = rawStorageFileProperties.FileChangeTime;
             FileId = rawStorageFileProperties.FileId;
             ParentId = rawStorageFileProperties.FileParentId;
         }
 
         internal FileSmbProperties(FlattenedStorageFileProperties flattenedStorageFileProperties)
         {
-            FileAttributes = NtfsFileAttributes.Parse(flattenedStorageFileProperties.FileAttributes);
+            FileAttributes = FileExtensions.ToFileAttributes(flattenedStorageFileProperties.FileAttributes);
             FilePermissionKey = flattenedStorageFileProperties.FilePermissionKey;
-            FileCreationTime = flattenedStorageFileProperties.FileCreationTime;
-            FileLastWriteTime = flattenedStorageFileProperties.FileLastWriteTime;
-            FileChangeTime = flattenedStorageFileProperties.FileChangeTime;
+            FileCreatedOn = flattenedStorageFileProperties.FileCreationTime;
+            FileLastWrittenOn = flattenedStorageFileProperties.FileLastWriteTime;
+            FileChangedOn = flattenedStorageFileProperties.FileChangeTime;
             FileId = flattenedStorageFileProperties.FileId;
             ParentId = flattenedStorageFileProperties.FileParentId;
         }
 
         internal FileSmbProperties(RawStorageDirectoryInfo rawStorageDirectoryInfo)
         {
-            FileAttributes = NtfsFileAttributes.Parse(rawStorageDirectoryInfo.FileAttributes);
+            FileAttributes = FileExtensions.ToFileAttributes(rawStorageDirectoryInfo.FileAttributes);
             FilePermissionKey = rawStorageDirectoryInfo.FilePermissionKey;
-            FileCreationTime = rawStorageDirectoryInfo.FileCreationTime;
-            FileLastWriteTime = rawStorageDirectoryInfo.FileLastWriteTime;
-            FileChangeTime = rawStorageDirectoryInfo.FileChangeTime;
+            FileCreatedOn = rawStorageDirectoryInfo.FileCreationTime;
+            FileLastWrittenOn = rawStorageDirectoryInfo.FileLastWriteTime;
+            FileChangedOn = rawStorageDirectoryInfo.FileChangeTime;
             FileId = rawStorageDirectoryInfo.FileId;
             ParentId = rawStorageDirectoryInfo.FileParentId;
         }
 
         internal FileSmbProperties(RawStorageDirectoryProperties rawStorageDirectoryProperties)
         {
-            FileAttributes = NtfsFileAttributes.Parse(rawStorageDirectoryProperties.FileAttributes);
+            FileAttributes = FileExtensions.ToFileAttributes(rawStorageDirectoryProperties.FileAttributes);
             FilePermissionKey = rawStorageDirectoryProperties.FilePermissionKey;
-            FileCreationTime = rawStorageDirectoryProperties.FileCreationTime;
-            FileLastWriteTime = rawStorageDirectoryProperties.FileLastWriteTime;
-            FileChangeTime = rawStorageDirectoryProperties.FileChangeTime;
+            FileCreatedOn = rawStorageDirectoryProperties.FileCreationTime;
+            FileLastWrittenOn = rawStorageDirectoryProperties.FileLastWriteTime;
+            FileChangedOn = rawStorageDirectoryProperties.FileChangeTime;
             FileId = rawStorageDirectoryProperties.FileId;
             ParentId = rawStorageDirectoryProperties.FileParentId;
         }
@@ -110,56 +117,22 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         /// <param name="other">The other instance to compare to.</param>
         /// <returns></returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object other)
-            => other is FileSmbProperties props && Equals(props);
+            => base.Equals(other);
 
         /// <summary>
         /// Gets the hash code for the FileSmbProperties.
         /// </summary>
         /// <returns></returns>
-        public override int GetHashCode()
-            => FileAttributes.GetHashCode()
-            ^ FilePermissionKey.GetHashCode()
-            ^ FileCreationTime.GetHashCode()
-            ^ FileLastWriteTime.GetHashCode()
-            ^ FileChangeTime.GetHashCode()
-            ^ FileId.GetHashCode()
-            ^ ParentId.GetHashCode();
-
-        /// <summary>
-        /// Check if two FileSmbProperties instances are equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(FileSmbProperties left, FileSmbProperties right) => left.Equals(right);
-
-        /// <summary>
-        /// Check if two FileSmbProperties instances are not equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(FileSmbProperties left, FileSmbProperties right) => !(left == right);
-
-        /// <summary>
-        /// Check if two FileSmbProperties instances are equal.
-        /// </summary>
-        /// <param name="other">The other instance to compare to.</param>
-        public bool Equals(FileSmbProperties other)
-            => FileAttributes == other.FileAttributes
-            && FilePermissionKey == other.FilePermissionKey
-            && FileCreationTime == other.FileCreationTime
-            && FileLastWriteTime == other.FileLastWriteTime
-            && FileChangeTime == other.FileChangeTime
-            && FileId == other.FileId
-            && ParentId == other.ParentId;
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => base.GetHashCode();
 
         internal string FileCreationTimeToString()
-            => NullableDateTimeOffsetToString(FileCreationTime);
+            => NullableDateTimeOffsetToString(FileCreatedOn);
 
         internal string FileLastWriteTimeToString()
-            => NullableDateTimeOffsetToString(FileLastWriteTime);
+            => NullableDateTimeOffsetToString(FileLastWrittenOn);
 
         private static string NullableDateTimeOffsetToString(DateTimeOffset? dateTimeOffset)
             => dateTimeOffset.HasValue ? DateTimeOffSetToString(dateTimeOffset.Value) : null;
@@ -167,21 +140,20 @@ namespace Azure.Storage.Files.Models
         private static string DateTimeOffSetToString(DateTimeOffset dateTimeOffset)
             => dateTimeOffset.UtcDateTime.ToString(Constants.File.FileTimeFormat, CultureInfo.InvariantCulture);
     }
-
-    /// <summary>
-    /// FilesModelFactory provides utilities for mocking.
-    /// </summary>
+  /// <summary>
+  /// FilesModelFactory provides utilities for mocking.
+  /// </summary>
     public static partial class FilesModelFactory
     {
         /// <summary>
         /// Creates a new FileSmbProperties instance for mocking.
         /// </summary>
         public static FileSmbProperties FileSmbProperties(
-            DateTimeOffset? fileChangeTime,
+            DateTimeOffset? fileChangedOn,
             string fileId,
             string parentId) => new FileSmbProperties
             {
-                FileChangeTime = fileChangeTime,
+                FileChangedOn = fileChangedOn,
                 FileId = fileId,
                 ParentId = parentId
             };

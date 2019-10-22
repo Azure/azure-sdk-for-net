@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Azure.Core.Http;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 
@@ -15,7 +15,7 @@ namespace Azure.Storage.Test.Shared
     /// Pipeline policy to verify x-ms-client-request-id and x-ms-client-return-request-id
     /// headers that are echoed back from a request match.
     /// </summary>
-    public class RecordedClientRequestIdPolicy : SynchronousHttpPipelinePolicy
+    public class RecordedClientRequestIdPolicy : HttpPipelineSynchronousPolicy
     {
         private readonly TestRecording _testRecording;
         private readonly string _parallelRangePrefix = null;
@@ -37,7 +37,7 @@ namespace Azure.Storage.Test.Shared
         /// x-ms-client-return-request-id is an echo of x-mis-client-request-id.
         /// </summary>
         /// <param name="message">The message that was sent</param>
-        public override void OnSendingRequest(HttpPipelineMessage message)
+        public override void OnSendingRequest(HttpMessage message)
         {
             if (_parallelRangePrefix != null &&
                 message.Request.Headers.TryGetValue("x-ms-range", out string range))

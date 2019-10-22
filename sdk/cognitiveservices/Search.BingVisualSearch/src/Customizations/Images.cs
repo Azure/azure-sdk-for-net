@@ -225,7 +225,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch
         /// </return>
         public async Task<HttpOperationResponse<ImageKnowledge>> VisualSearchMethodWithHttpMessagesAsync(string acceptLanguage = default(string), string contentType = default(string), string userAgent = default(string), string clientId = default(string), string clientIp = default(string), string location = default(string), string market = default(string), string safeSearch = default(string), string setLang = default(string), VisualSearchRequest knowledgeRequest = default(VisualSearchRequest), Stream image = default(Stream), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await VisualSearchMethodWithHttpMessagesAsync(acceptLanguage, contentType, userAgent, clientId, clientIp, location, market, safeSearch, setLang, JsonConvert.SerializeObject(knowledgeRequest), image, customHeaders, cancellationToken);
+            return await VisualSearchMethodWithHttpMessagesAsync(acceptLanguage, contentType, userAgent, clientId, clientIp, location, market, safeSearch, setLang, JsonConvert.SerializeObject(knowledgeRequest), image, customHeaders, cancellationToken).ConfigureAwait(false);
         }
     }
 }

@@ -37,11 +37,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// associated with this backup item.</param>
         /// <param name="policyState">Indicates consistency of policy object
         /// and policy applied to this backup item.</param>
-        public AzureFileshareProtectedItemExtendedInfo(System.DateTime? oldestRecoveryPoint = default(System.DateTime?), int? recoveryPointCount = default(int?), string policyState = default(string))
+        /// <param name="resourceState">Indicates the state of this resource.
+        /// Possible values are from enum ResourceState {Invalid, Active,
+        /// SoftDeleted, Deleted}</param>
+        /// <param name="resourceStateSyncTime">The resource state sync time
+        /// for this backup item.</param>
+        public AzureFileshareProtectedItemExtendedInfo(System.DateTime? oldestRecoveryPoint = default(System.DateTime?), int? recoveryPointCount = default(int?), string policyState = default(string), string resourceState = default(string), System.DateTime? resourceStateSyncTime = default(System.DateTime?))
         {
             OldestRecoveryPoint = oldestRecoveryPoint;
             RecoveryPointCount = recoveryPointCount;
             PolicyState = policyState;
+            ResourceState = resourceState;
+            ResourceStateSyncTime = resourceStateSyncTime;
             CustomInit();
         }
 
@@ -70,6 +77,19 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// </summary>
         [JsonProperty(PropertyName = "policyState")]
         public string PolicyState { get; set; }
+
+        /// <summary>
+        /// Gets indicates the state of this resource. Possible values are from
+        /// enum ResourceState {Invalid, Active, SoftDeleted, Deleted}
+        /// </summary>
+        [JsonProperty(PropertyName = "resourceState")]
+        public string ResourceState { get; private set; }
+
+        /// <summary>
+        /// Gets the resource state sync time for this backup item.
+        /// </summary>
+        [JsonProperty(PropertyName = "resourceStateSyncTime")]
+        public System.DateTime? ResourceStateSyncTime { get; private set; }
 
     }
 }

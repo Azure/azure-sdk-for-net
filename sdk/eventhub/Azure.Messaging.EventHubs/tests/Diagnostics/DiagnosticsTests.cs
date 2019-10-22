@@ -32,6 +32,8 @@ namespace Azure.Messaging.EventHubs.Tests
     [NonParallelizable]
     public class DiagnosticsTests
     {
+        private const string DiagnosticSourceName = "Azure.Messaging.EventHubs";
+
         /// <summary>
         ///   Verifies diagnostics functionality of the <see cref="EventHubProducer" />
         ///   class.
@@ -40,7 +42,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task EventHubProducerCreatesDiagnosticScopeOnSend()
         {
-            using var testListener = new ClientDiagnosticListener();
+            using var testListener = new ClientDiagnosticListener(DiagnosticSourceName);
 
             var eventHubName = "SomeName";
             var endpoint = new Uri("amqp://endpoint");
@@ -76,7 +78,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task EventHubProducerCreatesDiagnosticScopeOnBatchSend()
         {
-            using var testListener = new ClientDiagnosticListener();
+            using var testListener = new ClientDiagnosticListener(DiagnosticSourceName);
 
             var eventHubName = "SomeName";
             var endpoint = new Uri("amqp://endpoint");
@@ -230,7 +232,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task CheckpointManagerCreatesScope()
         {
-            using ClientDiagnosticListener listener = new ClientDiagnosticListener();
+            using ClientDiagnosticListener listener = new ClientDiagnosticListener(DiagnosticSourceName);
             var manager = new PartitionContext("namespace", "name", "group", "partition", "owner", new InMemoryPartitionManager());
 
             await manager.UpdateCheckpointAsync(0, 0);
@@ -247,7 +249,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task PartitionPumpCreatesScopeForEventProcessing()
         {
-            using ClientDiagnosticListener listener = new ClientDiagnosticListener();
+            using ClientDiagnosticListener listener = new ClientDiagnosticListener(DiagnosticSourceName);
             var processorCalledSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
             var consumerMock = new Mock<EventHubConsumer>();
             bool returnedItems = false;

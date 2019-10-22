@@ -1004,23 +1004,25 @@ namespace Azure.Messaging.EventHubs.Tests
                         // Validate the partition metrics were received and populated.
 
                         Assert.That(receivedEvents, Is.Not.Empty, "There should have been a set of events received.");
-                        Assert.That(consumer.LastEnqueuedEventInformation, Is.Not.Null, "There should be a partition metrics instance.");
-                        Assert.That(consumer.LastEnqueuedEventInformation.LastEnqueuedSequenceNumber.HasValue, Is.True, "There should be a last sequence number populated.");
-                        Assert.That(consumer.LastEnqueuedEventInformation.LastEnqueuedOffset.HasValue, Is.True, "There should be a last offset populated.");
-                        Assert.That(consumer.LastEnqueuedEventInformation.LastEnqueuedTime.HasValue, Is.True, "There should be a last enqueued time populated.");
-                        Assert.That(consumer.LastEnqueuedEventInformation.InformationReceived.HasValue, Is.True, "There should be a last update time populated.");
+
+                        var currentMetrics = consumer.ReadLastEnqueuedEventInformation();
+                        Assert.That(currentMetrics, Is.Not.Null, "There should be a partition metrics instance.");
+                        Assert.That(currentMetrics.LastEnqueuedSequenceNumber.HasValue, Is.True, "There should be a last sequence number populated.");
+                        Assert.That(currentMetrics.LastEnqueuedOffset.HasValue, Is.True, "There should be a last offset populated.");
+                        Assert.That(currentMetrics.LastEnqueuedTime.HasValue, Is.True, "There should be a last enqueued time populated.");
+                        Assert.That(currentMetrics.InformationReceived.HasValue, Is.True, "There should be a last update time populated.");
 
                         // Capture the metrics update time for comparison against the second batch in order to
                         // ensure that metrics are updated each time events are received.  Pause for a moment to
                         // be sure that receiving has some delta in time stamp.
 
                         var previousMetrics = new LastEnqueuedEventProperties(
-                            consumer.LastEnqueuedEventInformation.EventHubName,
-                            consumer.LastEnqueuedEventInformation.PartitionId,
-                            consumer.LastEnqueuedEventInformation.LastEnqueuedSequenceNumber,
-                            consumer.LastEnqueuedEventInformation.LastEnqueuedOffset,
-                            consumer.LastEnqueuedEventInformation.LastEnqueuedTime,
-                            consumer.LastEnqueuedEventInformation.InformationReceived);
+                            currentMetrics.EventHubName,
+                            currentMetrics.PartitionId,
+                            currentMetrics.LastEnqueuedSequenceNumber,
+                            currentMetrics.LastEnqueuedOffset,
+                            currentMetrics.LastEnqueuedTime,
+                            currentMetrics.InformationReceived);
 
                         await Task.Delay(TimeSpan.FromSeconds(15));
 
@@ -1039,11 +1041,13 @@ namespace Azure.Messaging.EventHubs.Tests
                         // Validate that metrics have been updated or remain stable.
 
                         Assert.That(receivedEvents, Is.Not.Empty, "There should have been a set of events received.");
-                        Assert.That(consumer.LastEnqueuedEventInformation, Is.Not.Null, "There should be a partition metrics instance.");
-                        Assert.That(consumer.LastEnqueuedEventInformation.LastEnqueuedSequenceNumber.Value, Is.Not.EqualTo(previousMetrics.LastEnqueuedSequenceNumber), "The last sequence number should have been updated.");
-                        Assert.That(consumer.LastEnqueuedEventInformation.LastEnqueuedOffset.Value, Is.Not.EqualTo(previousMetrics.LastEnqueuedOffset), "The last offset should have been updated.");
-                        Assert.That(consumer.LastEnqueuedEventInformation.LastEnqueuedTime.Value, Is.Not.EqualTo(previousMetrics.LastEnqueuedTime), "The last enqueue time should have been updated.");
-                        Assert.That(consumer.LastEnqueuedEventInformation.InformationReceived.Value, Is.GreaterThan(previousMetrics.InformationReceived), "The last update time should have been incremented.");
+
+                        currentMetrics = consumer.ReadLastEnqueuedEventInformation();
+                        Assert.That(currentMetrics, Is.Not.Null, "There should be a partition metrics instance.");
+                        Assert.That(currentMetrics.LastEnqueuedSequenceNumber.Value, Is.Not.EqualTo(previousMetrics.LastEnqueuedSequenceNumber), "The last sequence number should have been updated.");
+                        Assert.That(currentMetrics.LastEnqueuedOffset.Value, Is.Not.EqualTo(previousMetrics.LastEnqueuedOffset), "The last offset should have been updated.");
+                        Assert.That(currentMetrics.LastEnqueuedTime.Value, Is.Not.EqualTo(previousMetrics.LastEnqueuedTime), "The last enqueue time should have been updated.");
+                        Assert.That(currentMetrics.InformationReceived.Value, Is.GreaterThan(previousMetrics.InformationReceived), "The last update time should have been incremented.");
                     }
                 }
             }
@@ -1379,7 +1383,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             await consumer.CloseAsync();
                         }
 
-                        Assert.That(async () => await consumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<ObjectDisposedException>());
+                        Assert.That(async () => await consumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<EventHubsClientClosedException>().Or.InstanceOf<ObjectDisposedException>());
                     }
                 }
             }
@@ -1738,10 +1742,11 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [Ignore("Test fails in Track One as well")]
         public async Task FailingToCreateOwnerConsumerDoesNotCompromiseReceiveBehavior()
         {
-            await using (EventHubScope scope = await EventHubScope.CreateAsync(2, "anotherConsumerGroup"))
+            var customConsumerGroup = "anotherConsumerGroup";
+
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(2, new[] { customConsumerGroup }))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -1760,9 +1765,9 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // It should be possible to create new valid consumers.
 
-                    EventHubConsumer newExclusiveConsumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partitionIds[0], EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 10 });
+                    EventHubConsumer newExclusiveConsumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partitionIds[0], EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 30 });
                     EventHubConsumer anotherPartitionConsumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partitionIds[1], EventPosition.Latest);
-                    EventHubConsumer anotherConsumerGroupConsumer = client.CreateConsumer("anotherConsumerGroup", partitionIds[0], EventPosition.Latest);
+                    EventHubConsumer anotherConsumerGroupConsumer = client.CreateConsumer(customConsumerGroup, partitionIds[0], EventPosition.Latest);
 
                     Assert.That(async () => await newExclusiveConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
                     Assert.That(async () => await anotherPartitionConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
@@ -1786,7 +1791,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [Ignore("Test fails in Track One as well")]
         public async Task FailingToCreateInvalidPartitionConsumerDoesNotCompromiseReceiveBehavior()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
@@ -1827,7 +1831,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [Ignore("Test fails in Track One as well")]
         public async Task FailingToCreateInvalidConsumerGroupConsumerDoesNotCompromiseReceiveBehavior()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
@@ -1928,7 +1931,9 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task ConsumersInDifferentConsumerGroupsShouldAllReceiveEvents()
         {
-            await using (EventHubScope scope = await EventHubScope.CreateAsync(1, consumerGroup: "anotherConsumerGroup"))
+            var customConsumerGroup = "anotherConsumerGroup";
+
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(1, new[] { customConsumerGroup }))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -1945,7 +1950,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     await using (EventHubProducer producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = partition }))
                     await using (EventHubConsumer consumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partition, EventPosition.Latest))
-                    await using (EventHubConsumer anotherConsumer = client.CreateConsumer("anotherConsumerGroup", partition, EventPosition.Latest))
+                    await using (EventHubConsumer anotherConsumer = client.CreateConsumer(customConsumerGroup, partition, EventPosition.Latest))
                     {
                         // Initiate an operation to force the consumers to connect and set their positions at the
                         // end of the event stream.

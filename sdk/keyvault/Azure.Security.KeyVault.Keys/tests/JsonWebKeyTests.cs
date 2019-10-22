@@ -411,7 +411,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 throw new NotImplementedException();
             }
 
-            private static bool CollectionEquals<T>(ICollection<T> x, ICollection<T> y)
+            private static bool CollectionEquals<T>(IReadOnlyCollection<T> x, IReadOnlyCollection<T> y)
             {
                 if (ReferenceEquals(x, y)) return true;
                 if (x is null) return y.Count == 0;

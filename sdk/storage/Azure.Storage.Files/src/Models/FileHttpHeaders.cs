@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 
 namespace Azure.Storage.Files.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.Storage.Files.Models
     ///
     /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-and-retrieving-properties-and-metadata-for-blob-resources" />.
     /// </summary>
-    public struct FileHttpHeaders : IEquatable<FileHttpHeaders>
+    public class FileHttpHeaders
     {
         /// <summary>
         /// The MIME content type of the file.
@@ -65,49 +66,14 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
-        public override bool Equals(object obj)
-            => obj is FileHttpHeaders other && Equals(other);
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => base.Equals(obj);
 
         /// <summary>
         /// Get a hash code for the FileHttpHeaders.
         /// </summary>
         /// <returns>Hash code for the FileHttpHeaders.</returns>
-        public override int GetHashCode()
-            => ContentType.GetHashCode()
-            ^ ContentHash.GetHashCode()
-            ^ ContentEncoding.GetHashCode()
-            ^ ContentLanguage.GetHashCode()
-            ^ ContentDisposition.GetHashCode()
-            ^ CacheControl.GetHashCode()
-            ;
-
-        /// <summary>
-        /// Check if two FileHttpHeaders instances are equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(FileHttpHeaders left, FileHttpHeaders right) => left.Equals(right);
-
-        /// <summary>
-        /// Check if two FileHttpHeaders instances are not equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(FileHttpHeaders left, FileHttpHeaders right) => !(left == right);
-
-        /// <summary>
-        /// Check if two FileHttpHeaders instances are equal.
-        /// </summary>
-        /// <param name="other">The instance to compare to.</param>
-        public bool Equals(FileHttpHeaders other)
-            => CacheControl == other.CacheControl
-            && ContentDisposition == other.ContentDisposition
-            && ContentEncoding == other.ContentEncoding
-            && ContentLanguage == other.ContentLanguage
-            && ContentHash == other.ContentHash
-            && ContentType == other.ContentType
-            ;
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => base.GetHashCode();
     }
 }

@@ -3,6 +3,7 @@
 
 using Azure.Core.Pipeline;
 using System;
+using Azure.Core;
 
 namespace Azure.Security.KeyVault.Secrets
 {
@@ -40,7 +41,7 @@ namespace Azure.Security.KeyVault.Secrets
         public ServiceVersion Version { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SecretClientOptions"/>
+        /// Initializes a new instance of the <see cref="SecretClientOptions"/> class.
         /// class.
         /// </summary>
         /// <param name="version">

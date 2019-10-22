@@ -36,7 +36,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             CertificateOperation operation = await client.StartCreateCertificateAsync("MyCertificate");
 
             // You can await the completion of the create certificate operation.
-            CertificateWithPolicy certificate = await operation.WaitCompletionAsync();
+            CertificateWithPolicy certificate = await operation.WaitForCompletionAsync();
             #endregion
 
             this.client = client;
@@ -46,18 +46,18 @@ namespace Azure.Security.KeyVault.Certificates.Samples
         public async Task RetrieveCertificateAsync()
         {
             #region RetrieveCertificate
-            CertificateWithPolicy certificateWithPolicy = await client.GetCertificateWithPolicyAsync("MyCertificate");
+            CertificateWithPolicy certificateWithPolicy = await client.GetCertificateAsync("MyCertificate");
             #endregion
 
             #region GetCertificate
-            Certificate certificate = await client.GetCertificateAsync(certificateWithPolicy.Name, certificateWithPolicy.Properties.Version);
+            Certificate certificate = await client.GetCertificateVersionAsync(certificateWithPolicy.Name, certificateWithPolicy.Properties.Version);
             #endregion
         }
 
         [Test]
         public async Task UpdateCertificateAsync()
         {
-            CertificateWithPolicy certificate = await client.GetCertificateWithPolicyAsync("MyCertificate");
+            CertificateWithPolicy certificate = await client.GetCertificateAsync("MyCertificate");
 
             #region UpdateCertificate
             CertificateProperties certificateProperties = new CertificateProperties(certificate.Id)
@@ -89,7 +89,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             #region NotFound
             try
             {
-                CertificateWithPolicy certificateWithPolicy = await client.GetCertificateWithPolicyAsync("SomeCertificate");
+                CertificateWithPolicy certificateWithPolicy = await client.GetCertificateAsync("SomeCertificate");
             }
             catch (RequestFailedException ex)
             {

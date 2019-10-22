@@ -26,11 +26,8 @@ namespace Azure.Identity
         /// <summary>
         /// Creates a new SharedTokenCacheCredential which will authenticate users with the specified application.
         /// </summary>
-        /// <param name="clientId">The client id of the application to which the users will authenticate</param>
-        /// <param name="username">The username (typically an email address) of the user to authenticate, this is required because the local cache may contain tokens for multiple identities</param>
-        /// TODO: need to link to info on how the application has to be created to authenticate users, for multiple applications
-        public SharedTokenCacheCredential(string clientId, string username)
-            : this(clientId, username, null)
+        public SharedTokenCacheCredential()
+            : this(null, null)
         {
 
         }
@@ -38,15 +35,13 @@ namespace Azure.Identity
         /// <summary>
         /// Creates a new SharedTokenCacheCredential with the specifeid options, which will authenticate users with the specified application.
         /// </summary>
-        /// <param name="clientId">The client id of the application to which the users will authenticate</param>
         /// <param name="username">The username of the user to authenticate</param>
-        /// TODO: need to link to info on how the application has to be created to authenticate users, for multiple applications
         /// <param name="options">The client options for the newly created SharedTokenCacheCredential</param>
-        public SharedTokenCacheCredential(string clientId, string username, SharedTokenCacheCredentialOptions options)
+        public SharedTokenCacheCredential(string username, TokenCredentialOptions options = default)
         {
-            _clientId = clientId ?? Constants.DeveloperSignOnClientId;
+            _clientId = Constants.DeveloperSignOnClientId;
 
-            options ??= new SharedTokenCacheCredentialOptions();
+            options ??= new TokenCredentialOptions();
 
             _username = username;
 
@@ -54,7 +49,7 @@ namespace Azure.Identity
 
             _pubApp = PublicClientApplicationBuilder.Create(_clientId).WithHttpClientFactory(new HttpPipelineClientFactory(pipeline)).Build();
 
-            _cacheReader = new MsalCacheReader(_pubApp.UserTokenCache, options.CacheFilePath, options.CacheAccessRetryCount, options.CacheAccessRetryDelay);
+            _cacheReader = new MsalCacheReader(_pubApp.UserTokenCache, Constants.SharedTokenCacheFilePath, Constants.SharedTokenCacheAccessRetryCount, Constants.SharedTokenCacheAccessRetryDelay);
 
             _account = new Lazy<Task<IAccount>>(GetAccountAsync);
         }
@@ -62,21 +57,21 @@ namespace Azure.Identity
         /// <summary>
         /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated to another Microsoft application participating in SSO through the MSAL cache
         /// </summary>
-        /// <param name="request">The details of the authentication request.</param>
+        /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls</returns>
-        public override AccessToken GetToken(TokenRequest request, CancellationToken cancellationToken = default)
+        public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return GetTokenAsync(request, cancellationToken).GetAwaiter().GetResult();
+            return GetTokenAsync(requestContext, cancellationToken).GetAwaiter().GetResult();
         }
 
         /// <summary>
         /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated to another Microsoft application participating in SSO through the MSAL cache
         /// </summary>
-        /// <param name="request">The details of the authentication request.</param>
+        /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls</returns>
-        public override async Task<AccessToken> GetTokenAsync(TokenRequest request, CancellationToken cancellationToken = default)
+        public override async Task<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             try
             {
@@ -84,7 +79,7 @@ namespace Azure.Identity
 
                 if (account != null)
                 {
-                    AuthenticationResult result = await _pubApp.AcquireTokenSilent(request.Scopes, account).ExecuteAsync(cancellationToken).ConfigureAwait(false);
+                    AuthenticationResult result = await _pubApp.AcquireTokenSilent(requestContext.Scopes, account).ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
                     return new AccessToken(result.AccessToken, result.ExpiresOn);
                 }
@@ -108,7 +103,7 @@ namespace Azure.Identity
                 }
                 else
                 {
-                    account = await _pubApp.GetAccountAsync(_username).ConfigureAwait(false);
+                    account = (await _pubApp.GetAccountsAsync().ConfigureAwait(false)).Where(a => a.Username == _username).Single();
                 }
             }
             catch (InvalidOperationException) { } // more than on account

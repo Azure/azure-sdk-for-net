@@ -4,8 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Azure.Core.Http;
-using Azure.Core.Pipeline;
+using Azure.Core;
 
 namespace Azure.Storage.Blobs.Specialized
 {
@@ -50,7 +49,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// An optional function that can be used to process the response.  It
         /// is responsible for parsing response bodies and throwing exceptions.
         /// </param>
-        public DelayedResponse(HttpPipelineMessage message, Func<Response, Response> processResponse = null)
+        public DelayedResponse(HttpMessage message, Func<Response, Response> processResponse = null)
         {
             // Have the BatchPipelineTransport associate this response with the
             // message when it's sent.
@@ -76,6 +75,11 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 _live = _processResponse(_live);
             }
+        }
+
+        public override string ToString()
+        {
+            return _live == null ? "Status: NotSent, the batch has not been submitted yet" : base.ToString();
         }
 
         // We directly forward the entire Response interface to LiveResponse

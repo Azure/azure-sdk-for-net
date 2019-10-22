@@ -7,8 +7,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.Common;
-using Azure.Storage.Common.Test;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
@@ -57,12 +55,19 @@ namespace Azure.Storage.Blobs.Test
             var blobEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var credentials = new StorageSharedKeyCredential(accountName, accountKey);
 
-            BlobServiceClient service = InstrumentClient(new BlobServiceClient(blobEndpoint, credentials));
-            var builder = new BlobUriBuilder(service.Uri);
+            BlobServiceClient service1 = InstrumentClient(new BlobServiceClient(blobEndpoint, credentials));
+            BlobServiceClient service2 = InstrumentClient(new BlobServiceClient(blobEndpoint));
 
-            Assert.IsEmpty(builder.BlobContainerName);
-            Assert.AreEqual("", builder.BlobName);
-            Assert.AreEqual(accountName, builder.AccountName);
+            var builder1 = new BlobUriBuilder(service1.Uri);
+            var builder2 = new BlobUriBuilder(service2.Uri);
+
+            Assert.IsEmpty(builder1.BlobContainerName);
+            Assert.AreEqual("", builder1.BlobName);
+            Assert.AreEqual(accountName, builder1.AccountName);
+
+            Assert.IsEmpty(builder2.BlobContainerName);
+            Assert.AreEqual("", builder2.BlobName);
+            Assert.AreEqual(accountName, builder2.AccountName);
         }
 
         [Test]
@@ -216,7 +221,7 @@ namespace Azure.Storage.Blobs.Test
             BlobServiceClient service = GetServiceClient_SharedKey();
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 service.GetBlobContainersAsync().AsPages(continuationToken: "garbage").FirstAsync(),
                 e => Assert.AreEqual("OutOfRangeInput", e.ErrorCode));
         }
@@ -244,7 +249,7 @@ namespace Azure.Storage.Blobs.Test
                     GetOptions()));
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 service.GetAccountInfoAsync(),
                 e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
@@ -272,7 +277,7 @@ namespace Azure.Storage.Blobs.Test
                     GetOptions()));
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 service.GetPropertiesAsync(),
                 e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
@@ -325,7 +330,7 @@ namespace Azure.Storage.Blobs.Test
                     GetOptions()));
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 invalidService.SetPropertiesAsync(properties),
                 e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
@@ -356,7 +361,7 @@ namespace Azure.Storage.Blobs.Test
             BlobServiceClient service = GetServiceClient_OauthAccount();
 
             // Act
-            Response<UserDelegationKey> response = await service.GetUserDelegationKeyAsync(start: null, expiry: Recording.UtcNow.AddHours(1));
+            Response<UserDelegationKey> response = await service.GetUserDelegationKeyAsync(startsOn: null, expiresOn: Recording.UtcNow.AddHours(1));
 
             // Assert
             Assert.IsNotNull(response.Value);
@@ -369,8 +374,8 @@ namespace Azure.Storage.Blobs.Test
             BlobServiceClient service = GetServiceClient_SharedKey();
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                service.GetUserDelegationKeyAsync(start: null, expiry: Recording.UtcNow.AddHours(1)),
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                service.GetUserDelegationKeyAsync(startsOn: null, expiresOn: Recording.UtcNow.AddHours(1)),
                 e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode.Split('\n')[0]));
         }
 
@@ -382,8 +387,8 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
-                service.GetUserDelegationKeyAsync(start: null, expiry: Recording.Now.AddHours(1)),
-                e => Assert.AreEqual("expiry must be UTC", e.Message));
+                service.GetUserDelegationKeyAsync(startsOn: null, expiresOn: Recording.Now.AddHours(1)),
+                e => Assert.AreEqual("expiresOn must be UTC", e.Message));
         }
 
         [Test]
@@ -411,7 +416,7 @@ namespace Azure.Storage.Blobs.Test
             BlobContainerClient container = InstrumentClient((await service.CreateBlobContainerAsync(name)).Value);
 
             await service.DeleteBlobContainerAsync(name);
-            Assert.ThrowsAsync<StorageRequestFailedException>(
+            Assert.ThrowsAsync<RequestFailedException>(
                 async () => await container.GetPropertiesAsync());
         }
     }

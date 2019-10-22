@@ -387,16 +387,12 @@ namespace Azure.Messaging.EventHubs.Compatibility
                 ? new BasicRetryPolicy(consumerOptions.RetryOptions)
                 : defaultRetryPolicy;
 
-            LastEnqueuedEventProperties partitionMetrics = (consumerOptions.TrackLastEnqueuedEventInformation)
-                ? new LastEnqueuedEventProperties(EventHubName, partitionId)
-                : null;
-
             return new EventHubConsumer
             (
-                new TrackOneEventHubConsumer(CreateReceiverFactory, initialRetryPolicy, partitionMetrics),
+                new TrackOneEventHubConsumer(CreateReceiverFactory, initialRetryPolicy),
                 TrackOneClient.EventHubName,
-                partitionId,
                 consumerGroup,
+                partitionId,
                 eventPosition,
                 consumerOptions,
                 initialRetryPolicy

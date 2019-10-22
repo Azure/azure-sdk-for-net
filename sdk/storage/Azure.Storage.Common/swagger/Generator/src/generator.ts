@@ -138,6 +138,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     const pairName = `_headerPair`;
     let responseName = "_response";
     const scopeName = "_scope";
+    const clientDiagnostics = "clientDiagnostics";
     const operationName = "operationName";
     const result = operation.response.model;
     const sync = serviceModel.info.sync;
@@ -169,11 +170,13 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     if (sync) {
         w.line(`/// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>`);
     }
+    w.line(`/// <param name="${clientDiagnostics}">The ClientDiagnostics instance used for operation reporting.</param>`);
     w.line(`/// <param name="${operationName}">Operation name.</param>`);
     w.line(`/// <param name="${cancellationName}">Cancellation token.</param>`);
     w.line(`/// <returns>${operation.response.model.description || returnType.replace(/</g, '{').replace(/>/g, '}')}</returns>`);
     w.write(`public static async System.Threading.Tasks.ValueTask<${sendMethodReturnType}> ${methodName}(`);
     w.scope(() => {
+        w.line(`Azure.Core.Pipeline.ClientDiagnostics ${clientDiagnostics},`);
         const separateParams = IndentWriter.createFenceposter();
         for (const arg of operation.request.arguments) {
             if (separateParams()) { w.line(`,`); }
@@ -191,7 +194,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
         w.write(')')
     });
     w.scope('{', '}', () => {
-        w.line(`Azure.Core.Pipeline.DiagnosticScope ${scopeName} = ${pipelineName}.Diagnostics.CreateScope(${operationName});`)
+        w.line(`Azure.Core.Pipeline.DiagnosticScope ${scopeName} = ${clientDiagnostics}.CreateScope(${operationName});`)
         w.line(`try`);
         w.scope('{', '}', () => {
             for (const arg of operation.request.arguments) {
@@ -200,7 +203,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                 }
             }
             w.line(`${scopeName}.Start();`);
-            w.write(`using (Azure.Core.Pipeline.HttpPipelineMessage ${messageName} = ${methodName}_CreateMessage(`);
+            w.write(`using (Azure.Core.HttpMessage ${messageName} = ${methodName}_CreateMessage(`);
             w.scope(() => {
                 const separateParams = IndentWriter.createFenceposter();
                 for (const arg of operation.request.arguments) {
@@ -270,7 +273,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
         }
     }
     w.line(`/// <returns>The ${regionName} Message.</returns>`);
-    w.write(`internal static Azure.Core.Pipeline.HttpPipelineMessage ${methodName}_CreateMessage(`);
+    w.write(`internal static Azure.Core.HttpMessage ${methodName}_CreateMessage(`);
     w.scope(() => {
         const separateParams = IndentWriter.createFenceposter();
         for (const arg of operation.request.arguments) {
@@ -336,23 +339,25 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
         }
 
         w.line(`// Create the request`);
-        w.line(`Azure.Core.Pipeline.HttpPipelineMessage ${messageName} = ${pipelineName}.CreateMessage();`);
-        w.line(`Azure.Core.Http.Request ${requestName} = ${messageName}.Request;`);
+        w.line(`Azure.Core.HttpMessage ${messageName} = ${pipelineName}.CreateMessage();`);
+        w.line(`Azure.Core.Request ${requestName} = ${messageName}.Request;`);
         w.line();
 
         w.line(`// Set the endpoint`);
         const httpMethod = naming.pascalCase(operation.method);
-        w.line(`${requestName}.Method = Azure.Core.Pipeline.RequestMethod.${httpMethod};`);
+        w.line(`${requestName}.Method = Azure.Core.RequestMethod.${httpMethod};`);
         const uri = naming.parameter(operation.request.all[1].clientName);
         w.line(`${requestName}.Uri.Reset(${uri});`);
         if (operation.request.queries.length > 0) {
             for (const query of operation.request.queries) {
                 const constant = isEnumType(query.model) && query.model.constant;
                 useParameter(query, value => {
-                    if (!query.skipUrlEncoding && !constant) {
-                        value = `System.Uri.EscapeDataString(${value})`
+                    w.write(`${requestName}.Uri.AppendQuery("${query.name}", ${value}`);
+                    if (query.skipUrlEncoding || constant) {
+                        w.write(`, escapeValue: false`);
                     }
-                    w.write(`${requestName}.Uri.AppendQuery("${query.name}", ${value});`);
+
+                    w.write(`);`);
                 });
             }
         }
@@ -370,6 +375,9 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                         name = `"${header.model.dictionaryPrefix || 'x-ms-meta-'}" + ${value}.Key`;
                         value = `${value}.Value`;
                     }
+                    if (isEnumType(header.model) && header.model.modelAsString) {
+                        value = `${value}.ToString()`
+                    }
                     w.write(`${requestName}.Headers.SetValue(${name}, ${value});`);
                 });
             }
@@ -385,10 +393,10 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                 w.line(`string ${textName} = ${naming.parameter(operation.request.body.clientName)};`)
                 w.line(`${requestName}.Headers.SetValue("Content-Type", "application/json");`);
                 w.line(`${requestName}.Headers.SetValue("Content-Length", ${textName}.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));`);
-                w.line(`${requestName}.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(${textName}));`);
+                w.line(`${requestName}.Content = Azure.Core.RequestContent.Create(System.Text.Encoding.UTF8.GetBytes(${textName}));`);
             } else if (operation.consumes === `stream` || bodyType.type === `file`) {
                 // Serialize a file
-                w.line(`${requestName}.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(${naming.parameter(operation.request.body.clientName)});`);
+                w.line(`${requestName}.Content = Azure.Core.RequestContent.Create(${naming.parameter(operation.request.body.clientName)});`);
             } else if (operation.consumes === `xml`) {
                 // Serialize XML
                 if (isObjectType(bodyType)) {
@@ -428,7 +436,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                 w.line(`string ${textName} = ${bodyName}.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);`);
                 w.line(`${requestName}.Headers.SetValue("Content-Type", "application/xml");`);
                 w.line(`${requestName}.Headers.SetValue("Content-Length", ${textName}.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));`);
-                w.line(`${requestName}.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(${textName}));`);
+                w.line(`${requestName}.Content = Azure.Core.RequestContent.Create(System.Text.Encoding.UTF8.GetBytes(${textName}));`);
             } else {
                 throw `Serialization format ${operation.produces} not supported (in ${name})`;
             }
@@ -588,7 +596,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                 if (isPrimitiveType(header.model) && header.model.type === 'dictionary') {
                     const prefix = header.model.dictionaryPrefix || `x-ms-meta-`;
                     w.line(`${valueName}.${naming.pascalCase(header.clientName)} = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);`);
-                    w.line(`foreach (Azure.Core.Http.HttpHeader ${pairName} in ${responseName}.Headers)`);
+                    w.line(`foreach (Azure.Core.HttpHeader ${pairName} in ${responseName}.Headers)`);
                     w.scope(`{`, `}`, () => {
                         w.line(`if (${pairName}.Name.StartsWith("${prefix}", System.StringComparison.InvariantCulture))`);
                         w.scope(`{`, `}`, () => {
@@ -749,10 +757,20 @@ function generateEnumStrings(w: IndentWriter, model: IServiceModel, type: IEnumT
         w.line(`/// </summary>`);
         const enumName = naming.type(type.name);
         const enumFullName = types.getName(type, false, false);
-        w.line(`${type.public ? 'public' : 'internal'} partial struct ${enumName} : System.IEquatable<${enumName}>`);
+        w.line(`${type.public ? 'public' : 'internal'} readonly struct ${enumName} : System.IEquatable<${enumName}>`);
         w.scope(`{`, `}`, () => {
+            w.line(`/// <summary>`);
+            w.line(`/// The ${enumName} value.`);
+            w.line(`/// </summary>`);
+            w.line(`private readonly string _value;`);
+            w.line(``);
+            w.line(`/// <summary>`);
+            w.line(`/// Initializes a new instance of the <see cref="${enumName}"/> structure.`);
+            w.line(`/// </summary>`);
+            w.line(`/// <param name="value">The string value of the instance.</param>`);
+            w.line(`public ${enumName}(string value) { _value = value ?? throw new System.ArgumentNullException(nameof(value)); }`);
+            w.line(``);
             // Dump out the values
-            w.line(`#pragma warning disable CA2211 // Non-constant fields should not be visible`);
             const separator = IndentWriter.createFenceposter();
             for (const value of type.values) {
                 if (separator()) { w.line(); }
@@ -761,80 +779,61 @@ function generateEnumStrings(w: IndentWriter, model: IServiceModel, type: IEnumT
                 w.line(`/// <summary>`);
                 w.line(`/// ${value.description || text}`);
                 w.line(`/// </summary>`);
-                w.line(`public static ${enumFullName} ${name} { get; } = @"${text}";`)
+                w.line(`public static ${enumFullName} ${name} { get; } = new ${enumName}(@"${text}");`)
             }
-            w.line(`#pragma warning restore CA2211 // Non-constant fields should not be visible`);
             if (separator()) { w.line(); }
 
             // Dump out the infrastructure
             w.line(`/// <summary>`);
-            w.line(`/// The ${enumName} value.`);
+            w.line(`/// Determines if two <see cref="${enumName}"/> values are the same.`);
             w.line(`/// </summary>`);
-            w.line(`private readonly string _value;`);
-            w.line(``);
-            w.line(`/// <summary>`);
-            w.line(`/// Creates a new ${enumName} instance.`);
-            w.line(`/// </summary>`);
-            w.line(`/// <param name="value">The ${enumName} value.</param>`);
-            w.line(`private ${enumName}(string value) { _value = value; }`);
-            w.line(``);
-            w.line(`/// <summary>`);
-            w.line(`/// Check if two ${enumName} instances are equal.`);
-            w.line(`/// </summary>`);
-            w.line(`/// <param name="other">The instance to compare to.</param>`);
-            w.line(`/// <returns>True if they're equal, false otherwise.</returns>`);
-            w.line(`public bool Equals(${enumFullName} other) => _value.Equals(other._value, System.StringComparison.InvariantCulture);`)
-            w.line(``);
-            w.line(`/// <summary>`);
-            w.line(`/// Check if two ${enumName} instances are equal.`);
-            w.line(`/// </summary>`);
-            w.line(`/// <param name="o">The instance to compare to.</param>`);
-            w.line(`/// <returns>True if they're equal, false otherwise.</returns>`);
-            w.line(`public override bool Equals(object o) => o is ${enumFullName} other && Equals(other);`);
-            w.line(``);
-            w.line(`/// <summary>`);
-            w.line(`/// Get a hash code for the ${enumName}.`);
-            w.line(`/// </summary>`);
-            w.line(`/// <returns>Hash code for the ${enumName}.</returns>`);
-            w.line(`public override int GetHashCode() => _value.GetHashCode();`);
-            w.line(``);
-            w.line(`/// <summary>`);
-            w.line(`/// Convert the ${enumName} to a string.`);
-            w.line(`/// </summary>`);
-            w.line(`/// <returns>String representation of the ${enumName}.</returns>`);
-            w.line(`public override string ToString() => _value;`);
-            w.line(``);
-            w.line(`#pragma warning disable CA2225 // Operator overloads have named alternates`);
-            w.line(`/// <summary>`);
-            w.line(`/// Convert a string a ${enumName}.`);
-            w.line(`/// </summary>`);
-            w.line(`/// <param name="value">The string to convert.</param>`);
-            w.line(`/// <returns>The ${enumName} value.</returns>`);
-            w.line(`public static implicit operator ${enumName}(string value) => new ${enumFullName}(value);`);
-            w.line(`#pragma warning restore CA2225 // Operator overloads have named alternates`);
-            w.line(``);
-            w.line(`/// <summary>`);
-            w.line(`/// Convert an ${enumName} to a string.`);
-            w.line(`/// </summary>`);
-            w.line(`/// <param name="value">The ${enumName} value.</param>`);
-            w.line(`/// <returns>String representation of the ${enumName} value.</returns>`);
-            w.line(`public static implicit operator string(${enumFullName} value) => value._value;`);
-            w.line(``);
-            w.line(`/// <summary>`);
-            w.line(`/// Check if two ${enumName} instances are equal.`);
-            w.line(`/// </summary>`);
-            w.line(`/// <param name="left">The first instance to compare.</param>`);
-            w.line(`/// <param name="right">The second instance to compare.</param>`);
-            w.line(`/// <returns>True if they're equal, false otherwise.</returns>`);
+            w.line(`/// <param name="left">The first <see cref="${enumName}"/> to compare.</param>`);
+            w.line(`/// <param name="right">The second <see cref="${enumName}"/> to compare.</param>`);
+            w.line(`/// <returns>True if <paramref name="left"/> and <paramref name="right"/> are the same; otherwise, false.</returns>`);
             w.line(`public static bool operator ==(${enumFullName} left, ${enumFullName} right) => left.Equals(right);`);
             w.line(``);
             w.line(`/// <summary>`);
-            w.line(`/// Check if two ${enumName} instances are not equal.`);
+            w.line(`/// Determines if two <see cref="${enumName}"/> values are different.`);
             w.line(`/// </summary>`);
-            w.line(`/// <param name="left">The first instance to compare.</param>`);
-            w.line(`/// <param name="right">The second instance to compare.</param>`);
-            w.line(`/// <returns>True if they're not equal, false otherwise.</returns>`);
+            w.line(`/// <param name="left">The first <see cref="${enumName}"/> to compare.</param>`);
+            w.line(`/// <param name="right">The second <see cref="${enumName}"/> to compare.</param>`);
+            w.line(`/// <returns>True if <paramref name="left"/> and <paramref name="right"/> are different; otherwise, false.</returns>`);
             w.line(`public static bool operator !=(${enumFullName} left, ${enumFullName} right) => !left.Equals(right);`);
+            w.line(``);
+            w.line(`/// <summary>`);
+            w.line(`/// Converts a string to a <see cref="${enumName}"/>.`);
+            w.line(`/// </summary>`);
+            w.line(`/// <param name="value">The string value to convert.</param>`);
+            w.line(`/// <returns>The ${enumName} value.</returns>`);
+            w.line(`public static implicit operator ${enumName}(string value) => new ${enumFullName}(value);`);
+            w.line(``);
+            w.line(`/// <summary>`);
+            w.line(`/// Check if two <see cref="${enumName}"/> instances are equal.`);
+            w.line(`/// </summary>`);
+            w.line(`/// <param name="obj">The instance to compare to.</param>`);
+            w.line(`/// <returns>True if they're equal, false otherwise.</returns>`);
+            w.line(`[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]`);
+            w.line(`public override bool Equals(object obj) => obj is ${enumFullName} other && Equals(other);`);
+            w.line(``);
+            w.line(`/// <summary>`);
+            w.line(`/// Check if two <see cref="${enumName}"/> instances are equal.`);
+            w.line(`/// </summary>`);
+            w.line(`/// <param name="other">The instance to compare to.</param>`);
+            w.line(`/// <returns>True if they're equal, false otherwise.</returns>`);
+            w.line(`public bool Equals(${enumFullName} other) => string.Equals(_value, other._value, System.StringComparison.Ordinal);`)
+            w.line(``);
+            w.line(`/// <summary>`);
+            w.line(`/// Get a hash code for the <see cref="${enumName}"/>.`);
+            w.line(`/// </summary>`);
+            w.line(`/// <returns>Hash code for the ${enumName}.</returns>`);
+            w.line(`[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]`);
+            w.line(`public override int GetHashCode() => _value?.GetHashCode() ?? 0;`);
+            w.line(``);
+            w.line(`/// <summary>`);
+            w.line(`/// Convert the <see cref="${enumName}"/> to a string.`);
+            w.line(`/// </summary>`);
+            w.line(`/// <returns>String representation of the ${enumName}.</returns>`);
+            w.line(`public override string ToString() => _value;`);
         });
     });
     w.line(`#endregion ${regionName}`);
@@ -878,6 +877,7 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
             }
 
             // Instantiate nested models if necessary
+            const readonlyModel = Object.values(type.properties).every(p => (<IProperty>p).readonly);
             const nested = (<IProperty[]>Object.values(type.properties)).filter(p => !p.isNullable && (isObjectType(p.model) || (isPrimitiveType(p.model) && (p.model.itemType || p.model.type === `dictionary`))));
             if (nested.length > 0) {
                 const skipInitName = `skipInitialization`;
@@ -887,7 +887,7 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                 w.line(`/// </summary>`);
                 if (type.deserialize) {
                     // Add an optional overload that prevents initialization for deserialiation
-                    w.write(`public ${naming.type(type.name)}()`);
+                    w.write(`${!type.public || !readonlyModel ? 'public' : 'internal'} ${naming.type(type.name)}()`);
                     w.scope(() => w.write(`: this(false)`));
                     w.scope(`{`, `}`, () => null);
                     w.line();
@@ -1106,7 +1106,7 @@ function generateSerialize(w: IndentWriter, service: IService, type: IObjectType
         const properties = <IProperty[]>Object.values(type.properties);
         for (const property of properties) {
             let current = elementName;
-            const { xname: childName } = getXmlShape(property.name, { ...type.xml, name: property.name });
+            const { xname: childName } = getXmlShape(property.name, property.xml);
             if (!property.required) {
                 w.line(`if (value.${naming.property(property.name)} != null)`);
                 w.pushScope('{');

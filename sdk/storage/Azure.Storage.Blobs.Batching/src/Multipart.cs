@@ -8,9 +8,8 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Http;
+using Azure.Core;
 using Azure.Core.Http.Multipart;
-using Azure.Core.Pipeline;
 
 namespace Azure.Storage.Blobs.Specialized
 {
@@ -51,7 +50,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// single multipart/mixed content stream and content type.
         /// </returns>
         public static Task<(Stream, string)> CreateAsync(
-            IEnumerable<HttpPipelineMessage> messages,
+            IEnumerable<HttpMessage> messages,
             string prefix,
 #pragma warning disable CA1801 // Remove unused parameter (leaving for future changes)
 #pragma warning disable IDE0060 // Remove unused parameter
@@ -76,7 +75,7 @@ namespace Azure.Storage.Blobs.Specialized
 
             const string newline = "\r\n";
             var operationId = 0;
-            foreach (HttpPipelineMessage message in messages)
+            foreach (HttpMessage message in messages)
             {
                 // Write the boundary
                 content.Append(BatchConstants.BatchSeparator).Append(boundary).Append(newline);

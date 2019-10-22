@@ -93,7 +93,7 @@ When creating the certificate the user can specify the policy which controls the
 CertificateOperation operation = await client.StartCreateCertificateAsync("MyCertificate");
 
 // You can await the completion of the create certificate operation.
-CertificateWithPolicy certificate = await operation.WaitCompletionAsync();
+CertificateWithPolicy certificate = await operation.WaitForCompletionAsync();
 ```
 
 > NOTE: Depending on the certificate issuer and validation methods, certificate creation and signing can take an indeterministic amount of time. Users should only wait on certificate operations when the operation can be reasonably completed in the scope of the application, such as with self signed certificates or issuers with well known response times.
@@ -102,13 +102,13 @@ CertificateWithPolicy certificate = await operation.WaitCompletionAsync();
 `GetCertificateWithPolicy` retrieves the latest version of a certificate stored in the Key Vault along with its `CertificatePolicy`.
 
 ```C# RetrieveCertificate
-CertificateWithPolicy certificateWithPolicy = await client.GetCertificateWithPolicyAsync("MyCertificate");
+CertificateWithPolicy certificateWithPolicy = await client.GetCertificateAsync("MyCertificate");
 ```
 
 `GetCertificate` retrieves a specific version of a certificate in the vault.
 
 ```C# GetCertificate
-Certificate certificate = await client.GetCertificateAsync(certificateWithPolicy.Name, certificateWithPolicy.Properties.Version);
+Certificate certificate = await client.GetCertificateVersionAsync(certificateWithPolicy.Name, certificateWithPolicy.Properties.Version);
 ```
 
 ### Update an existing Certificate
@@ -160,7 +160,7 @@ For example, if you try to retrieve a Key that doesn't exist in your Key Vault, 
 ```C# NotFound
 try
 {
-    CertificateWithPolicy certificateWithPolicy = await client.GetCertificateWithPolicyAsync("SomeCertificate");
+    CertificateWithPolicy certificateWithPolicy = await client.GetCertificateAsync("SomeCertificate");
 }
 catch (RequestFailedException ex)
 {

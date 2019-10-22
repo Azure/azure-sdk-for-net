@@ -20,17 +20,17 @@ namespace Azure.Identity
         /// <summary>
         /// Gets the Azure Active Directory tenant (directory) Id of the service principal
         /// </summary>
-        public string TenantId { get; }
+        internal string TenantId { get; }
 
         /// <summary>
         /// Gets the client (application) ID of the service principal
         /// </summary>
-        public string ClientId { get; }
+        internal string ClientId { get; }
 
         /// <summary>
         /// Gets the client secret that was generated for the App Registration used to authenticate the client.
         /// </summary>
-        public string ClientSecret { get; }
+        internal string ClientSecret { get; }
 
         /// <summary>
         /// Creates an instance of the ClientSecretCredential with the details needed to authenticate against Azure Active Directory with a client secret.
@@ -50,7 +50,7 @@ namespace Azure.Identity
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientSecret">A client secret that was generated for the App Registration used to authenticate the client.</param>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
-        public ClientSecretCredential(string tenantId, string clientId, string clientSecret, AzureCredentialOptions options)
+        public ClientSecretCredential(string tenantId, string clientId, string clientSecret, TokenCredentialOptions options)
         {
             TenantId = tenantId;
             ClientId = clientId;
@@ -62,23 +62,23 @@ namespace Azure.Identity
         /// <summary>
         /// Obtains a token from the Azure Active Directory service, using the specified client secret to authenticate.
         /// </summary>
-        /// <param name="request">The details of the authentication request.</param>
+        /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
-        public override async Task<AccessToken> GetTokenAsync(TokenRequest request, CancellationToken cancellationToken = default)
+        public override async Task<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return await _client.AuthenticateAsync(TenantId, ClientId, ClientSecret, request.Scopes, cancellationToken).ConfigureAwait(false);
+            return await _client.AuthenticateAsync(TenantId, ClientId, ClientSecret, requestContext.Scopes, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Obtains a token from the Azure Active Directory service, using the specified client secret to authenticate.
         /// </summary>
-        /// <param name="request">The details of the authentication request.</param>
+        /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
-        public override AccessToken GetToken(TokenRequest request, CancellationToken cancellationToken = default)
+        public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return _client.Authenticate(TenantId, ClientId, ClientSecret, request.Scopes, cancellationToken);
+            return _client.Authenticate(TenantId, ClientId, ClientSecret, requestContext.Scopes, cancellationToken);
         }
     }
 }

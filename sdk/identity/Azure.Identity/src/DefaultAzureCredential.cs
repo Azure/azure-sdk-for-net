@@ -24,8 +24,9 @@ namespace Azure.Identity
         /// <summary>
         /// Creates an instance of the DefaultAzureCredential class.
         /// </summary>
-        public DefaultAzureCredential()
-            : this(null)
+        /// <param name="includeInteractiveCredentials">Specifies whether credentials requiring user interaction will be included in the default authentication flow.</param>
+        public DefaultAzureCredential(bool includeInteractiveCredentials = false)
+            : this(new DefaultAzureCredentialOptions { ExcludeInteractiveBrowserCredential = !includeInteractiveCredentials })
         {
 
         }
@@ -50,24 +51,24 @@ namespace Azure.Identity
             int i = 0;
             TokenCredential[] chain = new TokenCredential[5];
 
-            if (options.IncludeEnvironmentCredential)
+            if (!options.ExcludeEnvironmentCredential)
             {
                 chain[i++] = new EnvironmentCredential(options);
             }
 
-            if (options.IncludeManagedIdentityCredential)
+            if (!options.ExcludeManagedIdentityCredential)
             {
                 chain[i++] = new ManagedIdentityCredential(options.ManagedIdentityClientId, options);
             }
 
-            if (options.IncludeSharedTokenCacheCredential)
+            if (!options.ExcludeSharedTokenCacheCredential)
             {
-                chain[i++] = new SharedTokenCacheCredential(null, options.PreferredAccountUsername);
+                chain[i++] = new SharedTokenCacheCredential(options.SharedTokenCacheUsername);
             }
 
-            if (options.IncludeInteractiveBrowserCredential)
+            if (!options.ExcludeInteractiveBrowserCredential)
             {
-                chain[i++] = new InteractiveBrowserCredential(null, null, options);
+                chain[i++] = new InteractiveBrowserCredential(null, Constants.DeveloperSignOnClientId, options);
             }
 
             chain[i++] = new CredentialNotFoundGuard();
@@ -79,12 +80,12 @@ namespace Azure.Identity
         {
             private const string CredentialNotFoundMessage = @"Failed to find a credential to use for authentication.  If running in an environment where a managed identity is not available ensure the environment variables AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET are set.";
 
-            public override AccessToken GetToken(TokenRequest request, CancellationToken cancellationToken)
+            public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
             {
                 throw new AuthenticationFailedException(CredentialNotFoundMessage);
             }
 
-            public override Task<AccessToken> GetTokenAsync(TokenRequest request, CancellationToken cancellationToken)
+            public override Task<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
             {
                 throw new AuthenticationFailedException(CredentialNotFoundMessage);
             }

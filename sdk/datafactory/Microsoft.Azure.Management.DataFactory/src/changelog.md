@@ -3,6 +3,13 @@
 ## Current version
 ###  Feature Additions
 
+## Version 4.3.0
+###  Feature Additions
+- Added Switch activity
+- Added AzureMLExecutePipeline activity
+- Added AzureMLService linked service type
+- Added support for Expressions for Arguments property on HDInsightPig activity
+
 ## Version 4.2.0
 ###  Feature Additions
 * Added support for Data Flow:

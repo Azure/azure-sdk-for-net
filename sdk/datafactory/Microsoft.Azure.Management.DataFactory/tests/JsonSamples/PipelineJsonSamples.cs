@@ -1883,6 +1883,46 @@ namespace DataFactory.Tests.JsonSamples
   }
 }
 ";
+
+        [JsonSample]
+        public const string SwitchPipeline = @"
+{
+    ""name"": ""MySwitchPipeline"",
+    ""properties"": {
+        ""activities"": [
+            {
+                ""name"": ""MySwitchActivity"",
+                ""type"": ""Switch"",
+                ""typeProperties"": {
+                    ""on"": {
+                        ""value"": ""@bool(pipeline().parameters.routeSelection)"",
+                        ""type"": ""Expression""
+                    },
+                    ""cases"": [
+                        {
+                            ""value"": ""A"",
+                            ""activities"": [
+                                {
+                                    ""name"": ""MyCaseAActivity"",
+                                    ""type"": ""GetMetadata"",
+                                    ""typeProperties"": {
+                                        ""fieldList"" : [""field""],
+                                        ""dataset"": {
+                                            ""referenceName"": ""MyDataset"",
+                                            ""type"": ""DatasetReference""
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}
+";
+
         [JsonSample]
         public const string ForeachPipeline = @"
 {
@@ -1959,6 +1999,33 @@ namespace DataFactory.Tests.JsonSamples
   }
 }
 ";
+
+        [JsonSample]
+        public const string AzureMLExecutePipelinePipeline = @"
+{
+    ""name"": ""MyAzureMLExecutePipelinePipeline"",
+    ""properties"": {
+        ""activities"": [
+            {
+                ""name"": ""MyAzureMLExecutePipelineActivity"",
+                ""type"": ""AzureMLExecutePipeline"",
+                ""typeProperties"": {
+                    ""mlPipelineId"": ""93b9ccc4-0000-0000-8968-43a0a0fe0c44"",
+                    ""experimentName"": ""myExperimentName"",
+                    ""mlPipelineParameters"": {
+                        ""param_name"": ""param_value""
+                    }
+                },
+                ""linkedServiceName"": {
+                    ""referenceName"": ""MyAzureMLServiceLinkedService"",
+                    ""type"": ""LinkedServiceReference""
+                }
+            }
+        ]
+    }
+}
+";
+
         [JsonSample]
         public const string AzureMLUpdateResourcePipeline = @"
 {

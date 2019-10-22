@@ -10,6 +10,7 @@ using System.Security;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Diagnostics;
 
 namespace Azure.Identity
 {
@@ -22,7 +23,8 @@ namespace Azure.Identity
     {
         private readonly IPublicClientApplication _pubApp = null;
         private readonly HttpPipeline _pipeline = null;
-        private readonly AzureCredentialOptions _options;
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly TokenCredentialOptions _options;
         private readonly string _username = null;
         private readonly SecureString _password;
 
@@ -36,37 +38,39 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Creates an instance of the UsernamePasswordCredential with the details needed to authenticate against Azure Active Directory with a simple username
+        /// Creates an instance of the <see cref="UsernamePasswordCredential"/> with the details needed to authenticate against Azure Active Directory with a simple username
         /// and password.
         /// </summary>
         /// <param name="username"></param>
         /// <param name="password">The user account's user name, UPN.</param>
-        /// <param name="clientId">The client (application) ID of an App Registration in the tenant.</param>
         /// <param name="tenantId">The Azure Active Directory tenant (directory) ID or name.</param>
-        public UsernamePasswordCredential(string username, string password, string clientId, string tenantId)
+        /// <param name="clientId">The client (application) ID of an App Registration in the tenant.</param>
+        public UsernamePasswordCredential(string username, string password, string tenantId, string clientId)
             : this(username, password, clientId, tenantId, null)
         {
 
         }
 
         /// <summary>
-        /// Creates an instance of the UsernamePasswordCredential with the details needed to authenticate against Azure Active Directory with a simple username
+        /// Creates an instance of the <see cref="UsernamePasswordCredential"/> with the details needed to authenticate against Azure Active Directory with a simple username
         /// and password.
         /// </summary>
         /// <param name="username"></param>
         /// <param name="password">The user account's user name, UPN.</param>
-        /// <param name="clientId">The client (application) ID of an App Registration in the tenant.</param>
         /// <param name="tenantId">The Azure Active Directory tenant (directory) ID or name.</param>
+        /// <param name="clientId">The client (application) ID of an App Registration in the tenant.</param>
         /// <param name="options">The client options for the newly created UsernamePasswordCredential</param>
-        public UsernamePasswordCredential(string username, string password, string clientId, string tenantId, AzureCredentialOptions options)
+        public UsernamePasswordCredential(string username, string password, string tenantId, string clientId, TokenCredentialOptions options)
         {
             _username = username ?? throw new ArgumentNullException(nameof(username));
 
             _password = (password != null) ? password.ToSecureString() : throw new ArgumentNullException(nameof(password));
 
-            _options = options ?? new AzureCredentialOptions();
+            _options = options ?? new TokenCredentialOptions();
 
             _pipeline = HttpPipelineBuilder.Build(_options);
+
+            _clientDiagnostics = new ClientDiagnostics(options);
 
             _pubApp = PublicClientApplicationBuilder.Create(clientId).WithHttpClientFactory(new HttpPipelineClientFactory(_pipeline)).WithTenantId(tenantId).Build();
         }
@@ -75,30 +79,30 @@ namespace Azure.Identity
         /// Obtains a token for a user account, authenticating them using the given username and password.  Note: This will fail with
         /// an <see cref="AuthenticationFailedException"/> if the specified user acound has MFA enabled.
         /// </summary>
-        /// <param name="request">The details of the authentication request.</param>
+        /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
-        public override AccessToken GetToken(TokenRequest request, CancellationToken cancellationToken = default)
+        public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return GetTokenAsync(request, cancellationToken).GetAwaiter().GetResult();
+            return GetTokenAsync(requestContext, cancellationToken).GetAwaiter().GetResult();
         }
 
         /// <summary>
         /// Obtains a token for a user account, authenticating them using the given username and password.  Note: This will fail with
         /// an <see cref="AuthenticationFailedException"/> if the specified user acound has MFA enabled.
         /// </summary>
-        /// <param name="request">The details of the authentication request.</param>
+        /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
-        public override async Task<AccessToken> GetTokenAsync(TokenRequest request, CancellationToken cancellationToken = default)
+        public override async Task<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Identity.UsernamePasswordCredential.GetToken");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Identity.UsernamePasswordCredential.GetToken");
 
             scope.Start();
 
             try
             {
-                AuthenticationResult result = await _pubApp.AcquireTokenByUsernamePassword(request.Scopes, _username, _password).ExecuteAsync(cancellationToken).ConfigureAwait(false);
+                AuthenticationResult result = await _pubApp.AcquireTokenByUsernamePassword(requestContext.Scopes, _username, _password).ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
                 return new AccessToken(result.AccessToken, result.ExpiresOn);
             }

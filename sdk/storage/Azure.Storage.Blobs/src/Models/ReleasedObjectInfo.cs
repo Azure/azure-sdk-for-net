@@ -3,7 +3,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.Core.Http;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -11,7 +10,7 @@ namespace Azure.Storage.Blobs.Models
     /// Provides the version state of a succesfully released blob or container
     /// object.
     /// </summary>
-    public readonly struct ReleasedObjectInfo : IEquatable<ReleasedObjectInfo>
+    public class ReleasedObjectInfo
     {
         /// <summary>
         /// The ETag contains a value that you can use to perform operations
@@ -75,43 +74,13 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) =>
-            obj is ReleasedObjectInfo other && Equals(other);
-
-        /// <summary>
-        /// Check if two <see cref="ReleasedObjectInfo"/> instances are equal.
-        /// </summary>
-        /// <param name="other">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(ReleasedObjectInfo other) =>
-            ETag == other.ETag &&
-            LastModified == other.LastModified;
+        public override bool Equals(object obj) => base.Equals(obj);
 
         /// <summary>
         /// Get a hash code for the <see cref="ReleasedObjectInfo"/>.
         /// </summary>
         /// <returns>Hash code for the <see cref="ReleasedObjectInfo"/>.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() =>
-            ETag.GetHashCode() ^
-            LastModified.GetHashCode();
-
-        /// <summary>
-        /// Check if two <see cref="ReleasedObjectInfo"/> instances are equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(ReleasedObjectInfo left, ReleasedObjectInfo right) =>
-            left.Equals(right);
-
-        /// <summary>
-        /// Check if two <see cref="ReleasedObjectInfo"/> instances are not equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(ReleasedObjectInfo left, ReleasedObjectInfo right) =>
-            !(left == right);
+        public override int GetHashCode() => base.GetHashCode();
     }
 }

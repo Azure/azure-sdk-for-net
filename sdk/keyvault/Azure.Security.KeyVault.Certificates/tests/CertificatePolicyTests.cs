@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Text.Json;
 using NUnit.Framework;
 
@@ -9,6 +10,35 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 {
     public class CertificatePolicyTests
     {
+        [Test]
+        public void CertificatePolicyWithSubjectValidation()
+        {
+            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => new CertificatePolicy((string)null, null));
+            Assert.AreEqual("subject", ex.ParamName);
+
+            ex = Assert.Throws<ArgumentException>(() => new CertificatePolicy(string.Empty, null));
+            Assert.AreEqual("subject", ex.ParamName);
+
+            ex = Assert.Throws<ArgumentNullException>(() => new CertificatePolicy("CN=contoso.com", null));
+            Assert.AreEqual("issuerName", ex.ParamName);
+
+            ex = Assert.Throws<ArgumentException>(() => new CertificatePolicy("CN=contoso.com", string.Empty));
+            Assert.AreEqual("issuerName", ex.ParamName);
+        }
+
+        [Test]
+        public void CertificatePolicyWithSubjectAlternativeNamesValidation()
+        {
+            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => new CertificatePolicy((SubjectAlternativeNames)null, null));
+            Assert.AreEqual("subjectAlternativeNames", ex.ParamName);
+
+            ex = Assert.Throws<ArgumentNullException>(() => new CertificatePolicy("CN=contoso.com", null));
+            Assert.AreEqual("issuerName", ex.ParamName);
+
+            ex = Assert.Throws<ArgumentException>(() => new CertificatePolicy("CN=contoso.com", string.Empty));
+            Assert.AreEqual("issuerName", ex.ParamName);
+        }
+
         [Test]
         public void DeserializesSerializesRoundtrip()
         {

@@ -18,7 +18,7 @@ namespace Azure.Identity
     {
         private readonly IPublicClientApplication _pubApp = null;
         private IAccount _account = null;
-        private readonly AzureCredentialOptions _options;
+        private readonly TokenCredentialOptions _options;
         private readonly string _clientId;
 
         /// <summary>
@@ -34,14 +34,24 @@ namespace Azure.Identity
         /// Creates a new InteractiveBrowserCredential with the specifeid options, which will authenticate users with the specified application.
         /// </summary>
         /// <param name="clientId">The client id of the application to which the users will authenticate</param>
-        /// <param name="tenantId">The tenant id of the application and the users to authentiacte</param>
+        public InteractiveBrowserCredential(string clientId)
+            : this(null, clientId, null)
+        {
+
+        }
+
+        /// <summary>
+        /// Creates a new InteractiveBrowserCredential with the specifeid options, which will authenticate users with the specified application.
+        /// </summary>
+        /// <param name="tenantId">The tenant id of the application and the users to authenticate. Can be null in the case of multi-tenant applications.</param>
+        /// <param name="clientId">The client id of the application to which the users will authenticate</param>
         /// TODO: need to link to info on how the application has to be created to authenticate users, for multiple applications
         /// <param name="options">The client options for the newly created DeviceCodeCredential</param>
-        public InteractiveBrowserCredential(string clientId, string tenantId = default, AzureCredentialOptions options = default)
+        public InteractiveBrowserCredential(string tenantId, string clientId, TokenCredentialOptions options = default)
         {
             _clientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
 
-            _options = options ??= new AzureCredentialOptions();
+            _options = options ??= new TokenCredentialOptions();
 
             HttpPipeline pipeline = HttpPipelineBuilder.Build(_options);
 
@@ -58,38 +68,38 @@ namespace Azure.Identity
         /// <summary>
         /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated, otherwise the default browser is launched to authenticate the user.
         /// </summary>
-        /// <param name="request">The details of the authentication request.</param>
+        /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
-        public override AccessToken GetToken(TokenRequest request, CancellationToken cancellationToken = default)
+        public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return GetTokenAsync(request, cancellationToken).GetAwaiter().GetResult();
+            return GetTokenAsync(requestContext, cancellationToken).GetAwaiter().GetResult();
         }
 
         /// <summary>
         /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated, otherwise the default browser is launched to authenticate the user.
         /// </summary>
-        /// <param name="request">The details of the authentication request.</param>
+        /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
-        public override async Task<AccessToken> GetTokenAsync(TokenRequest request, CancellationToken cancellationToken = default)
+        public override async Task<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             if (_account != null)
             {
                 try
                 {
-                    AuthenticationResult result = await _pubApp.AcquireTokenSilent(request.Scopes, _account).ExecuteAsync(cancellationToken).ConfigureAwait(false);
+                    AuthenticationResult result = await _pubApp.AcquireTokenSilent(requestContext.Scopes, _account).ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
                     return new AccessToken(result.AccessToken, result.ExpiresOn);
                 }
                 catch (MsalUiRequiredException)
                 {
-                    return await GetTokenViaBrowserLoginAsync(request.Scopes, cancellationToken).ConfigureAwait(false);
+                    return await GetTokenViaBrowserLoginAsync(requestContext.Scopes, cancellationToken).ConfigureAwait(false);
                 }
             }
             else
             {
-                return await GetTokenViaBrowserLoginAsync(request.Scopes, cancellationToken).ConfigureAwait(false);
+                return await GetTokenViaBrowserLoginAsync(requestContext.Scopes, cancellationToken).ConfigureAwait(false);
             }
         }
 

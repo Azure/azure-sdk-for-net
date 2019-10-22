@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -33,7 +35,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// recovered.</param>
         /// <param name="recoveryType">Type of this recovery. Possible values
         /// include: 'Invalid', 'OriginalLocation', 'AlternateLocation',
-        /// 'RestoreDisks'</param>
+        /// 'RestoreDisks', 'Offline'</param>
         /// <param name="sourceResourceId">Fully qualified ARM ID of the VM
         /// which is being recovered.</param>
         /// <param name="targetVirtualMachineId">This is the complete ARM Id of
@@ -71,7 +73,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// Option</param>
         /// <param name="encryptionDetails">Details needed if the VM was
         /// encrypted at the time of backup.</param>
-        public IaasVMRestoreRequest(string recoveryPointId = default(string), string recoveryType = default(string), string sourceResourceId = default(string), string targetVirtualMachineId = default(string), string targetResourceGroupId = default(string), string storageAccountId = default(string), string virtualNetworkId = default(string), string subnetId = default(string), string targetDomainNameId = default(string), string region = default(string), string affinityGroup = default(string), bool? createNewCloudService = default(bool?), bool? originalStorageAccountOption = default(bool?), EncryptionDetails encryptionDetails = default(EncryptionDetails))
+        /// <param name="restoreDiskLunList">List of Disk LUNs for partial
+        /// restore</param>
+        public IaasVMRestoreRequest(string recoveryPointId = default(string), string recoveryType = default(string), string sourceResourceId = default(string), string targetVirtualMachineId = default(string), string targetResourceGroupId = default(string), string storageAccountId = default(string), string virtualNetworkId = default(string), string subnetId = default(string), string targetDomainNameId = default(string), string region = default(string), string affinityGroup = default(string), bool? createNewCloudService = default(bool?), bool? originalStorageAccountOption = default(bool?), EncryptionDetails encryptionDetails = default(EncryptionDetails), IList<int?> restoreDiskLunList = default(IList<int?>))
         {
             RecoveryPointId = recoveryPointId;
             RecoveryType = recoveryType;
@@ -87,6 +91,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             CreateNewCloudService = createNewCloudService;
             OriginalStorageAccountOption = originalStorageAccountOption;
             EncryptionDetails = encryptionDetails;
+            RestoreDiskLunList = restoreDiskLunList;
             CustomInit();
         }
 
@@ -103,7 +108,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 
         /// <summary>
         /// Gets or sets type of this recovery. Possible values include:
-        /// 'Invalid', 'OriginalLocation', 'AlternateLocation', 'RestoreDisks'
+        /// 'Invalid', 'OriginalLocation', 'AlternateLocation', 'RestoreDisks',
+        /// 'Offline'
         /// </summary>
         [JsonProperty(PropertyName = "recoveryType")]
         public string RecoveryType { get; set; }
@@ -199,6 +205,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// </summary>
         [JsonProperty(PropertyName = "encryptionDetails")]
         public EncryptionDetails EncryptionDetails { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of Disk LUNs for partial restore
+        /// </summary>
+        [JsonProperty(PropertyName = "restoreDiskLunList")]
+        public IList<int?> RestoreDiskLunList { get; set; }
 
     }
 }
