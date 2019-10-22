@@ -469,7 +469,7 @@ namespace Azure.Storage.Test.Shared
 
         private class DisposingContainer : IDisposable
         {
-            public BlobContainerClient ContainerClient { get; }
+            public BlobContainerClient ContainerClient { get; private set; }
 
             public DisposingContainer(BlobContainerClient container, IDictionary<string, string> metadata, PublicAccessType publicAccessType = default)
             {
@@ -485,6 +485,7 @@ namespace Azure.Storage.Test.Shared
                     try
                     {
                         ContainerClient.DeleteAsync().Wait();
+                        ContainerClient = null;
                     }
                     catch
                     {
