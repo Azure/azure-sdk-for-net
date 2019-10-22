@@ -16,7 +16,7 @@ namespace Azure.Identity
     /// </summary>
     public class InteractiveBrowserCredential : TokenCredential, IExtendedTokenCredential
     {
-        private readonly IPublicClientApplication _pubApp = null;
+        private readonly MsalPublicClientAbstraction _client;
         private readonly CredentialPipeline _pipeline;
         private IAccount _account = null;
 
@@ -24,7 +24,7 @@ namespace Azure.Identity
         /// Creates a new InteractiveBrowserCredential with the specifeid options, which will authenticate users.
         /// </summary>
         public InteractiveBrowserCredential()
-            : this(Constants.DeveloperSignOnClientId, null, CredentialPipeline.GetInstance(null))
+            : this(null, Constants.DeveloperSignOnClientId, CredentialPipeline.GetInstance(null))
         {
 
         }
@@ -57,7 +57,14 @@ namespace Azure.Identity
 
             _pipeline = pipeline;
 
-            _pubApp = _pipeline.CreateMsalPublicClient(clientId, tenantId, "http://localhost");
+            _client = _pipeline.CreateMsalPublicClient(clientId, tenantId, "http://localhost");
+        }
+
+        internal InteractiveBrowserCredential(CredentialPipeline pipeline, MsalPublicClientAbstraction client)
+        {
+            _pipeline = pipeline;
+
+            _client = client;
         }
 
         /// <summary>
@@ -95,13 +102,14 @@ namespace Azure.Identity
         private async Task<ExtendedAccessToken> GetTokenImplAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
             using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("Azure.Identity.InteractiveBrowserCredential.GetToken", requestContext);
+
             try
             {
                 if (_account != null)
                 {
                     try
                     {
-                        AuthenticationResult result = await _pubApp.AcquireTokenSilent(requestContext.Scopes, _account).ExecuteAsync(cancellationToken).ConfigureAwait(false);
+                        AuthenticationResult result = await _client.AcquireTokenSilentAsync(requestContext.Scopes, _account, cancellationToken).ConfigureAwait(false);
 
                         return new ExtendedAccessToken(new AccessToken(result.AccessToken, result.ExpiresOn));
                     }
@@ -127,7 +135,7 @@ namespace Azure.Identity
 
         private async Task<AccessToken> GetTokenViaBrowserLoginAsync(string[] scopes, CancellationToken cancellationToken)
         {
-            AuthenticationResult result = await _pubApp.AcquireTokenInteractive(scopes).WithPrompt(Prompt.SelectAccount).ExecuteAsync(cancellationToken).ConfigureAwait(false);
+            AuthenticationResult result = await _client.AcquireTokenInteractiveAsync(scopes, Prompt.SelectAccount, cancellationToken).ConfigureAwait(false);
 
             _account = result.Account;
 

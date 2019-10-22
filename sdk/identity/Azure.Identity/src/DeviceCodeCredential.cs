@@ -20,11 +20,9 @@ namespace Azure.Identity
     /// </summary>
     public class DeviceCodeCredential : TokenCredential
     {
-        private readonly IPublicClientApplication _pubApp = null;
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly HttpPipeline _pipeline = null;
+        private readonly MsalPublicClientAbstraction _client = null;
+        private readonly CredentialPipeline _pipeline;
         private IAccount _account = null;
-        private readonly TokenCredentialOptions _options;
         private readonly string _clientId;
         private readonly Func<DeviceCodeInfo, CancellationToken, Task> _deviceCodeCallback;
 
@@ -61,20 +59,9 @@ namespace Azure.Identity
 
             _deviceCodeCallback = deviceCodeCallback ?? throw new ArgumentNullException(nameof(deviceCodeCallback));
 
-            _options = options ?? new TokenCredentialOptions();
+            _pipeline = CredentialPipeline.GetInstance(options);
 
-            _pipeline = HttpPipelineBuilder.Build(_options);
-
-            _clientDiagnostics = new ClientDiagnostics(options);
-
-            var pubAppBuilder = PublicClientApplicationBuilder.Create(_clientId).WithHttpClientFactory(new HttpPipelineClientFactory(_pipeline)).WithRedirectUri("https://login.microsoftonline.com/common/oauth2/nativeclient");
-
-            if (!string.IsNullOrEmpty(tenantId))
-            {
-                pubAppBuilder = pubAppBuilder.WithTenantId(tenantId);
-            }
-
-            _pubApp = pubAppBuilder.Build();
+            _client = _pipeline.CreateMsalPublicClient(_clientId, tenantId, redirectUrl: "https://login.microsoftonline.com/common/oauth2/nativeclient");
         }
 
         /// <summary>
@@ -85,9 +72,7 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Identity.DeviceCodeCredential.GetToken");
-
-            scope.Start();
+            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("Azure.Identity.DeviceCodeCredential.GetToken", requestContext);
 
             try
             {
@@ -95,13 +80,12 @@ namespace Azure.Identity
                 {
                     try
                     {
-                        AuthenticationResult result = _pubApp.AcquireTokenSilent(requestContext.Scopes, _account).ExecuteAsync(cancellationToken).GetAwaiter().GetResult();
+                        AuthenticationResult result = _client.AcquireTokenSilentAsync(requestContext.Scopes, _account, cancellationToken).GetAwaiter().GetResult();
 
                         return new AccessToken(result.AccessToken, result.ExpiresOn);
                     }
                     catch (MsalUiRequiredException)
                     {
-                        // TODO: logging for exception here?
                         return GetTokenViaDeviceCodeAsync(requestContext.Scopes, cancellationToken).GetAwaiter().GetResult();
                     }
                 }
@@ -112,9 +96,7 @@ namespace Azure.Identity
             }
             catch (Exception e)
             {
-                scope.Failed(e);
-
-                throw;
+                throw scope.Failed(e);
             }
         }
 
@@ -126,9 +108,7 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override async Task<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Identity.DeviceCodeCredential.GetToken");
-
-            scope.Start();
+            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("Azure.Identity.DeviceCodeCredential.GetToken", requestContext);
 
             try
             {
@@ -136,32 +116,29 @@ namespace Azure.Identity
                 {
                     try
                     {
-                        AuthenticationResult result = await _pubApp.AcquireTokenSilent(requestContext.Scopes, _account).ExecuteAsync(cancellationToken).ConfigureAwait(false);
+                        AuthenticationResult result = await _client.AcquireTokenSilentAsync(requestContext.Scopes, _account, cancellationToken).ConfigureAwait(false);
 
                         return new AccessToken(result.AccessToken, result.ExpiresOn);
                     }
                     catch (MsalUiRequiredException)
                     {
-                        // TODO: logging for exception here?
-                        return await GetTokenViaDeviceCodeAsync(requestContext.Scopes, cancellationToken).ConfigureAwait(false);
+                        return GetTokenViaDeviceCodeAsync(requestContext.Scopes, cancellationToken).GetAwaiter().GetResult();
                     }
                 }
                 else
                 {
-                    return await GetTokenViaDeviceCodeAsync(requestContext.Scopes, cancellationToken).ConfigureAwait(false);
+                    return GetTokenViaDeviceCodeAsync(requestContext.Scopes, cancellationToken).GetAwaiter().GetResult();
                 }
             }
             catch (Exception e)
             {
-                scope.Failed(e);
-
-                throw;
+                throw scope.Failed(e);
             }
         }
 
         private async Task<AccessToken> GetTokenViaDeviceCodeAsync(string[] scopes, CancellationToken cancellationToken)
         {
-            AuthenticationResult result = await _pubApp.AcquireTokenWithDeviceCode(scopes, code => DeviceCodeCallback(code, cancellationToken)).ExecuteAsync(cancellationToken).ConfigureAwait(false);
+            AuthenticationResult result = await _client.AcquireTokenWithDeviceCodeAsync(scopes, code => DeviceCodeCallback(code, cancellationToken), cancellationToken).ConfigureAwait(false);
 
             _account = result.Account;
 

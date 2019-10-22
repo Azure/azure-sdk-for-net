@@ -89,6 +89,58 @@ namespace Azure.Identity.Tests
             VerifyClientAssertion(clientAssertion, expectedTenantId, expectedClientId, mockCert);
         }
 
+        [Test]
+        public async Task VerifyClientCertificateRequestFailedAsync()
+        {
+            var response = new MockResponse(400);
+
+            response.SetContent($"{{ \"error_code\": \"InvalidSecret\", \"message\": \"The specified client_secret is incorrect\" }}");
+
+            var mockTransport = new MockTransport(response);
+
+            var options = new TokenCredentialOptions() { Transport = mockTransport };
+
+            var expectedTenantId = Guid.NewGuid().ToString();
+
+            var expectedClientId = Guid.NewGuid().ToString();
+
+            var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+            var mockCert = new X509Certificate2(certificatePath, "password");
+
+            ClientCertificateCredential credential = InstrumentClient(new ClientCertificateCredential(expectedTenantId, expectedClientId, mockCert, options));
+
+            Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+
+            await Task.CompletedTask;
+        }
+
+        [Test]
+        public async Task VerifyClientCertificateCredentialExceptionAsync()
+        {
+            string expectedInnerExMessage = Guid.NewGuid().ToString();
+
+            var mockAadClient = new MockAadIdentityClient(() => { throw new MockClientException(expectedInnerExMessage); });
+
+            var expectedTenantId = Guid.NewGuid().ToString();
+
+            var expectedClientId = Guid.NewGuid().ToString();
+
+            var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+            var mockCert = new X509Certificate2(certificatePath, "password");
+
+            ClientCertificateCredential credential = InstrumentClient(new ClientCertificateCredential(expectedTenantId, expectedClientId, mockCert, CredentialPipeline.GetInstance(null), mockAadClient));
+
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+
+            Assert.IsNotNull(ex.InnerException);
+
+            Assert.IsInstanceOf(typeof(MockClientException), ex.InnerException);
+
+            Assert.AreEqual(expectedInnerExMessage, ex.InnerException.Message);
+
+            await Task.CompletedTask;
+        }
+
         public void VerifyClientAssertion(string clientAssertion, string expectedTenantId, string expectedClientId, X509Certificate2 clientCertificate)
         {
             var splitAssertion = clientAssertion.Split('.');

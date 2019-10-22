@@ -15,43 +15,39 @@ using Azure.Core.Diagnostics;
 
 namespace Azure.Identity
 {
-    internal class AadIdentityClient
+    internal class AadIdentityClient : AadIdentityClientAbstraction
     {
         private const string ClientAssertionType = "urn:ietf:params:oauth:client-assertion-type:jwt-bearer";
 
-        protected AadIdentityClient()
-        {
-        }
+        private readonly CredentialPipeline _pipeline;
 
         public AadIdentityClient(CredentialPipeline pipeline)
         {
-            Pipeline = pipeline;
+            _pipeline = pipeline;
         }
 
-        public CredentialPipeline Pipeline { get; }
-
-        public virtual async Task<AccessToken> AuthenticateAsync(string tenantId, string clientId, string clientSecret, string[] scopes, CancellationToken cancellationToken = default)
+        public override async Task<AccessToken> AuthenticateAsync(string tenantId, string clientId, string clientSecret, string[] scopes, CancellationToken cancellationToken = default)
         {
             using Request request = CreateClientSecretAuthRequest(tenantId, clientId, clientSecret, scopes);
 
             return await SendAuthRequestAsync(request, cancellationToken).ConfigureAwait(false);
         }
 
-        public virtual AccessToken Authenticate(string tenantId, string clientId, string clientSecret, string[] scopes, CancellationToken cancellationToken = default)
+        public override AccessToken Authenticate(string tenantId, string clientId, string clientSecret, string[] scopes, CancellationToken cancellationToken = default)
         {
             using Request request = CreateClientSecretAuthRequest(tenantId, clientId, clientSecret, scopes);
 
             return SendAuthRequest(request, cancellationToken);
         }
 
-        public virtual async Task<AccessToken> AuthenticateAsync(string tenantId, string clientId, X509Certificate2 clientCertificate, string[] scopes, CancellationToken cancellationToken = default)
+        public override async Task<AccessToken> AuthenticateAsync(string tenantId, string clientId, X509Certificate2 clientCertificate, string[] scopes, CancellationToken cancellationToken = default)
         {
             using Request request = CreateClientCertificateAuthRequest(tenantId, clientId, clientCertificate, scopes);
 
             return await SendAuthRequestAsync(request, cancellationToken).ConfigureAwait(false);
         }
 
-        public virtual AccessToken Authenticate(string tenantId, string clientId, X509Certificate2 clientCertificate, string[] scopes, CancellationToken cancellationToken = default)
+        public override AccessToken Authenticate(string tenantId, string clientId, X509Certificate2 clientCertificate, string[] scopes, CancellationToken cancellationToken = default)
         {
             using Request request = CreateClientCertificateAuthRequest(tenantId, clientId, clientCertificate, scopes);
 
@@ -60,7 +56,7 @@ namespace Azure.Identity
 
         private async Task<AccessToken> SendAuthRequestAsync(Request request, CancellationToken cancellationToken)
         {
-            Response response = await Pipeline.Pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+            Response response = await _pipeline.HttpPipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
             if (response.Status == 200 || response.Status == 201)
             {
@@ -74,7 +70,7 @@ namespace Azure.Identity
 
         private AccessToken SendAuthRequest(Request request, CancellationToken cancellationToken)
         {
-            Response response = Pipeline.Pipeline.SendRequest(request, cancellationToken);
+            Response response = _pipeline.HttpPipeline.SendRequest(request, cancellationToken);
 
             if (response.Status == 200 || response.Status == 201)
             {
@@ -88,13 +84,13 @@ namespace Azure.Identity
 
         private Request CreateClientSecretAuthRequest(string tenantId, string clientId, string clientSecret, string[] scopes)
         {
-            Request request = Pipeline.Pipeline.CreateRequest();
+            Request request = _pipeline.HttpPipeline.CreateRequest();
 
             request.Method = RequestMethod.Post;
 
             request.Headers.Add(HttpHeader.Common.FormUrlEncodedContentType);
 
-            request.Uri.Reset(Pipeline.AuthorityHost);
+            request.Uri.Reset(_pipeline.AuthorityHost);
 
             request.Uri.AppendPath(tenantId);
 
@@ -111,13 +107,13 @@ namespace Azure.Identity
 
         private Request CreateClientCertificateAuthRequest(string tenantId, string clientId, X509Certificate2 clientCertficate, string[] scopes)
         {
-            Request request = Pipeline.Pipeline.CreateRequest();
+            Request request = _pipeline.HttpPipeline.CreateRequest();
 
             request.Method = RequestMethod.Post;
 
             request.Headers.Add(HttpHeader.Common.FormUrlEncodedContentType);
 
-            request.Uri.Reset(Pipeline.AuthorityHost);
+            request.Uri.Reset(_pipeline.AuthorityHost);
 
             request.Uri.AppendPath(tenantId);
 

@@ -6,6 +6,7 @@ using NUnit.Framework;
 using Azure.Core;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Identity.Tests.Mock;
 
 namespace Azure.Identity.Tests
 {
@@ -53,6 +54,19 @@ namespace Azure.Identity.Tests
             }
         }
 
+        public class UnavailbleCredential : TokenCredential
+        {
+            public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
+            {
+                throw new CredentialUnavailableException("unavailable");
+            }
+
+            public override Task<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+            {
+                throw new CredentialUnavailableException("unavailable");
+            }
+        }
+
         [Test]
         public void CtorInvalidInput()
         {
@@ -77,7 +91,11 @@ namespace Azure.Identity.Tests
             Assert.AreEqual("tokenA", (await provider.GetTokenAsync(new TokenRequestContext(new string[] { "scopeA" }))).Token);
             Assert.AreEqual("tokenB", (await provider.GetTokenAsync(new TokenRequestContext(new string[] { "scopeB" }))).Token);
             Assert.AreEqual("tokenC", (await provider.GetTokenAsync(new TokenRequestContext(new string[] { "scopeC" }))).Token);
-            Assert.CatchAsync<AuthenticationFailedException>(async () => await provider.GetTokenAsync(new TokenRequestContext(new string[] { "ScopeD" })));
+            var ex = Assert.CatchAsync<AuthenticationFailedException>(async () => await provider.GetTokenAsync(new TokenRequestContext(new string[] { "ScopeD" })));
+
+            Assert.IsInstanceOf(typeof(AggregateException), ex.InnerException);
+
+            CollectionAssert.AllItemsAreInstancesOfType(((AggregateException)ex.InnerException).InnerExceptions, typeof(CredentialUnavailableException));
         }
 
         [Test]
@@ -91,6 +109,23 @@ namespace Azure.Identity.Tests
             Assert.AreEqual("tokenA", (await provider.GetTokenAsync(new TokenRequestContext(new string[] { "scopeA" }))).Token);
             Assert.CatchAsync<AuthenticationFailedException>(async () => await provider.GetTokenAsync(new TokenRequestContext(new string[] { "ScopeB" })));
             Assert.CatchAsync<AuthenticationFailedException>(async () => await provider.GetTokenAsync(new TokenRequestContext(new string[] { "ScopeC" })));
+        }
+
+        [Test]
+        public async Task AllCredentialSkipped()
+        {
+            var cred1 = new UnavailbleCredential();
+            var cred2 = new UnavailbleCredential();
+
+            var chain = new ChainedTokenCredential(cred1, cred2);
+
+            var ex = Assert.CatchAsync<AuthenticationFailedException>(async () => await chain.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+
+            Assert.IsInstanceOf(typeof(AggregateException), ex.InnerException);
+
+            CollectionAssert.AllItemsAreInstancesOfType(((AggregateException)ex.InnerException).InnerExceptions, typeof(CredentialUnavailableException));
+
+            await Task.CompletedTask;
         }
     }
 }

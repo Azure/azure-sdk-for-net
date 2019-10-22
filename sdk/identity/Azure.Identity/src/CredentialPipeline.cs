@@ -17,7 +17,7 @@ namespace Azure.Identity
         {
             AuthorityHost = options.AuthorityHost;
 
-            Pipeline = HttpPipelineBuilder.Build(options);
+            HttpPipeline = HttpPipelineBuilder.Build(options);
 
             Diagnostics = new ClientDiagnostics(options);
         }
@@ -29,30 +29,18 @@ namespace Azure.Identity
 
         public Uri AuthorityHost { get; }
 
-        public HttpPipeline Pipeline { get; }
+        public HttpPipeline HttpPipeline { get; }
 
         public ClientDiagnostics Diagnostics { get; }
 
         public IConfidentialClientApplication CreateMsalConfidentialClient(string tenantId, string clientId, string clientSecret)
         {
-            return ConfidentialClientApplicationBuilder.Create(clientId).WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline)).WithTenantId(tenantId).WithClientSecret(clientSecret).Build();
+            return ConfidentialClientApplicationBuilder.Create(clientId).WithHttpClientFactory(new HttpPipelineClientFactory(HttpPipeline)).WithTenantId(tenantId).WithClientSecret(clientSecret).Build();
         }
 
-        public IPublicClientApplication CreateMsalPublicClient(string clientId, string tenantId = default, string redirectUrl = default)
+        public MsalPublicClient CreateMsalPublicClient(string clientId, string tenantId = default, string redirectUrl = default, bool attachSharedCache = false)
         {
-            PublicClientApplicationBuilder pubAppBuilder = PublicClientApplicationBuilder.Create(clientId).WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline));
-
-            if (!string.IsNullOrEmpty(tenantId))
-            {
-                pubAppBuilder = pubAppBuilder.WithTenantId(tenantId);
-            }
-
-            if (!string.IsNullOrEmpty(redirectUrl))
-            {
-                pubAppBuilder = pubAppBuilder.WithRedirectUri(redirectUrl);
-            }
-
-            return pubAppBuilder.Build();
+            return new MsalPublicClient(HttpPipeline, clientId, tenantId, redirectUrl, attachSharedCache);
         }
 
         public CredentialDiagnosticScope StartGetTokenScope(string fullyQualifiedMethod, TokenRequestContext context)

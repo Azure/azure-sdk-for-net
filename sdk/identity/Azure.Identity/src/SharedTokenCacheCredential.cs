@@ -16,15 +16,14 @@ namespace Azure.Identity
     /// </summary>
     public class SharedTokenCacheCredential : TokenCredential, IExtendedTokenCredential
     {
-        private const string MultipleAccountsErrorMessage = "Multiple accounts were discovered in the shared token cache. To fix, set the AZURE_USERNAME environment variable to the preferred username, or specify it when constructing SharedTokenCacheCredential.";
+        internal const string MultipleAccountsErrorMessage = "Multiple accounts were discovered in the shared token cache. To fix, set the AZURE_USERNAME environment variable to the preferred username, or specify it when constructing SharedTokenCacheCredential.";
 
-        private const string NoAccountsErrorMessage = "No accounts were discovered in the shared token cache. To fix, authenticate through tooling supporting azure developer sign on.";
+        internal const string NoAccountsErrorMessage = "No accounts were discovered in the shared token cache. To fix, authenticate through tooling supporting azure developer sign on.";
 
-        private readonly IPublicClientApplication _pubApp;
+        private readonly MsalPublicClientAbstraction _client;
         private readonly CredentialPipeline _pipeline;
         private readonly string _username;
         private readonly Lazy<Task<(IAccount, Exception)>> _account;
-        private readonly MsalCacheReader _cacheReader;
 
         /// <summary>
         /// Creates a new SharedTokenCacheCredential which will authenticate users with the specified application.
@@ -46,14 +45,17 @@ namespace Azure.Identity
         }
 
         internal SharedTokenCacheCredential(string username, CredentialPipeline pipeline)
+            : this(username, pipeline, pipeline.CreateMsalPublicClient(Constants.DeveloperSignOnClientId, attachSharedCache: true))
+        {
+        }
+
+        internal SharedTokenCacheCredential(string username, CredentialPipeline pipeline, MsalPublicClientAbstraction client)
         {
             _username = username;
 
             _pipeline = pipeline;
 
-            _pubApp = _pipeline.CreateMsalPublicClient(Constants.DeveloperSignOnClientId);
-
-            _cacheReader = new MsalCacheReader(_pubApp.UserTokenCache, Constants.SharedTokenCacheFilePath, Constants.SharedTokenCacheAccessRetryCount, Constants.SharedTokenCacheAccessRetryDelay);
+            _client = client;
 
             _account = new Lazy<Task<(IAccount, Exception)>>(GetAccountAsync);
         }
@@ -104,7 +106,7 @@ namespace Azure.Identity
 
                 if (account != null)
                 {
-                    AuthenticationResult result = await _pubApp.AcquireTokenSilent(requestContext.Scopes, account).ExecuteAsync(cancellationToken).ConfigureAwait(false);
+                    AuthenticationResult result = await _client.AcquireTokenSilentAsync(requestContext.Scopes, account, cancellationToken).ConfigureAwait(false);
 
                     return new ExtendedAccessToken(new AccessToken(result.AccessToken, result.ExpiresOn));
                 }
@@ -115,7 +117,7 @@ namespace Azure.Identity
             }
             catch (MsalUiRequiredException)
             {
-                return new ExtendedAccessToken(scope.Failed(new CredentialUnavailableException($"Token aquisition failed for user {_username}. To fix, reauthenticate through tooling supporting azure developer sign on.")));
+                return new ExtendedAccessToken(scope.Failed(new CredentialUnavailableException($"Token aquisition failed for user '{_username}'. To fix, reauthenticate through tooling supporting azure developer sign on.")));
             }
             catch (Exception e)
             {
@@ -129,7 +131,7 @@ namespace Azure.Identity
 
             IAccount account = null;
 
-            List<IAccount> accounts = (await _pubApp.GetAccountsAsync().ConfigureAwait(false)).ToList();
+            List<IAccount> accounts = (await _client.GetAccountsAsync().ConfigureAwait(false)).ToList();
 
             try
             {
@@ -150,11 +152,11 @@ namespace Azure.Identity
                 }
                 else if (string.IsNullOrEmpty(_username))
                 {
-                    ex = new CredentialUnavailableException($"{MultipleAccountsErrorMessage}{Environment.NewLine} Discovered Accounts: [ {string.Join(", ", accounts.Select(a => a.Username))} ]");
+                    ex = new CredentialUnavailableException($"{MultipleAccountsErrorMessage}{Environment.NewLine} Discovered Accounts: [ '{string.Join("', '", accounts.Select(a => a.Username))}' ]");
                 }
                 else
                 {
-                    ex = new CredentialUnavailableException($"User account '{_username}' was not found in the shared token cache.{Environment.NewLine}  Discovered Accounts: [ {string.Join(", ", accounts.Select(a => a.Username))} ]");
+                    ex = new CredentialUnavailableException($"User account '{_username}' was not found in the shared token cache.{Environment.NewLine}  Discovered Accounts: [ '{string.Join("', '", accounts.Select(a => a.Username))}' ]");
                 }
             }
 

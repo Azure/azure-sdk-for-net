@@ -2,15 +2,11 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Microsoft.Identity.Client;
 using System;
-using System.Collections.Generic;
 using System.Security;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Diagnostics;
 
 namespace Azure.Identity
 {
@@ -21,7 +17,7 @@ namespace Azure.Identity
     /// </summary>
     public class UsernamePasswordCredential : TokenCredential
     {
-        private readonly IPublicClientApplication _pubApp = null;
+        private readonly MsalPublicClientAbstraction _client = null;
         private readonly CredentialPipeline _pipeline = null;
         private readonly string _username = null;
         private readonly SecureString _password;
@@ -64,6 +60,11 @@ namespace Azure.Identity
         }
 
         internal UsernamePasswordCredential(string username, string password, string tenantId, string clientId, CredentialPipeline pipeline)
+            : this(username, password, pipeline, pipeline.CreateMsalPublicClient(clientId, tenantId))
+        {
+        }
+
+        internal UsernamePasswordCredential(string username, string password, CredentialPipeline pipeline, MsalPublicClientAbstraction client)
         {
             _username = username ?? throw new ArgumentNullException(nameof(username));
 
@@ -71,7 +72,7 @@ namespace Azure.Identity
 
             _pipeline = pipeline;
 
-            _pubApp = _pipeline.CreateMsalPublicClient(clientId, tenantId);
+            _client = client;
         }
 
         /// <summary>
@@ -99,7 +100,7 @@ namespace Azure.Identity
 
             try
             {
-                AuthenticationResult result = await _pubApp.AcquireTokenByUsernamePassword(requestContext.Scopes, _username, _password).ExecuteAsync(cancellationToken).ConfigureAwait(false);
+                AuthenticationResult result = await _client.AcquireTokenByUsernamePasswordAsync(requestContext.Scopes, _username, _password, cancellationToken).ConfigureAwait(false);
 
                 return new AccessToken(result.AccessToken, result.ExpiresOn);
             }

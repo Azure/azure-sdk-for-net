@@ -32,7 +32,8 @@ namespace Azure.Identity
         /// </summary>
         internal X509Certificate2 ClientCertificate { get; }
 
-        private readonly AadIdentityClient _client;
+        private readonly AadIdentityClientAbstraction _client;
+        private readonly CredentialPipeline _pipeline;
 
         /// <summary>
         /// Protected constructor for mocking.
@@ -66,6 +67,11 @@ namespace Azure.Identity
         }
 
         internal ClientCertificateCredential(string tenantId, string clientId, X509Certificate2 clientCertificate, CredentialPipeline pipeline)
+            : this(tenantId, clientId, clientCertificate, pipeline, new AadIdentityClient(pipeline))
+        {
+        }
+
+        internal ClientCertificateCredential(string tenantId, string clientId, X509Certificate2 clientCertificate, CredentialPipeline pipeline, AadIdentityClientAbstraction client)
         {
             TenantId = tenantId ?? throw new ArgumentNullException(nameof(tenantId));
 
@@ -73,7 +79,9 @@ namespace Azure.Identity
 
             ClientCertificate = clientCertificate ?? throw new ArgumentNullException(nameof(clientCertificate));
 
-            _client = new AadIdentityClient(pipeline);
+            _pipeline = pipeline;
+
+            _client = client;
         }
 
         /// <summary>
@@ -84,7 +92,7 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            using CredentialDiagnosticScope scope = _client.Pipeline.StartGetTokenScope("Azure.Identity.ClientCertificateCredential.GetToken", requestContext);
+            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("Azure.Identity.ClientCertificateCredential.GetToken", requestContext);
 
             try
             {
@@ -104,7 +112,7 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override async Task<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            using CredentialDiagnosticScope scope = _client.Pipeline.StartGetTokenScope("Azure.Identity.ClientCertificateCredential.GetToken", requestContext);
+            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("Azure.Identity.ClientCertificateCredential.GetToken", requestContext);
 
             try
             {

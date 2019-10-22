@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Testing;
 using Azure.Identity.Tests.Mock;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
@@ -34,7 +35,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public async Task VerifyClientClientSecretRequestAsync()
+        public async Task VerifyClientSecretCredentialRequestAsync()
         {
             var response = new MockResponse(200);
 
@@ -77,6 +78,50 @@ namespace Azure.Identity.Tests
             Assert.IsTrue(parsedBody.TryGetValue("client_secret", out string actualClientSecret) && actualClientSecret == "secret");
 
             Assert.IsTrue(parsedBody.TryGetValue("scope", out string actualScope) && actualScope == MockScopes.Default.ToString());
+        }
+
+        [Test]
+        public async Task VerifyClientSecretRequestFailedAsync()
+        {
+            var response = new MockResponse(400);
+
+            response.SetContent($"{{ \"error_code\": \"InvalidSecret\", \"message\": \"The specified client_secret is incorrect\" }}");
+
+            var mockTransport = new MockTransport(response);
+
+            var options = new TokenCredentialOptions() { Transport = mockTransport };
+
+            var expectedTenantId = Guid.NewGuid().ToString();
+
+            var expectedClientId = Guid.NewGuid().ToString();
+
+            var expectedClientSecret = "secret";
+
+            ClientSecretCredential client = InstrumentClient(new ClientSecretCredential(expectedTenantId, expectedClientId, expectedClientSecret, options));
+
+            Assert.ThrowsAsync<AuthenticationFailedException>(async () => await client.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+
+            await Task.CompletedTask;
+        }
+
+        [Test]
+        public async Task VerifyClientSecretCredentialExceptionAsync()
+        {
+            string expectedInnerExMessage = Guid.NewGuid().ToString();
+
+            var mockAadClient = new MockAadIdentityClient(() => { throw new MockClientException(expectedInnerExMessage); });
+
+            ClientSecretCredential credential = InstrumentClient(new ClientSecretCredential(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), CredentialPipeline.GetInstance(null), mockAadClient));
+
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+
+            Assert.IsNotNull(ex.InnerException);
+
+            Assert.IsInstanceOf(typeof(MockClientException), ex.InnerException);
+
+            Assert.AreEqual(expectedInnerExMessage, ex.InnerException.Message);
+
+            await Task.CompletedTask;
         }
 
         public bool TryParseFormEncodedBody(byte[] content, out Dictionary<string, string> parsed)

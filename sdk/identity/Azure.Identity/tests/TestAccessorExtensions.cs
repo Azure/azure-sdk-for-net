@@ -11,11 +11,11 @@ namespace Azure.Identity.Tests
 {
     internal static class TestAccessorExtensions
     {
-        public static string _client(this ClientSecretCredential credential)
+        public static ClientSecretCredential _client(this ClientSecretCredential credential)
         {
-            return typeof(ClientSecretCredential).GetField("_client", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(credential) as string;
+            return typeof(ClientSecretCredential).GetField("_client", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(credential) as ClientSecretCredential;
         }
-        public static void _client(this ClientSecretCredential credential, AadIdentityClient client)
+        public static void _client(this ClientSecretCredential credential, AadIdentityClientAbstraction client)
         {
             typeof(ClientSecretCredential).GetField("_client", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(credential, client);
         }
@@ -31,6 +31,11 @@ namespace Azure.Identity.Tests
                 secureString.AppendChar(c);
             }
             return secureString;
+        }
+
+        public static void _client(this InteractiveBrowserCredential credential, MsalPublicClientAbstraction client)
+        {
+            typeof(InteractiveBrowserCredential).GetField("_client", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(credential, client);
         }
     }
 }

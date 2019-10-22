@@ -18,8 +18,8 @@ namespace Azure.Identity.Tests
         [SetUp]
         public void ResetManagedIdenityClient()
         {
-            typeof(ManagedIdentityCredential).GetField("s_msiType", BindingFlags.NonPublic | BindingFlags.Static).SetValue(null, 0);
-            typeof(ManagedIdentityCredential).GetField("s_endpoint", BindingFlags.NonPublic | BindingFlags.Static).SetValue(null, null);
+            typeof(ManagedIdentityClient).GetField("s_msiType", BindingFlags.NonPublic | BindingFlags.Static).SetValue(null, 0);
+            typeof(ManagedIdentityClient).GetField("s_endpoint", BindingFlags.NonPublic | BindingFlags.Static).SetValue(null, null);
         }
 
         public ManagedIdentityCredentialTests(bool isAsync) : base(isAsync)
@@ -272,6 +272,48 @@ namespace Azure.Identity.Tests
 
                 Assert.AreEqual("true", actMetadata);
             }
+        }
+
+        [Test]
+        public async Task VerifyMsiUnavailableCredentialException()
+        {
+            var mockClient = new MockManagedIdentityClient { MsiTypeFactory = () => MsiType.Unavailable };
+
+            var credential = InstrumentClient(new ManagedIdentityCredential(null, CredentialPipeline.GetInstance(null), mockClient));
+
+            var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+
+            Assert.AreEqual(ManagedIdentityCredential.MsiUnavailableError, ex.Message);
+
+            await Task.CompletedTask;
+        }
+
+        [Test]
+        public async Task VerifyClientGetMsiTypeThrows()
+        {
+            var mockClient = new MockManagedIdentityClient { MsiTypeFactory = () => throw new MockClientException("message") };
+
+            var credential = InstrumentClient(new ManagedIdentityCredential(null, CredentialPipeline.GetInstance(null), mockClient));
+
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+
+            Assert.IsInstanceOf(typeof(MockClientException), ex.InnerException);
+
+            await Task.CompletedTask;
+        }
+
+        [Test]
+        public async Task VerifyClientAuthenticateThrows()
+        {
+            var mockClient = new MockManagedIdentityClient { MsiTypeFactory = () => MsiType.Imds, TokenFactory = () => throw new MockClientException("message") };
+
+            var credential = InstrumentClient(new ManagedIdentityCredential(null, CredentialPipeline.GetInstance(null), mockClient));
+
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+
+            Assert.IsInstanceOf(typeof(MockClientException), ex.InnerException);
+
+            await Task.CompletedTask;
         }
     }
 }

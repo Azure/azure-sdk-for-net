@@ -96,7 +96,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void AuthenticateWithDeviceCodeMockVerifyMsalCancellationAsync()
+        public async Task AuthenticateWithDeviceCodeMockVerifyMsalCancellationAsync()
         {
             var expectedCode = Guid.NewGuid().ToString();
 
@@ -110,7 +110,11 @@ namespace Azure.Identity.Tests
 
             var cred = InstrumentClient(new DeviceCodeCredential((code, cancelToken) => VerifyDeviceCodeAndCancel(code, expectedCode, cancelSource), null, ClientId, options: options));
 
-            Assert.ThrowsAsync<OperationCanceledException>(async () => await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" }), cancelSource.Token));
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" }), cancelSource.Token));
+
+            Assert.IsInstanceOf(typeof(OperationCanceledException), ex.InnerException);
+
+            await Task.CompletedTask;
         }
 
         [Test]
@@ -128,18 +132,13 @@ namespace Azure.Identity.Tests
 
             var cred = InstrumentClient(new DeviceCodeCredential(VerifyDeviceCodeCallbackCancellationToken, ClientId, options: options));
 
-            Task<AccessToken> getTokenTask = cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" }), cancelSource.Token);
+            var getTokenTask = cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" }), cancelSource.Token);
 
-            try
-            {
-                AccessToken token = await getTokenTask;
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await getTokenTask);
 
-                Assert.Fail();
-            }
-            catch (TaskCanceledException)
-            {
+            Assert.IsInstanceOf(typeof(OperationCanceledException), ex.InnerException);
 
-            }
+            await Task.CompletedTask;
         }
 
         [Test]
@@ -157,7 +156,9 @@ namespace Azure.Identity.Tests
 
             var cred = InstrumentClient(new DeviceCodeCredential(ThrowingDeviceCodeCallback, ClientId, options: options));
 
-            Assert.ThrowsAsync<MockException>(async () => await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" }), cancelSource.Token));
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" }), cancelSource.Token));
+
+            Assert.IsInstanceOf(typeof(MockException), ex.InnerException);
         }
 
         private MockResponse ProcessMockRequest(MockRequest mockRequest, string code, string token)

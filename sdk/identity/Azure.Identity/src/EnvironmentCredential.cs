@@ -68,16 +68,42 @@ namespace Azure.Identity
 
             if (_credential is null)
             {
-                StringBuilder builder = new StringBuilder("EnvironmentCredential is unavailable, environment variables not fully configured.");
+                StringBuilder builder = new StringBuilder("EnvironmentCredential is unavailable, environment variables not fully configured. AZURE_TENANT_ID and AZURE_CLIENT_ID must be set, along with either AZURE_CLIENT_SECRET or AZURE_USERNAME and AZURE_PASSWORD. Currently set variables [ ");
 
-                builder.Append(Environment.NewLine).Append($"  AZURE_TENANT_ID specified {tenantId != null}");
-                builder.Append(Environment.NewLine).Append($"  AZURE_CLIENT_ID specified {clientId != null}");
-                builder.Append(Environment.NewLine).Append($"  AZURE_CLIENT_SECRET specified {clientSecret != null}");
-                builder.Append(Environment.NewLine).Append($"  AZURE_USERNAME specified {username != null}");
-                builder.Append(Environment.NewLine).Append($"  AZURE_PASSWORD specified {password != null}");
+                if (tenantId != null)
+                {
+                    builder.Append(" AZURE_TENANT_ID");
+                }
+
+                if (clientId != null)
+                {
+                    builder.Append(" AZURE_CLIENT_ID");
+                }
+
+                if (clientSecret != null)
+                {
+                    builder.Append(" AZURE_CLIENT_SECRET");
+                }
+
+                if (username != null)
+                {
+                    builder.Append(" AZURE_USERNAME");
+                }
+
+                if (password != null)
+                {
+                    builder.Append(" AZURE_PASSWORD");
+                }
 
                 _unavailbleErrorMessage = builder.ToString();
             }
+        }
+
+        internal EnvironmentCredential(CredentialPipeline pipeline, TokenCredential credential)
+        {
+            _pipeline = pipeline;
+
+            _credential = credential;
         }
 
         /// <summary>
