@@ -76,9 +76,13 @@ namespace Azure.Messaging.EventHubs.Samples
                     MaximumReceiveWaitTime = TimeSpan.FromSeconds(1)
                 };
 
+                // TODO: remove placeholder factory.  This will be discarded soon.
+
+                Func<PartitionContext, BasePartitionProcessor> factory = _ => new SamplePartitionProcessor();
+
                 // Let's finally create our event processor.  We're using the default consumer group that was created with the Event Hub.
 
-                var eventProcessor = new EventProcessor<SamplePartitionProcessor>(EventHubConsumer.DefaultConsumerGroupName, client, partitionManager, eventProcessorOptions);
+                var eventProcessor = new EventProcessor(EventHubConsumer.DefaultConsumerGroupName, client, factory, partitionManager, eventProcessorOptions);
 
                 // Once started, the event processor will start to claim partitions and receive events from them.
 
@@ -278,7 +282,7 @@ namespace Azure.Messaging.EventHubs.Samples
             }
 
             /// <summary>
-            ///   Processes an unexpected exception thrown while the associated <see cref="EventProcessor{T}" /> is running.
+            ///   Processes an unexpected exception thrown while the associated <see cref="EventProcessor" /> is running.
             /// </summary>
             ///
             /// <param name="partitionContext">Contains information about the partition from which events are sourced and provides a means of creating checkpoints for that partition.</param>

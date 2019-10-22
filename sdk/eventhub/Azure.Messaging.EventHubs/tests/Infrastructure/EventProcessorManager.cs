@@ -51,7 +51,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   The event processors managed by this hub.
         /// </summary>
         ///
-        private List<EventProcessor<PartitionProcessor>> EventProcessors { get; }
+        private List<EventProcessor> EventProcessors { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventProcessorManager"/> class.
@@ -99,7 +99,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 Options.MaximumReceiveWaitTime = TimeSpan.FromSeconds(2);
             }
 
-            EventProcessors = new List<EventProcessor<PartitionProcessor>>();
+            EventProcessors = new List<EventProcessor>();
         }
 
         /// <summary>
@@ -370,7 +370,7 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             /// <summary>
-            ///   Processes an unexpected exception thrown while the associated <see cref="EventProcessor{T}" /> is running.
+            ///   Processes an unexpected exception thrown while the associated <see cref="EventProcessor" /> is running.
             /// </summary>
             ///
             /// <param name="partitionContext">Contains information about the partition from which events are sourced and provides a means of creating checkpoints for that partition.</param>
@@ -393,7 +393,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   for testing purposes.
         /// </summary>
         ///
-        private class ShortWaitTimeMock : EventProcessor<PartitionProcessor>
+        private class ShortWaitTimeMock : EventProcessor
         {
             /// <summary>A value used to override event processors' load balance update time span.</summary>
             public static readonly TimeSpan s_shortLoadBalanceUpdate = TimeSpan.FromSeconds(1);

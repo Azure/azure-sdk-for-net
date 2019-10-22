@@ -10,7 +10,7 @@ namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
     ///   Processes events received from the Azure Event Hubs service.  An instance of this class or of a derived class
-    ///   will be created by the associated <see cref="EventProcessor{T}" /> for every partition it owns.  This class does
+    ///   will be created by the associated <see cref="EventProcessor" /> for every partition it owns.  This class does
     ///   not perform any kind of processing by itself and a useful partition processor is expected to be derived from it.
     /// </summary>
     ///
@@ -59,7 +59,7 @@ namespace Azure.Messaging.EventHubs.Processor
                                                 CancellationToken cancellationToken);
 
         /// <summary>
-        ///   Processes an unexpected exception thrown while the associated <see cref="EventProcessor{T}" /> is running.
+        ///   Processes an unexpected exception thrown while the associated <see cref="EventProcessor" /> is running.
         /// </summary>
         ///
         /// <param name="partitionContext">Contains information about the partition from which events are sourced and provides a means of creating checkpoints for that partition.</param>

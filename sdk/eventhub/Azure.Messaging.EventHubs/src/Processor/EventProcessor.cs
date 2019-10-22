@@ -17,9 +17,7 @@ namespace Azure.Messaging.EventHubs.Processor
     ///   them to a partition processor instance to be processed.
     /// </summary>
     ///
-    /// <typeparam name="T">The type of partition processor used by this instance by default; the type must be derived from <see cref="BasePartitionProcessor" /> and must have a parameterless constructor.</typeparam>
-    ///
-    public class EventProcessor<T> where T : BasePartitionProcessor, new()
+    public class EventProcessor
     {
         /// <summary>The seed to use for initializing random number generated for a given thread-specific instance.</summary>
         private static int s_randomSeed = Environment.TickCount;
@@ -98,36 +96,14 @@ namespace Azure.Messaging.EventHubs.Processor
         private Dictionary<string, PartitionOwnership> InstanceOwnership { get; set; }
 
         /// <summary>
-        ///   The running task responsible for performing partition load balancing between multiple <see cref="EventProcessor{T}" />
+        ///   The running task responsible for performing partition load balancing between multiple <see cref="EventProcessor" />
         ///   instances, as well as managing partition pumps and ownership.
         /// </summary>
         ///
         private Task RunningTask { get; set; }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventProcessor{T}"/> class.
-        /// </summary>
-        ///
-        /// <param name="consumerGroup">The name of the consumer group this event processor is associated with.  Events are read in the context of this group.</param>
-        /// <param name="eventHubClient">The client used to interact with the Azure Event Hubs service.</param>
-        /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.</param>
-        /// <param name="options">The set of options to use for this event processor.</param>
-        ///
-        /// <remarks>
-        ///   Ownership of the <paramref name="eventHubClient" /> is assumed to be responsibility of the caller; this
-        ///   processor will delegate operations to it, but will not perform any clean-up tasks, such as closing or
-        ///   disposing of the instance.
-        /// </remarks>
-        ///
-        public EventProcessor(string consumerGroup,
-                              EventHubClient eventHubClient,
-                              PartitionManager partitionManager,
-                              EventProcessorOptions options = default) : this(consumerGroup, eventHubClient, partitionContext => new T(), partitionManager, options)
-        {
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="EventProcessor{T}"/> class.
+        ///   Initializes a new instance of the <see cref="EventProcessor"/> class.
         /// </summary>
         ///
         /// <param name="consumerGroup">The name of the consumer group this event processor is associated with.  Events are read in the context of this group.</param>
@@ -164,7 +140,7 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventProcessor{T}"/> class.
+        ///   Initializes a new instance of the <see cref="EventProcessor"/> class.
         /// </summary>
         ///
         protected EventProcessor()
@@ -268,7 +244,7 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
-        ///   Performs load balancing between multiple <see cref="EventProcessor{T}" /> instances, claiming others' partitions to enforce
+        ///   Performs load balancing between multiple <see cref="EventProcessor" /> instances, claiming others' partitions to enforce
         ///   a more equal distribution when necessary.  It also manages its own partition pumps and ownership.
         /// </summary>
         ///
@@ -359,7 +335,7 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
-        ///   Finds and tries to claim an ownership if this <see cref="EventProcessor{T}" /> instance is eligible to increase its ownership
+        ///   Finds and tries to claim an ownership if this <see cref="EventProcessor" /> instance is eligible to increase its ownership
         ///   list.
         /// </summary>
         ///
