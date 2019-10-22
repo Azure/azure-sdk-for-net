@@ -144,9 +144,11 @@ certificate. Sensitive fields of the certificate will not be returned. This oper
 requires the certificates/list permission.
   
 ```C# ListCertificates
-await foreach (CertificateProperties listCertificates in client.GetCertificatesAsync())
+AsyncPageable<CertificateProperties> allCertificates = client.GetCertificatesAsync();
+
+await foreach (CertificateProperties certificateProperties in allCertificates)
 {
-    Console.WriteLine(listCertificates.Name);
+    Console.WriteLine(certificateProperties.Name);
 }
 ```
 
