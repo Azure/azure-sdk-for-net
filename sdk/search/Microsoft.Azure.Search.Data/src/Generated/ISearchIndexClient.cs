@@ -16,8 +16,8 @@ namespace Microsoft.Azure.Search
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Client that can be used to query an Azure Search index and upload,
-    /// merge, or delete documents.
+    /// Client that can be used to query an index and upload, merge, or delete
+    /// documents.
     /// </summary>
     public partial interface ISearchIndexClient : System.IDisposable
     {
@@ -46,18 +46,18 @@ namespace Microsoft.Azure.Search
         string ApiVersion { get; }
 
         /// <summary>
-        /// The name of the Azure Search service.
+        /// The name of the search service.
         /// </summary>
         string SearchServiceName { get; set; }
 
         /// <summary>
-        /// The DNS suffix of the Azure Search service. The default is
+        /// The DNS suffix of the search service. The default is
         /// search.windows.net.
         /// </summary>
         string SearchDnsSuffix { get; set; }
 
         /// <summary>
-        /// The name of the Azure Search index.
+        /// The name of the index.
         /// </summary>
         string IndexName { get; set; }
 
