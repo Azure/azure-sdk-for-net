@@ -5,7 +5,7 @@ using System;
 using Azure.Messaging.EventHubs.Processor;
 using NUnit.Framework;
 
-namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
+namespace Azure.Messaging.EventHubs.CheckpointStore.Blobs.Tests
 {
     /// <summary>
     ///   The suite of tests for the <see cref="PartitionOwnershipExtensions" />

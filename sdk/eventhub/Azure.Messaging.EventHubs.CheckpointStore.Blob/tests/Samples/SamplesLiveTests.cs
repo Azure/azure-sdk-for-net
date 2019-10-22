@@ -5,13 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Messaging.EventHubs.CheckpointStore.Blob.Samples.Infrastructure;
-using Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests.Infrastructure;
+using Azure.Messaging.EventHubs.CheckpointStore.Blobs.Samples.Infrastructure;
+using Azure.Messaging.EventHubs.CheckpointStore.Blobs.Tests.Infrastructure;
 using Azure.Messaging.EventHubs.Tests;
 using Azure.Messaging.EventHubs.Tests.Infrastructure;
 using NUnit.Framework;
 
-namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
+namespace Azure.Messaging.EventHubs.CheckpointStore.Blobs.Tests
 {
     /// <summary>
     ///   The suite of live tests for the samples associated with the

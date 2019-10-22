@@ -4,7 +4,7 @@
 using System;
 using Azure.Messaging.EventHubs.Processor;
 
-namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
+namespace Azure.Messaging.EventHubs.CheckpointStore.Blobs.Tests
 {
     /// <summary>
     ///   The set of extension methods for the <see cref="PartitionOwnership" />

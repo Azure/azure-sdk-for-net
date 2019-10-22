@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
+namespace Azure.Messaging.EventHubs.CheckpointStore.Blobs
 {
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.

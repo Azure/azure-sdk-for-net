@@ -3,7 +3,7 @@
 
 using System.Threading.Tasks;
 
-namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Samples.Infrastructure
+namespace Azure.Messaging.EventHubs.CheckpointStore.Blobs.Samples.Infrastructure
 {
     /// <summary>
     ///   Designates a class as a sample and provides a well-known means

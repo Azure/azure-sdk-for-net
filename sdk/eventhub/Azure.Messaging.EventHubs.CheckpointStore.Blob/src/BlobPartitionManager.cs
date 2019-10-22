@@ -11,7 +11,7 @@ using Azure.Storage;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 
-namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
+namespace Azure.Messaging.EventHubs.CheckpointStore.Blobs
 {
     /// <summary>
     ///   A storage blob service that keeps track of checkpoints and ownership.

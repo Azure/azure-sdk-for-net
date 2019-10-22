@@ -5,9 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Messaging.EventHubs.CheckpointStore.Blob.Samples.Infrastructure;
+using Azure.Messaging.EventHubs.CheckpointStore.Blobs.Samples.Infrastructure;
 
-namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Samples
+namespace Azure.Messaging.EventHubs.CheckpointStore.Blobs.Samples
 {
     /// <summary>
     ///   The main entry point for executing the samples.
