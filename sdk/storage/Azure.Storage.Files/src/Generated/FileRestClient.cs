@@ -8845,12 +8845,12 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// Time when the session that previously opened the handle has last been reconnected. (UTC)
         /// </summary>
-        public System.DateTimeOffset OpenTime { get; internal set; }
+        public System.DateTimeOffset? OpenedOn { get; internal set; }
 
         /// <summary>
         /// Time handle was last connected to (UTC)
         /// </summary>
-        public System.DateTimeOffset? LastReconnectTime { get; internal set; }
+        public System.DateTimeOffset? LastReconnectedOn { get; internal set; }
 
         /// <summary>
         /// Prevent direct instantiation of StorageFileHandle instances.
@@ -8901,12 +8901,12 @@ namespace Azure.Storage.Files.Models
             _child = element.Element(System.Xml.Linq.XName.Get("OpenTime", ""));
             if (_child != null)
             {
-                _value.OpenTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _value.OpenedOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("LastReconnectTime", ""));
             if (_child != null)
             {
-                _value.LastReconnectTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _value.LastReconnectedOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
             }
             CustomizeFromXml(element, _value);
             return _value;
@@ -8929,9 +8929,9 @@ namespace Azure.Storage.Files.Models
             string fileId,
             string sessionId,
             string clientIp,
-            System.DateTimeOffset openTime,
             string parentId = default,
-            System.DateTimeOffset? lastReconnectTime = default)
+            System.DateTimeOffset? openedOn = default,
+            System.DateTimeOffset? lastReconnectedOn = default)
         {
             return new StorageFileHandle()
             {
@@ -8940,9 +8940,9 @@ namespace Azure.Storage.Files.Models
                 FileId = fileId,
                 SessionId = sessionId,
                 ClientIp = clientIp,
-                OpenTime = openTime,
                 ParentId = parentId,
-                LastReconnectTime = lastReconnectTime,
+                OpenedOn = openedOn,
+                LastReconnectedOn = lastReconnectedOn,
             };
         }
     }
