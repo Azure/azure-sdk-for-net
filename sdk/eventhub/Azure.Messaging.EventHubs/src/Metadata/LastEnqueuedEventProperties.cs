@@ -28,38 +28,25 @@ namespace Azure.Messaging.EventHubs.Metadata
         ///   The sequence number of the last observed event to be enqueued in the partition.
         /// </summary>
         ///
-        public long? LastEnqueuedSequenceNumber { get; private set; }
+        public long? LastEnqueuedSequenceNumber { get; }
 
         /// <summary>
         ///   The offset of the last observed event to be enqueued in the partition.
         /// </summary>
         ///
-        public long? LastEnqueuedOffset { get; private set; }
+        public long? LastEnqueuedOffset { get; }
 
         /// <summary>
         ///   The date and time, in UTC, that the last observed event was enqueued in the partition.
         /// </summary>
         ///
-        public DateTimeOffset? LastEnqueuedTime { get; private set; }
+        public DateTimeOffset? LastEnqueuedTime { get; }
 
         /// <summary>
         ///   The date and time, in UTC, that the information about the last enqueued event was received.
         /// </summary>
-        public DateTimeOffset? InformationReceived { get; private set; }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="LastEnqueuedEventProperties"/> class.
-        /// </summary>
         ///
-        /// <param name="eventHubName">The name of the Event Hub that contains the partitions.</param>
-        /// <param name="partitionId">The identifier of the partition.</param>
-        ///
-        protected internal LastEnqueuedEventProperties(string eventHubName,
-                                                       string partitionId)
-        {
-            EventHubName = eventHubName;
-            PartitionId = partitionId;
-        }
+        public DateTimeOffset? InformationReceived { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="LastEnqueuedEventProperties"/> class.
@@ -70,39 +57,41 @@ namespace Azure.Messaging.EventHubs.Metadata
         /// <param name="lastSequenceNumber">The sequence number observed the last event to be enqueued in the partition.</param>
         /// <param name="lastOffset">The offset of the last event to be enqueued in the partition.</param>
         /// <param name="lastEnqueuedTime">The date and time, in UTC, that the last event was enqueued in the partition.</param>
-        /// <param name="lastUpdatedTime">The date and time, in UTC, that the metrics were last updated.</param>
+        /// <param name="lastReceivedTime">The date and time, in UTC, that the information was last received.</param>
         ///
         protected internal LastEnqueuedEventProperties(string eventHubName,
                                                        string partitionId,
                                                        long? lastSequenceNumber,
                                                        long? lastOffset,
                                                        DateTimeOffset? lastEnqueuedTime,
-                                                       DateTimeOffset? lastUpdatedTime)
+                                                       DateTimeOffset? lastReceivedTime)
         {
             EventHubName = eventHubName;
             PartitionId = partitionId;
-
-            UpdateMetrics(lastSequenceNumber, lastOffset, lastEnqueuedTime, lastUpdatedTime);
-        }
-
-        /// <summary>
-        ///   Updates the current set of metrics for the partition.
-        /// </summary>
-        ///
-        /// <param name="lastSequenceNumber">The sequence number observed the last event to be enqueued in the partition.</param>
-        /// <param name="lastOffset">The offset of the last event to be enqueued in the partition.</param>
-        /// <param name="lastEnqueuedTime">The date and time, in UTC, that the last event was enqueued in the partition.</param>
-        /// <param name="lastReceivedTime">The date and time, in UTC, that the metrics were last updated.</param>
-        ///
-        protected internal void UpdateMetrics(long? lastSequenceNumber,
-                                              long? lastOffset,
-                                              DateTimeOffset? lastEnqueuedTime,
-                                              DateTimeOffset? lastReceivedTime)
-        {
             LastEnqueuedSequenceNumber = lastSequenceNumber;
             LastEnqueuedOffset = lastOffset;
             LastEnqueuedTime = lastEnqueuedTime;
             InformationReceived = lastReceivedTime;
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="LastEnqueuedEventProperties"/> class.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The name of the Event Hub that contains the partitions.</param>
+        /// <param name="partitionId">The identifier of the partition.</param>
+        /// <param name="sourceEvent">The event to use as the source for the partition information.</param>
+        ///
+        internal LastEnqueuedEventProperties(string eventHubName,
+                                             string partitionId,
+                                             EventData sourceEvent) :
+            this(eventHubName,
+                 partitionId,
+                 sourceEvent?.LastPartitionSequenceNumber,
+                 sourceEvent?.LastPartitionOffset,
+                 sourceEvent?.LastPartitionEnqueuedTime,
+                 sourceEvent?.LastPartitionInformationRetrievalTime)
+        {
         }
     }
 }

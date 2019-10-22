@@ -96,6 +96,7 @@ namespace Azure.Data.AppConfiguration
         public virtual async Task<Response<ConfigurationSetting>> AddAsync(ConfigurationSetting setting, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Add");
+            scope.AddAttribute("key", setting?.Key);
             scope.Start();
 
             try
@@ -169,7 +170,7 @@ namespace Azure.Data.AppConfiguration
             BuildUriForKvRoute(request.Uri, setting);
 
             MatchConditions requestOptions = new MatchConditions();
-            requestOptions.SetIfNotExistsCondition();
+            requestOptions.IfNoneMatch = ETag.All;
             ConditionalRequestOptionsExtensions.ApplyHeaders(request, requestOptions);
 
             request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
@@ -220,7 +221,7 @@ namespace Azure.Data.AppConfiguration
             if (onlyIfUnchanged)
             {
                 requestOptions = new MatchConditions();
-                requestOptions.SetIfUnmodifiedCondition(setting.ETag);
+                requestOptions.IfMatch = setting.ETag;
             }
 
             return await SetAsync(setting, requestOptions, cancellationToken).ConfigureAwait(false);
@@ -241,7 +242,7 @@ namespace Azure.Data.AppConfiguration
             if (onlyIfUnchanged)
             {
                 requestOptions = new MatchConditions();
-                requestOptions.SetIfUnmodifiedCondition(setting.ETag);
+                requestOptions.IfMatch = setting.ETag;
             }
 
             return Set(setting, requestOptions, cancellationToken);
@@ -253,7 +254,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="setting"><see cref="ConfigurationSetting"/> to create.</param>
         /// <param name="requestOptions"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response<ConfigurationSetting>> SetAsync(ConfigurationSetting setting, MatchConditions requestOptions, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<ConfigurationSetting>> SetAsync(ConfigurationSetting setting, MatchConditions requestOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Set");
             scope.AddAttribute("key", setting?.Key);
@@ -286,7 +287,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="setting"><see cref="ConfigurationSetting"/> to create.</param>
         /// <param name="requestOptions"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response<ConfigurationSetting> Set(ConfigurationSetting setting, MatchConditions requestOptions, CancellationToken cancellationToken = default)
+        internal virtual Response<ConfigurationSetting> Set(ConfigurationSetting setting, MatchConditions requestOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Set");
             scope.AddAttribute("key", setting?.Key);
@@ -373,7 +374,7 @@ namespace Azure.Data.AppConfiguration
             if (onlyIfUnchanged)
             {
                 requestOptions = new MatchConditions();
-                requestOptions.SetIfUnmodifiedCondition(setting.ETag);
+                requestOptions.IfMatch = setting.ETag;
             }
 
             return await DeleteAsync(setting.Key, setting.Label, requestOptions, cancellationToken).ConfigureAwait(false);
@@ -394,7 +395,7 @@ namespace Azure.Data.AppConfiguration
             if (onlyIfUnchanged)
             {
                 requestOptions = new MatchConditions();
-                requestOptions.SetIfUnmodifiedCondition(setting.ETag);
+                requestOptions.IfMatch = setting.ETag;
             }
 
             return Delete(setting.Key, setting.Label, requestOptions, cancellationToken);
@@ -523,7 +524,7 @@ namespace Azure.Data.AppConfiguration
             if (onlyIfChanged)
             {
                 requestOptions = new MatchConditions();
-                requestOptions.SetIfModifiedCondition(setting.ETag);
+                requestOptions.IfNoneMatch = setting.ETag;
             }
 
             return await GetAsync(setting.Key, setting.Label, acceptDateTime: default, requestOptions, cancellationToken).ConfigureAwait(false);
@@ -544,7 +545,7 @@ namespace Azure.Data.AppConfiguration
             if (onlyIfChanged)
             {
                 requestOptions = new MatchConditions();
-                requestOptions.SetIfModifiedCondition(setting.ETag);
+                requestOptions.IfNoneMatch = setting.ETag;
             }
 
             return Get(setting.Key, setting.Label, acceptDateTime: default, requestOptions, cancellationToken);
@@ -703,7 +704,7 @@ namespace Azure.Data.AppConfiguration
                     case 200:
                     case 206:
                         SettingBatch settingBatch = await ConfigurationServiceSerializer.ParseBatchAsync(response, cancellationToken).ConfigureAwait(false);
-                        return new Page<ConfigurationSetting>(settingBatch.Settings, settingBatch.NextBatchLink, response);
+                        return Page<ConfigurationSetting>.FromValues(settingBatch.Settings, settingBatch.NextBatchLink, response);
                     default:
                         throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
                 }
@@ -736,7 +737,7 @@ namespace Azure.Data.AppConfiguration
                     case 200:
                     case 206:
                         SettingBatch settingBatch = ConfigurationServiceSerializer.ParseBatch(response);
-                        return new Page<ConfigurationSetting>(settingBatch.Settings, settingBatch.NextBatchLink, response);
+                        return Page<ConfigurationSetting>.FromValues(settingBatch.Settings, settingBatch.NextBatchLink, response);
                     default:
                         throw response.CreateRequestFailedException();
                 }
@@ -784,7 +785,7 @@ namespace Azure.Data.AppConfiguration
                     case 200:
                     case 206:
                         SettingBatch settingBatch = await ConfigurationServiceSerializer.ParseBatchAsync(response, cancellationToken).ConfigureAwait(false);
-                        return new Page<ConfigurationSetting>(settingBatch.Settings, settingBatch.NextBatchLink, response);
+                        return Page<ConfigurationSetting>.FromValues(settingBatch.Settings, settingBatch.NextBatchLink, response);
                     default:
                         throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
                 }
@@ -817,7 +818,7 @@ namespace Azure.Data.AppConfiguration
                     case 200:
                     case 206:
                         SettingBatch settingBatch = ConfigurationServiceSerializer.ParseBatch(response);
-                        return new Page<ConfigurationSetting>(settingBatch.Settings, settingBatch.NextBatchLink, response);
+                        return Page<ConfigurationSetting>.FromValues(settingBatch.Settings, settingBatch.NextBatchLink, response);
                     default:
                         throw response.CreateRequestFailedException();
                 }

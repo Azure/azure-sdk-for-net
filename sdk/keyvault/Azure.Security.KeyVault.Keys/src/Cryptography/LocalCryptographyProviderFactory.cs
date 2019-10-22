@@ -5,9 +5,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     internal static class LocalCryptographyProviderFactory
     {
-        public static ICryptographyProvider Create(Key key)
+        public static ICryptographyProvider Create(KeyVaultKey key)
         {
-            JsonWebKey keyMaterial = key?.KeyMaterial;
+            JsonWebKey keyMaterial = key?.Key;
             if (keyMaterial != null)
             {
                 if (keyMaterial.KeyType == KeyType.Rsa || keyMaterial.KeyType == KeyType.RsaHsm)

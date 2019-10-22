@@ -189,7 +189,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 AmqpMessage.Create(new Data { Value = new ArraySegment<byte>(new byte[] { 0x33 }) }),
             };
 
-            var options = new BatchOptions { MaximumizeInBytes = 30 };
+            var options = new BatchOptions { MaximumSizeInBytes = 30 };
             var transportBatch = new TransportBatchMock { Messages = messages };
             var batch = new EventDataBatch(transportBatch, options);
             var mock = new ObservableSenderMock(new ClientMock(), null);
@@ -231,7 +231,7 @@ namespace Azure.Messaging.EventHubs.Tests
             };
 
             var expectedHashKey = "TestKEy";
-            var options = new BatchOptions { MaximumizeInBytes = 30, PartitionKey = expectedHashKey };
+            var options = new BatchOptions { MaximumSizeInBytes = 30, PartitionKey = expectedHashKey };
             var transportBatch = new TransportBatchMock { Messages = messages };
             var batch = new EventDataBatch(transportBatch, options);
             var mock = new ObservableSenderMock(new ClientMock(), null);
@@ -366,12 +366,12 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task CreateBatchAsyncDefaultsTheMaximumSizeWhenNotProvided()
         {
             var expectedMaximumSize = 512;
-            var options = new BatchOptions { MaximumizeInBytes = null };
+            var options = new BatchOptions { MaximumSizeInBytes = null };
             var mock = new ObservableSenderMock(new ClientMock(), null, expectedMaximumSize);
             var producer = new TrackOneEventHubProducer(_ => mock, Mock.Of<EventHubRetryPolicy>());
 
             await producer.CreateBatchAsync(options, default);
-            Assert.That(options.MaximumizeInBytes, Is.EqualTo(expectedMaximumSize));
+            Assert.That(options.MaximumSizeInBytes, Is.EqualTo(expectedMaximumSize));
         }
 
         /// <summary>
@@ -383,12 +383,12 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task CreateBatchAsyncRespectsTheMaximumSizeWhenProvided()
         {
             var expectedMaximumSize = 512;
-            var options = new BatchOptions { MaximumizeInBytes = 512 };
+            var options = new BatchOptions { MaximumSizeInBytes = 512 };
             var mock = new ObservableSenderMock(new ClientMock(), null);
             var producer = new TrackOneEventHubProducer(_ => mock, Mock.Of<EventHubRetryPolicy>());
 
             await producer.CreateBatchAsync(options, default);
-            Assert.That(options.MaximumizeInBytes, Is.EqualTo(expectedMaximumSize));
+            Assert.That(options.MaximumSizeInBytes, Is.EqualTo(expectedMaximumSize));
         }
 
         /// <summary>
@@ -400,7 +400,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void CreateBatchAsyncVerifiesTheMaximumSize()
         {
             var linkMaximumSize = 512;
-            var options = new BatchOptions { MaximumizeInBytes = 1024 };
+            var options = new BatchOptions { MaximumSizeInBytes = 1024 };
             var mock = new ObservableSenderMock(new ClientMock(), null, linkMaximumSize);
             var producer = new TrackOneEventHubProducer(_ => mock, Mock.Of<EventHubRetryPolicy>());
 
@@ -415,7 +415,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task CreateBatchAsyncBuildsAnAmqpEventBatchWithTheOptions()
         {
-            var options = new BatchOptions { MaximumizeInBytes = 512 };
+            var options = new BatchOptions { MaximumSizeInBytes = 512 };
             var mock = new ObservableSenderMock(new ClientMock(), null);
             var producer = new TrackOneEventHubProducer(_ => mock, Mock.Of<EventHubRetryPolicy>());
             TransportEventBatch batch = await producer.CreateBatchAsync(options, default);

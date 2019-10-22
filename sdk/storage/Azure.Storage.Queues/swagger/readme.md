@@ -166,7 +166,7 @@ directive:
 - from: swagger-document
   where: $["x-ms-paths"]["/{queueName}/messages/{messageid}?popreceipt={popReceipt}&visibilitytimeout={visibilityTimeout}"]
   transform: >
-    $.put.responses["204"]["x-az-response-name"] = "UpdatedMessage";
+    $.put.responses["204"]["x-az-response-name"] = "UpdateReceipt";
 ```
 
 ### QueueErrorCode
@@ -182,9 +182,20 @@ directive:
 ``` yaml
 directive:
 - from: swagger-document
-  where: $.definitions.GeoReplication.properties.Status
+  where: $.definitions
   transform: >
-    $["x-ms-enum"].name = "GeoReplicationStatus";
+    if (!$.QueueGeoReplication) {
+        $.QueueGeoReplication = $.GeoReplication;
+        delete $.GeoReplication;
+        $.QueueGeoReplication.xml = {"name": "GeoReplication"};
+        $.QueueGeoReplication.properties.Status["x-ms-enum"].name = "QueueGeoReplicationStatus";
+        $.QueueGeoReplication.properties.Status["x-ms-enum"].modelAsString = false;
+        const def = $.QueueServiceStatistics.properties.GeoReplication;
+        if (!def["$ref"].endsWith("QueueGeoReplication")) {
+            const path = def["$ref"].replace(/[#].*$/, "#/definitions/QueueGeoReplication");
+            $.QueueServiceStatistics.properties.GeoReplication = {"$ref": path};
+        }
+    }
 ```
 
 ### StorageError
@@ -206,17 +217,22 @@ directive:
     $.type = "object"
 ```
 
+
 ### QueueMessage
 ``` yaml
 directive:
 - from: swagger-document
-  where: $.definitions.QueueMessage
+  where: $.definitions
   transform: >
-    $["x-az-public"] = false;
-    $.xml = { "name": "QueueMessage" };
+    $.QueueSendMessage = $.QueueMessage;
+    delete $.QueueMessage;
+    $.QueueSendMessage["x-az-public"] = false;
+    $.QueueSendMessage.xml = { "name": "QueueMessage" };
 - from: swagger-document
   where: $.parameters.QueueMessage
   transform: >
+    const path = $.schema["$ref"].replace(/[#].*$/, "#/definitions/QueueSendMessage");
+    $.schema = {"$ref": path};
     $["x-ms-client-name"] = "message";
 ```
 
@@ -226,16 +242,36 @@ directive:
 - from: swagger-document
   where: $.definitions
   transform: >
-    if (!$.DequeuedMessage) {
-        $.DequeuedMessage = $.DequeuedMessageItem;
+    if (!$.QueueMessage) {
+        $.QueueMessage = $.DequeuedMessageItem;
         delete $.DequeuedMessageItem;
     }
 - from: swagger-document
   where: $.definitions.DequeuedMessagesList
   transform: >
     const def = $.items;
-    if (!def["$ref"].endsWith("DequeuedMessage")) {
-        const path = def["$ref"].replace(/[#].*$/, "#/definitions/DequeuedMessage");
+    if (!def["$ref"].endsWith("QueueMessage")) {
+        const path = def["$ref"].replace(/[#].*$/, "#/definitions/QueueMessage");
+        $.items = { "$ref": path };
+    }
+```
+
+### EnqueuedMessage
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    if (!$.SendReceipt) {
+        $.SendReceipt = $.EnqueuedMessage;
+        delete $.EnqueuedMessage;
+    }
+- from: swagger-document
+  where: $.definitions.EnqueuedMessageList
+  transform: >
+    const def = $.items;
+    if (!def["$ref"].endsWith("SendReceipt")) {
+        const path = def["$ref"].replace(/[#].*$/, "#/definitions/SendReceipt");
         $.items = { "$ref": path };
     }
 ```
@@ -282,6 +318,11 @@ directive:
   transform: >
     delete $.xml;
 - from: swagger-document
+  where: $.definitions.SignedIdentifier
+  transform: >
+    $["x-ms-client-name"] = "QueueSignedIdentifier";
+    $.xml = {"name": "SignedIdentifier"};
+- from: swagger-document
   where: $.parameters.QueueAcl
   transform: >
     $.name = "permissions";
@@ -294,6 +335,25 @@ directive:
   where: $.definitions.AccessPolicy
   transform: >
      delete $.required;
+```
+
+### Access Policy properties renaming
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.AccessPolicy
+  transform: >
+    $["x-ms-client-name"] = "QueueAccessPolicy";
+    $.xml = {"name": "AccessPolicy"};
+    $.properties.StartsOn = $.properties.Start;
+    $.properties.StartsOn.xml = { "name": "Start"};
+    delete $.properties.Start;
+    $.properties.ExpiresOn = $.properties.Expiry;
+    $.properties.ExpiresOn.xml = { "name": "Expiry"};
+    delete $.properties.Expiry;
+    $.properties.Permissions = $.properties.Permission;
+    $.properties.Permissions.xml = { "name": "Permission"};
+    delete $.properties.Permission;
 ```
 
 ### Url
@@ -334,9 +394,14 @@ directive:
     $.QueueServiceProperties.properties.Logging.xml = { "name": "Logging"};
     $.Metrics["x-ms-client-name"] = "QueueMetrics";
     $.Metrics.xml = { "name": "Metrics" };
+    $.Metrics.properties.IncludeApis = $.Metrics.properties.IncludeAPIs;
+    $.Metrics.properties.IncludeApis.xml = { "name": "IncludeAPIs"};
+    delete $.Metrics.properties.IncludeAPIs;
     $.QueueServiceProperties.properties.HourMetrics.xml = { "name": "HourMetrics"};
     $.QueueServiceProperties.properties.MinuteMetrics.xml = { "name": "MinuteMetrics"};
     $.CorsRule["x-ms-client-name"] = "QueueCorsRule";
     $.CorsRule.xml = { "name": "CorsRule"};
     $.QueueServiceProperties.properties.Cors.xml.name = "CorsRule";
+    $.RetentionPolicy["x-ms-client-name"] = "QueueRetentionPolicy";
+    $.RetentionPolicy.xml = { "name": "RetentionPolicy"};
 ```

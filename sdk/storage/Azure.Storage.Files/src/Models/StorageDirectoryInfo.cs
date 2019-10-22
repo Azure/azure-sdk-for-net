@@ -30,7 +30,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// The directory's SMB properties.
         /// </summary>
-        public FileSmbProperties? SmbProperties { get; set; }
+        public FileSmbProperties SmbProperties { get; set; }
 
         internal StorageDirectoryInfo(RawStorageDirectoryInfo rawStorageDirectoryInfo)
         {

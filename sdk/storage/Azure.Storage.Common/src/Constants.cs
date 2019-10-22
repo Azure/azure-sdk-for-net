@@ -293,6 +293,11 @@ namespace Azure.Storage
 
             public const string SetHttpHeadersOperationName =
                 "Azure.Storage.Files.FileClient.SetHttpHeaders";
+            public const string ForceCloseAllHandlesOperationName =
+                "Azure.Storage.Files.FileClient.ForceCloseAllHandles";
+            public const string ForceCloseHandleOperationName =
+                "Azure.Storage.Files.FileClient.ForceCloseHandle";
+
             internal static class Directory
             {
                 public const string CreateOperationName =
@@ -309,8 +314,10 @@ namespace Azure.Storage
                     "Azure.Storage.Files.DirectoryClient.ListFilesAndDirectoriesSegment";
                 public const string GetHandlesOperationName =
                     "Azure.Storage.Files.DirectoryClient.ListHandles";
-                public const string ForceCloseHandlesOperationName =
-                    "Azure.Storage.Files.DirectoryClient.ForceCloseHandles";
+                public const string ForceCloseAllHandlesOperationName =
+                    "Azure.Storage.Files.DirectoryClient.ForceCloseAllHandles";
+                public const string ForceCloseHandleOperationName =
+                    "Azure.Storage.Files.DirectoryClient.ForceCloseHandle";
             }
 
             internal static class Service
@@ -368,10 +375,10 @@ namespace Azure.Storage
 
             public const string ClearMessagesOperationName =
                 "Azure.Storage.Queues.QueueClient.ClearMessages";
-            public const string EnqueueMessageOperationName =
-                "Azure.Storage.Queues.QueueClient.EnqueueMessage";
-            public const string DequeueMessageOperationName =
-                "Azure.Storage.Queues.QueueClient.DequeueMessages";
+            public const string SendMessageOperationName =
+                "Azure.Storage.Queues.QueueClient.SendMessage";
+            public const string ReceiveMessagesOperationName =
+                "Azure.Storage.Queues.QueueClient.ReceiveMessages";
             public const string PeekMessagesOperationName =
                 "Azure.Storage.Queues.QueueClient.PeekMessages";
             public const string DeleteMessageOperationName =

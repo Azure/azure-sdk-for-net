@@ -153,7 +153,9 @@ namespace Azure.Storage.Test.Shared
             => new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
                 {
                     { "foo", "bar" },
-                    { "meta", "data" }
+                    { "meta", "data" },
+                    { "Capital", "letter" },
+                    { "UPPER", "case" }
                 };
 
         public IPAddress GetIPAddress()
@@ -182,7 +184,7 @@ namespace Azure.Storage.Test.Shared
                 appId,
                 secret,
                 Recording.InstrumentClientOptions(
-                    new AzureCredentialOptions() { AuthorityHost = authorityHost }));
+                    new TokenCredentialOptions() { AuthorityHost = authorityHost }));
 
         public void AssertMetadataEquality(IDictionary<string, string> expected, IDictionary<string, string> actual)
         {
@@ -252,11 +254,11 @@ namespace Azure.Storage.Test.Shared
         /// </param>
         /// <param name="totalSize">The total size we should eventually see.</param>
         /// <returns>A task that will (optionally) delay.</returns>
-        protected async Task WaitForProgressAsync(List<StorageProgress> progressList, long totalSize)
+        protected async Task WaitForProgressAsync(List<long> progressList, long totalSize)
         {
             for (var attempts = 0; attempts < 10; attempts++)
             {
-                if (progressList.LastOrDefault()?.BytesTransferred >= totalSize)
+                if (progressList.LastOrDefault() >= totalSize)
                 {
                     return;
                 }

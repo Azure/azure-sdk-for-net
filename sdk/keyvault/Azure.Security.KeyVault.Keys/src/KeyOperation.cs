@@ -25,32 +25,32 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// The key can be used to encrypt.
         /// </summary>
-        public static readonly KeyOperation Encrypt = new KeyOperation("encrypt");
+        public static KeyOperation Encrypt { get; } = new KeyOperation("encrypt");
 
         /// <summary>
         /// The key can be used to decrypt.
         /// </summary>
-        public static readonly KeyOperation Decrypt = new KeyOperation("decrypt");
+        public static KeyOperation Decrypt { get; } = new KeyOperation("decrypt");
 
         /// <summary>
         /// The key can be used to sign.
         /// </summary>
-        public static readonly KeyOperation Sign = new KeyOperation("sign");
+        public static KeyOperation Sign { get; } = new KeyOperation("sign");
 
         /// <summary>
         /// The key can be used to verify.
         /// </summary>
-        public static readonly KeyOperation Verify = new KeyOperation("verify");
+        public static KeyOperation Verify { get; } = new KeyOperation("verify");
 
         /// <summary>
         /// The key can be used to wrap another key.
         /// </summary>
-        public static readonly KeyOperation WrapKey = new KeyOperation("wrapKey");
+        public static KeyOperation WrapKey { get; } = new KeyOperation("wrapKey");
 
         /// <summary>
         /// The key can be used to unwrap another key.
         /// </summary>
-        public static readonly KeyOperation UnwrapKey = new KeyOperation("unwrapKey");
+        public static KeyOperation UnwrapKey { get; } = new KeyOperation("unwrapKey");
 
         /// <summary>
         /// Determines if two <see cref="KeyOperation"/> values are the same.

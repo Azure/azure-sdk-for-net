@@ -33,7 +33,7 @@ namespace Azure.Identity
         private static MsiType s_msiType;
         private static Uri s_endpoint;
 
-        private readonly AzureCredentialOptions _options;
+        private readonly TokenCredentialOptions _options;
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
 
@@ -41,9 +41,9 @@ namespace Azure.Identity
         {
         }
 
-        public ManagedIdentityClient(AzureCredentialOptions options = null)
+        public ManagedIdentityClient(TokenCredentialOptions options = null)
         {
-            _options = options ?? new AzureCredentialOptions();
+            _options = options ?? new TokenCredentialOptions();
 
             _pipeline = HttpPipelineBuilder.Build(_options);
             _clientDiagnostics = new ClientDiagnostics(_options);
@@ -344,6 +344,12 @@ namespace Azure.Identity
                     Response response = await _pipeline.SendRequestAsync(request, CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, imdsTimeout).Token).ConfigureAwait(false);
 
                     return true;
+                }
+                // if the request failed for some reason, take that to mean the idms endpoint is not available.
+                catch (RequestFailedException)
+                {
+                    // todo: log
+                    return false;
                 }
                 // we only want to handle the case when the imdsTimeout resulted in the request being cancelled.
                 // this indicates that the request timed out and that imds is not available.  If the operation

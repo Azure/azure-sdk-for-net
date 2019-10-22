@@ -113,7 +113,7 @@ namespace Azure.Storage.Blobs.Samples
                 // Create a batch with three deletes
                 BlobBatchClient batchClient = service.GetBlobBatchClient();
                 BlobBatch batch = batchClient.CreateBatch();
-                Response fooResponse = batch.DeleteBlob(foo.Uri, DeleteSnapshotsOption.Include);
+                Response fooResponse = batch.DeleteBlob(foo.Uri, DeleteSnapshotsOption.IncludeSnapshots);
                 Response barResponse = batch.DeleteBlob(bar.Uri);
                 Response bazResponse = batch.DeleteBlob(baz.Uri);
 
@@ -162,7 +162,7 @@ namespace Azure.Storage.Blobs.Samples
             {
                 // An aggregate exception is thrown for all the indivudal failures
                 Assert.AreEqual(1, ex.InnerExceptions.Count);
-                StorageRequestFailedException failure = ex.InnerException as StorageRequestFailedException;
+                RequestFailedException failure = ex.InnerException as RequestFailedException;
                 Assert.IsTrue(BlobErrorCode.BlobNotFound == failure.ErrorCode);
             }
             finally

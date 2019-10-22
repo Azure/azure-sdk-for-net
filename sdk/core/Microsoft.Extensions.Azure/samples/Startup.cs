@@ -52,7 +52,7 @@ namespace Microsoft.Extensions.Azure.Samples
                 builder.ConfigureDefaults((options, provider) =>  options.AddPolicy(provider.GetService<DependencyInjectionEnabledPolicy>(), HttpPipelinePosition.PerCall));
 
                 builder.AddBlobServiceClient(Configuration.GetSection("Storage"))
-                        .WithVersion(BlobClientOptions.ServiceVersion.V2018_11_09);
+                        .WithVersion(BlobClientOptions.ServiceVersion.V2019_02_02);
             });
         }
 

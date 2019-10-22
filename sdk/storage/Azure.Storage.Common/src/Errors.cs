@@ -48,6 +48,9 @@ namespace Azure.Storage
         public static InvalidOperationException AccountSasMissingData()
             => new InvalidOperationException($"Account SAS is missing at least one of these: ExpiryTime, Permissions, Service, or ResourceType");
 
+        public static InvalidOperationException SasMissingData(string paramName)
+            => new InvalidOperationException($"SAS is missing required parameter: {paramName}");
+
         public static InvalidOperationException TaskIncomplete()
             => new InvalidOperationException("Task is not completed");
 
@@ -59,6 +62,9 @@ namespace Azure.Storage
 
         public static ArgumentException InvalidResourceType(char s)
             => new ArgumentException($"Invalid resource type: '{s}'");
+
+        public static ArgumentException VersionNotSupported(string paramName)
+           => new ArgumentException($"The version specified by {paramName} is not supported by this library.");
 
         public static ArgumentException AccountMismatch(string accountNameCredential, string accountNameValue)
             => new ArgumentException(string.Format(
@@ -85,8 +91,8 @@ namespace Azure.Storage
         public static AuthenticationException InvalidCredentials(string fullName)
             => new AuthenticationException($"Cannot authenticate credentials with {fullName}");
 
-        public static StorageRequestFailedException ClientRequestIdMismatch(Response response, string echo, string original)
-            => new StorageRequestFailedException(
+        public static RequestFailedException ClientRequestIdMismatch(Response response, string echo, string original)
+            => StorageRequestFailedExceptionHelpers.CreateException(
                     response,
                     $"Response x-ms-client-request-id '{echo}' does not match the original expected request id, '{original}'.");
 

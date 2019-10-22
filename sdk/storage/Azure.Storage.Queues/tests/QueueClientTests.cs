@@ -166,7 +166,7 @@ namespace Azure.Storage.Queues.Test
                 // Assert
                 Assert.Fail("CreateAsync unexpected success: queue service SAS should not be usable to create queue");
             }
-            catch (StorageRequestFailedException ex) when (ex.ErrorCode == "AuthorizationFailure") // TODO verify if this is a missing service code
+            catch (RequestFailedException ex) when (ex.ErrorCode == "AuthorizationFailure") // TODO verify if this is a missing service code
             {
                 pass = true;
             }
@@ -189,7 +189,7 @@ namespace Azure.Storage.Queues.Test
             await queue.CreateAsync();
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 queue.CreateAsync(metadata: new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase) { { "key", "value" } }),
                 actualException => Assert.AreEqual("QueueAlreadyExists", actualException.ErrorCode));
         }
@@ -217,7 +217,7 @@ namespace Azure.Storage.Queues.Test
             QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 queue.GetPropertiesAsync(),
                 actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
         }
@@ -283,7 +283,7 @@ namespace Azure.Storage.Queues.Test
             IDictionary<string, string> metadata = BuildMetadata();
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 queue.SetMetadataAsync(metadata),
                 actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
         }
@@ -294,20 +294,20 @@ namespace Azure.Storage.Queues.Test
             // Arrange
             using (GetNewQueue(out QueueClient queue))
             {
-                Models.SignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
+                Models.QueueSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
 
                 // Act
                 Response setResult = await queue.SetAccessPolicyAsync(signedIdentifiers);
 
                 // Assert
-                Response<IEnumerable<Models.SignedIdentifier>> result = await queue.GetAccessPolicyAsync();
-                Models.SignedIdentifier acl = result.Value.First();
+                Response<IEnumerable<Models.QueueSignedIdentifier>> result = await queue.GetAccessPolicyAsync();
+                Models.QueueSignedIdentifier acl = result.Value.First();
 
                 Assert.AreEqual(1, result.Value.Count());
                 Assert.AreEqual(signedIdentifiers[0].Id, acl.Id);
-                Assert.AreEqual(signedIdentifiers[0].AccessPolicy.Start, acl.AccessPolicy.Start);
-                Assert.AreEqual(signedIdentifiers[0].AccessPolicy.Expiry, acl.AccessPolicy.Expiry);
-                Assert.AreEqual(signedIdentifiers[0].AccessPolicy.Permission, acl.AccessPolicy.Permission);
+                Assert.AreEqual(signedIdentifiers[0].AccessPolicy.StartsOn, acl.AccessPolicy.StartsOn);
+                Assert.AreEqual(signedIdentifiers[0].AccessPolicy.ExpiresOn, acl.AccessPolicy.ExpiresOn);
+                Assert.AreEqual(signedIdentifiers[0].AccessPolicy.Permissions, acl.AccessPolicy.Permissions);
             }
         }
 
@@ -321,7 +321,7 @@ namespace Azure.Storage.Queues.Test
             QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 queue.GetAccessPolicyAsync(),
                 actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
         }
@@ -331,7 +331,7 @@ namespace Azure.Storage.Queues.Test
         {
             using (GetNewQueue(out QueueClient queue))
             {
-                Models.SignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
+                Models.QueueSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
                 Response result = await queue.SetAccessPolicyAsync(signedIdentifiers);
                 Assert.IsFalse(string.IsNullOrWhiteSpace(result.Headers.RequestId));
             }
@@ -345,10 +345,10 @@ namespace Azure.Storage.Queues.Test
             var queueName = GetNewQueueName();
             QueueServiceClient service = GetServiceClient_SharedKey();
             QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
-            Models.SignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
+            Models.QueueSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 queue.SetAccessPolicyAsync(signedIdentifiers),
                 actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
         }
@@ -380,7 +380,7 @@ namespace Azure.Storage.Queues.Test
                 await service.DeleteQueueAsync(name);
 
                 // Ensure the queue no longer returns values
-                Assert.ThrowsAsync<StorageRequestFailedException>(
+                Assert.ThrowsAsync<RequestFailedException>(
                     async () => await queue.GetPropertiesAsync());
             }
             finally
@@ -399,7 +399,7 @@ namespace Azure.Storage.Queues.Test
             QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 queue.DeleteAsync(),
                 actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
         }

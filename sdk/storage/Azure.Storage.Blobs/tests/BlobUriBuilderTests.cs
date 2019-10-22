@@ -169,16 +169,16 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual("blob", blobUriBuilder.BlobName);
             Assert.AreEqual("", blobUriBuilder.Snapshot);
 
-            Assert.AreEqual(new DateTimeOffset(2015, 4, 30, 2, 23, 26, TimeSpan.Zero), blobUriBuilder.Sas.ExpiryTime);
+            Assert.AreEqual(new DateTimeOffset(2015, 4, 30, 2, 23, 26, TimeSpan.Zero), blobUriBuilder.Sas.ExpiresOn);
             Assert.AreEqual("", blobUriBuilder.Sas.Identifier);
-            Assert.AreEqual(IPRange.Parse("168.1.5.60-168.1.5.70"), blobUriBuilder.Sas.IPRange);
+            Assert.AreEqual(SasIPRange.Parse("168.1.5.60-168.1.5.70"), blobUriBuilder.Sas.IPRange);
             Assert.AreEqual("rw", blobUriBuilder.Sas.Permissions);
             Assert.AreEqual(SasProtocol.Https, blobUriBuilder.Sas.Protocol);
             Assert.AreEqual("b", blobUriBuilder.Sas.Resource);
             Assert.IsNull(blobUriBuilder.Sas.ResourceTypes);
             Assert.IsNull(blobUriBuilder.Sas.Services);
             Assert.AreEqual("Z/RHIX5Xcg0Mq2rqI3OlWTjEg2tYkboXr1P9ZUXDtkk=", blobUriBuilder.Sas.Signature);
-            Assert.AreEqual(new DateTimeOffset(2015, 4, 29, 22, 18, 26, TimeSpan.Zero), blobUriBuilder.Sas.StartTime);
+            Assert.AreEqual(new DateTimeOffset(2015, 4, 29, 22, 18, 26, TimeSpan.Zero), blobUriBuilder.Sas.StartsOn);
             Assert.AreEqual("2015-04-05", blobUriBuilder.Sas.Version);
 
             Assert.AreEqual("", blobUriBuilder.Query);
@@ -330,16 +330,16 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual("blob", blobUriBuilder.BlobName);
             Assert.AreEqual("", blobUriBuilder.Snapshot);
 
-            Assert.AreEqual(new DateTimeOffset(2015, 4, 30, 2, 23, 26, TimeSpan.Zero), blobUriBuilder.Sas.ExpiryTime);
+            Assert.AreEqual(new DateTimeOffset(2015, 4, 30, 2, 23, 26, TimeSpan.Zero), blobUriBuilder.Sas.ExpiresOn);
             Assert.AreEqual("", blobUriBuilder.Sas.Identifier);
-            Assert.AreEqual(IPRange.Parse("168.1.5.60-168.1.5.70"), blobUriBuilder.Sas.IPRange);
+            Assert.AreEqual(SasIPRange.Parse("168.1.5.60-168.1.5.70"), blobUriBuilder.Sas.IPRange);
             Assert.AreEqual("rw", blobUriBuilder.Sas.Permissions);
             Assert.AreEqual(SasProtocol.Https, blobUriBuilder.Sas.Protocol);
             Assert.AreEqual("b", blobUriBuilder.Sas.Resource);
             Assert.IsNull(blobUriBuilder.Sas.ResourceTypes);
             Assert.IsNull(blobUriBuilder.Sas.Services);
             Assert.AreEqual("Z/RHIX5Xcg0Mq2rqI3OlWTjEg2tYkboXr1P9ZUXDtkk=", blobUriBuilder.Sas.Signature);
-            Assert.AreEqual(new DateTimeOffset(2015, 4, 29, 22, 18, 26, TimeSpan.Zero), blobUriBuilder.Sas.StartTime);
+            Assert.AreEqual(new DateTimeOffset(2015, 4, 29, 22, 18, 26, TimeSpan.Zero), blobUriBuilder.Sas.StartsOn);
             Assert.AreEqual("2015-04-05", blobUriBuilder.Sas.Version);
 
             Assert.AreEqual("", blobUriBuilder.Query);

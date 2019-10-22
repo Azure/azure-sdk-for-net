@@ -296,7 +296,7 @@ namespace Azure.Storage.Files
         /// <param name="metadata">
         /// Optional custom metadata to set for this share.
         /// </param>
-        /// <param name="quotaInBytes">
+        /// <param name="quotaInGB">
         /// Optional. Maximum size of the share in bytes.  If unspecified, use the service's default value.
         /// </param>
         /// <param name="cancellationToken">
@@ -308,16 +308,16 @@ namespace Azure.Storage.Files
         /// created share.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<ShareInfo> Create(
             Metadata metadata = default,
-            int? quotaInBytes = default,
+            int? quotaInGB = default,
             CancellationToken cancellationToken = default) =>
             CreateInternal(
                 metadata,
-                quotaInBytes,
+                quotaInGB,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -332,7 +332,7 @@ namespace Azure.Storage.Files
         /// <param name="metadata">
         /// Optional custom metadata to set for this share.
         /// </param>
-        /// <param name="quotaInBytes">
+        /// <param name="quotaInGB">
         /// Optional. Maximum size of the share in bytes.  If unspecified, use the service's default value.
         /// </param>
         /// <param name="cancellationToken">
@@ -344,16 +344,16 @@ namespace Azure.Storage.Files
         /// created share.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<ShareInfo>> CreateAsync(
             Metadata metadata = default,
-            int? quotaInBytes = default,
+            int? quotaInGB = default,
             CancellationToken cancellationToken = default) =>
             await CreateInternal(
                 metadata,
-                quotaInBytes,
+                quotaInGB,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -368,7 +368,7 @@ namespace Azure.Storage.Files
         /// <param name="metadata">
         /// Optional custom metadata to set for this share.
         /// </param>
-        /// <param name="quotaInBytes">
+        /// <param name="quotaInGB">
         /// Optional. Maximum size of the share in bytes.  If unspecified, use the service's default value.
         /// </param>
         /// <param name="async">
@@ -383,12 +383,12 @@ namespace Azure.Storage.Files
         /// created share.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<ShareInfo>> CreateInternal(
             Metadata metadata,
-            int? quotaInBytes,
+            int? quotaInGB,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -398,7 +398,7 @@ namespace Azure.Storage.Files
                     nameof(ShareClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(quotaInBytes)}: {quotaInBytes}");
+                    $"{nameof(quotaInGB)}: {quotaInGB}");
                 try
                 {
                     return await FileRestClient.Share.CreateAsync(
@@ -406,7 +406,7 @@ namespace Azure.Storage.Files
                         Pipeline,
                         Uri,
                         metadata: metadata,
-                        quota: quotaInBytes,
+                        quotaInGB: quotaInGB,
                         async: async,
                         operationName: Constants.File.Share.CreateOperationName,
                         cancellationToken: cancellationToken)
@@ -443,7 +443,7 @@ namespace Azure.Storage.Files
         /// created snapshot.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<ShareSnapshotInfo> CreateSnapshot(
@@ -472,7 +472,7 @@ namespace Azure.Storage.Files
         /// created snapshot.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<ShareSnapshotInfo>> CreateSnapshotAsync(
@@ -504,7 +504,7 @@ namespace Azure.Storage.Files
         /// created snapshot.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<ShareSnapshotInfo>> CreateSnapshotInternal(
@@ -547,12 +547,11 @@ namespace Azure.Storage.Files
         /// Marks the specified share or share snapshot for deletion.
         /// The share or share snapshot and any files contained within it are later deleted during garbage collection.
         ///
-        /// Currently, this method will always delete snapshots.  There's no way to specify a separate value for x-ms-delete-snapshots.
-        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-share"/>.
         /// </summary>
-        /// <param name="shareSnapshot">
-        /// Optional. Specifies the share snapshot to delete.
+        /// <param name="includeSnapshots">
+        /// A value indicating whether to delete a share's snapshots in addition
+        /// to the share itself.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -562,14 +561,14 @@ namespace Azure.Storage.Files
         /// A <see cref="Response"/> on successfully deleting.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response Delete(
-            string shareSnapshot = default,
+            bool includeSnapshots = true,
             CancellationToken cancellationToken = default) =>
             DeleteInternal(
-                shareSnapshot,
+                includeSnapshots,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -578,12 +577,11 @@ namespace Azure.Storage.Files
         /// Marks the specified share or share snapshot for deletion.
         /// The share or share snapshot and any files contained within it are later deleted during garbage collection.
         ///
-        /// Currently, this method will always delete snapshots.  There's no way to specify a separate value for x-ms-delete-snapshots.
-        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-share"/>.
         /// </summary>
-        /// <param name="shareSnapshot">
-        /// Optional. Specifies the share snapshot to delete.
+        /// <param name="includeSnapshots">
+        /// A value indicating whether to delete a share's snapshots in addition
+        /// to the share itself.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -593,14 +591,14 @@ namespace Azure.Storage.Files
         /// A <see cref="Response"/> on successfully deleting.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response> DeleteAsync(
-            string shareSnapshot = default,
+            bool includeSnapshots = true,
             CancellationToken cancellationToken = default) =>
             await DeleteInternal(
-                shareSnapshot,
+                includeSnapshots,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -609,12 +607,11 @@ namespace Azure.Storage.Files
         /// Marks the specified share or share snapshot for deletion.
         /// The share or share snapshot and any files contained within it are later deleted during garbage collection.
         ///
-        /// Currently, this method will always delete snapshots.  There's no way to specify a separate value for x-ms-delete-snapshots.
-        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-share"/>.
         /// </summary>
-        /// <param name="shareSnapshot">
-        /// Optional. Specifies the share snapshot to delete.
+        /// <param name="includeSnapshots">
+        /// A value indicating whether to delete a share's snapshots in addition
+        /// to the share itself.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -627,11 +624,11 @@ namespace Azure.Storage.Files
         /// A <see cref="Response"/> on successfully deleting.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response> DeleteInternal(
-            string shareSnapshot,
+            bool includeSnapshots,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -640,15 +637,14 @@ namespace Azure.Storage.Files
                 Pipeline.LogMethodEnter(
                     nameof(ShareClient),
                     message:
-                    $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(shareSnapshot)}: {shareSnapshot}");
+                    $"{nameof(Uri)}: {Uri}");
                 try
                 {
                     return await FileRestClient.Share.DeleteAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
-                        sharesnapshot: shareSnapshot,
+                        deleteSnapshots: includeSnapshots ? DeleteSnapshotsOptionType.Include : (DeleteSnapshotsOptionType?)null,
                         async: async,
                         operationName: Constants.File.Share.DeleteOperationName,
                         cancellationToken: cancellationToken)
@@ -675,9 +671,6 @@ namespace Azure.Storage.Files
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-share-properties"/>.
         /// </summary>
-        /// <param name="shareSnapshot">
-        /// Optional. Specifies the share snapshot to query for properties.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -687,14 +680,12 @@ namespace Azure.Storage.Files
         /// share's properties.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<ShareProperties> GetProperties(
-            string shareSnapshot = default,
             CancellationToken cancellationToken = default) =>
             GetPropertiesInternal(
-                shareSnapshot,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -706,9 +697,6 @@ namespace Azure.Storage.Files
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-share-properties"/>.
         /// </summary>
-        /// <param name="shareSnapshot">
-        /// Optional. Specifies the share snapshot to query for properties.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -718,14 +706,12 @@ namespace Azure.Storage.Files
         /// share's properties.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<ShareProperties>> GetPropertiesAsync(
-            string shareSnapshot = default,
             CancellationToken cancellationToken = default) =>
             await GetPropertiesInternal(
-                shareSnapshot,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -737,9 +723,6 @@ namespace Azure.Storage.Files
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-share-properties"/>.
         /// </summary>
-        /// <param name="shareSnapshot">
-        /// Optional. Specifies the share snapshot to query for properties.
-        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -752,11 +735,10 @@ namespace Azure.Storage.Files
         /// share's properties.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<ShareProperties>> GetPropertiesInternal(
-            string shareSnapshot,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -765,15 +747,13 @@ namespace Azure.Storage.Files
                 Pipeline.LogMethodEnter(
                     nameof(ShareClient),
                     message:
-                    $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(shareSnapshot)}: {shareSnapshot}");
+                    $"{nameof(Uri)}: {Uri}");
                 try
                 {
                     return await FileRestClient.Share.GetPropertiesAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
-                        sharesnapshot: shareSnapshot,
                         async: async,
                         operationName: Constants.File.Share.GetPropertiesOperationName,
                         cancellationToken: cancellationToken)
@@ -798,7 +778,7 @@ namespace Azure.Storage.Files
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-share-properties"/>.
         /// </summary>
-        /// <param name="quotaInBytes">Optional. The maximum size of the share. If unspecified, use the service's default value.</param>
+        /// <param name="quotaInGB">Optional. The maximum size of the share. If unspecified, use the service's default value.</param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -808,14 +788,14 @@ namespace Azure.Storage.Files
         /// share.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<ShareInfo> SetQuota(
-            int quotaInBytes = default,
+            int quotaInGB = default,
             CancellationToken cancellationToken = default) =>
             SetQuotaInternal(
-                quotaInBytes,
+                quotaInGB,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -825,7 +805,7 @@ namespace Azure.Storage.Files
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-share-properties"/>.
         /// </summary>
-        /// <param name="quotaInBytes">Optional. The maximum size of the share. If unspecified, use the service's default value.</param>
+        /// <param name="quotaInGB">Optional. The maximum size of the share. If unspecified, use the service's default value.</param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -835,14 +815,14 @@ namespace Azure.Storage.Files
         /// share.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<ShareInfo>> SetQuotaAsync(
-            int quotaInBytes = default,
+            int quotaInGB = default,
             CancellationToken cancellationToken = default) =>
             await SetQuotaInternal(
-                quotaInBytes,
+                quotaInGB,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -852,7 +832,7 @@ namespace Azure.Storage.Files
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-share-properties"/>.
         /// </summary>
-        /// <param name="quotaInBytes">Optional. The maximum size of the share. If unspecified, use the service's default value.</param>
+        /// <param name="quotaInGB">Optional. The maximum size of the share. If unspecified, use the service's default value.</param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -865,11 +845,11 @@ namespace Azure.Storage.Files
         /// share.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<ShareInfo>> SetQuotaInternal(
-            int quotaInBytes,
+        internal virtual async Task<Response<ShareInfo>> SetQuotaInternal(
+            int quotaInGB,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -879,14 +859,14 @@ namespace Azure.Storage.Files
                     nameof(ShareClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(quotaInBytes)}: {quotaInBytes}");
+                    $"{nameof(quotaInGB)}: {quotaInGB}");
                 try
                 {
                     return await FileRestClient.Share.SetQuotaAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
-                        quota: quotaInBytes,
+                        quotaInGB: quotaInGB,
                         async: async,
                         operationName: "Azure.Storage.Files.ShareClient.SetQuota",
                         cancellationToken: cancellationToken)
@@ -924,7 +904,7 @@ namespace Azure.Storage.Files
         /// share.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<ShareInfo> SetMetadata(
@@ -954,7 +934,7 @@ namespace Azure.Storage.Files
         /// share.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<ShareInfo>> SetMetadataAsync(
@@ -987,7 +967,7 @@ namespace Azure.Storage.Files
         /// share.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<ShareInfo>> SetMetadataInternal(
@@ -1042,10 +1022,10 @@ namespace Azure.Storage.Files
         /// describing the share's access policy.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<IEnumerable<SignedIdentifier>> GetAccessPolicy(
+        public virtual Response<IEnumerable<FileSignedIdentifier>> GetAccessPolicy(
             CancellationToken cancellationToken = default) =>
             GetAccessPolicyInternal(
                 false, // async
@@ -1064,14 +1044,14 @@ namespace Azure.Storage.Files
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{T}"/> of <see cref="IEnumerable{SignedIdentifier}"/>
+        /// A <see cref="Response{T}"/> of <see cref="IEnumerable{FileSignedIdentifier}"/>
         /// describing the share's access policy.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<IEnumerable<SignedIdentifier>>> GetAccessPolicyAsync(
+        public virtual async Task<Response<IEnumerable<FileSignedIdentifier>>> GetAccessPolicyAsync(
             CancellationToken cancellationToken = default) =>
             await GetAccessPolicyInternal(
                 true, // async
@@ -1093,14 +1073,14 @@ namespace Azure.Storage.Files
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{T}"/> of <see cref="IEnumerable{SignedIdentifier}"/>
+        /// A <see cref="Response{T}"/> of <see cref="IEnumerable{FileSignedIdentifier}"/>
         /// describing the share's access policy.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<IEnumerable<SignedIdentifier>>> GetAccessPolicyInternal(
+        private async Task<Response<IEnumerable<FileSignedIdentifier>>> GetAccessPolicyInternal(
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1154,11 +1134,11 @@ namespace Azure.Storage.Files
         /// updated share.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<ShareInfo> SetAccessPolicy(
-            IEnumerable<SignedIdentifier> permissions,
+            IEnumerable<FileSignedIdentifier> permissions,
             CancellationToken cancellationToken = default) =>
             SetAccessPolicyInternal(
                 permissions,
@@ -1186,11 +1166,11 @@ namespace Azure.Storage.Files
         /// updated share.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<ShareInfo>> SetAccessPolicyAsync(
-            IEnumerable<SignedIdentifier> permissions,
+            IEnumerable<FileSignedIdentifier> permissions,
             CancellationToken cancellationToken = default) =>
             await SetAccessPolicyInternal(
                 permissions,
@@ -1221,11 +1201,11 @@ namespace Azure.Storage.Files
         /// updated share.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<ShareInfo>> SetAccessPolicyInternal(
-            IEnumerable<SignedIdentifier> permissions,
+            IEnumerable<FileSignedIdentifier> permissions,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1274,7 +1254,7 @@ namespace Azure.Storage.Files
         /// share statistics.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<ShareStatistics> GetStatistics(
@@ -1298,7 +1278,7 @@ namespace Azure.Storage.Files
         /// share statistics.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<ShareStatistics>> GetStatisticsAsync(
@@ -1325,7 +1305,7 @@ namespace Azure.Storage.Files
         /// share statistics.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<ShareStatistics>> GetStatisticsInternal(
@@ -1586,14 +1566,14 @@ namespace Azure.Storage.Files
         /// newly created directory.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
         public virtual Response<DirectoryClient> CreateDirectory(
            string directoryName,
            IDictionary<string, string> metadata = default,
-           FileSmbProperties? smbProperties = default,
+           FileSmbProperties smbProperties = default,
            string filePermission = default,
            CancellationToken cancellationToken = default)
         {
@@ -1633,14 +1613,14 @@ namespace Azure.Storage.Files
         /// newly created directory.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<DirectoryClient>> CreateDirectoryAsync(
            string directoryName,
            IDictionary<string, string> metadata = default,
-           FileSmbProperties? smbProperties = default,
+           FileSmbProperties smbProperties = default,
            string filePermission = default,
            CancellationToken cancellationToken = default)
         {

@@ -20,17 +20,17 @@ namespace Azure.Identity
         /// <summary>
         /// Gets the Azure Active Directory tenant (directory) Id of the service principal
         /// </summary>
-        public string TenantId { get; }
+        internal string TenantId { get; }
 
         /// <summary>
         /// Gets the client (application) ID of the service principal
         /// </summary>
-        public string ClientId { get; }
+        internal string ClientId { get; }
 
         /// <summary>
         /// Gets the authentication X509 Certificate of the service principal
         /// </summary>
-        public X509Certificate2 ClientCertificate { get; }
+        internal X509Certificate2 ClientCertificate { get; }
 
         private readonly AadIdentityClient _client;
 
@@ -52,7 +52,7 @@ namespace Azure.Identity
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientCertificate">The authentication X509 Certificate of the service principal</param>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
-        public ClientCertificateCredential(string tenantId, string clientId, X509Certificate2 clientCertificate, AzureCredentialOptions options)
+        public ClientCertificateCredential(string tenantId, string clientId, X509Certificate2 clientCertificate, TokenCredentialOptions options)
         {
             TenantId = tenantId ?? throw new ArgumentNullException(nameof(tenantId));
 

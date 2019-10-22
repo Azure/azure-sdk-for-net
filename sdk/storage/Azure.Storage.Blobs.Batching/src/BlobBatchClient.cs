@@ -146,7 +146,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Response"/> on successfully submitting.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure to submit the batch occurs.  Individual sub-operation
         /// failures will only throw if <paramref name="throwOnFailure"/> is
         /// true and be wrapped in an <see cref="AggregateException"/>.
@@ -181,7 +181,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Response"/> on successfully submitting.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure to submit the batch occurs.  Individual sub-operation
         /// failures will only throw if <paramref name="throwOnFailure"/> is
         /// true and be wrapped in an <see cref="AggregateException"/>.
@@ -219,7 +219,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Response"/> on successfully submitting.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure to submit the batch occurs.  Individual sub-operation
         /// failures will only throw if <paramref name="throwOnFailure"/> is
         /// true and be wrapped in an <see cref="AggregateException"/>.
@@ -400,7 +400,7 @@ namespace Azure.Storage.Blobs.Specialized
             }
             catch (InvalidOperationException ex)
             {
-                // Wrap any parsing errors in a StorageRequestFailedException
+                // Wrap any parsing errors in a RequestFailedException
                 throw BatchErrors.InvalidResponse(rawResponse, ex);
             }
 
@@ -441,25 +441,25 @@ namespace Azure.Storage.Blobs.Specialized
         /// that the operation should be cancelled.
         /// </param>
         /// <param name="blobUris">URIs of the blobs to delete.</param>
-        /// <param name="deleteOptions">
+        /// <param name="snapshotsOption">
         /// Specifies options for deleting blob snapshots.
         /// </param>
         /// <returns>
         /// The <see cref="Response"/>s for the individual Delete operations.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure to submit the batch occurs.  Individual sub-operation
         /// failures will be wrapped in an <see cref="AggregateException"/>.
         /// </remarks>
         [ForwardsClientCalls]
         public virtual Response[] DeleteBlobs(
             IEnumerable<Uri> blobUris,
-            DeleteSnapshotsOption? deleteOptions = default,
+            DeleteSnapshotsOption snapshotsOption = default,
             CancellationToken cancellationToken = default) =>
             DeleteBlobsInteral(
                 blobUris,
-                deleteOptions,
+                snapshotsOption,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -474,25 +474,25 @@ namespace Azure.Storage.Blobs.Specialized
         /// that the operation should be cancelled.
         /// </param>
         /// <param name="blobUris">URIs of the blobs to delete.</param>
-        /// <param name="deleteOptions">
+        /// <param name="snapshotsOption">
         /// Specifies options for deleting blob snapshots.
         /// </param>
         /// <returns>
         /// The <see cref="Response"/>s for the individual Delete operations.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure to submit the batch occurs.  Individual sub-operation
         /// failures will be wrapped in an <see cref="AggregateException"/>.
         /// </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response[]> DeleteBlobsAsync(
             IEnumerable<Uri> blobUris,
-            DeleteSnapshotsOption? deleteOptions = default,
+            DeleteSnapshotsOption snapshotsOption = default,
             CancellationToken cancellationToken = default) =>
             await DeleteBlobsInteral(
                 blobUris,
-                deleteOptions,
+                snapshotsOption,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -503,7 +503,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// All of the deletions are sent as a single batched request.
         /// </summary>
         /// <param name="blobUris">URIs of the blobs to delete.</param>
-        /// <param name="deleteOptions">
+        /// <param name="snapshotsOption">
         /// Specifies options for deleting blob snapshots.
         /// </param>
         /// <param name="async">
@@ -517,13 +517,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="Response"/>s for the individual Delete operations.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure to submit the batch occurs.  Individual sub-operation
         /// failures will be wrapped in an <see cref="AggregateException"/>.
         /// </remarks>
         internal async Task<Response[]> DeleteBlobsInteral(
             IEnumerable<Uri> blobUris,
-            DeleteSnapshotsOption? deleteOptions,
+            DeleteSnapshotsOption snapshotsOption,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -534,7 +534,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobBatch batch = CreateBatch();
             foreach (Uri uri in blobUris)
             {
-                responses.Add(batch.DeleteBlob(uri, deleteOptions));
+                responses.Add(batch.DeleteBlob(uri, snapshotsOption));
             }
 
             // Submit the batch
@@ -571,7 +571,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="Response"/>s for the individual Set Tier operations.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure to submit the batch occurs.  Individual sub-operation
         /// failures will be wrapped in an <see cref="AggregateException"/>.
         /// </remarks>
@@ -610,7 +610,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="Response"/>s for the individual Set Tier operations.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure to submit the batch occurs.  Individual sub-operation
         /// failures will be wrapped in an <see cref="AggregateException"/>.
         /// </remarks>
@@ -655,7 +655,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="Response"/>s for the individual Set Tier operations.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure to submit the batch occurs.  Individual sub-operation
         /// failures will be wrapped in an <see cref="AggregateException"/>.
         /// </remarks>

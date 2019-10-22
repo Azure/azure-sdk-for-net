@@ -27,11 +27,9 @@ namespace Azure.Data.AppConfiguration.Tests
         [Test]
         public void FilterReservedCharacter()
         {
-            var selector = new SettingSelector()
-            {
-                Keys = new List<string>() { "my_key", "key,key" },
-                Labels = new List<string>() { "my_label", "label,label" },
-            };
+            var selector = new SettingSelector("my_key", "my_label");
+            selector.Keys.Add( "key,key" );
+            selector.Labels.Add("label,label");
 
             var builder = new RequestUriBuilder();
             builder.Reset(new Uri("http://localhost/"));
@@ -45,12 +43,7 @@ namespace Azure.Data.AppConfiguration.Tests
         [Test]
         public void FilterContains()
         {
-            var selector = new SettingSelector()
-            {
-                Keys = new List<string>() { "*key*" },
-                Labels = new List<string>() { "*label*" },
-            };
-
+            var selector = new SettingSelector("*key*", "*label*");
             var builder = new RequestUriBuilder();
             builder.Reset(new Uri("http://localhost/"));
 
@@ -62,10 +55,7 @@ namespace Azure.Data.AppConfiguration.Tests
         [Test]
         public void FilterNullLabel()
         {
-            var selector = new SettingSelector()
-            {
-                Labels = new List<string>() { "" },
-            };
+            var selector = new SettingSelector(SettingSelector.Any, string.Empty);
 
             var builder = new RequestUriBuilder();
             builder.Reset(new Uri("http://localhost/"));

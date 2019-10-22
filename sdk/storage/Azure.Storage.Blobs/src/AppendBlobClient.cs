@@ -267,11 +267,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// newly created append blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<BlobContentInfo> Create(
-            BlobHttpHeaders? httpHeaders = default,
+            BlobHttpHeaders httpHeaders = default,
             Metadata metadata = default,
             AppendBlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
@@ -311,11 +311,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// newly created append blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<BlobContentInfo>> CreateAsync(
-            BlobHttpHeaders? httpHeaders = default,
+            BlobHttpHeaders httpHeaders = default,
             Metadata metadata = default,
             AppendBlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
@@ -351,11 +351,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// newly created append blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<BlobContentInfo> CreateIfNotExists(
-            BlobHttpHeaders? httpHeaders = default,
+            BlobHttpHeaders httpHeaders = default,
             Metadata metadata = default,
             CancellationToken cancellationToken = default) =>
             CreateIfNotExistsInternal(
@@ -389,11 +389,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// newly created append blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<BlobContentInfo>> CreateIfNotExistsAsync(
-            BlobHttpHeaders? httpHeaders = default,
+            BlobHttpHeaders httpHeaders = default,
             Metadata metadata = default,
             CancellationToken cancellationToken = default) =>
             await CreateIfNotExistsInternal(
@@ -430,11 +430,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// newly created append blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<BlobContentInfo>> CreateIfNotExistsInternal(
-            BlobHttpHeaders? httpHeaders,
+            BlobHttpHeaders httpHeaders,
             Metadata metadata,
             bool async,
             CancellationToken cancellationToken)
@@ -457,7 +457,7 @@ namespace Azure.Storage.Blobs.Specialized
                     Constants.Blob.Append.CreateIfNotExistsOperationName)
                     .ConfigureAwait(false);
             }
-            catch (StorageRequestFailedException storageRequestFailedException)
+            catch (RequestFailedException storageRequestFailedException)
             when (storageRequestFailedException.ErrorCode == Constants.Blob.AlreadyExists)
             {
                 return default;
@@ -498,11 +498,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// newly created append blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<BlobContentInfo>> CreateInternal(
-            BlobHttpHeaders? httpHeaders,
+            BlobHttpHeaders httpHeaders,
             Metadata metadata,
             AppendBlobAccessConditions? accessConditions,
             bool async,
@@ -579,14 +579,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// is specified, the storage service compares the hash of the content
         /// that has arrived with this value.  Note that this MD5 hash is not
         /// stored with the blob.  If the two hashes do not match, the
-        /// operation will fail with a <see cref="StorageRequestFailedException"/>.
+        /// operation will fail with a <see cref="RequestFailedException"/>.
         /// </param>
         /// <param name="accessConditions">
         /// Optional <see cref="AppendBlobAccessConditions"/> to add
         /// conditions on appending content to this append blob.
         /// </param>
         /// <param name="progressHandler">
-        /// Optional <see cref="IProgress{StorageProgress}"/> to provide
+        /// Optional <see cref="IProgress{Long}"/> to provide
         /// progress updates about data transfers.
         /// </param>
         /// <param name="cancellationToken">
@@ -598,14 +598,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// state of the updated append blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<BlobAppendInfo> AppendBlock(
             Stream content,
             byte[] transactionalContentHash = default,
             AppendBlobAccessConditions? accessConditions = default,
-            IProgress<StorageProgress> progressHandler = default,
+            IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default) =>
             AppendBlockInternal(
                 content,
@@ -635,14 +635,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// is specified, the storage service compares the hash of the content
         /// that has arrived with this value.  Note that this MD5 hash is not
         /// stored with the blob.  If the two hashes do not match, the
-        /// operation will fail with a <see cref="StorageRequestFailedException"/>.
+        /// operation will fail with a <see cref="RequestFailedException"/>.
         /// </param>
         /// <param name="accessConditions">
         /// Optional <see cref="AppendBlobAccessConditions"/> to add
         /// conditions on appending content to this append blob.
         /// </param>
         /// <param name="progressHandler">
-        /// Optional <see cref="IProgress{StorageProgress}"/> to provide
+        /// Optional <see cref="IProgress{Long}"/> to provide
         /// progress updates about data transfers.
         /// </param>
         /// <param name="cancellationToken">
@@ -654,14 +654,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// state of the updated append blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<BlobAppendInfo>> AppendBlockAsync(
             Stream content,
             byte[] transactionalContentHash = default,
             AppendBlobAccessConditions? accessConditions = default,
-            IProgress<StorageProgress> progressHandler = default,
+            IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default) =>
             await AppendBlockInternal(
                 content,
@@ -691,14 +691,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// is specified, the storage service compares the hash of the content
         /// that has arrived with this value.  Note that this MD5 hash is not
         /// stored with the blob.  If the two hashes do not match, the
-        /// operation will fail with a <see cref="StorageRequestFailedException"/>.
+        /// operation will fail with a <see cref="RequestFailedException"/>.
         /// </param>
         /// <param name="accessConditions">
         /// Optional <see cref="AppendBlobAccessConditions"/> to add
         /// conditions on appending content to this append blob.
         /// </param>
         /// <param name="progressHandler">
-        /// Optional <see cref="IProgress{StorageProgress}"/> to provide
+        /// Optional <see cref="IProgress{Long}"/> to provide
         /// progress updates about data transfers.
         /// </param>
         /// <param name="async">
@@ -713,14 +713,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// state of the updated append blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<BlobAppendInfo>> AppendBlockInternal(
             Stream content,
             byte[] transactionalContentHash,
             AppendBlobAccessConditions? accessConditions,
-            IProgress<StorageProgress> progressHandler,
+            IProgress<long> progressHandler,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -814,7 +814,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// of the content that has arrived from the <paramref name="sourceUri"/>
         /// with this value.  Note that this md5 hash is not stored with the
         /// blob.  If the two hashes do not match, the operation will fail
-        /// with a <see cref="StorageRequestFailedException"/>.
+        /// with a <see cref="RequestFailedException"/>.
         /// </param>
         /// <param name="accessConditions">
         /// Optional <see cref="AppendBlobAccessConditions"/> to add
@@ -833,7 +833,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// state of the updated append blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<BlobAppendInfo> AppendBlockFromUri(
@@ -883,7 +883,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// of the content that has arrived from the <paramref name="sourceUri"/>
         /// with this value.  Note that this md5 hash is not stored with the
         /// blob.  If the two hashes do not match, the operation will fail
-        /// with a <see cref="StorageRequestFailedException"/>.
+        /// with a <see cref="RequestFailedException"/>.
         /// </param>
         /// <param name="accessConditions">
         /// Optional <see cref="AppendBlobAccessConditions"/> to add
@@ -902,7 +902,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// state of the updated append blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<BlobAppendInfo>> AppendBlockFromUriAsync(
@@ -952,7 +952,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// of the content that has arrived from the <paramref name="sourceUri"/>
         /// with this value.  Note that this md5 hash is not stored with the
         /// blob.  If the two hashes do not match, the operation will fail
-        /// with a <see cref="StorageRequestFailedException"/>.
+        /// with a <see cref="RequestFailedException"/>.
         /// </param>
         /// <param name="accessConditions">
         /// Optional <see cref="AppendBlobAccessConditions"/> to add
@@ -974,7 +974,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// state of the updated append blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<BlobAppendInfo>> AppendBlockFromUriInternal(

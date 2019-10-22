@@ -779,7 +779,7 @@ function generateEnumStrings(w: IndentWriter, model: IServiceModel, type: IEnumT
                 w.line(`/// <summary>`);
                 w.line(`/// ${value.description || text}`);
                 w.line(`/// </summary>`);
-                w.line(`public static readonly ${enumFullName} ${name} = new ${enumName}(@"${text}");`)
+                w.line(`public static ${enumFullName} ${name} { get; } = new ${enumName}(@"${text}");`)
             }
             if (separator()) { w.line(); }
 
@@ -877,6 +877,7 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
             }
 
             // Instantiate nested models if necessary
+            const readonlyModel = Object.values(type.properties).every(p => (<IProperty>p).readonly);
             const nested = (<IProperty[]>Object.values(type.properties)).filter(p => !p.isNullable && (isObjectType(p.model) || (isPrimitiveType(p.model) && (p.model.itemType || p.model.type === `dictionary`))));
             if (nested.length > 0) {
                 const skipInitName = `skipInitialization`;
@@ -886,7 +887,7 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                 w.line(`/// </summary>`);
                 if (type.deserialize) {
                     // Add an optional overload that prevents initialization for deserialiation
-                    w.write(`public ${naming.type(type.name)}()`);
+                    w.write(`${!type.public || !readonlyModel ? 'public' : 'internal'} ${naming.type(type.name)}()`);
                     w.scope(() => w.write(`: this(false)`));
                     w.scope(`{`, `}`, () => null);
                     w.line();
@@ -1105,7 +1106,7 @@ function generateSerialize(w: IndentWriter, service: IService, type: IObjectType
         const properties = <IProperty[]>Object.values(type.properties);
         for (const property of properties) {
             let current = elementName;
-            const { xname: childName } = getXmlShape(property.name, { ...type.xml, name: property.name });
+            const { xname: childName } = getXmlShape(property.name, property.xml);
             if (!property.required) {
                 w.line(`if (value.${naming.property(property.name)} != null)`);
                 w.pushScope('{');

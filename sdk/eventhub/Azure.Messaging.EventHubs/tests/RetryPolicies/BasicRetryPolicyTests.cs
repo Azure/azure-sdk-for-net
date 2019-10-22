@@ -29,9 +29,10 @@ namespace Azure.Messaging.EventHubs.Tests
             yield return new object[] { new TimeoutException() };
             yield return new object[] { new SocketException(500) };
 
-            // Task Canceled should use the inner exception as the decision point.
+            // Task/Operation Canceled should use the inner exception as the decision point.
 
             yield return new object[] { new TaskCanceledException("dummy", new EventHubsException(true, null)) };
+            yield return new object[] { new OperationCanceledException("dummy", new EventHubsException(true, null)) };
 
             // Aggregate should use the first inner exception as the decision point.
 
@@ -58,9 +59,10 @@ namespace Azure.Messaging.EventHubs.Tests
             yield return new object[] { new OutOfMemoryException() };
             yield return new object[] { new ObjectDisposedException("dummy") };
 
-            // Task Canceled should use the inner exception as the decision point.
+            // Task/Operation Canceled should use the inner exception as the decision point.
 
             yield return new object[] { new TaskCanceledException("dummy", new EventHubsException(false, null)) };
+            yield return new object[] { new OperationCanceledException("dummy", new EventHubsException(false, null)) };
 
             // Null is not retriable, even if it is a blessed type.
 

@@ -107,12 +107,11 @@ namespace Azure.Storage.Files.Samples
                 // Allow access to the service level APIs
                 ResourceTypes = AccountSasResourceTypes.Service,
 
-                // Allow read access
-                Permissions = new AccountSasPermissions() { Read = true }.ToString(),
-
                 // Access expires in 1 hour!
-                ExpiryTime = DateTimeOffset.UtcNow.AddHours(1)
+                ExpiresOn = DateTimeOffset.UtcNow.AddHours(1)
             };
+            // Allow read access
+            sas.SetPermissions(AccountSasPermissions.Read);
 
             // Create a SharedKeyCredential that we can use to sign the SAS token
             StorageSharedKeyCredential credential = new StorageSharedKeyCredential(StorageAccountName, StorageAccountKey);
@@ -129,8 +128,8 @@ namespace Azure.Storage.Files.Samples
 
             // Try to create a new container (which is beyond our
             // delegated permission)
-            StorageRequestFailedException ex =
-                Assert.ThrowsAsync<StorageRequestFailedException>(
+            RequestFailedException ex =
+                Assert.ThrowsAsync<RequestFailedException>(
                     async () => await service.CreateShareAsync(Randomize("sample-share")));
             Assert.AreEqual(403, ex.Status);
         }
