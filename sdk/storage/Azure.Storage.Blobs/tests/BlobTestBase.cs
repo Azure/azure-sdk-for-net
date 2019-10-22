@@ -400,7 +400,7 @@ namespace Azure.Storage.Test.Shared
             BlobLease lease = null;
             if (leaseId == ReceivedLeaseId || leaseId == garbageLeaseId)
             {
-                lease = await InstrumentClient(blob.GetLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync(LeaseClient.InfiniteLeaseDuration);
+                lease = await InstrumentClient(blob.GetBlobLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync(BlobLeaseClient.InfiniteLeaseDuration);
             }
             return leaseId == ReceivedLeaseId ? lease.LeaseId : leaseId;
         }
@@ -411,7 +411,7 @@ namespace Azure.Storage.Test.Shared
             BlobLease lease = null;
             if (leaseId == ReceivedLeaseId || leaseId == garbageLeaseId)
             {
-                lease = await InstrumentClient(container.GetLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync(LeaseClient.InfiniteLeaseDuration);
+                lease = await InstrumentClient(container.GetBlobLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync(BlobLeaseClient.InfiniteLeaseDuration);
             }
             return leaseId == ReceivedLeaseId ? lease.LeaseId : leaseId;
         }

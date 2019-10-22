@@ -12,10 +12,10 @@ using Azure.Storage.Blobs.Models;
 namespace Azure.Storage.Blobs.Specialized
 {
     /// <summary>
-    /// The <see cref="LeaseClient"/> allows you to manipulate Azure
+    /// The <see cref="BlobLeaseClient"/> allows you to manipulate Azure
     /// Storage leases on containers and blobs.
     /// </summary>
-    public class LeaseClient
+    public class BlobLeaseClient
     {
         /// <summary>
         /// The <see cref="BlobClient"/> to manage leases for.
@@ -65,17 +65,17 @@ namespace Azure.Storage.Blobs.Specialized
         public static readonly TimeSpan InfiniteLeaseDuration = TimeSpan.FromSeconds(Constants.Blob.Lease.InfiniteLeaseDuration);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LeaseClient"/> class
+        /// Initializes a new instance of the <see cref="BlobLeaseClient"/> class
         /// for mocking.
         /// </summary>
-        protected LeaseClient()
+        protected BlobLeaseClient()
         {
             _blob = null;
             _container = null;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LeaseClient"/>  class.
+        /// Initializes a new instance of the <see cref="BlobLeaseClient"/>  class.
         /// </summary>
         /// <param name="client">
         /// A <see cref="BlobClient"/> representing the blob being leased.
@@ -84,7 +84,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// An optional lease ID.  If no lease ID is provided, a random lease
         /// ID will be created.
         /// </param>
-        public LeaseClient(BlobBaseClient client, string leaseId = null)
+        public BlobLeaseClient(BlobBaseClient client, string leaseId = null)
         {
             _blob = client ?? throw Errors.ArgumentNull(nameof(client));
             _container = null;
@@ -92,7 +92,7 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LeaseClient"/>  class.
+        /// Initializes a new instance of the <see cref="BlobLeaseClient"/>  class.
         /// </summary>
         /// <param name="client">
         /// A <see cref="BlobContainerClient"/> representing the blob container
@@ -102,7 +102,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// An optional lease ID.  If no lease ID is provided, a random lease
         /// ID will be created.
         /// </param>
-        public LeaseClient(BlobContainerClient client, string leaseId = null)
+        public BlobLeaseClient(BlobContainerClient client, string leaseId = null)
         {
             _blob = null;
             _container = client ?? throw Errors.ArgumentNull(nameof(client));
@@ -123,7 +123,7 @@ namespace Azure.Storage.Blobs.Specialized
             if (BlobClient == null && BlobContainerClient == null)
             {
                 // This can only happen if someone's not being careful while mocking
-                throw BlobErrors.BlobOrContainerMissing(nameof(LeaseClient), nameof(BlobBaseClient), nameof(BlobContainerClient));
+                throw BlobErrors.BlobOrContainerMissing(nameof(BlobLeaseClient), nameof(BlobBaseClient), nameof(BlobContainerClient));
             }
         }
 
@@ -264,10 +264,10 @@ namespace Azure.Storage.Blobs.Specialized
             EnsureClient();
             // Int64 is an overflow safe cast relative to TimeSpan.MaxValue
             var serviceDuration = duration < TimeSpan.Zero ? Constants.Blob.Lease.InfiniteLeaseDuration : Convert.ToInt64(duration.TotalSeconds);
-            using (Pipeline.BeginLoggingScope(nameof(LeaseClient)))
+            using (Pipeline.BeginLoggingScope(nameof(BlobLeaseClient)))
             {
                 Pipeline.LogMethodEnter(
-                    nameof(LeaseClient),
+                    nameof(BlobLeaseClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(LeaseId)}: {LeaseId}\n" +
@@ -320,7 +320,7 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(LeaseClient));
+                    Pipeline.LogMethodExit(nameof(BlobLeaseClient));
                 }
             }
         }
@@ -434,10 +434,10 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(LeaseClient)))
+            using (Pipeline.BeginLoggingScope(nameof(BlobLeaseClient)))
             {
                 Pipeline.LogMethodEnter(
-                    nameof(LeaseClient),
+                    nameof(BlobLeaseClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(LeaseId)}: {LeaseId}\n" +
@@ -488,7 +488,7 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(LeaseClient));
+                    Pipeline.LogMethodExit(nameof(BlobLeaseClient));
                 }
             }
         }
@@ -603,10 +603,10 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken)
         {
             EnsureClient();
-            using (Pipeline.BeginLoggingScope(nameof(LeaseClient)))
+            using (Pipeline.BeginLoggingScope(nameof(BlobLeaseClient)))
             {
                 Pipeline.LogMethodEnter(
-                    nameof(LeaseClient),
+                    nameof(BlobLeaseClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(LeaseId)}: {LeaseId}\n" +
@@ -661,7 +661,7 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(LeaseClient));
+                    Pipeline.LogMethodExit(nameof(BlobLeaseClient));
                 }
             }
         }
@@ -781,10 +781,10 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken)
         {
             EnsureClient();
-            using (Pipeline.BeginLoggingScope(nameof(LeaseClient)))
+            using (Pipeline.BeginLoggingScope(nameof(BlobLeaseClient)))
             {
                 Pipeline.LogMethodEnter(
-                    nameof(LeaseClient),
+                    nameof(BlobLeaseClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(LeaseId)}: {LeaseId}\n" +
@@ -838,7 +838,7 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(LeaseClient));
+                    Pipeline.LogMethodExit(nameof(BlobLeaseClient));
                 }
             }
         }
@@ -1013,10 +1013,10 @@ namespace Azure.Storage.Blobs.Specialized
         {
             EnsureClient();
             long? serviceBreakPeriod = breakPeriod != null ? Convert.ToInt64(breakPeriod.Value.TotalSeconds) : (long?) null;
-            using (Pipeline.BeginLoggingScope(nameof(LeaseClient)))
+            using (Pipeline.BeginLoggingScope(nameof(BlobLeaseClient)))
             {
                 Pipeline.LogMethodEnter(
-                    nameof(LeaseClient),
+                    nameof(BlobLeaseClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(breakPeriod)}: {breakPeriod}\n" +
@@ -1069,7 +1069,7 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(LeaseClient));
+                    Pipeline.LogMethodExit(nameof(BlobLeaseClient));
                 }
             }
         }
@@ -1078,13 +1078,13 @@ namespace Azure.Storage.Blobs.Specialized
 
     /// <summary>
     /// Add easy to discover methods to <see cref="BlobContainerClient"/> and
-    /// <see cref="BlobClient"/> for easily creating <see cref="LeaseClient"/>
+    /// <see cref="BlobClient"/> for easily creating <see cref="BlobLeaseClient"/>
     /// instances.
     /// </summary>
     public static partial class SpecializedBlobExtensions
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="LeaseClient"/> class.
+        /// Initializes a new instance of the <see cref="BlobLeaseClient"/> class.
         /// </summary>
         /// <param name="client">
         /// A <see cref="BlobClient"/> representing the blob being leased.
@@ -1093,13 +1093,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// An optional lease ID.  If no lease ID is provided, a random lease
         /// ID will be created.
         /// </param>
-        public static LeaseClient GetLeaseClient(
+        public static BlobLeaseClient GetBlobLeaseClient(
             this BlobBaseClient client,
             string leaseId = null) =>
-            new LeaseClient(client, leaseId);
+            new BlobLeaseClient(client, leaseId);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LeaseClient"/> class.
+        /// Initializes a new instance of the <see cref="BlobLeaseClient"/> class.
         /// </summary>
         /// <param name="client">
         /// A <see cref="BlobContainerClient"/> representing the container
@@ -1109,9 +1109,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// An optional lease ID.  If no lease ID is provided, a random lease
         /// ID will be created.
         /// </param>
-        public static LeaseClient GetLeaseClient(
+        public static BlobLeaseClient GetBlobLeaseClient(
             this BlobContainerClient client,
             string leaseId = null) =>
-            new LeaseClient(client, leaseId);
+            new BlobLeaseClient(client, leaseId);
     }
 }

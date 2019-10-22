@@ -846,8 +846,8 @@ namespace Azure.Storage.Blobs.Test
                         await destBlob.UploadAsync(stream);
                     }
 
-                    TimeSpan duration = LeaseClient.InfiniteLeaseDuration;
-                    LeaseClient lease = InstrumentClient(destBlob.GetLeaseClient(Recording.Random.NewGuid().ToString()));
+                    TimeSpan duration = BlobLeaseClient.InfiniteLeaseDuration;
+                    BlobLeaseClient lease = InstrumentClient(destBlob.GetBlobLeaseClient(Recording.Random.NewGuid().ToString()));
                     Response<BlobLease> leaseResponse = await lease.AcquireAsync(duration);
 
                     Operation<long> operation = await destBlob.StartCopyFromUriAsync(
@@ -1833,7 +1833,7 @@ namespace Azure.Storage.Blobs.Test
                 var duration = TimeSpan.FromSeconds(15);
 
                 // Act
-                Response<BlobLease> response = await InstrumentClient(blob.GetLeaseClient(leaseId)).AcquireAsync(duration);
+                Response<BlobLease> response = await InstrumentClient(blob.GetBlobLeaseClient(leaseId)).AcquireAsync(duration);
 
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -1858,7 +1858,7 @@ namespace Azure.Storage.Blobs.Test
                         parameters: parameters);
 
                     // Act
-                    Response<BlobLease> response = await InstrumentClient(blob.GetLeaseClient(leaseId)).AcquireAsync(
+                    Response<BlobLease> response = await InstrumentClient(blob.GetBlobLeaseClient(leaseId)).AcquireAsync(
                         duration: duration,
                         accessConditions: accessConditions);
 
@@ -1886,7 +1886,7 @@ namespace Azure.Storage.Blobs.Test
 
                     // Act
                     await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                        InstrumentClient(blob.GetLeaseClient(leaseId)).AcquireAsync(
+                        InstrumentClient(blob.GetBlobLeaseClient(leaseId)).AcquireAsync(
                             duration: duration,
                             accessConditions: accessConditions),
                         e => { });
@@ -1906,7 +1906,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                    InstrumentClient(blob.GetLeaseClient(leaseId)).AcquireAsync(duration),
+                    InstrumentClient(blob.GetBlobLeaseClient(leaseId)).AcquireAsync(duration),
                     e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
             }
         }
@@ -1922,7 +1922,7 @@ namespace Azure.Storage.Blobs.Test
                 var leaseId = Recording.Random.NewGuid().ToString();
                 var duration = TimeSpan.FromSeconds(15);
 
-                LeaseClient lease = InstrumentClient(blob.GetLeaseClient(leaseId));
+                BlobLeaseClient lease = InstrumentClient(blob.GetBlobLeaseClient(leaseId));
                 await lease.AcquireAsync(duration);
 
                 // Act
@@ -1950,7 +1950,7 @@ namespace Azure.Storage.Blobs.Test
                     HttpAccessConditions accessConditions = BuildHttpAccessConditions(
                         parameters: parameters);
 
-                    LeaseClient lease = InstrumentClient(blob.GetLeaseClient(leaseId));
+                    BlobLeaseClient lease = InstrumentClient(blob.GetBlobLeaseClient(leaseId));
                     await lease.AcquireAsync(duration: duration);
 
                     // Act
@@ -1978,7 +1978,7 @@ namespace Azure.Storage.Blobs.Test
                     parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
                     HttpAccessConditions accessConditions = BuildHttpAccessConditions(parameters);
 
-                    LeaseClient lease = InstrumentClient(blob.GetLeaseClient(leaseId));
+                    BlobLeaseClient lease = InstrumentClient(blob.GetBlobLeaseClient(leaseId));
                     await lease.AcquireAsync(duration: duration);
 
                     // Act
@@ -2000,7 +2000,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                    InstrumentClient(blob.GetLeaseClient(leaseId)).ReleaseAsync(),
+                    InstrumentClient(blob.GetBlobLeaseClient(leaseId)).ReleaseAsync(),
                     e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
             }
         }
@@ -2016,7 +2016,7 @@ namespace Azure.Storage.Blobs.Test
                 var leaseId = Recording.Random.NewGuid().ToString();
                 var duration = TimeSpan.FromSeconds(15);
 
-                LeaseClient lease = InstrumentClient(blob.GetLeaseClient(leaseId));
+                BlobLeaseClient lease = InstrumentClient(blob.GetBlobLeaseClient(leaseId));
                 await lease.AcquireAsync(duration);
 
                 // Act
@@ -2044,7 +2044,7 @@ namespace Azure.Storage.Blobs.Test
                     HttpAccessConditions accessConditions = BuildHttpAccessConditions(
                         parameters: parameters);
 
-                    LeaseClient lease = InstrumentClient(blob.GetLeaseClient(leaseId));
+                    BlobLeaseClient lease = InstrumentClient(blob.GetBlobLeaseClient(leaseId));
                     await lease.AcquireAsync(duration: duration);
 
                     // Act
@@ -2072,7 +2072,7 @@ namespace Azure.Storage.Blobs.Test
                     parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
                     HttpAccessConditions accessConditions = BuildHttpAccessConditions(parameters);
 
-                    LeaseClient lease = InstrumentClient(blob.GetLeaseClient(leaseId));
+                    BlobLeaseClient lease = InstrumentClient(blob.GetBlobLeaseClient(leaseId));
                     await lease.AcquireAsync(duration: duration);
 
                     // Act
@@ -2094,7 +2094,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                    InstrumentClient(blob.GetLeaseClient(leaseId)).RenewAsync(),
+                    InstrumentClient(blob.GetBlobLeaseClient(leaseId)).RenewAsync(),
                     e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
             }
         }
@@ -2110,7 +2110,7 @@ namespace Azure.Storage.Blobs.Test
                 var leaseId = Recording.Random.NewGuid().ToString();
                 var duration = TimeSpan.FromSeconds(15);
 
-                LeaseClient lease = InstrumentClient(blob.GetLeaseClient(leaseId));
+                BlobLeaseClient lease = InstrumentClient(blob.GetBlobLeaseClient(leaseId));
                 await lease.AcquireAsync(duration);
 
                 // Act
@@ -2133,7 +2133,7 @@ namespace Azure.Storage.Blobs.Test
                 var duration = TimeSpan.FromSeconds(15);
                 TimeSpan breakPeriod = TimeSpan.FromSeconds(5);
 
-                LeaseClient lease = InstrumentClient(blob.GetLeaseClient(leaseId));
+                BlobLeaseClient lease = InstrumentClient(blob.GetBlobLeaseClient(leaseId));
                 await lease.AcquireAsync(duration);
 
                 // Act
@@ -2161,7 +2161,7 @@ namespace Azure.Storage.Blobs.Test
                     HttpAccessConditions accessConditions = BuildHttpAccessConditions(
                         parameters: parameters);
 
-                    LeaseClient lease = InstrumentClient(blob.GetLeaseClient(leaseId));
+                    BlobLeaseClient lease = InstrumentClient(blob.GetBlobLeaseClient(leaseId));
                     await lease.AcquireAsync(duration: duration);
 
                     // Act
@@ -2189,7 +2189,7 @@ namespace Azure.Storage.Blobs.Test
                     parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
                     HttpAccessConditions accessConditions = BuildHttpAccessConditions(parameters);
 
-                    LeaseClient lease = InstrumentClient(blob.GetLeaseClient(leaseId));
+                    BlobLeaseClient lease = InstrumentClient(blob.GetBlobLeaseClient(leaseId));
                     await lease.AcquireAsync(duration: duration);
 
                     // Act
@@ -2210,7 +2210,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                    InstrumentClient(blob.GetLeaseClient()).BreakAsync(),
+                    InstrumentClient(blob.GetBlobLeaseClient()).BreakAsync(),
                     e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
             }
         }
@@ -2227,7 +2227,7 @@ namespace Azure.Storage.Blobs.Test
                 var newLeaseId = Recording.Random.NewGuid().ToString();
                 var duration = TimeSpan.FromSeconds(15);
 
-                LeaseClient lease = InstrumentClient(blob.GetLeaseClient(leaseId));
+                BlobLeaseClient lease = InstrumentClient(blob.GetBlobLeaseClient(leaseId));
                 await lease.AcquireAsync(duration);
 
                 // Act
@@ -2256,7 +2256,7 @@ namespace Azure.Storage.Blobs.Test
                     HttpAccessConditions accessConditions = BuildHttpAccessConditions(
                         parameters: parameters);
 
-                    LeaseClient lease = InstrumentClient(blob.GetLeaseClient(leaseId));
+                    BlobLeaseClient lease = InstrumentClient(blob.GetBlobLeaseClient(leaseId));
                     await lease.AcquireAsync(duration: duration);
 
                     // Act
@@ -2287,7 +2287,7 @@ namespace Azure.Storage.Blobs.Test
                     parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
                     HttpAccessConditions accessConditions = BuildHttpAccessConditions(parameters);
 
-                    LeaseClient lease = InstrumentClient(blob.GetLeaseClient(leaseId));
+                    BlobLeaseClient lease = InstrumentClient(blob.GetBlobLeaseClient(leaseId));
                     await lease.AcquireAsync(duration: duration);
 
                     // Act
@@ -2312,7 +2312,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                    InstrumentClient(blob.GetLeaseClient(leaseId)).ChangeAsync(proposedId: newLeaseId),
+                    InstrumentClient(blob.GetBlobLeaseClient(leaseId)).ChangeAsync(proposedId: newLeaseId),
                     e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
             }
         }
@@ -2344,7 +2344,7 @@ namespace Azure.Storage.Blobs.Test
                 var leaseId = Recording.Random.NewGuid().ToString();
                 var duration = TimeSpan.FromSeconds(15);
 
-                await InstrumentClient(blob.GetLeaseClient(leaseId)).AcquireAsync(duration);
+                await InstrumentClient(blob.GetBlobLeaseClient(leaseId)).AcquireAsync(duration);
 
                 // Act
                 Response response = await blob.SetAccessTierAsync(

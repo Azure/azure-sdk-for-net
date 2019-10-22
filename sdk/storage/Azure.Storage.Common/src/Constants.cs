@@ -224,15 +224,15 @@ namespace Azure.Storage
                 /// The Azure Storage Operation Names for Blob Lease Client.
                 /// </summary>
                 public const string AcquireOperationName =
-                    "Azure.Storage.Blobs.Specialized.LeaseClient.Acquire";
+                    "Azure.Storage.Blobs.Specialized.BlobLeaseClient.Acquire";
                 public const string RenewOperationName =
-                    "Azure.Storage.Blobs.Specialized.LeaseClient.Renew";
+                    "Azure.Storage.Blobs.Specialized.BlobLeaseClient.Renew";
                 public const string ReleaseOperationName =
-                    "Azure.Storage.Blobs.Specialized.LeaseClient.Release";
+                    "Azure.Storage.Blobs.Specialized.BlobLeaseClient.Release";
                 public const string ChangeOperationName =
-                    "Azure.Storage.Blobs.Specialized.LeaseClient.Change";
+                    "Azure.Storage.Blobs.Specialized.BlobLeaseClient.Change";
                 public const string BreakOperationName =
-                    "Azure.Storage.Blobs.Specialized.LeaseClient.Break";
+                    "Azure.Storage.Blobs.Specialized.BlobLeaseClient.Break";
             }
 
             internal static class Page
