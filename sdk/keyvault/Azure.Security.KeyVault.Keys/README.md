@@ -55,7 +55,7 @@ Use the [Azure CLI][azure_cli] snippet below to create/get client secret credent
 
 * Grant the above mentioned application authorization to perform key operations on the Key Vault:
     ```PowerShell
-    az keyvault set-policy --name <your-key-vault-name> --spn $AZURE_CLIENT_ID --key-permissions backup delete get list create
+    az keyvault set-policy --name <your-key-vault-name> --spn $AZURE_CLIENT_ID --key-permissions backup delete get list create encrypt decrypt update
     ```
     > --key-permissions:
     > Accepted values: backup, create, decrypt, delete, encrypt, get, import, list, purge, recover, restore, sign, unwrapKey, update, verify, wrapKey
@@ -111,11 +111,11 @@ The following section provides several code snippets using the `client` [created
 * [Update an existing key](#update-an-existing-key)
 * [Delete a key](#delete-a-key)
 * [Delete and purge a key](#delete-and-purge-a-key)
-* [List Keys](#list-keys)
+* [List keys](#list-keys)
 * [Encrypt and Decrypt](#encrypt-and-decrypt)
 
 ### Sync examples
-* [Create a kKey synchronously](#create-a-key-synchronously)
+* [Create a key synchronously](#create-a-key-synchronously)
 * [Delete a key synchronously](#delete-a-key-synchronously)
 
 ### Create a key
@@ -137,6 +137,8 @@ Console.WriteLine(rsaKey.Name);
 Console.WriteLine(rsaKey.KeyType);
 
 // Create a hardware Elliptic Curve key
+// Because only premium key vault supports HSM backed keys , please ensure your key vault
+// SKU is premium when you set "hardwareProtected" value to true
 var echsmkey = new CreateEcKeyOptions("ec-key-name", hardwareProtected: true);
 KeyVaultKey ecKey = await client.CreateEcKeyAsync(echsmkey);
 
@@ -239,6 +241,8 @@ Console.WriteLine(rsaKey.Name);
 Console.WriteLine(rsaKey.KeyType);
 
 // Create a hardware Elliptic Curve key
+// Because only premium key vault supports HSM backed keys , please ensure your key vault
+// SKU is premium when you set "hardwareProtected" value to true
 var echsmkey = new CreateEcKeyOptions("ec-key-name", hardwareProtected: true);
 KeyVaultKey ecKey = client.CreateEcKey(echsmkey);
 
