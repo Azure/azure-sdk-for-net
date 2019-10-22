@@ -21,11 +21,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Identity.Tests", "..\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs", "..\..\eventhub\Azure.Messaging.EventHubs\src\Azure.Messaging.EventHubs.csproj", "{227CB61F-A6E3-449D-80B8-A89EA38BFA70}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.CheckpointStore.Blob", "..\..\eventhub\Azure.Messaging.EventHubs.CheckpointStore.Blob\src\Azure.Messaging.EventHubs.CheckpointStore.Blob.csproj", "{ED2547CD-2059-4517-BA48-7538F57A3DAE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.CheckpointStore.Blobs", "..\..\eventhub\Azure.Messaging.EventHubs.CheckpointStore.Blobs\src\Azure.Messaging.EventHubs.CheckpointStore.Blobs.csproj", "{ED2547CD-2059-4517-BA48-7538F57A3DAE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.CheckpointStore.Blob.Samples", "..\..\eventhub\Azure.Messaging.EventHubs.CheckpointStore.Blob\samples\Azure.Messaging.EventHubs.CheckpointStore.Blob.Samples.csproj", "{45A71353-4A4D-4558-9FFD-01C89D117356}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.CheckpointStore.Blobs.Samples", "..\..\eventhub\Azure.Messaging.EventHubs.CheckpointStore.Blobs\samples\Azure.Messaging.EventHubs.CheckpointStore.Blobs.Samples.csproj", "{45A71353-4A4D-4558-9FFD-01C89D117356}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests", "..\..\eventhub\Azure.Messaging.EventHubs.CheckpointStore.Blob\tests\Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests.csproj", "{EF1A1437-4877-4FD5-9EBF-5EFCBA811C03}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.CheckpointStore.Blobs.Tests", "..\..\eventhub\Azure.Messaging.EventHubs.CheckpointStore.Blobs\tests\Azure.Messaging.EventHubs.CheckpointStore.Blobs.Tests.csproj", "{EF1A1437-4877-4FD5-9EBF-5EFCBA811C03}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.Samples", "..\..\eventhub\Azure.Messaging.EventHubs\samples\Azure.Messaging.EventHubs.Samples.csproj", "{394E0E71-2B87-42CA-BC26-58191F6E10F7}"
 EndProject
