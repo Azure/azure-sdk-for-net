@@ -158,6 +158,9 @@ namespace Azure.Storage.Blobs.Test
         #endregion
 
         [Test]
+        [Category("Live")]
+        [Ignore("Task cancelled")]
+
         public async Task DownloadAsync_CPK()
         {
             using (GetNewContainer(out BlobContainerClient container))
@@ -1214,6 +1217,8 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Category("Live")]
+        [Ignore("Operation cancelled")]
         public async Task GetPropertiesAsync_CpkError()
         {
             using (GetNewContainer(out BlobContainerClient container))
