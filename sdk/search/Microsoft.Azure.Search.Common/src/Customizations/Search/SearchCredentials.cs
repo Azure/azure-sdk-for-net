@@ -11,11 +11,11 @@ namespace Microsoft.Azure.Search
     using Rest;
 
     /// <summary>
-    /// Credentials used to authenticate to an Azure Search service.
+    /// Credentials used to authenticate to a search service.
     /// <see href="https://docs.microsoft.com/rest/api/searchservice/"/>
     /// </summary>
     /// <remarks>
-    /// See <see href="https://docs.microsoft.com/azure/search/search-security-api-keys"/> for more information about API keys in Azure Search.
+    /// See <see href="https://docs.microsoft.com/azure/search/search-security-api-keys"/> for more information about API keys in Azure Cognitive Search.
     /// </remarks>
     public class SearchCredentials : ServiceClientCredentials
     {
@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Search
         /// Initializes a new instance of the SearchCredentials class with a query key or an admin key. Use a query
         /// key if your application does not require write access to the Search Service or index.
         /// </summary>
-        /// <param name="apiKey">api-key used to authenticate to the Azure Search service.</param>
+        /// <param name="apiKey">api-key used to authenticate to the search service.</param>
         /// <remarks>
         /// If your application performs only query operations on an index, we recommend passing a query key for the
         /// <paramref name="apiKey"/> parameter. This ensures that you have read-only access to the index, which is
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Search
         }
         
         /// <summary>
-        /// api-key used to authenticate to an Azure Search service. Can be either a query key for querying only, or
+        /// api-key used to authenticate to a search service. Can be either a query key for querying only, or
         /// an admin key that enables index and document management as well.
         /// </summary>
         public string ApiKey { get; }

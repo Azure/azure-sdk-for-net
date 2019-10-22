@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Search
     public partial interface IIndexersOperations
     {
         /// <summary>
-        /// Creates a new Azure Search indexer or updates an indexer if it already
+        /// Creates a new indexer or updates an indexer if it already
         /// exists.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Indexer" />
         /// </summary>
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Search
         Task<AzureOperationResponse<Indexer>> CreateOrUpdateWithHttpMessagesAsync(Indexer indexer, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Determines whether or not the given indexer exists in the Azure Search service.
+        /// Determines whether or not the given indexer exists in the search service.
         /// </summary>
         /// <param name="indexerName">
         /// The name of the indexer.
