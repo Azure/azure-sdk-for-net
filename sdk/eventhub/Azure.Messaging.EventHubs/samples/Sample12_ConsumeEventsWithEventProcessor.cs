@@ -109,6 +109,21 @@ namespace Azure.Messaging.EventHubs.Samples
                     return Task.CompletedTask;
                 };
 
+                eventProcessor.ProcessExceptionAsync = (PartitionContext partitionContext, Exception exception) =>
+                {
+                    // All the unhandled exceptions encountered during the event processor execution are passed to this method so
+                    // the user can decide how to handle them.
+                    //
+                    // This piece of code is not supposed to be reached by this sample.  If the following message has been printed
+                    // to the Console, then something unexpected has happened.
+
+                    Console.WriteLine($"\tPartition '{ partitionContext.PartitionId }': an unhandled exception was encountered. This was not expected to happen.");
+
+                    // This method is asynchronous, which means it's expected to return a Task.
+
+                    return Task.CompletedTask;
+                };
+
                 // Once started, the event processor will start to claim partitions and receive events from them.
 
                 Console.WriteLine("Starting the event processor.");
@@ -258,33 +273,6 @@ namespace Azure.Messaging.EventHubs.Samples
                 Interlocked.Decrement(ref s_activeInstancesCount);
 
                 Console.WriteLine($"\tPartition '{ partitionContext.PartitionId }': partition processor successfully closed. Reason: { reason }.");
-
-                // This method is asynchronous, which means it's expected to return a Task.
-
-                return Task.CompletedTask;
-            }
-
-            /// <summary>
-            ///   Processes an unexpected exception thrown while the associated <see cref="EventProcessor" /> is running.
-            /// </summary>
-            ///
-            /// <param name="partitionContext">Contains information about the partition from which events are sourced and provides a means of creating checkpoints for that partition.</param>
-            /// <param name="exception">The exception to be processed.  It's not used in this sample.</param>
-            /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.  It's not used in this sample.</param>
-            ///
-            /// <returns>A task to be resolved on when the operation has completed.</returns>
-            ///
-            public override Task ProcessErrorAsync(PartitionContext partitionContext,
-                                                   Exception exception,
-                                                   CancellationToken cancellationToken)
-            {
-                // All the unhandled exceptions encountered during the event processor execution are passed to this method so
-                // the user can decide how to handle them.
-                //
-                // This piece of code is not supposed to be reached by this sample.  If the following message has been printed
-                // to the Console, then something unexpected has happened.
-
-                Console.WriteLine($"\tPartition '{ partitionContext.PartitionId }': an unhandled exception was encountered. This was not expected to happen.");
 
                 // This method is asynchronous, which means it's expected to return a Task.
 

@@ -290,7 +290,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 // In case an exception is encountered while partition processor is processing the error, don't
                 // catch it and let the calling method (StopAsync) handle it.
 
-                await PartitionProcessor.ProcessErrorAsync(Context, unrecoverableException, cancellationToken).ConfigureAwait(false);
+                await OwnerEventProcessor.ProcessExceptionAsync(Context, unrecoverableException).ConfigureAwait(false);
             }
         }
     }

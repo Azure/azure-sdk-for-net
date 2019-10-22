@@ -109,6 +109,12 @@ namespace Azure.Messaging.EventHubs.Processor
         public Func<PartitionContext, IEnumerable<EventData>, Task> ProcessEventsAsync { internal get; set; }
 
         /// <summary>
+        ///   TODO.
+        /// </summary>
+        ///
+        public Func<PartitionContext, Exception, Task> ProcessExceptionAsync { internal get; set; }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="EventProcessor"/> class.
         /// </summary>
         ///

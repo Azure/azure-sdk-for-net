@@ -60,6 +60,12 @@ namespace Azure.Messaging.EventHubs.Tests
         private Action<PartitionContext, IEnumerable<EventData>> OnProcessEvents { get; }
 
         /// <summary>
+        ///   TODO.
+        /// </summary>
+        ///
+        private Action<PartitionContext, Exception> OnProcessException { get; }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="EventProcessorManager"/> class.
         /// </summary>
         ///
@@ -70,7 +76,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <param name="onInitialize">A callback action to be called on <see cref="PartitionProcessor.InitializeAsync" />.</param>
         /// <param name="onClose">A callback action to be called on <see cref="PartitionProcessor.CloseAsync" />.</param>
         /// <param name="onProcessEvents">A callback action to be called on <see cref="EventProcessor.ProcessEventsAsync" />.</param>
-        /// <param name="onProcessError">A callback action to be called on <see cref="PartitionProcessor.ProcessErrorAsync" />.</param>
+        /// <param name="onProcessException">A callback action to be called on <see cref="EventProcessor.ProcessExceptionAsync" />.</param>
         ///
         public EventProcessorManager(string consumerGroup,
                                      EventHubClient client,
@@ -79,7 +85,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                      Action<PartitionContext> onInitialize = null,
                                      Action<PartitionContext, PartitionProcessorCloseReason> onClose = null,
                                      Action<PartitionContext, IEnumerable<EventData>> onProcessEvents = null,
-                                     Action<PartitionContext, Exception, CancellationToken> onProcessError = null)
+                                     Action<PartitionContext, Exception> onProcessException = null)
         {
             ConsumerGroup = consumerGroup;
             InnerClient = client;
@@ -88,8 +94,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 new PartitionProcessor
                 (
                     onInitialize,
-                    onClose,
-                    onProcessError
+                    onClose
                 );
 
             InnerPartitionManager = partitionManager ?? new InMemoryPartitionManager();
@@ -105,6 +110,7 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             OnProcessEvents = onProcessEvents;
+            OnProcessException = onProcessException;
 
             EventProcessors = new List<EventProcessor>();
         }
@@ -131,6 +137,12 @@ namespace Azure.Messaging.EventHubs.Tests
                 eventProcessor.ProcessEventsAsync = (partitionContext, events) =>
                 {
                     OnProcessEvents?.Invoke(partitionContext, events);
+                    return Task.CompletedTask;
+                };
+
+                eventProcessor.ProcessExceptionAsync = (partitionContext, exception) =>
+                {
+                    OnProcessException?.Invoke(partitionContext, exception);
                     return Task.CompletedTask;
                 };
 
@@ -297,12 +309,6 @@ namespace Azure.Messaging.EventHubs.Tests
             private Action<PartitionContext, PartitionProcessorCloseReason> OnClose { get; }
 
             /// <summary>
-            ///   A callback action to be called on <see cref="ProcessErrorAsync" />.
-            /// </summary>
-            ///
-            private Action<PartitionContext, Exception, CancellationToken> OnProcessError { get; }
-
-            /// <summary>
             ///   Initializes a new instance of the <see cref="PartitionProcessor"/> class.
             /// </summary>
             ///
@@ -316,15 +322,12 @@ namespace Azure.Messaging.EventHubs.Tests
             ///
             /// <param name="onInitialize">A callback action to be called on <see cref="InitializeAsync" />.</param>
             /// <param name="onClose">A callback action to be called on <see cref="CloseAsync" />.</param>
-            /// <param name="onProcessError">A callback action to be called on <see cref="ProcessErrorAsync" />.</param>
             ///
             public PartitionProcessor(Action<PartitionContext> onInitialize = null,
-                                      Action<PartitionContext, PartitionProcessorCloseReason> onClose = null,
-                                      Action<PartitionContext, Exception, CancellationToken> onProcessError = null)
+                                      Action<PartitionContext, PartitionProcessorCloseReason> onClose = null)
             {
                 OnInitialize = onInitialize;
                 OnClose = onClose;
-                OnProcessError = onProcessError;
             }
 
             /// <summary>
@@ -354,24 +357,6 @@ namespace Azure.Messaging.EventHubs.Tests
                                             PartitionProcessorCloseReason reason)
             {
                 OnClose?.Invoke(partitionContext, reason);
-                return Task.CompletedTask;
-            }
-
-            /// <summary>
-            ///   Processes an unexpected exception thrown while the associated <see cref="EventProcessor" /> is running.
-            /// </summary>
-            ///
-            /// <param name="partitionContext">Contains information about the partition from which events are sourced and provides a means of creating checkpoints for that partition.</param>
-            /// <param name="exception">The exception to be processed.</param>
-            /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-            ///
-            /// <returns>A task to be resolved on when the operation has completed.</returns>
-            ///
-            public override Task ProcessErrorAsync(PartitionContext partitionContext,
-                                                   Exception exception,
-                                                   CancellationToken cancellationToken)
-            {
-                OnProcessError?.Invoke(partitionContext, exception, cancellationToken);
                 return Task.CompletedTask;
             }
         }

@@ -43,19 +43,5 @@ namespace Azure.Messaging.EventHubs.Processor
         {
             return Task.CompletedTask;
         }
-
-        /// <summary>
-        ///   Processes an unexpected exception thrown while the associated <see cref="EventProcessor" /> is running.
-        /// </summary>
-        ///
-        /// <param name="partitionContext">Contains information about the partition from which events are sourced and provides a means of creating checkpoints for that partition.</param>
-        /// <param name="exception">The exception to be processed.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
-        public abstract Task ProcessErrorAsync(PartitionContext partitionContext,
-                                               Exception exception,
-                                               CancellationToken cancellationToken);
     }
 }

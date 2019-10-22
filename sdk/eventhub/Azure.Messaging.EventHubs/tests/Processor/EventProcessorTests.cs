@@ -27,7 +27,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public static IEnumerable<object[]> ConstructorCreatesDefaultOptionsCases()
         {
             EventHubClient mockClient = Mock.Of<EventHubClient>();
-            Func<PartitionContext, PartitionProcessor> mockFactory = Mock.Of<Func<PartitionContext, PartitionProcessor>>();
+            Func<PartitionContext, BasePartitionProcessor> mockFactory = Mock.Of<Func<PartitionContext, BasePartitionProcessor>>();
             PartitionManager mockPartitionManager = Mock.Of<PartitionManager>();
 
             yield return new object[] { new ReadableOptionsMock(EventHubConsumer.DefaultConsumerGroupName, mockClient, mockFactory, mockPartitionManager), "no options" };
@@ -45,7 +45,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ConstructorValidatesTheConsumerGroup(string consumerGroup)
         {
             EventHubClient mockClient = Mock.Of<EventHubClient>();
-            Func<PartitionContext, PartitionProcessor> mockFactory = Mock.Of<Func<PartitionContext, PartitionProcessor>>();
+            Func<PartitionContext, BasePartitionProcessor> mockFactory = Mock.Of<Func<PartitionContext, BasePartitionProcessor>>();
             PartitionManager mockPartitionManager = Mock.Of<PartitionManager>();
 
             Assert.That(() => new EventProcessor(consumerGroup, mockClient, mockFactory, mockPartitionManager), Throws.InstanceOf<ArgumentException>());
@@ -59,7 +59,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorValidatesTheEventHubClient()
         {
-            Func<PartitionContext, PartitionProcessor> mockFactory = Mock.Of<Func<PartitionContext, PartitionProcessor>>();
+            Func<PartitionContext, BasePartitionProcessor> mockFactory = Mock.Of<Func<PartitionContext, BasePartitionProcessor>>();
             PartitionManager mockPartitionManager = Mock.Of<PartitionManager>();
 
             Assert.That(() => new EventProcessor(EventHubConsumer.DefaultConsumerGroupName, null, mockFactory, mockPartitionManager), Throws.InstanceOf<ArgumentException>());
@@ -88,7 +88,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ConstructorValidatesThePartitionManager()
         {
             EventHubClient mockClient = Mock.Of<EventHubClient>();
-            Func<PartitionContext, PartitionProcessor> mockFactory = Mock.Of<Func<PartitionContext, PartitionProcessor>>();
+            Func<PartitionContext, BasePartitionProcessor> mockFactory = Mock.Of<Func<PartitionContext, BasePartitionProcessor>>();
 
             Assert.That(() => new EventProcessor(EventHubConsumer.DefaultConsumerGroupName, mockClient, mockFactory, null), Throws.InstanceOf<ArgumentException>());
         }
@@ -122,7 +122,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ConstructorClonesOptions()
         {
             EventHubClient mockClient = Mock.Of<EventHubClient>();
-            Func<PartitionContext, PartitionProcessor> mockFactory = Mock.Of<Func<PartitionContext, PartitionProcessor>>();
+            Func<PartitionContext, BasePartitionProcessor> mockFactory = Mock.Of<Func<PartitionContext, BasePartitionProcessor>>();
             PartitionManager mockPartitionManager = Mock.Of<PartitionManager>();
 
             var options = new EventProcessorOptions
@@ -151,7 +151,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ConstructorCreatesTheIdentifier()
         {
             EventHubClient mockClient = Mock.Of<EventHubClient>();
-            Func<PartitionContext, PartitionProcessor> mockFactory = Mock.Of<Func<PartitionContext, PartitionProcessor>>();
+            Func<PartitionContext, BasePartitionProcessor> mockFactory = Mock.Of<Func<PartitionContext, BasePartitionProcessor>>();
             PartitionManager mockPartitionManager = Mock.Of<PartitionManager>();
 
             var eventProcessor = new EventProcessor(EventHubConsumer.DefaultConsumerGroupName, mockClient, mockFactory, mockPartitionManager);
@@ -173,31 +173,17 @@ namespace Azure.Messaging.EventHubs.Tests
 
             public ReadableOptionsMock(string consumerGroup,
                                        EventHubClient eventHubClient,
-                                       Func<PartitionContext, PartitionProcessor> partitionProcessorFactory,
+                                       Func<PartitionContext, BasePartitionProcessor> partitionProcessorFactory,
                                        PartitionManager partitionManager) : base(consumerGroup, eventHubClient, partitionProcessorFactory, partitionManager)
             {
             }
 
             public ReadableOptionsMock(string consumerGroup,
                                        EventHubClient eventHubClient,
-                                       Func<PartitionContext, PartitionProcessor> partitionProcessorFactory,
+                                       Func<PartitionContext, BasePartitionProcessor> partitionProcessorFactory,
                                        PartitionManager partitionManager,
                                        EventProcessorOptions options) : base(consumerGroup, eventHubClient, partitionProcessorFactory, partitionManager, options)
             {
-            }
-        }
-
-        /// <summary>
-        ///   A test helper class derived from <see cref="BasePartitionProcessor" />.
-        /// </summary>
-        ///
-        public class PartitionProcessor : BasePartitionProcessor
-        {
-            public override Task ProcessErrorAsync(PartitionContext partitionContext,
-                                                   Exception exception,
-                                                   CancellationToken cancellationToken)
-            {
-                return Task.CompletedTask;
             }
         }
     }
