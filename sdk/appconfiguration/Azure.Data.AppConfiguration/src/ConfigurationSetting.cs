@@ -17,9 +17,6 @@ namespace Azure.Data.AppConfiguration
     {
         private IDictionary<string, string> _tags;
 
-        /// <summary>
-        /// Creates a configuration setting and sets the values from the passed in parameter to this setting.
-        /// </summary>
         internal ConfigurationSetting()
         {
         }
