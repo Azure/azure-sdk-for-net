@@ -271,7 +271,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockCredential
                 .Setup(credential => credential.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.Is<CancellationToken>(value => value == cancellationSource.Token)))
-                .Returns(Task.FromResult(new AccessToken(tokenValue, DateTimeOffset.MaxValue)));
+                .Returns(new ValueTask<AccessToken>(new AccessToken(tokenValue, DateTimeOffset.MaxValue)));
 
             mockScope
                .Setup(scope => scope.OpenConsumerLinkAsync(
