@@ -274,9 +274,9 @@ namespace Microsoft.Azure.Search
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/List-Indexes" />
         /// </summary>
         /// <param name='select'>
-        /// Selects which properties of the index definitions to retrieve. Specified as
-        /// a comma-separated list of JSON property names, or '*' for all properties.
-        /// The default is all properties.
+        /// Selects which top-level properties of the index definitions to retrieve.
+        /// Specified as a comma-separated list of JSON property names, or '*' for all
+        /// properties. The default is all properties.
         /// </param>
         /// <param name='searchRequestOptions'>
         /// Additional parameters for the operation

@@ -71,9 +71,9 @@ namespace Microsoft.Azure.Search
             /// The operations group for this extension method.
             /// </param>
             /// <param name='select'>
-            /// Selects which properties of the index definitions to retrieve. Specified as
-            /// a comma-separated list of JSON property names, or '*' for all properties.
-            /// The default is all properties.
+            /// Selects which top-level properties of the index definitions to retrieve.
+            /// Specified as a comma-separated list of JSON property names, or '*' for all
+            /// properties. The default is all properties.
             /// </param>
             /// <param name='searchRequestOptions'>
             /// Additional parameters for the operation
@@ -91,9 +91,9 @@ namespace Microsoft.Azure.Search
             /// The operations group for this extension method.
             /// </param>
             /// <param name='select'>
-            /// Selects which properties of the index definitions to retrieve. Specified as
-            /// a comma-separated list of JSON property names, or '*' for all properties.
-            /// The default is all properties.
+            /// Selects which top-level properties of the index definitions to retrieve.
+            /// Specified as a comma-separated list of JSON property names, or '*' for all
+            /// properties. The default is all properties.
             /// </param>
             /// <param name='searchRequestOptions'>
             /// Additional parameters for the operation
