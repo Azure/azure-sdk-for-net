@@ -877,6 +877,7 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
             }
 
             // Instantiate nested models if necessary
+            const readonlyModel = Object.values(type.properties).every(p => (<IProperty>p).readonly);
             const nested = (<IProperty[]>Object.values(type.properties)).filter(p => !p.isNullable && (isObjectType(p.model) || (isPrimitiveType(p.model) && (p.model.itemType || p.model.type === `dictionary`))));
             if (nested.length > 0) {
                 const skipInitName = `skipInitialization`;
@@ -886,7 +887,7 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                 w.line(`/// </summary>`);
                 if (type.deserialize) {
                     // Add an optional overload that prevents initialization for deserialiation
-                    w.write(`public ${naming.type(type.name)}()`);
+                    w.write(`${!type.public || !readonlyModel ? 'public' : 'internal'} ${naming.type(type.name)}()`);
                     w.scope(() => w.write(`: this(false)`));
                     w.scope(`{`, `}`, () => null);
                     w.line();

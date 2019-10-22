@@ -1004,23 +1004,25 @@ namespace Azure.Messaging.EventHubs.Tests
                         // Validate the partition metrics were received and populated.
 
                         Assert.That(receivedEvents, Is.Not.Empty, "There should have been a set of events received.");
-                        Assert.That(consumer.LastEnqueuedEventInformation, Is.Not.Null, "There should be a partition metrics instance.");
-                        Assert.That(consumer.LastEnqueuedEventInformation.LastEnqueuedSequenceNumber.HasValue, Is.True, "There should be a last sequence number populated.");
-                        Assert.That(consumer.LastEnqueuedEventInformation.LastEnqueuedOffset.HasValue, Is.True, "There should be a last offset populated.");
-                        Assert.That(consumer.LastEnqueuedEventInformation.LastEnqueuedTime.HasValue, Is.True, "There should be a last enqueued time populated.");
-                        Assert.That(consumer.LastEnqueuedEventInformation.InformationReceived.HasValue, Is.True, "There should be a last update time populated.");
+
+                        var currentMetrics = consumer.ReadLastEnqueuedEventInformation();
+                        Assert.That(currentMetrics, Is.Not.Null, "There should be a partition metrics instance.");
+                        Assert.That(currentMetrics.LastEnqueuedSequenceNumber.HasValue, Is.True, "There should be a last sequence number populated.");
+                        Assert.That(currentMetrics.LastEnqueuedOffset.HasValue, Is.True, "There should be a last offset populated.");
+                        Assert.That(currentMetrics.LastEnqueuedTime.HasValue, Is.True, "There should be a last enqueued time populated.");
+                        Assert.That(currentMetrics.InformationReceived.HasValue, Is.True, "There should be a last update time populated.");
 
                         // Capture the metrics update time for comparison against the second batch in order to
                         // ensure that metrics are updated each time events are received.  Pause for a moment to
                         // be sure that receiving has some delta in time stamp.
 
                         var previousMetrics = new LastEnqueuedEventProperties(
-                            consumer.LastEnqueuedEventInformation.EventHubName,
-                            consumer.LastEnqueuedEventInformation.PartitionId,
-                            consumer.LastEnqueuedEventInformation.LastEnqueuedSequenceNumber,
-                            consumer.LastEnqueuedEventInformation.LastEnqueuedOffset,
-                            consumer.LastEnqueuedEventInformation.LastEnqueuedTime,
-                            consumer.LastEnqueuedEventInformation.InformationReceived);
+                            currentMetrics.EventHubName,
+                            currentMetrics.PartitionId,
+                            currentMetrics.LastEnqueuedSequenceNumber,
+                            currentMetrics.LastEnqueuedOffset,
+                            currentMetrics.LastEnqueuedTime,
+                            currentMetrics.InformationReceived);
 
                         await Task.Delay(TimeSpan.FromSeconds(15));
 
@@ -1039,11 +1041,13 @@ namespace Azure.Messaging.EventHubs.Tests
                         // Validate that metrics have been updated or remain stable.
 
                         Assert.That(receivedEvents, Is.Not.Empty, "There should have been a set of events received.");
-                        Assert.That(consumer.LastEnqueuedEventInformation, Is.Not.Null, "There should be a partition metrics instance.");
-                        Assert.That(consumer.LastEnqueuedEventInformation.LastEnqueuedSequenceNumber.Value, Is.Not.EqualTo(previousMetrics.LastEnqueuedSequenceNumber), "The last sequence number should have been updated.");
-                        Assert.That(consumer.LastEnqueuedEventInformation.LastEnqueuedOffset.Value, Is.Not.EqualTo(previousMetrics.LastEnqueuedOffset), "The last offset should have been updated.");
-                        Assert.That(consumer.LastEnqueuedEventInformation.LastEnqueuedTime.Value, Is.Not.EqualTo(previousMetrics.LastEnqueuedTime), "The last enqueue time should have been updated.");
-                        Assert.That(consumer.LastEnqueuedEventInformation.InformationReceived.Value, Is.GreaterThan(previousMetrics.InformationReceived), "The last update time should have been incremented.");
+
+                        currentMetrics = consumer.ReadLastEnqueuedEventInformation();
+                        Assert.That(currentMetrics, Is.Not.Null, "There should be a partition metrics instance.");
+                        Assert.That(currentMetrics.LastEnqueuedSequenceNumber.Value, Is.Not.EqualTo(previousMetrics.LastEnqueuedSequenceNumber), "The last sequence number should have been updated.");
+                        Assert.That(currentMetrics.LastEnqueuedOffset.Value, Is.Not.EqualTo(previousMetrics.LastEnqueuedOffset), "The last offset should have been updated.");
+                        Assert.That(currentMetrics.LastEnqueuedTime.Value, Is.Not.EqualTo(previousMetrics.LastEnqueuedTime), "The last enqueue time should have been updated.");
+                        Assert.That(currentMetrics.InformationReceived.Value, Is.GreaterThan(previousMetrics.InformationReceived), "The last update time should have been incremented.");
                     }
                 }
             }

@@ -73,7 +73,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// Conclusion time of the last attempted Copy File operation where this file was the destination file. This value can specify the time of a completed, aborted, or failed copy attempt.
         /// </summary>
-        public DateTimeOffset CopyCompletionTime => _rawStorageFileProperties.CopyCompletionTime;
+        public DateTimeOffset CopyCompletedOn => _rawStorageFileProperties.CopyCompletionTime;
 
         /// <summary>
         /// Only appears when x-ms-copy-status is failed or pending. Describes cause of fatal or non-fatal copy operation failure.
@@ -136,7 +136,7 @@ namespace Azure.Storage.Files.Models
             string cacheControl,
             string contentDisposition,
             IEnumerable<string> contentLanguage,
-            DateTimeOffset copyCompletionTime,
+            DateTimeOffset copyCompletedOn,
             string copyStatusDescription,
             string copyId,
             string copyProgress,
@@ -162,7 +162,7 @@ namespace Azure.Storage.Files.Models
                 CacheControl = cacheControl,
                 ContentDisposition = contentDisposition,
                 ContentLanguage = contentLanguage,
-                CopyCompletionTime = copyCompletionTime,
+                CopyCompletionTime = copyCompletedOn,
                 CopyStatusDescription = copyStatusDescription,
                 CopyId = copyId,
                 CopyProgress = copyProgress,

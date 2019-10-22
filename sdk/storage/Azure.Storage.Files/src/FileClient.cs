@@ -504,7 +504,7 @@ namespace Azure.Storage.Files
                         fileContentHash: httpHeaders?.ContentHash,
                         fileContentDisposition: httpHeaders?.ContentDisposition,
                         metadata: metadata,
-                        fileAttributes: smbProps.FileAttributes?.ToString() ?? Constants.File.FileAttributesNone,
+                        fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.FileAttributesNone,
                         filePermission: filePermission,
                         fileCreationTime: smbProps.FileCreationTimeToString() ?? Constants.File.FileTimeNow,
                         fileLastWriteTime: smbProps.FileLastWriteTimeToString() ?? Constants.File.FileTimeNow,
@@ -1126,9 +1126,6 @@ namespace Azure.Storage.Files
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-file-properties"/>
         /// </summary>
-        /// <param name="shareSnapshot">
-        /// Optional. The snapshot identifier.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1142,10 +1139,8 @@ namespace Azure.Storage.Files
         /// a failure occurs.
         /// </remarks>
         public virtual Response<StorageFileProperties> GetProperties(
-            string shareSnapshot = default,
             CancellationToken cancellationToken = default) =>
             GetPropertiesInternal(
-                shareSnapshot,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -1158,9 +1153,6 @@ namespace Azure.Storage.Files
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-file-properties"/>
         /// </summary>
-        /// <param name="shareSnapshot">
-        /// Optional. The snapshot identifier.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1174,10 +1166,8 @@ namespace Azure.Storage.Files
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<StorageFileProperties>> GetPropertiesAsync(
-            string shareSnapshot = default,
             CancellationToken cancellationToken = default) =>
             await GetPropertiesInternal(
-                shareSnapshot,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1190,9 +1180,6 @@ namespace Azure.Storage.Files
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-file-properties"/>
         /// </summary>
-        /// <param name="shareSnapshot">
-        /// Optional. The snapshot identifier.
-        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1209,7 +1196,6 @@ namespace Azure.Storage.Files
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<StorageFileProperties>> GetPropertiesInternal(
-            string shareSnapshot,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1218,15 +1204,13 @@ namespace Azure.Storage.Files
                 Pipeline.LogMethodEnter(
                     nameof(FileClient),
                     message:
-                    $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(shareSnapshot)}: {shareSnapshot}");
+                    $"{nameof(Uri)}: {Uri}");
                 try
                 {
                     Response<RawStorageFileProperties> response = await FileRestClient.File.GetPropertiesAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
-                        sharesnapshot: shareSnapshot,
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
@@ -1416,7 +1400,7 @@ namespace Azure.Storage.Files
                         fileCacheControl: httpHeaders?.CacheControl,
                         fileContentHash: httpHeaders?.ContentHash,
                         fileContentDisposition: httpHeaders?.ContentDisposition,
-                        fileAttributes: smbProps.FileAttributes?.ToString() ?? Constants.File.Preserve,
+                        fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.Preserve,
                         filePermission: filePermission,
                         fileCreationTime: smbProps.FileCreationTimeToString() ?? Constants.File.Preserve,
                         fileLastWriteTime: smbProps.FileLastWriteTimeToString() ?? Constants.File.Preserve,
@@ -2138,9 +2122,6 @@ namespace Azure.Storage.Files
         /// <param name="range">
         /// Optional. Specifies the range of bytes over which to list ranges, inclusively. If omitted, then all ranges for the file are returned.
         /// </param>
-        /// <param name="shareSnapshot">
-        /// Optional. Specifies the share snapshot to query.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -2155,11 +2136,9 @@ namespace Azure.Storage.Files
         /// </remarks>
         public virtual Response<StorageFileRangeInfo> GetRangeList(
             HttpRange range,
-            string shareSnapshot = default,
             CancellationToken cancellationToken = default) =>
             GetRangeListInternal(
                 range,
-                shareSnapshot,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -2171,9 +2150,6 @@ namespace Azure.Storage.Files
         /// </summary>
         /// <param name="range">
         /// Optional. Specifies the range of bytes over which to list ranges, inclusively. If omitted, then all ranges for the file are returned.
-        /// </param>
-        /// <param name="shareSnapshot">
-        /// Optional. Specifies the share snapshot to query.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -2189,11 +2165,9 @@ namespace Azure.Storage.Files
         /// </remarks>
         public virtual async Task<Response<StorageFileRangeInfo>> GetRangeListAsync(
             HttpRange range,
-            string shareSnapshot = default,
             CancellationToken cancellationToken = default) =>
             await GetRangeListInternal(
                 range,
-                shareSnapshot,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -2205,9 +2179,6 @@ namespace Azure.Storage.Files
         /// </summary>
         /// <param name="range">
         /// Optional. Specifies the range of bytes over which to list ranges, inclusively. If omitted, then all ranges for the file are returned.
-        /// </param>
-        /// <param name="shareSnapshot">
-        /// Optional. Specifies the share snapshot to query.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -2226,7 +2197,6 @@ namespace Azure.Storage.Files
         /// </remarks>
         private async Task<Response<StorageFileRangeInfo>> GetRangeListInternal(
             HttpRange range,
-            string shareSnapshot,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2235,15 +2205,13 @@ namespace Azure.Storage.Files
                 Pipeline.LogMethodEnter(
                     nameof(FileClient),
                     message:
-                    $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(shareSnapshot)}: {shareSnapshot}");
+                    $"{nameof(Uri)}: {Uri}");
                 try
                 {
                     return await FileRestClient.File.GetRangeListAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
-                        sharesnapshot: shareSnapshot,
                         range: range.ToString(),
                         async: async,
                         cancellationToken: cancellationToken)

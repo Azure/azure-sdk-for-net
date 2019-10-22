@@ -86,6 +86,13 @@ namespace Azure.Messaging.EventHubs
         public static AmqpSymbol PartitionLastEnqueuedTimeUtc { get; } = "last_enqueued_time_utc";
 
         /// <summary>
+        ///   The message property that identifies the time that the last enqueued event information was
+        ///   received from the service.
+        /// </summary>
+        ///
+        public static AmqpSymbol LastPartitionInformationRetrievalTimeUtc { get; } = "runtime_info_retrieval_time_utc";
+
+        /// <summary>
         ///   The set of descriptors for well-known <see cref="DescribedType" />
         ///   property types.
         /// </summary>

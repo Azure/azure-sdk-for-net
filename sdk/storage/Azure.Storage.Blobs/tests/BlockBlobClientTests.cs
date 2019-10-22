@@ -151,7 +151,8 @@ namespace Azure.Storage.Blobs.Test
                 httpBlob = InstrumentClient(new BlockBlobClient(
                     httpBlob.Uri,
                     httpBlob.Pipeline,
-                    new BlobClientOptions(customerProvidedKey: customerProvidedKey)));
+                    httpBlob.ClientDiagnostics,
+                    customerProvidedKey));
                 Assert.AreEqual(Constants.Blob.Http, httpBlob.Uri.Scheme);
                 BlockBlobClient httpsBlob = InstrumentClient(httpBlob.WithCustomerProvidedKey(customerProvidedKey));
 
@@ -377,7 +378,8 @@ namespace Azure.Storage.Blobs.Test
                 destBlob = InstrumentClient(new BlockBlobClient(
                     destBlob.Uri,
                     destBlob.Pipeline,
-                    new BlobClientOptions(customerProvidedKey: customerProvidedKey)));
+                    destBlob.ClientDiagnostics,
+                    customerProvidedKey));
                 Assert.AreEqual(Constants.Blob.Http, destBlob.Uri.Scheme);
 
                 // Act
@@ -1236,15 +1238,15 @@ namespace Azure.Storage.Blobs.Test
                 blob = InstrumentClient(new BlockBlobClient(
                     blob.Uri,
                     blob.Pipeline,
-                    new BlobClientOptions(customerProvidedKey: customerProvidedKey)));
+                    blob.ClientDiagnostics,
+                    customerProvidedKey));
                 Assert.AreEqual(Constants.Blob.Http, blob.Uri.Scheme);
                 var data = GetRandomBuffer(Size);
 
                 // Act
                 using var stream = new MemoryStream(data);
                 await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
-                    blob.UploadAsync(
-                        content: stream),
+                    blob.UploadAsync(content: stream),
                     actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
             }
         }

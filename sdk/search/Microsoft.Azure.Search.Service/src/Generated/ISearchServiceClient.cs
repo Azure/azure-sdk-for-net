@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Search
 
     /// <summary>
     /// Client that can be used to manage and query indexes and documents, as
-    /// well as manage other resources, on an Azure Search service.
+    /// well as manage other resources, on a search service.
     /// </summary>
     public partial interface ISearchServiceClient : System.IDisposable
     {
@@ -50,12 +50,12 @@ namespace Microsoft.Azure.Search
         string ApiVersion { get; }
 
         /// <summary>
-        /// The name of the Azure Search service.
+        /// The name of the search service.
         /// </summary>
         string SearchServiceName { get; set; }
 
         /// <summary>
-        /// The DNS suffix of the Azure Search service. The default is
+        /// The DNS suffix of the search service. The default is
         /// search.windows.net.
         /// </summary>
         string SearchDnsSuffix { get; set; }
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Search
         IIndexesOperations Indexes { get; }
 
         /// <summary>
-        /// Gets service level statistics for an Azure Search service.
+        /// Gets service level statistics for a search service.
         /// </summary>
         /// <param name='searchRequestOptions'>
         /// Additional parameters for the operation

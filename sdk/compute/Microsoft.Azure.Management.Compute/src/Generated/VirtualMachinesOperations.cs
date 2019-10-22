@@ -1590,7 +1590,8 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to redeploy a virtual machine.
+        /// Shuts down the virtual machine, moves it to a new node, and powers it back
+        /// on.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -3408,7 +3409,8 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to redeploy a virtual machine.
+        /// Shuts down the virtual machine, moves it to a new node, and powers it back
+        /// on.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

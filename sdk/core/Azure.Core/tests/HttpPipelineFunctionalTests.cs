@@ -86,7 +86,7 @@ namespace Azure.Core.Tests
             using TestServer testServer = new TestServer(
                 context =>
                 {
-                    if (i == 0)
+                    if (Interlocked.Increment(ref i) == 1)
                     {
                         context.Abort();
                     }
@@ -94,8 +94,6 @@ namespace Azure.Core.Tests
                     {
                         context.Response.StatusCode = 201;
                     }
-
-                    i++;
                     return Task.CompletedTask;
                 });
 
@@ -106,7 +104,7 @@ namespace Azure.Core.Tests
             await httpPipeline.SendAsync(message, CancellationToken.None);
 
             Assert.AreEqual(message.Response.Status, 201);
-            Assert.AreEqual(i, 2);
+            Assert.AreEqual(2, i);
         }
 
         private class TestOptions : ClientOptions

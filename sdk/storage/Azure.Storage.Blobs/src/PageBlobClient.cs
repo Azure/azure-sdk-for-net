@@ -174,12 +174,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        /// <param name="options">
-        /// Optional client options that define the transport pipeline
-        /// policies for authentication, retries, etc., that are applied to
-        /// </param>
-        internal PageBlobClient(Uri blobUri, HttpPipeline pipeline, BlobClientOptions options = default)
-            : base(blobUri, pipeline, options)
+        /// <param name="clientDiagnostics">Client diagnostics.</param>
+        /// <param name="customerProvidedKey">Customer provided key.</param>
+        internal PageBlobClient(Uri blobUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
+            : base(blobUri, pipeline, clientDiagnostics, customerProvidedKey)
         {
         }
         #endregion ctors
@@ -209,40 +207,7 @@ namespace Azure.Storage.Blobs.Specialized
         protected sealed override BlobBaseClient WithSnapshotCore(string snapshot)
         {
             var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
-            return new PageBlobClient(builder.ToUri(), Pipeline);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PageBlobClient"/>
-        /// class with an identical <see cref="Uri"/> source but the specified
-        /// <paramref name="customerProvidedKey"/> customer provided key.
-        /// </summary>
-        /// <param name="customerProvidedKey">
-        /// The customer provided key to be used by the service to encrypt data.
-        /// </param>
-        /// <returns>A new <see cref="PageBlobClient"/> instance.</returns>
-        public new PageBlobClient WithCustomerProvidedKey(CustomerProvidedKey customerProvidedKey) => (PageBlobClient)WithCustomerProvidedKeyCore(customerProvidedKey);
-
-        /// <summary>
-        /// Creates a new instance of the <see cref="PageBlobClient"/> class
-        /// with an identical <see cref="Uri"/> source but the specified
-        /// <paramref name="customerProvidedKey"/> customer provided key.
-        /// </summary>
-        /// <param name="customerProvidedKey">
-        /// The customer provided key to be used by the service to encrypt data.
-        /// </param>
-        /// <returns>A new <see cref="PageBlobClient"/> instance.</returns>
-        protected sealed override BlobBaseClient WithCustomerProvidedKeyCore(CustomerProvidedKey customerProvidedKey)
-        {
-            var uriBuilder = new UriBuilder(Uri)
-            {
-                Scheme = Constants.Blob.Https,
-                Port = Constants.Blob.HttpsPort
-            };
-            return new PageBlobClient(
-                uriBuilder.Uri,
-                Pipeline,
-                new BlobClientOptions(customerProvidedKey: customerProvidedKey));
+            return new PageBlobClient(builder.ToUri(), Pipeline, ClientDiagnostics, CustomerProvidedKey);
         }
 
         ///// <summary>
@@ -2147,7 +2112,7 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     // Create copySource Uri
-                    PageBlobClient pageBlobUri = new PageBlobClient(sourceUri, Pipeline).WithSnapshot(snapshot);
+                    PageBlobClient pageBlobUri = new PageBlobClient(sourceUri, Pipeline, ClientDiagnostics, CustomerProvidedKey).WithSnapshot(snapshot);
 
                     return await BlobRestClient.PageBlob.CopyIncrementalAsync(
                         ClientDiagnostics,
@@ -2471,7 +2436,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// <returns>A new <see cref="PageBlobClient"/> instance.</returns>
         public static PageBlobClient GetPageBlobClient(
             this BlobContainerClient client,
-            string blobName)
-            => new PageBlobClient(client.Uri.AppendToPath(blobName), client.Pipeline);
+            string blobName) =>
+            new PageBlobClient(
+                client.Uri.AppendToPath(blobName),
+                client.Pipeline,
+                client.ClientDiagnostics,
+                client.CustomerProvidedKey);
     }
 }
