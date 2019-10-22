@@ -200,7 +200,7 @@ namespace Azure.Storage.Blobs.Test
                     Response<BlockInfo> response = await blob.StageBlockAsync(
                         base64BlockId: ToBase64(GetNewBlockName()),
                         content: stream,
-                        leaseAccessConditions: new LeaseAccessConditions
+                        conditions: new BlobRequestConditions
                         {
                             LeaseId = leaseId
                         });
@@ -234,7 +234,7 @@ namespace Azure.Storage.Blobs.Test
                         blob.StageBlockAsync(
                             base64BlockId: ToBase64(GetNewBlockName()),
                             content: stream,
-                            leaseAccessConditions: new LeaseAccessConditions
+                            conditions: new BlobRequestConditions
                             {
                                 LeaseId = garbageLeaseId
                             }),
@@ -490,7 +490,7 @@ namespace Azure.Storage.Blobs.Test
                     await destBlob.UploadAsync(stream);
                 }
 
-                var leaseAccessConditions = new LeaseAccessConditions
+                var leaseAccessConditions = new BlobRequestConditions
                 {
                     LeaseId = await SetupBlobLeaseCondition(destBlob, ReceivedLeaseId, garbageLeaseId)
                 };
@@ -499,7 +499,7 @@ namespace Azure.Storage.Blobs.Test
                 await destBlob.StageBlockFromUriAsync(
                     sourceUri: sourceBlob.Uri,
                     base64BlockId: ToBase64(GetNewBlockName()),
-                    leaseAccessConditions: leaseAccessConditions);
+                    conditions: leaseAccessConditions);
             }
         }
 
@@ -523,7 +523,7 @@ namespace Azure.Storage.Blobs.Test
                     await destBlob.UploadAsync(stream);
                 }
 
-                var leaseAccessConditions = new LeaseAccessConditions
+                var leaseAccessConditions = new BlobRequestConditions
                 {
                     LeaseId = garbageLeaseId
                 };
@@ -533,7 +533,7 @@ namespace Azure.Storage.Blobs.Test
                     destBlob.StageBlockFromUriAsync(
                         sourceUri: sourceBlob.Uri,
                         base64BlockId: ToBase64(GetNewBlockName()),
-                        leaseAccessConditions: leaseAccessConditions),
+                        conditions: leaseAccessConditions),
                     actualException => Assert.AreEqual("LeaseNotPresentWithBlobOperation", actualException.ErrorCode)
                 );
             }
@@ -557,7 +557,7 @@ namespace Azure.Storage.Blobs.Test
                     }
 
                     parameters.SourceIfMatch = await SetupBlobMatchCondition(sourceBlob, parameters.SourceIfMatch);
-                    HttpAccessConditions sourceAccessConditions = BuildHttpAccessConditions(parameters);
+                    RequestConditions sourceAccessConditions = BuildRequestConditions(parameters);
 
                     BlockBlobClient destBlob = InstrumentClient(container.GetBlockBlobClient(GetNewBlobName()));
 
@@ -565,7 +565,7 @@ namespace Azure.Storage.Blobs.Test
                     await destBlob.StageBlockFromUriAsync(
                         sourceUri: sourceBlob.Uri,
                         base64BlockId: ToBase64(GetNewBlockName()),
-                        sourceAccessConditions: sourceAccessConditions);
+                        sourceConditions: sourceAccessConditions);
                 }
             }
         }
@@ -588,7 +588,7 @@ namespace Azure.Storage.Blobs.Test
                     }
 
                     parameters.SourceIfNoneMatch = await SetupBlobMatchCondition(sourceBlob, parameters.SourceIfNoneMatch);
-                    HttpAccessConditions sourceAccessConditions = BuildHttpAccessConditions(parameters);
+                    RequestConditions sourceAccessConditions = BuildRequestConditions(parameters);
 
                     BlockBlobClient destBlob = InstrumentClient(container.GetBlockBlobClient(GetNewBlobName()));
 
@@ -597,7 +597,7 @@ namespace Azure.Storage.Blobs.Test
                         destBlob.StageBlockFromUriAsync(
                             sourceUri: sourceBlob.Uri,
                             base64BlockId: ToBase64(GetNewBlockName()),
-                            sourceAccessConditions: sourceAccessConditions),
+                            sourceConditions: sourceAccessConditions),
                         e => { });
                 }
             }
@@ -742,13 +742,7 @@ namespace Azure.Storage.Blobs.Test
                 // Act
                 Response<BlobContentInfo> response = await blob.CommitBlockListAsync(
                     base64BlockIds: new string[] { ToBase64(blockName) },
-                    accessConditions: new BlobAccessConditions
-                    {
-                        LeaseAccessConditions = new LeaseAccessConditions
-                        {
-                            LeaseId = leaseId
-                        }
-                    });
+                    conditions: new BlobRequestConditions { LeaseId = leaseId });
 
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -776,13 +770,7 @@ namespace Azure.Storage.Blobs.Test
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     blob.CommitBlockListAsync(
                         base64BlockIds: new string[] { ToBase64(GetNewBlockName()) },
-                        accessConditions: new BlobAccessConditions
-                        {
-                            LeaseAccessConditions = new LeaseAccessConditions
-                            {
-                                LeaseId = garbageLeaseId
-                            }
-                        }),
+                        conditions: new BlobRequestConditions { LeaseId = garbageLeaseId }),
                     e =>
                     {
                         Assert.AreEqual("LeaseNotPresentWithBlobOperation", e.ErrorCode);
@@ -816,15 +804,12 @@ namespace Azure.Storage.Blobs.Test
                     }
 
                     parameters.SourceIfMatch = await SetupBlobMatchCondition(blob, parameters.SourceIfMatch);
-                    HttpAccessConditions accessConditions = BuildHttpAccessConditions(parameters);
+                    RequestConditions accessConditions = BuildRequestConditions(parameters);
 
                     // Act
                     Response<BlobContentInfo> response = await blob.CommitBlockListAsync(
                         base64BlockIds: new string[] { ToBase64(blockName) },
-                        accessConditions: new BlobAccessConditions
-                        {
-                            HttpAccessConditions = accessConditions
-                        });
+                        conditions: accessConditions.ToBlobRequestConditions());
 
                     // Assert
                     Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -863,16 +848,13 @@ namespace Azure.Storage.Blobs.Test
                     }
 
                     parameters.SourceIfNoneMatch = await SetupBlobMatchCondition(blob, parameters.SourceIfNoneMatch);
-                    HttpAccessConditions accessConditions = BuildHttpAccessConditions(parameters);
+                    RequestConditions accessConditions = BuildRequestConditions(parameters);
 
                     // Act
                     await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         blob.CommitBlockListAsync(
                             base64BlockIds: new string[] { ToBase64(blockName) },
-                            accessConditions: new BlobAccessConditions
-                            {
-                                HttpAccessConditions = accessConditions
-                            }),
+                            conditions: accessConditions.ToBlobRequestConditions()),
                         e => { });
                 }
             }
@@ -1098,7 +1080,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Act
                 Response<BlockList> response = await blob.GetBlockListAsync(
-                    leaseAccessConditions: new LeaseAccessConditions
+                    conditions: new BlobRequestConditions
                     {
                         LeaseId = leaseId
                     });
@@ -1124,7 +1106,7 @@ namespace Azure.Storage.Blobs.Test
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     blob.GetBlockListAsync(
-                        leaseAccessConditions: new LeaseAccessConditions
+                        conditions: new BlobRequestConditions
                         {
                             LeaseId = garbageLeaseId
                         }),
@@ -1305,17 +1287,14 @@ namespace Azure.Storage.Blobs.Test
                     }
 
                     parameters.SourceIfMatch = await SetupBlobMatchCondition(blob, parameters.SourceIfMatch);
-                    HttpAccessConditions accessConditions = BuildHttpAccessConditions(parameters);
+                    RequestConditions accessConditions = BuildRequestConditions(parameters);
 
                     // Act
                     using (var stream = new MemoryStream(data))
                     {
                         Response<BlobContentInfo> response = await blob.UploadAsync(
                             content: stream,
-                            accessConditions: new BlobAccessConditions
-                            {
-                                HttpAccessConditions = accessConditions
-                            });
+                            conditions: accessConditions.ToBlobRequestConditions());
 
                         // Assert
                         Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -1342,7 +1321,7 @@ namespace Azure.Storage.Blobs.Test
                     }
 
                     parameters.SourceIfNoneMatch = await SetupBlobMatchCondition(blob, parameters.SourceIfNoneMatch);
-                    HttpAccessConditions accessConditions = BuildHttpAccessConditions(parameters);
+                    RequestConditions accessConditions = BuildRequestConditions(parameters);
 
                     // Act
                     using (var stream = new MemoryStream(data))
@@ -1350,10 +1329,7 @@ namespace Azure.Storage.Blobs.Test
                         await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                             blob.UploadAsync(
                                 content: stream,
-                                accessConditions: new BlobAccessConditions
-                                {
-                                    HttpAccessConditions = accessConditions
-                                }),
+                                conditions: accessConditions.ToBlobRequestConditions()),
                             e => { });
                     }
                 }
@@ -1376,13 +1352,7 @@ namespace Azure.Storage.Blobs.Test
                     await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         blob.UploadAsync(
                             content: stream,
-                            accessConditions: new BlobAccessConditions
-                            {
-                                LeaseAccessConditions = new LeaseAccessConditions
-                                {
-                                    LeaseId = garbageLeaseId
-                                }
-                            }),
+                            conditions: new BlobRequestConditions { LeaseId = garbageLeaseId }),
                         e => Assert.AreEqual("LeaseNotPresentWithBlobOperation", e.ErrorCode.Split('\n')[0]));
                 }
             }
@@ -1438,8 +1408,8 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        private HttpAccessConditions BuildHttpAccessConditions(AccessConditionParameters parameters)
-            => new HttpAccessConditions
+        private RequestConditions BuildRequestConditions(AccessConditionParameters parameters)
+            => new RequestConditions
             {
                 IfMatch = parameters.SourceIfMatch != null ? new ETag(parameters.SourceIfMatch) : default(ETag?),
                 IfNoneMatch = parameters.SourceIfNoneMatch != null ? new ETag(parameters.SourceIfNoneMatch) : default(ETag?),

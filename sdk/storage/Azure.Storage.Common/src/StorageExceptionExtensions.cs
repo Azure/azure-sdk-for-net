@@ -12,16 +12,32 @@ namespace Azure.Storage
     /// <summary>
     /// Provide helpful information about errors calling Azure Storage endpoints.
     /// </summary>
-    internal class StorageRequestFailedExceptionHelpers
+    internal static class StorageExceptionExtensions
     {
-        public static RequestFailedException CreateException(Response response, string message = null, Exception innerException = null, string errorCode = null, IDictionary<string, string> additionalInfo = null)
+        /// <summary>
+        /// Create a RequestFailedException with a proper error message.
+        /// </summary>
+        /// <param name="response">The failed response.</param>
+        /// <param name="message">The optional message.</param>
+        /// <param name="innerException">An optional inner Exception.</param>
+        /// <param name="errorCode">An optional error code.</param>
+        /// <param name="additionalInfo">Optional additional information.</param>
+        /// <returns></returns>
+        public static RequestFailedException CreateException(
+            Response response,
+            string message = null,
+            Exception innerException = null,
+            string errorCode = null,
+            IDictionary<string, string> additionalInfo = null)
         {
             int status = response?.Status ?? throw Errors.ArgumentNull(nameof(response));
             string code = GetErrorCode(response, errorCode);
 
-            var exception = new RequestFailedException(status,
+            var exception = new RequestFailedException(
+                status,
                 CreateMessage(response, message ?? response.ReasonPhrase, code, additionalInfo),
-                code, innerException);
+                code,
+                innerException);
 
             if (additionalInfo != null)
             {
@@ -34,13 +50,18 @@ namespace Azure.Storage
             return exception;
         }
 
+        /// <summary>
+        /// Attempt to get the error code from a response if it's not provided.
+        /// </summary>
+        /// <param name="response">The response.</param>
+        /// <param name="errorCode">An optional error code.</param>
+        /// <returns>The response's error code.</returns>
         private static string GetErrorCode(Response response, string errorCode)
         {
             if (string.IsNullOrEmpty(errorCode))
             {
                 response.Headers.TryGetValue(Constants.HeaderNames.ErrorCode, out errorCode);
             }
-
             return errorCode;
         }
 
@@ -68,8 +89,7 @@ namespace Azure.Storage
                 .AppendLine(")");
 
             // Make the Storage ErrorCode especially prominent
-            if (!string.IsNullOrEmpty(errorCode) ||
-                response.Headers.TryGetValue(Constants.HeaderNames.ErrorCode, out errorCode))
+            if (!string.IsNullOrEmpty(errorCode))
             {
                 messageBuilder
                     .AppendLine()
@@ -107,5 +127,25 @@ namespace Azure.Storage
 
             return messageBuilder.ToString();
         }
+
+        /// <summary>
+        /// Check if a Response will throw an exception if you try to access
+        /// its Value property.
+        /// </summary>
+        /// <typeparam name="T">Type of the Response Value.</typeparam>
+        /// <param name="response">The response to check.</param>
+        /// <returns>True if the response will throw.</returns>
+        public static bool IsUnavailable<T>(this Response<T> response) =>
+            (response?.GetRawResponse().Status ?? 0) == 304;
+
+        /// <summary>
+        /// Create a response that will throw an exception if you try to access
+        /// its Value property.
+        /// </summary>
+        /// <typeparam name="T">Type of the Response Value.</typeparam>
+        /// <param name="rawResponse">The raw response.</param>
+        /// <returns>A response that will throw if accessed.</returns>
+        public static Response<T> AsNoBodyResponse<T>(this Response rawResponse) =>
+            new NoBodyResponse<T>(rawResponse);
     }
 }

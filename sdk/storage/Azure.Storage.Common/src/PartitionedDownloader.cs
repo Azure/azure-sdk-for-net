@@ -85,6 +85,12 @@ namespace Azure.Storage
                 ? await getPropertiesAsync(async, cancellationToken).ConfigureAwait(false)
                 : getPropertiesAsync(async, cancellationToken).EnsureCompleted();
 
+            // Return an exploding Response on 304
+            if (properties.IsUnavailable())
+            {
+                return properties.GetRawResponse().AsNoBodyResponse<TProperties>();
+            }
+
             ETag etag = getEtag(properties);
             var length = getLength(properties);
 
@@ -140,7 +146,7 @@ namespace Azure.Storage
 
                     Task downloadTask =
                         DownloadRangesImplAsync(
-                        destinationStream,
+                            destinationStream,
                             etag,
                             ranges,
                             downloadPartitionAsync,
@@ -286,8 +292,20 @@ namespace Azure.Storage
 
                     Response<P> response = loadedResponseQueue.Dequeue();
 
-                    Task writePartitionTask = writePartitionAsync(response, destinationStream, async, cancellationToken);
+                    // There's nothing to write for 304s
+                    if (response.IsUnavailable())
+                    {
+                        // Turn the exploding response into a real exception
+                        // since we can't complete the download
+                        Response raw = response.GetRawResponse();
+                        throw StorageExceptionExtensions.CreateException(
+                            raw,
+                            raw.ReasonPhrase,
+                            null,
+                            raw.Headers.TryGetValue(Constants.HeaderNames.ErrorCode, out string code) ? code : null);
+                    }
 
+                    Task writePartitionTask = writePartitionAsync(response, destinationStream, async, cancellationToken);
                     if (async)
                     {
                         await writePartitionTask.ConfigureAwait(false);
