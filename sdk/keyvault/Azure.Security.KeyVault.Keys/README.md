@@ -95,10 +95,10 @@ var cryptoClient = new CryptographyClient(keyId: key.Id, credential: new Default
 Azure Key Vault supports multiple key types and algorithms, and enables the use of hardware security modules (HSM) for high value keys.
 
 ### KeyClient
-`KeyClient` providing both synchronous and asynchronous operations exists in the SDK allowing for selection of a client based on an application's use case. Once you've initialized a `KeyClient`, you can interact with the primary resource types in Key Vault.
+A `KeyClient` providing both synchronous and asynchronous operations exists in the SDK allowing for selection of a client based on an application's use case. Once you've initialized a `KeyClient`, you can interact with the primary resource types in Key Vault.
 
 ### Cryptography Client:
-`CryptographyClient` providing both synchronous and asynchronous operations exists in the SDK allowing for selection of a client based on an application's use case. Once you've initialized a `CryptographyClient`, you can use it to perform cryptographic operations with keys stored in Key Vault.
+A `CryptographyClient` providing both synchronous and asynchronous operations exists in the SDK allowing for selection of a client based on an application's use case. Once you've initialized a `CryptographyClient`, you can use it to perform cryptographic operations with keys stored in Key Vault.
 
 ## Examples
 The Azure.Security.KeyVault.Keys package supports synchronous and asynchronous APIs.
@@ -111,11 +111,11 @@ The following section provides several code snippets using the `client` [created
 * [Update an existing key](#update-an-existing-key)
 * [Delete a key](#delete-a-key)
 * [Delete and purge a key](#delete-and-purge-a-key)
-* [List Keys](#list-keys)
+* [List keys](#list-keys)
 * [Encrypt and Decrypt](#encrypt-and-decrypt)
 
 ### Sync examples
-* [Create a Key synchronously](#create-a-key-synchronously)
+* [Create a key synchronously](#create-a-key-synchronously)
 * [Delete a key synchronously](#delete-a-key-synchronously)
 
 ### Create a key

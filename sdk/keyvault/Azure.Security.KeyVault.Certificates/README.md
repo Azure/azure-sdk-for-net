@@ -139,7 +139,7 @@ await client.PurgeDeletedCertificateAsync("MyCertificate");
 ```
 
 ### List Certificates
-`GetCertificatesAsync` Enumerates the certificates in the vault, returning select properties of the
+`GetCertificates` enumerates the certificates in the vault, returning select properties of the
 certificate. Sensitive fields of the certificate will not be returned. This operation
 requires the certificates/list permission.
   
