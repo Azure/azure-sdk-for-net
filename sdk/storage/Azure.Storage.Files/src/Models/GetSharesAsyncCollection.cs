@@ -1,23 +1,33 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Storage.Files.Models;
+
+#pragma warning disable SA1402  // File may only contain a single type
 
 namespace Azure.Storage.Files.Models
 {
     internal class GetSharesAsyncCollection : StorageCollectionEnumerator<ShareItem>
     {
         private readonly FileServiceClient _client;
-        private readonly GetSharesOptions? _options;
+        private readonly ShareTraits _traits;
+        private readonly ShareStates _states;
+        private readonly string _prefix;
 
         public GetSharesAsyncCollection(
             FileServiceClient client,
-            GetSharesOptions? options)
+            ShareTraits traits = ShareTraits.None,
+            ShareStates states = ShareStates.None,
+            string prefix = default)
         {
             _client = client;
-            _options = options;
+            _traits = traits;
+            _states = states;
+            _prefix = prefix;
         }
 
         public override async ValueTask<Page<ShareItem>> GetNextPageAsync(
@@ -28,7 +38,9 @@ namespace Azure.Storage.Files.Models
         {
             Task<Response<SharesSegment>> task = _client.GetSharesInternal(
                 continuationToken,
-                _options,
+                _traits,
+                _states,
+                _prefix,
                 pageSizeHint,
                 isAsync,
                 cancellationToken);
@@ -40,6 +52,35 @@ namespace Azure.Storage.Files.Models
                 response.Value.ShareItems.ToArray(),
                 response.Value.NextMarker,
                 response.GetRawResponse());
+        }
+    }
+}
+
+namespace Azure.Storage.Files
+{
+    /// <summary>
+    /// File service helpers.
+    /// </summary>
+    internal static partial class FileExtensions
+    {
+        /// <summary>
+        /// Convert the details into ListSharesIncludeType values.
+        /// </summary>
+        /// <returns>ListSharesIncludeType values</returns>
+        internal static IEnumerable<ListSharesIncludeType> AsIncludeItems(ShareTraits traits, ShareStates states)
+        {
+            // NOTE: Multiple strings MUST be appended in alphabetic order or signing the string for authentication fails!
+            // TODO: Remove this requirement by pushing it closer to header generation.
+            var items = new List<ListSharesIncludeType>();
+            if ((traits & ShareTraits.Metadata) == ShareTraits.Metadata)
+            {
+                items.Add(ListSharesIncludeType.Metadata);
+            }
+            if ((states & ShareStates.Snapshots) == ShareStates.Snapshots)
+            {
+                items.Add(ListSharesIncludeType.Snapshots);
+            }
+            return items.Count > 0 ? items : null;
         }
     }
 }

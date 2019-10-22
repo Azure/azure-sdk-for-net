@@ -528,6 +528,18 @@ namespace Compute.Tests
                 Assert.True(vmScaleSetOut.UpgradePolicy.AutomaticOSUpgradePolicy.EnableAutomaticOSUpgrade == expectedEnableAutomaticOSUpgradeValue);
             }
 
+            if (vmScaleSet.AutomaticRepairsPolicy != null)
+            {
+                bool expectedAutomaticRepairsEnabledValue = vmScaleSet.AutomaticRepairsPolicy.Enabled ?? false;
+                Assert.True(vmScaleSetOut.AutomaticRepairsPolicy.Enabled == expectedAutomaticRepairsEnabledValue);
+
+                string expectedAutomaticRepairsGracePeriodValue = vmScaleSet.AutomaticRepairsPolicy.GracePeriod ?? "PT5M";
+                Assert.Equal(vmScaleSetOut.AutomaticRepairsPolicy.GracePeriod, expectedAutomaticRepairsGracePeriodValue, ignoreCase: true);
+
+                int expectedAutomaticRepairsMaxInstanceRepairsPercentValue = vmScaleSet.AutomaticRepairsPolicy.MaxInstanceRepairsPercent ?? 20;
+                Assert.Equal(vmScaleSetOut.AutomaticRepairsPolicy.MaxInstanceRepairsPercent, expectedAutomaticRepairsMaxInstanceRepairsPercentValue); 
+            }
+
             if (vmScaleSet.VirtualMachineProfile.OsProfile.Secrets != null &&
                vmScaleSet.VirtualMachineProfile.OsProfile.Secrets.Any())
             {

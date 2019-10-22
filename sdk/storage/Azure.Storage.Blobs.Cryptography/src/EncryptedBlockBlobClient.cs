@@ -4,6 +4,7 @@
 using System;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Blobs.Models;
 
 #pragma warning disable SA1402  // File may only contain a single type
 
@@ -148,8 +149,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        internal EncryptedBlockBlobClient(Uri blobUri, HttpPipeline pipeline)
-            : base(blobUri, pipeline)
+        /// <param name="clientDiagnostics">Client diagnostics.</param>
+        /// <param name="customerProvidedKey">Customer provided key.</param>
+        internal EncryptedBlockBlobClient(Uri blobUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
+            : base(blobUri, pipeline, clientDiagnostics, customerProvidedKey)
         {
         }
         #endregion ctors
@@ -175,7 +178,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// <returns>A new <see cref="EncryptedBlockBlobClient"/> instance.</returns>
         public static EncryptedBlockBlobClient GetEncryptedBlockBlobClient(
             this BlobContainerClient client,
-            string blobName)
-            => new EncryptedBlockBlobClient(client.Uri.AppendToPath(blobName), client.Pipeline);
+            string blobName) =>
+            new EncryptedBlockBlobClient(
+                client.Uri.AppendToPath(blobName),
+                client.Pipeline,
+                client.ClientDiagnostics,
+                client.CustomerProvidedKey);
     }
 }

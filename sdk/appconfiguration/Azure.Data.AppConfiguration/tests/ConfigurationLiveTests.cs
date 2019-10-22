@@ -900,6 +900,38 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [Test]
+        public async Task GetBatchSettingWithReadOnly()
+        {
+            ConfigurationClient service = GetClient();
+
+            string key = GenerateKeyId("key-");
+            ConfigurationSetting setting = await service.AddAsync(key, "my_value", "my_label");
+
+            try
+            {
+                SettingSelector selector = new SettingSelector(key)
+                {
+                    Fields = SettingFields.Key | SettingFields.ReadOnly
+                };
+
+                List<ConfigurationSetting> batch = await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync();
+
+                CollectionAssert.IsNotEmpty(batch);
+                Assert.IsNotNull(batch[0].Key);
+                Assert.IsNotNull(batch[0].ReadOnly);
+                Assert.IsNull(batch[0].Label);
+                Assert.IsNull(batch[0].Value);
+                Assert.IsNull(batch[0].ContentType);
+                Assert.IsNull(batch[0].LastModified);
+                Assert.AreEqual(batch[0].ETag, default(ETag));
+            }
+            finally
+            {
+                await service.DeleteAsync(setting.Key, setting.Label);
+            }
+        }
+
+        [Test]
         public async Task GetBatchSettingWithAllFields()
         {
             ConfigurationClient service = GetClient();

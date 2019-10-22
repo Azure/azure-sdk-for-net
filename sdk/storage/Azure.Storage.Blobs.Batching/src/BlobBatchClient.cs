@@ -441,7 +441,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// that the operation should be cancelled.
         /// </param>
         /// <param name="blobUris">URIs of the blobs to delete.</param>
-        /// <param name="deleteOptions">
+        /// <param name="snapshotsOption">
         /// Specifies options for deleting blob snapshots.
         /// </param>
         /// <returns>
@@ -455,11 +455,11 @@ namespace Azure.Storage.Blobs.Specialized
         [ForwardsClientCalls]
         public virtual Response[] DeleteBlobs(
             IEnumerable<Uri> blobUris,
-            DeleteSnapshotsOption? deleteOptions = default,
+            DeleteSnapshotsOption snapshotsOption = default,
             CancellationToken cancellationToken = default) =>
             DeleteBlobsInteral(
                 blobUris,
-                deleteOptions,
+                snapshotsOption,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -474,7 +474,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// that the operation should be cancelled.
         /// </param>
         /// <param name="blobUris">URIs of the blobs to delete.</param>
-        /// <param name="deleteOptions">
+        /// <param name="snapshotsOption">
         /// Specifies options for deleting blob snapshots.
         /// </param>
         /// <returns>
@@ -488,11 +488,11 @@ namespace Azure.Storage.Blobs.Specialized
         [ForwardsClientCalls]
         public virtual async Task<Response[]> DeleteBlobsAsync(
             IEnumerable<Uri> blobUris,
-            DeleteSnapshotsOption? deleteOptions = default,
+            DeleteSnapshotsOption snapshotsOption = default,
             CancellationToken cancellationToken = default) =>
             await DeleteBlobsInteral(
                 blobUris,
-                deleteOptions,
+                snapshotsOption,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -503,7 +503,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// All of the deletions are sent as a single batched request.
         /// </summary>
         /// <param name="blobUris">URIs of the blobs to delete.</param>
-        /// <param name="deleteOptions">
+        /// <param name="snapshotsOption">
         /// Specifies options for deleting blob snapshots.
         /// </param>
         /// <param name="async">
@@ -523,7 +523,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         internal async Task<Response[]> DeleteBlobsInteral(
             IEnumerable<Uri> blobUris,
-            DeleteSnapshotsOption? deleteOptions,
+            DeleteSnapshotsOption snapshotsOption,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -534,7 +534,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobBatch batch = CreateBatch();
             foreach (Uri uri in blobUris)
             {
-                responses.Add(batch.DeleteBlob(uri, deleteOptions));
+                responses.Add(batch.DeleteBlob(uri, snapshotsOption));
             }
 
             // Submit the batch

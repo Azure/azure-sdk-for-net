@@ -69,6 +69,16 @@ namespace Azure.Storage.Blobs
         internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
 
         /// <summary>
+        /// The <see cref="CustomerProvidedKey"/> to be used when sending requests.
+        /// </summary>
+        internal readonly CustomerProvidedKey? _customerProvidedKey;
+
+        /// <summary>
+        /// The <see cref="CustomerProvidedKey"/> to be used when sending requests.
+        /// </summary>
+        internal virtual CustomerProvidedKey? CustomerProvidedKey => _customerProvidedKey;
+
+        /// <summary>
         /// The Storage account name corresponding to the service client.
         /// </summary>
         private string _accountName;
@@ -137,6 +147,7 @@ namespace Azure.Storage.Blobs
             _authenticationPolicy = StorageClientOptions.GetAuthenticationPolicy(conn.Credentials);
             _pipeline = options.Build(_authenticationPolicy);
             _clientDiagnostics = new ClientDiagnostics(options);
+            _customerProvidedKey = options.CustomerProvidedKey;
         }
 
         /// <summary>
@@ -212,7 +223,7 @@ namespace Azure.Storage.Blobs
         /// every request.
         /// </param>
         internal BlobServiceClient(Uri serviceUri, HttpPipelinePolicy authentication, BlobClientOptions options)
-            : this(serviceUri, authentication, options.Build(authentication), new ClientDiagnostics(options))
+            : this(serviceUri, authentication, options.Build(authentication), new ClientDiagnostics(options), options?.CustomerProvidedKey)
         {
 
         }
@@ -229,12 +240,14 @@ namespace Azure.Storage.Blobs
         /// The transport pipeline used to send every request.
         /// </param>
         /// <param name="clientDiagnostics"></param>
-        internal BlobServiceClient(Uri serviceUri, HttpPipelinePolicy authentication, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
+        /// <param name="customerProvidedKey">Customer provided key.</param>
+        internal BlobServiceClient(Uri serviceUri, HttpPipelinePolicy authentication, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
         {
             _uri = serviceUri;
             _authenticationPolicy = authentication;
             _pipeline = pipeline;
             _clientDiagnostics = clientDiagnostics;
+            _customerProvidedKey = customerProvidedKey;
         }
         #endregion ctors
 
@@ -251,7 +264,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="BlobContainerClient"/> for the desired container.
         /// </returns>
         public virtual BlobContainerClient GetBlobContainerClient(string blobContainerName) =>
-            new BlobContainerClient(Uri.AppendToPath(blobContainerName), Pipeline, ClientDiagnostics);
+            new BlobContainerClient(Uri.AppendToPath(blobContainerName), Pipeline, ClientDiagnostics, CustomerProvidedKey);
 
         #region GetBlobContainers
         /// <summary>

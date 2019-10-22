@@ -333,6 +333,12 @@ directive:
     if (!$.StorageFileHandle) {
         $.StorageFileHandle = $.HandleItem;
         delete $.HandleItem;
+        $.StorageFileHandle.properties.OpenedOn = $.StorageFileHandle.properties.OpenTime;
+        $.StorageFileHandle.properties.OpenedOn.xml = { "name": "OpenTime" };
+        delete $.StorageFileHandle.properties.OpenTime;
+        $.StorageFileHandle.properties.LastReconnectedOn = $.StorageFileHandle.properties.LastReconnectTime;
+        $.StorageFileHandle.properties.LastReconnectedOn.xml = { "name": "LastReconnectTime" };
+        delete $.StorageFileHandle.properties.LastReconnectTime;
     }
     if (!$.StorageHandlesSegment) {
         $.StorageHandlesSegment = $.ListHandlesResponse;
@@ -739,4 +745,13 @@ directive:
   transform: >
     $["x-ms-client-name"] = "FileSignedIdentifier";
     $.xml = {"name": "SignedIdentifier"};
+```
+
+### Hide DeleteSnapshotsOptionType
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.DeleteSnapshots
+  transform: >
+    $["x-az-public"] = false;
 ```

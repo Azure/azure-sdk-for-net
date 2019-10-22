@@ -99,13 +99,13 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region DeleteBlob
         /// <summary>
-        /// The <see cref="DeleteBlob(string, string, DeleteSnapshotsOption?, BlobAccessConditions?)"/>
+        /// The <see cref="DeleteBlob(string, string, DeleteSnapshotsOption, BlobAccessConditions?)"/>
         /// operation marks the specified blob or snapshot for  deletion. The
         /// blob is later deleted during garbage collection.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
-        /// <see cref="DeleteSnapshotsOption.Include"/>.
+        /// <see cref="DeleteSnapshotsOption.IncludeSnapshots"/>.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob" />.
@@ -116,7 +116,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="blobName">
         /// The name of the blob to delete.
         /// </param>
-        /// <param name="deleteOptions">
+        /// <param name="snapshotsOption">
         /// Specifies options for deleting blob snapshots.
         /// </param>
         /// <param name="accessConditions">
@@ -131,7 +131,7 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual Response DeleteBlob(
             string blobContainerName,
             string blobName,
-            DeleteSnapshotsOption? deleteOptions = default,
+            DeleteSnapshotsOption snapshotsOption = default,
             BlobAccessConditions? accessConditions = default)
         {
             var blobUri = new BlobUriBuilder(_client.Uri)
@@ -141,18 +141,18 @@ namespace Azure.Storage.Blobs.Specialized
             };
             return DeleteBlob(
                 blobUri.ToUri(),
-                deleteOptions,
+                snapshotsOption,
                 accessConditions);
         }
 
         /// <summary>
-        /// The <see cref="DeleteBlob(Uri, DeleteSnapshotsOption?, BlobAccessConditions?)"/>
+        /// The <see cref="DeleteBlob(Uri, DeleteSnapshotsOption, BlobAccessConditions?)"/>
         /// operation marks the specified blob or snapshot for deletion. The
         /// blob is later deleted during garbage collection.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
-        /// <see cref="DeleteSnapshotsOption.Include"/>.
+        /// <see cref="DeleteSnapshotsOption.IncludeSnapshots"/>.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob" />.
@@ -160,7 +160,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="blobUri">
         /// The blob to delete's primary <see cref="Uri"/> endpoint.
         /// </param>
-        /// <param name="deleteOptions">
+        /// <param name="snapshotsOption">
         /// Specifies options for deleting blob snapshots.
         /// </param>
         /// <param name="accessConditions">
@@ -174,14 +174,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// </returns>
         public virtual Response DeleteBlob(
             Uri blobUri,
-            DeleteSnapshotsOption? deleteOptions = default,
+            DeleteSnapshotsOption snapshotsOption = default,
             BlobAccessConditions? accessConditions = default)
         {
             SetBatchOperationType(BlobBatchOperationType.Delete);
             HttpMessage message = BlobRestClient.Blob.DeleteAsync_CreateMessage(
                 _client.BatchOperationPipeline,
                 blobUri,
-                deleteSnapshots: deleteOptions,
+                deleteSnapshots: snapshotsOption == DeleteSnapshotsOption.None ? null : (DeleteSnapshotsOption?)snapshotsOption,
                 leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
                 ifModifiedSince: accessConditions?.HttpAccessConditions?.IfModifiedSince,
                 ifUnmodifiedSince: accessConditions?.HttpAccessConditions?.IfUnmodifiedSince,

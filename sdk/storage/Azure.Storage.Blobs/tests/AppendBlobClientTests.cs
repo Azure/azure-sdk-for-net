@@ -149,7 +149,8 @@ namespace Azure.Storage.Blobs.Test
                 blob = InstrumentClient(new AppendBlobClient(
                     blob.Uri,
                     blob.Pipeline,
-                    new BlobClientOptions(customerProvidedKey: customerProvidedKey)));
+                    blob.ClientDiagnostics,
+                    customerProvidedKey));
                 ;
                 Assert.AreEqual(Constants.Blob.Http, blob.Uri.Scheme);
 
@@ -376,7 +377,8 @@ namespace Azure.Storage.Blobs.Test
                 httpBlob = InstrumentClient(new AppendBlobClient(
                     httpBlob.Uri,
                     httpBlob.Pipeline,
-                    new BlobClientOptions(customerProvidedKey: customerProvidedKey)));
+                    httpBlob.ClientDiagnostics,
+                    customerProvidedKey));
                 Assert.AreEqual(Constants.Blob.Http, httpBlob.Uri.Scheme);
                 AppendBlobClient httpsBlob = InstrumentClient(httpBlob.WithCustomerProvidedKey(customerProvidedKey));
                 var data = GetRandomBuffer(Constants.KB);
@@ -662,7 +664,8 @@ namespace Azure.Storage.Blobs.Test
                     httpDestBlob = InstrumentClient(new AppendBlobClient(
                         httpDestBlob.Uri,
                         httpDestBlob.Pipeline,
-                        new BlobClientOptions(customerProvidedKey: customerProvidedKey)));
+                        httpDestBlob.ClientDiagnostics,
+                        customerProvidedKey));
                     Assert.AreEqual(Constants.Blob.Http, httpDestBlob.Uri.Scheme);
                     AppendBlobClient httpsDestBlob = InstrumentClient(httpDestBlob.WithCustomerProvidedKey(customerProvidedKey));
                     await httpsDestBlob.CreateAsync();
