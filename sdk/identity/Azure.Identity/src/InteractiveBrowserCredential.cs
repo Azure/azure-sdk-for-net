@@ -68,14 +68,7 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            (AccessToken token, Exception ex) = GetTokenImplAsync(requestContext, cancellationToken).GetAwaiter().GetResult();
-
-            if (ex != null)
-            {
-                throw ex;
-            }
-
-            return token;
+            return GetTokenImplAsync(requestContext, cancellationToken).GetAwaiter().GetResult().GetTokenOrThrow();
         }
 
         /// <summary>
@@ -86,30 +79,21 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override async Task<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            (AccessToken token, Exception ex) = await GetTokenImplAsync(requestContext, cancellationToken).ConfigureAwait(false);
-
-            if (ex != null)
-            {
-                throw ex;
-            }
-
-            return token;
+            return (await GetTokenImplAsync(requestContext, cancellationToken).ConfigureAwait(false)).GetTokenOrThrow();
         }
 
-        (AccessToken, Exception) IExtendedTokenCredential.GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        ExtendedAccessToken IExtendedTokenCredential.GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
             return GetTokenImplAsync(requestContext, cancellationToken).GetAwaiter().GetResult();
         }
 
-        async Task<(AccessToken, Exception)> IExtendedTokenCredential.GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        async Task<ExtendedAccessToken> IExtendedTokenCredential.GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
             return await GetTokenImplAsync(requestContext, cancellationToken).ConfigureAwait(false);
         }
 
-        private async Task<(AccessToken, Exception)> GetTokenImplAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        private async Task<ExtendedAccessToken> GetTokenImplAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            Exception ex = null;
-
             using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("Azure.Identity.InteractiveBrowserCredential.GetToken", requestContext);
             try
             {
@@ -119,28 +103,26 @@ namespace Azure.Identity
                     {
                         AuthenticationResult result = await _pubApp.AcquireTokenSilent(requestContext.Scopes, _account).ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
-                        return (new AccessToken(result.AccessToken, result.ExpiresOn), null);
+                        return new ExtendedAccessToken(new AccessToken(result.AccessToken, result.ExpiresOn));
                     }
                     catch (MsalUiRequiredException)
                     {
                         AccessToken token = await GetTokenViaBrowserLoginAsync(requestContext.Scopes, cancellationToken).ConfigureAwait(false);
 
-                        return (token, null);
+                        return new ExtendedAccessToken(token);
                     }
                 }
                 else
                 {
                     AccessToken token = await GetTokenViaBrowserLoginAsync(requestContext.Scopes, cancellationToken).ConfigureAwait(false);
 
-                    return (token, null);
+                    return new ExtendedAccessToken(token);
                 }
             }
             catch (Exception e)
             {
-                ex = scope.Failed(e);
+                return new ExtendedAccessToken(scope.Failed(e));
             }
-
-            return (default, ex);
         }
 
         private async Task<AccessToken> GetTokenViaBrowserLoginAsync(string[] scopes, CancellationToken cancellationToken)

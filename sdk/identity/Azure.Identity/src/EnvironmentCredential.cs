@@ -70,11 +70,11 @@ namespace Azure.Identity
             {
                 StringBuilder builder = new StringBuilder("EnvironmentCredential is unavailable, environment variables not fully configured.");
 
-                builder.Append(Environment.NewLine).Append($"  AZURE_TENANT_ID specified {!(tenantId is null)}");
-                builder.Append(Environment.NewLine).Append($"  AZURE_CLIENT_ID specified {!(clientId is null)}");
-                builder.Append(Environment.NewLine).Append($"  AZURE_CLIENT_SECRET specified {!(clientSecret is null)}");
-                builder.Append(Environment.NewLine).Append($"  AZURE_USERNAME specified {!(username is null)}");
-                builder.Append(Environment.NewLine).Append($"  AZURE_PASSWORD specified {!(password is null)}");
+                builder.Append(Environment.NewLine).Append($"  AZURE_TENANT_ID specified {tenantId != null}");
+                builder.Append(Environment.NewLine).Append($"  AZURE_CLIENT_ID specified {clientId != null}");
+                builder.Append(Environment.NewLine).Append($"  AZURE_CLIENT_SECRET specified {clientSecret != null}");
+                builder.Append(Environment.NewLine).Append($"  AZURE_USERNAME specified {username != null}");
+                builder.Append(Environment.NewLine).Append($"  AZURE_PASSWORD specified {password != null}");
 
                 _unavailbleErrorMessage = builder.ToString();
             }
@@ -92,7 +92,7 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return (_credential != null) ? _credential.GetToken(requestContext, cancellationToken) : default;
+            return GetTokenImpl(requestContext, cancellationToken).GetTokenOrThrow();
         }
 
         /// <summary>
@@ -107,60 +107,58 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls, or a default <see cref="AccessToken"/>.</returns>
         public override async Task<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return (_credential != null) ? await _credential.GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false) : default;
+            return (await GetTokenImplAsync(requestContext, cancellationToken).ConfigureAwait(false)).GetTokenOrThrow();
         }
 
-        (AccessToken, Exception) IExtendedTokenCredential.GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        ExtendedAccessToken IExtendedTokenCredential.GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            Exception ex = null;
+            return GetTokenImpl(requestContext, cancellationToken);
+        }
 
+        async Task<ExtendedAccessToken> IExtendedTokenCredential.GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        {
+            return await GetTokenImplAsync(requestContext, cancellationToken).ConfigureAwait(false);
+        }
+
+        private ExtendedAccessToken GetTokenImpl(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        {
             using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("Azure.Identity.EnvironmentCredential.GetToken", requestContext);
 
             if (_credential is null)
             {
-                ex = scope.Failed(new CredentialUnavailableException(_unavailbleErrorMessage));
-
-                return (default, ex);
+                return new ExtendedAccessToken(scope.Failed(new CredentialUnavailableException(_unavailbleErrorMessage)));
             }
 
             try
             {
                 AccessToken token = _credential.GetToken(requestContext, cancellationToken);
 
-                return (token, null);
+                return new ExtendedAccessToken(token);
             }
             catch (Exception e)
             {
-                ex = scope.Failed(e);
-
-                return (default, ex);
+                return new ExtendedAccessToken(scope.Failed(e));
             }
         }
 
-        async Task<(AccessToken, Exception)> IExtendedTokenCredential.GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        private async Task<ExtendedAccessToken> GetTokenImplAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            Exception ex = null;
-
             using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("Azure.Identity.EnvironmentCredential.GetToken", requestContext);
 
             if (_credential is null)
             {
-                ex = scope.Failed(new CredentialUnavailableException(_unavailbleErrorMessage));
-
-                return (default, ex);
+                return new ExtendedAccessToken(scope.Failed(new CredentialUnavailableException(_unavailbleErrorMessage)));
             }
 
             try
             {
                 AccessToken token = await _credential.GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false);
 
-                return (token, null);
+                return new ExtendedAccessToken(token);
             }
             catch (Exception e)
             {
-                ex = scope.Failed(e);
-
-                return (default, ex);
+                return new ExtendedAccessToken(scope.Failed(e));
             }
         }
     }

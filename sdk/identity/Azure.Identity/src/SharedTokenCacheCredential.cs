@@ -66,14 +66,7 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls</returns>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            (AccessToken token, Exception ex) = GetTokenImplAsync(requestContext, cancellationToken).GetAwaiter().GetResult();
-
-            if (ex != null)
-            {
-                throw ex;
-            }
-
-            return token;
+            return GetTokenImplAsync(requestContext, cancellationToken).GetAwaiter().GetResult().GetTokenOrThrow();
         }
 
         /// <summary>
@@ -84,27 +77,20 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls</returns>
         public override async Task<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            (AccessToken token, Exception ex) = await GetTokenImplAsync(requestContext, cancellationToken).ConfigureAwait(false);
-
-            if (ex != null)
-            {
-                throw ex;
-            }
-
-            return token;
+            return (await GetTokenImplAsync(requestContext, cancellationToken).ConfigureAwait(false)).GetTokenOrThrow();
         }
 
-        (AccessToken, Exception) IExtendedTokenCredential.GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        ExtendedAccessToken IExtendedTokenCredential.GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
             return GetTokenImplAsync(requestContext, cancellationToken).GetAwaiter().GetResult();
         }
 
-        async Task<(AccessToken, Exception)> IExtendedTokenCredential.GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        async Task<ExtendedAccessToken> IExtendedTokenCredential.GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
             return await GetTokenImplAsync(requestContext, cancellationToken).ConfigureAwait(false);
         }
 
-        private async Task<(AccessToken, Exception)> GetTokenImplAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        private async Task<ExtendedAccessToken> GetTokenImplAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
             IAccount account = null;
 
@@ -120,23 +106,21 @@ namespace Azure.Identity
                 {
                     AuthenticationResult result = await _pubApp.AcquireTokenSilent(requestContext.Scopes, account).ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
-                    return (new AccessToken(result.AccessToken, result.ExpiresOn), null);
+                    return new ExtendedAccessToken(new AccessToken(result.AccessToken, result.ExpiresOn));
                 }
                 else
                 {
-                    ex = scope.Failed(ex);
+                    return new ExtendedAccessToken(scope.Failed(ex));
                 }
             }
             catch (MsalUiRequiredException)
             {
-                ex = scope.Failed(new CredentialUnavailableException($"Token aquisition failed for user {_username}. To fix, reauthenticate through tooling supporting azure developer sign on."));
+                return new ExtendedAccessToken(scope.Failed(new CredentialUnavailableException($"Token aquisition failed for user {_username}. To fix, reauthenticate through tooling supporting azure developer sign on.")));
             }
             catch (Exception e)
             {
-                ex = scope.Failed(e);
+                return new ExtendedAccessToken(scope.Failed(e));
             }
-
-            return (default, ex);
         }
 
         private async Task<(IAccount, Exception)> GetAccountAsync()

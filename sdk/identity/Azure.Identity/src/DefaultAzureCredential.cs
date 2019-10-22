@@ -58,35 +58,7 @@ namespace Azure.Identity
         /// <returns>The first <see cref="AccessToken"/> returned by the specified sources. Any credential which raises a <see cref="CredentialUnavailableException"/> will be skipped.</returns>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            for (int i = 0; i < _sources.Length; i++)
-            {
-                if (_unavailableExceptions[i] == null)
-                {
-                    (AccessToken token, Exception ex) = _sources[i].GetToken(requestContext, cancellationToken);
-
-                    if (ex is null)
-                    {
-                        return token;
-                    }
-
-                    if (ex is CredentialUnavailableException)
-                    {
-                        _unavailableExceptions[i] = ex;
-                    }
-                    else
-                    {
-                        Exception[] aggEx = new Exception[i + 1];
-
-                        Array.Copy(_unavailableExceptions, 0, aggEx, 0, i);
-
-                        aggEx[i] = ex;
-
-                        throw new AggregateAuthenticationException(Constants.AggregateCredentialFailedErrorMessage, new ReadOnlyMemory<object>(_sources, 0, i + 1), aggEx);
-                    }
-                }
-            }
-
-            throw new AggregateAuthenticationException(Constants.AggregateAllUnavailableErrorMessage, _sources, _unavailableExceptions);
+            return GetTokenAsync(false, requestContext, cancellationToken).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -97,20 +69,25 @@ namespace Azure.Identity
         /// <returns>The first <see cref="AccessToken"/> returned by the specified sources. Any credential which raises a <see cref="CredentialUnavailableException"/> will be skipped.</returns>
         public override async Task<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
+            return await GetTokenAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
+        }
+
+        private async Task<AccessToken> GetTokenAsync(bool isAsync, TokenRequestContext requestContext, CancellationToken cancellationToken)
+        {
             for (int i = 0; i < _sources.Length; i++)
             {
                 if (_unavailableExceptions[i] == null)
                 {
-                    (AccessToken token, Exception ex) = await _sources[i].GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false);
+                    ExtendedAccessToken exToken = isAsync ? await _sources[i].GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false) : _sources[i].GetToken(requestContext, cancellationToken);
 
-                    if (ex is null)
+                    if (exToken.Exception is null)
                     {
-                        return token;
+                        return exToken.AccessToken;
                     }
 
-                    if (ex is CredentialUnavailableException)
+                    if (exToken.Exception is CredentialUnavailableException)
                     {
-                        _unavailableExceptions[i] = ex;
+                        _unavailableExceptions[i] = exToken.Exception;
                     }
                     else
                     {
@@ -118,9 +95,9 @@ namespace Azure.Identity
 
                         Array.Copy(_unavailableExceptions, 0, aggEx, 0, i);
 
-                        aggEx[i] = ex;
+                        aggEx[i] = exToken.Exception;
 
-                        throw new AggregateAuthenticationException(Constants.AggregateCredentialFailedErrorMessage, new ReadOnlyMemory<object>(_sources, 0, i + 1), aggEx);
+                        throw new AggregateAuthenticationException(exToken.Exception.Message, new ReadOnlyMemory<object>(_sources, 0, i + 1), aggEx);
                     }
                 }
             }

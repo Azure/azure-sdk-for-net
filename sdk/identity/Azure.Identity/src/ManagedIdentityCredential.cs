@@ -83,14 +83,7 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls, or a default <see cref="AccessToken"/> if no managed identity is available.</returns>
         public override async Task<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            (AccessToken token, Exception ex) = await GetTokenImplAsync(requestContext, cancellationToken).ConfigureAwait(false);
-
-            if (ex != null)
-            {
-                throw ex;
-            }
-
-            return token;
+            return (await GetTokenImplAsync(requestContext, cancellationToken).ConfigureAwait(false)).GetTokenOrThrow();
         }
 
         /// <summary>
@@ -101,30 +94,21 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls, or a default <see cref="AccessToken"/> if no managed identity is available.</returns>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            (AccessToken token, Exception ex) = GetTokenImpl(requestContext, cancellationToken);
-
-            if (ex != null)
-            {
-                throw ex;
-            }
-
-            return token;
+            return GetTokenImpl(requestContext, cancellationToken).GetTokenOrThrow();
         }
 
-        async Task<(AccessToken, Exception)> IExtendedTokenCredential.GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        async Task<ExtendedAccessToken> IExtendedTokenCredential.GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
             return await GetTokenImplAsync(requestContext, cancellationToken).ConfigureAwait(false);
         }
 
-        (AccessToken, Exception) IExtendedTokenCredential.GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        ExtendedAccessToken IExtendedTokenCredential.GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
             return GetTokenImpl(requestContext, cancellationToken);
         }
 
-        private async Task<(AccessToken, Exception)> GetTokenImplAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        private async Task<ExtendedAccessToken> GetTokenImplAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            Exception ex = null;
-
             using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("Azure.Identity.ManagedIdentityCredential.GetToken", requestContext);
 
             try
@@ -134,25 +118,21 @@ namespace Azure.Identity
                 // if msi is unavailable or we were unable to determine the type return a default access token
                 if (msiType == MsiType.Unavailable || msiType == MsiType.Unknown)
                 {
-                    return (default, new CredentialUnavailableException(MsiUnavailableError));
+                    return new ExtendedAccessToken(new CredentialUnavailableException(MsiUnavailableError));
                 }
 
                 AccessToken token = await SendAuthRequestAsync(msiType, requestContext.Scopes, _clientId, cancellationToken).ConfigureAwait(false);
 
-                return (token, null);
+                return new ExtendedAccessToken(token);
             }
             catch (Exception e)
             {
-                ex = scope.Failed(e);
-
-                return (default, ex);
+                return new ExtendedAccessToken(scope.Failed(e));
             }
         }
 
-        private (AccessToken, Exception) GetTokenImpl(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        private ExtendedAccessToken GetTokenImpl(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            Exception ex = null;
-
             using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("Azure.Identity.ManagedIdentityCredential.GetToken", requestContext);
 
             try
@@ -162,18 +142,16 @@ namespace Azure.Identity
                 // if msi is unavailable or we were unable to determine the type return a default access token
                 if (msiType == MsiType.Unavailable || msiType == MsiType.Unknown)
                 {
-                    return (default, new CredentialUnavailableException(MsiUnavailableError));
+                    return new ExtendedAccessToken(new CredentialUnavailableException(MsiUnavailableError));
                 }
 
                 AccessToken token = SendAuthRequest(msiType, requestContext.Scopes, _clientId, cancellationToken);
 
-                return (token, null);
+                return new ExtendedAccessToken(token);
             }
             catch (Exception e)
             {
-                ex = scope.Failed(e);
-
-                return (default, ex);
+                return new ExtendedAccessToken(scope.Failed(e));
             }
         }
 
