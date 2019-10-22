@@ -41,7 +41,7 @@ namespace Azure.Identity.Tests
 
             var cancelSource = new CancellationTokenSource();
 
-            Task<AccessToken> getTokenTask = cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" }), cancelSource.Token);
+            ValueTask<AccessToken> getTokenTask = cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" }), cancelSource.Token);
 
             cancelSource.Cancel();
 

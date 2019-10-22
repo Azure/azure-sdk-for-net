@@ -25,11 +25,11 @@ namespace Azure.Storage.Queues.Models
         public QueueMessage Update(UpdateReceipt updated) =>
             QueuesModelFactory.QueueMessage(
                 MessageId,
-                InsertionTime,
-                ExpirationTime,
                 updated.PopReceipt,
-                updated.TimeNextVisible,
+                MessageText,
                 DequeueCount,
-                MessageText);
+                updated.NextVisibleOn,
+                InsertedOn,
+                ExpiresOn);
     }
 }

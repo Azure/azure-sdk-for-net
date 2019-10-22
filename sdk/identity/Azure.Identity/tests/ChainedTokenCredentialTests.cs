@@ -33,7 +33,7 @@ namespace Azure.Identity.Tests
                 return _scope == requestContext.Scopes[0] ? new AccessToken(_token, DateTimeOffset.MaxValue) : throw new CredentialUnavailableException("unavailable");
             }
 
-            public override async Task<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+            public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
             {
                 await Task.CompletedTask;
 
@@ -48,7 +48,7 @@ namespace Azure.Identity.Tests
                 throw new MockException();
             }
 
-            public override Task<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+            public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
             {
                 throw new MockException();
             }

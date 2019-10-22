@@ -48,6 +48,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// then click **Want to deploy programmatically, Get Started -&gt;**.
         /// Enter any required information and then click **Save**.</param>
         /// <param name="upgradePolicy">The upgrade policy.</param>
+        /// <param name="automaticRepairsPolicy">Policy for automatic
+        /// repairs.</param>
         /// <param name="virtualMachineProfile">The virtual machine
         /// profile.</param>
         /// <param name="provisioningState">The provisioning state, which only
@@ -78,15 +80,19 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Virtual Machine Scale Set. For instance: whether the Virtual
         /// Machines have the capability to support attaching managed data
         /// disks with UltraSSD_LRS storage account type.</param>
+        /// <param name="scaleInPolicy">Specifies the scale-in policy that
+        /// decides which virtual machines are chosen for removal when a
+        /// Virtual Machine Scale Set is scaled-in.</param>
         /// <param name="identity">The identity of the virtual machine scale
         /// set, if configured.</param>
         /// <param name="zones">The virtual machine scale set zones.</param>
-        public VirtualMachineScaleSet(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), Plan plan = default(Plan), UpgradePolicy upgradePolicy = default(UpgradePolicy), VirtualMachineScaleSetVMProfile virtualMachineProfile = default(VirtualMachineScaleSetVMProfile), string provisioningState = default(string), bool? overprovision = default(bool?), bool? doNotRunExtensionsOnOverprovisionedVMs = default(bool?), string uniqueId = default(string), bool? singlePlacementGroup = default(bool?), bool? zoneBalance = default(bool?), int? platformFaultDomainCount = default(int?), SubResource proximityPlacementGroup = default(SubResource), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), VirtualMachineScaleSetIdentity identity = default(VirtualMachineScaleSetIdentity), IList<string> zones = default(IList<string>))
+        public VirtualMachineScaleSet(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), Plan plan = default(Plan), UpgradePolicy upgradePolicy = default(UpgradePolicy), AutomaticRepairsPolicy automaticRepairsPolicy = default(AutomaticRepairsPolicy), VirtualMachineScaleSetVMProfile virtualMachineProfile = default(VirtualMachineScaleSetVMProfile), string provisioningState = default(string), bool? overprovision = default(bool?), bool? doNotRunExtensionsOnOverprovisionedVMs = default(bool?), string uniqueId = default(string), bool? singlePlacementGroup = default(bool?), bool? zoneBalance = default(bool?), int? platformFaultDomainCount = default(int?), SubResource proximityPlacementGroup = default(SubResource), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), ScaleInPolicy scaleInPolicy = default(ScaleInPolicy), VirtualMachineScaleSetIdentity identity = default(VirtualMachineScaleSetIdentity), IList<string> zones = default(IList<string>))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
             Plan = plan;
             UpgradePolicy = upgradePolicy;
+            AutomaticRepairsPolicy = automaticRepairsPolicy;
             VirtualMachineProfile = virtualMachineProfile;
             ProvisioningState = provisioningState;
             Overprovision = overprovision;
@@ -97,6 +103,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             PlatformFaultDomainCount = platformFaultDomainCount;
             ProximityPlacementGroup = proximityPlacementGroup;
             AdditionalCapabilities = additionalCapabilities;
+            ScaleInPolicy = scaleInPolicy;
             Identity = identity;
             Zones = zones;
             CustomInit();
@@ -130,6 +137,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.upgradePolicy")]
         public UpgradePolicy UpgradePolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets policy for automatic repairs.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.automaticRepairsPolicy")]
+        public AutomaticRepairsPolicy AutomaticRepairsPolicy { get; set; }
 
         /// <summary>
         /// Gets or sets the virtual machine profile.
@@ -204,6 +217,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.additionalCapabilities")]
         public AdditionalCapabilities AdditionalCapabilities { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the scale-in policy that decides which
+        /// virtual machines are chosen for removal when a Virtual Machine
+        /// Scale Set is scaled-in.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.scaleInPolicy")]
+        public ScaleInPolicy ScaleInPolicy { get; set; }
 
         /// <summary>
         /// Gets or sets the identity of the virtual machine scale set, if

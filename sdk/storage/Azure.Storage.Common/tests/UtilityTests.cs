@@ -53,7 +53,7 @@ namespace Azure.Storage.Common.Test
                     catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.LeaseIdMissing)
                     {
                         // Break any lingering leases
-                        await blobs.GetBlobContainerClient(container.Name).GetLeaseClient().BreakAsync();
+                        await blobs.GetBlobContainerClient(container.Name).GetBlobLeaseClient().BreakAsync();
                     }
                     catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerBeingDeleted)
                     {

@@ -232,7 +232,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockCredential
                 .Setup(credential => credential.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.Is<CancellationToken>(value => value == cancellationSource.Token)))
-                .Returns(Task.FromResult(new AccessToken(tokenValue, DateTimeOffset.MaxValue)))
+                .Returns(new ValueTask<AccessToken>(new AccessToken(tokenValue, DateTimeOffset.MaxValue)))
                 .Verifiable();
 
             mockConverter
@@ -273,7 +273,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockCredential
                 .Setup(credential => credential.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.Is<CancellationToken>(value => value == cancellationSource.Token)))
-                .Returns(Task.FromResult(new AccessToken(tokenValue, DateTimeOffset.MaxValue)));
+                .Returns(new ValueTask<AccessToken>(new AccessToken(tokenValue, DateTimeOffset.MaxValue)));
 
             mockConverter
                 .Setup(converter => converter.CreateEventHubPropertiesRequest(It.Is<string>(value => value == eventHubName), It.Is<string>(value => value == tokenValue)))
@@ -354,7 +354,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockCredential
                 .Setup(credential => credential.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.Is<CancellationToken>(value => value == cancellationSource.Token)))
-                .Returns(Task.FromResult(new AccessToken(tokenValue, DateTimeOffset.MaxValue)))
+                .Returns(new ValueTask<AccessToken>(new AccessToken(tokenValue, DateTimeOffset.MaxValue)))
                 .Verifiable();
 
             mockConverter
@@ -396,7 +396,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockCredential
                 .Setup(credential => credential.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.Is<CancellationToken>(value => value == cancellationSource.Token)))
-                .Returns(Task.FromResult(new AccessToken(tokenValue, DateTimeOffset.MaxValue)));
+                .Returns(new ValueTask<AccessToken>(new AccessToken(tokenValue, DateTimeOffset.MaxValue)));
 
             mockConverter
                 .Setup(converter => converter.CreatePartitionPropertiesRequest(It.Is<string>(value => value == eventHubName), It.Is<string>(value => value == partitionId), It.Is<string>(value => value == tokenValue)))

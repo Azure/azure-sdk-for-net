@@ -463,6 +463,22 @@ directive:
         $.BlobItemProperties.required = ["AccessTierInferred"];
         const path = $.BlobItem.properties.Properties.$ref.replace(/[#].*$/, "#/definitions/BlobItemProperties");
         $.BlobItem.properties.Properties = { "$ref": path };
+
+        $.BlobItemProperties.properties.CreatedOn = $.BlobItemProperties.properties.CreationTime;
+        $.BlobItemProperties.properties.CreatedOn.xml = {"name": "CreationTime"};
+        delete $.BlobItemProperties.properties.CreationTime;
+
+        $.BlobItemProperties.properties.CopyCompletedOn = $.BlobItemProperties.properties.CopyCompletionTime;
+        $.BlobItemProperties.properties.CopyCompletedOn.xml = {"name": "CopyCompletionTime"};
+        delete $.BlobItemProperties.properties.CopyCompletionTime;
+
+        $.BlobItemProperties.properties.DeletedOn = $.BlobItemProperties.properties.DeletedTime;
+        $.BlobItemProperties.properties.DeletedOn.xml = {"name": "DeletedTime"};
+        delete $.BlobItemProperties.properties.DeletedTime;
+
+        $.BlobItemProperties.properties.AccessTierChangedOn = $.BlobItemProperties.properties.AccessTierChangeTime;
+        $.BlobItemProperties.properties.AccessTierChangedOn.xml = {"name": "AccessTierChangeTime"};
+        delete $.BlobItemProperties.properties.AccessTierChangeTime;
     }
 - from: swagger-document
   where: $["x-ms-paths"]["/{containerName}/{blob}"]
@@ -503,6 +519,9 @@ directive:
     $.head.responses["200"].headers["Content-Language"].type = "array";
     $.head.responses["200"].headers["Content-Language"].collectionFormat = "csv";
     $.head.responses["200"].headers["Content-Language"].items = { "type": "string" };
+    $.head.responses["200"].headers["Content-MD5"]["x-ms-copy-completion-time"] = "CopyCompletedOn";
+    $.head.responses["200"].headers["Content-MD5"]["x-ms-creation-time"] = "CreatedOn";
+    $.head.responses["200"].headers["Content-MD5"]["x-ms-access-tier-change-time"] = "AccessTierChangedOn";
     $.head.responses["304"] = {
         "description": "The condition specified using HTTP conditional header(s) is not met.",
         "x-az-response-name": "ConditionNotMetError",
@@ -526,6 +545,9 @@ directive:
   where: $.parameters.DeleteSnapshots
   transform: >
     $["x-ms-enum"].name = "DeleteSnapshotsOption";
+    $.enum = [ "none", "include", "only" ];
+    $["x-ms-enum"].values = [ { name: "none", value: null }, { name: "IncludeSnapshots", value: "include" }, { name: "OnlySnapshots", value: "only" }];
+    $["x-az-enum-skip-value"] = "none";
 - from: swagger-document
   where: $.parameters.SequenceNumberAction
   transform: >
@@ -561,6 +583,9 @@ directive:
             const path = def["$ref"].replace(/[#].*$/, "#/definitions/BlobGeoReplication");
             $.BlobServiceStatistics.properties.GeoReplication = {"$ref": path};
         }
+        $.BlobGeoReplication.properties.LastSyncedOn = $.BlobGeoReplication.properties.LastSyncTime;
+        delete $.BlobGeoReplication.properties.LastSyncTime;
+        $.BlobGeoReplication.properties.LastSyncedOn.xml = { "name": "LastSyncTime" };
     }
 ```
 

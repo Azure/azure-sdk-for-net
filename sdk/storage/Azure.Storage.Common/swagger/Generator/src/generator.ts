@@ -479,8 +479,32 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                     }
                 });
             }
+
+            // We don't throw for 304s on read
+            // (this may be too ambitious for all services, but works for
+            // Storage so I'm not adding x-az- vendor extensions right now)
+            const isReadOperation =
+                operation.method.toLowerCase() == `get` ||
+                operation.method.toLowerCase() == `head`;
+            if (isReadOperation) {
+                w.line(`case 304:`);
+                w.scope('{', '}', () => {
+                    if (result.type === `void`) {
+                        // Just return the response if there's no model
+                        w.line(`return ${responseName};`);
+                    } else {
+                        // Return an exploding Response if there's a model type
+                        // (NoBodyResponse is shared source)
+                        w.line(`return new Azure.NoBodyResponse<${types.getName(result)}>(${responseName});`);
+                    }
+                });
+            }
+
             for (const response of operation.response.failures) {
-                if (response.code === `default`) {
+                if (response.code === `304` && isReadOperation) {
+                    // Ignore 304s handled above
+                    continue;
+                } else if (response.code === `default`) {
                     w.line(`default:`);
                 } else {
                     w.line(`case ${response.code}:`);
@@ -488,7 +512,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                 w.scope('{', '}', () => {
                     processResponse(response);
                     if (response.exception) {
-                        // If we're using x-ms-create-exception, we'll pass the response to
+                        // If we're using x-ms-create-exception we'll pass the response to
                         // an unimplemented method on the partial class
                         w.line(`throw ${valueName}.CreateException(${responseName});`);
                     } else {
@@ -877,6 +901,7 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
             }
 
             // Instantiate nested models if necessary
+            const readonlyModel = Object.values(type.properties).every(p => (<IProperty>p).readonly);
             const nested = (<IProperty[]>Object.values(type.properties)).filter(p => !p.isNullable && (isObjectType(p.model) || (isPrimitiveType(p.model) && (p.model.itemType || p.model.type === `dictionary`))));
             if (nested.length > 0) {
                 const skipInitName = `skipInitialization`;
@@ -886,7 +911,7 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                 w.line(`/// </summary>`);
                 if (type.deserialize) {
                     // Add an optional overload that prevents initialization for deserialiation
-                    w.write(`public ${naming.type(type.name)}()`);
+                    w.write(`${!type.public || !readonlyModel ? 'public' : 'internal'} ${naming.type(type.name)}()`);
                     w.scope(() => w.write(`: this(false)`));
                     w.scope(`{`, `}`, () => null);
                     w.line();

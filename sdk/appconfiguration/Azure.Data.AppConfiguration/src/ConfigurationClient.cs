@@ -96,6 +96,7 @@ namespace Azure.Data.AppConfiguration
         public virtual async Task<Response<ConfigurationSetting>> AddAsync(ConfigurationSetting setting, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Add");
+            scope.AddAttribute("key", setting?.Key);
             scope.Start();
 
             try
