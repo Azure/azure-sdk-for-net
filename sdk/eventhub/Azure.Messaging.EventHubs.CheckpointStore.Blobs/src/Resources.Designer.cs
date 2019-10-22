@@ -42,7 +42,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blobs
             {
                 if (object.ReferenceEquals(resourceMan, null))
                 {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Azure.Messaging.EventHubs.CheckpointStore.Blob.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Azure.Messaging.EventHubs.CheckpointStore.Blobs.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
