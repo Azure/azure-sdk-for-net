@@ -1,5 +1,15 @@
 ## Microsoft.Azure.Management.Storage release notes
 
+### Changes in 14.0.0
+
+- StorageAccounts.GetProperties() will also return PrivateEndpointConnections of the Stroage account
+- Support Get/Put one PrivateEndpointConnection of a Stroage account
+- Support List PrivateLinkResources of a Stroage account
+
+**Breaking changes**
+
+- Remove parameter "skipToken" from BlobContainers.List()
+
 ### Changes in 13.3.0
 
 - Support enable Files Azure Active Directory Domain Service Authentication when create or update Storage account
