@@ -31,7 +31,7 @@ namespace Azure.Messaging.EventHubs.Processor
         public bool IsRunning => RunningTask != null && !RunningTask.IsCompleted;
 
         /// <summary>
-        ///   TODO
+        ///   The <see cref="EventProcessor" /> that owns this instance.
         /// </summary>
         ///
         private EventProcessor OwnerEventProcessor { get; }
@@ -90,7 +90,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Initializes a new instance of the <see cref="PartitionPump"/> class.
         /// </summary>
         ///
-        /// <param name="eventProcessor">TODO.</param>
+        /// <param name="eventProcessor">The <see cref="EventProcessor" /> that owns this instance.</param>
         /// <param name="eventHubClient">The client used to interact with the Azure Event Hubs service.</param>
         /// <param name="consumerGroup">The name of the consumer group this partition pump is associated with.  Events are read in the context of this group.</param>
         /// <param name="partitionContext">The context of the Event Hub partition this partition pump is associated with.  Events will be read only from this partition.</param>

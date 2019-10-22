@@ -48,25 +48,25 @@ namespace Azure.Messaging.EventHubs.Tests
         private List<EventProcessor> EventProcessors { get; }
 
         /// <summary>
-        ///   TODO.
+        ///   A callback action to be called on <see cref="EventProcessor.InitializeProcessingForPartitionAsync" />.
         /// </summary>
         ///
         private Action<PartitionContext> OnInitialize { get; }
 
         /// <summary>
-        ///   TODO.
+        ///   A callback action to be called on <see cref="EventProcessor.ProcessingForPartitionStoppedAsync" />.
         /// </summary>
         ///
         private Action<PartitionContext, PartitionProcessorCloseReason> OnClose { get; }
 
         /// <summary>
-        ///   TODO.
+        ///   A callback action to be called on <see cref="EventProcessor.ProcessEventsAsync" />.
         /// </summary>
         ///
         private Action<PartitionContext, IEnumerable<EventData>> OnProcessEvents { get; }
 
         /// <summary>
-        ///   TODO.
+        ///   A callback action to be called on <see cref="EventProcessor.ProcessExceptionAsync" />.
         /// </summary>
         ///
         private Action<PartitionContext, Exception> OnProcessException { get; }

@@ -97,25 +97,27 @@ namespace Azure.Messaging.EventHubs.Processor
         private Task RunningTask { get; set; }
 
         /// <summary>
-        ///   TODO.
+        ///   The function to be called just before event processing starts for a given partition.
         /// </summary>
         ///
         public Func<PartitionContext, Task> InitializeProcessingForPartitionAsync { internal get; set; }
 
         /// <summary>
-        ///   TODO.
+        ///   The function to be called once event processing stops for a given partition.
         /// </summary>
         ///
         public Func<PartitionContext, PartitionProcessorCloseReason, Task> ProcessingForPartitionStoppedAsync { internal get; set; }
 
         /// <summary>
-        ///   TODO.
+        ///   The function responsible for processing sets of events received from the Event Hubs service.  Implementation is
+        ///   mandatory.
         /// </summary>
         ///
         public Func<PartitionContext, IEnumerable<EventData>, Task> ProcessEventsAsync { internal get; set; }
 
         /// <summary>
-        ///   TODO.
+        ///   The function responsible for processing unexpected exceptions thrown while this <see cref="EventProcessor" /> is
+        ///   running.  Implementation is mandatory.
         /// </summary>
         ///
         public Func<PartitionContext, Exception, Task> ProcessExceptionAsync { internal get; set; }
