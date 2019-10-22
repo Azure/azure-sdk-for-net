@@ -20,7 +20,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// Creates a configuration setting and sets the values from the passed in parameter to this setting.
         /// </summary>
-        public ConfigurationSetting()
+        internal ConfigurationSetting()
         {
         }
 
