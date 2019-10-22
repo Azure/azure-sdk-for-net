@@ -23,9 +23,8 @@ namespace Azure.Identity
         {
         }
 
-        public AadIdentityClient(TokenCredentialOptions options = null)
+        public AadIdentityClient(CredentialPipeline pipeline)
         {
-            _options = options ?? new TokenCredentialOptions();
             Pipeline = pipeline;
         }
 

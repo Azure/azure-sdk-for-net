@@ -70,11 +70,11 @@ namespace Azure.Identity
             {
                 StringBuilder builder = new StringBuilder("EnvironmentCredential is unavailable, environment variables not fully configured.");
 
-                builder.Append($"\n  AZURE_TENANT_ID specified {!(tenantId is null)}");
-                builder.Append($"\n  AZURE_CLIENT_ID specified {!(clientId is null)}");
-                builder.Append($"\n  AZURE_CLIENT_SECRET specified {!(clientSecret is null)}");
-                builder.Append($"\n  AZURE_USERNAME specified {!(username is null)}");
-                builder.Append($"\n  AZURE_PASSWORD specified {!(password is null)}");
+                builder.Append(Environment.NewLine).Append($"  AZURE_TENANT_ID specified {!(tenantId is null)}");
+                builder.Append(Environment.NewLine).Append($"  AZURE_CLIENT_ID specified {!(clientId is null)}");
+                builder.Append(Environment.NewLine).Append($"  AZURE_CLIENT_SECRET specified {!(clientSecret is null)}");
+                builder.Append(Environment.NewLine).Append($"  AZURE_USERNAME specified {!(username is null)}");
+                builder.Append(Environment.NewLine).Append($"  AZURE_PASSWORD specified {!(password is null)}");
 
                 _unavailbleErrorMessage = builder.ToString();
             }

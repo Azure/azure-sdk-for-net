@@ -166,11 +166,11 @@ namespace Azure.Identity
                 }
                 else if (string.IsNullOrEmpty(_username))
                 {
-                    ex = new CredentialUnavailableException($"{MultipleAccountsErrorMessage}\n Discovered Accounts: [ {string.Join(", ", accounts.Select(a => a.Username))} ]");
+                    ex = new CredentialUnavailableException($"{MultipleAccountsErrorMessage}{Environment.NewLine} Discovered Accounts: [ {string.Join(", ", accounts.Select(a => a.Username))} ]");
                 }
                 else
                 {
-                    ex = new CredentialUnavailableException($"User account '{_username}' was not found in the shared token cache.\n  Discovered Accounts: [ {string.Join(", ", accounts.Select(a => a.Username))} ]");
+                    ex = new CredentialUnavailableException($"User account '{_username}' was not found in the shared token cache.{Environment.NewLine}  Discovered Accounts: [ {string.Join(", ", accounts.Select(a => a.Username))} ]");
                 }
             }
 
