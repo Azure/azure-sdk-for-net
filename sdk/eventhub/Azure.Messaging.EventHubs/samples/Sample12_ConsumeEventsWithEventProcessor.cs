@@ -85,8 +85,24 @@ namespace Azure.Messaging.EventHubs.Samples
                 var eventProcessor = new EventProcessor(EventHubConsumer.DefaultConsumerGroupName, client, factory, partitionManager, eventProcessorOptions);
 
                 int totalEventsCount = 0;
+                int initializedPartitionsCount = 0;
 
                 // TODO: explain callbacks setup.
+
+                eventProcessor.InitializeProcessingForPartitionAsync = (PartitionContext partitionContext) =>
+                {
+                    // This is the last piece of code guaranteed to run before event processing, so all initialization
+                    // must be done by the moment this method returns.
+
+                    Interlocked.Increment(ref initializedPartitionsCount);
+
+                    Console.WriteLine($"\tPartition '{ partitionContext.PartitionId }': partition processing has started.");
+                    Console.WriteLine();
+
+                    // This method is asynchronous, which means it's expected to return a Task.
+
+                    return Task.CompletedTask;
+                };
 
                 eventProcessor.ProcessEventsAsync = (PartitionContext partitionContext, IEnumerable<EventData> events) =>
                 {
@@ -144,7 +160,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
                 var partitionsCount = (await client.GetPartitionIdsAsync()).Length;
 
-                while (SamplePartitionProcessor.ActiveInstancesCount < partitionsCount)
+                while (initializedPartitionsCount < partitionsCount)
                 {
                     await Task.Delay(500, cancellationSource.Token);
                 }
@@ -230,29 +246,6 @@ namespace Azure.Messaging.EventHubs.Samples
             public SamplePartitionProcessor()
             {
                 Console.WriteLine($"\tPartition processor successfully created.");
-            }
-
-            /// <summary>
-            ///   Initializes the partition processor.
-            /// </summary>
-            ///
-            /// <param name="partitionContext">Contains information about the partition from which events are sourced and provides a means of creating checkpoints for that partition.</param>
-            ///
-            /// <returns>A task to be resolved on when the operation has completed.</returns>
-            ///
-            public override Task InitializeAsync(PartitionContext partitionContext)
-            {
-                // This is the last piece of code guaranteed to run before event processing, so all initialization
-                // must be done by the moment this method returns.
-
-                Interlocked.Increment(ref s_activeInstancesCount);
-
-                Console.WriteLine($"\tPartition '{ partitionContext.PartitionId }': partition processor successfully initialized.");
-                Console.WriteLine();
-
-                // This method is asynchronous, which means it's expected to return a Task.
-
-                return Task.CompletedTask;
             }
 
             /// <summary>

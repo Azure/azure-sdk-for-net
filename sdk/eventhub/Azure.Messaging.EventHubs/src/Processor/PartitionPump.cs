@@ -145,7 +145,10 @@ namespace Azure.Messaging.EventHubs.Processor
                         // and let the event processor handle it.  The inner consumer hasn't connected to the service yet,
                         // so there's no need to close it.
 
-                        await PartitionProcessor.InitializeAsync(Context).ConfigureAwait(false);
+                        if (OwnerEventProcessor.InitializeProcessingForPartitionAsync != null)
+                        {
+                            await OwnerEventProcessor.InitializeProcessingForPartitionAsync(Context).ConfigureAwait(false);
+                        }
 
                         // Before closing, the running task will set the close reason in case of failure.  When something
                         // unexpected happens and it's not set, the default value (Unknown) is kept.

@@ -57,6 +57,12 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   TODO.
         /// </summary>
         ///
+        private Action<PartitionContext> OnInitialize { get; }
+
+        /// <summary>
+        ///   TODO.
+        /// </summary>
+        ///
         private Action<PartitionContext, IEnumerable<EventData>> OnProcessEvents { get; }
 
         /// <summary>
@@ -73,7 +79,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <param name="client">The client used to interact with the Azure Event Hubs service.</param>
         /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.</param>
         /// <param name="options">The set of options to use for the event processors.</param>
-        /// <param name="onInitialize">A callback action to be called on <see cref="PartitionProcessor.InitializeAsync" />.</param>
+        /// <param name="onInitialize">A callback action to be called on <see cref="EventProcessor.InitializeProcessingForPartitionAsync" />.</param>
         /// <param name="onClose">A callback action to be called on <see cref="PartitionProcessor.CloseAsync" />.</param>
         /// <param name="onProcessEvents">A callback action to be called on <see cref="EventProcessor.ProcessEventsAsync" />.</param>
         /// <param name="onProcessException">A callback action to be called on <see cref="EventProcessor.ProcessExceptionAsync" />.</param>
@@ -93,7 +99,6 @@ namespace Azure.Messaging.EventHubs.Tests
             PartitionProcessorFactory = partitionContext =>
                 new PartitionProcessor
                 (
-                    onInitialize,
                     onClose
                 );
 
@@ -109,6 +114,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 Options.MaximumReceiveWaitTime = TimeSpan.FromSeconds(2);
             }
 
+            OnInitialize = onInitialize;
             OnProcessEvents = onProcessEvents;
             OnProcessException = onProcessException;
 
@@ -133,6 +139,15 @@ namespace Azure.Messaging.EventHubs.Tests
                         InnerPartitionManager,
                         Options
                     );
+
+                if (OnInitialize != null)
+                {
+                    eventProcessor.InitializeProcessingForPartitionAsync = (partitionContext) =>
+                    {
+                        OnInitialize(partitionContext);
+                        return Task.CompletedTask;
+                    };
+                }
 
                 eventProcessor.ProcessEventsAsync = (partitionContext, events) =>
                 {
@@ -297,12 +312,6 @@ namespace Azure.Messaging.EventHubs.Tests
         private class PartitionProcessor : BasePartitionProcessor
         {
             /// <summary>
-            ///   A callback action to be called on <see cref="InitializeAsync" />.
-            /// </summary>
-            ///
-            private Action<PartitionContext> OnInitialize { get; }
-
-            /// <summary>
             ///   A callback action to be called on <see cref="CloseAsync" />.
             /// </summary>
             ///
@@ -323,25 +332,9 @@ namespace Azure.Messaging.EventHubs.Tests
             /// <param name="onInitialize">A callback action to be called on <see cref="InitializeAsync" />.</param>
             /// <param name="onClose">A callback action to be called on <see cref="CloseAsync" />.</param>
             ///
-            public PartitionProcessor(Action<PartitionContext> onInitialize = null,
-                                      Action<PartitionContext, PartitionProcessorCloseReason> onClose = null)
+            public PartitionProcessor(Action<PartitionContext, PartitionProcessorCloseReason> onClose = null)
             {
-                OnInitialize = onInitialize;
                 OnClose = onClose;
-            }
-
-            /// <summary>
-            ///   Initializes the partition processor.
-            /// </summary>
-            ///
-            /// <param name="partitionContext">Contains information about the partition from which events are sourced and provides a means of creating checkpoints for that partition.</param>
-            ///
-            /// <returns>A task to be resolved on when the operation has completed.</returns>
-            ///
-            public override Task InitializeAsync(PartitionContext partitionContext)
-            {
-                OnInitialize?.Invoke(partitionContext);
-                return Task.CompletedTask;
             }
 
             /// <summary>

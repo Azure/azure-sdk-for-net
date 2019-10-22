@@ -286,7 +286,6 @@ namespace Azure.Messaging.EventHubs.Tests
             clientMock.Setup(c => c.CreateConsumer("cg", "pid", It.IsAny<EventPosition>(), It.IsAny<EventHubConsumerOptions>())).Returns(consumerMock.Object);
 
             var processorMock = new Mock<BasePartitionProcessor>();
-            processorMock.Setup(p => p.InitializeAsync(It.IsAny<PartitionContext>())).Returns(Task.CompletedTask);
 
             var eventProcessorMock = new Mock<EventProcessor>();
             eventProcessorMock.Object.ProcessEventsAsync = (context, manager) =>

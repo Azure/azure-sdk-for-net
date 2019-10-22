@@ -106,6 +106,12 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   TODO.
         /// </summary>
         ///
+        public Func<PartitionContext, Task> InitializeProcessingForPartitionAsync { internal get; set; }
+
+        /// <summary>
+        ///   TODO.
+        /// </summary>
+        ///
         public Func<PartitionContext, IEnumerable<EventData>, Task> ProcessEventsAsync { internal get; set; }
 
         /// <summary>
