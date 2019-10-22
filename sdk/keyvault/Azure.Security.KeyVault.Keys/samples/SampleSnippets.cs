@@ -71,7 +71,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
 
             // Create a hardware Elliptic Curve key
             // Because only premium key vault supports HSM backed keys , please ensure your key vault
-            // SKU is premium when you set "hsm" value to true
+            // SKU is premium when you set "hardwareProtected" value to true
             var echsmkey = new CreateEcKeyOptions("ec-key-name", hardwareProtected: true);
             KeyVaultKey ecKey = await client.CreateEcKeyAsync(echsmkey);
 
@@ -99,7 +99,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
 
             // Create a hardware Elliptic Curve key
             // Because only premium key vault supports HSM backed keys , please ensure your key vault
-            // SKU is premium when you set "hsm" value to true
+            // SKU is premium when you set "hardwareProtected" value to true
             var echsmkey = new CreateEcKeyOptions("ec-key-name", hardwareProtected: true);
             KeyVaultKey ecKey = client.CreateEcKey(echsmkey);
 
