@@ -92,7 +92,7 @@ namespace Azure.Storage
             => new AuthenticationException($"Cannot authenticate credentials with {fullName}");
 
         public static RequestFailedException ClientRequestIdMismatch(Response response, string echo, string original)
-            => StorageRequestFailedExceptionHelpers.CreateException(
+            => StorageExceptionExtensions.CreateException(
                     response,
                     $"Response x-ms-client-request-id '{echo}' does not match the original expected request id, '{original}'.");
 

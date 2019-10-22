@@ -271,6 +271,10 @@ namespace Azure.Storage.Files
                         // Create the response
                         return Response.FromValue(_value, response);
                     }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Files.Models.FileServiceProperties>(response);
+                    }
                     default:
                     {
                         // Create the result
@@ -418,6 +422,10 @@ namespace Azure.Storage.Files
 
                         // Create the response
                         return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Files.Models.SharesSegment>(response);
                     }
                     default:
                     {
@@ -729,6 +737,10 @@ namespace Azure.Storage.Files
 
                         // Create the response
                         return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Files.Models.ShareProperties>(response);
                     }
                     default:
                     {
@@ -1295,6 +1307,10 @@ namespace Azure.Storage.Files
                         // Create the response
                         return Response.FromValue(_value, response);
                     }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<string>(response);
+                    }
                     default:
                     {
                         // Create the result
@@ -1711,6 +1727,10 @@ namespace Azure.Storage.Files
                         // Create the response
                         return Response.FromValue(_value, response);
                     }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.FileSignedIdentifier>>(response);
+                    }
                     default:
                     {
                         // Create the result
@@ -1989,6 +2009,10 @@ namespace Azure.Storage.Files
 
                         // Create the response
                         return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Files.Models.ShareStatistics>(response);
                     }
                     default:
                     {
@@ -2392,6 +2416,10 @@ namespace Azure.Storage.Files
 
                         // Create the response
                         return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Files.Models.RawStorageDirectoryProperties>(response);
                     }
                     default:
                     {
@@ -3012,6 +3040,10 @@ namespace Azure.Storage.Files
                         // Create the response
                         return Response.FromValue(_value, response);
                     }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Files.Models.FilesAndDirectoriesSegment>(response);
+                    }
                     default:
                     {
                         // Create the result
@@ -3163,6 +3195,10 @@ namespace Azure.Storage.Files
 
                         // Create the response
                         return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Files.Models.StorageHandlesSegment>(response);
                     }
                     default:
                     {
@@ -3989,6 +4025,10 @@ namespace Azure.Storage.Files
                         // Create the response
                         return Response.FromValue(_value, response);
                     }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Files.Models.FlattenedStorageFileProperties>(response);
+                    }
                     default:
                     {
                         // Create the result
@@ -4219,6 +4259,10 @@ namespace Azure.Storage.Files
 
                         // Create the response
                         return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Files.Models.RawStorageFileProperties>(response);
                     }
                     default:
                     {
@@ -5280,6 +5324,10 @@ namespace Azure.Storage.Files
                         // Create the response
                         return Response.FromValue(_value, response);
                     }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Files.Models.StorageFileRangeInfo>(response);
+                    }
                     default:
                     {
                         // Create the result
@@ -5713,6 +5761,10 @@ namespace Azure.Storage.Files
 
                         // Create the response
                         return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Files.Models.StorageHandlesSegment>(response);
                     }
                     default:
                     {
