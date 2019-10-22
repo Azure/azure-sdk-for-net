@@ -1193,6 +1193,8 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Category("Live")]
+        [Ignore("Operation cancelled")]
         public async Task GetPropertiesAsync_CPK()
         {
             using (GetNewContainer(out BlobContainerClient container))
@@ -1722,6 +1724,8 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Category("Live")]
+        [Ignore("Operation cancelled")]
         public async Task CreateSnapshotAsync_CPK()
         {
             using (GetNewContainer(out BlobContainerClient container))
@@ -1739,8 +1743,9 @@ namespace Azure.Storage.Blobs.Test
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
         }
-
         [Test]
+        [Category("Live")]
+        [Ignore("Operation cancelled")]
         public async Task CreateSnapshotAsync_CpkHttpError()
         {
             using (GetNewContainer(out BlobContainerClient container))
