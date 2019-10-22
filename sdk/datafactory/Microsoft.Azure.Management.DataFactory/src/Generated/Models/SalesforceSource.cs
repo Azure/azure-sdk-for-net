@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity Salesforce source.
     /// </summary>
-    public partial class SalesforceSource : CopySource
+    public partial class SalesforceSource : TabularSource
     {
         /// <summary>
         /// Initializes a new instance of the SalesforceSource class.
@@ -41,13 +41,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="maxConcurrentConnections">The maximum concurrent
         /// connection count for the source data store. Type: integer (or
         /// Expression with resultType integer).</param>
+        /// <param name="queryTimeout">Query timeout. Type: string (or
+        /// Expression with resultType string), pattern:
+        /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
         /// <param name="query">Database query. Type: string (or Expression
         /// with resultType string).</param>
         /// <param name="readBehavior">The read behavior for the operation.
         /// Default is Query. Possible values include: 'Query',
         /// 'QueryAll'</param>
-        public SalesforceSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object query = default(object), string readBehavior = default(string))
-            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections)
+        public SalesforceSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object queryTimeout = default(object), object query = default(object), string readBehavior = default(string))
+            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, queryTimeout)
         {
             Query = query;
             ReadBehavior = readBehavior;

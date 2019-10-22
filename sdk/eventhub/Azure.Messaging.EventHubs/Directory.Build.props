@@ -11,11 +11,6 @@
     <IsTestSupportProject>true</IsTestSupportProject>
   </PropertyGroup>
 
-  <!-- Disables StyleCopAnalyzer, Remove this property to enable it -->
-  <PropertyGroup>
-    <EnableStyleCopAnalyzers>false</EnableStyleCopAnalyzers>
-  </PropertyGroup>
-
   <!-- Import the common SDK build properties. -->
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
 

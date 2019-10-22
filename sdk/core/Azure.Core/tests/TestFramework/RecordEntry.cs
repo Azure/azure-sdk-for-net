@@ -81,7 +81,7 @@ namespace Azure.Core.Testing
                 {
                     var arrayBufferWriter = new ArrayBufferWriter<byte>();
                     using var writer = new Utf8JsonWriter(arrayBufferWriter);
-                    property.WriteValue(writer);
+                    property.WriteTo(writer);
                     writer.Flush();
                     return arrayBufferWriter.WrittenMemory.ToArray();
                 }
@@ -170,7 +170,8 @@ namespace Azure.Core.Testing
                 try
                 {
                     using JsonDocument document = JsonDocument.Parse(requestBody);
-                    document.RootElement.WriteProperty(name.AsSpan(), jsonWriter);
+                    jsonWriter.WritePropertyName(name.AsSpan());
+                    document.RootElement.WriteTo(jsonWriter);
                     return;
                 }
                 catch (Exception)
@@ -265,7 +266,7 @@ namespace Azure.Core.Testing
         {
             encoding = null;
             return TryGetContentType(requestHeaders, out string contentType) &&
-                   ContentTypeUtilities.TryGetTextEncoding(contentType, out encoding);
+                   TestFrameworkContentTypeUtilities.TryGetTextEncoding(contentType, out encoding);
         }
 
         public void Sanitize(RecordedTestSanitizer sanitizer)

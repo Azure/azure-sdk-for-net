@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Azure.Messaging.EventHubs.Tests
@@ -73,12 +74,12 @@ namespace Azure.Messaging.EventHubs.Tests
                     return false;
                 }
 
-                foreach (var property in trackOneEvent.SystemProperties)
+                foreach (KeyValuePair<string, object> property in trackOneEvent.SystemProperties)
                 {
                     if (property.Key == TrackOne.ClientConstants.EnqueuedTimeUtcName)
                     {
                         var trackOneDate = (DateTime)trackOneEvent.SystemProperties[property.Key];
-                        var trackTwoDate = trackTwoEvent.EnqueuedTime;
+                        DateTimeOffset? trackTwoDate = trackTwoEvent.EnqueuedTime;
 
                         if (trackOneDate != trackTwoDate.Value.UtcDateTime)
                         {
@@ -192,7 +193,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             return
             (
-                (String.Equals(trackOnePosition.Offset, trackTwoPosition.Offset, StringComparison.Ordinal))
+                (string.Equals(trackOnePosition.Offset, trackTwoPosition.Offset, StringComparison.Ordinal))
                  && (trackOnePosition.SequenceNumber == trackTwoPosition.SequenceNumber)
                  && (trackOnePosition.IsInclusive == trackTwoPosition.IsInclusive)
                  && (trackOnePosition.EnqueuedTimeUtc == trackTwoPosition.EnqueuedTime?.UtcDateTime)

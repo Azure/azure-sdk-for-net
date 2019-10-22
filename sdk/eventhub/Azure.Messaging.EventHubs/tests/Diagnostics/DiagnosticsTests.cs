@@ -32,6 +32,8 @@ namespace Azure.Messaging.EventHubs.Tests
     [NonParallelizable]
     public class DiagnosticsTests
     {
+        private const string DiagnosticSourceName = "Azure.Messaging.EventHubs";
+
         /// <summary>
         ///   Verifies diagnostics functionality of the <see cref="EventHubProducer" />
         ///   class.
@@ -40,7 +42,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task EventHubProducerCreatesDiagnosticScopeOnSend()
         {
-            using var testListener = new ClientDiagnosticListener();
+            using var testListener = new ClientDiagnosticListener(DiagnosticSourceName);
 
             var eventHubName = "SomeName";
             var endpoint = new Uri("amqp://endpoint");
@@ -55,13 +57,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var eventData = new EventData(ReadOnlyMemory<byte>.Empty);
             await producer.SendAsync(eventData);
 
-            var sendScope = testListener.AssertScope(DiagnosticProperty.ProducerActivityName,
+            ClientDiagnosticListener.ProducedDiagnosticScope sendScope = testListener.AssertScope(DiagnosticProperty.ProducerActivityName,
                 new KeyValuePair<string, string>(DiagnosticProperty.TypeAttribute, DiagnosticProperty.EventHubProducerType),
                 new KeyValuePair<string, string>(DiagnosticProperty.ServiceContextAttribute, DiagnosticProperty.EventHubsServiceContext),
                 new KeyValuePair<string, string>(DiagnosticProperty.EventHubAttribute, eventHubName),
                 new KeyValuePair<string, string>(DiagnosticProperty.EndpointAttribute, endpoint.ToString()));
 
-            var messageScope = testListener.AssertScope(DiagnosticProperty.EventActivityName);
+            ClientDiagnosticListener.ProducedDiagnosticScope messageScope = testListener.AssertScope(DiagnosticProperty.EventActivityName);
 
             Assert.That(eventData.Properties[DiagnosticProperty.DiagnosticIdAttribute], Is.EqualTo(messageScope.Activity.Id), "The diagnostics identifier should match.");
             Assert.That(messageScope.Activity.Tags, Has.One.EqualTo(new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.InternalKind)), "The activities tag should be internal.");
@@ -76,7 +78,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task EventHubProducerCreatesDiagnosticScopeOnBatchSend()
         {
-            using var testListener = new ClientDiagnosticListener();
+            using var testListener = new ClientDiagnosticListener(DiagnosticSourceName);
 
             var eventHubName = "SomeName";
             var endpoint = new Uri("amqp://endpoint");
@@ -99,23 +101,23 @@ namespace Azure.Messaging.EventHubs.Tests
 
             transportMock
                 .Setup(m => m.CreateBatchAsync(It.IsAny<BatchOptions>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(batchTransportMock.Object));
+                .Returns(new ValueTask<TransportEventBatch>(Task.FromResult(batchTransportMock.Object)));
 
             var producer = new EventHubProducer(transportMock.Object, endpoint, eventHubName, new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
 
             var eventData = new EventData(ReadOnlyMemory<byte>.Empty);
-            var batch = await producer.CreateBatchAsync();
+            EventDataBatch batch = await producer.CreateBatchAsync();
             Assert.True(batch.TryAdd(eventData));
 
             await producer.SendAsync(batch);
 
-            var sendScope = testListener.AssertScope(DiagnosticProperty.ProducerActivityName,
+            ClientDiagnosticListener.ProducedDiagnosticScope sendScope = testListener.AssertScope(DiagnosticProperty.ProducerActivityName,
                 new KeyValuePair<string, string>(DiagnosticProperty.TypeAttribute, DiagnosticProperty.EventHubProducerType),
                 new KeyValuePair<string, string>(DiagnosticProperty.ServiceContextAttribute, DiagnosticProperty.EventHubsServiceContext),
                 new KeyValuePair<string, string>(DiagnosticProperty.EventHubAttribute, eventHubName),
                 new KeyValuePair<string, string>(DiagnosticProperty.EndpointAttribute, endpoint.ToString()));
 
-            var messageScope = testListener.AssertScope(DiagnosticProperty.EventActivityName);
+            ClientDiagnosticListener.ProducedDiagnosticScope messageScope = testListener.AssertScope(DiagnosticProperty.EventActivityName);
 
             Assert.That(eventData.Properties[DiagnosticProperty.DiagnosticIdAttribute], Is.EqualTo(messageScope.Activity.Id), "The diagnostics identifier should match.");
             Assert.That(messageScope.Activity, Is.Not.SameAs(sendScope.Activity), "The activities should not be the same instance.");
@@ -129,7 +131,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task EventHubProducerAppliesDiagnosticIdToEventsOnSend()
         {
-            var activity = new Activity("SomeActivity").Start();
+            Activity activity = new Activity("SomeActivity").Start();
 
             var eventHubName = "SomeName";
             var endpoint = new Uri("amqp://some.endpoint.com/path");
@@ -153,7 +155,7 @@ namespace Azure.Messaging.EventHubs.Tests
             activity.Stop();
             Assert.That(writtenEventsData.Length, Is.EqualTo(2), "All events should have been instrumented.");
 
-            foreach (var eventData in writtenEventsData)
+            foreach (EventData eventData in writtenEventsData)
             {
                 Assert.That(eventData.Properties.TryGetValue(DiagnosticProperty.DiagnosticIdAttribute, out object value), Is.True, "The events should have a diagnostic identifier property.");
                 Assert.That(value, Is.EqualTo(activity.Id), "The diagnostics identifier should match the activity in the active scope.");
@@ -168,7 +170,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task EventHubProducerAppliesDiagnosticIdToEventsOnBatchSend()
         {
-            var activity = new Activity("SomeActivity").Start();
+            Activity activity = new Activity("SomeActivity").Start();
 
             var eventHubName = "SomeName";
             var endpoint = new Uri("amqp://some.endpoint.com/path");
@@ -194,7 +196,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             transportMock
                 .Setup(m => m.CreateBatchAsync(It.IsAny<BatchOptions>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(batchTransportMock.Object));
+                .Returns(new ValueTask<TransportEventBatch>(Task.FromResult(batchTransportMock.Object)));
 
             var producer = new EventHubProducer(transportMock.Object, endpoint, eventHubName, new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
 
@@ -202,7 +204,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var eventData2 = new EventData(ReadOnlyMemory<byte>.Empty);
             var eventData3 = new EventData(ReadOnlyMemory<byte>.Empty);
 
-            var batch = await producer.CreateBatchAsync();
+            EventDataBatch batch = await producer.CreateBatchAsync();
 
             Assert.That(batch.TryAdd(eventData1), Is.True, "The first event should have been added to the batch.");
             Assert.That(batch.TryAdd(eventData2), Is.True, "The second event should have been added to the batch.");
@@ -213,7 +215,7 @@ namespace Azure.Messaging.EventHubs.Tests
             activity.Stop();
             Assert.That(writtenEventsData.Count, Is.EqualTo(2), "Each of the events in the batch should have been instrumented.");
 
-            foreach (var eventData in writtenEventsData)
+            foreach (EventData eventData in writtenEventsData)
             {
                 Assert.That(eventData.Properties.TryGetValue(DiagnosticProperty.DiagnosticIdAttribute, out object value), Is.True, "The events should have a diagnostic identifier property.");
                 Assert.That(value, Is.EqualTo(activity.Id), "The diagnostics identifier should match the activity in the active scope.");
@@ -230,8 +232,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task CheckpointManagerCreatesScope()
         {
-            using ClientDiagnosticListener listener = new ClientDiagnosticListener();
-            var manager = new PartitionContext("name", "group", "partition", "owner", new InMemoryPartitionManager());
+            using ClientDiagnosticListener listener = new ClientDiagnosticListener(DiagnosticSourceName);
+            var manager = new PartitionContext("namespace", "name", "group", "partition", "owner", new InMemoryPartitionManager());
 
             await manager.UpdateCheckpointAsync(0, 0);
 
@@ -247,12 +249,13 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task PartitionPumpCreatesScopeForEventProcessing()
         {
-            using ClientDiagnosticListener listener = new ClientDiagnosticListener();
+            using ClientDiagnosticListener listener = new ClientDiagnosticListener(DiagnosticSourceName);
             var processorCalledSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
             var consumerMock = new Mock<EventHubConsumer>();
             bool returnedItems = false;
             consumerMock.Setup(c => c.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
-                .Returns(()=> {
+                .Returns(() =>
+                {
                     if (returnedItems)
                     {
                         throw new InvalidOperationException("Something bad happened");
@@ -288,7 +291,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(Task.CompletedTask)
                 .Callback(() => processorCalledSource.SetResult(null));
 
-            var manager = new PartitionPump(clientMock.Object, "cg", new PartitionContext("eh", "cg", "pid", "oid", new InMemoryPartitionManager()),  processorMock.Object, new EventProcessorOptions());
+            var manager = new PartitionPump(clientMock.Object, "cg", new PartitionContext("ns", "eh", "cg", "pid", "oid", new InMemoryPartitionManager()), processorMock.Object, new EventProcessorOptions());
 
             await manager.StartAsync();
             await processorCalledSource.Task;
@@ -301,6 +304,5 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(scope.Activity.Tags, Has.One.EqualTo(new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.ServerKind)), "The activities tag should be server.");
 
         }
-
     }
 }

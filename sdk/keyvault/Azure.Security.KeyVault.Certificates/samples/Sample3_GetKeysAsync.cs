@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using Azure.Core.Testing;
 using Azure.Identity;
@@ -39,15 +38,15 @@ namespace Azure.Security.KeyVault.Certificates.Samples
 
             CertificateOperation certOp2 = await client.StartCreateCertificateAsync(certName1);
 
-            // Next let's wait on the certificate operation to complete. Note that certificate creation can last an indeterministic 
-            // amount of time, so applications should only wait on the operation to complete in the case the issuance time is well 
+            // Next let's wait on the certificate operation to complete. Note that certificate creation can last an indeterministic
+            // amount of time, so applications should only wait on the operation to complete in the case the issuance time is well
             // known and within the scope of the application lifetime. In this case we are creating a self-signed certificate which
             // should be issued in a relatively short amount of time.
-            await certOp1.WaitCompletionAsync();
-            await certOp2.WaitCompletionAsync();
+            await certOp1.WaitForCompletionAsync();
+            await certOp2.WaitForCompletionAsync();
 
             // Let's list the certificates which exist in the vault along with their thumbprints
-            await foreach (CertificateBase cert in client.GetCertificatesAsync())
+            await foreach (CertificateProperties cert in client.GetCertificatesAsync())
             {
                 Debug.WriteLine($"Certificate is returned with name {cert.Name} and thumbprint {BitConverter.ToString(cert.X509Thumbprint)}");
             }
@@ -55,15 +54,15 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             // We need to create a new version of a certificate. Creating a certificate with the same name will create another version of the certificate
             CertificateOperation newCertOp = await client.StartCreateCertificateAsync(certName1);
 
-            await newCertOp.WaitCompletionAsync();
+            await newCertOp.WaitForCompletionAsync();
 
             // Let's print all the versions of this certificate
-            await foreach (CertificateBase cert in client.GetCertificateVersionsAsync(certName1))
+            await foreach (CertificateProperties cert in client.GetCertificateVersionsAsync(certName1))
             {
                 Debug.WriteLine($"Certificate {cert.Name} with name {cert.Version}");
             }
 
-            // The certificates are no longer needed. 
+            // The certificates are no longer needed.
             // You need to delete them from the Key Vault.
             await client.DeleteCertificateAsync(certName1);
             await client.DeleteCertificateAsync(certName2);

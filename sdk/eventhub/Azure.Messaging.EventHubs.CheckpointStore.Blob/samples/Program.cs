@@ -26,7 +26,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Samples
             // Parse the command line arguments determine if help was explicitly requested or if the
             // needed information was passed.
 
-            var parsedArgs = ParseArguments(args);
+            CommandLineArguments parsedArgs = ParseArguments(args);
 
             if (parsedArgs.Help)
             {
@@ -44,7 +44,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Samples
 
             // Prompt for the Event Hubs connection string, if it wasn't passed.
 
-            while (String.IsNullOrEmpty(parsedArgs.EventHubsConnectionString))
+            while (string.IsNullOrEmpty(parsedArgs.EventHubsConnectionString))
             {
                 Console.Write("Please provide the connection string for the Event Hubs namespace that you'd like to use and then press Enter: ");
                 parsedArgs.EventHubsConnectionString = Console.ReadLine().Trim();
@@ -53,7 +53,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Samples
 
             // Prompt for the Event Hub name, if it wasn't passed.
 
-            while (String.IsNullOrEmpty(parsedArgs.EventHub))
+            while (string.IsNullOrEmpty(parsedArgs.EventHub))
             {
                 Console.Write("Please provide the name of the Event Hub that you'd like to use and then press Enter: ");
                 parsedArgs.EventHub = Console.ReadLine().Trim();
@@ -62,7 +62,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Samples
 
             // Prompt for the storage connection string, if it wasn't passed.
 
-            while (String.IsNullOrEmpty(parsedArgs.StorageConnectionString))
+            while (string.IsNullOrEmpty(parsedArgs.StorageConnectionString))
             {
                 Console.Write("Please provide the connection string for the Azure storage account that you'd like to use and then press Enter: ");
                 parsedArgs.StorageConnectionString = Console.ReadLine().Trim();
@@ -71,7 +71,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Samples
 
             // Prompt for the blob container name, if it wasn't passed.
 
-            while (String.IsNullOrEmpty(parsedArgs.BlobContainer))
+            while (string.IsNullOrEmpty(parsedArgs.BlobContainer))
             {
                 Console.Write("Please provide the name of the blob container that you'd like to use and then press Enter: ");
                 parsedArgs.BlobContainer = Console.ReadLine().Trim();
@@ -80,7 +80,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Samples
 
             // Display the set of available samples and allow them to be run.
 
-            var samples = LocateSamples();
+            IReadOnlyList<IEventHubsBlobCheckpointSample> samples = LocateSamples();
 
             Console.WriteLine();
             Console.WriteLine("Available Samples:");
@@ -181,12 +181,12 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Samples
 
                 var value = Console.ReadLine();
 
-                if (String.Equals(value, "X", StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(value, "X", StringComparison.OrdinalIgnoreCase))
                 {
                     return null;
                 }
 
-                if (Int32.TryParse(value, out var choice))
+                if (int.TryParse(value, out var choice))
                 {
                     --choice;
 

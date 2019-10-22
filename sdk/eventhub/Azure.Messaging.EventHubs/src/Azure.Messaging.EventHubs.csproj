@@ -6,10 +6,10 @@
     <PackageReleaseNotes>https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/CHANGELOG.md</PackageReleaseNotes>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableFxCopAnalyzers>false</EnableFxCopAnalyzers>
-    <UseProjectReferenceToAzureCore>true</UseProjectReferenceToAzureCore>
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="SharedSource\" />
     <Folder Include="Properties\" />
   </ItemGroup>
 
@@ -45,6 +45,13 @@
 
   <ItemGroup Condition="'$(IsTargetingNetStandard)' == 'true'">
     <PackageReference Include="System.Runtime.Serialization.Primitives" />
+  </ItemGroup>
+
+  <!-- Import Azure.Core shared source -->
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="SharedSource\Argument.cs"/>
+    <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" Link="SharedSource\ClientDiagnostics.cs"/>
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" Link="SharedSource\DiagnosticScope.cs"/>
   </ItemGroup>
 
   <!-- Import the Azure.Core reference -->

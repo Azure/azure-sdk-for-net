@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 using Azure.Storage.Files.Models;
@@ -18,7 +18,7 @@ namespace Azure.Storage.Files.Tests
 {
     public class FileTestBase : StorageTestBase
     {
-        public static Uri InvalidUri = new Uri("https://error.file.core.windows.net");
+        public static Uri s_invalidUri = new Uri("https://error.file.core.windows.net");
 
         public FileTestBase(bool async) : this(async, null) { }
 
@@ -27,40 +27,47 @@ namespace Azure.Storage.Files.Tests
         {
         }
 
-        public string GetNewShareName() => $"test-share-{this.Recording.Random.NewGuid()}";
-        public string GetNewDirectoryName() => $"test-directory-{this.Recording.Random.NewGuid()}";
-        public string GetNewFileName() => $"test-file-{this.Recording.Random.NewGuid()}";
+        public string GetNewShareName() => $"test-share-{Recording.Random.NewGuid()}";
+        public string GetNewDirectoryName() => $"test-directory-{Recording.Random.NewGuid()}";
+        public string GetNewFileName() => $"test-file-{Recording.Random.NewGuid()}";
 
         public FileClientOptions GetOptions()
-            => this.Recording.InstrumentClientOptions(
-                    new FileClientOptions
-                    {
-                        Diagnostics = { IsLoggingEnabled = true },
-                        Retry =
-                        {
-                            Mode = RetryMode.Exponential,
-                            MaxRetries = Azure.Storage.Constants.MaxReliabilityRetries,
-                            Delay = TimeSpan.FromSeconds(this.Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
-                            MaxDelay = TimeSpan.FromSeconds(this.Mode == RecordedTestMode.Playback ? 0.1 : 10)
-                        }
-                    });
+        {
+            var options = new FileClientOptions
+            {
+                Diagnostics = { IsLoggingEnabled = true },
+                Retry =
+                {
+                    Mode = RetryMode.Exponential,
+                    MaxRetries = Azure.Storage.Constants.MaxReliabilityRetries,
+                    Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
+                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 10)
+                }
+            };
+            if (Mode != RecordedTestMode.Live)
+            {
+                options.AddPolicy(new RecordedClientRequestIdPolicy(Recording), HttpPipelinePosition.PerCall);
+            }
+
+            return Recording.InstrumentClientOptions(options);
+        }
 
         public IDisposable GetNewDirectory(out DirectoryClient directory, FileServiceClient service = default)
         {
-            var disposingShare = this.GetNewShare(out var share, default, service);
-            var directoryName = this.GetNewDirectoryName();
-            directory = this.InstrumentClient(share.GetDirectoryClient(directoryName));
+            IDisposable disposingShare = GetNewShare(out ShareClient share, default, service);
+            var directoryName = GetNewDirectoryName();
+            directory = InstrumentClient(share.GetDirectoryClient(directoryName));
             _ = directory.CreateAsync().Result;
             return disposingShare;
         }
 
         public IDisposable GetNewFile(out FileClient file, FileServiceClient service = default, string shareName = default, string directoryName = default, string fileName = default)
         {
-            var disposingShare = this.GetNewShare(out var share, shareName, service);
-            var directory = this.InstrumentClient(share.GetDirectoryClient(directoryName ?? this.GetNewDirectoryName()));
+            IDisposable disposingShare = GetNewShare(out ShareClient share, shareName, service);
+            DirectoryClient directory = InstrumentClient(share.GetDirectoryClient(directoryName ?? GetNewDirectoryName()));
             _ = directory.CreateAsync().Result;
 
-            file = this.InstrumentClient(directory.GetFileClient(fileName ?? this.GetNewFileName()));
+            file = InstrumentClient(directory.GetFileClient(fileName ?? GetNewFileName()));
             _ = file.CreateAsync(maxSize: Constants.MB).Result;
 
             return disposingShare;
@@ -71,97 +78,106 @@ namespace Azure.Storage.Files.Tests
             Exception raise = default)
         {
             raise = raise ?? new IOException("Simulated connection fault");
-            var options = this.GetOptions();
+            FileClientOptions options = GetOptions();
             options.AddPolicy(new FaultyDownloadPipelinePolicy(raiseAt, raise), HttpPipelinePosition.PerCall);
             return options;
         }
 
         public FileServiceClient GetServiceClient_SharedKey()
-            => this.InstrumentClient(
+            => InstrumentClient(
                 new FileServiceClient(
-                    new Uri(this.TestConfigDefault.FileServiceEndpoint),
+                    new Uri(TestConfigDefault.FileServiceEndpoint),
                     new StorageSharedKeyCredential(
-                        this.TestConfigDefault.AccountName,
-                        this.TestConfigDefault.AccountKey),
-                    this.GetOptions()));
+                        TestConfigDefault.AccountName,
+                        TestConfigDefault.AccountKey),
+                    GetOptions()));
 
         public FileServiceClient GetServiceClient_AccountSas(StorageSharedKeyCredential sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)
-            => this.InstrumentClient(
+            => InstrumentClient(
                 new FileServiceClient(
-                    new Uri($"{this.TestConfigDefault.FileServiceEndpoint}?{sasCredentials ?? this.GetNewAccountSasCredentials(sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
-                    this.GetOptions()));
+                    new Uri($"{TestConfigDefault.FileServiceEndpoint}?{sasCredentials ?? GetNewAccountSasCredentials(sharedKeyCredentials ?? GetNewSharedKeyCredentials())}"),
+                    GetOptions()));
 
         public FileServiceClient GetServiceClient_FileServiceSasShare(string shareName, StorageSharedKeyCredential sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)
-            => this.InstrumentClient(
+            => InstrumentClient(
                 new FileServiceClient(
-                    new Uri($"{this.TestConfigDefault.FileServiceEndpoint}?{sasCredentials ?? this.GetNewFileServiceSasCredentialsShare(shareName, sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
-                    this.GetOptions()));
+                    new Uri($"{TestConfigDefault.FileServiceEndpoint}?{sasCredentials ?? GetNewFileServiceSasCredentialsShare(shareName, sharedKeyCredentials ?? GetNewSharedKeyCredentials())}"),
+                    GetOptions()));
 
         public FileServiceClient GetServiceClient_FileServiceSasFile(string shareName, string filePath, StorageSharedKeyCredential sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)
-            => this.InstrumentClient(
+            => InstrumentClient(
                 new FileServiceClient(
-                    new Uri($"{this.TestConfigDefault.FileServiceEndpoint}?{sasCredentials ?? this.GetNewFileServiceSasCredentialsFile(shareName, filePath, sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
-                    this.GetOptions()));
+                    new Uri($"{TestConfigDefault.FileServiceEndpoint}?{sasCredentials ?? GetNewFileServiceSasCredentialsFile(shareName, filePath, sharedKeyCredentials ?? GetNewSharedKeyCredentials())}"),
+                    GetOptions()));
 
         public IDisposable GetNewShare(out ShareClient share, string shareName = default, FileServiceClient service = default, IDictionary<string, string> metadata = default)
         {
-            service ??= this.GetServiceClient_SharedKey();
-            share = this.InstrumentClient(service.GetShareClient(shareName ?? this.GetNewShareName()));
+            service ??= GetServiceClient_SharedKey();
+            share = InstrumentClient(service.GetShareClient(shareName ?? GetNewShareName()));
             return new DisposingShare(share, metadata ?? new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase));
         }
 
         public StorageSharedKeyCredential GetNewSharedKeyCredentials()
             => new StorageSharedKeyCredential(
-                this.TestConfigDefault.AccountName,
-                this.TestConfigDefault.AccountKey);
+                TestConfigDefault.AccountName,
+                TestConfigDefault.AccountKey);
 
         public SasQueryParameters GetNewAccountSasCredentials(StorageSharedKeyCredential sharedKeyCredentials = default)
-            => new AccountSasBuilder
+        {
+            var builder = new AccountSasBuilder
             {
                 Protocol = SasProtocol.None,
-                Services = new AccountSasServices { Files = true }.ToString(),
-                ResourceTypes = new AccountSasResourceTypes { Container = true }.ToString(),
-                StartTime = this.Recording.UtcNow.AddHours(-1),
-                ExpiryTime = this.Recording.UtcNow.AddHours(+1),
-                Permissions = new FileAccountSasPermissions { Create = true, Delete = true }.ToString(),
-                IPRange = new IPRange(IPAddress.None, IPAddress.None)
-            }.ToSasQueryParameters(sharedKeyCredentials);
+                Services = AccountSasServices.Files,
+                ResourceTypes = AccountSasResourceTypes.Container,
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(+1),
+                IPRange = new SasIPRange(IPAddress.None, IPAddress.None)
+            };
+            builder.SetPermissions(AccountSasPermissions.Create | AccountSasPermissions.Delete);
+            return builder.ToSasQueryParameters(sharedKeyCredentials);
+        }
 
         public SasQueryParameters GetNewFileServiceSasCredentialsShare(string shareName, StorageSharedKeyCredential sharedKeyCredentials = default)
-            => new FileSasBuilder
+        {
+            var builder = new FileSasBuilder
             {
                 ShareName = shareName,
                 Protocol = SasProtocol.None,
-                StartTime = this.Recording.UtcNow.AddHours(-1),
-                ExpiryTime = this.Recording.UtcNow.AddHours(+1),
-                Permissions = new ShareSasPermissions { Read = true, Write = true, List = true, Create = true, Delete = true }.ToString(),
-                IPRange = new IPRange(IPAddress.None, IPAddress.None)
-            }.ToSasQueryParameters(sharedKeyCredentials ?? this.GetNewSharedKeyCredentials());
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(+1),
+                IPRange = new SasIPRange(IPAddress.None, IPAddress.None)
+            };
+            builder.SetPermissions(ShareSasPermissions.All);
+            return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
+        }
 
         public SasQueryParameters GetNewFileServiceSasCredentialsFile(string shareName, string filePath, StorageSharedKeyCredential sharedKeyCredentials = default)
-            => new FileSasBuilder
+        {
+            var builder = new FileSasBuilder
             {
                 ShareName = shareName,
                 FilePath = filePath,
                 Protocol = SasProtocol.None,
-                StartTime = this.Recording.UtcNow.AddHours(-1),
-                ExpiryTime = this.Recording.UtcNow.AddHours(+1),
-                Permissions = new FileSasPermissions { Read = true, Write = true, Create = true, Delete = true }.ToString(),
-                IPRange = new IPRange(IPAddress.None, IPAddress.None)
-            }.ToSasQueryParameters(sharedKeyCredentials ?? this.GetNewSharedKeyCredentials());
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(+1),
+                IPRange = new SasIPRange(IPAddress.None, IPAddress.None)
+            };
+            builder.SetPermissions(FileSasPermissions.All);
+            return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
+        }
 
-        public SignedIdentifier[] BuildSignedIdentifiers() =>
+        public FileSignedIdentifier[] BuildSignedIdentifiers() =>
             new[]
             {
-                new SignedIdentifier
+                new FileSignedIdentifier
                 {
-                    Id = this.GetNewString(),
+                    Id = GetNewString(),
                     AccessPolicy =
-                        new AccessPolicy
+                        new FileAccessPolicy
                         {
-                            Start =  this.Recording.UtcNow.AddHours(-1),
-                            Expiry =  this.Recording.UtcNow.AddHours(1),
-                            Permission = "rw"
+                            StartsOn =  Recording.UtcNow.AddHours(-1),
+                            ExpiresOn =  Recording.UtcNow.AddHours(1),
+                            Permissions = "rw"
                         }
                 }
             };
@@ -172,7 +188,7 @@ namespace Azure.Storage.Files.Tests
             Assert.IsNotNull(storageFileInfo.LastModified);
             Assert.IsNotNull(storageFileInfo.IsServerEncrypted);
             Assert.IsNotNull(storageFileInfo.SmbProperties);
-            AssertValidFileSmbProperties(storageFileInfo.SmbProperties.Value);
+            AssertValidFileSmbProperties(storageFileInfo.SmbProperties);
         }
 
         public static void AssertValidStorageDirectoryInfo(StorageDirectoryInfo storageDirectoryInfo)
@@ -180,38 +196,49 @@ namespace Azure.Storage.Files.Tests
             Assert.IsNotNull(storageDirectoryInfo.ETag);
             Assert.IsNotNull(storageDirectoryInfo.LastModified);
             Assert.IsNotNull(storageDirectoryInfo.SmbProperties);
-            AssertValidFileSmbProperties(storageDirectoryInfo.SmbProperties.Value);
+            AssertValidFileSmbProperties(storageDirectoryInfo.SmbProperties);
         }
 
         public static void AssertValidFileSmbProperties(FileSmbProperties fileSmbProperties)
         {
             Assert.IsNotNull(fileSmbProperties.FileAttributes);
             Assert.IsNotNull(fileSmbProperties.FilePermissionKey);
-            Assert.IsNotNull(fileSmbProperties.FileCreationTime);
-            Assert.IsNotNull(fileSmbProperties.FileLastWriteTime);
-            Assert.IsNotNull(fileSmbProperties.FileChangeTime);
+            Assert.IsNotNull(fileSmbProperties.FileCreatedOn);
+            Assert.IsNotNull(fileSmbProperties.FileLastWrittenOn);
+            Assert.IsNotNull(fileSmbProperties.FileChangedOn);
             Assert.IsNotNull(fileSmbProperties.FileId);
             Assert.IsNotNull(fileSmbProperties.ParentId);
         }
 
-        class DisposingShare : IDisposable
+        internal static void AssertPropertiesEqual(FileSmbProperties left, FileSmbProperties right)
+        {
+            Assert.AreEqual(left.FileAttributes, right.FileAttributes);
+            Assert.AreEqual(left.FileCreatedOn, right.FileCreatedOn);
+            Assert.AreEqual(left.FileChangedOn, right.FileChangedOn);
+            Assert.AreEqual(left.FileId, right.FileId);
+            Assert.AreEqual(left.FileLastWrittenOn, right.FileLastWrittenOn);
+            Assert.AreEqual(left.FilePermissionKey, right.FilePermissionKey);
+            Assert.AreEqual(left.ParentId, right.ParentId);
+        }
+
+        private class DisposingShare : IDisposable
         {
             public ShareClient ShareClient { get; }
 
             public DisposingShare(ShareClient share, IDictionary<string, string> metadata)
             {
-                share.CreateAsync(metadata: metadata, quotaInBytes: 1).Wait();
+                share.CreateAsync(metadata: metadata, quotaInGB: 1).Wait();
 
-                this.ShareClient = share;
+                ShareClient = share;
             }
 
             public void Dispose()
             {
-                if (this.ShareClient != null)
+                if (ShareClient != null)
                 {
                     try
                     {
-                        this.ShareClient.DeleteAsync(default/*, new DeleteSnapshotsOptionType()*/).Wait();
+                        ShareClient.DeleteAsync(default/*, new DeleteSnapshotsOptionType()*/).Wait();
                     }
                     catch
                     {

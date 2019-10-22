@@ -12,7 +12,7 @@
 		<PackageReleaseNotes>
 			<![CDATA[
 New features:
-- Added support for Azure AD administrator on managed instance.
+- Added support for Hyperscale database readReplicaCount property.
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

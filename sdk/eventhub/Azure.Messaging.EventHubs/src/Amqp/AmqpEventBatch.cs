@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Azure.Core;
 using Azure.Messaging.EventHubs.Core;
 using Microsoft.Azure.Amqp;
 
@@ -80,17 +81,17 @@ namespace Azure.Messaging.EventHubs.Amqp
         public AmqpEventBatch(AmqpMessageConverter messageConverter,
                               BatchOptions options)
         {
-            Guard.ArgumentNotNull(nameof(messageConverter), messageConverter);
-            Guard.ArgumentNotNull(nameof(options), options);
-            Guard.ArgumentNotNull(nameof(options.MaximumizeInBytes), options.MaximumizeInBytes);
+            Argument.AssertNotNull(messageConverter, nameof(messageConverter));
+            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(options.MaximumSizeInBytes, nameof(options.MaximumSizeInBytes));
 
             MessageConverter = messageConverter;
             Options = options;
-            MaximumSizeInBytes = options.MaximumizeInBytes.Value;
+            MaximumSizeInBytes = options.MaximumSizeInBytes.Value;
 
             // Initialize the size by reserving space for the batch envelope.
 
-            using var envelope = messageConverter.CreateBatchFromEvents(Enumerable.Empty<EventData>(), options.PartitionKey);
+            using AmqpMessage envelope = messageConverter.CreateBatchFromEvents(Enumerable.Empty<EventData>(), options.PartitionKey);
             _sizeBytes = envelope.SerializedMessageSize;
         }
 
@@ -105,10 +106,10 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         public override bool TryAdd(EventData eventData)
         {
-            Guard.ArgumentNotNull(nameof(eventData), eventData);
-            Guard.NotDisposed(nameof(EventDataBatch), _disposed);
+            Argument.AssertNotNull(eventData, nameof(eventData));
+            Argument.AssertNotDisposed(_disposed, nameof(EventDataBatch));
 
-            var eventMessage = MessageConverter.CreateMessageFromEvent(eventData, Options.PartitionKey);
+            AmqpMessage eventMessage = MessageConverter.CreateMessageFromEvent(eventData, Options.PartitionKey);
 
             try
             {
@@ -129,6 +130,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                 _sizeBytes = size;
                 BatchMessages.Add(eventMessage);
+
                 return true;
             }
             catch
@@ -151,7 +153,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         {
             if (typeof(T) != typeof(AmqpMessage))
             {
-                throw new FormatException(String.Format(CultureInfo.CurrentCulture, Resources.UnsupportedTransportEventType, typeof(T).Name));
+                throw new FormatException(string.Format(CultureInfo.CurrentCulture, Resources.UnsupportedTransportEventType, typeof(T).Name));
             }
 
             return (IEnumerable<T>)BatchMessages;
@@ -165,7 +167,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         {
             _disposed = true;
 
-            foreach (var message in BatchMessages)
+            foreach (AmqpMessage message in BatchMessages)
             {
                 message.Dispose();
             }

@@ -1,15 +1,15 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.Collections.Generic;
 
 namespace TrackOne.Amqp
 {
-    using System;
-    using System.Collections.Generic;
-
     // WARNING: Consult filter engine owner before modifying this enum.
     // Introducing a new member here has impact to filtering engine in data type precedence and data conversion.
     // ALWASYS insert new types before Unknown!
-    enum PropertyValueType
+    internal enum PropertyValueType
     {
         Null,
         Byte, SByte, Char, Int16, UInt16, Int32, UInt32, Int64, UInt64, Single, Double, Decimal, // Numeric types
@@ -18,9 +18,9 @@ namespace TrackOne.Amqp
         Unknown
     }
 
-    class SerializationUtilities
+    internal class SerializationUtilities
     {
-        static readonly Dictionary<Type, PropertyValueType> typeToIntMap = new Dictionary<Type, PropertyValueType>
+        private static readonly Dictionary<Type, PropertyValueType> typeToIntMap = new Dictionary<Type, PropertyValueType>
         {
             { typeof(byte), PropertyValueType.Byte },
             { typeof(sbyte), PropertyValueType.SByte },
@@ -51,8 +51,7 @@ namespace TrackOne.Amqp
                 return PropertyValueType.Null;
             }
 
-            PropertyValueType typeId;
-            if (typeToIntMap.TryGetValue(value.GetType(), out typeId))
+            if (typeToIntMap.TryGetValue(value.GetType(), out PropertyValueType typeId))
             {
                 return typeId;
             }

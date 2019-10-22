@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs
 {
@@ -17,7 +17,7 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The Latest service version supported by this client library.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2018_11_09;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2019_02_02;
 
         /// <summary>
         /// The versions of Azure Blob Storage supported by this client
@@ -28,10 +28,10 @@ namespace Azure.Storage.Blobs
         {
 #pragma warning disable CA1707 // Identifiers should not contain underscores
             /// <summary>
-            /// The 2018-11-09 service version described at
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/version-2018-11-09" />
+            /// The 2019-02-02 service version described at
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/versioning-for-the-azure-storage-services#version-2019-02-02" />
             /// </summary>
-            V2018_11_09 = 0
+            V2019_02_02 = 1
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -43,6 +43,23 @@ namespace Azure.Storage.Blobs
         public ServiceVersion Version { get; }
 
         /// <summary>
+        /// Gets the <see cref="CustomerProvidedKey"/> to be used when making requests.
+        /// </summary>
+        public CustomerProvidedKey? CustomerProvidedKey { get; set; }
+
+        /// <summary>
+        /// Gets or sets the secondary storage <see cref="Uri"/> that can be read from for the storage account if the
+        /// account is enabled for RA-GRS.
+        ///
+        /// If this property is set, the secondary Uri will be used for GET or HEAD requests during retries.
+        /// If the status of the response from the secondary Uri is a 404, then subsequent retries for
+        /// the request will not use the secondary Uri again, as this indicates that the resource
+        /// may not have propagated there yet. Otherwise, subsequent retries will alternate back and forth
+        /// between primary and secondary Uri.
+        /// </summary>
+        public Uri GeoRedundantSecondaryUri { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="BlobClientOptions"/>
         /// class.
         /// </summary>
@@ -52,8 +69,28 @@ namespace Azure.Storage.Blobs
         /// </param>
         public BlobClientOptions(ServiceVersion version = LatestVersion)
         {
-            this.Version = version;
+            Version = version == ServiceVersion.V2019_02_02 ? version: throw Errors.VersionNotSupported(nameof(version));
             this.Initialize();
+        }
+
+        /// <summary>
+        /// Create an HttpPipeline from BlobClientOptions.
+        /// </summary>
+        /// <param name="authentication">Optional authentication policy.</param>
+        /// <returns>An HttpPipeline to use for Storage requests.</returns>
+        internal HttpPipeline Build(HttpPipelinePolicy authentication = null)
+        {
+            return this.Build(authentication, GeoRedundantSecondaryUri);
+        }
+
+        /// <summary>
+        /// Create an HttpPipeline from BlobClientOptions.
+        /// </summary>
+        /// <param name="credentials">Optional authentication credentials.</param>
+        /// <returns>An HttpPipeline to use for Storage requests.</returns>
+        internal HttpPipeline Build(object credentials)
+        {
+           return this.Build(credentials, GeoRedundantSecondaryUri);
         }
     }
 }

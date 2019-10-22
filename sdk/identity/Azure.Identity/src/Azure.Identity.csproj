@@ -7,7 +7,9 @@
     <PackageTags>Microsoft Azure Identity</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-      Adding SharedTokenCacheCredential to enable Single Sign On scenarios with other development tooling.
+      * Updated InteractiveBrowserCredential and DeviceCodeCredential to optionally accept a tenantId.
+      * Added DefaultAzureCredentialOptions for configuring DefaultAzureCredential authentication.
+      * Added AuthenticationCodeCredential to enable the authentication code authentication flow.
       ]]>
     </PackageReleaseNotes>
 
@@ -27,6 +29,10 @@
 
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" />
+    <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" />
+    <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" />
+    <Compile Include="$(AzureCoreSharedSources)ResponseExceptionExtensions.cs" />
   </ItemGroup>
 
   <!-- Import the Azure.Base project -->

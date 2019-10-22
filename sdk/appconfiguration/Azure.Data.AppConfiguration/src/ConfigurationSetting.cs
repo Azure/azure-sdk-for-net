@@ -1,24 +1,23 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
-using Azure.Core.Http;
 
 namespace Azure.Data.AppConfiguration
 {
     /// <summary>
     /// A setting, defined by a unique combination of a key and label.
     /// </summary>
-    public sealed class ConfigurationSetting : IEquatable<ConfigurationSetting>
+    public sealed class ConfigurationSetting
     {
         private IDictionary<string, string> _tags;
 
-        // TODO (pri 3): this is just for deserialization. We can remove after we move to JsonDocument
-        internal ConfigurationSetting() { }
+        internal ConfigurationSetting()
+        {
+        }
 
         /// <summary>
         /// Creates a configuration setting and sets the values from the passed in parameter to this setting.
@@ -59,7 +58,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// An ETag indicating the state of a configuration setting within a configuration store.
         /// </summary>
-        public ETag ETag { get; set; }
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// The last time a modifying operation was performed on the given configuration setting.
@@ -67,10 +66,10 @@ namespace Azure.Data.AppConfiguration
         public DateTimeOffset? LastModified { get; internal set; }
 
         /// <summary>
-        /// A value indicating whether the configuration setting is locked.
-        /// A locked configuration setting may not be modified until it is unlocked.
+        /// A value indicating whether the configuration setting is read only.
+        /// A read only configuration setting may not be modified until it is made writable.
         /// </summary>
-        public bool? Locked { get; internal set; }
+        public bool? ReadOnly { get; internal set; }
 
         /// <summary>
         /// A dictionary of tags that can help identify what a configuration setting may be applicable for.
@@ -84,84 +83,15 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// Check if two ConfigurationSetting instances are equal.
         /// </summary>
-        /// <param name="other">The instance to compare to.</param>
-        public bool Equals(ConfigurationSetting other)
-        {
-            if (other == null)
-                return false;
-            if (ETag != default && other.ETag != default)
-            {
-                if (ETag != other.ETag)
-                    return false;
-                if (LastModified != other.LastModified)
-                    return false;
-                if (Locked != other.Locked)
-                    return false;
-            }
-            if (!string.Equals(Key, other.Key, StringComparison.Ordinal))
-                return false;
-            if (!string.Equals(Value, other.Value, StringComparison.Ordinal))
-                return false;
-            if (!string.Equals(Label, other.Label, StringComparison.Ordinal))
-                return false;
-            if (!string.Equals(ContentType, other.ContentType, StringComparison.Ordinal))
-                return false;
-            if (!TagsEquals(other.Tags))
-                return false;
-
-            return true;
-        }
-
-        /// <summary>
-        /// Check if two ConfigurationSetting instances are equal.
-        /// </summary>
         /// <param name="obj">The instance to compare to.</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj)
-        {
-            if (obj == null)
-                return false;
-            if (obj is ConfigurationSetting other)
-            {
-                return Equals(other);
-            }
-            else
-                return false;
-        }
-
-        private bool TagsEquals(IDictionary<string, string> other)
-        {
-            if (other == null)
-                return false;
-            if (Tags.Count != other.Count)
-                return false;
-            foreach (KeyValuePair<string, string> pair in Tags)
-            {
-                if (!other.TryGetValue(pair.Key, out string value))
-                    return false;
-                if (!string.Equals(value, pair.Value, StringComparison.Ordinal))
-                    return false;
-            }
-            return true;
-        }
+        public override bool Equals(object obj) => base.Equals(obj);
 
         /// <summary>
         /// Get a hash code for the ConfigurationSetting
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode()
-        {
-            var hashCode = new HashCodeBuilder();
-            hashCode.Add(Key, StringComparer.Ordinal);
-            hashCode.Add(Label, StringComparer.Ordinal);
-            hashCode.Add(Value, StringComparer.Ordinal);
-            hashCode.Add(ContentType, StringComparer.Ordinal);
-            hashCode.Add(LastModified);
-            hashCode.Add(ETag);
-            hashCode.Add(Locked);
-            hashCode.Add(Tags);
-            return hashCode.ToHashCode();
-        }
+        public override int GetHashCode() => base.GetHashCode();
 
         /// <summary>
         /// Creates a (Key,Value) string in reference to the ConfigurationSetting.

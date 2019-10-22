@@ -52,7 +52,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                 return AmqpProperty.Type.Null;
             }
 
-            if (AmqpPropertyTypeMap.TryGetValue(instance, out var amqpType))
+            if (AmqpPropertyTypeMap.TryGetValue(instance, out AmqpProperty.Type amqpType))
             {
                 return amqpType;
             }

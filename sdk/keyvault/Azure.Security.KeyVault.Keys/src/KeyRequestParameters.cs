@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -10,6 +9,20 @@ namespace Azure.Security.KeyVault.Keys
 {
     internal class KeyRequestParameters : IJsonSerializable
     {
+        private const string KeyTypePropertyName = "kty";
+        private const string KeySizePropertyName = "key_size";
+        private const string KeyOpsPropertyName = "key_ops";
+        private const string CurveNamePropertyName = "crv";
+        private const string AttributesPropertyName = "attributes";
+        private const string TagsPropertyName = "tags";
+
+        private static readonly JsonEncodedText s_keyTypePropertyNameBytes = JsonEncodedText.Encode(KeyTypePropertyName);
+        private static readonly JsonEncodedText s_keySizePropertyNameBytes = JsonEncodedText.Encode(KeySizePropertyName);
+        private static readonly JsonEncodedText s_keyOpsPropertyNameBytes = JsonEncodedText.Encode(KeyOpsPropertyName);
+        private static readonly JsonEncodedText s_curveNamePropertyNameBytes = JsonEncodedText.Encode(CurveNamePropertyName);
+        private static readonly JsonEncodedText s_attributesPropertyNameBytes = JsonEncodedText.Encode(AttributesPropertyName);
+        private static readonly JsonEncodedText s_tagsPropertyNameBytes = JsonEncodedText.Encode(TagsPropertyName);
+
         private KeyAttributes _attributes;
 
         public KeyType KeyType { get; set; }
@@ -18,25 +31,25 @@ namespace Azure.Security.KeyVault.Keys
         public IList<KeyOperation> KeyOperations { get; set; }
         public bool? Enabled { get => _attributes.Enabled; set => _attributes.Enabled = value; }
         public DateTimeOffset? NotBefore { get => _attributes.NotBefore; set => _attributes.NotBefore = value; }
-        public DateTimeOffset? Expires { get => _attributes.Expires; set => _attributes.Expires = value; }
+        public DateTimeOffset? Expires { get => _attributes.ExpiresOn; set => _attributes.ExpiresOn = value; }
         public IDictionary<string, string> Tags { get; set; }
         public KeyCurveName? Curve { get; set; }
 
-        internal KeyRequestParameters(KeyBase key, IEnumerable<KeyOperation> operations)
+        internal KeyRequestParameters(KeyProperties key, IEnumerable<KeyOperation> operations)
         {
             if (key.Enabled.HasValue)
             {
                 Enabled = key.Enabled.Value;
             }
-            if (key.Expires.HasValue)
+            if (key.ExpiresOn.HasValue)
             {
-                Expires = key.Expires.Value;
+                Expires = key.ExpiresOn.Value;
             }
             if (key.NotBefore.HasValue)
             {
                 NotBefore = key.NotBefore.Value;
             }
-            if (key.Tags != null)
+            if (key.Tags != null && key.Tags.Count > 0)
             {
                 Tags = new Dictionary<string, string>(key.Tags);
             }
@@ -46,7 +59,7 @@ namespace Azure.Security.KeyVault.Keys
             }
         }
 
-        internal KeyRequestParameters(KeyType type, KeyCreateOptions options = default)
+        internal KeyRequestParameters(KeyType type, CreateKeyOptions options = default)
         {
             KeyType = type;
             if (options != null)
@@ -55,92 +68,79 @@ namespace Azure.Security.KeyVault.Keys
                 {
                     Enabled = options.Enabled.Value;
                 }
-                if (options.Expires.HasValue)
+                if (options.ExpiresOn.HasValue)
                 {
-                    Expires = options.Expires.Value;
+                    Expires = options.ExpiresOn.Value;
                 }
                 if (options.NotBefore.HasValue)
                 {
                     NotBefore = options.NotBefore.Value;
                 }
-                if (options.KeyOperations != null)
+                if (options.KeyOperations != null && options.KeyOperations.Count > 0)
                 {
                     KeyOperations = new List<KeyOperation>(options.KeyOperations);
                 }
-                if (options.Tags != null)
+                if (options.Tags != null && options.Tags.Count > 0)
                 {
                     Tags = new Dictionary<string, string>(options.Tags);
                 }
             }
         }
 
-        internal KeyRequestParameters(EcKeyCreateOptions ecKey)
+        internal KeyRequestParameters(CreateEcKeyOptions ecKey)
             : this(ecKey.KeyType, ecKey)
         {
-            if(ecKey.Curve.HasValue)
+            if (ecKey.CurveName.HasValue)
             {
-                Curve = ecKey.Curve.Value;
+                Curve = ecKey.CurveName.Value;
             }
         }
 
-        internal KeyRequestParameters(RsaKeyCreateOptions rsaKey)
+        internal KeyRequestParameters(CreateRsaKeyOptions rsaKey)
             : this(rsaKey.KeyType, rsaKey)
         {
-            if(rsaKey.KeySize.HasValue)
+            if (rsaKey.KeySize.HasValue)
             {
                 KeySize = rsaKey.KeySize.Value;
             }
         }
 
-        private const string KeyTypePropertyName = "kty";
-        private static readonly JsonEncodedText KeyTypePropertyNameBytes = JsonEncodedText.Encode(KeyTypePropertyName);
-        private const string KeySizePropertyName = "key_size";
-        private static readonly JsonEncodedText KeySizePropertyNameBytes = JsonEncodedText.Encode(KeySizePropertyName);
-        private const string KeyOpsPropertyName = "key_ops";
-        private static readonly JsonEncodedText KeyOpsPropertyNameBytes = JsonEncodedText.Encode(KeyOpsPropertyName);
-        private const string CurveNamePropertyName = "crv";
-        private static readonly JsonEncodedText CurveNamePropertyNameBytes = JsonEncodedText.Encode(CurveNamePropertyName);
-        private const string AttributesPropertyName = "attributes";
-        private static readonly JsonEncodedText AttributesPropertyNameBytes = JsonEncodedText.Encode(AttributesPropertyName);
-        private const string TagsPropertyName = "tags";
-        private static readonly JsonEncodedText TagsPropertyNameBytes = JsonEncodedText.Encode(TagsPropertyName);
-
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {
-            if(KeyType != default)
+            if (KeyType != default)
             {
-                json.WriteString(KeyTypePropertyNameBytes, KeyType);
+                json.WriteString(s_keyTypePropertyNameBytes, KeyType.ToString());
             }
-            if(KeySize.HasValue)
+            if (KeySize.HasValue)
             {
-                json.WriteNumber(KeySizePropertyNameBytes, KeySize.Value);
+                json.WriteNumber(s_keySizePropertyNameBytes, KeySize.Value);
             }
             if (Curve.HasValue)
             {
-                json.WriteString(CurveNamePropertyNameBytes, Curve.Value);
+                json.WriteString(s_curveNamePropertyNameBytes, Curve.Value.ToString());
             }
             if (Enabled.HasValue || NotBefore.HasValue || Expires.HasValue)
             {
-                json.WriteStartObject(AttributesPropertyNameBytes);
+                json.WriteStartObject(s_attributesPropertyNameBytes);
 
                 _attributes.WriteProperties(json);
 
                 json.WriteEndObject();
             }
-            if (KeyOperations != null)
+            if (KeyOperations != null && KeyOperations.Count > 0)
             {
-                json.WriteStartArray(KeyOpsPropertyNameBytes);
-                foreach(var operation in KeyOperations)
+                json.WriteStartArray(s_keyOpsPropertyNameBytes);
+                foreach (KeyOperation operation in KeyOperations)
                 {
-                    json.WriteStringValue(operation);
+                    json.WriteStringValue(operation.ToString());
                 }
                 json.WriteEndArray();
             }
             if (Tags != null && Tags.Count > 0)
             {
-                json.WriteStartObject(TagsPropertyNameBytes);
+                json.WriteStartObject(s_tagsPropertyNameBytes);
 
-                foreach (var kvp in Tags)
+                foreach (KeyValuePair<string, string> kvp in Tags)
                 {
                     json.WriteString(kvp.Key, kvp.Value);
                 }

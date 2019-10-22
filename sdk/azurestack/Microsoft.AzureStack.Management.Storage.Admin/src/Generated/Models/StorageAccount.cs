@@ -36,9 +36,8 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
         /// </summary>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource Name.</param>
-        /// <param name="type">Resource type.</param>
-        /// <param name="location">Resource location.</param>
-        /// <param name="tags">Resource tags.</param>
+        /// <param name="type">Resource Type.</param>
+        /// <param name="location">Resource Location.</param>
         /// <param name="tenantViewId">Resource URI of storage account from
         /// tenant view.</param>
         /// <param name="accountType">Storage account type. Possible values
@@ -55,6 +54,8 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
         /// used during undelete operation.</param>
         /// <param name="primaryLocation">The primary location for the storage
         /// account.</param>
+        /// <param name="faultDomain">The fault domain for the storage
+        /// account.</param>
         /// <param name="statusOfPrimary">The status of primary location of
         /// storage account. Possible values include: 'Available',
         /// 'Unavailable'</param>
@@ -64,22 +65,10 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
         /// tenant view.</param>
         /// <param name="tenantResourceGroupName">The name of resource group
         /// under which the storage account locates.</param>
-        /// <param name="currentOperation">Current operation being performed on
-        /// Storage Account. Possible values include: 'None', 'Create',
-        /// 'Update', 'Suspend', 'Delete', 'Undelete'</param>
-        /// <param name="customDomain">The custom domain the user assigned to
-        /// this storage account.</param>
-        /// <param name="acquisitionOperationCount">The count of acquisitions
-        /// in the storage account.</param>
         /// <param name="deletedTime">The date-time when the storage account
         /// was deleted.</param>
         /// <param name="accountStatus">The status of storage account. Possible
-        /// values include: 'Active', 'Deleted', 'OutOfRetentionPeriod',
-        /// 'Recycled'</param>
-        /// <param name="recoveredTime">The time when the storage account is
-        /// undeleted.</param>
-        /// <param name="recycledTime">The time when the storage account is
-        /// physically deleted.</param>
+        /// values include: 'Active', 'Deleted'</param>
         /// <param name="permissions">The permissions on the storage account.
         /// Possible values include: 'Empty', 'None', 'Read', 'Delete',
         /// 'Write', 'Full'</param>
@@ -87,11 +76,13 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
         /// visible to tenant.</param>
         /// <param name="wacInternalState">The internal state of storage
         /// account in WAC. Possible values include: 'None', 'Active',
-        /// 'Deleted', 'AboveQuota', 'Suspended', 'All'</param>
-        /// <param name="resourceAdminApiVersion">Storage admin REST API
-        /// version.</param>
-        public StorageAccount(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string tenantViewId = default(string), string accountType = default(string), string provisioningState = default(string), IDictionary<string, string> primaryEndpoints = default(IDictionary<string, string>), string creationTime = default(string), string alternateName = default(string), string primaryLocation = default(string), string statusOfPrimary = default(string), string tenantSubscriptionId = default(string), string tenantStorageAccountName = default(string), string tenantResourceGroupName = default(string), string currentOperation = default(string), string customDomain = default(string), int? acquisitionOperationCount = default(int?), System.DateTime? deletedTime = default(System.DateTime?), string accountStatus = default(string), System.DateTime? recoveredTime = default(System.DateTime?), System.DateTime? recycledTime = default(System.DateTime?), string permissions = default(string), string accountId = default(string), string wacInternalState = default(string), string resourceAdminApiVersion = default(string))
-            : base(id, name, type, location, tags)
+        /// 'Deleted', 'AboveQuota', 'Suspended', 'All', 'GcReadyState'</param>
+        /// <param name="encryption">The storage encryption setting</param>
+        /// <param name="supportsHttpsTrafficOnly">Storage account supports
+        /// https traffic only or not</param>
+        /// <param name="tags">Resource tags.</param>
+        public StorageAccount(string id = default(string), string name = default(string), string type = default(string), string location = default(string), string tenantViewId = default(string), string accountType = default(string), string provisioningState = default(string), IDictionary<string, string> primaryEndpoints = default(IDictionary<string, string>), string creationTime = default(string), string alternateName = default(string), string primaryLocation = default(string), string faultDomain = default(string), string statusOfPrimary = default(string), string tenantSubscriptionId = default(string), string tenantStorageAccountName = default(string), string tenantResourceGroupName = default(string), System.DateTime? deletedTime = default(System.DateTime?), string accountStatus = default(string), string permissions = default(string), string accountId = default(string), string wacInternalState = default(string), StorageEncryption encryption = default(StorageEncryption), bool? supportsHttpsTrafficOnly = default(bool?), IDictionary<string, string> tags = default(IDictionary<string, string>))
+            : base(id, name, type, location)
         {
             TenantViewId = tenantViewId;
             AccountType = accountType;
@@ -100,21 +91,19 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
             CreationTime = creationTime;
             AlternateName = alternateName;
             PrimaryLocation = primaryLocation;
+            FaultDomain = faultDomain;
             StatusOfPrimary = statusOfPrimary;
             TenantSubscriptionId = tenantSubscriptionId;
             TenantStorageAccountName = tenantStorageAccountName;
             TenantResourceGroupName = tenantResourceGroupName;
-            CurrentOperation = currentOperation;
-            CustomDomain = customDomain;
-            AcquisitionOperationCount = acquisitionOperationCount;
             DeletedTime = deletedTime;
             AccountStatus = accountStatus;
-            RecoveredTime = recoveredTime;
-            RecycledTime = recycledTime;
             Permissions = permissions;
             AccountId = accountId;
             WacInternalState = wacInternalState;
-            ResourceAdminApiVersion = resourceAdminApiVersion;
+            Encryption = encryption;
+            SupportsHttpsTrafficOnly = supportsHttpsTrafficOnly;
+            Tags = tags;
             CustomInit();
         }
 
@@ -170,6 +159,12 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
         public string PrimaryLocation { get; private set; }
 
         /// <summary>
+        /// Gets the fault domain for the storage account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.faultDomain")]
+        public string FaultDomain { get; private set; }
+
+        /// <summary>
         /// Gets the status of primary location of storage account. Possible
         /// values include: 'Available', 'Unavailable'
         /// </summary>
@@ -197,26 +192,6 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
         public string TenantResourceGroupName { get; private set; }
 
         /// <summary>
-        /// Gets current operation being performed on Storage Account. Possible
-        /// values include: 'None', 'Create', 'Update', 'Suspend', 'Delete',
-        /// 'Undelete'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.currentOperation")]
-        public string CurrentOperation { get; private set; }
-
-        /// <summary>
-        /// Gets the custom domain the user assigned to this storage account.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.customDomain")]
-        public string CustomDomain { get; private set; }
-
-        /// <summary>
-        /// Gets the count of acquisitions in the storage account.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.acquisitionOperationCount")]
-        public int? AcquisitionOperationCount { get; private set; }
-
-        /// <summary>
         /// Gets the date-time when the storage account was deleted.
         /// </summary>
         [JsonProperty(PropertyName = "properties.deletedTime")]
@@ -224,22 +199,10 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
 
         /// <summary>
         /// Gets or sets the status of storage account. Possible values
-        /// include: 'Active', 'Deleted', 'OutOfRetentionPeriod', 'Recycled'
+        /// include: 'Active', 'Deleted'
         /// </summary>
         [JsonProperty(PropertyName = "properties.accountStatus")]
         public string AccountStatus { get; set; }
-
-        /// <summary>
-        /// Gets the time when the storage account is undeleted.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.recoveredTime")]
-        public System.DateTime? RecoveredTime { get; private set; }
-
-        /// <summary>
-        /// Gets the time when the storage account is physically deleted.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.recycledTime")]
-        public System.DateTime? RecycledTime { get; private set; }
 
         /// <summary>
         /// Gets the permissions on the storage account. Possible values
@@ -257,16 +220,28 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
         /// <summary>
         /// Gets the internal state of storage account in WAC. Possible values
         /// include: 'None', 'Active', 'Deleted', 'AboveQuota', 'Suspended',
-        /// 'All'
+        /// 'All', 'GcReadyState'
         /// </summary>
         [JsonProperty(PropertyName = "properties.wacInternalState")]
         public string WacInternalState { get; private set; }
 
         /// <summary>
-        /// Gets storage admin REST API version.
+        /// Gets the storage encryption setting
         /// </summary>
-        [JsonProperty(PropertyName = "properties.resourceAdminApiVersion")]
-        public string ResourceAdminApiVersion { get; private set; }
+        [JsonProperty(PropertyName = "properties.encryption")]
+        public StorageEncryption Encryption { get; private set; }
+
+        /// <summary>
+        /// Gets storage account supports https traffic only or not
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.supportsHttpsTrafficOnly")]
+        public bool? SupportsHttpsTrafficOnly { get; private set; }
+
+        /// <summary>
+        /// Gets resource tags.
+        /// </summary>
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; private set; }
 
     }
 }

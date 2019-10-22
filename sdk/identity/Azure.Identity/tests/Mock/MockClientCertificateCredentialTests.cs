@@ -1,5 +1,9 @@
-﻿using NUnit.Framework;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using NUnit.Framework;
 using System;
+using System.IO;
 using System.Security.Cryptography.X509Certificates;
 
 namespace Azure.Identity.Tests.Mock
@@ -9,7 +13,8 @@ namespace Azure.Identity.Tests.Mock
         [Test]
         public void VerifyCtorErrorHandling()
         {
-            var clientCertificate = new X509Certificate2(@"./Data/cert.pfx", "password");
+            var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+            var clientCertificate = new X509Certificate2(certificatePath, "password");
 
             var tenantId = Guid.NewGuid().ToString();
 

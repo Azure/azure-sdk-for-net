@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using Azure.Core.Testing;
 using Azure.Identity;
@@ -33,59 +32,49 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             // already exists in the key vault, then a new version of the secret is created.
             string secretName = $"BankAccountPassword-{Guid.NewGuid()}";
 
-            var secret = new Secret(secretName, "f4G34fMh8v")
+            var secret = new KeyVaultSecret(secretName, "f4G34fMh8v")
             {
-                Expires = DateTimeOffset.Now.AddYears(1)
+                Properties =
+                {
+                    ExpiresOn = DateTimeOffset.Now.AddYears(1)
+                }
             };
 
-            await client.SetAsync(secret);
+            await client.SetSecretAsync(secret);
 
             // Let's Get the bank secret from the key vault.
-            Secret bankSecret = await client.GetAsync(secretName);
+            KeyVaultSecret bankSecret = await client.GetSecretAsync(secretName);
             Debug.WriteLine($"Secret is returned with name {bankSecret.Name} and value {bankSecret.Value}");
 
             // After one year, the bank account is still active, we need to update the expiry time of the secret.
             // The update method can be used to update the expiry attribute of the secret. It cannot be used to update
             // the value of the secret.
-            bankSecret.Expires = bankSecret.Expires.Value.AddYears(1);
-            SecretBase updatedSecret = await client.UpdateAsync(bankSecret);
-            Debug.WriteLine($"Secret's updated expiry time is {updatedSecret.Expires}");
+            bankSecret.Properties.ExpiresOn = bankSecret.Properties.ExpiresOn.Value.AddYears(1);
+            SecretProperties updatedSecret = await client.UpdateSecretPropertiesAsync(bankSecret.Properties);
+            Debug.WriteLine($"Secret's updated expiry time is {updatedSecret.ExpiresOn}");
 
             // Bank forced a password update for security purposes. Let's change the value of the secret in the key vault.
             // To achieve this, we need to create a new version of the secret in the key vault. The update operation cannot
             // change the value of the secret.
-            var secretNewValue = new Secret(secretName, "bhjd4DDgsa");
-            secretNewValue.Expires = DateTimeOffset.Now.AddYears(1);
+            var secretNewValue = new KeyVaultSecret(secretName, "bhjd4DDgsa")
+            {
+                Properties =
+                {
+                    ExpiresOn = DateTimeOffset.Now.AddYears(1)
+                }
+            };
 
-            await client.SetAsync(secretNewValue);
+            await client.SetSecretAsync(secretNewValue);
 
             // The bank account was closed. You need to delete its credentials from the key vault.
-            await client.DeleteAsync(secretName);
+            DeleteSecretOperation operation = await client.StartDeleteSecretAsync(secretName);
 
-            // To ensure secret is deleted on server side.
-            Assert.IsTrue(await WaitForDeletedSecretAsync(client, secretName));
+            // To ensure the secret is deleted on server before we try to purge it.
+            await operation.WaitForCompletionAsync();
 
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted secret needs to be purged.
-            await client.PurgeDeletedAsync(secretName);
+            await client.PurgeDeletedSecretAsync(secretName);
 
-        }
-
-        private async Task<bool> WaitForDeletedSecretAsync(SecretClient client, string secretName)
-        {
-            int maxIterations = 20;
-            for (int i = 0; i < maxIterations; i++)
-            {
-                try
-                {
-                    await client.GetDeletedAsync(secretName);
-                    return true;
-                }
-                catch
-                {
-                    Thread.Sleep(5000);
-                }
-            }
-            return false;
         }
     }
 }

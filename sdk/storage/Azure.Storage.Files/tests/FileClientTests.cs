@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -8,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Http;
 using Azure.Core.Testing;
 using Azure.Storage.Common;
 using Azure.Storage.Files.Models;
@@ -39,10 +37,10 @@ namespace Azure.Storage.Files.Test
 
             var connectionString = new StorageConnectionString(credentials, (default, default), (default, default), (default, default), (fileEndpoint, fileSecondaryEndpoint));
 
-            var shareName = this.GetNewShareName();
-            var filePath = this.GetNewFileName();
+            var shareName = GetNewShareName();
+            var filePath = GetNewFileName();
 
-            var file = this.InstrumentClient(new FileClient(connectionString.ToString(true), shareName, filePath, this.GetOptions()));
+            FileClient file = InstrumentClient(new FileClient(connectionString.ToString(true), shareName, filePath, GetOptions()));
 
             var builder = new FileUriBuilder(file.Uri);
 
@@ -52,32 +50,82 @@ namespace Azure.Storage.Files.Test
         }
 
         [Test]
+        public void FilePathsParsing()
+        {
+            // nested directories
+            Uri uri1 = new Uri("http://dummyaccount.file.core.windows.net/share/dir1/dir2/file.txt");
+            var builder1 = new FileUriBuilder(uri1);
+            var fileClient1 = new FileClient(uri1);
+            TestHelper.AssertCacheableProperty("file.txt", () => fileClient1.Name);
+            TestHelper.AssertCacheableProperty("dir1/dir2/file.txt", () => fileClient1.Path);
+            Assert.AreEqual("file.txt", builder1.LastDirectoryOrFileName);
+
+            // one directory
+            Uri uri2 = new Uri("http://dummyaccount.file.core.windows.net/share/dir1/file.txt");
+            var builder2 = new FileUriBuilder(uri2);
+            var fileClient2 = new FileClient(uri2);
+            TestHelper.AssertCacheableProperty("file.txt", () => fileClient2.Name);
+            TestHelper.AssertCacheableProperty("dir1/file.txt", () => fileClient2.Path);
+            Assert.AreEqual("file.txt", builder2.LastDirectoryOrFileName);
+
+            // trailing slash
+            Uri uri3 = new Uri("http://dummyaccount.file.core.windows.net/share/dir1/file.txt/");
+            var builder3 = new FileUriBuilder(uri3);
+            var fileClient3 = new FileClient(uri3);
+            TestHelper.AssertCacheableProperty("file.txt", () => fileClient3.Name);
+            TestHelper.AssertCacheableProperty("dir1/file.txt", () => fileClient3.Path);
+            Assert.AreEqual("file.txt", builder3.LastDirectoryOrFileName);
+
+            // no directories
+            Uri uri4 = new Uri("http://dummyaccount.file.core.windows.net/share/file.txt");
+            var builder4 = new FileUriBuilder(uri4);
+            var fileClient4 = new FileClient(uri4);
+            TestHelper.AssertCacheableProperty("file.txt", () => fileClient4.Name);
+            TestHelper.AssertCacheableProperty("file.txt", () => fileClient4.Path);
+            Assert.AreEqual("file.txt", builder4.LastDirectoryOrFileName);
+
+            // no directories or files
+            Uri uri5 = new Uri("http://dummyaccount.file.core.windows.net/share");
+            var builder5 = new FileUriBuilder(uri5);
+            var fileClient5 = new FileClient(uri5);
+            TestHelper.AssertCacheableProperty(string.Empty, () => fileClient5.Name);
+            TestHelper.AssertCacheableProperty(string.Empty, () => fileClient5.Path);
+            Assert.AreEqual(string.Empty, builder5.LastDirectoryOrFileName);
+        }
+
+        [Test]
         public async Task CreateAsync()
         {
-            using (this.GetNewDirectory(out var directory))
+            using (GetNewDirectory(out DirectoryClient directory))
             {
                 // Arrange
-                var file = this.InstrumentClient(directory.GetFileClient(this.GetNewFileName()));
+                var name = GetNewFileName();
+                FileClient file = InstrumentClient(directory.GetFileClient(name));
 
                 // Act
-                var response = await file.CreateAsync(maxSize: Constants.MB);
+                Response<StorageFileInfo> response = await file.CreateAsync(maxSize: Constants.MB);
 
                 // Assert
                 AssertValidStorageFileInfo(response);
+                var accountName = new FileUriBuilder(file.Uri).AccountName;
+                TestHelper.AssertCacheableProperty(accountName, () => file.AccountName);
+                var shareName = new FileUriBuilder(file.Uri).ShareName;
+                TestHelper.AssertCacheableProperty(shareName, () => file.ShareName);
+                TestHelper.AssertCacheableProperty(name, () => file.Name);
             }
         }
 
         [Test]
         public async Task CreateAsync_FilePermission()
         {
-            using (this.GetNewDirectory(out var directory))
+            using (GetNewDirectory(out DirectoryClient directory))
             {
                 // Arrange
-                var file = this.InstrumentClient(directory.GetFileClient(this.GetNewFileName()));
+                FileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
                 var filePermission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)";
 
                 // Act
-                var response = await file.CreateAsync(
+                Response<StorageFileInfo> response = await file.CreateAsync(
                     maxSize: Constants.MB,
                     filePermission: filePermission);
 
@@ -89,10 +137,10 @@ namespace Azure.Storage.Files.Test
         [Test]
         public async Task CreateAsync_FilePermissionAndFilePermissionKeySet()
         {
-            using (this.GetNewDirectory(out var directory))
+            using (GetNewDirectory(out DirectoryClient directory))
             {
                 // Arrange
-                var file = this.InstrumentClient(directory.GetFileClient(this.GetNewFileName()));
+                FileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
                 var filePermission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)";
                 var fileSmbProperties = new FileSmbProperties()
                 {
@@ -112,10 +160,10 @@ namespace Azure.Storage.Files.Test
         [Test]
         public async Task CreateAsync_FilePermissionTooLarge()
         {
-            using (this.GetNewDirectory(out var directory))
+            using (GetNewDirectory(out DirectoryClient directory))
             {
                 // Arrange
-                var file = this.InstrumentClient(directory.GetFileClient(this.GetNewFileName()));
+                FileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
                 var filePermission = new string('*', 9 * Constants.KB);
 
                 // Act
@@ -124,7 +172,7 @@ namespace Azure.Storage.Files.Test
                         maxSize: Constants.MB,
                         filePermission: filePermission),
                     e => Assert.AreEqual(
-                        "Value must be less than or equal to 8192" + Environment.NewLine 
+                        "Value must be less than or equal to 8192" + Environment.NewLine
                         + "Parameter name: filePermission", e.Message));
             }
         }
@@ -132,45 +180,45 @@ namespace Azure.Storage.Files.Test
         [Test]
         public async Task CreateAsync_SmbProperties()
         {
-            using (this.GetNewShare(out var share))
+            using (GetNewShare(out ShareClient share))
             {
                 // Arrange
                 var permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)";
-                var createPermissionResponse = await share.CreatePermissionAsync(permission);
+                Response<PermissionInfo> createPermissionResponse = await share.CreatePermissionAsync(permission);
 
-                var directory = this.InstrumentClient(share.GetDirectoryClient(this.GetNewDirectoryName()));
+                DirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
                 await directory.CreateAsync();
 
-                var file = this.InstrumentClient(directory.GetFileClient(this.GetNewFileName()));
+                FileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
                 var smbProperties = new FileSmbProperties
                 {
                     FilePermissionKey = createPermissionResponse.Value.FilePermissionKey,
-                    FileAttributes = NtfsFileAttributes.Parse("Archive|ReadOnly"),
-                    FileCreationTime = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
-                    FileLastWriteTime = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero),
+                    FileAttributes = FileExtensions.ToFileAttributes("Archive|ReadOnly"),
+                    FileCreatedOn = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
+                    FileLastWrittenOn = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero),
                 };
 
                 // Act
-                var response = await file.CreateAsync(
+                Response<StorageFileInfo> response = await file.CreateAsync(
                     maxSize: Constants.KB,
                     smbProperties: smbProperties);
 
                 // Assert
                 AssertValidStorageFileInfo(response);
-                Assert.AreEqual(smbProperties.FileAttributes, response.Value.SmbProperties.Value.FileAttributes);
-                Assert.AreEqual(smbProperties.FileCreationTime, response.Value.SmbProperties.Value.FileCreationTime);
-                Assert.AreEqual(smbProperties.FileLastWriteTime, response.Value.SmbProperties.Value.FileLastWriteTime);
+                Assert.AreEqual(smbProperties.FileAttributes, response.Value.SmbProperties.FileAttributes);
+                Assert.AreEqual(smbProperties.FileCreatedOn, response.Value.SmbProperties.FileCreatedOn);
+                Assert.AreEqual(smbProperties.FileLastWrittenOn, response.Value.SmbProperties.FileLastWrittenOn);
             }
         }
 
         [Test]
         public async Task CreateAsync_Metadata()
         {
-            using (this.GetNewDirectory(out var directory))
+            using (GetNewDirectory(out DirectoryClient directory))
             {
                 // Arrange
-                var file = this.InstrumentClient(directory.GetFileClient(this.GetNewFileName()));
-                var metadata = this.BuildMetadata();
+                FileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+                IDictionary<string, string> metadata = BuildMetadata();
 
                 // Act
                 await file.CreateAsync(
@@ -178,8 +226,8 @@ namespace Azure.Storage.Files.Test
                     metadata: metadata);
 
                 // Assert
-                var response = await file.GetPropertiesAsync();
-                this.AssertMetadataEquality(metadata, response.Value.Metadata);
+                Response<StorageFileProperties> response = await file.GetPropertiesAsync();
+                AssertMetadataEquality(metadata, response.Value.Metadata);
             }
         }
 
@@ -187,10 +235,10 @@ namespace Azure.Storage.Files.Test
         public async Task CreateAsync_Headers()
         {
             var constants = new TestConstants(this);
-            using (this.GetNewDirectory(out var directory))
+            using (GetNewDirectory(out DirectoryClient directory))
             {
                 // Arrange
-                var file = this.InstrumentClient(directory.GetFileClient(this.GetNewFileName()));
+                FileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
 
                 // Act
                 await file.CreateAsync(
@@ -206,7 +254,7 @@ namespace Azure.Storage.Files.Test
                     });
 
                 // Assert
-                var response = await file.GetPropertiesAsync();
+                Response<StorageFileProperties> response = await file.GetPropertiesAsync();
                 Assert.AreEqual(constants.ContentType, response.Value.ContentType);
                 TestHelper.AssertSequenceEqual(constants.ContentMD5.ToList(), response.Value.ContentHash.ToList());
                 Assert.AreEqual(1, response.Value.ContentEncoding.Count());
@@ -221,14 +269,14 @@ namespace Azure.Storage.Files.Test
         [Test]
         public async Task CreateAsync_Error()
         {
-            using (this.GetNewShare(out var share))
+            using (GetNewShare(out ShareClient share))
             {
                 // Arrange
-                var directory = this.InstrumentClient(share.GetDirectoryClient(this.GetNewDirectoryName()));
-                var file = this.InstrumentClient(directory.GetFileClient(this.GetNewFileName()));
+                DirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
+                FileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     file.CreateAsync(maxSize: Constants.KB),
                     e => Assert.AreEqual("ParentNotFound", e.ErrorCode.Split('\n')[0]));
             }
@@ -237,31 +285,31 @@ namespace Azure.Storage.Files.Test
         [Test]
         public async Task SetMetadataAsync()
         {
-            using (this.GetNewFile(out var file))
+            using (GetNewFile(out FileClient file))
             {
                 // Arrange
-                var metadata = this.BuildMetadata();
+                IDictionary<string, string> metadata = BuildMetadata();
 
                 // Act
                 await file.SetMetadataAsync(metadata);
 
                 // Assert
-                var response = await file.GetPropertiesAsync();
-                this.AssertMetadataEquality(metadata, response.Value.Metadata);
+                Response<StorageFileProperties> response = await file.GetPropertiesAsync();
+                AssertMetadataEquality(metadata, response.Value.Metadata);
             }
         }
 
         [Test]
         public async Task SetMetadataAsync_Error()
         {
-            using (this.GetNewDirectory(out var directory))
+            using (GetNewDirectory(out DirectoryClient directory))
             {
                 // Arrange
-                var file = this.InstrumentClient(directory.GetFileClient(this.GetNewFileName()));
-                var metadata = this.BuildMetadata();
+                FileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+                IDictionary<string, string> metadata = BuildMetadata();
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     file.SetMetadataAsync(metadata),
                     e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
             }
@@ -270,40 +318,40 @@ namespace Azure.Storage.Files.Test
         [Test]
         public async Task GetPropertiesAsync()
         {
-            using (this.GetNewDirectory(out var directory))
+            using (GetNewDirectory(out DirectoryClient directory))
             {
                 // Arrange
-                var file = this.InstrumentClient(directory.GetFileClient(this.GetNewFileName()));
+                FileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
 
                 // Act
-                var createResponse = await file.CreateAsync(maxSize: Constants.KB);
-                var getPropertiesResponse = await file.GetPropertiesAsync();
+                Response<StorageFileInfo> createResponse = await file.CreateAsync(maxSize: Constants.KB);
+                Response<StorageFileProperties> getPropertiesResponse = await file.GetPropertiesAsync();
 
                 // Assert
                 Assert.AreEqual(createResponse.Value.ETag, getPropertiesResponse.Value.ETag);
                 Assert.AreEqual(createResponse.Value.LastModified, getPropertiesResponse.Value.LastModified);
                 Assert.AreEqual(createResponse.Value.IsServerEncrypted, getPropertiesResponse.Value.IsServerEncrypted);
-                Assert.AreEqual(createResponse.Value.SmbProperties, getPropertiesResponse.Value.SmbProperties);
+                AssertPropertiesEqual(createResponse.Value.SmbProperties, getPropertiesResponse.Value.SmbProperties);
             }
         }
 
         [Test]
         public async Task GetPropertiesAsync_ShareSAS()
         {
-            var shareName = this.GetNewShareName();
-            var directoryName = this.GetNewDirectoryName();
-            var fileName = this.GetNewFileName();
-            using (this.GetNewFile(out _, shareName: shareName, directoryName: directoryName, fileName: fileName))
+            var shareName = GetNewShareName();
+            var directoryName = GetNewDirectoryName();
+            var fileName = GetNewFileName();
+            using (GetNewFile(out _, shareName: shareName, directoryName: directoryName, fileName: fileName))
             {
                 // Arrange
-                var sasFile = this.InstrumentClient(
-                    this.GetServiceClient_FileServiceSasShare(shareName)
+                FileClient sasFile = InstrumentClient(
+                    GetServiceClient_FileServiceSasShare(shareName)
                     .GetShareClient(shareName)
                     .GetDirectoryClient(directoryName)
                     .GetFileClient(fileName));
 
                 // Act
-                var response = await sasFile.GetPropertiesAsync();
+                Response<StorageFileProperties> response = await sasFile.GetPropertiesAsync();
 
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -313,20 +361,20 @@ namespace Azure.Storage.Files.Test
         [Test]
         public async Task GetPropertiesAsync_FileSAS()
         {
-            var shareName = this.GetNewShareName();
-            var directoryName = this.GetNewDirectoryName();
-            var fileName = this.GetNewFileName();
-            using (this.GetNewFile(out _, shareName: shareName, directoryName: directoryName, fileName: fileName))
+            var shareName = GetNewShareName();
+            var directoryName = GetNewDirectoryName();
+            var fileName = GetNewFileName();
+            using (GetNewFile(out _, shareName: shareName, directoryName: directoryName, fileName: fileName))
             {
                 // Arrange
-                var sasFile = this.InstrumentClient(
-                    this.GetServiceClient_FileServiceSasFile(shareName, directoryName + "/" + fileName)
+                FileClient sasFile = InstrumentClient(
+                    GetServiceClient_FileServiceSasFile(shareName, directoryName + "/" + fileName)
                     .GetShareClient(shareName)
                     .GetDirectoryClient(directoryName)
                     .GetFileClient(fileName));
 
                 // Act
-                var response = await sasFile.GetPropertiesAsync();
+                Response<StorageFileProperties> response = await sasFile.GetPropertiesAsync();
 
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -336,18 +384,18 @@ namespace Azure.Storage.Files.Test
         [Test]
         public async Task GetPropertiesAsync_Error()
         {
-            using (this.GetNewDirectory(out var directory))
+            using (GetNewDirectory(out DirectoryClient directory))
             {
                 // Arrange
-                var file = this.InstrumentClient(directory.GetFileClient(this.GetNewFileName()));
+                FileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     file.GetPropertiesAsync(),
                     e =>
                     {
                         Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]);
-                        if (this.Mode != RecordedTestMode.Playback)
+                        if (Mode != RecordedTestMode.Playback)
                         {
                             // The MockResponse type doesn't supply the ReasonPhrase we're
                             // checking for with this test
@@ -361,7 +409,7 @@ namespace Azure.Storage.Files.Test
         public async Task SetHttpHeadersAsync()
         {
             var constants = new TestConstants(this);
-            using (this.GetNewFile(out var file))
+            using (GetNewFile(out FileClient file))
             {
                 // Act
                 await file.SetHttpHeadersAsync(
@@ -376,7 +424,7 @@ namespace Azure.Storage.Files.Test
                     });
 
                 // Assert
-                var response = await file.GetPropertiesAsync();
+                Response<StorageFileProperties> response = await file.GetPropertiesAsync();
                 Assert.AreEqual(constants.ContentType, response.Value.ContentType);
                 TestHelper.AssertSequenceEqual(constants.ContentMD5.ToList(), response.Value.ContentHash.ToList());
                 Assert.AreEqual(1, response.Value.ContentEncoding.Count());
@@ -391,15 +439,15 @@ namespace Azure.Storage.Files.Test
         [Test]
         public async Task SetPropertiesAsync_FilePermission()
         {
-            using (this.GetNewDirectory(out var directory))
+            using (GetNewDirectory(out DirectoryClient directory))
             {
                 // Arrange
-                var file = this.InstrumentClient(directory.GetFileClient(this.GetNewFileName()));
+                FileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
                 var filePermission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)";
                 await file.CreateAsync(maxSize: Constants.KB);
 
                 // Act
-                var response = await file.SetHttpHeadersAsync(filePermission: filePermission);
+                Response<StorageFileInfo> response = await file.SetHttpHeadersAsync(filePermission: filePermission);
 
                 // Assert
                 AssertValidStorageFileInfo(response);
@@ -409,35 +457,35 @@ namespace Azure.Storage.Files.Test
         [Test]
         public async Task SetPropertiesAsync_SmbProperties()
         {
-            using (this.GetNewShare(out var share))
+            using (GetNewShare(out ShareClient share))
             {
                 // Arrange
                 var permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)";
-                var createPermissionResponse = await share.CreatePermissionAsync(permission);
+                Response<PermissionInfo> createPermissionResponse = await share.CreatePermissionAsync(permission);
 
-                var directory = this.InstrumentClient(share.GetDirectoryClient(this.GetNewDirectoryName()));
+                DirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
                 await directory.CreateAsync();
 
-                var file = this.InstrumentClient(directory.GetFileClient(this.GetNewFileName()));
+                FileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
                 var smbProperties = new FileSmbProperties
                 {
                     FilePermissionKey = createPermissionResponse.Value.FilePermissionKey,
-                    FileAttributes = NtfsFileAttributes.Parse("Archive|ReadOnly"),
-                    FileCreationTime = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
-                    FileLastWriteTime = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero),
+                    FileAttributes = FileExtensions.ToFileAttributes("Archive|ReadOnly"),
+                    FileCreatedOn = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
+                    FileLastWrittenOn = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero),
                 };
 
 
                 await file.CreateAsync(maxSize: Constants.KB);
 
                 // Act
-                var response = await file.SetHttpHeadersAsync(smbProperties: smbProperties);
+                Response<StorageFileInfo> response = await file.SetHttpHeadersAsync(smbProperties: smbProperties);
 
                 // Assert
                 AssertValidStorageFileInfo(response);
-                Assert.AreEqual(smbProperties.FileAttributes, response.Value.SmbProperties.Value.FileAttributes);
-                Assert.AreEqual(smbProperties.FileCreationTime, response.Value.SmbProperties.Value.FileCreationTime);
-                Assert.AreEqual(smbProperties.FileLastWriteTime, response.Value.SmbProperties.Value.FileLastWriteTime);
+                Assert.AreEqual(smbProperties.FileAttributes, response.Value.SmbProperties.FileAttributes);
+                Assert.AreEqual(smbProperties.FileCreatedOn, response.Value.SmbProperties.FileCreatedOn);
+                Assert.AreEqual(smbProperties.FileLastWrittenOn, response.Value.SmbProperties.FileLastWrittenOn);
             }
         }
 
@@ -445,10 +493,10 @@ namespace Azure.Storage.Files.Test
         public async Task SetPropertiesAsync_FilePermissionTooLong()
         {
             var constants = new TestConstants(this);
-            using (this.GetNewDirectory(out var directory))
+            using (GetNewDirectory(out DirectoryClient directory))
             {
                 // Arrange
-                var file = this.InstrumentClient(directory.GetFileClient(this.GetNewFileName()));
+                FileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
                 var filePermission = new string('*', 9 * Constants.KB);
                 await file.CreateAsync(maxSize: Constants.KB);
 
@@ -465,10 +513,10 @@ namespace Azure.Storage.Files.Test
         [Test]
         public async Task SetPropertiesAsync_FilePermissionAndFilePermissionKeySet()
         {
-            using (this.GetNewDirectory(out var directory))
+            using (GetNewDirectory(out DirectoryClient directory))
             {
                 // Arrange
-                var file = this.InstrumentClient(directory.GetFileClient(this.GetNewFileName()));
+                FileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
                 await file.CreateAsync(maxSize: Constants.KB);
 
                 var filePermission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)";
@@ -490,13 +538,13 @@ namespace Azure.Storage.Files.Test
         public async Task SetPropertiesAsync_Error()
         {
             var constants = new TestConstants(this);
-            using (this.GetNewDirectory(out var directory))
+            using (GetNewDirectory(out DirectoryClient directory))
             {
                 // Arrange
-                var file = this.InstrumentClient(directory.GetFileClient(this.GetNewFileName()));
+                FileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     file.SetHttpHeadersAsync(
                         httpHeaders: new FileHttpHeaders
                         {
@@ -514,10 +562,10 @@ namespace Azure.Storage.Files.Test
         [Test]
         public async Task DeleteAsync()
         {
-            using (this.GetNewFile(out var file))
+            using (GetNewFile(out FileClient file))
             {
                 // Act
-                var response = await file.DeleteAsync();
+                Response response = await file.DeleteAsync();
 
                 // Assert
                 Assert.IsNotNull(response.Headers.RequestId);
@@ -527,13 +575,13 @@ namespace Azure.Storage.Files.Test
         [Test]
         public async Task DeleteAsync_Error()
         {
-            using (this.GetNewDirectory(out var directory))
+            using (GetNewDirectory(out DirectoryClient directory))
             {
                 // Arrange
-                var file = this.InstrumentClient(directory.GetFileClient(this.GetNewFileName()));
+                FileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     file.DeleteAsync(),
                     e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
             }
@@ -542,11 +590,11 @@ namespace Azure.Storage.Files.Test
         [Test]
         public async Task StartCopyAsync()
         {
-            using (this.GetNewFile(out var source))
-            using (this.GetNewFile(out var dest))
+            using (GetNewFile(out FileClient source))
+            using (GetNewFile(out FileClient dest))
             {
                 // Arrange
-                var data = this.GetRandomBuffer(Constants.KB);
+                var data = GetRandomBuffer(Constants.KB);
 
                 using (var stream = new MemoryStream(data))
                 {
@@ -557,7 +605,7 @@ namespace Azure.Storage.Files.Test
                 }
 
                 // Act
-                var response = await dest.StartCopyAsync(source.Uri);
+                Response<StorageFileCopyInfo> response = await dest.StartCopyAsync(source.Uri);
 
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -567,12 +615,12 @@ namespace Azure.Storage.Files.Test
         [Test]
         public async Task StartCopyAsync_Metata()
         {
-            using (this.GetNewFile(out var source))
-            using (this.GetNewFile(out var dest))
+            using (GetNewFile(out FileClient source))
+            using (GetNewFile(out FileClient dest))
             {
                 // Arrange
                 await source.CreateAsync(maxSize: Constants.MB);
-                var data = this.GetRandomBuffer(Constants.KB);
+                var data = GetRandomBuffer(Constants.KB);
 
                 using (var stream = new MemoryStream(data))
                 {
@@ -582,29 +630,29 @@ namespace Azure.Storage.Files.Test
                         content: stream);
                 }
 
-                var metadata = this.BuildMetadata();
+                IDictionary<string, string> metadata = BuildMetadata();
 
                 // Act
-                var copyResponse = await dest.StartCopyAsync(
+                Response<StorageFileCopyInfo> copyResponse = await dest.StartCopyAsync(
                     sourceUri: source.Uri,
                     metadata: metadata);
 
-                await this.WaitForCopy(dest);
+                await WaitForCopy(dest);
 
                 // Assert
-                var response = await dest.GetPropertiesAsync();
-                this.AssertMetadataEquality(metadata, response.Value.Metadata);
+                Response<StorageFileProperties> response = await dest.GetPropertiesAsync();
+                AssertMetadataEquality(metadata, response.Value.Metadata);
             }
         }
 
         [Test]
         public async Task StartCopyAsync_Error()
         {
-            using (this.GetNewFile(out var file))
+            using (GetNewFile(out FileClient file))
             {
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    file.StartCopyAsync(sourceUri: InvalidUri),
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    file.StartCopyAsync(sourceUri: s_invalidUri),
                     e => Assert.AreEqual("CannotVerifyCopySource", e.ErrorCode.Split('\n')[0]));
             }
         }
@@ -612,12 +660,12 @@ namespace Azure.Storage.Files.Test
         [Test]
         public async Task AbortCopyAsync()
         {
-            using (this.GetNewDirectory(out var directory))
+            using (GetNewDirectory(out DirectoryClient directory))
             {
                 // Arrange
-                var source = this.InstrumentClient(directory.GetFileClient(this.GetNewFileName()));
+                FileClient source = InstrumentClient(directory.GetFileClient(GetNewFileName()));
                 await source.CreateAsync(maxSize: Constants.MB);
-                var data = this.GetRandomBuffer(Constants.MB);
+                var data = GetRandomBuffer(Constants.MB);
 
                 using (var stream = new MemoryStream(data))
                 {
@@ -627,19 +675,19 @@ namespace Azure.Storage.Files.Test
                         content: stream);
                 }
 
-                var dest = this.InstrumentClient(directory.GetFileClient(this.GetNewFileName()));
+                FileClient dest = InstrumentClient(directory.GetFileClient(GetNewFileName()));
                 await dest.CreateAsync(maxSize: Constants.MB);
-                var copyResponse = await dest.StartCopyAsync(source.Uri);
+                Response<StorageFileCopyInfo> copyResponse = await dest.StartCopyAsync(source.Uri);
 
                 // Act
                 try
                 {
-                    var response = await dest.AbortCopyAsync(copyResponse.Value.CopyId);
+                    Response response = await dest.AbortCopyAsync(copyResponse.Value.CopyId);
 
                     // Assert
                     Assert.IsNotNull(response.Headers.RequestId);
                 }
-                catch (StorageRequestFailedException e) when (e.ErrorCode == "NoPendingCopyOperation")
+                catch (RequestFailedException e) when (e.ErrorCode == "NoPendingCopyOperation")
                 {
                     // This exception is intentionally.  It is difficult to test AbortCopyAsync() in a deterministic way.
                     // this.WarnCopyCompletedTooQuickly();
@@ -650,14 +698,14 @@ namespace Azure.Storage.Files.Test
         [Test]
         public async Task AbortCopyAsync_Error()
         {
-            using (this.GetNewDirectory(out var directory))
+            using (GetNewDirectory(out DirectoryClient directory))
             {
                 // Arrange
-                var file = this.InstrumentClient(directory.GetFileClient(this.GetNewFileName()));
+                FileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
                 await file.CreateAsync(maxSize: Constants.MB);
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     file.AbortCopyAsync("id"),
                     e => Assert.AreEqual("InvalidQueryParameterValue", e.ErrorCode.Split('\n')[0]));
             }
@@ -666,29 +714,29 @@ namespace Azure.Storage.Files.Test
         [Test]
         public void WithSnapshot()
         {
-            var shareName = this.GetNewShareName();
-            var directoryName = this.GetNewDirectoryName();
-            var fileName = this.GetNewFileName();
+            var shareName = GetNewShareName();
+            var directoryName = GetNewDirectoryName();
+            var fileName = GetNewFileName();
 
-            var service = this.GetServiceClient_SharedKey();
+            FileServiceClient service = GetServiceClient_SharedKey();
 
-            var share = this.InstrumentClient(service.GetShareClient(shareName));
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
 
-            var directory = this.InstrumentClient(share.GetDirectoryClient(directoryName));
+            DirectoryClient directory = InstrumentClient(share.GetDirectoryClient(directoryName));
 
-            var file = this.InstrumentClient(directory.GetFileClient(fileName));
+            FileClient file = InstrumentClient(directory.GetFileClient(fileName));
 
             var builder = new FileUriBuilder(file.Uri);
 
             Assert.AreEqual("", builder.Snapshot);
 
-            file = this.InstrumentClient(file.WithSnapshot("foo"));
+            file = InstrumentClient(file.WithSnapshot("foo"));
 
             builder = new FileUriBuilder(file.Uri);
 
             Assert.AreEqual("foo", builder.Snapshot);
 
-            file = this.InstrumentClient(file.WithSnapshot(null));
+            file = InstrumentClient(file.WithSnapshot(null));
 
             builder = new FileUriBuilder(file.Uri);
 
@@ -699,8 +747,8 @@ namespace Azure.Storage.Files.Test
         public async Task DownloadAsync()
         {
             // Arrange
-            var data = this.GetRandomBuffer(Constants.KB);
-            using (this.GetNewFile(out var file))
+            var data = GetRandomBuffer(Constants.KB);
+            using (GetNewFile(out FileClient file))
             using (var stream = new MemoryStream(data))
             {
                 await file.UploadRangeAsync(
@@ -709,8 +757,8 @@ namespace Azure.Storage.Files.Test
                     content: stream);
 
                 // Act
-                var getPropertiesResponse = await file.GetPropertiesAsync();
-                var downloadResponse = await file.DownloadAsync(range: new HttpRange(Constants.KB, data.LongLength));
+                Response<StorageFileProperties> getPropertiesResponse = await file.GetPropertiesAsync();
+                Response<StorageFileDownloadInfo> downloadResponse = await file.DownloadAsync(range: new HttpRange(Constants.KB, data.LongLength));
 
                 // Assert
 
@@ -721,22 +769,22 @@ namespace Azure.Storage.Files.Test
                 TestHelper.AssertSequenceEqual(data, actual.ToArray());
 
                 // Properties are equal
-                Assert.AreEqual(getPropertiesResponse.Value.LastModified, downloadResponse.Value.Properties.LastModified);
-                this.AssertMetadataEquality(getPropertiesResponse.Value.Metadata, downloadResponse.Value.Properties.Metadata);
-                Assert.AreEqual(getPropertiesResponse.Value.ContentType, downloadResponse.Value.Properties.ContentType);
-                Assert.AreEqual(getPropertiesResponse.Value.ETag, downloadResponse.Value.Properties.ETag);
-                Assert.AreEqual(getPropertiesResponse.Value.ContentEncoding, downloadResponse.Value.Properties.ContentEncoding);
-                Assert.AreEqual(getPropertiesResponse.Value.CacheControl, downloadResponse.Value.Properties.CacheControl);
-                Assert.AreEqual(getPropertiesResponse.Value.ContentDisposition, downloadResponse.Value.Properties.ContentDisposition);
-                Assert.AreEqual(getPropertiesResponse.Value.ContentLanguage, downloadResponse.Value.Properties.ContentLanguage);
-                Assert.AreEqual(getPropertiesResponse.Value.CopyCompletionTime, downloadResponse.Value.Properties.CopyCompletionTime);
-                Assert.AreEqual(getPropertiesResponse.Value.CopyStatusDescription, downloadResponse.Value.Properties.CopyStatusDescription);
-                Assert.AreEqual(getPropertiesResponse.Value.CopyId, downloadResponse.Value.Properties.CopyId);
-                Assert.AreEqual(getPropertiesResponse.Value.CopyProgress, downloadResponse.Value.Properties.CopyProgress);
-                Assert.AreEqual(getPropertiesResponse.Value.CopySource, downloadResponse.Value.Properties.CopySource);
-                Assert.AreEqual(getPropertiesResponse.Value.CopyStatus, downloadResponse.Value.Properties.CopyStatus);
-                Assert.AreEqual(getPropertiesResponse.Value.IsServerEncrypted, downloadResponse.Value.Properties.IsServerEncrypted);
-                Assert.AreEqual(getPropertiesResponse.Value.SmbProperties, downloadResponse.Value.Properties.SmbProperties);
+                Assert.AreEqual(getPropertiesResponse.Value.LastModified, downloadResponse.Value.Details.LastModified);
+                AssertMetadataEquality(getPropertiesResponse.Value.Metadata, downloadResponse.Value.Details.Metadata);
+                Assert.AreEqual(getPropertiesResponse.Value.ContentType, downloadResponse.Value.ContentType);
+                Assert.AreEqual(getPropertiesResponse.Value.ETag, downloadResponse.Value.Details.ETag);
+                Assert.AreEqual(getPropertiesResponse.Value.ContentEncoding, downloadResponse.Value.Details.ContentEncoding);
+                Assert.AreEqual(getPropertiesResponse.Value.CacheControl, downloadResponse.Value.Details.CacheControl);
+                Assert.AreEqual(getPropertiesResponse.Value.ContentDisposition, downloadResponse.Value.Details.ContentDisposition);
+                Assert.AreEqual(getPropertiesResponse.Value.ContentLanguage, downloadResponse.Value.Details.ContentLanguage);
+                Assert.AreEqual(getPropertiesResponse.Value.CopyCompletedOn, downloadResponse.Value.Details.CopyCompletedOn);
+                Assert.AreEqual(getPropertiesResponse.Value.CopyStatusDescription, downloadResponse.Value.Details.CopyStatusDescription);
+                Assert.AreEqual(getPropertiesResponse.Value.CopyId, downloadResponse.Value.Details.CopyId);
+                Assert.AreEqual(getPropertiesResponse.Value.CopyProgress, downloadResponse.Value.Details.CopyProgress);
+                Assert.AreEqual(getPropertiesResponse.Value.CopySource, downloadResponse.Value.Details.CopySource);
+                Assert.AreEqual(getPropertiesResponse.Value.CopyStatus, downloadResponse.Value.Details.CopyStatus);
+                Assert.AreEqual(getPropertiesResponse.Value.IsServerEncrypted, downloadResponse.Value.Details.IsServerEncrypted);
+                AssertPropertiesEqual(getPropertiesResponse.Value.SmbProperties, downloadResponse.Value.Details.SmbProperties);
             }
         }
 
@@ -747,24 +795,24 @@ namespace Azure.Storage.Files.Test
             var dataSize = 1 * Constants.MB;
             var offset = 512 * Constants.KB;
 
-            using (this.GetNewShare(out var share))
+            using (GetNewShare(out ShareClient share))
             {
-                var directory = this.InstrumentClient(share.GetDirectoryClient(this.GetNewDirectoryName()));
-                var directoryFaulty = this.InstrumentClient(
+                DirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
+                DirectoryClient directoryFaulty = InstrumentClient(
                     new DirectoryClient(
                         directory.Uri,
-                        new StorageSharedKeyCredential(this.TestConfigDefault.AccountName, this.TestConfigDefault.AccountKey),
-                        this.GetFaultyFileConnectionOptions(raiseAt: 256 * Constants.KB)));
+                        new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey),
+                        GetFaultyFileConnectionOptions(raiseAt: 256 * Constants.KB)));
 
                 await directory.CreateAsync();
 
                 // Arrange
-                var fileName = this.GetNewFileName();
-                var fileFaulty = this.InstrumentClient(directoryFaulty.GetFileClient(fileName));
-                var file = this.InstrumentClient(directory.GetFileClient(fileName));
+                var fileName = GetNewFileName();
+                FileClient fileFaulty = InstrumentClient(directoryFaulty.GetFileClient(fileName));
+                FileClient file = InstrumentClient(directory.GetFileClient(fileName));
                 await file.CreateAsync(maxSize: fileSize);
 
-                var data = this.GetRandomBuffer(dataSize);
+                var data = GetRandomBuffer(dataSize);
 
                 // Act
                 using (var stream = new MemoryStream(data))
@@ -776,7 +824,7 @@ namespace Azure.Storage.Files.Test
                 }
 
                 // Assert
-                var downloadResponse = await fileFaulty.DownloadAsync(range: new HttpRange(offset, data.LongLength));
+                Response<StorageFileDownloadInfo> downloadResponse = await fileFaulty.DownloadAsync(range: new HttpRange(offset, data.LongLength));
                 var actual = new MemoryStream();
                 await downloadResponse.Value.Content.CopyToAsync(actual, 128 * Constants.KB);
                 TestHelper.AssertSequenceEqual(data, actual.ToArray());
@@ -786,9 +834,9 @@ namespace Azure.Storage.Files.Test
         [Test]
         public async Task GetRangeListAsync()
         {
-            using (this.GetNewFile(out var file))
+            using (GetNewFile(out FileClient file))
             {
-                var response = await file.GetRangeListAsync(range: new HttpRange(0, Constants.MB));
+                Response<StorageFileRangeInfo> response = await file.GetRangeListAsync(range: new HttpRange(0, Constants.MB));
 
                 Assert.IsNotNull(response);
             }
@@ -797,13 +845,13 @@ namespace Azure.Storage.Files.Test
         [Test]
         public async Task GetRangeListAsync_Error()
         {
-            using (this.GetNewDirectory(out var directory))
+            using (GetNewDirectory(out DirectoryClient directory))
             {
                 // Arrange
-                var file = this.InstrumentClient(directory.GetFileClient(this.GetNewFileName()));
+                FileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     file.GetRangeListAsync(range: new HttpRange(0, Constants.MB)),
                     e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
             }
@@ -812,12 +860,12 @@ namespace Azure.Storage.Files.Test
         [Test]
         public async Task UploadRangeAsync()
         {
-            var data = this.GetRandomBuffer(Constants.KB);
+            var data = GetRandomBuffer(Constants.KB);
 
-            using (this.GetNewFile(out var file))
+            using (GetNewFile(out FileClient file))
             using (var stream = new MemoryStream(data))
             {
-                var response = await file.UploadRangeAsync(
+                Response<StorageFileUploadInfo> response = await file.UploadRangeAsync(
                     writeType: FileRangeWriteType.Update,
                     range: new HttpRange(Constants.KB, Constants.KB),
                     content: stream);
@@ -829,22 +877,43 @@ namespace Azure.Storage.Files.Test
         [Test]
         public async Task UploadRangeAsync_Error()
         {
-            using (this.GetNewDirectory(out var directory))
+            using (GetNewDirectory(out DirectoryClient directory))
             {
                 // Arrange
-                var file = this.InstrumentClient(directory.GetFileClient(this.GetNewFileName()));
-                var data = this.GetRandomBuffer(Constants.KB);
+                FileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+                var data = GetRandomBuffer(Constants.KB);
 
                 using (var stream = new MemoryStream(data))
                 {
                     // Act
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     file.UploadRangeAsync(
                         writeType: FileRangeWriteType.Update,
                         range: new HttpRange(Constants.KB, Constants.KB),
                         content: stream),
                     e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
                 }
+            }
+        }
+
+        [Test]
+        public async Task UploadAsync_Simple()
+        {
+            const int size = 10 * Constants.KB;
+            var data = this.GetRandomBuffer(size);
+            using (this.GetNewShare(out var share))
+            {
+                var name = this.GetNewFileName();
+                var file = this.InstrumentClient(share.GetRootDirectoryClient().GetFileClient(name));
+
+                await file.CreateAsync(size);
+                using var stream = new MemoryStream(data);
+                await file.UploadAsync(stream);
+
+                using var bufferedContent = new MemoryStream();
+                var download = await file.DownloadAsync();
+                await download.Value.Content.CopyToAsync(bufferedContent);
+                TestHelper.AssertSequenceEqual(data, bufferedContent.ToArray());
             }
         }
 
@@ -860,7 +929,7 @@ namespace Azure.Storage.Files.Test
         [TestCase(501 * Constants.KB)]
         public async Task UploadAsync_SmallBlobs(int size) =>
             // Use a 1KB threshold so we get a lot of individual blocks
-            await this.UploadAndVerify(size, Constants.KB);
+            await UploadAndVerify(size, Constants.KB);
 
         [Test]
         [LiveOnly]
@@ -869,15 +938,15 @@ namespace Azure.Storage.Files.Test
         [TestCase(1 * Constants.GB)]
         public async Task UploadAsync_LargeBlobs(int size) =>
             // TODO: #6781 We don't want to add 1GB of random data in the recordings
-            await this.UploadAndVerify(size, Constants.MB);
+            await UploadAndVerify(size, Constants.MB);
 
         private async Task UploadAndVerify(long size, int singleRangeThreshold)
         {
-            var data = this.GetRandomBuffer(size);
-            using (this.GetNewShare(out var share))
+            var data = GetRandomBuffer(size);
+            using (GetNewShare(out ShareClient share))
             {
-                var name = this.GetNewFileName();
-                var file = this.InstrumentClient(share.GetRootDirectoryClient().GetFileClient(name));
+                var name = GetNewFileName();
+                FileClient file = InstrumentClient(share.GetRootDirectoryClient().GetFileClient(name));
                 await file.CreateAsync(size);
                 using (var stream = new MemoryStream(data))
                 {
@@ -890,7 +959,7 @@ namespace Azure.Storage.Files.Test
                 }
 
                 using var bufferedContent = new MemoryStream();
-                var download = await file.DownloadAsync();
+                Response<StorageFileDownloadInfo> download = await file.DownloadAsync();
                 await download.Value.Content.CopyToAsync(bufferedContent);
                 TestHelper.AssertSequenceEqual(data, bufferedContent.ToArray());
             }
@@ -903,33 +972,33 @@ namespace Azure.Storage.Files.Test
             var dataSize = 1 * Constants.MB;
             var offset = 512 * Constants.KB;
 
-            using (this.GetNewShare(out var share))
+            using (GetNewShare(out ShareClient share))
             {
-                var directory = this.InstrumentClient(share.GetDirectoryClient(this.GetNewDirectoryName()));
-                var directoryFaulty = this.InstrumentClient(
+                DirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
+                DirectoryClient directoryFaulty = InstrumentClient(
                     new DirectoryClient(
                         directory.Uri,
                         new StorageSharedKeyCredential(
-                            this.TestConfigDefault.AccountName,
-                            this.TestConfigDefault.AccountKey),
-                        this.GetFaultyFileConnectionOptions()));
+                            TestConfigDefault.AccountName,
+                            TestConfigDefault.AccountKey),
+                        GetFaultyFileConnectionOptions()));
 
                 await directory.CreateAsync();
 
                 // Arrange
-                var fileName = this.GetNewFileName();
-                var fileFaulty = this.InstrumentClient(directoryFaulty.GetFileClient(fileName));
-                var file = this.InstrumentClient(directory.GetFileClient(fileName));
+                var fileName = GetNewFileName();
+                FileClient fileFaulty = InstrumentClient(directoryFaulty.GetFileClient(fileName));
+                FileClient file = InstrumentClient(directory.GetFileClient(fileName));
                 await file.CreateAsync(maxSize: fileSize);
 
-                var data = this.GetRandomBuffer(dataSize);
-                var progressList = new List<StorageProgress>();
-                var progressHandler = new Progress<StorageProgress>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
+                var data = GetRandomBuffer(dataSize);
+                var progressList = new List<long>();
+                var progressHandler = new Progress<long>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
 
                 // Act
                 using (var stream = new FaultyStream(new MemoryStream(data), 256 * Constants.KB, 1, new Exception("Simulated stream fault")))
                 {
-                    var result = await fileFaulty.UploadRangeAsync(
+                    Response<StorageFileUploadInfo> result = await fileFaulty.UploadRangeAsync(
                         writeType: FileRangeWriteType.Update,
                         range: new HttpRange(offset, dataSize),
                         content: stream,
@@ -941,13 +1010,13 @@ namespace Azure.Storage.Files.Test
                     result.GetRawResponse().Headers.TryGetValue("x-ms-version", out var version);
                     Assert.IsNotNull(version);
 
-                    await this.WaitForProgressAsync(progressList, data.LongLength);
+                    await WaitForProgressAsync(progressList, data.LongLength);
                     Assert.IsTrue(progressList.Count > 1, "Too few progress received");
-                    Assert.GreaterOrEqual(data.LongLength, progressList.Last().BytesTransferred, "Final progress has unexpected value");
+                    Assert.GreaterOrEqual(data.LongLength, progressList.Last(), "Final progress has unexpected value");
                 }
 
                 // Assert
-                var downloadResponse = await file.DownloadAsync(range: new HttpRange(offset, data.LongLength));
+                Response<StorageFileDownloadInfo> downloadResponse = await file.DownloadAsync(range: new HttpRange(offset, data.LongLength));
                 var actual = new MemoryStream();
                 await downloadResponse.Value.Content.CopyToAsync(actual);
                 TestHelper.AssertSequenceEqual(data, actual.ToArray());
@@ -1028,7 +1097,7 @@ namespace Azure.Storage.Files.Test
 
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     destFile.UploadRangeFromUriAsync(
                     sourceUri: destFile.Uri,
                     range: destRange,
@@ -1041,10 +1110,10 @@ namespace Azure.Storage.Files.Test
         public async Task ListHandles()
         {
             // Arrange
-            using (this.GetNewFile(out var file))
+            using (GetNewFile(out FileClient file))
             {
                 // Act
-                var handles = await file.GetHandlesAsync().ToListAsync();
+                IList<StorageFileHandle> handles = await file.GetHandlesAsync().ToListAsync();
 
                 // Assert
                 Assert.AreEqual(0, handles.Count);
@@ -1055,10 +1124,10 @@ namespace Azure.Storage.Files.Test
         public async Task ListHandles_Min()
         {
             // Arrange
-            using (this.GetNewFile(out var file))
+            using (GetNewFile(out FileClient file))
             {
                 // Act
-                var handles = await file.GetHandlesAsync().ToListAsync();
+                IList<StorageFileHandle> handles = await file.GetHandlesAsync().ToListAsync();
 
                 // Assert
                 Assert.AreEqual(0, handles.Count);
@@ -1069,12 +1138,12 @@ namespace Azure.Storage.Files.Test
         public async Task ListHandles_Error()
         {
             // Arrange
-            using (this.GetNewDirectory(out var directory))
+            using (GetNewDirectory(out DirectoryClient directory))
             {
-                var file = this.InstrumentClient(directory.GetFileClient(this.GetNewDirectoryName()));
+                FileClient file = InstrumentClient(directory.GetFileClient(GetNewDirectoryName()));
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     file.GetHandlesAsync().ToListAsync(),
                     actualException => Assert.AreEqual("ResourceNotFound", actualException.ErrorCode));
 
@@ -1085,13 +1154,13 @@ namespace Azure.Storage.Files.Test
         public async Task ForceCloseHandles_Min()
         {
             // Arrange
-            using (this.GetNewFile(out var file))
+            using (GetNewFile(out FileClient file))
             {
                 // Act
-                var response = await file.ForceCloseHandlesAsync();
+                int handlesClosed = await file.ForceCloseAllHandlesAsync();
 
                 // Assert
-                Assert.AreEqual(0, response.Value.NumberOfHandlesClosed);
+                Assert.AreEqual(0, handlesClosed);
             }
         }
 
@@ -1099,31 +1168,47 @@ namespace Azure.Storage.Files.Test
         public async Task ForceCloseHandles_Error()
         {
             // Arrange
-            using (this.GetNewDirectory(out var directory))
+            using (GetNewDirectory(out DirectoryClient directory))
             {
-                var file = this.InstrumentClient(directory.GetFileClient(this.GetNewDirectoryName()));
+                FileClient file = InstrumentClient(directory.GetFileClient(GetNewDirectoryName()));
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    file.ForceCloseHandlesAsync(),
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    file.ForceCloseAllHandlesAsync(),
                     actualException => Assert.AreEqual("ResourceNotFound", actualException.ErrorCode));
+
+            }
+        }
+
+        [Test]
+        public async Task ForceCloseHandle_Error()
+        {
+            // Arrange
+            using (GetNewDirectory(out DirectoryClient directory))
+            {
+                FileClient file = InstrumentClient(directory.GetFileClient(GetNewDirectoryName()));
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    file.ForceCloseHandleAsync("nonExistantHandleId"),
+                    actualException => Assert.AreEqual("InvalidHeaderValue", actualException.ErrorCode));
 
             }
         }
 
         private async Task WaitForCopy(FileClient file, int milliWait = 200)
         {
-            var status = CopyStatus.Pending;
-            var start = this.Recording.Now;
+            CopyStatus status = CopyStatus.Pending;
+            DateTimeOffset start = Recording.Now;
             while (status != CopyStatus.Success)
             {
                 status = (await file.GetPropertiesAsync()).Value.CopyStatus;
-                var currentTime = this.Recording.Now;
+                DateTimeOffset currentTime = Recording.Now;
                 if (status == CopyStatus.Failed || currentTime.AddMinutes(-1) > start)
                 {
                     throw new Exception("Copy failed or took too long");
                 }
-                await this.Delay(milliWait);
+                await Delay(milliWait);
             }
         }
     }

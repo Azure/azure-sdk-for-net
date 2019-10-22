@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using Azure.Core.Http;
-using Azure.Core.Pipeline;
 
 namespace Azure.Core.Testing
 {
@@ -67,7 +65,7 @@ namespace Azure.Core.Testing
 
             _sanitizer.SanitizeHeaders(headers);
 
-            string uri = _sanitizer.SanitizeUri(request.UriBuilder.ToString());
+            string uri = _sanitizer.SanitizeUri(request.Uri.ToString());
 
             int bestScore = int.MaxValue;
             RecordEntry bestScoreEntry = null;

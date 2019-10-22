@@ -1,0 +1,71 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/075423e9-7d33-4166-8bdf-3920b04e3735/resourceGroups/ResourceGroup-CUS/providers/Microsoft.Security/iotSecuritySolutions/IotHub-CUS/analyticsModels/default/aggregatedAlerts/IoT_SuspiciousUseradd%2F2019-09-15?api-version=2019-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDc1NDIzZTktN2QzMy00MTY2LThiZGYtMzkyMGIwNGUzNzM1L3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXAtQ1VTL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VjdXJpdHkvaW90U2VjdXJpdHlTb2x1dGlvbnMvSW90SHViLUNVUy9hbmFseXRpY3NNb2RlbHMvZGVmYXVsdC9hZ2dyZWdhdGVkQWxlcnRzL0lvVF9TdXNwaWNpb3VzVXNlcmFkZCUyRjIwMTktMDktMTU/YXBpLXZlcnNpb249MjAxOS0wOC0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "f1a391c4-d81c-4ace-894e-54ee9f45f9d8"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 15 Sep 2019 09:43:32 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11995"
+        ],
+        "x-ms-request-id": [
+          "a4633721-d1f6-448c-a51c-dbe28ef6dca3"
+        ],
+        "x-ms-correlation-request-id": [
+          "a4633721-d1f6-448c-a51c-dbe28ef6dca3"
+        ],
+        "x-ms-routing-request-id": [
+          "UKSOUTH2:20190915T094332Z:a4633721-d1f6-448c-a51c-dbe28ef6dca3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "1607"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/075423e9-7d33-4166-8bdf-3920b04e3735/resourceGroups/resourcegroup-cus/providers/Microsoft.Security/IoTSecuritySolutions/Locations/centralus/default/IoT_SuspiciousUseradd/2019-09-15\",\r\n  \"name\": \"/subscriptions/075423e9-7d33-4166-8bdf-3920b04e3735/resourceGroups/resourcegroup-cus/providers/Microsoft.Security/IoTSecuritySolutions/Locations/centralus/default/IoT_SuspiciousUseradd/2019-09-15\",\r\n  \"type\": \"Microsoft.Security/IoTSecurityAggregatedAlert\",\r\n  \"properties\": {\r\n    \"alertType\": \"IoT_SuspiciousUseradd\",\r\n    \"alertDisplayName\": \"Detected suspicious use of the useradd command\",\r\n    \"aggregatedDateUtc\": \"2019-09-15\",\r\n    \"vendorName\": \"Microsoft\",\r\n    \"count\": 1,\r\n    \"effectedResourceType\": \"IoT Device\",\r\n    \"systemSource\": \"Devices\",\r\n    \"actionTaken\": \"Detected\",\r\n    \"remediationSteps\": \"Review with the user that ran the command if this was legitimate activity that you expect to see on the device. If not, escalate the alert to the information security team.\",\r\n    \"reportedSeverity\": \"Medium\",\r\n    \"description\": \"Suspicious use of the useradd command detected on the device.\",\r\n    \"logAnalyticsQuery\": \"SecurityAlert | where tolower(ResourceId) == tolower('/subscriptions/075423e9-7d33-4166-8bdf-3920b04e3735/resourcegroups/resourcegroup-cus/providers/microsoft.devices/iothubs/iothub-cus') and tolower(AlertName) == tolower('Detected suspicious use of the useradd command') and TimeGenerated > datetime(2019-09-15T00:00:00Z) and TimeGenerated < datetime(2019-09-16T00:00:00Z) | extend DeviceId=parse_json(ExtendedProperties)['DeviceId'] | project DeviceId, TimeGenerated, DisplayName, AlertSeverity, Description, RemediationSteps, ExtendedProperties\"\r\n  }\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "075423e9-7d33-4166-8bdf-3920b04e3735"
+  }
+}

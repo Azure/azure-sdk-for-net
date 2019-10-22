@@ -32,7 +32,7 @@ namespace Azure.Messaging.EventHubs.Core
                     return AmqpUriScheme;
 
                 default:
-                    throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Resources.InvalidTransportType, instance.ToString(), nameof(instance)));
+                    throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.InvalidTransportType, instance.ToString(), nameof(instance)));
             }
         }
 

@@ -110,18 +110,18 @@ namespace Kusto.Tests.ScenarioTests
                 var createdcluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
 
                 //create database
-                var createdDb = testBase.client.Databases.CreateOrUpdate(testBase.rgName, createdcluster.Name, testBase.databaseName, testBase.database);
-                VerifyDatabase(createdDb, testBase.databaseName, testBase.softDeletePeriod1, testBase.hotCachePeriod1, createdcluster.Name);
+                var createdDb = testBase.client.Databases.CreateOrUpdate(testBase.rgName, createdcluster.Name, testBase.databaseName, testBase.database) as ReadWriteDatabase;
+                VerifyReadWriteDatabase(createdDb, testBase.databaseName, testBase.softDeletePeriod1, testBase.hotCachePeriod1, createdcluster.Name);
 
                 // get database 
-                var database = testBase.client.Databases.Get(testBase.rgName, createdcluster.Name, testBase.databaseName);
-                VerifyDatabase(database, testBase.databaseName, testBase.softDeletePeriod1, testBase.hotCachePeriod1, createdcluster.Name);
+                var database = testBase.client.Databases.Get(testBase.rgName, createdcluster.Name, testBase.databaseName) as ReadWriteDatabase;
+                VerifyReadWriteDatabase(database, testBase.databaseName, testBase.softDeletePeriod1, testBase.hotCachePeriod1, createdcluster.Name);
 
                 //update database
                 testBase.database.HotCachePeriod = testBase.hotCachePeriod2;
                 testBase.database.SoftDeletePeriod = testBase.softDeletePeriod2;
-                var updatedDb = testBase.client.Databases.CreateOrUpdate(testBase.rgName, createdcluster.Name, testBase.databaseName, testBase.database);
-                VerifyDatabase(updatedDb, testBase.databaseName, testBase.softDeletePeriod2, testBase.hotCachePeriod2, createdcluster.Name);
+                var updatedDb = testBase.client.Databases.CreateOrUpdate(testBase.rgName, createdcluster.Name, testBase.databaseName, testBase.database) as ReadWriteDatabase;
+                VerifyReadWriteDatabase(updatedDb, testBase.databaseName, testBase.softDeletePeriod2, testBase.hotCachePeriod2, createdcluster.Name);
 
                 //delete database
                 testBase.client.Databases.Delete(testBase.rgName, createdcluster.Name, testBase.databaseName);
@@ -433,6 +433,171 @@ namespace Kusto.Tests.ScenarioTests
             }
         }
 
+        [Fact]
+        public void KustoAttachedDatabaseConfigurationTests()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var testBase = new KustoTestBase(context);
+
+                //create cluster
+                var createdCluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
+
+                // create a follower cluster
+                var createdFollowerCluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.followerClusterName, testBase.cluster);
+
+                //create database
+                var createdDb = testBase.client.Databases.CreateOrUpdate(testBase.rgName, createdCluster.Name, testBase.databaseName, testBase.database);
+
+                //create attached database configuration
+                var createdAttachedDatabaseConfiguration = testBase.client.AttachedDatabaseConfigurations.CreateOrUpdate(
+                    testBase.rgName,
+                    testBase.followerClusterName,
+                    testBase.attachedDatabaseConfigurationName,
+                    testBase.attachedDatabaseConfiguration);
+
+                VerifyAttachedDatabaseConfiguration(createdAttachedDatabaseConfiguration,
+                    testBase.attachedDatabaseConfigurationName,
+                    testBase.followerClusterName, testBase.databaseName,
+                    createdCluster.Id,
+                    testBase.defaultPrincipalsModificationKind);
+
+                // get attached database configuration
+                var attachedDatabaseConfiguration = testBase.client.AttachedDatabaseConfigurations.Get(testBase.rgName, createdFollowerCluster.Name, testBase.attachedDatabaseConfigurationName);
+
+                VerifyAttachedDatabaseConfiguration(attachedDatabaseConfiguration,
+                    testBase.attachedDatabaseConfigurationName,
+                    testBase.followerClusterName, testBase.databaseName,
+                    createdCluster.Id,
+                    testBase.defaultPrincipalsModificationKind);
+
+                // testing the created read-only following database
+                TestReadonlyFollowingDatabase(testBase);
+
+                // delete the attached database configuration
+                testBase.client.AttachedDatabaseConfigurations.Delete(testBase.rgName, createdFollowerCluster.Name, testBase.attachedDatabaseConfigurationName);
+                Assert.Throws<CloudException>(() =>
+                {
+                    testBase.client.AttachedDatabaseConfigurations.Get(
+                        resourceGroupName: testBase.rgName,
+                        clusterName: createdFollowerCluster.Name,
+                        attachedDatabaseConfigurationName: testBase.attachedDatabaseConfigurationName);
+                });
+
+                // delete cluster
+                testBase.client.Clusters.Delete(testBase.rgName, testBase.clusterName);
+
+                // delete follower cluster
+                testBase.client.Clusters.Delete(testBase.rgName, testBase.followerClusterName);
+            }
+        }
+
+        [Fact]
+        public void KustoFollowerDatabaseActionsTests()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var testBase = new KustoTestBase(context);
+
+                //create cluster
+                var createdCluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
+
+                // create a follower cluster
+                var createdFollowerCluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.followerClusterName, testBase.cluster);
+
+                //create database
+                var createdDb = testBase.client.Databases.CreateOrUpdate(testBase.rgName, createdCluster.Name, testBase.databaseName, testBase.database);
+
+                //create attached database configuration
+                var createdAttachedDatabaseConfiguration = testBase.client.AttachedDatabaseConfigurations.CreateOrUpdate(
+                    testBase.rgName,
+                    testBase.followerClusterName,
+                    testBase.attachedDatabaseConfigurationName,
+                    testBase.attachedDatabaseConfiguration);
+
+                var followerDatabasesList = testBase.client.Clusters.ListFollowerDatabases(testBase.rgName, testBase.clusterName);
+                var followerDatabase = followerDatabasesList.FirstOrDefault(f => f.AttachedDatabaseConfigurationName.Equals(testBase.attachedDatabaseConfigurationName, StringComparison.OrdinalIgnoreCase));
+                VerifyFollowerDatabase(followerDatabase, testBase.attachedDatabaseConfigurationName, testBase.databaseName, createdFollowerCluster.Id);
+
+                // detach the follower database
+                testBase.client.Clusters.DetachFollowerDatabases(testBase.rgName, testBase.clusterName, followerDatabase);
+                followerDatabasesList = testBase.client.Clusters.ListFollowerDatabases(testBase.rgName, testBase.clusterName);
+                VerifyFollowerDatabaseDontExist(followerDatabasesList, testBase.attachedDatabaseConfigurationName);
+
+                // delete cluster
+                testBase.client.Clusters.Delete(testBase.rgName, testBase.clusterName);
+
+                // delete follower cluster
+                testBase.client.Clusters.Delete(testBase.rgName, testBase.followerClusterName);
+            }
+        }
+
+        [Fact]
+        public void KustoIdentityTests()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var testBase = new KustoTestBase(context);
+
+                // Create cluster with an identity
+                testBase.cluster.Identity = new Identity(IdentityType.SystemAssigned);
+                var createdCluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
+
+                Assert.Equal(IdentityType.SystemAssigned, createdCluster.Identity.Type);
+
+                // Delete cluster
+                testBase.client.Clusters.Delete(testBase.rgName, testBase.clusterName);
+            }
+        }
+
+        [Fact]
+        public void KustoKeyVaultPropertiesTests()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var testBase = new KustoTestBase(context);
+
+                // Update the cluster with key vault properties
+                var cluster = testBase.client.Clusters.Update(testBase.resourceGroupForTest, testBase.clusterForKeyVaultPropertiesTest, new ClusterUpdate(keyVaultProperties: testBase.keyVaultProperties));
+
+                VerifyKeyVaultProperties(cluster.KeyVaultProperties, 
+                    testBase.KeyNameForKeyVaultPropertiesTest, 
+                    testBase.KeyVersionForKeyVaultPropertiesTest, 
+                    testBase.KeyVaultUriForKeyVaultPropertiesTest);
+            }
+        }
+
+        private void TestReadonlyFollowingDatabase(KustoTestBase testBase)
+        {
+            var readonlyFollowingDb = testBase.client.Databases.Get(testBase.rgName, testBase.followerClusterName, testBase.databaseName) as ReadOnlyFollowingDatabase;
+            VerifyReadOnlyFollowingDatabase(readonlyFollowingDb, testBase.databaseName, testBase.softDeletePeriod1, testBase.hotCachePeriod1, testBase.defaultPrincipalsModificationKind, testBase.followerClusterName);
+
+            readonlyFollowingDb.HotCachePeriod = testBase.hotCachePeriod2;
+            readonlyFollowingDb = testBase.client.Databases.CreateOrUpdate(testBase.rgName, testBase.followerClusterName, testBase.databaseName, readonlyFollowingDb) as ReadOnlyFollowingDatabase;
+            VerifyReadOnlyFollowingDatabase(readonlyFollowingDb, testBase.databaseName, testBase.softDeletePeriod1, testBase.hotCachePeriod2, testBase.defaultPrincipalsModificationKind, testBase.followerClusterName);
+        }
+
+        private void VerifyFollowerDatabase(FollowerDatabaseDefinition followerDatabaseDefinition, string attachedDatabaseConfigurationName, string databaseName, string clusterResourceId)
+        {
+            Assert.NotNull(followerDatabaseDefinition);
+            Assert.Equal(followerDatabaseDefinition.AttachedDatabaseConfigurationName, attachedDatabaseConfigurationName);
+            Assert.Equal(followerDatabaseDefinition.DatabaseName, databaseName);
+            Assert.Equal(followerDatabaseDefinition.ClusterResourceId, clusterResourceId);
+        }
+
+        private void VerifyKeyVaultProperties(KeyVaultProperties keyVaultProperties, string keyName, string keyVersion, string keyVaultUri)
+        {
+            Assert.NotNull(keyVaultProperties);
+            Assert.Equal(keyVaultProperties.KeyName, keyName);
+            Assert.Equal(keyVaultProperties.KeyVersion, keyVersion);
+            Assert.Equal(keyVaultProperties.KeyVaultUri, keyVaultUri);
+        }
+
+        private void VerifyFollowerDatabaseDontExist(IEnumerable<FollowerDatabaseDefinition> followerDatabasesList, string attachedDatabaseConfigurationName)
+        {
+            Assert.Null(followerDatabasesList.FirstOrDefault(f => f.AttachedDatabaseConfigurationName.Equals(attachedDatabaseConfigurationName, StringComparison.OrdinalIgnoreCase)));
+        }
+
         private void VerifyPrincipalsExists(IEnumerable<DatabasePrincipal> principals, DatabasePrincipal databasePrincipal)
         {
             Assert.NotNull(principals.First(principal => principal.Email == databasePrincipal.Email));
@@ -443,6 +608,15 @@ namespace Kusto.Tests.ScenarioTests
             Assert.Null(principals.FirstOrDefault(principal => principal.Email == databasePrincipal.Email));
         }
 
+        private void VerifyAttachedDatabaseConfiguration(AttachedDatabaseConfiguration createdAttachedDatabaseConfiguration, string attachedDatabaseConfigurationName, string clusterName, string databaseName, string clusterResourceId, string defaultPrincipalsModificationKind)
+        {
+            var attahcedDatabaseConfigurationFullName = ResourcesNamesUtils.GetAttachedDatabaseConfigurationName(clusterName, attachedDatabaseConfigurationName);
+            Assert.Equal(createdAttachedDatabaseConfiguration.Name, attahcedDatabaseConfigurationFullName);
+            Assert.Equal(createdAttachedDatabaseConfiguration.DatabaseName, databaseName);
+            Assert.Equal(createdAttachedDatabaseConfiguration.ClusterResourceId, clusterResourceId);
+            Assert.Equal(createdAttachedDatabaseConfiguration.DefaultPrincipalsModificationKind, defaultPrincipalsModificationKind);
+        }
+
         private void VerifyEventHub(EventHubDataConnection createdDataConnection, string eventHubConnectionName, string eventHubResourceId, string consumerGroupName, string clusterName, string databaseName, string dataFormat)
         {
             var eventHubFullName = ResourcesNamesUtils.GetDataConnectionFullName(clusterName, databaseName, eventHubConnectionName);
@@ -450,7 +624,6 @@ namespace Kusto.Tests.ScenarioTests
             Assert.Equal(createdDataConnection.EventHubResourceId, eventHubResourceId);
             Assert.Equal(createdDataConnection.ConsumerGroup, consumerGroupName);
             Assert.Equal(createdDataConnection.DataFormat, dataFormat);
-
         }
 
         private void VerifyIotHub(IotHubDataConnection createdDataConnection, string iotHubConnectionName, string iotHubResourceId, string consumerGroupName, string clusterName, string databaseName, string dataFormat)
@@ -473,9 +646,22 @@ namespace Kusto.Tests.ScenarioTests
             Assert.Equal(createdDataConnection.TableName, tableName);
         }
 
-        private void VerifyDatabase(Database database, string databaseName, TimeSpan? softDeletePeriod, TimeSpan? hotCachePeriod, string clusterName)
+        private void VerifyReadOnlyFollowingDatabase(ReadOnlyFollowingDatabase database, string databaseName, TimeSpan? softDeletePeriod, TimeSpan? hotCachePeriod, string principalsModificationKind, string clusterName)
         {
             var databaseFullName = ResourcesNamesUtils.GetFullDatabaseName(clusterName, databaseName);
+
+            Assert.NotNull(database);
+            Assert.Equal(database.Name, databaseFullName);
+            Assert.Equal(softDeletePeriod, database.SoftDeletePeriod);
+            Assert.Equal(hotCachePeriod, database.HotCachePeriod);
+            Assert.Equal(principalsModificationKind, database.PrincipalsModificationKind);
+        }
+
+        private void VerifyReadWriteDatabase(ReadWriteDatabase database, string databaseName, TimeSpan? softDeletePeriod, TimeSpan? hotCachePeriod, string clusterName)
+        {
+            var databaseFullName = ResourcesNamesUtils.GetFullDatabaseName(clusterName, databaseName);
+
+            Assert.NotNull(database);
             Assert.Equal(database.Name, databaseFullName);
             Assert.Equal(database.SoftDeletePeriod, softDeletePeriod);
             Assert.Equal(database.HotCachePeriod, hotCachePeriod);

@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
+using System;
 using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
@@ -14,15 +14,19 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         private const string KeyIdPropertyName = "kid";
         private const string PlaintextPropertyName = "value";
 
+        internal DecryptResult()
+        {
+        }
+
         /// <summary>
-        /// The <see cref="KeyBase.Id"/> of the <see cref="Key"/> used to decrypt
+        /// The <see cref="KeyProperties.Id"/> of the <see cref="KeyVaultKey"/> used to decrypt
         /// </summary>
-        public string KeyId { get; private set; }
+        public string KeyId { get; internal set; }
 
         /// <summary>
         /// The decrypted data
         /// </summary>
-        public byte[] Plaintext { get; private set; }
+        public byte[] Plaintext { get; internal set; }
 
         /// <summary>
         /// The algorithm used for the decryption

@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using Azure.Core.Testing;
 using Azure.Identity;
@@ -40,26 +39,26 @@ namespace Azure.Security.KeyVault.Certificates.Samples
 
             CertificateOperation certOp2 = client.StartCreateCertificate(certName1);
 
-            // Next let's wait on the certificate operation to complete. Note that certificate creation can last an indeterministic 
-            // amount of time, so applications should only wait on the operation to complete in the case the issuance time is well 
+            // Next let's wait on the certificate operation to complete. Note that certificate creation can last an indeterministic
+            // amount of time, so applications should only wait on the operation to complete in the case the issuance time is well
             // known and within the scope of the application lifetime. In this case we are creating a self-signed certificate which
             // should be issued in a relatively short amount of time.
             while (!certOp1.HasCompleted)
             {
                 certOp1.UpdateStatus();
 
-                Thread.Sleep(certOp1.PollingInterval);
+                Thread.Sleep(TimeSpan.FromSeconds(1));
             }
 
             while (!certOp2.HasCompleted)
             {
                 certOp2.UpdateStatus();
 
-                Thread.Sleep(certOp2.PollingInterval);
+                Thread.Sleep(TimeSpan.FromSeconds(1));
             }
 
             // Let's list the certificates which exist in the vault along with their thumbprints
-            foreach (CertificateBase cert in client.GetCertificates())
+            foreach (CertificateProperties cert in client.GetCertificates())
             {
                 Debug.WriteLine($"Certificate is returned with name {cert.Name} and thumbprint {BitConverter.ToString(cert.X509Thumbprint)}");
             }
@@ -71,16 +70,16 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             {
                 newCertOp.UpdateStatus();
 
-                Thread.Sleep(newCertOp.PollingInterval);
+                Thread.Sleep(TimeSpan.FromSeconds(1));
             }
 
             // Let's print all the versions of this certificate
-            foreach (CertificateBase cert in client.GetCertificateVersions(certName1))
+            foreach (CertificateProperties cert in client.GetCertificateVersions(certName1))
             {
                 Debug.WriteLine($"Certificate {cert.Name} with name {cert.Version}");
             }
 
-            // The certificates are no longer needed. 
+            // The certificates are no longer needed.
             // You need to delete them from the Key Vault.
             client.DeleteCertificate(certName1);
             client.DeleteCertificate(certName2);
@@ -112,7 +111,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
                 }
                 catch
                 {
-                    Thread.Sleep(5000);
+                    Thread.Sleep(2000);
                 }
             }
             return false;

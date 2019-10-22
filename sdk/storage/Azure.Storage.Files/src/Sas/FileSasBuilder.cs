@@ -1,10 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.ComponentModel;
-using Azure.Storage.Common;
+using Azure.Storage.Files;
 
 namespace Azure.Storage.Sas
 {
@@ -13,7 +12,7 @@ namespace Azure.Storage.Sas
     /// Signature (SAS) for an Azure Storage share, directory, or file.
     /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas" />.
     /// </summary>
-    public struct FileSasBuilder : IEquatable<FileSasBuilder>
+    public class FileSasBuilder
     {
         /// <summary>
         /// The storage service version to use to authenticate requests made
@@ -36,24 +35,24 @@ namespace Azure.Storage.Sas
         /// start time for this call is assumed to be the time when the
         /// storage service receives the request.
         /// </summary>
-        public DateTimeOffset StartTime { get; set; }
+        public DateTimeOffset StartsOn { get; set; }
 
         /// <summary>
         /// The time at which the shared access signature becomes invalid.
         /// This field must be omitted if it has been specified in an
         /// associated stored access policy.
         /// </summary>
-        public DateTimeOffset ExpiryTime { get; set; }
+        public DateTimeOffset ExpiresOn { get; set; }
 
         /// <summary>
         /// The permissions associated with the shared access signature. The
         /// user is restricted to operations allowed by the permissions. This
         /// field must be omitted if it has been specified in an associated
-        /// stored access policy.  The <see cref="FileSasPermissions"/>
-        /// and <see cref="ShareSasPermissions"/>
+        /// stored access policy.  The <see cref="FileSasPermissions"/>,
+        /// <see cref="ShareSasPermissions"/>, or <see cref="FileAccountSasPermissions"/>
         /// can be used to create the permissions string.
         /// </summary>
-        public string Permissions { get; set; }
+        public string Permissions { get; private set; }
 
         /// <summary>
         /// Specifies an IP address or a range of IP addresses from which to
@@ -63,7 +62,7 @@ namespace Azure.Storage.Sas
         /// When specifying a range of IP addresses, note that the range is
         /// inclusive.
         /// </summary>
-        public IPRange IPRange { get; set; }
+        public SasIPRange IPRange { get; set; }
 
         /// <summary>
         /// An optional unique value up to 64 characters in length that
@@ -77,7 +76,7 @@ namespace Azure.Storage.Sas
         public string ShareName { get; set; }
 
         /// <summary>
-        /// The path of the file or directory being made accessible, or <see cref="String.Empty"/>
+        /// The path of the file or directory being made accessible, or <see cref="string.Empty"/>
         /// for a share SAS.
         /// </summary>
         public string FilePath { get; set; }
@@ -109,6 +108,48 @@ namespace Azure.Storage.Sas
         public string ContentType { get; set; }
 
         /// <summary>
+        /// Sets the permissions for a file SAS.
+        /// </summary>
+        /// <param name="permissions">
+        /// <see cref="FileSasPermissions"/> containing the allowed permissions.
+        /// </param>
+        public void SetPermissions(FileSasPermissions permissions)
+        {
+            Permissions = permissions.ToPermissionsString();
+        }
+
+        /// <summary>
+        /// Sets the permissions for a file account level SAS.
+        /// </summary>
+        /// <param name="permissions">
+        /// <see cref="FileAccountSasPermissions"/> containing the allowed permissions.
+        /// </param>
+        public void SetPermissions(FileAccountSasPermissions permissions)
+        {
+            Permissions = permissions.ToPermissionsString();
+        }
+
+        /// <summary>
+        /// Sets the permissions for a share SAS.
+        /// </summary>
+        /// <param name="permissions">
+        /// <see cref="ShareSasPermissions"/> containing the allowed permissions.
+        /// </param>
+        public void SetPermissions(ShareSasPermissions permissions)
+        {
+            Permissions = permissions.ToPermissionsString();
+        }
+
+        /// <summary>
+        /// Sets the permissions for the SAS using a raw permissions string.
+        /// </summary>
+        /// <param name="rawPermissions">Raw permissions string for the SAS.</param>
+        public void SetPermissions(string rawPermissions)
+        {
+            Permissions = rawPermissions;
+        }
+
+        /// <summary>
         /// Use an account's <see cref="StorageSharedKeyCredential"/> to sign this
         /// shared access signature values to produce the proper SAS query
         /// parameters for authenticating requests.
@@ -122,60 +163,69 @@ namespace Azure.Storage.Sas
         public SasQueryParameters ToSasQueryParameters(StorageSharedKeyCredential sharedKeyCredential)
         {
             sharedKeyCredential = sharedKeyCredential ?? throw Errors.ArgumentNull(nameof(sharedKeyCredential));
+            if (ExpiresOn == default)
+            {
+                throw Errors.SasMissingData(nameof(ExpiresOn));
+            }
+            if (string.IsNullOrEmpty(Permissions))
+            {
+                throw Errors.SasMissingData(nameof(Permissions));
+            }
 
             string resource;
 
-            if (String.IsNullOrEmpty(this.FilePath))
+            if (string.IsNullOrEmpty(FilePath))
             {
-                // Make sure the permission characters are in the correct order
-                this.Permissions = ShareSasPermissions.Parse(this.Permissions).ToString();
                 resource = Constants.Sas.Resource.Share;
             }
             else
             {
-                // Make sure the permission characters are in the correct order
-                this.Permissions = FileSasPermissions.Parse(this.Permissions).ToString();
                 resource = Constants.Sas.Resource.File;
             }
 
-            if (String.IsNullOrEmpty(this.Version))
+            if (string.IsNullOrEmpty(Version))
             {
-                this.Version = SasQueryParameters.DefaultSasVersion;
+                Version = SasQueryParameters.DefaultSasVersion;
             }
 
-            var startTime = SasQueryParameters.FormatTimesForSasSigning(this.StartTime);
-            var expiryTime = SasQueryParameters.FormatTimesForSasSigning(this.ExpiryTime);
+            var startTime = SasQueryParameters.FormatTimesForSasSigning(StartsOn);
+            var expiryTime = SasQueryParameters.FormatTimesForSasSigning(ExpiresOn);
 
             // String to sign: http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
-            var stringToSign = String.Join("\n",
-                this.Permissions,
+            var stringToSign = string.Join("\n",
+                Permissions,
                 startTime,
                 expiryTime,
-                GetCanonicalName(sharedKeyCredential.AccountName, this.ShareName ?? String.Empty, this.FilePath ?? String.Empty),
-                this.Identifier,
-                this.IPRange.ToString(),
-                this.Protocol.ToString(),
-                this.Version,
-                this.CacheControl,
-                this.ContentDisposition,
-                this.ContentEncoding,
-                this.ContentLanguage,
-                this.ContentType);
+                GetCanonicalName(sharedKeyCredential.AccountName, ShareName ?? string.Empty, FilePath ?? string.Empty),
+                Identifier,
+                IPRange.ToString(),
+                Protocol.ToProtocolString(),
+                Version,
+                CacheControl,
+                ContentDisposition,
+                ContentEncoding,
+                ContentLanguage,
+                ContentType);
 
             var signature = sharedKeyCredential.ComputeHMACSHA256(stringToSign);
 
             var p = new SasQueryParameters(
-                version: this.Version,
-                services: null,
-                resourceTypes: null,
-                protocol: this.Protocol,
-                startTime: this.StartTime,
-                expiryTime: this.ExpiryTime,
-                ipRange: this.IPRange,
-                identifier: this.Identifier,
+                version: Version,
+                services: default,
+                resourceTypes: default,
+                protocol: Protocol,
+                startsOn: StartsOn,
+                expiresOn: ExpiresOn,
+                ipRange: IPRange,
+                identifier: Identifier,
                 resource: resource,
-                permissions: this.Permissions,
-                signature: signature);
+                permissions: Permissions,
+                signature: signature,
+                cacheControl: CacheControl,
+                contentDisposition: ContentDisposition,
+                contentEncoding: ContentEncoding,
+                contentLanguage: ContentLanguage,
+                contentType: ContentType);
             return p;
         }
 
@@ -189,8 +239,8 @@ namespace Azure.Storage.Sas
         /// <param name="shareName">The name of the share.</param>
         /// <param name="filePath">The path of the file.</param>
         /// <returns>The canonical resource name.</returns>
-        static string GetCanonicalName(string account, string shareName, string filePath)
-            => !String.IsNullOrEmpty(filePath)
+        private static string GetCanonicalName(string account, string shareName, string filePath)
+            => !string.IsNullOrEmpty(filePath)
                ? $"/file/{account}/{shareName}/{filePath.Replace("\\", "/")}"
                : $"/file/{account}/{shareName}";
 
@@ -199,8 +249,7 @@ namespace Azure.Storage.Sas
         /// </summary>
         /// <returns>A string that represents the current object.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string ToString() =>
-            base.ToString();
+        public override string ToString() => base.ToString();
 
         /// <summary>
         /// Check if two FileSasBuilder instances are equal.
@@ -208,67 +257,13 @@ namespace Azure.Storage.Sas
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj)
-            => obj is FileSasBuilder other && this.Equals(other);
+        public override bool Equals(object obj) => base.Equals(obj);
 
         /// <summary>
         /// Get a hash code for the FileSasBuilder.
         /// </summary>
         /// <returns>Hash code for the FileSasBuilder.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode()
-            => this.CacheControl.GetHashCode()
-            ^ this.ContentDisposition.GetHashCode()
-            ^ this.ContentEncoding.GetHashCode()
-            ^ this.ContentLanguage.GetHashCode()
-            ^ this.ContentType.GetHashCode()
-            ^ this.ExpiryTime.GetHashCode()
-            ^ this.FilePath.GetHashCode()
-            ^ this.Identifier.GetHashCode()
-            ^ this.IPRange.GetHashCode()
-            ^ this.Permissions.GetHashCode()
-            ^ this.Protocol.GetHashCode()
-            ^ this.ShareName.GetHashCode()
-            ^ this.StartTime.GetHashCode()
-            ^ this.Version.GetHashCode()
-            ;
-
-        /// <summary>
-        /// Check if two FileSasBuilder instances are equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(FileSasBuilder left, FileSasBuilder right) => left.Equals(right);
-
-        /// <summary>
-        /// Check if two FileSasBuilder instances are not equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(FileSasBuilder left, FileSasBuilder right) => !(left == right);
-
-        /// <summary>
-        /// Check if two FileSasBuilder instances are equal.
-        /// </summary>
-        /// <param name="other">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(FileSasBuilder other)
-            => this.CacheControl == other.CacheControl
-            && this.ContentDisposition == other.ContentDisposition
-            && this.ContentEncoding == other.ContentEncoding
-            && this.ContentLanguage == other.ContentEncoding
-            && this.ContentType == other.ContentType
-            && this.ExpiryTime == other.ExpiryTime
-            && this.FilePath == other.FilePath
-            && this.Identifier == other.Identifier
-            && this.IPRange == other.IPRange
-            && this.Permissions == other.Permissions
-            && this.Protocol == other.Protocol
-            && this.ShareName == other.ShareName
-            && this.StartTime == other.StartTime
-            && this.Version == other.Version
-            ;
+        public override int GetHashCode() => base.GetHashCode();
     }
 }

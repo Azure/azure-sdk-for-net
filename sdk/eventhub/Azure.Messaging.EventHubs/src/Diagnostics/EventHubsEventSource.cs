@@ -48,7 +48,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(1, eventHubsNamespace ?? String.Empty, eventHubName ?? String.Empty);
+                WriteEvent(1, eventHubsNamespace ?? string.Empty, eventHubName ?? string.Empty);
             }
         }
 
@@ -65,7 +65,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(2, eventHubsNamespace ?? String.Empty, eventHubName ?? String.Empty);
+                WriteEvent(2, eventHubsNamespace ?? string.Empty, eventHubName ?? string.Empty);
             }
         }
 
@@ -84,7 +84,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(3, eventHubName ?? String.Empty, partitionIdOrKey ?? String.Empty, eventHash ?? String.Empty);
+                WriteEvent(3, eventHubName ?? string.Empty, partitionIdOrKey ?? string.Empty, eventHash ?? string.Empty);
             }
         }
 
@@ -103,7 +103,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(4, eventHubName ?? String.Empty, partitionIdOrKey ?? String.Empty, eventHash ?? String.Empty);
+                WriteEvent(4, eventHubName ?? string.Empty, partitionIdOrKey ?? string.Empty, eventHash ?? string.Empty);
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(5, eventHubName ?? String.Empty, partitionIdOrKey ?? String.Empty, eventHash ?? String.Empty, errorMessage ?? String.Empty);
+                WriteEvent(5, eventHubName ?? string.Empty, partitionIdOrKey ?? string.Empty, eventHash ?? string.Empty, errorMessage ?? string.Empty);
             }
         }
 
@@ -133,15 +133,17 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// </summary>
         ///
         /// <param name="eventHubName">The name of the Event Hub being received from.</param>
+        /// <param name="consumerGroup">The consumer group associated with the receive operation.</param>
         /// <param name="partitionId">The identifier of the partition events are being received from.</param>
         ///
-        [Event(6, Level = EventLevel.Informational, Message = "Receiving events for Event Hub: {0} (Partition Id: '{1}').")]
+        [Event(6, Level = EventLevel.Informational, Message = "Receiving events for Event Hub: {0} (Consumer Group: '{1}', Partition Id: '{2}').")]
         public void EventReceiveStart(string eventHubName,
+                                      string consumerGroup,
                                       string partitionId)
         {
             if (IsEnabled())
             {
-                WriteEvent(6, eventHubName ?? String.Empty, partitionId ?? String.Empty);
+                WriteEvent(6, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty);
             }
         }
 
@@ -151,16 +153,18 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///
         /// <param name="eventHubName">The name of the Event Hub being received from.</param>
         /// <param name="partitionId">The identifier of the partition events are being received from.</param>
+        /// <param name="consumerGroup">The consumer group associated with the receive operation.</param>
         /// <param name="eventCount">The number of events that were received in the batch.</param>
         ///
-        [Event(7, Level = EventLevel.Informational, Message = "Completed receiving events for Event Hub: {0} (Partition Id: '{1}', Event Count: '{2}').")]
+        [Event(7, Level = EventLevel.Informational, Message = "Completed receiving events for Event Hub: {0} (Consumer Group: '{1}', Partition Id: '{2}').  Event Count: '{3}'")]
         public void EventReceiveComplete(string eventHubName,
+                                         string consumerGroup,
                                          string partitionId,
                                          int eventCount)
         {
             if (IsEnabled())
             {
-                WriteEvent(7, eventHubName ?? String.Empty, partitionId ?? String.Empty, eventCount);
+                WriteEvent(7, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty, eventCount);
             }
         }
 
@@ -170,16 +174,18 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///
         /// <param name="eventHubName">The name of the Event Hub being received from.</param>
         /// <param name="partitionId">The identifier of the partition events are being received from.</param>
+        /// <param name="consumerGroup">The consumer group associated with the receive operation.</param>
         /// <param name="errorMessage">The message for the exception that occurred.</param>
         ///
-        [Event(8, Level = EventLevel.Error, Message = "An exception occurred while receiving events for Event Hub: {0} (Partition Id: '{1}'). Error Message: '{2}'")]
+        [Event(8, Level = EventLevel.Error, Message = "An exception occurred while receiving events for Event Hub: {0} (Consumer Group: '{1}', Partition Id: '{2}'). Error Message: '{3}'")]
         public void EventReceiveError(string eventHubName,
+                                      string consumerGroup,
                                       string partitionId,
                                       string errorMessage)
         {
             if (IsEnabled())
             {
-                WriteEvent(8, eventHubName ?? String.Empty, partitionId ?? String.Empty, errorMessage ?? String.Empty);
+                WriteEvent(8, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty, errorMessage ?? string.Empty);
             }
         }
 
@@ -199,7 +205,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(9, clientType.Name, eventHubName ?? String.Empty, clientId ?? String.Empty);
+                WriteEvent(9, clientType.Name, eventHubName ?? string.Empty, clientId ?? string.Empty);
             }
         }
 
@@ -219,7 +225,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(10, clientType.Name, eventHubName ?? String.Empty, clientId ?? String.Empty);
+                WriteEvent(10, clientType.Name, eventHubName ?? string.Empty, clientId ?? string.Empty);
             }
         }
 
@@ -240,7 +246,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(11, clientType.Name, eventHubName ?? String.Empty, clientId ?? String.Empty, errorMessage ?? String.Empty);
+                WriteEvent(11, clientType.Name, eventHubName ?? string.Empty, clientId ?? string.Empty, errorMessage ?? string.Empty);
             }
         }
 
@@ -255,7 +261,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(12, eventHubName ?? String.Empty);
+                WriteEvent(12, eventHubName ?? string.Empty);
             }
         }
 
@@ -270,7 +276,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(13, eventHubName ?? String.Empty);
+                WriteEvent(13, eventHubName ?? string.Empty);
             }
         }
 
@@ -287,7 +293,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(14, eventHubName ?? String.Empty, errorMessage ?? String.Empty);
+                WriteEvent(14, eventHubName ?? string.Empty, errorMessage ?? string.Empty);
             }
         }
 
@@ -304,7 +310,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(15, eventHubName ?? String.Empty, partitionId ?? String.Empty);
+                WriteEvent(15, eventHubName ?? string.Empty, partitionId ?? string.Empty);
             }
         }
 
@@ -321,7 +327,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(16, eventHubName ?? String.Empty, partitionId ?? String.Empty);
+                WriteEvent(16, eventHubName ?? string.Empty, partitionId ?? string.Empty);
             }
         }
 
@@ -340,7 +346,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(17, eventHubName ?? String.Empty, partitionId ?? String.Empty, errorMessage ?? String.Empty);
+                WriteEvent(17, eventHubName ?? string.Empty, partitionId ?? string.Empty, errorMessage ?? string.Empty);
             }
         }
 
@@ -357,7 +363,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(18, eventHubName ?? String.Empty, partitionId ?? String.Empty);
+                WriteEvent(18, eventHubName ?? string.Empty, partitionId ?? string.Empty);
             }
         }
 
@@ -374,7 +380,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(19, eventHubName ?? String.Empty, partitionId ?? String.Empty);
+                WriteEvent(19, eventHubName ?? string.Empty, partitionId ?? string.Empty);
             }
         }
 
@@ -393,7 +399,60 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(20, eventHubName ?? String.Empty, partitionId ?? String.Empty, errorMessage ?? String.Empty);
+                WriteEvent(20, eventHubName ?? string.Empty, partitionId ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that refreshing authorization for an AMQP link has started.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The name of the Event Hub that the link is associated with.</param>
+        /// <param name="endpoint">The service endpoint that the link is bound to for communication.</param>
+        ///
+        [Event(21, Level = EventLevel.Informational, Message = "Beginning refresh of AMQP link authorization for Event Hub: {0} (Service Endpoint: '{1}').")]
+        public void AmqpLinkAuthorizationRefreshStart(string eventHubName,
+                                                      string endpoint)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(21, eventHubName ?? string.Empty, endpoint ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that refreshing authorization for an AMQP link has completed.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The name of the Event Hub that the link is associated with.</param>
+        /// <param name="endpoint">The service endpoint that the link is bound to for communication.</param>
+        ///
+        [Event(22, Level = EventLevel.Informational, Message = "Completed refresh of AMQP link authorization for Event Hub: {0} (Service Endpoint: '{1}').")]
+        public void AmqpLinkAuthorizationRefreshComplete(string eventHubName,
+                                                         string endpoint)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(22, eventHubName ?? string.Empty, endpoint ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an exception was encountered while refreshing authorization for an AMQP link has started.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The name of the Event Hub that the link is associated with.</param>
+        /// <param name="endpoint">The service endpoint that the link is bound to for communication.</param>
+        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        ///
+        [Event(23, Level = EventLevel.Error, Message = "An exception occurred while refreshing AMQP link authorization for Event Hub: {0} (Service Endpoint: '{1}'). Error Message: '{2}'")]
+        public void AmqpLinkAuthorizationRefreshError(string eventHubName,
+                                                      string endpoint,
+                                                      string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(23, eventHubName ?? string.Empty, endpoint ?? string.Empty, errorMessage ?? string.Empty);
             }
         }
 

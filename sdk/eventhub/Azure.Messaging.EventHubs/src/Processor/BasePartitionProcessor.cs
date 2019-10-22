@@ -21,7 +21,7 @@ namespace Azure.Messaging.EventHubs.Processor
         /// </summary>
         ///
         /// <param name="partitionContext">Contains information about the partition from which events are sourced and provides a means of creating checkpoints for that partition.</param>
-        /// 
+        ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         public virtual Task InitializeAsync(PartitionContext partitionContext)

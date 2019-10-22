@@ -28,7 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Microsoft.Azure.Amqp" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" />
     <PackageReference Include="System.Reflection.TypeExtensions" />
@@ -47,6 +46,6 @@
     <PackageReference Include="System.Runtime.Serialization.Primitives" />
   </ItemGroup>
 
-  <!-- Import the Azure.Messaging.EventHubs reference -->
-  <Import Project="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.EventHubs\src\Azure.Messaging.EventHubs.Reference.props" />
+  <!-- Import the references to the Azure client libraries -->
+  <Import Project="$(MSBuildThisFileDirectory)..\Azure.Client.Library.References.props" />
 </Project>

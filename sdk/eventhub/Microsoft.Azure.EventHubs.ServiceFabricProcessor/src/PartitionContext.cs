@@ -80,7 +80,7 @@ namespace Microsoft.Azure.EventHubs.ServiceFabricProcessor
         /// <returns></returns>
         public async Task CheckpointAsync()
         {
-            await CheckpointAsync(new Checkpoint(this.Offset, this.SequenceNumber));
+            await CheckpointAsync(new Checkpoint(this.Offset, this.SequenceNumber)).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -90,12 +90,12 @@ namespace Microsoft.Azure.EventHubs.ServiceFabricProcessor
         /// <returns></returns>
         public async Task CheckpointAsync(EventData eventData)
         {
-            await CheckpointAsync(new Checkpoint(eventData.SystemProperties.Offset, eventData.SystemProperties.SequenceNumber));
+            await CheckpointAsync(new Checkpoint(eventData.SystemProperties.Offset, eventData.SystemProperties.SequenceNumber)).ConfigureAwait(false);
         }
 
         private async Task CheckpointAsync(Checkpoint checkpoint)
         {
-            await this.checkpointMananger.UpdateCheckpointAsync(this.PartitionId, checkpoint, this.CancellationToken);
+            await this.checkpointMananger.UpdateCheckpointAsync(this.PartitionId, checkpoint, this.CancellationToken).ConfigureAwait(false);
         }
     }
 }

@@ -285,8 +285,7 @@ function createServiceInfo(project: IProject): IServiceInfo {
         license: {
             name: 'MIT',
             header: `Copyright (c) Microsoft Corporation. All rights reserved.
-Licensed under the MIT License. See License.txt in the project root for
-license information.`
+Licensed under the MIT License.`
         }
     };
 }
@@ -391,13 +390,19 @@ function createObjectType(project: IProject, name: string, swagger: any, locatio
         unsupported(() => def[`x-ms-client-flatten`], `${location}.properties['${name}']`);
         unsupported(() => def[`x-ms-mutability`], `${location}.properties['${name}']`);
 
+        let isNullable: boolean|undefined = def[`x-az-nullable-array`];
+        if (isNullable === undefined) {
+            isNullable = false;
+        }
+
         properties[name] = {
             name,
             clientName: optional(() => def[`x-ms-client-name`], name),
             description: def.description,
             readonly: true,
             xml: def.xml || { },
-            model: createType(project, name, def, `${location}.properties['${name}']`)
+            model: createType(project, name, def, `${location}.properties['${name}']`),
+            isNullable: isNullable
         };
     }
 
@@ -429,6 +434,11 @@ function createObjectType(project: IProject, name: string, swagger: any, locatio
         isPublic = true;
     }
 
+    let isStruct: boolean|undefined = swagger[`x-az-struct`];
+    if (isStruct === undefined) {
+        isStruct = false;
+    }
+
     const info = <IServiceInfo>required(() => project.cache.info);
     return {
         type: `object`,
@@ -442,7 +452,8 @@ function createObjectType(project: IProject, name: string, swagger: any, locatio
         deserialize: false,
         disableWarnings: swagger[`x-az-disable-warnings`],
         public: isPublic,
-        extendedHeaders: []
+        extendedHeaders: [],
+        struct: isStruct
     };
 }
 
@@ -603,6 +614,11 @@ function createResponse(project: IProject, code: string, name: string, swagger: 
         isPublic = true;
     }
 
+    let isStruct: boolean|undefined = swagger[`x-az-struct`];
+    if (isStruct === undefined) {
+        isStruct = false;
+    }
+
     return {
         code,
         description: swagger.description,
@@ -611,7 +627,9 @@ function createResponse(project: IProject, code: string, name: string, swagger: 
         bodyClientName: <string>optional(() => swagger[`x-az-response-schema-name`], `Body`), // TODO: switch from 'Body' to body.name?
         headers,
         exception: <boolean>optional(() => swagger[`x-az-create-exception`]),
-        public: isPublic
+        public: isPublic,
+        returnStream: <boolean>optional(() => swagger[`x-az-stream`]),
+        struct: isStruct
     };
 }
 
@@ -832,13 +850,13 @@ function getOperationParameters(project: IProject, info: IServiceInfo, path: tem
             external: true,
             namespace: 'Azure.Core.Pipeline',
             properties: { },
-            xml: { }
+            xml: { },
         },
         trace: false
     });
 
     return parameters;
-    
+
     // Replace any existing parameters or add them to the end of the list
     function addOrReplaceParameter(param: IParameter): void {
         const existing = parameters.findIndex(p => p.name === param.name && p.location === param.location);
@@ -900,6 +918,7 @@ function getOperationResponse(project: IProject, responses: IResponses, defaultN
             successes.forEach(s => s.model = model);
             break;
     }
+    model.returnStream = successes[0].returnStream;
     
     // Return all the responses
     return {
@@ -946,7 +965,8 @@ function getOperationResponse(project: IProject, responses: IResponses, defaultN
             properties: { },
             serialize: false,
             deserialize: false,
-            extendedHeaders: ignoredHeaders
+            extendedHeaders: ignoredHeaders,
+            struct: response.struct
         };
         registerCustomType(project, model);
 
@@ -995,7 +1015,8 @@ function getOperationResponse(project: IProject, responses: IResponses, defaultN
             body: a.body || b.body,
             bodyClientName: a.bodyClientName || b.bodyClientName,
             headers: { ...b.headers, ...a.headers },
-            public: a.public && b.public
+            public: a.public && b.public,
+            struct: a.struct && b.struct
         };
     }
 }

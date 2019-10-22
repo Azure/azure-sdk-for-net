@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using Azure.Core.Testing;
 using Azure.Identity;
@@ -36,79 +35,72 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             string bankSecretName = $"BankAccountPassword-{Guid.NewGuid()}";
             string storageSecretName = $"StorageAccountPasswor{Guid.NewGuid()}";
 
-            var bankSecret = new Secret(bankSecretName, "f4G34fMh8v")
+            var bankSecret = new KeyVaultSecret(bankSecretName, "f4G34fMh8v")
             {
-                Expires = DateTimeOffset.Now.AddYears(1)
+                Properties =
+                {
+                    ExpiresOn = DateTimeOffset.Now.AddYears(1)
+                }
             };
 
-            var storageSecret = new Secret(storageSecretName, "f4G34fMh8v547")
+            var storageSecret = new KeyVaultSecret(storageSecretName, "f4G34fMh8v547")
             {
-                Expires = DateTimeOffset.Now.AddYears(1)
+                Properties =
+                {
+                    ExpiresOn = DateTimeOffset.Now.AddYears(1)
+                }
             };
 
-            client.Set(bankSecret);
-            client.Set(storageSecret);
+            client.SetSecret(bankSecret);
+            client.SetSecret(storageSecret);
 
             // You need to check if any of the secrets are sharing same values. Let's list the secrets and print their values.
             // List operations don't return the secrets with value information.
             // So, for each returned secret we call Get to get the secret with its value information.
 
-            IEnumerable<Response<SecretBase>> secrets = client.GetSecrets();
-            foreach (SecretBase secret in secrets)
+            IEnumerable<SecretProperties> secrets = client.GetPropertiesOfSecrets();
+            foreach (SecretProperties secret in secrets)
             {
-                Secret secretWithValue = client.Get(secret.Name);
+                KeyVaultSecret secretWithValue = client.GetSecret(secret.Name);
                 Debug.WriteLine($"Secret is returned with name {secretWithValue.Name} and value {secretWithValue.Value}");
             }
 
             // The bank account password got updated, so you want to update the secret in key vault to ensure it reflects the new password.
             // Calling Set on an existing secret creates a new version of the secret in the key vault with the new value.
-            client.Set(bankSecretName, "sskdjfsdasdjsd");
+            client.SetSecret(bankSecretName, "sskdjfsdasdjsd");
 
             // You need to check all the different values your bank account password secret had previously.
             // Lets print all the versions of this secret.
-            IEnumerable<Response<SecretBase>> secretVersions = client.GetSecretVersions(bankSecretName);
-            foreach (SecretBase secret in secretVersions)
+            IEnumerable<SecretProperties> secretVersions = client.GetPropertiesOfSecretVersions(bankSecretName);
+            foreach (SecretProperties secret in secretVersions)
             {
                 Debug.WriteLine($"Secret's version {secret.Version} with name {secret.Name}");
             }
 
             // The bank account was closed. You need to delete its credentials from the key vault.
             // You also want to delete the information of your storage account.
-            client.Delete(bankSecretName);
-            client.Delete(storageSecretName);
+            DeleteSecretOperation bankSecretOperation = client.StartDeleteSecret(bankSecretName);
+            DeleteSecretOperation storageSecretOperation = client.StartDeleteSecret(storageSecretName);
 
-            // To ensure secrets are deleted on server side.
-            Assert.IsTrue(WaitForDeletedSecret(client, bankSecretName));
-            Assert.IsTrue(WaitForDeletedSecret(client, storageSecretName));
+            // To ensure the secrets are deleted on server before we try to purge them.
+            while (!bankSecretOperation.HasCompleted || !storageSecretOperation.HasCompleted)
+            {
+                Thread.Sleep(2000);
+
+                bankSecretOperation.UpdateStatus();
+                storageSecretOperation.UpdateStatus();
+            }
 
             // You can list all the deleted and non-purged secrets, assuming key vault is soft-delete enabled.
-            IEnumerable<Response<DeletedSecret>> secretsDeleted = client.GetDeletedSecrets();
+            IEnumerable<DeletedSecret> secretsDeleted = client.GetDeletedSecrets();
             foreach (DeletedSecret secret in secretsDeleted)
             {
                 Debug.WriteLine($"Deleted secret's recovery Id {secret.RecoveryId}");
             }
 
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted secret needs to be purged.
-            client.PurgeDeleted(bankSecretName);
-            client.PurgeDeleted(storageSecretName);
-        }
-
-        private bool WaitForDeletedSecret(SecretClient client, string secretName)
-        {
-            int maxIterations = 20;
-            for (int i = 0; i < maxIterations; i++)
-            {
-                try
-                {
-                    client.GetDeleted(secretName);
-                    return true;
-                }
-                catch
-                {
-                    Thread.Sleep(5000);
-                }
-            }
-            return false;
+            client.PurgeDeletedSecret(bankSecretName);
+            client.PurgeDeletedSecret(storageSecretName);
         }
     }
 }

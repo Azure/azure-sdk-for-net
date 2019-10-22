@@ -52,7 +52,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
 
         /// <summary>
         /// Fetches the result of any operation.
-        /// the operation.
         /// </summary>
         /// <param name='vaultName'>
         /// The name of the recovery services vault.
@@ -107,7 +106,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "operationId");
             }
-            string apiVersion = "2016-12-01";
+            string apiVersion = "2019-05-13";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
