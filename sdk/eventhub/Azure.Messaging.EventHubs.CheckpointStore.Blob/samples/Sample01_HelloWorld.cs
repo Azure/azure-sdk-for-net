@@ -3,9 +3,9 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Messaging.EventHubs.CheckpointStore.Blob.Samples.Infrastructure;
+using Azure.Messaging.EventHubs.CheckpointStore.Blobs.Samples.Infrastructure;
 
-namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Samples
+namespace Azure.Messaging.EventHubs.CheckpointStore.Blobs.Samples
 {
     /// <summary>
     ///   An introduction to Event Hubs checkpoint storage using blobs, illustrating how to create an event
