@@ -163,7 +163,7 @@ namespace Azure.Data.AppConfiguration
 
             Request request = _pipeline.CreateRequest();
 
-            ReadOnlyMemory<byte> content = Serialize(setting);
+            ReadOnlyMemory<byte> content = ConfigurationServiceSerializer.SerializeRequestBody(setting);
 
             request.Method = RequestMethod.Put;
 
@@ -321,7 +321,7 @@ namespace Azure.Data.AppConfiguration
             Argument.AssertNotNullOrEmpty(setting.Key, $"{nameof(setting)}.{nameof(setting.Key)}");
 
             Request request = _pipeline.CreateRequest();
-            ReadOnlyMemory<byte> content = Serialize(setting);
+            ReadOnlyMemory<byte> content = ConfigurationServiceSerializer.SerializeRequestBody(setting);
 
             request.Method = RequestMethod.Put;
             BuildUriForKvRoute(request.Uri, setting);

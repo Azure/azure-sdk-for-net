@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Data.AppConfiguration
@@ -11,11 +12,15 @@ namespace Azure.Data.AppConfiguration
     /// <summary>
     /// A setting, defined by a unique combination of a key and label.
     /// </summary>
+    [JsonConverter(typeof(ConfigurationSettingJsonConverter))]
     public sealed class ConfigurationSetting
     {
         private IDictionary<string, string> _tags;
 
-        internal ConfigurationSetting()
+        /// <summary>
+        /// Creates a configuration setting and sets the values from the passed in parameter to this setting.
+        /// </summary>
+        public ConfigurationSetting()
         {
         }
 
