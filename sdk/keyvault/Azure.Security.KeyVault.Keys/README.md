@@ -95,10 +95,10 @@ var cryptoClient = new CryptographyClient(keyId: key.Id, credential: new Default
 Azure Key Vault supports multiple key types and algorithms, and enables the use of hardware security modules (HSM) for high value keys.
 
 ### KeyClient
-A `KeyClient` providing both synchronous and asynchronous operations exists in the SDK allowing for selection of a client based on an application's use case. Once you've initialized a `KeyClient`, you can interact with the primary resource types in Key Vault.
+`KeyClient` providing both synchronous and asynchronous operations exists in the SDK allowing for selection of a client based on an application's use case. Once you've initialized a `KeyClient`, you can interact with the primary resource types in Key Vault.
 
 ### Cryptography Client:
-A `CryptographyClient` providing both synchronous and asynchronous operations exists in the SDK allowing for selection of a client based on an application's use case. Once you've initialized a `CryptographyClient`, you can use it to perform cryptographic operations with keys stored in Key Vault.
+`CryptographyClient` providing both synchronous and asynchronous operations exists in the SDK allowing for selection of a client based on an application's use case. Once you've initialized a `CryptographyClient`, you can use it to perform cryptographic operations with keys stored in Key Vault.
 
 ## Examples
 The Azure.Security.KeyVault.Keys package supports synchronous and asynchronous APIs.
@@ -115,7 +115,7 @@ The following section provides several code snippets using the `client` [created
 * [Encrypt and Decrypt](#encrypt-and-decrypt)
 
 ### Sync examples
-* [Create a kKey synchronously](#create-a-key-synchronously)
+* [Create a Key synchronously](#create-a-key-synchronously)
 * [Delete a key synchronously](#delete-a-key-synchronously)
 
 ### Create a key
@@ -137,6 +137,8 @@ Console.WriteLine(rsaKey.Name);
 Console.WriteLine(rsaKey.KeyType);
 
 // Create a hardware Elliptic Curve key
+// Because only premium key vault supports HSM backed keys , please ensure your key vault
+// SKU is premium when you set "hsm" value to true
 var echsmkey = new CreateEcKeyOptions("ec-key-name", hardwareProtected: true);
 KeyVaultKey ecKey = await client.CreateEcKeyAsync(echsmkey);
 
@@ -239,6 +241,8 @@ Console.WriteLine(rsaKey.Name);
 Console.WriteLine(rsaKey.KeyType);
 
 // Create a hardware Elliptic Curve key
+// Because only premium key vault supports HSM backed keys , please ensure your key vault
+// SKU is premium when you set "hsm" value to true
 var echsmkey = new CreateEcKeyOptions("ec-key-name", hardwareProtected: true);
 KeyVaultKey ecKey = client.CreateEcKey(echsmkey);
 
