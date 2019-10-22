@@ -219,7 +219,7 @@ namespace Microsoft.Azure.Search
         {
             DocumentsProxy = new DocumentsProxyOperations(this);
             BaseUri = "https://{searchServiceName}.{searchDnsSuffix}/indexes('{indexName}')";
-            ApiVersion = "2019-05-06";
+            ApiVersion = "2019-05-06-Preview";
             SearchDnsSuffix = "search.windows.net";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
