@@ -355,7 +355,7 @@ namespace TrackOne
                 throw Fx.Exception.Argument(nameof(eventDataBatch), Resources.EventDataListIsNullOrEmpty);
             }
 
-            await SendAsync(eventDataBatch.ToEnumerable(), eventDataBatch.PartitionKey);
+            await SendAsync(eventDataBatch.ToEnumerable(), eventDataBatch.PartitionKey).ConfigureAwait(false);
         }
 
         /// <summary>

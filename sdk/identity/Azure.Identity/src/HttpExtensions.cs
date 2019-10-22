@@ -8,7 +8,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Net;
-using Azure.Core.Http;
+using Azure.Core;
 
 namespace Azure.Identity
 {
@@ -71,11 +71,11 @@ namespace Azure.Identity
             return responseMessage;
         }
 
-        public static async Task<HttpPipelineRequestContent> ToPipelineRequestContentAsync(this HttpContent content)
+        public static async Task<RequestContent> ToPipelineRequestContentAsync(this HttpContent content)
         {
             if (content != null)
             {
-                return HttpPipelineRequestContent.Create(await content.ReadAsStreamAsync().ConfigureAwait(false));
+                return RequestContent.Create(await content.ReadAsStreamAsync().ConfigureAwait(false));
             }
 
             return null;

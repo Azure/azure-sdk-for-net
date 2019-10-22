@@ -88,10 +88,18 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void EventHubsExceptionTypesShouldHaveMappings()
         {
+            // These types are specific to track two and have no corresponding
+            // track one mapping.
+
+            var exemptions = new HashSet<Type>(new[]
+            {
+                typeof(EventHubsClientClosedException)
+            });
+
             IOrderedEnumerable<string> allDerrivedTypes = typeof(EventHubsException)
                .Assembly
                .GetTypes()
-               .Where(type => typeof(EventHubsException).IsAssignableFrom(type))
+               .Where(type => typeof(EventHubsException).IsAssignableFrom(type) && !exemptions.Contains(type))
                .Select(type => type.Name)
                .OrderBy(name => name);
 

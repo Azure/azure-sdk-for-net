@@ -23,7 +23,7 @@ namespace Azure.Messaging.EventHubs.Tests.Infrastructure
     public sealed class EventHubScope : IAsyncDisposable
     {
         /// <summary>The manager for common live test resource operations.</summary>
-        private static readonly LiveResourceManager s_resourceManager = new LiveResourceManager();
+        private static readonly LiveResourceManager ResourceManager = new LiveResourceManager();
 
         /// <summary>Serves as a sentinel flag to denote when the instance has been disposed.</summary>
         private bool _disposed = false;
@@ -69,12 +69,12 @@ namespace Azure.Messaging.EventHubs.Tests.Infrastructure
 
             var resourceGroup = TestEnvironment.EventHubsResourceGroup;
             var eventHubNamespace = TestEnvironment.EventHubsNamespace;
-            var token = await s_resourceManager.AquireManagementTokenAsync();
+            var token = await ResourceManager.AquireManagementTokenAsync();
             var client = new EventHubManagementClient(new TokenCredentials(token)) { SubscriptionId = TestEnvironment.EventHubsSubscription };
 
             try
             {
-                await s_resourceManager.CreateRetryPolicy().ExecuteAsync(() => client.EventHubs.DeleteAsync(resourceGroup, eventHubNamespace, EventHubName));
+                await ResourceManager.CreateRetryPolicy().ExecuteAsync(() => client.EventHubs.DeleteAsync(resourceGroup, eventHubNamespace, EventHubName));
             }
             catch
             {
@@ -110,19 +110,6 @@ namespace Azure.Messaging.EventHubs.Tests.Infrastructure
         /// </summary>
         ///
         /// <param name="partitionCount">The number of partitions that the Event Hub should be configured with.</param>
-        /// <param name="consumerGroup">The name of a consumer group to create and associate with the Event Hub; the default consumer group should not be specified, as it is implicitly created.</param>
-        /// <param name="caller">The name of the calling method; this is intended to be populated by the runtime.</param>
-        ///
-        public static Task<EventHubScope> CreateAsync(int partitionCount,
-                                                      string consumerGroup,
-                                                      [CallerMemberName] string caller = "") => CreateAsync(partitionCount, new[] { consumerGroup }, caller);
-
-        /// <summary>
-        ///   Performs the tasks needed to create a new Event Hub instance with the requested
-        ///   partition count and a dynamically assigned unique name.
-        /// </summary>
-        ///
-        /// <param name="partitionCount">The number of partitions that the Event Hub should be configured with.</param>
         /// <param name="consumerGroups">The set of consumer groups to create and associate with the Event Hub; the default consumer group should not be included, as it is implicitly created.</param>
         /// <param name="caller">The name of the calling method; this is intended to be populated by the runtime.</param>
         ///
@@ -137,16 +124,16 @@ namespace Azure.Messaging.EventHubs.Tests.Infrastructure
             var groups = (consumerGroups ?? Enumerable.Empty<string>()).ToList();
             var resourceGroup = TestEnvironment.EventHubsResourceGroup;
             var eventHubNamespace = TestEnvironment.EventHubsNamespace;
-            var token = await s_resourceManager.AquireManagementTokenAsync();
+            var token = await ResourceManager.AquireManagementTokenAsync();
 
             string CreateName() => $"{ Guid.NewGuid().ToString("D").Substring(0, 13) }-{ caller }";
 
             using (var client = new EventHubManagementClient(new TokenCredentials(token)) { SubscriptionId = TestEnvironment.EventHubsSubscription })
             {
                 var eventHub = new Eventhub(partitionCount: partitionCount);
-                eventHub = await s_resourceManager.CreateRetryPolicy<Eventhub>().ExecuteAsync(() => client.EventHubs.CreateOrUpdateAsync(resourceGroup, eventHubNamespace, CreateName(), eventHub));
+                eventHub = await ResourceManager.CreateRetryPolicy<Eventhub>().ExecuteAsync(() => client.EventHubs.CreateOrUpdateAsync(resourceGroup, eventHubNamespace, CreateName(), eventHub));
 
-                Polly.IAsyncPolicy<ConsumerGroup> consumerPolicy = s_resourceManager.CreateRetryPolicy<ConsumerGroup>();
+                Polly.IAsyncPolicy<ConsumerGroup> consumerPolicy = ResourceManager.CreateRetryPolicy<ConsumerGroup>();
 
                 await Task.WhenAll
                 (
@@ -172,18 +159,18 @@ namespace Azure.Messaging.EventHubs.Tests.Infrastructure
         {
             var subscription = TestEnvironment.EventHubsSubscription;
             var resourceGroup = TestEnvironment.EventHubsResourceGroup;
-            var token = await s_resourceManager.AquireManagementTokenAsync();
+            var token = await ResourceManager.AquireManagementTokenAsync();
 
             string CreateName() => $"net-eventhubs-{ Guid.NewGuid().ToString("D") }";
 
             using (var client = new EventHubManagementClient(new TokenCredentials(token)) { SubscriptionId = subscription })
             {
-                var location = await s_resourceManager.QueryResourceGroupLocationAsync(token, resourceGroup, subscription);
+                var location = await ResourceManager.QueryResourceGroupLocationAsync(token, resourceGroup, subscription);
 
-                var eventHubsNamespace = new EHNamespace(sku: new Sku("Standard", "Standard", 12), tags: s_resourceManager.GenerateTags(), isAutoInflateEnabled: true, maximumThroughputUnits: 20, location: location);
-                eventHubsNamespace = await s_resourceManager.CreateRetryPolicy<EHNamespace>().ExecuteAsync(() => client.Namespaces.CreateOrUpdateAsync(resourceGroup, CreateName(), eventHubsNamespace));
+                var eventHubsNamespace = new EHNamespace(sku: new Sku("Standard", "Standard", 12), tags: ResourceManager.GenerateTags(), isAutoInflateEnabled: true, maximumThroughputUnits: 20, location: location);
+                eventHubsNamespace = await ResourceManager.CreateRetryPolicy<EHNamespace>().ExecuteAsync(() => client.Namespaces.CreateOrUpdateAsync(resourceGroup, CreateName(), eventHubsNamespace));
 
-                AccessKeys accessKey = await s_resourceManager.CreateRetryPolicy<AccessKeys>().ExecuteAsync(() => client.Namespaces.ListKeysAsync(resourceGroup, eventHubsNamespace.Name, TestEnvironment.EventHubsDefaultSharedAccessKey));
+                AccessKeys accessKey = await ResourceManager.CreateRetryPolicy<AccessKeys>().ExecuteAsync(() => client.Namespaces.ListKeysAsync(resourceGroup, eventHubsNamespace.Name, TestEnvironment.EventHubsDefaultSharedAccessKey));
                 return new NamespaceProperties(eventHubsNamespace.Name, accessKey.PrimaryConnectionString);
             }
         }
@@ -199,11 +186,11 @@ namespace Azure.Messaging.EventHubs.Tests.Infrastructure
         {
             var subscription = TestEnvironment.EventHubsSubscription;
             var resourceGroup = TestEnvironment.EventHubsResourceGroup;
-            var token = await s_resourceManager.AquireManagementTokenAsync();
+            var token = await ResourceManager.AquireManagementTokenAsync();
 
             using (var client = new EventHubManagementClient(new TokenCredentials(token)) { SubscriptionId = subscription })
             {
-                await s_resourceManager.CreateRetryPolicy().ExecuteAsync(() => client.Namespaces.DeleteAsync(resourceGroup, namespaceName));
+                await ResourceManager.CreateRetryPolicy().ExecuteAsync(() => client.Namespaces.DeleteAsync(resourceGroup, namespaceName));
             }
         }
 

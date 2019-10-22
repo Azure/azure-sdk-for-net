@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using System.Net;
 using System.Text;
-using Azure.Core.Http;
+using Azure.Core;
 using Azure.Storage.Sas;
 
 namespace Azure.Storage.Files
@@ -93,7 +93,7 @@ namespace Azure.Storage.Files
         public string DirectoryOrFilePath
         {
             get => _directoryOrFilePath;
-            set { ResetUri(); _directoryOrFilePath = value; }
+            set { ResetUri(); _directoryOrFilePath = value.TrimEnd('/'); }
         }
         private string _directoryOrFilePath;
 

@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Azure.Storage.Common
+namespace Azure.Storage
 {
     /// <summary>
     /// Given a source of StreamPartitions, optionally collate them.
@@ -29,19 +29,19 @@ namespace Azure.Storage.Common
         {
             var destinationOffset = destination.Position;
 
-            await foreach (StreamPartition partition in partitions)
+            await foreach (StreamPartition partition in partitions.ConfigureAwait(false))
             {
                 if (async)
                 {
-                    await copyImpl(partition).ConfigureAwait(false);
+                    await copyCore(partition).ConfigureAwait(false);
                 }
                 else
                 {
-                    copyImpl(partition).EnsureCompleted();
+                    copyCore(partition).EnsureCompleted();
                 }
             }
 
-            async Task copyImpl(StreamPartition partition)
+            async Task copyCore(StreamPartition partition)
             {
                 // if the destination is seekable, ensure we position it correctly,
                 // else we trust the partitions are received in order and just write

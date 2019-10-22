@@ -37,52 +37,52 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <summary>
         /// RSA SHA-256 signature algorithm.
         /// </summary>
-        public static readonly SignatureAlgorithm RS256 = new SignatureAlgorithm(RS256Value);
+        public static SignatureAlgorithm RS256 { get; } = new SignatureAlgorithm(RS256Value);
 
         /// <summary>
         /// RSA SHA-384 signature algorithm.
         /// </summary>
-        public static readonly SignatureAlgorithm RS384 = new SignatureAlgorithm(RS384Value);
+        public static SignatureAlgorithm RS384 { get; } = new SignatureAlgorithm(RS384Value);
 
         /// <summary>
         /// RSA SHA-512 Signature algorithm.
         /// </summary>
-        public static readonly SignatureAlgorithm RS512 = new SignatureAlgorithm(RS512Value);
+        public static SignatureAlgorithm RS512 { get; } = new SignatureAlgorithm(RS512Value);
 
         /// <summary>
         /// RSASSA-PSS using SHA-256 and MGF1 with SHA-256.
         /// </summary>
-        public static readonly SignatureAlgorithm PS256 = new SignatureAlgorithm(PS256Value);
+        public static SignatureAlgorithm PS256 { get; } = new SignatureAlgorithm(PS256Value);
 
         /// <summary>
         /// RSASSA-PSS using SHA-384 and MGF1 with SHA-384.
         /// </summary>
-        public static readonly SignatureAlgorithm PS384 = new SignatureAlgorithm(PS384Value);
+        public static SignatureAlgorithm PS384 { get; } = new SignatureAlgorithm(PS384Value);
 
         /// <summary>
         /// RSASSA-PSS using SHA-512 and MGF1 with SHA-512.
         /// </summary>
-        public static readonly SignatureAlgorithm PS512 = new SignatureAlgorithm(PS512Value);
+        public static SignatureAlgorithm PS512 { get; } = new SignatureAlgorithm(PS512Value);
 
         /// <summary>
         /// ECDSA with a P-256 curve.
         /// </summary>
-        public static readonly SignatureAlgorithm ES256 = new SignatureAlgorithm(ES256Value);
+        public static SignatureAlgorithm ES256 { get; } = new SignatureAlgorithm(ES256Value);
 
         /// <summary>
         /// ECDSA with a P-384 curve.
         /// </summary>
-        public static readonly SignatureAlgorithm ES384 = new SignatureAlgorithm(ES384Value);
+        public static SignatureAlgorithm ES384 { get; } = new SignatureAlgorithm(ES384Value);
 
         /// <summary>
         /// ECDSA with a P-521 curve.
         /// </summary>
-        public static readonly SignatureAlgorithm ES512 = new SignatureAlgorithm(ES512Value);
+        public static SignatureAlgorithm ES512 { get; } = new SignatureAlgorithm(ES512Value);
 
         /// <summary>
         /// ECDSA with a secp256k1 curve.
         /// </summary>
-        public static readonly SignatureAlgorithm ES256K = new SignatureAlgorithm(ES256KValue);
+        public static SignatureAlgorithm ES256K { get; } = new SignatureAlgorithm(ES256KValue);
 
         /// <summary>
         /// Determines if two <see cref="SignatureAlgorithm"/> values are the same.
@@ -170,24 +170,24 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
         }
 
-        internal ref readonly KeyCurveName GetEcKeyCurveName()
+        internal KeyCurveName GetEcKeyCurveName()
         {
             switch (_value)
             {
                 case ES256Value:
-                    return ref KeyCurveName.P256;
+                    return KeyCurveName.P256;
 
                 case ES256KValue:
-                    return ref KeyCurveName.P256K;
+                    return KeyCurveName.P256K;
 
                 case ES384Value:
-                    return ref KeyCurveName.P384;
+                    return KeyCurveName.P384;
 
                 case ES512Value:
-                    return ref KeyCurveName.P521;
+                    return KeyCurveName.P521;
 
                 default:
-                    return ref KeyCurveName.s_default;
+                    return KeyCurveName.s_default;
             }
         }
 

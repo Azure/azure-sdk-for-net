@@ -8,6 +8,11 @@ using System.Threading;
 
 namespace Azure
 {
+    /// <summary>
+    /// A collection of values that may take multiple service requests to
+    /// iterate over.
+    /// </summary>
+    /// <typeparam name="T">The type of the values.</typeparam>
     public abstract class Pageable<T> : IEnumerable<T> where T : notnull
     {
         /// <summary>
@@ -36,7 +41,7 @@ namespace Azure
 
         /// <summary>
         /// Enumerate the values a <see cref="Page{T}"/> at a time.  This may
-        /// make mutliple service requests.
+        /// make multiple service requests.
         /// </summary>
         /// <param name="continuationToken">
         /// A continuation token indicating where to resume paging or null to
@@ -49,7 +54,7 @@ namespace Azure
         /// <returns>
         /// An async sequence of <see cref="Page{T}"/>s.
         /// </returns>
-        public abstract IEnumerable<Page<T>> ByPage(
+        public abstract IEnumerable<Page<T>> AsPages(
             string? continuationToken = default,
             int? pageSizeHint = default);
 
@@ -72,7 +77,7 @@ namespace Azure
         /// </summary>
         public virtual IEnumerator<T> GetEnumerator()
         {
-            foreach (Page<T> page in ByPage())
+            foreach (Page<T> page in AsPages())
             {
                 foreach (T value in page.Values)
                 {
@@ -87,7 +92,7 @@ namespace Azure
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => base.Equals(obj);
+        public override bool Equals(object? obj) => base.Equals(obj);
 
         /// <summary>
         /// Get a hash code for the <see cref="Pageable{T}"/>.

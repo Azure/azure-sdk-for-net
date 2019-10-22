@@ -14,7 +14,7 @@ namespace Azure.Storage.Sas
     /// A <see cref="SasQueryParameters"/> object represents the components
     /// that make up an Azure Storage Shared Access Signature's query
     /// parameters.  It includes components used by all Azure Storage resources
-    /// (Containers, Blobs, Files, and Queues).  You can construct a new instance
+    /// (Blob Containers, Blobs, Files, and Queues).  You can construct a new instance
     /// using the service specific SAS builder types.
     /// For more information, <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas"/>.
     /// </summary>
@@ -41,10 +41,10 @@ namespace Azure.Storage.Sas
         private readonly string _version;
 
         // ss
-        private readonly string _services;
+        private readonly AccountSasServices? _services;
 
         // srt
-        private readonly string _resourceTypes;
+        private readonly AccountSasResourceTypes? _resourceTypes;
 
         // spr
         private readonly SasProtocol _protocol;
@@ -56,7 +56,7 @@ namespace Azure.Storage.Sas
         private readonly DateTimeOffset _expiryTime;
 
         // sip
-        private readonly IPRange _ipRange;
+        private readonly SasIPRange _ipRange;
 
         // si
         private readonly string _identifier;
@@ -96,12 +96,12 @@ namespace Azure.Storage.Sas
         /// Gets the signed services accessible with an account level shared
         /// access signature.
         /// </summary>
-        public string Services => _services ?? string.Empty;
+        public AccountSasServices? Services => _services;
 
         /// <summary>
         /// Gets which resources are accessible via the shared access signature.
         /// </summary>
-        public string ResourceTypes => _resourceTypes ?? string.Empty;
+        public AccountSasResourceTypes? ResourceTypes => _resourceTypes;
 
         /// <summary>
         /// Optional. Specifies the protocol permitted for a request made with
@@ -115,24 +115,24 @@ namespace Azure.Storage.Sas
         /// time when the storage service receives the request.
         /// <see cref="DateTimeOffset.MinValue"/> means not set.
         /// </summary>
-        public DateTimeOffset StartTime => _startTime;
+        public DateTimeOffset StartsOn => _startTime;
 
         /// <summary>
         /// Gets the time at which the shared access signature becomes invalid.
         /// <see cref="DateTimeOffset.MinValue"/> means not set.
         /// </summary>
-        public DateTimeOffset ExpiryTime => _expiryTime;
+        public DateTimeOffset ExpiresOn => _expiryTime;
 
         /// <summary>
         /// Gets the optional IP address or a range of IP addresses from which
         /// to accept requests.  When specifying a range, note that the range
         /// is inclusive.
         /// </summary>
-        public IPRange IPRange => _ipRange;
+        public SasIPRange IPRange => _ipRange;
 
         /// <summary>
         /// Gets the optional unique value up to 64 characters in length that
-        /// correlates to an access policy specified for the container, queue,
+        /// correlates to an access policy specified for the blob container, queue,
         /// or share.
         /// </summary>
         public string Identifier => _identifier ?? string.Empty;
@@ -223,12 +223,12 @@ namespace Azure.Storage.Sas
         /// </summary>
         internal SasQueryParameters(
             string version,
-            string services,
-            string resourceTypes,
+            AccountSasServices? services,
+            AccountSasResourceTypes? resourceTypes,
             SasProtocol protocol,
-            DateTimeOffset startTime,
-            DateTimeOffset expiryTime,
-            IPRange ipRange,
+            DateTimeOffset startsOn,
+            DateTimeOffset expiresOn,
+            SasIPRange ipRange,
             string identifier,
             string resource,
             string permissions,
@@ -247,11 +247,11 @@ namespace Azure.Storage.Sas
         {
             // Assume URL-decoded
             _version = version ?? DefaultSasVersion;
-            _services = services ?? string.Empty;
-            _resourceTypes = resourceTypes ?? string.Empty;
+            _services = services;
+            _resourceTypes = resourceTypes;
             _protocol = protocol;
-            _startTime = startTime;
-            _expiryTime = expiryTime;
+            _startTime = startsOn;
+            _expiryTime = expiresOn;
             _ipRange = ipRange;
             _identifier = identifier ?? string.Empty;
             _resource = resource ?? string.Empty;
@@ -297,13 +297,13 @@ namespace Azure.Storage.Sas
                         _version = kv.Value;
                         break;
                     case Constants.Sas.Parameters.ServicesUpper:
-                        _services = kv.Value;
+                        _services = SasExtensions.ParseAccountServices(kv.Value);
                         break;
                     case Constants.Sas.Parameters.ResourceTypesUpper:
-                        _resourceTypes = kv.Value;
+                        _resourceTypes = SasExtensions.ParseResourceTypes(kv.Value);
                         break;
                     case Constants.Sas.Parameters.ProtocolUpper:
-                        _protocol = SasProtocol.Parse(kv.Value);
+                        _protocol = SasExtensions.ParseProtocol(kv.Value);
                         break;
                     case Constants.Sas.Parameters.StartTimeUpper:
                         _startTime = DateTimeOffset.ParseExact(kv.Value, Constants.SasTimeFormat, CultureInfo.InvariantCulture);
@@ -312,7 +312,7 @@ namespace Azure.Storage.Sas
                         _expiryTime = DateTimeOffset.ParseExact(kv.Value, Constants.SasTimeFormat, CultureInfo.InvariantCulture);
                         break;
                     case Constants.Sas.Parameters.IPRangeUpper:
-                        _ipRange = IPRange.Parse(kv.Value);
+                        _ipRange = SasIPRange.Parse(kv.Value);
                         break;
                     case Constants.Sas.Parameters.IdentifierUpper:
                         _identifier = kv.Value;
@@ -343,11 +343,11 @@ namespace Azure.Storage.Sas
                         break;
 
                     // Optionally include Blob parameters
-                    case Constants.Sas.Parameters.KeyOidUpper:
+                    case Constants.Sas.Parameters.KeyObjectIdUpper:
                         if (includeBlobParameters) { _keyObjectId = kv.Value; }
                         else { isSasKey = false; }
                         break;
-                    case Constants.Sas.Parameters.KeyTidUpper:
+                    case Constants.Sas.Parameters.KeyTenantIdUpper:
                         if (includeBlobParameters) { _keyTenantId = kv.Value; }
                         else { isSasKey = false; }
                         break;
@@ -418,29 +418,29 @@ namespace Azure.Storage.Sas
                 AddToBuilder(Constants.Sas.Parameters.Version, Version);
             }
 
-            if (!string.IsNullOrWhiteSpace(Services))
+            if (Services != null)
             {
-                AddToBuilder(Constants.Sas.Parameters.Services, Services);
+                AddToBuilder(Constants.Sas.Parameters.Services, Services.Value.ToPermissionsString());
             }
 
-            if (!string.IsNullOrWhiteSpace(ResourceTypes))
+            if (ResourceTypes != null)
             {
-                AddToBuilder(Constants.Sas.Parameters.ResourceTypes, ResourceTypes);
+                AddToBuilder(Constants.Sas.Parameters.ResourceTypes, ResourceTypes.Value.ToPermissionsString());
             }
 
-            if (Protocol != SasProtocol.None)
+            if (Protocol != default)
             {
-                AddToBuilder(Constants.Sas.Parameters.Protocol, Protocol.ToString());
+                AddToBuilder(Constants.Sas.Parameters.Protocol, Protocol.ToProtocolString());
             }
 
-            if (StartTime != DateTimeOffset.MinValue)
+            if (StartsOn != DateTimeOffset.MinValue)
             {
-                AddToBuilder(Constants.Sas.Parameters.StartTime, WebUtility.UrlEncode(StartTime.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
+                AddToBuilder(Constants.Sas.Parameters.StartTime, WebUtility.UrlEncode(StartsOn.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
             }
 
-            if (ExpiryTime != DateTimeOffset.MinValue)
+            if (ExpiresOn != DateTimeOffset.MinValue)
             {
-                AddToBuilder(Constants.Sas.Parameters.ExpiryTime, WebUtility.UrlEncode(ExpiryTime.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
+                AddToBuilder(Constants.Sas.Parameters.ExpiryTime, WebUtility.UrlEncode(ExpiresOn.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
             }
 
             var ipr = IPRange.ToString();
@@ -493,12 +493,12 @@ namespace Azure.Storage.Sas
             {
                 if (!string.IsNullOrWhiteSpace(_keyObjectId))
                 {
-                    AddToBuilder(Constants.Sas.Parameters.KeyOid, _keyObjectId);
+                    AddToBuilder(Constants.Sas.Parameters.KeyObjectId, _keyObjectId);
                 }
 
                 if (!string.IsNullOrWhiteSpace(_keyTenantId))
                 {
-                    AddToBuilder(Constants.Sas.Parameters.KeyTid, _keyTenantId);
+                    AddToBuilder(Constants.Sas.Parameters.KeyTenantId, _keyTenantId);
                 }
 
                 if (_keyStart != DateTimeOffset.MinValue)

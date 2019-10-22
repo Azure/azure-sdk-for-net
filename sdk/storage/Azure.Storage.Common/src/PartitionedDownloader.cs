@@ -7,8 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Http;
-using Azure.Storage.Common;
 
 namespace Azure.Storage
 {
@@ -57,8 +55,8 @@ namespace Azure.Storage
         /// The maximum size of the stream to allow using
         /// <paramref name="downloadStreamAsync"/>.
         /// </param>
-        /// <param name="parallelTransferOptions">
-        /// Optional <see cref="ParallelTransferOptions"/> to configure
+        /// <param name="transferOptions">
+        /// Optional <see cref="StorageTransferOptions"/> to configure
         /// parallel transfer behavior.
         /// </param>
         /// <param name="async">
@@ -78,7 +76,7 @@ namespace Azure.Storage
             Func<ETag, HttpRange, bool, CancellationToken, Task<Response<P>>> downloadPartitionAsync,
             Func<Response<P>, Stream, bool, CancellationToken, Task> writePartitionAsync,
             long singleDownloadThreshold,
-            ParallelTransferOptions? parallelTransferOptions = default,
+            StorageTransferOptions? transferOptions = default,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
@@ -125,14 +123,14 @@ namespace Azure.Storage
                 {
                     // Split the source content into ranges and download by range
 
-                    parallelTransferOptions ??= new ParallelTransferOptions();
+                    transferOptions ??= new StorageTransferOptions();
 
                     var maximumThreadCount =
-                        parallelTransferOptions.Value.MaximumThreadCount ?? Constants.Blob.Block.DefaultConcurrentTransfersCount;
+                        transferOptions.Value.MaximumConcurrency ?? Constants.Blob.Block.DefaultConcurrentTransfersCount;
                     var maximumPartitionLength =
                         Math.Min(
                             Constants.Blob.Block.MaxDownloadBytes,
-                            parallelTransferOptions.Value.MaximumTransferLength ?? Constants.DefaultBufferSize
+                            transferOptions.Value.MaximumTransferLength ?? Constants.DefaultBufferSize
                             );
 
                     var maximumActivePartitionCount = maximumThreadCount;

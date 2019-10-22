@@ -50,7 +50,11 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// existing backup or create new backup. If using existing backups,
         /// backup file paths are required to be provided in selectedDatabases.
         /// Possible values include: 'CreateBackup', 'ExistingBackup'</param>
-        public MigrateSqlServerSqlMITaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, IList<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases, BlobShare backupBlobShare, IList<string> selectedLogins = default(IList<string>), IList<string> selectedAgentJobs = default(IList<string>), FileShare backupFileShare = default(FileShare), string backupMode = default(string))
+        /// <param name="aadDomainName">Azure Active Directory domain name in
+        /// the format of 'contoso.com' for federated Azure AD or
+        /// 'contoso.onmicrosoft.com' for managed domain, required if and only
+        /// if Windows logins are selected</param>
+        public MigrateSqlServerSqlMITaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, IList<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases, BlobShare backupBlobShare, IList<string> selectedLogins = default(IList<string>), IList<string> selectedAgentJobs = default(IList<string>), FileShare backupFileShare = default(FileShare), string backupMode = default(string), string aadDomainName = default(string))
             : base(sourceConnectionInfo, targetConnectionInfo)
         {
             SelectedDatabases = selectedDatabases;
@@ -59,6 +63,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
             BackupFileShare = backupFileShare;
             BackupBlobShare = backupBlobShare;
             BackupMode = backupMode;
+            AadDomainName = aadDomainName;
             CustomInit();
         }
 
@@ -107,6 +112,15 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </summary>
         [JsonProperty(PropertyName = "backupMode")]
         public string BackupMode { get; set; }
+
+        /// <summary>
+        /// Gets or sets azure Active Directory domain name in the format of
+        /// 'contoso.com' for federated Azure AD or 'contoso.onmicrosoft.com'
+        /// for managed domain, required if and only if Windows logins are
+        /// selected
+        /// </summary>
+        [JsonProperty(PropertyName = "aadDomainName")]
+        public string AadDomainName { get; set; }
 
         /// <summary>
         /// Validate the object.

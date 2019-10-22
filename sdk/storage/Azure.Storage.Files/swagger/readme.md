@@ -148,6 +148,15 @@ directive:
     }
 ```
 
+### Hide ListSharesIncludeType
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.ListSharesInclude
+  transform: >
+    $.items["x-az-public"] = false;
+```
+
 ### /{shareName}?restype=share
 ``` yaml
 directive:
@@ -157,6 +166,7 @@ directive:
     $.put.responses["201"].description = "Success";
     $.put.responses["201"]["x-az-response-name"] = "ShareInfo";
     $.get.responses["200"]["x-az-response-name"] = "ShareProperties";
+    $.get.responses["200"].headers["x-ms-share-quota"]["x-ms-client-name"] = "QuotaInGB";
 ```
 
 ### /{shareName}?restype=share&comp=snapshot
@@ -320,8 +330,8 @@ directive:
 - from: swagger-document
   where: $.definitions
   transform: >
-    if (!$.StorageHandle) {
-        $.StorageHandle = $.HandleItem;
+    if (!$.StorageFileHandle) {
+        $.StorageFileHandle = $.HandleItem;
         delete $.HandleItem;
     }
     if (!$.StorageHandlesSegment) {
@@ -331,7 +341,7 @@ directive:
         const path = $.StorageHandlesSegment.properties.HandleList.items.$ref.replace(/[#].*$/, "#/definitions/");
         $.StorageHandlesSegment.properties.Handles = {
             "type": "array",
-            "items": { "$ref": path + "StorageHandle" },
+            "items": { "$ref": path + "StorageFileHandle" },
             "xml": { "name": "Entries", "wrapped": true }
         };
         delete $.StorageHandlesSegment.properties.HandleList;
@@ -428,6 +438,7 @@ directive:
     $.head.responses["200"].headers["Content-Language"].collectionFormat = "csv";
     $.head.responses["200"].headers["Content-Language"].items = { "type": "string" };
     $.head.responses["200"].headers["x-ms-copy-status"]["x-ms-enum"].name = "CopyStatus";
+    delete $.head.responses["200"].headers["x-ms-type"];
     $.head.responses["200"]["x-az-response-name"] = "RawStorageFileProperties";
     $.head.responses["200"]["x-az-public"] = false;
     $.head.responses.default = {
@@ -615,6 +626,18 @@ directive:
     }
 ```
 
+### ShareItemProperties properties renaming
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.ShareItemProperties
+  transform: >
+    $.properties.QuotaInGB = $.properties.Quota;
+    $.properties.QuotaInGB.xml = { "name": "Quota"};
+    delete $.properties.Quota;
+```
+
+
 ### FilePermission
 ``` yaml
 directive:
@@ -657,4 +680,72 @@ directive:
     $.type = "string";
     delete $.required;
     delete $.properties;
+```
+
+### Prepend File prefix to service property types
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.Metrics["x-ms-client-name"] = "FileMetrics";
+    $.Metrics.xml = { "name": "Metrics" };
+    $.Metrics.properties.IncludeApis = $.Metrics.properties.IncludeAPIs;
+    $.Metrics.properties.IncludeApis.xml = { "name": "IncludeAPIs"};
+    delete $.Metrics.properties.IncludeAPIs;
+    $.FileServiceProperties.properties.HourMetrics.xml = { "name": "HourMetrics"};
+    $.FileServiceProperties.properties.MinuteMetrics.xml = { "name": "MinuteMetrics"};
+    $.CorsRule["x-ms-client-name"] = "FileCorsRule";
+    $.CorsRule.xml = { "name": "CorsRule"};
+    $.FileServiceProperties.properties.Cors.xml.name = "Cors";
+    $.RetentionPolicy["x-ms-client-name"] = "FileRetentionPolicy";
+    $.RetentionPolicy.xml = { "name": "RetentionPolicy"};
+```
+
+### Access Policy properties renaming
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.AccessPolicy
+  transform: >
+    $["x-ms-client-name"] = "FileAccessPolicy";
+    $.xml = {"name": "AccessPolicy"};
+    $.properties.StartsOn = $.properties.Start;
+    $.properties.StartsOn.xml = { "name": "Start"};
+    delete $.properties.Start;
+    $.properties.ExpiresOn = $.properties.Expiry;
+    $.properties.ExpiresOn.xml = { "name": "Expiry"};
+    delete $.properties.Expiry;
+    $.properties.Permissions = $.properties.Permission;
+    $.properties.Permissions.xml = { "name": "Permission"};
+    delete $.properties.Permission;
+    $.required = ["StartsOn", "ExpiresOn", "Permissions"];
+```
+
+### ShareQuota properties renaming
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.ShareQuota
+  transform: >
+    $["x-ms-client-name"] = "quotaInGB";
+```
+
+### SignedIdentifier
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.SignedIdentifier
+  transform: >
+    $["x-ms-client-name"] = "FileSignedIdentifier";
+    $.xml = {"name": "SignedIdentifier"};
+```
+
+### Hide DeleteSnapshotsOptionType
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.DeleteSnapshots
+  transform: >
+    $["x-az-public"] = false;
 ```

@@ -260,6 +260,72 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubConsumer.ReadLastEnqueuedEventInformation" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void ReadLastEnqueuedEventInformationRespectsTheTrackingEnabledFlag(bool trackingEnabled)
+        {
+            var retryOptions = new RetryOptions
+            {
+                Delay = TimeSpan.FromSeconds(1),
+                MaximumDelay = TimeSpan.FromSeconds(2),
+                TryTimeout = TimeSpan.FromSeconds(3),
+                MaximumRetries = 4,
+                Mode = RetryMode.Fixed
+            };
+
+            var consumerOptions = new EventHubConsumerOptions { TrackLastEnqueuedEventInformation = trackingEnabled };
+            var consumer = new EventHubConsumer(new ObservableTransportConsumerMock(), "dummy", "consumerGroup", "0", EventPosition.Latest, consumerOptions, new BasicRetryPolicy(retryOptions));
+
+            if (trackingEnabled)
+            {
+                var metrics = consumer.ReadLastEnqueuedEventInformation();
+                Assert.That(metrics.EventHubName, Is.Not.Null.And.Not.Empty, "The Event Hub name should be present.");
+                Assert.That(metrics.PartitionId, Is.Not.Null.And.Not.Empty, "The partition id should be present.");
+            }
+            else
+            {
+                Assert.That(() => consumer.ReadLastEnqueuedEventInformation(), Throws.TypeOf<InvalidOperationException>(), "Last enqueued event information cannot be read if tracking is not enabled.");
+            }
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubConsumer.ReadLastEnqueuedEventInformation" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void ReadLastEnqueuedEventInformationPopulatesFromTheLastReceivedEvent()
+        {
+            var lastEvent = new EventData
+            (
+                eventBody: Array.Empty<byte>(),
+                lastPartitionSequenceNumber: 12345,
+                lastPartitionOffset: 89101,
+                lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T00:00:00Z"),
+                lastPartitionInformationRetrievalTime: DateTimeOffset.Parse("2012-03-04T08:49:00Z")
+            );
+
+            var eventHub = "someHub";
+            var partition = "PART";
+            var consumerOptions = new EventHubConsumerOptions { TrackLastEnqueuedEventInformation = true };
+            var transportMock = new ObservableTransportConsumerMock { LastReceivedEvent = lastEvent };
+            var consumer = new EventHubConsumer(transportMock, eventHub, "consumerGroup", partition, EventPosition.Latest, consumerOptions, Mock.Of<EventHubRetryPolicy>());
+            var metrics = consumer.ReadLastEnqueuedEventInformation();
+
+            Assert.That(metrics.EventHubName, Is.EqualTo(eventHub), "The Event Hub name should match.");
+            Assert.That(metrics.PartitionId, Is.EqualTo(partition), "The partition id should match.");
+            Assert.That(metrics.LastEnqueuedSequenceNumber, Is.EqualTo(lastEvent.LastPartitionSequenceNumber), "The sequence number should match.");
+            Assert.That(metrics.LastEnqueuedOffset, Is.EqualTo(lastEvent.LastPartitionOffset), "The offset should match.");
+            Assert.That(metrics.LastEnqueuedTime, Is.EqualTo(lastEvent.LastPartitionEnqueuedTime), "The enqueue time should match.");
+            Assert.That(metrics.InformationReceived, Is.EqualTo(lastEvent.LastPartitionInformationRetrievalTime), "The retrieval time should match.");
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="EventHubConsumer.CloseAsync" />
         ///   method.
         /// </summary>
@@ -583,7 +649,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var consumer = new EventHubConsumer(transportConsumer, "dummy", EventHubConsumer.DefaultConsumerGroupName, "0", EventPosition.Latest, new EventHubConsumerOptions(), Mock.Of<EventHubRetryPolicy>());
             var receivedEvents = new List<EventData>();
 
-            using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(60));
 
             await foreach (EventData eventData in consumer.SubscribeToEvents(cancellation.Token))
             {
@@ -634,7 +700,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
             }
 
-            using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(75));
 
             var firstSubscriberTask = Task.Run(async () =>
             {
@@ -704,7 +770,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     .Select(index => new EventData(Encoding.UTF8.GetBytes($"Event Number { index }")))
             );
 
-            using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(60));
 
             await foreach (EventData eventData in consumer.SubscribeToEvents(cancellation.Token))
             {
@@ -752,7 +818,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
             }
 
-            using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(75));
 
             var firstSubscriberTask = Task.Run(async () =>
             {
@@ -1200,6 +1266,12 @@ namespace Azure.Messaging.EventHubs.Tests
             public bool WasCloseCalled = false;
             public EventHubRetryPolicy UpdateRetryPolicyCalledWith;
             public (int, TimeSpan?) ReceiveCalledWith;
+
+            public new EventData LastReceivedEvent
+            {
+                get => base.LastReceivedEvent;
+                set => base.LastReceivedEvent = value;
+            }
 
             public override Task<IEnumerable<EventData>> ReceiveAsync(int maximumMessageCount,
                                                                       TimeSpan? maximumWaitTime,

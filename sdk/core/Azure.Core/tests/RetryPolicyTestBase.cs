@@ -9,7 +9,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
-using Azure.Core.Http;
 using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 using NUnit.Framework;
@@ -333,7 +332,7 @@ namespace Azure.Core.Tests
                 _exceptionFilter = exceptionFilter;
             }
 
-            public override bool IsRetriableResponse(HttpPipelineMessage message)
+            public override bool IsRetriableResponse(HttpMessage message)
             {
                 return Array.IndexOf(_retriableCodes, message.Response.Status) >= 0;
             }

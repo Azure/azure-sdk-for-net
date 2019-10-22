@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text.Json;
@@ -56,42 +57,47 @@ namespace Azure.Security.KeyVault.Keys
         private static readonly KeyOperation[] s_eCPublicKeyOperation = { KeyOperation.Sign };
         private static readonly KeyOperation[] s_eCPrivateKeyOperation = { KeyOperation.Sign, KeyOperation.Verify };
 
+        private readonly IList<KeyOperation> _keyOps;
+
         /// <summary>
         /// The identifier of the key. This is not limited to a <see cref="Uri"/>.
         /// </summary>
-        public string Id { get; set; }
+        public string Id { get; internal set; }
 
         /// <summary>
-        /// Supported JsonWebKey key types (kty) based on the cryptographic algorithm used for the key.
-        /// For valid values, see <see cref="KeyType"/>.
+        /// Gets or sets the <see cref="KeyType"/> for this <see cref="JsonWebKey"/>.
         /// </summary>
-        public KeyType KeyType { get; set; }
+        public KeyType KeyType { get; internal set; }
 
         /// <summary>
-        /// Supported Key Operations.
+        /// Gets supported key operations.
         /// </summary>
-        public IList<KeyOperation> KeyOps { get; set; }
+        public IReadOnlyCollection<KeyOperation> KeyOps { get; }
 
-        /// <summary>
-        /// Creates an instance of <see cref="JsonWebKey"/>.
-        /// </summary>
-        public JsonWebKey()
+        internal JsonWebKey() : this(null)
         {
-            KeyOps = new List<KeyOperation>();
+        }
+
+        internal JsonWebKey(IEnumerable<KeyOperation> keyOps)
+        {
+            _keyOps = keyOps is null ? new List<KeyOperation>() : new List<KeyOperation>(keyOps);
+            KeyOps = new ReadOnlyCollection<KeyOperation>(_keyOps);
         }
 
         /// <summary>
         /// Creates an instance of <see cref="JsonWebKey"/> using type <see cref="KeyType.Oct"/>.
         /// </summary>
         /// <param name="aesProvider">An <see cref="Aes"/> provider.</param>
+        /// <param name="keyOps">Optional list of supported <see cref="KeyOperation"/> values.</param>
         /// <exception cref="ArgumentNullException"><paramref name="aesProvider"/> is null.</exception>
-        public JsonWebKey(Aes aesProvider)
+        public JsonWebKey(Aes aesProvider, IEnumerable<KeyOperation> keyOps = default)
         {
             Argument.AssertNotNull(aesProvider, nameof(aesProvider));
 
-            KeyType = KeyType.Oct;
-            KeyOps = new List<KeyOperation>(s_aesKeyOperation);
+            _keyOps = new List<KeyOperation>(keyOps ?? s_aesKeyOperation);
+            KeyOps = new ReadOnlyCollection<KeyOperation>(_keyOps);
 
+            KeyType = KeyType.Oct;
             K = aesProvider.Key;
         }
 
@@ -100,11 +106,15 @@ namespace Azure.Security.KeyVault.Keys
         /// </summary>
         /// <param name="ecdsa">An <see cref="ECDsa"/> provider.</param>
         /// <param name="includePrivateParameters">Whether to include private parameters.</param>
+        /// <param name="keyOps">Optional list of supported <see cref="KeyOperation"/> values.</param>
         /// <exception cref="ArgumentNullException"><paramref name="ecdsa"/> is null.</exception>
         /// <exception cref="InvalidOperationException">The elliptic curve name is invalid.</exception>
-        public JsonWebKey(ECDsa ecdsa, bool includePrivateParameters = default)
+        public JsonWebKey(ECDsa ecdsa, bool includePrivateParameters = default, IEnumerable<KeyOperation> keyOps = default)
         {
             Argument.AssertNotNull(ecdsa, nameof(ecdsa));
+
+            _keyOps = new List<KeyOperation>(keyOps ?? (includePrivateParameters ? s_eCPrivateKeyOperation : s_eCPublicKeyOperation));
+            KeyOps = new ReadOnlyCollection<KeyOperation>(_keyOps);
 
             Initialize(ecdsa, includePrivateParameters);
         }
@@ -114,14 +124,16 @@ namespace Azure.Security.KeyVault.Keys
         /// </summary>
         /// <param name="rsaProvider">An <see cref="RSA"/> provider.</param>
         /// <param name="includePrivateParameters">Whether to include private parameters.</param>
+        /// <param name="keyOps">Optional list of supported <see cref="KeyOperation"/> values.</param>
         /// <exception cref="ArgumentNullException"><paramref name="rsaProvider"/> is null.</exception>
-        public JsonWebKey(RSA rsaProvider, bool includePrivateParameters = default)
+        public JsonWebKey(RSA rsaProvider, bool includePrivateParameters = default, IEnumerable<KeyOperation> keyOps = default)
         {
             Argument.AssertNotNull(rsaProvider, nameof(rsaProvider));
 
-            KeyType = KeyType.Rsa;
-            KeyOps = new List<KeyOperation>(includePrivateParameters ? s_rSAPrivateKeyOperation : s_rSAPublicKeyOperation);
+            _keyOps = new List<KeyOperation>(keyOps ?? (includePrivateParameters ? s_rSAPrivateKeyOperation : s_rSAPublicKeyOperation));
+            KeyOps = new ReadOnlyCollection<KeyOperation>(_keyOps);
 
+            KeyType = KeyType.Rsa;
             RSAParameters rsaParameters = rsaProvider.ExportParameters(includePrivateParameters);
 
             E = rsaParameters.Exponent;
@@ -140,12 +152,12 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// RSA modulus, in Base64.
         /// </summary>
-        public byte[] N { get; set; }
+        public byte[] N { get; internal set; }
 
         /// <summary>
         /// RSA public exponent, in Base64.
         /// </summary>
-        public byte[] E { get; set; }
+        public byte[] E { get; internal set; }
 
         #endregion
 
@@ -154,27 +166,27 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// RSA Private Key Parameter
         /// </summary>
-        public byte[] DP { get; set; }
+        public byte[] DP { get; internal set; }
 
         /// <summary>
         /// RSA Private Key Parameter
         /// </summary>
-        public byte[] DQ { get; set; }
+        public byte[] DQ { get; internal set; }
 
         /// <summary>
         /// RSA Private Key Parameter
         /// </summary>
-        public byte[] QI { get; set; }
+        public byte[] QI { get; internal set; }
 
         /// <summary>
         /// RSA secret prime
         /// </summary>
-        public byte[] P { get; set; }
+        public byte[] P { get; internal set; }
 
         /// <summary>
         /// RSA secret prime, with p &lt; q
         /// </summary>
-        public byte[] Q { get; set; }
+        public byte[] Q { get; internal set; }
 
         #endregion
 
@@ -183,17 +195,17 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// The curve for Elliptic Curve Cryptography (ECC) algorithms.
         /// </summary>
-        public KeyCurveName? CurveName { get; set; }
+        public KeyCurveName? CurveName { get; internal set; }
 
         /// <summary>
         /// X coordinate for the Elliptic Curve point.
         /// </summary>
-        public byte[] X { get; set; }
+        public byte[] X { get; internal set; }
 
         /// <summary>
         /// Y coordinate for the Elliptic Curve point.
         /// </summary>
-        public byte[] Y { get; set; }
+        public byte[] Y { get; internal set; }
 
         #endregion
 
@@ -202,7 +214,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// RSA private exponent or ECC private key.
         /// </summary>
-        public byte[] D { get; set; }
+        public byte[] D { get; internal set; }
 
         #endregion
 
@@ -211,14 +223,14 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// Symmetric key
         /// </summary>
-        public byte[] K { get; set; }
+        public byte[] K { get; internal set; }
 
         #endregion
 
         /// <summary>
         /// HSM Token, used with "Bring Your Own Key".
         /// </summary>
-        public byte[] T { get; set; }
+        public byte[] T { get; internal set; }
 
         internal bool HasPrivateKey
         {
@@ -330,7 +342,7 @@ namespace Azure.Security.KeyVault.Keys
             {
                 for (int i = 0; i < KeyOps.Count; ++i)
                 {
-                    if (KeyOps[i] == operation)
+                    if (_keyOps[i] == operation)
                     {
                         return true;
                     }
@@ -355,7 +367,7 @@ namespace Azure.Security.KeyVault.Keys
                     case KeyOpsPropertyName:
                         foreach (JsonElement element in prop.Value.EnumerateArray())
                         {
-                            KeyOps.Add(element.ToString());
+                            _keyOps.Add(element.ToString());
                         }
                         break;
                     case CurveNamePropertyName:
@@ -553,7 +565,6 @@ namespace Azure.Security.KeyVault.Keys
         private void Initialize(ECDsa ecdsa, bool includePrivateParameters)
         {
             KeyType = KeyType.Ec;
-            KeyOps = new List<KeyOperation>(includePrivateParameters ? s_eCPrivateKeyOperation : s_eCPublicKeyOperation);
 
             ECParameters ecParameters = ecdsa.ExportParameters(includePrivateParameters);
             CurveName = KeyCurveName.FromOid(ecParameters.Curve.Oid, ecdsa.KeySize).ToString() ?? throw new InvalidOperationException("elliptic curve name is invalid");

@@ -133,7 +133,8 @@ export interface IObjectType extends IModelType {
     serialize: boolean,
     deserialize: boolean,
     disableWarnings?: string,
-    public: boolean
+    public: boolean,
+    struct: boolean
 }
 
 export function isObjectType(model: IModelType): model is IObjectType {
@@ -238,7 +239,8 @@ export interface IResponse {
     model?: IModelType,
     exception?: boolean,
     public: boolean,
-    returnStream?: boolean
+    returnStream?: boolean,
+    struct: boolean
 }
 
 export interface IResponseGroup {

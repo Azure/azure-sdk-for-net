@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
@@ -51,7 +52,7 @@ namespace Microsoft.Extensions.Azure.Samples
                 builder.ConfigureDefaults((options, provider) =>  options.AddPolicy(provider.GetService<DependencyInjectionEnabledPolicy>(), HttpPipelinePosition.PerCall));
 
                 builder.AddBlobServiceClient(Configuration.GetSection("Storage"))
-                        .WithVersion(BlobClientOptions.ServiceVersion.V2018_11_09);
+                        .WithVersion(BlobClientOptions.ServiceVersion.V2019_02_02);
             });
         }
 

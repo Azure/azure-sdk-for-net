@@ -242,10 +242,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 await using (EventHubProducer producer = client.CreateProducer())
                 {
                     var singleEvent = new EventData(Array.Empty<byte>());
-                    EventData[] eventSet = new[] { new EventData(new byte[0]) };
-
                     Assert.That(async () => await producer.SendAsync(singleEvent), Throws.Nothing);
-                    Assert.That(async () => await producer.SendAsync(eventSet), Throws.Nothing);
                 }
             }
         }
@@ -446,7 +443,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 await using (EventHubProducer producer = client.CreateProducer())
                 {
                     using EventDataBatch batch = await producer.CreateBatchAsync();
-                    batch.TryAdd(new EventData(new byte[0]));
+                    batch.TryAdd(new EventData(Array.Empty<byte>()));
 
                     Assert.That(batch.Count, Is.EqualTo(1), "The batch should contain a single event.");
                     Assert.That(async () => await producer.SendAsync(batch), Throws.Nothing);
@@ -596,7 +593,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         await producer.CloseAsync();
                     }
 
-                    Assert.That(async () => await producer.SendAsync(events), Throws.TypeOf<ObjectDisposedException>());
+                    Assert.That(async () => await producer.SendAsync(events), Throws.TypeOf<EventHubsClientClosedException>().Or.TypeOf<ObjectDisposedException>());
                 }
             }
         }
@@ -964,30 +961,6 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     Assert.That(partitionsCount, Is.EqualTo(1));
                     Assert.That(receivedEventsCount, Is.EqualTo(batches));
-                }
-            }
-        }
-
-        /// <summary>
-        ///   Verifies that the <see cref="EventHubProducer" /> is able to
-        ///   connect to the Event Hubs service and perform operations.
-        /// </summary>
-        ///
-        [Test]
-        [Ignore("Expected behavior currently under discussion")]
-        public async Task ProducerCanSendWhenClientIsClosed()
-        {
-            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
-            {
-                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
-
-                await using (var client = new EventHubClient(connectionString))
-                await using (EventHubProducer producer = client.CreateProducer())
-                {
-                    client.Close();
-
-                    var events = new EventData(Encoding.UTF8.GetBytes("Do not delete me!"));
-                    Assert.That(async () => await producer.SendAsync(events), Throws.Nothing);
                 }
             }
         }

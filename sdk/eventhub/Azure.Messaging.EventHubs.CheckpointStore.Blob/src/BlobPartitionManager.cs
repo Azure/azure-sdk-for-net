@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Azure.Core.Http;
 using Azure.Messaging.EventHubs.Processor;
 using Azure.Storage;
 using Azure.Storage.Blobs;
@@ -62,13 +61,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
             List<PartitionOwnership> ownershipList = new List<PartitionOwnership>();
 
             var prefix = $"{ fullyQualifiedNamespace }/{ eventHubName }/{ consumerGroup }/";
-            var options = new GetBlobsOptions
-            {
-                IncludeMetadata = true,
-                Prefix = prefix
-            };
-
-            await foreach (BlobItem blob in _containerClient.GetBlobsAsync(options).ConfigureAwait(false))
+            await foreach (BlobItem blob in _containerClient.GetBlobsAsync(traits: BlobTraits.Metadata, prefix: prefix).ConfigureAwait(false))
             {
                 // In case this key does not exist, ownerIdentifier is set to null.  This will force the PartitionOwnership constructor
                 // to throw an exception.
@@ -146,9 +139,9 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
                         try
                         {
                             blobContent = new MemoryStream(new byte[0]);
-                            contentInfoResponse = await blobClient.UploadAsync(blobContent, metadata: metadata, blobAccessConditions: blobAccessConditions).ConfigureAwait(false);
+                            contentInfoResponse = await blobClient.UploadAsync(blobContent, metadata: metadata, accessConditions: blobAccessConditions).ConfigureAwait(false);
                         }
-                        catch (StorageRequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.BlobAlreadyExists)
+                        catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.BlobAlreadyExists)
                         {
                             // A blob could have just been created by another Event Processor that claimed ownership of this
                             // partition.  In this case, there's no point in retrying because we don't have the correct ETag.
@@ -172,7 +165,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
                         {
                             infoResponse = await blobClient.SetMetadataAsync(metadata, blobAccessConditions).ConfigureAwait(false);
                         }
-                        catch (StorageRequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.BlobNotFound)
+                        catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.BlobNotFound)
                         {
                             // No ownership was found, which means the ETag should have been set to null in order to
                             // claim this ownership.  For this reason, we consider it a failure and don't try again.
@@ -199,7 +192,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
 
                     Log($"Ownership with partition id = '{ ownership.PartitionId }' claimed.");
                 }
-                catch (StorageRequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ConditionNotMet)
+                catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ConditionNotMet)
                 {
                     Log($"Ownership with partition id = '{ ownership.PartitionId }' is not claimable.");
                 }
@@ -227,7 +220,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
             {
                 currentBlob = (await blobClient.GetPropertiesAsync().ConfigureAwait(false)).Value;
             }
-            catch (StorageRequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.BlobNotFound)
+            catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.BlobNotFound)
             {
                 Log($"Checkpoint with partition id = '{ checkpoint.PartitionId }' could not be updated because no associated ownership was found.");
                 return;
@@ -258,7 +251,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
 
                     Log($"Checkpoint with partition id = '{ checkpoint.PartitionId }' updated.");
                 }
-                catch (StorageRequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ConditionNotMet)
+                catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ConditionNotMet)
                 {
                     Log($"Checkpoint with partition id = '{ checkpoint.PartitionId }' could not be updated because eTag has changed.");
                 }

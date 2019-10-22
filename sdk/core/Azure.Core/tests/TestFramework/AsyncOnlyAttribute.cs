@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;

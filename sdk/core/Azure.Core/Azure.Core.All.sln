@@ -1,87 +1,93 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29315.20
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core", "src\Azure.Core.csproj", "{A0B44D0B-1D4F-41B0-BCFA-3A4E8019E4B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "src\Azure.Core.csproj", "{A0B44D0B-1D4F-41B0-BCFA-3A4E8019E4B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core.Tests", "tests\Azure.Core.Tests.csproj", "{84491222-6C36-4FA7-BBAE-1FA804129151}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Tests", "tests\Azure.Core.Tests.csproj", "{84491222-6C36-4FA7-BBAE-1FA804129151}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Data.AppConfiguration", "..\..\appconfiguration\Azure.Data.AppConfiguration\src\Azure.Data.AppConfiguration.csproj", "{BBA058C7-CC4D-4A32-9238-AEB1CD663AD5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Data.AppConfiguration", "..\..\appconfiguration\Azure.Data.AppConfiguration\src\Azure.Data.AppConfiguration.csproj", "{BBA058C7-CC4D-4A32-9238-AEB1CD663AD5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Data.AppConfiguration.Performance", "..\..\appconfiguration\Azure.Data.AppConfiguration\tests\Performance\Azure.Data.AppConfiguration.Performance.csproj", "{55053509-0255-474C-87E3-EFD99A04C8DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Data.AppConfiguration.Performance", "..\..\appconfiguration\Azure.Data.AppConfiguration\tests\Performance\Azure.Data.AppConfiguration.Performance.csproj", "{55053509-0255-474C-87E3-EFD99A04C8DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Data.AppConfiguration.Samples.Tests", "..\..\appconfiguration\Azure.Data.AppConfiguration\samples\Azure.Data.AppConfiguration.Samples.Tests.csproj", "{2C3D2B06-2899-4177-842D-83B12D4C7A8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Data.AppConfiguration.Samples.Tests", "..\..\appconfiguration\Azure.Data.AppConfiguration\samples\Azure.Data.AppConfiguration.Samples.Tests.csproj", "{2C3D2B06-2899-4177-842D-83B12D4C7A8F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Data.AppConfiguration.Tests", "..\..\appconfiguration\Azure.Data.AppConfiguration\tests\Azure.Data.AppConfiguration.Tests.csproj", "{DD735222-134F-41DC-BEAA-1B5C7209B7B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Data.AppConfiguration.Tests", "..\..\appconfiguration\Azure.Data.AppConfiguration\tests\Azure.Data.AppConfiguration.Tests.csproj", "{DD735222-134F-41DC-BEAA-1B5C7209B7B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Identity", "..\..\identity\Azure.Identity\src\Azure.Identity.csproj", "{278B865E-EDB0-4441-A242-9BA01741A596}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Identity", "..\..\identity\Azure.Identity\src\Azure.Identity.csproj", "{278B865E-EDB0-4441-A242-9BA01741A596}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Identity.Tests", "..\..\identity\Azure.Identity\tests\Azure.Identity.Tests.csproj", "{64F616A7-E86B-40F7-8BFF-03A96D06280A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Identity.Tests", "..\..\identity\Azure.Identity\tests\Azure.Identity.Tests.csproj", "{64F616A7-E86B-40F7-8BFF-03A96D06280A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Messaging.EventHubs", "..\..\eventhub\Azure.Messaging.EventHubs\src\Azure.Messaging.EventHubs.csproj", "{227CB61F-A6E3-449D-80B8-A89EA38BFA70}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs", "..\..\eventhub\Azure.Messaging.EventHubs\src\Azure.Messaging.EventHubs.csproj", "{227CB61F-A6E3-449D-80B8-A89EA38BFA70}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Messaging.EventHubs.CheckpointStore.Blob", "..\..\eventhub\Azure.Messaging.EventHubs.CheckpointStore.Blob\src\Azure.Messaging.EventHubs.CheckpointStore.Blob.csproj", "{ED2547CD-2059-4517-BA48-7538F57A3DAE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.CheckpointStore.Blob", "..\..\eventhub\Azure.Messaging.EventHubs.CheckpointStore.Blob\src\Azure.Messaging.EventHubs.CheckpointStore.Blob.csproj", "{ED2547CD-2059-4517-BA48-7538F57A3DAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Messaging.EventHubs.CheckpointStore.Blob.Samples", "..\..\eventhub\Azure.Messaging.EventHubs.CheckpointStore.Blob\samples\Azure.Messaging.EventHubs.CheckpointStore.Blob.Samples.csproj", "{45A71353-4A4D-4558-9FFD-01C89D117356}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.CheckpointStore.Blob.Samples", "..\..\eventhub\Azure.Messaging.EventHubs.CheckpointStore.Blob\samples\Azure.Messaging.EventHubs.CheckpointStore.Blob.Samples.csproj", "{45A71353-4A4D-4558-9FFD-01C89D117356}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests", "..\..\eventhub\Azure.Messaging.EventHubs.CheckpointStore.Blob\tests\Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests.csproj", "{EF1A1437-4877-4FD5-9EBF-5EFCBA811C03}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests", "..\..\eventhub\Azure.Messaging.EventHubs.CheckpointStore.Blob\tests\Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests.csproj", "{EF1A1437-4877-4FD5-9EBF-5EFCBA811C03}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Messaging.EventHubs.Samples", "..\..\eventhub\Azure.Messaging.EventHubs\samples\Azure.Messaging.EventHubs.Samples.csproj", "{394E0E71-2B87-42CA-BC26-58191F6E10F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.Samples", "..\..\eventhub\Azure.Messaging.EventHubs\samples\Azure.Messaging.EventHubs.Samples.csproj", "{394E0E71-2B87-42CA-BC26-58191F6E10F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Messaging.EventHubs.Tests", "..\..\eventhub\Azure.Messaging.EventHubs\tests\Azure.Messaging.EventHubs.Tests.csproj", "{0006AD1A-FB3F-4909-9BF1-3F47FEDE3621}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.Tests", "..\..\eventhub\Azure.Messaging.EventHubs\tests\Azure.Messaging.EventHubs.Tests.csproj", "{0006AD1A-FB3F-4909-9BF1-3F47FEDE3621}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Security.KeyVault.Certificates", "..\..\keyvault\Azure.Security.KeyVault.Certificates\src\Azure.Security.KeyVault.Certificates.csproj", "{2AEE183F-EEEC-4CB1-9138-174E5CCD2E3E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Certificates", "..\..\keyvault\Azure.Security.KeyVault.Certificates\src\Azure.Security.KeyVault.Certificates.csproj", "{2AEE183F-EEEC-4CB1-9138-174E5CCD2E3E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Security.KeyVault.Certificates.Samples", "..\..\keyvault\Azure.Security.KeyVault.Certificates\samples\Azure.Security.KeyVault.Certificates.Samples.csproj", "{70824189-358F-4594-B67B-3C89D04490C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Certificates.Samples", "..\..\keyvault\Azure.Security.KeyVault.Certificates\samples\Azure.Security.KeyVault.Certificates.Samples.csproj", "{70824189-358F-4594-B67B-3C89D04490C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Security.KeyVault.Certificates.Tests", "..\..\keyvault\Azure.Security.KeyVault.Certificates\tests\Azure.Security.KeyVault.Certificates.Tests.csproj", "{16CB0930-2713-4008-9748-3DADE10D5754}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Certificates.Tests", "..\..\keyvault\Azure.Security.KeyVault.Certificates\tests\Azure.Security.KeyVault.Certificates.Tests.csproj", "{16CB0930-2713-4008-9748-3DADE10D5754}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Security.KeyVault.Keys", "..\..\keyvault\Azure.Security.KeyVault.Keys\src\Azure.Security.KeyVault.Keys.csproj", "{CCBB4569-8982-47D7-A363-2E763846C408}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Keys", "..\..\keyvault\Azure.Security.KeyVault.Keys\src\Azure.Security.KeyVault.Keys.csproj", "{CCBB4569-8982-47D7-A363-2E763846C408}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Security.KeyVault.Keys.Samples", "..\..\keyvault\Azure.Security.KeyVault.Keys\samples\Azure.Security.KeyVault.Keys.Samples.csproj", "{86B2C321-E5EE-418D-927F-9EE431FE3117}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Keys.Samples", "..\..\keyvault\Azure.Security.KeyVault.Keys\samples\Azure.Security.KeyVault.Keys.Samples.csproj", "{86B2C321-E5EE-418D-927F-9EE431FE3117}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Security.KeyVault.Keys.Tests", "..\..\keyvault\Azure.Security.KeyVault.Keys\tests\Azure.Security.KeyVault.Keys.Tests.csproj", "{FDDA24B9-0614-4C4B-A297-68383861F026}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Keys.Tests", "..\..\keyvault\Azure.Security.KeyVault.Keys\tests\Azure.Security.KeyVault.Keys.Tests.csproj", "{FDDA24B9-0614-4C4B-A297-68383861F026}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Security.KeyVault.Secrets", "..\..\keyvault\Azure.Security.KeyVault.Secrets\src\Azure.Security.KeyVault.Secrets.csproj", "{23A291AC-01E7-4FB4-92FB-CC848293760F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Secrets", "..\..\keyvault\Azure.Security.KeyVault.Secrets\src\Azure.Security.KeyVault.Secrets.csproj", "{23A291AC-01E7-4FB4-92FB-CC848293760F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Security.KeyVault.Secrets.Samples", "..\..\keyvault\Azure.Security.KeyVault.Secrets\samples\Azure.Security.KeyVault.Secrets.Samples.csproj", "{0534CC5B-0DB9-4C62-B782-559F7B775943}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Secrets.Samples", "..\..\keyvault\Azure.Security.KeyVault.Secrets\samples\Azure.Security.KeyVault.Secrets.Samples.csproj", "{0534CC5B-0DB9-4C62-B782-559F7B775943}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Security.KeyVault.Secrets.Tests", "..\..\keyvault\Azure.Security.KeyVault.Secrets\tests\Azure.Security.KeyVault.Secrets.Tests.csproj", "{AFE825C2-3FEC-4B40-9403-C64D3C0A9C01}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Secrets.Tests", "..\..\keyvault\Azure.Security.KeyVault.Secrets\tests\Azure.Security.KeyVault.Secrets.Tests.csproj", "{AFE825C2-3FEC-4B40-9403-C64D3C0A9C01}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.Blobs", "..\..\storage\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj", "{A9C1260E-2177-47A0-937C-FEC0B912DD92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs", "..\..\storage\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj", "{A9C1260E-2177-47A0-937C-FEC0B912DD92}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.Blobs.Cryptography", "..\..\storage\Azure.Storage.Blobs.Cryptography\src\Azure.Storage.Blobs.Cryptography.csproj", "{32DDF14E-D506-41F8-9FBE-008AB51683F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Cryptography", "..\..\storage\Azure.Storage.Blobs.Cryptography\src\Azure.Storage.Blobs.Cryptography.csproj", "{32DDF14E-D506-41F8-9FBE-008AB51683F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.Blobs.Samples.Tests", "..\..\storage\Azure.Storage.Blobs\samples\Azure.Storage.Blobs.Samples.Tests.csproj", "{F6527BC8-A6E7-442D-AA18-C491097F490F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Samples.Tests", "..\..\storage\Azure.Storage.Blobs\samples\Azure.Storage.Blobs.Samples.Tests.csproj", "{F6527BC8-A6E7-442D-AA18-C491097F490F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.Blobs.Tests", "..\..\storage\Azure.Storage.Blobs\tests\Azure.Storage.Blobs.Tests.csproj", "{7342131C-3938-4724-AAE7-FD30E3123D5D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Tests", "..\..\storage\Azure.Storage.Blobs\tests\Azure.Storage.Blobs.Tests.csproj", "{7342131C-3938-4724-AAE7-FD30E3123D5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.Common", "..\..\storage\Azure.Storage.Common\src\Azure.Storage.Common.csproj", "{5ED78129-4737-4039-8F39-B08ACD7B17D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Common", "..\..\storage\Azure.Storage.Common\src\Azure.Storage.Common.csproj", "{5ED78129-4737-4039-8F39-B08ACD7B17D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.Common.Samples.Tests", "..\..\storage\Azure.Storage.Common\samples\Azure.Storage.Common.Samples.Tests.csproj", "{B7191F1E-51B7-460D-902D-1FF6110B526A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Common.Samples.Tests", "..\..\storage\Azure.Storage.Common\samples\Azure.Storage.Common.Samples.Tests.csproj", "{B7191F1E-51B7-460D-902D-1FF6110B526A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.Common.Tests", "..\..\storage\Azure.Storage.Common\tests\Azure.Storage.Common.Tests.csproj", "{6D4C6B9D-C43E-4B57-B8BB-EFFC8D776EA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Common.Tests", "..\..\storage\Azure.Storage.Common\tests\Azure.Storage.Common.Tests.csproj", "{6D4C6B9D-C43E-4B57-B8BB-EFFC8D776EA0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.Files", "..\..\storage\Azure.Storage.Files\src\Azure.Storage.Files.csproj", "{82C0CBA5-51A3-4E8F-90BD-5272BAEA584A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Files", "..\..\storage\Azure.Storage.Files\src\Azure.Storage.Files.csproj", "{82C0CBA5-51A3-4E8F-90BD-5272BAEA584A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.Files.Samples.Tests", "..\..\storage\Azure.Storage.Files\samples\Azure.Storage.Files.Samples.Tests.csproj", "{0BA3F141-B946-4954-A759-0D0C0E08649D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Files.Samples.Tests", "..\..\storage\Azure.Storage.Files\samples\Azure.Storage.Files.Samples.Tests.csproj", "{0BA3F141-B946-4954-A759-0D0C0E08649D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.Files.Tests", "..\..\storage\Azure.Storage.Files\tests\Azure.Storage.Files.Tests.csproj", "{338939AB-C01E-43A5-BD22-C4D684B52965}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Files.Tests", "..\..\storage\Azure.Storage.Files\tests\Azure.Storage.Files.Tests.csproj", "{338939AB-C01E-43A5-BD22-C4D684B52965}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.Queues", "..\..\storage\Azure.Storage.Queues\src\Azure.Storage.Queues.csproj", "{EA24A97A-40B7-4DDE-BAA4-A26A53680A67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Queues", "..\..\storage\Azure.Storage.Queues\src\Azure.Storage.Queues.csproj", "{EA24A97A-40B7-4DDE-BAA4-A26A53680A67}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.Queues.Cryptography", "..\..\storage\Azure.Storage.Queues.Cryptography\src\Azure.Storage.Queues.Cryptography.csproj", "{6B0B31F0-2000-4C95-9661-D4457EEDC26C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Queues.Cryptography", "..\..\storage\Azure.Storage.Queues.Cryptography\src\Azure.Storage.Queues.Cryptography.csproj", "{6B0B31F0-2000-4C95-9661-D4457EEDC26C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.Queues.Samples.Tests", "..\..\storage\Azure.Storage.Queues\samples\Azure.Storage.Queues.Samples.Tests.csproj", "{7B8CB5D9-6B72-45EF-B58B-6C5EC6CB6C6F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Queues.Samples.Tests", "..\..\storage\Azure.Storage.Queues\samples\Azure.Storage.Queues.Samples.Tests.csproj", "{7B8CB5D9-6B72-45EF-B58B-6C5EC6CB6C6F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.Queues.Tests", "..\..\storage\Azure.Storage.Queues\tests\Azure.Storage.Queues.Tests.csproj", "{EF7FA0C0-40B7-4349-9ACB-E766952ACA5A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Queues.Tests", "..\..\storage\Azure.Storage.Queues\tests\Azure.Storage.Queues.Tests.csproj", "{EF7FA0C0-40B7-4349-9ACB-E766952ACA5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Extensions.Azure", "..\Microsoft.Extensions.Azure\src\Microsoft.Extensions.Azure.csproj", "{03618691-F774-4076-923F-DF5F2C3E3CC2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.Azure", "..\Microsoft.Extensions.Azure\src\Microsoft.Extensions.Azure.csproj", "{03618691-F774-4076-923F-DF5F2C3E3CC2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Extensions.Azure.Samples", "..\Microsoft.Extensions.Azure\samples\Microsoft.Extensions.Azure.Samples.csproj", "{A1FC5DBE-8BAD-4D54-88C3-9D61F71EF341}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.Azure.Samples", "..\Microsoft.Extensions.Azure\samples\Microsoft.Extensions.Azure.Samples.csproj", "{A1FC5DBE-8BAD-4D54-88C3-9D61F71EF341}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Extensions.Azure.Tests", "..\Microsoft.Extensions.Azure\tests\Microsoft.Extensions.Azure.Tests.csproj", "{6DCD39C5-6302-43BD-8CB3-815DFC229AA4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.Azure.Tests", "..\Microsoft.Extensions.Azure\tests\Microsoft.Extensions.Azure.Tests.csproj", "{6DCD39C5-6302-43BD-8CB3-815DFC229AA4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Samples.Tests", "samples\Azure.Core.Samples.Tests.csproj", "{63C4E320-5D05-4574-ACA5-7EE41E814CF4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Batching", "..\..\storage\Azure.Storage.Blobs.Batching\src\Azure.Storage.Blobs.Batching.csproj", "{31DEE386-C8F8-4845-9C67-0E5EF328055C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Batching.Tests", "..\..\storage\Azure.Storage.Blobs.Batching\tests\Azure.Storage.Blobs.Batching.Tests.csproj", "{707974B7-C93D-494D-ADEF-FCEFC6687D7E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -91,9 +97,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{A0B44D0B-1D4F-41B0-BCFA-3A4E8019E4B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -576,5 +579,47 @@ Global
 		{6DCD39C5-6302-43BD-8CB3-815DFC229AA4}.Release|x64.Build.0 = Release|Any CPU
 		{6DCD39C5-6302-43BD-8CB3-815DFC229AA4}.Release|x86.ActiveCfg = Release|Any CPU
 		{6DCD39C5-6302-43BD-8CB3-815DFC229AA4}.Release|x86.Build.0 = Release|Any CPU
+		{63C4E320-5D05-4574-ACA5-7EE41E814CF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63C4E320-5D05-4574-ACA5-7EE41E814CF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63C4E320-5D05-4574-ACA5-7EE41E814CF4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{63C4E320-5D05-4574-ACA5-7EE41E814CF4}.Debug|x64.Build.0 = Debug|Any CPU
+		{63C4E320-5D05-4574-ACA5-7EE41E814CF4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{63C4E320-5D05-4574-ACA5-7EE41E814CF4}.Debug|x86.Build.0 = Debug|Any CPU
+		{63C4E320-5D05-4574-ACA5-7EE41E814CF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63C4E320-5D05-4574-ACA5-7EE41E814CF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63C4E320-5D05-4574-ACA5-7EE41E814CF4}.Release|x64.ActiveCfg = Release|Any CPU
+		{63C4E320-5D05-4574-ACA5-7EE41E814CF4}.Release|x64.Build.0 = Release|Any CPU
+		{63C4E320-5D05-4574-ACA5-7EE41E814CF4}.Release|x86.ActiveCfg = Release|Any CPU
+		{63C4E320-5D05-4574-ACA5-7EE41E814CF4}.Release|x86.Build.0 = Release|Any CPU
+		{31DEE386-C8F8-4845-9C67-0E5EF328055C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31DEE386-C8F8-4845-9C67-0E5EF328055C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31DEE386-C8F8-4845-9C67-0E5EF328055C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{31DEE386-C8F8-4845-9C67-0E5EF328055C}.Debug|x64.Build.0 = Debug|Any CPU
+		{31DEE386-C8F8-4845-9C67-0E5EF328055C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{31DEE386-C8F8-4845-9C67-0E5EF328055C}.Debug|x86.Build.0 = Debug|Any CPU
+		{31DEE386-C8F8-4845-9C67-0E5EF328055C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31DEE386-C8F8-4845-9C67-0E5EF328055C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31DEE386-C8F8-4845-9C67-0E5EF328055C}.Release|x64.ActiveCfg = Release|Any CPU
+		{31DEE386-C8F8-4845-9C67-0E5EF328055C}.Release|x64.Build.0 = Release|Any CPU
+		{31DEE386-C8F8-4845-9C67-0E5EF328055C}.Release|x86.ActiveCfg = Release|Any CPU
+		{31DEE386-C8F8-4845-9C67-0E5EF328055C}.Release|x86.Build.0 = Release|Any CPU
+		{707974B7-C93D-494D-ADEF-FCEFC6687D7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{707974B7-C93D-494D-ADEF-FCEFC6687D7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{707974B7-C93D-494D-ADEF-FCEFC6687D7E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{707974B7-C93D-494D-ADEF-FCEFC6687D7E}.Debug|x64.Build.0 = Debug|Any CPU
+		{707974B7-C93D-494D-ADEF-FCEFC6687D7E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{707974B7-C93D-494D-ADEF-FCEFC6687D7E}.Debug|x86.Build.0 = Debug|Any CPU
+		{707974B7-C93D-494D-ADEF-FCEFC6687D7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{707974B7-C93D-494D-ADEF-FCEFC6687D7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{707974B7-C93D-494D-ADEF-FCEFC6687D7E}.Release|x64.ActiveCfg = Release|Any CPU
+		{707974B7-C93D-494D-ADEF-FCEFC6687D7E}.Release|x64.Build.0 = Release|Any CPU
+		{707974B7-C93D-494D-ADEF-FCEFC6687D7E}.Release|x86.ActiveCfg = Release|Any CPU
+		{707974B7-C93D-494D-ADEF-FCEFC6687D7E}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CBD06B7E-4393-4447-BEA4-54E4CBE184F4}
 	EndGlobalSection
 EndGlobal

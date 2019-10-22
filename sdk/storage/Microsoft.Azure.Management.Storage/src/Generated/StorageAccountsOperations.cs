@@ -1437,7 +1437,8 @@ namespace Microsoft.Azure.Management.Storage
         }
 
         /// <summary>
-        /// Lists the access keys for the specified storage account.
+        /// Lists the access keys or Kerberos keys (if active directory enabled) for
+        /// the specified storage account.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription. The name is
@@ -1447,6 +1448,10 @@ namespace Microsoft.Azure.Management.Storage
         /// The name of the storage account within the specified resource group.
         /// Storage account names must be between 3 and 24 characters in length and use
         /// numbers and lower-case letters only.
+        /// </param>
+        /// <param name='expand'>
+        /// Specifies type of the key to be listed. Possible value is kerb. Possible
+        /// values include: 'kerb'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1469,7 +1474,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<StorageAccountListKeysResult>> ListKeysWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<StorageAccountListKeysResult>> ListKeysWithHttpMessagesAsync(string resourceGroupName, string accountName, ListKeyExpand? expand = default(ListKeyExpand?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1536,6 +1541,7 @@ namespace Microsoft.Azure.Management.Storage
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("expand", expand);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListKeys", tracingParameters);
             }
@@ -1549,6 +1555,10 @@ namespace Microsoft.Azure.Management.Storage
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (expand != null)
+            {
+                _queryParameters.Add(string.Format("$expand={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(expand, Client.SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1676,7 +1686,8 @@ namespace Microsoft.Azure.Management.Storage
         }
 
         /// <summary>
-        /// Regenerates one of the access keys for the specified storage account.
+        /// Regenerates one of the access keys or Kerberos keys for the specified
+        /// storage account.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription. The name is
@@ -1689,7 +1700,7 @@ namespace Microsoft.Azure.Management.Storage
         /// </param>
         /// <param name='keyName'>
         /// The name of storage keys that want to be regenerated, possible values are
-        /// key1, key2.
+        /// key1, key2, kerb1, kerb2.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

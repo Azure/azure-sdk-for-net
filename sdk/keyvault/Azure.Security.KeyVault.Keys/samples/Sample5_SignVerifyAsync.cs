@@ -33,16 +33,22 @@ namespace Azure.Security.KeyVault.Keys.Samples
 
             // First we'll create both a RSA key and an EC which will be used to sign and verify
             string rsaKeyName = $"CloudRsaKey-{Guid.NewGuid()}";
-            var rsaKey = new RsaKeyCreateOptions(rsaKeyName, hsm: false, keySize: 2048);
+            var rsaKey = new CreateRsaKeyOptions(rsaKeyName, hardwareProtected: false)
+            {
+                KeySize = 2048,
+            };
 
             string ecKeyName = $"CloudEcKey-{Guid.NewGuid()}";
-            var ecKey = new EcKeyCreateOptions(ecKeyName, hsm: false, curveName: KeyCurveName.P256K);
+            var ecKey = new CreateEcKeyOptions(ecKeyName, hardwareProtected: false)
+            {
+                CurveName = KeyCurveName.P256K,
+            };
 
-            Key cloudRsaKey = await keyClient.CreateRsaKeyAsync(rsaKey);
-            Debug.WriteLine($"Key is returned with name {cloudRsaKey.Name} and type {cloudRsaKey.KeyMaterial.KeyType}");
+            KeyVaultKey cloudRsaKey = await keyClient.CreateRsaKeyAsync(rsaKey);
+            Debug.WriteLine($"Key is returned with name {cloudRsaKey.Name} and type {cloudRsaKey.KeyType}");
 
-            Key cloudEcKey = await keyClient.CreateEcKeyAsync(ecKey);
-            Debug.WriteLine($"Key is returned with name {cloudEcKey.Name} and type {cloudEcKey.KeyMaterial.KeyType}");
+            KeyVaultKey cloudEcKey = await keyClient.CreateEcKeyAsync(ecKey);
+            Debug.WriteLine($"Key is returned with name {cloudEcKey.Name} and type {cloudEcKey.KeyType}");
 
             // Let's create the CryptographyClient which can perform cryptographic operations with the keys we just created.
             // Again we are using the default Azure credential as above.
@@ -102,34 +108,18 @@ namespace Azure.Security.KeyVault.Keys.Samples
             Debug.WriteLine($"Verified the signature using the algorithm {ecVerifyDataResult.Algorithm}, with key {ecVerifyDataResult.KeyId}. Signature is valid: {ecVerifyDataResult.IsValid}");
 
             // The Cloud Keys are no longer needed, need to delete them from the Key Vault.
-            await keyClient.DeleteKeyAsync(rsaKeyName);
-            await keyClient.DeleteKeyAsync(ecKeyName);
+            DeleteKeyOperation rsaKeyOperation = await keyClient.StartDeleteKeyAsync(rsaKeyName);
+            DeleteKeyOperation ecKeyOperation = await keyClient.StartDeleteKeyAsync(ecKeyName);
 
-            // To ensure the keys are deleted on server side.
-            Assert.IsTrue(await WaitForDeletedKeyAsync(keyClient, rsaKeyName));
-            Assert.IsTrue(await WaitForDeletedKeyAsync(keyClient, ecKeyName));
+            // To ensure the key is deleted on server before we try to purge it.
+            Task.WaitAll(
+                rsaKeyOperation.WaitForCompletionAsync().AsTask(),
+                ecKeyOperation.WaitForCompletionAsync().AsTask());
 
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted keys needs to be purged.
-            await keyClient.PurgeDeletedKeyAsync(rsaKeyName);
-            await keyClient.PurgeDeletedKeyAsync(ecKeyName);
-        }
-
-        private async Task<bool> WaitForDeletedKeyAsync(KeyClient client, string keyName)
-        {
-            int maxIterations = 20;
-            for (int i = 0; i < maxIterations; i++)
-            {
-                try
-                {
-                    await client.GetDeletedKeyAsync(keyName);
-                    return true;
-                }
-                catch
-                {
-                    await Task.Delay(5000);
-                }
-            }
-            return false;
+            Task.WaitAll(
+                keyClient.PurgeDeletedKeyAsync(rsaKeyName),
+                keyClient.PurgeDeletedKeyAsync(ecKeyName));
         }
     }
 }

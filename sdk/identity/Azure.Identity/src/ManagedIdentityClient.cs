@@ -9,7 +9,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Http;
+using Azure.Core.Diagnostics;
 
 namespace Azure.Identity
 {
@@ -27,26 +27,26 @@ namespace Azure.Identity
         private const int ImdsAvailableTimeoutMs = 500;
 
         // MSI Constants. Docs for MSI are available here https://docs.microsoft.com/en-us/azure/app-service/overview-managed-identity
-        private const string MsiEndpointEnvironemntVariable = "MSI_ENDPOINT";
-        private const string MsiSecretEnvironemntVariable = "MSI_SECRET";
         private const string AppServiceMsiApiVersion = "2017-09-01";
 
         private static readonly SemaphoreSlim s_initLock = new SemaphoreSlim(1, 1);
         private static MsiType s_msiType;
         private static Uri s_endpoint;
 
-        private readonly IdentityClientOptions _options;
+        private readonly TokenCredentialOptions _options;
         private readonly HttpPipeline _pipeline;
+        private readonly ClientDiagnostics _clientDiagnostics;
 
         protected ManagedIdentityClient()
         {
         }
 
-        public ManagedIdentityClient(IdentityClientOptions options = null)
+        public ManagedIdentityClient(TokenCredentialOptions options = null)
         {
-            _options = options ?? new IdentityClientOptions();
+            _options = options ?? new TokenCredentialOptions();
 
             _pipeline = HttpPipelineBuilder.Build(_options);
+            _clientDiagnostics = new ClientDiagnostics(_options);
         }
 
         private enum MsiType
@@ -70,7 +70,7 @@ namespace Azure.Identity
                 return default;
             }
 
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Identity.ManagedIdentityClient.Authenticate");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Identity.ManagedIdentityClient.Authenticate");
             scope.Start();
 
             try
@@ -101,7 +101,7 @@ namespace Azure.Identity
                 return default;
             }
 
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Identity.ManagedIdentityClient.Authenticate");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Identity.ManagedIdentityClient.Authenticate");
             scope.Start();
 
             try
@@ -180,8 +180,8 @@ namespace Azure.Identity
                     // check again if the we already determined the msiType now that we hold the lock
                     if (s_msiType == MsiType.Unknown)
                     {
-                        string endpointEnvVar = Environment.GetEnvironmentVariable(MsiEndpointEnvironemntVariable);
-                        string secretEnvVar = Environment.GetEnvironmentVariable(MsiSecretEnvironemntVariable);
+                        string endpointEnvVar = EnvironmentVariables.MsiEndpoint;
+                        string secretEnvVar = EnvironmentVariables.MsiSecret;
 
                         // if the env var MSI_ENDPOINT is set
                         if (!string.IsNullOrEmpty(endpointEnvVar))
@@ -243,8 +243,8 @@ namespace Azure.Identity
                     // check again if the we already determined the msiType now that we hold the lock
                     if (s_msiType == MsiType.Unknown)
                     {
-                        string endpointEnvVar = Environment.GetEnvironmentVariable(MsiEndpointEnvironemntVariable);
-                        string secretEnvVar = Environment.GetEnvironmentVariable(MsiSecretEnvironemntVariable);
+                        string endpointEnvVar = EnvironmentVariables.MsiEndpoint;
+                        string secretEnvVar = EnvironmentVariables.MsiSecret;
 
                         // if the env var MSI_ENDPOINT is set
                         if (!string.IsNullOrEmpty(endpointEnvVar))
@@ -345,6 +345,12 @@ namespace Azure.Identity
 
                     return true;
                 }
+                // if the request failed for some reason, take that to mean the idms endpoint is not available.
+                catch (RequestFailedException)
+                {
+                    // todo: log
+                    return false;
+                }
                 // we only want to handle the case when the imdsTimeout resulted in the request being cancelled.
                 // this indicates that the request timed out and that imds is not available.  If the operation
                 // was user cancelled we don't wan't to handle the exception so s_identityAvailable will
@@ -371,11 +377,11 @@ namespace Azure.Identity
 
             request.Uri.AppendQuery("api-version", ImdsApiVersion);
 
-            request.Uri.AppendQuery("resource", Uri.EscapeDataString(resource));
+            request.Uri.AppendQuery("resource", resource);
 
             if (!string.IsNullOrEmpty(clientId))
             {
-                request.Uri.AppendQuery("client_id", Uri.EscapeDataString(clientId));
+                request.Uri.AppendQuery("client_id", clientId);
             }
 
             return request;
@@ -390,17 +396,17 @@ namespace Azure.Identity
 
             request.Method = RequestMethod.Get;
 
-            request.Headers.Add("secret", Environment.GetEnvironmentVariable(MsiSecretEnvironemntVariable));
+            request.Headers.Add("secret", EnvironmentVariables.MsiSecret);
 
             request.Uri.Reset(s_endpoint);
 
             request.Uri.AppendQuery("api-version", AppServiceMsiApiVersion);
 
-            request.Uri.AppendQuery("resource", Uri.EscapeDataString(resource));
+            request.Uri.AppendQuery("resource", resource);
 
             if (!string.IsNullOrEmpty(clientId))
             {
-                request.Uri.AppendQuery("client_id", Uri.EscapeDataString(clientId));
+                request.Uri.AppendQuery("client_id", clientId);
             }
 
             return request;
@@ -430,7 +436,7 @@ namespace Azure.Identity
 
             ReadOnlyMemory<byte> content = Encoding.UTF8.GetBytes(bodyStr).AsMemory();
 
-            request.Content = HttpPipelineRequestContent.Create(content);
+            request.Content = RequestContent.Create(content);
 
             return request;
         }
@@ -453,13 +459,24 @@ namespace Azure.Identity
 
         private static AccessToken Deserialize(JsonElement json)
         {
-            if (!json.TryGetProperty("access_token", out JsonElement accessTokenProp))
+            string accessToken = null;
+            JsonElement? expiresOnProp = null;
+
+            foreach (JsonProperty prop in json.EnumerateObject())
             {
-                throw new AuthenticationFailedException(AuthenticationResponseInvalidFormatError);
+                switch (prop.Name)
+                {
+                    case "access_token":
+                        accessToken = prop.Value.GetString();
+                        break;
+
+                    case "expires_on":
+                        expiresOnProp = prop.Value;
+                        break;
+                }
             }
 
-            string accessToken = accessTokenProp.GetString();
-            if (!json.TryGetProperty("expires_on", out JsonElement expiresOnProp))
+            if (accessToken is null || !expiresOnProp.HasValue)
             {
                 throw new AuthenticationFailedException(AuthenticationResponseInvalidFormatError);
             }
@@ -468,7 +485,7 @@ namespace Azure.Identity
             // if s_msiType is AppService expires_on will be a string formatted datetimeoffset
             if (s_msiType == MsiType.AppService)
             {
-                if (!DateTimeOffset.TryParse(expiresOnProp.GetString(), out expiresOn))
+                if (!DateTimeOffset.TryParse(expiresOnProp.Value.GetString(), out expiresOn))
                 {
                     throw new AuthenticationFailedException(AuthenticationResponseInvalidFormatError);
                 }
@@ -478,8 +495,8 @@ namespace Azure.Identity
             {
                 // the seconds from epoch may be returned as a Json number or a Json string which is a number
                 // depending on the environment.  If neither of these are the case we throw an AuthException.
-                if (!(expiresOnProp.ValueKind == JsonValueKind.Number && expiresOnProp.TryGetInt64(out long expiresOnSec)) &&
-                    !(expiresOnProp.ValueKind == JsonValueKind.String && long.TryParse(expiresOnProp.GetString(), out expiresOnSec)))
+                if (!(expiresOnProp.Value.ValueKind == JsonValueKind.Number && expiresOnProp.Value.TryGetInt64(out long expiresOnSec)) &&
+                    !(expiresOnProp.Value.ValueKind == JsonValueKind.String && long.TryParse(expiresOnProp.Value.GetString(), out expiresOnSec)))
                 {
                     throw new AuthenticationFailedException(AuthenticationResponseInvalidFormatError);
                 }

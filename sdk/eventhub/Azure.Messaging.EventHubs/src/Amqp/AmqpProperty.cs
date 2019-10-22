@@ -26,6 +26,12 @@ namespace Azure.Messaging.EventHubs
         public static AmqpSymbol EntityType { get; } = AmqpConstants.Vendor + ":entity-type";
 
         /// <summary>
+        ///   The capability for tracking the last event enqueued in a partition, to associate with a link.
+        /// </summary>
+        ///
+        public static AmqpSymbol TrackLastEnqueuedEventInformation { get; } = AmqpConstants.Vendor + ":enable-receiver-runtime-metric";
+
+        /// <summary>
         ///   The timeout to associate with a link.
         /// </summary>
         ///
@@ -62,6 +68,31 @@ namespace Azure.Messaging.EventHubs
         public static AmqpSymbol PartitionKey { get; } = "x-opt-partition-key";
 
         /// <summary>
+        ///   The message property that identifies the last sequence number enqueued for a partition.
+        /// </summary>
+        ///
+        public static AmqpSymbol PartitionLastEnqueuedSequenceNumber { get; } = "last_enqueued_sequence_number";
+
+        /// <summary>
+        ///   The message property that identifies the last offset enqueued for a partition.
+        /// </summary>
+        ///
+        public static AmqpSymbol PartitionLastEnqueuedOffset { get; } = "last_enqueued_offset";
+
+        /// <summary>
+        ///   The message property that identifies the last time enqueued for a partition.
+        /// </summary>
+        ///
+        public static AmqpSymbol PartitionLastEnqueuedTimeUtc { get; } = "last_enqueued_time_utc";
+
+        /// <summary>
+        ///   The message property that identifies the time that the last enqueued event information was
+        ///   received from the service.
+        /// </summary>
+        ///
+        public static AmqpSymbol LastPartitionInformationRetrievalTimeUtc { get; } = "runtime_info_retrieval_time_utc";
+
+        /// <summary>
         ///   The set of descriptors for well-known <see cref="DescribedType" />
         ///   property types.
         /// </summary>
@@ -85,6 +116,31 @@ namespace Azure.Messaging.EventHubs
             /// </summary>
             ///
             public static AmqpSymbol DateTimeOffset { get; } = AmqpConstants.Vendor + ":datetime-offset";
+        }
+
+        /// <summary>
+        ///   Represents the entity mapping for AMQP properties between the client library and
+        ///   the Event Hubs service.
+        /// </summary>
+        ///
+        /// <remarks>
+        ///   WARNING:
+        ///     These values are synchronized between the Event Hubs service and the client
+        ///     library.  You must consult with the Event Hubs service team before making
+        ///     changes, including adding a new member.
+        ///
+        ///     When adding a new member, remember to always do so before the Unknown
+        ///     member.
+        /// </remarks>
+        ///
+        public enum Entity
+        {
+            Namespace = 4,
+            EventHub = 7,
+            ConsumerGroup = 8,
+            Partition = 9,
+            Checkpoint = 10,
+            Unknown = 0x7FFFFFFE
         }
 
         /// <summary>
