@@ -25,7 +25,7 @@ namespace Azure.Messaging.EventHubs.Amqp
     internal class AmqpEventHubClient : TransportEventHubClient
     {
         /// <summary>
-        /// The default scope used for token authentication with EventHubs.
+        ///   The default scope used for token authentication with EventHubs.
         /// </summary>
         private const string EventHubsScope = "https://eventhubs.azure.net/.default";
 
