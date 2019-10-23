@@ -86,12 +86,12 @@ namespace Azure.Storage.Blobs
             byte[] uploadId = Guid.NewGuid().ToByteArray();
             List<string> blocks = new List<string>();
 
-            IAsyncEnumerator<StreamPartition2> enumerator = GetBlocksAsync(content, async: false, cancellationToken).
+            IAsyncEnumerator<StreamPartition> enumerator = GetBlocksAsync(content, async: false, cancellationToken).
                 GetAsyncEnumerator(cancellationToken);
 
             while (enumerator.MoveNextAsync().EnsureCompleted())
             {
-                using StreamPartition2 block = enumerator.Current;
+                using StreamPartition block = enumerator.Current;
                 string blockId = GenerateBlockId(uploadId, block.AbsolutePosition);
 
                 _client.StageBlock(
@@ -120,7 +120,7 @@ namespace Azure.Storage.Blobs
             List<string> blocks = new List<string>();
             List<Task> runningTasks = new List<Task>();
 
-            await foreach (StreamPartition2 block in GetBlocksAsync(content, async: true, cancellationToken))
+            await foreach (StreamPartition block in GetBlocksAsync(content, async: true, cancellationToken))
             {
                 string blockId = GenerateBlockId(uploadId, block.AbsolutePosition);
 
@@ -143,7 +143,7 @@ namespace Azure.Storage.Blobs
                 .ConfigureAwait(false);
         }
 
-        private async Task StageBlobAsync(StreamPartition2 block, string blockId, BlobAccessConditions? blobAccessConditions, IProgress<long> progressHandler, CancellationToken cancellationToken)
+        private async Task StageBlobAsync(StreamPartition block, string blockId, BlobAccessConditions? blobAccessConditions, IProgress<long> progressHandler, CancellationToken cancellationToken)
         {
             try
             {
@@ -187,7 +187,7 @@ namespace Azure.Storage.Blobs
             return Convert.ToBase64String(id);
         }
 
-        private async IAsyncEnumerable<StreamPartition2> GetBlocksAsync(Stream stream, bool async, [EnumeratorCancellation] CancellationToken cancellationToken)
+        private async IAsyncEnumerable<StreamPartition> GetBlocksAsync(Stream stream, bool async, [EnumeratorCancellation] CancellationToken cancellationToken)
         {
             int read;
             long absolutePosition = 0;
@@ -213,7 +213,7 @@ namespace Azure.Storage.Blobs
 
                 if (offset != 0)
                 {
-                    yield return new StreamPartition2(absolutePosition, bytes, offset, _arrayPool);
+                    yield return new StreamPartition(absolutePosition, bytes, offset, _arrayPool);
                 }
                 else
                 {
@@ -224,9 +224,9 @@ namespace Azure.Storage.Blobs
             } while (read != 0);
         }
 
-        private readonly struct StreamPartition2: IDisposable
+        private readonly struct StreamPartition: IDisposable
         {
-            public StreamPartition2(long absolutePosition, byte[] bytes, int length, ArrayPool<byte> arrayPool)
+            public StreamPartition(long absolutePosition, byte[] bytes, int length, ArrayPool<byte> arrayPool)
             {
                 AbsolutePosition = absolutePosition;
                 Bytes = bytes;
