@@ -44,7 +44,7 @@ namespace Azure.Data.AppConfiguration
             return writer.WrittenMemory;
         }
 
-        public static void WriteRequestBody(Utf8JsonWriter writer, ConfigurationSetting setting)
+        private static void WriteRequestBody(Utf8JsonWriter writer, ConfigurationSetting setting)
         {
             writer.WriteString("value", setting.Value);
             writer.WriteString("content_type", setting.ContentType);

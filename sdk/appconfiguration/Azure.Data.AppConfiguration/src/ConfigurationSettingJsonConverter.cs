@@ -5,7 +5,8 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Azure.Data.AppConfiguration {
+namespace Azure.Data.AppConfiguration 
+{
     internal class ConfigurationSettingJsonConverter : JsonConverter<ConfigurationSetting>
     {
         public override ConfigurationSetting Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
