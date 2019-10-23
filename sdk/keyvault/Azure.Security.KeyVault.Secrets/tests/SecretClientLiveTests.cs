@@ -95,7 +95,7 @@ namespace Azure.Security.KeyVault.Test
                 Assert.AreEqual("value2", setResult.Properties.Tags["tag2"]);
                 Assert.AreEqual(secretName, setResult.Name);
                 Assert.AreEqual("CrudWithExtendedPropsValue1", setResult.Value);
-                Assert.AreEqual(VaultEndpoint, setResult.Properties.VaultEndpoint);
+                Assert.AreEqual(VaultUri, setResult.Properties.VaultUri);
                 Assert.AreEqual("Recoverable+Purgeable", setResult.Properties.RecoveryLevel);
                 Assert.That(setResult.Properties.CreatedOn, createdUpdatedConstraint);
                 Assert.That(setResult.Properties.UpdatedOn, createdUpdatedConstraint);

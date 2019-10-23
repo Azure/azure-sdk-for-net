@@ -31,7 +31,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                     Properties.Id = new Uri(Key.Id);
                     KeyVaultIdentifier kvid = KeyVaultIdentifier.Parse(Properties.Id);
                     Properties.Name = kvid.Name;
-                    Properties.VaultEndpoint = kvid.VaultEndpoint;
+                    Properties.VaultUri = kvid.VaultUri;
                     Properties.Version = kvid.Version;
                     break;
 
