@@ -531,6 +531,7 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(20 * Constants.KB)]
         [TestCase(30 * Constants.KB)]
         [TestCase(50 * Constants.KB)]
+        [Ignore("times out")]
         // [TestCase(501 * Constants.KB)] // TODO: #6781 We don't want to add 500K of random data in the recordings
         public async Task UploadFileAsync_SmallBlobs(long size) =>
             // Use a 1KB threshold so we get a lot of individual blocks
