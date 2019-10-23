@@ -333,6 +333,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Ignore("Could not verify the copy source within the specified time.")]
         public async Task StageBlockFromUriAsync_CPK()
         {
             using (GetNewContainer(out BlobContainerClient container))
