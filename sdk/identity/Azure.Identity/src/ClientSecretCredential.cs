@@ -93,7 +93,7 @@ namespace Azure.Identity
 
             try
             {
-                return await _client.AuthenticateAsync(TenantId, ClientId, ClientSecret, requestContext.Scopes, cancellationToken).ConfigureAwait(false);
+                return scope.Succeeded(await _client.AuthenticateAsync(TenantId, ClientId, ClientSecret, requestContext.Scopes, cancellationToken).ConfigureAwait(false));
             }
             catch (Exception e)
             {
@@ -113,7 +113,7 @@ namespace Azure.Identity
 
             try
             {
-                return _client.Authenticate(TenantId, ClientId, ClientSecret, requestContext.Scopes, cancellationToken);
+                return scope.Succeeded(_client.Authenticate(TenantId, ClientId, ClientSecret, requestContext.Scopes, cancellationToken));
             }
             catch (Exception e)
             {

@@ -102,7 +102,7 @@ namespace Azure.Identity
             {
                 AuthenticationResult result = await _client.AcquireTokenByUsernamePasswordAsync(requestContext.Scopes, _username, _password, cancellationToken).ConfigureAwait(false);
 
-                return new AccessToken(result.AccessToken, result.ExpiresOn);
+                return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
             catch (Exception e)
             {

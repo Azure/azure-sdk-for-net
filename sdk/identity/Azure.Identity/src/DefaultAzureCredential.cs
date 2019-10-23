@@ -74,6 +74,8 @@ namespace Azure.Identity
 
         private async Task<AccessToken> GetTokenAsync(bool isAsync, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
+            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("Azure.Identity.DefaultAcureCredential.GetToken", requestContext);
+
             for (int i = 0; i < _sources.Length; i++)
             {
                 if (_unavailableExceptions[i] == null)
@@ -82,7 +84,7 @@ namespace Azure.Identity
 
                     if (exToken.Exception is null)
                     {
-                        return exToken.AccessToken;
+                        return scope.Succeeded(exToken.AccessToken);
                     }
 
                     if (exToken.Exception is CredentialUnavailableException)
@@ -97,12 +99,12 @@ namespace Azure.Identity
 
                         aggEx[i] = exToken.Exception;
 
-                        throw new AggregateAuthenticationException(exToken.Exception.Message, new ReadOnlyMemory<object>(_sources, 0, i + 1), aggEx);
+                        throw scope.Failed(new AggregateAuthenticationException(exToken.Exception.Message, new ReadOnlyMemory<object>(_sources, 0, i + 1), aggEx));
                     }
                 }
             }
 
-            throw new AggregateAuthenticationException(Constants.AggregateAllUnavailableErrorMessage, _sources, _unavailableExceptions);
+            throw scope.Failed(new AggregateAuthenticationException(Constants.AggregateAllUnavailableErrorMessage, _sources, _unavailableExceptions));
         }
 
         private static IExtendedTokenCredential[] GetDefaultAzureCredentialChain(CredentialPipeline pipeline, DefaultAzureCredentialOptions options)

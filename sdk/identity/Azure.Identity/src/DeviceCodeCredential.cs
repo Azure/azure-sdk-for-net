@@ -54,16 +54,25 @@ namespace Azure.Identity
         /// <param name="clientId">The client id of the application to which the users will authenticate</param>
         /// <param name="options">The client options for the newly created DeviceCodeCredential</param>
         public DeviceCodeCredential(Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, string tenantId, string clientId,  TokenCredentialOptions options = default)
+            : this(deviceCodeCallback, tenantId, clientId, CredentialPipeline.GetInstance(options))
+        {
+        }
+
+        internal DeviceCodeCredential(Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, string tenantId, string clientId, CredentialPipeline pipeline)
+            : this(deviceCodeCallback, clientId, pipeline, pipeline.CreateMsalPublicClient(clientId, tenantId, redirectUrl: "https://login.microsoftonline.com/common/oauth2/nativeclient"))
+        {
+        }
+
+        internal DeviceCodeCredential(Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, string clientId, CredentialPipeline pipeline, MsalPublicClientAbstraction client)
         {
             _clientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
 
             _deviceCodeCallback = deviceCodeCallback ?? throw new ArgumentNullException(nameof(deviceCodeCallback));
 
-            _pipeline = CredentialPipeline.GetInstance(options);
+            _pipeline = pipeline;
 
-            _client = _pipeline.CreateMsalPublicClient(_clientId, tenantId, redirectUrl: "https://login.microsoftonline.com/common/oauth2/nativeclient");
+            _client = client;
         }
-
         /// <summary>
         /// Obtains a token for a user account, authenticating them through the device code authentication flow.
         /// </summary>
@@ -82,16 +91,16 @@ namespace Azure.Identity
                     {
                         AuthenticationResult result = _client.AcquireTokenSilentAsync(requestContext.Scopes, _account, cancellationToken).GetAwaiter().GetResult();
 
-                        return new AccessToken(result.AccessToken, result.ExpiresOn);
+                        return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
                     }
                     catch (MsalUiRequiredException)
                     {
-                        return GetTokenViaDeviceCodeAsync(requestContext.Scopes, cancellationToken).GetAwaiter().GetResult();
+                        return scope.Succeeded(GetTokenViaDeviceCodeAsync(requestContext.Scopes, cancellationToken).GetAwaiter().GetResult());
                     }
                 }
                 else
                 {
-                    return GetTokenViaDeviceCodeAsync(requestContext.Scopes, cancellationToken).GetAwaiter().GetResult();
+                    return scope.Succeeded(GetTokenViaDeviceCodeAsync(requestContext.Scopes, cancellationToken).GetAwaiter().GetResult());
                 }
             }
             catch (Exception e)
@@ -118,16 +127,16 @@ namespace Azure.Identity
                     {
                         AuthenticationResult result = await _client.AcquireTokenSilentAsync(requestContext.Scopes, _account, cancellationToken).ConfigureAwait(false);
 
-                        return new AccessToken(result.AccessToken, result.ExpiresOn);
+                        return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
                     }
                     catch (MsalUiRequiredException)
                     {
-                        return GetTokenViaDeviceCodeAsync(requestContext.Scopes, cancellationToken).GetAwaiter().GetResult();
+                        return scope.Succeeded(GetTokenViaDeviceCodeAsync(requestContext.Scopes, cancellationToken).GetAwaiter().GetResult());
                     }
                 }
                 else
                 {
-                    return GetTokenViaDeviceCodeAsync(requestContext.Scopes, cancellationToken).GetAwaiter().GetResult();
+                    return scope.Succeeded(GetTokenViaDeviceCodeAsync(requestContext.Scopes, cancellationToken).GetAwaiter().GetResult());
                 }
             }
             catch (Exception e)

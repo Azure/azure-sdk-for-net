@@ -20,64 +20,103 @@ namespace Azure.Identity
         private const int GetTokenFailedEvent = 3;
         private const int ProbeImdsEndpointEvent = 4;
         private const int ImdsEndpointFoundEvent = 5;
-        private const int ImdsEndpointUnavailableEvent = 4;
+        private const int ImdsEndpointUnavailableEvent = 6;
 
         private AzureIdentityEventSource() : base(EventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue) { }
 
         public static AzureIdentityEventSource Singleton { get; } = new AzureIdentityEventSource();
 
-        [Event(GetTokenEvent, Level = EventLevel.Informational, Message = "{0} [ Scopes: {1} ParentRequestId: {2} ]")]
-        public void GetToken(string fullyQualifiedMethod, TokenRequestContext context)
-        {
-            WriteEvent(GetTokenEvent, fullyQualifiedMethod, context.Scopes, context.ParentRequestId);
-        }
-
-        [Event(GetTokenSucceededEvent, Level = EventLevel.Informational, Message = "{0} succeeded [ Scopes: {1} ParentRequestId: {2} ExpiresOn: {3} ]")]
-        public void GetTokenSuccess(string fullyQualifiedMethod, TokenRequestContext context, DateTimeOffset ExpiresOn)
+        [NonEvent]
+        public void GetToken(string method, TokenRequestContext context)
         {
             if (IsEnabled(EventLevel.Informational, EventKeywords.All))
             {
-                WriteEvent(GetTokenSucceededEvent, fullyQualifiedMethod, context.Scopes, context.ParentRequestId, ExpiresOn.ToString("O", CultureInfo.InvariantCulture));
+                GetToken(method, FormatStringArray(context.Scopes), context.ParentRequestId);
+            }
+        }
+
+        [Event(GetTokenEvent, Level = EventLevel.Informational, Message = "{0} [ Scopes: {1} ParentRequestId: {2} ]")]
+        public void GetToken(string method, string scopes, string parentRequestId)
+        {
+            WriteEvent(GetTokenEvent, method, scopes, parentRequestId);
+        }
+
+        [NonEvent]
+        public void GetTokenSucceeded(string method, TokenRequestContext context, DateTimeOffset expiresOn)
+        {
+            if (IsEnabled(EventLevel.Informational, EventKeywords.All))
+            {
+                GetTokenSucceeded(method, FormatStringArray(context.Scopes), context.ParentRequestId, expiresOn.ToString("O", CultureInfo.InvariantCulture));
+            }
+        }
+
+        [Event(GetTokenSucceededEvent, Level = EventLevel.Informational, Message = "{0} succeeded [ Scopes: {1} ParentRequestId: {2} ExpiresOn: {3} ]")]
+        public void GetTokenSucceeded(string method, string scopes, string parentRequestId, string expiresOn)
+        {
+            WriteEvent(GetTokenSucceededEvent, method, scopes, parentRequestId, expiresOn);
+        }
+
+        [NonEvent]
+        public void GetTokenFailed(string method, TokenRequestContext context, Exception ex)
+        {
+            if (IsEnabled(EventLevel.Informational, EventKeywords.All))
+            {
+                GetTokenFailed(method, FormatStringArray(context.Scopes), context.ParentRequestId, FormatException(ex));
             }
         }
 
         [Event(GetTokenFailedEvent, Level = EventLevel.Informational, Message = "{0} was unable to retrieve an access token [ Scopes: {1} ParentRequestId: {2} ] {3}")]
-        public void GetTokenFailed(string fullyQualifiedMethod, TokenRequestContext context, Exception ex)
+        public void GetTokenFailed(string method, string scopes, string parentRequestId, string exception)
         {
-            if (IsEnabled(EventLevel.Informational, EventKeywords.All))
-            {
-                string exStr = FormatException(ex);
-
-                WriteEvent(GetTokenFailedEvent, fullyQualifiedMethod, context.Scopes, context.ParentRequestId, exStr);
-            }
+            WriteEvent(GetTokenFailedEvent, method, scopes, parentRequestId, exception);
         }
 
-        [Event(ProbeImdsEndpointEvent, Level = EventLevel.Informational, Message = "Probiing IMDS endpoint for availability. Endpoint: {0}")]
+        [NonEvent]
         public void ProbeImdsEndpoint(RequestUriBuilder uri)
         {
             if (IsEnabled(EventLevel.Informational, EventKeywords.All))
             {
-                WriteEvent(ProbeImdsEndpointEvent, uri.ToString());
+                ProbeImdsEndpoint(uri.ToString());
             }
         }
 
-        [Event(ImdsEndpointFoundEvent, Level = EventLevel.Informational, Message = "IMDS endpoint is available. Endpoint: {0}")]
+        [Event(ProbeImdsEndpointEvent, Level = EventLevel.Informational, Message = "Probiing IMDS endpoint for availability. Endpoint: {0}")]
+        public void ProbeImdsEndpoint(string uri)
+        {
+            WriteEvent(ProbeImdsEndpointEvent, uri);
+        }
+
+        [NonEvent]
         public void ImdsEndpointFound(RequestUriBuilder uri)
         {
             if (IsEnabled(EventLevel.Informational, EventKeywords.All))
             {
-                WriteEvent(ImdsEndpointFoundEvent, uri.ToString());
+                ImdsEndpointFound(uri.ToString());
             }
         }
 
-        [Event(ImdsEndpointUnavailableEvent, Level = EventLevel.Informational, Message = "IMDS endpoint is did not respond. Endpoint: {0}")]
+        [Event(ImdsEndpointFoundEvent, Level = EventLevel.Informational, Message = "IMDS endpoint is available. Endpoint: {0}")]
+        public void ImdsEndpointFound(string uri)
+        {
+            WriteEvent(ImdsEndpointFoundEvent, uri);
+        }
+
+        [NonEvent]
         public void ImdsEndpointUnavailable(RequestUriBuilder uri)
         {
             if (IsEnabled(EventLevel.Informational, EventKeywords.All))
             {
-                WriteEvent(ImdsEndpointUnavailableEvent, uri.ToString());
+                ImdsEndpointUnavailable(uri.ToString());
             }
         }
+
+        [Event(ImdsEndpointUnavailableEvent, Level = EventLevel.Informational, Message = "IMDS endpoint is did not respond. Endpoint: {0}")]
+        public void ImdsEndpointUnavailable(string uri)
+        {
+            WriteEvent(ImdsEndpointUnavailableEvent, uri);
+        }
+
+        [NonEvent]
         private static string FormatException(Exception ex)
         {
             StringBuilder sb = new StringBuilder();
@@ -101,6 +140,12 @@ namespace Azure.Identity
             }
             while (ex != null);
             return sb.ToString();
+        }
+
+        [NonEvent]
+        private static string FormatStringArray(string[] array)
+        {
+            return new StringBuilder("[ ").Append(string.Join(", ", array)).Append(" ]").ToString();
         }
     }
 }

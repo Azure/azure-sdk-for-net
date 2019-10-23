@@ -111,20 +111,20 @@ namespace Azure.Identity
                     {
                         AuthenticationResult result = await _client.AcquireTokenSilentAsync(requestContext.Scopes, _account, cancellationToken).ConfigureAwait(false);
 
-                        return new ExtendedAccessToken(new AccessToken(result.AccessToken, result.ExpiresOn));
+                        return new ExtendedAccessToken(scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn)));
                     }
                     catch (MsalUiRequiredException)
                     {
                         AccessToken token = await GetTokenViaBrowserLoginAsync(requestContext.Scopes, cancellationToken).ConfigureAwait(false);
 
-                        return new ExtendedAccessToken(token);
+                        return new ExtendedAccessToken(scope.Succeeded(token));
                     }
                 }
                 else
                 {
                     AccessToken token = await GetTokenViaBrowserLoginAsync(requestContext.Scopes, cancellationToken).ConfigureAwait(false);
 
-                    return new ExtendedAccessToken(token);
+                    return new ExtendedAccessToken(scope.Succeeded(token));
                 }
             }
             catch (Exception e)

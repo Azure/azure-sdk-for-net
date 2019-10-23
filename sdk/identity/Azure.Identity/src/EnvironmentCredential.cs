@@ -157,9 +157,9 @@ namespace Azure.Identity
 
             try
             {
-                AccessToken token = _credential.GetToken(requestContext, cancellationToken);
+                AccessToken token =  _credential.GetToken(requestContext, cancellationToken);
 
-                return new ExtendedAccessToken(token);
+                return new ExtendedAccessToken(scope.Succeeded(token));
             }
             catch (Exception e)
             {
@@ -180,7 +180,7 @@ namespace Azure.Identity
             {
                 AccessToken token = await _credential.GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false);
 
-                return new ExtendedAccessToken(token);
+                return new ExtendedAccessToken(scope.Succeeded(token));
             }
             catch (Exception e)
             {

@@ -27,6 +27,13 @@ namespace Azure.Identity
             _scope.Start();
         }
 
+        public AccessToken Succeeded(AccessToken token)
+        {
+            AzureIdentityEventSource.Singleton.GetTokenSucceeded(_name, _context, token.ExpiresOn);
+
+            return token;
+        }
+
         public AuthenticationFailedException Failed(string message)
         {
             var exception = new AuthenticationFailedException(message);

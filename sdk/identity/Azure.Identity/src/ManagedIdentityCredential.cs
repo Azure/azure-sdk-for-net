@@ -108,7 +108,7 @@ namespace Azure.Identity
 
                 AccessToken token = await _client.AuthenticateAsync(msiType, requestContext.Scopes, _clientId, cancellationToken).ConfigureAwait(false);
 
-                return new ExtendedAccessToken(token);
+                return new ExtendedAccessToken(scope.Succeeded(token));
             }
             catch (Exception e)
             {
@@ -132,7 +132,7 @@ namespace Azure.Identity
 
                 AccessToken token = _client.Authenticate(msiType, requestContext.Scopes, _clientId, cancellationToken);
 
-                return new ExtendedAccessToken(token);
+                return new ExtendedAccessToken(scope.Succeeded(token));
             }
             catch (Exception e)
             {

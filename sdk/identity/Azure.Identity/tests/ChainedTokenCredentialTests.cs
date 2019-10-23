@@ -61,7 +61,7 @@ namespace Azure.Identity.Tests
                 throw new CredentialUnavailableException("unavailable");
             }
 
-            public override Task<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+            public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
             {
                 throw new CredentialUnavailableException("unavailable");
             }

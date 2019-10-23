@@ -108,7 +108,7 @@ namespace Azure.Identity
                 {
                     AuthenticationResult result = await _client.AcquireTokenSilentAsync(requestContext.Scopes, account, cancellationToken).ConfigureAwait(false);
 
-                    return new ExtendedAccessToken(new AccessToken(result.AccessToken, result.ExpiresOn));
+                    return new ExtendedAccessToken(scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn)));
                 }
                 else
                 {
