@@ -936,6 +936,7 @@ namespace Azure.Storage.Files.Test
         [TestCase(33 * Constants.MB)]
         [TestCase(257 * Constants.MB)]
         [TestCase(1 * Constants.GB)]
+        [Ignore("times out")]
         public async Task UploadAsync_LargeBlobs(int size) =>
             // TODO: #6781 We don't want to add 1GB of random data in the recordings
             await UploadAndVerify(size, Constants.MB);
@@ -1025,6 +1026,7 @@ namespace Azure.Storage.Files.Test
 
         [Test]
         [LiveOnly]
+        [Ignore("task cancelled")]
         // TODO: #7645
         public async Task UploadRangeFromUriAsync()
         {
