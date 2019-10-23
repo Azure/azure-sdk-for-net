@@ -18,6 +18,8 @@
   <ItemGroup>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <PackageReference Include="Microsoft.AspNetCore.WebUtilities" />
+    <PackageReference Include="Microsoft.Azure.KeyVault" />
+    <PackageReference Include="Microsoft.Azure.Management.KeyVault" />
     <ProjectReference Include="..\src\Microsoft.Azure.Search.csproj" />
     <ProjectReference Include="..\..\Microsoft.Azure.Management.Search\tests\Microsoft.Azure.Management.Search.Tests.csproj" />
   </ItemGroup>
