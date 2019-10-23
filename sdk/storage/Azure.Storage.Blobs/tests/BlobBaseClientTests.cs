@@ -96,6 +96,7 @@ namespace Azure.Storage.Blobs.Test
 
         #region Secondary Storage
         [Test]
+        [Ignore("task canceled on Linux")]
         public async Task DownloadAsync_ReadFromSecondaryStorage()
         {
             using (GetNewContainer(out BlobContainerClient container, GetServiceClient_SecondaryAccount_ReadEnabledOnRetry(1, out TestExceptionPolicy testExceptionPolicy)))
