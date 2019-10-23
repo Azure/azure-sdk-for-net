@@ -125,6 +125,4 @@
     <!-- Disable doc comments for test projects -->
     <DocumentationFile></DocumentationFile>
   </PropertyGroup>
-
-  <Import Project="Versioning.props" />
 </Project>
