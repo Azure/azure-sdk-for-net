@@ -175,7 +175,8 @@ namespace Azure.Data.AppConfiguration.Tests
             var comparer = ConfigurationSettingEqualityComparer.Instance;
             IDictionary<string, ConfigurationSetting> dict = new Dictionary<string, ConfigurationSetting>
             {
-                { s_testSetting.Key, s_testSetting }
+                { s_testSetting.Key, s_testSetting },
+                { "null_key", null }
             };
 
             var serialized = JsonSerializer.Serialize(dict);
@@ -183,6 +184,7 @@ namespace Azure.Data.AppConfiguration.Tests
             CollectionAssert.IsNotEmpty(deserialized);
 
             Assert.IsTrue(comparer.Equals(s_testSetting, deserialized[s_testSetting.Key]));
+            Assert.IsNull(deserialized["null_key"]);
         }
     }
 }
