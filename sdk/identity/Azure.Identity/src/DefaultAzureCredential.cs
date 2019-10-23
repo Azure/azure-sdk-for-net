@@ -48,6 +48,8 @@ namespace Azure.Identity
             _pipeline = CredentialPipeline.GetInstance(options);
 
             _sources = GetDefaultAzureCredentialChain(_pipeline, options);
+
+            _unavailableExceptions = new Exception[_sources.Length];
         }
 
         /// <summary>
