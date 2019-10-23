@@ -90,7 +90,6 @@ namespace Azure.Core
             return _response.TryGetHeaderValues(name, out values);
         }
 
-
         /// <summary>
         /// Returns if headers is stored in the collection.
         /// </summary>

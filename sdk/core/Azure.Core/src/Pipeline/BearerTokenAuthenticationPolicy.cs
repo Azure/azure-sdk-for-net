@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline
 {
+    /// <summary>
+    /// A policy that sends <see cref="AccessToken"/> provided by <see cref="TokenCredential"/> as Authentication header.
+    /// </summary>
     public class BearerTokenAuthenticationPolicy : HttpPipelinePolicy
     {
         private readonly TokenCredential _credential;
@@ -18,10 +21,20 @@ namespace Azure.Core.Pipeline
 
         private DateTimeOffset _refreshOn;
 
+        /// <summary>
+        /// Creates a new instance os <see cref="BearerTokenAuthenticationPolicy"/> using provided token credential and scope to authenticate for.
+        /// </summary>
+        /// <param name="credential">The token credential to use for authentication.</param>
+        /// <param name="scope">The scope to authenticate for.</param>
         public BearerTokenAuthenticationPolicy(TokenCredential credential, string scope) : this(credential, new[] { scope })
         {
         }
 
+        /// <summary>
+        /// Creates a new instance os <see cref="BearerTokenAuthenticationPolicy"/> using provided token credential and scopes to authenticate for.
+        /// </summary>
+        /// <param name="credential">The token credential to use for authentication.</param>
+        /// <param name="scopes">Scopes to authenticate for.</param>
         public BearerTokenAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes)
         {
             Argument.AssertNotNull(credential, nameof(credential));
@@ -31,16 +44,19 @@ namespace Azure.Core.Pipeline
             _scopes = scopes.ToArray();
         }
 
+        /// <inheritdoc />
         public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             return ProcessAsync(message, pipeline, true);
         }
 
+        /// <inheritdoc />
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             ProcessAsync(message, pipeline, false).EnsureCompleted();
         }
 
+        /// <inheritdoc />
         public async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
             if (DateTimeOffset.UtcNow >= _refreshOn)
