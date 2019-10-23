@@ -334,7 +334,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8353")]
         public async Task StageBlockFromUriAsync_CPK()
         {
             using (GetNewContainer(out BlobContainerClient container))
