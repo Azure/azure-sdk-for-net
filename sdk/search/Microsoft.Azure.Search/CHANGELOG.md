@@ -195,6 +195,24 @@ Every minor version release targets the same (preview) REST API version as that 
 
 Features and improvements offered in a preview SDK are in a preview capacity. They may or may not be shipped in a subsequent GA SDK. We advise not to use them in production environments.
 
+<a name="11.0.0-preview"></a>
+
+# 11.0.0-preview
+## Target API Version
+2019-05-06-Preview
+
+## Breaking Changes
+
+TBD
+
+## Improvements
+
+TBD
+
+## Bug fixes
+
+TBD
+
 <a name="8.0.0-preview"></a>
 
 # 8.0.0-preview
