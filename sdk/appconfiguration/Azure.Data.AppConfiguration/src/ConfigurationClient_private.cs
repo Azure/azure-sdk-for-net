@@ -184,13 +184,6 @@ namespace Azure.Data.AppConfiguration
             BuildBatchQuery(builder, selector, pageLink);
         }
 
-        private static ReadOnlyMemory<byte> Serialize(ConfigurationSetting setting)
-        {
-            var writer = new ArrayBufferWriter<byte>();
-            ConfigurationServiceSerializer.Serialize(setting, writer);
-            return writer.WrittenMemory;
-        }
-
         #region nobody wants to see these
         /// <summary>
         /// Check if two ConfigurationSetting instances are equal.

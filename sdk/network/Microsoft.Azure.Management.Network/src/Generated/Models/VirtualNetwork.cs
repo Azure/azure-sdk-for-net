@@ -114,19 +114,18 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<VirtualNetworkPeering> VirtualNetworkPeerings { get; set; }
 
         /// <summary>
-        /// Gets or sets the resourceGuid property of the Virtual Network
-        /// resource.
+        /// Gets the resourceGuid property of the Virtual Network resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceGuid")]
-        public string ResourceGuid { get; set; }
+        public string ResourceGuid { get; private set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the virtual network
-        /// resource. Possible values include: 'Succeeded', 'Updating',
-        /// 'Deleting', 'Failed'
+        /// Gets the provisioning state of the virtual network resource.
+        /// Possible values include: 'Succeeded', 'Updating', 'Deleting',
+        /// 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets indicates if DDoS protection is enabled for all the
@@ -158,11 +157,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public VirtualNetworkBgpCommunities BgpCommunities { get; set; }
 
         /// <summary>
-        /// Gets or sets a unique read-only string that changes whenever the
-        /// resource is updated.
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
         /// <summary>
         /// Validate the object.

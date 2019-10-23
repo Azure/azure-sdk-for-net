@@ -126,10 +126,10 @@ namespace Microsoft.Azure.Management.Network.Models
         public string State { get; set; }
 
         /// <summary>
-        /// Gets or sets the Azure ASN.
+        /// Gets the Azure ASN.
         /// </summary>
         [JsonProperty(PropertyName = "properties.azureASN")]
-        public int? AzureASN { get; set; }
+        public int? AzureASN { get; private set; }
 
         /// <summary>
         /// Gets or sets the peer ASN.
@@ -150,16 +150,16 @@ namespace Microsoft.Azure.Management.Network.Models
         public string SecondaryPeerAddressPrefix { get; set; }
 
         /// <summary>
-        /// Gets or sets the primary port.
+        /// Gets the primary port.
         /// </summary>
         [JsonProperty(PropertyName = "properties.primaryAzurePort")]
-        public string PrimaryAzurePort { get; set; }
+        public string PrimaryAzurePort { get; private set; }
 
         /// <summary>
-        /// Gets or sets the secondary port.
+        /// Gets the secondary port.
         /// </summary>
         [JsonProperty(PropertyName = "properties.secondaryAzurePort")]
-        public string SecondaryAzurePort { get; set; }
+        public string SecondaryAzurePort { get; private set; }
 
         /// <summary>
         /// Gets or sets the shared key.
@@ -186,12 +186,12 @@ namespace Microsoft.Azure.Management.Network.Models
         public ExpressRouteCircuitStats Stats { get; set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the express route circuit
-        /// peering resource. Possible values include: 'Succeeded', 'Updating',
+        /// Gets the provisioning state of the express route circuit peering
+        /// resource. Possible values include: 'Succeeded', 'Updating',
         /// 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets the GatewayManager Etag.
@@ -200,10 +200,10 @@ namespace Microsoft.Azure.Management.Network.Models
         public string GatewayManagerEtag { get; set; }
 
         /// <summary>
-        /// Gets or sets who was the last to modify the peering.
+        /// Gets who was the last to modify the peering.
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastModifiedBy")]
-        public string LastModifiedBy { get; set; }
+        public string LastModifiedBy { get; private set; }
 
         /// <summary>
         /// Gets or sets the reference of the RouteFilter resource.
@@ -224,11 +224,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public ExpressRouteConnectionId ExpressRouteConnection { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of circuit connections associated with Azure
-        /// Private Peering for this circuit.
+        /// Gets the list of circuit connections associated with Azure Private
+        /// Peering for this circuit.
         /// </summary>
         [JsonProperty(PropertyName = "properties.connections")]
-        public IList<ExpressRouteCircuitConnection> Connections { get; set; }
+        public IList<ExpressRouteCircuitConnection> Connections { get; private set; }
 
         /// <summary>
         /// Gets the list of peered circuit connections associated with Azure

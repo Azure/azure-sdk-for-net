@@ -484,9 +484,13 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<VirtualMachine> ListAll(this IVirtualMachinesOperations operations)
+            /// <param name='statusOnly'>
+            /// statusOnly=true enables fetching run time status of all Virtual Machines in
+            /// the subscription.
+            /// </param>
+            public static IPage<VirtualMachine> ListAll(this IVirtualMachinesOperations operations, string statusOnly = default(string))
             {
-                return operations.ListAllAsync().GetAwaiter().GetResult();
+                return operations.ListAllAsync(statusOnly).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -496,12 +500,16 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='statusOnly'>
+            /// statusOnly=true enables fetching run time status of all Virtual Machines in
+            /// the subscription.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<VirtualMachine>> ListAllAsync(this IVirtualMachinesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<VirtualMachine>> ListAllAsync(this IVirtualMachinesOperations operations, string statusOnly = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListAllWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListAllWithHttpMessagesAsync(statusOnly, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -598,6 +606,43 @@ namespace Microsoft.Azure.Management.Compute
             public static async Task PowerOffAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, bool? skipShutdown = false, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.PowerOffWithHttpMessagesAsync(resourceGroupName, vmName, skipShutdown, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// The operation to reapply a virtual machine's state.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            public static void Reapply(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            {
+                operations.ReapplyAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The operation to reapply a virtual machine's state.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task ReapplyAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.ReapplyWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -1149,6 +1194,43 @@ namespace Microsoft.Azure.Management.Compute
             public static async Task BeginPowerOffAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, bool? skipShutdown = false, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginPowerOffWithHttpMessagesAsync(resourceGroupName, vmName, skipShutdown, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// The operation to reapply a virtual machine's state.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            public static void BeginReapply(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            {
+                operations.BeginReapplyAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The operation to reapply a virtual machine's state.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginReapplyAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginReapplyWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
