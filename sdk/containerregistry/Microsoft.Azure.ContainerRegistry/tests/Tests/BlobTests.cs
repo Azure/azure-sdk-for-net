@@ -130,7 +130,14 @@
             }
         }
 
-        [Fact]
+        /// <summary>
+        /// This test should be run only live.
+        /// HTTP calls made by the clients in <see cref="ContainerRegistryRefreshToken"> and <see cref="ContainerRegistryAccessToken">
+        /// aren't being mocked by the test framework. This leads to issues when trying to refresh AADTokens during "playback" as these
+        /// clients' requests are always "live".
+        /// </summary>
+        /// <returns></returns>
+        [Fact(Skip = "Should be run only live")]
         public async Task GetBlobOAuth()
         {
             using (var context = MockContext.Start(GetType(), nameof(GetBlobOAuth)))
@@ -145,9 +152,9 @@
         }
 
         /// <summary>
-        /// This test should be run only live. 
+        /// This test should be run only live.
         /// HTTP calls made by the clients in <see cref="ContainerRegistryRefreshToken"> and <see cref="ContainerRegistryAccessToken">
-        /// aren't being mocked by the test framework. This leads to issues when trying to refresh AADTokens during "playback" as these 
+        /// aren't being mocked by the test framework. This leads to issues when trying to refresh AADTokens during "playback" as these
         /// clients' requests are always "live".
         /// </summary>
         /// <returns></returns>

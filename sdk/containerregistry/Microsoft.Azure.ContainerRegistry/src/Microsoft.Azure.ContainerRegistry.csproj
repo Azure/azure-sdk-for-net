@@ -1,11 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-  	<PackageId>Microsoft.Azure.Runtime.ContainerRegistry</PackageId>
-    <Description>Provides management capabilities for Azure Container Registry Runtime items.</Description>
+  	<PackageId>Microsoft.Azure.ContainerRegistry</PackageId>
+    <Description>This is a client library for Azure Container Registry data plane operations. Use this library to retrieve, update and view Registry tags, blobs and manifests. </Description>
     <AssemblyTitle>Microsoft Azure Container Registry</AssemblyTitle>
-    <VersionPrefix>2.0.0</VersionPrefix>
-    <PackageTags>Microsoft Azure Container Registry;Container Registry;</PackageTags>
-    <PackageReleaseNotes>Added capabilities to manage repository, tag and manifest.</PackageReleaseNotes>
+    <VersionPrefix>0.10.0</VersionPrefix>
+    <PackageTags>Microsoft Azure Container Registry;Container Registry; Microsoft; Docker Registry HTTP API V2</PackageTags>
+    <PackageReleaseNotes>
+      * Manage Azure Container Registry repositories, tags, manifests, blobs, access tokens and refresh tokens.
+      * OAuth2 support.
+      * Support different manifest types.
+      * Add classes (e.g. ContainerRegistryCredentials) to simplify authentication.
+      * Add Docker Registry HTTP API V2 support.
+    </PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>

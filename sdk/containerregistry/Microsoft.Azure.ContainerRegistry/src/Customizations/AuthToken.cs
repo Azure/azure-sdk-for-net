@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 namespace Microsoft.Azure.ContainerRegistry
 {
     /// <summary>
-    /// Simple authentication class for use in clients used by Token classes.
+    /// Simple authentication credentials class for use by local clients within Token classes.
+    /// i.e <see cref="ContainerRegistryRefreshToken"/> and <see cref="ContainerRegistryAccessToken">
     /// </summary>
     internal class TokenCredentials : ServiceClientCredentials
     {
