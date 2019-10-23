@@ -96,7 +96,7 @@ namespace Azure.Storage.Blobs.Test
 
         #region Secondary Storage
         [Test]
-        [Ignore("task canceled on Linux")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8356")]
         public async Task DownloadAsync_ReadFromSecondaryStorage()
         {
             using (GetNewContainer(out BlobContainerClient container, GetServiceClient_SecondaryAccount_ReadEnabledOnRetry(1, out TestExceptionPolicy testExceptionPolicy)))
@@ -159,9 +159,7 @@ namespace Azure.Storage.Blobs.Test
         #endregion
 
         [Test]
-        [Category("Live")]
-        [Ignore("Task cancelled")]
-
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8353")]
         public async Task DownloadAsync_CPK()
         {
             using (GetNewContainer(out BlobContainerClient container))
@@ -454,9 +452,8 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Ignore("These tests currently take 40 mins for little additional coverage")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8356")]
         [Test]
-        [Category("Live")]
         [TestCase(512)]
         [TestCase(1 * Constants.KB)]
         [TestCase(2 * Constants.KB)]
@@ -1193,8 +1190,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Category("Live")]
-        [Ignore("Operation cancelled")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8353")]
         public async Task GetPropertiesAsync_CPK()
         {
             using (GetNewContainer(out BlobContainerClient container))
@@ -1214,8 +1210,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Category("Live")]
-        [Ignore("Operation cancelled")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8353")]
         public async Task GetPropertiesAsync_CpkError()
         {
             using (GetNewContainer(out BlobContainerClient container))
@@ -1598,7 +1593,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Ignore("Task canceled")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8353")]
         public async Task SetMetadataAsync_CPK()
         {
             using (GetNewContainer(out BlobContainerClient container))
@@ -1727,8 +1722,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Category("Live")]
-        [Ignore("Operation cancelled")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8353")]
         public async Task CreateSnapshotAsync_CPK()
         {
             using (GetNewContainer(out BlobContainerClient container))
@@ -1746,9 +1740,9 @@ namespace Azure.Storage.Blobs.Test
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
         }
+
         [Test]
-        [Category("Live")]
-        [Ignore("Operation cancelled")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8353")]
         public async Task CreateSnapshotAsync_CpkHttpError()
         {
             using (GetNewContainer(out BlobContainerClient container))

@@ -244,7 +244,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Ignore("Task canceled on Windows_NetFramework")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8354")]
         public async Task StageBlockAsync_WithUnreliableConnection()
         {
             const int blobSize = 1 * Constants.MB;
@@ -334,7 +334,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Ignore("Could not verify the copy source within the specified time.")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8353")]
         public async Task StageBlockFromUriAsync_CPK()
         {
             using (GetNewContainer(out BlobContainerClient container))
@@ -1361,7 +1361,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Ignore("task cancelled on Windows_NetFramework")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8354")]
         public async Task UploadAsync_WithUnreliableConnection()
         {
             const int blobSize = 1 * Constants.MB;

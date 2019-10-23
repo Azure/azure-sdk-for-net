@@ -770,8 +770,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Category("Live")]
-        [Ignore("Server encounter internal error.")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8351")]
         public async Task AppendBlockFromUriAsync_AccessConditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();

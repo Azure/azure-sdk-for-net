@@ -173,7 +173,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Ignore("Container already exists")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8358")]
         public async Task Batch_AcrossContainers()
         {
             using TestScenario scenario = Scenario();
