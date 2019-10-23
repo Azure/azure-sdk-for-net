@@ -28,6 +28,21 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <summary>The primitive for synchronizing access during start and close operations.</summary>
         private readonly SemaphoreSlim _runningTaskSemaphore = new SemaphoreSlim(1, 1);
 
+        /// <summary>The primitive for synchronizing access during start and set handler operations.</summary>
+        private readonly object _setHandlerMutex = new object();
+
+        /// <summary>The function to be called just before event processing starts for a given partition.</summary>
+        private Func<PartitionContext, Task> _initializeProcessingForPartitionAsync;
+
+        /// <summary>The function to be called once event processing stops for a given partition.</summary>
+        private Func<PartitionContext, PartitionProcessorCloseReason, Task> _processingForPartitionStoppedAsync;
+
+        /// <summary>Responsible for processing sets of events received from the Event Hubs service.</summary>
+        private Func<PartitionContext, IEnumerable<EventData>, Task> _processEventsAsync;
+
+        /// <summary>Responsible for processing unexpected exceptions thrown while this <see cref="EventProcessor" /> is running.</summary>
+        private Func<PartitionContext, Exception, Task> _processExceptionAsync;
+
         /// <summary>
         ///   The minimum amount of time to be elapsed between two load balancing verifications.
         /// </summary>
@@ -100,27 +115,98 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   The function to be called just before event processing starts for a given partition.
         /// </summary>
         ///
-        public Func<PartitionContext, Task> InitializeProcessingForPartitionAsync { internal get; set; }
+        public Func<PartitionContext, Task> InitializeProcessingForPartitionAsync
+        {
+            internal get => _initializeProcessingForPartitionAsync;
+
+            set
+            {
+                lock (_setHandlerMutex)
+                {
+                    if (RunningTask == null)
+                    {
+                        _initializeProcessingForPartitionAsync = value;
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException(Resources.RunningEventProcessorCannotPerformOperation);
+                    }
+                }
+            }
+        }
 
         /// <summary>
         ///   The function to be called once event processing stops for a given partition.
         /// </summary>
         ///
-        public Func<PartitionContext, PartitionProcessorCloseReason, Task> ProcessingForPartitionStoppedAsync { internal get; set; }
+        public Func<PartitionContext, PartitionProcessorCloseReason, Task> ProcessingForPartitionStoppedAsync
+        {
+            internal get => _processingForPartitionStoppedAsync;
+
+            set
+            {
+                lock (_setHandlerMutex)
+                {
+                    if (RunningTask == null)
+                    {
+                        _processingForPartitionStoppedAsync = value;
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException(Resources.RunningEventProcessorCannotPerformOperation);
+                    }
+                }
+            }
+        }
 
         /// <summary>
-        ///   The function responsible for processing sets of events received from the Event Hubs service.  Implementation is
-        ///   mandatory.
+        ///   Responsible for processing sets of events received from the Event Hubs service.  Implementation is mandatory.
         /// </summary>
         ///
-        public Func<PartitionContext, IEnumerable<EventData>, Task> ProcessEventsAsync { internal get; set; }
+        public Func<PartitionContext, IEnumerable<EventData>, Task> ProcessEventsAsync
+        {
+            internal get => _processEventsAsync;
+
+            set
+            {
+                lock (_setHandlerMutex)
+                {
+                    if (RunningTask == null)
+                    {
+                        _processEventsAsync = value;
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException(Resources.RunningEventProcessorCannotPerformOperation);
+                    }
+                }
+            }
+        }
 
         /// <summary>
-        ///   The function responsible for processing unexpected exceptions thrown while this <see cref="EventProcessor" /> is
-        ///   running.  Implementation is mandatory.
+        ///   Responsible for processing unexpected exceptions thrown while this <see cref="EventProcessor" /> is running.
+        ///   Implementation is mandatory.
         /// </summary>
         ///
-        public Func<PartitionContext, Exception, Task> ProcessExceptionAsync { internal get; set; }
+        public Func<PartitionContext, Exception, Task> ProcessExceptionAsync
+        {
+            internal get => _processExceptionAsync;
+
+            set
+            {
+                lock (_setHandlerMutex)
+                {
+                    if (RunningTask == null)
+                    {
+                        _processExceptionAsync = value;
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException(Resources.RunningEventProcessorCannotPerformOperation);
+                    }
+                }
+            }
+        }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventProcessor"/> class.
@@ -177,21 +263,27 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 try
                 {
-                    if (RunningTask == null)
+                    lock (_setHandlerMutex)
                     {
-                        // We expect the token source to be null, but we are playing safe.
+                        if (RunningTask == null)
+                        {
+                            Argument.AssertNotNull(_processEventsAsync, nameof(ProcessEventsAsync));
+                            Argument.AssertNotNull(_processExceptionAsync, nameof(ProcessExceptionAsync));
 
-                        RunningTaskTokenSource?.Cancel();
-                        RunningTaskTokenSource = new CancellationTokenSource();
+                            // We expect the token source to be null, but we are playing safe.
 
-                        // Initialize our empty ownership dictionary.
+                            RunningTaskTokenSource?.Cancel();
+                            RunningTaskTokenSource = new CancellationTokenSource();
 
-                        InstanceOwnership = new Dictionary<string, PartitionOwnership>();
+                            // Initialize our empty ownership dictionary.
 
-                        // Start the main running task.  It is resposible for managing the partition pumps and for partition
-                        // load balancing among multiple event processor instances.
+                            InstanceOwnership = new Dictionary<string, PartitionOwnership>();
 
-                        RunningTask = RunAsync(RunningTaskTokenSource.Token);
+                            // Start the main running task.  It is resposible for managing the partition pumps and for partition
+                            // load balancing among multiple event processor instances.
+
+                            RunningTask = RunAsync(RunningTaskTokenSource.Token);
+                        }
                     }
                 }
                 finally
@@ -240,8 +332,6 @@ namespace Azure.Messaging.EventHubs.Processor
                             // TODO: delegate the exception handling to an Exception Callback.
                         }
 
-                        RunningTask = null;
-
                         // Now that the task has finished, clean up what is left.  Stop and remove every partition pump that is still
                         // running and dispose of our ownership dictionary.
 
@@ -254,6 +344,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 }
                 finally
                 {
+                    RunningTask = null;
                     _runningTaskSemaphore.Release();
                 }
             }
