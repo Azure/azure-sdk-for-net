@@ -289,7 +289,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Ignore("container already exists")]
         public async Task Delete_OneFails_NoThrow()
         {
             using TestScenario scenario = Scenario();
