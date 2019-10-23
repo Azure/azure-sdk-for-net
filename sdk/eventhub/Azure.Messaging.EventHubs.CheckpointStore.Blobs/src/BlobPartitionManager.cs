@@ -119,7 +119,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blobs
                 metadata[BlobMetadataKey.Offset] = ownership.Offset?.ToString() ?? string.Empty;
                 metadata[BlobMetadataKey.SequenceNumber] = ownership.SequenceNumber?.ToString() ?? string.Empty;
 
-                var blobAccessConditions = new BlobAccessConditions();
+                var blobRequestConditions = new BlobRequestConditions();
 
                 var blobName = $"{ ownership.FullyQualifiedNamespace }/{ ownership.EventHubName }/{ ownership.ConsumerGroup }/{ ownership.PartitionId }";
                 BlobClient blobClient = _containerClient.GetBlobClient(blobName);
@@ -132,14 +132,14 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blobs
 
                     if (ownership.ETag == null)
                     {
-                        blobAccessConditions.HttpAccessConditions = new HttpAccessConditions { IfNoneMatch = new ETag("*") };
+                        blobRequestConditions.IfNoneMatch = new ETag("*");
 
                         MemoryStream blobContent = null;
 
                         try
                         {
                             blobContent = new MemoryStream(new byte[0]);
-                            contentInfoResponse = await blobClient.UploadAsync(blobContent, metadata: metadata, accessConditions: blobAccessConditions).ConfigureAwait(false);
+                            contentInfoResponse = await blobClient.UploadAsync(blobContent, metadata: metadata, conditions: blobRequestConditions).ConfigureAwait(false);
                         }
                         catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.BlobAlreadyExists)
                         {
@@ -159,11 +159,11 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blobs
                     }
                     else
                     {
-                        blobAccessConditions.HttpAccessConditions = new HttpAccessConditions { IfMatch = new ETag(ownership.ETag) };
+                        blobRequestConditions.IfMatch = new ETag(ownership.ETag);
 
                         try
                         {
-                            infoResponse = await blobClient.SetMetadataAsync(metadata, blobAccessConditions).ConfigureAwait(false);
+                            infoResponse = await blobClient.SetMetadataAsync(metadata, blobRequestConditions).ConfigureAwait(false);
                         }
                         catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.BlobNotFound)
                         {
@@ -240,14 +240,11 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blobs
                     { BlobMetadataKey.SequenceNumber, checkpoint.SequenceNumber.ToString() }
                 };
 
-                var accessConditions = new BlobAccessConditions
-                {
-                    HttpAccessConditions = new HttpAccessConditions { IfMatch = currentBlob.ETag }
-                };
+                var requestConditions = new BlobRequestConditions { IfMatch = currentBlob.ETag };
 
                 try
                 {
-                    await blobClient.SetMetadataAsync(metadata, accessConditions).ConfigureAwait(false);
+                    await blobClient.SetMetadataAsync(metadata, requestConditions).ConfigureAwait(false);
 
                     Log($"Checkpoint with partition id = '{ checkpoint.PartitionId }' updated.");
                 }
