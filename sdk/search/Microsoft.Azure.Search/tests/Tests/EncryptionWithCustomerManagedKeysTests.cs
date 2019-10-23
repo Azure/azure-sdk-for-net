@@ -31,6 +31,9 @@ namespace Microsoft.Azure.Search.Tests
 
                 Index createdEncryptedIndex = searchClient.Indexes.Create(encryptedIndex);
 
+                // ApplicationSecret is null in the response for security reasons
+                encryptedIndex.EncryptionKey.AccessCredentials.ApplicationSecret = null;
+
                 AssertIndexesEqual(encryptedIndex, createdEncryptedIndex);
             });
         }
@@ -73,6 +76,10 @@ namespace Microsoft.Azure.Search.Tests
                 });
 
                 SynonymMap createdEncryptedSynonyMap = searchClient.SynonymMaps.Create(encryptedSynonymMap);
+
+                // ApplicationSecret is null in the response for security reasons
+                encryptedSynonymMap.EncryptionKey.AccessCredentials.ApplicationSecret = null;
+
                 AssertSynonymMapsEqual(encryptedSynonymMap, createdEncryptedSynonyMap);
             });
         }
