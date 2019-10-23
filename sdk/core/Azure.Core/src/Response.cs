@@ -85,6 +85,10 @@ namespace Azure
             return new ValueResponse<T>(response, value);
         }
 
+        /// <summary>
+        /// Returns the string representation of this <see cref="Response"/>.
+        /// </summary>
+        /// <returns>The string representation of this <see cref="Response"/></returns>
         public override string ToString()
         {
             return $"Status: {Status}, ReasonPhrase: {ReasonPhrase}";
