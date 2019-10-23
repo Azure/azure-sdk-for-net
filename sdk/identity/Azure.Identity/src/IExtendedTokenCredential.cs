@@ -10,7 +10,7 @@ namespace Azure.Identity
 {
     internal interface IExtendedTokenCredential
     {
-        Task<ExtendedAccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken);
+        ValueTask<ExtendedAccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken);
 
         ExtendedAccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken);
     }

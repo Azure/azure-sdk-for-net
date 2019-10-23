@@ -94,12 +94,12 @@ namespace Azure.Identity
             return GetTokenImplAsync(requestContext, cancellationToken).GetAwaiter().GetResult();
         }
 
-        async Task<ExtendedAccessToken> IExtendedTokenCredential.GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        async ValueTask<ExtendedAccessToken> IExtendedTokenCredential.GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
             return await GetTokenImplAsync(requestContext, cancellationToken).ConfigureAwait(false);
         }
 
-        private async Task<ExtendedAccessToken> GetTokenImplAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        private async ValueTask<ExtendedAccessToken> GetTokenImplAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
             using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("Azure.Identity.InteractiveBrowserCredential.GetToken", requestContext);
 

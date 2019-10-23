@@ -141,7 +141,7 @@ namespace Azure.Identity
             return GetTokenImpl(requestContext, cancellationToken);
         }
 
-        async Task<ExtendedAccessToken> IExtendedTokenCredential.GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        async ValueTask<ExtendedAccessToken> IExtendedTokenCredential.GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
             return await GetTokenImplAsync(requestContext, cancellationToken).ConfigureAwait(false);
         }
@@ -167,7 +167,7 @@ namespace Azure.Identity
             }
         }
 
-        private async Task<ExtendedAccessToken> GetTokenImplAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        private async ValueTask<ExtendedAccessToken> GetTokenImplAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
             using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("Azure.Identity.EnvironmentCredential.GetToken", requestContext);
 
