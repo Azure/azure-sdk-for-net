@@ -64,12 +64,12 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<string> Locations { get; set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the service endpoint
-        /// resource. Possible values include: 'Succeeded', 'Updating',
-        /// 'Deleting', 'Failed'
+        /// Gets the provisioning state of the service endpoint resource.
+        /// Possible values include: 'Succeeded', 'Updating', 'Deleting',
+        /// 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
     }
 }
