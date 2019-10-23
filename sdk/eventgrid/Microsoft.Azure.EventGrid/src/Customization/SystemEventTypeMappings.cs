@@ -91,6 +91,8 @@ namespace Microsoft.Azure.EventGrid
             // Storage events
             { EventTypes.StorageBlobCreatedEvent, typeof(StorageBlobCreatedEventData) },
             { EventTypes.StorageBlobDeletedEvent, typeof(StorageBlobDeletedEventData) },
+            { EventTypes.StorageDirectoryCreatedEvent, typeof(StorageDirectoryCreatedEventData) },
+            { EventTypes.StorageDirectoryDeletedEvent, typeof(StorageDirectoryDeletedEventData) }
         };
     }
 }
