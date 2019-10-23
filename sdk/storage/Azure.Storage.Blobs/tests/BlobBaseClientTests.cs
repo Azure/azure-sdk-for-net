@@ -376,8 +376,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Category("Live")]
-        [Ignore("Container already exists")]
         public async Task DownloadAsync_Overloads()
         {
             using (GetNewContainer(out BlobContainerClient container))
@@ -797,8 +795,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Category("Live")]
-        [Ignore("Container being deleted failure")]
         public async Task AbortCopyFromUriAsync()
         {
             using (GetNewContainer(out BlobContainerClient container))
