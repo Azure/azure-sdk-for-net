@@ -6,7 +6,7 @@ using System.Text.Json;
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     /// <summary>
-    /// Represents information about an encryption operation
+    /// Represents information about an encryption operation.
     /// </summary>
     public class EncryptResult : IJsonDeserializable
     {
@@ -18,17 +18,17 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         }
 
         /// <summary>
-        /// The <see cref="KeyProperties.Id"/> of the <see cref="KeyVaultKey"/> used to encrypt. This must be stored alongside the <see cref="Ciphertext"/> as the same key must be used to decrypt it.
+        /// Gets the <see cref="KeyProperties.Id"/> of the <see cref="KeyVaultKey"/> used to encrypt. This must be stored alongside the <see cref="Ciphertext"/> as the same key must be used to decrypt it.
         /// </summary>
         public string KeyId { get; internal set; }
 
         /// <summary>
-        /// The ciphertext that is the result of the encryption
+        /// Gets the ciphertext that is the result of the encryption.
         /// </summary>
         public byte[] Ciphertext { get; internal set; }
 
         /// <summary>
-        /// The algorithm used for encryption. This must be stored alongside the <see cref="Ciphertext"/> as the same algorithm must be used to decrypt it.
+        /// Gets the <see cref="EncryptionAlgorithm"/> used for encryption. This must be stored alongside the <see cref="Ciphertext"/> as the same algorithm must be used to decrypt it.
         /// </summary>
         public EncryptionAlgorithm Algorithm { get; internal set; }
 

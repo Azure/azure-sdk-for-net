@@ -6,7 +6,7 @@ using System.Text.Json;
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     /// <summary>
-    /// Represents information about an unwrap operation
+    /// Represents information about an unwrap operation.
     /// </summary>
     public class UnwrapResult : IJsonDeserializable
     {
@@ -18,17 +18,17 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         }
 
         /// <summary>
-        /// The <see cref="KeyProperties.Id"/> of the <see cref="Key"/> used to uwrap
+        /// Gets the <see cref="KeyProperties.Id"/> of the <see cref="Key"/> used to uwrap.
         /// </summary>
         public string KeyId { get; internal set; }
 
         /// <summary>
-        /// The unwrapped key
+        /// Gets the unwrapped key.
         /// </summary>
         public byte[] Key { get; internal set; }
 
         /// <summary>
-        /// The algorithm used
+        /// Gets the algorithm used.
         /// </summary>
         public KeyWrapAlgorithm Algorithm { get; internal set; }
 
