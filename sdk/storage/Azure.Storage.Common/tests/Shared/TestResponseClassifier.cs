@@ -2,6 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics;
+using System.Net.Sockets;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -11,7 +14,7 @@ namespace Azure.Storage.Test
     /// We're going to make our tests retry a few additional error types that
     /// may be more wasteful, but are less likely to cause test failures.
     /// </summary>
-    internal class TestResponseClassifier : ResponseClassifier
+    public class TestResponseClassifier : ResponseClassifier
     {
         /// <summary>
         /// Determine if a response should be retried.
@@ -36,6 +39,13 @@ namespace Azure.Storage.Test
 
             // Otherwise use the default rules
             return base.IsRetriableResponse(message);
+        }
+
+        public override bool IsRetriableException(Exception exception)
+        {
+            Debug.WriteLine("debug testresponseclassifier" + exception);
+            Console.WriteLine("console testresponseclassifier" + exception);
+            return (exception is SocketException) || (exception is TaskCanceledException) || base.IsRetriableException(exception);
         }
     }
 }
