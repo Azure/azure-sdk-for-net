@@ -209,6 +209,17 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to The member {0} should have been set and cannot be null..
+        /// </summary>
+        internal static string MemberCannotBeNull
+        {
+            get
+            {
+                return ResourceManager.GetString("MemberCannotBeNull", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to The message (id:{0}, size:{1} bytes) is larger than is currently allowed ({2} bytes)..
         /// </summary>
         internal static string MessageSizeExceeded

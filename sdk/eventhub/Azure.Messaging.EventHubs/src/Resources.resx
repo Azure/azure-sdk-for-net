@@ -222,6 +222,9 @@
   <data name="TrackLastEnqueuedEventInformationNotSet" xml:space="preserve">
     <value>This information is only available when TrackLastEnqueuedEventInformation is set on the Event Hub consumer options.</value>
   </data>
+  <data name="MemberCannotBeNull" xml:space="preserve">
+    <value>The member {0} should have been set and cannot be null.</value>
+  </data>
   <data name="RunningEventProcessorCannotPerformOperation" xml:space="preserve">
     <value>The event processor is already running and needs to be stopped in order to perform this operation.</value>
   </data>

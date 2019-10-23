@@ -5,6 +5,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -267,8 +268,15 @@ namespace Azure.Messaging.EventHubs.Processor
                     {
                         if (RunningTask == null)
                         {
-                            Argument.AssertNotNull(_processEventsAsync, nameof(ProcessEventsAsync));
-                            Argument.AssertNotNull(_processExceptionAsync, nameof(ProcessExceptionAsync));
+                            if (_processEventsAsync == null)
+                            {
+                                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.MemberCannotBeNull, nameof(ProcessEventsAsync)));
+                            }
+
+                            if (_processExceptionAsync == null)
+                            {
+                                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.MemberCannotBeNull, nameof(ProcessExceptionAsync)));
+                            }
 
                             // We expect the token source to be null, but we are playing safe.
 
