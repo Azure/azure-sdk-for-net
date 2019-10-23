@@ -36,7 +36,9 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// for the copy of the disk.</param>
         /// <param name="status">The Status of the copy. Possible values
         /// include: 'NotStarted', 'InProgress', 'Completed',
-        /// 'CompletedWithErrors', 'Failed', 'NotReturned'</param>
+        /// 'CompletedWithErrors', 'Failed', 'NotReturned', 'HardwareError',
+        /// 'DeviceFormatted', 'DeviceMetadataModified',
+        /// 'StorageAccountNotAccessible', 'UnsupportedData'</param>
         public DataBoxDiskCopyProgress(string serialNumber = default(string), long? bytesCopied = default(long?), int? percentComplete = default(int?), CopyStatus? status = default(CopyStatus?))
         {
             SerialNumber = serialNumber;
@@ -72,7 +74,9 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// <summary>
         /// Gets the Status of the copy. Possible values include: 'NotStarted',
         /// 'InProgress', 'Completed', 'CompletedWithErrors', 'Failed',
-        /// 'NotReturned'
+        /// 'NotReturned', 'HardwareError', 'DeviceFormatted',
+        /// 'DeviceMetadataModified', 'StorageAccountNotAccessible',
+        /// 'UnsupportedData'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public CopyStatus? Status { get; private set; }

@@ -79,12 +79,12 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<ExpressRouteConnection> ExpressRouteConnections { get; private set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the express route gateway
-        /// resource. Possible values include: 'Succeeded', 'Updating',
-        /// 'Deleting', 'Failed'
+        /// Gets the provisioning state of the express route gateway resource.
+        /// Possible values include: 'Succeeded', 'Updating', 'Deleting',
+        /// 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets the Virtual Hub where the ExpressRoute gateway is or

@@ -142,6 +142,11 @@ namespace Microsoft.Azure.Management.Compute
         IVirtualMachineScaleSetRollingUpgradesOperations VirtualMachineScaleSetRollingUpgrades { get; }
 
         /// <summary>
+        /// Gets the IVirtualMachineScaleSetVMExtensionsOperations.
+        /// </summary>
+        IVirtualMachineScaleSetVMExtensionsOperations VirtualMachineScaleSetVMExtensions { get; }
+
+        /// <summary>
         /// Gets the IVirtualMachineScaleSetVMsOperations.
         /// </summary>
         IVirtualMachineScaleSetVMsOperations VirtualMachineScaleSetVMs { get; }
@@ -170,6 +175,11 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the ISnapshotsOperations.
         /// </summary>
         ISnapshotsOperations Snapshots { get; }
+
+        /// <summary>
+        /// Gets the IDiskEncryptionSetsOperations.
+        /// </summary>
+        IDiskEncryptionSetsOperations DiskEncryptionSets { get; }
 
         /// <summary>
         /// Gets the IGalleriesOperations.

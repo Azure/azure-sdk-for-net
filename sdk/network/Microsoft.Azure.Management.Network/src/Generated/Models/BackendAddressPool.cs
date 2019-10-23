@@ -100,12 +100,12 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<SubResource> OutboundRules { get; private set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the backend address pool
-        /// resource. Possible values include: 'Succeeded', 'Updating',
-        /// 'Deleting', 'Failed'
+        /// Gets the provisioning state of the backend address pool resource.
+        /// Possible values include: 'Succeeded', 'Updating', 'Deleting',
+        /// 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets the name of the resource that is unique within the set
@@ -116,11 +116,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets a unique read-only string that changes whenever the
-        /// resource is updated.
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
         /// <summary>
         /// Gets type of the resource.

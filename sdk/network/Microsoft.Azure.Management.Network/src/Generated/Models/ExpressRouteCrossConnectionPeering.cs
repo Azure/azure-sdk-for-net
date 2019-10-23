@@ -176,10 +176,10 @@ namespace Microsoft.Azure.Management.Network.Models
         public string GatewayManagerEtag { get; set; }
 
         /// <summary>
-        /// Gets or sets who was the last to modify the peering.
+        /// Gets who was the last to modify the peering.
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastModifiedBy")]
-        public string LastModifiedBy { get; set; }
+        public string LastModifiedBy { get; private set; }
 
         /// <summary>
         /// Gets or sets the IPv6 peering configuration.
