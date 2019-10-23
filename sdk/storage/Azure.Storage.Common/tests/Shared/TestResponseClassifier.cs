@@ -11,9 +11,8 @@ namespace Azure.Storage.Test
     /// We're going to make our tests retry a few additional error types that
     /// may be more wasteful, but are less likely to cause test failures.
     /// </summary>
-    internal class TestResponseClassifier : StorageResponseClassifier
+    internal class TestResponseClassifier : ResponseClassifier
     {
-        public TestResponseClassifier() : base(null) { }
         /// <summary>
         /// Determine if a response should be retried.
         /// </summary>
