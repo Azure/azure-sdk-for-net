@@ -6,7 +6,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.HybridCompute</PackageId>
     <Description>Provides developers with libraries for managing hybrid machines</Description>
-    <Version>0.0.1</Version>
+    <Version>0.1.0-preview</Version>
     <AssemblyName>Microsoft.Azure.Management.HybridCompute</AssemblyName>
     <PackageTags>management;hybridcompute;</PackageTags>
     <PackageReleaseNotes>
