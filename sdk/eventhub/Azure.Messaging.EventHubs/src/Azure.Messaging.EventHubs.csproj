@@ -11,6 +11,9 @@
   <ItemGroup>
     <Folder Include="SharedSource\" />
     <Folder Include="Properties\" />
+    <Folder Include="TrackOneClient\Amqp\" />
+    <Folder Include="TrackOneClient\Core\" />
+    <Folder Include="TrackOneClient\Primitives\" />
   </ItemGroup>
 
    <ItemGroup>
@@ -49,9 +52,9 @@
 
   <!-- Import Azure.Core shared source -->
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="SharedSource\Argument.cs"/>
-    <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" Link="SharedSource\ClientDiagnostics.cs"/>
-    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" Link="SharedSource\DiagnosticScope.cs"/>
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="SharedSource\Argument.cs" />
+    <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" Link="SharedSource\ClientDiagnostics.cs" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" Link="SharedSource\DiagnosticScope.cs" />
   </ItemGroup>
 
   <!-- Import the Azure.Core reference -->
@@ -62,7 +65,6 @@
       Dependencies needed only for the Track One client.
   -->
   <ItemGroup>
-    <Folder Include="TrackOneClient\" />
 
     <Compile Update="TrackOneClient\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
