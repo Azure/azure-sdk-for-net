@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Collections.Generic;
+using System.Collections;
 
 namespace Azure.Identity
 {
@@ -19,7 +20,7 @@ namespace Azure.Identity
         internal const string MultipleAccountsErrorMessage = "Multiple accounts were discovered in the shared token cache. To fix, set the AZURE_USERNAME environment variable to the preferred username, or specify it when constructing SharedTokenCacheCredential.";
 
         internal const string NoAccountsErrorMessage = "No accounts were discovered in the shared token cache. To fix, authenticate through tooling supporting azure developer sign on.";
-
+        
         private readonly MsalPublicClientAbstraction _client;
         private readonly CredentialPipeline _pipeline;
         private readonly string _username;
@@ -131,28 +132,41 @@ namespace Azure.Identity
 
             IAccount account = null;
 
-            List<IAccount> accounts = (await _client.GetAccountsAsync().ConfigureAwait(false)).ToList();
+            IEnumerable<IAccount> allAccounts = await _client.GetAccountsAsync().ConfigureAwait(false);
+
+            List<IAccount> accounts = (!string.IsNullOrEmpty(_username)) ? allAccounts.Where(a => a.Username == _username).ToList() : allAccounts.ToList();
 
             try
             {
-                if (string.IsNullOrEmpty(_username))
+                // if there are no accounts we will fail here with InvalidOperationException
+                var proposedAccount = accounts.First();
+
+                // if all accounts have the same home account id they are interchangable, so we can just use the first account which we picked
+                if (accounts.All(a => a.HomeAccountId.Identifier == proposedAccount.HomeAccountId.Identifier))
                 {
-                    account = accounts.Single();
+                    account = proposedAccount;
                 }
+                // otherwise we need to error so we don't indiscriminantly choose between different tenents / subscriptions
                 else
                 {
-                    account = accounts.Where(a => a.Username == _username).First();
+                    // if username wasn't specified it's possible that they can rectify this situation by specifying
+                    if (string.IsNullOrEmpty(_username))
+                    {
+                        ex = new CredentialUnavailableException($"{MultipleAccountsErrorMessage}{Environment.NewLine} Discovered Accounts: [ '{string.Join("', '", accounts.Select(a => a.Username))}' ]");
+                    }
+                    // if they already specified username the cache is essentially unusable to use without more information
+                    else
+                    {
+                        ex = new CredentialUnavailableException($"Multiple entries for the user account '{_username}' were found in the shared token cache. This is not currently supported by the SharedTokenCacheCredential.");
+                    }
                 }
             }
+            // we should only get this exception in the case there are no accounts in the shared token credential, or no accounts matching the specified username (if specified)
             catch (InvalidOperationException)
             {
-                if (accounts.Count == 0)
+                if (string.IsNullOrEmpty(_username))
                 {
                     ex = new CredentialUnavailableException(NoAccountsErrorMessage);
-                }
-                else if (string.IsNullOrEmpty(_username))
-                {
-                    ex = new CredentialUnavailableException($"{MultipleAccountsErrorMessage}{Environment.NewLine} Discovered Accounts: [ '{string.Join("', '", accounts.Select(a => a.Username))}' ]");
                 }
                 else
                 {
