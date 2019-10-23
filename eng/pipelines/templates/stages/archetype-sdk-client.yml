@@ -1,0 +1,19 @@
+parameters:
+  Artifacts: []
+  ServiceDirectory: not-specified
+
+stages:
+  - stage: Build
+    jobs:
+    - template: ../jobs/archetype-sdk-client.yml
+      parameters:
+        ServiceDirectory: ${{parameters.ServiceDirectory}}
+
+  - stage: DocGen
+    jobs:
+    - template: ../jobs/archetype-sdk-docs.yml
+      parameters:
+        DependsOn: []
+        Artifacts: ${{parameters.Artifacts}}
+        ArtifactName: packages
+        ServiceDirectory: ${{parameters.ServiceDirectory}}

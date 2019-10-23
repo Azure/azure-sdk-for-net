@@ -25,28 +25,11 @@ resources:
       endpoint: azure
 
 stages:
-- stage: DocGenerationPerPackage
-  jobs:
-  - job:
-    strategy:
-      maxParallel: $[ variables['MaxParallelTestJobs'] ]
-      matrix:
-        Azure.Core:
-          PackageName: "Azure.Core"
-        Microsoft.Extensions.Azure:
-          PackageName: "Microsoft.Extensions.Azure"
-    variables:
-      - template: ../../eng/pipelines/templates/variables/globals.yml
-    pool:
-      vmImage: windows-2019
-    steps:
-    - template: ../../eng/pipelines/templates/steps/archetype-sdk-docs.yml
-      parameters:
-        PackageLocation: core/$(PackageName)
-
-- stage: BuildTestandAnalyze
-  dependsOn: []
-  jobs:
-  - template: ../../eng/pipelines/templates/jobs/archetype-sdk-client.yml
-    parameters:
-      ServiceDirectory: '*'
+- template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    ArtifactName: packages
+    Artifacts:
+    - name: Azure.Core
+      safeName: AzureCore
+    - name: Microsoft.Extensions.Azure
+      safeName: MicrosoftExtensionsAzure
