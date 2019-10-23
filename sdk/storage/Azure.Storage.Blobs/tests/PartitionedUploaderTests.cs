@@ -361,13 +361,13 @@ namespace Azure.Storage.Blobs.Tests
                 Interlocked.Increment(ref TotalRents);
                 Interlocked.Increment(ref CurrentCount);
 
-                // give out larger blocks to test that we aren't depending on their length
-                return _innerPool.Rent(minimumLength * 2);
+                return _innerPool.Rent(minimumLength);
             }
 
             public override void Return(byte[] array, bool clearArray = false)
             {
                 Interlocked.Decrement(ref CurrentCount);
+                _innerPool.Return(array, true);
             }
         }
 

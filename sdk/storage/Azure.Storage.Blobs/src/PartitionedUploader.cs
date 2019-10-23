@@ -191,33 +191,37 @@ namespace Azure.Storage.Blobs
             do
             {
                 byte[] bytes = _arrayPool.Rent(_blockSize);
-                int offset = 0;
-
-                do
+                try
                 {
-                    if (async)
+                    int offset = 0;
+                    do
                     {
-                        read = await stream.ReadAsync(bytes, offset, _blockSize - offset, cancellationToken).ConfigureAwait(false);
-                    }
-                    else
+                        if (async)
+                        {
+                            read = await stream.ReadAsync(bytes, offset, _blockSize - offset, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            cancellationToken.ThrowIfCancellationRequested();
+                            read = stream.Read(bytes, offset, _blockSize - offset);
+                        }
+                        offset += read;
+                        absolutePosition += read;
+                    } while (offset < _minimumBlockFill && read != 0);
+
+                    if (offset != 0)
                     {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        read = stream.Read(bytes, offset, _blockSize - offset);
+                        yield return new StreamPartition(absolutePosition, bytes, offset, _arrayPool);
+                        bytes = null;
                     }
-                    offset += read;
-                    absolutePosition += read;
-                } while (offset < _minimumBlockFill && read != 0);
-
-                if (offset != 0)
-                {
-                    yield return new StreamPartition(absolutePosition, bytes, offset, _arrayPool);
                 }
-                else
+                finally
                 {
-                    // return the block immediately
-                    _arrayPool.Return(bytes);
+                    if (bytes != null)
+                    {
+                        _arrayPool.Return(bytes);
+                    }
                 }
-
             } while (read != 0);
         }
 
