@@ -1598,6 +1598,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Ignore("Task canceled")]
         public async Task SetMetadataAsync_CPK()
         {
             using (GetNewContainer(out BlobContainerClient container))
