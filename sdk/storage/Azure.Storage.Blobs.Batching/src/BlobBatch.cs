@@ -99,7 +99,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region DeleteBlob
         /// <summary>
-        /// The <see cref="DeleteBlob(string, string, DeleteSnapshotsOption, BlobAccessConditions?)"/>
+        /// The <see cref="DeleteBlob(string, string, DeleteSnapshotsOption, BlobRequestConditions)"/>
         /// operation marks the specified blob or snapshot for  deletion. The
         /// blob is later deleted during garbage collection.
         ///
@@ -119,8 +119,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="snapshotsOption">
         /// Specifies options for deleting blob snapshots.
         /// </param>
-        /// <param name="accessConditions">
-        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// deleting this blob.
         /// </param>
         /// <returns>
@@ -132,7 +132,7 @@ namespace Azure.Storage.Blobs.Specialized
             string blobContainerName,
             string blobName,
             DeleteSnapshotsOption snapshotsOption = default,
-            BlobAccessConditions? accessConditions = default)
+            BlobRequestConditions conditions = default)
         {
             var blobUri = new BlobUriBuilder(_client.Uri)
             {
@@ -142,11 +142,11 @@ namespace Azure.Storage.Blobs.Specialized
             return DeleteBlob(
                 blobUri.ToUri(),
                 snapshotsOption,
-                accessConditions);
+                conditions);
         }
 
         /// <summary>
-        /// The <see cref="DeleteBlob(Uri, DeleteSnapshotsOption, BlobAccessConditions?)"/>
+        /// The <see cref="DeleteBlob(Uri, DeleteSnapshotsOption, BlobRequestConditions)"/>
         /// operation marks the specified blob or snapshot for deletion. The
         /// blob is later deleted during garbage collection.
         ///
@@ -163,8 +163,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="snapshotsOption">
         /// Specifies options for deleting blob snapshots.
         /// </param>
-        /// <param name="accessConditions">
-        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// deleting this blob.
         /// </param>
         /// <returns>
@@ -175,18 +175,18 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual Response DeleteBlob(
             Uri blobUri,
             DeleteSnapshotsOption snapshotsOption = default,
-            BlobAccessConditions? accessConditions = default)
+            BlobRequestConditions conditions = default)
         {
             SetBatchOperationType(BlobBatchOperationType.Delete);
             HttpMessage message = BlobRestClient.Blob.DeleteAsync_CreateMessage(
                 _client.BatchOperationPipeline,
                 blobUri,
                 deleteSnapshots: snapshotsOption == DeleteSnapshotsOption.None ? null : (DeleteSnapshotsOption?)snapshotsOption,
-                leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
-                ifModifiedSince: accessConditions?.HttpAccessConditions?.IfModifiedSince,
-                ifUnmodifiedSince: accessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
-                ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
-                ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch);
+                leaseId: conditions?.LeaseId,
+                ifModifiedSince: conditions?.IfModifiedSince,
+                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                ifMatch: conditions?.IfMatch,
+                ifNoneMatch: conditions?.IfNoneMatch);
             _messages.Add(message);
             return new DelayedResponse(message, BlobRestClient.Blob.DeleteAsync_CreateResponse);
         }
@@ -194,7 +194,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region SetBlobAccessTier
         /// <summary>
-        /// The <see cref="SetBlobAccessTier(string, string, AccessTier, RehydratePriority?, LeaseAccessConditions?)"/>
+        /// The <see cref="SetBlobAccessTier(string, string, AccessTier, RehydratePriority?, BlobRequestConditions)"/>
         /// operation sets the tier on a blob.  The operation is allowed on
         /// block blobs in a blob storage or general purpose v2 account.
         ///
@@ -213,7 +213,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Indicates the tier to be set on the blob.
         /// </param>
         /// <param name="leaseAccessConditions">
-        /// Optional <see cref="LeaseAccessConditions"/> to add conditions on
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// setting the access tier.
         /// </param>
         /// <param name="rehydratePriority">
@@ -230,7 +230,7 @@ namespace Azure.Storage.Blobs.Specialized
             string blobName,
             AccessTier accessTier,
             RehydratePriority? rehydratePriority = default,
-            LeaseAccessConditions? leaseAccessConditions = default)
+            BlobRequestConditions leaseAccessConditions = default)
         {
             var blobUri = new BlobUriBuilder(_client.Uri)
             {
@@ -245,7 +245,7 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// The <see cref="SetBlobAccessTier(Uri, AccessTier, RehydratePriority?, LeaseAccessConditions?)"/>
+        /// The <see cref="SetBlobAccessTier(Uri, AccessTier, RehydratePriority?, BlobRequestConditions)"/>
         /// operation sets the tier on a blob.  The operation is allowed on
         /// block blobs in a blob storage or general purpose v2 account.
         ///
@@ -265,7 +265,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Indicates the priority with which to rehydrate an archived blob.
         /// </param>
         /// <param name="leaseAccessConditions">
-        /// Optional <see cref="LeaseAccessConditions"/> to add conditions on
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// setting the access tier.
         /// </param>
         /// <returns>
@@ -277,7 +277,7 @@ namespace Azure.Storage.Blobs.Specialized
             Uri blobUri,
             AccessTier accessTier,
             RehydratePriority? rehydratePriority = default,
-            LeaseAccessConditions? leaseAccessConditions = default)
+            BlobRequestConditions leaseAccessConditions = default)
         {
             SetBatchOperationType(BlobBatchOperationType.SetAccessTier);
             HttpMessage message = BlobRestClient.Blob.SetAccessTierAsync_CreateMessage(

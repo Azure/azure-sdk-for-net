@@ -423,7 +423,7 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual Response<BlobDownloadInfo> Download(
             CancellationToken cancellationToken = default) =>
             Download(
-                accessConditions: default, // Pass anything else so we don't recurse on this overload
+                conditions: default, // Pass anything else so we don't recurse on this overload
                 cancellationToken: cancellationToken);
 
         /// <summary>
@@ -450,13 +450,13 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual async Task<Response<BlobDownloadInfo>> DownloadAsync(
             CancellationToken cancellationToken) =>
             await DownloadAsync(
-                accessConditions: default, // Pass anything else so we don't recurse on this overload
+                conditions: default, // Pass anything else so we don't recurse on this overload
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
 #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
-        /// The <see cref="Download(HttpRange, BlobAccessConditions?, Boolean, CancellationToken)"/>
+        /// The <see cref="Download(HttpRange, BlobRequestConditions, bool, CancellationToken)"/>
         /// operation downloads a blob from the service, including its metadata
         /// and properties.
         ///
@@ -466,8 +466,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// If provided, only donwload the bytes of the blob in the specified
         /// range.  If not provided, download the entire blob.
         /// </param>
-        /// <param name="accessConditions">
-        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// donwloading this blob.
         /// </param>
         /// <param name="rangeGetContentHash">
@@ -493,19 +493,19 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual Response<BlobDownloadInfo> Download(
             HttpRange range = default,
-            BlobAccessConditions? accessConditions = default,
+            BlobRequestConditions conditions = default,
             bool rangeGetContentHash = default,
             CancellationToken cancellationToken = default) =>
             DownloadInternal(
                 range,
-                accessConditions,
+                conditions,
                 rangeGetContentHash,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="DownloadAsync(HttpRange, BlobAccessConditions?, Boolean, CancellationToken)"/>
+        /// The <see cref="DownloadAsync(HttpRange, BlobRequestConditions, bool, CancellationToken)"/>
         /// operation downloads a blob from the service, including its metadata
         /// and properties.
         ///
@@ -515,8 +515,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// If provided, only donwload the bytes of the blob in the specified
         /// range.  If not provided, download the entire blob.
         /// </param>
-        /// <param name="accessConditions">
-        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// donwloading this blob.
         /// </param>
         /// <param name="rangeGetContentHash">
@@ -542,12 +542,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual async Task<Response<BlobDownloadInfo>> DownloadAsync(
             HttpRange range = default,
-            BlobAccessConditions? accessConditions = default,
+            BlobRequestConditions conditions = default,
             bool rangeGetContentHash = default,
             CancellationToken cancellationToken = default) =>
             await DownloadInternal(
                 range,
-                accessConditions,
+                conditions,
                 rangeGetContentHash,
                 true, // async
                 cancellationToken)
@@ -563,8 +563,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// If provided, only donwload the bytes of the blob in the specified
         /// range.  If not provided, download the entire blob.
         /// </param>
-        /// <param name="accessConditions">
-        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// donwloading this blob.
         /// </param>
         /// <param name="rangeGetContentHash">
@@ -593,7 +593,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         private async Task<Response<BlobDownloadInfo>> DownloadInternal(
             HttpRange range,
-            BlobAccessConditions? accessConditions,
+            BlobRequestConditions conditions,
             bool rangeGetContentHash,
             bool async,
             CancellationToken cancellationToken)
@@ -606,11 +606,17 @@ namespace Azure.Storage.Blobs.Specialized
                     // Start downloading the blob
                     (Response<FlattenedDownloadProperties> response, Stream stream) = await StartDownloadAsync(
                         range,
-                        accessConditions,
+                        conditions,
                         rangeGetContentHash,
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
+
+                    // Return an exploding Response on 304
+                    if (response.IsUnavailable())
+                    {
+                        return response.GetRawResponse().AsNoBodyResponse<BlobDownloadInfo>();
+                    }
 
                     // Wrap the response Content in a RetriableStream so we
                     // can return it before it's finished downloading, but still
@@ -620,7 +626,7 @@ namespace Azure.Storage.Blobs.Specialized
                          startOffset =>
                             StartDownloadAsync(
                                     range,
-                                    accessConditions,
+                                    conditions,
                                     rangeGetContentHash,
                                     startOffset,
                                     async,
@@ -630,7 +636,7 @@ namespace Azure.Storage.Blobs.Specialized
                         async startOffset =>
                             (await StartDownloadAsync(
                                 range,
-                                accessConditions,
+                                conditions,
                                 rangeGetContentHash,
                                 startOffset,
                                 async,
@@ -664,8 +670,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// If provided, only download the bytes of the blob in the specified
         /// range.  If not provided, download the entire blob.
         /// </param>
-        /// <param name="accessConditions">
-        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// donwloading this blob.
         /// </param>
         /// <param name="rangeGetContentHash">
@@ -697,7 +703,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         private async Task<(Response<FlattenedDownloadProperties>, Stream)> StartDownloadAsync(
             HttpRange range = default,
-            BlobAccessConditions? accessConditions = default,
+            BlobRequestConditions conditions = default,
             bool rangeGetContentHash = default,
             long startOffset = 0,
             bool async = true,
@@ -719,21 +725,23 @@ namespace Azure.Storage.Blobs.Specialized
                     Pipeline,
                     Uri,
                     range: pageRange.ToString(),
-                    leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
+                    leaseId: conditions?.LeaseId,
                     rangeGetContentHash: rangeGetContentHash ? (bool?)true : null,
                     encryptionKey: CustomerProvidedKey?.EncryptionKey,
                     encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
                     encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
-                    ifModifiedSince: accessConditions?.HttpAccessConditions?.IfModifiedSince,
-                    ifUnmodifiedSince: accessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
-                    ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
-                    ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
+                    ifModifiedSince: conditions?.IfModifiedSince,
+                    ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                    ifMatch: conditions?.IfMatch,
+                    ifNoneMatch: conditions?.IfNoneMatch,
                     async: async,
                     operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.Download",
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
 
-            Pipeline.LogTrace($"Response: {response.GetRawResponse().Status}, ContentLength: {response.Value.ContentLength}");
+            // Watch out for exploding Responses
+            long length = response.IsUnavailable() ? 0 : response.Value.ContentLength;
+            Pipeline.LogTrace($"Response: {response.GetRawResponse().Status}, ContentLength: {length}");
 
             return (response, stream);
         }
@@ -846,7 +854,7 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken) =>
             DownloadTo(
                 destination,
-                accessConditions: default, // Pass anything else so we don't recurse on this overload
+                conditions: default, // Pass anything else so we don't recurse on this overload
                 cancellationToken: cancellationToken);
         #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
@@ -876,7 +884,7 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken) =>
             DownloadTo(
                 path,
-                accessConditions: default, // Pass anything else so we don't recurse on this overload
+                conditions: default, // Pass anything else so we don't recurse on this overload
                 cancellationToken: cancellationToken);
         #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
@@ -906,7 +914,7 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken) =>
             await DownloadToAsync(
                 destination,
-                accessConditions: default, // Pass anything else so we don't recurse on this overload
+                conditions: default, // Pass anything else so we don't recurse on this overload
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
         #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
@@ -937,21 +945,21 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken) =>
             await DownloadToAsync(
                 path,
-                accessConditions: default, // Pass anything else so we don't recurse on this overload
+                conditions: default, // Pass anything else so we don't recurse on this overload
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
-            #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
+        #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
-        /// The <see cref="DownloadTo(Stream, BlobAccessConditions?, StorageTransferOptions, CancellationToken)"/>
+        /// The <see cref="DownloadTo(Stream, BlobRequestConditions, StorageTransferOptions, CancellationToken)"/>
         /// operation downloads a blob using parallel requests,
         /// and writes the content to <paramref name="destination"/>.
         /// </summary>
         /// <param name="destination">
         /// A <see cref="Stream"/> to write the downloaded content to.
         /// </param>
-        /// <param name="accessConditions">
-        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// the creation of this new block blob.
         /// </param>
         /// <param name="transferOptions">
@@ -972,7 +980,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual Response<BlobProperties> DownloadTo(
             Stream destination,
-            BlobAccessConditions? accessConditions = default,
+            BlobRequestConditions conditions = default,
             ///// <param name="progressHandler">
             ///// Optional <see cref="IProgress{Long}"/> to provide
             ///// progress updates about data transfers.
@@ -982,7 +990,7 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken = default) =>
             StagedDownloadAsync(
                 destination,
-                accessConditions,
+                conditions,
                 //progressHandler,
                 transferOptions: transferOptions,
                 async: false,
@@ -990,15 +998,15 @@ namespace Azure.Storage.Blobs.Specialized
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="DownloadTo(string, BlobAccessConditions?, StorageTransferOptions, CancellationToken)"/>
+        /// The <see cref="DownloadTo(string, BlobRequestConditions, StorageTransferOptions, CancellationToken)"/>
         /// operation downloads a blob using parallel requests,
         /// and writes the content to <paramref name="path"/>.
         /// </summary>
         /// <param name="path">
         /// A file path to write the downloaded content to.
         /// </param>
-        /// <param name="accessConditions">
-        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// the creation of this new block blob.
         /// </param>
         /// <param name="transferOptions">
@@ -1019,7 +1027,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual Response<BlobProperties> DownloadTo(
             string path,
-            BlobAccessConditions? accessConditions = default,
+            BlobRequestConditions conditions = default,
             ///// <param name="progressHandler">
             ///// Optional <see cref="IProgress{Long}"/> to provide
             ///// progress updates about data transfers.
@@ -1031,7 +1039,7 @@ namespace Azure.Storage.Blobs.Specialized
             using Stream destination = File.Create(path);
             return StagedDownloadAsync(
                 destination,
-                accessConditions,
+                conditions,
                 //progressHandler,
                 transferOptions: transferOptions,
                 async: false,
@@ -1040,15 +1048,15 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// The <see cref="DownloadToAsync(Stream, BlobAccessConditions?, StorageTransferOptions, CancellationToken)"/>
+        /// The <see cref="DownloadToAsync(Stream, BlobRequestConditions, StorageTransferOptions, CancellationToken)"/>
         /// operation downloads a blob using parallel requests,
         /// and writes the content to <paramref name="destination"/>.
         /// </summary>
         /// <param name="destination">
         /// A <see cref="Stream"/> to write the downloaded content to.
         /// </param>
-        /// <param name="accessConditions">
-        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// the creation of this new block blob.
         /// </param>
         /// <param name="transferOptions">
@@ -1069,7 +1077,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual async Task<Response<BlobProperties>> DownloadToAsync(
             Stream destination,
-            BlobAccessConditions? accessConditions = default,
+            BlobRequestConditions conditions = default,
             ///// <param name="progressHandler">
             ///// Optional <see cref="IProgress{Long}"/> to provide
             ///// progress updates about data transfers.
@@ -1079,7 +1087,7 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken = default) =>
             await StagedDownloadAsync(
                 destination,
-                accessConditions,
+                conditions,
                 //progressHandler,
                 transferOptions: transferOptions,
                 async: true,
@@ -1087,15 +1095,15 @@ namespace Azure.Storage.Blobs.Specialized
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="DownloadToAsync(string, BlobAccessConditions?, StorageTransferOptions, CancellationToken)"/>
+        /// The <see cref="DownloadToAsync(string, BlobRequestConditions, StorageTransferOptions, CancellationToken)"/>
         /// operation downloads a blob using parallel requests,
         /// and writes the content to <paramref name="path"/>.
         /// </summary>
         /// <param name="path">
         /// A file path to write the downloaded content to.
         /// </param>
-        /// <param name="accessConditions">
-        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// the creation of this new block blob.
         /// </param>
         /// <param name="transferOptions">
@@ -1116,7 +1124,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual async Task<Response<BlobProperties>> DownloadToAsync(
             string path,
-            BlobAccessConditions? accessConditions = default,
+            BlobRequestConditions conditions = default,
             ///// <param name="progressHandler">
             ///// Optional <see cref="IProgress{Long}"/> to provide
             ///// progress updates about data transfers.
@@ -1128,7 +1136,7 @@ namespace Azure.Storage.Blobs.Specialized
             using Stream destination = File.Create(path);
             return await StagedDownloadAsync(
                 destination,
-                accessConditions,
+                conditions,
                 //progressHandler,
                 transferOptions: transferOptions,
                 async: true,
@@ -1144,8 +1152,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="destination">
         /// A <see cref="Stream"/> to write the downloaded content to.
         /// </param>
-        /// <param name="blobAccessConditions">
-        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// the creation of this new block blob.
         /// </param>
         /// <param name="singleBlockThreshold">
@@ -1173,7 +1181,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         internal Task<Response<BlobProperties>> StagedDownloadAsync(
             Stream destination,
-            BlobAccessConditions? blobAccessConditions = default,
+            BlobRequestConditions conditions = default,
             ///// <param name="progressHandler">
             ///// Optional <see cref="IProgress{Long}"/> to provide
             ///// progress updates about data transfers.
@@ -1207,7 +1215,7 @@ namespace Azure.Storage.Blobs.Specialized
             async Task<Response<BlobProperties>> GetPropertiesAsync(bool async, CancellationToken ct)
                 =>
                 await client.GetPropertiesInternal(
-                        accessConditions: blobAccessConditions,
+                        conditions: conditions,
                         async: async,
                         cancellationToken: ct).ConfigureAwait(false);
 
@@ -1219,7 +1227,13 @@ namespace Azure.Storage.Blobs.Specialized
             async Task<Response<BlobDownloadInfo>> DownloadStreamAsync(bool async, CancellationToken ct)
             {
                 Response<BlobDownloadInfo> response = await client.DownloadInternal(
-                    range: default, blobAccessConditions, default, async, cancellationToken).ConfigureAwait(false);
+                    range: default, conditions, default, async, cancellationToken).ConfigureAwait(false);
+
+                // Return an exploding Response on 304
+                if (response.IsUnavailable())
+                {
+                    return response.GetRawResponse().AsNoBodyResponse<BlobDownloadInfo>();
+                }
 
                 if (async)
                 {
@@ -1237,16 +1251,9 @@ namespace Azure.Storage.Blobs.Specialized
             Task<Response<BlobDownloadInfo>> DownloadPartitionAsync(ETag eTag, HttpRange httpRange, bool async, CancellationToken ct)
             {
                 // copy ETag to the access conditions
-
-                BlobAccessConditions accessConditions = blobAccessConditions ?? new BlobAccessConditions();
-                accessConditions.HttpAccessConditions ??= new HttpAccessConditions();
-
-                HttpAccessConditions httpAccessConditions = accessConditions.HttpAccessConditions.Value;
-                httpAccessConditions.IfMatch = eTag;
-
-                accessConditions.HttpAccessConditions = httpAccessConditions;
-
-                return client.DownloadInternal(range: httpRange, accessConditions: accessConditions,
+                BlobRequestConditions accessConditions = conditions ?? new BlobRequestConditions();
+                accessConditions.IfMatch = eTag;
+                return client.DownloadInternal(range: httpRange, conditions: accessConditions,
                     rangeGetContentHash: default, async: async, cancellationToken: cancellationToken);
             }
 
@@ -1257,7 +1264,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region StartCopyFromUri
         /// <summary>
-        /// The <see cref="StartCopyFromUri(Uri, Metadata, AccessTier?, BlobAccessConditions?, BlobAccessConditions?, RehydratePriority?, CancellationToken)"/>
+        /// The <see cref="StartCopyFromUri(Uri, Metadata, AccessTier?, BlobRequestConditions, BlobRequestConditions, RehydratePriority?, CancellationToken)"/>
         /// operation copies data at from the <paramref name="source"/> to this
         /// blob.  You can check the <see cref="BlobProperties.CopyStatus"/>
         /// returned from the <see cref="GetProperties"/> to determine if the
@@ -1287,12 +1294,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="AccessTier"/>
         /// Indicates the tier to be set on the blob.
         /// </param>
-        /// <param name="sourceAccessConditions">
-        /// Optional <see cref="BlobAccessConditions"/> to add
+        /// <param name="sourceConditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add
         /// conditions on the copying of data from this source blob.
         /// </param>
-        /// <param name="destinationAccessConditions">
-        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// <param name="destinationConditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// the copying of data to this blob.
         /// </param>
         /// <param name="rehydratePriority">
@@ -1315,8 +1322,8 @@ namespace Azure.Storage.Blobs.Specialized
             Uri source,
             Metadata metadata = default,
             AccessTier? accessTier = default,
-            BlobAccessConditions? sourceAccessConditions = default,
-            BlobAccessConditions? destinationAccessConditions = default,
+            BlobRequestConditions sourceConditions = default,
+            BlobRequestConditions destinationConditions = default,
             RehydratePriority? rehydratePriority = default,
             CancellationToken cancellationToken = default)
         {
@@ -1324,8 +1331,8 @@ namespace Azure.Storage.Blobs.Specialized
                 source,
                 metadata,
                 accessTier,
-                sourceAccessConditions,
-                destinationAccessConditions,
+                sourceConditions,
+                destinationConditions,
                 rehydratePriority,
                 false, // async
                 cancellationToken)
@@ -1338,7 +1345,7 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// The <see cref="StartCopyFromUri(Uri, Metadata, AccessTier?, BlobAccessConditions?, BlobAccessConditions?, RehydratePriority?, CancellationToken)"/>
+        /// The <see cref="StartCopyFromUri(Uri, Metadata, AccessTier?, BlobRequestConditions, BlobRequestConditions, RehydratePriority?, CancellationToken)"/>
         /// operation copies data at from the <paramref name="source"/> to this
         /// blob.  You can check the <see cref="BlobProperties.CopyStatus"/>
         /// returned from the <see cref="GetPropertiesAsync"/> to determine if
@@ -1368,12 +1375,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="AccessTier"/>
         /// Indicates the tier to be set on the blob.
         /// </param>
-        /// <param name="sourceAccessConditions">
-        /// Optional <see cref="BlobAccessConditions"/> to add
+        /// <param name="sourceConditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add
         /// conditions on the copying of data from this source blob.
         /// </param>
-        /// <param name="destinationAccessConditions">
-        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// <param name="destinationConditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// the copying of data to this blob.
         /// </param>
         /// <param name="rehydratePriority">
@@ -1396,8 +1403,8 @@ namespace Azure.Storage.Blobs.Specialized
             Uri source,
             Metadata metadata = default,
             AccessTier? accessTier = default,
-            BlobAccessConditions? sourceAccessConditions = default,
-            BlobAccessConditions? destinationAccessConditions = default,
+            BlobRequestConditions sourceConditions = default,
+            BlobRequestConditions destinationConditions = default,
             RehydratePriority? rehydratePriority = default,
             CancellationToken cancellationToken = default)
         {
@@ -1405,8 +1412,8 @@ namespace Azure.Storage.Blobs.Specialized
                 source,
                 metadata,
                 accessTier,
-                sourceAccessConditions,
-                destinationAccessConditions,
+                sourceConditions,
+                destinationConditions,
                 rehydratePriority,
                 true, // async
                 cancellationToken)
@@ -1449,12 +1456,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="AccessTier"/>
         /// Indicates the tier to be set on the blob.
         /// </param>
-        /// <param name="sourceAccessConditions">
-        /// Optional <see cref="BlobAccessConditions"/> to add
+        /// <param name="sourceConditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add
         /// conditions on the copying of data from this source blob.
         /// </param>
-        /// <param name="destinationAccessConditions">
-        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// <param name="destinationConditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// the copying of data to this blob.
         /// </param>
         /// <param name="rehydratePriority">
@@ -1480,8 +1487,8 @@ namespace Azure.Storage.Blobs.Specialized
             Uri source,
             Metadata metadata,
             AccessTier? accessTier,
-            BlobAccessConditions? sourceAccessConditions,
-            BlobAccessConditions? destinationAccessConditions,
+            BlobRequestConditions sourceConditions,
+            BlobRequestConditions destinationConditions,
             RehydratePriority? rehydratePriority,
             bool async,
             CancellationToken cancellationToken)
@@ -1493,8 +1500,8 @@ namespace Azure.Storage.Blobs.Specialized
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(source)}: {source}\n" +
-                    $"{nameof(sourceAccessConditions)}: {sourceAccessConditions}\n" +
-                    $"{nameof(destinationAccessConditions)}: {destinationAccessConditions}");
+                    $"{nameof(sourceConditions)}: {sourceConditions}\n" +
+                    $"{nameof(destinationConditions)}: {destinationConditions}");
                 try
                 {
                     return await BlobRestClient.Blob.StartCopyFromUriAsync(
@@ -1504,15 +1511,15 @@ namespace Azure.Storage.Blobs.Specialized
                         copySource: source,
                         rehydratePriority: rehydratePriority,
                         tier: accessTier,
-                        sourceIfModifiedSince: sourceAccessConditions?.HttpAccessConditions?.IfModifiedSince,
-                        sourceIfUnmodifiedSince: sourceAccessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
-                        sourceIfMatch: sourceAccessConditions?.HttpAccessConditions?.IfMatch,
-                        sourceIfNoneMatch: sourceAccessConditions?.HttpAccessConditions?.IfNoneMatch,
-                        ifModifiedSince: destinationAccessConditions?.HttpAccessConditions?.IfModifiedSince,
-                        ifUnmodifiedSince: destinationAccessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
-                        ifMatch: destinationAccessConditions?.HttpAccessConditions?.IfMatch,
-                        ifNoneMatch: destinationAccessConditions?.HttpAccessConditions?.IfNoneMatch,
-                        leaseId: destinationAccessConditions?.LeaseAccessConditions?.LeaseId,
+                        sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
+                        sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
+                        sourceIfMatch: sourceConditions?.IfMatch,
+                        sourceIfNoneMatch: sourceConditions?.IfNoneMatch,
+                        ifModifiedSince: destinationConditions?.IfModifiedSince,
+                        ifUnmodifiedSince: destinationConditions?.IfUnmodifiedSince,
+                        ifMatch: destinationConditions?.IfMatch,
+                        ifNoneMatch: destinationConditions?.IfNoneMatch,
+                        leaseId: destinationConditions?.LeaseId,
                         metadata: metadata,
                         async: async,
                         operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.StartCopyFromUri",
@@ -1543,8 +1550,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="copyId">
         /// ID of the copy operation to abort.
         /// </param>
-        /// <param name="leaseAccessConditions">
-        /// Optional <see cref="LeaseAccessConditions"/> to add
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add
         /// conditions on aborting the copy operation.
         /// </param>
         /// <param name="cancellationToken">
@@ -1560,11 +1567,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual Response AbortCopyFromUri(
             string copyId,
-            LeaseAccessConditions? leaseAccessConditions = default,
+            BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             AbortCopyFromUriInternal(
                 copyId,
-                leaseAccessConditions,
+                conditions,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -1579,8 +1586,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="copyId">
         /// ID of the copy operation to abort.
         /// </param>
-        /// <param name="leaseAccessConditions">
-        /// Optional <see cref="LeaseAccessConditions"/> to add
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add
         /// conditions on aborting the copy operation.
         /// </param>
         /// <param name="cancellationToken">
@@ -1596,11 +1603,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual async Task<Response> AbortCopyFromUriAsync(
             string copyId,
-            LeaseAccessConditions? leaseAccessConditions = default,
+            BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await AbortCopyFromUriInternal(
                 copyId,
-                leaseAccessConditions,
+                conditions,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1615,8 +1622,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="copyId">
         /// ID of the copy operation to abort.
         /// </param>
-        /// <param name="leaseAccessConditions">
-        /// Optional <see cref="LeaseAccessConditions"/> to add
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add
         /// conditions on aborting the copy operation.
         /// </param>
         /// <param name="async">
@@ -1635,7 +1642,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         private async Task<Response> AbortCopyFromUriInternal(
             string copyId,
-            LeaseAccessConditions? leaseAccessConditions,
+            BlobRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1646,7 +1653,7 @@ namespace Azure.Storage.Blobs.Specialized
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(copyId)}: {copyId}\n" +
-                    $"{nameof(leaseAccessConditions)}: {leaseAccessConditions}");
+                    $"{nameof(conditions)}: {conditions}");
                 try
                 {
                     return await BlobRestClient.Blob.AbortCopyFromUriAsync(
@@ -1654,7 +1661,7 @@ namespace Azure.Storage.Blobs.Specialized
                         Pipeline,
                         Uri,
                         copyId: copyId,
-                        leaseId: leaseAccessConditions?.LeaseId,
+                        leaseId: conditions?.LeaseId,
                         async: async,
                         operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.AbortCopyFromUri",
                         cancellationToken: cancellationToken)
@@ -1688,8 +1695,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="snapshotsOption">
         /// Specifies options for deleting blob snapshots.
         /// </param>
-        /// <param name="accessConditions">
-        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// deleting this blob.
         /// </param>
         /// <param name="cancellationToken">
@@ -1705,11 +1712,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual Response Delete(
             DeleteSnapshotsOption snapshotsOption = default,
-            BlobAccessConditions? accessConditions = default,
+            BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             DeleteInternal(
                 snapshotsOption,
-                accessConditions,
+                conditions,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -1728,8 +1735,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="snapshotsOption">
         /// Specifies options for deleting blob snapshots.
         /// </param>
-        /// <param name="accessConditions">
-        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// deleting this blob.
         /// </param>
         /// <param name="cancellationToken">
@@ -1745,11 +1752,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual async Task<Response> DeleteAsync(
             DeleteSnapshotsOption snapshotsOption = default,
-            BlobAccessConditions? accessConditions = default,
+            BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await DeleteInternal(
                 snapshotsOption,
-                accessConditions,
+                conditions,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1768,8 +1775,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="snapshotsOption">
         /// Specifies options for deleting blob snapshots.
         /// </param>
-        /// <param name="accessConditions">
-        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// deleting this blob.
         /// </param>
         /// <param name="cancellationToken">
@@ -1785,11 +1792,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual Response<bool> DeleteIfExists(
             DeleteSnapshotsOption snapshotsOption = default,
-            BlobAccessConditions? accessConditions = default,
+            BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             DeleteIfExistsInternal(
                 snapshotsOption,
-                accessConditions ?? default,
+                conditions ?? default,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -1808,8 +1815,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="snapshotsOption">
         /// Specifies options for deleting blob snapshots.
         /// </param>
-        /// <param name="accessConditions">
-        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// deleting this blob.
         /// </param>
         /// <param name="cancellationToken">
@@ -1825,11 +1832,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual async Task<Response<bool>> DeleteIfExistsAsync(
             DeleteSnapshotsOption snapshotsOption = default,
-            BlobAccessConditions? accessConditions = default,
+            BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await DeleteIfExistsInternal(
                 snapshotsOption,
-                accessConditions ?? default,
+                conditions ?? default,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1848,8 +1855,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="snapshotsOption">
         /// Specifies options for deleting blob snapshots.
         /// </param>
-        /// <param name="accessConditions">
-        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// deleting this blob.
         /// </param>
         /// <param name="async">
@@ -1868,7 +1875,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         private async Task<Response<bool>> DeleteIfExistsInternal(
             DeleteSnapshotsOption snapshotsOption,
-            BlobAccessConditions accessConditions,
+            BlobRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1876,7 +1883,7 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 Response response = await DeleteInternal(
                     snapshotsOption,
-                    accessConditions,
+                    conditions,
                     async,
                     cancellationToken,
                     Constants.Blob.Base.DeleteIfExists)
@@ -1904,8 +1911,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="snapshotsOption">
         /// Specifies options for deleting blob snapshots.
         /// </param>
-        /// <param name="accessConditions">
-        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// deleting this blob.
         /// </param>
         /// <param name="async">
@@ -1927,7 +1934,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         private async Task<Response> DeleteInternal(
             DeleteSnapshotsOption snapshotsOption,
-            BlobAccessConditions? accessConditions,
+            BlobRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken,
             string operationName = Constants.Blob.Base.Delete)
@@ -1939,19 +1946,19 @@ namespace Azure.Storage.Blobs.Specialized
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(snapshotsOption)}: {snapshotsOption}\n" +
-                    $"{nameof(accessConditions)}: {accessConditions}");
+                    $"{nameof(conditions)}: {conditions}");
                 try
                 {
                     return await BlobRestClient.Blob.DeleteAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
-                        leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
                         deleteSnapshots: snapshotsOption == DeleteSnapshotsOption.None ? null : (DeleteSnapshotsOption?)snapshotsOption,
-                        ifModifiedSince: accessConditions?.HttpAccessConditions?.IfModifiedSince,
-                        ifUnmodifiedSince: accessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
-                        ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
-                        ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
+                        leaseId: conditions?.LeaseId,
+                        ifModifiedSince: conditions?.IfModifiedSince,
+                        ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                        ifMatch: conditions?.IfMatch,
+                        ifNoneMatch: conditions?.IfNoneMatch,
                         async: async,
                         operationName: operationName,
                         cancellationToken: cancellationToken)
@@ -2082,8 +2089,8 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob-properties" />.
         /// </summary>
-        /// <param name="accessConditions">
-        /// Optional <see cref="BlobAccessConditions"/> to add
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add
         /// conditions on getting the blob's properties.
         /// </param>
         /// <param name="cancellationToken">
@@ -2099,10 +2106,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public virtual Response<BlobProperties> GetProperties(
-            BlobAccessConditions? accessConditions = default,
+            BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             GetPropertiesInternal(
-                accessConditions,
+                conditions,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -2115,8 +2122,8 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob-properties" />.
         /// </summary>
-        /// <param name="accessConditions">
-        /// Optional <see cref="BlobAccessConditions"/> to add
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add
         /// conditions on getting the blob's properties.
         /// </param>
         /// <param name="cancellationToken">
@@ -2132,10 +2139,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<BlobProperties>> GetPropertiesAsync(
-            BlobAccessConditions? accessConditions = default,
+            BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await GetPropertiesInternal(
-                accessConditions,
+                conditions,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -2148,8 +2155,8 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob-properties" />.
         /// </summary>
-        /// <param name="accessConditions">
-        /// Optional <see cref="BlobAccessConditions"/> to add
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add
         /// conditions on getting the blob's properties.
         /// </param>
         /// <param name="async">
@@ -2168,7 +2175,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<BlobProperties>> GetPropertiesInternal(
-            BlobAccessConditions? accessConditions,
+            BlobRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2178,7 +2185,7 @@ namespace Azure.Storage.Blobs.Specialized
                     nameof(BlobBaseClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(accessConditions)}: {accessConditions}");
+                    $"{nameof(conditions)}: {conditions}");
                 try
                 {
                     BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
@@ -2187,14 +2194,14 @@ namespace Azure.Storage.Blobs.Specialized
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
-                        leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
+                        leaseId: conditions?.LeaseId,
                         encryptionKey: CustomerProvidedKey?.EncryptionKey,
                         encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
                         encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
-                        ifModifiedSince: accessConditions?.HttpAccessConditions?.IfModifiedSince,
-                        ifUnmodifiedSince: accessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
-                        ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
-                        ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
+                        ifModifiedSince: conditions?.IfModifiedSince,
+                        ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                        ifMatch: conditions?.IfMatch,
+                        ifNoneMatch: conditions?.IfNoneMatch,
                         async: async,
                         operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.GetProperties",
                         cancellationToken: cancellationToken)
@@ -2223,8 +2230,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="httpHeaders">
         /// Optional. The standard HTTP header system properties to set.  If not specified, existing values will be cleared.
         /// </param>
-        /// <param name="accessConditions">
-        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// setting the blob's HTTP headers.
         /// </param>
         /// <param name="cancellationToken">
@@ -2241,11 +2248,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual Response<BlobInfo> SetHttpHeaders(
             BlobHttpHeaders httpHeaders = default,
-            BlobAccessConditions? accessConditions = default,
+            BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             SetHttpHeadersInternal(
                 httpHeaders,
-                accessConditions,
+                conditions,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -2259,8 +2266,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="httpHeaders">
         /// Optional. The standard HTTP header system properties to set.  If not specified, existing values will be cleared.
         /// </param>
-        /// <param name="accessConditions">
-        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// setting the blob's HTTP headers.
         /// </param>
         /// <param name="cancellationToken">
@@ -2277,11 +2284,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual async Task<Response<BlobInfo>> SetHttpHeadersAsync(
             BlobHttpHeaders httpHeaders = default,
-            BlobAccessConditions? accessConditions = default,
+            BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await SetHttpHeadersInternal(
                 httpHeaders,
-                accessConditions,
+                conditions,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -2295,8 +2302,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="httpHeaders">
         /// Optional. The standard HTTP header system properties to set.  If not specified, existing values will be cleared.
         /// </param>
-        /// <param name="accessConditions">
-        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// setting the blob's HTTP headers.
         /// </param>
         /// <param name="async">
@@ -2316,7 +2323,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         private async Task<Response<BlobInfo>> SetHttpHeadersInternal(
             BlobHttpHeaders httpHeaders,
-            BlobAccessConditions? accessConditions,
+            BlobRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2327,7 +2334,7 @@ namespace Azure.Storage.Blobs.Specialized
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(httpHeaders)}: {httpHeaders}\n" +
-                    $"{nameof(accessConditions)}: {accessConditions}");
+                    $"{nameof(conditions)}: {conditions}");
                 try
                 {
                     BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
@@ -2343,11 +2350,11 @@ namespace Azure.Storage.Blobs.Specialized
                             blobContentEncoding: httpHeaders?.ContentEncoding,
                             blobContentLanguage: httpHeaders?.ContentLanguage,
                             blobContentDisposition: httpHeaders?.ContentDisposition,
-                            leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
-                            ifModifiedSince: accessConditions?.HttpAccessConditions?.IfModifiedSince,
-                            ifUnmodifiedSince: accessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
-                            ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
-                            ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
+                            leaseId: conditions?.LeaseId,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch,
+                            ifNoneMatch: conditions?.IfNoneMatch,
                             async: async,
                             operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.SetHttpHeaders",
                             cancellationToken: cancellationToken)
@@ -2383,8 +2390,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="metadata">
         /// Custom metadata to set for this blob.
         /// </param>
-        /// <param name="accessConditions">
-        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// setting the blob's metadata.
         /// </param>
         /// <param name="cancellationToken">
@@ -2401,11 +2408,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual Response<BlobInfo> SetMetadata(
             Metadata metadata,
-            BlobAccessConditions? accessConditions = default,
+            BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             SetMetadataInternal(
                 metadata,
-                accessConditions,
+                conditions,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -2419,8 +2426,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="metadata">
         /// Custom metadata to set for this blob.
         /// </param>
-        /// <param name="accessConditions">
-        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// setting the blob's metadata.
         /// </param>
         /// <param name="cancellationToken">
@@ -2437,11 +2444,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual async Task<Response<BlobInfo>> SetMetadataAsync(
             Metadata metadata,
-            BlobAccessConditions? accessConditions = default,
+            BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await SetMetadataInternal(
                 metadata,
-                accessConditions,
+                conditions,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -2455,8 +2462,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="metadata">
         /// Custom metadata to set for this blob.
         /// </param>
-        /// <param name="accessConditions">
-        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// setting the blob's metadata.
         /// </param>
         /// <param name="async">
@@ -2476,7 +2483,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         private async Task<Response<BlobInfo>> SetMetadataInternal(
             Metadata metadata,
-            BlobAccessConditions? accessConditions,
+            BlobRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2486,7 +2493,7 @@ namespace Azure.Storage.Blobs.Specialized
                     nameof(BlobBaseClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(accessConditions)}: {accessConditions}");
+                    $"{nameof(conditions)}: {conditions}");
                 try
                 {
                     BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
@@ -2497,14 +2504,14 @@ namespace Azure.Storage.Blobs.Specialized
                             Pipeline,
                             Uri,
                             metadata: metadata,
-                            leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
+                            leaseId: conditions?.LeaseId,
                             encryptionKey: CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
-                            ifModifiedSince: accessConditions?.HttpAccessConditions?.IfModifiedSince,
-                            ifUnmodifiedSince: accessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
-                            ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
-                            ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch,
+                            ifNoneMatch: conditions?.IfNoneMatch,
                             async: async,
                             operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.SetMetadata",
                             cancellationToken: cancellationToken)
@@ -2539,8 +2546,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="metadata">
         /// Optional custom metadata to set for this blob snapshot.
         /// </param>
-        /// <param name="accessConditions">
-        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// setting creating this snapshot.
         /// </param>
         /// <param name="cancellationToken">
@@ -2557,11 +2564,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual Response<BlobSnapshotInfo> CreateSnapshot(
             Metadata metadata = default,
-            BlobAccessConditions? accessConditions = default,
+            BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             CreateSnapshotInternal(
                 metadata,
-                accessConditions,
+                conditions,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -2575,8 +2582,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="metadata">
         /// Optional custom metadata to set for this blob snapshot.
         /// </param>
-        /// <param name="accessConditions">
-        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// setting creating this snapshot.
         /// </param>
         /// <param name="cancellationToken">
@@ -2593,11 +2600,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual async Task<Response<BlobSnapshotInfo>> CreateSnapshotAsync(
             Metadata metadata = default,
-            BlobAccessConditions? accessConditions = default,
+            BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await CreateSnapshotInternal(
                 metadata,
-                accessConditions,
+                conditions,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -2611,8 +2618,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="metadata">
         /// Optional custom metadata to set for this blob snapshot.
         /// </param>
-        /// <param name="accessConditions">
-        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// setting creating this snapshot.
         /// </param>
         /// <param name="async">
@@ -2632,7 +2639,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         private async Task<Response<BlobSnapshotInfo>> CreateSnapshotInternal(
             Metadata metadata,
-            BlobAccessConditions? accessConditions,
+            BlobRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2642,7 +2649,7 @@ namespace Azure.Storage.Blobs.Specialized
                     nameof(BlobBaseClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(accessConditions)}: {accessConditions}");
+                    $"{nameof(conditions)}: {conditions}");
                 try
                 {
                     BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
@@ -2655,11 +2662,11 @@ namespace Azure.Storage.Blobs.Specialized
                         encryptionKey: CustomerProvidedKey?.EncryptionKey,
                         encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
                         encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
-                        ifModifiedSince: accessConditions?.HttpAccessConditions?.IfModifiedSince,
-                        ifUnmodifiedSince: accessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
-                        ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
-                        ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
-                        leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
+                        ifModifiedSince: conditions?.IfModifiedSince,
+                        ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                        ifMatch: conditions?.IfMatch,
+                        ifNoneMatch: conditions?.IfNoneMatch,
+                        leaseId: conditions?.LeaseId,
                         async: async,
                         operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.CreateSnapshot",
                         cancellationToken: cancellationToken)
@@ -2697,8 +2704,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="accessTier">
         /// Indicates the tier to be set on the blob.
         /// </param>
-        /// <param name="leaseAccessConditions">
-        /// Optional <see cref="LeaseAccessConditions"/> to add conditions on
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// setting the access tier.
         /// </param>
         /// <param name="rehydratePriority">
@@ -2718,12 +2725,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual Response SetAccessTier(
             AccessTier accessTier,
-            LeaseAccessConditions? leaseAccessConditions = default,
+            BlobRequestConditions conditions = default,
             RehydratePriority? rehydratePriority = default,
             CancellationToken cancellationToken = default) =>
             SetAccessTierInternal(
                 accessTier,
-                leaseAccessConditions,
+                conditions,
                 rehydratePriority,
                 false, // async
                 cancellationToken)
@@ -2747,8 +2754,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="accessTier">
         /// Indicates the tier to be set on the blob.
         /// </param>
-        /// <param name="leaseAccessConditions">
-        /// Optional <see cref="LeaseAccessConditions"/> to add conditions on
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// setting the access tier.
         /// </param>
         /// <param name="rehydratePriority">
@@ -2768,12 +2775,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual async Task<Response> SetAccessTierAsync(
             AccessTier accessTier,
-            LeaseAccessConditions? leaseAccessConditions = default,
+            BlobRequestConditions conditions = default,
             RehydratePriority? rehydratePriority = default,
             CancellationToken cancellationToken = default) =>
             await SetAccessTierInternal(
                 accessTier,
-                leaseAccessConditions,
+                conditions,
                 rehydratePriority,
                 true, // async
                 cancellationToken)
@@ -2797,8 +2804,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="accessTier">
         /// Indicates the tier to be set on the blob.
         /// </param>
-        /// <param name="leaseAccessConditions">
-        /// Optional <see cref="LeaseAccessConditions"/> to add conditions on
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// setting the access tier.
         /// </param>
         /// <param name="rehydratePriority">
@@ -2821,7 +2828,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         private async Task<Response> SetAccessTierInternal(
             AccessTier accessTier,
-            LeaseAccessConditions? leaseAccessConditions,
+            BlobRequestConditions conditions,
             RehydratePriority? rehydratePriority,
             bool async,
             CancellationToken cancellationToken)
@@ -2833,7 +2840,7 @@ namespace Azure.Storage.Blobs.Specialized
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(accessTier)}: {accessTier}\n" +
-                    $"{nameof(leaseAccessConditions)}: {leaseAccessConditions}");
+                    $"{nameof(conditions)}: {conditions}");
                 try
                 {
                     return await BlobRestClient.Blob.SetAccessTierAsync(
@@ -2842,7 +2849,7 @@ namespace Azure.Storage.Blobs.Specialized
                         Uri,
                         tier: accessTier,
                         rehydratePriority: rehydratePriority,
-                        leaseId: leaseAccessConditions?.LeaseId,
+                        leaseId: conditions?.LeaseId,
                         async: async,
                         operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.SetAccessTier",
                         cancellationToken: cancellationToken)

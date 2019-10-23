@@ -28,7 +28,7 @@ namespace Compute.Tests
         protected const string GalleryNamePrefix = "galleryPsTestGallery";
         protected const string GalleryImageNamePrefix = "galleryPsTestGalleryImage";
         protected const string GalleryApplicationNamePrefix = "galleryPsTestGalleryApplication";
-        private string galleryHomeLocation = "eastus2euap";
+        private string galleryHomeLocation = "eastus2";
 
         [Fact]
         public void Gallery_CRUD_Tests()
@@ -382,7 +382,15 @@ namespace Compute.Tests
             Assert.Equal(imageIn.Location, imageOut.Location);
             Assert.Equal(imageIn.OsState, imageOut.OsState);
             Assert.Equal(imageIn.OsType, imageOut.OsType);
-            Assert.Equal(imageIn.HyperVGeneration, imageOut.HyperVGeneration);
+            if (imageIn.HyperVGeneration == null)
+            {
+                Assert.Equal(HyperVGenerationType.V1, imageOut.HyperVGeneration);
+            }
+            else
+            {
+                Assert.Equal(imageIn.HyperVGeneration, imageOut.HyperVGeneration);
+            }
+            
             if (!string.IsNullOrEmpty(imageIn.Description))
             {
                 Assert.Equal(imageIn.Description, imageOut.Description);

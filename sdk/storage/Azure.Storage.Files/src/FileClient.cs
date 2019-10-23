@@ -1215,7 +1215,10 @@ namespace Azure.Storage.Files
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
-                    return Response.FromValue(new StorageFileProperties(response.Value), response.GetRawResponse());
+                    // Return an exploding Response on 304
+                    return response.IsUnavailable() ?
+                        response.GetRawResponse().AsNoBodyResponse<StorageFileProperties>() :
+                        Response.FromValue(new StorageFileProperties(response.Value), response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {

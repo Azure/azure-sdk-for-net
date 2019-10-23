@@ -44,41 +44,41 @@ namespace Azure.Storage.Blobs
             Stream content,
             BlobHttpHeaders blobHttpHeaders,
             IDictionary<string, string> metadata,
-            BlobAccessConditions? blobAccessConditions,
+            BlobRequestConditions conditions,
             IProgress<long> progressHandler,
             AccessTier? accessTier = default,
             CancellationToken cancellationToken = default)
         {
             if (TryGetLength(content, out long length) && length < _singleBlockThreshold)
             {
-                return await _client.UploadAsync(content, blobHttpHeaders, metadata, blobAccessConditions, accessTier, progressHandler, cancellationToken).ConfigureAwait(false);
+                return await _client.UploadAsync(content, blobHttpHeaders, metadata, conditions, accessTier, progressHandler, cancellationToken).ConfigureAwait(false);
             }
 
-            return await UploadInParallelAsync(content, blobHttpHeaders, metadata, blobAccessConditions, progressHandler, accessTier, cancellationToken).ConfigureAwait(false);
+            return await UploadInParallelAsync(content, blobHttpHeaders, metadata, conditions, progressHandler, accessTier, cancellationToken).ConfigureAwait(false);
         }
 
         public Response<BlobContentInfo> Upload(
             Stream content,
             BlobHttpHeaders blobHttpHeaders,
             IDictionary<string, string> metadata,
-            BlobAccessConditions? blobAccessConditions,
+            BlobRequestConditions conditions,
             IProgress<long> progressHandler,
             AccessTier? accessTier = default,
             CancellationToken cancellationToken = default)
         {
             if (TryGetLength(content, out long length) && length < _singleBlockThreshold)
             {
-                return _client.Upload(content, blobHttpHeaders, metadata, blobAccessConditions, accessTier, progressHandler, cancellationToken);
+                return _client.Upload(content, blobHttpHeaders, metadata, conditions, accessTier, progressHandler, cancellationToken);
             }
 
-            return UploadInSequence(content, blobHttpHeaders, metadata, blobAccessConditions, progressHandler, accessTier, cancellationToken);
+            return UploadInSequence(content, blobHttpHeaders, metadata, conditions, progressHandler, accessTier, cancellationToken);
         }
 
         private Response<BlobContentInfo> UploadInSequence(
             Stream content,
             BlobHttpHeaders blobHttpHeaders,
             IDictionary<string, string> metadata,
-            BlobAccessConditions? blobAccessConditions,
+            BlobRequestConditions conditions,
             IProgress<long> progressHandler,
             AccessTier? accessTier,
             CancellationToken cancellationToken)
@@ -96,21 +96,21 @@ namespace Azure.Storage.Blobs
                 _client.StageBlock(
                     blockId,
                     new MemoryStream(block.Bytes, 0, block.Length, writable: false),
-                    leaseAccessConditions: blobAccessConditions?.LeaseAccessConditions,
+                    conditions: conditions,
                     progressHandler: progressHandler,
                     cancellationToken: cancellationToken);
 
                 blocks.Add(blockId);
             }
 
-            return _client.CommitBlockList(blocks, blobHttpHeaders, metadata, blobAccessConditions, accessTier, cancellationToken);
+            return _client.CommitBlockList(blocks, blobHttpHeaders, metadata, conditions, accessTier, cancellationToken);
         }
 
         private async Task<Response<BlobContentInfo>> UploadInParallelAsync(
             Stream content,
             BlobHttpHeaders blobHttpHeaders,
             IDictionary<string, string> metadata,
-            BlobAccessConditions? blobAccessConditions,
+            BlobRequestConditions blobAccessConditions,
             IProgress<long> progressHandler,
             AccessTier? accessTier,
             CancellationToken cancellationToken)
@@ -141,14 +141,14 @@ namespace Azure.Storage.Blobs
                 .ConfigureAwait(false);
         }
 
-        private async Task StageBlobAsync(StreamPartition block, string blockId, BlobAccessConditions? blobAccessConditions, IProgress<long> progressHandler, CancellationToken cancellationToken)
+        private async Task StageBlobAsync(StreamPartition block, string blockId, BlobRequestConditions conditions, IProgress<long> progressHandler, CancellationToken cancellationToken)
         {
             try
             {
                 await _client.StageBlockAsync(
                     blockId,
                     new MemoryStream(block.Bytes, 0, block.Length, writable: false),
-                    leaseAccessConditions: blobAccessConditions?.LeaseAccessConditions,
+                    conditions: conditions,
                     progressHandler: progressHandler,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
             }

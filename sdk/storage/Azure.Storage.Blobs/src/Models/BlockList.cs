@@ -57,6 +57,12 @@ namespace Azure.Storage.Blobs
         /// <returns>The BlockList response.</returns>
         internal static Response<BlockList> ToBlockList(this Response<GetBlockListOperation> response)
         {
+            // Return an exploding Response on 304
+            if (response.IsUnavailable())
+            {
+                return response.GetRawResponse().AsNoBodyResponse<BlockList>();
+            }
+
             BlockList blocks = response.Value.Body;
             blocks.LastModified = response.Value.LastModified;
             blocks.ETag = response.Value.ETag;

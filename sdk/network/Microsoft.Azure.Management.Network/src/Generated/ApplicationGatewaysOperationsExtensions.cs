@@ -720,52 +720,6 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Updates the specified application gateway tags.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='applicationGatewayName'>
-            /// The name of the application gateway.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to update application gateway tags.
-            /// </param>
-            public static ApplicationGateway BeginUpdateTags(this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName, TagsObject parameters)
-            {
-                return operations.BeginUpdateTagsAsync(resourceGroupName, applicationGatewayName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates the specified application gateway tags.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='applicationGatewayName'>
-            /// The name of the application gateway.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to update application gateway tags.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ApplicationGateway> BeginUpdateTagsAsync(this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName, TagsObject parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.BeginUpdateTagsWithHttpMessagesAsync(resourceGroupName, applicationGatewayName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Starts the specified application gateway.
             /// </summary>
             /// <param name='operations'>

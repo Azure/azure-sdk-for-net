@@ -24,11 +24,10 @@ namespace Azure.Storage.Blobs.Tests
         private readonly bool _async;
 
         // Use constants to verify that we flow them everywhere
-        private static readonly LeaseAccessConditions s_leaseConditions = new LeaseAccessConditions() { LeaseId = "MyImportantLease" };
         private static readonly CancellationToken s_cancellationToken = new CancellationTokenSource().Token;
         private static readonly BlobHttpHeaders s_blobHttpHeaders = new BlobHttpHeaders() { CacheControl = "Please do", ContentEncoding = new string[] { "Yes" }};
         private static readonly Dictionary<string, string> s_metadata = new Dictionary<string, string>() { { "Key", "Value" } };
-        private static readonly BlobAccessConditions s_conditions = new BlobAccessConditions() { LeaseAccessConditions = s_leaseConditions };
+        private static readonly BlobRequestConditions s_conditions = new BlobRequestConditions() { LeaseId = "MyImportantLease" };
         private static readonly AccessTier s_accessTier = AccessTier.Cool;
         private static readonly Progress<long> s_progress = new Progress<long>();
         private static readonly Response<BlobContentInfo> s_response = Response.FromValue(new BlobContentInfo(), new MockResponse(200));
@@ -259,10 +258,10 @@ namespace Azure.Storage.Blobs.Tests
                         IsAny<string>(),
                         IsAny<Stream>(),
                         IsAny<byte[]>(),
-                        s_leaseConditions,
+                        s_conditions,
                         s_progress,
                         s_cancellationToken
-                    )).Returns<string, Stream, byte[], LeaseAccessConditions?, IProgress<long>, CancellationToken>(sink.StageAsync);
+                    )).Returns<string, Stream, byte[], BlobRequestConditions, IProgress<long>, CancellationToken>(sink.StageAsync);
 
                 clientMock.Setup(
                     c => c.CommitBlockListAsync(
@@ -272,7 +271,7 @@ namespace Azure.Storage.Blobs.Tests
                         s_conditions,
                         s_accessTier,
                         s_cancellationToken
-                    )).Returns<IEnumerable<string>, BlobHttpHeaders, Dictionary<string, string>, BlobAccessConditions?, AccessTier?, CancellationToken>(sink.CommitAsync);
+                    )).Returns<IEnumerable<string>, BlobHttpHeaders, Dictionary<string, string>, BlobRequestConditions, AccessTier?, CancellationToken>(sink.CommitAsync);
             }
             else
             {
@@ -281,10 +280,10 @@ namespace Azure.Storage.Blobs.Tests
                         IsAny<string>(),
                         IsAny<Stream>(),
                         IsAny<byte[]>(),
-                        s_leaseConditions,
+                        s_conditions,
                         s_progress,
                         s_cancellationToken
-                    )).Returns<string, Stream, byte[], LeaseAccessConditions?, IProgress<long>, CancellationToken>(sink.Stage);
+                    )).Returns<string, Stream, byte[], BlobRequestConditions, IProgress<long>, CancellationToken>(sink.Stage);
 
                 clientMock.Setup(
                     c => c.CommitBlockList(
@@ -294,7 +293,7 @@ namespace Azure.Storage.Blobs.Tests
                         s_conditions,
                         s_accessTier,
                         s_cancellationToken
-                    )).Returns<IEnumerable<string>, BlobHttpHeaders, Dictionary<string, string>, BlobAccessConditions?, AccessTier?, CancellationToken>(sink.Commit);
+                    )).Returns<IEnumerable<string>, BlobHttpHeaders, Dictionary<string, string>, BlobRequestConditions, AccessTier?, CancellationToken>(sink.Commit);
             }
         }
 
@@ -317,25 +316,25 @@ namespace Azure.Storage.Blobs.Tests
                 Staged = new Dictionary<string, byte[]>();
             }
 
-            public async Task<Response<BlobContentInfo>> CommitAsync(IEnumerable<string> blocks, BlobHttpHeaders headers, Dictionary<string, string> metadata, BlobAccessConditions? accessConditions, AccessTier? accessTier, CancellationToken cancellationToken)
+            public async Task<Response<BlobContentInfo>> CommitAsync(IEnumerable<string> blocks, BlobHttpHeaders headers, Dictionary<string, string> metadata, BlobRequestConditions accessConditions, AccessTier? accessTier, CancellationToken cancellationToken)
             {
                 await Task.Delay(25);
                 return Commit(blocks, headers, metadata, accessConditions, accessTier, cancellationToken);
             }
 
-            public Response<BlobContentInfo> Commit(IEnumerable<string> blocks, BlobHttpHeaders headers, Dictionary<string, string> metadata, BlobAccessConditions? accessConditions, AccessTier? accessTier, CancellationToken cancellationToken)
+            public Response<BlobContentInfo> Commit(IEnumerable<string> blocks, BlobHttpHeaders headers, Dictionary<string, string> metadata, BlobRequestConditions accessConditions, AccessTier? accessTier, CancellationToken cancellationToken)
             {
                 Blocks = blocks.ToArray();
                 return s_response;
             }
 
-            public async  Task<Response<BlockInfo>> StageAsync(string s, Stream stream, byte[] hash, LeaseAccessConditions? accessConditions, IProgress<long> progress, CancellationToken cancellationToken)
+            public async  Task<Response<BlockInfo>> StageAsync(string s, Stream stream, byte[] hash, BlobRequestConditions accessConditions, IProgress<long> progress, CancellationToken cancellationToken)
             {
                 await Task.Delay(25);
                 return Stage(s, stream, hash, accessConditions, progress, cancellationToken);
             }
 
-            public Response<BlockInfo> Stage(string s, Stream stream, byte[] hash, LeaseAccessConditions? accessConditions, IProgress<long> progress, CancellationToken cancellationToken)
+            public Response<BlockInfo> Stage(string s, Stream stream, byte[] hash, BlobRequestConditions accessConditions, IProgress<long> progress, CancellationToken cancellationToken)
             {
                 progress.Report(stream.Length);
                 var memoryStream = new MemoryStream();

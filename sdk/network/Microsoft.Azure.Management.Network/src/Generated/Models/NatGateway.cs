@@ -111,19 +111,17 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<SubResource> Subnets { get; private set; }
 
         /// <summary>
-        /// Gets or sets the resource GUID property of the NAT gateway
-        /// resource.
+        /// Gets the resource GUID property of the NAT gateway resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceGuid")]
-        public string ResourceGuid { get; set; }
+        public string ResourceGuid { get; private set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the NAT gateway resource.
-        /// Possible values include: 'Succeeded', 'Updating', 'Deleting',
-        /// 'Failed'
+        /// Gets the provisioning state of the NAT gateway resource. Possible
+        /// values include: 'Succeeded', 'Updating', 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets a list of availability zones denoting the zone in
@@ -133,11 +131,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<string> Zones { get; set; }
 
         /// <summary>
-        /// Gets or sets a unique read-only string that changes whenever the
-        /// resource is updated.
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
     }
 }

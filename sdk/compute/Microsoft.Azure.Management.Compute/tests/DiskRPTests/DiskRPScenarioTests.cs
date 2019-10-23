@@ -29,13 +29,13 @@ namespace Compute.Tests.DiskRPTests
         [Fact]
         public void Disk_CRUD_ImportDisk()
         {
-            Disk_CRUD_Execute(DiskCreateOption.Import, "Disk_CRUD_ImportDisk", diskSizeGB: 150, location: "eastus2euap");
+            Disk_CRUD_Execute(DiskCreateOption.Import, "Disk_CRUD_ImportDisk", diskSizeGB: 150, location: "eastus2");
         }
 
         [Fact]
         public void Snapshot_CRUD_EmptyDisk()
         {
-            Snapshot_CRUD_Execute(DiskCreateOption.Empty, "Snapshot_CRUD_EmptyDisk", diskSizeGB: 5, location: "eastus2euap");
+            Snapshot_CRUD_Execute(DiskCreateOption.Empty, "Snapshot_CRUD_EmptyDisk", diskSizeGB: 5, location: "eastus2");
         }
 
         [Fact]

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Core.Tests;
 using Castle.DynamicProxy;
@@ -36,10 +37,26 @@ namespace Azure.Core.Testing
                     return;
                 }
 
-                var result = (Task)invocation.ReturnValue;
                 try
                 {
-                    result.GetAwaiter().GetResult();
+                    object returnValue = invocation.ReturnValue;
+                    if (returnValue is Task t)
+                    {
+                        t.GetAwaiter().GetResult();
+                    }
+                    else
+                    {
+                        // Await ValueTask
+                        Type returnType = returnValue.GetType();
+                        MethodInfo getAwaiterMethod = returnType.GetMethod("GetAwaiter", BindingFlags.Instance | BindingFlags.Public);
+                        MethodInfo getResultMethod = getAwaiterMethod.ReturnType.GetMethod("GetResult", BindingFlags.Instance | BindingFlags.Public);
+
+                        getResultMethod.Invoke(
+                            getAwaiterMethod.Invoke(returnValue, Array.Empty<object>()),
+                            Array.Empty<object>());
+
+                    }
+
                     expectedEvents.Add(expectedEventPrefix + ".Stop");
                 }
                 catch (Exception ex)
