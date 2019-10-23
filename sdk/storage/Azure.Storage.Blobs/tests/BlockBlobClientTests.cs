@@ -1361,6 +1361,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Ignore("task cancelled on Windows_NetFramework")]
         public async Task UploadAsync_WithUnreliableConnection()
         {
             const int blobSize = 1 * Constants.MB;

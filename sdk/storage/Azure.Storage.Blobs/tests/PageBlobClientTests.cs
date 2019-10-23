@@ -1610,6 +1610,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Ignore("Internal error on Windows_NetCore")]
         public async Task UploadPagesFromUriAsync_CPK()
         {
             using (GetNewContainer(out BlobContainerClient container))
