@@ -47,7 +47,7 @@ namespace Azure.Storage.Blobs.Specialized
             new InvalidOperationException($"Expected an HTTP header line, not {headerLine}");
 
         public static RequestFailedException InvalidResponse(Response response, Exception innerException) =>
-            StorageRequestFailedExceptionHelpers.CreateException(response, "Invalid response", innerException);
+            StorageExceptionExtensions.CreateException(response, "Invalid response", innerException);
 
     }
 }

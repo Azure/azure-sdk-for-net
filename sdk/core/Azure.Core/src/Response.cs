@@ -84,5 +84,10 @@ namespace Azure
         {
             return new ValueResponse<T>(response, value);
         }
+
+        public override string ToString()
+        {
+            return $"Status: {Status}, ReasonPhrase: {ReasonPhrase}";
+        }
     }
 }

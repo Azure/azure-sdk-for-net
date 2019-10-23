@@ -85,7 +85,7 @@ namespace Azure.Identity
                 throw new AuthenticationFailedException(CredentialNotFoundMessage);
             }
 
-            public override Task<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+            public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
             {
                 throw new AuthenticationFailedException(CredentialNotFoundMessage);
             }

@@ -59,65 +59,24 @@ namespace Azure.Data.AppConfiguration
                 Labels.Add(label);
         }
 
-        /// <summary>
-        /// Check if two SettingSelector instances are equal.
-        /// </summary>
-        /// <param name="other">The instance to compare to.</param>
-        public bool Equals(SettingSelector other)
-        {
-            if (other == null)
-                return false;
-            if (!Keys.SequenceEqual(other.Keys))
-                return false;
-            if (!Labels.SequenceEqual(other.Labels))
-                return false;
-            if (!Fields.Equals(other.Fields))
-                return false;
-            if (AsOf != other.AsOf)
-                return false;
-
-            return true;
-        }
-
         #region nobody wants to see these
         /// <summary>
         /// Check if two SettingSelector instances are equal.
         /// </summary>
         /// <param name="obj">The instance to compare to.</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj)
-        {
-            if (obj == null)
-                return false;
-            if (obj is SettingSelector other)
-            {
-                return Equals(other);
-            }
-            else
-            {
-                return false;
-            }
-        }
+        public override bool Equals(object obj) => base.Equals(obj);
 
         /// <summary>
         /// Get a hash code for the SettingSelector
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode()
-        {
-            var hashCode = new HashCodeBuilder();
-            hashCode.Add(Keys);
-            hashCode.Add(Labels);
-            hashCode.Add(AsOf);
-            hashCode.Add(Fields);
-            return hashCode.ToHashCode();
-        }
+        public override int GetHashCode() => base.GetHashCode();
 
         /// <summary>
         /// Creates a string in reference to the SettingSelector.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        // TODO ()
         public override string ToString() => base.ToString();
         #endregion
     }

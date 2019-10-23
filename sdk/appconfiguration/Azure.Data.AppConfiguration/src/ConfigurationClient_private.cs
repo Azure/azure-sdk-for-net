@@ -160,7 +160,7 @@ namespace Azure.Data.AppConfiguration
 
             if (selector.Fields != SettingFields.All)
             {
-                var filter = selector.Fields.ToString().ToLowerInvariant();
+                var filter = selector.Fields.ToString().ToLowerInvariant().Replace("readonly", "locked");
                 builder.AppendQuery(FieldsQueryFilter, filter);
             }
 
@@ -182,13 +182,6 @@ namespace Azure.Data.AppConfiguration
             builder.Reset(_baseUri);
             builder.AppendPath(RevisionsRoute, escape: false);
             BuildBatchQuery(builder, selector, pageLink);
-        }
-
-        private static ReadOnlyMemory<byte> Serialize(ConfigurationSetting setting)
-        {
-            var writer = new ArrayBufferWriter<byte>();
-            ConfigurationServiceSerializer.Serialize(setting, writer);
-            return writer.WrittenMemory;
         }
 
         #region nobody wants to see these

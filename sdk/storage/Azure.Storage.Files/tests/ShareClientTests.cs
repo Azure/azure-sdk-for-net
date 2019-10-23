@@ -87,7 +87,7 @@ namespace Azure.Storage.Files.Test
             }
             finally
             {
-                await share.DeleteAsync();
+                await share.DeleteAsync(false);
             }
         }
 
@@ -108,7 +108,7 @@ namespace Azure.Storage.Files.Test
             AssertMetadataEquality(metadata, response.Value.Metadata);
 
             // Cleanup
-            await share.DeleteAsync();
+            await share.DeleteAsync(false);
         }
 
         [Test]
@@ -128,7 +128,7 @@ namespace Azure.Storage.Files.Test
                 e => Assert.AreEqual("ShareAlreadyExists", e.ErrorCode.Split('\n')[0]));
 
             // Cleanup
-            await share.DeleteAsync();
+            await share.DeleteAsync(false);
         }
 
         [Test]
@@ -146,7 +146,7 @@ namespace Azure.Storage.Files.Test
             }
             finally
             {
-                await share.DeleteAsync();
+                await share.DeleteAsync(false);
             }
         }
 
@@ -446,7 +446,7 @@ namespace Azure.Storage.Files.Test
             await share.CreateAsync(quotaInGB: 1);
 
             // Act
-            Response response = await share.DeleteAsync();
+            Response response = await share.DeleteAsync(false);
 
             // Assert
             Assert.IsNotNull(response.Headers.RequestId);
@@ -463,7 +463,7 @@ namespace Azure.Storage.Files.Test
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                share.DeleteAsync(),
+                share.DeleteAsync(false),
                 e => Assert.AreEqual("ShareNotFound", e.ErrorCode.Split('\n')[0]));
         }
 

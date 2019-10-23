@@ -12,16 +12,13 @@ namespace Azure.Storage.Files.Models
     {
         private readonly DirectoryClient _client;
         private readonly string _prefix;
-        private readonly string _shareSnapshot;
 
         public GetFilesAndDirectoriesAsyncCollection(
             DirectoryClient client,
-            string prefix,
-            string shareSnapshot)
+            string prefix)
         {
             _client = client;
             _prefix = prefix;
-            _shareSnapshot = shareSnapshot;
         }
 
         public override async ValueTask<Page<StorageFileItem>> GetNextPageAsync(
@@ -33,7 +30,6 @@ namespace Azure.Storage.Files.Models
             Task<Response<FilesAndDirectoriesSegment>> task = _client.GetFilesAndDirectoriesInternal(
                 continuationToken,
                 _prefix,
-                _shareSnapshot,
                 pageSizeHint,
                 isAsync,
                 cancellationToken);

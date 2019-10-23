@@ -6,11 +6,11 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.PrivateDns</PackageId>
 		<Description>Provides management capabilities for Azure Private DNS.</Description>
-		<Version>0.8.0-preview</Version>
+		<Version>1.0.0</Version>
 		<AssemblyName>Microsoft.Azure.Management.PrivateDns</AssemblyName>
 		<PackageTags>Microsoft Azure Private DNS;Private DNS;DNS</PackageTags>
 		<PackageReleaseNotes>
-<![CDATA[This is an initial preview release SDK for Azure Private DNS Zones, which allows you to:
+<![CDATA[This is a release SDK for Azure Private DNS Zones, which allows you to:
  - create/read/update/delete Private DNS zones.
    A Private DNS zone hosts records for any domain.
  - create/read/update/delete record sets in Private DNS zones.
