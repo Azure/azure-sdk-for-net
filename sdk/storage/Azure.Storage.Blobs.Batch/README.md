@@ -156,12 +156,12 @@ For more information see the [Code of Conduct FAQ][coc_faq]
 or contact [opencode@microsoft.com][coc_contact] with any
 additional questions or comments.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Blobs.Batching%2FREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Blobs.Batch%2FREADME.png)
 
 <!-- LINKS -->
-[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Blobs.Batching/src
-[package]: https://www.nuget.org/packages/Azure.Storage.Blobs.Batching/
-[docs]: https://azure.github.io/azure-sdk-for-net/api/Azure.Storage.Blobs.Batching.html
+[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Blobs.Batch/src
+[package]: https://www.nuget.org/packages/Azure.Storage.Blobs.Batch/
+[docs]: https://azure.github.io/azure-sdk-for-net/api/Azure.Storage.Blobs.Batch.html
 [rest_docs]: https://docs.microsoft.com/en-us/rest/api/storageservices/blob-service-rest-api
 [product_docs]: https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blobs-overview
 [nuget]: https://www.nuget.org/

@@ -3,4 +3,4 @@ Breaking Changes
 
 Next Preview
 --------------------------
-- New Azure.Storage.Blobs.Batching client library.
+- New Azure.Storage.Blobs.Batch client library.

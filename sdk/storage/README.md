@@ -4,7 +4,7 @@ Azure Storage is a Microsoft-managed service providing cloud storage that is hig
 
 - [Azure.Storage.Blobs][blobs] is Microsoft's object storage solution for the cloud. Blob storage is optimized for storing massive amounts of unstructured data that does not adhere to a particular data model or definition, such as text or binary data.
 
-- [Azure.Storage.Blobs.Batching][blobs_batching] allows you to batch multiple Azure Blob Storage operations in a single request.
+- [Azure.Storage.Blobs.Batch][blobs_batch] allows you to batch multiple Azure Blob Storage operations in a single request.
 
 - [Azure.Storage.Blobs.Cryptography][blobs_cryptography] supports client-side encryption for Azure Storage block blobs.
 
@@ -35,7 +35,7 @@ additional questions or comments.
 
 <!-- LINKS -->
 [blobs]: ./Azure.Storage.Blobs/README.md
-[blobs_batching]: ./Azure.Storage.Blobs.Batching/README.md
+[blobs_batching]: ./Azure.Storage.Blobs.Batch/README.md
 [blobs_cryptography]: ./Azure.Storage.Blobs.Cryptography/README.md
 [queues]: ./Azure.Storage.Queues/README.md
 [files]: ./Azure.Storage.Files/README.md

@@ -3,14 +3,14 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyTitle>Microsoft Azure.Storage.Blobs.Batching client library tests</AssemblyTitle>
+    <AssemblyTitle>Microsoft Azure.Storage.Blobs.Batch client library tests</AssemblyTitle>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="$(MSBuildThisFileDirectory)..\src\Azure.Storage.Blobs.Batching.csproj" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\identity\Azure.Identity\src\Azure.Identity.csproj" />
+    <ProjectReference Include="..\src\Azure.Storage.Blobs.Batch.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\tests\Shared\**\*.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
