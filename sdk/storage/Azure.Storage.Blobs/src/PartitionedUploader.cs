@@ -83,7 +83,6 @@ namespace Azure.Storage.Blobs
             AccessTier? accessTier,
             CancellationToken cancellationToken)
         {
-            byte[] uploadId = Guid.NewGuid().ToByteArray();
             List<string> blocks = new List<string>();
 
             IAsyncEnumerator<StreamPartition> enumerator = GetBlocksAsync(content, async: false, cancellationToken).
@@ -92,7 +91,7 @@ namespace Azure.Storage.Blobs
             while (enumerator.MoveNextAsync().EnsureCompleted())
             {
                 using StreamPartition block = enumerator.Current;
-                string blockId = GenerateBlockId(uploadId, block.AbsolutePosition);
+                string blockId = GenerateBlockId(block.AbsolutePosition);
 
                 _client.StageBlock(
                     blockId,
@@ -116,13 +115,12 @@ namespace Azure.Storage.Blobs
             AccessTier? accessTier,
             CancellationToken cancellationToken)
         {
-            byte[] uploadId = Guid.NewGuid().ToByteArray();
             List<string> blocks = new List<string>();
             List<Task> runningTasks = new List<Task>();
 
             await foreach (StreamPartition block in GetBlocksAsync(content, async: true, cancellationToken))
             {
-                string blockId = GenerateBlockId(uploadId, block.AbsolutePosition);
+                string blockId = GenerateBlockId(block.AbsolutePosition);
 
                 Task task = StageBlobAsync(block, blockId, blobAccessConditions, progressHandler, cancellationToken);
 
@@ -177,12 +175,11 @@ namespace Azure.Storage.Blobs
             return false;
         }
 
-        private static string GenerateBlockId(byte[] uploadId, long offset)
+        private static string GenerateBlockId(long offset)
         {
             byte[] id = new byte[48];
 
             BitConverter.GetBytes(offset).CopyTo(id, 0);
-            uploadId.CopyTo(id, id.Length - uploadId.Length);
 
             return Convert.ToBase64String(id);
         }
