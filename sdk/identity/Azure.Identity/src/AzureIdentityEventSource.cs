@@ -35,7 +35,7 @@ namespace Azure.Identity
             }
         }
 
-        [Event(GetTokenEvent, Level = EventLevel.Informational, Message = "{0} [ Scopes: {1} ParentRequestId: {2} ]")]
+        [Event(GetTokenEvent, Level = EventLevel.Informational, Message = "{0} invoked. Scopes: {1} ParentRequestId: {2}")]
         public void GetToken(string method, string scopes, string parentRequestId)
         {
             WriteEvent(GetTokenEvent, method, scopes, parentRequestId);
@@ -50,7 +50,7 @@ namespace Azure.Identity
             }
         }
 
-        [Event(GetTokenSucceededEvent, Level = EventLevel.Informational, Message = "{0} succeeded [ Scopes: {1} ParentRequestId: {2} ExpiresOn: {3} ]")]
+        [Event(GetTokenSucceededEvent, Level = EventLevel.Informational, Message = "{0} succeeded. Scopes: {1} ParentRequestId: {2} ExpiresOn: {3}")]
         public void GetTokenSucceeded(string method, string scopes, string parentRequestId, string expiresOn)
         {
             WriteEvent(GetTokenSucceededEvent, method, scopes, parentRequestId, expiresOn);
@@ -65,7 +65,7 @@ namespace Azure.Identity
             }
         }
 
-        [Event(GetTokenFailedEvent, Level = EventLevel.Informational, Message = "{0} was unable to retrieve an access token [ Scopes: {1} ParentRequestId: {2} ] {3}")]
+        [Event(GetTokenFailedEvent, Level = EventLevel.Informational, Message = "{0} was unable to retrieve an access token. Scopes: {1} ParentRequestId: {2} Exception: {3}")]
         public void GetTokenFailed(string method, string scopes, string parentRequestId, string exception)
         {
             WriteEvent(GetTokenFailedEvent, method, scopes, parentRequestId, exception);
