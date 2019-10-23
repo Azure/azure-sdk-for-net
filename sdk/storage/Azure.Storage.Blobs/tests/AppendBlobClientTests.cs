@@ -5,15 +5,19 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Common;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
@@ -770,7 +774,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8351")]
         public async Task AppendBlockFromUriAsync_AccessConditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();
@@ -801,6 +804,10 @@ namespace Azure.Storage.Blobs.Test
                     using (var stream = new MemoryStream(data))
                     {
                         AppendBlobClient sourceBlob = InstrumentClient(container.GetAppendBlobClient(GetNewBlobName()));
+                        //var mock = new Mock<HttpPipeline>();
+                        //mock.Setup(x => x.ResponseClassifier).Returns(new TestResponseClassifier());
+                        //PropertyInfo propertyInfo = sourceBlob.GetType().GetProperty("_pipeline", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
+                        //propertyInfo.SetValue(sourceBlob, mock);
                         await sourceBlob.CreateAsync();
                         await sourceBlob.AppendBlockAsync(stream);
 

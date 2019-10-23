@@ -80,12 +80,13 @@ namespace Azure.Storage
         /// Create an HttpPipeline from Storage ClientOptions.
         /// </summary>
         /// <param name="options">The Storage ClientOptions.</param>
+        /// <param name="responseClassifier"></param>
         /// <param name="authentication">Optional authentication policy.</param>
         /// <param name="geoRedundantSecondaryStorageUri">The secondary URI to be used for retries on failed read requests</param>
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
-        public static HttpPipeline Build(this ClientOptions options, HttpPipelinePolicy authentication = null, Uri geoRedundantSecondaryStorageUri = null)
+        public static HttpPipeline Build(this ClientOptions options, HttpPipelinePolicy authentication = null, Uri geoRedundantSecondaryStorageUri = null, ResponseClassifier responseClassifier = default)
         {
-            StorageResponseClassifier classifier = null;
+            ResponseClassifier classifier = responseClassifier;
             List<HttpPipelinePolicy> perRetryClientPolicies = new List<HttpPipelinePolicy>();
             if (geoRedundantSecondaryStorageUri != null)
             {
@@ -108,9 +109,10 @@ namespace Azure.Storage
         /// </summary>
         /// <param name="options">The Storage ClientOptions.</param>
         /// <param name="credentials">Optional authentication credentials.</param>
+        /// <param name="responseClassifier"></param>
         /// <param name="geoRedundantSecondaryStorageUri">The secondary URI to be used for retries on failed read requests</param>
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
-        public static HttpPipeline Build(this ClientOptions options, object credentials, Uri geoRedundantSecondaryStorageUri = null) =>
-            Build(options, GetAuthenticationPolicy(credentials), geoRedundantSecondaryStorageUri);
+        public static HttpPipeline Build(this ClientOptions options, object credentials, Uri geoRedundantSecondaryStorageUri = null, ResponseClassifier responseClassifier = default) =>
+            Build(options, GetAuthenticationPolicy(credentials), geoRedundantSecondaryStorageUri, responseClassifier);
     }
 }

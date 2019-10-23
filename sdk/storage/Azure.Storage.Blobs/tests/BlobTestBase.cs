@@ -55,7 +55,8 @@ namespace Azure.Storage.Test.Shared
                     MaxRetries = Azure.Storage.Constants.MaxReliabilityRetries,
                     Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
                     MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 10)
-                }
+                },
+                ResponseClassifier = new TestResponseClassifier()
             };
             if (Mode != RecordedTestMode.Live)
             {
