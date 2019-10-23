@@ -15,7 +15,7 @@ using System.Collections.ObjectModel;
 namespace Microsoft.Azure.Search
 {
     /// <summary>
-    /// Builds field definitions for an Azure Search index by reflecting over a user-defined model type.
+    /// Builds field definitions for a search index by reflecting over a user-defined model type.
     /// </summary>
     public static class FieldBuilder
     {

@@ -44,6 +44,7 @@ namespace Compute.Tests
                         Tags = new Dictionary<string, string>() { { "testKey", "testValue" } }
                     };
                     createdDHG.Tags = updateDHGInput.Tags;
+                    updateDHGInput.PlatformFaultDomainCount = returnedDHG.PlatformFaultDomainCount; // There is a bug in PATCH.  PlatformFaultDomainCount is a required property now.
                     returnedDHG =  m_CrpClient.DedicatedHostGroups.Update(rgName, dhgName, updateDHGInput);
                     ValidateDedicatedHostGroup(createdDHG, returnedDHG);
 

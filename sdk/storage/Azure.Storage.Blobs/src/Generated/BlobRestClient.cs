@@ -283,6 +283,10 @@ namespace Azure.Storage.Blobs
                         // Create the response
                         return Response.FromValue(_value, response);
                     }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Blobs.Models.BlobServiceProperties>(response);
+                    }
                     default:
                     {
                         // Create the result
@@ -413,6 +417,10 @@ namespace Azure.Storage.Blobs
 
                         // Create the response
                         return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Blobs.Models.BlobServiceStatistics>(response);
                     }
                     default:
                     {
@@ -567,6 +575,10 @@ namespace Azure.Storage.Blobs
 
                         // Create the response
                         return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Blobs.Models.BlobContainersSegment>(response);
                     }
                     default:
                     {
@@ -843,6 +855,10 @@ namespace Azure.Storage.Blobs
 
                         // Create the response
                         return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Blobs.Models.AccountInfo>(response);
                     }
                     default:
                     {
@@ -1352,6 +1368,10 @@ namespace Azure.Storage.Blobs
                         // Create the response
                         return Response.FromValue(_value, response);
                     }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Blobs.Models.FlattenedContainerItem>(response);
+                    }
                     default:
                     {
                         // Create the result
@@ -1815,6 +1835,10 @@ namespace Azure.Storage.Blobs
 
                         // Create the response
                         return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Blobs.Models.BlobContainerAccessPolicy>(response);
                     }
                     default:
                     {
@@ -2999,6 +3023,10 @@ namespace Azure.Storage.Blobs
                         // Create the response
                         return Response.FromValue(_value, response);
                     }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Blobs.Models.BlobsFlatSegment>(response);
+                    }
                     default:
                     {
                         // Create the result
@@ -3159,6 +3187,10 @@ namespace Azure.Storage.Blobs
 
                         // Create the response
                         return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Blobs.Models.BlobsHierarchySegment>(response);
                     }
                     default:
                     {
@@ -3624,17 +3656,7 @@ namespace Azure.Storage.Blobs
                     }
                     case 304:
                     {
-                        // Create the result
-                        Azure.Storage.Blobs.Models.ConditionNotMetError _value = new Azure.Storage.Blobs.Models.ConditionNotMetError();
-
-                        // Get response headers
-                        string _header;
-                        if (response.Headers.TryGetValue("x-ms-error-code", out _header))
-                        {
-                            _value.ErrorCode = _header;
-                        }
-
-                        throw _value.CreateException(response);
+                        return new Azure.NoBodyResponse<Azure.Storage.Blobs.Models.FlattenedDownloadProperties>(response);
                     }
                     default:
                     {
@@ -3823,7 +3845,7 @@ namespace Azure.Storage.Blobs
                         }
                         if (response.Headers.TryGetValue("x-ms-creation-time", out _header))
                         {
-                            _value.CreationTime = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                            _value.CreatedOn = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
                         _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
                         foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
@@ -3839,7 +3861,7 @@ namespace Azure.Storage.Blobs
                         }
                         if (response.Headers.TryGetValue("x-ms-copy-completion-time", out _header))
                         {
-                            _value.CopyCompletionTime = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                            _value.CopyCompletedOn = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
                         if (response.Headers.TryGetValue("x-ms-copy-status-description", out _header))
                         {
@@ -3947,7 +3969,7 @@ namespace Azure.Storage.Blobs
                         }
                         if (response.Headers.TryGetValue("x-ms-access-tier-change-time", out _header))
                         {
-                            _value.AccessTierChangeTime = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                            _value.AccessTierChangedOn = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
 
                         // Create the response
@@ -3955,17 +3977,7 @@ namespace Azure.Storage.Blobs
                     }
                     case 304:
                     {
-                        // Create the result
-                        Azure.Storage.Blobs.Models.ConditionNotMetError _value = new Azure.Storage.Blobs.Models.ConditionNotMetError();
-
-                        // Get response headers
-                        string _header;
-                        if (response.Headers.TryGetValue("x-ms-error-code", out _header))
-                        {
-                            _value.ErrorCode = _header;
-                        }
-
-                        throw _value.CreateException(response);
+                        return new Azure.NoBodyResponse<Azure.Storage.Blobs.Models.BlobProperties>(response);
                     }
                     default:
                     {
@@ -4528,6 +4540,10 @@ namespace Azure.Storage.Blobs
 
                         // Create the response
                         return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Blobs.Models.BlobGetAccessControlResult>(response);
                     }
                     default:
                     {
@@ -8488,17 +8504,7 @@ namespace Azure.Storage.Blobs
                     }
                     case 304:
                     {
-                        // Create the result
-                        Azure.Storage.Blobs.Models.ConditionNotMetError _value = new Azure.Storage.Blobs.Models.ConditionNotMetError();
-
-                        // Get response headers
-                        string _header;
-                        if (response.Headers.TryGetValue("x-ms-error-code", out _header))
-                        {
-                            _value.ErrorCode = _header;
-                        }
-
-                        throw _value.CreateException(response);
+                        return new Azure.NoBodyResponse<Azure.Storage.Blobs.Models.PageRangesInfoInternal>(response);
                     }
                     default:
                     {
@@ -8696,17 +8702,7 @@ namespace Azure.Storage.Blobs
                     }
                     case 304:
                     {
-                        // Create the result
-                        Azure.Storage.Blobs.Models.ConditionNotMetError _value = new Azure.Storage.Blobs.Models.ConditionNotMetError();
-
-                        // Get response headers
-                        string _header;
-                        if (response.Headers.TryGetValue("x-ms-error-code", out _header))
-                        {
-                            _value.ErrorCode = _header;
-                        }
-
-                        throw _value.CreateException(response);
+                        return new Azure.NoBodyResponse<Azure.Storage.Blobs.Models.PageRangesInfoInternal>(response);
                     }
                     default:
                     {
@@ -11307,6 +11303,10 @@ namespace Azure.Storage.Blobs
                         // Create the response
                         return Response.FromValue(_value, response);
                     }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Blobs.Models.GetBlockListOperation>(response);
+                    }
                     default:
                     {
                         // Create the result
@@ -12384,6 +12384,10 @@ namespace Azure.Storage.Blobs
 
                         // Create the response
                         return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Blobs.Models.DirectoryGetAccessControlResult>(response);
                     }
                     default:
                     {
@@ -14590,7 +14594,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// A GMT date/time value, to the second. All primary writes preceding this value are guaranteed to be available for read operations at the secondary. Primary writes after this point in time may or may not be available for reads.
         /// </summary>
-        public System.DateTimeOffset LastSyncTime { get; internal set; }
+        public System.DateTimeOffset? LastSyncedOn { get; internal set; }
 
         /// <summary>
         /// Prevent direct instantiation of BlobGeoReplication instances.
@@ -14616,7 +14620,7 @@ namespace Azure.Storage.Blobs.Models
             _child = element.Element(System.Xml.Linq.XName.Get("LastSyncTime", ""));
             if (_child != null)
             {
-                _value.LastSyncTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _value.LastSyncedOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
             }
             CustomizeFromXml(element, _value);
             return _value;
@@ -14635,12 +14639,12 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public static BlobGeoReplication BlobGeoReplication(
             Azure.Storage.Blobs.Models.BlobGeoReplicationStatus status,
-            System.DateTimeOffset lastSyncTime)
+            System.DateTimeOffset? lastSyncedOn = default)
         {
             return new BlobGeoReplication()
             {
                 Status = status,
-                LastSyncTime = lastSyncTime,
+                LastSyncedOn = lastSyncedOn,
             };
         }
     }
@@ -15039,7 +15043,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// AccessTierChangeTime
         /// </summary>
-        public System.DateTimeOffset? AccessTierChangeTime { get; internal set; }
+        public System.DateTimeOffset? AccessTierChangedOn { get; internal set; }
 
         /// <summary>
         /// ETag
@@ -15210,7 +15214,7 @@ namespace Azure.Storage.Blobs.Models
             _child = element.Element(System.Xml.Linq.XName.Get("AccessTierChangeTime", ""));
             if (_child != null)
             {
-                _value.AccessTierChangeTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _value.AccessTierChangedOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("Etag", ""));
             if (_child != null)
@@ -15296,7 +15300,7 @@ namespace Azure.Storage.Blobs.Models
                 CreationTime = creationTime,
                 ArchiveStatus = archiveStatus,
                 CustomerProvidedKeySha256 = customerProvidedKeySha256,
-                AccessTierChangeTime = accessTierChangeTime,
+                AccessTierChangedOn = accessTierChangeTime,
                 ETag = eTag,
             };
         }
@@ -15541,7 +15545,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Returns the date and time the blob was created.
         /// </summary>
-        public System.DateTimeOffset CreationTime { get; internal set; }
+        public System.DateTimeOffset CreatedOn { get; internal set; }
 
         /// <summary>
         /// x-ms-meta
@@ -15556,7 +15560,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Conclusion time of the last attempted Copy Blob operation where this blob was the destination blob. This value can specify the time of a completed, aborted, or failed copy attempt. This header does not appear if a copy is pending, if this blob has never been the destination in a Copy Blob operation, or if this blob has been modified after a concluded Copy Blob operation using Set Blob Properties, Put Blob, or Put Block List.
         /// </summary>
-        public System.DateTimeOffset CopyCompletionTime { get; internal set; }
+        public System.DateTimeOffset CopyCompletedOn { get; internal set; }
 
         /// <summary>
         /// Only appears when x-ms-copy-status is failed or pending. Describes the cause of the last fatal or non-fatal copy operation failure. This header does not appear if this blob has never been the destination in a Copy Blob operation, or if this blob has been modified after a concluded Copy Blob operation using Set Blob Properties, Put Blob, or Put Block List
@@ -15693,7 +15697,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The time the tier was changed on the object. This is only returned if the tier on the block blob was ever set.
         /// </summary>
-        public System.DateTimeOffset AccessTierChangeTime { get; internal set; }
+        public System.DateTimeOffset AccessTierChangedOn { get; internal set; }
 
         /// <summary>
         /// Creates a new BlobProperties instance
@@ -15773,14 +15777,14 @@ namespace Azure.Storage.Blobs.Models
                 IsServerEncrypted = isServerEncrypted,
                 CopyStatusDescription = copyStatusDescription,
                 EncryptionKeySha256 = encryptionKeySha256,
-                CopyCompletionTime = copyCompletionTime,
+                CopyCompletedOn = copyCompletionTime,
                 AccessTier = accessTier,
                 BlobType = blobType,
                 AccessTierInferred = accessTierInferred,
                 Metadata = metadata,
                 ArchiveStatus = archiveStatus,
-                CreationTime = creationTime,
-                AccessTierChangeTime = accessTierChangeTime,
+                CreatedOn = creationTime,
+                AccessTierChangedOn = accessTierChangeTime,
                 ContentType = contentType,
             };
         }
@@ -17220,14 +17224,19 @@ namespace Azure.Storage.Blobs.Models
     public enum DeleteSnapshotsOption
     {
         /// <summary>
+        /// none
+        /// </summary>
+        None,
+
+        /// <summary>
         /// include
         /// </summary>
-        Include,
+        IncludeSnapshots,
 
         /// <summary>
         /// only
         /// </summary>
-        Only
+        OnlySnapshots
     }
 }
 
@@ -17241,8 +17250,9 @@ namespace Azure.Storage.Blobs
             {
                 return value switch
                 {
-                    Azure.Storage.Blobs.Models.DeleteSnapshotsOption.Include => "include",
-                    Azure.Storage.Blobs.Models.DeleteSnapshotsOption.Only => "only",
+                    Azure.Storage.Blobs.Models.DeleteSnapshotsOption.None => null,
+                    Azure.Storage.Blobs.Models.DeleteSnapshotsOption.IncludeSnapshots => "include",
+                    Azure.Storage.Blobs.Models.DeleteSnapshotsOption.OnlySnapshots => "only",
                     _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.DeleteSnapshotsOption value.")
                 };
             }
@@ -17251,8 +17261,9 @@ namespace Azure.Storage.Blobs
             {
                 return value switch
                 {
-                    "include" => Azure.Storage.Blobs.Models.DeleteSnapshotsOption.Include,
-                    "only" => Azure.Storage.Blobs.Models.DeleteSnapshotsOption.Only,
+                    null => Azure.Storage.Blobs.Models.DeleteSnapshotsOption.None,
+                    "include" => Azure.Storage.Blobs.Models.DeleteSnapshotsOption.IncludeSnapshots,
+                    "only" => Azure.Storage.Blobs.Models.DeleteSnapshotsOption.OnlySnapshots,
                     _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.DeleteSnapshotsOption value.")
                 };
             }

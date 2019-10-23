@@ -126,9 +126,9 @@ namespace Microsoft.Azure.Management.Network.Models
             {
                 throw new ValidationException(ValidationRules.InclusiveMaximum, "VirtualRouterAsn", 4294967295);
             }
-            if (VirtualRouterAsn < 1)
+            if (VirtualRouterAsn < 0)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "VirtualRouterAsn", 1);
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "VirtualRouterAsn", 0);
             }
         }
     }

@@ -547,12 +547,11 @@ namespace Azure.Storage.Files
         /// Marks the specified share or share snapshot for deletion.
         /// The share or share snapshot and any files contained within it are later deleted during garbage collection.
         ///
-        /// Currently, this method will always delete snapshots.  There's no way to specify a separate value for x-ms-delete-snapshots.
-        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-share"/>.
         /// </summary>
-        /// <param name="shareSnapshot">
-        /// Optional. Specifies the share snapshot to delete.
+        /// <param name="includeSnapshots">
+        /// A value indicating whether to delete a share's snapshots in addition
+        /// to the share itself.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -566,10 +565,10 @@ namespace Azure.Storage.Files
         /// a failure occurs.
         /// </remarks>
         public virtual Response Delete(
-            string shareSnapshot = default,
+            bool includeSnapshots = true,
             CancellationToken cancellationToken = default) =>
             DeleteInternal(
-                shareSnapshot,
+                includeSnapshots,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -578,12 +577,11 @@ namespace Azure.Storage.Files
         /// Marks the specified share or share snapshot for deletion.
         /// The share or share snapshot and any files contained within it are later deleted during garbage collection.
         ///
-        /// Currently, this method will always delete snapshots.  There's no way to specify a separate value for x-ms-delete-snapshots.
-        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-share"/>.
         /// </summary>
-        /// <param name="shareSnapshot">
-        /// Optional. Specifies the share snapshot to delete.
+        /// <param name="includeSnapshots">
+        /// A value indicating whether to delete a share's snapshots in addition
+        /// to the share itself.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -597,10 +595,10 @@ namespace Azure.Storage.Files
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response> DeleteAsync(
-            string shareSnapshot = default,
+            bool includeSnapshots = true,
             CancellationToken cancellationToken = default) =>
             await DeleteInternal(
-                shareSnapshot,
+                includeSnapshots,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -609,12 +607,11 @@ namespace Azure.Storage.Files
         /// Marks the specified share or share snapshot for deletion.
         /// The share or share snapshot and any files contained within it are later deleted during garbage collection.
         ///
-        /// Currently, this method will always delete snapshots.  There's no way to specify a separate value for x-ms-delete-snapshots.
-        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-share"/>.
         /// </summary>
-        /// <param name="shareSnapshot">
-        /// Optional. Specifies the share snapshot to delete.
+        /// <param name="includeSnapshots">
+        /// A value indicating whether to delete a share's snapshots in addition
+        /// to the share itself.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -631,7 +628,7 @@ namespace Azure.Storage.Files
         /// a failure occurs.
         /// </remarks>
         private async Task<Response> DeleteInternal(
-            string shareSnapshot,
+            bool includeSnapshots,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -640,15 +637,14 @@ namespace Azure.Storage.Files
                 Pipeline.LogMethodEnter(
                     nameof(ShareClient),
                     message:
-                    $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(shareSnapshot)}: {shareSnapshot}");
+                    $"{nameof(Uri)}: {Uri}");
                 try
                 {
                     return await FileRestClient.Share.DeleteAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
-                        sharesnapshot: shareSnapshot,
+                        deleteSnapshots: includeSnapshots ? DeleteSnapshotsOptionType.Include : (DeleteSnapshotsOptionType?)null,
                         async: async,
                         operationName: Constants.File.Share.DeleteOperationName,
                         cancellationToken: cancellationToken)
@@ -675,9 +671,6 @@ namespace Azure.Storage.Files
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-share-properties"/>.
         /// </summary>
-        /// <param name="shareSnapshot">
-        /// Optional. Specifies the share snapshot to query for properties.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -691,10 +684,8 @@ namespace Azure.Storage.Files
         /// a failure occurs.
         /// </remarks>
         public virtual Response<ShareProperties> GetProperties(
-            string shareSnapshot = default,
             CancellationToken cancellationToken = default) =>
             GetPropertiesInternal(
-                shareSnapshot,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -706,9 +697,6 @@ namespace Azure.Storage.Files
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-share-properties"/>.
         /// </summary>
-        /// <param name="shareSnapshot">
-        /// Optional. Specifies the share snapshot to query for properties.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -722,10 +710,8 @@ namespace Azure.Storage.Files
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<ShareProperties>> GetPropertiesAsync(
-            string shareSnapshot = default,
             CancellationToken cancellationToken = default) =>
             await GetPropertiesInternal(
-                shareSnapshot,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -737,9 +723,6 @@ namespace Azure.Storage.Files
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-share-properties"/>.
         /// </summary>
-        /// <param name="shareSnapshot">
-        /// Optional. Specifies the share snapshot to query for properties.
-        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -756,7 +739,6 @@ namespace Azure.Storage.Files
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<ShareProperties>> GetPropertiesInternal(
-            string shareSnapshot,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -765,15 +747,13 @@ namespace Azure.Storage.Files
                 Pipeline.LogMethodEnter(
                     nameof(ShareClient),
                     message:
-                    $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(shareSnapshot)}: {shareSnapshot}");
+                    $"{nameof(Uri)}: {Uri}");
                 try
                 {
                     return await FileRestClient.Share.GetPropertiesAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
-                        sharesnapshot: shareSnapshot,
                         async: async,
                         operationName: Constants.File.Share.GetPropertiesOperationName,
                         cancellationToken: cancellationToken)
@@ -1429,6 +1409,12 @@ namespace Azure.Storage.Files
                             operationName: Constants.File.Share.GetPermissionOperationName,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
+
+                    // Return an exploding Response on 304
+                    if (jsonResponse.IsUnavailable())
+                    {
+                        return jsonResponse;
+                    }
 
                     // Parse the JSON object
                     using var doc = JsonDocument.Parse(jsonResponse.Value);

@@ -50,7 +50,7 @@ Use the [Azure CLI][azure_cli] snippet below to create/get client secret credent
 
 * Grant the above mentioned application authorization to perform key operations on the key vault:
     ```PowerShell
-    az keyvault set-policy --name <your-key-vault-name> --spn $AZURE_CLIENT_ID --certificate-permissions backup delete get list create
+    az keyvault set-policy --name <your-key-vault-name> --spn $AZURE_CLIENT_ID --certificate-permissions backup delete get list create update purge
     ```
     > --certificate-permissions:
     > Allowed values: backup, create, delete, deleteissuers, get, getissuers, import, list, listissuers, managecontacts, manageissuers, purge, recover, restore, setissuers, update.
@@ -138,6 +138,20 @@ Console.WriteLine(deletedCert.ScheduledPurgeDate);
 await client.PurgeDeletedCertificateAsync("MyCertificate");
 ```
 
+### List Certificates
+`GetCertificates` enumerates the certificates in the vault, returning select properties of the
+certificate. Sensitive fields of the certificate will not be returned. This operation
+requires the certificates/list permission.
+  
+```C# ListCertificates
+AsyncPageable<CertificateProperties> allCertificates = client.GetCertificatesAsync();
+
+await foreach (CertificateProperties certificateProperties in allCertificates)
+{
+    Console.WriteLine(certificateProperties.Name);
+}
+```
+
 ## Troubleshooting
 
 ### General
@@ -212,7 +226,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 <!-- LINKS -->
 [certificate_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Certificates/src
-[certificate_client_nuget_package]: https://www.nuget.org/packages/Azure.Security.KeyVault.Certificate/
+[certificate_client_nuget_package]: https://www.nuget.org/packages/Azure.Security.KeyVault.Certificates/
 [API_reference]: https://azure.github.io/azure-sdk-for-net/api/Azure.Security.KeyVault.Certificates.html
 [keyvault_docs]: https://docs.microsoft.com/en-us/azure/key-vault/
 [certificate_client_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Certificates/samples

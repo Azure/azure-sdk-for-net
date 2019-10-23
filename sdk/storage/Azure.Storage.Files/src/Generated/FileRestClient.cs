@@ -271,6 +271,10 @@ namespace Azure.Storage.Files
                         // Create the response
                         return Response.FromValue(_value, response);
                     }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Files.Models.FileServiceProperties>(response);
+                    }
                     default:
                     {
                         // Create the result
@@ -418,6 +422,10 @@ namespace Azure.Storage.Files
 
                         // Create the response
                         return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Files.Models.SharesSegment>(response);
                     }
                     default:
                     {
@@ -729,6 +737,10 @@ namespace Azure.Storage.Files
 
                         // Create the response
                         return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Files.Models.ShareProperties>(response);
                     }
                     default:
                     {
@@ -1295,6 +1307,10 @@ namespace Azure.Storage.Files
                         // Create the response
                         return Response.FromValue(_value, response);
                     }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<string>(response);
+                    }
                     default:
                     {
                         // Create the result
@@ -1711,6 +1727,10 @@ namespace Azure.Storage.Files
                         // Create the response
                         return Response.FromValue(_value, response);
                     }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.FileSignedIdentifier>>(response);
+                    }
                     default:
                     {
                         // Create the result
@@ -1989,6 +2009,10 @@ namespace Azure.Storage.Files
 
                         // Create the response
                         return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Files.Models.ShareStatistics>(response);
                     }
                     default:
                     {
@@ -2392,6 +2416,10 @@ namespace Azure.Storage.Files
 
                         // Create the response
                         return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Files.Models.RawStorageDirectoryProperties>(response);
                     }
                     default:
                     {
@@ -3012,6 +3040,10 @@ namespace Azure.Storage.Files
                         // Create the response
                         return Response.FromValue(_value, response);
                     }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Files.Models.FilesAndDirectoriesSegment>(response);
+                    }
                     default:
                     {
                         // Create the result
@@ -3163,6 +3195,10 @@ namespace Azure.Storage.Files
 
                         // Create the response
                         return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Files.Models.StorageHandlesSegment>(response);
                     }
                     default:
                     {
@@ -3989,6 +4025,10 @@ namespace Azure.Storage.Files
                         // Create the response
                         return Response.FromValue(_value, response);
                     }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Files.Models.FlattenedStorageFileProperties>(response);
+                    }
                     default:
                     {
                         // Create the result
@@ -4219,6 +4259,10 @@ namespace Azure.Storage.Files
 
                         // Create the response
                         return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Files.Models.RawStorageFileProperties>(response);
                     }
                     default:
                     {
@@ -5280,6 +5324,10 @@ namespace Azure.Storage.Files
                         // Create the response
                         return Response.FromValue(_value, response);
                     }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Files.Models.StorageFileRangeInfo>(response);
+                    }
                     default:
                     {
                         // Create the result
@@ -5714,6 +5762,10 @@ namespace Azure.Storage.Files
                         // Create the response
                         return Response.FromValue(_value, response);
                     }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Files.Models.StorageHandlesSegment>(response);
+                    }
                     default:
                     {
                         // Create the result
@@ -5960,7 +6012,7 @@ namespace Azure.Storage.Files.Models
     /// <summary>
     /// Specifies the option include to delete the base share and all of its snapshots.
     /// </summary>
-    public enum DeleteSnapshotsOptionType
+    internal enum DeleteSnapshotsOptionType
     {
         /// <summary>
         /// include
@@ -8845,12 +8897,12 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// Time when the session that previously opened the handle has last been reconnected. (UTC)
         /// </summary>
-        public System.DateTimeOffset OpenTime { get; internal set; }
+        public System.DateTimeOffset? OpenedOn { get; internal set; }
 
         /// <summary>
         /// Time handle was last connected to (UTC)
         /// </summary>
-        public System.DateTimeOffset? LastReconnectTime { get; internal set; }
+        public System.DateTimeOffset? LastReconnectedOn { get; internal set; }
 
         /// <summary>
         /// Prevent direct instantiation of StorageFileHandle instances.
@@ -8901,12 +8953,12 @@ namespace Azure.Storage.Files.Models
             _child = element.Element(System.Xml.Linq.XName.Get("OpenTime", ""));
             if (_child != null)
             {
-                _value.OpenTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _value.OpenedOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("LastReconnectTime", ""));
             if (_child != null)
             {
-                _value.LastReconnectTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _value.LastReconnectedOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
             }
             CustomizeFromXml(element, _value);
             return _value;
@@ -8929,9 +8981,9 @@ namespace Azure.Storage.Files.Models
             string fileId,
             string sessionId,
             string clientIp,
-            System.DateTimeOffset openTime,
             string parentId = default,
-            System.DateTimeOffset? lastReconnectTime = default)
+            System.DateTimeOffset? openedOn = default,
+            System.DateTimeOffset? lastReconnectedOn = default)
         {
             return new StorageFileHandle()
             {
@@ -8940,9 +8992,9 @@ namespace Azure.Storage.Files.Models
                 FileId = fileId,
                 SessionId = sessionId,
                 ClientIp = clientIp,
-                OpenTime = openTime,
                 ParentId = parentId,
-                LastReconnectTime = lastReconnectTime,
+                OpenedOn = openedOn,
+                LastReconnectedOn = lastReconnectedOn,
             };
         }
     }

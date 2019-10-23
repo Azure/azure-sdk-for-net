@@ -30,17 +30,17 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// The creation time of the file.
         /// </summary>
-        public DateTimeOffset? FileCreationTime { get; set; }
+        public DateTimeOffset? FileCreatedOn { get; set; }
 
         /// <summary>
         /// The last write time of the file.
         /// </summary>
-        public DateTimeOffset? FileLastWriteTime { get; set; }
+        public DateTimeOffset? FileLastWrittenOn { get; set; }
 
         /// <summary>
         /// The change time of the file.
         /// </summary>
-        public DateTimeOffset? FileChangeTime { get; internal set; }
+        public DateTimeOffset? FileChangedOn { get; internal set; }
 
         /// <summary>
         /// The fileId of the file.
@@ -60,9 +60,9 @@ namespace Azure.Storage.Files.Models
         {
             FileAttributes = FileExtensions.ToFileAttributes(rawStorageFileInfo.FileAttributes);
             FilePermissionKey = rawStorageFileInfo.FilePermissionKey;
-            FileCreationTime = rawStorageFileInfo.FileCreationTime;
-            FileLastWriteTime = rawStorageFileInfo.FileLastWriteTime;
-            FileChangeTime = rawStorageFileInfo.FileChangeTime;
+            FileCreatedOn = rawStorageFileInfo.FileCreationTime;
+            FileLastWrittenOn = rawStorageFileInfo.FileLastWriteTime;
+            FileChangedOn = rawStorageFileInfo.FileChangeTime;
             FileId = rawStorageFileInfo.FileId;
             ParentId = rawStorageFileInfo.FileParentId;
 
@@ -72,9 +72,9 @@ namespace Azure.Storage.Files.Models
         {
             FileAttributes = FileExtensions.ToFileAttributes(rawStorageFileProperties.FileAttributes);
             FilePermissionKey = rawStorageFileProperties.FilePermissionKey;
-            FileCreationTime = rawStorageFileProperties.FileCreationTime;
-            FileLastWriteTime = rawStorageFileProperties.FileLastWriteTime;
-            FileChangeTime = rawStorageFileProperties.FileChangeTime;
+            FileCreatedOn = rawStorageFileProperties.FileCreationTime;
+            FileLastWrittenOn = rawStorageFileProperties.FileLastWriteTime;
+            FileChangedOn = rawStorageFileProperties.FileChangeTime;
             FileId = rawStorageFileProperties.FileId;
             ParentId = rawStorageFileProperties.FileParentId;
         }
@@ -83,9 +83,9 @@ namespace Azure.Storage.Files.Models
         {
             FileAttributes = FileExtensions.ToFileAttributes(flattenedStorageFileProperties.FileAttributes);
             FilePermissionKey = flattenedStorageFileProperties.FilePermissionKey;
-            FileCreationTime = flattenedStorageFileProperties.FileCreationTime;
-            FileLastWriteTime = flattenedStorageFileProperties.FileLastWriteTime;
-            FileChangeTime = flattenedStorageFileProperties.FileChangeTime;
+            FileCreatedOn = flattenedStorageFileProperties.FileCreationTime;
+            FileLastWrittenOn = flattenedStorageFileProperties.FileLastWriteTime;
+            FileChangedOn = flattenedStorageFileProperties.FileChangeTime;
             FileId = flattenedStorageFileProperties.FileId;
             ParentId = flattenedStorageFileProperties.FileParentId;
         }
@@ -94,9 +94,9 @@ namespace Azure.Storage.Files.Models
         {
             FileAttributes = FileExtensions.ToFileAttributes(rawStorageDirectoryInfo.FileAttributes);
             FilePermissionKey = rawStorageDirectoryInfo.FilePermissionKey;
-            FileCreationTime = rawStorageDirectoryInfo.FileCreationTime;
-            FileLastWriteTime = rawStorageDirectoryInfo.FileLastWriteTime;
-            FileChangeTime = rawStorageDirectoryInfo.FileChangeTime;
+            FileCreatedOn = rawStorageDirectoryInfo.FileCreationTime;
+            FileLastWrittenOn = rawStorageDirectoryInfo.FileLastWriteTime;
+            FileChangedOn = rawStorageDirectoryInfo.FileChangeTime;
             FileId = rawStorageDirectoryInfo.FileId;
             ParentId = rawStorageDirectoryInfo.FileParentId;
         }
@@ -105,9 +105,9 @@ namespace Azure.Storage.Files.Models
         {
             FileAttributes = FileExtensions.ToFileAttributes(rawStorageDirectoryProperties.FileAttributes);
             FilePermissionKey = rawStorageDirectoryProperties.FilePermissionKey;
-            FileCreationTime = rawStorageDirectoryProperties.FileCreationTime;
-            FileLastWriteTime = rawStorageDirectoryProperties.FileLastWriteTime;
-            FileChangeTime = rawStorageDirectoryProperties.FileChangeTime;
+            FileCreatedOn = rawStorageDirectoryProperties.FileCreationTime;
+            FileLastWrittenOn = rawStorageDirectoryProperties.FileLastWriteTime;
+            FileChangedOn = rawStorageDirectoryProperties.FileChangeTime;
             FileId = rawStorageDirectoryProperties.FileId;
             ParentId = rawStorageDirectoryProperties.FileParentId;
         }
@@ -129,10 +129,10 @@ namespace Azure.Storage.Files.Models
         public override int GetHashCode() => base.GetHashCode();
 
         internal string FileCreationTimeToString()
-            => NullableDateTimeOffsetToString(FileCreationTime);
+            => NullableDateTimeOffsetToString(FileCreatedOn);
 
         internal string FileLastWriteTimeToString()
-            => NullableDateTimeOffsetToString(FileLastWriteTime);
+            => NullableDateTimeOffsetToString(FileLastWrittenOn);
 
         private static string NullableDateTimeOffsetToString(DateTimeOffset? dateTimeOffset)
             => dateTimeOffset.HasValue ? DateTimeOffSetToString(dateTimeOffset.Value) : null;
@@ -149,11 +149,11 @@ namespace Azure.Storage.Files.Models
         /// Creates a new FileSmbProperties instance for mocking.
         /// </summary>
         public static FileSmbProperties FileSmbProperties(
-            DateTimeOffset? fileChangeTime,
+            DateTimeOffset? fileChangedOn,
             string fileId,
             string parentId) => new FileSmbProperties
             {
-                FileChangeTime = fileChangeTime,
+                FileChangedOn = fileChangedOn,
                 FileId = fileId,
                 ParentId = parentId
             };
