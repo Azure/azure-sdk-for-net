@@ -71,7 +71,7 @@ namespace Azure.Core.Pipeline
 
         public void Dispose()
         {
-            if (_activity == null)
+            if (_activity?.Id == null)
             {
                 return;
             }
