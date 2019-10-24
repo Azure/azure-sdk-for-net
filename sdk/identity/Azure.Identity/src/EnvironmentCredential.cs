@@ -68,7 +68,7 @@ namespace Azure.Identity
 
             if (_credential is null)
             {
-                StringBuilder builder = new StringBuilder("EnvironmentCredential is unavailable, environment variables not fully configured. AZURE_TENANT_ID and AZURE_CLIENT_ID must be set, along with either AZURE_CLIENT_SECRET or AZURE_USERNAME and AZURE_PASSWORD. Currently set variables [ ");
+                StringBuilder builder = new StringBuilder("Environment variables not fully configured. AZURE_TENANT_ID and AZURE_CLIENT_ID must be set, along with either AZURE_CLIENT_SECRET or AZURE_USERNAME and AZURE_PASSWORD. Currently set variables [ ");
 
                 if (tenantId != null)
                 {
@@ -95,7 +95,7 @@ namespace Azure.Identity
                     builder.Append(" AZURE_PASSWORD");
                 }
 
-                _unavailbleErrorMessage = builder.ToString();
+                _unavailbleErrorMessage = builder.Append(" ]").ToString();
             }
         }
 

@@ -42,7 +42,7 @@ namespace Azure.Identity
                 }
                 else
                 {
-                    exStr.AppendLine($"  {credentials.Span[i].GetType().Name} failed with {innerExceptions.Span[i].ToString()}.");
+                    exStr.AppendLine($"  {credentials.Span[i].GetType().Name} failed with {innerExceptions.Span[i].Message}.");
                 }
             }
 

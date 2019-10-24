@@ -19,7 +19,7 @@ namespace Azure.Identity
     /// </summary>
     public class ManagedIdentityCredential : TokenCredential, IExtendedTokenCredential
     {
-        internal const string MsiUnavailableError = "Managed identity authentication is unavailable, no endpoint found.";
+        internal const string MsiUnavailableError = "No managed identity endpoint found.";
 
         private readonly string _clientId;
         private readonly CredentialPipeline _pipeline;
