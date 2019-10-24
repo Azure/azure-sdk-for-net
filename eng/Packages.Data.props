@@ -113,6 +113,5 @@
     <PackageReference Update="System.Threading.Channels" Version="4.6.0" />
     <PackageReference Update="System.Text.Json" Version="4.6.0" />
     <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="4.6.0" />
-    <PackageReference Update="System.Runtime.CompilerServices.Unsafe" Version="4.6.0" />
   </ItemGroup>
 </Project>

@@ -13,6 +13,5 @@
 
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.Messaging.EventHubs.csproj" />
-    <ProjectReference Include="..\..\..\identity\Azure.Identity\src\Azure.Identity.csproj" />
   </ItemGroup>
 </Project>
