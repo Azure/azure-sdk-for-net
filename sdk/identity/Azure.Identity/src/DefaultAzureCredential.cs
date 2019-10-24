@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using System;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -19,24 +20,21 @@ namespace Azure.Identity
     /// </summary>
     public class DefaultAzureCredential : TokenCredential
     {
-        private static readonly IExtendedTokenCredential[] s_defaultCredentialChain = GetDefaultAzureCredentialChain(CredentialPipeline.GetInstance(null), new DefaultAzureCredentialOptions());
+        private const string DefaultExceptionMessage = "The DefaultAzureCredential failed to retrieve from the included credentials.";
+        private const string UnhandledExceptionMessage = "The DefaultAzureCredential failed due to an unhandled exception: ";
+        private static readonly IExtendedTokenCredential[] s_defaultCredentialChain = GetDefaultAzureCredentialChain(new DefaultAzureCredentialFactory(CredentialPipeline.GetInstance(null)), new DefaultAzureCredentialOptions());
 
         private readonly Exception[] _unavailableExceptions;
         private readonly IExtendedTokenCredential[] _sources;
         private readonly CredentialPipeline _pipeline;
+
         /// <summary>
         /// Creates an instance of the DefaultAzureCredential class.
         /// </summary>
         /// <param name="includeInteractiveCredentials">Specifies whether credentials requiring user interaction will be included in the default authentication flow.</param>
         public DefaultAzureCredential(bool includeInteractiveCredentials = false)
+            : this((includeInteractiveCredentials) ? new DefaultAzureCredentialOptions { ExcludeInteractiveBrowserCredential = !includeInteractiveCredentials } : null)
         {
-            DefaultAzureCredentialOptions options = (includeInteractiveCredentials) ? new DefaultAzureCredentialOptions { ExcludeInteractiveBrowserCredential = !includeInteractiveCredentials } : null;
-
-            _pipeline = CredentialPipeline.GetInstance(options);
-
-            _sources = GetDefaultAzureCredentialChain(_pipeline, options);
-
-            _unavailableExceptions = new Exception[_sources.Length];
         }
 
         /// <summary>
@@ -44,10 +42,15 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="options"></param>
         public DefaultAzureCredential(DefaultAzureCredentialOptions options)
+            : this(new DefaultAzureCredentialFactory(CredentialPipeline.GetInstance(options)), options)
         {
-            _pipeline = CredentialPipeline.GetInstance(options);
+        }
 
-            _sources = GetDefaultAzureCredentialChain(_pipeline, options);
+        internal DefaultAzureCredential(DefaultAzureCredentialFactory factory, DefaultAzureCredentialOptions options)
+        {
+            _pipeline = factory.Pipeline;
+
+            _sources = GetDefaultAzureCredentialChain(factory, options);
 
             _unavailableExceptions = new Exception[_sources.Length];
         }
@@ -58,7 +61,7 @@ namespace Azure.Identity
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The first <see cref="AccessToken"/> returned by the specified sources. Any credential which raises a <see cref="CredentialUnavailableException"/> will be skipped.</returns>
-        public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return GetTokenAsync(false, requestContext, cancellationToken).GetAwaiter().GetResult();
         }
@@ -69,7 +72,7 @@ namespace Azure.Identity
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The first <see cref="AccessToken"/> returned by the specified sources. Any credential which raises a <see cref="CredentialUnavailableException"/> will be skipped.</returns>
-        public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return await GetTokenAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
         }
@@ -78,7 +81,9 @@ namespace Azure.Identity
         {
             using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("Azure.Identity.DefaultAcureCredential.GetToken", requestContext);
 
-            for (int i = 0; i < _sources.Length; i++)
+            int i;
+
+            for (i = 0; i < _sources.Length && _sources[i] != null; i++)
             {
                 if (_unavailableExceptions[i] == null)
                 {
@@ -101,15 +106,16 @@ namespace Azure.Identity
 
                         aggEx[i] = exToken.Exception;
 
-                        throw scope.Failed(new AggregateAuthenticationException(exToken.Exception.Message, new ReadOnlyMemory<object>(_sources, 0, i + 1), aggEx));
+                        throw scope.Failed(AuthenticationFailedException.CreateAggregateException(UnhandledExceptionMessage + exToken.Exception.ToString(), new ReadOnlyMemory<object>(_sources, 0, i + 1), aggEx));
                     }
                 }
             }
 
-            throw scope.Failed(new AggregateAuthenticationException(Constants.AggregateAllUnavailableErrorMessage, _sources, _unavailableExceptions));
+            throw scope.Failed(AuthenticationFailedException.CreateAggregateException(DefaultExceptionMessage, new ReadOnlyMemory<object>(_sources, 0, i), new ReadOnlyMemory<Exception>(_unavailableExceptions, 0, i)));
         }
 
-        private static IExtendedTokenCredential[] GetDefaultAzureCredentialChain(CredentialPipeline pipeline, DefaultAzureCredentialOptions options)
+
+        private static IExtendedTokenCredential[] GetDefaultAzureCredentialChain(DefaultAzureCredentialFactory factory, DefaultAzureCredentialOptions options)
         {
             if (options is null)
             {
@@ -121,22 +127,22 @@ namespace Azure.Identity
 
             if (!options.ExcludeEnvironmentCredential)
             {
-                chain[i++] = new EnvironmentCredential(pipeline);
+                chain[i++] = factory.CreateEnvironmentCredential();
             }
 
             if (!options.ExcludeManagedIdentityCredential)
             {
-                chain[i++] = new ManagedIdentityCredential(options.ManagedIdentityClientId, pipeline);
+                chain[i++] = factory.CreateManagedIdentityCredential(options.ManagedIdentityClientId);
             }
 
             if (!options.ExcludeSharedTokenCacheCredential)
             {
-                chain[i++] = new SharedTokenCacheCredential(options.SharedTokenCacheUsername, pipeline);
+                chain[i++] = factory.CreateSharedTokenCacheCredential(options.SharedTokenCacheUsername ?? EnvironmentVariables.Username);
             }
 
             if (!options.ExcludeInteractiveBrowserCredential)
             {
-                chain[i++] = new InteractiveBrowserCredential(null, Constants.DeveloperSignOnClientId, pipeline);
+                chain[i++] = factory.CreateInteractiveBrowserCredential();
             }
 
             if (i == 0)

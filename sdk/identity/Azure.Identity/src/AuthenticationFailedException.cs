@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text;
 
 namespace Azure.Identity
 {
@@ -27,6 +28,20 @@ namespace Azure.Identity
         public AuthenticationFailedException(string message, Exception innerException)
             : base(message, innerException)
         {
+        }
+
+        internal static AuthenticationFailedException CreateAggregateException(string message, ReadOnlyMemory<object> credentials, ReadOnlyMemory<Exception> innerExceptions)
+        {
+            StringBuilder exStr = new StringBuilder(message).AppendLine();
+
+            for (int i = 0; i < credentials.Length; i++)
+            {
+                exStr.AppendLine($"  {credentials.Span[i].GetType().Name} failed with {innerExceptions.Span[i].ToString()}\".");
+            }
+
+            exStr.Append("See inner exception for more detail.");
+
+            return new AuthenticationFailedException(exStr.ToString(), new AggregateException(message, innerExceptions.ToArray()));
         }
     }
 }

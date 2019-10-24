@@ -20,7 +20,7 @@ namespace Azure.Identity
         internal const string MultipleAccountsErrorMessage = "Multiple accounts were discovered in the shared token cache. To fix, set the AZURE_USERNAME environment variable to the preferred username, or specify it when constructing SharedTokenCacheCredential.";
 
         internal const string NoAccountsErrorMessage = "No accounts were discovered in the shared token cache. To fix, authenticate through tooling supporting azure developer sign on.";
-        
+
         private readonly MsalPublicClientAbstraction _client;
         private readonly CredentialPipeline _pipeline;
         private readonly string _username;

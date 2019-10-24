@@ -12,26 +12,19 @@ namespace Azure.Identity
     /// </summary>
     internal class AggregateAuthenticationException : AuthenticationFailedException
     {
-        private readonly ReadOnlyMemory<object> _credentials;
-        private readonly ReadOnlyMemory<Exception> _innerExceptions;
 
         internal AggregateAuthenticationException(string message, ReadOnlyMemory<object> credentials, ReadOnlyMemory<Exception> innerExceptions)
-            : base(message, new AggregateException(message, innerExceptions.ToArray()))
+            : base(BuildMessage(message, credentials, innerExceptions), new AggregateException(message, innerExceptions.ToArray()))
         {
-            _credentials = credentials;
-            _innerExceptions = innerExceptions;
         }
 
-        /// <inheritdocs/>
-        public override string ToString()
+        private static string BuildMessage(string message, ReadOnlyMemory<object> credentials, ReadOnlyMemory<Exception> innerExceptions)
         {
-            StringBuilder exStr = new StringBuilder(base.ToString());
+            StringBuilder exStr = new StringBuilder(message);
 
-            exStr.Append(Environment.NewLine).Append("INNER EXEPTIONS:").Append(Environment.NewLine);
-
-            for (int i = 0; i < _credentials.Length; i++)
+            for (int i = 0; i < credentials.Length; i++)
             {
-                exStr.Append(_credentials.Span[i].GetType().Name).Append(" Failed: ").Append(_innerExceptions.Span[i].Message).Append(Environment.NewLine);
+                exStr.Append(credentials.Span[i].GetType().Name).Append(" Failed: ").Append(innerExceptions.Span[i].Message).Append(Environment.NewLine);
             }
 
             return exStr.ToString();
