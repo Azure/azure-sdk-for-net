@@ -1,4 +1,11 @@
-# Release History
+# 4.0.0
+Refactored several classes based on feedback, including:
+* KeyBase is now KeyProperties.
+* Key contains a Properties property of type KeyProperties.
+* Enumeration members have been renamed to reflect general naming guidelines consistent with .NET.
+* Enumerations have been changed to structures to allow additions by the server to support new algorithms.
+
+See https://github.com/Azure/azure-sdk-for-net/tree/Azure.Security.KeyVault.Certificates_4.0.0-preview.5/sdk/keyvault/Azure.Security.KeyVault.Keys/ChangeLog.md for more details.
 
 ## 4.0.0-preview.6
 

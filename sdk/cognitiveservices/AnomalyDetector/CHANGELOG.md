@@ -1,0 +1,4 @@
+# 0.8.0
+The Cognitive Service Anomaly Detector Client SDK helps users detect anomalies automatically in time series data. It supports two functionalities:
+1) Detect anomalies for the entire series in batch. This operation generates a model using an entire series, each point is detected with the same model. With this method, points before and after a certain point are used to determine whether it is an anomaly. The entire detection can give the user an overall status of the time series.
+2) Detect anomaly status of the latest point in time series. This operation generates a model using points before the latest one. With this method, only historical points are used to determine whether the target point is an anomaly. The latest point detecting operation matches the scenario of real-time monitoring of business metrics.

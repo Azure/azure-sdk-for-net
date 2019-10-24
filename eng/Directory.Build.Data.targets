@@ -11,7 +11,7 @@
   </Target>
 
   <!-- Set PackageProjectUrl and PackageReleaseNotes to the package README.md and CHANGELOG.md respectively for Client Libraries -->
-  <Target Name="SetPackageProjectUrlandReleaseNotes" BeforeTargets="ValidateTargetFrameworks" Condition="'$(IsTestProject)' != 'true' and '$(IsSamplesProject)' != 'true' and '$(IsTestSupportProject)' != 'true' and '$(CommitSHA)' == ''">
+  <Target Name="SetPackageProjectUrlandReleaseNotes" BeforeTargets="ValidateTargetFrameworks" Condition="'$(IsTestProject)' != 'true' and '$(IsSamplesProject)' != 'true' and '$(IsTestSupportProject)' != 'true' and '$(CommitSHA)' != ''">
     <Error Condition="'$(PackageReleaseNotes)' != ''" Text="Release notes are included in $(MSBuildProjectFile). Move release notes to CHANGELOG.md located in the Package Directory" />
     <PropertyGroup>
       <CurrentCsprojPath>$(MSBuildProjectDirectory)</CurrentCsprojPath>

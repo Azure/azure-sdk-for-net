@@ -1,4 +1,11 @@
-# Release History
+# 4.0.0
+Refactored several classes based on feedback, including:
+* CertificateBase is now CertificateProperties.
+* Certificate contains a Properties property of type CertificateProperties.
+* IssuerBase is now IssuerProperties.
+* Issuer contains a Properties property of type IssuerProperties.
+
+See https://github.com/Azure/azure-sdk-for-net/tree/Azure.Security.KeyVault.Certificates_4.0.0-preview.5/sdk/keyvault/Azure.Security.KeyVault.Certificates/ChangeLog.md for more details.
 
 ## 4.0.0-preview.5 (2019-10-07)
 

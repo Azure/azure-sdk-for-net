@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <PackageReleaseNotes></PackageReleaseNotes>
   </PropertyGroup>
   <Import Project="..\..\..\core\Azure.Core\tests\LiveOnly.props" />
   <ItemGroup>

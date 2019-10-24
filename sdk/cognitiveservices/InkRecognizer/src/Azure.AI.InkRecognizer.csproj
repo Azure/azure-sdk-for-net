@@ -13,10 +13,6 @@
     <!--<PackageTags>InkRecognizer\azure-ai-inkrecognizer;InkRecognizer;azure-ai-inkrecognizer;</PackageTags>-->
 
     <!--<PackageTags>InkRecognizer;InkRecognizer;azure-ai-inkrecognizer;</PackageTags>-->
-    <PackageReleaseNotes>
-      <![CDATA[
-      ]]>
-    </PackageReleaseNotes>
 
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021</NoWarn>

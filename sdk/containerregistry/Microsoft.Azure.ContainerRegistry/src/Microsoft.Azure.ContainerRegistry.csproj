@@ -4,7 +4,6 @@
     <AssemblyTitle>Microsoft Azure Container Registry</AssemblyTitle>
     <VersionPrefix>0.9.0</VersionPrefix>
     <PackageTags>Microsoft Azure Container Registry;Container Registry;</PackageTags>
-    <PackageReleaseNotes>Added capabilities to manage repository, tag and manifest.</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>

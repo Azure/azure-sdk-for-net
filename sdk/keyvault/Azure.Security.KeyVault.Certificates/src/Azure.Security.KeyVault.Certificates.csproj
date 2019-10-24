@@ -5,18 +5,6 @@
     <AssemblyTitle>Microsoft Azure.Security.KeyVault.Certificates client library</AssemblyTitle>
     <VersionPrefix>4.0.0</VersionPrefix>
     <PackageTags>Microsoft Azure Key Vault Certificates</PackageTags>
-    <PackageReleaseNotes>
-      <![CDATA[
-      Refactored several classes based on feedback, including:
-      * CertificateBase is now CertificateProperties.
-      * Certificate contains a Properties property of type CertificateProperties.
-      * IssuerBase is now IssuerProperties.
-      * Issuer contains a Properties property of type IssuerProperties.
-
-      See https://github.com/Azure/azure-sdk-for-net/tree/Azure.Security.KeyVault.Certificates_4.0.0-preview.5/sdk/keyvault/Azure.Security.KeyVault.Certificates/ChangeLog.md for more details.
-      ]]>
-    </PackageReleaseNotes>
-
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>

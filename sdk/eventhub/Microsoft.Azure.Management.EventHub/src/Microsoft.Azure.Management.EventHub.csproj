@@ -9,12 +9,6 @@
 		<Version>2.5.0</Version>
 		<AssemblyName>Microsoft.Azure.Management.EventHub</AssemblyName>
 		<PackageTags>Microsoft Azure EventHubs Management;Event Hubs;Event Hubs management;</PackageTags>
-		<PackageReleaseNotes>
-			<![CDATA[
-		Event Hubs:
-    1) added NetworkRuleSet operations
-	  ]]>
-		</PackageReleaseNotes>
 		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
 	</PropertyGroup> 
 

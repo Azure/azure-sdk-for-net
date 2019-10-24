@@ -3,6 +3,7 @@
     <Description>Microsoft Azure Key Vault Cryptography Class Library</Description>
     <AssemblyTitle>Microsoft Azure Key Vault Cryptography</AssemblyTitle>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <PackageReleaseNotes></PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Microsoft.Azure.KeyVault.Core\src\Microsoft.Azure.KeyVault.Core.csproj" />
