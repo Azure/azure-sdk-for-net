@@ -14,7 +14,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// Initializes a new instance of the <see cref="Secrets.SecretProperties"/> for mocking purposes.
         /// </summary>
         /// <param name="id">Sets the <see cref="Secrets.SecretProperties.Id"/> property.</param>
-        /// <param name="vaultEndpoint">Sets the <see cref="Secrets.SecretProperties.VaultEndpoint"/> property.</param>
+        /// <param name="vaultUri">Sets the <see cref="Secrets.SecretProperties.VaultUri"/> property.</param>
         /// <param name="name">Sets the <see cref="Secrets.SecretProperties.Name"/> property.</param>
         /// <param name="version">Sets the <see cref="Secrets.SecretProperties.Version"/> property.</param>
         /// <param name="managed">Sets the <see cref="Secrets.SecretProperties.Managed"/> property.</param>
@@ -25,7 +25,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <returns>A new instance of the <see cref="Secrets.SecretProperties"/> for mocking purposes.</returns>
         public static SecretProperties SecretProperties(
             Uri id = default,
-            Uri vaultEndpoint = default,
+            Uri vaultUri = default,
             string name = default,
             string version = default,
             bool managed = default,
@@ -37,7 +37,7 @@ namespace Azure.Security.KeyVault.Secrets
             return new SecretProperties
             {
                 Id = id,
-                VaultEndpoint = vaultEndpoint,
+                VaultUri = vaultUri,
                 Name = name,
                 Version = version,
                 Managed = managed,

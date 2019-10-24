@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Azure.Core.Testing;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.Common;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
@@ -770,6 +769,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8351")]
         public async Task AppendBlockFromUriAsync_AccessConditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();

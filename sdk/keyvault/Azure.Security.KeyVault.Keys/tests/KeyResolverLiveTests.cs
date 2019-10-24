@@ -32,7 +32,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             recording ??= Recording;
 
-            return InstrumentClient(new SecretClient(VaultEndpoint, recording.GetCredential(new DefaultAzureCredential()), recording.InstrumentClientOptions(new SecretClientOptions())));
+            return InstrumentClient(new SecretClient(VaultUri, recording.GetCredential(new DefaultAzureCredential()), recording.InstrumentClientOptions(new SecretClientOptions())));
         }
 
         [Test]
@@ -40,7 +40,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             var uriBuilder = new RequestUriBuilder();
 
-            uriBuilder.Reset(VaultEndpoint);
+            uriBuilder.Reset(VaultUri);
 
             uriBuilder.AppendPath($"/keys/", escape: false);
 
@@ -54,7 +54,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             var uriBuilder = new RequestUriBuilder();
 
-            uriBuilder.Reset(VaultEndpoint);
+            uriBuilder.Reset(VaultUri);
 
             uriBuilder.AppendPath($"/secrets/", escape: false);
 

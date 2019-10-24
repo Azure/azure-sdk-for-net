@@ -173,6 +173,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8358")]
         public async Task Batch_AcrossContainers()
         {
             using TestScenario scenario = Scenario();
