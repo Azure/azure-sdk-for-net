@@ -496,6 +496,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8354")]
         public async Task UploadPagesAsync_WithUnreliableConnection()
         {
             const int blobSize = 1 * Constants.MB;
@@ -1610,6 +1611,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8353")]
         public async Task UploadPagesFromUriAsync_CPK()
         {
             using (GetNewContainer(out BlobContainerClient container))
