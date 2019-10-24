@@ -132,4 +132,4 @@ namespace Azure.Storage.Files
             LoggedQueryParameters.ForEach(header => Diagnostics.LoggedQueryParameters.Add(header));
         }
     }
- }
+}
