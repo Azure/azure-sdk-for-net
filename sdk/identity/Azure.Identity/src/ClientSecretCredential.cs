@@ -95,6 +95,12 @@ namespace Azure.Identity
             {
                 return scope.Succeeded(await _client.AuthenticateAsync(TenantId, ClientId, ClientSecret, requestContext.Scopes, cancellationToken).ConfigureAwait(false));
             }
+            catch (OperationCanceledException e)
+            {
+                scope.Failed(e);
+
+                throw;
+            }
             catch (Exception e)
             {
                 throw scope.Failed(e);
@@ -114,6 +120,12 @@ namespace Azure.Identity
             try
             {
                 return scope.Succeeded(_client.Authenticate(TenantId, ClientId, ClientSecret, requestContext.Scopes, cancellationToken));
+            }
+            catch (OperationCanceledException e)
+            {
+                scope.Failed(e);
+
+                throw;
             }
             catch (Exception e)
             {

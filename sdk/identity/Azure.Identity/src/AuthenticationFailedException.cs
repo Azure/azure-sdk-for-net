@@ -36,7 +36,14 @@ namespace Azure.Identity
 
             for (int i = 0; i < credentials.Length; i++)
             {
-                exStr.AppendLine($"  {credentials.Span[i].GetType().Name} failed with {innerExceptions.Span[i].ToString()}\".");
+                if (innerExceptions.Span[i] is CredentialUnavailableException)
+                {
+                    exStr.AppendLine($"  {credentials.Span[i].GetType().Name} is unavailable {innerExceptions.Span[i].Message}.");
+                }
+                else
+                {
+                    exStr.AppendLine($"  {credentials.Span[i].GetType().Name} failed with {innerExceptions.Span[i].ToString()}.");
+                }
             }
 
             exStr.Append("See inner exception for more detail.");

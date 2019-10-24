@@ -110,6 +110,12 @@ namespace Azure.Identity
 
                 return new ExtendedAccessToken(scope.Succeeded(token));
             }
+            catch (OperationCanceledException e)
+            {
+                scope.Failed(e);
+
+                throw;
+            }
             catch (Exception e)
             {
                 return new ExtendedAccessToken(scope.Failed(e));
@@ -133,6 +139,12 @@ namespace Azure.Identity
                 AccessToken token = _client.Authenticate(msiType, requestContext.Scopes, _clientId, cancellationToken);
 
                 return new ExtendedAccessToken(scope.Succeeded(token));
+            }
+            catch (OperationCanceledException e)
+            {
+                scope.Failed(e);
+
+                throw;
             }
             catch (Exception e)
             {

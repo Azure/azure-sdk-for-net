@@ -68,7 +68,7 @@ namespace Azure.Identity
                     {
                         _unavailableExceptions[i] = e;
                     }
-                    catch (Exception e)
+                    catch (Exception e) when (!(e is OperationCanceledException))
                     {
                         Exception[] aggEx = new Exception[i + 1];
 
@@ -104,7 +104,7 @@ namespace Azure.Identity
                     {
                         _unavailableExceptions[i] = e;
                     }
-                    catch (Exception e)
+                    catch (Exception e) when (!(e is OperationCanceledException))
                     {
                         Exception[] aggEx = new Exception[i + 1];
 

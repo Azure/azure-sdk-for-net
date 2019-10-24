@@ -103,6 +103,12 @@ namespace Azure.Identity
                     return scope.Succeeded(GetTokenViaDeviceCodeAsync(requestContext.Scopes, cancellationToken).GetAwaiter().GetResult());
                 }
             }
+            catch (OperationCanceledException e)
+            {
+                scope.Failed(e);
+
+                throw;
+            }
             catch (Exception e)
             {
                 throw scope.Failed(e);
@@ -138,6 +144,12 @@ namespace Azure.Identity
                 {
                     return scope.Succeeded(GetTokenViaDeviceCodeAsync(requestContext.Scopes, cancellationToken).GetAwaiter().GetResult());
                 }
+            }
+            catch (OperationCanceledException e)
+            {
+                scope.Failed(e);
+
+                throw;
             }
             catch (Exception e)
             {

@@ -161,6 +161,12 @@ namespace Azure.Identity
 
                 return new ExtendedAccessToken(scope.Succeeded(token));
             }
+            catch (OperationCanceledException e)
+            {
+                scope.Failed(e);
+
+                throw;
+            }
             catch (Exception e)
             {
                 return new ExtendedAccessToken(scope.Failed(e));
@@ -181,6 +187,12 @@ namespace Azure.Identity
                 AccessToken token = await _credential.GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false);
 
                 return new ExtendedAccessToken(scope.Succeeded(token));
+            }
+            catch (OperationCanceledException e)
+            {
+                scope.Failed(e);
+
+                throw;
             }
             catch (Exception e)
             {

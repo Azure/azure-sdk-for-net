@@ -136,10 +136,21 @@ namespace Azure.Identity
 
             List<IAccount> accounts = (!string.IsNullOrEmpty(_username)) ? allAccounts.Where(a => a.Username == _username).ToList() : allAccounts.ToList();
 
-            try
+            if (accounts.Count == 0)
             {
-                // if there are no accounts we will fail here with InvalidOperationException
-                var proposedAccount = accounts.First();
+                if (allAccounts.Count == 0)
+                {
+                    ex = new CredentialUnavailableException(NoAccountsErrorMessage);
+                }
+                else
+                {
+                    ex = new CredentialUnavailableException($"User account '{_username}' was not found in the shared token cache.{Environment.NewLine}  Discovered Accounts: [ '{string.Join("', '", allAccounts.Select(a => a.Username))}' ]");
+                }
+            }
+            else
+            {
+                // we already know there is at least one account
+                IAccount proposedAccount = accounts.First();
 
                 // if all accounts have the same home account id they are interchangable, so we can just use the first account which we picked
                 if (accounts.All(a => a.HomeAccountId.Identifier == proposedAccount.HomeAccountId.Identifier))
@@ -159,18 +170,6 @@ namespace Azure.Identity
                     {
                         ex = new CredentialUnavailableException($"Multiple entries for the user account '{_username}' were found in the shared token cache. This is not currently supported by the SharedTokenCacheCredential.");
                     }
-                }
-            }
-            // we should only get this exception in the case there are no accounts in the shared token credential, or no accounts matching the specified username (if specified)
-            catch (InvalidOperationException)
-            {
-                if (allAccounts.Count == 0 || string.IsNullOrEmpty(_username))
-                {
-                    ex = new CredentialUnavailableException(NoAccountsErrorMessage);
-                }
-                else
-                {
-                    ex = new CredentialUnavailableException($"User account '{_username}' was not found in the shared token cache.{Environment.NewLine}  Discovered Accounts: [ '{string.Join("', '", allAccounts.Select(a => a.Username))}' ]");
                 }
             }
 
