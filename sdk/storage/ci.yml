@@ -43,16 +43,12 @@ stages:
       safeName: AzureStorageBlobs
     - name: Azure.Storage.Blobs.Batching
       safeName: AzureStorageBlobsBatching
-    - name: Azure.Storage.Blobs.Cryptography
-      safeName: AzureStorageBlobsCryptography
     - name: Azure.Storage.Common
-      safeName: AzureStorageComon
+      safeName: AzureStorageCommon
     - name: Azure.Storage.Files
       safeName: AzureStorageFiles
     - name: Azure.Storage.Files.DataLake
       safeName: AzureStorageFilesDataLake
     - name: Azure.Storage.Queues
       safeName: AzureStorageQueues
-    - name: Azure.Storage.Queues.Cryptography
-      safeName: AzureStorageQueuesCryptography
       
