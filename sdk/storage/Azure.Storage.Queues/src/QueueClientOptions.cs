@@ -53,6 +53,26 @@ namespace Azure.Storage.Queues
         {
             Version = version == ServiceVersion.V2019_02_02 ? version : throw Errors.VersionNotSupported(nameof(version));
             this.Initialize();
+            AddHeadersAndQueryParameters();
+        }
+
+        /// <summary>
+        /// Gets or sets the secondary storage <see cref="Uri"/> that can be read from for the storage account if the
+        /// account is enabled for RA-GRS.
+        ///
+        /// If this property is set, the secondary Uri will be used for GET or HEAD requests during retries.
+        /// If the status of the response from the secondary Uri is a 404, then subsequent retries for
+        /// the request will not use the secondary Uri again, as this indicates that the resource
+        /// may not have propagated there yet. Otherwise, subsequent retries will alternate back and forth
+        /// between primary and secondary Uri.
+        /// </summary>
+        public Uri GeoRedundantSecondaryUri { get; set; }
+
+        /// <summary>
+        /// Add headers and query parameters in <see cref="DiagnosticsOptions.LoggedHeaderNames"/> and <see cref="DiagnosticsOptions.LoggedQueryParameters"/>
+        /// </summary>
+        private void AddHeadersAndQueryParameters()
+        {
             Diagnostics.LoggedHeaderNames.Add("Access-Control-Allow-Origin");
             Diagnostics.LoggedHeaderNames.Add("x-ms-date");
             Diagnostics.LoggedHeaderNames.Add("x-ms-error-code");
@@ -88,18 +108,6 @@ namespace Azure.Storage.Queues
             Diagnostics.LoggedQueryParameters.Add("popreceipt");
             Diagnostics.LoggedQueryParameters.Add("visibilitytimeout");
         }
-
-        /// <summary>
-        /// Gets or sets the secondary storage <see cref="Uri"/> that can be read from for the storage account if the
-        /// account is enabled for RA-GRS.
-        ///
-        /// If this property is set, the secondary Uri will be used for GET or HEAD requests during retries.
-        /// If the status of the response from the secondary Uri is a 404, then subsequent retries for
-        /// the request will not use the secondary Uri again, as this indicates that the resource
-        /// may not have propagated there yet. Otherwise, subsequent retries will alternate back and forth
-        /// between primary and secondary Uri.
-        /// </summary>
-        public Uri GeoRedundantSecondaryUri { get; set; }
 
         /// <summary>
         /// Create an HttpPipeline from QueueClientOptions.

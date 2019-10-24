@@ -71,6 +71,14 @@ namespace Azure.Storage.Blobs
         {
             Version = version == ServiceVersion.V2019_02_02 ? version : throw Errors.VersionNotSupported(nameof(version));
             this.Initialize();
+            AddHeadersAndQueryParameters();
+        }
+
+        /// <summary>
+        /// Add headers and query parameters in <see cref="DiagnosticsOptions.LoggedHeaderNames"/> and <see cref="DiagnosticsOptions.LoggedQueryParameters"/>
+        /// </summary>
+        private void AddHeadersAndQueryParameters()
+        {
             Diagnostics.LoggedHeaderNames.Add("Access-Control-Allow-Origin");
             Diagnostics.LoggedHeaderNames.Add("x-ms-date");
             Diagnostics.LoggedHeaderNames.Add("x-ms-error-code");
