@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,7 +25,6 @@ namespace Azure.Identity
         private const string UnhandledExceptionMessage = "The DefaultAzureCredential failed due to an unhandled exception: ";
         private static readonly IExtendedTokenCredential[] s_defaultCredentialChain = GetDefaultAzureCredentialChain(new DefaultAzureCredentialFactory(CredentialPipeline.GetInstance(null)), new DefaultAzureCredentialOptions());
 
-        private readonly Exception[] _unavailableExceptions;
         private readonly IExtendedTokenCredential[] _sources;
         private readonly CredentialPipeline _pipeline;
 
@@ -51,8 +51,6 @@ namespace Azure.Identity
             _pipeline = factory.Pipeline;
 
             _sources = GetDefaultAzureCredentialChain(factory, options);
-
-            _unavailableExceptions = new Exception[_sources.Length];
         }
 
         /// <summary>
@@ -81,37 +79,32 @@ namespace Azure.Identity
         {
             using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("Azure.Identity.DefaultAcureCredential.GetToken", requestContext);
 
+            List<Exception> exceptions = new List<Exception>();
+
             int i;
 
             for (i = 0; i < _sources.Length && _sources[i] != null; i++)
             {
-                if (_unavailableExceptions[i] == null)
+                ExtendedAccessToken exToken = isAsync ? await _sources[i].GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false) : _sources[i].GetToken(requestContext, cancellationToken);
+
+                if (exToken.Exception is null)
                 {
-                    ExtendedAccessToken exToken = isAsync ? await _sources[i].GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false) : _sources[i].GetToken(requestContext, cancellationToken);
+                    return scope.Succeeded(exToken.AccessToken);
+                }
 
-                    if (exToken.Exception is null)
-                    {
-                        return scope.Succeeded(exToken.AccessToken);
-                    }
+                if (exToken.Exception is CredentialUnavailableException)
+                {
+                    exceptions.Add(exToken.Exception);
+                }
+                else
+                {
+                    exceptions.Add(exToken.Exception);
 
-                    if (exToken.Exception is CredentialUnavailableException)
-                    {
-                        _unavailableExceptions[i] = exToken.Exception;
-                    }
-                    else
-                    {
-                        Exception[] aggEx = new Exception[i + 1];
-
-                        Array.Copy(_unavailableExceptions, 0, aggEx, 0, i);
-
-                        aggEx[i] = exToken.Exception;
-
-                        throw scope.Failed(AuthenticationFailedException.CreateAggregateException($"{UnhandledExceptionMessage} {_sources[i].GetType().Name} failed with unhandled exception {exToken.Exception.Message}.", new ReadOnlyMemory<object>(_sources, 0, i + 1), aggEx));
-                    }
+                    throw scope.Failed(AuthenticationFailedException.CreateAggregateException($"{UnhandledExceptionMessage} {_sources[i].GetType().Name} failed with unhandled exception {exToken.Exception.Message}.", new ReadOnlyMemory<object>(_sources, 0, i + 1), exceptions));
                 }
             }
 
-            throw scope.Failed(AuthenticationFailedException.CreateAggregateException(DefaultExceptionMessage, new ReadOnlyMemory<object>(_sources, 0, i), new ReadOnlyMemory<Exception>(_unavailableExceptions, 0, i)));
+            throw scope.Failed(AuthenticationFailedException.CreateAggregateException(DefaultExceptionMessage, new ReadOnlyMemory<object>(_sources, 0, i), exceptions));
         }
 
 

@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace Azure.Identity
 {
@@ -30,19 +32,19 @@ namespace Azure.Identity
         {
         }
 
-        internal static AuthenticationFailedException CreateAggregateException(string message, ReadOnlyMemory<object> credentials, ReadOnlyMemory<Exception> innerExceptions)
+        internal static AuthenticationFailedException CreateAggregateException(string message, ReadOnlyMemory<object> credentials, IList<Exception> innerExceptions)
         {
             StringBuilder exStr = new StringBuilder(message).AppendLine();
 
             for (int i = 0; i < credentials.Length; i++)
             {
-                if (innerExceptions.Span[i] is CredentialUnavailableException)
+                if (innerExceptions[i] is CredentialUnavailableException)
                 {
-                    exStr.AppendLine($"  {credentials.Span[i].GetType().Name} is unavailable {innerExceptions.Span[i].Message}.");
+                    exStr.AppendLine($"  {credentials.Span[i].GetType().Name} is unavailable {innerExceptions[i].Message}.");
                 }
                 else
                 {
-                    exStr.AppendLine($"  {credentials.Span[i].GetType().Name} failed with {innerExceptions.Span[i].Message}.");
+                    exStr.AppendLine($"  {credentials.Span[i].GetType().Name} failed with {innerExceptions[i].Message}.");
                 }
             }
 

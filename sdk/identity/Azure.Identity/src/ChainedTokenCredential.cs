@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,7 +20,6 @@ namespace Azure.Identity
 
         private const string AggregateCredentialFailedErrorMessage = "The ChainedTokenCredential failed due to an unhandled exception: ";
 
-        private readonly Exception[] _unavailableExceptions;
         private readonly TokenCredential[] _sources;
 
         /// <summary>
@@ -44,8 +44,6 @@ namespace Azure.Identity
 
             }
             _sources = sources;
-
-            _unavailableExceptions = new Exception[_sources.Length];
         }
 
         /// <summary>
@@ -56,32 +54,27 @@ namespace Azure.Identity
         /// <returns>The first <see cref="AccessToken"/> returned by the specified sources. Any credential which raises a <see cref="CredentialUnavailableException"/> will be skipped.</returns>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
+            List<Exception> exceptions = new List<Exception>();
+
             for (int i = 0; i < _sources.Length; i++)
             {
-                if (_unavailableExceptions[i] == null)
+                try
                 {
-                    try
-                    {
-                        return _sources[i].GetToken(requestContext, cancellationToken);
-                    }
-                    catch (CredentialUnavailableException e)
-                    {
-                        _unavailableExceptions[i] = e;
-                    }
-                    catch (Exception e) when (!(e is OperationCanceledException))
-                    {
-                        Exception[] aggEx = new Exception[i + 1];
+                    return _sources[i].GetToken(requestContext, cancellationToken);
+                }
+                catch (CredentialUnavailableException e)
+                {
+                    exceptions.Add(e);
+                }
+                catch (Exception e) when (!(e is OperationCanceledException))
+                {
+                    exceptions.Add(e);
 
-                        Array.Copy(_unavailableExceptions, 0, aggEx, 0, i);
-
-                        aggEx[i] = e;
-
-                        throw AuthenticationFailedException.CreateAggregateException(AggregateCredentialFailedErrorMessage + e.ToString(), new ReadOnlyMemory<object>(_sources, 0, i + 1), aggEx);
-                    }
+                    throw AuthenticationFailedException.CreateAggregateException(AggregateCredentialFailedErrorMessage + e.ToString(), new ReadOnlyMemory<object>(_sources, 0, i + 1), exceptions);
                 }
             }
 
-            throw AuthenticationFailedException.CreateAggregateException(AggregateAllUnavailableErrorMessage, _sources, _unavailableExceptions);
+            throw AuthenticationFailedException.CreateAggregateException(AggregateAllUnavailableErrorMessage, _sources, exceptions);
         }
 
         /// <summary>
@@ -92,32 +85,27 @@ namespace Azure.Identity
         /// <returns>The first <see cref="AccessToken"/> returned by the specified sources. Any credential which raises a <see cref="CredentialUnavailableException"/> will be skipped.</returns>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
+            List<Exception> exceptions = new List<Exception>();
+
             for (int i = 0; i < _sources.Length; i++)
             {
-                if (_unavailableExceptions[i] == null)
+                try
                 {
-                    try
-                    {
-                        return await _sources[i].GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false);
-                    }
-                    catch (CredentialUnavailableException e)
-                    {
-                        _unavailableExceptions[i] = e;
-                    }
-                    catch (Exception e) when (!(e is OperationCanceledException))
-                    {
-                        Exception[] aggEx = new Exception[i + 1];
+                    return await _sources[i].GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false);
+                }
+                catch (CredentialUnavailableException e)
+                {
+                    exceptions.Add(e);
+                }
+                catch (Exception e) when (!(e is OperationCanceledException))
+                {
+                    exceptions.Add(e);
 
-                        Array.Copy(_unavailableExceptions, 0, aggEx, 0, i);
-
-                        aggEx[i] = e;
-
-                        throw AuthenticationFailedException.CreateAggregateException(AggregateCredentialFailedErrorMessage + e.ToString(), new ReadOnlyMemory<object>(_sources, 0, i + 1), aggEx);
-                    }
+                    throw AuthenticationFailedException.CreateAggregateException(AggregateCredentialFailedErrorMessage + e.ToString(), new ReadOnlyMemory<object>(_sources, 0, i + 1), exceptions);
                 }
             }
 
-            throw AuthenticationFailedException.CreateAggregateException(AggregateAllUnavailableErrorMessage, _sources, _unavailableExceptions);
+            throw AuthenticationFailedException.CreateAggregateException(AggregateAllUnavailableErrorMessage, _sources, exceptions);
         }
     }
 }
