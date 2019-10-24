@@ -122,7 +122,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="left">The method to compare.</param>
         /// <param name="right">The method to compare against.</param>
-        /// <returns><code>true</code> if <see cref="Method"/> values are equal for <paramref name="left"/> and <paramref name="right"/>, otherwise. <code>false</code></returns>
+        /// <returns><c>true</c> if <see cref="Method"/> values are equal for <paramref name="left"/> and <paramref name="right"/>, otherwise <c>false</c>.</returns>
         public static bool operator ==(RequestMethod left, RequestMethod right)
         {
             return left.Equals(right);
@@ -133,7 +133,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="left">The method to compare.</param>
         /// <param name="right">The method to compare against.</param>
-        /// <returns><code>true</code> if <see cref="Method"/> values are equal for <paramref name="left"/> and <paramref name="right"/>, otherwise. <code>false</code></returns>
+        /// <returns><c>true</c> if <see cref="Method"/> values are equal for <paramref name="left"/> and <paramref name="right"/>, otherwise <c>false</c>.</returns>
         public static bool operator !=(RequestMethod left, RequestMethod right)
         {
             return !left.Equals(right);
