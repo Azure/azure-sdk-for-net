@@ -8,10 +8,6 @@ namespace Azure.Identity
 {
     internal class Constants
     {
-        public const string AggregateAllUnavailableErrorMessage = "None of the provided credentials returned an AccessToken. See InnerExceptions for details";
-
-        public const string AggregateCredentialFailedErrorMessage = "The ChainedTokenCredential GetToken failed due to an unhandled exception. See InnerExceptions for details";
-
         // TODO: Currently this is piggybacking off the Azure CLI client ID, but needs to be switched once the Developer Sign On application is available
         public const string DeveloperSignOnClientId = "04b07795-8ddb-461a-bbee-02f9e1bf7b46";
 

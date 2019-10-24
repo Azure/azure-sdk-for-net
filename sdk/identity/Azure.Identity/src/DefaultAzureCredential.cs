@@ -20,7 +20,7 @@ namespace Azure.Identity
     /// </summary>
     public class DefaultAzureCredential : TokenCredential
     {
-        private const string DefaultExceptionMessage = "The DefaultAzureCredential failed to retrieve from the included credentials.";
+        private const string DefaultExceptionMessage = "The DefaultAzureCredential failed to retrieve a token from the included credentials.";
         private const string UnhandledExceptionMessage = "The DefaultAzureCredential failed due to an unhandled exception: ";
         private static readonly IExtendedTokenCredential[] s_defaultCredentialChain = GetDefaultAzureCredentialChain(new DefaultAzureCredentialFactory(CredentialPipeline.GetInstance(null)), new DefaultAzureCredentialOptions());
 

@@ -15,6 +15,10 @@ namespace Azure.Identity
     /// </summary>
     public class ChainedTokenCredential : TokenCredential
     {
+        private const string AggregateAllUnavailableErrorMessage = "The ChainedTokenCredential failed to retrieve a token from the included credentials.";
+
+        private const string AggregateCredentialFailedErrorMessage = "The ChainedTokenCredential failed due to an unhandled exception: ";
+
         private readonly Exception[] _unavailableExceptions;
         private readonly TokenCredential[] _sources;
 
@@ -72,12 +76,12 @@ namespace Azure.Identity
 
                         aggEx[i] = e;
 
-                        throw new AggregateAuthenticationException(Constants.AggregateCredentialFailedErrorMessage, new ReadOnlyMemory<object>(_sources, 0, i + 1), aggEx);
+                        throw AuthenticationFailedException.CreateAggregateException(AggregateCredentialFailedErrorMessage + e.ToString(), new ReadOnlyMemory<object>(_sources, 0, i + 1), aggEx);
                     }
                 }
             }
 
-            throw new AggregateAuthenticationException(Constants.AggregateAllUnavailableErrorMessage, _sources, _unavailableExceptions);
+            throw AuthenticationFailedException.CreateAggregateException(AggregateAllUnavailableErrorMessage, _sources, _unavailableExceptions);
         }
 
         /// <summary>
@@ -108,12 +112,12 @@ namespace Azure.Identity
 
                         aggEx[i] = e;
 
-                        throw new AggregateAuthenticationException(Constants.AggregateCredentialFailedErrorMessage, new ReadOnlyMemory<object>(_sources, 0, i + 1), aggEx);
+                        throw AuthenticationFailedException.CreateAggregateException(AggregateCredentialFailedErrorMessage + e.ToString(), new ReadOnlyMemory<object>(_sources, 0, i + 1), aggEx);
                     }
                 }
             }
 
-            throw new AggregateAuthenticationException(Constants.AggregateAllUnavailableErrorMessage, _sources, _unavailableExceptions);
+            throw AuthenticationFailedException.CreateAggregateException(AggregateAllUnavailableErrorMessage, _sources, _unavailableExceptions);
         }
     }
 }
