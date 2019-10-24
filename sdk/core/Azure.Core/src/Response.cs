@@ -68,7 +68,7 @@ namespace Azure
         protected internal abstract bool ContainsHeader(string name);
 
         /// <summary>
-        /// Returns an iterator enumerating <see cref="HttpHeader"/> in the response.
+        /// Returns an iterator for enumerating <see cref="HttpHeader"/> in the response.
         /// </summary>
         /// <returns>The <see cref="IEnumerable{T}"/> enumerating <see cref="HttpHeader"/> in the response.</returns>
         protected internal abstract IEnumerable<HttpHeader> EnumerateHeaders();
