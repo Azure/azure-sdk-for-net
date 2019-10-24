@@ -63,7 +63,7 @@ Use the [Azure CLI][azure_cli] snippet below to create/get client secret credent
 #### Create CertificateClient
 Once you've populated the **AZURE_CLIENT_ID**, **AZURE_CLIENT_SECRET** and **AZURE_TENANT_ID** environment variables and replaced **your-vault-url** with the above returned URI, you can create the [CertificateClient][certificate_client_class]:
 
-```C# Snippet:CreateClient
+```C# Snippet:CreateCertificateClient
 // Create a new certificate client using the default credential from Azure.Identity using environment variables previously set,
 // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
 var client = new CertificateClient(vaultUri: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
