@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
@@ -171,6 +170,85 @@ namespace Azure.Security.KeyVault.Keys.Tests
             KeyVaultKey keyReturned = await Client.GetKeyAsync(keyName);
 
             AssertKeyVaultKeysEqual(keyReturned, updateResult);
+        }
+
+        [Test]
+        public async Task UpdateOps()
+        {
+            string keyName = Recording.GenerateId();
+
+            CreateEcKeyOptions options = new CreateEcKeyOptions(keyName)
+            {
+                KeyOperations =
+                {
+                    KeyOperation.Verify,
+                },
+            };
+
+            KeyVaultKey key = await Client.CreateEcKeyAsync(options);
+            RegisterForCleanup(key.Name);
+
+            AssertAreEqual(new[] { KeyOperation.Verify }, key.KeyOperations);
+
+            key.Properties.ExpiresOn = DateTimeOffset.Now.AddDays(1);
+
+            key = await Client.UpdateKeyPropertiesAsync(key.Properties);
+            AssertAreEqual(new[] { KeyOperation.Verify }, key.KeyOperations);
+
+            key = await Client.UpdateKeyPropertiesAsync(key.Properties, new[] { KeyOperation.Sign, KeyOperation.Verify });
+            AssertAreEqual(new[] { KeyOperation.Sign, KeyOperation.Verify }, key.KeyOperations);
+        }
+
+        [Test]
+        public async Task UpdateTags()
+        {
+            string keyName = Recording.GenerateId();
+
+            CreateEcKeyOptions options = new CreateEcKeyOptions(keyName)
+            {
+                Tags =
+                {
+                    ["A"] = "1",
+                    ["B"] = "2",
+                },
+            };
+
+            KeyVaultKey key = await Client.CreateEcKeyAsync(options);
+            RegisterForCleanup(key.Name);
+
+            IDictionary<string, string> expectedTags = new Dictionary<string, string>
+            {
+                ["A"] = "1",
+                ["B"] = "2",
+            };
+
+            AssertAreEqual(expectedTags, key.Properties.Tags);
+
+            key.Properties.Tags["B"] = "3";
+            key.Properties.Tags["C"] = "4";
+
+            key = await Client.UpdateKeyPropertiesAsync(key.Properties);
+
+            expectedTags = new Dictionary<string, string>
+            {
+                ["A"] = "1",
+                ["B"] = "3",
+                ["C"] = "4",
+            };
+
+            AssertAreEqual(expectedTags, key.Properties.Tags);
+
+            key.Properties.Tags.Clear();
+            key.Properties.Tags["D"] = "5";
+
+            key = await Client.UpdateKeyPropertiesAsync(key.Properties);
+
+            expectedTags = new Dictionary<string, string>
+            {
+                ["D"] = "5",
+            };
+
+            AssertAreEqual(expectedTags, key.Properties.Tags);
         }
 
         [Test]

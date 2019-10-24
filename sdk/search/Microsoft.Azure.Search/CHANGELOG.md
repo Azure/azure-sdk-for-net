@@ -4,6 +4,20 @@ Every minor version release targets the same (GA) REST API version as that of th
 
 Features and improvements in a GA SDK are considered generally available.
 
+# 10.1.0
+
+# Breaking Changes
+
+None
+
+# Improvements
+
+- Re-branded "Azure Search" to "Azure Cognitive Search" (when appropriate) in doc comments. [PR 8316](https://github.com/Azure/azure-sdk-for-net/pull/8316)
+
+# Bug fixes
+
+None
+
 # 10.0.1
 
 # Breaking Changes

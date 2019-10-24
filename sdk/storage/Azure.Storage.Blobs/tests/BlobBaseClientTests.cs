@@ -96,6 +96,7 @@ namespace Azure.Storage.Blobs.Test
 
         #region Secondary Storage
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8356")]
         public async Task DownloadAsync_ReadFromSecondaryStorage()
         {
             using (GetNewContainer(out BlobContainerClient container, GetServiceClient_SecondaryAccount_ReadEnabledOnRetry(1, out TestExceptionPolicy testExceptionPolicy)))
@@ -158,6 +159,7 @@ namespace Azure.Storage.Blobs.Test
         #endregion
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8353")]
         public async Task DownloadAsync_CPK()
         {
             using (GetNewContainer(out BlobContainerClient container))
@@ -450,6 +452,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8356")]
         [Test]
         [TestCase(512)]
         [TestCase(1 * Constants.KB)]
@@ -1187,6 +1190,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8353")]
         public async Task GetPropertiesAsync_CPK()
         {
             using (GetNewContainer(out BlobContainerClient container))
@@ -1206,6 +1210,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8353")]
         public async Task GetPropertiesAsync_CpkError()
         {
             using (GetNewContainer(out BlobContainerClient container))
@@ -1588,6 +1593,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8353")]
         public async Task SetMetadataAsync_CPK()
         {
             using (GetNewContainer(out BlobContainerClient container))
@@ -1716,6 +1722,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8353")]
         public async Task CreateSnapshotAsync_CPK()
         {
             using (GetNewContainer(out BlobContainerClient container))
@@ -1735,6 +1742,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8353")]
         public async Task CreateSnapshotAsync_CpkHttpError()
         {
             using (GetNewContainer(out BlobContainerClient container))
