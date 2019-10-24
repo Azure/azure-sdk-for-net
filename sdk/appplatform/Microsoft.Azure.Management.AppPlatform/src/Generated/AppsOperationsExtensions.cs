@@ -321,6 +321,114 @@ namespace Microsoft.Azure.Management.AppPlatform
             }
 
             /// <summary>
+            /// Create a new App or update an exiting App.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            /// <param name='appName'>
+            /// The name of the App resource.
+            /// </param>
+            /// <param name='appResource'>
+            /// Parameters for the create or update operation
+            /// </param>
+            public static AppResource BeginCreateOrUpdate(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, AppResource appResource = default(AppResource))
+            {
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, serviceName, appName, appResource).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create a new App or update an exiting App.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            /// <param name='appName'>
+            /// The name of the App resource.
+            /// </param>
+            /// <param name='appResource'>
+            /// Parameters for the create or update operation
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AppResource> BeginCreateOrUpdateAsync(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, AppResource appResource = default(AppResource), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, appName, appResource, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Operation to update an exiting App.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            /// <param name='appName'>
+            /// The name of the App resource.
+            /// </param>
+            /// <param name='appResource'>
+            /// Parameters for the update operation
+            /// </param>
+            public static AppResource BeginUpdate(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, AppResource appResource = default(AppResource))
+            {
+                return operations.BeginUpdateAsync(resourceGroupName, serviceName, appName, appResource).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Operation to update an exiting App.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            /// <param name='appName'>
+            /// The name of the App resource.
+            /// </param>
+            /// <param name='appResource'>
+            /// Parameters for the update operation
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AppResource> BeginUpdateAsync(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, AppResource appResource = default(AppResource), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, appName, appResource, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Handles requests to list all resources in a Service.
             /// </summary>
             /// <param name='operations'>

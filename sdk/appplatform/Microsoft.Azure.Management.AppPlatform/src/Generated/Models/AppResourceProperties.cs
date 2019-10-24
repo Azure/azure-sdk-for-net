@@ -33,7 +33,8 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// public endpoint</param>
         /// <param name="url">URL of the App</param>
         /// <param name="provisioningState">Provisioning state of the App.
-        /// Possible values include: 'Succeeded', 'Failed'</param>
+        /// Possible values include: 'Succeeded', 'Failed', 'Creating',
+        /// 'Updating'</param>
         /// <param name="activeDeploymentName">Name of the active deployment of
         /// the App</param>
         /// <param name="createdTime">Date time when the resource is
@@ -71,7 +72,7 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
 
         /// <summary>
         /// Gets provisioning state of the App. Possible values include:
-        /// 'Succeeded', 'Failed'
+        /// 'Succeeded', 'Failed', 'Creating', 'Updating'
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; private set; }

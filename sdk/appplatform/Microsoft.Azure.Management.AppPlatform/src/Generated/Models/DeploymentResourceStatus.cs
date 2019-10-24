@@ -20,7 +20,6 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         public const string Stopped = "Stopped";
         public const string Running = "Running";
         public const string Failed = "Failed";
-        public const string Processing = "Processing";
         public const string Allocating = "Allocating";
         public const string Upgrading = "Upgrading";
         public const string Compiling = "Compiling";

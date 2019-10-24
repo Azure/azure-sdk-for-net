@@ -18,5 +18,7 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
     {
         public const string Succeeded = "Succeeded";
         public const string Failed = "Failed";
+        public const string Creating = "Creating";
+        public const string Updating = "Updating";
     }
 }

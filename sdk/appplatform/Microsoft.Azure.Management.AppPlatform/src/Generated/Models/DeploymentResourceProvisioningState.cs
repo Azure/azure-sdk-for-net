@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
     public static class DeploymentResourceProvisioningState
     {
         public const string Creating = "Creating";
-        public const string Processing = "Processing";
+        public const string Updating = "Updating";
         public const string Succeeded = "Succeeded";
         public const string Failed = "Failed";
     }
