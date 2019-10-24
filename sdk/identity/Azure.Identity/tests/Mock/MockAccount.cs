@@ -8,6 +8,13 @@ namespace Azure.Identity.Tests.Mock
 {
     public class MockAccount : IAccount
     {
+        public MockAccount(string username, string homeId = null)
+        {
+            homeId ??= Guid.NewGuid().ToString();
+            Username = username;
+            HomeAccountId = new AccountId(homeId);
+        }
+
         public string Username { get; set; }
 
         public string Environment { get; set; }

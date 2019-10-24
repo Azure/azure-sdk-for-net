@@ -100,7 +100,7 @@ namespace Azure.Identity.Tests
         {
             var mockMsalClient = new MockMsalPublicClient
             {
-                Accounts = new IAccount[] { new MockAccount { Username = "mockuser@mockdomain.com" } },
+                Accounts = new IAccount[] { new MockAccount("mockuser@mockdomain.com") },
                 SilentAuthFactory = (_) => { return AuthenticationResultFactory.Create(accessToken: Guid.NewGuid().ToString(), expiresOn: DateTimeOffset.UtcNow.AddMinutes(10)); }
             };
 
@@ -174,7 +174,7 @@ namespace Azure.Identity.Tests
 
             var mockMsalClient = new MockMsalPublicClient
             {
-                Accounts = new IAccount[] { new MockAccount { Username = "mockuser@mockdomain.com" } },
+                Accounts = new IAccount[] { new MockAccount("mockuser@mockdomain.com") },
                 SilentAuthFactory = (_) => throw new MockClientException(expExMessage)
             };
 

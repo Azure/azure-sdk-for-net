@@ -25,7 +25,7 @@ namespace Azure.Identity.Tests.Mock
 
             tenantId ??= Guid.NewGuid().ToString();
 
-            account ??= new MockAccount() { Username = "mockuser@mockdomain.com" };
+            account ??= new MockAccount("mockuser@mockdomain.com");
 
             idToken ??= Guid.NewGuid().ToString();
 
