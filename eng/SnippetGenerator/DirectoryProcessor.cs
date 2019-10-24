@@ -15,7 +15,7 @@ namespace SnippetGenerator
 {
     public class DirectoryProcessor
     {
-        private readonly string _snippetPrefix = "Snippet:";
+        private const string _snippetPrefix = "Snippet:";
         private readonly string _directory;
         private readonly Lazy<List<Snippet>> _snippets;
 
@@ -29,7 +29,7 @@ namespace SnippetGenerator
 
         public void Process()
         {
-            foreach (var mdFile in Directory.GetFiles(_directory, "*.md", SearchOption.AllDirectories))
+            foreach (var mdFile in Directory.EnumerateFiles(_directory, "*.md", SearchOption.AllDirectories))
             {
                 Console.WriteLine($"Processing {mdFile}");
 
