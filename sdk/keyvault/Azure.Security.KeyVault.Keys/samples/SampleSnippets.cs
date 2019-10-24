@@ -229,7 +229,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
         [Ignore("The key is deleted and purged on tear down of this text fixture.")]
         public void DeleteKeySync()
         {
-            #region DeleteKeySync
+            #region Snippet:DeleteKeySync
             DeleteKeyOperation operation = client.StartDeleteKey("key-name");
 
             while (!operation.HasCompleted)

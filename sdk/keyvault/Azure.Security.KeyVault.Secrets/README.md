@@ -71,7 +71,7 @@ Once you've populated the **AZURE_CLIENT_ID**, **AZURE_CLIENT_SECRET** and **AZU
 ```C# Snippet:CreateSecretClient
 // Create a new secret client using the default credential from Azure.Identity using environment variables previously set,
 // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
-var client = new SecretClient(vaultEndpoint: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
+var client = new SecretClient(vaultUri: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
 
 // Create a new secret using the secret client.
 KeyVaultSecret secret = client.SetSecret("secret-name", "secret-value");
@@ -162,7 +162,7 @@ Console.WriteLine(secret.Value);
 ### Delete and purge a secret
 You will need to wait for the long-running operation to complete before trying to purge or recover the secret.
 
-```C# DeleteAndPurgeSecret
+```C# Snippet:DeleteAndPurgeSecret
 DeleteSecretOperation operation = await client.StartDeleteSecretAsync("secret-name");
 
 // You only need to wait for completion if you want to purge or recover the secret.
@@ -200,7 +200,7 @@ Console.WriteLine(secret.Value);
 When deleting a secret synchronously before you purge it, you need to call `UpdateStatus` on the returned operation periodically.
 You could do this in a loop as shown in the example, or periodically within other operations in your program.
 
-```C# DeleteSecretSync
+```C# Snippet:DeleteSecretSync
 DeleteSecretOperation operation = client.StartDeleteSecret("secret-name");
 
 // You only need to wait for completion if you want to purge or recover the secret.

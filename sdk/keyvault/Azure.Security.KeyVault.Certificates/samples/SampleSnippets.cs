@@ -75,7 +75,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
         [Test]
         public async Task ListCertificatesAsync()
         {
-            #region ListCertificates
+            #region Snippet:ListCertificates
             AsyncPageable<CertificateProperties> allCertificates = client.GetCertificatesAsync();
 
             await foreach (CertificateProperties certificateProperties in allCertificates)

@@ -71,7 +71,7 @@ Once you've populated the **AZURE_CLIENT_ID**, **AZURE_CLIENT_SECRET** and **AZU
 ```C# Snippet:CreateKeyClient
 // Create a new key client using the default credential from Azure.Identity using environment variables previously set,
 // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
-var client = new KeyClient(vaultEndpoint: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
+var client = new KeyClient(vaultUri: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
 
 // Create a new key using the key client.
 KeyVaultKey key = client.CreateKey("key-name", KeyType.Rsa);
@@ -188,7 +188,7 @@ Console.WriteLine(key.DeletedOn);
 ### Delete and purge a key
 You will need to wait for the long-running operation to complete before trying to purge or recover the key.
 
-```C# DeleteAndPurgeKey
+```C# Snippet:DeleteAndPurgeKey
 DeleteKeyOperation operation = await client.StartDeleteKeyAsync("key-name");
 
 // You only need to wait for completion if you want to purge or recover the key.
@@ -204,7 +204,7 @@ This example lists all the keys in the specified Key Vault.
 ```C# Snippet:ListKeys
 AsyncPageable<KeyProperties> allKeys = client.GetPropertiesOfKeysAsync();
 
-foreach (KeyProperties key in allKeys)
+await foreach (KeyProperties keyProperties in allKeys)
 {
     Console.WriteLine(keyProperties.Name);
 }
@@ -254,7 +254,7 @@ Console.WriteLine(ecKey.KeyType);
 When deleting a key synchronously before you purge it, you need to call `UpdateStatus` on the returned operation periodically.
 You could do this in a loop as shown in the example, or periodically within other operations in your program.
 
-```C# DeleteKeySync
+```C# Snippet:DeleteKeySync
 DeleteKeyOperation operation = client.StartDeleteKey("key-name");
 
 while (!operation.HasCompleted)

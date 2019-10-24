@@ -145,7 +145,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
         [OneTimeTearDown]
         public async Task DeleteAndPurgeSecret()
         {
-            #region DeleteAndPurgeSecret
+            #region Snippet:DeleteAndPurgeSecret
             DeleteSecretOperation operation = await client.StartDeleteSecretAsync("secret-name");
 
             // You only need to wait for completion if you want to purge or recover the secret.
@@ -159,7 +159,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
         [Ignore("The secret is deleted and purged on tear down of this text fixture.")]
         public void DeleteSecretSync()
         {
-            #region DeleteSecretSync
+            #region Snippet:DeleteSecretSync
             DeleteSecretOperation operation = client.StartDeleteSecret("secret-name");
 
             // You only need to wait for completion if you want to purge or recover the secret.
