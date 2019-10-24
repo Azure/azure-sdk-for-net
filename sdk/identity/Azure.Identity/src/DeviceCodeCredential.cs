@@ -20,7 +20,7 @@ namespace Azure.Identity
     /// </summary>
     public class DeviceCodeCredential : TokenCredential
     {
-        private readonly MsalPublicClientAbstraction _client = null;
+        private readonly MsalPublicClient _client = null;
         private readonly CredentialPipeline _pipeline;
         private IAccount _account = null;
         private readonly string _clientId;
@@ -63,7 +63,7 @@ namespace Azure.Identity
         {
         }
 
-        internal DeviceCodeCredential(Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, string clientId, CredentialPipeline pipeline, MsalPublicClientAbstraction client)
+        internal DeviceCodeCredential(Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, string clientId, CredentialPipeline pipeline, MsalPublicClient client)
         {
             _clientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
 

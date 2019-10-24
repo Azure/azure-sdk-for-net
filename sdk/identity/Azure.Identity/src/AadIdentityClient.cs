@@ -15,39 +15,43 @@ using Azure.Core.Diagnostics;
 
 namespace Azure.Identity
 {
-    internal class AadIdentityClient : AadIdentityClientAbstraction
+    internal class AadIdentityClient
     {
         private const string ClientAssertionType = "urn:ietf:params:oauth:client-assertion-type:jwt-bearer";
 
         private readonly CredentialPipeline _pipeline;
+
+        protected AadIdentityClient()
+        {
+        }
 
         public AadIdentityClient(CredentialPipeline pipeline)
         {
             _pipeline = pipeline;
         }
 
-        public override async Task<AccessToken> AuthenticateAsync(string tenantId, string clientId, string clientSecret, string[] scopes, CancellationToken cancellationToken = default)
+        public virtual async Task<AccessToken> AuthenticateAsync(string tenantId, string clientId, string clientSecret, string[] scopes, CancellationToken cancellationToken = default)
         {
             using Request request = CreateClientSecretAuthRequest(tenantId, clientId, clientSecret, scopes);
 
             return await SendAuthRequestAsync(request, cancellationToken).ConfigureAwait(false);
         }
 
-        public override AccessToken Authenticate(string tenantId, string clientId, string clientSecret, string[] scopes, CancellationToken cancellationToken = default)
+        public virtual AccessToken Authenticate(string tenantId, string clientId, string clientSecret, string[] scopes, CancellationToken cancellationToken = default)
         {
             using Request request = CreateClientSecretAuthRequest(tenantId, clientId, clientSecret, scopes);
 
             return SendAuthRequest(request, cancellationToken);
         }
 
-        public override async Task<AccessToken> AuthenticateAsync(string tenantId, string clientId, X509Certificate2 clientCertificate, string[] scopes, CancellationToken cancellationToken = default)
+        public virtual async Task<AccessToken> AuthenticateAsync(string tenantId, string clientId, X509Certificate2 clientCertificate, string[] scopes, CancellationToken cancellationToken = default)
         {
             using Request request = CreateClientCertificateAuthRequest(tenantId, clientId, clientCertificate, scopes);
 
             return await SendAuthRequestAsync(request, cancellationToken).ConfigureAwait(false);
         }
 
-        public override AccessToken Authenticate(string tenantId, string clientId, X509Certificate2 clientCertificate, string[] scopes, CancellationToken cancellationToken = default)
+        public virtual AccessToken Authenticate(string tenantId, string clientId, X509Certificate2 clientCertificate, string[] scopes, CancellationToken cancellationToken = default)
         {
             using Request request = CreateClientCertificateAuthRequest(tenantId, clientId, clientCertificate, scopes);
 

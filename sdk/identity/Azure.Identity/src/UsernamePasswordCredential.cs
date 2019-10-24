@@ -17,7 +17,7 @@ namespace Azure.Identity
     /// </summary>
     public class UsernamePasswordCredential : TokenCredential
     {
-        private readonly MsalPublicClientAbstraction _client = null;
+        private readonly MsalPublicClient _client = null;
         private readonly CredentialPipeline _pipeline = null;
         private readonly string _username = null;
         private readonly SecureString _password;
@@ -64,7 +64,7 @@ namespace Azure.Identity
         {
         }
 
-        internal UsernamePasswordCredential(string username, string password, CredentialPipeline pipeline, MsalPublicClientAbstraction client)
+        internal UsernamePasswordCredential(string username, string password, CredentialPipeline pipeline, MsalPublicClient client)
         {
             _username = username ?? throw new ArgumentNullException(nameof(username));
 

@@ -15,7 +15,7 @@ namespace Azure.Identity
     /// </summary>
     public class ClientSecretCredential : TokenCredential
     {
-        private readonly AadIdentityClientAbstraction _client;
+        private readonly AadIdentityClient _client;
         private readonly CredentialPipeline _pipeline;
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Azure.Identity
         {
         }
 
-        internal ClientSecretCredential(string tenantId, string clientId, string clientSecret, CredentialPipeline pipeline, AadIdentityClientAbstraction client)
+        internal ClientSecretCredential(string tenantId, string clientId, string clientSecret, CredentialPipeline pipeline, AadIdentityClient client)
         {
             TenantId = tenantId ?? throw new ArgumentNullException(nameof(tenantId));
 

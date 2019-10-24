@@ -21,7 +21,7 @@ namespace Azure.Identity
 
         internal const string NoAccountsErrorMessage = "No accounts were discovered in the shared token cache. To fix, authenticate through tooling supporting azure developer sign on.";
 
-        private readonly MsalPublicClientAbstraction _client;
+        private readonly MsalPublicClient _client;
         private readonly CredentialPipeline _pipeline;
         private readonly string _username;
         private readonly Lazy<Task<(IAccount, Exception)>> _account;
@@ -50,7 +50,7 @@ namespace Azure.Identity
         {
         }
 
-        internal SharedTokenCacheCredential(string username, CredentialPipeline pipeline, MsalPublicClientAbstraction client)
+        internal SharedTokenCacheCredential(string username, CredentialPipeline pipeline, MsalPublicClient client)
         {
             _username = username;
 

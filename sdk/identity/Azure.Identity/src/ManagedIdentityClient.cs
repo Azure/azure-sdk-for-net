@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Identity
 {
-    internal class ManagedIdentityClient : ManagedIdentityClientAbstraction
+    internal class ManagedIdentityClient
     {
         private const string AuthenticationResponseInvalidFormatError = "Invalid response, the authentication response was not in the expected format.";
         private const string MsiEndpointInvalidUriError = "The environment variable MSI_ENDPOINT contains an invalid Uri.";
@@ -30,12 +30,16 @@ namespace Azure.Identity
 
         private readonly CredentialPipeline _pipeline;
 
+        protected ManagedIdentityClient()
+        {
+        }
+
         public ManagedIdentityClient(CredentialPipeline pipeline)
         {
             _pipeline = pipeline;
         }
 
-        public override AccessToken Authenticate(MsiType msiType, string[] scopes, string clientId, CancellationToken cancellationToken)
+        public virtual AccessToken Authenticate(MsiType msiType, string[] scopes, string clientId, CancellationToken cancellationToken)
         {
             using Request request = CreateAuthRequest(msiType, scopes, clientId);
 
@@ -51,7 +55,7 @@ namespace Azure.Identity
             throw response.CreateRequestFailedException();
         }
 
-        public async override Task<AccessToken> AuthenticateAsync(MsiType msiType, string[] scopes, string clientId, CancellationToken cancellationToken)
+        public async virtual Task<AccessToken> AuthenticateAsync(MsiType msiType, string[] scopes, string clientId, CancellationToken cancellationToken)
         {
             using Request request = CreateAuthRequest(msiType, scopes, clientId);
 
@@ -67,7 +71,7 @@ namespace Azure.Identity
             throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
         }
 
-        public override MsiType GetMsiType(CancellationToken cancellationToken)
+        public virtual MsiType GetMsiType(CancellationToken cancellationToken)
         {
             // if we haven't already determined the msi type
             if (s_msiType == MsiType.Unknown)
@@ -129,7 +133,7 @@ namespace Azure.Identity
             return s_msiType;
         }
 
-        public override async Task<MsiType> GetMsiTypeAsync(CancellationToken cancellationToken)
+        public virtual async Task<MsiType> GetMsiTypeAsync(CancellationToken cancellationToken)
         {
             // if we haven't already determined the msi type
             if (s_msiType == MsiType.Unknown)

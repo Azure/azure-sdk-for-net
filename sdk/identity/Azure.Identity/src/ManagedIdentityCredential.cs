@@ -23,7 +23,7 @@ namespace Azure.Identity
 
         private readonly string _clientId;
         private readonly CredentialPipeline _pipeline;
-        private readonly ManagedIdentityClientAbstraction _client;
+        private readonly ManagedIdentityClient _client;
 
         /// <summary>
         /// Protected constructor for mocking.
@@ -51,7 +51,7 @@ namespace Azure.Identity
         {
         }
 
-        internal ManagedIdentityCredential(string clientId, CredentialPipeline pipeline, ManagedIdentityClientAbstraction client)
+        internal ManagedIdentityCredential(string clientId, CredentialPipeline pipeline, ManagedIdentityClient client)
         {
             _clientId = clientId;
 

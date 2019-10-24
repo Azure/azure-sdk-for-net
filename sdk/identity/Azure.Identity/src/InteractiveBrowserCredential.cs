@@ -16,7 +16,7 @@ namespace Azure.Identity
     /// </summary>
     public class InteractiveBrowserCredential : TokenCredential, IExtendedTokenCredential
     {
-        private readonly MsalPublicClientAbstraction _client;
+        private readonly MsalPublicClient _client;
         private readonly CredentialPipeline _pipeline;
         private IAccount _account = null;
 
@@ -60,7 +60,7 @@ namespace Azure.Identity
             _client = _pipeline.CreateMsalPublicClient(clientId, tenantId, "http://localhost");
         }
 
-        internal InteractiveBrowserCredential(CredentialPipeline pipeline, MsalPublicClientAbstraction client)
+        internal InteractiveBrowserCredential(CredentialPipeline pipeline, MsalPublicClient client)
         {
             _pipeline = pipeline;
 

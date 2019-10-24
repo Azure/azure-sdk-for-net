@@ -11,7 +11,7 @@ using Microsoft.Identity.Client;
 
 namespace Azure.Identity.Tests.Mock
 {
-    internal class MockMsalPublicClient : MsalPublicClientAbstraction
+    internal class MockMsalPublicClient : MsalPublicClient
     {
         public IEnumerable<IAccount> Accounts { get; set; }
 

@@ -9,7 +9,7 @@ using Azure.Core;
 
 namespace Azure.Identity.Tests.Mock
 {
-    internal class MockAadIdentityClient : AadIdentityClientAbstraction
+    internal class MockAadIdentityClient : AadIdentityClient
     {
         public MockAadIdentityClient(Func<AccessToken> tokenFactory)
         {

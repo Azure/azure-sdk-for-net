@@ -15,7 +15,7 @@ namespace Azure.Identity.Tests
         {
             return typeof(ClientSecretCredential).GetField("_client", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(credential) as ClientSecretCredential;
         }
-        public static void _client(this ClientSecretCredential credential, AadIdentityClientAbstraction client)
+        public static void _client(this ClientSecretCredential credential, AadIdentityClient client)
         {
             typeof(ClientSecretCredential).GetField("_client", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(credential, client);
         }
@@ -33,7 +33,7 @@ namespace Azure.Identity.Tests
             return secureString;
         }
 
-        public static void _client(this InteractiveBrowserCredential credential, MsalPublicClientAbstraction client)
+        public static void _client(this InteractiveBrowserCredential credential, MsalPublicClient client)
         {
             typeof(InteractiveBrowserCredential).GetField("_client", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(credential, client);
         }

@@ -32,7 +32,7 @@ namespace Azure.Identity
         /// </summary>
         internal X509Certificate2 ClientCertificate { get; }
 
-        private readonly AadIdentityClientAbstraction _client;
+        private readonly AadIdentityClient _client;
         private readonly CredentialPipeline _pipeline;
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Azure.Identity
         {
         }
 
-        internal ClientCertificateCredential(string tenantId, string clientId, X509Certificate2 clientCertificate, CredentialPipeline pipeline, AadIdentityClientAbstraction client)
+        internal ClientCertificateCredential(string tenantId, string clientId, X509Certificate2 clientCertificate, CredentialPipeline pipeline, AadIdentityClient client)
         {
             TenantId = tenantId ?? throw new ArgumentNullException(nameof(tenantId));
 

@@ -8,7 +8,7 @@ using Azure.Core;
 
 namespace Azure.Identity.Tests.Mock
 {
-    internal class MockManagedIdentityClient : ManagedIdentityClientAbstraction
+    internal class MockManagedIdentityClient : ManagedIdentityClient
     {
         public Func<MsiType> MsiTypeFactory { get; set; }
 

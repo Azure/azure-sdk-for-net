@@ -11,10 +11,14 @@ using Microsoft.Identity.Client;
 
 namespace Azure.Identity
 {
-    internal class MsalPublicClient : MsalPublicClientAbstraction
+    internal class MsalPublicClient
     {
         private readonly IPublicClientApplication _client;
         private readonly MsalCacheReader _cacheReader;
+
+        protected MsalPublicClient()
+        {
+        }
 
         public MsalPublicClient(HttpPipeline pipeline, string clientId, string tenantId = default, string redirectUrl = default, bool attachSharedCache = false)
         {
@@ -38,27 +42,27 @@ namespace Azure.Identity
             }
         }
 
-        public override async Task<IEnumerable<IAccount>> GetAccountsAsync()
+        public virtual async Task<IEnumerable<IAccount>> GetAccountsAsync()
         {
             return await _client.GetAccountsAsync().ConfigureAwait(false);
         }
 
-        public override async Task<AuthenticationResult> AcquireTokenSilentAsync(string[] scopes, IAccount account, CancellationToken cancellationToken)
+        public virtual async Task<AuthenticationResult> AcquireTokenSilentAsync(string[] scopes, IAccount account, CancellationToken cancellationToken)
         {
             return await _client.AcquireTokenSilent(scopes, account).ExecuteAsync(cancellationToken).ConfigureAwait(false);
         }
 
-        public override async Task<AuthenticationResult> AcquireTokenInteractiveAsync(string[] scopes, Prompt prompt, CancellationToken cancellationToken)
+        public virtual async Task<AuthenticationResult> AcquireTokenInteractiveAsync(string[] scopes, Prompt prompt, CancellationToken cancellationToken)
         {
             return await _client.AcquireTokenInteractive(scopes).WithPrompt(prompt).ExecuteAsync(cancellationToken).ConfigureAwait(false);
         }
 
-        public override async Task<AuthenticationResult> AcquireTokenByUsernamePasswordAsync(string[] scopes, string username, SecureString password, CancellationToken cancellationToken)
+        public virtual async Task<AuthenticationResult> AcquireTokenByUsernamePasswordAsync(string[] scopes, string username, SecureString password, CancellationToken cancellationToken)
         {
             return await _client.AcquireTokenByUsernamePassword(scopes, username, password).ExecuteAsync(cancellationToken).ConfigureAwait(false);
         }
 
-        public override async Task<AuthenticationResult> AcquireTokenWithDeviceCodeAsync(string[] scopes, Func<DeviceCodeResult, Task> deviceCodeCallback, CancellationToken cancellationToken)
+        public virtual async Task<AuthenticationResult> AcquireTokenWithDeviceCodeAsync(string[] scopes, Func<DeviceCodeResult, Task> deviceCodeCallback, CancellationToken cancellationToken)
         {
             return await _client.AcquireTokenWithDeviceCode(scopes, deviceCodeCallback).ExecuteAsync(cancellationToken).ConfigureAwait(false);
         }
