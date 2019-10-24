@@ -6,7 +6,7 @@ using System;
 namespace Azure.Identity
 {
     /// <summary>
-    /// An exception class raised for errors in authenticating client reqeusts.
+    /// An exception class raised for errors in authenticating client requests.
     /// </summary>
     public class AuthenticationFailedException : Exception
     {

@@ -33,7 +33,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Creates a new SharedTokenCacheCredential with the specifeid options, which will authenticate users with the specified application.
+        /// Creates a new SharedTokenCacheCredential with the specified options, which will authenticate users with the specified application.
         /// </summary>
         /// <param name="username">The username of the user to authenticate</param>
         /// <param name="options">The client options for the newly created SharedTokenCacheCredential</param>

@@ -9,16 +9,17 @@ using System.Threading.Tasks;
 
 namespace Azure.Identity
 {
-    internal class SentinalFileLock : IDisposable
+    internal class SentinelFileLock : IDisposable
     {
         private FileStream _lockFileStream;
         private const int DefaultFileBufferSize = 4096;
 
-        private SentinalFileLock(FileStream lockFileStream)
+        private SentinelFileLock(FileStream lockFileStream)
         {
             _lockFileStream = lockFileStream;
         }
-        public static async Task<SentinalFileLock> AquireAsync(string lockfilePath, int lockFileRetryCount, TimeSpan lockFileRetryDelay)
+
+        public static async Task<SentinelFileLock> AcquireAsync(string lockfilePath, int lockFileRetryCount, TimeSpan lockFileRetryDelay)
         {
             Exception exception = null;
             FileStream fileStream = null;
@@ -47,7 +48,7 @@ namespace Azure.Identity
                 }
             }
 
-            return (fileStream != null) ? new SentinalFileLock(fileStream) : throw new InvalidOperationException("Could not get access to the shared lock file.", exception);
+            return (fileStream != null) ? new SentinelFileLock(fileStream) : throw new InvalidOperationException("Could not get access to the shared lock file.", exception);
         }
 
         public void Dispose()
