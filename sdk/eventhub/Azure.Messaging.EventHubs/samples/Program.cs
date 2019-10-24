@@ -42,6 +42,34 @@ namespace Azure.Messaging.EventHubs.Samples
             Console.WriteLine("=========================================");
             Console.WriteLine();
 
+            // Display the set of available samples and allow the user to choose.
+
+            var samples = LocateSamples();
+
+            Console.WriteLine();
+            Console.WriteLine("Available Samples:");
+            Console.WriteLine();
+
+            for (var index = 0; index < samples.Count; ++index)
+            {
+                Console.WriteLine($"{ index + 1 }) { samples[index].Name }");
+                Console.WriteLine($"\t{ samples[index].Description }");
+                Console.WriteLine();
+            }
+
+            Console.WriteLine();
+
+            var choice = ReadSelection(samples.Count);
+
+            if (choice == null)
+            {
+                Console.WriteLine();
+                Console.WriteLine();
+                Console.WriteLine("Quitting...");
+                Console.WriteLine();
+                return;
+            }
+
             // Prompt for the connection string, if it wasn't passed.
 
             while (String.IsNullOrEmpty(parsedArgs.ConnectionString))
@@ -60,45 +88,19 @@ namespace Azure.Messaging.EventHubs.Samples
                 Console.WriteLine();
             }
 
-            // Display the set of available samples and allow them to be run.
-
-            var samples = LocateSamples();
+            // Run the chosen sample
 
             Console.WriteLine();
-            Console.WriteLine("Available Samples:");
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("-------------------------------------------------------------------------");
+            Console.WriteLine($"Running: { samples[choice.Value].Name }");
+            Console.WriteLine("-------------------------------------------------------------------------");
             Console.WriteLine();
 
-            for (var index = 0; index < samples.Count; ++index)
-            {
-                Console.WriteLine($"{ index + 1 }) { samples[index].Name }");
-                Console.WriteLine($"\t{ samples[index].Description }");
-                Console.WriteLine();
-            }
+            await samples[choice.Value].RunAsync(parsedArgs.ConnectionString, parsedArgs.EventHub);
 
-            Console.WriteLine();
-            var choice = ReadSelection(samples.Count);
-
-            if (choice == null)
-            {
-                Console.WriteLine();
-                Console.WriteLine();
-                Console.WriteLine("Quitting...");
-                Console.WriteLine();
-                return;
-            }
-            else
-            {
-                Console.WriteLine();
-                Console.WriteLine();
-                Console.WriteLine();
-                Console.WriteLine("-------------------------------------------------------------------------");
-                Console.WriteLine($"Running: { samples[choice.Value].Name }");
-                Console.WriteLine("-------------------------------------------------------------------------");
-                Console.WriteLine();
-
-                await samples[choice.Value].RunAsync(parsedArgs.ConnectionString, parsedArgs.EventHub);
-                return;
-            }
+            return;
         }
 
         /// <summary>
