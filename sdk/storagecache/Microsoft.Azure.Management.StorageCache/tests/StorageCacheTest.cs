@@ -128,10 +128,10 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
         }
 
         /// <summary>
-        /// Verify flush cache.
+        /// Verify flush cache with no storage target attached.
         /// </summary>
-        [Fact(Skip = "skip until health state if fixed.")]
-        public void TestFlushCache()
+        [Fact]
+        public void TestFlushCacheWithoutStorageTarget()
         {
             this.testOutputHelper.WriteLine($"Running in {HttpMockServer.GetCurrentMode()} mode.");
             using (StorageCacheTestContext context = new StorageCacheTestContext(this))
@@ -140,7 +140,11 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
                 client.ApiVersion = Constants.DefaultAPIVersion;
                 client.Caches.Flush(this.fixture.ResourceGroup.Name, this.fixture.Cache.Name);
                 this.fixture.CacheHelper.StoragecacheManagementClient = client;
-                this.fixture.CacheHelper.WaitForCacheState(this.fixture.CacheHelper.GetCacheHealthState, this.fixture.Cache.Name, "Healthy").GetAwaiter().GetResult();
+                if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                {
+                    this.fixture.CacheHelper.WaitForCacheState(this.fixture.CacheHelper.GetCacheHealthState, this.fixture.Cache.Name, "Flushing", timeout: 120, polling_delay: 5).GetAwaiter().GetResult();
+                    this.fixture.CacheHelper.WaitForCacheState(this.fixture.CacheHelper.GetCacheHealthState, this.fixture.Cache.Name, "Healthy", polling_delay:5).GetAwaiter().GetResult();
+                }
             }
         }
 
