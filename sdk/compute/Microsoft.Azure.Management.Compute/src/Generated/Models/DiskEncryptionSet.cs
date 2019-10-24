@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// rotation.</param>
         /// <param name="provisioningState">The disk encryption set
         /// provisioning state.</param>
-        public DiskEncryptionSet(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceIdentity identity = default(ResourceIdentity), KeyVaultAndKeyReference activeKey = default(KeyVaultAndKeyReference), IList<KeyVaultAndKeyReference> previousKeys = default(IList<KeyVaultAndKeyReference>), string provisioningState = default(string))
+        public DiskEncryptionSet(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), EncryptionSetIdentity identity = default(EncryptionSetIdentity), KeyVaultAndKeyReference activeKey = default(KeyVaultAndKeyReference), IList<KeyVaultAndKeyReference> previousKeys = default(IList<KeyVaultAndKeyReference>), string provisioningState = default(string))
             : base(location, id, name, type, tags)
         {
             Identity = identity;
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "identity")]
-        public ResourceIdentity Identity { get; set; }
+        public EncryptionSetIdentity Identity { get; set; }
 
         /// <summary>
         /// Gets or sets the key vault key which is currently used by this disk

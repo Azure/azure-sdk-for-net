@@ -17,18 +17,18 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// The managed identity for the disk encryption set. It should be given
     /// permission on the key vault before it can be used to encrypt disks.
     /// </summary>
-    public partial class ResourceIdentity
+    public partial class EncryptionSetIdentity
     {
         /// <summary>
-        /// Initializes a new instance of the ResourceIdentity class.
+        /// Initializes a new instance of the EncryptionSetIdentity class.
         /// </summary>
-        public ResourceIdentity()
+        public EncryptionSetIdentity()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ResourceIdentity class.
+        /// Initializes a new instance of the EncryptionSetIdentity class.
         /// </summary>
         /// <param name="type">The type of Managed Identity used by the
         /// DiskEncryptionSet. Only SystemAssigned is supported. Possible
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Resource. This will be sent to the RP from ARM via the
         /// x-ms-client-tenant-id header in the PUT request if the resource has
         /// a systemAssigned(implicit) identity</param>
-        public ResourceIdentity(string type = default(string), string principalId = default(string), string tenantId = default(string))
+        public EncryptionSetIdentity(string type = default(string), string principalId = default(string), string tenantId = default(string))
         {
             Type = type;
             PrincipalId = principalId;
