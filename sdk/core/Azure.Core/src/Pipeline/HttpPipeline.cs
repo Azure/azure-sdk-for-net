@@ -58,11 +58,11 @@ namespace Azure.Core.Pipeline
         public ResponseClassifier ResponseClassifier { get; }
 
         /// <summary>
-        /// Invokes the pipeline asynchronously. After the task completes response would be set to <see cref="HttpMessage.Response"/> property.
+        /// Invokes the pipeline asynchronously. After the task completes response would be set to the <see cref="HttpMessage.Response"/> property.
         /// </summary>
         /// <param name="message">The <see cref="HttpMessage"/> to send.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
-        /// <returns>The <see cref="ValueTask"/> representing asynchronous operation.</returns>
+        /// <returns>The <see cref="ValueTask"/> representing the asynchronous operation.</returns>
         public ValueTask SendAsync(HttpMessage message, CancellationToken cancellationToken)
         {
             message.CancellationToken = cancellationToken;
@@ -70,7 +70,7 @@ namespace Azure.Core.Pipeline
         }
 
         /// <summary>
-        /// Invokes the pipeline synchronously. After the task completes response would be set to <see cref="HttpMessage.Response"/> property.
+        /// Invokes the pipeline synchronously. After the task completes response would be set to the <see cref="HttpMessage.Response"/> property.
         /// </summary>
         /// <param name="message">The <see cref="HttpMessage"/> to send.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
@@ -84,7 +84,7 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="request">The <see cref="Request"/> to send.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
-        /// <returns>The <see cref="ValueTask{T}"/> representing asynchronous operation.</returns>
+        /// <returns>The <see cref="ValueTask{T}"/> representing the asynchronous operation.</returns>
         public async ValueTask<Response> SendRequestAsync(Request request, CancellationToken cancellationToken)
         {
             HttpMessage message = new HttpMessage(request, ResponseClassifier);

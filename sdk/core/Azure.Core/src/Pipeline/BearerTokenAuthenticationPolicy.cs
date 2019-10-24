@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Azure.Core.Pipeline
 {
     /// <summary>
-    /// A policy that sends <see cref="AccessToken"/> provided by <see cref="TokenCredential"/> as Authentication header.
+    /// A policy that sends an <see cref="AccessToken"/> provided by a <see cref="TokenCredential"/> as an Authentication header.
     /// </summary>
     public class BearerTokenAuthenticationPolicy : HttpPipelinePolicy
     {

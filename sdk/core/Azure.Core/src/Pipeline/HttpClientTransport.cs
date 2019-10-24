@@ -31,7 +31,7 @@ namespace Azure.Core.Pipeline
         /// <summary>
         /// Creates a new instance of <see cref="HttpClientTransport"/> using the provided client instance.
         /// </summary>
-        /// <param name="client"></param>
+        /// <param name="client">The instance of <see cref="HttpClient"/> to use.</param>
         public HttpClientTransport(HttpClient client)
         {
             _client = client ?? throw new ArgumentNullException(nameof(client));

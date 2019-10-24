@@ -11,7 +11,7 @@ namespace Azure.Core.Extensions
     public interface IAzureClientFactoryBuilder
     {
         /// <summary>
-        /// Registers a client in dependency injection container using the factory.
+        /// Registers a client in the dependency injection container using the factory to create a client instance.
         /// </summary>
         /// <typeparam name="TClient">The type of the client.</typeparam>
         /// <typeparam name="TOptions">The client options type used the client.</typeparam>

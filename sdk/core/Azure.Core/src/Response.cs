@@ -45,7 +45,7 @@ namespace Azure
         public abstract void Dispose();
 
         /// <summary>
-        /// Returns header value if headers is stored in the collection. If header has multiple values they are going to be joined with a comma.
+        /// Returns header value if the header is stored in the collection. If header has multiple values they are going to be joined with a comma.
         /// </summary>
         /// <param name="name">The header name.</param>
         /// <param name="value">The reference to populate with value.</param>
@@ -53,7 +53,7 @@ namespace Azure
         protected internal abstract bool TryGetHeader(string name, [NotNullWhen(true)] out string? value);
 
         /// <summary>
-        /// Returns header values if headers is stored in the collection.
+        /// Returns header values if the header is stored in the collection.
         /// </summary>
         /// <param name="name">The header name.</param>
         /// <param name="values">The reference to populate with values.</param>
@@ -61,7 +61,7 @@ namespace Azure
         protected internal abstract bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values);
 
         /// <summary>
-        /// Returns <c>true</c> if headers is stored in the collection.
+        /// Returns <c>true</c> if the header is stored in the collection.
         /// </summary>
         /// <param name="name">The header name.</param>
         /// <returns><c>true</c> if the specified header is stored in the collection, otherwise <c>false</c>.</returns>
