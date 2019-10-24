@@ -130,8 +130,19 @@ namespace Azure.Storage.Blobs
                 if (runningTasks.Count >= _threadCount)
                 {
                     await Task.WhenAny(runningTasks).ConfigureAwait(false);
+                    for (int i = 0; i < runningTasks.Count; i++)
+                    {
+                        Task runningTask = runningTasks[i];
 
-                    runningTasks.RemoveAll(t => t.IsCompleted);
+                        if (!runningTask.IsCompleted)
+                        {
+                            continue;
+                        }
+
+                        await runningTask.ConfigureAwait(false);
+                        runningTasks.RemoveAt(i);
+                        i--;
+                    }
                 }
             }
 

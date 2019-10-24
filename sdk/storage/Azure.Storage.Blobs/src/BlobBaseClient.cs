@@ -1179,7 +1179,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal Task<Response<BlobProperties>> StagedDownloadAsync(
+        internal async Task<Response<BlobProperties>> StagedDownloadAsync(
             Stream destination,
             BlobRequestConditions conditions = default,
             ///// <param name="progressHandler">
@@ -1195,70 +1195,16 @@ namespace Azure.Storage.Blobs.Specialized
             Debug.Assert(singleBlockThreshold <= Constants.Blob.Block.MaxDownloadBytes);
 
             var client = new BlobBaseClient(Uri, Pipeline, ClientDiagnostics, CustomerProvidedKey);
-            Task<Response<BlobProperties>> downloadTask =
-                PartitionedDownloader.DownloadAsync(
-                    destination,
-                    GetPropertiesAsync,
-                    GetEtag,
-                    GetLength,
-                    DownloadStreamAsync,
-                    DownloadPartitionAsync,
-                    WritePartitionAsync,
-                    singleBlockThreshold,
-                    transferOptions,
-                    async,
-                    cancellationToken
-                    );
+            PartitionedDownloader downloader = new PartitionedDownloader(client, transferOptions, singleBlockThreshold);
 
-            return downloadTask;
-
-            async Task<Response<BlobProperties>> GetPropertiesAsync(bool async, CancellationToken ct)
-                =>
-                await client.GetPropertiesInternal(
-                        conditions: conditions,
-                        async: async,
-                        cancellationToken: ct).ConfigureAwait(false);
-
-            static ETag GetEtag(BlobProperties blobProperties) => blobProperties.ETag;
-
-            static long GetLength(BlobProperties blobProperties) => blobProperties.ContentLength;
-
-            // Download the entire stream
-            async Task<Response<BlobDownloadInfo>> DownloadStreamAsync(bool async, CancellationToken ct)
+            if (async)
             {
-                Response<BlobDownloadInfo> response = await client.DownloadInternal(
-                    range: default, conditions, default, async, cancellationToken).ConfigureAwait(false);
-
-                // Return an exploding Response on 304
-                if (response.IsUnavailable())
-                {
-                    return response.GetRawResponse().AsNoBodyResponse<BlobDownloadInfo>();
-                }
-
-                if (async)
-                {
-                    await response.Value.Content.CopyToAsync(
-                        destination, Constants.DefaultStreamCopyBufferSize, ct).ConfigureAwait(false);
-                }
-                else
-                {
-                    response.Value.Content.CopyTo(destination, Constants.DefaultStreamCopyBufferSize);
-                }
-
-                return response;
+                return await downloader.DownloadToAsync(destination, conditions, cancellationToken).ConfigureAwait(false);
             }
-
-            Task<Response<BlobDownloadInfo>> DownloadPartitionAsync(ETag eTag, HttpRange httpRange, bool async, CancellationToken ct)
+            else
             {
-                // copy ETag to the access conditions
-                BlobRequestConditions accessConditions = conditions ?? new BlobRequestConditions();
-                accessConditions.IfMatch = eTag;
-                return client.DownloadInternal(range: httpRange, conditions: accessConditions,
-                    rangeGetContentHash: default, async: async, cancellationToken: cancellationToken);
+                return downloader.DownloadTo(destination, conditions, cancellationToken);
             }
-
-            static Task WritePartitionAsync(Response<BlobDownloadInfo> response, Stream destination, bool async, CancellationToken ct)
-                => response.Value.Content.CopyToAsync(destination);
         }
         #endregion Parallel Download
 
