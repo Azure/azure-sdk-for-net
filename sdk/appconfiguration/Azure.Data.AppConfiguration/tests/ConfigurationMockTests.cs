@@ -656,7 +656,7 @@ namespace Azure.Data.AppConfiguration.Tests
                     { "tag1", "value1" },
                     { "tag2", "value2" }
                 },
-                ReadOnly = true
+                IsReadOnly = true
             };
             response.SetContent(SerializationHelpers.Serialize(testSetting, SerializeSetting));
 
@@ -685,7 +685,7 @@ namespace Azure.Data.AppConfiguration.Tests
                     { "tag1", "value1" },
                     { "tag2", "value2" }
                 },
-                ReadOnly = true
+                IsReadOnly = true
             };
             response.SetContent(SerializationHelpers.Serialize(testSetting, SerializeSetting));
 
@@ -729,7 +729,7 @@ namespace Azure.Data.AppConfiguration.Tests
                     { "tag1", "value1" },
                     { "tag2", "value2" }
                 },
-                ReadOnly = false
+                IsReadOnly = false
             };
             response.SetContent(SerializationHelpers.Serialize(testSetting, SerializeSetting));
 
@@ -758,7 +758,7 @@ namespace Azure.Data.AppConfiguration.Tests
                     { "tag1", "value1" },
                     { "tag2", "value2" }
                 },
-                ReadOnly = false
+                IsReadOnly = false
             };
             response.SetContent(SerializationHelpers.Serialize(testSetting, SerializeSetting));
 
@@ -889,8 +889,8 @@ namespace Azure.Data.AppConfiguration.Tests
                 json.WriteString("etag", setting.ETag.ToString());
             if (setting.LastModified.HasValue)
                 json.WriteString("last_modified", setting.LastModified.Value.ToString());
-            if (setting.ReadOnly.HasValue)
-                json.WriteBoolean("locked", setting.ReadOnly.Value);
+            if (setting.IsReadOnly.HasValue)
+                json.WriteBoolean("locked", setting.IsReadOnly.Value);
             json.WriteEndObject();
         }
 
@@ -914,8 +914,8 @@ namespace Azure.Data.AppConfiguration.Tests
                 json.WriteString("etag", setting.ETag.ToString());
             if (setting.LastModified.HasValue)
                 json.WriteString("last_modified", setting.LastModified.Value.ToString());
-            if (setting.ReadOnly.HasValue)
-                json.WriteBoolean("locked", setting.ReadOnly.Value);
+            if (setting.IsReadOnly.HasValue)
+                json.WriteBoolean("locked", setting.IsReadOnly.Value);
             json.WriteEndObject();
         }
 

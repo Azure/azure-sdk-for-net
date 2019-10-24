@@ -21,7 +21,7 @@ namespace Azure.Data.AppConfiguration.Tests
             ContentType = "test_content_type",
             ETag = new ETag("test_etag"),
             LastModified = new DateTimeOffset(DateTime.Today).AddHours(5).AddMinutes(15).AddSeconds(32),
-            ReadOnly = true,
+            IsReadOnly = true,
             Tags = new Dictionary<string, string>
             {
                 { "tag1", "value1" },
