@@ -23,13 +23,13 @@ namespace Azure.Storage.Blobs
 
         private readonly int _blockSize;
         private readonly int _minimumBlockFill;
-        private readonly int _threadCount;
+        private readonly int _workerCount;
 
         public PartitionedUploader(BlockBlobClient client, StorageTransferOptions transferOptions, long? singleBlockThreshold = null, ArrayPool<byte> arrayPool = null)
         {
             _client = client;
             _singleBlockThreshold = singleBlockThreshold ?? Constants.Blob.Block.MaxUploadBytes;
-            _threadCount =
+            _workerCount =
                 transferOptions.MaximumConcurrency ?? Constants.Blob.Block.DefaultConcurrentTransfersCount;
             _blockSize =
                 Math.Min(
@@ -127,7 +127,7 @@ namespace Azure.Storage.Blobs
                 runningTasks.Add(task);
                 blocks.Add(blockId);
 
-                if (runningTasks.Count >= _threadCount)
+                if (runningTasks.Count >= _workerCount)
                 {
                     await Task.WhenAny(runningTasks).ConfigureAwait(false);
                     for (int i = 0; i < runningTasks.Count; i++)

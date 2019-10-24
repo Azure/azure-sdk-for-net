@@ -18,13 +18,13 @@ namespace Azure.Storage.Blobs
         private readonly long _singleBlockThreshold;
 
         private readonly int _blockSize;
-        private readonly int _threadCount;
+        private readonly int _workerCount;
 
         public PartitionedDownloader(BlobBaseClient client, StorageTransferOptions transferOptions = default, long? singleBlockThreshold = null)
         {
             _client = client;
             _singleBlockThreshold = singleBlockThreshold ?? Constants.Blob.Block.MaxUploadBytes;
-            _threadCount =
+            _workerCount =
                 transferOptions.MaximumConcurrency ?? Constants.Blob.Block.DefaultConcurrentTransfersCount;
             _blockSize =
                 Math.Min(
@@ -68,7 +68,7 @@ namespace Azure.Storage.Blobs
 
                 runningTasks.Enqueue(task);
 
-                if (runningTasks.Count < _threadCount)
+                if (runningTasks.Count < _workerCount)
                 {
                     continue;
                 }
