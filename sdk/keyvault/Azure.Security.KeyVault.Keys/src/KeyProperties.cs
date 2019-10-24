@@ -48,7 +48,6 @@ namespace Azure.Security.KeyVault.Keys
         {
             Argument.AssertNotNull(id, nameof(id));
 
-            Id = id;
             ParseId(id);
         }
 
@@ -67,7 +66,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// Vault base URL.
         /// </summary>
-        public Uri VaultEndpoint { get; internal set; }
+        public Uri VaultUri { get; internal set; }
 
         /// <summary>
         /// Version of the key.
@@ -122,7 +121,7 @@ namespace Azure.Security.KeyVault.Keys
         public string RecoveryLevel { get => _attributes.RecoveryLevel; internal set => _attributes.RecoveryLevel = value; }
 
         /// <summary>
-        /// Parses the key identifier into the <see cref="VaultEndpoint"/>, <see cref="Name"/>, and <see cref="Version"/> of the key.
+        /// Parses the key identifier into the <see cref="VaultUri"/>, <see cref="Name"/>, and <see cref="Version"/> of the key.
         /// </summary>
         /// <param name="idToParse">The key vault object identifier.</param>
         internal void ParseId(Uri idToParse)
@@ -135,7 +134,7 @@ namespace Azure.Security.KeyVault.Keys
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. segment [1] should be 'keys/', found '{1}'", idToParse, idToParse.Segments[1]));
 
             Id = idToParse;
-            VaultEndpoint = new Uri($"{idToParse.Scheme}://{idToParse.Authority}");
+            VaultUri = new Uri($"{idToParse.Scheme}://{idToParse.Authority}");
             Name = idToParse.Segments[2].Trim('/');
             Version = (idToParse.Segments.Length == 4) ? idToParse.Segments[3].TrimEnd('/') : null;
         }

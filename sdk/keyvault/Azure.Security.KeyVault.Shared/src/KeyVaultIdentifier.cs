@@ -14,7 +14,7 @@ namespace Azure.Security.KeyVault
 
         public Uri Id { get; private set; }
 
-        public Uri VaultEndpoint { get; set; }
+        public Uri VaultUri { get; set; }
 
         public string Name { get; set; }
 
@@ -42,7 +42,7 @@ namespace Azure.Security.KeyVault
             {
 
                 Id = id,
-                VaultEndpoint = new Uri($"{id.Scheme}://{id.Authority}"),
+                VaultUri = new Uri($"{id.Scheme}://{id.Authority}"),
                 Collection = id.Segments[1].Trim('/'),
                 Name = id.Segments[2].Trim('/'),
                 Version = (id.Segments.Length == 4) ? id.Segments[3].TrimEnd('/') : null

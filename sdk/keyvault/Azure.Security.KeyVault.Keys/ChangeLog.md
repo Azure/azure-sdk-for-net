@@ -9,7 +9,6 @@
 - The default `JsonWebKey` constructor has been removed.
 - `JsonWebKey` constructors now take an optional collection of key operations.
 - `JsonWebKey.KeyOps` is now read-only. You must pass a collection of key operations at construction time.
-- `VaultUri` properties and `vaultUri` parameters have been renamed to `VaultEndpoint` and `vaultEndpoint` respectively.
 - `Hsm` properties and `hsm` parameters have been renamed to `HardwareProtected` and `hardwareProtected` respectively.
 - On `KeyProperties`, `Expires`, `Created`, and `Updated` have been renamed to `ExpiresOn`, `CreatedOn`, and `UpdatedOn` respectively.
 - On `DeletedKey`, `DeletedDate` has been renamed to `DeletedOn`.
@@ -28,7 +27,6 @@
 ### Major changes
 
 - `JsonWebKey.KeyType` and `JsonWebKey.KeyOps` have been exposed as `KeyVaultKey.KeyType` and `KeyVaultKey.KeyOperations` respectively.
-- `KeyClient.VaultEndpoint` has been added with the original value pass to `KeyClient`.
 - `KeyModelFactory` added to create mocks of model types for testing.
 - `CryptographyModeFactory` added to create mocks of model types for testing.
 
