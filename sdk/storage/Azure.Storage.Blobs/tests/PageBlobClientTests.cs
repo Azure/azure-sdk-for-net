@@ -1611,7 +1611,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8353")]
         public async Task UploadPagesFromUriAsync_CPK()
         {
             using (GetNewContainer(out BlobContainerClient container))
@@ -1857,6 +1856,15 @@ namespace Azure.Storage.Blobs.Test
                 new AccessConditionParameters { SourceIfMatch = GarbageETag },
                 new AccessConditionParameters { SourceIfNoneMatch = ReceivedETag }
             };
+
+        [Test]
+        public void Loop()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                _ = UploadPagesFromUriAsync_AccessConditionsFail();
+            }
+        }
 
         [Test]
         public async Task UploadPagesFromUriAsync_AccessConditionsFail()

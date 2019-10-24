@@ -41,11 +41,11 @@ namespace Azure.Storage.Test
             return base.IsRetriableResponse(message);
         }
 
-        public override bool IsRetriableException(Exception exception)
-        {
-            Debug.WriteLine("debug testresponseclassifier" + exception);
-            Console.WriteLine("console testresponseclassifier" + exception);
-            return (exception is SocketException) || (exception is TaskCanceledException) || base.IsRetriableException(exception);
-        }
+        //public override bool IsRetriableException(Exception exception)
+        //{
+        //    Debug.WriteLine("debug testresponseclassifier" + exception);
+        //    Console.WriteLine("console testresponseclassifier" + exception);
+        //    return (exception is SocketException) || (exception is TaskCanceledException) || base.IsRetriableException(exception);
+        //}
     }
 }

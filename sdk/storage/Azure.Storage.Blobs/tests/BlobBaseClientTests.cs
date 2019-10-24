@@ -159,7 +159,6 @@ namespace Azure.Storage.Blobs.Test
         #endregion
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8353")]
         public async Task DownloadAsync_CPK()
         {
             using (GetNewContainer(out BlobContainerClient container))
@@ -1190,7 +1189,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8353")]
         public async Task GetPropertiesAsync_CPK()
         {
             using (GetNewContainer(out BlobContainerClient container))
@@ -1210,7 +1208,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8353")]
         public async Task GetPropertiesAsync_CpkError()
         {
             using (GetNewContainer(out BlobContainerClient container))
@@ -1593,7 +1590,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8353")]
         public async Task SetMetadataAsync_CPK()
         {
             using (GetNewContainer(out BlobContainerClient container))
@@ -1722,7 +1718,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8353")]
         public async Task CreateSnapshotAsync_CPK()
         {
             using (GetNewContainer(out BlobContainerClient container))
@@ -1742,7 +1737,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8353")]
         public async Task CreateSnapshotAsync_CpkHttpError()
         {
             using (GetNewContainer(out BlobContainerClient container))

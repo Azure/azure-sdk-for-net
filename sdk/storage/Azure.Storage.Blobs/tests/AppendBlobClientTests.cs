@@ -804,9 +804,11 @@ namespace Azure.Storage.Blobs.Test
                     using (var stream = new MemoryStream(data))
                     {
                         AppendBlobClient sourceBlob = InstrumentClient(container.GetAppendBlobClient(GetNewBlobName()));
-                        //var mock = new Mock<HttpPipeline>();
-                        //mock.Setup(x => x.ResponseClassifier).Returns(new TestResponseClassifier());
-                        //PropertyInfo propertyInfo = sourceBlob.GetType().GetProperty("_pipeline", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
+                        //  var mock = new Mock<HttpPipeline>();
+                        // mock.Setup(x => x.ResponseClassifier).Returns(new TestResponseClassifier());
+
+                        //FieldInfo[] fieldInfo = sourceBlob.Pipeline.GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
+                            //.GetProperty("_pipeline", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
                         //propertyInfo.SetValue(sourceBlob, mock);
                         await sourceBlob.CreateAsync();
                         await sourceBlob.AppendBlockAsync(stream);
