@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -53,6 +54,50 @@ namespace Azure.Storage.Queues
         {
             Version = version == ServiceVersion.V2019_02_02 ? version : throw Errors.VersionNotSupported(nameof(version));
             this.Initialize();
+            List<string> LoggedHeaderNames = new List<string>
+            {
+                "Access-Control-Allow-Origin",
+                "x-ms-client-request-id",
+                "x-ms-date",
+                "x-ms-error-code",
+                "x-ms-request-id",
+                "x-ms-version",
+                "x-ms-approximate-messages-count",
+                "x-ms-popreceipt",
+                "x-ms-time-next-visible"
+            };
+
+            List<string> LoggedQueryParameters = new List<string>
+            {
+                "comp",
+                "maxresults",
+                "rscc",
+                "rscd",
+                "rsce",
+                "rscl",
+                "rsct",
+                "se",
+                "si",
+                "sip",
+                "sp",
+                "spr",
+                "sr",
+                "srt",
+                "ss",
+                "st",
+                "sv",
+                "include",
+                "marker",
+                "prefix",
+                "messagettl",
+                "numofmessages",
+                "peekonly",
+                "popreceipt",
+                "visibilitytimeout"
+            };
+
+            LoggedHeaderNames.ForEach(header => Diagnostics.LoggedHeaderNames.Add(header));
+            LoggedQueryParameters.ForEach(header => Diagnostics.LoggedQueryParameters.Add(header));
         }
 
         /// <summary>
