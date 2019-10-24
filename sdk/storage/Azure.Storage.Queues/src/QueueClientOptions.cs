@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -54,50 +53,40 @@ namespace Azure.Storage.Queues
         {
             Version = version == ServiceVersion.V2019_02_02 ? version : throw Errors.VersionNotSupported(nameof(version));
             this.Initialize();
-            List<string> LoggedHeaderNames = new List<string>
-            {
-                "Access-Control-Allow-Origin",
-                "x-ms-client-request-id",
-                "x-ms-date",
-                "x-ms-error-code",
-                "x-ms-request-id",
-                "x-ms-version",
-                "x-ms-approximate-messages-count",
-                "x-ms-popreceipt",
-                "x-ms-time-next-visible"
-            };
+            Diagnostics.LoggedHeaderNames.Add("Access-Control-Allow-Origin");
+            Diagnostics.LoggedHeaderNames.Add("x-ms-date");
+            Diagnostics.LoggedHeaderNames.Add("x-ms-error-code");
+            Diagnostics.LoggedHeaderNames.Add("x-ms-request-id");
+            Diagnostics.LoggedHeaderNames.Add("x-ms-version");
+            Diagnostics.LoggedHeaderNames.Add("x-ms-approximate-messages-count");
+            Diagnostics.LoggedHeaderNames.Add("x-ms-popreceipt");
+            Diagnostics.LoggedHeaderNames.Add("x-ms-time-next-visible");
 
-            List<string> LoggedQueryParameters = new List<string>
-            {
-                "comp",
-                "maxresults",
-                "rscc",
-                "rscd",
-                "rsce",
-                "rscl",
-                "rsct",
-                "se",
-                "si",
-                "sip",
-                "sp",
-                "spr",
-                "sr",
-                "srt",
-                "ss",
-                "st",
-                "sv",
-                "include",
-                "marker",
-                "prefix",
-                "messagettl",
-                "numofmessages",
-                "peekonly",
-                "popreceipt",
-                "visibilitytimeout"
-            };
-
-            LoggedHeaderNames.ForEach(header => Diagnostics.LoggedHeaderNames.Add(header));
-            LoggedQueryParameters.ForEach(header => Diagnostics.LoggedQueryParameters.Add(header));
+            Diagnostics.LoggedQueryParameters.Add("comp");
+            Diagnostics.LoggedQueryParameters.Add("maxresults");
+            Diagnostics.LoggedQueryParameters.Add("rscc");
+            Diagnostics.LoggedQueryParameters.Add("rscd");
+            Diagnostics.LoggedQueryParameters.Add("rsce");
+            Diagnostics.LoggedQueryParameters.Add("rscl");
+            Diagnostics.LoggedQueryParameters.Add("rsct");
+            Diagnostics.LoggedQueryParameters.Add("se");
+            Diagnostics.LoggedQueryParameters.Add("si");
+            Diagnostics.LoggedQueryParameters.Add("sip");
+            Diagnostics.LoggedQueryParameters.Add("sp");
+            Diagnostics.LoggedQueryParameters.Add("spr");
+            Diagnostics.LoggedQueryParameters.Add("sr");
+            Diagnostics.LoggedQueryParameters.Add("srt");
+            Diagnostics.LoggedQueryParameters.Add("ss");
+            Diagnostics.LoggedQueryParameters.Add("st");
+            Diagnostics.LoggedQueryParameters.Add("sv");
+            Diagnostics.LoggedQueryParameters.Add("include");
+            Diagnostics.LoggedQueryParameters.Add("marker");
+            Diagnostics.LoggedQueryParameters.Add("prefix");
+            Diagnostics.LoggedQueryParameters.Add("messagettl");
+            Diagnostics.LoggedQueryParameters.Add("numofmessages");
+            Diagnostics.LoggedQueryParameters.Add("peekonly");
+            Diagnostics.LoggedQueryParameters.Add("popreceipt");
+            Diagnostics.LoggedQueryParameters.Add("visibilitytimeout");
         }
 
         /// <summary>

@@ -30,9 +30,6 @@ namespace Azure.Storage
 
             // We'll use the standard RetryPolicy with a few more retries
             options.Retry.MaxRetries = Constants.MaxReliabilityRetries;
-
-            // Disable logging until we fully support redaction
-            options.Diagnostics.IsLoggingEnabled = false;
         }
 
         /// <summary>
