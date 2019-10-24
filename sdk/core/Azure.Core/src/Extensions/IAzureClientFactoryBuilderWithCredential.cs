@@ -15,7 +15,7 @@ namespace Azure.Core.Extensions
         /// </summary>
         /// <typeparam name="TClient">The type of the client.</typeparam>
         /// <typeparam name="TOptions">The client options type used the client.</typeparam>
-        /// <param name="clientFactory">The factory that given the instance of options and credential returns a client instance.</param>
+        /// <param name="clientFactory">The factory, that given the instance of options and credential, returns a client instance.</param>
         /// <param name="requiresCredential">Specifies whether the credential is optional (client supports anonymous auth).</param>
         /// <returns><see cref="IAzureClientBuilder{TClient,TOptions}"/> that allows customizing the client registration.</returns>
         IAzureClientBuilder<TClient, TOptions> RegisterClientFactory<TClient, TOptions>(Func<TOptions, TokenCredential, TClient> clientFactory, bool requiresCredential = true) where TOptions : class;

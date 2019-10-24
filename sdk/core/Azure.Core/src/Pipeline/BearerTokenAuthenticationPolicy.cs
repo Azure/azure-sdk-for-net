@@ -22,7 +22,7 @@ namespace Azure.Core.Pipeline
         private DateTimeOffset _refreshOn;
 
         /// <summary>
-        /// Creates a new instance os <see cref="BearerTokenAuthenticationPolicy"/> using provided token credential and scope to authenticate for.
+        /// Creates a new instance of <see cref="BearerTokenAuthenticationPolicy"/> using provided token credential and scope to authenticate for.
         /// </summary>
         /// <param name="credential">The token credential to use for authentication.</param>
         /// <param name="scope">The scope to authenticate for.</param>
@@ -31,7 +31,7 @@ namespace Azure.Core.Pipeline
         }
 
         /// <summary>
-        /// Creates a new instance os <see cref="BearerTokenAuthenticationPolicy"/> using provided token credential and scopes to authenticate for.
+        /// Creates a new instance of <see cref="BearerTokenAuthenticationPolicy"/> using provided token credential and scopes to authenticate for.
         /// </summary>
         /// <param name="credential">The token credential to use for authentication.</param>
         /// <param name="scopes">Scopes to authenticate for.</param>

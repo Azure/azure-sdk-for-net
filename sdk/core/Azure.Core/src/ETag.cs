@@ -26,7 +26,7 @@ namespace Azure
         /// </summary>
         /// <param name="left">The <see cref="ETag"/> to compare.</param>
         /// <param name="right">The <see cref="ETag"/> to compare to.</param>
-        /// <returns><code>true</code> if values of both ETags are equal, otherwise. <code>false</code></returns>
+        /// <returns><c>true</c> if values of both ETags are equal, otherwise <c>false</c>.</returns>
         public static bool operator ==(ETag left, ETag right) => left.Equals(right);
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace Azure
         /// </summary>
         /// <param name="left">The <see cref="ETag"/> to compare.</param>
         /// <param name="right">The <see cref="ETag"/> to compare to.</param>
-        /// <returns><code>true</code> if values of both ETags are not equal, otherwise. <code>false</code></returns>
+        /// <returns><c>true</c> if values of both ETags are not equal, otherwise <c>false</c>.</returns>
         public static bool operator !=(ETag left, ETag right) => !left.Equals(right);
 
         /// <summary>

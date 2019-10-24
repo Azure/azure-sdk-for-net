@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Azure.Core.Pipeline
 {
     /// <summary>
-    /// Represents a <see cref="HttpPipelinePolicy"/> that doesn't do any asynchronous or blocking operations.
+    /// Represents a <see cref="HttpPipelinePolicy"/> that doesn't do any asynchronous or synchronously blocking operations.
     /// </summary>
     public abstract class HttpPipelineSynchronousPolicy : HttpPipelinePolicy
     {

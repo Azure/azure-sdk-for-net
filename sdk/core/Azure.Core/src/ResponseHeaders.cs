@@ -73,7 +73,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="name">The header name.</param>
         /// <param name="value">The reference to populate with value.</param>
-        /// <returns><code>true</code> if the specified header is stored in the collection, otherwise. <code>false</code></returns>
+        /// <returns><c>true</c> if the specified header is stored in the collection, otherwise <c>false</c>.</returns>
         public bool TryGetValue(string name, [NotNullWhen(true)] out string? value)
         {
             return _response.TryGetHeader(name, out value);
@@ -84,17 +84,17 @@ namespace Azure.Core
         /// </summary>
         /// <param name="name">The header name.</param>
         /// <param name="values">The reference to populate with values.</param>
-        /// <returns><code>true</code> if the specified header is stored in the collection, otherwise. <code>false</code></returns>
+        /// <returns><c>true</c> if the specified header is stored in the collection, otherwise <c>false</c>.</returns>
         public bool TryGetValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
         {
             return _response.TryGetHeaderValues(name, out values);
         }
 
         /// <summary>
-        /// Returns if headers is stored in the collection.
+        /// Returns <c>true</c> if headers is stored in the collection.
         /// </summary>
         /// <param name="name">The header name.</param>
-        /// <returns><code>true</code> if the specified header is stored in the collection, otherwise. <code>false</code></returns>
+        /// <returns><c>true</c> if the specified header is stored in the collection, otherwise <c>false</c>.</returns>
         public bool Contains(string name)
         {
             return _response.ContainsHeader(name);
