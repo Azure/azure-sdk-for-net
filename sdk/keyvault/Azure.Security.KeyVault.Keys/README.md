@@ -68,7 +68,7 @@ Use the [Azure CLI][azure_cli] snippet below to create/get client secret credent
 #### Create KeyClient
 Once you've populated the **AZURE_CLIENT_ID**, **AZURE_CLIENT_SECRET** and **AZURE_TENANT_ID** environment variables and replaced **your-vault-url** with the above returned URI, you can create the [KeyClient][key_client_class]:
 
-```C# CreateKeyClient
+```C# Snippet:CreateKeyClient
 // Create a new key client using the default credential from Azure.Identity using environment variables previously set,
 // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
 var client = new KeyClient(vaultUri: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
@@ -80,7 +80,7 @@ Key key = client.CreateKey("key-name", KeyType.Rsa);
 #### Create CryptographyClient
 Once you've created a `Key` in the key vault, you can also create the [CryptographyClient][crypto_client_class]:
 
-```C# CreateCryptographyClient
+```C# Snippet:CreateCryptographyClient
 // Create a new certificate client using the default credential from Azure.Identity using environment variables previously set,
 // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
 var cryptoClient = new CryptographyClient(keyId: key.Id, credential: new DefaultAzureCredential());
@@ -115,7 +115,7 @@ The following section provides several code snippets using the [above created](#
 ### Create a Key
 Create a Key to be stored in the Azure Key Vault. If a key with the same name already exists, then a new version of the key is created.
 
-```C# CreateKey
+```C# Snippet:CreateKey
 // Create a key. Note that you can specify the type of key
 // i.e. Elliptic curve, Hardware Elliptic Curve, RSA
 Key key = client.CreateKey("key-name", KeyType.Rsa);
@@ -141,7 +141,7 @@ Console.WriteLine(ecKey.KeyMaterial.KeyType);
 ### Retrieve a Key
 `GetKey` retrieves a key previously stored in the Key Vault.
 
-```C# RetrieveKey
+```C# Snippet:RetrieveKey
 Key key = client.GetKey("key-name");
 
 Console.WriteLine(key.Name);
@@ -151,7 +151,7 @@ Console.WriteLine(key.KeyMaterial.KeyType);
 ### Update an existing Key
 `UpdateKey` updates a key previously stored in the Key Vault.
 
-```C# UpdateKey
+```C# Snippet:UpdateKey
 Key key = client.CreateKey("key-name", KeyType.Rsa);
 
 // You can specify additional application-specific metadata in the form of tags.
@@ -167,7 +167,7 @@ Console.WriteLine(updatedKey.Properties.Updated);
 ### Delete a Key
 `DeleteKey` deletes a key previously stored in the Key Vault. When [soft-delete][soft_delete] is not enabled for the Key Vault, this operation permanently deletes the key.
 
-```C# DeleteKey
+```C# Snippet:DeleteKey
 DeletedKey key = client.DeleteKey("key-name");
 
 Console.WriteLine(key.Name);
@@ -177,19 +177,19 @@ Console.WriteLine(key.DeletedDate);
 ### List Keys
 This example lists all the keys in the specified Key Vault.
 
-```C# ListKeys
+```C# Snippet:ListKeys
 Pageable<KeyProperties> allKeys = client.GetKeys();
 
-foreach (KeyProperties key in allKeys)
+foreach (KeyProperties keyProperties in allKeys)
 {
-    Console.WriteLine(key.Name);
+    Console.WriteLine(keyProperties.Name);
 }
 ```
 
 ### Encrypt and Decrypt
 This example creates a CryptographyClient and uses it to encrypt and decrypt with a key in Key Vault.
 
-```C# EncryptDecrypt
+```C# Snippet:EncryptDecrypt
 byte[] plaintext = Encoding.UTF8.GetBytes("A single block of plaintext");
 
 // encrypt the data using the algorithm RSAOAEP
@@ -202,7 +202,7 @@ DecryptResult decryptResult = cryptoClient.Decrypt(EncryptionAlgorithm.RsaOaep, 
 ### Async create a Key
 Async APIs are identical to their synchronous counterparts. Note that all methods end with `Async`.
 
-```C# CreateKeyAsync
+```C# Snippet:CreateKeyAsync
 // Create a key of any type
 Key key = await client.CreateKeyAsync("key-name", KeyType.Rsa);
 
@@ -231,7 +231,7 @@ When you interact with the Azure Key Vault Key client library using the .NET SDK
 
 For example, if you try to retrieve a Key that doesn't exist in your Key Vault, a `404` error is returned, indicating `Not Found`.
 
-```C# NotFound
+```C# Snippet:NotFound
 try
 {
     Key key = await client.GetKeyAsync("some_key");

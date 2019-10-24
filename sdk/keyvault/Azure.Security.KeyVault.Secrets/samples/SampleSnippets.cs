@@ -26,7 +26,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             // Environment variable with the Key Vault endpoint.
             string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
 
-            #region CreateClient
+            #region Snippet:CreateSecretClient
             // Create a new secret client using the default credential from Azure.Identity using environment variables previously set,
             // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
             var client = new SecretClient(vaultUri: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
@@ -41,7 +41,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
         [Test]
         public void CreateSecret()
         {
-            #region CreateSecret
+            #region Snippet:CreateSecret
             Secret secret = client.SetSecret("secret-name", "secret-value");
 
             Console.WriteLine(secret.Name);
@@ -54,7 +54,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
         [Test]
         public async Task CreateSecretAsync()
         {
-            #region CreateSecretAsync
+            #region Snippet:CreateSecretAsync
             Secret secret = await client.SetSecretAsync("secret-name", "secret-value");
 
             Console.WriteLine(secret.Name);
@@ -68,7 +68,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             // Make sure a secret exists.
             client.SetSecret("secret-name", "secret-value");
 
-            #region RetrieveSecret
+            #region Snippet:RetrieveSecret
             Secret secret = client.GetSecret("secret-name");
 
             Console.WriteLine(secret.Name);
@@ -82,7 +82,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             // Make sure a secret exists.
             client.SetSecret("secret-name", "secret-value");
 
-            #region UpdateSecret
+            #region Snippet:UpdateSecret
             Secret secret = client.GetSecret("secret-name");
 
             // Clients may specify the content type of a secret to assist in interpreting the secret data when it's retrieved.
@@ -102,7 +102,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
         [Test]
         public void ListSecrets()
         {
-            #region ListSecrets
+            #region Snippet:ListSecrets
             Pageable<SecretProperties> allSecrets = client.GetSecrets();
 
             foreach (SecretProperties secretProperties in allSecrets)
@@ -115,7 +115,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
         [Test]
         public void NotFound()
         {
-            #region NotFound
+            #region Snippet:SecretNotFound
             try
             {
                 Secret secret = client.GetSecret("some_secret");
@@ -130,7 +130,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
         [OneTimeTearDown]
         public void DeleteSecret()
         {
-            #region DeleteSecret
+            #region Snippet:DeleteSecret
             DeletedSecret secret = client.DeleteSecret("secret-name");
 
             Console.WriteLine(secret.Name);

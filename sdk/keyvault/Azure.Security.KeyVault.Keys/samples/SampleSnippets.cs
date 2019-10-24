@@ -29,7 +29,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             // Environment variable with the Key Vault endpoint.
             string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
 
-            #region CreateKeyClient
+            #region Snippet:CreateKeyClient
             // Create a new key client using the default credential from Azure.Identity using environment variables previously set,
             // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
             var client = new KeyClient(vaultUri: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
@@ -38,7 +38,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             Key key = client.CreateKey("key-name", KeyType.Rsa);
             #endregion
 
-            #region CreateCryptographyClient
+            #region Snippet:CreateCryptographyClient
             // Create a new certificate client using the default credential from Azure.Identity using environment variables previously set,
             // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
             var cryptoClient = new CryptographyClient(keyId: key.Id, credential: new DefaultAzureCredential());
@@ -51,7 +51,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
         [Test]
         public void CreateKey()
         {
-            #region CreateKey
+            #region Snippet:CreateKey
             // Create a key. Note that you can specify the type of key
             // i.e. Elliptic curve, Hardware Elliptic Curve, RSA
             Key key = client.CreateKey("key-name", KeyType.Rsa);
@@ -78,7 +78,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
         [Test]
         public async Task CreateKeyAsync()
         {
-            #region CreateKeyAsync
+            #region Snippet:CreateKeyAsync
             // Create a key of any type
             Key key = await client.CreateKeyAsync("key-name", KeyType.Rsa);
 
@@ -107,7 +107,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             // Make sure a key exists.
             client.CreateKey("key-name", KeyType.Rsa);
 
-            #region RetrieveKey
+            #region Snippet:RetrieveKey
             Key key = client.GetKey("key-name");
 
             Console.WriteLine(key.Name);
@@ -118,7 +118,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
         [Test]
         public void UpdateKey()
         {
-            #region UpdateKey
+            #region Snippet:UpdateKey
             Key key = client.CreateKey("key-name", KeyType.Rsa);
 
             // You can specify additional application-specific metadata in the form of tags.
@@ -135,7 +135,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
         [Test]
         public void ListKeys()
         {
-            #region ListKeys
+            #region Snippet:ListKeys
             Pageable<KeyProperties> allKeys = client.GetKeys();
 
             foreach (KeyProperties keyProperties in allKeys)
@@ -148,7 +148,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
         [Test]
         public void EncryptDecrypt()
         {
-            #region EncryptDecrypt
+            #region Snippet:EncryptDecrypt
             byte[] plaintext = Encoding.UTF8.GetBytes("A single block of plaintext");
 
             // encrypt the data using the algorithm RSAOAEP
@@ -162,7 +162,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
         [Test]
         public async Task NotFoundAsync()
         {
-            #region NotFound
+            #region Snippet:NotFound
             try
             {
                 Key key = await client.GetKeyAsync("some_key");
@@ -177,7 +177,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
         [OneTimeTearDown]
         public void DeleteKey()
         {
-            #region DeleteKey
+            #region Snippet:DeleteKey
             DeletedKey key = client.DeleteKey("key-name");
 
             Console.WriteLine(key.Name);
