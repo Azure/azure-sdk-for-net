@@ -580,7 +580,7 @@ namespace Compute.Tests.DiskRPTests
 
             var des = new DiskEncryptionSet
             {
-                Identity = new ResourceIdentity
+                Identity = new EncryptionSetIdentity
                 {
                     Type = ResourceIdentityType.SystemAssigned.ToString()
                 },
