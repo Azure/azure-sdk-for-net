@@ -160,6 +160,18 @@ namespace Azure.Messaging.EventHubs
         protected internal DateTimeOffset? LastPartitionEnqueuedTime { get; }
 
         /// <summary>
+        ///   The date and time, in UTC, that the last event information for the Event Hub partition was retrieved
+        ///   from the Event Hubs service.
+        /// </summary>
+        ///
+        /// <remarks>
+        ///   This property is only populated for events received using an <see cref="EventHubConsumer" /> which was created when
+        ///   <see cref="EventHubConsumerOptions.TrackLastEnqueuedEventInformation" /> is enabled.
+        /// </remarks>
+        ///
+        protected internal DateTimeOffset? LastPartitionInformationRetrievalTime { get; }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="EventData"/> class.
         /// </summary>
         ///
@@ -184,6 +196,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="lastPartitionSequenceNumber">The sequence number that was last enqueued into the Event Hub partition.</param>
         /// <param name="lastPartitionOffset">The offset that was last enqueued into the Event Hub partition.</param>
         /// <param name="lastPartitionEnqueuedTime">The date and time, in UTC, of the event that was last enqueued into the Event Hub partition.</param>
+        /// <param name="lastPartitionInformationRetrievalTime">The date and time, in UTC, that the last event information for the Event Hub partition was retrieved from the serivce.</param>
         ///
         protected internal EventData(ReadOnlyMemory<byte> eventBody,
                                      IDictionary<string, object> properties = null,
@@ -194,7 +207,8 @@ namespace Azure.Messaging.EventHubs
                                      string partitionKey = null,
                                      long? lastPartitionSequenceNumber = null,
                                      long? lastPartitionOffset = null,
-                                     DateTimeOffset? lastPartitionEnqueuedTime = null)
+                                     DateTimeOffset? lastPartitionEnqueuedTime = null,
+                                     DateTimeOffset? lastPartitionInformationRetrievalTime = null)
         {
             Body = eventBody;
             Properties = properties ?? new Dictionary<string, object>();
@@ -206,6 +220,7 @@ namespace Azure.Messaging.EventHubs
             LastPartitionSequenceNumber = lastPartitionSequenceNumber;
             LastPartitionOffset = lastPartitionOffset;
             LastPartitionEnqueuedTime = lastPartitionEnqueuedTime;
+            LastPartitionInformationRetrievalTime = lastPartitionInformationRetrievalTime;
         }
 
         /// <summary>

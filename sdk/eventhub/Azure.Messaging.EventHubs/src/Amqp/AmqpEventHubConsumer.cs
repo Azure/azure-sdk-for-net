@@ -11,7 +11,6 @@ using Azure.Core;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
 using Azure.Messaging.EventHubs.Errors;
-using Azure.Messaging.EventHubs.Metadata;
 using Microsoft.Azure.Amqp;
 
 namespace Azure.Messaging.EventHubs.Amqp
@@ -52,6 +51,13 @@ namespace Azure.Messaging.EventHubs.Amqp
         private string EventHubName { get; }
 
         /// <summary>
+        ///   The name of the consumer group that this consumer is associated with.  Events will be read
+        ///   only in the context of this group.
+        /// </summary>
+        ///
+        private string ConsumerGroup { get; }
+
+        /// <summary>
         ///   The identifier of the Event Hub partition that this consumer is associated with.  Events will be read
         ///   only from this partition.
         /// </summary>
@@ -59,11 +65,10 @@ namespace Azure.Messaging.EventHubs.Amqp
         private string PartitionId { get; }
 
         /// <summary>
-        ///   The name of the consumer group that this consumer is associated with.  Events will be read
-        ///   only in the context of this group.
+        ///   The set of options which govern the behavior of this consumer instance.
         /// </summary>
         ///
-        private string ConsumerGroup { get; }
+        private EventHubConsumerOptions Options { get; }
 
         /// <summary>
         ///   The converter to use for translating between AMQP messages and client library
@@ -96,7 +101,6 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="connectionScope">The AMQP connection context for operations .</param>
         /// <param name="messageConverter">The converter to use for translating between AMQP messages and client types.</param>
         /// <param name="retryPolicy">The retry policy to consider when an operation fails.</param>
-        /// <param name="lastEnqueuedEventProperties">The set of properties for the last event enqueued in a partition; if not requested in the consumer options, it is expected that this is <c>null</c>.</param>
         ///
         /// <remarks>
         ///   As an internal type, this class performs only basic sanity checks against its arguments.  It
@@ -114,8 +118,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                                     EventHubConsumerOptions consumerOptions,
                                     AmqpConnectionScope connectionScope,
                                     AmqpMessageConverter messageConverter,
-                                    EventHubRetryPolicy retryPolicy,
-                                    LastEnqueuedEventProperties lastEnqueuedEventProperties) : base(lastEnqueuedEventProperties)
+                                    EventHubRetryPolicy retryPolicy)
         {
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
@@ -129,6 +132,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             EventHubName = eventHubName;
             ConsumerGroup = consumerGroup;
             PartitionId = partitionId;
+            Options = consumerOptions;
             ConnectionScope = connectionScope;
             MessageConverter = messageConverter;
             ReceiveLink = new FaultTolerantAmqpObject<ReceivingAmqpLink>(timeout => ConnectionScope.OpenConsumerLinkAsync(consumerGroup, partitionId, eventPosition, consumerOptions, timeout, CancellationToken.None), link => link.SafeClose());
@@ -214,10 +218,9 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                             receivedEventCount = receivedEvents.Count;
 
-                            if ((LastEnqueuedEventInformation != null) && (receivedEventCount > 0))
+                            if ((Options.TrackLastEnqueuedEventInformation) && (receivedEventCount > 0))
                             {
-                                EventData lastEvent = receivedEvents[receivedEventCount - 1];
-                                LastEnqueuedEventInformation.UpdateMetrics(lastEvent.LastPartitionSequenceNumber, lastEvent.LastPartitionOffset, lastEvent.LastPartitionEnqueuedTime, DateTimeOffset.UtcNow);
+                                LastReceivedEvent = receivedEvents[receivedEventCount - 1];
                             }
 
                             return receivedEvents;

@@ -152,6 +152,61 @@ namespace Azure.Security.KeyVault.Test
         }
 
         [Test]
+        public async Task UpdateTags()
+        {
+            string secretName = Recording.GenerateId();
+
+            KeyVaultSecret secret = new KeyVaultSecret(secretName, "test")
+            {
+                Properties =
+                {
+                    Tags =
+                    {
+                        ["A"] = "1",
+                        ["B"] = "2",
+                    },
+                },
+            };
+
+            secret = await Client.SetSecretAsync(secret);
+            RegisterForCleanup(secret.Name);
+
+            IDictionary<string, string> expectedTags = new Dictionary<string, string>
+            {
+                ["A"] = "1",
+                ["B"] = "2",
+            };
+
+            AssertAreEqual(expectedTags, secret.Properties.Tags);
+
+            secret.Properties.Tags["B"] = "3";
+            secret.Properties.Tags["C"] = "4";
+
+            SecretProperties updateResult = await Client.UpdateSecretPropertiesAsync(secret.Properties);
+
+            expectedTags = new Dictionary<string, string>
+            {
+                ["A"] = "1",
+                ["B"] = "3",
+                ["C"] = "4",
+            };
+
+            AssertAreEqual(expectedTags, updateResult.Tags);
+
+            updateResult.Tags.Clear();
+            updateResult.Tags["D"] = "5";
+
+            updateResult = await Client.UpdateSecretPropertiesAsync(updateResult);
+
+            expectedTags = new Dictionary<string, string>
+            {
+                ["D"] = "5",
+            };
+
+            AssertAreEqual(expectedTags, updateResult.Tags);
+        }
+
+        [Test]
         public async Task GetSecret()
         {
             string secretName = Recording.GenerateId();

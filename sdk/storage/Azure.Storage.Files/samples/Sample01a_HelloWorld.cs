@@ -72,7 +72,6 @@ namespace Azure.Storage.Files.Samples
         /// <summary>
         /// Download a file.
         /// </summary>
-        /// <returns></returns>
         [Test]
         public void Download()
         {

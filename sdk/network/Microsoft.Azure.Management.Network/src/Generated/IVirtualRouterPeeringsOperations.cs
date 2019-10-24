@@ -77,37 +77,6 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse<VirtualRouterPeering>> GetWithHttpMessagesAsync(string resourceGroupName, string virtualRouterName, string peeringName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates a Virtual Router Peering.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name of the Virtual Router Peering.
-        /// </param>
-        /// <param name='virtualRouterName'>
-        /// The name of the Virtual Router.
-        /// </param>
-        /// <param name='peeringName'>
-        /// The name of the Virtual Router Peering being updated.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to update Virtual Router Peering operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<VirtualRouterPeering>> UpdateWithHttpMessagesAsync(string resourceGroupName, string virtualRouterName, string peeringName, VirtualRouterPeering parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Creates or updates the specified Virtual Router Peering.
         /// </summary>
         /// <param name='resourceGroupName'>

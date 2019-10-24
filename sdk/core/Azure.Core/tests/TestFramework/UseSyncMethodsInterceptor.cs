@@ -87,7 +87,7 @@ namespace Azure.Core.Testing
                 }
                 else
                 {
-                    invocation.ReturnValue = _taskFromResultMethod.MakeGenericMethod(returnType).Invoke(null, new[] { result });
+                    SetAsyncResult(invocation, returnType, result);
                 }
             }
             catch (TargetInvocationException exception)
@@ -98,9 +98,51 @@ namespace Azure.Core.Testing
                 }
                 else
                 {
-                    invocation.ReturnValue = _taskFromExceptionMethod.MakeGenericMethod(methodInfo.ReturnType).Invoke(null, new[] { exception.InnerException });
+                    SetAsyncException(invocation, returnType, exception.InnerException);
                 }
             }
+        }
+
+        private void SetAsyncResult(IInvocation invocation, Type returnType, object result)
+        {
+            Type methodReturnType = invocation.Method.ReturnType;
+            if (methodReturnType.IsGenericType)
+            {
+                if (methodReturnType.GetGenericTypeDefinition() == typeof(Task<>))
+                {
+                    invocation.ReturnValue = _taskFromResultMethod.MakeGenericMethod(returnType).Invoke(null, new[] { result });
+                    return;
+                }
+                if (methodReturnType.GetGenericTypeDefinition() == typeof(ValueTask<>))
+                {
+                    invocation.ReturnValue = Activator.CreateInstance(typeof(ValueTask<>).MakeGenericType(returnType), result);
+                    return;
+                }
+            }
+
+            throw new NotSupportedException();
+        }
+
+        private void SetAsyncException(IInvocation invocation, Type returnType, Exception result)
+        {
+            Type methodReturnType = invocation.Method.ReturnType;
+            if (methodReturnType.IsGenericType)
+            {
+                if (methodReturnType.GetGenericTypeDefinition() == typeof(Task<>))
+                {
+                    invocation.ReturnValue = _taskFromExceptionMethod.MakeGenericMethod(returnType).Invoke(null, new[] { result });
+                    return;
+                }
+
+                if (methodReturnType.GetGenericTypeDefinition() == typeof(ValueTask<>))
+                {
+                    var task = _taskFromExceptionMethod.MakeGenericMethod(returnType).Invoke(null, new[] { result });
+                    invocation.ReturnValue = Activator.CreateInstance(typeof(ValueTask<>).MakeGenericType(returnType), task);
+                    return;
+                }
+            }
+
+            throw new NotSupportedException();
         }
 
         private static MethodInfo GetMethod(IInvocation invocation, string nonAsyncMethodName, Type[] types) =>

@@ -17,7 +17,7 @@ namespace Azure.Core
         /// <param name="requestContext">The <see cref="TokenRequestContext"/> with authentication information.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>A valid <see cref="AccessToken"/>.</returns>
-        public abstract Task<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken);
+        public abstract ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken);
 
         /// <summary>
         /// Gets an <see cref="AccessToken"/> for the specified set of scopes.

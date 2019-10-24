@@ -89,7 +89,7 @@ namespace Compute.Tests
                 // AutomaticOSUpgradeProperties.AutomaticOSUpgradeSupported = false in GET VMImageVesion call
                 imagePublisher = "Canonical";
                 imageOffer = "UbuntuServer";
-                imageSku = "18.10-DAILY";
+                imageSku = _pirClient.VirtualMachineImages.ListSkus(ComputeManagementTestUtilities.DefaultLocation, imagePublisher, imageOffer).FirstOrDefault().Name;
                 string[] availableUbuntuImageVersions = _pirClient.VirtualMachineImages.List(
                     ComputeManagementTestUtilities.DefaultLocation, imagePublisher, imageOffer, imageSku).Select(t => t.Name).ToArray();
 

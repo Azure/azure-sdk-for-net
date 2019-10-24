@@ -193,9 +193,9 @@ namespace Azure.Storage.Files.Test
                 var smbProperties = new FileSmbProperties
                 {
                     FilePermissionKey = createPermissionResponse.Value.FilePermissionKey,
-                    FileAttributes = NtfsFileAttributes.Parse("Archive|ReadOnly"),
-                    FileCreationTime = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
-                    FileLastWriteTime = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero),
+                    FileAttributes = FileExtensions.ToFileAttributes("Archive|ReadOnly"),
+                    FileCreatedOn = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
+                    FileLastWrittenOn = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero),
                 };
 
                 // Act
@@ -206,8 +206,8 @@ namespace Azure.Storage.Files.Test
                 // Assert
                 AssertValidStorageFileInfo(response);
                 Assert.AreEqual(smbProperties.FileAttributes, response.Value.SmbProperties.FileAttributes);
-                Assert.AreEqual(smbProperties.FileCreationTime, response.Value.SmbProperties.FileCreationTime);
-                Assert.AreEqual(smbProperties.FileLastWriteTime, response.Value.SmbProperties.FileLastWriteTime);
+                Assert.AreEqual(smbProperties.FileCreatedOn, response.Value.SmbProperties.FileCreatedOn);
+                Assert.AreEqual(smbProperties.FileLastWrittenOn, response.Value.SmbProperties.FileLastWrittenOn);
             }
         }
 
@@ -470,9 +470,9 @@ namespace Azure.Storage.Files.Test
                 var smbProperties = new FileSmbProperties
                 {
                     FilePermissionKey = createPermissionResponse.Value.FilePermissionKey,
-                    FileAttributes = NtfsFileAttributes.Parse("Archive|ReadOnly"),
-                    FileCreationTime = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
-                    FileLastWriteTime = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero),
+                    FileAttributes = FileExtensions.ToFileAttributes("Archive|ReadOnly"),
+                    FileCreatedOn = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
+                    FileLastWrittenOn = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero),
                 };
 
 
@@ -484,8 +484,8 @@ namespace Azure.Storage.Files.Test
                 // Assert
                 AssertValidStorageFileInfo(response);
                 Assert.AreEqual(smbProperties.FileAttributes, response.Value.SmbProperties.FileAttributes);
-                Assert.AreEqual(smbProperties.FileCreationTime, response.Value.SmbProperties.FileCreationTime);
-                Assert.AreEqual(smbProperties.FileLastWriteTime, response.Value.SmbProperties.FileLastWriteTime);
+                Assert.AreEqual(smbProperties.FileCreatedOn, response.Value.SmbProperties.FileCreatedOn);
+                Assert.AreEqual(smbProperties.FileLastWrittenOn, response.Value.SmbProperties.FileLastWrittenOn);
             }
         }
 
@@ -777,7 +777,7 @@ namespace Azure.Storage.Files.Test
                 Assert.AreEqual(getPropertiesResponse.Value.CacheControl, downloadResponse.Value.Details.CacheControl);
                 Assert.AreEqual(getPropertiesResponse.Value.ContentDisposition, downloadResponse.Value.Details.ContentDisposition);
                 Assert.AreEqual(getPropertiesResponse.Value.ContentLanguage, downloadResponse.Value.Details.ContentLanguage);
-                Assert.AreEqual(getPropertiesResponse.Value.CopyCompletionTime, downloadResponse.Value.Details.CopyCompletionTime);
+                Assert.AreEqual(getPropertiesResponse.Value.CopyCompletedOn, downloadResponse.Value.Details.CopyCompletedOn);
                 Assert.AreEqual(getPropertiesResponse.Value.CopyStatusDescription, downloadResponse.Value.Details.CopyStatusDescription);
                 Assert.AreEqual(getPropertiesResponse.Value.CopyId, downloadResponse.Value.Details.CopyId);
                 Assert.AreEqual(getPropertiesResponse.Value.CopyProgress, downloadResponse.Value.Details.CopyProgress);
@@ -936,6 +936,7 @@ namespace Azure.Storage.Files.Test
         [TestCase(33 * Constants.MB)]
         [TestCase(257 * Constants.MB)]
         [TestCase(1 * Constants.GB)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8354")]
         public async Task UploadAsync_LargeBlobs(int size) =>
             // TODO: #6781 We don't want to add 1GB of random data in the recordings
             await UploadAndVerify(size, Constants.MB);
@@ -1025,6 +1026,7 @@ namespace Azure.Storage.Files.Test
 
         [Test]
         [LiveOnly]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8354")]
         // TODO: #7645
         public async Task UploadRangeFromUriAsync()
         {

@@ -224,15 +224,15 @@ namespace Azure.Storage
                 /// The Azure Storage Operation Names for Blob Lease Client.
                 /// </summary>
                 public const string AcquireOperationName =
-                    "Azure.Storage.Blobs.Specialized.LeaseClient.Acquire";
+                    "Azure.Storage.Blobs.Specialized.BlobLeaseClient.Acquire";
                 public const string RenewOperationName =
-                    "Azure.Storage.Blobs.Specialized.LeaseClient.Renew";
+                    "Azure.Storage.Blobs.Specialized.BlobLeaseClient.Renew";
                 public const string ReleaseOperationName =
-                    "Azure.Storage.Blobs.Specialized.LeaseClient.Release";
+                    "Azure.Storage.Blobs.Specialized.BlobLeaseClient.Release";
                 public const string ChangeOperationName =
-                    "Azure.Storage.Blobs.Specialized.LeaseClient.Change";
+                    "Azure.Storage.Blobs.Specialized.BlobLeaseClient.Change";
                 public const string BreakOperationName =
-                    "Azure.Storage.Blobs.Specialized.LeaseClient.Break";
+                    "Azure.Storage.Blobs.Specialized.BlobLeaseClient.Break";
             }
 
             internal static class Page
@@ -375,10 +375,10 @@ namespace Azure.Storage
 
             public const string ClearMessagesOperationName =
                 "Azure.Storage.Queues.QueueClient.ClearMessages";
-            public const string EnqueueMessageOperationName =
-                "Azure.Storage.Queues.QueueClient.EnqueueMessage";
-            public const string DequeueMessageOperationName =
-                "Azure.Storage.Queues.QueueClient.DequeueMessages";
+            public const string SendMessageOperationName =
+                "Azure.Storage.Queues.QueueClient.SendMessage";
+            public const string ReceiveMessagesOperationName =
+                "Azure.Storage.Queues.QueueClient.ReceiveMessages";
             public const string PeekMessagesOperationName =
                 "Azure.Storage.Queues.QueueClient.PeekMessages";
             public const string DeleteMessageOperationName =

@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="collation">Collation of the managed database.</param>
         /// <param name="status">Status of the database. Possible values
         /// include: 'Online', 'Offline', 'Shutdown', 'Creating',
-        /// 'Inaccessible', 'Updating'</param>
+        /// 'Inaccessible', 'Restoring', 'Updating'</param>
         /// <param name="creationDate">Creation date of the database.</param>
         /// <param name="earliestRestorePoint">Earliest restore point in time
         /// for point in time restore.</param>
@@ -112,7 +112,8 @@ namespace Microsoft.Azure.Management.Sql.Models
 
         /// <summary>
         /// Gets status of the database. Possible values include: 'Online',
-        /// 'Offline', 'Shutdown', 'Creating', 'Inaccessible', 'Updating'
+        /// 'Offline', 'Shutdown', 'Creating', 'Inaccessible', 'Restoring',
+        /// 'Updating'
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
         public string Status { get; private set; }

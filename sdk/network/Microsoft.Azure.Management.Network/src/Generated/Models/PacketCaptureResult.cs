@@ -85,11 +85,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets or sets a unique read-only string that changes whenever the
-        /// resource is updated.
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
         /// <summary>
         /// Gets or sets the ID of the targeted resource, only VM is currently
@@ -131,12 +131,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<PacketCaptureFilter> Filters { get; set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the packet capture session.
-        /// Possible values include: 'Succeeded', 'Updating', 'Deleting',
-        /// 'Failed'
+        /// Gets the provisioning state of the packet capture session. Possible
+        /// values include: 'Succeeded', 'Updating', 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Validate the object.

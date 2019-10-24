@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Search.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents a synonym map definition in Azure Search.
+    /// Represents a synonym map definition.
     /// </summary>
     public partial class SynonymMap
     {

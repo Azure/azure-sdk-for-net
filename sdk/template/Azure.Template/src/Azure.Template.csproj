@@ -5,7 +5,7 @@
   <PropertyGroup>
     <Description>This is a template project to demonstrate how to create a package as well as use for testing our build and release pipelines</Description>
     <AssemblyTitle>Azure SDK Template</AssemblyTitle>
-    <VersionPrefix>1.0.2</VersionPrefix>
+    <Version>1.0.2-preview.1</Version>
     <PackageTags>Azure Template</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[

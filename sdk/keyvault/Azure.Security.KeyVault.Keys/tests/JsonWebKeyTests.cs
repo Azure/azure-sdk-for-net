@@ -8,7 +8,6 @@ using System.Linq;
 using System.Security.Cryptography;
 using Azure.Core;
 using NUnit.Framework;
-using NUnit.Framework.Constraints;
 
 namespace Azure.Security.KeyVault.Keys.Tests
 {
@@ -123,6 +122,39 @@ namespace Azure.Security.KeyVault.Keys.Tests
 #endif
         }
 
+        [Test]
+        public void FromECDsaNoPrivateKey()
+        {
+#if NET461
+            Assert.Ignore("Creating ECDsa with JsonWebKey is not supported on net461.");
+#else
+            using ECDsa ecdsa = ECDsa.Create();
+            ECParameters ecParameters = ecdsa.ExportParameters(false);
+            ecdsa.ImportParameters(ecParameters);
+
+            Assert.That(() => new JsonWebKey(ecdsa, includePrivateParameters: true), Throws.InstanceOf<CryptographicException>());
+#endif
+        }
+
+        [Test]
+        public void ToECDsaNoPrivateKey()
+        {
+#if NET461
+            Assert.Ignore("Creating ECDsa with JsonWebKey is not supported on net461.");
+#else
+            JsonWebKey jwk;
+            using (ECDsa ecdsa = ECDsa.Create())
+            {
+                jwk = new JsonWebKey(ecdsa, includePrivateParameters: false);
+            }
+
+            using (ECDsa ecdsa = jwk.ToECDsa(includePrivateParameters: true))
+            {
+                Assert.That(() => ecdsa.ExportParameters(includePrivateParameters: true), Throws.InstanceOf<CryptographicException>());
+            }
+#endif
+        }
+
         [TestCaseSource(nameof(GetECDSaTestData))]
         public void ToECDsa(string oid, string friendlyName, bool includePrivateParameters)
         {
@@ -207,6 +239,31 @@ namespace Azure.Security.KeyVault.Keys.Tests
             deserialized.Deserialize(ms);
 
             Assert.That(deserialized, Is.EqualTo(jwk).Using(JsonWebKeyComparer.s_instance));
+        }
+
+        [Test]
+        public void FromRSANoPrivateKey()
+        {
+            using RSA rsa = RSA.Create();
+            RSAParameters rsaParameters = rsa.ExportParameters(false);
+            rsa.ImportParameters(rsaParameters);
+
+            Assert.That(() => new JsonWebKey(rsa, includePrivateParameters: true), Throws.InstanceOf<CryptographicException>());
+        }
+
+        [Test]
+        public void ToRSANoPrivateKey()
+        {
+            JsonWebKey jwk;
+            using (RSA rsa = RSA.Create())
+            {
+                jwk = new JsonWebKey(rsa, includePrivateParameters: false);
+            }
+
+            using (RSA rsa = jwk.ToRSA(includePrivateParameters: true))
+            {
+                Assert.That(() => rsa.ExportParameters(includePrivateParameters: true), Throws.InstanceOf<CryptographicException>());
+            }
         }
 
         [TestCase(false)]

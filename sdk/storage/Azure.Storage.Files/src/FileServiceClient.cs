@@ -225,9 +225,15 @@ namespace Azure.Storage.Files
         ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-shares"/>.
         /// </summary>
-        /// <param name="options">
-        /// Specifies options for listing, filtering, and shaping the
-        /// shares.
+        /// <param name="traits">
+        /// Specifies traits to include in the <see cref="ShareItem"/>s.
+        /// </param>
+        /// <param name="states">
+        /// Specifies states to include when listing shares.
+        /// </param>
+        /// <param name="prefix">
+        /// String that filters the results to return only shares whose name
+        /// begins with the specified prefix.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -242,9 +248,11 @@ namespace Azure.Storage.Files
         /// a failure occurs.
         /// </remarks>
         public virtual Pageable<ShareItem> GetShares(
-            GetSharesOptions? options = default,
+            ShareTraits traits = ShareTraits.None,
+            ShareStates states = ShareStates.None,
+            string prefix = default,
             CancellationToken cancellationToken = default) =>
-            new GetSharesAsyncCollection(this, options).ToSyncCollection(cancellationToken);
+            new GetSharesAsyncCollection(this, traits, states, prefix).ToSyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetSharesAsync"/> operation returns an async collection
@@ -254,9 +262,15 @@ namespace Azure.Storage.Files
         ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-shares"/>.
         /// </summary>
-        /// <param name="options">
-        /// Specifies options for listing, filtering, and shaping the
-        /// shares.
+        /// <param name="traits">
+        /// Specifies traits to include in the <see cref="ShareItem"/>s.
+        /// </param>
+        /// <param name="states">
+        /// Specifies states to include when listing shares.
+        /// </param>
+        /// <param name="prefix">
+        /// String that filters the results to return only shares whose name
+        /// begins with the specified prefix.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -271,9 +285,11 @@ namespace Azure.Storage.Files
         /// a failure occurs.
         /// </remarks>
         public virtual AsyncPageable<ShareItem> GetSharesAsync(
-            GetSharesOptions? options = default,
+            ShareTraits traits = ShareTraits.None,
+            ShareStates states = ShareStates.None,
+            string prefix = default,
             CancellationToken cancellationToken = default) =>
-            new GetSharesAsyncCollection(this, options).ToAsyncCollection(cancellationToken);
+            new GetSharesAsyncCollection(this, traits, states, prefix).ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetSharesInternal"/> operation returns a
@@ -295,9 +311,15 @@ namespace Azure.Storage.Files
         /// be used as the value for the <paramref name="marker"/> parameter
         /// in a subsequent call to request the next segment of list items.
         /// </param>
-        /// <param name="options">
-        /// Specifies options for listing, filtering, and shaping the
-        /// shares.
+        /// <param name="traits">
+        /// Specifies traits to include in the <see cref="ShareItem"/>s.
+        /// </param>
+        /// <param name="states">
+        /// Specifies states to include when listing shares.
+        /// </param>
+        /// <param name="prefix">
+        /// String that filters the results to return only shares whose name
+        /// begins with the specified prefix.
         /// </param>
         /// <param name="pageSizeHint">
         /// Gets or sets a value indicating the size of the page that should be
@@ -320,7 +342,9 @@ namespace Azure.Storage.Files
         /// </remarks>
         internal async Task<Response<SharesSegment>> GetSharesInternal(
             string marker,
-            GetSharesOptions? options,
+            ShareTraits traits,
+            ShareStates states,
+            string prefix,
             int? pageSizeHint,
             bool async,
             CancellationToken cancellationToken)
@@ -331,8 +355,7 @@ namespace Azure.Storage.Files
                     nameof(FileServiceClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(marker)}: {marker}\n" +
-                    $"{nameof(options)}: {options}");
+                    $"{nameof(marker)}: {marker}");
                 try
                 {
                     return await FileRestClient.Service.ListSharesSegmentAsync(
@@ -340,9 +363,9 @@ namespace Azure.Storage.Files
                         Pipeline,
                         Uri,
                         marker: marker,
-                        prefix: options?.Prefix,
+                        prefix: prefix,
                         maxresults: pageSizeHint,
-                        include: options?.AsIncludeItems(),
+                        include: FileExtensions.AsIncludeItems(traits, states),
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
@@ -685,6 +708,10 @@ namespace Azure.Storage.Files
         /// <param name="shareName">
         /// The name of the share to delete.
         /// </param>
+        /// <param name="includeSnapshots">
+        /// A value indicating whether to delete a share's snapshots in addition
+        /// to the share itself.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -699,8 +726,9 @@ namespace Azure.Storage.Files
         [ForwardsClientCalls]
         public virtual Response DeleteShare(
             string shareName,
+            bool includeSnapshots = true,
             CancellationToken cancellationToken = default) =>
-            GetShareClient(shareName).Delete(cancellationToken: cancellationToken);
+            GetShareClient(shareName).Delete(includeSnapshots, cancellationToken);
 
         /// <summary>
         /// Marks the specified share or share snapshot for deletion.
@@ -712,6 +740,10 @@ namespace Azure.Storage.Files
         /// </summary>
         /// <param name="shareName">
         /// The name of the share to delete.
+        /// </param>
+        /// <param name="includeSnapshots">
+        /// A value indicating whether to delete a share's snapshots in addition
+        /// to the share itself.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -727,9 +759,10 @@ namespace Azure.Storage.Files
         [ForwardsClientCalls]
         public virtual async Task<Response> DeleteShareAsync(
             string shareName,
+            bool includeSnapshots = true,
             CancellationToken cancellationToken = default) =>
             await GetShareClient(shareName)
-                .DeleteAsync(cancellationToken: cancellationToken)
+                .DeleteAsync(includeSnapshots, cancellationToken)
                 .ConfigureAwait(false);
         #endregion DeleteShare
     }

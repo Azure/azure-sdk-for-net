@@ -11,6 +11,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     internal class EcCryptographyProvider : LocalCryptographyProvider
     {
         private readonly KeyCurveName _curve;
+        private readonly JsonWebKey _keyMaterial;
 
         internal EcCryptographyProvider(KeyVaultKey key) : base(key)
         {
@@ -21,25 +22,24 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             JsonWebKey keyMaterial = key.Key;
             if (keyMaterial != null && keyMaterial.CurveName.HasValue)
             {
+                // Save the key material to use for operational support validation.
+                _keyMaterial = keyMaterial;
+
                 _curve = keyMaterial.CurveName.Value;
                 if (_curve.IsSupported)
                 {
                     KeyMaterial = keyMaterial;
-                }
-                else
-                {
-                    // TODO: Log that we don't support the algorithm locally.
                 }
             }
         }
 
         public override bool SupportsOperation(KeyOperation operation)
         {
-            if (KeyMaterial != null)
+            if (_keyMaterial != null)
             {
                 if (operation == KeyOperation.Sign || operation == KeyOperation.Verify)
                 {
-                    return KeyMaterial.SupportsOperation(operation);
+                    return _keyMaterial.SupportsOperation(operation);
                 }
             }
 
@@ -55,13 +55,14 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             // The JWK is not supported by this client. Send to the server.
             if (KeyMaterial is null)
             {
+                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(Sign), _curve);
                 return null;
             }
 
             // A private key is required to sign. Send to the server.
             if (MustRemote)
             {
-                // TODO: Log that we need a private key.
+                KeysEventSource.Singleton.PrivateKeyRequired(nameof(Sign));
                 return null;
             }
 
@@ -100,6 +101,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             // The JWK is not supported by this client. Send to the server.
             if (KeyMaterial is null)
             {
+                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(Verify), _curve);
                 return null;
             }
 

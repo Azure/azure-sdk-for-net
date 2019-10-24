@@ -438,5 +438,16 @@ namespace Azure.Messaging.EventHubs
                 return ResourceManager.GetString("ClosedConnectionCannotPerformOperation", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to This information is only available when TrackLastEnqueuedEventInformation is set on the Event Hub consumer options..
+        /// </summary>
+        internal static string TrackLastEnqueuedEventInformationNotSet
+        {
+            get
+            {
+                return ResourceManager.GetString("TrackLastEnqueuedEventInformationNotSet", resourceCulture);
+            }
+        }
     }
 }

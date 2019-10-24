@@ -101,6 +101,19 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public void Batch_StatusIndicatesCannotRead()
+        {
+            using TestScenario scenario = Scenario();
+            Uri uri = scenario.GetInvalidBlobUris(1)[0];
+
+            BlobBatchClient client = scenario.GetBlobBatchClient();
+            BlobBatch batch = client.CreateBatch();
+            Response response = batch.DeleteBlob(uri);
+
+            Assert.AreEqual(0, response.Status);
+        }
+
+        [Test]
         public void Batch_CannotReadBeforeSubmit()
         {
             using TestScenario scenario = Scenario();
@@ -110,7 +123,7 @@ namespace Azure.Storage.Blobs.Test
             BlobBatch batch = client.CreateBatch();
             Response response = batch.DeleteBlob(uri);
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(
-                () => { int status = response.Status; });
+                () => { var _ = response.ClientRequestId; });
 
             StringAssert.Contains("Cannot use the Response before calling BlobBatchClient.SubmitBatch", ex.Message);
         }
@@ -160,6 +173,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8358")]
         public async Task Batch_AcrossContainers()
         {
             using TestScenario scenario = Scenario();

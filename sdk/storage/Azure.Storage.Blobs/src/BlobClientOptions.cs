@@ -48,26 +48,6 @@ namespace Azure.Storage.Blobs
         public CustomerProvidedKey? CustomerProvidedKey { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BlobClientOptions"/>
-        /// class.
-        /// </summary>
-        /// <param name="version">
-        /// The <see cref="ServiceVersion"/> of the service API used when
-        /// making requests
-        /// </param>
-        /// <param name="customerProvidedKey">
-        /// The customer provided key to be used by the service to encrypt data.
-        /// </param>
-        public BlobClientOptions(
-            ServiceVersion version = LatestVersion,
-            CustomerProvidedKey? customerProvidedKey = default)
-        {
-            Version = version == ServiceVersion.V2019_02_02 ? version: throw Errors.VersionNotSupported(nameof(version));
-            CustomerProvidedKey = customerProvidedKey;
-            this.Initialize();
-        }
-
-        /// <summary>
         /// Gets or sets the secondary storage <see cref="Uri"/> that can be read from for the storage account if the
         /// account is enabled for RA-GRS.
         ///
@@ -78,6 +58,20 @@ namespace Azure.Storage.Blobs
         /// between primary and secondary Uri.
         /// </summary>
         public Uri GeoRedundantSecondaryUri { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobClientOptions"/>
+        /// class.
+        /// </summary>
+        /// <param name="version">
+        /// The <see cref="ServiceVersion"/> of the service API used when
+        /// making requests.
+        /// </param>
+        public BlobClientOptions(ServiceVersion version = LatestVersion)
+        {
+            Version = version == ServiceVersion.V2019_02_02 ? version: throw Errors.VersionNotSupported(nameof(version));
+            this.Initialize();
+        }
 
         /// <summary>
         /// Create an HttpPipeline from BlobClientOptions.

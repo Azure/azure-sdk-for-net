@@ -77,10 +77,18 @@ namespace Azure.Storage.Blobs.Specialized
             }
         }
 
+        public override string ToString()
+        {
+            return _live == null ? "Status: NotSent, the batch has not been submitted yet" : base.ToString();
+        }
+
         // We directly forward the entire Response interface to LiveResponse
         #region forward Response members to Live
         /// <inheritdoc />
-        public override int Status => LiveResponse.Status;
+        public override int Status =>
+            _live == null ?
+                BatchConstants.NoStatusCode : // Give users a hint that this is an exploding Response
+                LiveResponse.Status;
 
         /// <inheritdoc />
         public override string ReasonPhrase => LiveResponse.ReasonPhrase;

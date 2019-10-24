@@ -146,7 +146,7 @@ namespace Azure.Storage.Blobs.Test
                 var data = GetRandomBuffer(Constants.KB);
 
                 await Verify(stream => blob.UploadAsync(stream));
-                await Verify(stream => blob.UploadAsync(stream, CancellationToken.None));
+                await Verify(stream => blob.UploadAsync(stream, true, CancellationToken.None));
                 await Verify(stream => blob.UploadAsync(stream, metadata: default));
 
                 async Task Verify(Func<Stream, Task<Response<BlobContentInfo>>> upload)
@@ -376,7 +376,7 @@ namespace Azure.Storage.Blobs.Test
                     File.WriteAllBytes(path, data);
 
                     await Verify(blob.UploadAsync(path));
-                    await Verify(blob.UploadAsync(path, CancellationToken.None));
+                    await Verify(blob.UploadAsync(path, true, CancellationToken.None));
                     await Verify(blob.UploadAsync(path, metadata: default));
 
                     async Task Verify(Task<Response<BlobContentInfo>> upload)
@@ -421,7 +421,7 @@ namespace Azure.Storage.Blobs.Test
                         content: stream,
                         blobHttpHeaders: default,
                         metadata: default,
-                        blobAccessConditions: default,
+                        conditions: default,
                         progressHandler: default,
                         singleBlockThreshold: singleBlockThreshold,
                         transferOptions: transferOptions,
@@ -473,7 +473,7 @@ namespace Azure.Storage.Blobs.Test
                             path: path,
                             blobHttpHeaders: default,
                             metadata: default,
-                            blobAccessConditions: default,
+                            conditions: default,
                             progressHandler: default,
                             singleBlockThreshold: singleBlockThreshold,
                             transferOptions: transferOptions,
@@ -517,6 +517,7 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(20 * Constants.KB)]
         [TestCase(30 * Constants.KB)]
         [TestCase(50 * Constants.KB)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8354")]
         // [TestCase(501 * Constants.KB)] // TODO: #6781 We don't want to add 500K of random data in the recordings
         public async Task UploadStreamAsync_SmallBlobs(long size) =>
             // Use a 1KB threshold so we get a lot of individual blocks
@@ -531,6 +532,7 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(20 * Constants.KB)]
         [TestCase(30 * Constants.KB)]
         [TestCase(50 * Constants.KB)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8354")]
         // [TestCase(501 * Constants.KB)] // TODO: #6781 We don't want to add 500K of random data in the recordings
         public async Task UploadFileAsync_SmallBlobs(long size) =>
             // Use a 1KB threshold so we get a lot of individual blocks
@@ -553,6 +555,7 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(1 * Constants.GB, 8)]
         [TestCase(1 * Constants.GB, 16)]
         [TestCase(1 * Constants.GB, null)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8354")]
         public async Task UploadStreamAsync_LargeBlobs(long size, int? maximumThreadCount)
         {
             // TODO: #6781 We don't want to add 1GB of random data in the recordings
@@ -576,12 +579,139 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(1 * Constants.GB, 8)]
         [TestCase(1 * Constants.GB, 16)]
         [TestCase(1 * Constants.GB, null)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8354")]
         public async Task UploadFileAsync_LargeBlobs(long size, int? maximumThreadCount)
         {
             // TODO: #6781 We don't want to add 1GB of random data in the recordings
             await UploadFileAndVerify(size, 16 * Constants.MB, new StorageTransferOptions { MaximumConcurrency = maximumThreadCount });
         }
 
+        [Test]
+        public async Task UploadAsync_DoesNotOverwriteDefault_Stream()
+        {
+            using IDisposable _  = GetNewContainer(out BlobContainerClient container);
+
+            // Upload one blob
+            var name = GetNewBlobName();
+            BlobClient blob = InstrumentClient(container.GetBlobClient(name));
+            using var stream = new MemoryStream(GetRandomBuffer(Constants.KB));
+            await blob.UploadAsync(stream);
+
+            // Overwriting fails
+            using var stream2 = new MemoryStream(GetRandomBuffer(Constants.KB));
+            Assert.ThrowsAsync<RequestFailedException>(
+                async () => await blob.UploadAsync(stream2));
+        }
+
+        [Test]
+        public async Task UploadAsync_DoesNotOverwrite_Stream()
+        {
+            using IDisposable _ = GetNewContainer(out BlobContainerClient container);
+
+            // Upload one blob
+            var name = GetNewBlobName();
+            BlobClient blob = InstrumentClient(container.GetBlobClient(name));
+            using var stream = new MemoryStream(GetRandomBuffer(Constants.KB));
+            await blob.UploadAsync(stream);
+
+            // Overwriting fails
+            using var stream2 = new MemoryStream(GetRandomBuffer(Constants.KB));
+            Assert.ThrowsAsync<RequestFailedException>(
+                async () => await blob.UploadAsync(stream2, overwrite: false));
+        }
+
+        [Test]
+        public async Task UploadAsync_OverwritesDeliberately_Stream()
+        {
+            using IDisposable _ = GetNewContainer(out BlobContainerClient container);
+
+            // Upload one blob
+            var name = GetNewBlobName();
+            BlobClient blob = InstrumentClient(container.GetBlobClient(name));
+            using var stream = new MemoryStream(GetRandomBuffer(Constants.KB));
+            await blob.UploadAsync(stream);
+
+            // Overwriting works if allowed
+            using var stream2 = new MemoryStream(GetRandomBuffer(Constants.KB));
+            await blob.UploadAsync(stream2, overwrite: true);
+        }
+
+        [Test]
+        public async Task UploadAsync_DoesNotOverwriteDefault_Path()
+        {
+            using IDisposable _ = GetNewContainer(out BlobContainerClient container);
+            var path = Path.GetTempFileName();
+            try
+            {
+                // Upload one blob
+                var name = GetNewBlobName();
+                BlobClient blob = InstrumentClient(container.GetBlobClient(name));
+                File.WriteAllBytes(path, GetRandomBuffer(Constants.KB));
+                await blob.UploadAsync(path);
+
+                // Overwriting fails
+                Assert.ThrowsAsync<RequestFailedException>(
+                    async () => await blob.UploadAsync(path));
+            }
+            finally
+            {
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+            }
+        }
+
+        [Test]
+        public async Task UploadAsync_DoesNotOverwrite_Path()
+        {
+            using IDisposable _ = GetNewContainer(out BlobContainerClient container);
+            var path = Path.GetTempFileName();
+            try
+            {
+                // Upload one blob
+                var name = GetNewBlobName();
+                BlobClient blob = InstrumentClient(container.GetBlobClient(name));
+                File.WriteAllBytes(path, GetRandomBuffer(Constants.KB));
+                await blob.UploadAsync(path);
+
+                // Overwriting fails
+                Assert.ThrowsAsync<RequestFailedException>(
+                    async () => await blob.UploadAsync(path, overwrite: false));
+            }
+            finally
+            {
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+            }
+        }
+
+        [Test]
+        public async Task UploadAsync_OverwritesDeliberately_Path()
+        {
+            using IDisposable _ = GetNewContainer(out BlobContainerClient container);
+            var path = Path.GetTempFileName();
+            try
+            {
+                // Upload one blob
+                var name = GetNewBlobName();
+                BlobClient blob = InstrumentClient(container.GetBlobClient(name));
+                File.WriteAllBytes(path, GetRandomBuffer(Constants.KB));
+                await blob.UploadAsync(path);
+
+                // Overwriting works if allowed
+                await blob.UploadAsync(path, overwrite: true);
+            }
+            finally
+            {
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+            }
+        }
         #endregion Upload
     }
 }

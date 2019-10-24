@@ -100,12 +100,12 @@ namespace Microsoft.Azure.Management.Network.Models
         public bool? Primary { get; set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the private link service IP
+        /// Gets the provisioning state of the private link service IP
         /// configuration resource. Possible values include: 'Succeeded',
         /// 'Updating', 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets whether the specific IP configuration is IPv4 or IPv6.
