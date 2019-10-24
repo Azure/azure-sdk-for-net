@@ -65,7 +65,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <summary>
         /// Gets the <see cref="Uri"/> of the vault used to create this instance of the <see cref="SecretClient"/>.
         /// </summary>
-        public Uri VaultUri => _pipeline.VaultUri;
+        public virtual Uri VaultUri => _pipeline.VaultUri;
 
         /// <summary>
         /// Get a specified secret from a given key vault.

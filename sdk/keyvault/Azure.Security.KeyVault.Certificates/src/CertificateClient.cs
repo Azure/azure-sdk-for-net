@@ -69,7 +69,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Gets the <see cref="Uri"/> of the vault used to create this instance of the <see cref="CertificateClient"/>.
         /// </summary>
-        public Uri VaultUri => _pipeline.VaultUri;
+        public virtual Uri VaultUri => _pipeline.VaultUri;
 
         /// <summary>
         /// Starts a long running operation to create a self-signed <see cref="Certificate"/> in the vault, using the default certificate policy.
