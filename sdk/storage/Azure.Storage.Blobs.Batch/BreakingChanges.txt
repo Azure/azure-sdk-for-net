@@ -3,4 +3,4 @@ Breaking Changes
 
 Next Preview
 --------------------------
-- New Azure.Storage.Blobs.Batch client library.
+- Azure.Storage.Blobs.Batching assembly and package are renamed to Azure.Storage.Blobs.Batch

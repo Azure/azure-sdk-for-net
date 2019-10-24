@@ -35,7 +35,7 @@ additional questions or comments.
 
 <!-- LINKS -->
 [blobs]: ./Azure.Storage.Blobs/README.md
-[blobs_batching]: ./Azure.Storage.Blobs.Batch/README.md
+[blobs_batch]: ./Azure.Storage.Blobs.Batch/README.md
 [blobs_cryptography]: ./Azure.Storage.Blobs.Cryptography/README.md
 [queues]: ./Azure.Storage.Queues/README.md
 [files]: ./Azure.Storage.Files/README.md
