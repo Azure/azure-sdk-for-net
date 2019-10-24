@@ -10,7 +10,6 @@ resources:
     - repository: azure-sdk-build-tools
       type: git
       name: internal/azure-sdk-build-tools
-      ref: refs/heads/net-unified-pipelines
 
 trigger:
   branches:
@@ -46,5 +45,3 @@ stages:
       safeName: AzureSecurityKeyVaultKeys
     - name: Azure.Security.KeyVault.Secrets
       safeName: AzureSecurityKeyVaultSecrets
-    - name: Azure.Security.KeyVault.Shared
-      safeName: AzureSecurityKeyVaultShared
