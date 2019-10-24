@@ -25,7 +25,7 @@ namespace Azure.Storage.Blobs.Test
             SasProtocol protocol = SasProtocol.Https;
             DateTimeOffset startTime = DateTimeOffset.Now;
             DateTimeOffset expiryTime = startTime.AddDays(1);
-            var ipRange = new IPRange();
+            var ipRange = new SasIPRange();
             var identifier = "foo";
             var resource = "bar";
             var permissions = "rw";

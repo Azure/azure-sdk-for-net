@@ -25,14 +25,14 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <summary>The type to consider a token if not based on a shared access signature.</summary>
         private const string JsonWebTokenType = "jwt";
 
-        /// <summary>The type to consider a token generated from the associated <see cref="_credential" />.</summary>
-        private readonly string _tokenType;
+        /// <summary>The type to consider a token generated from the associated <see cref="Credential" />.</summary>
+        private readonly string TokenType;
 
         /// <summary>The credential used to generate access tokens.</summary>
-        private readonly EventHubTokenCredential _credential;
+        private readonly EventHubTokenCredential Credential;
 
         /// <summary>The cancellation token to consider when making requests.</summary>
-        private readonly CancellationToken _cancellationToken;
+        private readonly CancellationToken CancellationToken;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="CbsTokenProvider"/> class.
@@ -46,10 +46,10 @@ namespace Azure.Messaging.EventHubs.Amqp
         {
             Argument.AssertNotNull(credential, nameof(credential));
 
-            _credential = credential;
-            _cancellationToken = cancellationToken;
+            Credential = credential;
+            CancellationToken = cancellationToken;
 
-            _tokenType = (credential.IsSharedAccessSignatureCredential)
+            TokenType = (credential.IsSharedAccessSignatureCredential)
                 ? SharedAccessSignatureTokenType
                 : JsonWebTokenType;
         }
@@ -68,8 +68,8 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                   string appliesTo,
                                                   string[] requiredClaims)
         {
-            AccessToken token = await _credential.GetTokenAsync(new TokenRequestContext(requiredClaims), _cancellationToken).ConfigureAwait(false);
-            return new CbsToken(token.Token, _tokenType, token.ExpiresOn.UtcDateTime);
+            AccessToken token = await Credential.GetTokenAsync(new TokenRequestContext(requiredClaims), CancellationToken).ConfigureAwait(false);
+            return new CbsToken(token.Token, TokenType, token.ExpiresOn.UtcDateTime);
         }
     }
 }

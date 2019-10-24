@@ -117,7 +117,7 @@ namespace Azure.Core.Pipeline
 
     /// <summary>
     /// HACK HACK HACK. Some runtime environments like Azure.Functions downgrade System.Diagnostic.DiagnosticSource package version causing method not found exceptions in customer apps
-    /// This type is a temporary workaround to avoid the issue
+    /// This type is a temporary workaround to avoid the issue.
     /// </summary>
     internal static class ActivityExtensions
     {

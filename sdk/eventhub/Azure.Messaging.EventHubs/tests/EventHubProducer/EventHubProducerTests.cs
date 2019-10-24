@@ -153,6 +153,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
         /// <summary>
         ///   Verifies functionality of the <see cref="EventHubProducer.SendAsync"/>
+        ///   method.
         /// </summary>
         ///
         [Test]
@@ -166,6 +167,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
         /// <summary>
         ///   Verifies functionality of the <see cref="EventHubProducer.SendAsync"/>
+        ///   method.
         /// </summary>
         ///
         [Test]
@@ -179,6 +181,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
         /// <summary>
         ///   Verifies functionality of the <see cref="EventHubProducer.SendAsync"/>
+        ///   method.
         /// </summary>
         ///
         [Test]
@@ -197,6 +200,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
         /// <summary>
         ///   Verifies functionality of the <see cref="EventHubProducer.SendAsync"/>
+        ///   method.
         /// </summary>
         ///
         [Test]
@@ -215,6 +219,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
         /// <summary>
         ///   Verifies functionality of the <see cref="EventHubProducer.SendAsync"/>
+        ///   method.
         /// </summary>
         ///
         [Test]
@@ -228,6 +233,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
         /// <summary>
         ///   Verifies functionality of the <see cref="EventHubProducer.SendAsync"/>
+        ///   method.
         /// </summary>
         ///
         [Test]
@@ -241,6 +247,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
         /// <summary>
         ///   Verifies functionality of the <see cref="EventHubProducer.SendAsync"/>
+        ///   method.
         /// </summary>
         ///
         [Test]
@@ -254,6 +261,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
         /// <summary>
         ///   Verifies functionality of the <see cref="EventHubProducer.SendAsync"/>
+        ///   method.
         /// </summary>
         ///
         [Test]
@@ -269,6 +277,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
         /// <summary>
         ///   Verifies functionality of the <see cref="EventHubProducer.SendAsync"/>
+        ///   method.
         /// </summary>
         ///
         [Test]
@@ -284,6 +293,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
         /// <summary>
         ///   Verifies functionality of the <see cref="EventHubProducer.SendAsync"/>
+        ///   method.
         /// </summary>
         ///
         [Test]
@@ -299,6 +309,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
         /// <summary>
         ///   Verifies functionality of the <see cref="EventHubProducer.SendAsync"/>
+        ///   method.
         /// </summary>
         ///
         [Test]
@@ -314,6 +325,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
         /// <summary>
         ///   Verifies functionality of the <see cref="EventHubProducer.SendAsync"/>
+        ///   method.
         /// </summary>
         ///
         [Test]
@@ -333,6 +345,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
         /// <summary>
         ///   Verifies functionality of the <see cref="EventHubProducer.SendAsync"/>
+        ///   method.
         /// </summary>
         ///
         [Test]
@@ -353,6 +366,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
         /// <summary>
         ///   Verifies functionality of the <see cref="EventHubProducer.SendAsync"/>
+        ///   method.
         /// </summary>
         ///
         [Test]
@@ -369,6 +383,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
         /// <summary>
         ///   Verifies functionality of the <see cref="EventHubProducer.CreateBatchAsync"/>
+        ///   method.
         /// </summary>
         ///
         [Test]
@@ -383,12 +398,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
         /// <summary>
         ///   Verifies functionality of the <see cref="EventHubProducer.CreateBatchAsync"/>
+        ///   method.
         /// </summary>
         ///
         [Test]
         public async Task CreateBatchInvokesTheTransportProducer()
         {
-            var batchOptions = new BatchOptions { PartitionKey = "Hi", MaximumizeInBytes = 9999 };
+            var batchOptions = new BatchOptions { PartitionKey = "Hi", MaximumSizeInBytes = 9999 };
             var transportProducer = new ObservableTransportProducerMock();
             var producer = new EventHubProducer(transportProducer, new Uri("amqp://some.endpoint.com/path"), "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
 
@@ -397,11 +413,12 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(transportProducer.CreateBatchCalledWith, Is.Not.Null, "The batch creation should have passed options.");
             Assert.That(transportProducer.CreateBatchCalledWith, Is.Not.SameAs(batchOptions), "The options should have been cloned.");
             Assert.That(transportProducer.CreateBatchCalledWith.PartitionKey, Is.EqualTo(batchOptions.PartitionKey), "The partition key should match.");
-            Assert.That(transportProducer.CreateBatchCalledWith.MaximumizeInBytes, Is.EqualTo(batchOptions.MaximumizeInBytes), "The maximum size should match.");
+            Assert.That(transportProducer.CreateBatchCalledWith.MaximumSizeInBytes, Is.EqualTo(batchOptions.MaximumSizeInBytes), "The maximum size should match.");
         }
 
         /// <summary>
         ///   Verifies functionality of the <see cref="EventHubProducer.CreateBatchAsync"/>
+        ///   method.
         /// </summary>
         ///
         [Test]
@@ -416,17 +433,18 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(transportProducer.CreateBatchCalledWith, Is.Not.Null, "The batch creation should have passed options.");
             Assert.That(transportProducer.CreateBatchCalledWith, Is.Not.SameAs(expectedOptions), "The options should have been cloned.");
             Assert.That(transportProducer.CreateBatchCalledWith.PartitionKey, Is.EqualTo(expectedOptions.PartitionKey), "The partition key should match.");
-            Assert.That(transportProducer.CreateBatchCalledWith.MaximumizeInBytes, Is.EqualTo(expectedOptions.MaximumizeInBytes), "The maximum size should match.");
+            Assert.That(transportProducer.CreateBatchCalledWith.MaximumSizeInBytes, Is.EqualTo(expectedOptions.MaximumSizeInBytes), "The maximum size should match.");
         }
 
         /// <summary>
         ///   Verifies functionality of the <see cref="EventHubProducer.CreateBatchAsync"/>
+        ///   method.
         /// </summary>
         ///
         [Test]
         public async Task CreateBatchSetsTheSendOptionsForTheEventBatch()
         {
-            var batchOptions = new BatchOptions { PartitionKey = "Hi", MaximumizeInBytes = 9999 };
+            var batchOptions = new BatchOptions { PartitionKey = "Hi", MaximumSizeInBytes = 9999 };
             var transportProducer = new ObservableTransportProducerMock();
             var producer = new EventHubProducer(transportProducer, new Uri("amqp://some.endpoint.com/path"), "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
             EventDataBatch eventBatch = await producer.CreateBatchAsync(batchOptions);

@@ -90,11 +90,11 @@ namespace Azure.Storage.Queues.Test
                 Protocol = constants.Sas.Protocol,
                 StartsOn = constants.Sas.StartTime,
                 ExpiresOn = constants.Sas.ExpiryTime,
-                Permissions = Permissions,
                 IPRange = constants.Sas.IPRange,
                 Identifier = constants.Sas.Identifier,
                 QueueName = queueName,
             };
+            queueSasBuilder.SetPermissions(Permissions);
 
             if (includeVersion)
             {
@@ -113,7 +113,7 @@ namespace Azure.Storage.Queues.Test
                 "/queue/" + constants.Sas.Account + "/" + queueName,
                 constants.Sas.Identifier,
                 constants.Sas.IPRange.ToString(),
-                SasProtocol.Https.ToString(),
+                SasProtocol.Https.ToProtocolString(),
                 includeVersion ? constants.Sas.Version : SasQueryParameters.DefaultSasVersion);
 
             return constants.Sas.SharedKeyCredential.ComputeHMACSHA256(stringToSign);

@@ -96,6 +96,7 @@ namespace Azure.Data.AppConfiguration
         public virtual async Task<Response<ConfigurationSetting>> AddAsync(ConfigurationSetting setting, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Add");
+            scope.AddAttribute("key", setting?.Key);
             scope.Start();
 
             try
@@ -162,7 +163,7 @@ namespace Azure.Data.AppConfiguration
 
             Request request = _pipeline.CreateRequest();
 
-            ReadOnlyMemory<byte> content = Serialize(setting);
+            ReadOnlyMemory<byte> content = ConfigurationServiceSerializer.SerializeRequestBody(setting);
 
             request.Method = RequestMethod.Put;
 
@@ -253,7 +254,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="setting"><see cref="ConfigurationSetting"/> to create.</param>
         /// <param name="requestOptions"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response<ConfigurationSetting>> SetAsync(ConfigurationSetting setting, MatchConditions requestOptions, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<ConfigurationSetting>> SetAsync(ConfigurationSetting setting, MatchConditions requestOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Set");
             scope.AddAttribute("key", setting?.Key);
@@ -286,7 +287,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="setting"><see cref="ConfigurationSetting"/> to create.</param>
         /// <param name="requestOptions"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response<ConfigurationSetting> Set(ConfigurationSetting setting, MatchConditions requestOptions, CancellationToken cancellationToken = default)
+        internal virtual Response<ConfigurationSetting> Set(ConfigurationSetting setting, MatchConditions requestOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Set");
             scope.AddAttribute("key", setting?.Key);
@@ -320,7 +321,7 @@ namespace Azure.Data.AppConfiguration
             Argument.AssertNotNullOrEmpty(setting.Key, $"{nameof(setting)}.{nameof(setting.Key)}");
 
             Request request = _pipeline.CreateRequest();
-            ReadOnlyMemory<byte> content = Serialize(setting);
+            ReadOnlyMemory<byte> content = ConfigurationServiceSerializer.SerializeRequestBody(setting);
 
             request.Method = RequestMethod.Put;
             BuildUriForKvRoute(request.Uri, setting);
@@ -625,6 +626,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual AsyncPageable<ConfigurationSetting> GetSettingsAsync(SettingSelector selector, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(selector, nameof(selector));
             return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => GetSettingsPageAsync(selector, nextLink, cancellationToken));
         }
 
@@ -635,6 +637,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Pageable<ConfigurationSetting> GetSettings(SettingSelector selector, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(selector, nameof(selector));
             return PageResponseEnumerator.CreateEnumerable(nextLink => GetSettingsPage(selector, nextLink, cancellationToken));
         }
 
@@ -645,6 +648,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual AsyncPageable<ConfigurationSetting> GetRevisionsAsync(SettingSelector selector, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(selector, nameof(selector));
             return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => GetRevisionsPageAsync(selector, nextLink, cancellationToken));
         }
 
@@ -655,6 +659,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Pageable<ConfigurationSetting> GetRevisions(SettingSelector selector, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(selector, nameof(selector));
             return PageResponseEnumerator.CreateEnumerable(nextLink => GetRevisionsPage(selector, nextLink, cancellationToken));
         }
 
@@ -703,7 +708,7 @@ namespace Azure.Data.AppConfiguration
                     case 200:
                     case 206:
                         SettingBatch settingBatch = await ConfigurationServiceSerializer.ParseBatchAsync(response, cancellationToken).ConfigureAwait(false);
-                        return new Page<ConfigurationSetting>(settingBatch.Settings, settingBatch.NextBatchLink, response);
+                        return Page<ConfigurationSetting>.FromValues(settingBatch.Settings, settingBatch.NextBatchLink, response);
                     default:
                         throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
                 }
@@ -736,7 +741,7 @@ namespace Azure.Data.AppConfiguration
                     case 200:
                     case 206:
                         SettingBatch settingBatch = ConfigurationServiceSerializer.ParseBatch(response);
-                        return new Page<ConfigurationSetting>(settingBatch.Settings, settingBatch.NextBatchLink, response);
+                        return Page<ConfigurationSetting>.FromValues(settingBatch.Settings, settingBatch.NextBatchLink, response);
                     default:
                         throw response.CreateRequestFailedException();
                 }
@@ -784,7 +789,7 @@ namespace Azure.Data.AppConfiguration
                     case 200:
                     case 206:
                         SettingBatch settingBatch = await ConfigurationServiceSerializer.ParseBatchAsync(response, cancellationToken).ConfigureAwait(false);
-                        return new Page<ConfigurationSetting>(settingBatch.Settings, settingBatch.NextBatchLink, response);
+                        return Page<ConfigurationSetting>.FromValues(settingBatch.Settings, settingBatch.NextBatchLink, response);
                     default:
                         throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
                 }
@@ -817,7 +822,7 @@ namespace Azure.Data.AppConfiguration
                     case 200:
                     case 206:
                         SettingBatch settingBatch = ConfigurationServiceSerializer.ParseBatch(response);
-                        return new Page<ConfigurationSetting>(settingBatch.Settings, settingBatch.NextBatchLink, response);
+                        return Page<ConfigurationSetting>.FromValues(settingBatch.Settings, settingBatch.NextBatchLink, response);
                     default:
                         throw response.CreateRequestFailedException();
                 }

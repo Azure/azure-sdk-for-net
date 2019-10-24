@@ -9,7 +9,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
@@ -39,7 +38,7 @@ namespace Azure.Messaging.EventHubs
         internal const int MinimumBatchSizeLimit = 24;
 
         /// <summary>The set of default publishing options to use when no specific options are requested.</summary>
-        private static readonly SendOptions s_defaultSendOptions = new SendOptions();
+        private static readonly SendOptions DefaultSendOptions = new SendOptions();
 
         /// <summary>The fully-qualified location of the Event Hub instance to which events will be sent.</summary>
         private readonly Uri _endpoint;
@@ -225,7 +224,7 @@ namespace Azure.Messaging.EventHubs
                                             SendOptions options,
                                             CancellationToken cancellationToken = default)
         {
-            options ??= s_defaultSendOptions;
+            options ??= DefaultSendOptions;
 
             Argument.AssertNotNull(events, nameof(events));
             AssertSinglePartitionReference(PartitionId, options.PartitionKey);

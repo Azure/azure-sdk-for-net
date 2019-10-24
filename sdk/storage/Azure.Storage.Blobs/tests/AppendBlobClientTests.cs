@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Azure.Core.Testing;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.Common;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
@@ -149,7 +148,8 @@ namespace Azure.Storage.Blobs.Test
                 blob = InstrumentClient(new AppendBlobClient(
                     blob.Uri,
                     blob.Pipeline,
-                    new BlobClientOptions(customerProvidedKey: customerProvidedKey)));
+                    blob.ClientDiagnostics,
+                    customerProvidedKey));
                 ;
                 Assert.AreEqual(Constants.Blob.Http, blob.Uri.Scheme);
 
@@ -176,10 +176,10 @@ namespace Azure.Storage.Blobs.Test
             using (GetNewContainer(out BlobContainerClient container))
             {
                 // Arrange
-                AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(String.Empty));
+                AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(string.Empty));
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     blob.CreateAsync(),
                     actualException => Assert.AreEqual("InvalidUri", actualException.ErrorCode)
                     );
@@ -209,12 +209,12 @@ namespace Azure.Storage.Blobs.Test
                     await blob.CreateAsync();
                     parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
                     parameters.LeaseId = await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
-                    AppendBlobAccessConditions accessConditions = BuildDestinationAccessConditions(
+                    AppendBlobRequestConditions accessConditions = BuildDestinationAccessConditions(
                         parameters: parameters,
                         lease: true);
 
                     // Act
-                    Response<BlobContentInfo> response = await blob.CreateAsync(accessConditions: accessConditions);
+                    Response<BlobContentInfo> response = await blob.CreateAsync(conditions: accessConditions);
 
                     // Assert
                     Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -243,13 +243,13 @@ namespace Azure.Storage.Blobs.Test
                     // AppendBlob needs to exists for us to test CreateAsync() with access conditions
                     await blob.CreateAsync();
                     parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
-                    AppendBlobAccessConditions accessConditions = BuildDestinationAccessConditions(
+                    AppendBlobRequestConditions accessConditions = BuildDestinationAccessConditions(
                         parameters: parameters,
                         lease: true);
 
                     // Act
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                        blob.CreateAsync(accessConditions: accessConditions),
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                        blob.CreateAsync(conditions: accessConditions),
                         e => { });
                 }
             }
@@ -304,10 +304,10 @@ namespace Azure.Storage.Blobs.Test
             using (GetNewContainer(out BlobContainerClient container))
             {
                 // Arrange
-                AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(String.Empty));
+                AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(string.Empty));
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     blob.CreateIfNotExistsAsync(),
                     actualException => Assert.AreEqual("InvalidUri", actualException.ErrorCode)
                     );
@@ -376,7 +376,8 @@ namespace Azure.Storage.Blobs.Test
                 httpBlob = InstrumentClient(new AppendBlobClient(
                     httpBlob.Uri,
                     httpBlob.Pipeline,
-                    new BlobClientOptions(customerProvidedKey: customerProvidedKey)));
+                    httpBlob.ClientDiagnostics,
+                    customerProvidedKey));
                 Assert.AreEqual(Constants.Blob.Http, httpBlob.Uri.Scheme);
                 AppendBlobClient httpsBlob = InstrumentClient(httpBlob.WithCustomerProvidedKey(customerProvidedKey));
                 var data = GetRandomBuffer(Constants.KB);
@@ -426,7 +427,7 @@ namespace Azure.Storage.Blobs.Test
                 // Act
                 using (var stream = new MemoryStream(data))
                 {
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         blob.AppendBlockAsync(
                             content: stream,
                             transactionalContentHash: MD5.Create().ComputeHash(Encoding.UTF8.GetBytes("garbage"))),
@@ -447,7 +448,7 @@ namespace Azure.Storage.Blobs.Test
                 // Act
                 using (var stream = new MemoryStream(data))
                 {
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         blob.AppendBlockAsync(stream),
                         e => Assert.AreEqual("BlobNotFound", e.ErrorCode.Split('\n')[0]));
                 }
@@ -479,7 +480,7 @@ namespace Azure.Storage.Blobs.Test
                     var data = GetRandomBuffer(7);
                     parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
                     parameters.LeaseId = await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
-                    AppendBlobAccessConditions accessConditions = BuildDestinationAccessConditions(
+                    AppendBlobRequestConditions accessConditions = BuildDestinationAccessConditions(
                         parameters: parameters,
                         lease: true,
                         appendPosAndMaxSize: true);
@@ -489,7 +490,7 @@ namespace Azure.Storage.Blobs.Test
                     {
                         Response<BlobAppendInfo> response = await blob.AppendBlockAsync(
                             content: stream,
-                            accessConditions: accessConditions);
+                            conditions: accessConditions);
 
                         // Assert
                         Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -522,7 +523,7 @@ namespace Azure.Storage.Blobs.Test
                     // AppendBlob needs to exists for us to test CreateAsync() with access conditions
                     await blob.CreateAsync();
                     parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
-                    AppendBlobAccessConditions accessConditions = BuildDestinationAccessConditions(
+                    AppendBlobRequestConditions accessConditions = BuildDestinationAccessConditions(
                         parameters: parameters,
                         lease: true,
                         appendPosAndMaxSize: true);
@@ -530,10 +531,10 @@ namespace Azure.Storage.Blobs.Test
                     // Act
                     using (var stream = new MemoryStream(data))
                     {
-                        await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                        await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                             blob.AppendBlockAsync(
                                 content: stream,
-                                accessConditions: accessConditions),
+                                conditions: accessConditions),
                             e => { });
                     }
                 }
@@ -563,8 +564,8 @@ namespace Azure.Storage.Blobs.Test
                 await blob.CreateAsync();
 
                 var data = GetRandomBuffer(blobSize);
-                var progressList = new List<StorageProgress>();
-                var progressHandler = new Progress<StorageProgress>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
+                var progressList = new List<long>();
+                var progressHandler = new Progress<long>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
 
                 // Act
                 using (var stream = new FaultyStream(new MemoryStream(data), 256 * Constants.KB, 1, new Exception("Simulated stream fault")))
@@ -573,7 +574,7 @@ namespace Azure.Storage.Blobs.Test
                     await WaitForProgressAsync(progressList, data.LongLength);
                     Assert.IsTrue(progressList.Count > 1, "Too few progress received");
                     // Changing from Assert.AreEqual because these don't always update fast enough
-                    Assert.GreaterOrEqual(data.LongLength, progressList.Last().BytesTransferred, "Final progress has unexpected value");
+                    Assert.GreaterOrEqual(data.LongLength, progressList.Last(), "Final progress has unexpected value");
                 }
 
                 // Assert
@@ -662,7 +663,8 @@ namespace Azure.Storage.Blobs.Test
                     httpDestBlob = InstrumentClient(new AppendBlobClient(
                         httpDestBlob.Uri,
                         httpDestBlob.Pipeline,
-                        new BlobClientOptions(customerProvidedKey: customerProvidedKey)));
+                        httpDestBlob.ClientDiagnostics,
+                        customerProvidedKey));
                     Assert.AreEqual(Constants.Blob.Http, httpDestBlob.Uri.Scheme);
                     AppendBlobClient httpsDestBlob = InstrumentClient(httpDestBlob.WithCustomerProvidedKey(customerProvidedKey));
                     await httpsDestBlob.CreateAsync();
@@ -756,7 +758,7 @@ namespace Azure.Storage.Blobs.Test
                     await destBlob.CreateAsync();
 
                     // Act
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         destBlob.AppendBlockFromUriAsync(
                             sourceUri: sourceBlob.Uri,
                             sourceContentHash: MD5.Create().ComputeHash(Encoding.UTF8.GetBytes("garabage"))),
@@ -767,6 +769,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8351")]
         public async Task AppendBlockFromUriAsync_AccessConditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();
@@ -807,17 +810,17 @@ namespace Azure.Storage.Blobs.Test
                         parameters.SourceIfMatch = await SetupBlobMatchCondition(sourceBlob, parameters.SourceIfMatch);
                         parameters.LeaseId = await SetupBlobLeaseCondition(destBlob, parameters.LeaseId, garbageLeaseId);
 
-                        AppendBlobAccessConditions accessConditions = BuildDestinationAccessConditions(
+                        AppendBlobRequestConditions accessConditions = BuildDestinationAccessConditions(
                             parameters: parameters,
                             lease: true,
                             appendPosAndMaxSize: true);
-                        AppendBlobAccessConditions sourceAccessConditions = BuildSourceAccessConditions(parameters);
+                        AppendBlobRequestConditions sourceAccessConditions = BuildSourceAccessConditions(parameters);
 
                         // Act
                         await destBlob.AppendBlockFromUriAsync(
                             sourceUri: sourceBlob.Uri,
-                            accessConditions: accessConditions,
-                            sourceAccessConditions: sourceAccessConditions);
+                            conditions: accessConditions,
+                            sourceConditions: sourceAccessConditions);
                     }
                 }
             }
@@ -862,18 +865,18 @@ namespace Azure.Storage.Blobs.Test
                         parameters.NoneMatch = await SetupBlobMatchCondition(destBlob, parameters.NoneMatch);
                         parameters.SourceIfNoneMatch = await SetupBlobMatchCondition(sourceBlob, parameters.SourceIfNoneMatch);
 
-                        AppendBlobAccessConditions accessConditions = BuildDestinationAccessConditions(
+                        AppendBlobRequestConditions accessConditions = BuildDestinationAccessConditions(
                             parameters: parameters,
                             lease: true,
                             appendPosAndMaxSize: true);
-                        AppendBlobAccessConditions sourceAccessConditions = BuildSourceAccessConditions(parameters);
+                        AppendBlobRequestConditions sourceAccessConditions = BuildSourceAccessConditions(parameters);
 
                         // Act
-                        await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                        await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                             destBlob.AppendBlockFromUriAsync(
                                 sourceUri: sourceBlob.Uri,
-                                accessConditions: accessConditions,
-                                sourceAccessConditions: sourceAccessConditions),
+                                conditions: accessConditions,
+                                sourceConditions: sourceAccessConditions),
                             actualException => Assert.IsTrue(true)
                         );
                     }
@@ -881,28 +884,22 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        private AppendBlobAccessConditions BuildDestinationAccessConditions(
+        private AppendBlobRequestConditions BuildDestinationAccessConditions(
             AccessConditionParameters parameters,
             bool lease = false,
             bool appendPosAndMaxSize = false)
         {
-            var accessConditions = new AppendBlobAccessConditions
+            var accessConditions = new AppendBlobRequestConditions
             {
-                HttpAccessConditions = new HttpAccessConditions
-                {
-                    IfMatch = parameters.Match != null ? new ETag(parameters.Match) : default(ETag?),
-                    IfNoneMatch = parameters.NoneMatch != null ? new ETag(parameters.NoneMatch) : default(ETag?),
-                    IfModifiedSince = parameters.IfModifiedSince,
-                    IfUnmodifiedSince = parameters.IfUnmodifiedSince
-                }
+                IfMatch = parameters.Match != null ? new ETag(parameters.Match) : default(ETag?),
+                IfNoneMatch = parameters.NoneMatch != null ? new ETag(parameters.NoneMatch) : default(ETag?),
+                IfModifiedSince = parameters.IfModifiedSince,
+                IfUnmodifiedSince = parameters.IfUnmodifiedSince
             };
 
             if (lease)
             {
-                accessConditions.LeaseAccessConditions = new LeaseAccessConditions
-                {
-                    LeaseId = parameters.LeaseId
-                };
+                accessConditions.LeaseId = parameters.LeaseId;
             }
 
             if (appendPosAndMaxSize)
@@ -914,16 +911,13 @@ namespace Azure.Storage.Blobs.Test
             return accessConditions;
         }
 
-        private AppendBlobAccessConditions BuildSourceAccessConditions(AccessConditionParameters parameters)
-            => new AppendBlobAccessConditions
+        private AppendBlobRequestConditions BuildSourceAccessConditions(AccessConditionParameters parameters) =>
+            new AppendBlobRequestConditions
             {
-                HttpAccessConditions = new HttpAccessConditions
-                {
-                    IfMatch = parameters.SourceIfMatch != null ? new ETag(parameters.SourceIfMatch) : default(ETag?),
-                    IfNoneMatch = parameters.SourceIfNoneMatch != null ? new ETag(parameters.SourceIfNoneMatch) : default(ETag?),
-                    IfModifiedSince = parameters.SourceIfModifiedSince,
-                    IfUnmodifiedSince = parameters.SourceIfUnmodifiedSince
-                },
+                IfMatch = parameters.SourceIfMatch != null ? new ETag(parameters.SourceIfMatch) : default(ETag?),
+                IfNoneMatch = parameters.SourceIfNoneMatch != null ? new ETag(parameters.SourceIfNoneMatch) : default(ETag?),
+                IfModifiedSince = parameters.SourceIfModifiedSince,
+                IfUnmodifiedSince = parameters.SourceIfUnmodifiedSince
             };
 
         public class AccessConditionParameters

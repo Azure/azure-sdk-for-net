@@ -77,13 +77,13 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<string> DnsServers { get; set; }
 
         /// <summary>
-        /// Gets or sets if the VM that uses this NIC is part of an
-        /// Availability Set, then this list will have the union of all DNS
-        /// servers from all NICs that are part of the Availability Set. This
-        /// property is what is configured on each of those VMs.
+        /// Gets if the VM that uses this NIC is part of an Availability Set,
+        /// then this list will have the union of all DNS servers from all NICs
+        /// that are part of the Availability Set. This property is what is
+        /// configured on each of those VMs.
         /// </summary>
         [JsonProperty(PropertyName = "appliedDnsServers")]
-        public IList<string> AppliedDnsServers { get; set; }
+        public IList<string> AppliedDnsServers { get; private set; }
 
         /// <summary>
         /// Gets or sets relative DNS name for this NIC used for internal
@@ -93,20 +93,20 @@ namespace Microsoft.Azure.Management.Network.Models
         public string InternalDnsNameLabel { get; set; }
 
         /// <summary>
-        /// Gets or sets fully qualified DNS name supporting internal
-        /// communications between VMs in the same virtual network.
+        /// Gets fully qualified DNS name supporting internal communications
+        /// between VMs in the same virtual network.
         /// </summary>
         [JsonProperty(PropertyName = "internalFqdn")]
-        public string InternalFqdn { get; set; }
+        public string InternalFqdn { get; private set; }
 
         /// <summary>
-        /// Gets or sets even if internalDnsNameLabel is not specified, a DNS
-        /// entry is created for the primary NIC of the VM. This DNS name can
-        /// be constructed by concatenating the VM name with the value of
+        /// Gets even if internalDnsNameLabel is not specified, a DNS entry is
+        /// created for the primary NIC of the VM. This DNS name can be
+        /// constructed by concatenating the VM name with the value of
         /// internalDomainNameSuffix.
         /// </summary>
         [JsonProperty(PropertyName = "internalDomainNameSuffix")]
-        public string InternalDomainNameSuffix { get; set; }
+        public string InternalDomainNameSuffix { get; private set; }
 
     }
 }

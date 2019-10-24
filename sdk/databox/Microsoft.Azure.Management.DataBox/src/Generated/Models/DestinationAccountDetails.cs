@@ -10,12 +10,11 @@
 
 namespace Microsoft.Azure.Management.DataBox.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Details for the destination account.
+    /// Details of the destination storage accounts.
     /// </summary>
     public partial class DestinationAccountDetails
     {
@@ -30,10 +29,14 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// <summary>
         /// Initializes a new instance of the DestinationAccountDetails class.
         /// </summary>
-        /// <param name="accountId">Destination storage account id.</param>
-        public DestinationAccountDetails(string accountId)
+        /// <param name="accountId">Arm Id of the destination where the data
+        /// has to be moved.</param>
+        /// <param name="sharePassword">Share password to be shared by all
+        /// shares in SA.</param>
+        public DestinationAccountDetails(string accountId = default(string), string sharePassword = default(string))
         {
             AccountId = accountId;
+            SharePassword = sharePassword;
             CustomInit();
         }
 
@@ -43,23 +46,17 @@ namespace Microsoft.Azure.Management.DataBox.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets destination storage account id.
+        /// Gets or sets arm Id of the destination where the data has to be
+        /// moved.
         /// </summary>
         [JsonProperty(PropertyName = "accountId")]
         public string AccountId { get; set; }
 
         /// <summary>
-        /// Validate the object.
+        /// Gets or sets share password to be shared by all shares in SA.
         /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (AccountId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "AccountId");
-            }
-        }
+        [JsonProperty(PropertyName = "sharePassword")]
+        public string SharePassword { get; set; }
+
     }
 }

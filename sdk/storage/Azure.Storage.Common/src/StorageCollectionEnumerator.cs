@@ -236,7 +236,6 @@ namespace Azure.Storage
                     }
                 } while (CanContinue(continuationToken));
             }
-
         }
     }
 }

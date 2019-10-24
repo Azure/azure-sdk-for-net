@@ -15,7 +15,8 @@ namespace Azure.Storage.Blobs.Models
     public enum BlobTraits
     {
         /// <summary>
-        /// Default flag specifying that no flags are set in <see cref="BlobTraits"/>.
+        /// Flag specifying only the default information for blobs
+        /// should be included.
         /// </summary>
         None = 0,
 

@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Storage.Common;
 using Azure.Storage.Files.Models;
 using Azure.Storage.Files.Tests;
 using Azure.Storage.Test;
@@ -69,7 +68,7 @@ namespace Azure.Storage.Files.Test
                     GetOptions()));
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 service.GetPropertiesAsync(),
                 e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode.Split('\n')[0]));
         }
@@ -117,7 +116,7 @@ namespace Azure.Storage.Files.Test
                     GetOptions()));
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 fakeService.SetPropertiesAsync(properties),
                 e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode.Split('\n')[0]));
         }
@@ -157,7 +156,7 @@ namespace Azure.Storage.Files.Test
                     GetOptions()));
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 service.GetSharesAsync().ToListAsync(),
                 e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode.Split('\n')[0]));
         }
@@ -171,11 +170,11 @@ namespace Azure.Storage.Files.Test
             {
                 ShareClient share = InstrumentClient((await service.CreateShareAsync(name)).Value);
                 Response<ShareProperties> properties = await share.GetPropertiesAsync();
-                Assert.AreNotEqual(0, properties.Value.Quota);
+                Assert.AreNotEqual(0, properties.Value.QuotaInGB);
             }
             finally
             {
-                await service.DeleteShareAsync(name);
+                await service.DeleteShareAsync(name, false);
             }
         }
 
@@ -186,8 +185,8 @@ namespace Azure.Storage.Files.Test
             FileServiceClient service = GetServiceClient_SharedKey();
             ShareClient share = InstrumentClient((await service.CreateShareAsync(name)).Value);
 
-            await service.DeleteShareAsync(name);
-            Assert.ThrowsAsync<StorageRequestFailedException>(
+            await service.DeleteShareAsync(name, false);
+            Assert.ThrowsAsync<RequestFailedException>(
                 async () => await share.GetPropertiesAsync());
         }
 

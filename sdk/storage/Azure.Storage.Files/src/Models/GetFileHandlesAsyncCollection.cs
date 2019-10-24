@@ -31,7 +31,7 @@ namespace Azure.Storage.Files.Models
             Response<StorageHandlesSegment> response = isAsync ?
                 await task.ConfigureAwait(false) :
                 task.EnsureCompleted();
-            return new Page<StorageFileHandle>(
+            return Page<StorageFileHandle>.FromValues(
                 response.Value.Handles.ToArray(),
                 response.Value.NextMarker,
                 response.GetRawResponse());

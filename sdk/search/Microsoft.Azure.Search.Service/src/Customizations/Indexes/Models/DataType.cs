@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Search.Models
     using Serialization;
 
     /// <summary>
-    /// Defines the data type of a field in an Azure Search index.
+    /// Defines the data type of a field in a search index.
     /// </summary>
     [JsonConverter(typeof(ExtensibleEnumConverter<DataType>))]
     public struct DataType : IEquatable<DataType>

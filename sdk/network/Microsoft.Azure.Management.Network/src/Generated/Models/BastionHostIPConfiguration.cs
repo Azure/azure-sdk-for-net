@@ -78,12 +78,12 @@ namespace Microsoft.Azure.Management.Network.Models
         public SubResource PublicIPAddress { get; set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the bastion host IP
-        /// configuration resource. Possible values include: 'Succeeded',
-        /// 'Updating', 'Deleting', 'Failed'
+        /// Gets the provisioning state of the bastion host IP configuration
+        /// resource. Possible values include: 'Succeeded', 'Updating',
+        /// 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets private IP allocation method. Possible values include:

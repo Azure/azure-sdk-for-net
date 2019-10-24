@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Search.Models
     using Common;
 
     /// <summary>
-    /// Provides factory methods for creating a batch of document write operations to send to the Azure Search index.
+    /// Provides factory methods for creating a batch of document write operations to send to the search index.
     /// </summary>
     public static class IndexBatch
     {

@@ -22,8 +22,7 @@ namespace Microsoft.Azure.Search
     public static partial class SynonymMapsOperationsExtensions
     {
             /// <summary>
-            /// Creates a new Azure Search synonym map or updates a synonym map if it
-            /// already exists.
+            /// Creates a new synonym map or updates a synonym map if it already exists.
             /// <see href="https://docs.microsoft.com/rest/api/searchservice/Update-Synonym-Map" />
             /// </summary>
             /// <param name='operations'>
@@ -47,8 +46,7 @@ namespace Microsoft.Azure.Search
             }
 
             /// <summary>
-            /// Creates a new Azure Search synonym map or updates a synonym map if it
-            /// already exists.
+            /// Creates a new synonym map or updates a synonym map if it already exists.
             /// <see href="https://docs.microsoft.com/rest/api/searchservice/Update-Synonym-Map" />
             /// </summary>
             /// <param name='operations'>
@@ -78,7 +76,7 @@ namespace Microsoft.Azure.Search
             }
 
             /// <summary>
-            /// Deletes an Azure Search synonym map.
+            /// Deletes a synonym map.
             /// <see href="https://docs.microsoft.com/rest/api/searchservice/Delete-Synonym-Map" />
             /// </summary>
             /// <param name='operations'>
@@ -99,7 +97,7 @@ namespace Microsoft.Azure.Search
             }
 
             /// <summary>
-            /// Deletes an Azure Search synonym map.
+            /// Deletes a synonym map.
             /// <see href="https://docs.microsoft.com/rest/api/searchservice/Delete-Synonym-Map" />
             /// </summary>
             /// <param name='operations'>
@@ -123,7 +121,7 @@ namespace Microsoft.Azure.Search
             }
 
             /// <summary>
-            /// Retrieves a synonym map definition from Azure Search.
+            /// Retrieves a synonym map definition.
             /// <see href="https://docs.microsoft.com/rest/api/searchservice/Get-Synonym-Map" />
             /// </summary>
             /// <param name='operations'>
@@ -141,7 +139,7 @@ namespace Microsoft.Azure.Search
             }
 
             /// <summary>
-            /// Retrieves a synonym map definition from Azure Search.
+            /// Retrieves a synonym map definition.
             /// <see href="https://docs.microsoft.com/rest/api/searchservice/Get-Synonym-Map" />
             /// </summary>
             /// <param name='operations'>
@@ -165,7 +163,7 @@ namespace Microsoft.Azure.Search
             }
 
             /// <summary>
-            /// Lists all synonym maps available for an Azure Search service.
+            /// Lists all synonym maps available for a search service.
             /// <see href="https://docs.microsoft.com/rest/api/searchservice/List-Synonym-Maps" />
             /// </summary>
             /// <param name='operations'>
@@ -180,7 +178,7 @@ namespace Microsoft.Azure.Search
             }
 
             /// <summary>
-            /// Lists all synonym maps available for an Azure Search service.
+            /// Lists all synonym maps available for a search service.
             /// <see href="https://docs.microsoft.com/rest/api/searchservice/List-Synonym-Maps" />
             /// </summary>
             /// <param name='operations'>
@@ -201,7 +199,7 @@ namespace Microsoft.Azure.Search
             }
 
             /// <summary>
-            /// Creates a new Azure Search synonym map.
+            /// Creates a new synonym map.
             /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Synonym-Map" />
             /// </summary>
             /// <param name='operations'>
@@ -219,7 +217,7 @@ namespace Microsoft.Azure.Search
             }
 
             /// <summary>
-            /// Creates a new Azure Search synonym map.
+            /// Creates a new synonym map.
             /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Synonym-Map" />
             /// </summary>
             /// <param name='operations'>

@@ -53,9 +53,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// application firewall policy resource. Possible values include:
         /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="resourceState">Resource status of the policy.</param>
+        /// <param name="httpListeners">A collection of references to
+        /// application gateway http listeners.</param>
+        /// <param name="pathBasedRules">A collection of references to
+        /// application gateway path rules.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public WebApplicationFirewallPolicy(ManagedRulesDefinition managedRules, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), PolicySettings policySettings = default(PolicySettings), IList<WebApplicationFirewallCustomRule> customRules = default(IList<WebApplicationFirewallCustomRule>), IList<ApplicationGateway> applicationGateways = default(IList<ApplicationGateway>), string provisioningState = default(string), string resourceState = default(string), string etag = default(string))
+        public WebApplicationFirewallPolicy(ManagedRulesDefinition managedRules, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), PolicySettings policySettings = default(PolicySettings), IList<WebApplicationFirewallCustomRule> customRules = default(IList<WebApplicationFirewallCustomRule>), IList<ApplicationGateway> applicationGateways = default(IList<ApplicationGateway>), string provisioningState = default(string), string resourceState = default(string), IList<SubResource> httpListeners = default(IList<SubResource>), IList<SubResource> pathBasedRules = default(IList<SubResource>), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             PolicySettings = policySettings;
@@ -64,6 +68,8 @@ namespace Microsoft.Azure.Management.Network.Models
             ProvisioningState = provisioningState;
             ResourceState = resourceState;
             ManagedRules = managedRules;
+            HttpListeners = httpListeners;
+            PathBasedRules = pathBasedRules;
             Etag = etag;
             CustomInit();
         }
@@ -116,11 +122,24 @@ namespace Microsoft.Azure.Management.Network.Models
         public ManagedRulesDefinition ManagedRules { get; set; }
 
         /// <summary>
-        /// Gets or sets a unique read-only string that changes whenever the
-        /// resource is updated.
+        /// Gets a collection of references to application gateway http
+        /// listeners.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.httpListeners")]
+        public IList<SubResource> HttpListeners { get; private set; }
+
+        /// <summary>
+        /// Gets a collection of references to application gateway path rules.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.pathBasedRules")]
+        public IList<SubResource> PathBasedRules { get; private set; }
+
+        /// <summary>
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
         /// <summary>
         /// Validate the object.

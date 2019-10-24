@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Search.Models
     using Serialization;
 
     /// <summary>
-    /// Defines the names of all text analyzers supported by Azure Search.
+    /// Defines the names of all text analyzers supported by Azure Cognitive Search.
     /// <see href="https://docs.microsoft.com/rest/api/searchservice/Language-support"/>
     /// </summary>
     [JsonConverter(typeof(ExtensibleEnumConverter<AnalyzerName>))]

@@ -41,13 +41,13 @@ namespace Azure.Core.Pipeline
             ProcessAsync(message, pipeline, false).EnsureCompleted();
         }
 
-        public async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
+        private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
             if (DateTimeOffset.UtcNow >= _refreshOn)
             {
                 AccessToken token = async ?
-                        await _credential.GetTokenAsync(new TokenRequestContext(_scopes), message.CancellationToken).ConfigureAwait(false) :
-                        _credential.GetToken(new TokenRequestContext(_scopes), message.CancellationToken);
+                        await _credential.GetTokenAsync(new TokenRequestContext(_scopes, message.Request.ClientRequestId), message.CancellationToken).ConfigureAwait(false) :
+                        _credential.GetToken(new TokenRequestContext(_scopes, message.Request.ClientRequestId), message.CancellationToken);
 
                 _headerValue = "Bearer " + token.Token;
                 _refreshOn = token.ExpiresOn - TimeSpan.FromMinutes(2);

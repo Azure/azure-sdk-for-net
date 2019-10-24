@@ -117,7 +117,7 @@ namespace Azure.Storage.Queues.Test
             QueueClient queue = (await service.CreateQueueAsync(queueName)).Value; // Ensure at least one queue
             try
             {
-                AsyncPageable<QueueItem> queues = service.GetQueuesAsync(new GetQueuesOptions { Prefix = prefix });
+                AsyncPageable<QueueItem> queues = service.GetQueuesAsync(prefix: prefix);
                 IList<QueueItem> items = await queues.ToListAsync();
 
                 Assert.AreNotEqual(0, items.Count());
@@ -138,7 +138,7 @@ namespace Azure.Storage.Queues.Test
             {
                 IDictionary<string, string> metadata = BuildMetadata();
                 await queue.SetMetadataAsync(metadata);
-                QueueItem first = await service.GetQueuesAsync(new GetQueuesOptions { IncludeMetadata = true }).FirstAsync();
+                QueueItem first = await service.GetQueuesAsync(QueueTraits.Metadata).FirstAsync();
                 Assert.IsNotNull(first.Metadata);
             }
         }
@@ -148,7 +148,7 @@ namespace Azure.Storage.Queues.Test
         public async Task GetQueuesAsync_Error()
         {
             QueueServiceClient service = GetServiceClient_SharedKey();
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 service.GetQueuesAsync().AsPages(continuationToken: "garbage").FirstAsync(),
                 e => Assert.AreEqual("OutOfRangeInput", e.ErrorCode));
         }
@@ -190,7 +190,6 @@ namespace Azure.Storage.Queues.Test
                 IList<QueueItem> queues = await EnsurePropagatedAsync(
                     async () => await service.GetQueuesAsync().ToListAsync(),
                     queues => queues.Count > 0);
-                Assert.AreEqual(1, queues.Count);
             }
             return testExceptionPolicy;
         }

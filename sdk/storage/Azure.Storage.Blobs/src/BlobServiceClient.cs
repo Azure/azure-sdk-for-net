@@ -69,6 +69,16 @@ namespace Azure.Storage.Blobs
         internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
 
         /// <summary>
+        /// The <see cref="CustomerProvidedKey"/> to be used when sending requests.
+        /// </summary>
+        internal readonly CustomerProvidedKey? _customerProvidedKey;
+
+        /// <summary>
+        /// The <see cref="CustomerProvidedKey"/> to be used when sending requests.
+        /// </summary>
+        internal virtual CustomerProvidedKey? CustomerProvidedKey => _customerProvidedKey;
+
+        /// <summary>
         /// The Storage account name corresponding to the service client.
         /// </summary>
         private string _accountName;
@@ -137,6 +147,7 @@ namespace Azure.Storage.Blobs
             _authenticationPolicy = StorageClientOptions.GetAuthenticationPolicy(conn.Credentials);
             _pipeline = options.Build(_authenticationPolicy);
             _clientDiagnostics = new ClientDiagnostics(options);
+            _customerProvidedKey = options.CustomerProvidedKey;
         }
 
         /// <summary>
@@ -212,7 +223,7 @@ namespace Azure.Storage.Blobs
         /// every request.
         /// </param>
         internal BlobServiceClient(Uri serviceUri, HttpPipelinePolicy authentication, BlobClientOptions options)
-            : this(serviceUri, authentication, options.Build(authentication), new ClientDiagnostics(options))
+            : this(serviceUri, authentication, options.Build(authentication), new ClientDiagnostics(options), options?.CustomerProvidedKey)
         {
 
         }
@@ -229,12 +240,14 @@ namespace Azure.Storage.Blobs
         /// The transport pipeline used to send every request.
         /// </param>
         /// <param name="clientDiagnostics"></param>
-        internal BlobServiceClient(Uri serviceUri, HttpPipelinePolicy authentication, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
+        /// <param name="customerProvidedKey">Customer provided key.</param>
+        internal BlobServiceClient(Uri serviceUri, HttpPipelinePolicy authentication, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
         {
             _uri = serviceUri;
             _authenticationPolicy = authentication;
             _pipeline = pipeline;
             _clientDiagnostics = clientDiagnostics;
+            _customerProvidedKey = customerProvidedKey;
         }
         #endregion ctors
 
@@ -251,7 +264,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="BlobContainerClient"/> for the desired container.
         /// </returns>
         public virtual BlobContainerClient GetBlobContainerClient(string blobContainerName) =>
-            new BlobContainerClient(Uri.AppendToPath(blobContainerName), Pipeline, ClientDiagnostics);
+            new BlobContainerClient(Uri.AppendToPath(blobContainerName), Pipeline, ClientDiagnostics, CustomerProvidedKey);
 
         #region GetBlobContainers
         /// <summary>
@@ -278,7 +291,7 @@ namespace Azure.Storage.Blobs
         /// describing the blob containers in the storage account.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Pageable<BlobContainerItem> GetBlobContainers(
@@ -311,7 +324,7 @@ namespace Azure.Storage.Blobs
         /// containers in the storage account.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual AsyncPageable<BlobContainerItem> GetBlobContainersAsync(
@@ -364,7 +377,7 @@ namespace Azure.Storage.Blobs
         /// segment of the blob containers in the storage account.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         internal async Task<Response<BlobContainersSegment>> GetBlobContainersInternal(
@@ -425,7 +438,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="Response{AccountInfo}"/> describing the account.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<AccountInfo> GetAccountInfo(
@@ -449,7 +462,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="Response{AccountInfo}"/> describing the account.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<AccountInfo>> GetAccountInfoAsync(
@@ -476,7 +489,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="Response{AccountInfo}"/> describing the account.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<AccountInfo>> GetAccountInfoInternal(
@@ -527,7 +540,7 @@ namespace Azure.Storage.Blobs
         /// the service properties.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<BlobServiceProperties> GetProperties(
@@ -553,7 +566,7 @@ namespace Azure.Storage.Blobs
         /// the service properties.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<BlobServiceProperties>> GetPropertiesAsync(
@@ -582,7 +595,7 @@ namespace Azure.Storage.Blobs
         /// the service properties.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<BlobServiceProperties>> GetPropertiesInternal(
@@ -637,7 +650,7 @@ namespace Azure.Storage.Blobs
         /// the service properties.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response SetProperties(
@@ -669,7 +682,7 @@ namespace Azure.Storage.Blobs
         /// the service properties.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response> SetPropertiesAsync(
@@ -704,7 +717,7 @@ namespace Azure.Storage.Blobs
         /// the service properties.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response> SetPropertiesInternal(
@@ -763,7 +776,7 @@ namespace Azure.Storage.Blobs
         /// the service replication statistics.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<BlobServiceStatistics> GetStatistics(
@@ -791,7 +804,7 @@ namespace Azure.Storage.Blobs
         /// the service replication statistics.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<BlobServiceStatistics>> GetStatisticsAsync(
@@ -822,7 +835,7 @@ namespace Azure.Storage.Blobs
         /// the service replication statistics.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<BlobServiceStatistics>> GetStatisticsInternal(
@@ -879,7 +892,7 @@ namespace Azure.Storage.Blobs
         /// the service replication statistics.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<UserDelegationKey> GetUserDelegationKey(
@@ -915,7 +928,7 @@ namespace Azure.Storage.Blobs
         /// the service replication statistics.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<UserDelegationKey>> GetUserDelegationKeyAsync(
@@ -952,7 +965,7 @@ namespace Azure.Storage.Blobs
         /// the service replication statistics.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<UserDelegationKey>> GetUserDelegationKeyInternal(
@@ -1037,7 +1050,7 @@ namespace Azure.Storage.Blobs
         /// newly created container.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
@@ -1087,7 +1100,7 @@ namespace Azure.Storage.Blobs
         /// newly created container.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
@@ -1114,8 +1127,8 @@ namespace Azure.Storage.Blobs
         /// <param name="blobContainerName">
         /// The name of the container to delete.
         /// </param>
-        /// <param name="accessConditions">
-        /// Optional <see cref="BlobContainerAccessConditions"/> to add
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add
         /// conditions on the deletion of this container.
         /// </param>
         /// <param name="cancellationToken">
@@ -1126,17 +1139,17 @@ namespace Azure.Storage.Blobs
         /// A <see cref="Response"/> if successful.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
         public virtual Response DeleteBlobContainer(
             string blobContainerName,
-            BlobContainerAccessConditions? accessConditions = default,
+            BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             GetBlobContainerClient(blobContainerName)
                 .Delete(
-                    accessConditions,
+                    conditions,
                     cancellationToken);
 
         /// <summary>
@@ -1149,8 +1162,8 @@ namespace Azure.Storage.Blobs
         /// <param name="blobContainerName">
         /// The name of the blob container to delete.
         /// </param>
-        /// <param name="accessConditions">
-        /// Optional <see cref="BlobContainerAccessConditions"/> to add
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add
         /// conditions on the deletion of this blob container.
         /// </param>
         /// <param name="cancellationToken">
@@ -1161,18 +1174,18 @@ namespace Azure.Storage.Blobs
         /// A <see cref="Response"/> if successful.
         /// </returns>
         /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response> DeleteBlobContainerAsync(
             string blobContainerName,
-            BlobContainerAccessConditions? accessConditions = default,
+            BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await
                 GetBlobContainerClient(blobContainerName)
                 .DeleteAsync(
-                    accessConditions,
+                    conditions,
                     cancellationToken)
                     .ConfigureAwait(false);
         #endregion DeleteBlobContainer
