@@ -10,6 +10,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
     using Microsoft.Azure.Management.StorageCache.Models;
     using Microsoft.Azure.Management.StorageCache.Tests.Helpers;
     using Microsoft.Azure.Management.StorageCache.Tests.Utilities;
+    using Microsoft.Azure.Test.HttpRecorder;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Xunit.Sdk;
 
@@ -105,7 +106,10 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
                     {
                         this.Cache = null;
                         this.Cache = this.CacheHelper.Create(this.cacheName, sku, int_size);
-                        this.CacheHelper.CheckCacheState(this.cacheName);
+                        if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                        {
+                            this.CacheHelper.CheckCacheState(this.cacheName);
+                        }
                     }
                 }
                 catch (Exception)

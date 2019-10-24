@@ -14,6 +14,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
     using Microsoft.Azure.Management.Storage;
     using Microsoft.Azure.Management.StorageCache;
     using Microsoft.Azure.Management.StorageCache.Models;
+    using Microsoft.Azure.Test.HttpRecorder;
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Xunit.Abstractions;
@@ -223,8 +224,11 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
         public void DeleteStorageTarget(string cacheName, string storageTargetName, ITestOutputHelper testOutputHelper = null)
         {
             this.StoragecacheManagementClient.StorageTargets.Delete(this.resourceGroup.Name, cacheName, storageTargetName);
-            this.WaitForStoragteTargetState(cacheName, storageTargetName, "Deleting", testOutputHelper).GetAwaiter().GetResult();
-            this.WaitForStoragteTargetState(cacheName, storageTargetName, "Succeeded", testOutputHelper).GetAwaiter().GetResult();
+            if (HttpMockServer.Mode == HttpRecorderMode.Record)
+            {
+                this.WaitForStoragteTargetState(cacheName, storageTargetName, "Deleting", testOutputHelper).GetAwaiter().GetResult();
+                this.WaitForStoragteTargetState(cacheName, storageTargetName, "Succeeded", testOutputHelper).GetAwaiter().GetResult();
+            }
         }
 
         /// <summary>
@@ -292,7 +296,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
                 cacheName,
                 storageTargetName,
                 storageTargetParameters);
-            if (wait)
+            if (wait && HttpMockServer.Mode == HttpRecorderMode.Record)
             {
                 this.WaitForStoragteTargetState(cacheName, storageTargetName, "Succeeded", testOutputHelper).GetAwaiter().GetResult();
             }
