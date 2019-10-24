@@ -9,9 +9,6 @@
     <VersionPrefix>3.5.1</VersionPrefix>
     <PackageTags>Microsoft,Azure,Batch,windowsazureofficial</PackageTags>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-    <PackageReleaseNotes>
-      Improve usability of GetOutputStoragePath.
-    </PackageReleaseNotes>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>

@@ -12,9 +12,6 @@
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     <SignAssembly>true</SignAssembly>
     <RestorePackagesPath>$(LibraryNugetPackageFolder)</RestorePackagesPath>
-    <PackageReleaseNotes>
-      Updated Microsoft.Azure.Batch dependency to 11.0.
-    </PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
