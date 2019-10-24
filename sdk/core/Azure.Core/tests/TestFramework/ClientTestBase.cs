@@ -11,6 +11,7 @@ using NUnit.Framework;
 namespace Azure.Core.Testing
 {
     [TestFixture(true)]
+    [TestFixture(false)]
     public class ClientTestBase
     {
         private static readonly ProxyGenerator s_proxyGenerator = new ProxyGenerator();
