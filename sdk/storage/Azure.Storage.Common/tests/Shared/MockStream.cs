@@ -4,7 +4,7 @@
 using System;
 using System.IO;
 
-namespace Azure.Storage.Common.Tests.Shared
+namespace Azure.Storage.Tests.Shared
 {
     /// <summary>
     /// Stream class that can be used for mocking. Properties can be implemented
