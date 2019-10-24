@@ -7,6 +7,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
     using System.Collections.Generic;
     using System.Reflection.Metadata;
     using Microsoft.Azure.Management.Storage;
+    using Microsoft.Azure.Management.Storage.Models;
     using Microsoft.Azure.Management.StorageCache.Models;
     using Microsoft.Azure.Management.StorageCache.Tests.Fixtures;
     using Microsoft.Azure.Management.StorageCache.Tests.Helpers;
@@ -313,7 +314,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
                 StorageAccountsHelper storageAccountsHelper = new StorageAccountsHelper(storageManagementClient, this.fixture.ResourceGroup);
                 var storageAccount = storageAccountsHelper.CreateStorageAccount(this.fixture.ResourceGroup.Name);
                 var blobContainer = storageAccountsHelper.CreateBlobContainer(storageAccount.Name, this.fixture.ResourceGroup.Name);
-
+                AddStorageAccountAccessRules(context, storageAccount);
                 StorageTarget storageTargetParameters = this.fixture.CacheHelper.CreateClfsStorageTargetParameters(
                     storageAccount.Name,
                     blobContainer.Name,
@@ -383,7 +384,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
                 StorageAccountsHelper storageAccountsHelper = new StorageAccountsHelper(storageManagementClient, this.fixture.ResourceGroup);
                 var storageAccount = storageAccountsHelper.CreateStorageAccount(this.fixture.ResourceGroup.Name);
                 var blobContainer = storageAccountsHelper.CreateBlobContainer(storageAccount.Name, this.fixture.ResourceGroup.Name);
-
+                AddStorageAccountAccessRules(context, storageAccount);
                 StorageTarget storageTargetParameters = this.fixture.CacheHelper.CreateClfsStorageTargetParameters(
                     storageAccount.Name,
                     blobContainer.Name,
@@ -417,7 +418,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
                 var client = context.GetClient<StorageCacheManagementClient>();
                 client.ApiVersion = Constants.DefaultAPIVersion;
                 this.fixture.CacheHelper.StoragecacheManagementClient = client;
-                CloudErrorException ex = Assert.Throws<CloudErrorException>(() => this.AddClfsStorageAccount(context, "4", addPermissions: false));
+                CloudErrorException ex = Assert.Throws<CloudErrorException>(() => this.AddClfsStorageAccount(context, "4", wait:false, addPermissions: false));
                 this.testOutputHelper.WriteLine($"{ex.Body.Error.Message}");
                 this.testOutputHelper.WriteLine($"{ex.Body.Error.Code}");
                 this.testOutputHelper.WriteLine($"{ex.Body.Error.Target}");
@@ -441,11 +442,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
 
             if (addPermissions)
             {
-                string role1 = "Storage Account Contributor";
-                string role2 = "Storage Blob Data Contributor";
-                this.fixture.Context.AddRoleAssignment(context, storageAccount.Id, role1, TestUtilities.GenerateGuid().ToString());
-                this.fixture.Context.AddRoleAssignment(context, storageAccount.Id, role2, TestUtilities.GenerateGuid().ToString());
-                this.testOutputHelper.WriteLine($"Added {role1} & {role2} role to storage account {storageAccountName}.");
+                AddStorageAccountAccessRules(context, storageAccount);
             }
 
             var blobContainer = storageAccountsHelper.CreateBlobContainer(storageAccount.Name, blobContainerName);
@@ -466,6 +463,23 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
             this.testOutputHelper.WriteLine($"Storage target Id {storageTarget.Id}");
             this.testOutputHelper.WriteLine($"Storage target Target {storageTarget.Clfs.Target}");
             return storageTarget;
+        }
+
+        private void AddStorageAccountAccessRules(StorageCacheTestContext context, StorageAccount storageAccount)
+        {
+            try
+            {
+                string role1 = "Storage Account Contributor";
+                string role2 = "Storage Blob Data Contributor";
+                this.fixture.Context.AddRoleAssignment(context, storageAccount.Id, role1, TestUtilities.GenerateGuid().ToString());
+                this.fixture.Context.AddRoleAssignment(context, storageAccount.Id, role2, TestUtilities.GenerateGuid().ToString());
+                this.testOutputHelper.WriteLine($"Added {role1} & {role2} role to storage account {storageAccount.Name}.");
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }
