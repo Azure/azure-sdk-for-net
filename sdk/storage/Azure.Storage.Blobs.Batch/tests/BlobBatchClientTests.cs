@@ -262,7 +262,7 @@ namespace Azure.Storage.Blobs.Test
             Response response2 = batch.DeleteBlob(good[1].Uri);
             Response response3 = batch.DeleteBlob(bad[0]);
             AggregateException exes = Assert.ThrowsAsync<AggregateException>(
-                async () => await client.SubmitBatchAsync(batch));
+                async () => await client.SubmitBatchAsync(batch, throwOnAnyFailure: true));
 
             RequestFailedException ex = exes.InnerException as RequestFailedException;
             Assert.IsNotNull(ex);
@@ -324,7 +324,7 @@ namespace Azure.Storage.Blobs.Test
             Response response2 = batch.DeleteBlob(bad[0]);
             Response response3 = batch.DeleteBlob(bad[1]);
             AggregateException exes = Assert.ThrowsAsync<AggregateException>(
-                async () => await client.SubmitBatchAsync(batch));
+                async () => await client.SubmitBatchAsync(batch, throwOnAnyFailure: true));
 
             Assert.AreEqual(2, exes.InnerExceptions.Count);
             Assert.AreEqual(404, (exes.InnerExceptions[0] as RequestFailedException)?.Status);
@@ -419,7 +419,7 @@ namespace Azure.Storage.Blobs.Test
             Response response2 = batch.SetBlobAccessTier(good[1].Uri, AccessTier.Cool);
             Response response3 = batch.SetBlobAccessTier(bad[0], AccessTier.Cool);
             AggregateException exes = Assert.ThrowsAsync<AggregateException>(
-                async () => await client.SubmitBatchAsync(batch));
+                async () => await client.SubmitBatchAsync(batch, throwOnAnyFailure: true));
 
             RequestFailedException ex = exes.InnerException as RequestFailedException;
             Assert.IsNotNull(ex);
@@ -481,7 +481,7 @@ namespace Azure.Storage.Blobs.Test
             Response response2 = batch.SetBlobAccessTier(bad[0], AccessTier.Cool);
             Response response3 = batch.SetBlobAccessTier(bad[1], AccessTier.Cool);
             AggregateException exes = Assert.ThrowsAsync<AggregateException>(
-                async () => await client.SubmitBatchAsync(batch));
+                async () => await client.SubmitBatchAsync(batch, throwOnAnyFailure: true));
 
             Assert.AreEqual(2, exes.InnerExceptions.Count);
             Assert.AreEqual(404, (exes.InnerExceptions[0] as RequestFailedException)?.Status);

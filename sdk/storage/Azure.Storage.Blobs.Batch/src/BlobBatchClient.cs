@@ -154,7 +154,7 @@ namespace Azure.Storage.Blobs.Specialized
 [ForwardsClientCalls] // TODO: Throwing exceptions fails tests
         public virtual Response SubmitBatch(
             BlobBatch batch,
-            bool throwOnAnyFailure = true,
+            bool throwOnAnyFailure = false,
             CancellationToken cancellationToken = default) =>
             SubmitBatchInternal(
                 batch,
@@ -189,7 +189,7 @@ namespace Azure.Storage.Blobs.Specialized
 [ForwardsClientCalls] // TODO: Throwing exceptions fails tests
         public virtual async Task<Response> SubmitBatchAsync(
             BlobBatch batch,
-            bool throwOnAnyFailure = true,
+            bool throwOnAnyFailure = false,
             CancellationToken cancellationToken = default) =>
             await SubmitBatchInternal(
                 batch,
