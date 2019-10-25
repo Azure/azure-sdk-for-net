@@ -10,20 +10,6 @@ using NUnit.Framework;
 
 namespace Azure.Core.Samples
 {
-    public class TransportSamples
-    {
-        [Test]
-        public void HttpClientConfiguration()
-        {
-            #region Snippet:HttpClientTransport
-            using HttpClient client = new HttpClient();
-            client.Timeout = TimeSpan.FromSeconds(10);
-
-            SecretClientOptions options = new SecretClientOptions();
-            options.Transport = new HttpClientTransport(client);
-            #endregion
-        }
-    }
     public class LoggingSamples
     {
         [Test]
@@ -59,6 +45,21 @@ namespace Azure.Core.Samples
                 {
                     LoggedHeaderNames = { "x-ms-request-id" },
                     LoggedQueryParameters = { "api-version" }
+                }
+            };
+            #endregion
+        }
+
+        [Test]
+        public static void LoggingRedactedHeaderAll()
+        {
+            #region Snippet:LoggingRedactedHeaderAll
+            SecretClientOptions options = new SecretClientOptions()
+            {
+                Diagnostics =
+                {
+                    LoggedHeaderNames = { "*" },
+                    LoggedQueryParameters = { "*" }
                 }
             };
             #endregion

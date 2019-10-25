@@ -136,7 +136,7 @@ Assert.AreEqual("Value", setting.Value);
 
 ```C# Snippet:ConsoleLogging
 // Setup a listener to monitor logged events.
-using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger(EventLevel.LogAlways);
+using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
 ```
 
 ### Reporting Errors ```RequestFailedException```

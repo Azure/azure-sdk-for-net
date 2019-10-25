@@ -18,9 +18,9 @@ namespace Azure.Core.Samples
             #region Snippet:AddingPerCallPolicy
 
             SecretClientOptions options = new SecretClientOptions();
-            options.AddPolicy(new StopwatchPolicy(), HttpPipelinePosition.PerCall);
+            options.AddPolicy(new CustomRequestPolicy(), HttpPipelinePosition.PerCall);
 
-            options.AddPolicy(new StopwatchPolicy(), HttpPipelinePosition.PerCall);
+            options.AddPolicy(new StopwatchPolicy(), HttpPipelinePosition.PerRetry);
 
             #endregion
         }
@@ -56,7 +56,7 @@ namespace Azure.Core.Samples
 
         #endregion
 
-        #region Snippet:StopwatchPolicy
+        #region Snippet:SyncPolicy
         public class CustomRequestPolicy : HttpPipelineSynchronousPolicy
         {
             public override void OnSendingRequest(HttpMessage message)
