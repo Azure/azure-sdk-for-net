@@ -36,7 +36,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <param name='scaleUnit'>
         /// Name of the scale units.
         /// </param>
-        /// <param name='nodeList'>
+        /// <param name='scaleUnitNodeParameters'>
         /// A list of input data that allows for adding a set of scale unit
         /// nodes.
         /// </param>
@@ -52,7 +52,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> ScaleOutWithHttpMessagesAsync(string resourceGroupName, string location, string scaleUnit, ScaleOutScaleUnitParametersList nodeList, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> ScaleOutWithHttpMessagesAsync(string resourceGroupName, string location, string scaleUnit, ScaleOutScaleUnitParametersList scaleUnitNodeParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Add a new scale unit.
         /// </summary>
@@ -149,7 +149,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <param name='scaleUnit'>
         /// Name of the scale units.
         /// </param>
-        /// <param name='nodeList'>
+        /// <param name='scaleUnitNodeParameters'>
         /// A list of input data that allows for adding a set of scale unit
         /// nodes.
         /// </param>
@@ -165,7 +165,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginScaleOutWithHttpMessagesAsync(string resourceGroupName, string location, string scaleUnit, ScaleOutScaleUnitParametersList nodeList, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginScaleOutWithHttpMessagesAsync(string resourceGroupName, string location, string scaleUnit, ScaleOutScaleUnitParametersList scaleUnitNodeParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Add a new scale unit.
         /// </summary>
