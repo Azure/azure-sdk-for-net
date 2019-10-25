@@ -235,9 +235,9 @@ namespace Azure.Identity
                 {
                     return false;
                 }
-                // in the case that the request failed in a manner that we didn't receive any response, take this
-                // to indicate that the imds endpoint is not available.
-                catch (Exception)
+                // in the case that the request failed in a manner that we didn't receive any response other,
+                // than being canceled, take this to indicate that the imds endpoint is not available.
+                catch (Exception e) when (!(e is OperationCanceledException))
                 {
                     return false;
                 }
@@ -279,9 +279,9 @@ namespace Azure.Identity
 
                     return false;
                 }
-                // in the case that the request failed in a manner that we didn't receive any response, take this
-                // to indicate that the imds endpoint is not available.
-                catch (Exception)
+                // in the case that the request failed in a manner that we didn't receive any response other,
+                // than being canceled, take this to indicate that the imds endpoint is not available.
+                catch (Exception e) when (!(e is OperationCanceledException))
                 {
                     return false;
                 }
