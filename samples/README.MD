@@ -35,8 +35,9 @@ This section lists **main** how-to guides for the most commonly used APIs and mo
 - How to access **HTTP response details** (TODO)
 
 #### Azure.Security.KeyVault
-- How to **store secrets** in Azure KeyVault (TODO)
-- How to **backup and restore** secrets (TODO) 
+- How to **store and retrieve** secrets and keys (TODO)
+- How to **backup and restore** secrets and keys (TODO) 
+- How to **encrypt and decrypt** secrets and keys (TODO)
 
 #### Azure.Storage.Blobs
 - How to **upload** to a blob (TODO)
