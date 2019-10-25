@@ -35,13 +35,13 @@ namespace Azure.Data.AppConfiguration
 
         /// <summary>
         /// The primary identifier of the configuration setting.
-        /// The key is used together with label to uniquely identify a configuration setting.
+        /// A <see cref="Key"/> is used together with a <see cref="Label"/> to uniquely identify a configuration setting.
         /// </summary>
         public string Key { get; set; }
 
         /// <summary>
         /// A value used to group configuration settings.
-        /// The label is used together with key to uniquely identify a configuration setting.
+        /// A <see cref="Label"/> is used together with a <see cref="Key"/> to uniquely identify a configuration setting.
         /// </summary>
         public string Label { get; set; }
 

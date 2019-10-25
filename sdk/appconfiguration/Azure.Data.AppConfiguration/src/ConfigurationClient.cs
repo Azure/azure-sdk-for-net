@@ -27,7 +27,7 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ConfigurationClient"/>.
+        /// Initializes a new instance of the <see cref="ConfigurationClient"/> class.
         /// </summary>
         /// <param name="connectionString">Connection string with authentication option and related parameters.</param>
         public ConfigurationClient(string connectionString)
@@ -36,7 +36,7 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary>
-        /// Creates a <see cref="ConfigurationClient"/> that sends requests to the configuration store.
+        /// Initializes a new instance of the <see cref="ConfigurationClient"/> class.
         /// </summary>
         /// <param name="connectionString">Connection string with authentication option and related parameters.</param>
         /// <param name="options">Options that allow configuration of requests sent to the configuration store.</param>
@@ -606,9 +606,9 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// Retrieves one or more <see cref="ConfigurationSetting"/> that satisfy the options set in the <see cref="SettingSelector"/>.
         /// </summary>
-        /// <param name="selector">Options used to select a set of <see cref="ConfigurationSetting"/>s from the configuration store.</param>
+        /// <param name="selector">Options used to select a set of <see cref="ConfigurationSetting"/> entities from the configuration store.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>An enumerable collection containing the retrieved  <see cref="ConfigurationSetting"/>s.</returns>
+        /// <returns>An enumerable collection containing the retrieved <see cref="ConfigurationSetting"/> entities.</returns>
         public virtual AsyncPageable<ConfigurationSetting> GetConfigurationSettingsAsync(SettingSelector selector, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(selector, nameof(selector));
