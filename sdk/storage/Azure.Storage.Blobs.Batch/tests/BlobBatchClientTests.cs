@@ -305,6 +305,7 @@ namespace Azure.Storage.Blobs.Test
             Response response3 = batch.DeleteBlob(bad[0]);
             Response response = await client.SubmitBatchAsync(batch, throwOnAnyFailure: false);
 
+            Assert.AreEqual(3, batch.RequestCount);
             scenario.AssertStatus(202, response, response1, response2);
             scenario.AssertStatus(404, response3);
             await scenario.AssertDeleted(good);
@@ -563,6 +564,7 @@ namespace Azure.Storage.Blobs.Test
                 responses[2] = batch.DeleteBlob(blobs[2].Uri);
                 response = await client.SubmitBatchAsync(batch);
                 batch.Dispose();
+                Assert.AreEqual(3, batch.RequestCount);
             }
             scenario.AssertStatus(202, response);
             scenario.AssertStatus(202, responses);
