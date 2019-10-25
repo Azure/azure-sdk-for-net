@@ -128,19 +128,19 @@ namespace Azure.Storage.Files.Test
             FileServiceClient service = GetServiceClient_SharedKey();
 
             // Ensure at least one share
-            using (GetNewShare(out ShareClient share, service: service))
-            {
-                var shares = new List<ShareItem>();
-                await foreach (Page<ShareItem> page in service.GetSharesAsync().AsPages())
-                {
-                    shares.AddRange(page.Values);
-                }
+            await using DisposingShare test = await GetTestShareAsync(service);
+            ShareClient share = test.Share;
 
-                // Assert
-                Assert.AreNotEqual(0, shares.Count);
-                Assert.AreEqual(shares.Count, shares.Select(c => c.Name).Distinct().Count());
-                Assert.IsTrue(shares.Any(c => share.Uri == service.GetShareClient(c.Name).Uri));
+            var shares = new List<ShareItem>();
+            await foreach (Page<ShareItem> page in service.GetSharesAsync().AsPages())
+            {
+                shares.AddRange(page.Values);
             }
+
+            // Assert
+            Assert.AreNotEqual(0, shares.Count);
+            Assert.AreEqual(shares.Count, shares.Select(c => c.Name).Distinct().Count());
+            Assert.IsTrue(shares.Any(c => share.Uri == service.GetShareClient(c.Name).Uri));
         }
 
         [Test]

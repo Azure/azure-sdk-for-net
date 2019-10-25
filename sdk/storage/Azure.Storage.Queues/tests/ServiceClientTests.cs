@@ -64,11 +64,11 @@ namespace Azure.Storage.Queues.Test
         public async Task GetQueuesAsync()
         {
             QueueServiceClient service = GetServiceClient_SharedKey();
-            using (GetNewQueue(out _, service: service)) // Ensure at least one queue
-            {
-                IList<QueueItem> queues = await service.GetQueuesAsync().ToListAsync();
-                Assert.IsTrue(queues.Count >= 1);
-            }
+            await using DisposingQueue test = await GetTestQueueAsync(service);
+
+            IList<QueueItem> queues = await service.GetQueuesAsync().ToListAsync();
+            Assert.IsTrue(queues.Count >= 1);
+
             var accountName = new QueueUriBuilder(service.Uri).AccountName;
             TestHelper.AssertCacheableProperty(accountName, () => service.AccountName);
         }
@@ -77,19 +77,18 @@ namespace Azure.Storage.Queues.Test
         public async Task GetQueuesAsync_Marker()
         {
             QueueServiceClient service = GetServiceClient_SharedKey();
-            using (GetNewQueue(out QueueClient queue, service: service)) // Ensure at least one queue
-            {
-                var marker = default(string);
-                var queues = new List<QueueItem>();
-                await foreach (Page<QueueItem> page in service.GetQueuesAsync().AsPages(marker))
-                {
-                    queues.AddRange(page.Values);
-                }
+            await using DisposingQueue test = await GetTestQueueAsync(service);
 
-                Assert.AreNotEqual(0, queues.Count);
-                Assert.AreEqual(queues.Count, queues.Select(c => c.Name).Distinct().Count());
-                Assert.IsTrue(queues.Any(c => queue.Uri == InstrumentClient(service.GetQueueClient(c.Name)).Uri));
+            var marker = default(string);
+            var queues = new List<QueueItem>();
+            await foreach (Page<QueueItem> page in service.GetQueuesAsync().AsPages(marker))
+            {
+                queues.AddRange(page.Values);
             }
+
+            Assert.AreNotEqual(0, queues.Count);
+            Assert.AreEqual(queues.Count, queues.Select(c => c.Name).Distinct().Count());
+            Assert.IsTrue(queues.Any(c => test.Queue.Uri == InstrumentClient(service.GetQueueClient(c.Name)).Uri));
         }
 
         [Test]
@@ -97,15 +96,14 @@ namespace Azure.Storage.Queues.Test
         public async Task GetQueuesAsync_MaxResults()
         {
             QueueServiceClient service = GetServiceClient_SharedKey();
-            using (GetNewQueue(out _, service: service))
-            using (GetNewQueue(out QueueClient queue, service: service)) // Ensure at least two queues
-            {
-                Page<QueueItem> page = await
-                    service.GetQueuesAsync()
-                    .AsPages(pageSizeHint: 1)
-                    .FirstAsync();
-                Assert.AreEqual(1, page.Values.Count);
-            }
+            await using DisposingQueue test1 = await GetTestQueueAsync(service);
+            await using DisposingQueue test2 = await GetTestQueueAsync(service);
+
+            Page<QueueItem> page = await
+                service.GetQueuesAsync()
+                .AsPages(pageSizeHint: 1)
+                .FirstAsync();
+            Assert.AreEqual(1, page.Values.Count);
         }
 
         [Test]
@@ -134,13 +132,12 @@ namespace Azure.Storage.Queues.Test
         public async Task GetQueuesAsync_Metadata()
         {
             QueueServiceClient service = GetServiceClient_SharedKey();
-            using (GetNewQueue(out QueueClient queue, service: service)) // Ensure at least one queue
-            {
-                IDictionary<string, string> metadata = BuildMetadata();
-                await queue.SetMetadataAsync(metadata);
-                QueueItem first = await service.GetQueuesAsync(QueueTraits.Metadata).FirstAsync();
-                Assert.IsNotNull(first.Metadata);
-            }
+            await using DisposingQueue test = await GetTestQueueAsync(service);
+
+            IDictionary<string, string> metadata = BuildMetadata();
+            await test.Queue.SetMetadataAsync(metadata);
+            QueueItem first = await service.GetQueuesAsync(QueueTraits.Metadata).FirstAsync();
+            Assert.IsNotNull(first.Metadata);
         }
 
         [Test]
@@ -185,12 +182,12 @@ namespace Azure.Storage.Queues.Test
         private async Task<TestExceptionPolicy> PerformSecondaryStorageTest(int numberOfReadFailuresToSimulate, bool retryOn404 = false)
         {
             QueueServiceClient service = GetServiceClient_SecondaryAccount_ReadEnabledOnRetry(numberOfReadFailuresToSimulate, out TestExceptionPolicy testExceptionPolicy, retryOn404);
-            using (GetNewQueue(out _, service: service))
-            {
-                IList<QueueItem> queues = await EnsurePropagatedAsync(
-                    async () => await service.GetQueuesAsync().ToListAsync(),
-                    queues => queues.Count > 0);
-            }
+            await using DisposingQueue test = await GetTestQueueAsync(service);
+
+            IList<QueueItem> queues = await EnsurePropagatedAsync(
+                async () => await service.GetQueuesAsync().ToListAsync(),
+                queues => queues.Count > 0);
+
             return testExceptionPolicy;
         }
         #endregion
