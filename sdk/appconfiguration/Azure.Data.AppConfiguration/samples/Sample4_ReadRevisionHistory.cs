@@ -22,36 +22,36 @@ namespace Azure.Data.AppConfiguration.Samples
          */
         public async Task ReadRevisionHistory()
         {
-            // Retrieve the connection string from the configuration store.
-            // You can get the string from your Azure portal.
-            var connectionString = Environment.GetEnvironmentVariable("APPCONFIGURATION_CONNECTION_STRING");
+            // Retrieve the connection string from the environment.
+            // The connection string is available from the App Configuration Access Keys view in the Azure Portal.
+            var connectionString = "Endpoint=https://annelo-azconfig-01.azconfig.io;Id=2d0t-l1-s0:xh9w4NdZSWB7Em0FKSoV;Secret=JrlwvXVcBjzGRsmZlyziaLRdqHoOejicKGNdNPwg7cE=";//Environment.GetEnvironmentVariable("APPCONFIGURATION_CONNECTION_STRING");
 
             // Instantiate a client that will be used to call the service.
             var client = new ConfigurationClient(connectionString);
 
             // Create the Configuration Settings to be stored in the Configuration Store.
-            var setting = new ConfigurationSetting("revised_setting", "v1");
-            await client.SetAsync(setting);
+            ConfigurationSetting setting = new ConfigurationSetting($"setting_with_revisions-{DateTime.Now.ToString("s")}", "v1");
+            ConfigurationSetting settingV1 = await client.SetConfigurationSettingAsync(setting);
 
             // Create a first revision.
-            setting.Value = "v2";
-            await client.SetAsync(setting);
+            settingV1.Value = "v2";
+            ConfigurationSetting settingV2 = await client.SetConfigurationSettingAsync(settingV1);
 
             // Create a second revision.
-            setting.Value = "v3";
-            await client.SetAsync(setting);
+            settingV2.Value = "v3";
+            ConfigurationSetting settingV3 = await client.SetConfigurationSettingAsync(settingV2);
 
             // Retrieve revisions for just the endpoint setting.
-            var selector = new SettingSelector("revised_setting");
+            var selector = new SettingSelector(setting.Key);
 
-            Debug.WriteLine("Revisions of production endpoint setting: ");
+            Debug.WriteLine("Revisions of the setting: ");
             await foreach (ConfigurationSetting settingVersion in client.GetRevisionsAsync(selector))
             {
                 Debug.WriteLine($"Setting was {settingVersion} at {settingVersion.LastModified}.");
             }
 
             // Once we don't need the Configuration Settings, we can delete them.
-            await client.DeleteAsync(setting.Key, setting.Label);
+            await client.DeleteConfigurationSettingAsync(setting.Key, setting.Label);
         }
     }
 }
