@@ -10,6 +10,7 @@ resources:
     - repository: azure-sdk-build-tools
       type: git
       name: internal/azure-sdk-build-tools
+      ref: ref/heads/add-per-artifact-skips
 
 trigger:
   branches:
@@ -41,3 +42,8 @@ stages:
     Artifacts:
     - name: Azure.Core
       safeName: AzureCore
+    - name: Microsoft.Extensions.Azure
+      safeName: MicrosoftExtensionsAzure
+      options:
+        skipTagRepository: true
+        skipPublishPackage: true
