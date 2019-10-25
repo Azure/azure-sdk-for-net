@@ -13,10 +13,12 @@ namespace Azure.Identity
     /// <summary>
     /// Provides a default <see cref="TokenCredential"/> authentication flow for applications that will be deployed to Azure.  The following credential
     /// types if enabled will be tried, in order:
-    /// - <see cref="EnvironmentCredential"/>
-    /// - <see cref="ManagedIdentityCredential"/>
-    /// - <see cref="SharedTokenCacheCredential"/>
-    /// - <see cref="InteractiveBrowserCredential"/>
+    /// <list type="bullet">
+    /// <item><description><see cref="EnvironmentCredential"/></description></item>
+    /// <item><description><see cref="ManagedIdentityCredential"/></description></item>
+    /// <item><description><see cref="SharedTokenCacheCredential"/></description></item>
+    /// <item><description><see cref="InteractiveBrowserCredential"/></description></item>
+    /// </list>
     /// Consult the documentation of these credential types for more information on how they attempt authentication.
     /// </summary>
     public class DefaultAzureCredential : TokenCredential

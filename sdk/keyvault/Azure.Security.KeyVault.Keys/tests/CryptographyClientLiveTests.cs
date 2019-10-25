@@ -34,7 +34,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        public async Task EncryptDecryptRoundTrip([Fields]EncryptionAlgorithm algorithm)
+        public async Task EncryptDecryptRoundTrip([EnumValues]EncryptionAlgorithm algorithm)
         {
             KeyVaultKey key = await CreateTestKey(algorithm);
             RegisterForCleanup(key.Name);
@@ -60,7 +60,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        public async Task WrapUnwrapRoundTrip([Fields(Exclude = new[] { nameof(KeyWrapAlgorithm.A128KW), nameof(KeyWrapAlgorithm.A192KW), nameof(KeyWrapAlgorithm.A256KW) })]KeyWrapAlgorithm algorithm)
+        public async Task WrapUnwrapRoundTrip([EnumValues(Exclude = new[] { nameof(KeyWrapAlgorithm.A128KW), nameof(KeyWrapAlgorithm.A192KW), nameof(KeyWrapAlgorithm.A256KW) })]KeyWrapAlgorithm algorithm)
         {
             KeyVaultKey key = await CreateTestKey(algorithm);
             RegisterForCleanup(key.Name);
@@ -86,7 +86,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        public async Task SignVerifyDataRoundTrip([Fields]SignatureAlgorithm algorithm)
+        public async Task SignVerifyDataRoundTrip([EnumValues]SignatureAlgorithm algorithm)
         {
             KeyVaultKey key = await CreateTestKey(algorithm);
             RegisterForCleanup(key.Name);
@@ -128,7 +128,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        public async Task SignVerifyDataStreamRoundTrip([Fields]SignatureAlgorithm algorithm)
+        public async Task SignVerifyDataStreamRoundTrip([EnumValues]SignatureAlgorithm algorithm)
         {
             KeyVaultKey key = await CreateTestKey(algorithm);
             RegisterForCleanup(key.Name);
@@ -178,7 +178,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         // We do not test using ES256K below since macOS doesn't support it; various ideas to work around that adversely affect runtime code too much.
 
         [Test]
-        public async Task LocalSignVerifyRoundTrip([Fields(Exclude = new[] { nameof(SignatureAlgorithm.ES256K) })]SignatureAlgorithm algorithm)
+        public async Task LocalSignVerifyRoundTrip([EnumValues(Exclude = new[] { nameof(SignatureAlgorithm.ES256K) })]SignatureAlgorithm algorithm)
         {
 #if NET461
             if (algorithm.GetEcKeyCurveName() != default)
@@ -221,7 +221,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        public async Task LocalSignVerifyRoundTripOnFramework([Fields(nameof(SignatureAlgorithm.PS256), nameof(SignatureAlgorithm.PS384), nameof(SignatureAlgorithm.PS512))]SignatureAlgorithm algorithm)
+        public async Task LocalSignVerifyRoundTripOnFramework([EnumValues(nameof(SignatureAlgorithm.PS256), nameof(SignatureAlgorithm.PS384), nameof(SignatureAlgorithm.PS512))]SignatureAlgorithm algorithm)
         {
 #if !NETFRAMEWORK
             // RSA-PSS is not supported on .NET Framework so recorded tests will fall back to the remote client.
@@ -255,7 +255,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        public async Task SignLocalVerifyRoundTrip([Fields(Exclude = new[] { nameof(SignatureAlgorithm.ES256K) })]SignatureAlgorithm algorithm)
+        public async Task SignLocalVerifyRoundTrip([EnumValues(Exclude = new[] { nameof(SignatureAlgorithm.ES256K) })]SignatureAlgorithm algorithm)
         {
 #if NET461
             if (algorithm.GetEcKeyCurveName() != default)
@@ -298,7 +298,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        public async Task SignLocalVerifyRoundTripFramework([Fields(nameof(SignatureAlgorithm.PS256), nameof(SignatureAlgorithm.PS384), nameof(SignatureAlgorithm.PS512))]SignatureAlgorithm algorithm)
+        public async Task SignLocalVerifyRoundTripFramework([EnumValues(nameof(SignatureAlgorithm.PS256), nameof(SignatureAlgorithm.PS384), nameof(SignatureAlgorithm.PS512))]SignatureAlgorithm algorithm)
         {
 #if !NETFRAMEWORK
             // RSA-PSS is not supported on .NET Framework so recorded tests will fall back to the remote client.
