@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -33,26 +34,38 @@ namespace Azure.Storage.Blobs
                 );
         }
 
-        public async Task<Response<BlobProperties>> DownloadToAsync(Stream stream, BlobRequestConditions conditions, CancellationToken cancellationToken)
+        private static long ParseLength(string s)
         {
-            Response<BlobProperties> properties = await _client.GetPropertiesAsync(conditions, cancellationToken).ConfigureAwait(false);
+            int lengthSeparator = s.IndexOf("/", StringComparison.InvariantCultureIgnoreCase);
 
-            long length = properties.Value.ContentLength;
-            ETag etag = properties.Value.ETag;
-
-            if (length == 0)
+            if (lengthSeparator == -1)
             {
-                return properties;
+                Errors.ParsingHttpRangeFailed();
             }
 
-            if (length <= _singleBlockThreshold)
+            return long.Parse(s.Substring(lengthSeparator + 1), CultureInfo.InvariantCulture);
+        }
+
+        public async Task<Response<BlobProperties>> DownloadToAsync(Stream stream, BlobRequestConditions conditions, CancellationToken cancellationToken)
+        {
+            var initialRange = new HttpRange(0, _singleBlockThreshold);
+
+            Task<Response<BlobDownloadInfo>> initialResponseTask = _client.DownloadAsync(initialRange, conditions, rangeGetContentHash: false, cancellationToken);
+            Response<BlobDownloadInfo> initialRequest = await initialResponseTask.ConfigureAwait(false);
+
+            long initialLength = initialRequest.Value.ContentLength;
+            long totalLength = ParseLength(initialRequest.Value.Details.ContentRange);
+            ETag etag = initialRequest.Value.Details.ETag;
+            Response<BlobProperties> properties = CreateProperties(initialRequest, totalLength);
+
+            if (initialLength == totalLength)
             {
-                using BlobDownloadInfo downloadAsync = await _client.DownloadAsync(cancellationToken).ConfigureAwait(false);
-                await CopyToAsync(downloadAsync, stream, cancellationToken).ConfigureAwait(false);
+                await CopyToAsync(initialRequest, stream, cancellationToken).ConfigureAwait(false);
                 return properties;
             }
 
             Queue<Task<Response<BlobDownloadInfo>>> runningTasks = new Queue<Task<Response<BlobDownloadInfo>>>();
+            runningTasks.Enqueue(initialResponseTask);
 
             BlobRequestConditions conditionsWithEtag = CreateConditionsWithEtag(conditions, etag);
 
@@ -62,7 +75,7 @@ namespace Azure.Storage.Blobs
                 await CopyToAsync(result, stream, cancellationToken).ConfigureAwait(false);
             }
 
-            foreach (HttpRange httpRange in GetRanges(length))
+            foreach (HttpRange httpRange in GetRanges(initialLength, totalLength))
             {
                 Task<Response<BlobDownloadInfo>> task = _client.DownloadAsync(httpRange, conditionsWithEtag, rangeGetContentHash: false, cancellationToken);
 
@@ -84,28 +97,36 @@ namespace Azure.Storage.Blobs
             return properties;
         }
 
+        private static Response<BlobProperties> CreateProperties(Response<BlobDownloadInfo> response, long totalLength)
+        {
+            return Response.FromValue(new BlobProperties()
+            {
+                ContentLength = totalLength,
+                AcceptRanges = response.Value.Details.AcceptRanges
+            }, response.GetRawResponse());
+        }
+
         public Response<BlobProperties> DownloadTo(Stream stream, BlobRequestConditions conditions, CancellationToken cancellationToken)
         {
-            Response<BlobProperties> properties = _client.GetProperties(conditions, cancellationToken);
+            var initialRange = new HttpRange(0, _singleBlockThreshold);
+            Response<BlobDownloadInfo> initialRequest = _client.Download(initialRange, conditions, rangeGetContentHash: false, cancellationToken);
 
-            long length = properties.Value.ContentLength;
-            ETag etag = properties.Value.ETag;
+            long initialLength = initialRequest.Value.ContentLength;
+            long totalLength = ParseLength(initialRequest.Value.Details.ContentRange);
+            ETag etag = initialRequest.Value.Details.ETag;
 
-            if (length == 0)
+            Response<BlobProperties> properties = CreateProperties(initialRequest, totalLength);
+
+            CopyTo(initialRequest, stream, cancellationToken);
+
+            if (initialLength == totalLength)
             {
-                return properties;
-            }
-
-            if (length <= _singleBlockThreshold)
-            {
-                using BlobDownloadInfo downloadAsync = _client.Download(cancellationToken);
-                CopyTo(downloadAsync, stream, cancellationToken);
                 return properties;
             }
 
             BlobRequestConditions conditionsWithEtag = CreateConditionsWithEtag(conditions, etag);
 
-            foreach (HttpRange httpRange in GetRanges(length))
+            foreach (HttpRange httpRange in GetRanges(initialLength, totalLength))
             {
                 BlobDownloadInfo result = _client.Download(httpRange, conditionsWithEtag, rangeGetContentHash: false, cancellationToken);
 
@@ -139,9 +160,9 @@ namespace Azure.Storage.Blobs
             result.Content.CopyTo(stream, 8096);
         }
 
-        private IEnumerable<HttpRange> GetRanges(long length)
+        private IEnumerable<HttpRange> GetRanges(long l, long length)
         {
-            for (long i = 0; i < length; i += _blockSize)
+            for (long i = l; i < length; i += _blockSize)
             {
                 yield return new HttpRange(i, Math.Min(length - i, _blockSize));
             }
