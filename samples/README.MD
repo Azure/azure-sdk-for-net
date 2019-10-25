@@ -29,13 +29,14 @@ Sometimes we want to illustrate how several APIs or even packages work together 
 This section lists **main** how-to guides for the most commonly used APIs and most common scenarios, i.e. this section does not attempt to be a complete directory of guides contained in this repository. 
 
 #### General How-To Guides
-- How-To **authenticate** with Azure services (TODO)
-- How-To configure, access, and analyze **logging** information (TODO)
-- How-To configure **retries** (TODO)
-- How-To access **HTTP response details** (TODO)
+- How to **authenticate** with Azure services (TODO)
+- How to configure, access, and analyze **logging** information (TODO)
+- How to configure **retries** (TODO)
+- How to access **HTTP response details** (TODO)
 
 #### Azure.Security.KeyVault
 - How to **store secrets** in Azure KeyVault (TODO)
+- How to **backup and restore** secrets (TODO) 
 
 #### Azure.Storage.Blobs
 - How to **upload** to a blob (TODO)
