@@ -4,6 +4,7 @@
 using Microsoft.Azure.EventGrid.Models;
 using Microsoft.Rest.Serialization;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -393,6 +394,65 @@ namespace Microsoft.Azure.EventGrid.Tests.ScenarioTests
             Assert.True(events[0].Data is EventHubCaptureFileCreatedEventData);
             EventHubCaptureFileCreatedEventData eventData = (EventHubCaptureFileCreatedEventData)events[0].Data;
             Assert.Equal("AzureBlockBlob", eventData.FileType);
+        }
+
+        // MachineLearningServices events
+        [Fact]
+        public void ConsumeMachineLearningServicesModelRegisteredEvent()
+        {
+            string requestContent = "[{\"Topic\":\"/subscriptions/a5fe3bc5-98f0-4c84-affc-a589f54d9b23/resourceGroups/jenns/providers/Microsoft.MachineLearningServices/workspaces/jenns-canary\",\"EventType\":\"Microsoft.MachineLearningServices.ModelRegistered\",\"Subject\":\"models/sklearn_regression_model:3\",\"EventTime\":\"2019-10-17T22:23:57.5350054+00:00\",\"Id\":\"3b73ee51-bbf4-480d-9112-cfc23b41bfdb\",\"Data\":{\"ModelName\":\"sklearn_regression_model\",\"ModelVersion\":3,\"ModelTags\":{\"area\":\"diabetes\",\"type\":\"regression\"},\"ModelProperties\":{\"area\":\"test\"}},\"dataVersion\":\"\",\"metadataVersion\":\"1\"}]";
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is MachineLearningServicesModelRegisteredEventData);
+            MachineLearningServicesModelRegisteredEventData eventData = (MachineLearningServicesModelRegisteredEventData)events[0].Data;
+            Assert.Equal("sklearn_regression_model", eventData.ModelName);
+
+            Assert.True(eventData.ModelTags is JObject);
+            var tags = (JObject)eventData.ModelTags;
+            Assert.Equal("regression", tags["type"]);
+
+            Assert.True(eventData.ModelProperties is JObject);
+            var properties = (JObject)eventData.ModelProperties;
+            Assert.Equal("test", properties["area"]);
+        }
+
+        [Fact]
+        public void ConsumeMachineLearningServicesModelDeployedEvent()
+        {
+            string requestContent = "[{\"Topic\":\"/subscriptions/a5fe3bc5-98f0-4c84-affc-a589f54d9b23/resourceGroups/jenns/providers/Microsoft.MachineLearningServices/workspaces/jenns-canary\",\"EventType\":\"Microsoft.MachineLearningServices.ModelDeployed\",\"Subject\":\"endpoints/aciservice1\",\"EventTime\":\"2019-10-23T18:20:08.8824474+00:00\",\"Id\":\"40d0b167-be44-477b-9d23-a2befba7cde0\",\"Data\":{\"ServiceName\":\"aciservice1\",\"ServiceComputeType\":\"ACI\",\"ServiceTags\":{\"mytag\":\"test tag\"},\"ServiceProperties\":{\"myprop\":\"test property\"},\"ModelIds\":\"my_first_model:1,my_second_model:1\"},\"dataVersion\":\"\",\"metadataVersion\":\"1\"}]";
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is MachineLearningServicesModelDeployedEventData);
+            MachineLearningServicesModelDeployedEventData eventData = (MachineLearningServicesModelDeployedEventData)events[0].Data;
+            Assert.Equal("aciservice1", eventData.ServiceName);
+            Assert.Equal(2, eventData.ModelIds.Split(',').Length);
+        }
+
+        [Fact]
+        public void ConsumeMachineLearningServicesRunCompletedEvent()
+        {
+            string requestContent = "[{\"Topic\":\"/subscriptions/a5fe3bc5-98f0-4c84-affc-a589f54d9b23/resourceGroups/jenns/providers/Microsoft.MachineLearningServices/workspaces/jenns-canary\",\"EventType\":\"Microsoft.MachineLearningServices.RunCompleted\",\"Subject\":\"experiments/0fa9dfaa-cba3-4fa7-b590-23e48548f5c1/runs/AutoML_ad912b2d-6467-4f32-a616-dbe4af6dd8fc\",\"EventTime\":\"2019-10-18T19:29:55.8856038+00:00\",\"Id\":\"044ac44d-462c-4043-99eb-d9e01dc760ab\",\"Data\":{\"ExperimentId\":\"0fa9dfaa-cba3-4fa7-b590-23e48548f5c1\",\"ExperimentName\":\"automl-local-regression\",\"RunId\":\"AutoML_ad912b2d-6467-4f32-a616-dbe4af6dd8fc\",\"RunType\":\"automl\",\"RunTags\":{\"experiment_status\":\"ModelSelection\",\"experiment_status_descr\":\"Beginning model selection.\"},\"RunProperties\":{\"num_iterations\":\"10\",\"target\":\"local\"}},\"dataVersion\":\"\",\"metadataVersion\":\"1\"}]";
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is MachineLearningServicesRunCompletedEventData);
+            MachineLearningServicesRunCompletedEventData eventData = (MachineLearningServicesRunCompletedEventData)events[0].Data;
+            Assert.Equal("AutoML_ad912b2d-6467-4f32-a616-dbe4af6dd8fc", eventData.RunId);
+            Assert.Equal("automl-local-regression", eventData.ExperimentName);
+        }
+
+        [Fact]
+        public void ConsumeMachineLearningServicesDatasetDriftDetectedEvent()
+        {
+            string requestContent = "[{\"Topic\":\"/subscriptions/60582a10-b9fd-49f1-a546-c4194134bba8/resourceGroups/copetersRG/providers/Microsoft.MachineLearningServices/workspaces/driftDemoWS\",\"EventType\":\"Microsoft.MachineLearningServices.DatasetDriftDetected\",\"Subject\":\"datadrift/01d29aa4-e6a4-470a-9ef3-66660d21f8ef/run/01d29aa4-e6a4-470a-9ef3-66660d21f8ef_1571590300380\",\"EventTime\":\"2019-10-20T17:08:08.467191+00:00\",\"Id\":\"2684de79-b145-4dcf-ad2e-6a1db798585f\",\"Data\":{\"DataDriftId\":\"01d29aa4-e6a4-470a-9ef3-66660d21f8ef\",\"DataDriftName\":\"copetersDriftMonitor3\",\"RunId\":\"01d29aa4-e6a4-470a-9ef3-66660d21f8ef_1571590300380\",\"BaseDatasetId\":\"3c56d136-0f64-4657-a0e8-5162089a88a3\",\"TargetDatasetId\":\"d7e74d2e-c972-4266-b5fb-6c9c182d2a74\",\"DriftCoefficient\":0.8350349068479208,\"StartTime\":\"2019-07-04T00:00:00+00:00\",\"EndTime\":\"2019-07-05T00:00:00+00:00\"},\"dataVersion\":\"\",\"metadataVersion\":\"1\"}]";
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is MachineLearningServicesDatasetDriftDetectedEventData);
+            MachineLearningServicesDatasetDriftDetectedEventData eventData = (MachineLearningServicesDatasetDriftDetectedEventData)events[0].Data;
+            Assert.Equal("copetersDriftMonitor3", eventData.DataDriftName);
         }
 
         // Maps events
