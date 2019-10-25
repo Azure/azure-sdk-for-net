@@ -23,7 +23,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public string KeyId { get; internal set; }
 
         /// <summary>
-        /// Gets a value indicating whether the result of the verification: true if the signature was valid; otherwise, false.
+        /// Gets a value indicating whether the specified signature is valid.
         /// </summary>
         public bool IsValid { get; internal set; }
 

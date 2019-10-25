@@ -88,7 +88,10 @@ namespace Azure.Security.KeyVault.Keys
         /// Initializes a new instance of the <see cref="JsonWebKey"/> class using type <see cref="KeyType.Oct"/>.
         /// </summary>
         /// <param name="aesProvider">An <see cref="Aes"/> provider.</param>
-        /// <param name="keyOps">Optional list of supported <see cref="KeyOperation"/> values. If null, the default for the key type is used.</param>
+        /// <param name="keyOps">
+        /// Optional list of supported <see cref="KeyOperation"/> values. If null, the default for the key type is used, including:
+        /// <see cref="KeyOperation.Encrypt"/>, <see cref="KeyOperation.Decrypt"/>, <see cref="KeyOperation.WrapKey"/>, and <see cref="KeyOperation.UnwrapKey"/>.
+        /// </param>
         /// <exception cref="ArgumentNullException"><paramref name="aesProvider"/> is null.</exception>
         public JsonWebKey(Aes aesProvider, IEnumerable<KeyOperation> keyOps = default)
         {
@@ -106,7 +109,10 @@ namespace Azure.Security.KeyVault.Keys
         /// </summary>
         /// <param name="ecdsa">An <see cref="ECDsa"/> provider.</param>
         /// <param name="includePrivateParameters">Whether to include the private key.</param>
-        /// <param name="keyOps">Optional list of supported <see cref="KeyOperation"/> values. If null, the default for the key type is used.</param>
+        /// <param name="keyOps">
+        /// Optional list of supported <see cref="KeyOperation"/> values. If null, the default for the key type is used, including:
+        /// <see cref="KeyOperation.Sign"/>, and <see cref="KeyOperation.Decrypt"/> if <paramref name="includePrivateParameters"/> is true.
+        /// </param>
         /// <exception cref="ArgumentNullException"><paramref name="ecdsa"/> is null.</exception>
         /// <exception cref="InvalidOperationException">The elliptic curve name is invalid.</exception>
         public JsonWebKey(ECDsa ecdsa, bool includePrivateParameters = default, IEnumerable<KeyOperation> keyOps = default)
@@ -124,7 +130,11 @@ namespace Azure.Security.KeyVault.Keys
         /// </summary>
         /// <param name="rsaProvider">An <see cref="RSA"/> provider.</param>
         /// <param name="includePrivateParameters">Whether to include the private key.</param>
-        /// <param name="keyOps">Optional list of supported <see cref="KeyOperation"/> values. If null, the default for the key type is used.</param>
+        /// <param name="keyOps">
+        /// Optional list of supported <see cref="KeyOperation"/> values. If null, the default for the key type is used, including:
+        /// <see cref="KeyOperation.Encrypt"/>, <see cref="KeyOperation.Verify"/>, and <see cref="KeyOperation.WrapKey"/>;
+        /// and <see cref="KeyOperation.Decrypt"/>, <see cref="KeyOperation.Sign"/>, and <see cref="KeyOperation.UnwrapKey"/> if <paramref name="includePrivateParameters"/> is true.
+        /// </param>
         /// <exception cref="ArgumentNullException"><paramref name="rsaProvider"/> is null.</exception>
         public JsonWebKey(RSA rsaProvider, bool includePrivateParameters = default, IEnumerable<KeyOperation> keyOps = default)
         {
@@ -184,7 +194,7 @@ namespace Azure.Security.KeyVault.Keys
         public byte[] P { get; internal set; }
 
         /// <summary>
-        /// Gets the RSA secret prime, with <see cref="P"/> &lt; <see cref="Q"/>.
+        /// Gets the RSA secret prime.
         /// </summary>
         public byte[] Q { get; internal set; }
 

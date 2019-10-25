@@ -27,7 +27,7 @@ namespace Azure.Security.KeyVault.Keys
         public KeyCurveName? CurveName { get; set; }
 
         /// <summary>
-        /// Gets a value indicating whether to create a hardware-protected key (HSM).
+        /// Gets a value indicating whether to create a hardware-protected key in a hardware security module (HSM).
         /// </summary>
         /// <value><c>true</c> to create a hardware-protected key; otherwise, <c>false</c> to create a software key.</value>
         public bool HardwareProtected { get; }
@@ -36,7 +36,7 @@ namespace Azure.Security.KeyVault.Keys
         /// Initializes a new instance of the <see cref="CreateEcKeyOptions"/> class.
         /// </summary>
         /// <param name="name">The name of the key to create.</param>
-        /// <param name="hardwareProtected">True to create a hardware-protected (HSM) key. The default is false to create a software key.</param>
+        /// <param name="hardwareProtected">True to create a hardware-protected key in a hardware security module (HSM). The default is false to create a software key.</param>
         /// <exception cref="ArgumentException"><paramref name="name"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
         public CreateEcKeyOptions(string name, bool hardwareProtected = false)

@@ -105,7 +105,7 @@ namespace Azure.Security.KeyVault.Secrets
         public bool? Enabled { get => _attributes.Enabled; set => _attributes.Enabled = value; }
 
         /// <summary>
-        /// Gets or sets a <see cref="DateTimeOffset"/> of when the secret will be valid and cannot be used.
+        /// Gets or sets a <see cref="DateTimeOffset"/> of when the secret will be valid and can be used.
         /// </summary>
         public DateTimeOffset? NotBefore { get => _attributes.NotBefore; set => _attributes.NotBefore = value; }
 

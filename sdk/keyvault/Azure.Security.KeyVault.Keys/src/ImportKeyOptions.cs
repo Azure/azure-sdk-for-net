@@ -50,7 +50,7 @@ namespace Azure.Security.KeyVault.Keys
         public JsonWebKey Key { get; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to import the key to a hardware-protected key (HSM).
+        /// Gets or sets a value indicating whether to import the key into a hardware security module (HSM).
         /// </summary>
         public bool? HardwareProtected { get; set; }
 
