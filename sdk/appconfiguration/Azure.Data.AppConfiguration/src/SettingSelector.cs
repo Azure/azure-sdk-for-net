@@ -8,10 +8,10 @@ using System.ComponentModel;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary>
-    /// <see cref="SettingSelector"/> is a set of options that allows selecting
+    /// <para><see cref="SettingSelector"/> is a set of options that allows selecting
     /// a filtered set of <see cref="ConfigurationSetting"/> entities from the
     /// configuration store, and optionally allows indicating which fields of
-    /// each setting to retreive.
+    /// each setting to retreive.</para>
     /// <para>Literals or filters may be specified for keys and labels.</para>
     /// <para>For more information, <see href="https://github.com/Azure/AppConfiguration/blob/master/docs/REST/kv.md#filtering"/>.</para>
     /// </summary>
