@@ -9,11 +9,13 @@ namespace SnippetGenerator
     {
         public string Name { get; }
         public SourceText Text { get; }
+        public string FilePath { get; }
 
-        public Snippet(string name, SourceText text)
+        public Snippet(string name, SourceText text, string filePath)
         {
             Name = name;
             Text = text;
+            FilePath = filePath;
         }
     }
 }

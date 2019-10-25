@@ -32,7 +32,7 @@ namespace Azure.Core
         public string Name { get; }
 
         /// <summary>
-        /// Gets header value. If header has multiple values they would be joined with a comma. To get separate values use <see cref="RequestHeaders.TryGetValues"/> or <see cref="ResponseHeaders.TryGetValues"/>.
+        /// Gets header value. If the header has multiple values they would be joined with a comma. To get separate values use <see cref="RequestHeaders.TryGetValues"/> or <see cref="ResponseHeaders.TryGetValues"/>.
         /// </summary>
         public string Value { get; }
 

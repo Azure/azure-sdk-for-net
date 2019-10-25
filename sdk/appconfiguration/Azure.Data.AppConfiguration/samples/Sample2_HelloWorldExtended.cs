@@ -37,17 +37,17 @@ namespace Azure.Data.AppConfiguration.Samples
             // There are two(2) ways to store a Configuration Setting:
             //   -AddAsync creates a setting only if the setting does not already exist in the store.
             //   -SetAsync creates a setting if it doesn't exist or overrides an existing setting
-            await client.AddAsync(betaEndpoint);
-            await client.AddAsync(betaInstances);
-            await client.AddAsync(productionEndpoint);
-            await client.AddAsync(productionInstances);
+            await client.AddConfigurationSettingAsync(betaEndpoint);
+            await client.AddConfigurationSettingAsync(betaInstances);
+            await client.AddConfigurationSettingAsync(productionEndpoint);
+            await client.AddConfigurationSettingAsync(productionInstances);
 
             // There is a need to increase the production instances from 1 to 5.
             // The SetAsync will help us with this.
-            ConfigurationSetting instancesToUpdate = await client.GetAsync(productionInstances.Key, productionInstances.Label);
+            ConfigurationSetting instancesToUpdate = await client.GetConfigurationSettingAsync(productionInstances.Key, productionInstances.Label);
             instancesToUpdate.Value = "5";
 
-            await client.SetAsync(instancesToUpdate);
+            await client.SetConfigurationSettingAsync(instancesToUpdate);
 
             // We want to gather all the information available for the "production' environment.
             // By calling GetBatchSync with the proper filter for label "production", we will get
@@ -55,16 +55,16 @@ namespace Azure.Data.AppConfiguration.Samples
             var selector = new SettingSelector(null, "production");
 
             Debug.WriteLine("Settings for Production environmnet");
-            await foreach (ConfigurationSetting setting in client.GetSettingsAsync(selector))
+            await foreach (ConfigurationSetting setting in client.GetConfigurationSettingsAsync(selector))
             {
                 Debug.WriteLine(setting);
             }
 
             // Once we don't need the Configuration Setting, we can delete them.
-            await client.DeleteAsync(betaEndpoint.Key, betaEndpoint.Label);
-            await client.DeleteAsync(betaInstances.Key, betaInstances.Label);
-            await client.DeleteAsync(productionEndpoint.Key, productionEndpoint.Label);
-            await client.DeleteAsync(productionInstances.Key, productionInstances.Label);
+            await client.DeleteConfigurationSettingAsync(betaEndpoint.Key, betaEndpoint.Label);
+            await client.DeleteConfigurationSettingAsync(betaInstances.Key, betaInstances.Label);
+            await client.DeleteConfigurationSettingAsync(productionEndpoint.Key, productionEndpoint.Label);
+            await client.DeleteConfigurationSettingAsync(productionInstances.Key, productionInstances.Label);
         }
     }
 }

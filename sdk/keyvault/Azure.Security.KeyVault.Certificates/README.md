@@ -63,7 +63,7 @@ Use the [Azure CLI][azure_cli] snippet below to create/get client secret credent
 #### Create CertificateClient
 Once you've populated the **AZURE_CLIENT_ID**, **AZURE_CLIENT_SECRET** and **AZURE_TENANT_ID** environment variables and replaced **your-vault-url** with the above returned URI, you can create the [CertificateClient][certificate_client_class]:
 
-```C# CreateClient
+```C# Snippet:CreateCertificateClient
 // Create a new certificate client using the default credential from Azure.Identity using environment variables previously set,
 // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
 var client = new CertificateClient(vaultUri: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
@@ -88,7 +88,7 @@ This section contains code snippets covering common tasks:
 the same name already exists, then a new version of the certificate is created.
 When creating the certificate the user can specify the policy which controls the certificate lifetime. If no policy is specified the default policy will be used. The `StartCreateCertificate` operation returns a `CertificateOperation`. The following example creates a self signed certificate with the default policy.
 
-```C# CreateCertificate
+```C# Snippet:CreateCertificate
 // Create a certificate. This starts a long running operation to create and sign the certificate.
 CertificateOperation operation = await client.StartCreateCertificateAsync("MyCertificate");
 
@@ -101,20 +101,20 @@ CertificateWithPolicy certificate = await operation.WaitForCompletionAsync();
 ### Retrieve a Certificate
 `GetCertificateWithPolicy` retrieves the latest version of a certificate stored in the Key Vault along with its `CertificatePolicy`.
 
-```C# RetrieveCertificate
+```C# Snippet:RetrieveCertificate
 CertificateWithPolicy certificateWithPolicy = await client.GetCertificateAsync("MyCertificate");
 ```
 
 `GetCertificate` retrieves a specific version of a certificate in the vault.
 
-```C# GetCertificate
+```C# Snippet:GetCertificate
 Certificate certificate = await client.GetCertificateVersionAsync(certificateWithPolicy.Name, certificateWithPolicy.Properties.Version);
 ```
 
 ### Update an existing Certificate
 `UpdateCertificate` updates a certificate stored in the Key Vault.
 
-```C# UpdateCertificate
+```C# Snippet:UpdateCertificate
 CertificateProperties certificateProperties = new CertificateProperties(certificate.Id)
 {
     Tags =
@@ -130,7 +130,7 @@ Certificate updated = await client.UpdateCertificatePropertiesAsync(certificateP
 `DeleteCertificate` deletes all versions of a certificate stored in the Key Vault. When [soft-delete][soft_delete] 
 is not enabled for the Key Vault, this operation permanently deletes the certificate. If soft delete is enabled the certificate is marked for deletion and can be optionally purged or recovered up until its scheduled purge date.
 
-```C# DeleteCertificate
+```C# Snippet:DeleteCertificate
 DeletedCertificate deletedCert = await client.DeleteCertificateAsync("MyCertificate");
 
 Console.WriteLine(deletedCert.ScheduledPurgeDate);
@@ -143,7 +143,7 @@ await client.PurgeDeletedCertificateAsync("MyCertificate");
 certificate. Sensitive fields of the certificate will not be returned. This operation
 requires the certificates/list permission.
   
-```C# ListCertificates
+```C# Snippet:ListCertificates
 AsyncPageable<CertificateProperties> allCertificates = client.GetCertificatesAsync();
 
 await foreach (CertificateProperties certificateProperties in allCertificates)
@@ -159,7 +159,7 @@ When you interact with the Azure Key Vault Certificate client library using the 
 
 For example, if you try to retrieve a Key that doesn't exist in your Key Vault, a `404` error is returned, indicating `Not Found`.
 
-```C# NotFound
+```C# Snippet:CertificateNotFound
 try
 {
     CertificateWithPolicy certificateWithPolicy = await client.GetCertificateAsync("SomeCertificate");

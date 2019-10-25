@@ -15,7 +15,6 @@
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Moq" />
     <PackageReference Include="Polly" />
-    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
     <PackageReference Include="Microsoft.Azure.Management.Storage" />
