@@ -891,7 +891,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 Assert.IsNull(batch[0].Value);
                 Assert.IsNull(batch[0].ContentType);
                 Assert.IsNull(batch[0].LastModified);
-                Assert.IsNull(batch[0].ReadOnly);
+                Assert.IsNull(batch[0].IsReadOnly);
             }
             finally
             {
@@ -911,14 +911,14 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 SettingSelector selector = new SettingSelector(key)
                 {
-                    Fields = SettingFields.Key | SettingFields.ReadOnly
+                    Fields = SettingFields.Key | SettingFields.IsReadOnly
                 };
 
                 List<ConfigurationSetting> batch = await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync();
 
                 CollectionAssert.IsNotEmpty(batch);
                 Assert.IsNotNull(batch[0].Key);
-                Assert.IsNotNull(batch[0].ReadOnly);
+                Assert.IsNotNull(batch[0].IsReadOnly);
                 Assert.IsNull(batch[0].Label);
                 Assert.IsNull(batch[0].Value);
                 Assert.IsNull(batch[0].ContentType);
@@ -959,7 +959,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 Assert.IsNotNull(batch[0].ContentType);
                 Assert.IsNotNull(batch[0].ETag);
                 Assert.IsNotNull(batch[0].LastModified);
-                Assert.IsNotNull(batch[0].ReadOnly);
+                Assert.IsNotNull(batch[0].IsReadOnly);
             }
             finally
             {
@@ -1200,7 +1200,7 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 var setting = await service.AddConfigurationSettingAsync(testSetting);
                 var readOnly = await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label);
-                Assert.IsTrue(readOnly.Value.ReadOnly);
+                Assert.IsTrue(readOnly.Value.IsReadOnly);
             }
             finally
             {
@@ -1238,7 +1238,7 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 var setting = await service.AddConfigurationSettingAsync(testSetting);
                 var readOnly = await service.ClearReadOnlyAsync(testSetting.Key, testSetting.Label);
-                Assert.IsFalse(readOnly.Value.ReadOnly);
+                Assert.IsFalse(readOnly.Value.IsReadOnly);
             }
             finally
             {
