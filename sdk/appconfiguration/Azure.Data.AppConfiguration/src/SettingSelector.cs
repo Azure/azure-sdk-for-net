@@ -8,14 +8,12 @@ using System.ComponentModel;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary>
-    /// <see cref="SettingSelector"/> is a set of options that allows selecting
-    /// a filtered set of <see cref="ConfigurationSetting"/>s from the
+    /// <para><see cref="SettingSelector"/> is a set of options that allows selecting
+    /// a filtered set of <see cref="ConfigurationSetting"/> entities from the
     /// configuration store, and optionally allows indicating which fields of
-    /// each setting to retreive.
-    ///
-    /// Literals or filters may be specified for keys and labels.
-    ///
-    /// For more information, <see href="https://github.com/Azure/AppConfiguration/blob/master/docs/REST/kv.md#filtering"/>.
+    /// each setting to retreive.</para>
+    /// <para>Literals or filters may be specified for keys and labels.</para>
+    /// <para>For more information, <see href="https://github.com/Azure/AppConfiguration/blob/master/docs/REST/kv.md#filtering"/>.</para>
     /// </summary>
     public class SettingSelector
     {
@@ -26,13 +24,13 @@ namespace Azure.Data.AppConfiguration
         public static readonly string Any = "*";
 
         /// <summary>
-        /// Keys or key filters that will be used to select a set of <see cref="ConfigurationSetting"/>s.
+        /// Keys or key filters that will be used to select a set of <see cref="ConfigurationSetting"/> entities.
         /// </summary>
         /// <remarks>See the documentation for this client library for details on the format of filter expressions.</remarks>
         public IList<string> Keys { get; }
 
         /// <summary>
-        /// Labels or label filters that will be used to select a set of <see cref="ConfigurationSetting"/>s.
+        /// Labels or label filters that will be used to select a set of <see cref="ConfigurationSetting"/> entities.
         /// </summary>
         /// <remarks>See the documentation for this client library for details on the format of filter expressions.</remarks>
         public IList<string> Labels { get; }
@@ -43,24 +41,24 @@ namespace Azure.Data.AppConfiguration
         public SettingFields Fields { get; set; } = SettingFields.All;
 
         /// <summary>
-        /// A time indicating what version in the selected <see cref="ConfigurationSetting"/>s' revision history to retrieve.
-        /// If set, all properties of the <see cref="ConfigurationSetting"/>s in the returned group will be exactly what they
+        /// Indicates the point in time in the revision history of the selected <see cref="ConfigurationSetting"/> entities to retrieve.
+        /// If set, all properties of the <see cref="ConfigurationSetting"/> entities in the returned group will be exactly what they
         /// were at this time.
         /// </summary>
         public DateTimeOffset? AsOf { get; set; }
 
         /// <summary>
-        /// Creates a <see cref="SettingSelector"/> that will retrieve all <see cref="ConfigurationSetting"/>s in the
+        /// Creates a <see cref="SettingSelector"/> that will retrieve all <see cref="ConfigurationSetting"/> entities in the
         /// configuration store by setting both Key and Label filters to Any.
         /// </summary>
         public SettingSelector() : this(Any, Any) { }
 
         /// <summary>
-        /// Creates a <see cref="SettingSelector"/> that will retrieve <see cref="ConfigurationSetting"/>s that match
+        /// Creates a <see cref="SettingSelector"/> that will retrieve <see cref="ConfigurationSetting"/> entities that match
         /// the passed-in keys and labels.
         /// </summary>
-        /// <param name="key">A key or key filter indicating which <see cref="ConfigurationSetting"/>s to select.</param>
-        /// <param name="label">A label or label filter indicating which <see cref="ConfigurationSetting"/>s to select</param>
+        /// <param name="key">A key or key filter indicating which <see cref="ConfigurationSetting"/> entities to select.</param>
+        /// <param name="label">A label or label filter indicating which <see cref="ConfigurationSetting"/> entities to select</param>
         public SettingSelector(string key, string label = default)
         {
             Keys = new List<string>
