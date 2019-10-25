@@ -29,10 +29,10 @@ Sometimes we want to illustrate how several APIs or even packages work together 
 This section lists **main** how-to guides for the most commonly used APIs and most common scenarios, i.e. this section does not attempt to be a complete directory of guides contained in this repository. 
 
 ### General How-To Guides
-- How-To configure, access, and analyze **logging** information 
-- How-To configure **retries**
-- How-To access **HTTP response details**
+- How-To configure, access, and analyze **logging** information (TODO)
+- How-To configure **retries** (TODO)
+- How-To access **HTTP response details** (TODO)
 
 ### Azure.Storage.Blobs
-- How to **upload** to a blob
-- How to **download** a blob to a file
+- How to **upload** to a blob (TODO)
+- How to **download** a blob to a file (TODO)
