@@ -63,7 +63,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// Creates a <see cref="ConfigurationSetting"/> if the setting, uniquely identified by key and label, does not already exist in the configuration store.
         /// </summary>
-        /// <param name="key">The primary identifier of a configuration setting.</param>
+        /// <param name="key">The primary identifier of the configuration setting.</param>
         /// <param name="value">The configuration setting's value.</param>
         /// <param name="label">A label used to group this configuration setting with others.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -77,7 +77,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// Creates a <see cref="ConfigurationSetting"/> if the setting, uniquely identified by key and label, does not already exist in the configuration store.
         /// </summary>
-        /// <param name="key">The primary identifier of a configuration setting.</param>
+        /// <param name="key">The primary identifier of the configuration setting.</param>
         /// <param name="value">The configuration setting's value.</param>
         /// <param name="label">A label used to group this configuration setting with others.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -185,7 +185,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// Creates a <see cref="ConfigurationSetting"/>, uniquely identified by key and label, if it doesn't exist or overwrites the existing setting in the configuration store.
         /// </summary>
-        /// <param name="key">The primary identifier of a configuration setting.</param>
+        /// <param name="key">The primary identifier of the configuration setting.</param>
         /// <param name="value">The configuration setting's value.</param>
         /// <param name="label">A label used to group this configuration setting with others.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -199,7 +199,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// Creates a <see cref="ConfigurationSetting"/>, uniquely identified by key and label, if it doesn't exist or overwrites the existing setting in the configuration store.
         /// </summary>
-        /// <param name="key">The primary identifier of a configuration setting.</param>
+        /// <param name="key">The primary identifier of the configuration setting.</param>
         /// <param name="value">The configuration setting's value.</param>
         /// <param name="label">A label used to group this configuration setting with others.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -837,8 +837,8 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// Sets an existing <see cref="ConfigurationSetting"/> as read only in the configuration store.
         /// </summary>
-        /// <param name="key">The primary identifier of a configuration setting.</param>
-        /// <param name="label">The value used to group configuration settings.</param>
+        /// <param name="key">The primary identifier of the configuration setting.</param>
+        /// <param name="label">A label used to group this configuration setting with others.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<ConfigurationSetting>> SetReadOnlyAsync(string key, string label = default, CancellationToken cancellationToken = default)
         {
@@ -869,8 +869,8 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// Sets an existing <see cref="ConfigurationSetting"/> as read only in the configuration store.
         /// </summary>
-        /// <param name="key">The primary identifier of a configuration setting.</param>
-        /// <param name="label">The value used to group configuration settings.</param>
+        /// <param name="key">The primary identifier of the configuration setting.</param>
+        /// <param name="label">A label used to group this configuration setting with others.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<ConfigurationSetting> SetReadOnly(string key, string label = default, CancellationToken cancellationToken = default)
         {
@@ -912,8 +912,8 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// Sets an existing <see cref="ConfigurationSetting"/> as read write in the configuration store.
         /// </summary>
-        /// <param name="key">The primary identifier of a configuration setting.</param>
-        /// <param name="label">The value used to group configuration settings.</param>
+        /// <param name="key">The primary identifier of the configuration setting.</param>
+        /// <param name="label">A label used to group this configuration setting with others.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<ConfigurationSetting>> ClearReadOnlyAsync(string key, string label = default, CancellationToken cancellationToken = default)
         {
@@ -944,8 +944,8 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// Sets an existing <see cref="ConfigurationSetting"/> as read write in the configuration store.
         /// </summary>
-        /// <param name="key">The primary identifier of a configuration setting.</param>
-        /// <param name="label">The value used to group configuration settings.</param>
+        /// <param name="key">The primary identifier of the configuration setting.</param>
+        /// <param name="label">A label used to group this configuration setting with others.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<ConfigurationSetting> ClearReadOnly(string key, string label = default, CancellationToken cancellationToken = default)
         {

@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Data.AppConfiguration
 {
@@ -24,9 +23,9 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// Creates a configuration setting and sets the values from the passed in parameter to this setting.
         /// </summary>
-        /// <param name="key">The primary identifier of a configuration setting.</param>
-        /// <param name="value">The value of the configuration setting.</param>
-        /// <param name="label">The value used to group configuration settings.</param>
+        /// <param name="key">The primary identifier of the configuration setting.</param>
+        /// <param name="value">The configuration setting's value.</param>
+        /// <param name="label">A label used to group this configuration setting with others.</param>
         public ConfigurationSetting(string key, string value, string label = null)
         {
             Key = key;
@@ -35,19 +34,19 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary>
-        /// The primary identifier of a configuration setting.
-        /// The key is used in unison with the label to uniquely identify a configuration setting.
+        /// The primary identifier of the configuration setting.
+        /// The key is used together with label to uniquely identify a configuration setting.
         /// </summary>
         public string Key { get; set; }
 
         /// <summary>
         /// A value used to group configuration settings.
-        /// The label is used in unison with the key to uniquely identify a configuration setting.
+        /// The label is used together with key to uniquely identify a configuration setting.
         /// </summary>
         public string Label { get; set; }
 
         /// <summary>
-        /// The value of the configuration setting.
+        /// The configuration setting's value.
         /// </summary>
         public string Value { get; set; }
 
@@ -74,7 +73,8 @@ namespace Azure.Data.AppConfiguration
         public bool? IsReadOnly { get; internal set; }
 
         /// <summary>
-        /// A dictionary of tags that can help identify what a configuration setting may be applicable for.
+        /// A dictionary of tags used to assign additional properties to a configuration setting.
+        /// These can be used to indicate how a configuration setting may be applied.
         /// </summary>
         public IDictionary<string, string> Tags
         {
