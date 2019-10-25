@@ -10,7 +10,7 @@ resources:
     - repository: azure-sdk-build-tools
       type: git
       name: internal/azure-sdk-build-tools
-      ref: ref/heads/add-per-artifact-skips
+      ref: refs/heads/add-per-artifact-skips
 
 trigger:
   branches:
