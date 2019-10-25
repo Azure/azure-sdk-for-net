@@ -1674,7 +1674,7 @@ namespace Azure.Storage.Blobs
                           async: async,
                           cancellationToken: cancellationToken)
                           .ConfigureAwait(false);
-                    if (!traits.Equals(BlobTraits.Metadata))
+                    if ((traits & BlobTraits.Metadata) != BlobTraits.Metadata)
                     {
                         IEnumerable<BlobItem> blobItems = response.Value.BlobItems;
                         foreach (BlobItem blobItem in blobItems)
