@@ -478,10 +478,12 @@ namespace Azure.Storage.Test.Shared
 
             public async ValueTask DisposeAsync()
             {
+                if (Container != null)
                 {
                     try
                     {
                         await Container.DeleteAsync();
+                        Container = null;
                     }
                     catch
                     {
