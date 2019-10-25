@@ -40,8 +40,8 @@ namespace Azure.Messaging.EventHubs.Samples
         public async Task RunAsync(string connectionString,
                                    string eventHubName)
         {
-            // We will start by creating a client using its default set of options.  It will be used by the event processor to
-            // communicate with the Azure Event Hubs service.
+            // We will start by creating a client using its default set of options.  It will be used to send events to the
+            // Azure Event Hubs service and to obtain partition information.
 
             await using (var client = new EventHubClient(connectionString, eventHubName))
             {
@@ -67,7 +67,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
                 // Let's finally create our event processor.  We're using the default consumer group that was created with the Event Hub.
 
-                var eventProcessor = new EventProcessor(EventHubConsumer.DefaultConsumerGroupName, client, partitionManager, eventProcessorOptions);
+                var eventProcessor = new EventProcessor(connectionString, eventHubName, EventHubConsumer.DefaultConsumerGroupName, partitionManager, eventProcessorOptions);
 
                 int totalEventsCount = 0;
                 int partitionsBeingProcessedCount = 0;

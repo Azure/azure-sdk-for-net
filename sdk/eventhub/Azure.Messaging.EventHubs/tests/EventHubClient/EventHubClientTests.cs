@@ -41,7 +41,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Provides the invalid test cases for the constructor tests.
+        ///   Provides test cases for the constructor tests.
         /// </summary>
         ///
         public static IEnumerable<object[]> ConstructorCreatesDefaultOptionsCases()
@@ -54,7 +54,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Provides the invalid test cases for the constructor tests.
+        ///   Provides test cases for the constructor tests.
         /// </summary>
         ///
         public static IEnumerable<object[]> ConstructorClonesOptionsCases()

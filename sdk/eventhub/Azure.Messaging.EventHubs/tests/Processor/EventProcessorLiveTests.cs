@@ -52,8 +52,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     var eventProcessorManager = new EventProcessorManager
                         (
+                            connectionString,
                             EventHubConsumer.DefaultConsumerGroupName,
-                            client,
                             onInitialize: partitionContext =>
                                 initializeCalls.AddOrUpdate(partitionContext.PartitionId, 1, (partitionId, value) => value + 1)
                         );
@@ -113,8 +113,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     var eventProcessorManager = new EventProcessorManager
                         (
+                            connectionString,
                             EventHubConsumer.DefaultConsumerGroupName,
-                            client,
                             onClose: (partitionContext, reason) =>
                             {
                                 closeCalls.AddOrUpdate(partitionContext.PartitionId, 1, (partitionId, value) => value + 1);
@@ -178,8 +178,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     var eventProcessorManager = new EventProcessorManager
                         (
+                            connectionString,
                             EventHubConsumer.DefaultConsumerGroupName,
-                            client,
                             onProcessEvents: (partitionContext, events) =>
                             {
                                 // Make it a list so we can safely enumerate it.
@@ -284,8 +284,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     var eventProcessorManager = new EventProcessorManager
                         (
+                            connectionString,
                             EventHubConsumer.DefaultConsumerGroupName,
-                            client,
                             onProcessEvents: (partitionContext, events) =>
                                 receivedEventSets.Add(events)
                         );
@@ -334,8 +334,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     var eventProcessorManager = new EventProcessorManager
                         (
+                            connectionString,
                             EventHubConsumer.DefaultConsumerGroupName,
-                            client,
                             onInitialize: partitionContext =>
                                 Interlocked.Increment(ref initializeCallsCount)
                         );
@@ -391,8 +391,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     var eventProcessorManager = new EventProcessorManager
                         (
+                            connectionString,
                             EventHubConsumer.DefaultConsumerGroupName,
-                            client,
                             onClose: (partitionContext, reason) =>
                                 Interlocked.Increment(ref closeCallsCount)
                         );
@@ -449,8 +449,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     var eventProcessorManager = new EventProcessorManager
                         (
+                            connectionString,
                             EventHubConsumer.DefaultConsumerGroupName,
-                            client,
                             onProcessEvents: (partitionContext, events) =>
                             {
                                 // Make it a list so we can safely enumerate it.
@@ -583,8 +583,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     var eventProcessorManager = new EventProcessorManager
                         (
+                            connectionString,
                             EventHubConsumer.DefaultConsumerGroupName,
-                            client,
                             partitionManager,
                             onProcessEvents: (partitionContext, events) =>
                             {
@@ -678,8 +678,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     var eventProcessorManager = new EventProcessorManager
                         (
+                            connectionString,
                             EventHubConsumer.DefaultConsumerGroupName,
-                            client,
                             partitionManager,
                             onProcessEvents: (partitionContext, events) =>
                             {
@@ -776,8 +776,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     var eventProcessorManager = new EventProcessorManager
                         (
+                            connectionString,
                             EventHubConsumer.DefaultConsumerGroupName,
-                            client,
                             options: new EventProcessorOptions { InitialEventPosition = EventPosition.FromEnqueuedTime(enqueuedTime) },
                             onProcessEvents: (partitionContext, events) =>
                             {
@@ -837,8 +837,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     var eventProcessorManager = new EventProcessorManager
                         (
+                            connectionString,
                             EventHubConsumer.DefaultConsumerGroupName,
-                            client,
                             options: new EventProcessorOptions { MaximumReceiveWaitTime = TimeSpan.FromSeconds(maximumWaitTimeInSecs) },
                             onInitialize: partitionContext =>
                                 timestamps.TryAdd(partitionContext.PartitionId, new List<DateTimeOffset> { DateTimeOffset.UtcNow }),
@@ -939,8 +939,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     var eventProcessorManager = new EventProcessorManager
                         (
+                            connectionString,
                             EventHubConsumer.DefaultConsumerGroupName,
-                            client,
                             options: new EventProcessorOptions { MaximumMessageCount = maximumMessageCount },
                             onProcessEvents: (partitionContext, events) =>
                             {
@@ -1006,8 +1006,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     var eventProcessorManager = new EventProcessorManager
                         (
+                            connectionString,
                             EventHubConsumer.DefaultConsumerGroupName,
-                            client,
                             onInitialize: partitionContext =>
                                 ownedPartitionsCount.AddOrUpdate(partitionContext.OwnerIdentifier, 1, (ownerId, value) => value + 1),
                             onClose: (partitionContext, reason) =>
@@ -1070,8 +1070,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     var eventProcessorManager = new EventProcessorManager
                         (
+                            connectionString,
                             EventHubConsumer.DefaultConsumerGroupName,
-                            client,
                             onInitialize: partitionContext =>
                                 ownedPartitionsCount.AddOrUpdate(partitionContext.OwnerIdentifier, 1, (ownerId, value) => value + 1),
                             onClose: (partitionContext, reason) =>

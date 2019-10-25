@@ -66,7 +66,35 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   The client used to interact with the Azure Event Hubs service.
         /// </summary>
         ///
-        private EventHubClient InnerClient { get; }
+        private EventHubClient InnerClient { get; set; }
+
+        /// <summary>
+        ///   The connection string to use for connecting to the Event Hubs namespace.
+        /// </summary>
+        ///
+        private string ConnectionString { get; }
+
+        /// <summary>
+        ///   The name of the Event Hub that the event processor is connected to, specific
+        ///   to the Event Hubs namespace that contains it.
+        /// </summary>
+        ///
+        private string EventHubName { get; }
+
+        /// <summary>
+        ///   The fully qualified Event Hubs namespace.  This is likely to be similar to
+        ///   <c>{yournamespace}.servicebus.windows.net</c>.
+        /// </summary>
+        ///
+        private string FullyQualifiedNamespace { get; }
+
+        /// <summary>
+        ///   The Azure managed identity credential to use for authorization.  Access controls
+        ///   may be specified by the Event Hubs namespace or the requested Event Hub, depending
+        ///   on Azure configuration.
+        /// </summary>
+        ///
+        private TokenCredential Credential { get; }
 
         /// <summary>
         ///   The name of the consumer group this event processor is associated with.  Events will be
@@ -157,27 +185,90 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Initializes a new instance of the <see cref="EventProcessor"/> class.
         /// </summary>
         ///
+        /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub name and the shared key properties are contained in this connection string.</param>
         /// <param name="consumerGroup">The name of the consumer group this event processor is associated with.  Events are read in the context of this group.</param>
-        /// <param name="eventHubClient">The client used to interact with the Azure Event Hubs service.</param>
         /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.</param>
         /// <param name="options">The set of options to use for this event processor.</param>
         ///
         /// <remarks>
-        ///   Ownership of the <paramref name="eventHubClient" /> is assumed to be responsibility of the caller; this
-        ///   processor will delegate operations to it, but will not perform any clean-up tasks, such as closing or
-        ///   disposing of the instance.
+        ///   If the connection string is copied from the Event Hubs namespace, it will likely not contain the name of the desired Event Hub,
+        ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ EVENT HUB NAME ]]" to the end of the
+        ///   connection string.  For example, ";EntityPath=telemetry-hub".
+        ///
+        ///   If you have defined a shared access policy directly on the Event Hub itself, then copying the connection string from that
+        ///   Event Hub will result in a connection string that contains the name.
         /// </remarks>
         ///
-        public EventProcessor(string consumerGroup,
-                              EventHubClient eventHubClient,
+        public EventProcessor(string connectionString,
+                              string consumerGroup,
+                              PartitionManager partitionManager,
+                              EventProcessorOptions options = default) : this(connectionString, null, consumerGroup, partitionManager, options)
+        {
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="EventProcessor"/> class.
+        /// </summary>
+        ///
+        /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the shared key properties are contained in this connection string, but not the Event Hub name.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub to connect the event processor to.</param>
+        /// <param name="consumerGroup">The name of the consumer group this event processor is associated with.  Events are read in the context of this group.</param>
+        /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.</param>
+        /// <param name="options">The set of options to use for this event processor.</param>
+        ///
+        /// <remarks>
+        ///   If the connection string is copied from the Event Hub itself, it will contain the name of the desired Event Hub,
+        ///   and can be used directly without passing the <paramref name="eventHubName" />.  The name of the Event Hub should be
+        ///   passed only once, either as part of the connection string or separately.
+        /// </remarks>
+        ///
+        public EventProcessor(string connectionString,
+                              string eventHubName,
+                              string consumerGroup,
                               PartitionManager partitionManager,
                               EventProcessorOptions options = default)
         {
+            Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
-            Argument.AssertNotNull(eventHubClient, nameof(eventHubClient));
             Argument.AssertNotNull(partitionManager, nameof(partitionManager));
 
-            InnerClient = eventHubClient;
+            ConnectionString = connectionString;
+            EventHubName = eventHubName;
+            ConsumerGroup = consumerGroup;
+            Manager = partitionManager;
+            Options = options?.Clone() ?? new EventProcessorOptions();
+
+            Identifier = Guid.NewGuid().ToString();
+            PartitionPumps = new ConcurrentDictionary<string, PartitionPump>();
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="EventProcessor"/> class.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub to connect the event processor to.</param>
+        /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
+        /// <param name="consumerGroup">The name of the consumer group this event processor is associated with.  Events are read in the context of this group.</param>
+        /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.</param>
+        /// <param name="options">The set of options to use for this event processor.</param>
+        ///
+        public EventProcessor(string fullyQualifiedNamespace,
+                              string eventHubName,
+                              TokenCredential credential,
+                              string consumerGroup,
+                              PartitionManager partitionManager,
+                              EventProcessorOptions options = default)
+        {
+            Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNull(credential, nameof(credential));
+            Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
+            Argument.AssertNotNull(partitionManager, nameof(partitionManager));
+
+            FullyQualifiedNamespace = fullyQualifiedNamespace;
+            EventHubName = eventHubName;
+            Credential = credential;
             ConsumerGroup = consumerGroup;
             Manager = partitionManager;
             Options = options?.Clone() ?? new EventProcessorOptions();
@@ -232,6 +323,13 @@ namespace Azure.Messaging.EventHubs.Processor
                             // Initialize our empty ownership dictionary.
 
                             InstanceOwnership = new Dictionary<string, PartitionOwnership>();
+
+                            // The Event Hub client creation depends on which constructor was called for this event processor
+                            // instance.
+
+                            InnerClient = ConnectionString != null
+                                ? new EventHubClient(ConnectionString, EventHubName)
+                                : new EventHubClient(FullyQualifiedNamespace, EventHubName, Credential);
 
                             // Start the main running task.  It is resposible for managing the partition pumps and for partition
                             // load balancing among multiple event processor instances.
@@ -294,6 +392,13 @@ namespace Azure.Messaging.EventHubs.Processor
                         await Task.WhenAll(PartitionPumps.Keys
                             .Select(partitionId => RemovePartitionPumpIfItExistsAsync(partitionId, PartitionProcessorCloseReason.Shutdown)))
                             .ConfigureAwait(false);
+
+                        // We can only dispose of the client once the pumps have stopped.
+
+                        if (InnerClient != null)
+                        {
+                            await InnerClient.DisposeAsync().ConfigureAwait(false);
+                        }
                     }
                 }
                 finally

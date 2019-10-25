@@ -5,9 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Messaging.EventHubs.Processor;
 using Moq;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 
 namespace Azure.Messaging.EventHubs.Tests
 {
@@ -20,13 +22,47 @@ namespace Azure.Messaging.EventHubs.Tests
     public class EventProcessorTests
     {
         /// <summary>
+        ///   Provides the invalid test cases for the constructor tests.
+        /// </summary>
+        ///
+        public static IEnumerable<object[]> ConstructorExpandedArgumentInvalidCases()
+        {
+            TokenCredential credential = Mock.Of<TokenCredential>();
+
+            yield return new object[] { null, "fakePath", credential };
+            yield return new object[] { "", "fakePath", credential };
+            yield return new object[] { "FakeNamespace", null, credential };
+            yield return new object[] { "FakNamespace", "", credential };
+            yield return new object[] { "FakeNamespace", "FakePath", null };
+        }
+
+        /// <summary>
         ///   Provides test cases for the constructor tests.
         /// </summary>
         ///
-        public static IEnumerable<object[]> ConstructorCreatesDefaultOptionsCases()
+        public static IEnumerable<object[]> MultipleConstructorsCases()
         {
-            yield return new object[] { new ReadableOptionsMock("consumerGroup", Mock.Of<EventHubClient>(), Mock.Of<PartitionManager>()), "no options" };
-            yield return new object[] { new ReadableOptionsMock("consumerGroup", Mock.Of<EventHubClient>(), Mock.Of<PartitionManager>(), null), "null options" };
+            yield return new object[] { new ReadableOptionsMock("connectionString", "consumerGroup", Mock.Of<PartitionManager>()), "simple connection string" };
+            yield return new object[] { new ReadableOptionsMock("connectionString", "eventHubName", "consumerGroup", Mock.Of<PartitionManager>()), "connection string with event hub name" };
+            yield return new object[] { new ReadableOptionsMock("namespace", "eventHubName", Mock.Of<TokenCredential>(), "consumerGroup", Mock.Of<PartitionManager>()), "expanded arguments" };
+        }
+
+        /// <summary>
+        ///   Provides test cases for the constructor tests.
+        /// </summary>
+        ///
+        public static IEnumerable<object[]> ConstructorClonesOptionsCases()
+        {
+            var options = new EventProcessorOptions
+            {
+                InitialEventPosition = EventPosition.FromSequenceNumber(315),
+                MaximumMessageCount = 25,
+                MaximumReceiveWaitTime = TimeSpan.FromMilliseconds(427)
+            };
+
+            yield return new object[] { new ReadableOptionsMock("connectionString", "consumerGroup", Mock.Of<PartitionManager>(), options), options, "simple connection string" };
+            yield return new object[] { new ReadableOptionsMock("connectionString", "eventHubName", "consumerGroup", Mock.Of<PartitionManager>(), options), options, "connection string with event hub name" };
+            yield return new object[] { new ReadableOptionsMock("namespace", "eventHubName", Mock.Of<TokenCredential>(), "consumerGroup", Mock.Of<PartitionManager>(), options), options, "expanded arguments" };
         }
 
         /// <summary>
@@ -37,9 +73,13 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         [TestCase(null)]
         [TestCase("")]
-        public void ConstructorValidatesTheConsumerGroup(string consumerGroup)
+        public void ConstructorRequiresConnectionString(string connectionString)
         {
-            Assert.That(() => new EventProcessor(consumerGroup, Mock.Of<EventHubClient>(), Mock.Of<PartitionManager>()), Throws.InstanceOf<ArgumentException>());
+            // Seems ExactTypeConstraints is not re-entrant.
+            ExactTypeConstraint TypeConstraint() => connectionString is null ? Throws.ArgumentNullException : Throws.ArgumentException;
+
+            Assert.That(() => new EventProcessor(connectionString, "consumerGroup", Mock.Of<PartitionManager>()), TypeConstraint(), "The constructor with no event hub should perform validation.");
+            Assert.That(() => new EventProcessor(connectionString, "eventHubName", "consumerGroup", Mock.Of<PartitionManager>()), TypeConstraint(), "The constructor with the event hub should perform validation.");
         }
 
         /// <summary>
@@ -48,9 +88,16 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void ConstructorValidatesTheEventHubClient()
+        [TestCase(null)]
+        [TestCase("")]
+        public void ConstructorRequiresConsumerGroup(string consumerGroup)
         {
-            Assert.That(() => new EventProcessor("consumerGroup", null, Mock.Of<PartitionManager>()), Throws.InstanceOf<ArgumentException>());
+            // Seems ExactTypeConstraints is not re-entrant.
+            ExactTypeConstraint TypeConstraint() => consumerGroup is null ? Throws.ArgumentNullException : Throws.ArgumentException;
+
+            Assert.That(() => new EventProcessor("connectionString", consumerGroup, Mock.Of<PartitionManager>()), TypeConstraint(), "The constructor with connection string and no event hub should perform validation.");
+            Assert.That(() => new EventProcessor("connectionString", "eventHubName", consumerGroup, Mock.Of<PartitionManager>()), TypeConstraint(), "The constructor with connection string and event hub should perform validation.");
+            Assert.That(() => new EventProcessor("namespace", "eventHubName", Mock.Of<TokenCredential>(), consumerGroup, Mock.Of<PartitionManager>()), TypeConstraint(), "The constructor with expanded arguments should perform validation.");
         }
 
         /// <summary>
@@ -59,9 +106,11 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void ConstructorValidatesThePartitionManager()
+        public void ConstructorRequiresPartitionManager()
         {
-            Assert.That(() => new EventProcessor("consumerGroup", Mock.Of<EventHubClient>(), null), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new EventProcessor("connectionString", "consumerGroup", null), Throws.InstanceOf<ArgumentNullException>(), "The constructor with connection string and no event hub should perform validation.");
+            Assert.That(() => new EventProcessor("connectionString", "eventHubName", "consumerGroup", null), Throws.InstanceOf<ArgumentNullException>(), "The constructor with connection string and event hub should perform validation.");
+            Assert.That(() => new EventProcessor("namespace", "eventHubName", Mock.Of<TokenCredential>(), "consumerGroup", null), Throws.InstanceOf<ArgumentNullException>(), "The constructor with expanded arguments should perform validation.");
         }
 
         /// <summary>
@@ -70,7 +119,21 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [TestCaseSource(nameof(ConstructorCreatesDefaultOptionsCases))]
+        [TestCaseSource(nameof(ConstructorExpandedArgumentInvalidCases))]
+        public void ConstructorRequiresExpandedArguments(string fullyQualifiedNamespace,
+                                                         string eventHubName,
+                                                         TokenCredential credential)
+        {
+            Assert.That(() => new EventHubClient(fullyQualifiedNamespace, eventHubName, credential), Throws.InstanceOf<ArgumentException>());
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="EventProcessor" />
+        ///    constructor.
+        /// </summary>
+        ///
+        [Test]
+        [TestCaseSource(nameof(MultipleConstructorsCases))]
         public void ConstructorCreatesDefaultOptions(ReadableOptionsMock eventProcessor,
                                                      string constructorDescription)
         {
@@ -90,23 +153,18 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void ConstructorClonesOptions()
+        [TestCaseSource(nameof(ConstructorClonesOptionsCases))]
+        public void ConstructorClonesOptions(ReadableOptionsMock eventProcessor,
+                                             EventProcessorOptions constructorOptions,
+                                             string constructorDescription)
         {
-            var options = new EventProcessorOptions
-            {
-                InitialEventPosition = EventPosition.FromOffset(55),
-                MaximumMessageCount = 43,
-                MaximumReceiveWaitTime = TimeSpan.FromMinutes(65)
-            };
+            var options = eventProcessor.Options;
 
-            var eventProcessor = new ReadableOptionsMock("consumerGroup", Mock.Of<EventHubClient>(), Mock.Of<PartitionManager>(), options);
-            EventProcessorOptions clonedOptions = eventProcessor.Options;
-
-            Assert.That(clonedOptions, Is.Not.Null, "The constructor should have set the options.");
-            Assert.That(clonedOptions, Is.Not.SameAs(options), "The constructor should have cloned the options.");
-            Assert.That(clonedOptions.InitialEventPosition, Is.EqualTo(options.InitialEventPosition), "The constructor should have the correct initial event position.");
-            Assert.That(clonedOptions.MaximumMessageCount, Is.EqualTo(options.MaximumMessageCount), "The constructor should have the correct maximum message count.");
-            Assert.That(clonedOptions.MaximumReceiveWaitTime, Is.EqualTo(options.MaximumReceiveWaitTime), "The constructor should have the correct maximum receive wait time.");
+            Assert.That(options, Is.Not.Null, $"The { constructorDescription } constructor should have set the options.");
+            Assert.That(options, Is.Not.SameAs(constructorOptions), $"The { constructorDescription } constructor should have cloned the options.");
+            Assert.That(options.InitialEventPosition, Is.EqualTo(constructorOptions.InitialEventPosition), $"The constructor { constructorDescription } should have the correct initial event position.");
+            Assert.That(options.MaximumMessageCount, Is.EqualTo(constructorOptions.MaximumMessageCount), $"The { constructorDescription } constructor should have the correct maximum message count.");
+            Assert.That(options.MaximumReceiveWaitTime, Is.EqualTo(constructorOptions.MaximumReceiveWaitTime), $"The constructor { constructorDescription } should have the correct maximum receive wait time.");
         }
 
         /// <summary>
@@ -115,12 +173,11 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void ConstructorCreatesTheIdentifier()
+        [TestCaseSource(nameof(MultipleConstructorsCases))]
+        public void ConstructorCreatesTheIdentifier(EventProcessor eventProcessor,
+                                                    string constructorDescription)
         {
-            var eventProcessor = new EventProcessor("consumerGroup", Mock.Of<EventHubClient>(), Mock.Of<PartitionManager>());
-
-            Assert.That(eventProcessor.Identifier, Is.Not.Null);
-            Assert.That(eventProcessor.Identifier, Is.Not.Empty);
+            Assert.That(eventProcessor.Identifier, Is.Not.Null.And.Not.Empty, $"The { constructorDescription } constructor should have set the identifier.");
         }
 
         /// <summary>
@@ -131,7 +188,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void StartAsyncValidatesProcessEventsAsync()
         {
-            EventProcessor processor = new EventProcessor("consumerGroup", Mock.Of<EventHubClient>(), Mock.Of<PartitionManager>());
+            EventProcessor processor = new EventProcessor("connectionString", "consumerGroup", Mock.Of<PartitionManager>());
             processor.ProcessExceptionAsync = (context, exception) => Task.CompletedTask;
 
             Assert.That(async () => await processor.StartAsync(), Throws.InstanceOf<InvalidOperationException>().And.Message.Contains(nameof(EventProcessor.ProcessEventsAsync)));
@@ -145,7 +202,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void StartAsyncValidatesProcessExceptionAsync()
         {
-            EventProcessor processor = new EventProcessor("consumerGroup", Mock.Of<EventHubClient>(), Mock.Of<PartitionManager>());
+            EventProcessor processor = new EventProcessor("connectionString", "consumerGroup", Mock.Of<PartitionManager>());
             processor.ProcessEventsAsync = (context, events) => Task.CompletedTask;
 
             Assert.That(async () => await processor.StartAsync(), Throws.InstanceOf<InvalidOperationException>().And.Message.Contains(nameof(EventProcessor.ProcessExceptionAsync)));
@@ -159,7 +216,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task StartAsyncStartsTheEventProcessorWhenProcessingHandlerPropertiesAreSet()
         {
-            EventProcessor processor = new EventProcessor("consumerGroup", Mock.Of<EventHubClient>(), Mock.Of<PartitionManager>());
+            var fakeConnection = "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake";
+            EventProcessor processor = new EventProcessor(fakeConnection, "consumerGroup", Mock.Of<PartitionManager>());
 
             processor.ProcessEventsAsync = (context, events) => Task.CompletedTask;
             processor.ProcessExceptionAsync = (context, exception) => Task.CompletedTask;
@@ -176,7 +234,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task HandlerPropertiesCannotBeSetWhenEventProcessorIsRunning()
         {
-            EventProcessor processor = new EventProcessor("consumerGroup", Mock.Of<EventHubClient>(), Mock.Of<PartitionManager>());
+            var fakeConnection = "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake";
+            EventProcessor processor = new EventProcessor(fakeConnection, "consumerGroup", Mock.Of<PartitionManager>());
 
             processor.ProcessEventsAsync = (context, events) => Task.CompletedTask;
             processor.ProcessExceptionAsync = (context, exception) => Task.CompletedTask;
@@ -198,7 +257,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task HandlerPropertiesCanBeSetAfterEventProcessorHasStopped()
         {
-            EventProcessor processor = new EventProcessor("consumerGroup", Mock.Of<EventHubClient>(), Mock.Of<PartitionManager>());
+            var fakeConnection = "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake";
+            EventProcessor processor = new EventProcessor(fakeConnection, "consumerGroup", Mock.Of<PartitionManager>());
 
             processor.ProcessEventsAsync = (context, events) => Task.CompletedTask;
             processor.ProcessExceptionAsync = (context, exception) => Task.CompletedTask;
@@ -223,16 +283,27 @@ namespace Azure.Messaging.EventHubs.Tests
                     .GetProperty(nameof(Options), BindingFlags.Instance | BindingFlags.NonPublic)
                     .GetValue(this) as EventProcessorOptions;
 
-            public ReadableOptionsMock(string consumerGroup,
-                                       EventHubClient eventHubClient,
-                                       PartitionManager partitionManager) : base(consumerGroup, eventHubClient, partitionManager)
+            public ReadableOptionsMock(string connectionString,
+                                       string consumerGroup,
+                                       PartitionManager partitionManager,
+                                       EventProcessorOptions options = default) : base(connectionString, consumerGroup, partitionManager, options)
             {
             }
 
-            public ReadableOptionsMock(string consumerGroup,
-                                       EventHubClient eventHubClient,
+            public ReadableOptionsMock(string connectionString,
+                                       string eventHubName,
+                                       string consumerGroup,
                                        PartitionManager partitionManager,
-                                       EventProcessorOptions options) : base(consumerGroup, eventHubClient, partitionManager, options)
+                                       EventProcessorOptions options = default) : base(connectionString, eventHubName, consumerGroup, partitionManager, options)
+            {
+            }
+
+            public ReadableOptionsMock(string fullyQualifiedNamespace,
+                                       string eventHubName,
+                                       TokenCredential credential,
+                                       string consumerGroup,
+                                       PartitionManager partitionManager,
+                                       EventProcessorOptions options = default) : base(fullyQualifiedNamespace, eventHubName, credential, consumerGroup, partitionManager, options)
             {
             }
         }
