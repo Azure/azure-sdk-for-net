@@ -3,8 +3,12 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using NUnit.Framework;
 using NUnit.Framework.Interfaces;
+using NUnit.Framework.Internal;
 
 namespace Azure.Core.Testing
 {
@@ -39,11 +43,24 @@ namespace Azure.Core.Testing
         /// </summary>
         public string[] Exclude { get; set; }
 
-        public IEnumerable GetData(IParameterInfo parameter)
+        public IEnumerable GetData(IParameterInfo parameter) => GetMembers(parameter.ParameterType, parameter.ParameterInfo?.Name);
+
+        internal IEnumerable<object> GetMembers(Type parameterType, string parameterName)
+        {
+            object[] data = GetMembersImpl(parameterType).ToArray();
+            if (data is null || data.Length == 0)
+            {
+                // NUnit handles this exception specifically to mark the test as failed or, in some cases, skipped.
+                throw new InvalidDataSourceException(@$"No enumeration members found on parameter ""{parameterName}"".");
+            }
+
+            return data;
+        }
+
+        private IEnumerable<object> GetMembersImpl(Type type)
         {
             const BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly;
 
-            Type type = parameter.ParameterType;
             if (type.IsValueType)
             {
                 PropertyInfo[] properties = type.GetProperties(bindingFlags);

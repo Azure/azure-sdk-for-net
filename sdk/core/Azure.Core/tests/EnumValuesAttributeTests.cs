@@ -4,6 +4,7 @@
 using System;
 using Azure.Core.Testing;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 
 namespace Azure.Core.Tests
 {
@@ -55,6 +56,15 @@ namespace Azure.Core.Tests
         public void ExcludesNamedEnumValuesOverride([EnumValues(nameof(DataEnum.A), nameof(DataEnum.B), Exclude = new[] { nameof(DataEnum.B) })]DataEnum data)
         {
             Assert.AreEqual(DataEnum.A, data);
+        }
+
+        [Test]
+        public void ThrowsIfNoneFound()
+        {
+            EnumValuesAttribute sut = new EnumValuesAttribute();
+
+            Exception ex = Assert.Throws<InvalidDataSourceException>(() => sut.GetMembers(GetType(), "source"));
+            Assert.AreEqual(@"No enumeration members found on parameter ""source"".", ex.Message);
         }
 
         // Should work for fields and properties alike.
