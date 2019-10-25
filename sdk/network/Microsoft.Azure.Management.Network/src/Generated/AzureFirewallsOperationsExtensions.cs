@@ -145,7 +145,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Updates tags for an Azure Firewall resource.
+            /// Updates tags of an Azure Firewall resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -157,15 +157,15 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the Azure Firewall.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the create or update Azure Firewall operation.
+            /// Parameters supplied to update azure firewall tags.
             /// </param>
-            public static AzureFirewall UpdateTags(this IAzureFirewallsOperations operations, string resourceGroupName, string azureFirewallName, AzureFirewall parameters)
+            public static AzureFirewall UpdateTags(this IAzureFirewallsOperations operations, string resourceGroupName, string azureFirewallName, TagsObject parameters)
             {
                 return operations.UpdateTagsAsync(resourceGroupName, azureFirewallName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Updates tags for an Azure Firewall resource.
+            /// Updates tags of an Azure Firewall resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -177,12 +177,12 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the Azure Firewall.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the create or update Azure Firewall operation.
+            /// Parameters supplied to update azure firewall tags.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AzureFirewall> UpdateTagsAsync(this IAzureFirewallsOperations operations, string resourceGroupName, string azureFirewallName, AzureFirewall parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AzureFirewall> UpdateTagsAsync(this IAzureFirewallsOperations operations, string resourceGroupName, string azureFirewallName, TagsObject parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateTagsWithHttpMessagesAsync(resourceGroupName, azureFirewallName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {

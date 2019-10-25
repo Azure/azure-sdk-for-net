@@ -67,7 +67,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <summary>
         /// Vault base URL.
         /// </summary>
-        public Uri VaultEndpoint { get => _identifier.VaultEndpoint; internal set => _identifier.VaultEndpoint = value; }
+        public Uri VaultUri { get => _identifier.VaultUri; internal set => _identifier.VaultUri = value; }
 
         /// <summary>
         /// Name of the secret.

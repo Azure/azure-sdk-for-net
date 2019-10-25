@@ -1664,7 +1664,7 @@ namespace Storage.Tests
                 {
                     Sku = new Sku { Name = SkuName.StandardGRS },
                     Kind = Kind.StorageV2,
-                    Location = "eastus2(stage)"
+                    Location = "westus"
                 };
                 storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
                 List<ManagementPolicyRule> rules = new List<ManagementPolicyRule>();
@@ -2043,6 +2043,109 @@ namespace Storage.Tests
                 account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
                 Assert.Equal(SkuName.StandardLRS, account.Sku.Name);
                 Assert.Equal(LargeFileSharesState.Enabled, account.LargeFileSharesState);
+            }
+        }
+
+        [Fact]
+        public void StorageAccountPrivateEndpointTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = new StorageAccountCreateParameters
+                {
+                    Location = "westeurope",
+                    Kind = Kind.StorageV2,
+                    Sku = new Sku { Name = SkuName.StandardLRS }
+                };
+                var account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
+                Assert.Equal(SkuName.StandardLRS, account.Sku.Name);
+
+                account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
+                IList<PrivateEndpointConnection> pes = account.PrivateEndpointConnections;
+                foreach (PrivateEndpointConnection pe in pes)
+                {
+                    //Get from account
+                    PrivateEndpointConnection pe2 = storageMgmtClient.PrivateEndpointConnections.Get(rgname, accountName, pe.Name);
+
+                    // Prepare data for set
+                    PrivateEndpoint endpoint = new PrivateEndpoint(pe.PrivateEndpoint.Id);
+                    PrivateEndpointConnection connection = new PrivateEndpointConnection()
+                    {
+                        PrivateEndpoint = endpoint,
+                        //ProvisioningState = PrivateEndpointConnectionProvisioningState.Succeeded,
+                        PrivateLinkServiceConnectionState = new PrivateLinkServiceConnectionState()
+                        {
+                            ActionRequired = "None",
+                            Description = "123",
+                            Status = "Approved"
+                        }
+                    };
+
+                    if (pe.PrivateLinkServiceConnectionState.Status != "Rejected")
+                    {
+                        //Set approve
+                        connection.PrivateLinkServiceConnectionState.Status = "Approved";
+                        PrivateEndpointConnection pe3 = storageMgmtClient.PrivateEndpointConnections.Put(rgname, accountName, pe.Name, connection);
+                        Assert.Equal("Approved", pe3.PrivateLinkServiceConnectionState.Status);
+
+                        //Validate approve by get
+                        pe3 = storageMgmtClient.PrivateEndpointConnections.Get(rgname, accountName, pe.Name);
+                        Assert.Equal("Approved", pe3.PrivateLinkServiceConnectionState.Status);
+                    }
+
+                    if (pe.PrivateLinkServiceConnectionState.Status == "Rejected")
+                    {
+                        //Set reject
+                        connection.PrivateLinkServiceConnectionState.Status = "Rejected";
+                        PrivateEndpointConnection pe4 = storageMgmtClient.PrivateEndpointConnections.Put(rgname, accountName, pe.Name, connection);
+                        Assert.Equal("Rejected", pe4.PrivateLinkServiceConnectionState.Status);
+
+                        //Validate reject by get
+                        pe4 = storageMgmtClient.PrivateEndpointConnections.Get(rgname, accountName, pe.Name);
+                        Assert.Equal("Rejected", pe4.PrivateLinkServiceConnectionState.Status);
+                    }
+                }
+            }
+        }
+
+        [Fact]
+        public void StorageAccountPrivateLinkTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = new StorageAccountCreateParameters
+                {
+                    Location = "westus",
+                    Kind = Kind.StorageV2,
+                    Sku = new Sku { Name = SkuName.StandardLRS }
+                };
+                var account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
+
+                // Get private link resource
+                var result = storageMgmtClient.PrivateLinkResources.ListByStorageAccount(rgname, accountName);
+
+                // Validate
+                Assert.True(result.Value.Count > 0);
             }
         }
     }

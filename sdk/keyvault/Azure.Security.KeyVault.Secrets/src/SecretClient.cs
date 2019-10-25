@@ -32,11 +32,11 @@ namespace Azure.Security.KeyVault.Secrets
         /// <summary>
         /// Initializes a new instance of the <see cref="SecretClient"/> class for the specified vault.
         /// </summary>
-        /// <param name="vaultEndpoint">A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal.</param>
+        /// <param name="vaultUri">A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal.</param>
         /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, such as DefaultAzureCredential.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="vaultEndpoint"/> or <paramref name="credential"/> is null.</exception>
-        public SecretClient(Uri vaultEndpoint, TokenCredential credential)
-            : this(vaultEndpoint, credential, null)
+        /// <exception cref="ArgumentNullException"><paramref name="vaultUri"/> or <paramref name="credential"/> is null.</exception>
+        public SecretClient(Uri vaultUri, TokenCredential credential)
+            : this(vaultUri, credential, null)
         {
 
         }
@@ -44,13 +44,13 @@ namespace Azure.Security.KeyVault.Secrets
         /// <summary>
         /// Initializes a new instance of the <see cref="SecretClient"/> class for the specified vault.
         /// </summary>
-        /// <param name="vaultEndpoint">A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal.</param>
+        /// <param name="vaultUri">A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal.</param>
         /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, such as DefaultAzureCredential.</param>
         /// <param name="options"><see cref="SecretClientOptions"/> that allow to configure the management of the request sent to Key Vault.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="vaultEndpoint"/> or <paramref name="credential"/> is null.</exception>
-        public SecretClient(Uri vaultEndpoint, TokenCredential credential, SecretClientOptions options)
+        /// <exception cref="ArgumentNullException"><paramref name="vaultUri"/> or <paramref name="credential"/> is null.</exception>
+        public SecretClient(Uri vaultUri, TokenCredential credential, SecretClientOptions options)
         {
-            Argument.AssertNotNull(vaultEndpoint, nameof(vaultEndpoint));
+            Argument.AssertNotNull(vaultUri, nameof(vaultUri));
             Argument.AssertNotNull(credential, nameof(credential));
 
             options ??= new SecretClientOptions();
@@ -59,13 +59,13 @@ namespace Azure.Security.KeyVault.Secrets
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options,
                     new ChallengeBasedAuthenticationPolicy(credential));
 
-            _pipeline = new KeyVaultPipeline(vaultEndpoint, apiVersion, pipeline, new ClientDiagnostics(options));
+            _pipeline = new KeyVaultPipeline(vaultUri, apiVersion, pipeline, new ClientDiagnostics(options));
         }
 
         /// <summary>
         /// Gets the <see cref="Uri"/> of the vault used to create this instance of the <see cref="SecretClient"/>.
         /// </summary>
-        public Uri VaultEndpoint => _pipeline.VaultEndpoint;
+        public virtual Uri VaultUri => _pipeline.VaultUri;
 
         /// <summary>
         /// Get a specified secret from a given key vault.
@@ -139,7 +139,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            Uri firstPageUri = new Uri(VaultEndpoint, $"{SecretsPath}{name}/versions?api-version={_pipeline.ApiVersion}");
+            Uri firstPageUri = new Uri(VaultUri, $"{SecretsPath}{name}/versions?api-version={_pipeline.ApiVersion}");
 
             return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new SecretProperties(), "Azure.Security.KeyVault.Secrets.SecretClient.GetPropertiesOfSecretVersions", cancellationToken));
         }
@@ -158,7 +158,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            Uri firstPageUri = new Uri(VaultEndpoint, $"{SecretsPath}{name}/versions?api-version={_pipeline.ApiVersion}");
+            Uri firstPageUri = new Uri(VaultUri, $"{SecretsPath}{name}/versions?api-version={_pipeline.ApiVersion}");
 
             return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new SecretProperties(), "Azure.Security.KeyVault.Secrets.SecretClient.GetPropertiesOfSecretVersions", cancellationToken));
         }
@@ -175,7 +175,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual AsyncPageable<SecretProperties> GetPropertiesOfSecretsAsync(CancellationToken cancellationToken = default)
         {
-            Uri firstPageUri = new Uri(VaultEndpoint, SecretsPath + $"?api-version={_pipeline.ApiVersion}");
+            Uri firstPageUri = new Uri(VaultUri, SecretsPath + $"?api-version={_pipeline.ApiVersion}");
 
             return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new SecretProperties(), "Azure.Security.KeyVault.Secrets.SecretClient.GetPropertiesOfSecrets", cancellationToken));
         }
@@ -192,7 +192,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Pageable<SecretProperties> GetPropertiesOfSecrets(CancellationToken cancellationToken = default)
         {
-            Uri firstPageUri = new Uri(VaultEndpoint, SecretsPath + $"?api-version={_pipeline.ApiVersion}");
+            Uri firstPageUri = new Uri(VaultUri, SecretsPath + $"?api-version={_pipeline.ApiVersion}");
 
             return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new SecretProperties(), "Azure.Security.KeyVault.Secrets.SecretClient.GetPropertiesOfSecrets", cancellationToken));
         }
@@ -478,7 +478,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual AsyncPageable<DeletedSecret> GetDeletedSecretsAsync(CancellationToken cancellationToken = default)
         {
-            Uri firstPageUri = new Uri(VaultEndpoint, DeletedSecretsPath + $"?api-version={_pipeline.ApiVersion}");
+            Uri firstPageUri = new Uri(VaultUri, DeletedSecretsPath + $"?api-version={_pipeline.ApiVersion}");
 
             return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new DeletedSecret(), "Azure.Security.KeyVault.Secrets.SecretClient.GetDeletedSecrets", cancellationToken));
         }
@@ -494,7 +494,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Pageable<DeletedSecret> GetDeletedSecrets(CancellationToken cancellationToken = default)
         {
-            Uri firstPageUri = new Uri(VaultEndpoint, DeletedSecretsPath + $"?api-version={_pipeline.ApiVersion}");
+            Uri firstPageUri = new Uri(VaultUri, DeletedSecretsPath + $"?api-version={_pipeline.ApiVersion}");
 
             return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new DeletedSecret(), "Azure.Security.KeyVault.Secrets.SecretClient.GetDeletedSecrets", cancellationToken));
         }

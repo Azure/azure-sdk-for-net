@@ -72,10 +72,10 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Tier { get; set; }
 
         /// <summary>
-        /// Gets or sets the capacity.
+        /// Gets the capacity.
         /// </summary>
         [JsonProperty(PropertyName = "capacity")]
-        public int? Capacity { get; set; }
+        public int? Capacity { get; private set; }
 
     }
 }

@@ -342,52 +342,6 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Updates a load balancer tags.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='loadBalancerName'>
-            /// The name of the load balancer.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to update load balancer tags.
-            /// </param>
-            public static LoadBalancer BeginUpdateTags(this ILoadBalancersOperations operations, string resourceGroupName, string loadBalancerName, TagsObject parameters)
-            {
-                return operations.BeginUpdateTagsAsync(resourceGroupName, loadBalancerName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates a load balancer tags.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='loadBalancerName'>
-            /// The name of the load balancer.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to update load balancer tags.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<LoadBalancer> BeginUpdateTagsAsync(this ILoadBalancersOperations operations, string resourceGroupName, string loadBalancerName, TagsObject parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.BeginUpdateTagsWithHttpMessagesAsync(resourceGroupName, loadBalancerName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Gets all the load balancers in a subscription.
             /// </summary>
             /// <param name='operations'>

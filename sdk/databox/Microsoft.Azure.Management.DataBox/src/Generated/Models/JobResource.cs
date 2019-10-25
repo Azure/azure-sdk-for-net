@@ -54,17 +54,23 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// 'Dispatched', 'Delivered', 'PickedUp', 'AtAzureDC', 'DataCopy',
         /// 'Completed', 'CompletedWithErrors', 'Cancelled',
         /// 'Failed_IssueReportedAtCustomer', 'Failed_IssueDetectedAtAzureDC',
-        /// 'Aborted'</param>
+        /// 'Aborted', 'CompletedWithWarnings', 'ReadyToDispatchFromAzureDC',
+        /// 'ReadyToReceiveAtAzureDC'</param>
         /// <param name="startTime">Time at which the job was started in UTC
         /// ISO 8601 format.</param>
         /// <param name="error">Top level error for the job.</param>
         /// <param name="details">Details of a job run. This field will only be
         /// sent for expand details filter.</param>
         /// <param name="cancellationReason">Reason for cancellation.</param>
+        /// <param name="deliveryType">Delivery type of Job. Possible values
+        /// include: 'NonScheduled', 'Scheduled'</param>
+        /// <param name="deliveryInfo">Delivery Info of Job.</param>
+        /// <param name="isCancellableWithoutFee">Flag to indicate cancellation
+        /// of scheduled job.</param>
         /// <param name="name">Name of the object.</param>
         /// <param name="id">Id of the object.</param>
         /// <param name="type">Type of the object.</param>
-        public JobResource(string location, Sku sku, IDictionary<string, string> tags = default(IDictionary<string, string>), bool? isCancellable = default(bool?), bool? isDeletable = default(bool?), bool? isShippingAddressEditable = default(bool?), StageName? status = default(StageName?), System.DateTime? startTime = default(System.DateTime?), Error error = default(Error), JobDetails details = default(JobDetails), string cancellationReason = default(string), string name = default(string), string id = default(string), string type = default(string))
+        public JobResource(string location, Sku sku, IDictionary<string, string> tags = default(IDictionary<string, string>), bool? isCancellable = default(bool?), bool? isDeletable = default(bool?), bool? isShippingAddressEditable = default(bool?), StageName? status = default(StageName?), System.DateTime? startTime = default(System.DateTime?), Error error = default(Error), JobDetails details = default(JobDetails), string cancellationReason = default(string), JobDeliveryType? deliveryType = default(JobDeliveryType?), JobDeliveryInfo deliveryInfo = default(JobDeliveryInfo), bool? isCancellableWithoutFee = default(bool?), string name = default(string), string id = default(string), string type = default(string))
             : base(location, sku, tags)
         {
             IsCancellable = isCancellable;
@@ -75,6 +81,9 @@ namespace Microsoft.Azure.Management.DataBox.Models
             Error = error;
             Details = details;
             CancellationReason = cancellationReason;
+            DeliveryType = deliveryType;
+            DeliveryInfo = deliveryInfo;
+            IsCancellableWithoutFee = isCancellableWithoutFee;
             Name = name;
             Id = id;
             Type = type;
@@ -110,7 +119,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// 'Delivered', 'PickedUp', 'AtAzureDC', 'DataCopy', 'Completed',
         /// 'CompletedWithErrors', 'Cancelled',
         /// 'Failed_IssueReportedAtCustomer', 'Failed_IssueDetectedAtAzureDC',
-        /// 'Aborted'
+        /// 'Aborted', 'CompletedWithWarnings', 'ReadyToDispatchFromAzureDC',
+        /// 'ReadyToReceiveAtAzureDC'
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
         public StageName? Status { get; private set; }
@@ -139,6 +149,25 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.cancellationReason")]
         public string CancellationReason { get; private set; }
+
+        /// <summary>
+        /// Gets or sets delivery type of Job. Possible values include:
+        /// 'NonScheduled', 'Scheduled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.deliveryType")]
+        public JobDeliveryType? DeliveryType { get; set; }
+
+        /// <summary>
+        /// Gets or sets delivery Info of Job.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.deliveryInfo")]
+        public JobDeliveryInfo DeliveryInfo { get; set; }
+
+        /// <summary>
+        /// Gets flag to indicate cancellation of scheduled job.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isCancellableWithoutFee")]
+        public bool? IsCancellableWithoutFee { get; private set; }
 
         /// <summary>
         /// Gets name of the object.

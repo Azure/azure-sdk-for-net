@@ -114,12 +114,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public BgpSettings BgpProperties { get; set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the VPN site resource.
-        /// Possible values include: 'Succeeded', 'Updating', 'Deleting',
-        /// 'Failed'
+        /// Gets the provisioning state of the VPN site resource. Possible
+        /// values include: 'Succeeded', 'Updating', 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets isSecuritySite flag.

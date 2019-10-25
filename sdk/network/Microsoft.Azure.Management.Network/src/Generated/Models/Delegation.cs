@@ -70,11 +70,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public string ServiceName { get; set; }
 
         /// <summary>
-        /// Gets or sets describes the actions permitted to the service upon
+        /// Gets describes the actions permitted to the service upon
         /// delegation.
         /// </summary>
         [JsonProperty(PropertyName = "properties.actions")]
-        public IList<string> Actions { get; set; }
+        public IList<string> Actions { get; private set; }
 
         /// <summary>
         /// Gets the provisioning state of the service delegation resource.
@@ -92,11 +92,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets a unique read-only string that changes whenever the
-        /// resource is updated.
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
     }
 }

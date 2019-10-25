@@ -26,10 +26,10 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             // Environment variable with the Key Vault endpoint.
             string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
 
-            #region CreateClient
+            #region Snippet:CreateSecretClient
             // Create a new secret client using the default credential from Azure.Identity using environment variables previously set,
             // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
-            var client = new SecretClient(vaultEndpoint: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
+            var client = new SecretClient(vaultUri: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
 
             // Create a new secret using the secret client.
             KeyVaultSecret secret = client.SetSecret("secret-name", "secret-value");
@@ -44,7 +44,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
         [Test]
         public async Task CreateSecret()
         {
-            #region CreateSecret
+            #region Snippet:CreateSecret
             KeyVaultSecret secret = await client.SetSecretAsync("secret-name", "secret-value");
 
             Console.WriteLine(secret.Name);
@@ -57,7 +57,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
         [Test]
         public void CreateSecretSync()
         {
-            #region CreateSecretSync
+            #region Snippet:CreateSecretSync
             KeyVaultSecret secret = client.SetSecret("secret-name", "secret-value");
 
             Console.WriteLine(secret.Name);
@@ -71,7 +71,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             // Make sure a secret exists. This will create a new version if "secret-name" already exists.
             await client.SetSecretAsync("secret-name", "secret-value");
 
-            #region RetrieveSecret
+            #region Snippet:RetrieveSecret
             KeyVaultSecret secret = await client.GetSecretAsync("secret-name");
 
             Console.WriteLine(secret.Name);
@@ -85,7 +85,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             // Make sure a secret exists. This will create a new version if "secret-name" already exists.
             await client.SetSecretAsync("secret-name", "secret-value");
 
-            #region UpdateSecret
+            #region Snippet:UpdateSecret
             KeyVaultSecret secret = await client.GetSecretAsync("secret-name");
 
             // Clients may specify the content type of a secret to assist in interpreting the secret data when it's retrieved.
@@ -105,7 +105,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
         [Test]
         public async Task ListSecrets()
         {
-            #region ListSecrets
+            #region Snippet:ListSecrets
             AsyncPageable<SecretProperties> allSecrets = client.GetPropertiesOfSecretsAsync();
 
             await foreach (SecretProperties secretProperties in allSecrets)
@@ -118,7 +118,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
         [Test]
         public async Task NotFound()
         {
-            #region NotFound
+            #region Snippet:SecretNotFound
             try
             {
                 KeyVaultSecret secret = await client.GetSecretAsync("some_secret");
@@ -133,7 +133,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
         [Ignore("The secret is deleted and purged on tear down of this text fixture.")]
         public async Task DeleteSecret()
         {
-            #region DeleteSecret
+            #region Snippet:DeleteSecret
             DeleteSecretOperation operation = await client.StartDeleteSecretAsync("secret-name");
 
             DeletedSecret secret = operation.Value;
@@ -145,7 +145,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
         [OneTimeTearDown]
         public async Task DeleteAndPurgeSecret()
         {
-            #region DeleteAndPurgeSecret
+            #region Snippet:DeleteAndPurgeSecret
             DeleteSecretOperation operation = await client.StartDeleteSecretAsync("secret-name");
 
             // You only need to wait for completion if you want to purge or recover the secret.
@@ -159,7 +159,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
         [Ignore("The secret is deleted and purged on tear down of this text fixture.")]
         public void DeleteSecretSync()
         {
-            #region DeleteSecretSync
+            #region Snippet:DeleteSecretSync
             DeleteSecretOperation operation = client.StartDeleteSecret("secret-name");
 
             // You only need to wait for completion if you want to purge or recover the secret.

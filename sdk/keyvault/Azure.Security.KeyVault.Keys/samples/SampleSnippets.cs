@@ -29,10 +29,10 @@ namespace Azure.Security.KeyVault.Keys.Samples
             // Environment variable with the Key Vault endpoint.
             string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
 
-            #region CreateKeyClient
+            #region Snippet:CreateKeyClient
             // Create a new key client using the default credential from Azure.Identity using environment variables previously set,
             // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
-            var client = new KeyClient(vaultEndpoint: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
+            var client = new KeyClient(vaultUri: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
 
             // Create a new key using the key client.
             KeyVaultKey key = client.CreateKey("key-name", KeyType.Rsa);
@@ -41,7 +41,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             key = client.GetKey("key-name");
             #endregion
 
-            #region CreateCryptographyClient
+            #region Snippet:CreateCryptographyClient
             // Create a new certificate client using the default credential from Azure.Identity using environment variables previously set,
             // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
             var cryptoClient = new CryptographyClient(keyId: key.Id, credential: new DefaultAzureCredential());
@@ -54,7 +54,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
         [Test]
         public async Task CreateKey()
         {
-            #region CreateKey
+            #region Snippet:CreateKey
             // Create a key. Note that you can specify the type of key
             // i.e. Elliptic curve, Hardware Elliptic Curve, RSA
             KeyVaultKey key = await client.CreateKeyAsync("key-name", KeyType.Rsa);
@@ -70,6 +70,8 @@ namespace Azure.Security.KeyVault.Keys.Samples
             Console.WriteLine(rsaKey.KeyType);
 
             // Create a hardware Elliptic Curve key
+            // Because only premium key vault supports HSM backed keys , please ensure your key vault
+            // SKU is premium when you set "hardwareProtected" value to true
             var echsmkey = new CreateEcKeyOptions("ec-key-name", hardwareProtected: true);
             KeyVaultKey ecKey = await client.CreateEcKeyAsync(echsmkey);
 
@@ -81,7 +83,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
         [Test]
         public void CreateKeySync()
         {
-            #region CreateKeySync
+            #region Snippet:CreateKeySync
             // Create a key of any type
             KeyVaultKey key = client.CreateKey("key-name", KeyType.Rsa);
 
@@ -96,6 +98,8 @@ namespace Azure.Security.KeyVault.Keys.Samples
             Console.WriteLine(rsaKey.KeyType);
 
             // Create a hardware Elliptic Curve key
+            // Because only premium key vault supports HSM backed keys , please ensure your key vault
+            // SKU is premium when you set "hardwareProtected" value to true
             var echsmkey = new CreateEcKeyOptions("ec-key-name", hardwareProtected: true);
             KeyVaultKey ecKey = client.CreateEcKey(echsmkey);
 
@@ -110,7 +114,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             // Make sure a key exists.
             await client.CreateKeyAsync("key-name", KeyType.Rsa);
 
-            #region RetrieveKey
+            #region Snippet:RetrieveKey
             KeyVaultKey key = await client.GetKeyAsync("key-name");
 
             Console.WriteLine(key.Name);
@@ -121,7 +125,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
         [Test]
         public async Task UpdateKey()
         {
-            #region UpdateKey
+            #region Snippet:UpdateKey
             KeyVaultKey key = await client.CreateKeyAsync("key-name", KeyType.Rsa);
 
             // You can specify additional application-specific metadata in the form of tags.
@@ -138,7 +142,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
         [Test]
         public async Task ListKeys()
         {
-            #region ListKeys
+            #region Snippet:ListKeys
             AsyncPageable<KeyProperties> allKeys = client.GetPropertiesOfKeysAsync();
 
             await foreach (KeyProperties keyProperties in allKeys)
@@ -151,7 +155,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
         [Test]
         public async Task EncryptDecrypt()
         {
-            #region EncryptDecrypt
+            #region Snippet:EncryptDecrypt
             byte[] plaintext = Encoding.UTF8.GetBytes("A single block of plaintext");
 
             // encrypt the data using the algorithm RSAOAEP
@@ -165,7 +169,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
         [Test]
         public async Task NotFoundAsync()
         {
-            #region NotFound
+            #region Snippet:KeyNotFound
             try
             {
                 KeyVaultKey key = await client.GetKeyAsync("some_key");
@@ -180,7 +184,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
         [Ignore("The key is deleted and purged on tear down of this text fixture.")]
         public async Task DeleteKey()
         {
-            #region DeleteKey
+            #region Snippet:DeleteKey
             DeleteKeyOperation operation = await client.StartDeleteKeyAsync("key-name");
 
             DeletedKey key = operation.Value;
@@ -192,7 +196,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
         [OneTimeTearDown]
         public async Task DeleteAndPurgeKey()
         {
-            #region DeleteAndPurgeKey
+            #region Snippet:DeleteAndPurgeKey
             DeleteKeyOperation operation = await client.StartDeleteKeyAsync("key-name");
 
             // You only need to wait for completion if you want to purge or recover the key.
@@ -225,7 +229,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
         [Ignore("The key is deleted and purged on tear down of this text fixture.")]
         public void DeleteKeySync()
         {
-            #region DeleteKeySync
+            #region Snippet:DeleteKeySync
             DeleteKeyOperation operation = client.StartDeleteKey("key-name");
 
             while (!operation.HasCompleted)

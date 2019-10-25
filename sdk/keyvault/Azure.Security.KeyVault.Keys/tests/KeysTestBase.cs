@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         public KeyClient Client { get; set; }
 
-        public Uri VaultEndpoint { get; set; }
+        public Uri VaultUri { get; set; }
 
         private readonly Queue<(string Name, bool Delete)> _keysToCleanup = new Queue<(string, bool)>();
 
@@ -40,7 +40,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             base.StartTestRecording();
 
             Client = GetClient();
-            VaultEndpoint = new Uri(Recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable));
+            VaultUri = new Uri(Recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable));
         }
 
         [TearDown]
@@ -92,7 +92,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             Assert.AreEqual(exp.Id, act.Id);
             Assert.AreEqual(exp.KeyType, act.KeyType);
-            AreEqual(exp.KeyOps, act.KeyOps);
+            AssertAreEqual(exp.KeyOps, act.KeyOps);
             Assert.AreEqual(exp.CurveName, act.CurveName);
             Assert.AreEqual(exp.K, act.K);
             Assert.AreEqual(exp.N, act.N);
@@ -114,10 +114,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.AreEqual(exp.RecoveryLevel, act.RecoveryLevel);
             Assert.AreEqual(exp.ExpiresOn, act.ExpiresOn);
             Assert.AreEqual(exp.NotBefore, act.NotBefore);
-            Assert.IsTrue(AreEqual(exp.Tags, act.Tags));
+            AssertAreEqual(exp.Tags, act.Tags);
         }
 
-        private static void AreEqual(IReadOnlyCollection<KeyOperation> exp, IReadOnlyCollection<KeyOperation> act)
+        protected static void AssertAreEqual<T>(IReadOnlyCollection<T> exp, IReadOnlyCollection<T> act)
         {
             if (exp is null && act is null)
                 return;
@@ -125,20 +125,21 @@ namespace Azure.Security.KeyVault.Keys.Tests
             CollectionAssert.AreEqual(exp, act);
         }
 
-        private static bool AreEqual(IDictionary<string, string> exp, IDictionary<string, string> act)
+        protected static void AssertAreEqual<TKey, TValue>(IDictionary<TKey, TValue> exp, IDictionary<TKey, TValue> act)
         {
             if (exp == null && act == null)
-                return true;
+                return;
 
             if (exp?.Count != act?.Count)
-                return false;
+                Assert.Fail("Actual count {0} does not match expected count {1}", act?.Count, exp?.Count);
 
-            foreach (KeyValuePair<string, string> pair in exp)
+            foreach (KeyValuePair<TKey, TValue> pair in exp)
             {
-                if (!act.TryGetValue(pair.Key, out string value)) return false;
-                if (!string.Equals(value, pair.Value)) return false;
+                if (!act.TryGetValue(pair.Key, out TValue value))
+                    Assert.Fail("Actual dictionary does not contain expected key '{0}'", pair.Key);
+
+                Assert.AreEqual(pair.Value, value);
             }
-            return true;
         }
 
         protected Task WaitForDeletedKey(string name)

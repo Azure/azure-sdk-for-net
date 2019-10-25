@@ -8,7 +8,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
-using Azure.Storage.Common;
 using Azure.Storage.Files.Models;
 using Azure.Storage.Files.Tests;
 using Azure.Storage.Test;
@@ -936,6 +935,7 @@ namespace Azure.Storage.Files.Test
         [TestCase(33 * Constants.MB)]
         [TestCase(257 * Constants.MB)]
         [TestCase(1 * Constants.GB)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8354")]
         public async Task UploadAsync_LargeBlobs(int size) =>
             // TODO: #6781 We don't want to add 1GB of random data in the recordings
             await UploadAndVerify(size, Constants.MB);
@@ -1025,6 +1025,7 @@ namespace Azure.Storage.Files.Test
 
         [Test]
         [LiveOnly]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8354")]
         // TODO: #7645
         public async Task UploadRangeFromUriAsync()
         {

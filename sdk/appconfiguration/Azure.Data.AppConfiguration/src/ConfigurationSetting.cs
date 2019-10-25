@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Data.AppConfiguration
@@ -11,6 +12,7 @@ namespace Azure.Data.AppConfiguration
     /// <summary>
     /// A setting, defined by a unique combination of a key and label.
     /// </summary>
+    [JsonConverter(typeof(ConfigurationSettingJsonConverter))]
     public sealed class ConfigurationSetting
     {
         private IDictionary<string, string> _tags;
@@ -69,7 +71,7 @@ namespace Azure.Data.AppConfiguration
         /// A value indicating whether the configuration setting is read only.
         /// A read only configuration setting may not be modified until it is made writable.
         /// </summary>
-        public bool? ReadOnly { get; internal set; }
+        public bool? IsReadOnly { get; internal set; }
 
         /// <summary>
         /// A dictionary of tags that can help identify what a configuration setting may be applicable for.
