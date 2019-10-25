@@ -3,6 +3,8 @@
 
 using System;
 using System.IO;
+using System.Net.Http;
+using System.Net.Sockets;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -99,6 +101,31 @@ namespace Azure.Identity.Tests
                 Assert.IsTrue(request.Headers.TryGetValue("Metadata", out string metadataValue));
 
                 Assert.AreEqual("true", metadataValue);
+            }
+        }
+
+        [NonParallelizable]
+        [Test]
+        public void VerifyImdsUnavailableImmediateFailureMockAsync()
+        {
+            using (new TestEnvVar("MSI_ENDPOINT", null))
+            using (new TestEnvVar("MSI_SECRET", null))
+            {
+                var mockTransport = new MockTransport(request => throw new Exception("mock imds probe exception"));
+
+                var options = new TokenCredentialOptions() { Transport = mockTransport };
+
+                ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential("mock-client-id", options));
+
+                Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+
+                MockRequest request = mockTransport.Requests[0];
+
+                string query = request.Uri.Query;
+
+                Assert.IsTrue(query.Contains("api-version=2018-02-01"));
+
+                Assert.False(request.Headers.TryGetValue("Metadata", out string _));
             }
         }
 
