@@ -356,6 +356,37 @@ namespace Azure.Storage
         }
 
         /// <summary>
+        /// Data Lake constant values;
+        /// </summary>
+        internal static class DataLake
+        {
+            /// <summary>
+            /// The blob URI suffex.
+            /// </summary>
+            public const string BlobUriSuffix = "blob";
+
+            /// <summary>
+            /// The DFS URI suffex.
+            /// </summary>
+            public const string DfsUriSuffix = "dfs";
+
+            /// <summary>
+            /// The key of the object json object returned for errors.
+            /// </summary>
+            public const string ErrorKey = "error";
+
+            /// <summary>
+            /// The key of the error code returned for errors.
+            /// </summary>
+            public const string ErrorCodeKey = "code";
+
+            /// <summary>
+            /// The key of the error message returned for errors.
+            /// </summary>
+            public const string ErrorMessageKey = "message";
+        }
+
+        /// <summary>
         /// Queue constant values
         /// </summary>
         internal static class Queue

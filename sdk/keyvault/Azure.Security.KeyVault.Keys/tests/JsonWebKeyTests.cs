@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Text;
 using Azure.Core;
 using NUnit.Framework;
 
@@ -40,12 +41,22 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public void ToAes()
         {
+            byte[] plaintext = Encoding.UTF8.GetBytes("test");
+
             using Aes aes = Aes.Create();
+            using ICryptoTransform encryptor = aes.CreateEncryptor();
+            byte[] ciphertext = encryptor.TransformFinalBlock(plaintext, 0, plaintext.Length);
+
             JsonWebKey jwk = new JsonWebKey(aes);
+            CollectionAssert.AreEqual(aes.Key, jwk.K);
             Assert.True(HasPrivateKey(jwk));
 
-            Aes key = jwk.ToAes();
+            using Aes key = jwk.ToAes();
             CollectionAssert.AreEqual(jwk.K, key.Key);
+
+            using ICryptoTransform decryptor = key.CreateDecryptor(key.Key, aes.IV);
+            plaintext = decryptor.TransformFinalBlock(ciphertext, 0, ciphertext.Length);
+            Assert.AreEqual("test", Encoding.UTF8.GetString(plaintext));
         }
 
         [Test]
@@ -161,13 +172,34 @@ namespace Azure.Security.KeyVault.Keys.Tests
 #if NET461
             Assert.Ignore("Creating ECDsa with JsonWebKey is not supported on net461.");
 #else
+            byte[] plaintext = Encoding.UTF8.GetBytes("test");
+            byte[] signature = null;
+
             using ECDsa ecdsa = ECDsa.Create();
-            int bitLength = ecdsa.KeySize;
+            try
+            {
+                ecdsa.GenerateKey(ECCurve.CreateFromValue(oid));
+            }
+            catch (NotSupportedException)
+            {
+                Assert.Inconclusive("This platform does not support OID {0} with friendly name '{1}'", oid, friendlyName);
+            }
+
+            if (includePrivateParameters)
+            {
+                signature = ecdsa.SignData(plaintext, HashAlgorithmName.SHA256);
+            }
 
             JsonWebKey jwk = new JsonWebKey(ecdsa, includePrivateParameters);
 
-            ECDsa key = jwk.ToECDsa(includePrivateParameters);
+            using ECDsa key = jwk.ToECDsa(includePrivateParameters);
+            int bitLength = ecdsa.KeySize;
             Assert.AreEqual(bitLength, key.KeySize);
+
+            if (signature != null)
+            {
+                Assert.IsTrue(ecdsa.VerifyData(plaintext, signature, HashAlgorithmName.SHA256));
+            }
 #endif
         }
 
@@ -270,13 +302,24 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [TestCase(true)]
         public void ToRSA(bool includePrivateParameters)
         {
+            byte[] plaintext = Encoding.UTF8.GetBytes("test");
+
             using RSA rsa = RSA.Create();
+            byte[] ciphertext = rsa.Encrypt(plaintext, RSAEncryptionPadding.Pkcs1);
+
             JsonWebKey jwk = new JsonWebKey(rsa, includePrivateParameters);
+
             int bitLength = jwk.N.Length * 8;
             Assert.AreEqual(includePrivateParameters, HasPrivateKey(jwk));
 
-            RSA key = jwk.ToRSA(includePrivateParameters);
+            using RSA key = jwk.ToRSA(includePrivateParameters);
             Assert.AreEqual(bitLength, key.KeySize);
+
+            if (includePrivateParameters)
+            {
+                plaintext = key.Decrypt(ciphertext, RSAEncryptionPadding.Pkcs1);
+                Assert.AreEqual("test", Encoding.UTF8.GetString(plaintext));
+            }
         }
 
         [Test]
@@ -365,10 +408,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
             RSAParameters zeroE = rsaParameters;
             zeroE.Exponent = new byte[] { 0, 0, 0, 0 };
             yield return new object[] { zeroE, nameof(zeroE) };
-
-            RSAParameters longerE = rsaParameters;
-            longerE.Exponent = new byte[] { 0x1, 0x2, 0x3, 0x4, 0x5 };
-            yield return new object[] { longerE, nameof(longerE) };
 
             RSAParameters nullN = rsaParameters;
             nullN.Modulus = null;

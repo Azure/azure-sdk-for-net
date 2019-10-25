@@ -19,9 +19,9 @@ namespace Azure.Data.AppConfiguration
             writer.WriteString("key", setting.Key);
             writer.WriteString("label", setting.Label);
 
-            if (setting.ReadOnly != default)
+            if (setting.IsReadOnly != default)
             {
-                writer.WriteBoolean("locked", setting.ReadOnly.Value);
+                writer.WriteBoolean("locked", setting.IsReadOnly.Value);
             }
 
             if (setting.LastModified != default)
@@ -116,11 +116,11 @@ namespace Azure.Data.AppConfiguration
             {
                 if (property.Value.ValueKind == JsonValueKind.Null)
                 {
-                    setting.ReadOnly = null;
+                    setting.IsReadOnly = null;
                 }
                 else
                 {
-                    setting.ReadOnly = property.Value.GetBoolean();
+                    setting.IsReadOnly = property.Value.GetBoolean();
                 }
             }
             else if (property.NameEquals("tags"))

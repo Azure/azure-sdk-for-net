@@ -62,6 +62,14 @@ namespace Azure.Storage.Test.Shared
                 () => TestConfigurations.DefaultTargetOAuthTenant);
 
         /// <summary>
+        /// Gets the tenant to use for any tests that require authentication
+        /// with Azure AD.
+        /// </summary>
+        public TenantConfiguration TestConfigHierarchicalNamespace => GetTestConfig(
+                "Storage_TestConfigHierarchicalNamespace",
+                () => TestConfigurations.DefaultTargetHierarchicalNamespaceTenant);
+
+        /// <summary>
         /// Gets a cache used for storing serialized tenant configurations.  Do
         /// not get values from this directly; use GetTestConfig.
         /// </summary>
@@ -186,7 +194,7 @@ namespace Azure.Storage.Test.Shared
                 Recording.InstrumentClientOptions(
                     new TokenCredentialOptions() { AuthorityHost = authorityHost }));
 
-        public void AssertMetadataEquality(IDictionary<string, string> expected, IDictionary<string, string> actual)
+        public virtual void AssertMetadataEquality(IDictionary<string, string> expected, IDictionary<string, string> actual)
         {
             Assert.IsNotNull(expected, "Expected metadata is null");
             Assert.IsNotNull(actual, "Actual metadata is null");

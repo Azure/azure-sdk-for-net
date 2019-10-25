@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Search
     internal partial interface IDocumentsProxyOperations
     {
         /// <summary>
-        /// Queries the number of documents in the Azure Search index.
+        /// Queries the number of documents in the index.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Count-Documents" />
         /// </summary>
         /// <param name='searchRequestOptions'>

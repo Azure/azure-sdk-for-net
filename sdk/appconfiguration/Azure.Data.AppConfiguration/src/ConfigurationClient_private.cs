@@ -160,7 +160,7 @@ namespace Azure.Data.AppConfiguration
 
             if (selector.Fields != SettingFields.All)
             {
-                var filter = selector.Fields.ToString().ToLowerInvariant().Replace("readonly", "locked");
+                var filter = selector.Fields.ToString().ToLowerInvariant().Replace("isreadonly", "locked");
                 builder.AppendQuery(FieldsQueryFilter, filter);
             }
 

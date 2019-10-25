@@ -38,7 +38,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// A value indicating whether the configuration setting is read-only.
         /// </summary>
-        ReadOnly = 0x0040,
+        IsReadOnly = 0x0040,
         /// <summary>
         /// A dictionary of tags that can help identify what a configuration setting may be applicable for.
         /// </summary>

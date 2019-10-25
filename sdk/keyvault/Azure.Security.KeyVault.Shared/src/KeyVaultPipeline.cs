@@ -14,9 +14,9 @@ namespace Azure.Security.KeyVault
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
 
-        public KeyVaultPipeline(Uri vaultEndpoint, string apiVersion, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
+        public KeyVaultPipeline(Uri vaultUri, string apiVersion, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
         {
-            VaultEndpoint = vaultEndpoint;
+            VaultUri = vaultUri;
             _pipeline = pipeline;
 
             _clientDiagnostics = clientDiagnostics;
@@ -26,12 +26,12 @@ namespace Azure.Security.KeyVault
 
         public string ApiVersion { get; }
 
-        public Uri VaultEndpoint { get; }
+        public Uri VaultUri { get; }
 
         public Uri CreateFirstPageUri(string path)
         {
             var firstPage = new RequestUriBuilder();
-            firstPage.Reset(VaultEndpoint);
+            firstPage.Reset(VaultUri);
 
             firstPage.AppendPath(path, escape: false);
             firstPage.AppendQuery("api-version", ApiVersion);
@@ -42,7 +42,7 @@ namespace Azure.Security.KeyVault
         public Uri CreateFirstPageUri(string path, params ValueTuple<string, string>[] queryParams)
         {
             var firstPage = new RequestUriBuilder();
-            firstPage.Reset(VaultEndpoint);
+            firstPage.Reset(VaultUri);
 
             firstPage.AppendPath(path, escape: false);
             firstPage.AppendQuery("api-version", ApiVersion);
@@ -74,7 +74,7 @@ namespace Azure.Security.KeyVault
             request.Headers.Add(HttpHeader.Common.JsonContentType);
             request.Headers.Add(HttpHeader.Common.JsonAccept);
             request.Method = method;
-            request.Uri.Reset(VaultEndpoint);
+            request.Uri.Reset(VaultUri);
 
             foreach (var p in path)
             {

@@ -25,8 +25,8 @@ namespace Azure.Data.AppConfiguration.Samples
             // pass the policy options to the client
             var client = new ConfigurationClient(connectionString, options);
 
-            client.Set(new ConfigurationSetting("some_key", "some_value"));
-            client.Delete("some_key");
+            client.SetConfigurationSetting(new ConfigurationSetting("some_key", "some_value"));
+            client.DeleteConfigurationSetting("some_key");
         }
     }
 }

@@ -4,7 +4,6 @@
 using System;
 using System.Text;
 using System.Xml.Linq;
-using Azure.Storage.Common;
 
 namespace Azure.Storage.Test
 {

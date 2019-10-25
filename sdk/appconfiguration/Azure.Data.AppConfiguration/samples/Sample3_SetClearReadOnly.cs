@@ -30,7 +30,7 @@ namespace Azure.Data.AppConfiguration.Samples
             var setting = new ConfigurationSetting("some_key", "some_value");
 
             // Add the setting to the Configuration Store.
-            client.Set(setting);
+            client.SetConfigurationSetting(setting);
 
             // Make the setting read only.
             client.SetReadOnly(setting.Key);
@@ -41,7 +41,7 @@ namespace Azure.Data.AppConfiguration.Samples
             try
             {
                 // Set() should throw because setting is read only and cannot be updated.
-                client.Set(setting);
+                client.SetConfigurationSetting(setting);
             }
             catch (RequestFailedException e)
             {
@@ -53,7 +53,7 @@ namespace Azure.Data.AppConfiguration.Samples
 
             // Try to update to the new value again.
             // Set() should now succeed because setting is read write.
-            client.Set(setting);
+            client.SetConfigurationSetting(setting);
         }
     }
 }

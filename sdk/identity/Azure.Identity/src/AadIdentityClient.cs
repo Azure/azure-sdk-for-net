@@ -17,130 +17,50 @@ namespace Azure.Identity
 {
     internal class AadIdentityClient
     {
-        private static readonly Lazy<AadIdentityClient> s_sharedClient = new Lazy<AadIdentityClient>(() => new AadIdentityClient(null));
-
-        private readonly TokenCredentialOptions _options;
-        private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
-
         private const string ClientAssertionType = "urn:ietf:params:oauth:client-assertion-type:jwt-bearer";
 
-        private const string AuthenticationRequestFailedError = "The request to the identity service failed.  See inner exception for details.";
+        private readonly CredentialPipeline _pipeline;
 
         protected AadIdentityClient()
         {
         }
 
-        public AadIdentityClient(TokenCredentialOptions options = null)
+        public AadIdentityClient(CredentialPipeline pipeline)
         {
-            _options = options ?? new TokenCredentialOptions();
-
-            _pipeline = HttpPipelineBuilder.Build(_options);
-            _clientDiagnostics = new ClientDiagnostics(_options);
+            _pipeline = pipeline;
         }
-
-        public static AadIdentityClient SharedClient { get { return s_sharedClient.Value; } }
-
 
         public virtual async Task<AccessToken> AuthenticateAsync(string tenantId, string clientId, string clientSecret, string[] scopes, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Identity.AadIdentityClient.Authenticate");
-            scope.Start();
+            using Request request = CreateClientSecretAuthRequest(tenantId, clientId, clientSecret, scopes);
 
-            try
-            {
-                using Request request = CreateClientSecretAuthRequest(tenantId, clientId, clientSecret, scopes);
-                try
-                {
-                    return await SendAuthRequestAsync(request, cancellationToken).ConfigureAwait(false);
-                }
-                catch (RequestFailedException ex)
-                {
-                    throw new AuthenticationFailedException(AuthenticationRequestFailedError, ex);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return await SendAuthRequestAsync(request, cancellationToken).ConfigureAwait(false);
         }
 
         public virtual AccessToken Authenticate(string tenantId, string clientId, string clientSecret, string[] scopes, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Identity.AadIdentityClient.Authenticate");
-            scope.Start();
+            using Request request = CreateClientSecretAuthRequest(tenantId, clientId, clientSecret, scopes);
 
-            try
-            {
-                using Request request = CreateClientSecretAuthRequest(tenantId, clientId, clientSecret, scopes);
-                try
-                {
-                    return SendAuthRequest(request, cancellationToken);
-                }
-                catch (RequestFailedException ex)
-                {
-                    throw new AuthenticationFailedException(AuthenticationRequestFailedError, ex);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return SendAuthRequest(request, cancellationToken);
         }
 
         public virtual async Task<AccessToken> AuthenticateAsync(string tenantId, string clientId, X509Certificate2 clientCertificate, string[] scopes, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Identity.AadIdentityClient.Authenticate");
-            scope.Start();
+            using Request request = CreateClientCertificateAuthRequest(tenantId, clientId, clientCertificate, scopes);
 
-            try
-            {
-                using Request request = CreateClientCertificateAuthRequest(tenantId, clientId, clientCertificate, scopes);
-                try
-                {
-                    return await SendAuthRequestAsync(request, cancellationToken).ConfigureAwait(false);
-                }
-                catch (RequestFailedException ex)
-                {
-                    throw new AuthenticationFailedException(AuthenticationRequestFailedError, ex);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return await SendAuthRequestAsync(request, cancellationToken).ConfigureAwait(false);
         }
 
         public virtual AccessToken Authenticate(string tenantId, string clientId, X509Certificate2 clientCertificate, string[] scopes, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Identity.AadIdentityClient.Authenticate");
-            scope.Start();
+            using Request request = CreateClientCertificateAuthRequest(tenantId, clientId, clientCertificate, scopes);
 
-            try
-            {
-                using Request request = CreateClientCertificateAuthRequest(tenantId, clientId, clientCertificate, scopes);
-                try
-                {
-                    return SendAuthRequest(request, cancellationToken);
-                }
-                catch (RequestFailedException ex)
-                {
-                    throw new AuthenticationFailedException(AuthenticationRequestFailedError, ex);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return SendAuthRequest(request, cancellationToken);
         }
 
         private async Task<AccessToken> SendAuthRequestAsync(Request request, CancellationToken cancellationToken)
         {
-            Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+            Response response = await _pipeline.HttpPipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
             if (response.Status == 200 || response.Status == 201)
             {
@@ -154,7 +74,7 @@ namespace Azure.Identity
 
         private AccessToken SendAuthRequest(Request request, CancellationToken cancellationToken)
         {
-            Response response = _pipeline.SendRequest(request, cancellationToken);
+            Response response = _pipeline.HttpPipeline.SendRequest(request, cancellationToken);
 
             if (response.Status == 200 || response.Status == 201)
             {
@@ -168,13 +88,13 @@ namespace Azure.Identity
 
         private Request CreateClientSecretAuthRequest(string tenantId, string clientId, string clientSecret, string[] scopes)
         {
-            Request request = _pipeline.CreateRequest();
+            Request request = _pipeline.HttpPipeline.CreateRequest();
 
             request.Method = RequestMethod.Post;
 
             request.Headers.Add(HttpHeader.Common.FormUrlEncodedContentType);
 
-            request.Uri.Reset(_options.AuthorityHost);
+            request.Uri.Reset(_pipeline.AuthorityHost);
 
             request.Uri.AppendPath(tenantId);
 
@@ -191,13 +111,13 @@ namespace Azure.Identity
 
         private Request CreateClientCertificateAuthRequest(string tenantId, string clientId, X509Certificate2 clientCertficate, string[] scopes)
         {
-            Request request = _pipeline.CreateRequest();
+            Request request = _pipeline.HttpPipeline.CreateRequest();
 
             request.Method = RequestMethod.Post;
 
             request.Headers.Add(HttpHeader.Common.FormUrlEncodedContentType);
 
-            request.Uri.Reset(_options.AuthorityHost);
+            request.Uri.Reset(_pipeline.AuthorityHost);
 
             request.Uri.AppendPath(tenantId);
 
@@ -291,7 +211,7 @@ namespace Azure.Identity
                         break;
 
                     case "expires_in":
-                        expiresOn = DateTime.UtcNow + TimeSpan.FromSeconds(prop.Value.GetInt64());
+                        expiresOn = DateTimeOffset.UtcNow + TimeSpan.FromSeconds(prop.Value.GetInt64());
                         break;
                 }
             }

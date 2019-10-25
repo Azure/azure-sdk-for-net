@@ -17,7 +17,7 @@ namespace Azure.Security.KeyVault.Test
 
         public SecretClient Client { get; set; }
 
-        public Uri VaultEndpoint { get; set; }
+        public Uri VaultUri { get; set; }
 
         private readonly Queue<(string Name, bool Delete)> _secretsToCleanup = new Queue<(string, bool)>();
 
@@ -41,7 +41,7 @@ namespace Azure.Security.KeyVault.Test
             base.StartTestRecording();
 
             Client = GetClient();
-            VaultEndpoint = new Uri(Recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable));
+            VaultUri = new Uri(Recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable));
         }
 
         [TearDown]
