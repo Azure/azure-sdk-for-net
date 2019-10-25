@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Azure.Core.Http;
 using Azure.Storage.Blobs.Models;
 
 #pragma warning disable SA1402  // File may only contain a single type
@@ -24,7 +23,7 @@ namespace Azure.Storage.Blobs.Models
     }
 
     /// <summary>
-    /// The properties and Content returned from downloading a blob
+    /// The details and Content returned from downloading a blob
     /// </summary>
     public partial class BlobDownloadInfo : IDisposable
     {
@@ -49,6 +48,11 @@ namespace Azure.Storage.Blobs.Models
         public Stream Content => _flattened.Content;
 
         /// <summary>
+        /// The media type of the body of the response. For Download Blob this is 'application/octet-stream'
+        /// </summary>
+        public string ContentType => _flattened.ContentType;
+
+        /// <summary>
         /// If the blob has an MD5 hash and this operation is to read the full blob, this response header is returned so that the client can check for message content integrity.
         /// </summary>
 #pragma warning disable CA1819 // Properties should not return arrays
@@ -56,9 +60,9 @@ namespace Azure.Storage.Blobs.Models
 #pragma warning restore CA1819 // Properties should not return arrays
 
         /// <summary>
-        /// Properties returned when downloading a Blob
+        /// Details returned when downloading a Blob
         /// </summary>
-        public BlobDownloadProperties Properties { get; private set; }
+        public BlobDownloadDetails Details { get; private set; }
 
         /// <summary>
         /// Creates a new DownloadInfo backed by FlattenedDownloadProperties
@@ -67,7 +71,7 @@ namespace Azure.Storage.Blobs.Models
         internal BlobDownloadInfo(FlattenedDownloadProperties flattened)
         {
             _flattened = flattened;
-            Properties = new BlobDownloadProperties() { _flattened = flattened };
+            Details = new BlobDownloadDetails() { _flattened = flattened };
         }
 
         /// <summary>
@@ -81,9 +85,9 @@ namespace Azure.Storage.Blobs.Models
     }
 
     /// <summary>
-    /// Properties returned when downloading a Blob
+    /// Details returned when downloading a Blob
     /// </summary>
-    public partial class BlobDownloadProperties
+    public partial class BlobDownloadDetails
     {
         /// <summary>
         /// Internal flattened property representation
@@ -99,11 +103,6 @@ namespace Azure.Storage.Blobs.Models
         /// x-ms-meta
         /// </summary>
         public IDictionary<string, string> Metadata => _flattened.Metadata;
-
-        /// <summary>
-        /// The media type of the body of the response. For Download Blob this is 'application/octet-stream'
-        /// </summary>
-        public string ContentType => _flattened.ContentType;
 
         /// <summary>
         /// Indicates the range of bytes returned in the event that the client requested a subset of the blob by setting the 'Range' request header.
@@ -143,7 +142,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Conclusion time of the last attempted Copy Blob operation where this blob was the destination blob. This value can specify the time of a completed, aborted, or failed copy attempt. This header does not appear if a copy is pending, if this blob has never been the destination in a Copy Blob operation, or if this blob has been modified after a concluded Copy Blob operation using Set Blob Properties, Put Blob, or Put Block List.
         /// </summary>
-        public DateTimeOffset CopyCompletionTime => _flattened.CopyCompletionTime;
+        public DateTimeOffset CopyCompletedOn => _flattened.CopyCompletionTime;
 
         /// <summary>
         /// Only appears when x-ms-copy-status is failed or pending. Describes the cause of the last fatal or non-fatal copy operation failure. This header does not appear if this blob has never been the destination in a Copy Blob operation, or if this blob has been modified after a concluded Copy Blob operation using Set Blob Properties, Put Blob, or Put Block List
@@ -240,7 +239,7 @@ namespace Azure.Storage.Blobs.Models
             Azure.Storage.Blobs.Models.LeaseStatus leaseStatus = default,
             byte[] contentHash = default,
             string acceptRanges = default,
-            Azure.Core.Http.ETag eTag = default,
+            ETag eTag = default,
             int blobCommittedBlockCount = default,
             string contentRange = default,
             bool isServerEncrypted = default,

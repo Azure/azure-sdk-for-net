@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -14,35 +15,25 @@ namespace Azure.Core
     {
         private const string DefaultMessage = "Service request failed.";
 
-        public static ValueTask<RequestFailedException> CreateRequestFailedExceptionAsync(this Response response)
+        public static ValueTask<RequestFailedException> CreateRequestFailedExceptionAsync(this Response response, string message = null, string errorCode = null)
         {
-            return CreateRequestFailedExceptionAsync(response, DefaultMessage);
+            return CreateRequestFailedExceptionAsync(message ?? DefaultMessage, response, errorCode, true);
         }
 
-        public static ValueTask<RequestFailedException> CreateRequestFailedExceptionAsync(this Response response, string message)
+        public static RequestFailedException CreateRequestFailedException(this Response response, string message = null, string errorCode = null)
         {
-            return CreateRequestFailedExceptionAsync(message, response, true);
-        }
-
-        public static RequestFailedException CreateRequestFailedException(this Response response)
-        {
-            return CreateRequestFailedException(response, DefaultMessage);
-        }
-
-        public static RequestFailedException CreateRequestFailedException(this Response response, string message)
-        {
-            ValueTask<RequestFailedException> messageTask = CreateRequestFailedExceptionAsync(message, response, false);
+            ValueTask<RequestFailedException> messageTask = CreateRequestFailedExceptionAsync(message, response, errorCode, false);
             Debug.Assert(messageTask.IsCompleted);
             return messageTask.GetAwaiter().GetResult();
         }
 
-        public static async ValueTask<RequestFailedException> CreateRequestFailedExceptionAsync(string message, Response response, bool async)
+        public static async ValueTask<RequestFailedException> CreateRequestFailedExceptionAsync(string message, Response response, string errorCode, bool async)
         {
-            message = await CreateRequestFailedMessageAsync(message, response, async).ConfigureAwait(false);
-            return new RequestFailedException(response.Status, message);
+            message = await CreateRequestFailedMessageAsync(message, response, errorCode, async).ConfigureAwait(false);
+            return new RequestFailedException(response.Status, message, errorCode, null);
         }
 
-        public static async ValueTask<string> CreateRequestFailedMessageAsync(string message, Response response, bool async)
+        public static async ValueTask<string> CreateRequestFailedMessageAsync(string message, Response response, string errorCode, bool async)
         {
             StringBuilder messageBuilder = new StringBuilder()
                 .AppendLine(message)
@@ -51,6 +42,13 @@ namespace Azure.Core
                 .Append(" (")
                 .Append(response.ReasonPhrase)
                 .AppendLine(")");
+
+            if (!string.IsNullOrWhiteSpace(errorCode))
+            {
+                messageBuilder.Append("ErrorCode: ")
+                    .Append(errorCode)
+                    .AppendLine();
+            }
 
             if (response.ContentStream != null &&
                 ContentTypeUtilities.TryGetTextEncoding(response.Headers.ContentType, out var encoding))
@@ -70,7 +68,7 @@ namespace Azure.Core
             messageBuilder
                 .AppendLine()
                 .AppendLine("Headers:");
-            foreach (Http.HttpHeader responseHeader in response.Headers)
+            foreach (HttpHeader responseHeader in response.Headers)
             {
                 messageBuilder.AppendLine($"{responseHeader.Name}: {responseHeader.Value}");
             }

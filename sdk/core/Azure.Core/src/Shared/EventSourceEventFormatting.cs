@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Diagnostics.Tracing;
 using System.Globalization;
 using System.Linq;
@@ -9,7 +8,7 @@ using System.Text;
 
 namespace Azure.Core.Shared
 {
-    internal class EventSourceEventFormatting
+    internal static class EventSourceEventFormatting
     {
         public static string Format(EventWrittenEventArgs eventData)
         {

@@ -36,9 +36,9 @@ namespace Azure.Data.AppConfiguration
         /// </summary>
         LastModified = 0x0020,
         /// <summary>
-        /// A value indicating whether the configuration setting is locked.
+        /// A value indicating whether the configuration setting is read-only.
         /// </summary>
-        Locked = 0x0040,
+        IsReadOnly = 0x0040,
         /// <summary>
         /// A dictionary of tags that can help identify what a configuration setting may be applicable for.
         /// </summary>

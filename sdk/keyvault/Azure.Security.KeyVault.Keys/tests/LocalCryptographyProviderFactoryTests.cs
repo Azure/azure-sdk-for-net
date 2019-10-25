@@ -14,12 +14,12 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [TestCaseSource(nameof(GetCreateData))]
         public void Create(JsonWebKey jwk, Type clientType)
         {
-            ICryptographyProvider client = LocalCryptographyProviderFactory.Create(jwk);
-            Assert.IsInstanceOf(clientType, client, "Key {0} of type {1} did not yield client type {2}", jwk.Id, jwk.KeyType, clientType.Name);
+            ICryptographyProvider provider = LocalCryptographyProviderFactory.Create(new KeyVaultKey { Key = jwk });
+            Assert.IsInstanceOf(clientType, provider, "Key {0} of type {1} did not yield client type {2}", jwk.Id, jwk.KeyType, clientType.Name);
         }
 
         [Test]
-        public void CreateThrows()
+        public void NotSupported()
         {
             JsonWebKey jwk = new JsonWebKey
             {
@@ -27,7 +27,24 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 KeyType = new KeyType("invalid"),
             };
 
-            Assert.Throws<NotSupportedException>(() => LocalCryptographyProviderFactory.Create(jwk));
+            ICryptographyProvider provider = LocalCryptographyProviderFactory.Create(new KeyVaultKey { Key = jwk });
+            Assert.IsNull(provider);
+        }
+
+        [Test]
+        public void NoKey()
+        {
+            ICryptographyProvider provider = LocalCryptographyProviderFactory.Create(null);
+            Assert.IsNull(provider);
+        }
+
+        [Test]
+        public void NoKeyMaterial()
+        {
+            KeyVaultKey key = new KeyVaultKey();
+
+            ICryptographyProvider provider = LocalCryptographyProviderFactory.Create(key);
+            Assert.IsNull(provider);
         }
 
         private static IEnumerable<object[]> GetCreateData()

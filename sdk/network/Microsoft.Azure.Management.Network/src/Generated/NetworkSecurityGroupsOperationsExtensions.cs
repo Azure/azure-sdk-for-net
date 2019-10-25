@@ -350,52 +350,6 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Updates a network security group tags.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='networkSecurityGroupName'>
-            /// The name of the network security group.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to update network security group tags.
-            /// </param>
-            public static NetworkSecurityGroup BeginUpdateTags(this INetworkSecurityGroupsOperations operations, string resourceGroupName, string networkSecurityGroupName, TagsObject parameters)
-            {
-                return operations.BeginUpdateTagsAsync(resourceGroupName, networkSecurityGroupName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates a network security group tags.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='networkSecurityGroupName'>
-            /// The name of the network security group.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to update network security group tags.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<NetworkSecurityGroup> BeginUpdateTagsAsync(this INetworkSecurityGroupsOperations operations, string resourceGroupName, string networkSecurityGroupName, TagsObject parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.BeginUpdateTagsWithHttpMessagesAsync(resourceGroupName, networkSecurityGroupName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Gets all network security groups in a subscription.
             /// </summary>
             /// <param name='operations'>

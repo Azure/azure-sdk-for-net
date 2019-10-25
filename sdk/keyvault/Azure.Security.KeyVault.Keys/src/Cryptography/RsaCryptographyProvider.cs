@@ -1,45 +1,45 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Security.Cryptography;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure.Core;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
-    internal class RsaCryptographyProvider : ICryptographyProvider
+    internal class RsaCryptographyProvider : LocalCryptographyProvider
     {
-        private readonly JsonWebKey _jwk;
-
-        internal RsaCryptographyProvider(JsonWebKey jwk)
+        internal RsaCryptographyProvider(KeyVaultKey key) : base(key)
         {
-            _jwk = jwk ?? throw new ArgumentNullException(nameof(jwk));
         }
 
-        public bool ShouldRemote => _jwk.Id != null;
-
-        public bool SupportsOperation(KeyOperation operation)
+        public override bool SupportsOperation(KeyOperation operation)
         {
-            if (_jwk != null)
+            if (KeyMaterial != null)
             {
                 if (operation == KeyOperation.Encrypt || operation == KeyOperation.Decrypt || operation == KeyOperation.Sign || operation == KeyOperation.Verify || operation == KeyOperation.WrapKey || operation == KeyOperation.UnwrapKey)
                 {
-                    return _jwk.SupportsOperation(operation);
+                    return KeyMaterial.SupportsOperation(operation);
                 }
             }
 
             return false;
         }
 
-        public EncryptResult Encrypt(EncryptionAlgorithm algorithm, byte[] plaintext, byte[] iv, byte[] authenticationData, CancellationToken cancellationToken)
+        public override EncryptResult Encrypt(EncryptionAlgorithm algorithm, byte[] plaintext, CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(plaintext, nameof(plaintext));
 
-            RSAEncryptionPadding padding = algorithm.GetRsaEncryptionPadding();
-            byte[] ciphertext = Encrypt(plaintext, padding);
+            ThrowIfTimeInvalid();
 
+            RSAEncryptionPadding padding = algorithm.GetRsaEncryptionPadding();
+            if (padding is null)
+            {
+                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(Encrypt), algorithm);
+                return null;
+            }
+
+            byte[] ciphertext = Encrypt(plaintext, padding);
             EncryptResult result = null;
 
             if (ciphertext != null)
@@ -48,26 +48,32 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 {
                     Algorithm = algorithm,
                     Ciphertext = ciphertext,
-                    KeyId = _jwk.Id,
+                    KeyId = KeyMaterial.Id,
                 };
             }
 
             return result;
         }
 
-        public Task<EncryptResult> EncryptAsync(EncryptionAlgorithm algorithm, byte[] plaintext, byte[] iv, byte[] authenticationData, CancellationToken cancellationToken)
-        {
-            EncryptResult result = Encrypt(algorithm, plaintext, iv, authenticationData, cancellationToken);
-            return Task.FromResult(result);
-        }
-
-        public DecryptResult Decrypt(EncryptionAlgorithm algorithm, byte[] ciphertext, byte[] iv, byte[] authenticationData, byte[] authenticationTag, CancellationToken cancellationToken)
+        public override DecryptResult Decrypt(EncryptionAlgorithm algorithm, byte[] ciphertext, CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(ciphertext, nameof(ciphertext));
 
-            RSAEncryptionPadding padding = algorithm.GetRsaEncryptionPadding();
-            byte[] plaintext = Decrypt(ciphertext, padding);
+            if (MustRemote)
+            {
+                // A private key is required to decrypt. Send to the server.
+                KeysEventSource.Singleton.PrivateKeyRequired(nameof(Decrypt));
+                return null;
+            }
 
+            RSAEncryptionPadding padding = algorithm.GetRsaEncryptionPadding();
+            if (padding is null)
+            {
+                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(Decrypt), algorithm);
+                return null;
+            }
+
+            byte[] plaintext = Decrypt(ciphertext, padding);
             DecryptResult result = null;
 
             if (plaintext != null)
@@ -75,7 +81,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 result = new DecryptResult
                 {
                     Algorithm = algorithm,
-                    KeyId = _jwk.Id,
+                    KeyId = KeyMaterial.Id,
                     Plaintext = plaintext,
                 };
             }
@@ -83,55 +89,45 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             return result;
         }
 
-        public Task<DecryptResult> DecryptAsync(EncryptionAlgorithm algorithm, byte[] ciphertext, byte[] iv, byte[] authenticationData, byte[] authenticationTag, CancellationToken cancellationToken)
-        {
-            DecryptResult result = Decrypt(algorithm, ciphertext, iv, authenticationData, authenticationTag, cancellationToken);
-            return Task.FromResult(result);
-        }
-
-        public SignResult Sign(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken)
+        public override SignResult Sign(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(digest, nameof(digest));
 
+            ThrowIfTimeInvalid();
+
             // A private key is required to sign. Send to the server.
-            if (_jwk.Id != null && !_jwk.HasPrivateKey)
+            if (MustRemote)
             {
-                // TODO: Log that we need a private key.
+                KeysEventSource.Singleton.PrivateKeyRequired(nameof(Sign));
                 return null;
             }
 
             HashAlgorithmName hashAlgorithm = algorithm.GetHashAlgorithmName();
             if (hashAlgorithm == default)
             {
-                // TODO: Log that we don't support the given algorithm.
+                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(Sign), algorithm);
                 return null;
             }
 
             RSASignaturePadding padding = algorithm.GetRsaSignaturePadding();
             if (padding is null)
             {
-                // TODO: Log that we don't support the given algorithm.
+                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(Sign), algorithm);
                 return null;
             }
 
-            using RSA rsa = _jwk.ToRSA(true);
+            using RSA rsa = KeyMaterial.ToRSA(true);
             byte[] signature = rsa.SignHash(digest, hashAlgorithm, padding);
 
             return new SignResult
             {
                 Algorithm = algorithm,
-                KeyId = _jwk.Id,
+                KeyId = KeyMaterial.Id,
                 Signature = signature,
             };
         }
 
-        public Task<SignResult> SignAsync(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken)
-        {
-            SignResult result = Sign(algorithm, digest, cancellationToken);
-            return Task.FromResult(result);
-        }
-
-        public VerifyResult Verify(SignatureAlgorithm algorithm, byte[] digest, byte[] signature, CancellationToken cancellationToken)
+        public override VerifyResult Verify(SignatureAlgorithm algorithm, byte[] digest, byte[] signature, CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(digest, nameof(digest));
             Argument.AssertNotNull(signature, nameof(signature));
@@ -139,41 +135,42 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             HashAlgorithmName hashAlgorithm = algorithm.GetHashAlgorithmName();
             if (hashAlgorithm == default)
             {
-                // TODO: Log that we don't support the given algorithm.
+                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(Verify), algorithm);
                 return null;
             }
 
             RSASignaturePadding padding = algorithm.GetRsaSignaturePadding();
             if (padding is null)
             {
-                // TODO: Log that we don't support the given algorithm.
+                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(Verify), algorithm);
                 return null;
             }
 
-            using RSA rsa = _jwk.ToRSA();
+            using RSA rsa = KeyMaterial.ToRSA();
             bool isValid = rsa.VerifyHash(digest, signature, hashAlgorithm, padding);
 
             return new VerifyResult
             {
                 Algorithm = algorithm,
                 IsValid = isValid,
-                KeyId = _jwk.Id,
+                KeyId = KeyMaterial.Id,
             };
         }
 
-        public Task<VerifyResult> VerifyAsync(SignatureAlgorithm algorithm, byte[] digest, byte[] signature, CancellationToken cancellationToken)
-        {
-            VerifyResult result = Verify(algorithm, digest, signature, cancellationToken);
-            return Task.FromResult(result);
-        }
-
-        public WrapResult WrapKey(KeyWrapAlgorithm algorithm, byte[] key, CancellationToken cancellationToken)
+        public override WrapResult WrapKey(KeyWrapAlgorithm algorithm, byte[] key, CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            RSAEncryptionPadding padding = algorithm.GetRsaEncryptionPadding();
-            byte[] encryptedKey = Encrypt(key, padding);
+            ThrowIfTimeInvalid();
 
+            RSAEncryptionPadding padding = algorithm.GetRsaEncryptionPadding();
+            if (padding is null)
+            {
+                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(WrapKey), algorithm);
+                return null;
+            }
+
+            byte[] encryptedKey = Encrypt(key, padding);
             WrapResult result = null;
 
             if (encryptedKey != null)
@@ -182,26 +179,32 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 {
                     Algorithm = algorithm,
                     EncryptedKey = encryptedKey,
-                    KeyId = _jwk.Id,
+                    KeyId = KeyMaterial.Id,
                 };
             }
 
             return result;
         }
 
-        public Task<WrapResult> WrapKeyAsync(KeyWrapAlgorithm algorithm, byte[] key, CancellationToken cancellationToken)
-        {
-            WrapResult result = WrapKey(algorithm, key, cancellationToken);
-            return Task.FromResult(result);
-        }
-
-        public UnwrapResult UnwrapKey(KeyWrapAlgorithm algorithm, byte[] encryptedKey, CancellationToken cancellationToken)
+        public override UnwrapResult UnwrapKey(KeyWrapAlgorithm algorithm, byte[] encryptedKey, CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(encryptedKey, nameof(encryptedKey));
 
-            RSAEncryptionPadding padding = algorithm.GetRsaEncryptionPadding();
-            byte[] key = Decrypt(encryptedKey, padding);
+            if (MustRemote)
+            {
+                // A private key is required to decrypt. Send to the server.
+                KeysEventSource.Singleton.PrivateKeyRequired(nameof(UnwrapKey));
+                return null;
+            }
 
+            RSAEncryptionPadding padding = algorithm.GetRsaEncryptionPadding();
+            if (padding is null)
+            {
+                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(UnwrapKey), algorithm);
+                return null;
+            }
+
+            byte[] key = Decrypt(encryptedKey, padding);
             UnwrapResult result = null;
 
             if (key != null)
@@ -210,47 +213,22 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 {
                     Algorithm = algorithm,
                     Key = key,
-                    KeyId = _jwk.Id,
+                    KeyId = KeyMaterial.Id,
                 };
             }
 
             return result;
         }
 
-        public Task<UnwrapResult> UnwrapKeyAsync(KeyWrapAlgorithm algorithm, byte[] encryptedKey, CancellationToken cancellationToken)
-        {
-            UnwrapResult result = UnwrapKey(algorithm, encryptedKey, cancellationToken);
-            return Task.FromResult(result);
-        }
-
         private byte[] Encrypt(byte[] data, RSAEncryptionPadding padding)
         {
-            if (padding is null)
-            {
-                // TODO: Log that we don't support the given algorithm.
-                return null;
-            }
-
-            using RSA rsa = _jwk.ToRSA(true);
+            using RSA rsa = KeyMaterial.ToRSA(true);
             return rsa.Encrypt(data, padding);
         }
 
         private byte[] Decrypt(byte[] data, RSAEncryptionPadding padding)
         {
-            // A private key is required to decrypt. Send to the server.
-            if (_jwk.Id != null && !_jwk.HasPrivateKey)
-            {
-                // TODO: Log that we need a private key.
-                return null;
-            }
-
-            if (padding is null)
-            {
-                // TODO: Log that we don't support the given algorithm.
-                return null;
-            }
-
-            using RSA rsa = _jwk.ToRSA();
+            using RSA rsa = KeyMaterial.ToRSA();
             return rsa.Decrypt(data, padding);
         }
     }

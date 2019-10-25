@@ -3,11 +3,12 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Data.AppConfiguration
 {
-    internal class ApiVersionPolicy : SynchronousHttpPipelinePolicy
+    internal class ApiVersionPolicy : HttpPipelineSynchronousPolicy
     {
         private readonly string _versionString;
 
@@ -16,7 +17,7 @@ namespace Azure.Data.AppConfiguration
             _versionString = versionString;
         }
 
-        public override void OnSendingRequest(HttpPipelineMessage message)
+        public override void OnSendingRequest(HttpMessage message)
         {
             message.Request.Uri.AppendQuery("api-version", _versionString);
         }

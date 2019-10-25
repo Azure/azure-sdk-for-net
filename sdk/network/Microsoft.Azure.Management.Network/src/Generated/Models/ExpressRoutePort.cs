@@ -161,11 +161,10 @@ namespace Microsoft.Azure.Management.Network.Models
         public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets or sets the resource GUID property of the express route port
-        /// resource.
+        /// Gets the resource GUID property of the express route port resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceGuid")]
-        public string ResourceGuid { get; set; }
+        public string ResourceGuid { get; private set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource

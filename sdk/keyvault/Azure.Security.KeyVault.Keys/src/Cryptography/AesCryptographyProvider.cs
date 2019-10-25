@@ -4,67 +4,37 @@
 using System;
 using System.Security.Cryptography;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure.Core;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
-    internal class AesCryptographyProvider : ICryptographyProvider
+    internal class AesCryptographyProvider : LocalCryptographyProvider
     {
-        private readonly JsonWebKey _jwk;
-
-        internal AesCryptographyProvider(JsonWebKey jwk)
+        internal AesCryptographyProvider(KeyVaultKey key) : base(key)
         {
-            _jwk = jwk;
         }
 
-        public bool ShouldRemote => _jwk.Id != null;
-
-        public bool SupportsOperation(KeyOperation operation)
+        public override bool SupportsOperation(KeyOperation operation)
         {
-            if (_jwk != null)
+            if (KeyMaterial != null)
             {
-                if (operation == KeyOperation.Encrypt || operation == KeyOperation.Decrypt || operation == KeyOperation.WrapKey || operation == KeyOperation.UnwrapKey)
+                if (operation == KeyOperation.WrapKey || operation == KeyOperation.UnwrapKey)
                 {
-                    return _jwk.SupportsOperation(operation);
+                    return KeyMaterial.SupportsOperation(operation);
                 }
             }
 
             return false;
         }
 
-        public DecryptResult Decrypt(EncryptionAlgorithm algorithm, byte[] ciphertext, byte[] iv, byte[] authenticationData, byte[] authenticationTag, CancellationToken cancellationToken)
-        {
-            // TODO: Log if not supported locally.
-            return null;
-        }
-
-        public Task<DecryptResult> DecryptAsync(EncryptionAlgorithm algorithm, byte[] ciphertext, byte[] iv, byte[] authenticationData, byte[] authenticationTag, CancellationToken cancellationToken)
-        {
-            DecryptResult result = Decrypt(algorithm, ciphertext, iv, authenticationData, authenticationTag, cancellationToken);
-            return Task.FromResult(result);
-        }
-
-        public EncryptResult Encrypt(EncryptionAlgorithm algorithm, byte[] plaintext, byte[] iv, byte[] authenticationData, CancellationToken cancellationToken)
-        {
-            // TODO: Log if not supported locally.
-            return null;
-        }
-
-        public Task<EncryptResult> EncryptAsync(EncryptionAlgorithm algorithm, byte[] plaintext, byte[] iv, byte[] authenticationData, CancellationToken cancellationToken)
-        {
-            EncryptResult result = Encrypt(algorithm, plaintext, iv, authenticationData, cancellationToken);
-            return Task.FromResult(result);
-        }
-
-        public UnwrapResult UnwrapKey(KeyWrapAlgorithm algorithm, byte[] encryptedKey, CancellationToken cancellationToken)
+        public override UnwrapResult UnwrapKey(KeyWrapAlgorithm algorithm, byte[] encryptedKey, CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(encryptedKey, nameof(encryptedKey));
 
             int algorithmKeySizeBytes = algorithm.GetKeySizeInBytes();
             if (algorithmKeySizeBytes == 0)
             {
-                // TODO: Log that we don't support the algorithm locally.
+                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(UnwrapKey), algorithm);
                 return null;
             }
 
@@ -74,7 +44,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 throw new ArgumentException($"Key wrap algorithm {algorithm} key size {algorithmKeySizeBytes} is greater than the underlying key size {keySizeBytes}");
             }
 
-            byte[] sizedKey = (keySizeBytes == algorithmKeySizeBytes) ? _jwk.K : _jwk.K.Take(algorithmKeySizeBytes);
+            byte[] sizedKey = (keySizeBytes == algorithmKeySizeBytes) ? KeyMaterial.K : KeyMaterial.K.Take(algorithmKeySizeBytes);
 
             using ICryptoTransform decryptor = AesKw.CreateDecryptor(sizedKey);
 
@@ -83,24 +53,20 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             {
                 Algorithm = algorithm,
                 Key = key,
-                KeyId = _jwk.Id,
+                KeyId = KeyMaterial.Id,
             };
         }
 
-        public Task<UnwrapResult> UnwrapKeyAsync(KeyWrapAlgorithm algorithm, byte[] encryptedKey, CancellationToken cancellationToken)
-        {
-            UnwrapResult result = UnwrapKey(algorithm, encryptedKey, cancellationToken);
-            return Task.FromResult(result);
-        }
-
-        public WrapResult WrapKey(KeyWrapAlgorithm algorithm, byte[] key, CancellationToken cancellationToken)
+        public override WrapResult WrapKey(KeyWrapAlgorithm algorithm, byte[] key, CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(key, nameof(key));
+
+            ThrowIfTimeInvalid();
 
             int algorithmKeySizeBytes = algorithm.GetKeySizeInBytes();
             if (algorithmKeySizeBytes == 0)
             {
-                // TODO: Log that we don't support the algorithm locally.
+                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(WrapKey), algorithm);
                 return null;
             }
 
@@ -110,7 +76,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 throw new ArgumentException($"Key wrap algorithm {algorithm} key size {algorithmKeySizeBytes} is greater than the underlying key size {keySizeBytes}");
             }
 
-            byte[] sizedKey = (keySizeBytes == algorithmKeySizeBytes) ? _jwk.K : _jwk.K.Take(algorithmKeySizeBytes);
+            byte[] sizedKey = (keySizeBytes == algorithmKeySizeBytes) ? KeyMaterial.K : KeyMaterial.K.Take(algorithmKeySizeBytes);
 
             using ICryptoTransform encryptor = AesKw.CreateEncryptor(sizedKey);
 
@@ -119,14 +85,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             {
                 Algorithm = algorithm,
                 EncryptedKey = encryptedKey,
-                KeyId = _jwk.Id,
+                KeyId = KeyMaterial.Id,
             };
-        }
-
-        public Task<WrapResult> WrapKeyAsync(KeyWrapAlgorithm algorithm, byte[] key, CancellationToken cancellationToken)
-        {
-            WrapResult result = WrapKey(algorithm, key, cancellationToken);
-            return Task.FromResult(result);
         }
 
         private int GetKeySizeInBits()
@@ -136,35 +96,13 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         private int GetKeySizeInBytes()
         {
-            if (_jwk.K != null)
+            if (KeyMaterial.K != null)
             {
-                return _jwk.K.Length;
+                return KeyMaterial.K.Length;
             }
 
             return 0;
 
         }
-
-        #region Unsupported operations
-        SignResult ICryptographyProvider.Sign(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<SignResult> ICryptographyProvider.SignAsync(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        VerifyResult ICryptographyProvider.Verify(SignatureAlgorithm algorithm, byte[] digest, byte[] signature, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<VerifyResult> ICryptographyProvider.VerifyAsync(SignatureAlgorithm algorithm, byte[] digest, byte[] signature, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-        #endregion
     }
 }

@@ -1,6 +1,6 @@
 # Azure SDK .NET - Versioning
 
-This document covers the basic versioning strategy and which properties to use. It is based on the rules outlined in our [Azure SDK Releases doc](https://github.com/Azure/azure-sdk/blob/master/docs/engineering-system/releases.md#net) and it closely matches the [.NET versioning rules](https://github.com/dotnet/arcade/blob/master/Documentation/CorePackages/Versioning.md) but simplified to only include the parts necessary for our libraries.
+This document covers the basic versioning strategy and which properties to use. It is based on the rules outlined in our [Azure SDK Releases doc](https://github.com/Azure/azure-sdk/blob/master/docs/policies/releases.md#net) and it closely matches the [.NET versioning rules](https://github.com/dotnet/arcade/blob/master/Documentation/CorePackages/Versioning.md) but simplified to only include the parts necessary for our libraries.
 
 ## Package Versioning
 
@@ -9,29 +9,30 @@ Package version will look like:
 MAJOR.MINOR.PATCH-PRERELEASE
 ```
 
-In the project file use the `VersionPrefix` property to define the `MAJOR.MINOR.PATCH` part of the version.
+In the project file use the `Version` property to define the `MAJOR.MINOR.PATCH-preview.X` part of the version.
 
 ```
-<VersionPrefix>1.0.0</VersionPrefix>
+<Version>1.0.0-preview.1</Version>
 ```
 
-`PRERELEASE` will be controlled by:
+By default builds will replace any prerelease identifier with a `dev.yyyyMMdd.r` to ensure we have unique package versions. The date will come from either
+today's date or a property named `OfficialBuildId` which we will pass as part of our build pipelines.
 
-- **BuildNumber:** Should be in the format `yyyyMMdd.<build revision>` and defaults to today's date `yyyyMMdd.1` but can be set by passing in and msbuild property for `OfficialBuildId` with a matching format.
-- **PreReleaseLabel:** Defaults to `dev` but can be set by passing in the msbuild property for `PreReleaseVersionLabel`. Some examples might be "preview", "preview.1", etc.
-- **VersionKind:** Defaults to "" which results to the default dev build label but can be set by passing in the msbuild property `DotNetFinalVersionKind` to one of the values "", "prerelease", or "release".
+If we need to produce a package that is not a dev version and has the version in the project (i.e. stable or preview) then the `SkipDevBuildNumber` should
+be passed as `true` to the packaging command.
 
-Examples:
+## Incrementing the version
 
-| VersionKind  | Package version format                  | Example package versions  |
-|--------------|-----------------------------------------|---------------------------|
-| ""           | `1.2.3-<PreReleaseLabel>.<BuildNumber>` | `1.2.3-dev.20190509.1`    |
-| "prerelease" | `1.2.3-<PreReleaseLabel>`               | `1.2.3-preview.1`         |
-| "release"    | `1.2.3`                                 | `1.2.3`                   |
+See [Incrementing after release](https://github.com/Azure/azure-sdk/blob/master/docs/policies/releases.md#incrementing-after-release) for general guidance but at a
+high level we will do the following versioning changes:
+
+- After a preview release we bump the number after the preview. `1.0.0-preview.1` -> `1.0.0-preview.2`
+- After a GA release we bump the minor version and switch to preview 1. `1.0.0` -> `1.1.0-preview.1`
+- Prior to a hotfix release we bump the patch version. `1.0.0` -> `1.0.1`
 
 ## Assembly Versioning
 
-By default the assembly version will be set to the `VersionPrefix` property but if the assembly version needs to be different for some reason then it can be independently set by the `AssemblyVersion` property.
+By default the assembly version will be set to the `Version` property but if the assembly version needs to be different for some reason then it can be independently set by the `AssemblyVersion` property.
 
 ## File Versioning
 
@@ -58,6 +59,4 @@ The versioning scheme imposes the following limits on these version parts:
 | Parameter                  | Description                                                  |
 | -------------------------- | ------------------------------------------------------------ |
 | OfficialBuildId            | ID of current build. The accepted format is `yyyyMMdd.r`. Should be passed to build in YAML official build defintion. |
-| DotNetFinalVersionKind     | Specify the kind of version being generated: `release`, `prerelease` or empty. |
-| PreReleaseVersionLabel     | Pre-release label to be used on the string. E.g., `preview`, `preview.1`, etc. |
-| VersionPrefix              | Specify the leading part of the version string. If empty it will default to 1.0.0 from the SDK. |
+

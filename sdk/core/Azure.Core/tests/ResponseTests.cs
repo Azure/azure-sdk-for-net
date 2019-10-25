@@ -29,18 +29,64 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void ToStringsFormatsStatusAndValue()
+        {
+            var response = Response.FromValue(new TestPayload("test_name"), response: new MockResponse(200));
+
+            Assert.AreEqual("Status: 200, Value: Name: test_name", response.ToString());
+        }
+
+        [Test]
+        public void ToStringsFormatsStatusAndResponsePhrase()
+        {
+            var response = new MockResponse(200, "Phrase");
+
+            Assert.AreEqual("Status: 200, ReasonPhrase: Phrase", response.ToString());
+        }
+
+        [Test]
         public void ValueThrowsIfUnspecified()
         {
             var response = new NoBodyResponse<TestPayload>(new MockResponse(304));
-            Assert.Throws<ResponseBodyNotFoundException>(() => { TestPayload value = response.Value; });
+            bool throws = false;
+            try
+            {
+                TestPayload value = response.Value;
+            }
+            catch
+            {
+                throws = true;
+            }
+
+            Assert.True(throws);
         }
 
         [Test]
         public void ValueThrowsFromCastIfUnspecified()
         {
             var response = new NoBodyResponse<TestPayload>(new MockResponse(304));
-            Assert.Throws<ResponseBodyNotFoundException>(() => { TestPayload value = response; });
+
+            bool throws = false;
+            try
+            {
+                TestPayload value = response;
+            }
+            catch
+            {
+                throws = true;
+            }
+
+            Assert.True(throws);
         }
+
+        [Test]
+        public void ToStringsFormatsStatusAndMessageForNoBodyResponse()
+        {
+            var response = new NoBodyResponse<TestPayload>(new MockResponse(200));
+
+            Assert.AreEqual("Status: 200, Service returned no content", response.ToString());
+        }
+
 
         internal class TestPayload
         {
@@ -49,6 +95,11 @@ namespace Azure.Core.Tests
             public TestPayload(string name)
             {
                 Name = name;
+            }
+
+            public override string ToString()
+            {
+                return $"Name: {Name}";
             }
         }
     }

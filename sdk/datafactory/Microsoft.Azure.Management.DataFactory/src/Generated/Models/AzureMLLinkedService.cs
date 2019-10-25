@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// Azure ML Web Service linked service.
+    /// Azure ML Studio Web Service linked service.
     /// </summary>
     [Newtonsoft.Json.JsonObject("AzureML")]
     [Rest.Serialization.JsonTransformation]
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the AzureMLLinkedService class.
         /// </summary>
         /// <param name="mlEndpoint">The Batch Execution REST URL for an Azure
-        /// ML Web Service endpoint. Type: string (or Expression with
+        /// ML Studio Web Service endpoint. Type: string (or Expression with
         /// resultType string).</param>
         /// <param name="apiKey">The API key for accessing the Azure ML model
         /// endpoint.</param>
@@ -48,15 +48,15 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="annotations">List of tags that can be used for
         /// describing the linked service.</param>
         /// <param name="updateResourceEndpoint">The Update Resource REST URL
-        /// for an Azure ML Web Service endpoint. Type: string (or Expression
-        /// with resultType string).</param>
+        /// for an Azure ML Studio Web Service endpoint. Type: string (or
+        /// Expression with resultType string).</param>
         /// <param name="servicePrincipalId">The ID of the service principal
         /// used to authenticate against the ARM-based updateResourceEndpoint
-        /// of an Azure ML web service. Type: string (or Expression with
+        /// of an Azure ML Studio web service. Type: string (or Expression with
         /// resultType string).</param>
         /// <param name="servicePrincipalKey">The key of the service principal
         /// used to authenticate against the ARM-based updateResourceEndpoint
-        /// of an Azure ML web service.</param>
+        /// of an Azure ML Studio web service.</param>
         /// <param name="tenant">The name or ID of the tenant to which the
         /// service principal belongs. Type: string (or Expression with
         /// resultType string).</param>
@@ -83,8 +83,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the Batch Execution REST URL for an Azure ML Web
-        /// Service endpoint. Type: string (or Expression with resultType
+        /// Gets or sets the Batch Execution REST URL for an Azure ML Studio
+        /// Web Service endpoint. Type: string (or Expression with resultType
         /// string).
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.mlEndpoint")]
@@ -97,8 +97,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public SecretBase ApiKey { get; set; }
 
         /// <summary>
-        /// Gets or sets the Update Resource REST URL for an Azure ML Web
-        /// Service endpoint. Type: string (or Expression with resultType
+        /// Gets or sets the Update Resource REST URL for an Azure ML Studio
+        /// Web Service endpoint. Type: string (or Expression with resultType
         /// string).
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.updateResourceEndpoint")]
@@ -106,16 +106,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 
         /// <summary>
         /// Gets or sets the ID of the service principal used to authenticate
-        /// against the ARM-based updateResourceEndpoint of an Azure ML web
-        /// service. Type: string (or Expression with resultType string).
+        /// against the ARM-based updateResourceEndpoint of an Azure ML Studio
+        /// web service. Type: string (or Expression with resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.servicePrincipalId")]
         public object ServicePrincipalId { get; set; }
 
         /// <summary>
         /// Gets or sets the key of the service principal used to authenticate
-        /// against the ARM-based updateResourceEndpoint of an Azure ML web
-        /// service.
+        /// against the ARM-based updateResourceEndpoint of an Azure ML Studio
+        /// web service.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.servicePrincipalKey")]
         public SecretBase ServicePrincipalKey { get; set; }

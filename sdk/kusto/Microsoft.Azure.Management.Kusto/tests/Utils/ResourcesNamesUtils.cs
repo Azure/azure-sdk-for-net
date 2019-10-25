@@ -11,6 +11,11 @@ namespace Kusto.Tests.Utils
             return $"{clusterName}/{databaseName}/{eventhubConnectionName}";
         }
 
+        public static string GetAttachedDatabaseConfigurationName(string clusterName, string attachedDatabaseConfigurationName)
+        {
+            return $"{clusterName}/{attachedDatabaseConfigurationName}";
+        }
+
         public static string GetFullDatabaseName(string clusterName, string databaseName)
         {
             return $"{clusterName}/{databaseName}";

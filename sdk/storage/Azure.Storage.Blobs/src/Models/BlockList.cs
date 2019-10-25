@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core.Http;
 using Azure.Storage.Blobs.Models;
 
 #pragma warning disable SA1402  // File may only contain a single type
@@ -24,7 +23,7 @@ namespace Azure.Storage.Blobs.Models
         public DateTimeOffset LastModified { get; internal set; }
 
         /// <summary>
-        /// The <see cref="Core.Http.ETag"/> contains a value that you can use to
+        /// The <see cref="Azure.ETag"/> contains a value that you can use to
         /// perform operations conditionally. If the request version is
         /// 2011-08-18 or newer, the  ETag value will be in quotes.
         /// </summary>
@@ -58,6 +57,12 @@ namespace Azure.Storage.Blobs
         /// <returns>The BlockList response.</returns>
         internal static Response<BlockList> ToBlockList(this Response<GetBlockListOperation> response)
         {
+            // Return an exploding Response on 304
+            if (response.IsUnavailable())
+            {
+                return response.GetRawResponse().AsNoBodyResponse<BlockList>();
+            }
+
             BlockList blocks = response.Value.Body;
             blocks.LastModified = response.Value.LastModified;
             blocks.ETag = response.Value.ETag;

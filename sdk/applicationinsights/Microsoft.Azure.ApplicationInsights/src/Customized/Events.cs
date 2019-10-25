@@ -69,7 +69,7 @@ namespace Microsoft.Azure.ApplicationInsights.Query
             CancellationToken cancellationToken = default(CancellationToken))
         {
             var realResult = await GetByTypeWithHttpMessagesAsync(appId, EventType.Traces, timespan, filter, search, orderby, select,
-                skip, top, format, count, apply, customHeaders, cancellationToken);
+                skip, top, format, count, apply, customHeaders, cancellationToken).ConfigureAwait(false);
             var realBody = realResult.Body;
             return new HttpOperationResponse<EventsResults<EventsTraceResult>>
             {
@@ -113,7 +113,7 @@ namespace Microsoft.Azure.ApplicationInsights.Query
             CancellationToken cancellationToken = default(CancellationToken))
         {
             var realResult = await GetWithHttpMessagesAsync(appId, EventType.Traces, eventId, timespan, customHeaders,
-                cancellationToken);
+                cancellationToken).ConfigureAwait(false);
             var realBody = realResult.Body;
             return new HttpOperationResponse<EventsResults<EventsTraceResult>>
             {
@@ -187,7 +187,7 @@ namespace Microsoft.Azure.ApplicationInsights.Query
                 CancellationToken cancellationToken = default(CancellationToken))
         {
             var realResult = await GetByTypeWithHttpMessagesAsync(appId, EventType.CustomEvents, timespan, filter, search, orderby, select,
-                skip, top, format, count, apply, customHeaders, cancellationToken);
+                skip, top, format, count, apply, customHeaders, cancellationToken).ConfigureAwait(false);
             var realBody = realResult.Body;
             return new HttpOperationResponse<EventsResults<EventsCustomEventResult>>
             {
@@ -231,7 +231,7 @@ namespace Microsoft.Azure.ApplicationInsights.Query
                 CancellationToken cancellationToken = default(CancellationToken))
         {
             var realResult = await GetWithHttpMessagesAsync(appId, EventType.CustomEvents, eventId, timespan, customHeaders,
-                cancellationToken);
+                cancellationToken).ConfigureAwait(false);
             var realBody = realResult.Body;
             return new HttpOperationResponse<EventsResults<EventsCustomEventResult>>
             {
@@ -305,7 +305,7 @@ namespace Microsoft.Azure.ApplicationInsights.Query
                 CancellationToken cancellationToken = default(CancellationToken))
         {
             var realResult = await GetByTypeWithHttpMessagesAsync(appId, EventType.PageViews, timespan, filter, search, orderby, select,
-                skip, top, format, count, apply, customHeaders, cancellationToken);
+                skip, top, format, count, apply, customHeaders, cancellationToken).ConfigureAwait(false);
             var realBody = realResult.Body;
             return new HttpOperationResponse<EventsResults<EventsPageViewResult>>
             {
@@ -349,7 +349,7 @@ namespace Microsoft.Azure.ApplicationInsights.Query
                 CancellationToken cancellationToken = default(CancellationToken))
         {
             var realResult = await GetWithHttpMessagesAsync(appId, EventType.PageViews, eventId, timespan, customHeaders,
-                cancellationToken);
+                cancellationToken).ConfigureAwait(false);
             var realBody = realResult.Body;
             return new HttpOperationResponse<EventsResults<EventsPageViewResult>>
             {
@@ -423,7 +423,7 @@ namespace Microsoft.Azure.ApplicationInsights.Query
                 CancellationToken cancellationToken = default(CancellationToken))
         {
             var realResult = await GetByTypeWithHttpMessagesAsync(appId, EventType.BrowserTimings, timespan, filter, search, orderby, select,
-                skip, top, format, count, apply, customHeaders, cancellationToken);
+                skip, top, format, count, apply, customHeaders, cancellationToken).ConfigureAwait(false);
             var realBody = realResult.Body;
             return new HttpOperationResponse<EventsResults<EventsBrowserTimingResult>>
             {
@@ -467,7 +467,7 @@ namespace Microsoft.Azure.ApplicationInsights.Query
                 CancellationToken cancellationToken = default(CancellationToken))
         {
             var realResult = await GetWithHttpMessagesAsync(appId, EventType.BrowserTimings, eventId, timespan, customHeaders,
-                cancellationToken);
+                cancellationToken).ConfigureAwait(false);
             var realBody = realResult.Body;
             return new HttpOperationResponse<EventsResults<EventsBrowserTimingResult>>
             {
@@ -541,7 +541,7 @@ namespace Microsoft.Azure.ApplicationInsights.Query
                 CancellationToken cancellationToken = default(CancellationToken))
         {
             var realResult = await GetByTypeWithHttpMessagesAsync(appId, EventType.Requests, timespan, filter, search, orderby, select,
-                skip, top, format, count, apply, customHeaders, cancellationToken);
+                skip, top, format, count, apply, customHeaders, cancellationToken).ConfigureAwait(false);
             var realBody = realResult.Body;
             return new HttpOperationResponse<EventsResults<EventsRequestResult>>
             {
@@ -585,7 +585,7 @@ namespace Microsoft.Azure.ApplicationInsights.Query
                 CancellationToken cancellationToken = default(CancellationToken))
         {
             var realResult = await GetWithHttpMessagesAsync(appId, EventType.Requests, eventId, timespan, customHeaders,
-                cancellationToken);
+                cancellationToken).ConfigureAwait(false);
             var realBody = realResult.Body;
             return new HttpOperationResponse<EventsResults<EventsRequestResult>>
             {
@@ -659,7 +659,7 @@ namespace Microsoft.Azure.ApplicationInsights.Query
                 CancellationToken cancellationToken = default(CancellationToken))
         {
             var realResult = await GetByTypeWithHttpMessagesAsync(appId, EventType.Dependencies, timespan, filter, search, orderby, select,
-                skip, top, format, count, apply, customHeaders, cancellationToken);
+                skip, top, format, count, apply, customHeaders, cancellationToken).ConfigureAwait(false);
             var realBody = realResult.Body;
             return new HttpOperationResponse<EventsResults<EventsDependencyResult>>
             {
@@ -703,7 +703,7 @@ namespace Microsoft.Azure.ApplicationInsights.Query
                 CancellationToken cancellationToken = default(CancellationToken))
         {
             var realResult = await GetWithHttpMessagesAsync(appId, EventType.Dependencies, eventId, timespan, customHeaders,
-                cancellationToken);
+                cancellationToken).ConfigureAwait(false);
             var realBody = realResult.Body;
             return new HttpOperationResponse<EventsResults<EventsDependencyResult>>
             {
@@ -777,7 +777,7 @@ namespace Microsoft.Azure.ApplicationInsights.Query
                 CancellationToken cancellationToken = default(CancellationToken))
         {
             var realResult = await GetByTypeWithHttpMessagesAsync(appId, EventType.Exceptions, timespan, filter, search, orderby, select,
-                skip, top, format, count, apply, customHeaders, cancellationToken);
+                skip, top, format, count, apply, customHeaders, cancellationToken).ConfigureAwait(false);
             var realBody = realResult.Body;
             return new HttpOperationResponse<EventsResults<EventsExceptionResult>>
             {
@@ -821,7 +821,7 @@ namespace Microsoft.Azure.ApplicationInsights.Query
                 CancellationToken cancellationToken = default(CancellationToken))
         {
             var realResult = await GetWithHttpMessagesAsync(appId, EventType.Exceptions, eventId, timespan, customHeaders,
-                cancellationToken);
+                cancellationToken).ConfigureAwait(false);
             var realBody = realResult.Body;
             return new HttpOperationResponse<EventsResults<EventsExceptionResult>>
             {
@@ -895,7 +895,7 @@ namespace Microsoft.Azure.ApplicationInsights.Query
                 CancellationToken cancellationToken = default(CancellationToken))
         {
             var realResult = await GetByTypeWithHttpMessagesAsync(appId, EventType.AvailabilityResults, timespan, filter, search, orderby, select,
-                skip, top, format, count, apply, customHeaders, cancellationToken);
+                skip, top, format, count, apply, customHeaders, cancellationToken).ConfigureAwait(false);
             var realBody = realResult.Body;
             return new HttpOperationResponse<EventsResults<EventsAvailabilityResultResult>>
             {
@@ -939,7 +939,7 @@ namespace Microsoft.Azure.ApplicationInsights.Query
                 CancellationToken cancellationToken = default(CancellationToken))
         {
             var realResult = await GetWithHttpMessagesAsync(appId, EventType.AvailabilityResults, eventId, timespan, customHeaders,
-                cancellationToken);
+                cancellationToken).ConfigureAwait(false);
             var realBody = realResult.Body;
             return new HttpOperationResponse<EventsResults<EventsAvailabilityResultResult>>
             {
@@ -1013,7 +1013,7 @@ namespace Microsoft.Azure.ApplicationInsights.Query
                 CancellationToken cancellationToken = default(CancellationToken))
         {
             var realResult = await GetByTypeWithHttpMessagesAsync(appId, EventType.PerformanceCounters, timespan, filter, search, orderby, select,
-                skip, top, format, count, apply, customHeaders, cancellationToken);
+                skip, top, format, count, apply, customHeaders, cancellationToken).ConfigureAwait(false);
             var realBody = realResult.Body;
             return new HttpOperationResponse<EventsResults<EventsPerformanceCounterResult>>
             {
@@ -1057,7 +1057,7 @@ namespace Microsoft.Azure.ApplicationInsights.Query
                 CancellationToken cancellationToken = default(CancellationToken))
         {
             var realResult = await GetWithHttpMessagesAsync(appId, EventType.PerformanceCounters, eventId, timespan, customHeaders,
-                cancellationToken);
+                cancellationToken).ConfigureAwait(false);
             var realBody = realResult.Body;
             return new HttpOperationResponse<EventsResults<EventsPerformanceCounterResult>>
             {
@@ -1131,7 +1131,7 @@ namespace Microsoft.Azure.ApplicationInsights.Query
                 CancellationToken cancellationToken = default(CancellationToken))
         {
             var realResult = await GetByTypeWithHttpMessagesAsync(appId, EventType.CustomMetrics, timespan, filter, search, orderby, select,
-                skip, top, format, count, apply, customHeaders, cancellationToken);
+                skip, top, format, count, apply, customHeaders, cancellationToken).ConfigureAwait(false);
             var realBody = realResult.Body;
             return new HttpOperationResponse<EventsResults<EventsCustomMetricResult>>
             {
@@ -1175,7 +1175,7 @@ namespace Microsoft.Azure.ApplicationInsights.Query
                 CancellationToken cancellationToken = default(CancellationToken))
         {
             var realResult = await GetWithHttpMessagesAsync(appId, EventType.CustomMetrics, eventId, timespan, customHeaders,
-                cancellationToken);
+                cancellationToken).ConfigureAwait(false);
             var realBody = realResult.Body;
             return new HttpOperationResponse<EventsResults<EventsCustomMetricResult>>
             {

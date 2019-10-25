@@ -32,10 +32,13 @@ namespace Azure.Security.KeyVault.Keys.Samples
 
             // First create a RSA key which will be used to wrap and unwrap another key
             string rsaKeyName = $"CloudRsaKey-{Guid.NewGuid()}";
-            var rsaKey = new RsaKeyCreateOptions(rsaKeyName, hsm: false, keySize: 2048);
+            var rsaKey = new CreateRsaKeyOptions(rsaKeyName, hardwareProtected: false)
+            {
+                KeySize = 2048,
+            };
 
-            Key cloudRsaKey = await keyClient.CreateRsaKeyAsync(rsaKey);
-            Debug.WriteLine($"Key is returned with name {cloudRsaKey.Name} and type {cloudRsaKey.KeyMaterial.KeyType}");
+            KeyVaultKey cloudRsaKey = await keyClient.CreateRsaKeyAsync(rsaKey);
+            Debug.WriteLine($"Key is returned with name {cloudRsaKey.Name} and type {cloudRsaKey.KeyType}");
 
             // Let's create the CryptographyClient which can perform cryptographic operations with the key we just created.
             // Again we are using the default Azure credential as above.
@@ -54,32 +57,14 @@ namespace Azure.Security.KeyVault.Keys.Samples
             Debug.WriteLine($"Decrypted data using the algorithm {unwrapResult.Algorithm}, with key {unwrapResult.KeyId}. The resulting decrypted data is {Encoding.UTF8.GetString(unwrapResult.Key)}");
 
             // The Cloud RSA Key is no longer needed, need to delete it from the Key Vault.
-            await keyClient.DeleteKeyAsync(rsaKeyName);
+            DeleteKeyOperation operation = await keyClient.StartDeleteKeyAsync(rsaKeyName);
 
-            // To ensure key is deleted on server side.
-            Assert.IsTrue(await WaitForDeletedKeyAsync(keyClient, rsaKeyName));
+            // To ensure the key is deleted on server before we try to purge it.
+            await operation.WaitForCompletionAsync();
 
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted key needs to be purged.
             await keyClient.PurgeDeletedKeyAsync(rsaKeyName);
 
-        }
-
-        private async Task<bool> WaitForDeletedKeyAsync(KeyClient client, string keyName)
-        {
-            int maxIterations = 20;
-            for (int i = 0; i < maxIterations; i++)
-            {
-                try
-                {
-                    await client.GetDeletedKeyAsync(keyName);
-                    return true;
-                }
-                catch
-                {
-                    await Task.Delay(5000);
-                }
-            }
-            return false;
         }
     }
 }

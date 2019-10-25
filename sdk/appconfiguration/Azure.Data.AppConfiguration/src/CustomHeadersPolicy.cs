@@ -4,11 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Data.AppConfiguration
 {
-    internal class CustomHeadersPolicy : SynchronousHttpPipelinePolicy
+    internal class CustomHeadersPolicy : HttpPipelineSynchronousPolicy
     {
         private const string ActivityId = "Azure.CustomDiagnosticHeaders";
 
@@ -19,7 +20,7 @@ namespace Azure.Data.AppConfiguration
             { "correlation-context", false }
         };
 
-        public override void OnSendingRequest(HttpPipelineMessage message)
+        public override void OnSendingRequest(HttpMessage message)
         {
             Activity activity = Activity.Current;
             while (activity != null && activity.OperationName != ActivityId)

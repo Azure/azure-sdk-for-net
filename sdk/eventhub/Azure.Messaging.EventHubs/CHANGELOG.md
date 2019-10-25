@@ -1,5 +1,21 @@
 # Release History
 
+## 5.0.0-preview.4 (2019-10-07)
+
+### Event Processor
+
+- Included the Event Hubs fully qualified namespace as part of the checkpoint information, ensuring that there is no conflict between Event Hubs instances in different regions using the same Event Hub and consumer group names.
+
+- Distributed tracing support has been added to the Event Processor.
+
+### Bug fixes and foundation improvements
+
+- Fixed date parsing for time zones ahead of UTC in the Event Hub Consumer when tracking of the last event was disabled.
+
+- Updated dependencies to take advantage of newer client libraries for identity management, blob storage, and .NET Core improvements.
+
+- Improved stability and performance with refactorings around hot paths and areas of technical debt.
+
 ## 5.0.0-preview.3 (2019-09-06)
 
 ### Consuming Events

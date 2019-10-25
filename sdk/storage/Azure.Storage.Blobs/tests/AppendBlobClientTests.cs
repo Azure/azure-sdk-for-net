@@ -8,11 +8,9 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Core.Http;
 using Azure.Core.Testing;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.Common;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
@@ -82,83 +80,78 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task CreateAsync()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                var blobName = GetNewBlobName();
-                AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(blobName));
+            await using DisposingContainer test = await GetTestContainerAsync();
+            // Arrange
+            var blobName = GetNewBlobName();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
 
-                // Act
-                Response<BlobContentInfo> response = await blob.CreateAsync();
+            // Act
+            Response<BlobContentInfo> response = await blob.CreateAsync();
 
-                // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            // Assert
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
 
-                IList<BlobItem> blobs = await container.GetBlobsAsync().ToListAsync();
-                Assert.AreEqual(1, blobs.Count);
-                Assert.AreEqual(blobName, blobs.First().Name);
-            }
+            IList<BlobItem> blobs = await test.Container.GetBlobsAsync().ToListAsync();
+            Assert.AreEqual(1, blobs.Count);
+            Assert.AreEqual(blobName, blobs.First().Name);
         }
 
         [Test]
         public async Task CreateAsync_Metadata()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(GetNewBlobName()));
-                IDictionary<string, string> metadata = BuildMetadata();
+            await using DisposingContainer test = await GetTestContainerAsync();
+            // Arrange
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            IDictionary<string, string> metadata = BuildMetadata();
 
-                // Act
-                await blob.CreateAsync(
-                    metadata: metadata);
+            // Act
+            await blob.CreateAsync(
+                metadata: metadata);
 
-                // Assert
-                Response<BlobProperties> response = await blob.GetPropertiesAsync();
-                AssertMetadataEquality(metadata, response.Value.Metadata);
-            }
+            // Assert
+            Response<BlobProperties> response = await blob.GetPropertiesAsync();
+            AssertMetadataEquality(metadata, response.Value.Metadata);
         }
 
         [Test]
         public async Task CreateAsync_CPK()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                var blobName = GetNewBlobName();
-                AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(blobName));
-                CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-                blob = InstrumentClient(blob.WithCustomerProvidedKey(customerProvidedKey));
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Act
-                Response<BlobContentInfo> response = await blob.CreateAsync();
+            // Arrange
+            var blobName = GetNewBlobName();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            blob = InstrumentClient(blob.WithCustomerProvidedKey(customerProvidedKey));
 
-                // Assert
-                Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
-            }
+            // Act
+            Response<BlobContentInfo> response = await blob.CreateAsync();
+
+            // Assert
+            Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
         }
 
         [Test]
         public async Task CreateAsync_CpkHttpError()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                var blobName = GetNewBlobName();
-                AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(blobName));
-                CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-                blob = InstrumentClient(new AppendBlobClient(
-                    blob.Uri,
-                    blob.Pipeline,
-                    new BlobClientOptions(customerProvidedKey: customerProvidedKey)));
-                ;
-                Assert.AreEqual(Constants.Blob.Http, blob.Uri.Scheme);
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Act
-                await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
-                    blob.CreateAsync(),
-                    actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
-            }
+            // Arrange
+            var blobName = GetNewBlobName();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            blob = InstrumentClient(new AppendBlobClient(
+                blob.Uri,
+                blob.Pipeline,
+                blob.ClientDiagnostics,
+                customerProvidedKey));
+            ;
+            Assert.AreEqual(Constants.Blob.Http, blob.Uri.Scheme);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                blob.CreateAsync(),
+                actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
         }
 
         //TODO
@@ -174,17 +167,16 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task CreateAsync_Error()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(String.Empty));
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    blob.CreateAsync(),
-                    actualException => Assert.AreEqual("InvalidUri", actualException.ErrorCode)
-                    );
-            }
+            // Arrange
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(string.Empty));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.CreateAsync(),
+                actualException => Assert.AreEqual("InvalidUri", actualException.ErrorCode)
+                );
         }
 
         [Test]
@@ -202,24 +194,23 @@ namespace Azure.Storage.Blobs.Test
             };
             foreach (AccessConditionParameters parameters in data)
             {
-                using (GetNewContainer(out BlobContainerClient container))
-                {
-                    // Arrange
-                    AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(GetNewBlobName()));
-                    // AppendBlob needs to exists for us to test CreateAsync() with access conditions
-                    await blob.CreateAsync();
-                    parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
-                    parameters.LeaseId = await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
-                    AppendBlobAccessConditions accessConditions = BuildDestinationAccessConditions(
-                        parameters: parameters,
-                        lease: true);
+                await using DisposingContainer test = await GetTestContainerAsync();
 
-                    // Act
-                    Response<BlobContentInfo> response = await blob.CreateAsync(accessConditions: accessConditions);
+                // Arrange
+                AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+                // AppendBlob needs to exists for us to test CreateAsync() with access conditions
+                await blob.CreateAsync();
+                parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
+                parameters.LeaseId = await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
+                AppendBlobRequestConditions accessConditions = BuildDestinationAccessConditions(
+                    parameters: parameters,
+                    lease: true);
 
-                    // Assert
-                    Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
-                }
+                // Act
+                Response<BlobContentInfo> response = await blob.CreateAsync(conditions: accessConditions);
+
+                // Assert
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
         }
 
@@ -237,221 +228,212 @@ namespace Azure.Storage.Blobs.Test
             };
             foreach (AccessConditionParameters parameters in data)
             {
-                using (GetNewContainer(out BlobContainerClient container))
-                {
-                    // Arrange
-                    AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(GetNewBlobName()));
-                    // AppendBlob needs to exists for us to test CreateAsync() with access conditions
-                    await blob.CreateAsync();
-                    parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
-                    AppendBlobAccessConditions accessConditions = BuildDestinationAccessConditions(
-                        parameters: parameters,
-                        lease: true);
+                await using DisposingContainer test = await GetTestContainerAsync();
 
-                    // Act
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                        blob.CreateAsync(accessConditions: accessConditions),
-                        e => { });
-                }
+                // Arrange
+                AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+                // AppendBlob needs to exists for us to test CreateAsync() with access conditions
+                await blob.CreateAsync();
+                parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
+                AppendBlobRequestConditions accessConditions = BuildDestinationAccessConditions(
+                    parameters: parameters,
+                    lease: true);
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    blob.CreateAsync(conditions: accessConditions),
+                    e => { });
             }
         }
 
         [Test]
         public async Task CreateIfNotExistsAsync()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                var blobName = GetNewBlobName();
-                AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(blobName));
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Act
-                Response<BlobContentInfo> response = await blob.CreateIfNotExistsAsync();
+            // Arrange
+            var blobName = GetNewBlobName();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
 
-                // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            // Act
+            Response<BlobContentInfo> response = await blob.CreateIfNotExistsAsync();
 
-                IList<BlobItem> blobs = await container.GetBlobsAsync().ToListAsync();
-                Assert.AreEqual(1, blobs.Count);
-                Assert.AreEqual(blobName, blobs.First().Name);
-            }
+            // Assert
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+
+            IList<BlobItem> blobs = await test.Container.GetBlobsAsync().ToListAsync();
+            Assert.AreEqual(1, blobs.Count);
+            Assert.AreEqual(blobName, blobs.First().Name);
         }
 
         [Test]
         public async Task CreateIfNotExistsAsync_Exists()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                var blobName = GetNewBlobName();
-                AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(blobName));
-                Response<BlobContentInfo> response = await blob.CreateAsync();
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Act
-                Response<BlobContentInfo> responseExists = await blob.CreateIfNotExistsAsync();
+            // Arrange
+            var blobName = GetNewBlobName();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            Response<BlobContentInfo> response = await blob.CreateAsync();
 
-                // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            // Act
+            Response<BlobContentInfo> responseExists = await blob.CreateIfNotExistsAsync();
 
-                IList<BlobItem> blobs = await container.GetBlobsAsync().ToListAsync();
-                Assert.AreEqual(1, blobs.Count);
-                Assert.AreEqual(blobName, blobs.First().Name);
-            }
+            // Assert
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+
+            IList<BlobItem> blobs = await test.Container.GetBlobsAsync().ToListAsync();
+            Assert.AreEqual(1, blobs.Count);
+            Assert.AreEqual(blobName, blobs.First().Name);
         }
 
         [Test]
         public async Task CreateIfNotExistsAsync_Error()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(String.Empty));
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    blob.CreateIfNotExistsAsync(),
-                    actualException => Assert.AreEqual("InvalidUri", actualException.ErrorCode)
-                    );
-            }
+            // Arrange
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(string.Empty));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.CreateIfNotExistsAsync(),
+                actualException => Assert.AreEqual("InvalidUri", actualException.ErrorCode)
+                );
         }
 
         [Test]
         public async Task AppendBlockAsync()
         {
-            using (GetNewContainer(out BlobContainerClient container))
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var blobName = GetNewBlobName();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            await blob.CreateAsync();
+            const int blobSize = Constants.KB;
+            var data = GetRandomBuffer(blobSize);
+
+            // Act
+            using (var stream = new MemoryStream(data))
             {
-                // Arrange
-                var blobName = GetNewBlobName();
-                AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(blobName));
-                await blob.CreateAsync();
-                const int blobSize = Constants.KB;
-                var data = GetRandomBuffer(blobSize);
-
-                // Act
-                using (var stream = new MemoryStream(data))
-                {
-                    await blob.AppendBlockAsync(stream);
-                }
-
-                // Assert
-                Response<BlobDownloadInfo> result = await blob.DownloadAsync(new HttpRange(0, data.Length));
-                var dataResult = new MemoryStream();
-                await result.Value.Content.CopyToAsync(dataResult);
-                Assert.AreEqual(data.Length, dataResult.Length);
-                TestHelper.AssertSequenceEqual(data, dataResult.ToArray());
+                await blob.AppendBlockAsync(stream);
             }
+
+            // Assert
+            Response<BlobDownloadInfo> result = await blob.DownloadAsync(new HttpRange(0, data.Length));
+            var dataResult = new MemoryStream();
+            await result.Value.Content.CopyToAsync(dataResult);
+            Assert.AreEqual(data.Length, dataResult.Length);
+            TestHelper.AssertSequenceEqual(data, dataResult.ToArray());
         }
 
         [Test]
         public async Task AppendBlockAsync_CPK()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                var blobName = GetNewBlobName();
-                AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(blobName));
-                CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-                blob = InstrumentClient(blob.WithCustomerProvidedKey(customerProvidedKey));
-                var data = GetRandomBuffer(Constants.KB);
-                await blob.CreateAsync();
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Act
-                using var stream = new MemoryStream(data);
-                Response<BlobAppendInfo> response = await blob.AppendBlockAsync(
-                    content: stream);
+            // Arrange
+            var blobName = GetNewBlobName();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            blob = InstrumentClient(blob.WithCustomerProvidedKey(customerProvidedKey));
+            var data = GetRandomBuffer(Constants.KB);
+            await blob.CreateAsync();
 
-                // Assert
-                Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
-            }
+            // Act
+            using var stream = new MemoryStream(data);
+            Response<BlobAppendInfo> response = await blob.AppendBlockAsync(
+                content: stream);
+
+            // Assert
+            Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
         }
 
         [Test]
         public async Task AppendBlockAsync_CpkHttpError()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                var blobName = GetNewBlobName();
-                AppendBlobClient httpBlob = InstrumentClient(container.GetAppendBlobClient(blobName));
-                CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-                httpBlob = InstrumentClient(new AppendBlobClient(
-                    httpBlob.Uri,
-                    httpBlob.Pipeline,
-                    new BlobClientOptions(customerProvidedKey: customerProvidedKey)));
-                Assert.AreEqual(Constants.Blob.Http, httpBlob.Uri.Scheme);
-                AppendBlobClient httpsBlob = InstrumentClient(httpBlob.WithCustomerProvidedKey(customerProvidedKey));
-                var data = GetRandomBuffer(Constants.KB);
-                await httpsBlob.CreateAsync();
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Act
-                using var stream = new MemoryStream(data);
-                await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
-                    httpBlob.AppendBlockAsync(stream),
-                    actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
-            }
+            // Arrange
+            var blobName = GetNewBlobName();
+            AppendBlobClient httpBlob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            httpBlob = InstrumentClient(new AppendBlobClient(
+                httpBlob.Uri,
+                httpBlob.Pipeline,
+                httpBlob.ClientDiagnostics,
+                customerProvidedKey));
+            Assert.AreEqual(Constants.Blob.Http, httpBlob.Uri.Scheme);
+            AppendBlobClient httpsBlob = InstrumentClient(httpBlob.WithCustomerProvidedKey(customerProvidedKey));
+            var data = GetRandomBuffer(Constants.KB);
+            await httpsBlob.CreateAsync();
+
+            // Act
+            using var stream = new MemoryStream(data);
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                httpBlob.AppendBlockAsync(stream),
+                actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
         }
 
         [Test]
         public async Task AppendBlockAsync_MD5()
         {
-            using (GetNewContainer(out BlobContainerClient container))
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            await blob.CreateAsync();
+            var data = GetRandomBuffer(Constants.KB);
+
+            // Act
+            using (var stream = new MemoryStream(data))
             {
-                // Arrange
-                AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(GetNewBlobName()));
-                await blob.CreateAsync();
-                var data = GetRandomBuffer(Constants.KB);
+                Response<BlobAppendInfo> response = await blob.AppendBlockAsync(
+                    content: stream,
+                    transactionalContentHash: MD5.Create().ComputeHash(data));
 
-                // Act
-                using (var stream = new MemoryStream(data))
-                {
-                    Response<BlobAppendInfo> response = await blob.AppendBlockAsync(
-                        content: stream,
-                        transactionalContentHash: MD5.Create().ComputeHash(data));
-
-                    // Assert
-                    Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
-                }
+                // Assert
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
         }
 
         [Test]
         public async Task AppendBlockAsync_MD5Fail()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(GetNewBlobName()));
-                await blob.CreateAsync();
-                var data = GetRandomBuffer(Constants.KB);
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Act
-                using (var stream = new MemoryStream(data))
-                {
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                        blob.AppendBlockAsync(
-                            content: stream,
-                            transactionalContentHash: MD5.Create().ComputeHash(Encoding.UTF8.GetBytes("garbage"))),
-                        e => Assert.AreEqual("Md5Mismatch", e.ErrorCode.Split('\n')[0]));
-                }
+            // Arrange
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            await blob.CreateAsync();
+            var data = GetRandomBuffer(Constants.KB);
+
+            // Act
+            using (var stream = new MemoryStream(data))
+            {
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    blob.AppendBlockAsync(
+                        content: stream,
+                        transactionalContentHash: MD5.Create().ComputeHash(Encoding.UTF8.GetBytes("garbage"))),
+                    e => Assert.AreEqual("Md5Mismatch", e.ErrorCode.Split('\n')[0]));
             }
         }
 
         [Test]
         public async Task AppendBlockAsync_Error()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(GetNewBlobName()));
-                var data = GetRandomBuffer(Constants.KB);
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Act
-                using (var stream = new MemoryStream(data))
-                {
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                        blob.AppendBlockAsync(stream),
-                        e => Assert.AreEqual("BlobNotFound", e.ErrorCode.Split('\n')[0]));
-                }
+            // Arrange
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            var data = GetRandomBuffer(Constants.KB);
+
+            // Act
+            using (var stream = new MemoryStream(data))
+            {
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    blob.AppendBlockAsync(stream),
+                    e => Assert.AreEqual("BlobNotFound", e.ErrorCode.Split('\n')[0]));
             }
         }
 
@@ -472,29 +454,28 @@ namespace Azure.Storage.Blobs.Test
             };
             foreach (AccessConditionParameters parameters in testCases)
             {
-                using (GetNewContainer(out BlobContainerClient container))
+                await using DisposingContainer test = await GetTestContainerAsync();
+
+                // Arrange
+                AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+                await blob.CreateAsync();
+                var data = GetRandomBuffer(7);
+                parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
+                parameters.LeaseId = await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
+                AppendBlobRequestConditions accessConditions = BuildDestinationAccessConditions(
+                    parameters: parameters,
+                    lease: true,
+                    appendPosAndMaxSize: true);
+
+                // Act
+                using (var stream = new MemoryStream(data))
                 {
-                    // Arrange
-                    AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(GetNewBlobName()));
-                    await blob.CreateAsync();
-                    var data = GetRandomBuffer(7);
-                    parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
-                    parameters.LeaseId = await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
-                    AppendBlobAccessConditions accessConditions = BuildDestinationAccessConditions(
-                        parameters: parameters,
-                        lease: true,
-                        appendPosAndMaxSize: true);
+                    Response<BlobAppendInfo> response = await blob.AppendBlockAsync(
+                        content: stream,
+                        conditions: accessConditions);
 
-                    // Act
-                    using (var stream = new MemoryStream(data))
-                    {
-                        Response<BlobAppendInfo> response = await blob.AppendBlockAsync(
-                            content: stream,
-                            accessConditions: accessConditions);
-
-                        // Assert
-                        Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
-                    }
+                    // Assert
+                    Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
                 }
             }
         }
@@ -515,28 +496,27 @@ namespace Azure.Storage.Blobs.Test
             };
             foreach (AccessConditionParameters parameters in testCases)
             {
-                using (GetNewContainer(out BlobContainerClient container))
-                {
-                    // Arrange
-                    AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(GetNewBlobName()));
-                    var data = GetRandomBuffer(7);
-                    // AppendBlob needs to exists for us to test CreateAsync() with access conditions
-                    await blob.CreateAsync();
-                    parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
-                    AppendBlobAccessConditions accessConditions = BuildDestinationAccessConditions(
-                        parameters: parameters,
-                        lease: true,
-                        appendPosAndMaxSize: true);
+                await using DisposingContainer test = await GetTestContainerAsync();
 
-                    // Act
-                    using (var stream = new MemoryStream(data))
-                    {
-                        await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                            blob.AppendBlockAsync(
-                                content: stream,
-                                accessConditions: accessConditions),
-                            e => { });
-                    }
+                // Arrange
+                AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+                var data = GetRandomBuffer(7);
+                // AppendBlob needs to exists for us to test CreateAsync() with access conditions
+                await blob.CreateAsync();
+                parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
+                AppendBlobRequestConditions accessConditions = BuildDestinationAccessConditions(
+                    parameters: parameters,
+                    lease: true,
+                    appendPosAndMaxSize: true);
+
+                // Act
+                using (var stream = new MemoryStream(data))
+                {
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                        blob.AppendBlockAsync(
+                            content: stream,
+                            conditions: accessConditions),
+                        e => { });
                 }
             }
         }
@@ -545,229 +525,223 @@ namespace Azure.Storage.Blobs.Test
         public async Task AppendBlockAsync_WithUnreliableConnection()
         {
             const int blobSize = 1 * Constants.MB;
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-            using (GetNewContainer(out BlobContainerClient container))
+            BlobContainerClient containerFaulty = InstrumentClient(
+                new BlobContainerClient(
+                    test.Container.Uri,
+                    new StorageSharedKeyCredential(
+                        TestConfigDefault.AccountName,
+                        TestConfigDefault.AccountKey),
+                    GetFaultyBlobConnectionOptions()));
+
+            // Arrange
+            var blobName = GetNewBlobName();
+            AppendBlobClient blobFaulty = InstrumentClient(containerFaulty.GetAppendBlobClient(blobName));
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+
+            await blob.CreateAsync();
+
+            var data = GetRandomBuffer(blobSize);
+            var progressList = new List<long>();
+            var progressHandler = new Progress<long>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
+
+            // Act
+            using (var stream = new FaultyStream(new MemoryStream(data), 256 * Constants.KB, 1, new Exception("Simulated stream fault")))
             {
-                BlobContainerClient containerFaulty = InstrumentClient(
-                    new BlobContainerClient(
-                        container.Uri,
-                        new StorageSharedKeyCredential(
-                            TestConfigDefault.AccountName,
-                            TestConfigDefault.AccountKey),
-                        GetFaultyBlobConnectionOptions()));
-
-                // Arrange
-                var blobName = GetNewBlobName();
-                AppendBlobClient blobFaulty = InstrumentClient(containerFaulty.GetAppendBlobClient(blobName));
-                AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(blobName));
-
-                await blob.CreateAsync();
-
-                var data = GetRandomBuffer(blobSize);
-                var progressList = new List<StorageProgress>();
-                var progressHandler = new Progress<StorageProgress>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
-
-                // Act
-                using (var stream = new FaultyStream(new MemoryStream(data), 256 * Constants.KB, 1, new Exception("Simulated stream fault")))
-                {
-                    await blobFaulty.AppendBlockAsync(stream, progressHandler: progressHandler);
-                    await WaitForProgressAsync(progressList, data.LongLength);
-                    Assert.IsTrue(progressList.Count > 1, "Too few progress received");
-                    // Changing from Assert.AreEqual because these don't always update fast enough
-                    Assert.GreaterOrEqual(data.LongLength, progressList.Last().BytesTransferred, "Final progress has unexpected value");
-                }
-
-                // Assert
-                Response<BlobDownloadInfo> downloadResponse = await blob.DownloadAsync();
-                var actual = new MemoryStream();
-                await downloadResponse.Value.Content.CopyToAsync(actual);
-                Assert.AreEqual(data.Length, actual.Length);
-                TestHelper.AssertSequenceEqual(data, actual.ToArray());
+                await blobFaulty.AppendBlockAsync(stream, progressHandler: progressHandler);
+                await WaitForProgressAsync(progressList, data.LongLength);
+                Assert.IsTrue(progressList.Count > 1, "Too few progress received");
+                // Changing from Assert.AreEqual because these don't always update fast enough
+                Assert.GreaterOrEqual(data.LongLength, progressList.Last(), "Final progress has unexpected value");
             }
+
+            // Assert
+            Response<BlobDownloadInfo> downloadResponse = await blob.DownloadAsync();
+            var actual = new MemoryStream();
+            await downloadResponse.Value.Content.CopyToAsync(actual);
+            Assert.AreEqual(data.Length, actual.Length);
+            TestHelper.AssertSequenceEqual(data, actual.ToArray());
         }
 
         [Test]
         public async Task AppendBlockFromUriAsync_Min()
         {
-            using (GetNewContainer(out BlobContainerClient container))
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+
+            var data = GetRandomBuffer(Constants.KB);
+
+            using (var stream = new MemoryStream(data))
             {
-                // Arrange
-                await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+                AppendBlobClient sourceBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+                await sourceBlob.CreateAsync();
+                await sourceBlob.AppendBlockAsync(stream);
 
-                var data = GetRandomBuffer(Constants.KB);
+                AppendBlobClient destBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+                await destBlob.CreateAsync();
 
-                using (var stream = new MemoryStream(data))
-                {
-                    AppendBlobClient sourceBlob = InstrumentClient(container.GetAppendBlobClient(GetNewBlobName()));
-                    await sourceBlob.CreateAsync();
-                    await sourceBlob.AppendBlockAsync(stream);
-
-                    AppendBlobClient destBlob = InstrumentClient(container.GetAppendBlobClient(GetNewBlobName()));
-                    await destBlob.CreateAsync();
-
-                    // Act
-                    await destBlob.AppendBlockFromUriAsync(sourceBlob.Uri, new HttpRange(0, Constants.KB));
-                }
+                // Act
+                await destBlob.AppendBlockFromUriAsync(sourceBlob.Uri, new HttpRange(0, Constants.KB));
             }
         }
 
         [Test]
         public async Task AppendBlockFromUriAsync_CPK()
         {
-            using (GetNewContainer(out BlobContainerClient container))
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+
+            var data = GetRandomBuffer(Constants.KB);
+
+            using (var stream = new MemoryStream(data))
             {
-                // Arrange
-                await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+                AppendBlobClient sourceBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+                await sourceBlob.CreateAsync();
+                await sourceBlob.AppendBlockAsync(stream);
 
-                var data = GetRandomBuffer(Constants.KB);
+                AppendBlobClient destBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+                CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+                destBlob = InstrumentClient(destBlob.WithCustomerProvidedKey(customerProvidedKey));
+                await destBlob.CreateAsync();
 
-                using (var stream = new MemoryStream(data))
-                {
-                    AppendBlobClient sourceBlob = InstrumentClient(container.GetAppendBlobClient(GetNewBlobName()));
-                    await sourceBlob.CreateAsync();
-                    await sourceBlob.AppendBlockAsync(stream);
+                // Act
+                Response<BlobAppendInfo> response = await destBlob.AppendBlockFromUriAsync(
+                    sourceBlob.Uri,
+                    new HttpRange(0, Constants.KB));
 
-                    AppendBlobClient destBlob = InstrumentClient(container.GetAppendBlobClient(GetNewBlobName()));
-                    CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-                    destBlob = InstrumentClient(destBlob.WithCustomerProvidedKey(customerProvidedKey));
-                    await destBlob.CreateAsync();
-
-                    // Act
-                    Response<BlobAppendInfo> response = await destBlob.AppendBlockFromUriAsync(
-                        sourceBlob.Uri,
-                        new HttpRange(0, Constants.KB));
-
-                    Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
-                }
+                Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
             }
         }
 
         [Test]
         public async Task AppendBlockFromUriAsync_CpkHttpError()
         {
-            using (GetNewContainer(out BlobContainerClient container))
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+
+            var data = GetRandomBuffer(Constants.KB);
+
+            using (var stream = new MemoryStream(data))
             {
-                // Arrange
-                await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+                AppendBlobClient sourceBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+                await sourceBlob.CreateAsync();
+                await sourceBlob.AppendBlockAsync(stream);
 
-                var data = GetRandomBuffer(Constants.KB);
+                AppendBlobClient httpDestBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+                CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+                httpDestBlob = InstrumentClient(new AppendBlobClient(
+                    httpDestBlob.Uri,
+                    httpDestBlob.Pipeline,
+                    httpDestBlob.ClientDiagnostics,
+                    customerProvidedKey));
+                Assert.AreEqual(Constants.Blob.Http, httpDestBlob.Uri.Scheme);
+                AppendBlobClient httpsDestBlob = InstrumentClient(httpDestBlob.WithCustomerProvidedKey(customerProvidedKey));
+                await httpsDestBlob.CreateAsync();
 
-                using (var stream = new MemoryStream(data))
-                {
-                    AppendBlobClient sourceBlob = InstrumentClient(container.GetAppendBlobClient(GetNewBlobName()));
-                    await sourceBlob.CreateAsync();
-                    await sourceBlob.AppendBlockAsync(stream);
-
-                    AppendBlobClient httpDestBlob = InstrumentClient(container.GetAppendBlobClient(GetNewBlobName()));
-                    CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-                    httpDestBlob = InstrumentClient(new AppendBlobClient(
-                        httpDestBlob.Uri,
-                        httpDestBlob.Pipeline,
-                        new BlobClientOptions(customerProvidedKey: customerProvidedKey)));
-                    Assert.AreEqual(Constants.Blob.Http, httpDestBlob.Uri.Scheme);
-                    AppendBlobClient httpsDestBlob = InstrumentClient(httpDestBlob.WithCustomerProvidedKey(customerProvidedKey));
-                    await httpsDestBlob.CreateAsync();
-
-                    // Act
-                    await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
-                        httpDestBlob.AppendBlockFromUriAsync(
-                            sourceBlob.Uri,
-                            new HttpRange(0, Constants.KB)),
-                        actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
-                }
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                    httpDestBlob.AppendBlockFromUriAsync(
+                        sourceBlob.Uri,
+                        new HttpRange(0, Constants.KB)),
+                    actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
             }
         }
 
         [Test]
         public async Task AppendBlockFromUriAsync_Range()
         {
-            using (GetNewContainer(out BlobContainerClient container))
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+
+            var data = GetRandomBuffer(4 * Constants.KB);
+
+            using (var stream = new MemoryStream(data))
             {
-                // Arrange
-                await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+                AppendBlobClient sourceBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+                await sourceBlob.CreateAsync();
+                await sourceBlob.AppendBlockAsync(stream);
 
-                var data = GetRandomBuffer(4 * Constants.KB);
+                AppendBlobClient destBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+                await destBlob.CreateAsync();
 
-                using (var stream = new MemoryStream(data))
-                {
-                    AppendBlobClient sourceBlob = InstrumentClient(container.GetAppendBlobClient(GetNewBlobName()));
-                    await sourceBlob.CreateAsync();
-                    await sourceBlob.AppendBlockAsync(stream);
+                // Act
+                await destBlob.AppendBlockFromUriAsync(sourceBlob.Uri, new HttpRange(2 * Constants.KB, 2 * Constants.KB));
 
-                    AppendBlobClient destBlob = InstrumentClient(container.GetAppendBlobClient(GetNewBlobName()));
-                    await destBlob.CreateAsync();
-
-                    // Act
-                    await destBlob.AppendBlockFromUriAsync(sourceBlob.Uri, new HttpRange(2 * Constants.KB, 2 * Constants.KB));
-
-                    // Assert
-                    Response<BlobDownloadInfo> result = await destBlob.DownloadAsync(new HttpRange(0, 2 * Constants.KB));
-                    var dataResult = new MemoryStream();
-                    await result.Value.Content.CopyToAsync(dataResult);
-                    Assert.AreEqual(2 * Constants.KB, dataResult.Length);
-                    TestHelper.AssertSequenceEqual(data.Skip(2 * Constants.KB).Take(2 * Constants.KB), dataResult.ToArray());
-                }
+                // Assert
+                Response<BlobDownloadInfo> result = await destBlob.DownloadAsync(new HttpRange(0, 2 * Constants.KB));
+                var dataResult = new MemoryStream();
+                await result.Value.Content.CopyToAsync(dataResult);
+                Assert.AreEqual(2 * Constants.KB, dataResult.Length);
+                TestHelper.AssertSequenceEqual(data.Skip(2 * Constants.KB).Take(2 * Constants.KB), dataResult.ToArray());
             }
         }
 
         [Test]
         public async Task AppendBlockFromUriAsync_MD5()
         {
-            using (GetNewContainer(out BlobContainerClient container))
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+
+            var data = GetRandomBuffer(Constants.KB);
+
+            using (var stream = new MemoryStream(data))
             {
-                // Arrange
-                await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+                AppendBlobClient sourceBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+                await sourceBlob.CreateAsync();
+                await sourceBlob.AppendBlockAsync(stream);
 
-                var data = GetRandomBuffer(Constants.KB);
+                AppendBlobClient destBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+                await destBlob.CreateAsync();
 
-                using (var stream = new MemoryStream(data))
-                {
-                    AppendBlobClient sourceBlob = InstrumentClient(container.GetAppendBlobClient(GetNewBlobName()));
-                    await sourceBlob.CreateAsync();
-                    await sourceBlob.AppendBlockAsync(stream);
-
-                    AppendBlobClient destBlob = InstrumentClient(container.GetAppendBlobClient(GetNewBlobName()));
-                    await destBlob.CreateAsync();
-
-                    // Act
-                    await destBlob.AppendBlockFromUriAsync(
-                        sourceUri: sourceBlob.Uri,
-                        sourceContentHash: MD5.Create().ComputeHash(data));
-                }
+                // Act
+                await destBlob.AppendBlockFromUriAsync(
+                    sourceUri: sourceBlob.Uri,
+                    sourceContentHash: MD5.Create().ComputeHash(data));
             }
         }
 
         [Test]
         public async Task AppendBlockFromUriAsync_MD5_Fail()
         {
-            using (GetNewContainer(out BlobContainerClient container))
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+
+            var data = GetRandomBuffer(Constants.KB);
+
+            using (var stream = new MemoryStream(data))
             {
-                // Arrange
-                await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+                AppendBlobClient sourceBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+                await sourceBlob.CreateAsync();
+                await sourceBlob.AppendBlockAsync(stream);
 
-                var data = GetRandomBuffer(Constants.KB);
+                AppendBlobClient destBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+                await destBlob.CreateAsync();
 
-                using (var stream = new MemoryStream(data))
-                {
-                    AppendBlobClient sourceBlob = InstrumentClient(container.GetAppendBlobClient(GetNewBlobName()));
-                    await sourceBlob.CreateAsync();
-                    await sourceBlob.AppendBlockAsync(stream);
-
-                    AppendBlobClient destBlob = InstrumentClient(container.GetAppendBlobClient(GetNewBlobName()));
-                    await destBlob.CreateAsync();
-
-                    // Act
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                        destBlob.AppendBlockFromUriAsync(
-                            sourceUri: sourceBlob.Uri,
-                            sourceContentHash: MD5.Create().ComputeHash(Encoding.UTF8.GetBytes("garabage"))),
-                        actualException => Assert.AreEqual("Md5Mismatch", actualException.ErrorCode)
-                    );
-                }
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    destBlob.AppendBlockFromUriAsync(
+                        sourceUri: sourceBlob.Uri,
+                        sourceContentHash: MD5.Create().ComputeHash(Encoding.UTF8.GetBytes("garabage"))),
+                    actualException => Assert.AreEqual("Md5Mismatch", actualException.ErrorCode)
+                );
             }
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8351")]
         public async Task AppendBlockFromUriAsync_AccessConditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();
@@ -788,38 +762,37 @@ namespace Azure.Storage.Blobs.Test
             };
             foreach (AccessConditionParameters parameters in testCases)
             {
-                using (GetNewContainer(out BlobContainerClient container))
+                await using DisposingContainer test = await GetTestContainerAsync();
+
+                // Arrange
+                await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+
+                var data = GetRandomBuffer(7);
+
+                using (var stream = new MemoryStream(data))
                 {
-                    // Arrange
-                    await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+                    AppendBlobClient sourceBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+                    await sourceBlob.CreateAsync();
+                    await sourceBlob.AppendBlockAsync(stream);
 
-                    var data = GetRandomBuffer(7);
+                    AppendBlobClient destBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+                    await destBlob.CreateAsync();
 
-                    using (var stream = new MemoryStream(data))
-                    {
-                        AppendBlobClient sourceBlob = InstrumentClient(container.GetAppendBlobClient(GetNewBlobName()));
-                        await sourceBlob.CreateAsync();
-                        await sourceBlob.AppendBlockAsync(stream);
+                    parameters.Match = await SetupBlobMatchCondition(destBlob, parameters.Match);
+                    parameters.SourceIfMatch = await SetupBlobMatchCondition(sourceBlob, parameters.SourceIfMatch);
+                    parameters.LeaseId = await SetupBlobLeaseCondition(destBlob, parameters.LeaseId, garbageLeaseId);
 
-                        AppendBlobClient destBlob = InstrumentClient(container.GetAppendBlobClient(GetNewBlobName()));
-                        await destBlob.CreateAsync();
+                    AppendBlobRequestConditions accessConditions = BuildDestinationAccessConditions(
+                        parameters: parameters,
+                        lease: true,
+                        appendPosAndMaxSize: true);
+                    AppendBlobRequestConditions sourceAccessConditions = BuildSourceAccessConditions(parameters);
 
-                        parameters.Match = await SetupBlobMatchCondition(destBlob, parameters.Match);
-                        parameters.SourceIfMatch = await SetupBlobMatchCondition(sourceBlob, parameters.SourceIfMatch);
-                        parameters.LeaseId = await SetupBlobLeaseCondition(destBlob, parameters.LeaseId, garbageLeaseId);
-
-                        AppendBlobAccessConditions accessConditions = BuildDestinationAccessConditions(
-                            parameters: parameters,
-                            lease: true,
-                            appendPosAndMaxSize: true);
-                        AppendBlobAccessConditions sourceAccessConditions = BuildSourceAccessConditions(parameters);
-
-                        // Act
-                        await destBlob.AppendBlockFromUriAsync(
-                            sourceUri: sourceBlob.Uri,
-                            accessConditions: accessConditions,
-                            sourceAccessConditions: sourceAccessConditions);
-                    }
+                    // Act
+                    await destBlob.AppendBlockFromUriAsync(
+                        sourceUri: sourceBlob.Uri,
+                        conditions: accessConditions,
+                        sourceConditions: sourceAccessConditions);
                 }
             }
         }
@@ -844,66 +817,59 @@ namespace Azure.Storage.Blobs.Test
             };
             foreach (AccessConditionParameters parameters in testCases)
             {
-                using (GetNewContainer(out BlobContainerClient container))
+                await using DisposingContainer test = await GetTestContainerAsync();
+
+                // Arrange
+                await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+
+                var data = GetRandomBuffer(7);
+
+                using (var stream = new MemoryStream(data))
                 {
-                    // Arrange
-                    await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+                    AppendBlobClient sourceBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+                    await sourceBlob.CreateAsync();
+                    await sourceBlob.AppendBlockAsync(stream);
 
-                    var data = GetRandomBuffer(7);
+                    AppendBlobClient destBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+                    await destBlob.CreateAsync();
 
-                    using (var stream = new MemoryStream(data))
-                    {
-                        AppendBlobClient sourceBlob = InstrumentClient(container.GetAppendBlobClient(GetNewBlobName()));
-                        await sourceBlob.CreateAsync();
-                        await sourceBlob.AppendBlockAsync(stream);
+                    parameters.NoneMatch = await SetupBlobMatchCondition(destBlob, parameters.NoneMatch);
+                    parameters.SourceIfNoneMatch = await SetupBlobMatchCondition(sourceBlob, parameters.SourceIfNoneMatch);
 
-                        AppendBlobClient destBlob = InstrumentClient(container.GetAppendBlobClient(GetNewBlobName()));
-                        await destBlob.CreateAsync();
+                    AppendBlobRequestConditions accessConditions = BuildDestinationAccessConditions(
+                        parameters: parameters,
+                        lease: true,
+                        appendPosAndMaxSize: true);
+                    AppendBlobRequestConditions sourceAccessConditions = BuildSourceAccessConditions(parameters);
 
-                        parameters.NoneMatch = await SetupBlobMatchCondition(destBlob, parameters.NoneMatch);
-                        parameters.SourceIfNoneMatch = await SetupBlobMatchCondition(sourceBlob, parameters.SourceIfNoneMatch);
-
-                        AppendBlobAccessConditions accessConditions = BuildDestinationAccessConditions(
-                            parameters: parameters,
-                            lease: true,
-                            appendPosAndMaxSize: true);
-                        AppendBlobAccessConditions sourceAccessConditions = BuildSourceAccessConditions(parameters);
-
-                        // Act
-                        await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                            destBlob.AppendBlockFromUriAsync(
-                                sourceUri: sourceBlob.Uri,
-                                accessConditions: accessConditions,
-                                sourceAccessConditions: sourceAccessConditions),
-                            actualException => Assert.IsTrue(true)
-                        );
-                    }
+                    // Act
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                        destBlob.AppendBlockFromUriAsync(
+                            sourceUri: sourceBlob.Uri,
+                            conditions: accessConditions,
+                            sourceConditions: sourceAccessConditions),
+                        actualException => Assert.IsTrue(true)
+                    );
                 }
             }
         }
 
-        private AppendBlobAccessConditions BuildDestinationAccessConditions(
+        private AppendBlobRequestConditions BuildDestinationAccessConditions(
             AccessConditionParameters parameters,
             bool lease = false,
             bool appendPosAndMaxSize = false)
         {
-            var accessConditions = new AppendBlobAccessConditions
+            var accessConditions = new AppendBlobRequestConditions
             {
-                HttpAccessConditions = new HttpAccessConditions
-                {
-                    IfMatch = parameters.Match != null ? new ETag(parameters.Match) : default(ETag?),
-                    IfNoneMatch = parameters.NoneMatch != null ? new ETag(parameters.NoneMatch) : default(ETag?),
-                    IfModifiedSince = parameters.IfModifiedSince,
-                    IfUnmodifiedSince = parameters.IfUnmodifiedSince
-                }
+                IfMatch = parameters.Match != null ? new ETag(parameters.Match) : default(ETag?),
+                IfNoneMatch = parameters.NoneMatch != null ? new ETag(parameters.NoneMatch) : default(ETag?),
+                IfModifiedSince = parameters.IfModifiedSince,
+                IfUnmodifiedSince = parameters.IfUnmodifiedSince
             };
 
             if (lease)
             {
-                accessConditions.LeaseAccessConditions = new LeaseAccessConditions
-                {
-                    LeaseId = parameters.LeaseId
-                };
+                accessConditions.LeaseId = parameters.LeaseId;
             }
 
             if (appendPosAndMaxSize)
@@ -915,16 +881,13 @@ namespace Azure.Storage.Blobs.Test
             return accessConditions;
         }
 
-        private AppendBlobAccessConditions BuildSourceAccessConditions(AccessConditionParameters parameters)
-            => new AppendBlobAccessConditions
+        private AppendBlobRequestConditions BuildSourceAccessConditions(AccessConditionParameters parameters) =>
+            new AppendBlobRequestConditions
             {
-                HttpAccessConditions = new HttpAccessConditions
-                {
-                    IfMatch = parameters.SourceIfMatch != null ? new ETag(parameters.SourceIfMatch) : default(ETag?),
-                    IfNoneMatch = parameters.SourceIfNoneMatch != null ? new ETag(parameters.SourceIfNoneMatch) : default(ETag?),
-                    IfModifiedSince = parameters.SourceIfModifiedSince,
-                    IfUnmodifiedSince = parameters.SourceIfUnmodifiedSince
-                },
+                IfMatch = parameters.SourceIfMatch != null ? new ETag(parameters.SourceIfMatch) : default(ETag?),
+                IfNoneMatch = parameters.SourceIfNoneMatch != null ? new ETag(parameters.SourceIfNoneMatch) : default(ETag?),
+                IfModifiedSince = parameters.SourceIfModifiedSince,
+                IfUnmodifiedSince = parameters.SourceIfUnmodifiedSince
             };
 
         public class AccessConditionParameters

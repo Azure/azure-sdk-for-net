@@ -50,28 +50,28 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets health Code
+        /// Gets health Code
         /// </summary>
         [JsonProperty(PropertyName = "code")]
-        public int? Code { get; set; }
+        public int? Code { get; private set; }
 
         /// <summary>
-        /// Gets or sets health Title
+        /// Gets health Title
         /// </summary>
         [JsonProperty(PropertyName = "title")]
-        public string Title { get; set; }
+        public string Title { get; private set; }
 
         /// <summary>
-        /// Gets or sets health Message
+        /// Gets health Message
         /// </summary>
         [JsonProperty(PropertyName = "message")]
-        public string Message { get; set; }
+        public string Message { get; private set; }
 
         /// <summary>
-        /// Gets or sets health Recommended Actions
+        /// Gets health Recommended Actions
         /// </summary>
         [JsonProperty(PropertyName = "recommendations")]
-        public IList<string> Recommendations { get; set; }
+        public IList<string> Recommendations { get; private set; }
 
     }
 }

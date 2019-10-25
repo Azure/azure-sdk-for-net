@@ -42,8 +42,8 @@ namespace Azure.Storage.Files.Models
         /// Create an exception corresponding to the StorageError.
         /// </summary>
         /// <param name="response">The failed response.</param>
-        /// <returns>A StorageRequestFailedException.</returns>
+        /// <returns>A RequestFailedException.</returns>
         public Exception CreateException(Azure.Response response)
-            => new StorageRequestFailedException(response, Message, null, Code, AdditionalInformation);
+            => StorageExceptionExtensions.CreateException(response, Message, null, Code, AdditionalInformation);
     }
 }

@@ -1,30 +1,32 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     internal static class LocalCryptographyProviderFactory
     {
-        public static ICryptographyProvider Create(JsonWebKey key)
+        public static ICryptographyProvider Create(KeyVaultKey key)
         {
-            if (key.KeyType == KeyType.Rsa || key.KeyType == KeyType.RsaHsm)
+            JsonWebKey keyMaterial = key?.Key;
+            if (keyMaterial != null)
             {
-                return new RsaCryptographyProvider(key);
+                if (keyMaterial.KeyType == KeyType.Rsa || keyMaterial.KeyType == KeyType.RsaHsm)
+                {
+                    return new RsaCryptographyProvider(key);
+                }
+
+                if (keyMaterial.KeyType == KeyType.Ec || keyMaterial.KeyType == KeyType.EcHsm)
+                {
+                    return new EcCryptographyProvider(key);
+                }
+
+                if (keyMaterial.KeyType == KeyType.Oct)
+                {
+                    return new AesCryptographyProvider(key);
+                }
             }
 
-            if (key.KeyType == KeyType.Ec || key.KeyType == KeyType.EcHsm)
-            {
-                return new EcCryptographyProvider(key);
-            }
-
-            if (key.KeyType == KeyType.Oct)
-            {
-                return new AesCryptographyProvider(key);
-            }
-
-            throw new NotSupportedException();
+            return null;
         }
     }
 }

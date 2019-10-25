@@ -4,7 +4,7 @@
 using Azure.Core.Testing;
 using NUnit.Framework;
 using System;
-using Azure.Core.Pipeline;
+using Azure.Core;
 
 namespace Azure.Data.AppConfiguration.Samples
 {
@@ -25,8 +25,8 @@ namespace Azure.Data.AppConfiguration.Samples
             // pass the policy options to the client
             var client = new ConfigurationClient(connectionString, options);
 
-            client.Set(new ConfigurationSetting("some_key", "some_value"));
-            client.Delete("some_key");
+            client.SetConfigurationSetting(new ConfigurationSetting("some_key", "some_value"));
+            client.DeleteConfigurationSetting("some_key");
         }
     }
 }

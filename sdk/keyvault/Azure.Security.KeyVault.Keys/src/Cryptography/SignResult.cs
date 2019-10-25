@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
@@ -14,8 +13,12 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         private const string KeyIdPropertyName = "kid";
         private const string SignaturePropertyName = "value";
 
+        internal SignResult()
+        {
+        }
+
         /// <summary>
-        /// The <see cref="KeyProperties.Id"/> of the <see cref="Key"/> used to sign. This must be stored alongside the <see cref="Signature"/> as the same key must be used to verify it.
+        /// The <see cref="KeyProperties.Id"/> of the <see cref="KeyVaultKey"/> used to sign. This must be stored alongside the <see cref="Signature"/> as the same key must be used to verify it.
         /// </summary>
         public string KeyId { get; internal set; }
 

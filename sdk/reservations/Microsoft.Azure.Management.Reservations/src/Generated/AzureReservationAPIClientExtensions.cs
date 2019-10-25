@@ -77,7 +77,8 @@ namespace Microsoft.Azure.Management.Reservations
             /// Get list of applicable `Reservation`s.
             /// </summary>
             /// <remarks>
-            /// Get applicable `Reservation`s that are applied to this subscription.
+            /// Get applicable `Reservation`s that are applied to this subscription or a
+            /// resource group under this subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -94,7 +95,8 @@ namespace Microsoft.Azure.Management.Reservations
             /// Get list of applicable `Reservation`s.
             /// </summary>
             /// <remarks>
-            /// Get applicable `Reservation`s that are applied to this subscription.
+            /// Get applicable `Reservation`s that are applied to this subscription or a
+            /// resource group under this subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

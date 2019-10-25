@@ -47,14 +47,14 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             {
                 certOp1.UpdateStatus();
 
-                Thread.Sleep(certOp1.PollingInterval);
+                Thread.Sleep(TimeSpan.FromSeconds(1));
             }
 
             while (!certOp2.HasCompleted)
             {
                 certOp2.UpdateStatus();
 
-                Thread.Sleep(certOp2.PollingInterval);
+                Thread.Sleep(TimeSpan.FromSeconds(1));
             }
 
             // Let's list the certificates which exist in the vault along with their thumbprints
@@ -70,7 +70,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             {
                 newCertOp.UpdateStatus();
 
-                Thread.Sleep(newCertOp.PollingInterval);
+                Thread.Sleep(TimeSpan.FromSeconds(1));
             }
 
             // Let's print all the versions of this certificate
@@ -111,7 +111,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
                 }
                 catch
                 {
-                    Thread.Sleep(5000);
+                    Thread.Sleep(2000);
                 }
             }
             return false;

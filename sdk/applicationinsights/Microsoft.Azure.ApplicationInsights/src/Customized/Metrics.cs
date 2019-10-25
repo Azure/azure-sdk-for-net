@@ -82,7 +82,7 @@ namespace Microsoft.Azure.ApplicationInsights.Query
             int? top = default(int?), string orderby = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var realResult = await GetWithHttpMessagesAsync(appId, metricId, timespan, null, aggregation, null, top, orderby, filter, customHeaders, cancellationToken);
+            var realResult = await GetWithHttpMessagesAsync(appId, metricId, timespan, null, aggregation, null, top, orderby, filter, customHeaders, cancellationToken).ConfigureAwait(false);
             var realBody = realResult.Body.Value;
             return new HttpOperationResponse<MetricsSummaryResult>
             {
@@ -189,7 +189,7 @@ namespace Microsoft.Azure.ApplicationInsights.Query
             IList<string> segment = default(IList<string>), int? top = default(int?), string orderby = default(string),
              string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var realResult = await GetWithHttpMessagesAsync(appId, metricId, timespan, interval, aggregation, null, top, orderby, filter, customHeaders, cancellationToken);
+            var realResult = await GetWithHttpMessagesAsync(appId, metricId, timespan, interval, aggregation, null, top, orderby, filter, customHeaders, cancellationToken).ConfigureAwait(false);
             var realBody = realResult.Body.Value;
             return new HttpOperationResponse<MetricsIntervaledResult>
             {
@@ -431,7 +431,7 @@ namespace Microsoft.Azure.ApplicationInsights.Query
             Dictionary<string, List<string>> customHeaders = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var realResult = await GetWithHttpMessagesAsync(appId, metricId, timespan, interval, aggregation, segment, top, orderby, filter, customHeaders, cancellationToken);
+            var realResult = await GetWithHttpMessagesAsync(appId, metricId, timespan, interval, aggregation, segment, top, orderby, filter, customHeaders, cancellationToken).ConfigureAwait(false);
             var realBody = realResult.Body.Value;
             return new HttpOperationResponse<MetricsIntervaledSegmentedResult>
             {

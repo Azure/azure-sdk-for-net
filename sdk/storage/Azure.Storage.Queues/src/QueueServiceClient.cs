@@ -3,11 +3,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Storage.Common;
 using Azure.Storage.Queues.Models;
 
 namespace Azure.Storage.Queues
@@ -37,6 +37,17 @@ namespace Azure.Storage.Queues
         /// </summary>
         internal virtual HttpPipeline Pipeline => _pipeline;
 
+        /// <summary>
+        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
+        /// every request.
+        /// </summary>
+        private readonly ClientDiagnostics _clientDiagnostics;
+
+        /// <summary>
+        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
+        /// every request.
+        /// </summary>
+        internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
         /// <summary>
         /// The Storage account name corresponding to the service client.
         /// </summary>
@@ -104,6 +115,7 @@ namespace Azure.Storage.Queues
             _uri = conn.QueueEndpoint;
             options ??= new QueueClientOptions();
             _pipeline = options.Build(conn.Credentials);
+            _clientDiagnostics = new ClientDiagnostics(options);
         }
 
         /// <summary>
@@ -183,6 +195,7 @@ namespace Azure.Storage.Queues
             _uri = serviceUri;
             options ??= new QueueClientOptions();
             _pipeline = options.Build(authentication);
+            _clientDiagnostics = new ClientDiagnostics(options);
         }
 
         /// <summary>
@@ -195,10 +208,12 @@ namespace Azure.Storage.Queues
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        internal QueueServiceClient(Uri serviceUri, HttpPipeline pipeline)
+        /// <param name="clientDiagnostics"></param>
+        internal QueueServiceClient(Uri serviceUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
         {
             _uri = serviceUri;
             _pipeline = pipeline;
+            _clientDiagnostics = clientDiagnostics;
         }
         #endregion ctors
 
@@ -215,7 +230,7 @@ namespace Azure.Storage.Queues
         /// A <see cref="QueueClient"/> for the desired queue.
         /// </returns>
         public virtual QueueClient GetQueueClient(string queueName)
-            => new QueueClient(Uri.AppendToPath(queueName), Pipeline);
+            => new QueueClient(Uri.AppendToPath(queueName), Pipeline, ClientDiagnostics);
 
         #region GetQueues
         /// <summary>
@@ -226,8 +241,12 @@ namespace Azure.Storage.Queues
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-queues1"/>
         /// </summary>
-        /// <param name="options">
-        /// <see cref="GetQueuesOptions"/>
+        /// <param name="traits">
+        /// Optional trait options for shaping the queues.
+        /// </param>
+        /// <param name="prefix">
+        /// Optional string that filters the results to return only queues
+        /// whose name begins with the specified <paramref name="prefix"/>.
         /// </param>
         /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
@@ -236,9 +255,10 @@ namespace Azure.Storage.Queues
         /// The queues in the storage account.
         /// </returns>
         public virtual Pageable<QueueItem> GetQueues(
-            GetQueuesOptions? options = default,
+            QueueTraits traits = QueueTraits.None,
+            string prefix = default,
             CancellationToken cancellationToken = default) =>
-            new GetQueuesAsyncCollection(this, options).ToSyncCollection(cancellationToken);
+            new GetQueuesAsyncCollection(this, traits, prefix).ToSyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetQueuesAsync"/> operation returns an async
@@ -248,8 +268,12 @@ namespace Azure.Storage.Queues
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-queues1"/>
         /// </summary>
-        /// <param name="options">
-        /// <see cref="GetQueuesOptions"/>
+        /// <param name="traits">
+        /// Optional trait options for shaping the queues.
+        /// </param>
+        /// <param name="prefix">
+        /// Optional string that filters the results to return only queues
+        /// whose name begins with the specified <paramref name="prefix"/>.
         /// </param>
         /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
@@ -262,19 +286,24 @@ namespace Azure.Storage.Queues
         /// After getting a segment, process it, and then call ListQueuesSegment again (passing in the next marker) to get the next segment.
         /// </remarks>
         public virtual AsyncPageable<QueueItem> GetQueuesAsync(
-            GetQueuesOptions? options = default,
+            QueueTraits traits = QueueTraits.None,
+            string prefix = default,
             CancellationToken cancellationToken = default) =>
-            new GetQueuesAsyncCollection(this, options).ToAsyncCollection(cancellationToken);
+            new GetQueuesAsyncCollection(this, traits, prefix).ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// Returns a single segment of containers starting from the specified marker.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-queues1"/>
         /// </summary>
-        /// <param name="options">
-        /// <see cref="GetQueuesOptions"/>
-        /// </param>
         /// <param name="marker">
         /// Marker from the previous request.
+        /// </param>
+        /// <param name="traits">
+        /// Optional trait options for shaping the queues.
+        /// </param>
+        /// <param name="prefix">
+        /// Optional string that filters the results to return only queues
+        /// whose name begins with the specified <paramref name="prefix"/>.
         /// </param>
         /// <param name="pageSizeHint">
         /// Optional hint to specify the desired size of the page returned.
@@ -294,7 +323,8 @@ namespace Azure.Storage.Queues
         /// </remarks>
         internal async Task<Response<QueuesSegment>> GetQueuesInternal(
             string marker,
-            GetQueuesOptions? options,
+            QueueTraits traits,
+            string prefix,
             int? pageSizeHint,
             bool async,
             CancellationToken cancellationToken)
@@ -306,16 +336,19 @@ namespace Azure.Storage.Queues
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(marker)}: {marker}\n" +
-                    $"{nameof(options)}: {options}");
+                    $"{nameof(traits)}: {traits}\n" +
+                    $"{nameof(prefix)}: {prefix}");
                 try
                 {
+                    IEnumerable<ListQueuesIncludeType> includeTypes = traits.AsIncludeTypes();
                     return await QueueRestClient.Service.ListQueuesSegmentAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         marker: marker,
-                        prefix: options?.Prefix,
+                        prefix: prefix,
                         maxresults: pageSizeHint,
-                        include: options?.AsIncludeTypes(),
+                        include: includeTypes.Any() ? includeTypes : null,
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
@@ -393,6 +426,7 @@ namespace Azure.Storage.Queues
                 try
                 {
                     return await QueueRestClient.Service.GetPropertiesAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         async: async,
@@ -488,6 +522,7 @@ namespace Azure.Storage.Queues
                 try
                 {
                     return await QueueRestClient.Service.SetPropertiesAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         properties: properties,
@@ -574,6 +609,7 @@ namespace Azure.Storage.Queues
                 try
                 {
                     return await QueueRestClient.Service.GetStatisticsAsync(
+                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         async: async,

@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Messaging.EventHubs.Errors;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests
@@ -175,6 +176,27 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var target = "test";
             Assert.That(() => Argument.AssertNotDisposed(true, target), Throws.InstanceOf<ObjectDisposedException>().And.Message.Contains(target));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="Argument.AssertNotClosed" /> method.
+        /// </summary>
+        ///
+        [Test]
+        public void NotClosedAllowsUnclosed()
+        {
+            Assert.That(() => Argument.AssertNotClosed(false, "test"), Throws.Nothing);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="Argument.AssertNotClosed" /> method.
+        /// </summary>
+        ///
+        [Test]
+        public void NotClosedEnforcesClosed()
+        {
+            var target = "test";
+            Assert.That(() => Argument.AssertNotClosed(true, target), Throws.InstanceOf<EventHubsClientClosedException>().And.Message.Contains(target));
         }
     }
 }

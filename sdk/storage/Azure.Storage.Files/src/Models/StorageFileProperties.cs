@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core.Http;
 
 #pragma warning disable SA1402  // File may only contain a single type
 
@@ -28,11 +27,6 @@ namespace Azure.Storage.Files.Models
         /// A set of name-value pairs associated with this file as user-defined metadata.
         /// </summary>
         public IDictionary<string, string> Metadata => _rawStorageFileProperties.Metadata;
-
-        /// <summary>
-        /// Returns the type File. Reserved for future use.
-        /// </summary>
-        public Header FileType => _rawStorageFileProperties.FileType;
 
         /// <summary>
         /// The size of the file in bytes.
@@ -79,7 +73,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// Conclusion time of the last attempted Copy File operation where this file was the destination file. This value can specify the time of a completed, aborted, or failed copy attempt.
         /// </summary>
-        public DateTimeOffset CopyCompletionTime => _rawStorageFileProperties.CopyCompletionTime;
+        public DateTimeOffset CopyCompletedOn => _rawStorageFileProperties.CopyCompletionTime;
 
         /// <summary>
         /// Only appears when x-ms-copy-status is failed or pending. Describes cause of fatal or non-fatal copy operation failure.
@@ -134,7 +128,6 @@ namespace Azure.Storage.Files.Models
         public static StorageFileProperties StorageFileProperties(
             DateTimeOffset lastModified,
             IDictionary<string, string> metadata,
-            Header fileType,
             long contentLength,
             string contentType,
             ETag eTag,
@@ -143,7 +136,7 @@ namespace Azure.Storage.Files.Models
             string cacheControl,
             string contentDisposition,
             IEnumerable<string> contentLanguage,
-            DateTimeOffset copyCompletionTime,
+            DateTimeOffset copyCompletedOn,
             string copyStatusDescription,
             string copyId,
             string copyProgress,
@@ -161,7 +154,6 @@ namespace Azure.Storage.Files.Models
             {
                 LastModified = lastModified,
                 Metadata = metadata,
-                FileType = fileType,
                 ContentLength = contentLength,
                 ContentType = contentType,
                 ETag = eTag,
@@ -170,7 +162,7 @@ namespace Azure.Storage.Files.Models
                 CacheControl = cacheControl,
                 ContentDisposition = contentDisposition,
                 ContentLanguage = contentLanguage,
-                CopyCompletionTime = copyCompletionTime,
+                CopyCompletionTime = copyCompletedOn,
                 CopyStatusDescription = copyStatusDescription,
                 CopyId = copyId,
                 CopyProgress = copyProgress,

@@ -21,7 +21,7 @@ namespace Azure.Identity
         {
             _cachePath = cachePath;
 
-            _cacheLockPath = cachePath + ".lock";
+            _cacheLockPath = cachePath + ".lockfile";
 
             _cacheRetryCount = cacheRetryCount;
 

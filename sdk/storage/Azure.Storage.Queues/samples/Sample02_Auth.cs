@@ -102,17 +102,16 @@ namespace Azure.Storage.Queues.Samples
             AccountSasBuilder sas = new AccountSasBuilder
             {
                 // Allow access to queues
-                Services = new AccountSasServices() { Queues = true }.ToString(),
+                Services = AccountSasServices.Queues,
 
                 // Allow access to the service level APIs
-                ResourceTypes = new AccountSasResourceTypes() { Service = true }.ToString(),
-
-                // Allow read access
-                Permissions = new AccountSasPermissions() { Read = true }.ToString(),
+                ResourceTypes = AccountSasResourceTypes.Service,
 
                 // Access expires in 1 hour!
-                ExpiryTime = DateTimeOffset.UtcNow.AddHours(1)
+                ExpiresOn = DateTimeOffset.UtcNow.AddHours(1)
             };
+            // Allow read access
+            sas.SetPermissions(AccountSasPermissions.Read);
 
             // Create a SharedKeyCredential that we can use to sign the SAS token
             StorageSharedKeyCredential credential = new StorageSharedKeyCredential(StorageAccountName, StorageAccountKey);
@@ -131,8 +130,8 @@ namespace Azure.Storage.Queues.Samples
 
             // Try to create a new container (which is beyond our
             // delegated permission)
-            StorageRequestFailedException ex =
-                Assert.ThrowsAsync<StorageRequestFailedException>(
+            RequestFailedException ex =
+                Assert.ThrowsAsync<RequestFailedException>(
                     async () => await service.CreateQueueAsync(Randomize("sample-queue")));
             Assert.AreEqual(403, ex.Status);
         }
@@ -161,7 +160,7 @@ namespace Azure.Storage.Queues.Samples
                     ActiveDirectoryTenantId,
                     ActiveDirectoryApplicationId,
                     ActiveDirectoryApplicationSecret,
-                    new IdentityClientOptions() { AuthorityHost = ActiveDirectoryAuthEndpoint });
+                    new TokenCredentialOptions() { AuthorityHost = ActiveDirectoryAuthEndpoint });
 
             // Create a client that can authenticate using our token credential
             QueueServiceClient service = new QueueServiceClient(ActiveDirectoryQueueUri, credential);

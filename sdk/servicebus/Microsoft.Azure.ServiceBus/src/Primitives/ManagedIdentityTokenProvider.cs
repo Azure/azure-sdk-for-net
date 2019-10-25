@@ -22,7 +22,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         /// <returns><see cref="SecurityToken"/></returns>
         public async override Task<SecurityToken> GetTokenAsync(string appliesTo, TimeSpan timeout)
         {
-            string accessToken = await azureServiceTokenProvider.GetAccessTokenAsync(Constants.AadServiceBusAudience);
+            string accessToken = await azureServiceTokenProvider.GetAccessTokenAsync(Constants.AadServiceBusAudience).ConfigureAwait(false);
             return new JsonSecurityToken(accessToken, appliesTo);
         }
     }

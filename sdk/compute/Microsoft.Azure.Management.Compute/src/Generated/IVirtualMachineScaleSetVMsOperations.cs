@@ -343,7 +343,8 @@ namespace Microsoft.Azure.Management.Compute
         /// </exception>
         Task<AzureOperationResponse> StartWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Redeploys a virtual machine in a VM scale set.
+        /// Shuts down the virtual machine in the virtual machine scale set,
+        /// moves it to a new node, and powers it back on.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -651,7 +652,8 @@ namespace Microsoft.Azure.Management.Compute
         /// </exception>
         Task<AzureOperationResponse> BeginStartWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Redeploys a virtual machine in a VM scale set.
+        /// Shuts down the virtual machine in the virtual machine scale set,
+        /// moves it to a new node, and powers it back on.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

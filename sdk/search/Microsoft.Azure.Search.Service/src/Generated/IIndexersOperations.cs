@@ -24,8 +24,7 @@ namespace Microsoft.Azure.Search
     public partial interface IIndexersOperations
     {
         /// <summary>
-        /// Resets the change tracking state associated with an Azure Search
-        /// indexer.
+        /// Resets the change tracking state associated with an indexer.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Reset-Indexer" />
         /// </summary>
         /// <param name='indexerName'>
@@ -48,7 +47,7 @@ namespace Microsoft.Azure.Search
         /// </exception>
         Task<AzureOperationResponse> ResetWithHttpMessagesAsync(string indexerName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Runs an Azure Search indexer on-demand.
+        /// Runs an indexer on-demand.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Run-Indexer" />
         /// </summary>
         /// <param name='indexerName'>
@@ -71,8 +70,7 @@ namespace Microsoft.Azure.Search
         /// </exception>
         Task<AzureOperationResponse> RunWithHttpMessagesAsync(string indexerName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates a new Azure Search indexer or updates an indexer if it
-        /// already exists.
+        /// Creates a new indexer or updates an indexer if it already exists.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Indexer" />
         /// </summary>
         /// <param name='indexerName'>
@@ -104,7 +102,7 @@ namespace Microsoft.Azure.Search
         /// </exception>
         Task<AzureOperationResponse<Indexer>> CreateOrUpdateWithHttpMessagesAsync(string indexerName, Indexer indexer, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes an Azure Search indexer.
+        /// Deletes an indexer.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Delete-Indexer" />
         /// </summary>
         /// <param name='indexerName'>
@@ -130,7 +128,7 @@ namespace Microsoft.Azure.Search
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string indexerName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Retrieves an indexer definition from Azure Search.
+        /// Retrieves an indexer definition.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Get-Indexer" />
         /// </summary>
         /// <param name='indexerName'>
@@ -156,7 +154,7 @@ namespace Microsoft.Azure.Search
         /// </exception>
         Task<AzureOperationResponse<Indexer>> GetWithHttpMessagesAsync(string indexerName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists all indexers available for an Azure Search service.
+        /// Lists all indexers available for a search service.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/List-Indexers" />
         /// </summary>
         /// <param name='searchRequestOptions'>
@@ -179,7 +177,7 @@ namespace Microsoft.Azure.Search
         /// </exception>
         Task<AzureOperationResponse<IndexerListResult>> ListWithHttpMessagesAsync(SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates a new Azure Search indexer.
+        /// Creates a new indexer.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Indexer" />
         /// </summary>
         /// <param name='indexer'>

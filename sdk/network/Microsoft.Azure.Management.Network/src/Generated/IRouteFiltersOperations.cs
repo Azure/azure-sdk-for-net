@@ -102,7 +102,7 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse<RouteFilter>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string routeFilterName, RouteFilter routeFilterParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates a route filter in a specified resource group.
+        /// Updates tags of a route filter.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -110,8 +110,8 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='routeFilterName'>
         /// The name of the route filter.
         /// </param>
-        /// <param name='routeFilterParameters'>
-        /// Parameters supplied to the update route filter operation.
+        /// <param name='parameters'>
+        /// Parameters supplied to update route filter tags.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<RouteFilter>> UpdateWithHttpMessagesAsync(string resourceGroupName, string routeFilterName, PatchRouteFilter routeFilterParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<RouteFilter>> UpdateTagsWithHttpMessagesAsync(string resourceGroupName, string routeFilterName, TagsObject parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets all route filters in a resource group.
         /// </summary>
@@ -220,34 +220,6 @@ namespace Microsoft.Azure.Management.Network
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<RouteFilter>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string routeFilterName, RouteFilter routeFilterParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Updates a route filter in a specified resource group.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='routeFilterName'>
-        /// The name of the route filter.
-        /// </param>
-        /// <param name='routeFilterParameters'>
-        /// Parameters supplied to the update route filter operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<RouteFilter>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string routeFilterName, PatchRouteFilter routeFilterParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets all route filters in a resource group.
         /// </summary>

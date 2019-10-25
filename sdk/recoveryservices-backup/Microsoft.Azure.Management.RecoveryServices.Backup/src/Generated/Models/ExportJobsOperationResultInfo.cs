@@ -35,10 +35,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// string of list of jobs is exported.</param>
         /// <param name="blobSasKey">SAS key to access the blob. It expires in
         /// 15 mins.</param>
-        public ExportJobsOperationResultInfo(string blobUrl = default(string), string blobSasKey = default(string))
+        /// <param name="excelFileBlobUrl">URL of the blob into which the
+        /// ExcelFile is uploaded.</param>
+        /// <param name="excelFileBlobSasKey">SAS key to access the blob. It
+        /// expires in 15 mins.</param>
+        public ExportJobsOperationResultInfo(string blobUrl = default(string), string blobSasKey = default(string), string excelFileBlobUrl = default(string), string excelFileBlobSasKey = default(string))
         {
             BlobUrl = blobUrl;
             BlobSasKey = blobSasKey;
+            ExcelFileBlobUrl = excelFileBlobUrl;
+            ExcelFileBlobSasKey = excelFileBlobSasKey;
             CustomInit();
         }
 
@@ -59,6 +65,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// </summary>
         [JsonProperty(PropertyName = "blobSasKey")]
         public string BlobSasKey { get; set; }
+
+        /// <summary>
+        /// Gets or sets URL of the blob into which the ExcelFile is uploaded.
+        /// </summary>
+        [JsonProperty(PropertyName = "excelFileBlobUrl")]
+        public string ExcelFileBlobUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets SAS key to access the blob. It expires in 15 mins.
+        /// </summary>
+        [JsonProperty(PropertyName = "excelFileBlobSasKey")]
+        public string ExcelFileBlobSasKey { get; set; }
 
     }
 }

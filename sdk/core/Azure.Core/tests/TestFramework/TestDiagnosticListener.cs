@@ -7,19 +7,24 @@ using System.Diagnostics;
 
 namespace Azure.Core.Tests
 {
-    public class TestDiagnosticListener : IObserver<DiagnosticListener>, IObserver<KeyValuePair<string, object>>, IDisposable
+    public class TestDiagnosticListener : IObserver<DiagnosticListener>, IDisposable
     {
-        private readonly string _diagnosticSourceName;
+        private readonly Func<DiagnosticListener, bool> _selector;
 
         private List<IDisposable> _subscriptions = new List<IDisposable>();
 
-        public Queue<KeyValuePair<string, object>> Events { get; } = new Queue<KeyValuePair<string, object>>();
+        public Queue<(string Key, object Value, DiagnosticListener Listener)> Events { get; } =
+            new Queue<(string Key, object Value, DiagnosticListener Listener)>();
 
         public Queue<(string, object, object)> IsEnabledCalls { get; } = new Queue<(string, object, object)>();
 
-        public TestDiagnosticListener(string diagnosticSourceName)
+        public TestDiagnosticListener(string name): this(source => source.Name == name)
         {
-            _diagnosticSourceName = diagnosticSourceName;
+        }
+
+        public TestDiagnosticListener(Func<DiagnosticListener, bool> selector)
+        {
+            _selector = selector;
             DiagnosticListener.AllListeners.Subscribe(this);
         }
 
@@ -31,22 +36,14 @@ namespace Azure.Core.Tests
         {
         }
 
-        public void OnNext(KeyValuePair<string, object> value)
-        {
-            lock (Events)
-            {
-                Events.Enqueue(value);
-            }
-        }
-
         public void OnNext(DiagnosticListener value)
         {
             List<IDisposable> subscriptions = _subscriptions;
-            if (value.Name == _diagnosticSourceName && subscriptions != null)
+            if (_selector(value) && subscriptions != null)
             {
                 lock (subscriptions)
                 {
-                    subscriptions.Add(value.Subscribe(this, IsEnabled));
+                    subscriptions.Add(value.Subscribe(new InternalListener(Events, value), IsEnabled));
                 }
             }
         }
@@ -72,6 +69,37 @@ namespace Azure.Core.Tests
             foreach (IDisposable subscription in subscriptions)
             {
                 subscription.Dispose();
+            }
+        }
+
+        private class InternalListener: IObserver<KeyValuePair<string, object>>
+        {
+            private readonly Queue<(string, object, DiagnosticListener)> _queue;
+
+            private DiagnosticListener _listener;
+
+            public InternalListener(
+                Queue<(string, object, DiagnosticListener)> queue,
+                DiagnosticListener listener)
+            {
+                _queue = queue;
+                _listener = listener;
+            }
+
+            public void OnCompleted()
+            {
+            }
+
+            public void OnError(Exception error)
+            {
+            }
+
+            public void OnNext(KeyValuePair<string, object> value)
+            {
+                lock (_queue)
+                {
+                    _queue.Enqueue((value.Key, value.Value, _listener));
+                }
             }
         }
     }

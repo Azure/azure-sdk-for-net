@@ -11,30 +11,25 @@ namespace Azure
     /// zero or more <see cref="Page{T}"/>s of values.
     /// </summary>
     /// <typeparam name="T">The type of values.</typeparam>
-    public readonly struct Page<T>
+    public abstract class Page<T>
     {
         /// <summary>
         /// Gets the values in this <see cref="Page{T}"/>.
         /// </summary>
-        public IReadOnlyList<T> Values { get; }
+        public abstract IReadOnlyList<T> Values { get; }
 
         /// <summary>
         /// Gets the continuation token used to request the next
         /// <see cref="Page{T}"/>.  The continuation token may be null or
         /// empty when there are no more pages.
         /// </summary>
-        public string? ContinuationToken { get; }
-
-        /// <summary>
-        /// The <see cref="Response"/> that provided this <see cref="Page{T}"/>.
-        /// </summary>
-        private readonly Response _response;
+        public abstract string? ContinuationToken { get; }
 
         /// <summary>
         /// Gets the <see cref="Response"/> that provided this
         /// <see cref="Page{T}"/>.
         /// </summary>
-        public Response GetRawResponse() => _response;
+        public abstract Response GetRawResponse();
 
         /// <summary>
         /// Creates a new <see cref="Page{T}"/>.
@@ -48,11 +43,11 @@ namespace Azure
         /// <param name="response">
         /// The <see cref="Response"/> that provided this <see cref="Page{T}"/>.
         /// </param>
-        public Page(IReadOnlyList<T> values, string? continuationToken, Response response)
+#pragma warning disable CA1000 // Do not declare static members on generic types
+        public static Page<T> FromValues(IReadOnlyList<T> values, string? continuationToken, Response response)
+#pragma warning restore CA1000 // Do not declare static members on generic types
         {
-            Values = values;
-            ContinuationToken = continuationToken;
-            _response = response;
+            return new PageCore(values, continuationToken, response);
         }
 
         /// <summary>
@@ -70,7 +65,7 @@ namespace Azure
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => base.Equals(obj);
+        public override bool Equals(object? obj) => base.Equals(obj);
 
         /// <summary>
         /// Get a hash code for the <see cref="Page{T}"/>.
@@ -78,5 +73,21 @@ namespace Azure
         /// <returns>Hash code for the <see cref="Page{T}"/>.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();
+
+        private class PageCore : Page<T>
+        {
+            private readonly Response _response;
+
+            public PageCore(IReadOnlyList<T> values, string? continuationToken, Response response)
+            {
+                _response = response;
+                Values = values;
+                ContinuationToken = continuationToken;
+            }
+
+            public override IReadOnlyList<T> Values { get; }
+            public override string? ContinuationToken { get; }
+            public override Response GetRawResponse() => _response;
+        }
     }
 }

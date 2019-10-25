@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Search
     public static partial class IndexesOperationsExtensions
     {
         /// <summary>
-        /// Creates a new Azure Search index or updates an index if it already exists.
+        /// Creates a new search index or updates an index if it already exists.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Update-Index" />
         /// </summary>
         /// <param name='operations'>
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Creates a new Azure Search index or updates an index if it already exists.
+        /// Creates a new search index or updates an index if it already exists.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Update-Index" />
         /// </summary>
         /// <param name='operations'>
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Determines whether or not the given index exists in the Azure Search service.
+        /// Determines whether or not the given index exists in the search service.
         /// </summary>
         /// <param name='operations'>
         /// The operations group for this extension method.
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Determines whether or not the given index exists in the Azure Search service.
+        /// Determines whether or not the given index exists in the search service.
         /// </summary>
         /// <param name='operations'>
         /// The operations group for this extension method.
@@ -139,7 +139,7 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Lists the names of all indexes available for an Azure Search
+        /// Lists the names of all indexes available for a search
         /// service. Use this instead of List() when you only need index
         /// names. It will save bandwidth and resource utilization, especially
         /// if your Search Service has many indexes.
@@ -162,7 +162,7 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Lists the names of all indexes available for an Azure Search
+        /// Lists the names of all indexes available for a search
         /// service. Use this instead of List() when you only need index
         /// names. It will save bandwidth and resource utilization, especially
         /// if your Search Service has many indexes.

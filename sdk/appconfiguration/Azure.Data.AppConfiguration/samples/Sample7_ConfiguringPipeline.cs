@@ -6,6 +6,7 @@ using Azure.Core.Pipeline;
 using NUnit.Framework;
 using System;
 using System.Net.Http;
+using Azure.Core;
 
 namespace Azure.Data.AppConfiguration.Samples
 {
@@ -43,21 +44,21 @@ namespace Azure.Data.AppConfiguration.Samples
             // pass the policy options to the client
             var client = new ConfigurationClient(connectionString, options);
 
-            client.Set(new ConfigurationSetting("some_key", "some_value"));
-            client.Delete("some_key");
+            client.SetConfigurationSetting(new ConfigurationSetting("some_key", "some_value"));
+            client.DeleteConfigurationSetting("some_key");
         }
 
-        private class AddHeaderPolicy : SynchronousHttpPipelinePolicy
+        private class AddHeaderPolicy : HttpPipelineSynchronousPolicy
         {
-            public override void OnSendingRequest(HttpPipelineMessage message)
+            public override void OnSendingRequest(HttpMessage message)
             {
                 message.Request.Headers.Add("User-Agent", "ConfiguraingPipelineSample");
             }
         }
 
-        private class CustomLogPolicy : SynchronousHttpPipelinePolicy
+        private class CustomLogPolicy : HttpPipelineSynchronousPolicy
         {
-            public override void OnSendingRequest(HttpPipelineMessage message)
+            public override void OnSendingRequest(HttpMessage message)
             {
                 Console.WriteLine(message.ToString());
             }

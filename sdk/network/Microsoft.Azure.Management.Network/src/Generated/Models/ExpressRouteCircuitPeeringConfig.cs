@@ -75,12 +75,12 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<string> AdvertisedCommunities { get; set; }
 
         /// <summary>
-        /// Gets or sets the advertised public prefix state of the Peering
-        /// resource. Possible values include: 'NotConfigured', 'Configuring',
+        /// Gets the advertised public prefix state of the Peering resource.
+        /// Possible values include: 'NotConfigured', 'Configuring',
         /// 'Configured', 'ValidationNeeded'
         /// </summary>
         [JsonProperty(PropertyName = "advertisedPublicPrefixesState")]
-        public string AdvertisedPublicPrefixesState { get; set; }
+        public string AdvertisedPublicPrefixesState { get; private set; }
 
         /// <summary>
         /// Gets or sets the legacy mode of the peering.

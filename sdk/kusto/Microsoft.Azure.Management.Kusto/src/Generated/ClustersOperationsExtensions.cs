@@ -267,6 +267,91 @@ namespace Microsoft.Azure.Management.Kusto
             }
 
             /// <summary>
+            /// Returns a list of databases that are owned by this cluster and were
+            /// followed by another cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            public static IEnumerable<FollowerDatabaseDefinition> ListFollowerDatabases(this IClustersOperations operations, string resourceGroupName, string clusterName)
+            {
+                return operations.ListFollowerDatabasesAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns a list of databases that are owned by this cluster and were
+            /// followed by another cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IEnumerable<FollowerDatabaseDefinition>> ListFollowerDatabasesAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListFollowerDatabasesWithHttpMessagesAsync(resourceGroupName, clusterName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Detaches all followers of a database owned by this cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            /// <param name='followerDatabaseToRemove'>
+            /// The follower databases properties to remove.
+            /// </param>
+            public static void DetachFollowerDatabases(this IClustersOperations operations, string resourceGroupName, string clusterName, FollowerDatabaseDefinition followerDatabaseToRemove)
+            {
+                operations.DetachFollowerDatabasesAsync(resourceGroupName, clusterName, followerDatabaseToRemove).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Detaches all followers of a database owned by this cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            /// <param name='followerDatabaseToRemove'>
+            /// The follower databases properties to remove.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DetachFollowerDatabasesAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, FollowerDatabaseDefinition followerDatabaseToRemove, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DetachFollowerDatabasesWithHttpMessagesAsync(resourceGroupName, clusterName, followerDatabaseToRemove, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Lists all Kusto clusters within a resource group.
             /// </summary>
             /// <param name='operations'>
@@ -637,6 +722,49 @@ namespace Microsoft.Azure.Management.Kusto
             public static async Task BeginStartAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginStartWithHttpMessagesAsync(resourceGroupName, clusterName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Detaches all followers of a database owned by this cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            /// <param name='followerDatabaseToRemove'>
+            /// The follower databases properties to remove.
+            /// </param>
+            public static void BeginDetachFollowerDatabases(this IClustersOperations operations, string resourceGroupName, string clusterName, FollowerDatabaseDefinition followerDatabaseToRemove)
+            {
+                operations.BeginDetachFollowerDatabasesAsync(resourceGroupName, clusterName, followerDatabaseToRemove).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Detaches all followers of a database owned by this cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            /// <param name='followerDatabaseToRemove'>
+            /// The follower databases properties to remove.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDetachFollowerDatabasesAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, FollowerDatabaseDefinition followerDatabaseToRemove, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginDetachFollowerDatabasesWithHttpMessagesAsync(resourceGroupName, clusterName, followerDatabaseToRemove, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

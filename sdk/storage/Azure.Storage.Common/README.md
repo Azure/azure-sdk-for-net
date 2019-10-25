@@ -20,9 +20,9 @@ Install the Azure Storage client library for .NET you'd like to use with
 [NuGet][nuget] and the `Azure.Storage.Common` client library will be included:
 
 ```Powershell
-dotnet add package Azure.Storage.Blobs --version 12.0.0-preview.3
-dotnet add package Azure.Storage.Queues --version 12.0.0-preview.3
-dotnet add package Azure.Storage.Files --version 12.0.0-preview.3
+dotnet add package Azure.Storage.Blobs --version 12.0.0-preview.4
+dotnet add package Azure.Storage.Queues --version 12.0.0-preview.4
+dotnet add package Azure.Storage.Files --version 12.0.0-preview.4
 ```
 
 ### Prerequisites
@@ -41,7 +41,7 @@ az storage account create --name MyStorageAccount --resource-group MyResourceGro
 ## Key concepts
 
 The Azure Storage Common client library contains shared infrastructure like
-[authentication credentials][auth_credentials] and [StorageRequestFailedException][StorageRequestFailedException].
+[authentication credentials][auth_credentials] and [RequestFailedException][RequestFailedException].
 
 ## Examples
 
@@ -49,7 +49,7 @@ Please see the examples for [Blobs][blobs_examples], [Queues][queues_examples], 
 
 ## Troubleshooting
 
-All Azure Storage services will throw a [StorageRequestFailedException][StorageRequestFailedException]
+All Azure Storage services will throw a [RequestFailedException][RequestFailedException]
 with helpful [`ErrorCode`s][error_codes].
 
 ## Next steps
@@ -90,7 +90,7 @@ additional questions or comments.
 [blobs_examples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Blobs/README.md#Examples
 [files_examples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Files/README.md#Examples
 [queues_examples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Queues/README.md#Examples
-[StorageRequestFailedException]: src/StorageRequestFailedException.cs
+[RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/src/RequestFailedException.cs
 [error_codes]: https://docs.microsoft.com/en-us/rest/api/storageservices/common-rest-api-error-codes
 [samples]: samples/
 [blobs_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Blobs/README.md#next-steps

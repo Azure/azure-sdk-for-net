@@ -514,52 +514,6 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Updates public IP address tags.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='publicIpAddressName'>
-            /// The name of the public IP address.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to update public IP address tags.
-            /// </param>
-            public static PublicIPAddress BeginUpdateTags(this IPublicIPAddressesOperations operations, string resourceGroupName, string publicIpAddressName, TagsObject parameters)
-            {
-                return operations.BeginUpdateTagsAsync(resourceGroupName, publicIpAddressName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates public IP address tags.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='publicIpAddressName'>
-            /// The name of the public IP address.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to update public IP address tags.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<PublicIPAddress> BeginUpdateTagsAsync(this IPublicIPAddressesOperations operations, string resourceGroupName, string publicIpAddressName, TagsObject parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.BeginUpdateTagsWithHttpMessagesAsync(resourceGroupName, publicIpAddressName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Gets all the public IP addresses in a subscription.
             /// </summary>
             /// <param name='operations'>

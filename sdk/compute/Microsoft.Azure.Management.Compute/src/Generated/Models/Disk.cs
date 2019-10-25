@@ -77,7 +77,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="diskState">The state of the disk. Possible values
         /// include: 'Unattached', 'Attached', 'Reserved', 'ActiveSAS',
         /// 'ReadyToUpload', 'ActiveUpload'</param>
-        public Disk(string location, CreationData creationData, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string managedBy = default(string), DiskSku sku = default(DiskSku), IList<string> zones = default(IList<string>), System.DateTime? timeCreated = default(System.DateTime?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), int? diskSizeGB = default(int?), long? diskSizeBytes = default(long?), string uniqueId = default(string), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), string provisioningState = default(string), long? diskIOPSReadWrite = default(long?), int? diskMBpsReadWrite = default(int?), string diskState = default(string))
+        /// <param name="encryption">Encryption property can be used to encrypt
+        /// data at rest with customer managed keys or platform managed
+        /// keys.</param>
+        public Disk(string location, CreationData creationData, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string managedBy = default(string), DiskSku sku = default(DiskSku), IList<string> zones = default(IList<string>), System.DateTime? timeCreated = default(System.DateTime?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), int? diskSizeGB = default(int?), long? diskSizeBytes = default(long?), string uniqueId = default(string), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), string provisioningState = default(string), long? diskIOPSReadWrite = default(long?), int? diskMBpsReadWrite = default(int?), string diskState = default(string), Encryption encryption = default(Encryption))
             : base(location, id, name, type, tags)
         {
             ManagedBy = managedBy;
@@ -95,6 +98,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             DiskIOPSReadWrite = diskIOPSReadWrite;
             DiskMBpsReadWrite = diskMBpsReadWrite;
             DiskState = diskState;
+            Encryption = encryption;
             CustomInit();
         }
 
@@ -209,6 +213,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string DiskState { get; private set; }
 
         /// <summary>
+        /// Gets or sets encryption property can be used to encrypt data at
+        /// rest with customer managed keys or platform managed keys.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.encryption")]
+        public Encryption Encryption { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -228,6 +239,10 @@ namespace Microsoft.Azure.Management.Compute.Models
             if (EncryptionSettingsCollection != null)
             {
                 EncryptionSettingsCollection.Validate();
+            }
+            if (Encryption != null)
+            {
+                Encryption.Validate();
             }
         }
     }
