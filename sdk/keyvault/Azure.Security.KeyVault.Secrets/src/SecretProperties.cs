@@ -88,7 +88,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// Gets a value indicating whether the secret's lifetime is managed by Key Vault.
         /// If this secret is backing a Key Vault certificate, the value will be true.
         /// </summary>
-        public bool? Managed { get; internal set; }
+        public bool Managed { get; internal set; }
 
         /// <summary>
         /// Gets the key identifier of a key backing a Key Vault certificate if this secret is backing a Key Vault certifcate.
