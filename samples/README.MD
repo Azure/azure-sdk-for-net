@@ -17,7 +17,7 @@ The Azure SDK repository is organized in the following folder structure, with th
 ## Package `Hello World` Samples
 Each package folder contains a README.md file. Many of these README files contain some basic `Hello World` code samples.
 
-## Package-Specific Samples and Hot-To Guides
+## Package Samples and Hot-To Guides
 As illustrated by the diagram above, package-specific samples are located in each package folder. These samples can be either short C# programs contained in *.cs files, or more complete how-to guides (code samples and some commentary) contained *.md files. You can find a shortcuts to how-to guides for most common scenarios in the `Main How-To Guides` section below.
 
 ## Code Snippets
