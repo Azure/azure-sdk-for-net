@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     /// <summary>
-    /// A client used to perform cryptographic operations with Azure Key Vault keys
+    /// A client used to perform cryptographic operations with Azure Key Vault keys.
     /// </summary>
     public class CryptographyClient : IKeyEncryptionKey
     {
@@ -128,7 +128,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         internal ICryptographyProvider RemoteClient => _remoteProvider;
 
         /// <summary>
-        /// The <see cref="KeyVaultKey.Id"/> of the key used to perform cryptographic operations for the client.
+        /// Gets the <see cref="KeyVaultKey.Id"/> of the key used to perform cryptographic operations for the client.
         /// </summary>
         public virtual string KeyId => _keyId.ToString();
 
