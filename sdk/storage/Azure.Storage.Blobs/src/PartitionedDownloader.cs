@@ -101,8 +101,40 @@ namespace Azure.Storage.Blobs
         {
             return Response.FromValue(new BlobProperties()
             {
-                ContentLength = totalLength,
-                AcceptRanges = response.Value.Details.AcceptRanges
+                ContentLength = totalLength,LastModified = response.Value.Details.LastModified,
+                BlobType = response.Value.BlobType,
+                Metadata = response.Value.Details.Metadata,
+                CopyCompletedOn = response.Value.Details.CopyCompletedOn,
+                CopyStatusDescription = response.Value.Details.CopyStatusDescription,
+                CopyId = response.Value.Details.CopyId,
+                CopyProgress = response.Value.Details.CopyProgress,
+                CopySource = response.Value.Details.CopySource,
+                CopyStatus = response.Value.Details.CopyStatus,
+                LeaseDuration = response.Value.Details.LeaseDuration,
+                LeaseState = response.Value.Details.LeaseState,
+                LeaseStatus = response.Value.Details.LeaseStatus,
+                ContentType = response.Value.ContentType,
+                ETag = response.Value.Details.ETag,
+                ContentHash = response.Value.ContentHash,
+                ContentDisposition = response.Value.Details.ContentDisposition,
+                CacheControl = response.Value.Details.CacheControl,
+                BlobSequenceNumber = response.Value.Details.BlobSequenceNumber,
+                AcceptRanges = response.Value.Details.AcceptRanges,
+                BlobCommittedBlockCount = response.Value.Details.BlobCommittedBlockCount,
+                IsServerEncrypted = response.Value.Details.IsServerEncrypted,
+                EncryptionKeySha256 = response.Value.Details.EncryptionKeySha256,
+
+                ContentEncoding = new string[] { response.Value.Details.ContentEncoding },
+                ContentLanguage = new string[] { response.Value.Details.ContentLanguage },
+
+                // TODO: These do not exist on BlobDownloadInfo
+                //AccessTier = response.Value.Details.AccessTier,
+                //AccessTierInferred = response.Value.Details.AccessTierInferred,
+                //ArchiveStatus = response.Value.Details.ArchiveStatus,
+                //AccessTierChangedOn = response.Value.Details.AccessTierChangedOn,
+                //IsIncrementalCopy = response.Value.Details.IsIncrementalCopy,
+                //DestinationSnapshot = response.Value.Details.DestinationSnapshot,
+                //CreatedOn = response.Value.Details.CreatedOn,
             }, response.GetRawResponse());
         }
 
