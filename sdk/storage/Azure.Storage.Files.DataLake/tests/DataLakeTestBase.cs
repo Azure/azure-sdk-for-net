@@ -322,7 +322,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Models.DataLakeLease lease = null;
             if (leaseId == ReceivedLeaseId || leaseId == garbageLeaseId)
             {
-                lease = await InstrumentClient(path.GetLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync(DataLakeLeaseClient.InfiniteLeaseDuration);
+                lease = await InstrumentClient(path.GetDataLakeLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync(DataLakeLeaseClient.InfiniteLeaseDuration);
             }
             return leaseId == ReceivedLeaseId ? lease.LeaseId : leaseId;
         }
@@ -333,7 +333,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Models.DataLakeLease lease = null;
             if (leaseId == ReceivedLeaseId || leaseId == garbageLeaseId)
             {
-                lease = await InstrumentClient(fileSystem.GetLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync(DataLakeLeaseClient.InfiniteLeaseDuration);
+                lease = await InstrumentClient(fileSystem.GetDataLakeLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync(DataLakeLeaseClient.InfiniteLeaseDuration);
             }
             return leaseId == ReceivedLeaseId ? lease.LeaseId : leaseId;
         }
