@@ -42,7 +42,7 @@ namespace Microsoft.Azure.EventGrid
             // Event Hub events
             { EventTypes.EventHubCaptureFileCreatedEvent, typeof(EventHubCaptureFileCreatedEventData) },
 
-            // Maps events
+            // MachineLearningServices events
             { EventTypes.MachineLearningServicesModelRegisteredEvent, typeof(MachineLearningServicesModelRegisteredEventData) },
             { EventTypes.MachineLearningServicesModelDeployedEvent, typeof(MachineLearningServicesModelDeployedEventData) },
             { EventTypes.MachineLearningServicesRunCompletedEvent, typeof(MachineLearningServicesRunCompletedEventData) },
