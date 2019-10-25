@@ -107,7 +107,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 await using (var client = new EventHubClient(connectionString))
                 {
                     var closeCalls = new ConcurrentDictionary<string, int>();
-                    var closeReasons = new ConcurrentDictionary<string, PartitionProcessorCloseReason>();
+                    var closeReasons = new ConcurrentDictionary<string, CloseReason>();
 
                     // Create the event processor manager to manage our event processors.
 
@@ -149,8 +149,8 @@ namespace Azure.Messaging.EventHubs.Tests
                         Assert.That(closeCalls.TryGetValue(partitionId, out var calls), Is.True, $"{ partitionId }: CloseAsync should have been called.");
                         Assert.That(calls, Is.EqualTo(1), $"{ partitionId }: CloseAsync should have been called only once.");
 
-                        Assert.That(closeReasons.TryGetValue(partitionId, out PartitionProcessorCloseReason reason), Is.True, $"{ partitionId }: close reason should have been set.");
-                        Assert.That(reason, Is.EqualTo(PartitionProcessorCloseReason.Shutdown), $"{ partitionId }: unexpected close reason.");
+                        Assert.That(closeReasons.TryGetValue(partitionId, out CloseReason reason), Is.True, $"{ partitionId }: close reason should have been set.");
+                        Assert.That(reason, Is.EqualTo(CloseReason.Shutdown), $"{ partitionId }: unexpected close reason.");
                     }
 
                     Assert.That(closeCalls.Keys.Count, Is.EqualTo(partitionIds.Count()));

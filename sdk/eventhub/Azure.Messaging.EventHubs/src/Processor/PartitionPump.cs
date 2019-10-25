@@ -84,7 +84,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Shutdown and OwnershipLost close reasons will be specified by the event processor.
         /// </summary>
         ///
-        private PartitionProcessorCloseReason CloseReason { get; set; }
+        private CloseReason CloseReason { get; set; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="PartitionPump"/> class.
@@ -162,7 +162,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public async Task StopAsync(PartitionProcessorCloseReason? reason)
+        public async Task StopAsync(CloseReason? reason)
         {
             if (RunningTask != null)
             {
@@ -263,7 +263,7 @@ namespace Azure.Messaging.EventHubs.Processor
                     {
                         diagnosticScope.Failed(partitionProcessorException);
                         unrecoverableException = partitionProcessorException;
-                        CloseReason = PartitionProcessorCloseReason.PartitionProcessorException;
+                        CloseReason = CloseReason.ProcessEventsException;
 
                         break;
                     }
@@ -275,7 +275,7 @@ namespace Azure.Messaging.EventHubs.Processor
                     if (RetryPolicy.CalculateRetryDelay(eventHubException, 1) == null)
                     {
                         unrecoverableException = eventHubException;
-                        CloseReason = PartitionProcessorCloseReason.EventHubException;
+                        CloseReason = CloseReason.EventHubException;
 
                         break;
                     }

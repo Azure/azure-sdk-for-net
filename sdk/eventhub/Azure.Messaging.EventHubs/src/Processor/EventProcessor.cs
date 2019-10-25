@@ -36,7 +36,7 @@ namespace Azure.Messaging.EventHubs.Processor
         private Func<PartitionContext, Task> _initializeProcessingForPartitionAsync;
 
         /// <summary>The handler to be called once event processing stops for a given partition.</summary>
-        private Func<PartitionContext, PartitionProcessorCloseReason, Task> _processingForPartitionStoppedAsync;
+        private Func<PartitionContext, CloseReason, Task> _processingForPartitionStoppedAsync;
 
         /// <summary>Responsible for processing sets of events received from the Event Hubs service.</summary>
         private Func<PartitionContext, IEnumerable<EventData>, Task> _processEventsAsync;
@@ -154,7 +154,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   The handler to be called once event processing stops for a given partition.
         /// </summary>
         ///
-        public Func<PartitionContext, PartitionProcessorCloseReason, Task> ProcessingForPartitionStoppedAsync
+        public Func<PartitionContext, CloseReason, Task> ProcessingForPartitionStoppedAsync
         {
             internal get => _processingForPartitionStoppedAsync;
             set => EnsureNotRunningAndInvoke(() => _processingForPartitionStoppedAsync = value);
@@ -390,7 +390,7 @@ namespace Azure.Messaging.EventHubs.Processor
                         InstanceOwnership = null;
 
                         await Task.WhenAll(PartitionPumps.Keys
-                            .Select(partitionId => RemovePartitionPumpIfItExistsAsync(partitionId, PartitionProcessorCloseReason.Shutdown)))
+                            .Select(partitionId => RemovePartitionPumpIfItExistsAsync(partitionId, CloseReason.Shutdown)))
                             .ConfigureAwait(false);
 
                         // We can only dispose of the client once the pumps have stopped.
@@ -453,7 +453,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 await Task.WhenAll(PartitionPumps.Keys
                     .Except(InstanceOwnership.Keys)
-                    .Select(partitionId => RemovePartitionPumpIfItExistsAsync(partitionId, PartitionProcessorCloseReason.OwnershipLost)))
+                    .Select(partitionId => RemovePartitionPumpIfItExistsAsync(partitionId, CloseReason.OwnershipLost)))
                     .ConfigureAwait(false);
 
                 // Now that we are left with pumps that should be running, check their status.  If any has stopped, it means an
@@ -666,7 +666,7 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         private async Task RemovePartitionPumpIfItExistsAsync(string partitionId,
-                                                              PartitionProcessorCloseReason? reason = null)
+                                                              CloseReason? reason = null)
         {
             if (PartitionPumps.TryRemove(partitionId, out PartitionPump pump))
             {
