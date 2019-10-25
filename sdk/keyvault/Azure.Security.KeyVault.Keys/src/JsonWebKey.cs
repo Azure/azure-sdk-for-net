@@ -313,7 +313,7 @@ namespace Azure.Security.KeyVault.Keys
             // Key parameter length requirements defined by 2.2.2.9.1 RSA Private Key BLOB specification: https://docs.microsoft.com/openspecs/windows_protocols/ms-wcce/5cf2e6b9-3195-4f85-bc18-05b50e6d4e11
             var rsaParameters = new RSAParameters
             {
-                Exponent = ForceBufferLength(nameof(E), E, 4),
+                Exponent = E,
                 Modulus = TrimBuffer(N),
             };
 

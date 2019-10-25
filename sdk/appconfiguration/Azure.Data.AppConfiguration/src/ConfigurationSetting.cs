@@ -71,7 +71,7 @@ namespace Azure.Data.AppConfiguration
         /// A value indicating whether the configuration setting is read only.
         /// A read only configuration setting may not be modified until it is made writable.
         /// </summary>
-        public bool? ReadOnly { get; internal set; }
+        public bool? IsReadOnly { get; internal set; }
 
         /// <summary>
         /// A dictionary of tags that can help identify what a configuration setting may be applicable for.
