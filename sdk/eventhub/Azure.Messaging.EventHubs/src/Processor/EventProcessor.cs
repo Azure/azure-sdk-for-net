@@ -14,8 +14,8 @@ using Azure.Core;
 namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
-    ///   Receives <see cref="EventData" /> as they are available for a partition, in the context of a consumer group, and routes
-    ///   them to be processed by a function provided by the user.
+    ///   Consumes events for the configured Event Hub and consumer group across all partitions, making them available for processing
+    ///   through the provided handlers.
     /// </summary>
     ///
     public class EventProcessor
@@ -24,18 +24,18 @@ namespace Azure.Messaging.EventHubs.Processor
         private static int s_randomSeed = Environment.TickCount;
 
         /// <summary>The random number generator to use for a specific thread.</summary>
-        private static readonly ThreadLocal<Random> s_randomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
+        private static readonly ThreadLocal<Random> RandomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
 
         /// <summary>The primitive for synchronizing access during start and close operations.</summary>
-        private readonly SemaphoreSlim _runningTaskSemaphore = new SemaphoreSlim(1, 1);
+        private readonly SemaphoreSlim RunningTaskSemaphore = new SemaphoreSlim(1, 1);
 
         /// <summary>The primitive for synchronizing access during start and set handler operations.</summary>
-        private readonly object _startProcessorGuard = new object();
+        private readonly object StartProcessorGuard = new object();
 
-        /// <summary>The function to be called just before event processing starts for a given partition.</summary>
+        /// <summary>The handler to be called just before event processing starts for a given partition.</summary>
         private Func<PartitionContext, Task> _initializeProcessingForPartitionAsync;
 
-        /// <summary>The function to be called once event processing stops for a given partition.</summary>
+        /// <summary>The handler to be called once event processing stops for a given partition.</summary>
         private Func<PartitionContext, PartitionProcessorCloseReason, Task> _processingForPartitionStoppedAsync;
 
         /// <summary>Responsible for processing sets of events received from the Event Hubs service.</summary>
@@ -113,23 +113,23 @@ namespace Azure.Messaging.EventHubs.Processor
         private Task RunningTask { get; set; }
 
         /// <summary>
-        ///   The function to be called just before event processing starts for a given partition.
+        ///   The handler to be called just before event processing starts for a given partition.
         /// </summary>
         ///
         public Func<PartitionContext, Task> InitializeProcessingForPartitionAsync
         {
             internal get => _initializeProcessingForPartitionAsync;
-            set => AssertNotRunning(() => _initializeProcessingForPartitionAsync = value);
+            set => EnsureNotRunningAndInvoke(() => _initializeProcessingForPartitionAsync = value);
         }
 
         /// <summary>
-        ///   The function to be called once event processing stops for a given partition.
+        ///   The handler to be called once event processing stops for a given partition.
         /// </summary>
         ///
         public Func<PartitionContext, PartitionProcessorCloseReason, Task> ProcessingForPartitionStoppedAsync
         {
             internal get => _processingForPartitionStoppedAsync;
-            set => AssertNotRunning(() => _processingForPartitionStoppedAsync = value);
+            set => EnsureNotRunningAndInvoke(() => _processingForPartitionStoppedAsync = value);
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace Azure.Messaging.EventHubs.Processor
         public Func<PartitionContext, IEnumerable<EventData>, Task> ProcessEventsAsync
         {
             internal get => _processEventsAsync;
-            set => AssertNotRunning(() => _processEventsAsync = value);
+            set => EnsureNotRunningAndInvoke(() => _processEventsAsync = value);
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace Azure.Messaging.EventHubs.Processor
         public Func<PartitionContext, Exception, Task> ProcessExceptionAsync
         {
             internal get => _processExceptionAsync;
-            set => AssertNotRunning(() => _processExceptionAsync = value);
+            set => EnsureNotRunningAndInvoke(() => _processExceptionAsync = value);
         }
 
         /// <summary>
@@ -206,22 +206,22 @@ namespace Azure.Messaging.EventHubs.Processor
         {
             if (RunningTask == null)
             {
-                await _runningTaskSemaphore.WaitAsync().ConfigureAwait(false);
+                await RunningTaskSemaphore.WaitAsync().ConfigureAwait(false);
 
                 try
                 {
-                    lock (_startProcessorGuard)
+                    lock (StartProcessorGuard)
                     {
                         if (RunningTask == null)
                         {
                             if (_processEventsAsync == null)
                             {
-                                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.MemberCannotBeNull, nameof(ProcessEventsAsync)));
+                                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotStartEventProcessorWithoutHandler, nameof(ProcessEventsAsync)));
                             }
 
                             if (_processExceptionAsync == null)
                             {
-                                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.MemberCannotBeNull, nameof(ProcessExceptionAsync)));
+                                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotStartEventProcessorWithoutHandler, nameof(ProcessExceptionAsync)));
                             }
 
                             // We expect the token source to be null, but we are playing safe.
@@ -242,7 +242,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 }
                 finally
                 {
-                    _runningTaskSemaphore.Release();
+                    RunningTaskSemaphore.Release();
                 }
             }
         }
@@ -257,7 +257,7 @@ namespace Azure.Messaging.EventHubs.Processor
         {
             if (RunningTask != null)
             {
-                await _runningTaskSemaphore.WaitAsync().ConfigureAwait(false);
+                await RunningTaskSemaphore.WaitAsync().ConfigureAwait(false);
 
                 try
                 {
@@ -299,7 +299,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 finally
                 {
                     RunningTask = null;
-                    _runningTaskSemaphore.Release();
+                    RunningTaskSemaphore.Release();
                 }
             }
         }
@@ -463,7 +463,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 if (unclaimedPartitions.Any())
                 {
-                    var index = s_randomNumberGenerator.Value.Next(unclaimedPartitions.Count());
+                    var index = RandomNumberGenerator.Value.Next(unclaimedPartitions.Count());
 
                     return await ClaimOwnershipAsync(unclaimedPartitions.ElementAt(index), completeOwnershipEnumerable).ConfigureAwait(false);
                 }
@@ -492,7 +492,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 if (stealablePartitions.Any())
                 {
-                    var index = s_randomNumberGenerator.Value.Next(stealablePartitions.Count());
+                    var index = RandomNumberGenerator.Value.Next(stealablePartitions.Count());
 
                     return await ClaimOwnershipAsync(stealablePartitions.ElementAt(index), completeOwnershipEnumerable).ConfigureAwait(false);
                 }
@@ -652,11 +652,11 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <exception cref="InvalidOperationException">Occurs when this method is invoked while the event processor is running.</exception>
         ///
-        private void AssertNotRunning(Action action)
+        private void EnsureNotRunningAndInvoke(Action action)
         {
             if (RunningTask == null)
             {
-                lock (_startProcessorGuard)
+                lock (StartProcessorGuard)
                 {
                     if (RunningTask == null)
                     {

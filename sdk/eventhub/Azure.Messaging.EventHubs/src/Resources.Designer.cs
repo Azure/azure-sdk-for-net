@@ -88,6 +88,17 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Cannot begin processing without {0} handler set..
+        /// </summary>
+        internal static string CannotStartEventProcessorWithoutHandler
+        {
+            get
+            {
+                return ResourceManager.GetString("CannotStartEventProcessorWithoutHandler", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to The &apos;identifier&apos; parameter exceeds the maximum allowed size of {0} characters..
         /// </summary>
         internal static string ConsumerIdentifierOverMaxValue
@@ -205,17 +216,6 @@ namespace Azure.Messaging.EventHubs
             get
             {
                 return ResourceManager.GetString("InvalidTransportType", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to The member {0} should have been set and cannot be null..
-        /// </summary>
-        internal static string MemberCannotBeNull
-        {
-            get
-            {
-                return ResourceManager.GetString("MemberCannotBeNull", resourceCulture);
             }
         }
 
