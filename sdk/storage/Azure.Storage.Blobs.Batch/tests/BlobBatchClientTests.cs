@@ -46,7 +46,7 @@ namespace Azure.Storage.Blobs.Test
             await using TestScenario scenario = Scenario();
 
             BlobBatchClient client = scenario.GetBlobBatchClient();
-            BlobBatch batch = client.CreateBatch();
+            using BlobBatch batch = client.CreateBatch();
             ArgumentException ex = Assert.ThrowsAsync<ArgumentException>(
                 async () => await client.SubmitBatchAsync(batch));
 
@@ -76,11 +76,12 @@ namespace Azure.Storage.Blobs.Test
             await using TestScenario scenario = Scenario();
             Uri[] uris = scenario.GetInvalidBlobUris(2);
             BlobBatchClient client = scenario.GetBlobBatchClient();
-            BlobBatch batch = client.CreateBatch();
+            using BlobBatch batch = client.CreateBatch();
 
             batch.DeleteBlob(uris[0]);
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(
                 () => batch.SetBlobAccessTier(uris[1], AccessTier.Cool));
+            batch.Dispose();
 
             StringAssert.Contains("already being used for Delete operations", ex.Message);
         }
@@ -91,7 +92,7 @@ namespace Azure.Storage.Blobs.Test
             await using TestScenario scenario = Scenario();
             Uri[] uris = scenario.GetInvalidBlobUris(2);
             BlobBatchClient client = scenario.GetBlobBatchClient();
-            BlobBatch batch = client.CreateBatch();
+            using BlobBatch batch = client.CreateBatch();
 
             batch.SetBlobAccessTier(uris[0], AccessTier.Cool);
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(
@@ -107,8 +108,9 @@ namespace Azure.Storage.Blobs.Test
             Uri uri = scenario.GetInvalidBlobUris(1)[0];
 
             BlobBatchClient client = scenario.GetBlobBatchClient();
-            BlobBatch batch = client.CreateBatch();
+            using BlobBatch batch = client.CreateBatch();
             Response response = batch.DeleteBlob(uri);
+            batch.Dispose();
 
             Assert.AreEqual(0, response.Status);
         }
@@ -120,7 +122,7 @@ namespace Azure.Storage.Blobs.Test
             Uri uri = scenario.GetInvalidBlobUris(1)[0];
 
             BlobBatchClient client = scenario.GetBlobBatchClient();
-            BlobBatch batch = client.CreateBatch();
+            using BlobBatch batch = client.CreateBatch();
             Response response = batch.DeleteBlob(uri);
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(
                 () => { var _ = response.ClientRequestId; });
@@ -136,7 +138,7 @@ namespace Azure.Storage.Blobs.Test
             Uri[] bad = scenario.GetInvalidBlobUris(1);
 
             BlobBatchClient client = scenario.GetBlobBatchClient();
-            BlobBatch batch = client.CreateBatch();
+            using BlobBatch batch = client.CreateBatch();
             Response response1 = batch.DeleteBlob(good[0]);
             Response response2 = batch.DeleteBlob(bad[0]);
             try
@@ -160,7 +162,7 @@ namespace Azure.Storage.Blobs.Test
             await using TestScenario scenario1 = Scenario();
             BlobBatchClient client1 = scenario1.GetBlobBatchClient();
             Uri uri = scenario1.GetInvalidBlobUris(1)[0];
-            BlobBatch batch1 = client1.CreateBatch();
+            using BlobBatch batch1 = client1.CreateBatch();
             Response response = batch1.DeleteBlob(uri);
 
             await using TestScenario scenario2 = Scenario();
@@ -219,7 +221,7 @@ namespace Azure.Storage.Blobs.Test
             BlobClient[] blobs = await scenario.CreateBlobsAsync(3);
 
             BlobBatchClient client = scenario.GetBlobBatchClient();
-            BlobBatch batch = client.CreateBatch();
+            using BlobBatch batch = client.CreateBatch();
             Response[] responses = new Response[]
             {
                 batch.DeleteBlob(blobs[0].Uri),
@@ -255,7 +257,7 @@ namespace Azure.Storage.Blobs.Test
             Uri[] bad = scenario.GetInvalidBlobUris(1);
 
             BlobBatchClient client = scenario.GetBlobBatchClient();
-            BlobBatch batch = client.CreateBatch();
+            using BlobBatch batch = client.CreateBatch();
             Response response1 = batch.DeleteBlob(good[0].Uri);
             Response response2 = batch.DeleteBlob(good[1].Uri);
             Response response3 = batch.DeleteBlob(bad[0]);
@@ -297,7 +299,7 @@ namespace Azure.Storage.Blobs.Test
             Uri[] bad = scenario.GetInvalidBlobUris(1);
 
             BlobBatchClient client = scenario.GetBlobBatchClient();
-            BlobBatch batch = client.CreateBatch();
+            using BlobBatch batch = client.CreateBatch();
             Response response1 = batch.DeleteBlob(good[0].Uri);
             Response response2 = batch.DeleteBlob(good[1].Uri);
             Response response3 = batch.DeleteBlob(bad[0]);
@@ -316,7 +318,7 @@ namespace Azure.Storage.Blobs.Test
             Uri[] bad = scenario.GetInvalidBlobUris(2);
 
             BlobBatchClient client = scenario.GetBlobBatchClient();
-            BlobBatch batch = client.CreateBatch();
+            using BlobBatch batch = client.CreateBatch();
             Response response1 = batch.DeleteBlob(good[0].Uri);
             Response response2 = batch.DeleteBlob(bad[0]);
             Response response3 = batch.DeleteBlob(bad[1]);
@@ -355,7 +357,7 @@ namespace Azure.Storage.Blobs.Test
             Uri[] bad = scenario.GetInvalidBlobUris(2);
 
             BlobBatchClient client = scenario.GetBlobBatchClient();
-            BlobBatch batch = client.CreateBatch();
+            using BlobBatch batch = client.CreateBatch();
             Response response1 = batch.DeleteBlob(good[0].Uri);
             Response response2 = batch.DeleteBlob(bad[0]);
             Response response3 = batch.DeleteBlob(bad[1]);
@@ -375,7 +377,7 @@ namespace Azure.Storage.Blobs.Test
             BlobClient[] blobs = await scenario.CreateBlobsAsync(3);
 
             BlobBatchClient client = scenario.GetBlobBatchClient();
-            BlobBatch batch = client.CreateBatch();
+            using BlobBatch batch = client.CreateBatch();
             Response[] responses = new Response[]
             {
                 batch.SetBlobAccessTier(blobs[0].Uri, AccessTier.Cool),
@@ -411,7 +413,7 @@ namespace Azure.Storage.Blobs.Test
             Uri[] bad = scenario.GetInvalidBlobUris(1);
 
             BlobBatchClient client = scenario.GetBlobBatchClient();
-            BlobBatch batch = client.CreateBatch();
+            using BlobBatch batch = client.CreateBatch();
             Response response1 = batch.SetBlobAccessTier(good[0].Uri, AccessTier.Cool);
             Response response2 = batch.SetBlobAccessTier(good[1].Uri, AccessTier.Cool);
             Response response3 = batch.SetBlobAccessTier(bad[0], AccessTier.Cool);
@@ -453,7 +455,7 @@ namespace Azure.Storage.Blobs.Test
             Uri[] bad = scenario.GetInvalidBlobUris(1);
 
             BlobBatchClient client = scenario.GetBlobBatchClient();
-            BlobBatch batch = client.CreateBatch();
+            using BlobBatch batch = client.CreateBatch();
             Response response1 = batch.SetBlobAccessTier(good[0].Uri, AccessTier.Cool);
             Response response2 = batch.SetBlobAccessTier(good[1].Uri, AccessTier.Cool);
             Response response3 = batch.SetBlobAccessTier(bad[0], AccessTier.Cool);
@@ -473,7 +475,7 @@ namespace Azure.Storage.Blobs.Test
             Uri[] bad = scenario.GetInvalidBlobUris(2);
 
             BlobBatchClient client = scenario.GetBlobBatchClient();
-            BlobBatch batch = client.CreateBatch();
+            using BlobBatch batch = client.CreateBatch();
             Response response1 = batch.SetBlobAccessTier(good[0].Uri, AccessTier.Cool);
             Response response2 = batch.SetBlobAccessTier(bad[0], AccessTier.Cool);
             Response response3 = batch.SetBlobAccessTier(bad[1], AccessTier.Cool);
@@ -512,7 +514,7 @@ namespace Azure.Storage.Blobs.Test
             Uri[] bad = scenario.GetInvalidBlobUris(2);
 
             BlobBatchClient client = scenario.GetBlobBatchClient();
-            BlobBatch batch = client.CreateBatch();
+            using BlobBatch batch = client.CreateBatch();
             Response response1 = batch.SetBlobAccessTier(good[0].Uri, AccessTier.Cool);
             Response response2 = batch.SetBlobAccessTier(bad[0], AccessTier.Cool);
             Response response3 = batch.SetBlobAccessTier(bad[1], AccessTier.Cool);
@@ -522,6 +524,49 @@ namespace Azure.Storage.Blobs.Test
             scenario.AssertStatus(200, response1);
             scenario.AssertStatus(404, response2, response3);
             await scenario.AssertTiers(AccessTier.Cool, good);
+        }
+
+        [Test]
+        public async Task Batch_Dispose_Response_Still_Available()
+        {
+            await using TestScenario scenario = Scenario();
+            BlobClient[] blobs = await scenario.CreateBlobsAsync(3);
+
+            BlobBatchClient client = scenario.GetBlobBatchClient();
+            Response[] responses = new Response[3];
+            Response response;
+            using (BlobBatch batch = client.CreateBatch())
+            {
+                responses[0] = batch.DeleteBlob(blobs[0].Uri);
+                responses[1] = batch.DeleteBlob(blobs[1].Uri);
+                responses[2] = batch.DeleteBlob(blobs[2].Uri);
+                response = await client.SubmitBatchAsync(batch);
+            }
+            scenario.AssertStatus(202, response);
+            scenario.AssertStatus(202, responses);
+            await scenario.AssertDeleted(blobs);
+        }
+
+        [Test]
+        public async Task Batch_Double_Dispose_Response_Still_Available()
+        {
+            await using TestScenario scenario = Scenario();
+            BlobClient[] blobs = await scenario.CreateBlobsAsync(3);
+
+            BlobBatchClient client = scenario.GetBlobBatchClient();
+            Response[] responses = new Response[3];
+            Response response;
+            using (BlobBatch batch = client.CreateBatch())
+            {
+                responses[0] = batch.DeleteBlob(blobs[0].Uri);
+                responses[1] = batch.DeleteBlob(blobs[1].Uri);
+                responses[2] = batch.DeleteBlob(blobs[2].Uri);
+                response = await client.SubmitBatchAsync(batch);
+                batch.Dispose();
+            }
+            scenario.AssertStatus(202, response);
+            scenario.AssertStatus(202, responses);
+            await scenario.AssertDeleted(blobs);
         }
         #endregion SetBlobAccessTier
 
