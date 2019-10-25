@@ -30,7 +30,7 @@ namespace Azure.Messaging.EventHubs.Processor
         private readonly SemaphoreSlim _runningTaskSemaphore = new SemaphoreSlim(1, 1);
 
         /// <summary>The primitive for synchronizing access during start and set handler operations.</summary>
-        private readonly object _setHandlerMutex = new object();
+        private readonly object _startProcessorGuard = new object();
 
         /// <summary>The function to be called just before event processing starts for a given partition.</summary>
         private Func<PartitionContext, Task> _initializeProcessingForPartitionAsync;
@@ -119,21 +119,7 @@ namespace Azure.Messaging.EventHubs.Processor
         public Func<PartitionContext, Task> InitializeProcessingForPartitionAsync
         {
             internal get => _initializeProcessingForPartitionAsync;
-
-            set
-            {
-                lock (_setHandlerMutex)
-                {
-                    if (RunningTask == null)
-                    {
-                        _initializeProcessingForPartitionAsync = value;
-                    }
-                    else
-                    {
-                        throw new InvalidOperationException(Resources.RunningEventProcessorCannotPerformOperation);
-                    }
-                }
-            }
+            set => AssertNotRunning(() => _initializeProcessingForPartitionAsync = value);
         }
 
         /// <summary>
@@ -143,21 +129,7 @@ namespace Azure.Messaging.EventHubs.Processor
         public Func<PartitionContext, PartitionProcessorCloseReason, Task> ProcessingForPartitionStoppedAsync
         {
             internal get => _processingForPartitionStoppedAsync;
-
-            set
-            {
-                lock (_setHandlerMutex)
-                {
-                    if (RunningTask == null)
-                    {
-                        _processingForPartitionStoppedAsync = value;
-                    }
-                    else
-                    {
-                        throw new InvalidOperationException(Resources.RunningEventProcessorCannotPerformOperation);
-                    }
-                }
-            }
+            set => AssertNotRunning(() => _processingForPartitionStoppedAsync = value);
         }
 
         /// <summary>
@@ -167,21 +139,7 @@ namespace Azure.Messaging.EventHubs.Processor
         public Func<PartitionContext, IEnumerable<EventData>, Task> ProcessEventsAsync
         {
             internal get => _processEventsAsync;
-
-            set
-            {
-                lock (_setHandlerMutex)
-                {
-                    if (RunningTask == null)
-                    {
-                        _processEventsAsync = value;
-                    }
-                    else
-                    {
-                        throw new InvalidOperationException(Resources.RunningEventProcessorCannotPerformOperation);
-                    }
-                }
-            }
+            set => AssertNotRunning(() => _processEventsAsync = value);
         }
 
         /// <summary>
@@ -192,21 +150,7 @@ namespace Azure.Messaging.EventHubs.Processor
         public Func<PartitionContext, Exception, Task> ProcessExceptionAsync
         {
             internal get => _processExceptionAsync;
-
-            set
-            {
-                lock (_setHandlerMutex)
-                {
-                    if (RunningTask == null)
-                    {
-                        _processExceptionAsync = value;
-                    }
-                    else
-                    {
-                        throw new InvalidOperationException(Resources.RunningEventProcessorCannotPerformOperation);
-                    }
-                }
-            }
+            set => AssertNotRunning(() => _processExceptionAsync = value);
         }
 
         /// <summary>
@@ -256,6 +200,8 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
+        /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="ProcessEventsAsync" /> or <see cref="ProcessExceptionAsync" /> set.</exception>
+        ///
         public virtual async Task StartAsync()
         {
             if (RunningTask == null)
@@ -264,7 +210,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 try
                 {
-                    lock (_setHandlerMutex)
+                    lock (_startProcessorGuard)
                     {
                         if (RunningTask == null)
                         {
@@ -696,6 +642,36 @@ namespace Azure.Messaging.EventHubs.Processor
             // will fail in claiming it here, but this instance still owns it.
 
             return Manager.ClaimOwnershipAsync(ownershipToRenew);
+        }
+
+        /// <summary>
+        ///   Invokes a specified action only if this <see cref="EventProcessor" /> instance is not running.
+        /// </summary>
+        ///
+        /// <param name="action">The action to invoke.</param>
+        ///
+        /// <exception cref="InvalidOperationException">Occurs when this method is invoked while the event processor is running.</exception>
+        ///
+        private void AssertNotRunning(Action action)
+        {
+            if (RunningTask == null)
+            {
+                lock (_startProcessorGuard)
+                {
+                    if (RunningTask == null)
+                    {
+                        action?.Invoke();
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException(Resources.RunningEventProcessorCannotPerformOperation);
+                    }
+                }
+            }
+            else
+            {
+                throw new InvalidOperationException(Resources.RunningEventProcessorCannotPerformOperation);
+            }
         }
     }
 }
