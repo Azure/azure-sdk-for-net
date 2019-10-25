@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Net.Sockets;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Testing;
@@ -126,6 +127,27 @@ namespace Azure.Identity.Tests
                 Assert.IsTrue(query.Contains("api-version=2018-02-01"));
 
                 Assert.False(request.Headers.TryGetValue("Metadata", out string _));
+            }
+        }
+
+        [NonParallelizable]
+        [Test]
+        public void VerifyImdsAvailableUserCanceledMockAsync()
+        {
+            using (new TestEnvVar("MSI_ENDPOINT", null))
+            using (new TestEnvVar("MSI_SECRET", null))
+            {
+                var mockTransport = new MockTransport(request => throw new OperationCanceledException("mock user canceled exception"));
+
+                var options = new TokenCredentialOptions() { Transport = mockTransport };
+
+                ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential("mock-client-id", options));
+
+                CancellationTokenSource cancellationSource = new CancellationTokenSource();
+
+                cancellationSource.Cancel();
+
+                Assert.CatchAsync<OperationCanceledException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), cancellationSource.Token));
             }
         }
 
