@@ -275,7 +275,7 @@ When you interact with the Azure Key Vault key client library using the .NET SDK
 
 For example, if you try to retrieve a key that doesn't exist in your Key Vault, a `404` error is returned, indicating "Not Found".
 
-```C# Snippet:NotFound
+```C# Snippet:KeyNotFound
 try
 {
     KeyVaultKey key = await client.GetKeyAsync("some_key");

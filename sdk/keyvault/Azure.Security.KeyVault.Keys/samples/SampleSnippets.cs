@@ -169,7 +169,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
         [Test]
         public async Task NotFoundAsync()
         {
-            #region Snippet:NotFound
+            #region Snippet:KeyNotFound
             try
             {
                 KeyVaultKey key = await client.GetKeyAsync("some_key");
