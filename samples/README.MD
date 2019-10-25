@@ -20,8 +20,6 @@ Each package folder contains a `README.md` file. Many of these README files cont
 ## Package Samples and Hot-To Guides
 Each package folder contains a subfolder called `samples` with additional code samples. These samples can be either short programs contained in *.cs files, or more complete how-to guides (code samples and some commentary) contained *.md files. You can find a shortcuts to main how-to guides in the [**How-To Guides List**](#how-to-guide-list) section below.
 
-## Code Snippets
-
 ## Sample Applications
 Sometimes we want to illustrate how several APIs or even packages work together in a context of a more complete program. For these cases, we created sample applications that you can look at, download, compile, and execute. These application samples are located on 
 [https://code.msdn.microsoft.com/](https://code.msdn.microsoft.com/).
