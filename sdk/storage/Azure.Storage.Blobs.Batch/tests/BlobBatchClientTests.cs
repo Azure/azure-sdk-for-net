@@ -301,7 +301,7 @@ namespace Azure.Storage.Blobs.Test
             Response response1 = batch.DeleteBlob(good[0].Uri);
             Response response2 = batch.DeleteBlob(good[1].Uri);
             Response response3 = batch.DeleteBlob(bad[0]);
-            Response response = await client.SubmitBatchAsync(batch, throwOnFailure: false);
+            Response response = await client.SubmitBatchAsync(batch, throwOnAnyFailure: false);
 
             scenario.AssertStatus(202, response, response1, response2);
             scenario.AssertStatus(404, response3);
@@ -359,7 +359,7 @@ namespace Azure.Storage.Blobs.Test
             Response response1 = batch.DeleteBlob(good[0].Uri);
             Response response2 = batch.DeleteBlob(bad[0]);
             Response response3 = batch.DeleteBlob(bad[1]);
-            Response response = await client.SubmitBatchAsync(batch, throwOnFailure: false);
+            Response response = await client.SubmitBatchAsync(batch, throwOnAnyFailure: false);
 
             scenario.AssertStatus(202, response, response1);
             scenario.AssertStatus(404, response2, response3);
@@ -457,7 +457,7 @@ namespace Azure.Storage.Blobs.Test
             Response response1 = batch.SetBlobAccessTier(good[0].Uri, AccessTier.Cool);
             Response response2 = batch.SetBlobAccessTier(good[1].Uri, AccessTier.Cool);
             Response response3 = batch.SetBlobAccessTier(bad[0], AccessTier.Cool);
-            Response response = await client.SubmitBatchAsync(batch, throwOnFailure: false);
+            Response response = await client.SubmitBatchAsync(batch, throwOnAnyFailure: false);
 
             scenario.AssertStatus(202, response);
             scenario.AssertStatus(200, response1, response2);
@@ -516,7 +516,7 @@ namespace Azure.Storage.Blobs.Test
             Response response1 = batch.SetBlobAccessTier(good[0].Uri, AccessTier.Cool);
             Response response2 = batch.SetBlobAccessTier(bad[0], AccessTier.Cool);
             Response response3 = batch.SetBlobAccessTier(bad[1], AccessTier.Cool);
-            Response response = await client.SubmitBatchAsync(batch, throwOnFailure: false);
+            Response response = await client.SubmitBatchAsync(batch, throwOnAnyFailure: false);
 
             scenario.AssertStatus(202, response);
             scenario.AssertStatus(200, response1);
