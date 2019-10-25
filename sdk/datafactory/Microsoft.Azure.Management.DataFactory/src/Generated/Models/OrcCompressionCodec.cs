@@ -12,12 +12,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 {
 
     /// <summary>
-    /// Defines values for DynamicsAuthenticationType.
+    /// Defines values for OrcCompressionCodec.
     /// </summary>
-    public static class DynamicsAuthenticationType
+    public static class OrcCompressionCodec
     {
-        public const string Office365 = "Office365";
-        public const string Ifd = "Ifd";
-        public const string AADServicePrincipal = "AADServicePrincipal";
+        public const string None = "none";
+        public const string Zlib = "zlib";
+        public const string Snappy = "snappy";
     }
 }

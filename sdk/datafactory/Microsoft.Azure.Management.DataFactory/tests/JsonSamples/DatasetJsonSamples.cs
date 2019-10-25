@@ -1046,7 +1046,7 @@ namespace DataFactory.Tests.JsonSamples
         ""folderPath"": ""dataflow/test/input"",
         ""fileName"": ""data.parquet""
       },
-      ""compressionCodec"": ""gzip""
+      ""compressionCodec"": ""snappy""
     },
     ""schema"": [
       {
