@@ -91,4 +91,3 @@ stages:
       safeName: MicrosoftAzureCognitiveServicesVisionCustomVisionTraining
     - name: Microsoft.Azure.CognitiveServices.Vision.Face
       safeName: MicrosoftAzureCognitiveServicesVisionFace
-          

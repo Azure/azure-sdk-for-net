@@ -36,6 +36,10 @@ jobs:
         inputs:
           artifactName: packages
           path: $(Build.ArtifactStagingDirectory)
+      - template: ../steps/archetype-sdk-docs.yml
+        parameters:
+          ServiceDirectory: ${{parameters.ServiceDirectory}}
+          Artifacts: ${{parameters.Artifacts}}
   - job: "Analyze"
     condition: ne(variables['Skip.Analyze'], true)
     variables:
