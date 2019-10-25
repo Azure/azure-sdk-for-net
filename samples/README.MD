@@ -5,7 +5,7 @@ Developers like to learn by looking at code, and so the Azure SDK comes with a m
 # Structure of the Repository
 The Azure SDK repository is organized in the following folder structure, with the main sample locations highlighted using **bold** font.
 
-`/samples` ```// (this folder)```<br>
+`/samples` - this folder<br>
 &nbsp;&nbsp;&nbsp;&nbsp;`README.md` ```// (this file)```<br>
 `/sdk` ```// folder containing sources for all SDK packages```<br>
 &nbsp;&nbsp;&nbsp;&nbsp;`/<service>` ```// e.g. storage```<br>
