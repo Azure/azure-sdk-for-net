@@ -227,11 +227,17 @@ namespace Azure.Identity
 
                     return true;
                 }
-                // we only want to handle the case when the imdsTimeout resulted in the request being cancelled.
+                // we only want to handle the case when the imdsTimeout resulted in the request being canceled
                 // this indicates that the request timed out and that imds is not available.  If the operation
-                // was user cancelled we don't wan't to handle the exception so s_identityAvailable will
+                // was user canceled we don't want to handle the exception so s_identityAvailable will
                 // remain unset, as we still haven't determined if the imds endpoint is available.
                 catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
+                {
+                    return false;
+                }
+                // in the case that the request failed in a manner that we didn't receive any response other,
+                // than being canceled, take this to indicate that the imds endpoint is not available.
+                catch (Exception e) when (!(e is OperationCanceledException))
                 {
                     return false;
                 }
@@ -263,14 +269,20 @@ namespace Azure.Identity
 
                     return true;
                 }
-                // we only want to handle the case when the imdsTimeout resulted in the request being cancelled.
+                // we only want to handle the case when the imdsTimeout resulted in the request being canceled.
                 // this indicates that the request timed out and that imds is not available.  If the operation
-                // was user cancelled we don't wan't to handle the exception so s_identityAvailable will
+                // was user canceled we don't wan't to handle the exception so s_identityAvailable will
                 // remain unset, as we still haven't determined if the imds endpoint is available.
                 catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
                 {
                     AzureIdentityEventSource.Singleton.ImdsEndpointUnavailable(request.Uri);
 
+                    return false;
+                }
+                // in the case that the request failed in a manner that we didn't receive any response other,
+                // than being canceled, take this to indicate that the imds endpoint is not available.
+                catch (Exception e) when (!(e is OperationCanceledException))
+                {
                     return false;
                 }
             }
