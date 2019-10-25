@@ -6,7 +6,7 @@ Developers like to learn by looking at code, and so the Azure SDK comes with a m
 The Azure SDK repository is organized in the following folder structure, with the two main locations containing sample code highlighted
 
 **`/samples`** ```// repo-wide samples (this folder)```<br>
-`/sdk`<br>
+`/sdk` ```// folder containing sources for all SDK packages```<br>
 &nbsp;&nbsp;&nbsp;&nbsp;`/<service>` ```// e.g. storage```<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`/<package>` ```// e.g. Azure.Storage.Blobs```<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**`/samples`** ```// package-specific samples```<br>
