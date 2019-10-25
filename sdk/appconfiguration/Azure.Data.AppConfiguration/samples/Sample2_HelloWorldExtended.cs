@@ -52,15 +52,15 @@ namespace Azure.Data.AppConfiguration.Samples
             // We want to gather all the information available for the "production' environment.
             // By calling GetBatchSync with the proper filter for label "production", we will get
             // all the Configuration Settings that satisfy that condition.
-            var selector = new SettingSelector(null, "production");
+            var selector = new SettingSelector(SettingSelector.Any, "production");
 
-            Debug.WriteLine("Settings for Production environmnet");
+            Debug.WriteLine("Settings for Production environment:");
             await foreach (ConfigurationSetting setting in client.GetConfigurationSettingsAsync(selector))
             {
                 Debug.WriteLine(setting);
             }
 
-            // Once we don't need the Configuration Setting, we can delete them.
+            // Once we don't need the Configuration Settings, we can delete them.
             await client.DeleteConfigurationSettingAsync(betaEndpoint.Key, betaEndpoint.Label);
             await client.DeleteConfigurationSettingAsync(betaInstances.Key, betaInstances.Label);
             await client.DeleteConfigurationSettingAsync(productionEndpoint.Key, productionEndpoint.Label);
