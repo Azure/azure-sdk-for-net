@@ -134,7 +134,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="batch">
         /// A <see cref="BlobBatch"/> of sub-operations.
         /// </param>
-        /// <param name="throwOnFailure">
+        /// <param name="throwOnAnyFailure">
         /// A value indicating whether or not to throw exceptions for
         /// sub-operation failures.
         /// </param>
@@ -148,17 +148,17 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure to submit the batch occurs.  Individual sub-operation
-        /// failures will only throw if <paramref name="throwOnFailure"/> is
+        /// failures will only throw if <paramref name="throwOnAnyFailure"/> is
         /// true and be wrapped in an <see cref="AggregateException"/>.
         /// </remarks>
 [ForwardsClientCalls] // TODO: Throwing exceptions fails tests
         public virtual Response SubmitBatch(
             BlobBatch batch,
-            bool throwOnFailure = true,
+            bool throwOnAnyFailure = false,
             CancellationToken cancellationToken = default) =>
             SubmitBatchInternal(
                 batch,
-                throwOnFailure,
+                throwOnAnyFailure,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -169,7 +169,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="batch">
         /// A <see cref="BlobBatch"/> of sub-operations.
         /// </param>
-        /// <param name="throwOnFailure">
+        /// <param name="throwOnAnyFailure">
         /// A value indicating whether or not to throw exceptions for
         /// sub-operation failures.
         /// </param>
@@ -183,17 +183,17 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure to submit the batch occurs.  Individual sub-operation
-        /// failures will only throw if <paramref name="throwOnFailure"/> is
+        /// failures will only throw if <paramref name="throwOnAnyFailure"/> is
         /// true and be wrapped in an <see cref="AggregateException"/>.
         /// </remarks>
 [ForwardsClientCalls] // TODO: Throwing exceptions fails tests
         public virtual async Task<Response> SubmitBatchAsync(
             BlobBatch batch,
-            bool throwOnFailure = true,
+            bool throwOnAnyFailure = false,
             CancellationToken cancellationToken = default) =>
             await SubmitBatchInternal(
                 batch,
-                throwOnFailure,
+                throwOnAnyFailure,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -204,7 +204,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="batch">
         /// A <see cref="BlobBatch"/> of sub-operations.
         /// </param>
-        /// <param name="throwOnFailure">
+        /// <param name="throwOnAnyFailure">
         /// A value indicating whether or not to throw exceptions for
         /// sub-operation failures.
         /// </param>
@@ -221,12 +221,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure to submit the batch occurs.  Individual sub-operation
-        /// failures will only throw if <paramref name="throwOnFailure"/> is
+        /// failures will only throw if <paramref name="throwOnAnyFailure"/> is
         /// true and be wrapped in an <see cref="AggregateException"/>.
         /// </remarks>
         private async Task<Response> SubmitBatchInternal(
             BlobBatch batch,
-            bool throwOnFailure,
+            bool throwOnAnyFailure,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -277,7 +277,7 @@ namespace Azure.Storage.Blobs.Specialized
                 raw,
                 batchResult.Value.Content,
                 batchResult.Value.ContentType,
-                throwOnFailure,
+                throwOnAnyFailure,
                 async,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -349,7 +349,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="responseContentType">
         /// The raw multipart response content type (containing the boundary).
         /// </param>
-        /// <param name="throwOnFailure">
+        /// <param name="throwOnAnyFailure">
         /// A value indicating whether or not to throw exceptions for
         /// sub-operation failures.
         /// </param>
@@ -366,7 +366,7 @@ namespace Azure.Storage.Blobs.Specialized
             Response rawResponse,
             Stream responseContent,
             string responseContentType,
-            bool throwOnFailure,
+            bool throwOnAnyFailure,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -413,7 +413,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (messages[i].TryGetProperty(BatchConstants.DelayedResponsePropertyName, out object value) &&
                         value is DelayedResponse response)
                     {
-                        response.SetLiveResponse(responses[i], throwOnFailure);
+                        response.SetLiveResponse(responses[i], throwOnAnyFailure);
                     }
                 }
                 catch (Exception ex)
