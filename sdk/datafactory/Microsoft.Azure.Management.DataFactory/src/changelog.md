@@ -1,6 +1,6 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
-## Version 4.3.1
+## Version 4.4.0
 ###  Feature Additions
 - Added Serve-to-Server authentication type for Dynamics 365, Dynamics CRM and Common Data Service for Apps connector
 - Changed Username from required to optional in Dynamics 365, Dynamics CRM and Common Data Service for Apps connector
