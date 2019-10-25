@@ -53,6 +53,7 @@ namespace Azure.Storage.Queues
         {
             Version = version == ServiceVersion.V2019_02_02 ? version : throw Errors.VersionNotSupported(nameof(version));
             this.Initialize();
+            AddHeadersAndQueryParameters();
         }
 
         /// <summary>
@@ -66,6 +67,47 @@ namespace Azure.Storage.Queues
         /// between primary and secondary Uri.
         /// </summary>
         public Uri GeoRedundantSecondaryUri { get; set; }
+
+        /// <summary>
+        /// Add headers and query parameters in <see cref="DiagnosticsOptions.LoggedHeaderNames"/> and <see cref="DiagnosticsOptions.LoggedQueryParameters"/>
+        /// </summary>
+        private void AddHeadersAndQueryParameters()
+        {
+            Diagnostics.LoggedHeaderNames.Add("Access-Control-Allow-Origin");
+            Diagnostics.LoggedHeaderNames.Add("x-ms-date");
+            Diagnostics.LoggedHeaderNames.Add("x-ms-error-code");
+            Diagnostics.LoggedHeaderNames.Add("x-ms-request-id");
+            Diagnostics.LoggedHeaderNames.Add("x-ms-version");
+            Diagnostics.LoggedHeaderNames.Add("x-ms-approximate-messages-count");
+            Diagnostics.LoggedHeaderNames.Add("x-ms-popreceipt");
+            Diagnostics.LoggedHeaderNames.Add("x-ms-time-next-visible");
+
+            Diagnostics.LoggedQueryParameters.Add("comp");
+            Diagnostics.LoggedQueryParameters.Add("maxresults");
+            Diagnostics.LoggedQueryParameters.Add("rscc");
+            Diagnostics.LoggedQueryParameters.Add("rscd");
+            Diagnostics.LoggedQueryParameters.Add("rsce");
+            Diagnostics.LoggedQueryParameters.Add("rscl");
+            Diagnostics.LoggedQueryParameters.Add("rsct");
+            Diagnostics.LoggedQueryParameters.Add("se");
+            Diagnostics.LoggedQueryParameters.Add("si");
+            Diagnostics.LoggedQueryParameters.Add("sip");
+            Diagnostics.LoggedQueryParameters.Add("sp");
+            Diagnostics.LoggedQueryParameters.Add("spr");
+            Diagnostics.LoggedQueryParameters.Add("sr");
+            Diagnostics.LoggedQueryParameters.Add("srt");
+            Diagnostics.LoggedQueryParameters.Add("ss");
+            Diagnostics.LoggedQueryParameters.Add("st");
+            Diagnostics.LoggedQueryParameters.Add("sv");
+            Diagnostics.LoggedQueryParameters.Add("include");
+            Diagnostics.LoggedQueryParameters.Add("marker");
+            Diagnostics.LoggedQueryParameters.Add("prefix");
+            Diagnostics.LoggedQueryParameters.Add("messagettl");
+            Diagnostics.LoggedQueryParameters.Add("numofmessages");
+            Diagnostics.LoggedQueryParameters.Add("peekonly");
+            Diagnostics.LoggedQueryParameters.Add("popreceipt");
+            Diagnostics.LoggedQueryParameters.Add("visibilitytimeout");
+        }
 
         /// <summary>
         /// Create an HttpPipeline from QueueClientOptions.
