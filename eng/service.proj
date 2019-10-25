@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <ExcludeMgmtLib Include="..\sdk\*\*.Management.*\**\*.csproj;..\sdk\*mgmt*\**\*.csproj;" />
-    <TestProjects Include="..\sdk\$(ServiceDirectory)\**\tests\**\*.csproj" />
+    <TestProjects Include="..\sdk\$(ServiceDirectory)\**\tests\**\*.csproj" Exclude="..\sdk\$(ServiceDirectory)\Azure.*\**\*.csproj" />
     <SamplesProjects Include="..\sdk\$(ServiceDirectory)\**\samples\**\*.csproj" />
     <SrcProjects Include="..\sdk\$(ServiceDirectory)\**\*.csproj" Exclude="@(TestProjects);@(SamplesProjects)"/>
     <ProjectReference Include="@(TestProjects)" Exclude="@(ExcludeMgmtLib)" Condition="'$(IncludeTests)' == 'true'" />
