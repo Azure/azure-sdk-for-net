@@ -12,7 +12,7 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
 
 // Avoid compiling the test class. Disabling just the test methods still causes the fixture to instantiate and dispose, which still breaks live tests.
-// See https://github.com/Azure/azure-sdk-for-net/pull/8423 for status and more information about why these tests are disabled.
+// See https://github.com/Azure/azure-sdk-for-net/issues/8420 for status and more information about why these tests are disabled.
 #if !AZURE_KEYVAULT_TEST_MODE_LIVE
 
 namespace Microsoft.Azure.KeyVault.Extensions.Tests
