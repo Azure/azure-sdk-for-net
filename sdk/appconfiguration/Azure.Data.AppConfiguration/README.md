@@ -175,7 +175,7 @@ For example, if you try to retrieve a Configuration Setting that doesn't exist i
 ```c#
 string connectionString = <connection_string>;
 var client = new ConfigurationClient(connectionString);
-ConfigurationSetting setting = client.Get("nonexistant_key");
+ConfigurationSetting setting = client.Get("nonexistent_key");
 ```
 
 You will notice that additional information is logged, like the Client Request ID of the operation.
