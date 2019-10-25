@@ -14,7 +14,7 @@ The Azure SDK repository is organized in the following folder structure, with th
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`/src`<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`/tests`<br>
 
-## Package-Level README.md
+## Package README.md Samples
 Each package folder contains a README.md file. Many of these README files contain some basic `Hello World` code samples.
 
 ## Package-Specific Samples and Hot-To Guides
