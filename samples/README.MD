@@ -3,10 +3,10 @@
 Developers like to learn by looking at code, and so the Azure SDK comes with a myriad of code samples in the form of short code snippets, sample applications, and how-to guides. This document describes where to find all these resources.
 
 # Structure of the Repository
-The Azure SDK repository is organized in the following folder structure:
+The Azure SDK repository is organized in the following folder structure, with the two main locations containing sample code highlighted
 
 `/sdk`<br>
-&nbsp;&nbsp;&nbsp;&nbsp;`/samples` ```// repo-wide samples (this folder)```<br>
+&nbsp;&nbsp;&nbsp;&nbsp;**`/samples`** ```// repo-wide samples (this folder)```<br>
 &nbsp;&nbsp;&nbsp;&nbsp;`/<service>` ```// e.g. storage```<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`/<package>` ```// e.g. Azure.Storage.Blobs```<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**`/samples`** ```// package-specific samples```<br>
