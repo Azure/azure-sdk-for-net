@@ -9,46 +9,58 @@ using NUnit.Framework.Interfaces;
 namespace Azure.Core.Testing
 {
     /// <summary>
-    /// Provides values to NUnit that are public, static, read-only fields of the declared type.
+    /// Provides values to NUnit that are public, static, read-only fields and properties of the declared type.
     /// Use this in place of ValuesAttribute for enum-like structs.
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter, AllowMultiple = false, Inherited = false)]
-    public class FieldsAttribute : Attribute, IParameterDataSource
+    public class EnumValuesAttribute : Attribute, IParameterDataSource
     {
         private readonly string[] _names;
 
         /// <summary>
-        /// Creates a new instance of the <see cref="FieldsAttribute"/> class.
-        /// All public, static, read-only fields of the declared type are included.
+        /// Creates a new instance of the <see cref="EnumValuesAttribute"/> class.
+        /// All public, static, read-only fields and properties of the declared type are included.
         /// </summary>
-        public FieldsAttribute()
+        public EnumValuesAttribute()
         {
         }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="FieldsAttribute"/> class.
-        /// Only public, static, read-only fields of the declared type with any of the specified <paramref name="names"/> are included.
+        /// Creates a new instance of the <see cref="EnumValuesAttribute"/> class.
+        /// Only public, static, read-only fields and properties of the declared type with any of the specified <paramref name="names"/> are included.
         /// </summary>
-        public FieldsAttribute(params string[] names)
+        public EnumValuesAttribute(params string[] names)
         {
             _names = names;
         }
 
         /// <summary>
-        /// Gets or sets a list of field names to exclude. Fields names specified here will be excluded even if specified in the <see cref="FieldsAttribute(string[])"/> constructor.
+        /// Gets or sets a list of field and properties names to exclude. Field and property names specified here will be excluded even if specified in the <see cref="EnumValuesAttribute(string[])"/> constructor.
         /// </summary>
         public string[] Exclude { get; set; }
 
         public IEnumerable GetData(IParameterInfo parameter)
         {
+            const BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly;
+
             Type type = parameter.ParameterType;
             if (type.IsValueType)
             {
-                FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly);
+                PropertyInfo[] properties = type.GetProperties(bindingFlags);
+                for (int i = 0; i < properties.Length; ++i)
+                {
+                    PropertyInfo property = properties[i];
+                    if (property.PropertyType == type && property.CanRead && !property.CanWrite && Includes(property.Name) && !Excludes(property.Name))
+                    {
+                        yield return property.GetValue(null);
+                    }
+                }
+
+                FieldInfo[] fields = type.GetFields(bindingFlags);
                 for (int i = 0; i < fields.Length; ++i)
                 {
                     FieldInfo field = fields[i];
-                    if (field.FieldType == type && Includes(field.Name) && !Excludes(field.Name))
+                    if (field.FieldType == type && (field.IsInitOnly || field.IsLiteral) && Includes(field.Name) && !Excludes(field.Name))
                     {
                         yield return field.GetValue(null);
                     }
