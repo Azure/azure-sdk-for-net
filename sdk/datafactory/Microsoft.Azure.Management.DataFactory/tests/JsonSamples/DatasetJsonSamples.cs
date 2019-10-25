@@ -1046,7 +1046,7 @@ namespace DataFactory.Tests.JsonSamples
         ""folderPath"": ""dataflow/test/input"",
         ""fileName"": ""data.parquet""
       },
-      ""compressionCodec"": ""snappy""
+      ""compressionCodec"": ""gzip""
     },
     ""schema"": [
       {
@@ -1209,9 +1209,22 @@ namespace DataFactory.Tests.JsonSamples
         ""type"": ""AzureBlobStorageLocation"",
         ""container"": ""ContainerName"",
         ""folderPath"": ""dataflow/test/input"",
-        ""fileName"": ""data.parquet""
+        ""fileName"": ""data.orc""
+      },
+      ""orcCompressionCodec"": ""snappy""
+    },
+    ""schema"": [
+      {
+        ""name"": ""col1"",
+        ""type"": ""INT_32""
+      },
+      {
+        ""name"": ""col2"",
+        ""type"": ""Decimal"",
+        ""precision"": ""38"",
+        ""scale"": ""2""
       }
-    }
+    ]
   }
 }";
 
