@@ -90,14 +90,14 @@ namespace Azure.Messaging.EventHubs.Samples
                     return Task.CompletedTask;
                 };
 
-                eventProcessor.ProcessingForPartitionStoppedAsync = (PartitionContext partitionContext, CloseReason reason) =>
+                eventProcessor.ProcessingForPartitionStoppedAsync = (PartitionProcessingStoppedContext stopContext) =>
                 {
                     // The code to be run just before stopping processing events for a partition.  This is the right place to dispose
                     // of objects that will no longer be used.
 
                     Interlocked.Decrement(ref partitionsBeingProcessedCount);
 
-                    Console.WriteLine($"\tPartition '{ partitionContext.PartitionId }': partition processing has stopped. Reason: { reason }.");
+                    Console.WriteLine($"\tPartition '{ stopContext.Context.PartitionId }': partition processing has stopped. Reason: { stopContext.Reason }.");
 
                     // This method is asynchronous, which means it's expected to return a Task.
 

@@ -36,7 +36,7 @@ namespace Azure.Messaging.EventHubs.Processor
         private Func<InitializePartitionProcessingContext, Task> _initializeProcessingForPartitionAsync;
 
         /// <summary>The handler to be called once event processing stops for a given partition.</summary>
-        private Func<PartitionContext, CloseReason, Task> _processingForPartitionStoppedAsync;
+        private Func<PartitionProcessingStoppedContext, Task> _processingForPartitionStoppedAsync;
 
         /// <summary>Responsible for processing sets of events received from the Event Hubs service.</summary>
         private Func<PartitionContext, IEnumerable<EventData>, Task> _processEventsAsync;
@@ -154,7 +154,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   The handler to be called once event processing stops for a given partition.
         /// </summary>
         ///
-        public Func<PartitionContext, CloseReason, Task> ProcessingForPartitionStoppedAsync
+        public Func<PartitionProcessingStoppedContext, Task> ProcessingForPartitionStoppedAsync
         {
             internal get => _processingForPartitionStoppedAsync;
             set => EnsureNotRunningAndInvoke(() => _processingForPartitionStoppedAsync = value);

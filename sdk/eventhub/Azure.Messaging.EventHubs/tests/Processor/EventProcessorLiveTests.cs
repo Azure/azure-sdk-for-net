@@ -115,10 +115,10 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             connectionString,
                             EventHubConsumer.DefaultConsumerGroupName,
-                            onClose: (partitionContext, reason) =>
+                            onClose: stopContext =>
                             {
-                                closeCalls.AddOrUpdate(partitionContext.PartitionId, 1, (partitionId, value) => value + 1);
-                                closeReasons[partitionContext.PartitionId] = reason;
+                                closeCalls.AddOrUpdate(stopContext.Context.PartitionId, 1, (partitionId, value) => value + 1);
+                                closeReasons[stopContext.Context.PartitionId] = stopContext.Reason;
                             }
                         );
 
@@ -393,7 +393,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             connectionString,
                             EventHubConsumer.DefaultConsumerGroupName,
-                            onClose: (partitionContext, reason) =>
+                            onClose: stopContext =>
                                 Interlocked.Increment(ref closeCallsCount)
                         );
 
@@ -1011,8 +1011,8 @@ namespace Azure.Messaging.EventHubs.Tests
                             EventHubConsumer.DefaultConsumerGroupName,
                             onInitialize: initializationContext =>
                                 ownedPartitionsCount.AddOrUpdate(initializationContext.Context.OwnerIdentifier, 1, (ownerId, value) => value + 1),
-                            onClose: (partitionContext, reason) =>
-                                ownedPartitionsCount.AddOrUpdate(partitionContext.OwnerIdentifier, 0, (ownerId, value) => value - 1)
+                            onClose: stopContext =>
+                                ownedPartitionsCount.AddOrUpdate(stopContext.Context.OwnerIdentifier, 0, (ownerId, value) => value - 1)
                         );
 
                     eventProcessorManager.AddEventProcessors(eventProcessors);
@@ -1075,8 +1075,8 @@ namespace Azure.Messaging.EventHubs.Tests
                             EventHubConsumer.DefaultConsumerGroupName,
                             onInitialize: initializationContext =>
                                 ownedPartitionsCount.AddOrUpdate(initializationContext.Context.OwnerIdentifier, 1, (ownerId, value) => value + 1),
-                            onClose: (partitionContext, reason) =>
-                                ownedPartitionsCount.AddOrUpdate(partitionContext.OwnerIdentifier, 0, (ownerId, value) => value - 1)
+                            onClose: stopContext =>
+                                ownedPartitionsCount.AddOrUpdate(stopContext.Context.OwnerIdentifier, 0, (ownerId, value) => value - 1)
                         );
 
                     eventProcessorManager.AddEventProcessors(1);

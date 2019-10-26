@@ -58,7 +58,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   A callback action to be called on <see cref="EventProcessor.ProcessingForPartitionStoppedAsync" />.
         /// </summary>
         ///
-        private Action<PartitionContext, CloseReason> OnClose { get; }
+        private Action<PartitionProcessingStoppedContext> OnClose { get; }
 
         /// <summary>
         ///   A callback action to be called on <see cref="EventProcessor.ProcessEventsAsync" />.
@@ -90,7 +90,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                      PartitionManager partitionManager = null,
                                      EventProcessorOptions options = null,
                                      Action<InitializePartitionProcessingContext> onInitialize = null,
-                                     Action<PartitionContext, CloseReason> onClose = null,
+                                     Action<PartitionProcessingStoppedContext> onClose = null,
                                      Action<PartitionContext, IEnumerable<EventData>> onProcessEvents = null,
                                      Action<PartitionContext, Exception> onProcessException = null)
         {
@@ -145,9 +145,9 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 if (OnClose != null)
                 {
-                    eventProcessor.ProcessingForPartitionStoppedAsync = (partitionContext, reason) =>
+                    eventProcessor.ProcessingForPartitionStoppedAsync = stopContext =>
                     {
-                        OnClose(partitionContext, reason);
+                        OnClose(stopContext);
                         return Task.CompletedTask;
                     };
                 }

@@ -218,7 +218,8 @@ namespace Azure.Messaging.EventHubs.Processor
 
                         if (OwnerEventProcessor.ProcessingForPartitionStoppedAsync != null)
                         {
-                            await OwnerEventProcessor.ProcessingForPartitionStoppedAsync(Context, reason ?? CloseReason).ConfigureAwait(false);
+                            var stopContext = new PartitionProcessingStoppedContext(Context, reason ?? CloseReason);
+                            await OwnerEventProcessor.ProcessingForPartitionStoppedAsync(stopContext).ConfigureAwait(false);
                         }
                     }
                 }
