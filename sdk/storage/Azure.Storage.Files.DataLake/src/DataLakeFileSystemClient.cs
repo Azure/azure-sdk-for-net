@@ -507,16 +507,16 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
-        public virtual Response<FileSystemItem> GetProperties(
+        public virtual Response<FileSystemProperties> GetProperties(
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            Response<BlobContainerItem> containerResponse = _containerClient.GetProperties(
-                conditions.ToBlobRequestConditions(),
+            Response<BlobContainerProperties> containerResponse = _containerClient.GetProperties(
+                conditions,
                 cancellationToken);
 
             return Response.FromValue(
-                containerResponse.Value.ToFileSystemItem(),
+                containerResponse.Value.ToFileSystemProperties(),
                 containerResponse.GetRawResponse());
         }
 
@@ -545,17 +545,17 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
-        public virtual async Task<Response<FileSystemItem>> GetPropertiesAsync(
+        public virtual async Task<Response<FileSystemProperties>> GetPropertiesAsync(
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            Response<BlobContainerItem> response = await _containerClient.GetPropertiesAsync(
-                conditions.ToBlobRequestConditions(),
+            Response<BlobContainerProperties> response = await _containerClient.GetPropertiesAsync(
+                conditions,
                 cancellationToken)
                 .ConfigureAwait(false);
 
             return Response.FromValue(
-                response.Value.ToFileSystemItem(),
+                response.Value.ToFileSystemProperties(),
                 response.GetRawResponse());
         }
         #endregion GetProperties

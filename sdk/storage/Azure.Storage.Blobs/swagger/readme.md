@@ -464,9 +464,9 @@ directive:
         const path = $.BlobItem.properties.Properties.$ref.replace(/[#].*$/, "#/definitions/BlobItemProperties");
         $.BlobItem.properties.Properties = { "$ref": path };
 
-        $.BlobItemProperties.properties.CreatedOn = $.BlobItemProperties.properties.CreationTime;
-        $.BlobItemProperties.properties.CreatedOn.xml = {"name": "CreationTime"};
-        delete $.BlobItemProperties.properties.CreationTime;
+        $.BlobItemProperties.properties.CreatedOn = $.BlobItemProperties.properties["Creation-Time"];
+        $.BlobItemProperties.properties.CreatedOn.xml = {"name": "Creation-Time"};
+        delete $.BlobItemProperties.properties["Creation-Time"];
 
         $.BlobItemProperties.properties.CopyCompletedOn = $.BlobItemProperties.properties.CopyCompletionTime;
         $.BlobItemProperties.properties.CopyCompletedOn.xml = {"name": "CopyCompletionTime"};
@@ -1022,6 +1022,16 @@ directive:
     $.properties.ETag = $.properties.Etag;
     $.properties.ETag.xml = { "name":  "Etag" };
     delete $.properties.Etag;
+```
+
+### Move Metadata from BlobContainerItem to BlobContainerProperties
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.BlobContainerProperties.properties.Metadata = $.BlobContainerItem.properties.Metadata;
+    delete $.BlobContainerItem.properties.Metadata;
 ```
 
 ### UserDelegationKey properties

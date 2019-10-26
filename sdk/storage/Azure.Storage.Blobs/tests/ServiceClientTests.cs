@@ -203,7 +203,7 @@ namespace Azure.Storage.Blobs.Test
             BlobContainerItem first = await service.GetBlobContainersAsync(BlobContainerTraits.Metadata).FirstAsync();
 
             // Assert
-            Assert.IsNotNull(first.Metadata);
+            Assert.IsNotNull(first.Properties.Metadata);
         }
 
         [Test]
@@ -392,7 +392,7 @@ namespace Azure.Storage.Blobs.Test
             try
             {
                 BlobContainerClient container = InstrumentClient((await service.CreateBlobContainerAsync(name)).Value);
-                Response<BlobContainerItem> properties = await container.GetPropertiesAsync();
+                Response<BlobContainerProperties> properties = await container.GetPropertiesAsync();
                 Assert.IsNotNull(properties.Value);
             }
             finally

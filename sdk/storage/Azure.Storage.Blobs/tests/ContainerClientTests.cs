@@ -173,7 +173,7 @@ namespace Azure.Storage.Blobs.Test
             await container.CreateAsync(metadata: metadata);
 
             // Assert
-            Response<BlobContainerItem> response = await container.GetPropertiesAsync();
+            Response<BlobContainerProperties> response = await container.GetPropertiesAsync();
             AssertMetadataEquality(metadata, response.Value.Metadata);
 
             // Cleanup
@@ -191,8 +191,8 @@ namespace Azure.Storage.Blobs.Test
             await container.CreateAsync(publicAccessType: PublicAccessType.Blob);
 
             // Assert
-            Response<BlobContainerItem> response = await container.GetPropertiesAsync();
-            Assert.AreEqual(PublicAccessType.Blob, response.Value.Properties.PublicAccess);
+            Response<BlobContainerProperties> response = await container.GetPropertiesAsync();
+            Assert.AreEqual(PublicAccessType.Blob, response.Value.PublicAccess);
 
             // Cleanup
             await container.DeleteAsync();
@@ -227,8 +227,8 @@ namespace Azure.Storage.Blobs.Test
             await container.CreateIfNotExistsAsync();
 
             // Assert
-            Response<BlobContainerItem> response = await container.GetPropertiesAsync();
-            Assert.IsNotNull(response.Value.Properties.ETag);
+            Response<BlobContainerProperties> response = await container.GetPropertiesAsync();
+            Assert.IsNotNull(response.Value.ETag);
 
             // Cleanup
             await container.DeleteAsync();
@@ -246,8 +246,8 @@ namespace Azure.Storage.Blobs.Test
             await container.CreateIfNotExistsAsync();
 
             // Assert
-            Response<BlobContainerItem> response = await container.GetPropertiesAsync();
-            Assert.IsNotNull(response.Value.Properties.ETag);
+            Response<BlobContainerProperties> response = await container.GetPropertiesAsync();
+            Assert.IsNotNull(response.Value.ETag);
 
             // Cleanup
             await container.DeleteAsync();
@@ -361,10 +361,10 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Act
-            Response<BlobContainerItem> response = await test.Container.GetPropertiesAsync();
+            Response<BlobContainerProperties> response = await test.Container.GetPropertiesAsync();
 
             // Assert
-            Assert.AreEqual(PublicAccessType.BlobContainer, response.Value.Properties.PublicAccess);
+            Assert.AreEqual(PublicAccessType.BlobContainer, response.Value.PublicAccess);
         }
 
         [Test]
@@ -392,7 +392,7 @@ namespace Azure.Storage.Blobs.Test
             await test.Container.SetMetadataAsync(metadata);
 
             // Assert
-            Response<BlobContainerItem> response = await test.Container.GetPropertiesAsync();
+            Response<BlobContainerProperties> response = await test.Container.GetPropertiesAsync();
             AssertMetadataEquality(metadata, response.Value.Metadata);
         }
 
@@ -560,8 +560,8 @@ namespace Azure.Storage.Blobs.Test
             );
 
             // Assert
-            Response<BlobContainerItem> propertiesResponse = await test.Container.GetPropertiesAsync();
-            Assert.AreEqual(publicAccessType, propertiesResponse.Value.Properties.PublicAccess);
+            Response<BlobContainerProperties> propertiesResponse = await test.Container.GetPropertiesAsync();
+            Assert.AreEqual(publicAccessType, propertiesResponse.Value.PublicAccess);
 
             Response<BlobContainerAccessPolicy> response = await test.Container.GetAccessPolicyAsync();
             Assert.AreEqual(1, response.Value.SignedIdentifiers.Count());
@@ -862,10 +862,10 @@ namespace Azure.Storage.Blobs.Test
             Response<ReleasedObjectInfo> releaseResponse = await InstrumentClient(test.Container.GetBlobLeaseClient(leaseResponse.Value.LeaseId)).ReleaseAsync();
 
             // Assert
-            Response<BlobContainerItem> response = await test.Container.GetPropertiesAsync();
+            Response<BlobContainerProperties> response = await test.Container.GetPropertiesAsync();
 
-            Assert.AreEqual(LeaseStatus.Unlocked, response.Value.Properties.LeaseStatus);
-            Assert.AreEqual(LeaseState.Available, response.Value.Properties.LeaseState);
+            Assert.AreEqual(LeaseStatus.Unlocked, response.Value.LeaseStatus);
+            Assert.AreEqual(LeaseState.Available, response.Value.LeaseState);
         }
 
         [Test]
@@ -954,9 +954,9 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobLease> breakResponse = await InstrumentClient(test.Container.GetBlobLeaseClient()).BreakAsync(breakPeriod);
 
             // Assert
-            Response<BlobContainerItem> response = await test.Container.GetPropertiesAsync();
-            Assert.AreEqual(LeaseStatus.Unlocked, response.Value.Properties.LeaseStatus);
-            Assert.AreEqual(LeaseState.Broken, response.Value.Properties.LeaseState);
+            Response<BlobContainerProperties> response = await test.Container.GetPropertiesAsync();
+            Assert.AreEqual(LeaseStatus.Unlocked, response.Value.LeaseStatus);
+            Assert.AreEqual(LeaseState.Broken, response.Value.LeaseState);
         }
 
         [Test]
@@ -1590,7 +1590,7 @@ namespace Azure.Storage.Blobs.Test
             BlobContainerClient containerClient = GetBlobContainerClient_SecondaryAccount_ReadEnabledOnRetry(numberOfReadFailuresToSimulate, out TestExceptionPolicy testExceptionPolicy, retryOn404);
             await containerClient.CreateAsync();
 
-            Response<BlobContainerItem> properties = await EnsurePropagatedAsync(
+            Response<BlobContainerProperties> properties = await EnsurePropagatedAsync(
                 async () => await containerClient.GetPropertiesAsync(),
                 properties => properties.GetRawResponse().Status != 404);
 

@@ -138,7 +138,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 FileSystemItem first = await service.GetFileSystemsAsync(FileSystemTraits.Metadata).FirstAsync();
 
                 // Assert
-                Assert.IsNotNull(first.Metadata);
+                Assert.IsNotNull(first.Properties.Metadata);
             }
         }
 
@@ -166,8 +166,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeServiceClient service = GetServiceClient_SharedKey();
             try
             {
-                DataLakeFileSystemClient fileSystem = InstrumentClient((await service.CreateFileSystemAsync(name)).Value);
-                Response<FileSystemItem> properties = await fileSystem.GetPropertiesAsync();
+                FileSystemClient fileSystem = InstrumentClient((await service.CreateFileSystemAsync(name)).Value);
+                Response<FileSystemProperties> properties = await fileSystem.GetPropertiesAsync();
                 Assert.IsNotNull(properties.Value);
             }
             finally
