@@ -138,8 +138,7 @@ public class LiveDeploymentScriptsTests : TestBase
                 new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned, userAssignedIdentities);
 
             // Create deployment script object with minimal properties
-            var deploymentScriptName = TestUtilities.GenerateName();
-            var thisTestName = TestUtilities.GetCurrentMethodName();
+            var deploymentScriptName = TestUtilities.GetCurrentMethodName() + "--" + TestUtilities.GenerateName();
 
             var deploymentScript = new AzurePowerShellScript(managedIdentity, LocationWestUs, RetentionInterval,
                 AzurePowerShellVersion, scriptContent: ScriptContent, arguments: ScriptArguments);
