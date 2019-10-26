@@ -292,7 +292,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 return Task.CompletedTask;
             };
 
-            var manager = new PartitionPump(eventProcessorMock.Object, clientMock.Object, "cg", new PartitionContext("ns", "eh", "cg", "pid", "oid", new InMemoryPartitionManager()), new EventProcessorOptions());
+            var manager = new PartitionPump(eventProcessorMock.Object, clientMock.Object, "cg", new PartitionContext("ns", "eh", "cg", "pid", "oid", new InMemoryPartitionManager()), null, new EventProcessorOptions());
 
             await manager.StartAsync();
             await processorCalledSource.Task;

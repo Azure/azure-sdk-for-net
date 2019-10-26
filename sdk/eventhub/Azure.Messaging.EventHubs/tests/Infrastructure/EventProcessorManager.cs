@@ -52,7 +52,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   A callback action to be called on <see cref="EventProcessor.InitializeProcessingForPartitionAsync" />.
         /// </summary>
         ///
-        private Action<PartitionContext> OnInitialize { get; }
+        private Action<InitializePartitionProcessingContext> OnInitialize { get; }
 
         /// <summary>
         ///   A callback action to be called on <see cref="EventProcessor.ProcessingForPartitionStoppedAsync" />.
@@ -89,7 +89,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                      string consumerGroup,
                                      PartitionManager partitionManager = null,
                                      EventProcessorOptions options = null,
-                                     Action<PartitionContext> onInitialize = null,
+                                     Action<InitializePartitionProcessingContext> onInitialize = null,
                                      Action<PartitionContext, CloseReason> onClose = null,
                                      Action<PartitionContext, IEnumerable<EventData>> onProcessEvents = null,
                                      Action<PartitionContext, Exception> onProcessException = null)
@@ -136,9 +136,9 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 if (OnInitialize != null)
                 {
-                    eventProcessor.InitializeProcessingForPartitionAsync = (partitionContext) =>
+                    eventProcessor.InitializeProcessingForPartitionAsync = initializationContext =>
                     {
-                        OnInitialize(partitionContext);
+                        OnInitialize(initializationContext);
                         return Task.CompletedTask;
                     };
                 }

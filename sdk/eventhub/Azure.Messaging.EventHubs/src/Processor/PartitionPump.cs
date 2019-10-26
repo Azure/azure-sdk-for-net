@@ -56,6 +56,12 @@ namespace Azure.Messaging.EventHubs.Processor
         private PartitionContext Context { get; }
 
         /// <summary>
+        ///   The position within the partition where the pump should begin reading events.
+        /// </summary>
+        ///
+        private EventPosition StartingPosition { get; }
+
+        /// <summary>
         ///   The set of options to use for this partition pump.
         /// </summary>
         ///
@@ -94,18 +100,21 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="eventHubClient">The client used to interact with the Azure Event Hubs service.</param>
         /// <param name="consumerGroup">The name of the consumer group this partition pump is associated with.  Events are read in the context of this group.</param>
         /// <param name="partitionContext">The context of the Event Hub partition this partition pump is associated with.  Events will be read only from this partition.</param>
+        /// <param name="startingPosition">The position within the partition where the pump should begin reading events.</param>
         /// <param name="options">The set of options to use for this partition pump.</param>
         ///
         internal PartitionPump(EventProcessor eventProcessor,
                                EventHubClient eventHubClient,
                                string consumerGroup,
                                PartitionContext partitionContext,
+                               EventPosition startingPosition,
                                EventProcessorOptions options)
         {
             OwnerEventProcessor = eventProcessor;
             InnerClient = eventHubClient;
             ConsumerGroup = consumerGroup;
             Context = partitionContext;
+            StartingPosition = startingPosition;
             Options = options;
         }
 
@@ -130,16 +139,20 @@ namespace Azure.Messaging.EventHubs.Processor
                         RunningTaskTokenSource?.Cancel();
                         RunningTaskTokenSource = new CancellationTokenSource();
 
-                        InnerConsumer = InnerClient.CreateConsumer(ConsumerGroup, Context.PartitionId, Options.InitialEventPosition);
-
                         // In case an exception is encountered while the processing is initializing, don't catch it
-                        // and let the event processor handle it.  The inner consumer hasn't connected to the service yet,
-                        // so there's no need to close it.
+                        // and let the event processor handle it.
+
+                        EventPosition startingPosition = StartingPosition;
 
                         if (OwnerEventProcessor.InitializeProcessingForPartitionAsync != null)
                         {
-                            await OwnerEventProcessor.InitializeProcessingForPartitionAsync(Context).ConfigureAwait(false);
+                            var initializationContext = new InitializePartitionProcessingContext(Context);
+                            await OwnerEventProcessor.InitializeProcessingForPartitionAsync(initializationContext).ConfigureAwait(false);
+
+                            startingPosition = startingPosition ?? initializationContext.DefaultStartingPosition;
                         }
+
+                        InnerConsumer = InnerClient.CreateConsumer(ConsumerGroup, Context.PartitionId, startingPosition ?? EventPosition.Earliest);
 
                         // Before closing, the running task will set the close reason in case of failure.  When something
                         // unexpected happens and it's not set, the default value (Unknown) is kept.

@@ -20,12 +20,6 @@ namespace Azure.Messaging.EventHubs.Processor
         private TimeSpan? _maximumReceiveWaitTime = null;
 
         /// <summary>
-        ///   The position within a partition where the <see cref="EventProcessor" /> should begin reading events.
-        /// </summary>
-        ///
-        public EventPosition InitialEventPosition { get; set; } = EventPosition.Earliest;
-
-        /// <summary>
         ///   The maximum number of messages to receive in every receive attempt.
         /// </summary>
         ///
@@ -73,7 +67,6 @@ namespace Azure.Messaging.EventHubs.Processor
         internal EventProcessorOptions Clone() =>
             new EventProcessorOptions
             {
-                InitialEventPosition = InitialEventPosition,
                 MaximumMessageCount = MaximumMessageCount,
                 MaximumReceiveWaitTime = MaximumReceiveWaitTime
             };

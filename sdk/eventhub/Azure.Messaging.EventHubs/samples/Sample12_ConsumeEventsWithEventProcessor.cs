@@ -55,13 +55,11 @@ namespace Azure.Messaging.EventHubs.Samples
 
                 PartitionManager partitionManager = new InMemoryPartitionManager();
 
-                // It's also possible to specify custom options upon event processor creation.  We want to receive events from
-                // the latest available position so older events don't interfere with our sample.  We also don't want to wait
-                // more than 1 second for every set of events.
+                // It's also possible to specify custom options upon event processor creation.  We don't want to wait more than
+                // 1 second for every set of events.
 
                 EventProcessorOptions eventProcessorOptions = new EventProcessorOptions
                 {
-                    InitialEventPosition = EventPosition.Latest,
                     MaximumReceiveWaitTime = TimeSpan.FromSeconds(1)
                 };
 
@@ -74,14 +72,18 @@ namespace Azure.Messaging.EventHubs.Samples
 
                 // TODO: explain callbacks setup once the public API is finished for the next preview.
 
-                eventProcessor.InitializeProcessingForPartitionAsync = (PartitionContext partitionContext) =>
+                eventProcessor.InitializeProcessingForPartitionAsync = (InitializePartitionProcessingContext initializationContext) =>
                 {
                     // This is the last piece of code guaranteed to run before event processing, so all initialization
                     // must be done by the moment this method returns.
 
+                    // We want to receive events from the latest available position so older events don't interefere with our sample.
+
+                    initializationContext.DefaultStartingPosition = EventPosition.Latest;
+
                     Interlocked.Increment(ref partitionsBeingProcessedCount);
 
-                    Console.WriteLine($"\tPartition '{ partitionContext.PartitionId }': partition processing has started.");
+                    Console.WriteLine($"\tPartition '{ initializationContext.Context.PartitionId }': partition processing has started.");
 
                     // This method is asynchronous, which means it's expected to return a Task.
 

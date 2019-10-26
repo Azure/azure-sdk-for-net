@@ -54,8 +54,8 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             connectionString,
                             EventHubConsumer.DefaultConsumerGroupName,
-                            onInitialize: partitionContext =>
-                                initializeCalls.AddOrUpdate(partitionContext.PartitionId, 1, (partitionId, value) => value + 1)
+                            onInitialize: initializationContext =>
+                                initializeCalls.AddOrUpdate(initializationContext.Context.PartitionId, 1, (partitionId, value) => value + 1)
                         );
 
                     eventProcessorManager.AddEventProcessors(1);
@@ -336,7 +336,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             connectionString,
                             EventHubConsumer.DefaultConsumerGroupName,
-                            onInitialize: partitionContext =>
+                            onInitialize: initializationContext =>
                                 Interlocked.Increment(ref initializeCallsCount)
                         );
 
@@ -778,7 +778,8 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             connectionString,
                             EventHubConsumer.DefaultConsumerGroupName,
-                            options: new EventProcessorOptions { InitialEventPosition = EventPosition.FromEnqueuedTime(enqueuedTime) },
+                            onInitialize: initializationContext =>
+                                initializationContext.DefaultStartingPosition = EventPosition.FromEnqueuedTime(enqueuedTime),
                             onProcessEvents: (partitionContext, events) =>
                             {
                                 // Make it a list so we can safely enumerate it.
@@ -840,8 +841,8 @@ namespace Azure.Messaging.EventHubs.Tests
                             connectionString,
                             EventHubConsumer.DefaultConsumerGroupName,
                             options: new EventProcessorOptions { MaximumReceiveWaitTime = TimeSpan.FromSeconds(maximumWaitTimeInSecs) },
-                            onInitialize: partitionContext =>
-                                timestamps.TryAdd(partitionContext.PartitionId, new List<DateTimeOffset> { DateTimeOffset.UtcNow }),
+                            onInitialize: initializationContext =>
+                                timestamps.TryAdd(initializationContext.Context.PartitionId, new List<DateTimeOffset> { DateTimeOffset.UtcNow }),
                             onProcessEvents: (partitionContext, events) =>
                                 timestamps.AddOrUpdate
                                     (
@@ -1008,8 +1009,8 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             connectionString,
                             EventHubConsumer.DefaultConsumerGroupName,
-                            onInitialize: partitionContext =>
-                                ownedPartitionsCount.AddOrUpdate(partitionContext.OwnerIdentifier, 1, (ownerId, value) => value + 1),
+                            onInitialize: initializationContext =>
+                                ownedPartitionsCount.AddOrUpdate(initializationContext.Context.OwnerIdentifier, 1, (ownerId, value) => value + 1),
                             onClose: (partitionContext, reason) =>
                                 ownedPartitionsCount.AddOrUpdate(partitionContext.OwnerIdentifier, 0, (ownerId, value) => value - 1)
                         );
@@ -1072,8 +1073,8 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             connectionString,
                             EventHubConsumer.DefaultConsumerGroupName,
-                            onInitialize: partitionContext =>
-                                ownedPartitionsCount.AddOrUpdate(partitionContext.OwnerIdentifier, 1, (ownerId, value) => value + 1),
+                            onInitialize: initializationContext =>
+                                ownedPartitionsCount.AddOrUpdate(initializationContext.Context.OwnerIdentifier, 1, (ownerId, value) => value + 1),
                             onClose: (partitionContext, reason) =>
                                 ownedPartitionsCount.AddOrUpdate(partitionContext.OwnerIdentifier, 0, (ownerId, value) => value - 1)
                         );

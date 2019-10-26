@@ -33,7 +33,7 @@ namespace Azure.Messaging.EventHubs.Processor
         private readonly object StartProcessorGuard = new object();
 
         /// <summary>The handler to be called just before event processing starts for a given partition.</summary>
-        private Func<PartitionContext, Task> _initializeProcessingForPartitionAsync;
+        private Func<InitializePartitionProcessingContext, Task> _initializeProcessingForPartitionAsync;
 
         /// <summary>The handler to be called once event processing stops for a given partition.</summary>
         private Func<PartitionContext, CloseReason, Task> _processingForPartitionStoppedAsync;
@@ -144,7 +144,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   The handler to be called just before event processing starts for a given partition.
         /// </summary>
         ///
-        public Func<PartitionContext, Task> InitializeProcessingForPartitionAsync
+        public Func<InitializePartitionProcessingContext, Task> InitializeProcessingForPartitionAsync
         {
             internal get => _initializeProcessingForPartitionAsync;
             set => EnsureNotRunningAndInvoke(() => _initializeProcessingForPartitionAsync = value);
@@ -633,16 +633,14 @@ namespace Azure.Messaging.EventHubs.Processor
 
             try
             {
-                EventProcessorOptions options = Options.Clone();
-
-                // Ovewrite the initial event position in case a checkpoint exists.
+                EventPosition startingPosition = default;
 
                 if (initialSequenceNumber.HasValue)
                 {
-                    options.InitialEventPosition = EventPosition.FromSequenceNumber(initialSequenceNumber.Value);
+                    startingPosition = EventPosition.FromSequenceNumber(initialSequenceNumber.Value, false);
                 }
 
-                var partitionPump = new PartitionPump(this, InnerClient, ConsumerGroup, partitionContext, options);
+                var partitionPump = new PartitionPump(this, InnerClient, ConsumerGroup, partitionContext, startingPosition, Options);
 
                 await partitionPump.StartAsync().ConfigureAwait(false);
 

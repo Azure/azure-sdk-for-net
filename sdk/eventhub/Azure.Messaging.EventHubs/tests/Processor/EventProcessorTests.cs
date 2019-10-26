@@ -55,7 +55,6 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var options = new EventProcessorOptions
             {
-                InitialEventPosition = EventPosition.FromSequenceNumber(315),
                 MaximumMessageCount = 25,
                 MaximumReceiveWaitTime = TimeSpan.FromMilliseconds(427)
             };
@@ -142,7 +141,6 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(options, Is.Not.Null, $"The { constructorDescription } constructor should have set default options.");
             Assert.That(options, Is.Not.SameAs(defaultOptions), $"The { constructorDescription } constructor should not have the same options instance.");
-            Assert.That(options.InitialEventPosition.IsEquivalentTo(defaultOptions.InitialEventPosition), Is.True, $"The { constructorDescription } constructor should have the correct initial event position.");
             Assert.That(options.MaximumMessageCount, Is.EqualTo(defaultOptions.MaximumMessageCount), $"The { constructorDescription } constructor should have the correct maximum message count.");
             Assert.That(options.MaximumReceiveWaitTime, Is.EqualTo(defaultOptions.MaximumReceiveWaitTime), $"The { constructorDescription } constructor should have the correct maximum receive wait time.");
         }
@@ -162,7 +160,6 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(options, Is.Not.Null, $"The { constructorDescription } constructor should have set the options.");
             Assert.That(options, Is.Not.SameAs(constructorOptions), $"The { constructorDescription } constructor should have cloned the options.");
-            Assert.That(options.InitialEventPosition, Is.EqualTo(constructorOptions.InitialEventPosition), $"The constructor { constructorDescription } should have the correct initial event position.");
             Assert.That(options.MaximumMessageCount, Is.EqualTo(constructorOptions.MaximumMessageCount), $"The { constructorDescription } constructor should have the correct maximum message count.");
             Assert.That(options.MaximumReceiveWaitTime, Is.EqualTo(constructorOptions.MaximumReceiveWaitTime), $"The constructor { constructorDescription } should have the correct maximum receive wait time.");
         }
