@@ -19,7 +19,7 @@ The Azure SDK repository is organized in the following folder structure, with th
 Each package folder contains a package-specific `README.md` file. Most of these `README` files contain `Hello World` code samples illustrating basic usage of the the APIs contained in the package. For example, you can find `Hello World` samples for the `Azure.Storage.Blobs` package [here](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Blobs/README.md#examples).
 
 ## Package Samples and Hot-To Guides
-Each package folder contains a subfolder called `samples` with additional code samples. These samples can be either short programs contained in *.cs files, or more complete how-to guides (code samples and some commentary) contained *.md files. You can find a shortcuts to main how-to guides in the [**How-To Guides List**](#how-to-guide-list) section below.
+Each package folder contains a subfolder called `samples` with additional code samples. These samples can be either short programs contained in *.cs files, or more complete how-to guides (code samples and some commentary) contained in *.md files. You can find a shortcuts to main how-to guides in the [**How-To Guides List**](#how-to-guide-list) section below.
 
 ## Sample Applications
 Sometimes we want to illustrate how several APIs or even packages work together in a context of a more complete program. For these cases, we created sample applications that you can look at, download, compile, and execute. These application samples are located on 
