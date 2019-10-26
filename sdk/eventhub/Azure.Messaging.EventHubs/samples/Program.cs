@@ -59,7 +59,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
             Console.WriteLine();
 
-            var choice = ReadSelection(samples.Count);
+            int? choice = ReadSelection(samples.Count);
 
             if (choice == null)
             {
@@ -68,24 +68,6 @@ namespace Azure.Messaging.EventHubs.Samples
                 Console.WriteLine("Quitting...");
                 Console.WriteLine();
                 return;
-            }
-
-            // Prompt for the connection string, if it wasn't passed.
-
-            while (String.IsNullOrEmpty(parsedArgs.ConnectionString))
-            {
-                Console.Write("Please provide the connection string for the Event Hubs namespace that you'd like to use and then press Enter: ");
-                parsedArgs.ConnectionString = Console.ReadLine().Trim();
-                Console.WriteLine();
-            }
-
-            // Prompt for the Event Hub name, if it wasn't passed.
-
-            while (String.IsNullOrEmpty(parsedArgs.EventHub))
-            {
-                Console.Write("Please provide the name of the Event Hub that you'd like to use and then press Enter: ");
-                parsedArgs.EventHub = Console.ReadLine().Trim();
-                Console.WriteLine();
             }
 
             // Run the chosen sample
@@ -98,9 +80,245 @@ namespace Azure.Messaging.EventHubs.Samples
             Console.WriteLine("-------------------------------------------------------------------------");
             Console.WriteLine();
 
-            await samples[choice.Value].RunAsync(parsedArgs.ConnectionString, parsedArgs.EventHub);
+            await FindAndRunSample(parsedArgs, choice);
+        }
 
-            return;
+        private static async Task FindAndRunSample(CommandLineArguments parsedArgs, int? choice)
+        {
+            if (IsSample01(choice))
+            {
+                await RunSample01(parsedArgs);
+            }
+            else if (IsSample02(choice))
+            {
+                await RunSample02(parsedArgs);
+            }
+            else if (IsSample03(choice))
+            {
+                await RunSample03(parsedArgs);
+            }
+            else if (IsSample04(choice))
+            {
+                await RunSample04(parsedArgs);
+            }
+            else if (IsSample05(choice))
+            {
+                await RunSample05(parsedArgs);
+            }
+            else if (IsSample06(choice))
+            {
+                await RunSample06(parsedArgs);
+            }
+            else if (IsSample07(choice))
+            {
+                await RunSample07(parsedArgs);
+            }
+            else if (IsSample08(choice))
+            {
+                await RunSample08(parsedArgs);
+            }
+            else if (IsSample09(choice))
+            {
+                await RunSample09(parsedArgs);
+            }
+            else if (IsSample10(choice))
+            {
+                await RunSample10(parsedArgs);
+            }
+            else if (IsSample11(choice))
+            {
+                await RunSample11(parsedArgs);
+            }
+            else if (IsSample12(choice))
+            {
+                await RunSample12(parsedArgs);
+            }
+        }
+
+        private static bool IsSample01(int? choice)
+        {
+            return choice == (int)SampleNames.Sample01_HelloWorld;
+        }
+
+        private static async Task RunSample01(CommandLineArguments parsedArgs)
+        {
+            string connectionString = PromptConnectionString(parsedArgs);
+            string eventHubName = PromptEventHubName(parsedArgs);
+
+            await new Sample01_HelloWorld().RunAsync(connectionString, eventHubName);
+        }
+
+        private static bool IsSample02(int? choice)
+        {
+            return choice == (int)SampleNames.Sample02_ClientWithCustomOptions;
+        }
+
+        private static async Task RunSample02(CommandLineArguments parsedArgs)
+        {
+            string connectionString = PromptConnectionString(parsedArgs);
+            string eventHubName = PromptEventHubName(parsedArgs);
+
+            await new Sample02_ClientWithCustomOptions().RunAsync(connectionString, eventHubName);
+        }
+
+        private static bool IsSample03(int? choice)
+        {
+            return choice == (int)SampleNames.Sample03_PublishAnEvent;
+        }
+
+        private static async Task RunSample03(CommandLineArguments parsedArgs)
+        {
+            string connectionString = PromptConnectionString(parsedArgs);
+            string eventHubName = PromptEventHubName(parsedArgs);
+
+            await new Sample03_PublishAnEvent().RunAsync(connectionString, eventHubName);
+        }
+
+        private static bool IsSample04(int? choice)
+        {
+            return choice == (int)SampleNames.Sample04_PublishEventsWithPartitionKey;
+        }
+
+        private static async Task RunSample04(CommandLineArguments parsedArgs)
+        {
+            string connectionString = PromptConnectionString(parsedArgs);
+            string eventHubName = PromptEventHubName(parsedArgs);
+
+            await new Sample04_PublishEventsWithPartitionKey().RunAsync(connectionString, eventHubName);
+        }
+
+        private static bool IsSample05(int? choice)
+        {
+            return choice == (int)SampleNames.Sample05_PublishAnEventBatch;
+        }
+
+        private static async Task RunSample05(CommandLineArguments parsedArgs)
+        {
+            string connectionString = PromptConnectionString(parsedArgs);
+            string eventHubName = PromptEventHubName(parsedArgs);
+
+            await new Sample05_PublishAnEventBatch().RunAsync(connectionString, eventHubName);
+        }
+
+        private static bool IsSample06(int? choice)
+        {
+            return choice == (int)SampleNames.Sample06_PublishEventsToSpecificPartitions;
+        }
+
+        private static async Task RunSample06(CommandLineArguments parsedArgs)
+        {
+            string connectionString = PromptConnectionString(parsedArgs);
+            string eventHubName = PromptEventHubName(parsedArgs);
+
+            await new Sample06_PublishEventsToSpecificPartitions().RunAsync(connectionString, eventHubName);
+        }
+
+        private static bool IsSample07(int? choice)
+        {
+            return choice == (int)SampleNames.Sample07_PublishEventsWithCustomMetadata;
+        }
+
+        private static async Task RunSample07(CommandLineArguments parsedArgs)
+        {
+            string connectionString = PromptConnectionString(parsedArgs);
+            string eventHubName = PromptEventHubName(parsedArgs);
+
+            await new Sample07_PublishEventsWithCustomMetadata().RunAsync(connectionString, eventHubName);
+        }
+
+        private static bool IsSample08(int? choice)
+        {
+            return choice == (int)SampleNames.Sample08_ConsumeEvents;
+        }
+
+        private static async Task RunSample08(CommandLineArguments parsedArgs)
+        {
+            string connectionString = PromptConnectionString(parsedArgs);
+            string eventHubName = PromptEventHubName(parsedArgs);
+
+            await new Sample08_ConsumeEvents().RunAsync(connectionString, eventHubName);
+        }
+
+        private static bool IsSample09(int? choice)
+        {
+            return choice == (int)SampleNames.Sample09_ConsumeEventsWithMaximumWaitTime;
+        }
+
+        private static async Task RunSample09(CommandLineArguments parsedArgs)
+        {
+            string connectionString = PromptConnectionString(parsedArgs);
+            string eventHubName = PromptEventHubName(parsedArgs);
+
+            await new Sample09_ConsumeEventsWithMaximumWaitTime().RunAsync(connectionString, eventHubName);
+        }
+
+        private static bool IsSample10(int? choice)
+        {
+            return choice == (int)SampleNames.Sample10_ConsumeEventsFromAKnownPosition;
+        }
+
+        private static async Task RunSample10(CommandLineArguments parsedArgs)
+        {
+            string connectionString = PromptConnectionString(parsedArgs);
+            string eventHubName = PromptEventHubName(parsedArgs);
+
+            await new Sample10_ConsumeEventsFromAKnownPosition().RunAsync(connectionString, eventHubName);
+        }
+
+        private static bool IsSample11(int? choice)
+        {
+            return choice == (int)SampleNames.Sample11_ConsumeEventsByBatch;
+        }
+
+        private static async Task RunSample11(CommandLineArguments parsedArgs)
+        {
+            string connectionString = PromptConnectionString(parsedArgs);
+            string eventHubName = PromptEventHubName(parsedArgs);
+
+            await new Sample11_ConsumeEventsByBatch().RunAsync(connectionString, eventHubName);
+        }
+
+        private static bool IsSample12(int? choice)
+        {
+            return choice == (int)SampleNames.Sample12_ConsumeEventsWithEventProcessor;
+        }
+
+        private static async Task RunSample12(CommandLineArguments parsedArgs)
+        {
+            string connectionString = PromptConnectionString(parsedArgs);
+            string eventHubName = PromptEventHubName(parsedArgs);
+
+            await new Sample12_ConsumeEventsWithEventProcessor().RunAsync(connectionString, eventHubName);
+        }
+
+        private static string PromptEventHubName(CommandLineArguments parsedArgs)
+        {
+            // Prompt for the Event Hub name, if it wasn't passed.
+            string eventHubName = parsedArgs.EventHub;
+
+            while (String.IsNullOrEmpty(eventHubName))
+            {
+                Console.Write("Please provide the name of the Event Hub that you'd like to use and then press Enter: ");
+                eventHubName = Console.ReadLine().Trim();
+                Console.WriteLine();
+            }
+
+            return eventHubName;
+        }
+
+        private static string PromptConnectionString(CommandLineArguments parsedArgs)
+        {
+            // Prompt for the connection string, if it wasn't passed.
+            string connectionString = parsedArgs.ConnectionString;
+
+            while (String.IsNullOrEmpty(connectionString))
+            {
+                Console.Write("Please provide the connection string for the Event Hubs namespace that you'd like to use and then press Enter: ");
+                connectionString = Console.ReadLine().Trim();
+                Console.WriteLine();
+            }
+
+            return connectionString;
         }
 
         /// <summary>

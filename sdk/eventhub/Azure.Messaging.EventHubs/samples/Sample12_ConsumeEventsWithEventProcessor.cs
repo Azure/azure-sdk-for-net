@@ -22,7 +22,7 @@ namespace Azure.Messaging.EventHubs.Samples
         ///   The name of the sample.
         /// </summary>
         ///
-        public string Name { get; } = nameof(Sample12_ConsumeEventsWithEventProcessor);
+        public string Name { get; } = nameof(SampleNames.Sample12_ConsumeEventsWithEventProcessor);
 
         /// <summary>
         ///   A short description of the sample.

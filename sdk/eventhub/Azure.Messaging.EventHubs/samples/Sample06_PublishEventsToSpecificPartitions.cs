@@ -18,7 +18,7 @@ namespace Azure.Messaging.EventHubs.Samples
         ///   The name of the sample.
         /// </summary>
         ///
-        public string Name { get; } = nameof(Sample06_PublishEventsToSpecificPartitions);
+        public string Name { get; } = nameof(SampleNames.Sample06_PublishEventsToSpecificPartitions);
 
         /// <summary>
         ///   A short description of the sample.

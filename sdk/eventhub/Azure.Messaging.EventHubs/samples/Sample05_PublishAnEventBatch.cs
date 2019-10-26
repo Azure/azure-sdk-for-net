@@ -19,7 +19,7 @@ namespace Azure.Messaging.EventHubs.Samples
         ///   The name of the sample.
         /// </summary>
         ///
-        public string Name { get; } = nameof(Sample05_PublishAnEventBatch);
+        public string Name { get; } = nameof(SampleNames.Sample05_PublishAnEventBatch);
 
         /// <summary>
         ///   A short description of the sample.
