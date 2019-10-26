@@ -1663,17 +1663,26 @@ namespace Azure.Storage.Blobs
 
                 try
                 {
-                    return await BlobRestClient.Container.ListBlobsFlatSegmentAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        marker: marker,
-                        prefix: prefix,
-                        maxresults: pageSizeHint,
-                        include: BlobExtensions.AsIncludeItems(traits, states),
-                        async: async,
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    Response<BlobsFlatSegment> response = await BlobRestClient.Container.ListBlobsFlatSegmentAsync(
+                          ClientDiagnostics,
+                          Pipeline,
+                          Uri,
+                          marker: marker,
+                          prefix: prefix,
+                          maxresults: pageSizeHint,
+                          include: BlobExtensions.AsIncludeItems(traits, states),
+                          async: async,
+                          cancellationToken: cancellationToken)
+                          .ConfigureAwait(false);
+                    if ((traits & BlobTraits.Metadata) != BlobTraits.Metadata)
+                    {
+                        IEnumerable<BlobItem> blobItems = response.Value.BlobItems;
+                        foreach (BlobItem blobItem in blobItems)
+                        {
+                            blobItem.Metadata = null;
+                        }
+                    }
+                    return response;
                 }
                 catch (Exception ex)
                 {
