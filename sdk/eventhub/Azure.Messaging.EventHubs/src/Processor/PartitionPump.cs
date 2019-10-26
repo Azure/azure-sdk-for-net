@@ -13,7 +13,7 @@ namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
     ///   Constantly receives <see cref="EventData" /> from a single partition in the context of a given consumer
-    ///   group.  The received data is sent to a partition processor to be processed.
+    ///   group.  The received data is sent to its owner <see cref="EventProcessor" /> to be processed.
     /// </summary>
     ///
     internal class PartitionPump
@@ -80,8 +80,8 @@ namespace Azure.Messaging.EventHubs.Processor
         private Task RunningTask { get; set; }
 
         /// <summary>
-        ///   The reason why the associated partition processor is being closed.  This member is only used in case of failure.
-        ///   Shutdown and OwnershipLost close reasons will be specified by the event processor.
+        ///   The reason why the processing for the associated partition is being stopped.  This member is only used
+        ///   in case of failure.  Shutdown and OwnershipLost close reasons will be specified by the event processor.
         /// </summary>
         ///
         private CloseReason CloseReason { get; set; }
@@ -132,7 +132,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                         InnerConsumer = InnerClient.CreateConsumer(ConsumerGroup, Context.PartitionId, Options.InitialEventPosition);
 
-                        // In case an exception is encountered while partition processor is initializing, don't catch it
+                        // In case an exception is encountered while the processing is initializing, don't catch it
                         // and let the event processor handle it.  The inner consumer hasn't connected to the service yet,
                         // so there's no need to close it.
 
@@ -158,7 +158,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Stops the partition pump.  In case it isn't running, nothing happens.
         /// </summary>
         ///
-        /// <param name="reason">The reason why the associated partition processor is being closed.  In case it's <c>null</c>, the internal close reason set by this pump is used.</param>
+        /// <param name="reason">The reason why the processing for the associated partition is being stopped.  In case it's <c>null</c>, the internal close reason set by this pump is used.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
@@ -177,7 +177,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                         try
                         {
-                            // RunningTask is only expected to fail when the partition processor throws while processing
+                            // RunningTask is only expected to fail when the event processor throws while processing
                             // an error, but unforeseen scenarios might happen.
 
                             await RunningTask.ConfigureAwait(false);
@@ -195,13 +195,13 @@ namespace Azure.Messaging.EventHubs.Processor
 
                         await InnerConsumer.CloseAsync().ConfigureAwait(false);
 
-                        // In case an exception is encountered while partition processor is closing, don't catch it and
-                        // let the event processor handle it.  The pump has no way to guess when a partition was lost or
-                        // when a shutdown request was sent to the event processor, so it expects a "reason" parameter to
-                        // provide this information.  However, in case of pump failure, the external event processor does
-                        // not have enough information to figure out what failure reason to use, as this information is
-                        // only known by the pump.  In this case, we expect the processor-provided reason to be null, and
-                        // the private CloseReason is used instead.
+                        // In case an exception is encountered while the processing is stopping, don't catch it and let
+                        // the event processor handle it.  The pump has no way to guess when a partition was lost or when
+                        // a shutdown request was sent to the event processor, so it expects a "reason" parameter to provide
+                        // this information.  However, in case of pump failure, the external event processor does not have
+                        // enough information to figure out what failure reason to use, as this information is only known
+                        // by the pump.  In this case, we expect the processor-provided reason to be null, and the private
+                        // CloseReason is used instead.
 
                         if (OwnerEventProcessor.ProcessingForPartitionStoppedAsync != null)
                         {
@@ -218,7 +218,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
         /// <summary>
         ///   The main loop of a partition pump.  It receives events from the Azure Event Hubs service
-        ///   and delegates their processing to the inner partition processor.
+        ///   and delegates their processing to the event processor processing handlers.
         /// </summary>
         ///
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
@@ -284,8 +284,8 @@ namespace Azure.Messaging.EventHubs.Processor
 
             if (unrecoverableException != null)
             {
-                // In case an exception is encountered while partition processor is processing the error, don't
-                // catch it and let the calling method (StopAsync) handle it.
+                // In case an exception is encountered while the exception is being processed, don't catch it
+                // and let the calling method (StopAsync) handle it.
 
                 await OwnerEventProcessor.ProcessExceptionAsync(Context, unrecoverableException).ConfigureAwait(false);
             }

@@ -10,9 +10,9 @@ using Azure.Messaging.EventHubs.Diagnostics;
 namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
-    ///   Contains information about a partition that a partition processor will be processing
-    ///   events from.  It's also responsible for the creation of checkpoints.  The interaction
-    ///   with the chosen storage service is done via <see cref="PartitionManager" />.
+    ///   Contains information about a partition that an <see cref="EventProcessor" /> will be
+    ///   processing events from.  It's also responsible for the creation of checkpoints.  The
+    ///   interaction with the chosen storage service is done via <see cref="PartitionManager" />.
     /// </summary>
     ///
     public class PartitionContext

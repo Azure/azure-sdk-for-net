@@ -20,7 +20,7 @@ namespace Azure.Messaging.EventHubs.Processor
         private TimeSpan? _maximumReceiveWaitTime = null;
 
         /// <summary>
-        ///   The position within a partition where the partition processor should begin reading events.
+        ///   The position within a partition where the <see cref="EventProcessor" /> should begin reading events.
         /// </summary>
         ///
         public EventPosition InitialEventPosition { get; set; } = EventPosition.Earliest;

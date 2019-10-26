@@ -132,7 +132,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     await eventProcessorManager.WaitStabilization();
 
-                    // CloseAsync should have not been called when constructing the event processor or initializing the partition processors.
+                    // CloseAsync should have not been called when constructing the event processor or during processing initialization.
 
                     Assert.That(closeCalls.Keys, Is.Empty);
 
@@ -242,7 +242,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     await eventProcessorManager.StopAllAsync();
 
-                    // Validate results.  Make sure we received every event in the correct partition processor,
+                    // Validate results.  Make sure we received every event with the correct partition context,
                     // in the order they were sent.
 
                     foreach (var partitionId in partitionIds)

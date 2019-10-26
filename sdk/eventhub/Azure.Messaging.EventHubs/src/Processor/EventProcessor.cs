@@ -661,7 +661,7 @@ namespace Azure.Messaging.EventHubs.Processor
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the Event Hub partition the partition pump is associated with.</param>
-        /// <param name="reason">The reason why the partition processor is being closed.</param>
+        /// <param name="reason">The reason why the processing for the specified partition is being stopped.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
