@@ -6,6 +6,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Metadata;
 using Azure.Messaging.EventHubs.Samples.Infrastructure;
+using Azure.Messaging.EventHubs.Samples.Infrastructure.Interfaces;
 
 namespace Azure.Messaging.EventHubs.Samples
 {
@@ -13,7 +14,7 @@ namespace Azure.Messaging.EventHubs.Samples
     ///   An introduction to Event Hubs, exploring additional options for creating an <see cref="EventHubClient" />.
     /// </summary>
     ///
-    public class Sample02_ClientWithCustomOptions : IEventHubsSample
+    public class Sample02_ClientWithCustomOptions : IEventHubsSample, ICobalt
     {
         /// <summary>
         ///   The name of the sample.

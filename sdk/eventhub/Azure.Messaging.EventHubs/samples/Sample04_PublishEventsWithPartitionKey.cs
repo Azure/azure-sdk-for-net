@@ -5,6 +5,7 @@ using System;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Samples.Infrastructure;
+using Azure.Messaging.EventHubs.Samples.Infrastructure.Interfaces;
 
 namespace Azure.Messaging.EventHubs.Samples
 {
@@ -12,7 +13,7 @@ namespace Azure.Messaging.EventHubs.Samples
     ///   An introduction to publishing events, using a partition key to group them together.
     /// </summary>
     ///
-    public class Sample04_PublishEventsWithPartitionKey : IEventHubsSample
+    public class Sample04_PublishEventsWithPartitionKey : IEventHubsSample, ICobalt
     {
         /// <summary>
         ///   The name of the sample.

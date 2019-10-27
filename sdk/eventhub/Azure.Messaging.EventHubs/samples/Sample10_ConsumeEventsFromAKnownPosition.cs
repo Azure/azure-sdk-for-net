@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Samples.Infrastructure;
+using Azure.Messaging.EventHubs.Samples.Infrastructure.Interfaces;
 
 namespace Azure.Messaging.EventHubs.Samples
 {
@@ -15,7 +16,7 @@ namespace Azure.Messaging.EventHubs.Samples
     ///   An example of consuming events, starting at a well-known position in the Event Hub partition.
     /// </summary>
     ///
-    public class Sample10_ConsumeEventsFromAKnownPosition : IEventHubsSample
+    public class Sample10_ConsumeEventsFromAKnownPosition : IEventHubsSample, ICobalt
     {
         /// <summary>
         ///   The name of the sample.

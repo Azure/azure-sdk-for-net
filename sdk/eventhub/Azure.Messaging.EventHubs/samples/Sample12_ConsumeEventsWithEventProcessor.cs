@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Processor;
 using Azure.Messaging.EventHubs.Samples.Infrastructure;
+using Azure.Messaging.EventHubs.Samples.Infrastructure.Interfaces;
 
 namespace Azure.Messaging.EventHubs.Samples
 {
@@ -16,7 +17,7 @@ namespace Azure.Messaging.EventHubs.Samples
     ///   An example of consuming events from all Event Hub partitions at once, using the Event Processor.
     /// </summary>
     ///
-    public class Sample12_ConsumeEventsWithEventProcessor : IEventHubsSample
+    public class Sample12_ConsumeEventsWithEventProcessor : IEventHubsSample, ICobalt
     {
         /// <summary>
         ///   The name of the sample.

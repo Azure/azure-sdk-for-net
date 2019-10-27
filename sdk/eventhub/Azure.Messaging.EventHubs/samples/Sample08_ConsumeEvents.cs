@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Samples.Infrastructure;
+using Azure.Messaging.EventHubs.Samples.Infrastructure.Interfaces;
 
 namespace Azure.Messaging.EventHubs.Samples
 {
@@ -15,7 +16,7 @@ namespace Azure.Messaging.EventHubs.Samples
     ///   An introduction to consuming events, using a simple <see cref="EventHubConsumer" />.
     /// </summary>
     ///
-    public class Sample08_ConsumeEvents : IEventHubsSample
+    public class Sample08_ConsumeEvents : IEventHubsSample, ICobalt
     {
         /// <summary>
         ///   The name of the sample.

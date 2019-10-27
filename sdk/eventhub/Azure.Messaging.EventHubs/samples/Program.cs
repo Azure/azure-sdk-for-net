@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Samples.Infrastructure;
+using Azure.Messaging.EventHubs.Samples.Infrastructure.Interfaces;
 
 namespace Azure.Messaging.EventHubs.Samples
 {
@@ -70,24 +71,6 @@ namespace Azure.Messaging.EventHubs.Samples
                 return;
             }
 
-            // Prompt for the connection string, if it wasn't passed.
-
-            while (String.IsNullOrEmpty(parsedArgs.ConnectionString))
-            {
-                Console.Write("Please provide the connection string for the Event Hubs namespace that you'd like to use and then press Enter: ");
-                parsedArgs.ConnectionString = Console.ReadLine().Trim();
-                Console.WriteLine();
-            }
-
-            // Prompt for the Event Hub name, if it wasn't passed.
-
-            while (String.IsNullOrEmpty(parsedArgs.EventHub))
-            {
-                Console.Write("Please provide the name of the Event Hub that you'd like to use and then press Enter: ");
-                parsedArgs.EventHub = Console.ReadLine().Trim();
-                Console.WriteLine();
-            }
-
             // Run the chosen sample
 
             Console.WriteLine();
@@ -98,9 +81,45 @@ namespace Azure.Messaging.EventHubs.Samples
             Console.WriteLine("-------------------------------------------------------------------------");
             Console.WriteLine();
 
-            await samples[choice.Value].RunAsync(parsedArgs.ConnectionString, parsedArgs.EventHub);
+            var sample = samples[choice.Value];
+
+            if (sample is ICobalt)
+            {
+                QueryConnectionString(parsedArgs);
+                QueryEventHubName(parsedArgs);
+
+                await (sample as ICobalt).RunAsync(parsedArgs.ConnectionString, parsedArgs.EventHub);
+            }
+            else if (sample is IIndigo)
+            {
+                // TODO query parameters and invoke
+            }
 
             return;
+        }
+
+        private static void QueryEventHubName(CommandLineArguments parsedArgs)
+        {
+            // Prompt for the Event Hub name, if it wasn't passed.
+
+            while (String.IsNullOrEmpty(parsedArgs.EventHub))
+            {
+                Console.Write("Please provide the name of the Event Hub that you'd like to use and then press Enter: ");
+                parsedArgs.EventHub = Console.ReadLine().Trim();
+                Console.WriteLine();
+            }
+        }
+
+        private static void QueryConnectionString(CommandLineArguments parsedArgs)
+        {
+            // Prompt for the connection string, if it wasn't passed.
+
+            while (String.IsNullOrEmpty(parsedArgs.ConnectionString))
+            {
+                Console.Write("Please provide the connection string for the Event Hubs namespace that you'd like to use and then press Enter: ");
+                parsedArgs.ConnectionString = Console.ReadLine().Trim();
+                Console.WriteLine();
+            }
         }
 
         /// <summary>

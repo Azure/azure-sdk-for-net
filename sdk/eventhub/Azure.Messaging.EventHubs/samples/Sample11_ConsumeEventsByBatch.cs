@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Samples.Infrastructure;
+using Azure.Messaging.EventHubs.Samples.Infrastructure.Interfaces;
 
 namespace Azure.Messaging.EventHubs.Samples
 {
@@ -14,7 +15,7 @@ namespace Azure.Messaging.EventHubs.Samples
     ///   An example of consuming events, using a batch approach to control throughput.
     /// </summary>
     ///
-    public class Sample11_ConsumeEventsByBatch : IEventHubsSample
+    public class Sample11_ConsumeEventsByBatch : IEventHubsSample, ICobalt
     {
         /// <summary>
         ///   The name of the sample.

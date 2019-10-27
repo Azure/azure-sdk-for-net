@@ -5,6 +5,7 @@ using System;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Samples.Infrastructure;
+using Azure.Messaging.EventHubs.Samples.Infrastructure.Interfaces;
 
 namespace Azure.Messaging.EventHubs.Samples
 {
@@ -12,7 +13,7 @@ namespace Azure.Messaging.EventHubs.Samples
     ///   An example of publishing events, extending the event data with custom metadata.
     /// </summary>
     ///
-    public class Sample07_PublishEventsWithCustomMetadata : IEventHubsSample
+    public class Sample07_PublishEventsWithCustomMetadata : IEventHubsSample, ICobalt
     {
         /// <summary>
         ///   The name of the sample.

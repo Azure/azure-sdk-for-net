@@ -5,6 +5,7 @@ using System;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Samples.Infrastructure;
+using Azure.Messaging.EventHubs.Samples.Infrastructure.Interfaces;
 
 namespace Azure.Messaging.EventHubs.Samples
 {
@@ -13,7 +14,7 @@ namespace Azure.Messaging.EventHubs.Samples
     ///   does not exceed the transport size limits.
     /// </summary>
     ///
-    public class Sample05_PublishAnEventBatch : IEventHubsSample
+    public class Sample05_PublishAnEventBatch : IEventHubsSample, ICobalt
     {
         /// <summary>
         ///   The name of the sample.

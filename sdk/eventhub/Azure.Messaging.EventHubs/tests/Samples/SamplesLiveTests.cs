@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Samples.Infrastructure;
+using Azure.Messaging.EventHubs.Samples.Infrastructure.Interfaces;
 using Azure.Messaging.EventHubs.Tests.Infrastructure;
 using NUnit.Framework;
 
@@ -49,7 +50,11 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestEnvironment.EventHubsConnectionString;
-                Assert.That(async () => await sample.RunAsync(connectionString, scope.EventHubName), Throws.Nothing);
+
+                if (sample is ICobalt)
+                {
+                    Assert.That(async () => await (sample as ICobalt).RunAsync(connectionString, scope.EventHubName), Throws.Nothing);
+                }
             }
         }
     }
