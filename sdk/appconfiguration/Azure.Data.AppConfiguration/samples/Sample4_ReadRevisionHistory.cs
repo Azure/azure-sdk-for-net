@@ -15,16 +15,15 @@ namespace Azure.Data.AppConfiguration.Samples
         [Test]
         /*
          * This sample demonstrates how to read the revision history of one or
-         * more Configuration Settings in a Configuration Store.
-         *
-         * To do this, we create a setting, change it twice to create revisions,
-         * then read the revision history for that setting.
+         * more Configuration Settings in a Configuration Store. To do this, we
+         * create a setting, change it twice to create revisions, then read the
+         * revision history for that setting.
          */
         public async Task ReadRevisionHistory()
         {
             // Retrieve the connection string from the environment.
             // The connection string is available from the App Configuration Access Keys view in the Azure Portal.
-            var connectionString = "Endpoint=https://annelo-azconfig-01.azconfig.io;Id=2d0t-l1-s0:xh9w4NdZSWB7Em0FKSoV;Secret=JrlwvXVcBjzGRsmZlyziaLRdqHoOejicKGNdNPwg7cE=";//Environment.GetEnvironmentVariable("APPCONFIGURATION_CONNECTION_STRING");
+            var connectionString = Environment.GetEnvironmentVariable("APPCONFIGURATION_CONNECTION_STRING");
 
             // Instantiate a client that will be used to call the service.
             var client = new ConfigurationClient(connectionString);
@@ -41,7 +40,7 @@ namespace Azure.Data.AppConfiguration.Samples
             settingV2.Value = "v3";
             ConfigurationSetting settingV3 = await client.SetConfigurationSettingAsync(settingV2);
 
-            // Retrieve revisions for just the endpoint setting.
+            // Retrieve revisions for the setting.
             var selector = new SettingSelector(setting.Key);
 
             Debug.WriteLine("Revisions of the setting: ");
@@ -50,7 +49,7 @@ namespace Azure.Data.AppConfiguration.Samples
                 Debug.WriteLine($"Setting was {settingVersion} at {settingVersion.LastModified}.");
             }
 
-            // Once we don't need the Configuration Settings, we can delete them.
+            // Delete the Configuration Settings from the Configuration Store.
             await client.DeleteConfigurationSettingAsync(setting.Key, setting.Label);
         }
     }
