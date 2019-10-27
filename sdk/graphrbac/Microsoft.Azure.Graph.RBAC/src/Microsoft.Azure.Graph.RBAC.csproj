@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk"> 
   <PropertyGroup>
-    <VersionPrefix>3.8.0-preview</VersionPrefix>
+    <VersionPrefix>3.8.0-preview.2</VersionPrefix>
     <Description>Provides Microsoft Azure Graph RBAC access.</Description>
     <AssemblyTitle>Microsoft Azure Graph RBAC Library</AssemblyTitle>
     <PackageTags>Microsoft AutoRest Management REST;netcore451511</PackageTags>
