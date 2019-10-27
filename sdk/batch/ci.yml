@@ -10,7 +10,6 @@ resources:
     - repository: azure-sdk-build-tools
       type: git
       name: internal/azure-sdk-build-tools
-      ref: refs/heads/net-unified-pipelines
 
 trigger:
   branches:
