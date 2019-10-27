@@ -2,7 +2,7 @@
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure Cognitive Services Personalizer Library</AssemblyTitle>
     <Description>Provides API functions for consuming Microsoft Azure Cognitive Services Personalizer APIs.</Description>
-    <VersionPrefix>0.8.0</VersionPrefix>
+    <Version>1.0.0-preview.1</Version>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;Personalizer API;REST HTTP client</PackageTags>
     <PackageReleaseNotes>
     <![CDATA[
