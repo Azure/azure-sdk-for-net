@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Samples.Infrastructure;
-using Azure.Messaging.EventHubs.Samples.Infrastructure.Interfaces;
+using Azure.Messaging.EventHubs.Samples.Infrastructure.Means;
 using Azure.Messaging.EventHubs.Tests.Infrastructure;
 using NUnit.Framework;
 

@@ -3,7 +3,7 @@
 
 using System.Threading.Tasks;
 
-namespace Azure.Messaging.EventHubs.Samples.Infrastructure.Interfaces
+namespace Azure.Messaging.EventHubs.Samples.Infrastructure.Means
 {
     /// <summary>
     ///   Provides a well-known means of executing an EventHubs sample.
