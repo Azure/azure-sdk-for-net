@@ -8,6 +8,7 @@
 
     <!-- Disable warning for missing xml doc comments until we can add all the missing ones -->
     <NoWarn>$(NoWarn);1573;1591</NoWarn>
+    <Version>10.1.0</Version>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Spatial" />

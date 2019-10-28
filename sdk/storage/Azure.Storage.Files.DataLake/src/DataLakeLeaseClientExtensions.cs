@@ -22,7 +22,7 @@ namespace Azure.Storage.Files.DataLake
         /// An optional lease ID.  If no lease ID is provided, a random lease
         /// ID will be created.
         /// </param>
-        public static DataLakeLeaseClient GetLeaseClient(
+        public static DataLakeLeaseClient GetDataLakeLeaseClient(
             this PathClient client,
             string leaseId = null) =>
             new DataLakeLeaseClient(client, leaseId);
@@ -37,7 +37,7 @@ namespace Azure.Storage.Files.DataLake
         /// An optional lease ID.  If no lease ID is provided, a random lease
         /// ID will be created.
         /// </param>
-        public static DataLakeLeaseClient GetLeaseClient(
+        public static DataLakeLeaseClient GetDataLakeLeaseClient(
             this FileSystemClient client,
             string leaseId = null) =>
             new DataLakeLeaseClient(client, leaseId);

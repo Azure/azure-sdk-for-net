@@ -700,13 +700,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="destinationPath">
         /// The destination path to rename the path to.
         /// </param>
-        /// <param name="destConditions">
-        /// Optional <see cref="DataLakeRequestConditions"/> to add
-        /// conditions on the creation of this file or directory.
-        /// </param>
         /// <param name="sourceConditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
         /// conditions on the source on the creation of this file or directory.
+        /// </param>
+        /// <param name="destinationConditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add
+        /// conditions on the creation of this file or directory.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -723,13 +723,13 @@ namespace Azure.Storage.Files.DataLake
         [ForwardsClientCalls]
         public virtual Response<PathClient> Rename(
             string destinationPath,
-            DataLakeRequestConditions destConditions = default,
             DataLakeRequestConditions sourceConditions = default,
+            DataLakeRequestConditions destinationConditions = default,
             CancellationToken cancellationToken = default) =>
             RenameInternal(
                 destinationPath,
-                destConditions,
                 sourceConditions,
+                destinationConditions,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -742,13 +742,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="destinationPath">
         /// The destination path to rename the path to.
         /// </param>
-        /// <param name="destConditions">
-        /// Optional <see cref="DataLakeRequestConditions"/> to add
-        /// conditions on the creation of this file or directory.
-        /// </param>
         /// <param name="sourceConditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
         /// conditions on the source on the creation of this file or directory.
+        /// </param>
+        /// <param name="destinationConditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add
+        /// conditions on the creation of this file or directory.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -765,13 +765,13 @@ namespace Azure.Storage.Files.DataLake
         [ForwardsClientCalls]
         public virtual async Task<Response<PathClient>> RenameAsync(
             string destinationPath,
-            DataLakeRequestConditions destConditions = default,
             DataLakeRequestConditions sourceConditions = default,
+            DataLakeRequestConditions destinationConditions = default,
             CancellationToken cancellationToken = default) =>
             await RenameInternal(
                 destinationPath,
-                destConditions,
                 sourceConditions,
+                destinationConditions,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -784,13 +784,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="destinationPath">
         /// The destination path to rename the path to.
         /// </param>
-        /// <param name="destConditions">
-        /// Optional <see cref="DataLakeRequestConditions"/> to add
-        /// conditions on the creation of this file or directory.
-        /// </param>
         /// <param name="sourceConditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
         /// conditions on the source on the creation of this file or directory.
+        /// </param>
+        /// <param name="destinationConditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add
+        /// conditions on the creation of this file or directory.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -809,8 +809,8 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         private async Task<Response<PathClient>> RenameInternal(
             string destinationPath,
-            DataLakeRequestConditions destConditions,
             DataLakeRequestConditions sourceConditions,
+            DataLakeRequestConditions destinationConditions,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -821,7 +821,7 @@ namespace Azure.Storage.Files.DataLake
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(destinationPath)}: {destinationPath}\n" +
-                    $"{nameof(destConditions)}: {destConditions}\n" +
+                    $"{nameof(destinationConditions)}: {destinationConditions}\n" +
                     $"{nameof(sourceConditions)}: {sourceConditions}");
                 try
                 {
@@ -837,12 +837,12 @@ namespace Azure.Storage.Files.DataLake
                         resourceUri: destPathClient.DfsUri,
                         mode: PathRenameMode.Legacy,
                         renameSource: renameSource,
-                        leaseId: destConditions?.LeaseId,
+                        leaseId: destinationConditions?.LeaseId,
                         sourceLeaseId: sourceConditions?.LeaseId,
-                        ifMatch: destConditions?.IfMatch,
-                        ifNoneMatch: destConditions?.IfNoneMatch,
-                        ifModifiedSince: destConditions?.IfModifiedSince,
-                        ifUnmodifiedSince: destConditions?.IfUnmodifiedSince,
+                        ifMatch: destinationConditions?.IfMatch,
+                        ifNoneMatch: destinationConditions?.IfNoneMatch,
+                        ifModifiedSince: destinationConditions?.IfModifiedSince,
+                        ifUnmodifiedSince: destinationConditions?.IfUnmodifiedSince,
                         sourceIfMatch: sourceConditions?.IfMatch,
                         sourceIfNoneMatch: sourceConditions?.IfNoneMatch,
                         sourceIfModifiedSince: sourceConditions?.IfModifiedSince,

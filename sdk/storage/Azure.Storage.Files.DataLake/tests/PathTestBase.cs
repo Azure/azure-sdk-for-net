@@ -17,7 +17,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
         }
 
-        public IEnumerable<AccessConditionParameters> AccessConditions_Data
+        public IEnumerable<AccessConditionParameters> Conditions_Data
             => new[]
             {
                 new AccessConditionParameters(),
@@ -28,7 +28,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 new AccessConditionParameters { LeaseId = ReceivedLeaseId }
             };
 
-        public IEnumerable<AccessConditionParameters> GetAccessConditionsFail_Data(string garbageLeaseId)
+        public IEnumerable<AccessConditionParameters> GetConditionsFail_Data(string garbageLeaseId)
             => new[]
             {
                 new AccessConditionParameters { IfModifiedSince = NewDate },
@@ -38,7 +38,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 new AccessConditionParameters { LeaseId = garbageLeaseId },
              };
 
-        public IEnumerable<AccessConditionParameters> NoLease_AccessConditions_Data
+        public IEnumerable<AccessConditionParameters> NoLease_Conditions_Data
             => new[]
             {
                 new AccessConditionParameters(),
@@ -48,7 +48,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 new AccessConditionParameters { NoneMatch = GarbageETag },
             };
 
-        public IEnumerable<AccessConditionParameters> NoLease_AccessConditionsFail_Data
+        public IEnumerable<AccessConditionParameters> NoLease_ConditionsFail_Data
             => new[]
             {
                 new AccessConditionParameters { IfModifiedSince = NewDate },
@@ -67,11 +67,11 @@ namespace Azure.Storage.Files.DataLake.Tests
                 IfNoneMatch = parameters.NoneMatch != null ? new ETag(parameters.NoneMatch) : default(ETag?)
             };
 
-        public DataLakeRequestConditions BuildDataLakeRequestAccessConditions(
+        public DataLakeRequestConditions BuildDataLakeRequestConditions(
             AccessConditionParameters parameters,
             bool lease = true)
         {
-            DataLakeRequestConditions accessConditions = new DataLakeRequestConditions()
+            DataLakeRequestConditions conditions = new DataLakeRequestConditions()
             {
                 IfModifiedSince = parameters.IfModifiedSince,
                 IfUnmodifiedSince = parameters.IfUnmodifiedSince,
@@ -81,9 +81,9 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             if (lease)
             {
-                accessConditions.LeaseId = parameters.LeaseId;
+                conditions.LeaseId = parameters.LeaseId;
             }
-            return accessConditions;
+            return conditions;
         }
 
         public class AccessConditionParameters

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,22 +14,35 @@ using Azure.Core;
 namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
-    ///   Receives <see cref="EventData" /> as they are available for a partition, in the context of a consumer group, and routes
-    ///   them to a partition processor instance to be processed.
+    ///   Consumes events for the configured Event Hub and consumer group across all partitions, making them available for processing
+    ///   through the provided handlers.
     /// </summary>
     ///
-    /// <typeparam name="T">The type of partition processor used by this instance by default; the type must be derived from <see cref="BasePartitionProcessor" /> and must have a parameterless constructor.</typeparam>
-    ///
-    public class EventProcessor<T> where T : BasePartitionProcessor, new()
+    public class EventProcessor
     {
         /// <summary>The seed to use for initializing random number generated for a given thread-specific instance.</summary>
         private static int s_randomSeed = Environment.TickCount;
 
         /// <summary>The random number generator to use for a specific thread.</summary>
-        private static readonly ThreadLocal<Random> s_randomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
+        private static readonly ThreadLocal<Random> RandomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
 
         /// <summary>The primitive for synchronizing access during start and close operations.</summary>
-        private readonly SemaphoreSlim _runningTaskSemaphore = new SemaphoreSlim(1, 1);
+        private readonly SemaphoreSlim RunningTaskSemaphore = new SemaphoreSlim(1, 1);
+
+        /// <summary>The primitive for synchronizing access during start and set handler operations.</summary>
+        private readonly object StartProcessorGuard = new object();
+
+        /// <summary>The handler to be called just before event processing starts for a given partition.</summary>
+        private Func<PartitionContext, Task> _initializeProcessingForPartitionAsync;
+
+        /// <summary>The handler to be called once event processing stops for a given partition.</summary>
+        private Func<PartitionContext, PartitionProcessorCloseReason, Task> _processingForPartitionStoppedAsync;
+
+        /// <summary>Responsible for processing sets of events received from the Event Hubs service.</summary>
+        private Func<PartitionContext, IEnumerable<EventData>, Task> _processEventsAsync;
+
+        /// <summary>Responsible for processing unexpected exceptions thrown while this <see cref="EventProcessor" /> is running.</summary>
+        private Func<PartitionContext, Exception, Task> _processExceptionAsync;
 
         /// <summary>
         ///   The minimum amount of time to be elapsed between two load balancing verifications.
@@ -62,12 +76,6 @@ namespace Azure.Messaging.EventHubs.Processor
         private string ConsumerGroup { get; }
 
         /// <summary>
-        ///   A factory used to create partition processors.
-        /// </summary>
-        ///
-        private Func<PartitionContext, BasePartitionProcessor> PartitionProcessorFactory { get; }
-
-        /// <summary>
         ///   Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.
         /// </summary>
         ///
@@ -98,41 +106,59 @@ namespace Azure.Messaging.EventHubs.Processor
         private Dictionary<string, PartitionOwnership> InstanceOwnership { get; set; }
 
         /// <summary>
-        ///   The running task responsible for performing partition load balancing between multiple <see cref="EventProcessor{T}" />
+        ///   The running task responsible for performing partition load balancing between multiple <see cref="EventProcessor" />
         ///   instances, as well as managing partition pumps and ownership.
         /// </summary>
         ///
         private Task RunningTask { get; set; }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventProcessor{T}"/> class.
+        ///   The handler to be called just before event processing starts for a given partition.
         /// </summary>
         ///
-        /// <param name="consumerGroup">The name of the consumer group this event processor is associated with.  Events are read in the context of this group.</param>
-        /// <param name="eventHubClient">The client used to interact with the Azure Event Hubs service.</param>
-        /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.</param>
-        /// <param name="options">The set of options to use for this event processor.</param>
-        ///
-        /// <remarks>
-        ///   Ownership of the <paramref name="eventHubClient" /> is assumed to be responsibility of the caller; this
-        ///   processor will delegate operations to it, but will not perform any clean-up tasks, such as closing or
-        ///   disposing of the instance.
-        /// </remarks>
-        ///
-        public EventProcessor(string consumerGroup,
-                              EventHubClient eventHubClient,
-                              PartitionManager partitionManager,
-                              EventProcessorOptions options = default) : this(consumerGroup, eventHubClient, partitionContext => new T(), partitionManager, options)
+        public Func<PartitionContext, Task> InitializeProcessingForPartitionAsync
         {
+            internal get => _initializeProcessingForPartitionAsync;
+            set => EnsureNotRunningAndInvoke(() => _initializeProcessingForPartitionAsync = value);
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventProcessor{T}"/> class.
+        ///   The handler to be called once event processing stops for a given partition.
+        /// </summary>
+        ///
+        public Func<PartitionContext, PartitionProcessorCloseReason, Task> ProcessingForPartitionStoppedAsync
+        {
+            internal get => _processingForPartitionStoppedAsync;
+            set => EnsureNotRunningAndInvoke(() => _processingForPartitionStoppedAsync = value);
+        }
+
+        /// <summary>
+        ///   Responsible for processing sets of events received from the Event Hubs service.  Implementation is mandatory.
+        /// </summary>
+        ///
+        public Func<PartitionContext, IEnumerable<EventData>, Task> ProcessEventsAsync
+        {
+            internal get => _processEventsAsync;
+            set => EnsureNotRunningAndInvoke(() => _processEventsAsync = value);
+        }
+
+        /// <summary>
+        ///   Responsible for processing unexpected exceptions thrown while this <see cref="EventProcessor" /> is running.
+        ///   Implementation is mandatory.
+        /// </summary>
+        ///
+        public Func<PartitionContext, Exception, Task> ProcessExceptionAsync
+        {
+            internal get => _processExceptionAsync;
+            set => EnsureNotRunningAndInvoke(() => _processExceptionAsync = value);
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="EventProcessor"/> class.
         /// </summary>
         ///
         /// <param name="consumerGroup">The name of the consumer group this event processor is associated with.  Events are read in the context of this group.</param>
         /// <param name="eventHubClient">The client used to interact with the Azure Event Hubs service.</param>
-        /// <param name="partitionProcessorFactory">Creates a partition processor instance for the associated <see cref="PartitionContext" />.</param>
         /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.</param>
         /// <param name="options">The set of options to use for this event processor.</param>
         ///
@@ -144,18 +170,15 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         public EventProcessor(string consumerGroup,
                               EventHubClient eventHubClient,
-                              Func<PartitionContext, BasePartitionProcessor> partitionProcessorFactory,
                               PartitionManager partitionManager,
                               EventProcessorOptions options = default)
         {
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
             Argument.AssertNotNull(eventHubClient, nameof(eventHubClient));
-            Argument.AssertNotNull(partitionProcessorFactory, nameof(partitionProcessorFactory));
             Argument.AssertNotNull(partitionManager, nameof(partitionManager));
 
             InnerClient = eventHubClient;
             ConsumerGroup = consumerGroup;
-            PartitionProcessorFactory = partitionProcessorFactory;
             Manager = partitionManager;
             Options = options?.Clone() ?? new EventProcessorOptions();
 
@@ -164,7 +187,7 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventProcessor{T}"/> class.
+        ///   Initializes a new instance of the <see cref="EventProcessor"/> class.
         /// </summary>
         ///
         protected EventProcessor()
@@ -177,34 +200,49 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
+        /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="ProcessEventsAsync" /> or <see cref="ProcessExceptionAsync" /> set.</exception>
+        ///
         public virtual async Task StartAsync()
         {
             if (RunningTask == null)
             {
-                await _runningTaskSemaphore.WaitAsync().ConfigureAwait(false);
+                await RunningTaskSemaphore.WaitAsync().ConfigureAwait(false);
 
                 try
                 {
-                    if (RunningTask == null)
+                    lock (StartProcessorGuard)
                     {
-                        // We expect the token source to be null, but we are playing safe.
+                        if (RunningTask == null)
+                        {
+                            if (_processEventsAsync == null)
+                            {
+                                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotStartEventProcessorWithoutHandler, nameof(ProcessEventsAsync)));
+                            }
 
-                        RunningTaskTokenSource?.Cancel();
-                        RunningTaskTokenSource = new CancellationTokenSource();
+                            if (_processExceptionAsync == null)
+                            {
+                                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotStartEventProcessorWithoutHandler, nameof(ProcessExceptionAsync)));
+                            }
 
-                        // Initialize our empty ownership dictionary.
+                            // We expect the token source to be null, but we are playing safe.
 
-                        InstanceOwnership = new Dictionary<string, PartitionOwnership>();
+                            RunningTaskTokenSource?.Cancel();
+                            RunningTaskTokenSource = new CancellationTokenSource();
 
-                        // Start the main running task.  It is resposible for managing the partition pumps and for partition
-                        // load balancing among multiple event processor instances.
+                            // Initialize our empty ownership dictionary.
 
-                        RunningTask = RunAsync(RunningTaskTokenSource.Token);
+                            InstanceOwnership = new Dictionary<string, PartitionOwnership>();
+
+                            // Start the main running task.  It is resposible for managing the partition pumps and for partition
+                            // load balancing among multiple event processor instances.
+
+                            RunningTask = RunAsync(RunningTaskTokenSource.Token);
+                        }
                     }
                 }
                 finally
                 {
-                    _runningTaskSemaphore.Release();
+                    RunningTaskSemaphore.Release();
                 }
             }
         }
@@ -219,7 +257,7 @@ namespace Azure.Messaging.EventHubs.Processor
         {
             if (RunningTask != null)
             {
-                await _runningTaskSemaphore.WaitAsync().ConfigureAwait(false);
+                await RunningTaskSemaphore.WaitAsync().ConfigureAwait(false);
 
                 try
                 {
@@ -248,8 +286,6 @@ namespace Azure.Messaging.EventHubs.Processor
                             // TODO: delegate the exception handling to an Exception Callback.
                         }
 
-                        RunningTask = null;
-
                         // Now that the task has finished, clean up what is left.  Stop and remove every partition pump that is still
                         // running and dispose of our ownership dictionary.
 
@@ -262,13 +298,14 @@ namespace Azure.Messaging.EventHubs.Processor
                 }
                 finally
                 {
-                    _runningTaskSemaphore.Release();
+                    RunningTask = null;
+                    RunningTaskSemaphore.Release();
                 }
             }
         }
 
         /// <summary>
-        ///   Performs load balancing between multiple <see cref="EventProcessor{T}" /> instances, claiming others' partitions to enforce
+        ///   Performs load balancing between multiple <see cref="EventProcessor" /> instances, claiming others' partitions to enforce
         ///   a more equal distribution when necessary.  It also manages its own partition pumps and ownership.
         /// </summary>
         ///
@@ -359,7 +396,7 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
-        ///   Finds and tries to claim an ownership if this <see cref="EventProcessor{T}" /> instance is eligible to increase its ownership
+        ///   Finds and tries to claim an ownership if this <see cref="EventProcessor" /> instance is eligible to increase its ownership
         ///   list.
         /// </summary>
         ///
@@ -426,7 +463,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 if (unclaimedPartitions.Any())
                 {
-                    var index = s_randomNumberGenerator.Value.Next(unclaimedPartitions.Count());
+                    var index = RandomNumberGenerator.Value.Next(unclaimedPartitions.Count());
 
                     return await ClaimOwnershipAsync(unclaimedPartitions.ElementAt(index), completeOwnershipEnumerable).ConfigureAwait(false);
                 }
@@ -455,7 +492,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 if (stealablePartitions.Any())
                 {
-                    var index = s_randomNumberGenerator.Value.Next(stealablePartitions.Count());
+                    var index = RandomNumberGenerator.Value.Next(stealablePartitions.Count());
 
                     return await ClaimOwnershipAsync(stealablePartitions.ElementAt(index), completeOwnershipEnumerable).ConfigureAwait(false);
                 }
@@ -491,7 +528,6 @@ namespace Azure.Messaging.EventHubs.Processor
 
             try
             {
-                BasePartitionProcessor partitionProcessor = PartitionProcessorFactory(partitionContext);
                 EventProcessorOptions options = Options.Clone();
 
                 // Ovewrite the initial event position in case a checkpoint exists.
@@ -501,7 +537,7 @@ namespace Azure.Messaging.EventHubs.Processor
                     options.InitialEventPosition = EventPosition.FromSequenceNumber(initialSequenceNumber.Value);
                 }
 
-                var partitionPump = new PartitionPump(InnerClient, ConsumerGroup, partitionContext, partitionProcessor, options);
+                var partitionPump = new PartitionPump(this, InnerClient, ConsumerGroup, partitionContext, options);
 
                 await partitionPump.StartAsync().ConfigureAwait(false);
 
@@ -606,6 +642,36 @@ namespace Azure.Messaging.EventHubs.Processor
             // will fail in claiming it here, but this instance still owns it.
 
             return Manager.ClaimOwnershipAsync(ownershipToRenew);
+        }
+
+        /// <summary>
+        ///   Invokes a specified action only if this <see cref="EventProcessor" /> instance is not running.
+        /// </summary>
+        ///
+        /// <param name="action">The action to invoke.</param>
+        ///
+        /// <exception cref="InvalidOperationException">Occurs when this method is invoked while the event processor is running.</exception>
+        ///
+        private void EnsureNotRunningAndInvoke(Action action)
+        {
+            if (RunningTask == null)
+            {
+                lock (StartProcessorGuard)
+                {
+                    if (RunningTask == null)
+                    {
+                        action?.Invoke();
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException(Resources.RunningEventProcessorCannotPerformOperation);
+                    }
+                }
+            }
+            else
+            {
+                throw new InvalidOperationException(Resources.RunningEventProcessorCannotPerformOperation);
+            }
         }
     }
 }

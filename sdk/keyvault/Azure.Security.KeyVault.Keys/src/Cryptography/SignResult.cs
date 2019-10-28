@@ -6,7 +6,7 @@ using System.Text.Json;
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     /// <summary>
-    /// Represents information about a sign operation
+    /// Represents information about a sign operation.
     /// </summary>
     public class SignResult : IJsonDeserializable
     {
@@ -18,17 +18,17 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         }
 
         /// <summary>
-        /// The <see cref="KeyProperties.Id"/> of the <see cref="KeyVaultKey"/> used to sign. This must be stored alongside the <see cref="Signature"/> as the same key must be used to verify it.
+        /// Gets the <see cref="KeyProperties.Id"/> of the <see cref="KeyVaultKey"/> used to sign. This must be stored alongside the <see cref="Signature"/> as the same key must be used to verify it.
         /// </summary>
         public string KeyId { get; internal set; }
 
         /// <summary>
-        /// The signature
+        /// Gets the signature.
         /// </summary>
         public byte[] Signature { get; internal set; }
 
         /// <summary>
-        /// The algorithm used to sign. This must be stored alongside the <see cref="Signature"/> as the same algorithm must be used to verify it.
+        /// Gets the algorithm used to sign. This must be stored alongside the <see cref="Signature"/> as the same algorithm must be used to verify it.
         /// </summary>
         public SignatureAlgorithm Algorithm { get; internal set; }
 

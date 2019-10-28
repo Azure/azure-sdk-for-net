@@ -19,27 +19,27 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// List of supported <see cref="KeyOperations"/>.
+        /// Gets a list of <see cref="KeyOperation"/> values the key should support.
         /// </summary>
         public IList<KeyOperation> KeyOperations { get; } = new List<KeyOperation>();
 
         /// <summary>
-        /// Not before date in UTC.
+        /// Gets or sets a <see cref="DateTimeOffset"/> of when the key will be valid.
         /// </summary>
         public DateTimeOffset? NotBefore { get; set; }
 
         /// <summary>
-        /// Expiry date in UTC.
+        /// Gets or sets a <see cref="DateTimeOffset"/> of when the key will expire.
         /// </summary>
         public DateTimeOffset? ExpiresOn { get; set; }
 
         /// <summary>
-        /// Determines whether the object is enabled.
+        /// Gets or sets a value indicating whether the key will be enabled. If null, the service default is used.
         /// </summary>
         public bool? Enabled { get; set; }
 
         /// <summary>
-        /// A dictionary of tags with specific metadata about the key.
+        /// Gets a dictionary of tags with specific metadata about the key.
         /// </summary>
         public IDictionary<string, string> Tags { get; } = new Dictionary<string, string>();
     }

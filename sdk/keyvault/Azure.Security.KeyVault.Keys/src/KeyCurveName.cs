@@ -34,25 +34,25 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// The NIST P-256 elliptic curve, AKA SECG curve SECP256R1
+        /// Gets the NIST P-256 elliptic curve, AKA SECG curve SECP256R1
         /// For more information, see <see href="https://docs.microsoft.com/en-us/azure/key-vault/about-keys-secrets-and-certificates#curve-types"/>.
         /// </summary>
         public static KeyCurveName P256 { get; } = new KeyCurveName(P256Value);
 
         /// <summary>
-        /// The SECG SECP256K1 elliptic curve.
+        /// Gets the SECG SECP256K1 elliptic curve.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/azure/key-vault/about-keys-secrets-and-certificates#curve-types"/>.
         /// </summary>
         public static KeyCurveName P256K { get; } = new KeyCurveName(P256KValue);
 
         /// <summary>
-        /// The NIST P-384 elliptic curve, AKA SECG curve SECP384R1.
+        /// Gets the NIST P-384 elliptic curve, AKA SECG curve SECP384R1.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/azure/key-vault/about-keys-secrets-and-certificates#curve-types"/>.
         /// </summary>
         public static KeyCurveName P384 { get; } = new KeyCurveName(P384Value);
 
         /// <summary>
-        /// The NIST P-521 elliptic curve, AKA SECG curve SECP521R1.
+        /// Gets the NIST P-521 elliptic curve, AKA SECG curve SECP521R1.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/azure/key-vault/about-keys-secrets-and-certificates#curve-types"/>.
         /// </summary>
         public static KeyCurveName P521 { get; } = new KeyCurveName(P521Value);

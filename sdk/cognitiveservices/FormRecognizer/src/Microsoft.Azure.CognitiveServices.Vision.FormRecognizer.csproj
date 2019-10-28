@@ -2,7 +2,7 @@
   <PropertyGroup>
     <AssemblyTitle>Microsoft Cognitive Services Form Recognizer SDK</AssemblyTitle>
     <Description>This client library provides access to the Microsoft Cognitive Services Form Recognizer APIs.</Description>
-    <VersionPrefix>0.8.0</VersionPrefix>
+    <Version>1.0.0-preview.1</Version>
     <PackageTags>FormRecognizer;Form Recognizer;</PackageTags>
     <PackageReleaseNotes>
 <![CDATA[

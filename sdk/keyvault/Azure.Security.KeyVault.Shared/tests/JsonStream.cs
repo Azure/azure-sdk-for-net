@@ -6,7 +6,7 @@ using System.IO;
 using System.Text;
 using System.Text.Json;
 
-namespace Azure.Security.KeyVault.Certificates.Tests
+namespace Azure.Security.KeyVault.Tests
 {
     internal class JsonStream : IDisposable
     {

@@ -426,7 +426,7 @@ namespace Azure.Storage.Files.DataLake
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container" />.
         /// </summary>
-        /// <param name="accessConditions">
+        /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
         /// conditions on the deletion of this file system.
         /// </param>
@@ -443,10 +443,10 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         [ForwardsClientCalls]
         public virtual Response Delete(
-            DataLakeRequestConditions accessConditions = default,
+            DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             _containerClient.Delete(
-                accessConditions,
+                conditions,
                 cancellationToken);
 
         /// <summary>
@@ -456,7 +456,7 @@ namespace Azure.Storage.Files.DataLake
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container" />.
         /// </summary>
-        /// <param name="accessConditions">
+        /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
         /// conditions on the deletion of this cofile systemntainer.
         /// </param>
@@ -473,10 +473,10 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response> DeleteAsync(
-            DataLakeRequestConditions accessConditions = default,
+            DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await _containerClient.DeleteAsync(
-                accessConditions,
+                conditions,
                 cancellationToken)
                 .ConfigureAwait(false);
         #endregion Delete
@@ -570,7 +570,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="metadata">
         /// Custom metadata to set for this file system.
         /// </param>
-        /// <param name="accessConditions">
+        /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
         /// conditions on the deletion of this file system.
         /// </param>
@@ -588,12 +588,12 @@ namespace Azure.Storage.Files.DataLake
         [ForwardsClientCalls]
         public virtual Response<FileSystemInfo> SetMetadata(
             Metadata metadata,
-            DataLakeRequestConditions accessConditions = default,
+            DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
             Response<BlobContainerInfo> response = _containerClient.SetMetadata(
                 metadata,
-                accessConditions,
+                conditions,
                 cancellationToken);
 
             return Response.FromValue(
@@ -614,7 +614,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="metadata">
         /// Custom metadata to set for this file system.
         /// </param>
-        /// <param name="accessConditions">
+        /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
         /// conditions on the deletion of this file system.
         /// </param>
@@ -632,12 +632,12 @@ namespace Azure.Storage.Files.DataLake
         [ForwardsClientCalls]
         public virtual async Task<Response<FileSystemInfo>> SetMetadataAsync(
             Metadata metadata,
-            DataLakeRequestConditions accessConditions = default,
+            DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
             Response<BlobContainerInfo> response = await _containerClient.SetMetadataAsync(
                 metadata,
-                accessConditions,
+                conditions,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -839,7 +839,7 @@ namespace Azure.Storage.Files.DataLake
         /// 0777 for a directory and 0666 for a file. The default umask is 0027. The umask must be specified
         /// in 4-digit octal notation (e.g. 0766).
         /// </param>
-        /// <param name="accessConditions">
+        /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
         /// conditions on the creation of this file or directory..
         /// </param>
@@ -862,7 +862,7 @@ namespace Azure.Storage.Files.DataLake
             Metadata metadata = default,
             string permissions = default,
             string umask = default,
-            DataLakeRequestConditions accessConditions = default,
+            DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
             DirectoryClient directoryClient = GetDirectoryClient(path);
@@ -872,7 +872,7 @@ namespace Azure.Storage.Files.DataLake
                 metadata,
                 permissions,
                 umask,
-                accessConditions,
+                conditions,
                 cancellationToken);
 
             return Response.FromValue(
@@ -910,7 +910,7 @@ namespace Azure.Storage.Files.DataLake
         /// 0777 for a directory and 0666 for a file. The default umask is 0027. The umask must be specified
         /// in 4-digit octal notation (e.g. 0766).
         /// </param>
-        /// <param name="accessConditions">
+        /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
         /// conditions on the creation of this file or directory..
         /// </param>
@@ -933,7 +933,7 @@ namespace Azure.Storage.Files.DataLake
             Metadata metadata = default,
             string permissions = default,
             string umask = default,
-            DataLakeRequestConditions accessConditions = default,
+            DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
             DirectoryClient directoryClient = GetDirectoryClient(path);
@@ -943,7 +943,7 @@ namespace Azure.Storage.Files.DataLake
                 metadata,
                 permissions,
                 umask,
-                accessConditions,
+                conditions,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -964,7 +964,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="path">
         /// The path to the directory to delete.
         /// </param>
-        /// <param name="accessConditions">
+        /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
         /// deleting this path.
         /// </param>
@@ -982,11 +982,11 @@ namespace Azure.Storage.Files.DataLake
         [ForwardsClientCalls]
         public virtual Response DeleteDirectory(
             string path,
-            DataLakeRequestConditions accessConditions = default,
+            DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             GetDirectoryClient(path).Delete(
                 recursive: true,
-                accessConditions,
+                conditions,
                 cancellationToken);
 
         /// <summary>
@@ -998,7 +998,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="path">
         /// The path to the directory to delete.
         /// </param>
-        /// <param name="accessConditions">
+        /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
         /// deleting this path.
         /// </param>
@@ -1016,11 +1016,11 @@ namespace Azure.Storage.Files.DataLake
         [ForwardsClientCalls]
         public virtual async Task<Response> DeleteDirectoryAsync(
             string path,
-            DataLakeRequestConditions accessConditions = default,
+            DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await GetDirectoryClient(path).DeleteAsync(
                 recursive: true,
-                accessConditions,
+                conditions,
                 cancellationToken)
                 .ConfigureAwait(false);
         #endregion Delete Directory
@@ -1056,7 +1056,7 @@ namespace Azure.Storage.Files.DataLake
         /// 0777 for a directory and 0666 for a file. The default umask is 0027. The umask must be specified
         /// in 4-digit octal notation (e.g. 0766).
         /// </param>
-        /// <param name="accessConditions">
+        /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
         /// conditions on the creation of this file or directory..
         /// </param>
@@ -1079,7 +1079,7 @@ namespace Azure.Storage.Files.DataLake
             Metadata metadata = default,
             string permissions = default,
             string umask = default,
-            DataLakeRequestConditions accessConditions = default,
+            DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
             FileClient fileClient = GetFileClient(path);
@@ -1089,7 +1089,7 @@ namespace Azure.Storage.Files.DataLake
                 metadata,
                 permissions,
                 umask,
-                accessConditions,
+                conditions,
                 cancellationToken);
 
             return Response.FromValue(
@@ -1127,7 +1127,7 @@ namespace Azure.Storage.Files.DataLake
         /// 0777 for a directory and 0666 for a file. The default umask is 0027. The umask must be specified
         /// in 4-digit octal notation (e.g. 0766).
         /// </param>
-        /// <param name="accessConditions">
+        /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
         /// conditions on the creation of this file or directory..
         /// </param>
@@ -1150,7 +1150,7 @@ namespace Azure.Storage.Files.DataLake
             Metadata metadata = default,
             string permissions = default,
             string umask = default,
-            DataLakeRequestConditions accessConditions = default,
+            DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
             FileClient fileClient = GetFileClient(path);
@@ -1160,7 +1160,7 @@ namespace Azure.Storage.Files.DataLake
                 metadata,
                 permissions,
                 umask,
-                accessConditions,
+                conditions,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -1179,7 +1179,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="path">
         /// The path to the file to delete.
         /// </param>
-        /// <param name="accessConditions">
+        /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
         /// deleting this path.
         /// </param>
@@ -1197,10 +1197,10 @@ namespace Azure.Storage.Files.DataLake
         [ForwardsClientCalls]
         public virtual Response DeleteFile(
             string path,
-            DataLakeRequestConditions accessConditions = default,
+            DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             GetFileClient(path).Delete(
-                accessConditions,
+                conditions,
                 cancellationToken);
 
         /// <summary>
@@ -1211,7 +1211,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="path">
         /// The path to the file to delete.
         /// </param>
-        /// <param name="accessConditions">
+        /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
         /// deleting this path.
         /// </param>
@@ -1229,10 +1229,10 @@ namespace Azure.Storage.Files.DataLake
         [ForwardsClientCalls]
         public virtual async Task<Response> DeleteFileAsync(
             string path,
-            DataLakeRequestConditions accessConditions = default,
+            DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
             => await GetFileClient(path).DeleteAsync(
-                accessConditions,
+                conditions,
                 cancellationToken)
                 .ConfigureAwait(false);
 
