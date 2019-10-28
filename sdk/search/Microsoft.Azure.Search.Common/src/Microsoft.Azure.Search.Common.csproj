@@ -6,6 +6,6 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <PackageReleaseNotes>See the Microsoft.Azure.Cognitive Search package for detailed release notes on the entire Azure Cognitive Search .NET SDK.</PackageReleaseNotes>
     <PackageReleaseNotes>See the Microsoft.Azure.Search package for detailed release notes on the entire Azure Search .NET SDK.</PackageReleaseNotes>
-    <Version>10.1.0-preview.1</Version>
+    <Version>10.1.0</Version>
   </PropertyGroup>
 </Project>
