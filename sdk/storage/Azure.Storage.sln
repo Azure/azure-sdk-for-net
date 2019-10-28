@@ -81,7 +81,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Samples
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Queues.Samples.Tests", "Azure.Storage.Queues\samples\Azure.Storage.Queues.Samples.Tests.csproj", "{1CDEBFBF-280D-4618-B52A-238EE6751A33}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Files.Shares.Samples.Tests", "Azure.Storage.Files\samples\Azure.Storage.Files.Shares.Samples.Tests.csproj", "{6C62BFA4-DB03-4701-934D-915AB28B9761}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Files.Shares.Samples.Tests", "Azure.Storage.Files.Shares\samples\Azure.Storage.Files.Shares.Samples.Tests.csproj", "{6C62BFA4-DB03-4701-934D-915AB28B9761}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Common.Samples.Tests", "Azure.Storage.Common\samples\Azure.Storage.Common.Samples.Tests.csproj", "{9EBEFBC5-A5F4-41B5-946E-67F2DCF5E5B5}"
 EndProject

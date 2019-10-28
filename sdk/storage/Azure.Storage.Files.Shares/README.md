@@ -67,18 +67,18 @@ ShareClient share = new ShareClient(connectionString, "sample-share");
 share.Create();
 
 // Get a reference to a directory named "sample-dir" and then create it
-DirectoryClient directory = share.GetDirectoryClient("sample-dir");
+ShareDirectoryClient directory = share.GetDirectoryClient("sample-dir");
 directory.Create();
 
 // Get a reference to a file named "sample-file" in directory "sample-dir"
-FileClient file = directory.GetFileClient("sample-file");
+ShareFileClient file = directory.GetFileClient("sample-file");
 
 // Upload the file
 using (FileStream stream = File.OpenRead("local-file.txt"))
 {
     file.Create(stream.Length);
     file.UploadRange(
-        FileRangeWriteType.Update,
+        ShareFileRangeWriteType.Update,
         new HttpRange(0, stream.Length),
         stream);
 }
@@ -94,13 +94,13 @@ string connectionString = "<connection_string>";
 ShareClient share = new ShareClient(connectionString, "sample-share");
 
 // Get a reference to a directory named "sample-dir"
-DirectoryClient directory = share.GetDirectoryClient("sample-dir");
+ShareDirectoryClient directory = share.GetDirectoryClient("sample-dir");
 
 // Get a reference to a file named "sample-file" in directory "sample-dir"
-FileClient file = directory.GetFileClient("sample-file");
+ShareFileClient file = directory.GetFileClient("sample-file");
 
 // Download the file
-StorageFileDownloadInfo download = file.Download();
+ShareFileDownloadInfo download = file.Download();
 using (FileStream stream = File.OpenWrite("downloaded-file.txt"))
 {
     download.Content.CopyTo(stream);
@@ -117,13 +117,13 @@ string connectionString = "<connection_string>";
 ShareClient share = new ShareClient(connectionString, "sample-share");
 
 // Track the remaining directories to walk, starting from the root
-Queue<DirectoryClient> remaining = new Queue<DirectoryClient>();
+Queue<ShareDirectoryClient> remaining = new Queue<ShareDirectoryClient>();
 remaining.Enqueue(share.GetRootDirectoryClient());
 while (remaining.Count > 0)
 {
     // Get all of the next directory's files and subdirectories
-    DirectoryClient dir = remaining.Dequeue();
-    foreach (StorageFileItem item in dir.GetFilesAndDirectories())
+    ShareDirectoryClient dir = remaining.Dequeue();
+    foreach (ShareFileItem item in dir.GetFilesAndDirectories())
     {
         Console.WriteLine(item.Name);
 
@@ -143,11 +143,11 @@ We fully support both synchronous and asynchronous APIs.
 ```c#
 string connectionString = "<connection_string>";
 ShareClient share = new ShareClient(connectionString, "sample-share");
-DirectoryClient directory = share.GetDirectoryClient("sample-dir");
-FileClient file = directory.GetFileClient("sample-file");
+ShareDirectoryClient directory = share.GetDirectoryClient("sample-dir");
+ShareFileClient file = directory.GetFileClient("sample-file");
 
 // Download the file
-StorageFileDownloadInfo download = await file.DownloadAsync();
+ShareFileDownloadInfo download = await file.DownloadAsync();
 using (FileStream stream = File.OpenWrite("downloaded-file.txt"))
 {
     await download.Content.CopyToAsync(stream);
