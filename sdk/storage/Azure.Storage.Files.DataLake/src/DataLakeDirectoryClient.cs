@@ -51,6 +51,20 @@ namespace Azure.Storage.Files.DataLake
         /// name of the account, the name of the file system, and the path of the
         /// directory.
         /// </param>
+        public DataLakeDirectoryClient(Uri directoryUri)
+            : this(directoryUri, (HttpPipelinePolicy)null, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeDirectoryClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="directoryUri">
+        /// A <see cref="Uri"/> referencing the directory that includes the
+        /// name of the account, the name of the file system, and the path of the
+        /// directory.
+        /// </param>
         /// <param name="options">
         /// Optional <see cref="DataLakeClientOptions"/> that define the transport
         /// pipeline policies for authentication, retries, etc., that are
