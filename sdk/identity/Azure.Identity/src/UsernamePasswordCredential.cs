@@ -36,7 +36,7 @@ namespace Azure.Identity
         /// and password.
         /// </summary>
         /// <param name="username"></param>
-        /// <param name="password">The user account's user name, UPN.</param>
+        /// <param name="password">The user account's username, also known as UPN.</param>
         /// <param name="tenantId">The Azure Active Directory tenant (directory) ID or name.</param>
         /// <param name="clientId">The client (application) ID of an App Registration in the tenant.</param>
         public UsernamePasswordCredential(string username, string password, string tenantId, string clientId)
@@ -77,7 +77,7 @@ namespace Azure.Identity
 
         /// <summary>
         /// Obtains a token for a user account, authenticating them using the given username and password.  Note: This will fail with
-        /// an <see cref="AuthenticationFailedException"/> if the specified user acound has MFA enabled.
+        /// an <see cref="AuthenticationFailedException"/> if the specified user account has MFA enabled. This method is called by Azure SDK clients. It isn't intended for use in application code.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -89,7 +89,7 @@ namespace Azure.Identity
 
         /// <summary>
         /// Obtains a token for a user account, authenticating them using the given username and password.  Note: This will fail with
-        /// an <see cref="AuthenticationFailedException"/> if the specified user acound has MFA enabled.
+        /// an <see cref="AuthenticationFailedException"/> if the specified user account has MFA enabled. This method is called by Azure SDK clients. It isn't intended for use in application code.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
