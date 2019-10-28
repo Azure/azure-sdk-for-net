@@ -1,0 +1,1 @@
+# Azure.Core Response samples

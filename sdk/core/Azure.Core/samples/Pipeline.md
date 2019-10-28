@@ -11,12 +11,14 @@ Azure SDKs provides a way to add policies to the pipeline at two positions:
 
 ```C# Snippet:AddingPerCallPolicy
 SecretClientOptions options = new SecretClientOptions();
-options.AddPolicy(new StopwatchPolicy(), HttpPipelinePosition.PerCall);
+options.AddPolicy(new CustomRequestPolicy(), HttpPipelinePosition.PerCall);
 
-options.AddPolicy(new StopwatchPolicy(), HttpPipelinePosition.PerCall);
+options.AddPolicy(new StopwatchPolicy(), HttpPipelinePosition.PerRetry);
 ```
 
 ## Implementing a policy
+
+To implement a policy create a class deriving from `HttpPipelinePolicy` and overide `ProcessAsync` and `Process` methods. Request can be acessed via `message.Request`. Response is accessible via `message.Response` but only after `ProcessNextAsync`/`ProcessNext` was called.
 
 ```C# Snippet:StopwatchPolicy
 public class StopwatchPolicy : HttpPipelinePolicy
@@ -50,7 +52,8 @@ public class StopwatchPolicy : HttpPipelinePolicy
 
 ## Implementing a syncronous policy
 
-If you polic
+If your policy doesn't do any asyncronous operations you can derive from `HttpPipelineSynchronousPolicy` and override `OnSendingRequest` or `OnResponseReceived` method.
+
 ```C# Snippet:SyncPolicy
 public class CustomRequestPolicy : HttpPipelineSynchronousPolicy
 {

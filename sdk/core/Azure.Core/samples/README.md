@@ -4,6 +4,10 @@
 
 [Logging samples](docs/Logging.md)
 
+## Retries
+
+[Retry samples](docs/Retries.md)
+
 ## Transport
 
 [Transport samples](docs/Transport.md)

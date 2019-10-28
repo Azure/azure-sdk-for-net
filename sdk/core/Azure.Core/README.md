@@ -13,7 +13,7 @@ The main shared concepts of Azure.Core (and so Azure SDK libraries using Azure.C
 - Configuring service clients, e.g. configuring retries, logging.
 - Accessing HTTP response details.
 - Calling long running operations (LROs).
-- Paging and asynchronous streams (```IAsyncEnumerable<T>```) 
+- Paging and asynchronous streams (```AsyncPageable<T>```) 
 - Exceptions for reporting errors from service requests in a consistent fashion.
 - Abstractions for representing Azure SDK credentials.
 

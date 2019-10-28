@@ -16,10 +16,8 @@
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\src\Azure.Core.csproj">
-      <Project>{FEC0AE57-E241-46DB-B7C7-9181F28E1D3F}</Project>
-      <Name>Azure.Core</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\src\Azure.Core.csproj" />
+    <ProjectReference Include="..\..\..\keyvault\Azure.Security.KeyVault.Secrets\src\Azure.Security.KeyVault.Secrets.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\src\Shared\ArrayBufferWriter.cs" />
@@ -28,7 +26,7 @@
     <Compile Include="..\src\Shared\RetriableStream.cs" />
     <Compile Include="..\src\Shared\NoBodyResponse{T}.cs" />
     <Compile Include="..\src\Shared\ResponseExceptionExtensions.cs" />
-    <Compile Include="..\src\Shared\OperationHelpers.cs"/>
+    <Compile Include="..\src\Shared\OperationHelpers.cs" />
   </ItemGroup>
 
 </Project>
