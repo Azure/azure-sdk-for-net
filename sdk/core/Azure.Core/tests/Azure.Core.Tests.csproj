@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.Core.csproj" />
     <ProjectReference Include="..\..\..\keyvault\Azure.Security.KeyVault.Secrets\src\Azure.Security.KeyVault.Secrets.csproj" />
+    <ProjectReference Include="..\..\..\identity\Azure.Identity\src\Azure.Identity.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\src\Shared\ArrayBufferWriter.cs" />

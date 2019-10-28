@@ -66,37 +66,27 @@ _Service methods_ return a shared Azure.Core type ```Response<T>``` (in rare cas
 This type provides access to both the deserialized result of the service call, 
 and to the details of the HTTP response returned from the server.
 
-```csharp
-public async Task UsingResponseOfT()
+```C# Snippet:ResponseTHelloWorld
+// create a client
+var client = new SecretClient(new Uri("http://example.com"), new DefaultAzureCredential());
+
+// call a service method, which returns Response<T>
+Response<KeyVaultSecret> response = await client.GetSecretAsync("SecretName");
+
+// Response<T> has two main accessors.
+// Value property for accessing the deserialized result of the call
+KeyVaultSecret secret = response.Value;
+
+// .. and GetRawResponse method for accessing all the details of the HTTP response
+Response http = response.GetRawResponse();
+
+// for example, you can access HTTP status
+int status = http.Status;
+
+// or the headers
+foreach (HttpHeader header in http.Headers)
 {
-    // create a client
-    var client = new BlobContainerClient(connectionString, "container");
-
-    // call a service method, which returns Response<T>
-    Response<ContainerItem> response = await client.GetPropertiesAsync();
-
-    // Response<T> has two main accessors. 
-    // Value property for accessing the deserialized result of the call
-    ContainerItem container = response.Value;
-
-    // .. and GetRawResponse method for accessing all the details of the HTTP response
-    Response http = response.GetRawResponse();
-
-    // for example, you can access HTTP status
-    int status = http.Status;
-
-    // or the headers
-    foreach(HttpHeader header = http.Headers) {
-        Console.WriteLine($"{header.Name} {header.Value}");
-    }
-
-    // or the stream of the response content
-    Stream content = http.ContentStream;
-
-    // but, if you are not interested in all HTTP details, 
-    // and just want the result of the service call,
-    // Response<T> provides a cast to get you directly to the result
-    ContainerItem result = await client.GetPropertiesAsync();
+    Console.WriteLine($"{header.Name} {header.Value}");
 }
 ```
 
@@ -110,26 +100,25 @@ Mocking is enabled by:
 
 For example, the ConfigurationClient.Get method can be mocked (with [Moq](https://github.com/moq/moq4)) as follows:
 
-```c#
+```C# Snippet:ClientMock
 // Create a mock response
 var mockResponse = new Mock<Response>();
 
-// Create a client mock
-var mock = new Mock<ConfigurationClient>();
-
-// Setup client method
-mock.Setup(c => 
-    c.Get("Key", It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<CancellationToken>()))
-    .Returns(new Response<ConfigurationSetting>(mockResponse.Object, 
-         // factory for the model type
-         ConfigurationModelFactory.ConfigurationSetting("Key", "Value")
-    )
+// Create a mock value
+var mockValue = SecretModelFactory.KeyVaultSecret(
+    SecretModelFactory.SecretProperties(new Uri("http://example.com"))
 );
 
+// Create a client mock
+var mock = new Mock<SecretClient>();
+
+// Setup client method
+mock.Setup(c => c.GetSecret("Name", null, default))
+    .Returns(Response.FromValue(mockValue, mockResponse.Object));
+
 // Use the client mock
-ConfigurationClient client = mock.Object;
-ConfigurationSetting setting = client.Get("Key");
-Assert.AreEqual("Value", setting.Value);
+SecretClient client = mock.Object;
+KeyVaultSecret secret = client.GetSecret("Name");
 ```
 
 ### Setting up console logging

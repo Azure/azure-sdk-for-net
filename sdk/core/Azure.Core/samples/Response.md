@@ -1,1 +1,128 @@
 # Azure.Core Response samples
+
+Most client methods return one of the following types:
+ - `Response` -  an HTTP response
+ - `Response<T>` -  a value and HTTP response
+ - `Pageable<T>` -  a collection of values retrieved in pages
+ - `AsyncPageable<T>` - a collection of values asyncrounosly retrieved in pages
+
+## Accessing HTTP response propreties
+
+```C# Snippet:ResponseTHelloWorld
+// create a client
+var client = new SecretClient(new Uri("http://example.com"), new DefaultAzureCredential());
+
+// call a service method, which returns Response<T>
+Response<KeyVaultSecret> response = await client.GetSecretAsync("SecretName");
+
+// Response<T> has two main accessors.
+// Value property for accessing the deserialized result of the call
+KeyVaultSecret secret = response.Value;
+
+// .. and GetRawResponse method for accessing all the details of the HTTP response
+Response http = response.GetRawResponse();
+
+// for example, you can access HTTP status
+int status = http.Status;
+
+// or the headers
+foreach (HttpHeader header in http.Headers)
+{
+    Console.WriteLine($"{header.Name} {header.Value}");
+}
+```
+
+## Accessing HTTP response content
+
+```C# Snippet:ResponseTContent
+// call a service method, which returns Response<T>
+Response<KeyVaultSecret> response = await client.GetSecretAsync("SecretName");
+
+Response http = response.GetRawResponse();
+
+Stream contentStream = http.ContentStream;
+
+// Rewind the stream
+contentStream.Position = 0;
+
+using (StreamReader reader = new StreamReader(contentStream))
+{
+    Console.WriteLine(reader.ReadToEnd());
+}
+```
+
+## Accessing HTTP response well-known headers
+
+You can access well known response headers via properties of `ResponseHeaders` object:
+
+```C# Snippet:ResponseHeaders
+// call a service method, which returns Response<T>
+Response<KeyVaultSecret> response = await client.GetSecretAsync("SecretName");
+
+Response http = response.GetRawResponse();
+
+Console.WriteLine("ETag " + http.Headers.ETag);
+Console.WriteLine("Content-Length " + http.Headers.ContentLength);
+Console.WriteLine("Content-Type " + http.Headers.ContentType);
+```
+
+## Iterating over AsyncPageable using await foreach
+
+This sample required C# 8 compiler.
+
+```C# Snippet:AsyncPageable
+// call a service method, which returns AsyncPageable<T>
+AsyncPageable<SecretProperties> response = client.GetPropertiesOfSecretsAsync();
+
+await foreach (SecretProperties secretProperties in response)
+{
+    Console.WriteLine(secretProperties.Name);
+}
+```
+
+## Iterating over AsyncPageable using while loop
+
+```C# Snippet:AsyncPageableLoop
+// call a service method, which returns AsyncPageable<T>
+AsyncPageable<SecretProperties> response = client.GetPropertiesOfSecretsAsync();
+
+IAsyncEnumerator<SecretProperties> enumerator = response.GetAsyncEnumerator();
+while (await enumerator.MoveNextAsync())
+{
+    SecretProperties secretProperties = enumerator.Current;
+    Console.WriteLine(secretProperties.Name);
+}
+```
+
+## Iterating over AsyncPageable pages
+
+If you want to have control over receiving pages of values from the service use `AsyncPageable<T>.AsPages` method:
+
+```C# Snippet:AsyncPageableAsPages
+// call a service method, which returns AsyncPageable<T>
+AsyncPageable<SecretProperties> response = client.GetPropertiesOfSecretsAsync();
+
+await foreach (Page<SecretProperties> page in response.AsPages())
+{
+    // enumerate through page items
+    foreach (SecretProperties secretProperties in page.Values)
+    {
+        Console.WriteLine(secretProperties.Name);
+    }
+
+    // get continuation token that can be used in AsPages call to resume enumeration
+    Console.WriteLine(page.ContinuationToken);
+}
+```
+
+## Iterating over pageable
+
+```C# Snippet:Pageable
+// call a service method, which returns Pageable<T>
+Pageable<SecretProperties> response = client.GetPropertiesOfSecrets();
+
+foreach (SecretProperties secretProperties in response)
+{
+    Console.WriteLine(secretProperties.Name);
+}
+```
