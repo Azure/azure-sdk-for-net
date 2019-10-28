@@ -17,10 +17,10 @@ using System.Collections.Generic;
 namespace Azure.Storage.Files.DataLake
 {
     /// <summary>
-    /// The <see cref="FileSystemClient"/> allows you to manipulate Azure
+    /// The <see cref="DataLakeFileSystemClient"/> allows you to manipulate Azure
     /// Data Lake file systems and their directories and files.
     /// </summary>
-    public class FileSystemClient
+    public class DataLakeFileSystemClient
     {
         /// <summary>
         /// A <see cref="BlobContainerClient"/> assoicated with the file system.
@@ -112,15 +112,15 @@ namespace Azure.Storage.Files.DataLake
 
         #region ctors
         /// <summary>
-        /// Initializes a new instance of the <see cref="FileSystemClient"/>
+        /// Initializes a new instance of the <see cref="DataLakeFileSystemClient"/>
         /// class for mocking.
         /// </summary>
-        protected FileSystemClient()
+        protected DataLakeFileSystemClient()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FileSystemClient"/>
+        /// Initializes a new instance of the <see cref="DataLakeFileSystemClient"/>
         /// class.
         /// </summary>
         /// <param name="fileSystemUri">
@@ -132,13 +132,13 @@ namespace Azure.Storage.Files.DataLake
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public FileSystemClient(Uri fileSystemUri, DataLakeClientOptions options = default)
+        public DataLakeFileSystemClient(Uri fileSystemUri, DataLakeClientOptions options = default)
             : this(fileSystemUri, (HttpPipelinePolicy)null, options)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FileSystemClient"/>
+        /// Initializes a new instance of the <see cref="DataLakeFileSystemClient"/>
         /// class.
         /// </summary>
         /// <param name="fileSystemUri">
@@ -153,13 +153,13 @@ namespace Azure.Storage.Files.DataLake
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public FileSystemClient(Uri fileSystemUri, StorageSharedKeyCredential credential, DataLakeClientOptions options = default)
+        public DataLakeFileSystemClient(Uri fileSystemUri, StorageSharedKeyCredential credential, DataLakeClientOptions options = default)
             : this(fileSystemUri, credential.AsPolicy(), options)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FileSystemClient"/>
+        /// Initializes a new instance of the <see cref="DataLakeFileSystemClient"/>
         /// class.
         /// </summary>
         /// <param name="fileSystemUri">
@@ -174,13 +174,13 @@ namespace Azure.Storage.Files.DataLake
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public FileSystemClient(Uri fileSystemUri, TokenCredential credential, DataLakeClientOptions options = default)
+        public DataLakeFileSystemClient(Uri fileSystemUri, TokenCredential credential, DataLakeClientOptions options = default)
             : this(fileSystemUri, credential.AsPolicy(), options)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FileSystemClient"/>
+        /// Initializes a new instance of the <see cref="DataLakeFileSystemClient"/>
         /// class.
         /// </summary>
         /// <param name="fileSystemUri">
@@ -195,7 +195,7 @@ namespace Azure.Storage.Files.DataLake
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        internal FileSystemClient(Uri fileSystemUri, HttpPipelinePolicy authentication, DataLakeClientOptions options)
+        internal DataLakeFileSystemClient(Uri fileSystemUri, HttpPipelinePolicy authentication, DataLakeClientOptions options)
         {
             _uri = fileSystemUri;
             _blobUri = GetBlobUri(fileSystemUri);
@@ -206,7 +206,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FileSystemClient"/>
+        /// Initializes a new instance of the <see cref="DataLakeFileSystemClient"/>
         /// class.
         /// </summary>
         /// <param name="fileSystemUri">
@@ -217,7 +217,7 @@ namespace Azure.Storage.Files.DataLake
         /// The transport pipeline used to send every request.
         /// </param>
         ///         /// <param name="clientDiagnostics"></param>
-        internal FileSystemClient(Uri fileSystemUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
+        internal DataLakeFileSystemClient(Uri fileSystemUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
         {
             _uri = fileSystemUri;
             _blobUri = GetBlobUri(fileSystemUri);
@@ -229,26 +229,26 @@ namespace Azure.Storage.Files.DataLake
         #endregion ctors
 
         /// <summary>
-        /// Create a new <see cref="DirectoryClient"/> object by appending
+        /// Create a new <see cref="DataLakeDirectoryClient"/> object by appending
         /// <paramref name="directoryName"/> to the end of <see cref="Uri"/>.  The
-        /// new <see cref="DirectoryClient"/> uses the same request policy
-        /// pipeline as the <see cref="FileSystemClient"/>.
+        /// new <see cref="DataLakeDirectoryClient"/> uses the same request policy
+        /// pipeline as the <see cref="DataLakeFileSystemClient"/>.
         /// </summary>
         /// <param name="directoryName">The name of the directory.</param>
-        /// <returns>A new <see cref="DirectoryClient"/> instance.</returns>
-        public virtual DirectoryClient GetDirectoryClient(string directoryName)
-            => new DirectoryClient(Uri.AppendToPath(directoryName), Pipeline);
+        /// <returns>A new <see cref="DataLakeDirectoryClient"/> instance.</returns>
+        public virtual DataLakeDirectoryClient GetDirectoryClient(string directoryName)
+            => new DataLakeDirectoryClient(Uri.AppendToPath(directoryName), Pipeline);
 
         /// <summary>
-        /// Create a new <see cref="FileClient"/> object by appending
+        /// Create a new <see cref="DataLakeFileClient"/> object by appending
         /// <paramref name="fileName"/> to the end of <see cref="Uri"/>.  The
-        /// new <see cref="FileClient"/> uses the same request policy
-        /// pipeline as the <see cref="FileClient"/>.
+        /// new <see cref="DataLakeFileClient"/> uses the same request policy
+        /// pipeline as the <see cref="DataLakeFileClient"/>.
         /// </summary>
         /// <param name="fileName">The name of the directory.</param>
-        /// <returns>A new <see cref="FileClient"/> instance.</returns>
-        public virtual FileClient GetFileClient(string fileName)
-            => new FileClient(Uri.AppendToPath(fileName), Pipeline);
+        /// <returns>A new <see cref="DataLakeFileClient"/> instance.</returns>
+        public virtual DataLakeFileClient GetFileClient(string fileName)
+            => new DataLakeFileClient(Uri.AppendToPath(fileName), Pipeline);
 
         /// <summary>
         /// Gets the blob Uri.
@@ -446,7 +446,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             _containerClient.Delete(
-                conditions,
+                conditions.ToBlobRequestConditions(),
                 cancellationToken);
 
         /// <summary>
@@ -476,7 +476,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await _containerClient.DeleteAsync(
-                conditions,
+                conditions.ToBlobRequestConditions(),
                 cancellationToken)
                 .ConfigureAwait(false);
         #endregion Delete
@@ -512,7 +512,7 @@ namespace Azure.Storage.Files.DataLake
             CancellationToken cancellationToken = default)
         {
             Response<BlobContainerItem> containerResponse = _containerClient.GetProperties(
-                conditions,
+                conditions.ToBlobRequestConditions(),
                 cancellationToken);
 
             return Response.FromValue(
@@ -550,7 +550,7 @@ namespace Azure.Storage.Files.DataLake
             CancellationToken cancellationToken = default)
         {
             Response<BlobContainerItem> response = await _containerClient.GetPropertiesAsync(
-                conditions,
+                conditions.ToBlobRequestConditions(),
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -593,7 +593,7 @@ namespace Azure.Storage.Files.DataLake
         {
             Response<BlobContainerInfo> response = _containerClient.SetMetadata(
                 metadata,
-                conditions,
+                conditions.ToBlobRequestConditions(),
                 cancellationToken);
 
             return Response.FromValue(
@@ -637,7 +637,7 @@ namespace Azure.Storage.Files.DataLake
         {
             Response<BlobContainerInfo> response = await _containerClient.SetMetadataAsync(
                 metadata,
-                conditions,
+                conditions.ToBlobRequestConditions(),
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -659,8 +659,19 @@ namespace Azure.Storage.Files.DataLake
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/list"/>.
         /// </summary>
-        /// <param name="options">
-        /// Specifies options for listing and filtering the paths.
+        /// <param name="path">
+        /// Filters results to paths within the specified directory.
+        /// </param>
+        /// <param name="recursive">
+        /// If "true", all paths are listed; otherwise, only paths at the root of the filesystem are listed.
+        /// </param>
+        /// <param name="upn">
+        /// Optional. Valid only when Hierarchical Namespace is enabled for the account. If
+        /// "true", the user identity values returned in the owner and group fields of each list
+        /// entry will be transformed from Azure Active Directory Object IDs to User Principal
+        /// Names. If "false", the values will be returned as Azure Active Directory Object IDs.
+        /// The default value is false. Note that group and application Object IDs are not translated
+        /// because they do not have unique friendly names.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -675,9 +686,15 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         public virtual Pageable<PathItem> ListPaths(
-            GetPathsOptions? options = default,
+            string path = default,
+            bool recursive = default,
+            bool upn = default,
             CancellationToken cancellationToken = default) =>
-            new GetPathsAsyncCollection(this, options).ToSyncCollection(cancellationToken);
+            new GetPathsAsyncCollection(
+                this,
+                path,
+                recursive,
+                upn).ToSyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="ListPathsAsync"/> operation returns an async
@@ -687,8 +704,19 @@ namespace Azure.Storage.Files.DataLake
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/list"/>.
         /// </summary>
-        /// <param name="options">
-        /// Specifies options for listing and filtering paths.
+        /// <param name="path">
+        /// Filters results to paths within the specified directory.
+        /// </param>
+        /// <param name="recursive">
+        /// If "true", all paths are listed; otherwise, only paths at the root of the filesystem are listed.
+        /// </param>
+        /// <param name="upn">
+        /// Optional. Valid only when Hierarchical Namespace is enabled for the account. If
+        /// "true", the user identity values returned in the owner and group fields of each list
+        /// entry will be transformed from Azure Active Directory Object IDs to User Principal
+        /// Names. If "false", the values will be returned as Azure Active Directory Object IDs.
+        /// The default value is false. Note that group and application Object IDs are not translated
+        /// because they do not have unique friendly names.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -703,9 +731,14 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         public virtual AsyncPageable<PathItem> ListPathsAsync(
-            GetPathsOptions? options = default,
+            string path = default,
+            bool recursive = default,
+            bool upn = default,
             CancellationToken cancellationToken = default) =>
-            new GetPathsAsyncCollection(this, options).ToAsyncCollection(cancellationToken);
+            new GetPathsAsyncCollection(this,
+                path,
+                recursive,
+                upn).ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="ListPathsInternal"/> operation returns a
@@ -719,8 +752,19 @@ namespace Azure.Storage.Files.DataLake
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/list"/>.
         /// </summary>
-        /// <param name="options">
-        /// Specifies options for listing and filtering paths.
+        /// <param name="path">
+        /// Filters results to paths within the specified directory.
+        /// </param>
+        /// <param name="recursive">
+        /// If "true", all paths are listed; otherwise, only paths at the root of the filesystem are listed.
+        /// </param>
+        /// <param name="upn">
+        /// Optional. Valid only when Hierarchical Namespace is enabled for the account. If
+        /// "true", the user identity values returned in the owner and group fields of each list
+        /// entry will be transformed from Azure Active Directory Object IDs to User Principal
+        /// Names. If "false", the values will be returned as Azure Active Directory Object IDs.
+        /// The default value is false. Note that group and application Object IDs are not translated
+        /// because they do not have unique friendly names.
         /// </param>
         /// <param name="continuation">
         /// The number of paths returned with each invocation is limited. If the number of paths
@@ -748,13 +792,15 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         internal async Task<Response<PathSegment>> ListPathsInternal(
-            GetPathsOptions? options,
+            string path,
+            bool recursive,
+            bool upn,
             string continuation,
             int? maxResults,
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(FileSystemClient)))
+            using (Pipeline.BeginLoggingScope(nameof(DataLakeFileSystemClient)))
             {
                 Pipeline.LogMethodEnter(
                     nameof(BlobContainerClient),
@@ -769,10 +815,10 @@ namespace Azure.Storage.Files.DataLake
                         pipeline: Pipeline,
                         resourceUri: _dfsUri,
                         continuation: continuation,
-                        recursive: options?.Recursive ?? false,
+                        recursive: recursive,
                         maxResults: maxResults,
-                        upn: options?.Upn,
-                        path: options?.Path,
+                        upn: upn,
+                        path: path,
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
@@ -802,7 +848,7 @@ namespace Azure.Storage.Files.DataLake
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(FileSystemClient));
+                    Pipeline.LogMethodExit(nameof(DataLakeFileSystemClient));
                 }
             }
         }
@@ -856,16 +902,16 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
-        public virtual Response<DirectoryClient> CreateDirectory(
+        public virtual Response<DataLakeDirectoryClient> CreateDirectory(
             string path,
-            PathHttpHeaders? httpHeaders = default,
+            PathHttpHeaders httpHeaders = default,
             Metadata metadata = default,
             string permissions = default,
             string umask = default,
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DirectoryClient directoryClient = GetDirectoryClient(path);
+            DataLakeDirectoryClient directoryClient = GetDirectoryClient(path);
 
             Response<PathInfo> response = directoryClient.Create(
                 httpHeaders,
@@ -927,16 +973,16 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DirectoryClient>> CreateDirectoryAsync(
+        public virtual async Task<Response<DataLakeDirectoryClient>> CreateDirectoryAsync(
             string path,
-            PathHttpHeaders? httpHeaders = default,
+            PathHttpHeaders httpHeaders = default,
             Metadata metadata = default,
             string permissions = default,
             string umask = default,
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DirectoryClient directoryClient = GetDirectoryClient(path);
+            DataLakeDirectoryClient directoryClient = GetDirectoryClient(path);
 
             Response<PathInfo> response = await GetDirectoryClient(path).CreateAsync(
                 httpHeaders,
@@ -1073,16 +1119,16 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
-        public virtual Response<FileClient> CreateFile(
+        public virtual Response<DataLakeFileClient> CreateFile(
             string path,
-            PathHttpHeaders? httpHeaders = default,
+            PathHttpHeaders httpHeaders = default,
             Metadata metadata = default,
             string permissions = default,
             string umask = default,
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            FileClient fileClient = GetFileClient(path);
+            DataLakeFileClient fileClient = GetFileClient(path);
 
             Response<PathInfo> response = fileClient.Create(
                 httpHeaders,
@@ -1144,16 +1190,16 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
-        public virtual async Task<Response<FileClient>> CreateFileAsync(
+        public virtual async Task<Response<DataLakeFileClient>> CreateFileAsync(
             string path,
-            PathHttpHeaders? httpHeaders = default,
+            PathHttpHeaders httpHeaders = default,
             Metadata metadata = default,
             string permissions = default,
             string umask = default,
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            FileClient fileClient = GetFileClient(path);
+            DataLakeFileClient fileClient = GetFileClient(path);
 
             Response<PathInfo> response = await fileClient.CreateAsync(
                 httpHeaders,
