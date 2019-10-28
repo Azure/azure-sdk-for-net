@@ -98,6 +98,11 @@ steps:
           RootFolder: $(Build.SourcesDirectory)
           BuildSHA: $(Build.SourceVersion)
           RepoId: 'Azure/azure-sdk-for-net'
+      - task: PublishPipelineArtifact@0
+        condition: succeeded()
+        inputs:
+          artifactName: ReadMe.${{artifact.name}}
+          targetPath: $(Build.SourcesDirectory)/sdk/$(packageLocation)/README.md
       - pwsh: |
           # Copy Package ReadMe
           $PkgReadMePath = "$(Build.SourcesDirectory)/sdk/$(packageLocation)/README.md"

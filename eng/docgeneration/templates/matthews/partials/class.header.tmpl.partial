@@ -34,7 +34,7 @@
 </div>
 {{/inheritedMembers.0}}
 
-<h6><strong>{{__global.namespace}}</strong>: {{namespace}}</h6>
+<h6><strong>{{__global.namespace}}</strong>: {{{namespace.specName.0.value}}}</h6>
 <h6><strong>{{__global.assembly}}</strong>: {{assemblies.0}}.dll</h6>
 
 <h5 id="{{id}}_syntax">{{__global.syntax}}</h5>
