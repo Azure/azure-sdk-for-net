@@ -16,6 +16,12 @@ steps:
     displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
     inputs:
       version: $(DotNetCoreSDKVersion)
+  - template: eng/pipelines/templates/scripts/replace-relative-links.yml@azure-sdk-tools
+    parameters:
+      TargetFolder: $(Build.SourcesDirectory)
+      RootFolder: $(Build.SourcesDirectory)
+      BuildSHA: $(Build.SourceVersion)
+      RepoId: 'Azure/azure-sdk-for-net'
   - ${{ if ne(variables['Build.DefinitionName'], 'net - client - ci')}}:
     - ${{ each artifact in parameters.Artifacts }}:
       - pwsh: |
@@ -92,12 +98,6 @@ steps:
           script: $(Build.BinariesDirectory)/docfx/docfx.exe init -q
           workingDirectory: $(Build.BinariesDirectory)/$(artifactSafeName)/docfx-output
           failOnStderr: true
-      - template: eng/pipelines/templates/scripts/replace-relative-links.yml@azure-sdk-tools
-        parameters:
-          TargetFolder: $(Build.SourcesDirectory)
-          RootFolder: $(Build.SourcesDirectory)
-          BuildSHA: $(Build.SourceVersion)
-          RepoId: 'Azure/azure-sdk-for-net'
       - task: PublishPipelineArtifact@0
         condition: succeeded()
         inputs:
