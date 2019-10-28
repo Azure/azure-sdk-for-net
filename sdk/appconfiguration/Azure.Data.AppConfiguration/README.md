@@ -133,7 +133,7 @@ Create a Configuration Setting to be stored in the Configuration Store. There ar
 string connectionString = <connection_string>;
 var client = new ConfigurationClient(connectionString);
 var setting = new ConfigurationSetting("some_key", "some_value");
-client.Set(setting);
+client.SetConfigurationSetting(setting);
 ```
 
 ### Retrieve a Configuration Setting
@@ -143,7 +143,7 @@ Retrieve a previously stored Configuration Setting by calling Get.  This snippet
 ```c#
 string connectionString = <connection_string>;
 var client = new ConfigurationClient(connectionString);
-ConfigurationSetting setting = client.Get("some_key");
+ConfigurationSetting setting = client.GetConfigurationSetting("some_key");
 ```
 
 ### Update an existing Configuration Setting
@@ -153,7 +153,7 @@ Update an existing Configuration Setting by calling Set.  This snippet assumes t
 ```c#
 string connectionString = <connection_string>;
 var client = new ConfigurationClient(connectionString);
-ConfigurationSetting setting = client.Set("some_key", "new_value");
+ConfigurationSetting setting = client.SetConfigurationSetting("some_key", "new_value");
 ```
 
 ### Delete a Configuration Setting
@@ -163,7 +163,7 @@ Delete an existing Configuration Setting by calling Delete.  This snippet assume
 ```c#
 string connectionString = <connection_string>;
 var client = new ConfigurationClient(connectionString);
-ConfigurationSetting setting = client.Delete("some_key");
+ConfigurationSetting setting = client.DeleteConfigurationSetting("some_key");
 ```
 
 ## Troubleshooting
@@ -175,7 +175,7 @@ For example, if you try to retrieve a Configuration Setting that doesn't exist i
 ```c#
 string connectionString = <connection_string>;
 var client = new ConfigurationClient(connectionString);
-ConfigurationSetting setting = client.Get("nonexistent_key");
+ConfigurationSetting setting = client.GetConfigurationSetting("nonexistent_key");
 ```
 
 You will notice that additional information is logged, like the Client Request ID of the operation.
