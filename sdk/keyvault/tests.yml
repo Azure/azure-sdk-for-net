@@ -16,5 +16,49 @@ jobs:
       AZURE_TENANT_ID: $(aad-azure-sdk-test-tenant-id)
       AZURE_CLIENT_ID: $(net-keyvault-azure-client-id)
       AZURE_CLIENT_SECRET: $(net-keyvault-azure-client-secret)
-      AZURE_KEYVAULT_URL: $(net-keyvault-azure-keyvault-url)
+      AZURE_KEYVAULT_URL: $[coalesce('$(AZURE_KEYVAULT_NAME)', '$(net-keyvault-azure-keyvault-url)')]
       AZURE_KEYVAULT_TEST_MODE: Live
+
+    PreSteps:
+    - template: ../../eng/pipelines/templates/steps/azure-cli-login.yml
+      parameters:
+        ClientID: $(net-keyvault-azure-client-id)
+        ClientSecret: $(net-keyvault-azure-client-secret)
+        TenantID: $(aad-azure-sdk-test-tenant-id)
+
+    - pwsh: |
+        Write-Host "##vso[task.setvariable variable=AZURE_KEYVAULT_NAME;isOutput=true]${Env:AZURE_KEYVAULT_NAME}"
+      displayName: Generate resource name
+      name: keyvaultvars
+      env:
+        AZURE_KEYVAULT_NAME: $[format('adpnetkv{0:yyyyMMddss}', pipeline.startTime)]
+
+    - script: |
+        az group create --name "$(AZURE_KEYVAULT_NAME)rg" --location westus --tags service-directory=keyvault test-resource=true
+        az keyvault create --name "$(AZURE_KEYVAULT_NAME)" --resource-group "$(AZURE_KEYVAULT_NAME)rg" --location westus --enable-soft-delete --sku premium
+      displayName: Create Key Vault
+
+    - script: >-
+        az keyvault set-policy --name "$(AZURE_KEYVAULT_NAME) --resource-group "$(AZURE_KEYVAULT_NAME)rg" --spn "$(net-keyvault-azure-client-id)"
+        --certificate-permissions backup create delete deleteissuers get getissuers import list listissuers managecontacts manageissuers purge recover restore setissuers update
+        --key-permissions backup create decrypt delete encrypt get import list purge recover restore sign unwrapKey update verify wrapKey
+        --secret-permissions backup delete get list purge recover restore set
+      displayName: Set Key Vault permissions
+
+- job: Clean
+  dependsOn: Test
+  condition: always()
+  pool: ubuntu-16.04
+  variables:
+    AZURE_KEYVAULT_NAME: $[dependencies.Test.outputs['job1.keyvaultvars.AZURE_KEYVAULT_NAME']]
+
+  steps:
+  - template: ../../eng/pipelines/templates/steps/azure-cli-login.yml
+    parameters:
+      ClientID: $(net-keyvault-azure-client-id)
+      ClientSecret: $(net-keyvault-azure-client-secret)
+      TenantID: $(aad-azure-sdk-test-tenant-id)
+
+  - script: |
+      az group delete --name "$(AZURE_KEYVAULT_NAME)rg" --yes
+    displayName: Delete Key Vault
