@@ -197,7 +197,7 @@ Features and improvements offered in a preview SDK are in a preview capacity. Th
 
 <a name="11.0.0-preview"></a>
 
-# 11.0.0-preview
+# 11.0.0-preview.1
 ## Target API Version
 2019-05-06-Preview
 
