@@ -25,9 +25,9 @@
             {
                 workspace.WorkspaceFailed += OnWorkspaceFailed;
                 workspace.SkipUnrecognizedProjects = false;
-                Project p = await workspace.OpenProjectAsync(projectFilePath);
+                Project p = await workspace.OpenProjectAsync(projectFilePath).ConfigureAwait(false);
 
-                IDictionary<string, HashSet<MethodDeclarationSyntax>> methods = await GetOperationsMethods(p);
+                IDictionary<string, HashSet<MethodDeclarationSyntax>> methods = await GetOperationsMethods(p).ConfigureAwait(false);
 
                 IEnumerable<BatchRequestGroup> groups = methods.Select(kvp => new BatchRequestGroup(kvp.Key, kvp.Value.Select(GetClassSignature)));
 
@@ -37,12 +37,12 @@
 
         private static async Task<IDictionary<string, HashSet<MethodDeclarationSyntax>>> GetOperationsMethods(Project project)
         {
-            var compilation = await project.GetCompilationAsync();
+            var compilation = await project.GetCompilationAsync().ConfigureAwait(false);
             OperationsMethodFinder operationsMethodFinder = new OperationsMethodFinder();
 
             foreach (var syntaxTree in compilation.SyntaxTrees)
             {
-                operationsMethodFinder.Visit(await syntaxTree.GetRootAsync());
+                operationsMethodFinder.Visit(await syntaxTree.GetRootAsync().ConfigureAwait(false));
             }
 
             return operationsMethodFinder.Methods;

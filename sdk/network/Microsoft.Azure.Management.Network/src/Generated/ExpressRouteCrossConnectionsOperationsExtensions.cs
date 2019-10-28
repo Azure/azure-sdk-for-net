@@ -424,52 +424,6 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Updates an express route cross connection tags.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='crossConnectionName'>
-            /// The name of the cross connection.
-            /// </param>
-            /// <param name='crossConnectionParameters'>
-            /// Parameters supplied to update express route cross connection tags.
-            /// </param>
-            public static ExpressRouteCrossConnection BeginUpdateTags(this IExpressRouteCrossConnectionsOperations operations, string resourceGroupName, string crossConnectionName, TagsObject crossConnectionParameters)
-            {
-                return operations.BeginUpdateTagsAsync(resourceGroupName, crossConnectionName, crossConnectionParameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates an express route cross connection tags.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='crossConnectionName'>
-            /// The name of the cross connection.
-            /// </param>
-            /// <param name='crossConnectionParameters'>
-            /// Parameters supplied to update express route cross connection tags.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ExpressRouteCrossConnection> BeginUpdateTagsAsync(this IExpressRouteCrossConnectionsOperations operations, string resourceGroupName, string crossConnectionName, TagsObject crossConnectionParameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.BeginUpdateTagsWithHttpMessagesAsync(resourceGroupName, crossConnectionName, crossConnectionParameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Gets the currently advertised ARP table associated with the express route
             /// cross connection in a resource group.
             /// </summary>

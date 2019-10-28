@@ -1,0 +1,143 @@
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
+  <PropertyGroup>
+    <!--<LanguageTargets>$(MSBuildToolsPath)\Microsoft.CSharp.targets</LanguageTargets>-->
+    <!--<LanguageTargets>$(MSBuildExtensionsPath)\$(VisualStudioVersion)\Bin\Microsoft.CSharp.targets</LanguageTargets>-->
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{205A62E4-93BC-414C-8344-2E7A46E1252A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Azure.CognitiveServices.InkRecognizer.WPF.Stroke</RootNamespace>
+    <AssemblyName>Azure.CognitiveServices.InkRecognizer.WPF.Stroke</AssemblyName>
+    <UseWPF>true</UseWPF>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>Current</OldToolsVersion>
+    <Version>1.0.0-preview.1</Version>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Update="Azure.Core" Version="1.0.0-preview.8" />
+    <!--<PackageReference Include="Azure.Core" Version="1.0.0-preview.8" targetFramework="net461" />-->
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.0.0-preview6.19259.10" />
+    <!--<PackageReference Include="Azure.Core" version="1.0.0-preview.6" targetFramework="net461" />-->
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" version="1.0.0-preview6.19259.10" targetFramework="net461" />
+    <PackageReference Include="System.Buffers" version="4.5.0" targetFramework="net461" />
+    <PackageReference Include="System.Memory" version="4.5.2" targetFramework="net461" />
+    <PackageReference Include="System.Numerics.Vectors" version="4.5.0" targetFramework="net461" />
+    <!-- <PackageReference Include="System.Runtime.CompilerServices.Unsafe" version="4.5.2" targetFramework="net461" />-->
+    <PackageReference Include="System.Threading.Tasks.Extensions" version="4.5.2" targetFramework="net461" />
+    <PackageReference Include="Azure.ClientSdk.Analyzers" version="0.1.1-dev.20190716.1" targetFramework="net461" />
+    <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20190716.1" />
+    <PackageReference Update="System.Memory" Version="4.5.3" />
+    <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="1.0.0-preview7.19362.9" />
+    <PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.0" />
+    <PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="2.1.0" />
+    <PackageReference Update="Microsoft.Extensions.Logging.Abstractions" Version="2.1.0" />
+    <PackageReference Update="Microsoft.Extensions.Options" Version="2.1.0" />
+    <PackageReference Update="System.Threading.Channels" Version="4.6.0-preview7.19362.9" />
+    <PackageReference Update="System.Text.Json" Version="4.6.0-preview7.19362.9" />
+    <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="4.6.0-preview7.19362.9" />
+    <!--<PackageReference Update="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.2" />-->
+    <!--<PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-19367-01" />-->
+    <!--<PackageReference Update="StyleCop.Analyzers" Version="1.1.118" /> -->
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.2" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-19367-01" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" />
+    <!--
+    <PackageReference Include="Azure.ClientSdk.Analyzers" version="0.1.1-dev.20190716.1" targetFramework="net461" />
+    <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20190716.1" />
+    <PackageReference Update="System.Memory" Version="4.5.3" />
+    <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="1.0.0-preview7.19362.9" />
+    <PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.0" />
+    <PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="2.1.0" />
+    <PackageReference Update="Microsoft.Extensions.Logging.Abstractions" Version="2.1.0" />
+    <PackageReference Update="Microsoft.Extensions.Options" Version="2.1.0" />
+    <PackageReference Update="System.Threading.Channels" Version="4.6.0-preview7.19362.9" />
+    <PackageReference Update="System.Text.Json" Version="4.6.0-preview7.19362.9" />
+    <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="4.6.0-preview7.19362.9" />   
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.2" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-19367-01" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" version="4.6.0-preview7.19362.9" targetFramework="net461" /> 
+-->
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\*.png" />
+    <Compile Update="**\*.xaml.cs" SubType="Code" DependentUpon="%(Filename)" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StrokeStore.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\InkRecognizer\src\Azure.AI.InkRecognizer.csproj">
+      <Project>{c302e788-b3af-4dd2-9cc4-bd495bfbc5bf}</Project>
+      <Name>Azure.AI.InkRecognizer</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

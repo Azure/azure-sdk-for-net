@@ -35,10 +35,13 @@ namespace Microsoft.Azure.Management.Security.Models
         /// to this policy</param>
         /// <param name="ports">Port configurations for the virtual
         /// machine</param>
-        public JitNetworkAccessPolicyVirtualMachine(string id, IList<JitNetworkAccessPortRule> ports)
+        /// <param name="publicIpAddress">Public IP address of the Azure
+        /// Firewall that is linked to this policy, if applicable</param>
+        public JitNetworkAccessPolicyVirtualMachine(string id, IList<JitNetworkAccessPortRule> ports, string publicIpAddress = default(string))
         {
             Id = id;
             Ports = ports;
+            PublicIpAddress = publicIpAddress;
             CustomInit();
         }
 
@@ -59,6 +62,13 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </summary>
         [JsonProperty(PropertyName = "ports")]
         public IList<JitNetworkAccessPortRule> Ports { get; set; }
+
+        /// <summary>
+        /// Gets or sets public IP address of the Azure Firewall that is linked
+        /// to this policy, if applicable
+        /// </summary>
+        [JsonProperty(PropertyName = "publicIpAddress")]
+        public string PublicIpAddress { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Threading.Tasks;
@@ -15,7 +14,7 @@ namespace Azure.Storage.Files.Samples
 {
     /// <summary>
     /// Demonstrate various authorization and authentication mechanisms.
-    /// 
+    ///
     /// For more information, see
     /// https://docs.microsoft.com/en-us/azure/storage/common/storage-auth
     /// </summary>
@@ -23,7 +22,7 @@ namespace Azure.Storage.Files.Samples
     {
         /// <summary>
         /// Use a connection string to connect to a Storage account.
-        /// 
+        ///
         /// A connection string includes the authentication information
         /// required for your application to access data in an Azure Storage
         /// account at runtime using Shared Key authorization.
@@ -35,9 +34,9 @@ namespace Azure.Storage.Files.Samples
             // obtain your connection string from the Azure Portal (click
             // Access Keys under Settings in the Portal Storage account blade)
             // or using the Azure CLI with:
-            // 
+            //
             //     az storage account show-connection-string --name <account_name> --resource-group <resource_group>
-            // 
+            //
             // And you can provide the connection string to your application
             // using an environment variable.
             string connectionString = ConnectionString;
@@ -51,7 +50,7 @@ namespace Azure.Storage.Files.Samples
 
         /// <summary>
         /// Use a shared key to access a Storage Account.
-        /// 
+        ///
         /// Shared Key authorization relies on your account access keys and
         /// other parameters to produce an encrypted signature string that is
         /// passed on the request in the Authorization header.
@@ -60,15 +59,15 @@ namespace Azure.Storage.Files.Samples
         public async Task SharedKeyAuthAsync()
         {
             // Get a Storage account name, shared key, and endpoint Uri.
-            // 
+            //
             // You can obtain both from the Azure Portal by clicking Access
             // Keys under Settings in the Portal Storage account blade.
-            // 
+            //
             // You can also get access to your account keys from the Azure CLI
             // with:
-            // 
+            //
             //     az storage account keys list --account-name <account_name> --resource-group <resource_group>
-            // 
+            //
             string accountName = StorageAccountName;
             string accountKey = StorageAccountKey;
             Uri serviceUri = StorageAccountFileUri;
@@ -85,7 +84,7 @@ namespace Azure.Storage.Files.Samples
 
         /// <summary>
         /// Use a shared access signature to acces a Storage Account.
-        /// 
+        ///
         /// A shared access signature (SAS) is a URI that grants restricted
         /// access rights to Azure Storage resources. You can provide a shared
         /// access signature to clients who should not be trusted with your
@@ -103,17 +102,16 @@ namespace Azure.Storage.Files.Samples
             AccountSasBuilder sas = new AccountSasBuilder
             {
                 // Allow access to files
-                Services = new AccountSasServices() { Files = true }.ToString(),
+                Services = AccountSasServices.Files,
 
                 // Allow access to the service level APIs
-                ResourceTypes = new AccountSasResourceTypes() { Service = true }.ToString(),
-
-                // Allow read access
-                Permissions = new AccountSasPermissions() { Read = true }.ToString(),
+                ResourceTypes = AccountSasResourceTypes.Service,
 
                 // Access expires in 1 hour!
-                ExpiryTime = DateTimeOffset.UtcNow.AddHours(1)
+                ExpiresOn = DateTimeOffset.UtcNow.AddHours(1)
             };
+            // Allow read access
+            sas.SetPermissions(AccountSasPermissions.Read);
 
             // Create a SharedKeyCredential that we can use to sign the SAS token
             StorageSharedKeyCredential credential = new StorageSharedKeyCredential(StorageAccountName, StorageAccountKey);
@@ -130,8 +128,8 @@ namespace Azure.Storage.Files.Samples
 
             // Try to create a new container (which is beyond our
             // delegated permission)
-            StorageRequestFailedException ex =
-                Assert.ThrowsAsync<StorageRequestFailedException>(
+            RequestFailedException ex =
+                Assert.ThrowsAsync<RequestFailedException>(
                     async () => await service.CreateShareAsync(Randomize("sample-share")));
             Assert.AreEqual(403, ex.Status);
         }

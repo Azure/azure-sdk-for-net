@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -11,7 +10,7 @@ namespace Azure.Storage
     /// <summary>
     /// Extension methods to make tests easier to author.
     /// </summary>
-    public static class TestExtensions
+    public static partial class TestExtensions
     {
         /// <summary>
         /// Convert an IAsyncEnumerable into a List to make test verification
@@ -23,7 +22,7 @@ namespace Azure.Storage
         public static async Task<IList<T>> ToListAsync<T>(this IAsyncEnumerable<T> items)
         {
             var all = new List<T>();
-            await foreach (var item in items)
+            await foreach (T item in items)
             {
                 all.Add(item);
             }
@@ -41,7 +40,7 @@ namespace Azure.Storage
         /// </returns>
         public static async Task<T> FirstAsync<T>(this IAsyncEnumerable<T> items)
         {
-            await foreach (var item in items)
+            await foreach (T item in items)
             {
                 return item;
             }

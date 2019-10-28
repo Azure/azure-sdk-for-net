@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Globalization;
@@ -9,30 +8,30 @@ namespace Azure.Security.KeyVault.Secrets
 {
     internal struct ObjectId
     {
-        Uri _id;
+        public Uri Id { get; set; }
 
-        public Uri Id => _id;
-
-        public Uri Vault { get; set; }
+        public Uri VaultUri { get; set; }
 
         public string Name { get; set; }
 
         public string Version { get; set; }
 
-        public void ParseId(string collection, string id)
+        public void ParseId(string collection, string id) => ParseId(collection, new Uri(id, UriKind.Absolute));
+
+        public void ParseId(string collection, Uri id)
         {
-            _id = new Uri(id, UriKind.Absolute); ;
+            Id = id;
 
             // We expect an identifier with either 3 or 4 segments: host + collection + name [+ version]
-            if (_id.Segments.Length != 3 && _id.Segments.Length != 4)
-                throw new ArgumentException(String.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. Bad number of segments: {1}", id, _id.Segments.Length));
+            if (Id.Segments.Length != 3 && Id.Segments.Length != 4)
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. Bad number of segments: {1}", id, Id.Segments.Length));
 
-            if (!string.Equals(_id.Segments[1], collection + "/", StringComparison.OrdinalIgnoreCase))
-                throw new ArgumentException(String.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. segment [1] should be '{1}/', found '{2}'", id, collection, _id.Segments[1]));
+            if (!string.Equals(Id.Segments[1], collection + "/", StringComparison.OrdinalIgnoreCase))
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. segment [1] should be '{1}/', found '{2}'", id, collection, Id.Segments[1]));
 
-            Vault = new Uri($"{_id.Scheme}://{_id.Authority}");
-            Name = _id.Segments[2].Trim('/');
-            Version = (_id.Segments.Length == 4) ? _id.Segments[3].TrimEnd('/') : null;
+            VaultUri = new Uri($"{Id.Scheme}://{Id.Authority}");
+            Name = Id.Segments[2].Trim('/');
+            Version = (Id.Segments.Length == 4) ? Id.Segments[3].TrimEnd('/') : null;
         }
     }
 }

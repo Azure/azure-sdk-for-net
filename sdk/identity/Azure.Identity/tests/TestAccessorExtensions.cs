@@ -11,23 +11,15 @@ namespace Azure.Identity.Tests
 {
     internal static class TestAccessorExtensions
     {
-        public static string _client(this ClientSecretCredential credential)
+        public static ClientSecretCredential _client(this ClientSecretCredential credential)
         {
-            return typeof(ClientSecretCredential).GetField("_client", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(credential) as string;
+            return typeof(ClientSecretCredential).GetField("_client", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(credential) as ClientSecretCredential;
         }
         public static void _client(this ClientSecretCredential credential, AadIdentityClient client)
         {
             typeof(ClientSecretCredential).GetField("_client", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(credential, client);
         }
 
-        public static ManagedIdentityClient _client(this ManagedIdentityCredential credential)
-        {
-            return typeof(ManagedIdentityCredential).GetField("_client", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(credential) as ManagedIdentityClient;
-        }
-        public static void _client(this ManagedIdentityCredential credential, ManagedIdentityClient client)
-        {
-            typeof(ManagedIdentityCredential).GetField("_client", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(credential, client);
-        }
         public static SecureString ToSecureString(this string plainString)
         {
             if (plainString == null)
@@ -39,6 +31,16 @@ namespace Azure.Identity.Tests
                 secureString.AppendChar(c);
             }
             return secureString;
+        }
+
+        public static void _client(this InteractiveBrowserCredential credential, MsalPublicClient client)
+        {
+            typeof(InteractiveBrowserCredential).GetField("_client", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(credential, client);
+        }
+
+        public static IExtendedTokenCredential[] _sources(this DefaultAzureCredential credential)
+        {
+            return typeof(DefaultAzureCredential).GetField("_sources", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(credential) as IExtendedTokenCredential[];
         }
     }
 }

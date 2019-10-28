@@ -25,5 +25,5 @@ using Xunit;
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("1050e361-5461-40c6-a866-6b90e01aac9c")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("3.0.0.0")]
+[assembly: AssemblyFileVersion("3.0.0.0")]

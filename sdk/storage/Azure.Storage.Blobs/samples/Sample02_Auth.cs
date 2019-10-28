@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.IO;
@@ -18,7 +17,7 @@ namespace Azure.Storage.Blobs.Samples
 {
     /// <summary>
     /// Demonstrate various authorization and authentication mechanisms.
-    /// 
+    ///
     /// For more information, see
     /// https://docs.microsoft.com/en-us/azure/storage/common/storage-auth
     /// </summary>
@@ -26,7 +25,7 @@ namespace Azure.Storage.Blobs.Samples
     {
         /// <summary>
         /// Use a connection string to connect to a Storage account.
-        /// 
+        ///
         /// A connection string includes the authentication information
         /// required for your application to access data in an Azure Storage
         /// account at runtime using Shared Key authorization.
@@ -38,9 +37,9 @@ namespace Azure.Storage.Blobs.Samples
             // obtain your connection string from the Azure Portal (click
             // Access Keys under Settings in the Portal Storage account blade)
             // or using the Azure CLI with:
-            // 
+            //
             //     az storage account show-connection-string --name <account_name> --resource-group <resource_group>
-            // 
+            //
             // And you can provide the connection string to your application
             // using an environment variable.
             string connectionString = ConnectionString;
@@ -54,12 +53,12 @@ namespace Azure.Storage.Blobs.Samples
 
         /// <summary>
         /// Anonymously access a public blob.
-        /// 
+        ///
         /// You can enable anonymous, public read access to a container and its
         /// blobs in Azure Blob storage.  By doing so, you can grant read-only
         /// access to these resources without sharing your account key, and
-        /// without requiring a shared access signature (SAS).  
-        /// 
+        /// without requiring a shared access signature (SAS).
+        ///
         /// Public read access is best for scenarios where you want certain
         /// blobs to always be available for anonymous read access.  For more
         /// fine-grained control, you can create a shared access signature.
@@ -90,7 +89,7 @@ namespace Azure.Storage.Blobs.Samples
 
         /// <summary>
         /// Use a shared key to access a Storage Account.
-        /// 
+        ///
         /// Shared Key authorization relies on your account access keys and
         /// other parameters to produce an encrypted signature string that is
         /// passed on the request in the Authorization header.
@@ -99,15 +98,15 @@ namespace Azure.Storage.Blobs.Samples
         public async Task SharedKeyAuthAsync()
         {
             // Get a Storage account name, shared key, and endpoint Uri.
-            // 
+            //
             // You can obtain both from the Azure Portal by clicking Access
             // Keys under Settings in the Portal Storage account blade.
-            // 
+            //
             // You can also get access to your account keys from the Azure CLI
             // with:
-            // 
+            //
             //     az storage account keys list --account-name <account_name> --resource-group <resource_group>
-            // 
+            //
             string accountName = StorageAccountName;
             string accountKey = StorageAccountKey;
             Uri serviceUri = StorageAccountBlobUri;
@@ -124,7 +123,7 @@ namespace Azure.Storage.Blobs.Samples
 
         /// <summary>
         /// Use a shared access signature to acces a Storage Account.
-        /// 
+        ///
         /// A shared access signature (SAS) is a URI that grants restricted
         /// access rights to Azure Storage resources. You can provide a shared
         /// access signature to clients who should not be trusted with your
@@ -142,17 +141,16 @@ namespace Azure.Storage.Blobs.Samples
             AccountSasBuilder sas = new AccountSasBuilder
             {
                 // Allow access to blobs
-                Services = new AccountSasServices() { Blobs = true }.ToString(),
+                Services = AccountSasServices.Blobs,
 
                 // Allow access to the service level APIs
-                ResourceTypes = new AccountSasResourceTypes() { Service = true }.ToString(),
-
-                // Allow read access
-                Permissions = new AccountSasPermissions() {  Read = true }.ToString(),
+                ResourceTypes = AccountSasResourceTypes.Service,
 
                 // Access expires in 1 hour!
-                ExpiryTime = DateTimeOffset.UtcNow.AddHours(1)
+                ExpiresOn = DateTimeOffset.UtcNow.AddHours(1)
             };
+            // Allow read access
+            sas.SetPermissions(AccountSasPermissions.Read);
 
             // Create a SharedKeyCredential that we can use to sign the SAS token
             StorageSharedKeyCredential credential = new StorageSharedKeyCredential(StorageAccountName, StorageAccountKey);
@@ -169,15 +167,15 @@ namespace Azure.Storage.Blobs.Samples
 
             // Try to create a new container (which is beyond our
             // delegated permission)
-            StorageRequestFailedException ex = 
-                Assert.ThrowsAsync<StorageRequestFailedException>(
+            RequestFailedException ex =
+                Assert.ThrowsAsync<RequestFailedException>(
                     async () => await service.CreateBlobContainerAsync(Randomize("sample-container")));
             Assert.AreEqual(403, ex.Status);
         }
 
         /// <summary>
         /// Use an Active Directory token to access a Storage account.
-        /// 
+        ///
         /// Azure Storage provides integration with Azure Active Directory
         /// (Azure AD) for identity-based authentication of requests to the
         /// Blob and Queue services. With Azure AD, you can use role-based
@@ -185,8 +183,8 @@ namespace Azure.Storage.Blobs.Samples
         /// resources to users, groups, or applications. You can grant
         /// permissions that are scoped to the level of an individual
         /// container or queue.
-        /// 
-        /// To learn more about Azure AD integration in Azure Storage, see 
+        ///
+        /// To learn more about Azure AD integration in Azure Storage, see
         /// https://docs.microsoft.com/en-us/azure/storage/common/storage-auth-aad
         /// </summary>
         [Test]
@@ -194,12 +192,12 @@ namespace Azure.Storage.Blobs.Samples
         {
             // Create a token credential that can use our Azure Active
             // Directory application to authenticate with Azure Storage
-            TokenCredential credential = 
+            TokenCredential credential =
                 new ClientSecretCredential(
                     ActiveDirectoryTenantId,
                     ActiveDirectoryApplicationId,
                     ActiveDirectoryApplicationSecret,
-                    new IdentityClientOptions() { AuthorityHost = ActiveDirectoryAuthEndpoint });
+                    new TokenCredentialOptions() { AuthorityHost = ActiveDirectoryAuthEndpoint });
 
             // Create a client that can authenticate using our token credential
             BlobServiceClient service = new BlobServiceClient(ActiveDirectoryBlobUri, credential);

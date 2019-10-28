@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Keys.Tests
 {
-    public class KeyClientTests: ClientTestBase
+    public class KeyClientTests : ClientTestBase
     {
         public KeyClientTests(bool isAsync) : base(isAsync)
         {
@@ -21,88 +21,87 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public void CreateKeyArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentException>(() => Client.CreateKeyAsync(null, KeyType.EllipticCurve));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.CreateKeyAsync("name", default));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.CreateKeyAsync("", KeyType.EllipticCurve));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.CreateKeyAsync(null, KeyType.Ec));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.CreateKeyAsync("name", default));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.CreateKeyAsync(string.Empty, KeyType.Ec));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.CreateEcKeyAsync(null));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.CreateRsaKeyAsync(null));
         }
 
         [Test]
-        public void UpdateKeyArgumentValidation()
+        public void UpdateKeyPropertiesArgumentValidation()
         {
-            var keyOperations = new List<KeyOperations>() { KeyOperations.Sign };
-            var key = new KeyBase("name");
+            var keyOperations = new List<KeyOperation>() { KeyOperation.Sign };
+            var key = new KeyProperties("name");
 
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateKeyAsync(null, null));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateKeyAsync(null, keyOperations));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateKeyAsync(key, null));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateKeyAsync(key, keyOperations));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateKeyPropertiesAsync(null, null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateKeyPropertiesAsync(null, keyOperations));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateKeyPropertiesAsync(key, null));
         }
 
         [Test]
         public void RestoreKeyArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RestoreKeyAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RestoreKeyBackupAsync(null));
         }
 
         [Test]
         public void PurgeDeletedKeyArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentException>(() => Client.PurgeDeletedKeyAsync(null));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.PurgeDeletedKeyAsync(""));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.PurgeDeletedKeyAsync(null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.PurgeDeletedKeyAsync(string.Empty));
         }
 
         [Test]
         public void GetKeyArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentException>(() => Client.GetKeyAsync(null));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.GetKeyAsync(""));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.GetKeyAsync(null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.GetKeyAsync(string.Empty));
         }
 
         [Test]
         public void DeleteKeyArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentException>(() => Client.DeleteKeyAsync(null));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.DeleteKeyAsync(""));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.StartDeleteKeyAsync(null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.StartDeleteKeyAsync(string.Empty));
         }
 
         [Test]
         public void GetDeletedKeyArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentException>(() => Client.GetDeletedKeyAsync(null));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.GetDeletedKeyAsync(""));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.GetDeletedKeyAsync(null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.GetDeletedKeyAsync(string.Empty));
         }
 
         [Test]
         public void RecoverDeletedKeyArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentException>(() => Client.RecoverDeletedKeyAsync(null));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.RecoverDeletedKeyAsync(""));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.StartRecoverDeletedKeyAsync(null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.StartRecoverDeletedKeyAsync(string.Empty));
         }
 
         [Test]
         public void BackupKeyArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentException>(() => Client.BackupKeyAsync(null));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.BackupKeyAsync(""));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.BackupKeyAsync(null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.BackupKeyAsync(string.Empty));
         }
 
         [Test]
         public void ImportKeyArgumentValidation()
         {
-            var keyMaterial = new JsonWebKey();
+            var jwk = new JsonWebKey();
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.ImportKeyAsync(null));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.ImportKeyAsync("", keyMaterial));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.ImportKeyAsync(null, keyMaterial));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.ImportKeyAsync(null, null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.ImportKeyAsync(string.Empty, jwk));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.ImportKeyAsync(null, jwk));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.ImportKeyAsync(null, null));
         }
 
         [Test]
         public void GetKeyVersionsArgumentValidation()
         {
-            Assert.Throws<ArgumentException>(() => Client.GetKeyVersionsAsync(null));
-            Assert.Throws<ArgumentException>(() => Client.GetKeyVersionsAsync(""));
+            Assert.Throws<ArgumentNullException>(() => Client.GetPropertiesOfKeyVersionsAsync(null));
+            Assert.Throws<ArgumentException>(() => Client.GetPropertiesOfKeyVersionsAsync(string.Empty));
         }
     }
 }

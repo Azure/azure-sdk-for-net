@@ -54,7 +54,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Content-Length": [
-          "928"
+          "938"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"

@@ -60,10 +60,10 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="idleTimeoutInMinutes">The idle timeout of the public
         /// IP address.</param>
         /// <param name="resourceGuid">The resource GUID property of the public
-        /// IP resource.</param>
+        /// IP address resource.</param>
         /// <param name="provisioningState">The provisioning state of the
-        /// PublicIP resource. Possible values are: 'Updating', 'Deleting', and
-        /// 'Failed'.</param>
+        /// public IP address resource. Possible values include: 'Succeeded',
+        /// 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         /// <param name="zones">A list of availability zones denoting the IP
@@ -161,24 +161,25 @@ namespace Microsoft.Azure.Management.Network.Models
         public int? IdleTimeoutInMinutes { get; set; }
 
         /// <summary>
-        /// Gets or sets the resource GUID property of the public IP resource.
+        /// Gets the resource GUID property of the public IP address resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceGuid")]
-        public string ResourceGuid { get; set; }
+        public string ResourceGuid { get; private set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the PublicIP resource.
-        /// Possible values are: 'Updating', 'Deleting', and 'Failed'.
+        /// Gets the provisioning state of the public IP address resource.
+        /// Possible values include: 'Succeeded', 'Updating', 'Deleting',
+        /// 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets or sets a unique read-only string that changes whenever the
-        /// resource is updated.
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
         /// <summary>
         /// Gets or sets a list of availability zones denoting the IP allocated

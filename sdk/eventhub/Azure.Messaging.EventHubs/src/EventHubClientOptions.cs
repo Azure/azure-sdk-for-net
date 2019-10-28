@@ -90,9 +90,9 @@ namespace Azure.Messaging.EventHubs
         internal EventHubClientOptions Clone() =>
             new EventHubClientOptions
             {
-                TransportType = this.TransportType,
-                Proxy = this.Proxy,
-                _retryOptions = this.RetryOptions.Clone()
+                TransportType = TransportType,
+                Proxy = Proxy,
+                _retryOptions = RetryOptions.Clone()
             };
 
         /// <summary>

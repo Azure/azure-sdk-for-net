@@ -34,8 +34,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models
         /// result.</param>
         public Sentiment(double score, string label = default(string))
         {
-            Score = score;
             Label = label;
+            Score = score;
             CustomInit();
         }
 
@@ -45,16 +45,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the sentiment score of the query.
-        /// </summary>
-        [JsonProperty(PropertyName = "score")]
-        public double Score { get; set; }
-
-        /// <summary>
         /// Gets or sets the label of the sentiment analysis result.
         /// </summary>
         [JsonProperty(PropertyName = "label")]
         public string Label { get; set; }
+
+        /// <summary>
+        /// Gets or sets the sentiment score of the query.
+        /// </summary>
+        [JsonProperty(PropertyName = "score")]
+        public double Score { get; set; }
 
         /// <summary>
         /// Validate the object.

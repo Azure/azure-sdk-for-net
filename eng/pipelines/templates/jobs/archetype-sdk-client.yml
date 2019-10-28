@@ -11,24 +11,33 @@ jobs:
           echo "##vso[build.addbuildtag]Scheduled"
         displayName: "Tag scheduled builds"
         condition: and(eq(variables['Build.SourceBranchName'],'master'),eq(variables['Build.Reason'],'Schedule'))
+      - pwsh: |
+          $skipDevBuildNumber = "false"
+          if ('$(Build.Reason)' -eq 'Manual') {
+            $skipDevBuildNumber = "true"
+          }
+          $versioningProperties = "/p:OfficialBuildId=$(OfficialBuildId) /p:SkipDevBuildNumber=$skipDevBuildNumber";
+          echo "##vso[task.setvariable variable=VersioningProperties]$versioningProperties"
+        displayName: "Setup Versioning Properties"
       - task: DotNetCoreInstaller@2
         displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
         inputs:
           version: "$(DotNetCoreSDKVersion)"
       - script: >-
           dotnet pack eng/service.proj -o $(Build.ArtifactStagingDirectory) -warnaserror /p:ServiceDirectory=${{parameters.ServiceDirectory}}
-          /p:PublicSign=false ${{ parameters.VersioningProperties }} /p:Configuration=$(BuildConfiguration) /p:CommitSHA=$(Build.SourceVersion)
+          /p:PublicSign=false $(VersioningProperties) /p:Configuration=$(BuildConfiguration) /p:CommitSHA=$(Build.SourceVersion)
         displayName: "Build and Package"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
           DOTNET_MULTILEVEL_LOOKUP: 0
       - task: PublishPipelineArtifact@1
-        condition: succeededOrFailed()
+        condition: succeeded()
         inputs:
           artifactName: packages
           path: $(Build.ArtifactStagingDirectory)
   - job: "Analyze"
+    condition: ne(variables['Skip.Analyze'], true)
     variables:
       - template: ../variables/globals.yml
     dependsOn:
@@ -71,12 +80,13 @@ jobs:
           ignoreDirectories: "sdk/storage/Azure.Storage.Common/swagger/Generator"
         condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
       - task: PublishPipelineArtifact@1
-        condition: succeededOrFailed()
+        condition: succeeded()
         displayName: "Publish Report Artifacts"
         inputs:
           artifactName: reports
           path: $(Build.ArtifactStagingDirectory)/dependencies.html
   - job: "Test"
+    condition: ne(variables['Skip.Test'], true)
     variables:
       - template: ../variables/globals.yml
     strategy:
@@ -117,7 +127,7 @@ jobs:
           packageType: sdk
           version: "$(DotNetCoreSDKVersion)"
       - script: >-
-          dotnet test eng/service.proj --filter TestCategory!=Live --framework $(TestTargetFramework) --logger "trx;LogFileName=$(TestTargetFramework).trx" 
+          dotnet test eng/service.proj --filter TestCategory!=Live --framework $(TestTargetFramework) --logger "trx;LogFileName=$(TestTargetFramework).trx"
           /p:ServiceDirectory=${{ parameters.ServiceDirectory }} /p:IncludeSrc=false /p:IncludeSamples=false /p:Configuration=$(BuildConfiguration)
         displayName: "Build & Test ($(TestTargetFramework))"
         env:

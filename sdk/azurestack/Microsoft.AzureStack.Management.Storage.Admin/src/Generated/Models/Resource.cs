@@ -13,8 +13,6 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -35,16 +33,14 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
         /// </summary>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource Name.</param>
-        /// <param name="type">Resource type.</param>
-        /// <param name="location">Resource location.</param>
-        /// <param name="tags">Resource tags.</param>
-        public Resource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="type">Resource Type.</param>
+        /// <param name="location">Resource Location.</param>
+        public Resource(string id = default(string), string name = default(string), string type = default(string), string location = default(string))
         {
             Id = id;
             Name = name;
             Type = type;
             Location = location;
-            Tags = tags;
             CustomInit();
         }
 
@@ -66,22 +62,16 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets resource type.
+        /// Gets resource Type.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets resource location.
+        /// Gets resource Location.
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; private set; }
-
-        /// <summary>
-        /// Gets resource tags.
-        /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; private set; }
 
     }
 }

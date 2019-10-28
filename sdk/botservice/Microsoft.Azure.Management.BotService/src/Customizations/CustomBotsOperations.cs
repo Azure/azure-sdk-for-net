@@ -235,7 +235,7 @@ namespace Microsoft.Azure.Management.BotService
 
         public async Task<AzureOperationResponse<IPage<Bot>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await innerBotServicesOperations.ListWithHttpMessagesAsync(customHeaders, cancellationToken);
+            return await innerBotServicesOperations.ListWithHttpMessagesAsync(customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

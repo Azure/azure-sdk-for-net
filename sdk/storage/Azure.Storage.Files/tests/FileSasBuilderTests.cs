@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using Azure.Storage.Files.Tests;
@@ -24,26 +23,27 @@ namespace Azure.Storage.Files.Test
         {
             // Arrange
             var constants = new TestConstants(this);
-            var shareName = this.GetNewShareName();
-            var filePath = this.GetNewDirectoryName();
-            var fileSasBuilder = this.BuildFileSasBuilder(includeVersion: true, includeFilePath: true, constants, shareName, filePath);
-            var signature = this.BuildSignature(includeFilePath: true, includeVersion: true, constants, shareName, filePath);
+            var shareName = GetNewShareName();
+            var filePath = GetNewDirectoryName();
+            FileSasBuilder fileSasBuilder = BuildFileSasBuilder(includeVersion: true, includeFilePath: true, constants, shareName, filePath);
+            var signature = BuildSignature(includeFilePath: true, includeVersion: true, constants, shareName, filePath);
 
             // Act
             var sasQueryParameters = fileSasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential);
 
             // Assert
             Assert.AreEqual(constants.Sas.Version, sasQueryParameters.Version);
-            Assert.AreEqual(String.Empty, sasQueryParameters.Services);
-            Assert.AreEqual(String.Empty, sasQueryParameters.ResourceTypes);
+            Assert.IsNull(sasQueryParameters.Services);
+            Assert.IsNull(sasQueryParameters.ResourceTypes);
             Assert.AreEqual(constants.Sas.Protocol, sasQueryParameters.Protocol);
-            Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartTime);
-            Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiryTime);
+            Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartsOn);
+            Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiresOn);
             Assert.AreEqual(constants.Sas.IPRange, sasQueryParameters.IPRange);
             Assert.AreEqual(constants.Sas.Identifier, sasQueryParameters.Identifier);
             Assert.AreEqual(Constants.Sas.Resource.File, sasQueryParameters.Resource);
             Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
             Assert.AreEqual(signature, sasQueryParameters.Signature);
+            AssertResponseHeaders(constants, sasQueryParameters);
         }
 
         [Test]
@@ -51,26 +51,27 @@ namespace Azure.Storage.Files.Test
         {
             // Arrange
             var constants = new TestConstants(this);
-            var shareName = this.GetNewShareName();
-            var filePath = this.GetNewDirectoryName();
-            var fileSasBuilder = this.BuildFileSasBuilder(includeVersion: false, includeFilePath: false, constants, shareName, filePath);
-            var signature = this.BuildSignature(includeFilePath: false, includeVersion: false, constants, shareName, filePath);
+            var shareName = GetNewShareName();
+            var filePath = GetNewDirectoryName();
+            FileSasBuilder fileSasBuilder = BuildFileSasBuilder(includeVersion: false, includeFilePath: false, constants, shareName, filePath);
+            var signature = BuildSignature(includeFilePath: false, includeVersion: false, constants, shareName, filePath);
 
             // Act
             var sasQueryParameters = fileSasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential);
 
             // Assert
             Assert.AreEqual(SasQueryParameters.DefaultSasVersion, sasQueryParameters.Version);
-            Assert.AreEqual(String.Empty, sasQueryParameters.Services);
-            Assert.AreEqual(String.Empty, sasQueryParameters.ResourceTypes);
+            Assert.IsNull(sasQueryParameters.Services);
+            Assert.IsNull(sasQueryParameters.ResourceTypes);
             Assert.AreEqual(constants.Sas.Protocol, sasQueryParameters.Protocol);
-            Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartTime);
-            Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiryTime);
+            Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartsOn);
+            Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiresOn);
             Assert.AreEqual(constants.Sas.IPRange, sasQueryParameters.IPRange);
             Assert.AreEqual(constants.Sas.Identifier, sasQueryParameters.Identifier);
             Assert.AreEqual(Constants.Sas.Resource.Share, sasQueryParameters.Resource);
             Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
             Assert.AreEqual(signature, sasQueryParameters.Signature);
+            AssertResponseHeaders(constants, sasQueryParameters);
         }
 
         [Test]
@@ -78,9 +79,9 @@ namespace Azure.Storage.Files.Test
         {
             // Arrange
             var constants = new TestConstants(this);
-            var shareName = this.GetNewShareName();
-            var filePath = this.GetNewDirectoryName();
-            var fileSasBuilder = this.BuildFileSasBuilder(includeVersion: true, includeFilePath: true, constants, shareName, filePath);
+            var shareName = GetNewShareName();
+            var filePath = GetNewDirectoryName();
+            FileSasBuilder fileSasBuilder = BuildFileSasBuilder(includeVersion: true, includeFilePath: true, constants, shareName, filePath);
 
             // Act
             Assert.Throws<ArgumentNullException>(() => fileSasBuilder.ToSasQueryParameters(null), "sharedKeyCredential");
@@ -92,9 +93,8 @@ namespace Azure.Storage.Files.Test
             {
                 Version = null,
                 Protocol = constants.Sas.Protocol,
-                StartTime = constants.Sas.StartTime,
-                ExpiryTime = constants.Sas.ExpiryTime,
-                Permissions = Permissions,
+                StartsOn = constants.Sas.StartTime,
+                ExpiresOn = constants.Sas.ExpiryTime,
                 IPRange = constants.Sas.IPRange,
                 Identifier = constants.Sas.Identifier,
                 ShareName = shareName,
@@ -105,13 +105,14 @@ namespace Azure.Storage.Files.Test
                 ContentLanguage = constants.Sas.ContentLanguage,
                 ContentType = constants.Sas.ContentType
             };
+            fileSasBuilder.SetPermissions(FileSasPermissions.All);
 
             if (includeVersion)
             {
                 fileSasBuilder.Version = constants.Sas.Version;
             }
 
-            if(includeFilePath)
+            if (includeFilePath)
             {
                 fileSasBuilder.FilePath = filePath;
             }
@@ -122,19 +123,19 @@ namespace Azure.Storage.Files.Test
         private string BuildSignature(bool includeFilePath, bool includeVersion, TestConstants constants, string shareName, string filePath)
         {
             var canonicalName = "/file/" + constants.Sas.Account + "/" + shareName;
-            if(includeFilePath)
+            if (includeFilePath)
             {
                 canonicalName += "/" + filePath;
             }
 
-            var stringToSign = String.Join("\n",
+            var stringToSign = string.Join("\n",
                 Permissions,
                 SasQueryParameters.FormatTimesForSasSigning(constants.Sas.StartTime),
                 SasQueryParameters.FormatTimesForSasSigning(constants.Sas.ExpiryTime),
                 canonicalName,
                 constants.Sas.Identifier,
                 constants.Sas.IPRange.ToString(),
-                constants.Sas.Protocol.ToString(),
+                constants.Sas.Protocol.ToProtocolString(),
                 includeVersion ? constants.Sas.Version : SasQueryParameters.DefaultSasVersion,
                 constants.Sas.CacheControl,
                 constants.Sas.ContentDisposition,

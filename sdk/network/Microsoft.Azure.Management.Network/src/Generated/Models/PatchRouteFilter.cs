@@ -41,9 +41,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// circuit peerings.</param>
         /// <param name="ipv6Peerings">A collection of references to express
         /// route circuit ipv6 peerings.</param>
-        /// <param name="provisioningState">The provisioning state of the
-        /// resource. Possible values are: 'Updating', 'Deleting', 'Succeeded'
-        /// and 'Failed'.</param>
+        /// <param name="provisioningState">The provisioning state of the route
+        /// filter resource. Possible values include: 'Succeeded', 'Updating',
+        /// 'Deleting', 'Failed'</param>
         /// <param name="name">The name of the resource that is unique within a
         /// resource group. This name can be used to access the
         /// resource.</param>
@@ -78,22 +78,21 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<RouteFilterRule> Rules { get; set; }
 
         /// <summary>
-        /// Gets or sets a collection of references to express route circuit
-        /// peerings.
+        /// Gets a collection of references to express route circuit peerings.
         /// </summary>
         [JsonProperty(PropertyName = "properties.peerings")]
-        public IList<ExpressRouteCircuitPeering> Peerings { get; set; }
+        public IList<ExpressRouteCircuitPeering> Peerings { get; private set; }
 
         /// <summary>
-        /// Gets or sets a collection of references to express route circuit
-        /// ipv6 peerings.
+        /// Gets a collection of references to express route circuit ipv6
+        /// peerings.
         /// </summary>
         [JsonProperty(PropertyName = "properties.ipv6Peerings")]
-        public IList<ExpressRouteCircuitPeering> Ipv6Peerings { get; set; }
+        public IList<ExpressRouteCircuitPeering> Ipv6Peerings { get; private set; }
 
         /// <summary>
-        /// Gets the provisioning state of the resource. Possible values are:
-        /// 'Updating', 'Deleting', 'Succeeded' and 'Failed'.
+        /// Gets the provisioning state of the route filter resource. Possible
+        /// values include: 'Succeeded', 'Updating', 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }

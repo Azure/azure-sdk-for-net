@@ -342,52 +342,6 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Updates a route table tags.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='routeTableName'>
-            /// The name of the route table.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to update route table tags.
-            /// </param>
-            public static RouteTable BeginUpdateTags(this IRouteTablesOperations operations, string resourceGroupName, string routeTableName, TagsObject parameters)
-            {
-                return operations.BeginUpdateTagsAsync(resourceGroupName, routeTableName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates a route table tags.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='routeTableName'>
-            /// The name of the route table.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to update route table tags.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<RouteTable> BeginUpdateTagsAsync(this IRouteTablesOperations operations, string resourceGroupName, string routeTableName, TagsObject parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.BeginUpdateTagsWithHttpMessagesAsync(resourceGroupName, routeTableName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Gets all route tables in a resource group.
             /// </summary>
             /// <param name='operations'>

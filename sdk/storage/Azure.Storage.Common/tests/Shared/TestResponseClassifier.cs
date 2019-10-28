@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Storage.Test
@@ -18,11 +18,11 @@ namespace Azure.Storage.Test
         /// </summary>
         /// <param name="response">The response.</param>
         /// <returns>Whether it should be retried.</returns>
-        public override bool IsRetriableResponse(Response response)
+        public override bool IsRetriableResponse(HttpMessage message)
         {
             // Retry select Storage Error Codes
-            if (response.Status >= 400 &&
-                response.Headers.TryGetValue("x-ms-error-code", out var error))
+            if (message.Response.Status >= 400 &&
+                message.Response.Headers.TryGetValue("x-ms-error-code", out var error))
             {
                 switch (error)
                 {
@@ -35,7 +35,7 @@ namespace Azure.Storage.Test
             }
 
             // Otherwise use the default rules
-            return base.IsRetriableResponse(response);
+            return base.IsRetriableResponse(message);
         }
     }
 }

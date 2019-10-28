@@ -1,4 +1,4 @@
-﻿using NetApp.Tests.Helpers;
+using NetApp.Tests.Helpers;
 using Microsoft.Azure.Management.NetApp;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Test.HttpRecorder;
@@ -32,14 +32,14 @@ namespace NetApp.Tests.ResourceTests
                 ResourceUtils.CreatePool(netAppMgmtClient, ResourceUtils.poolName1, ResourceUtils.accountName1, poolOnly: true);
                 var poolsBefore = netAppMgmtClient.Pools.List(ResourceUtils.resourceGroup, ResourceUtils.accountName1);
                 Assert.Single(poolsBefore);
-
+                /*
                 // delete the pool and check again
                 netAppMgmtClient.Pools.Delete(ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1);
                 var poolsAfter = netAppMgmtClient.Pools.List(ResourceUtils.resourceGroup, ResourceUtils.accountName1);
                 Assert.Empty(poolsAfter);
 
                 // cleanup - remove the account
-                ResourceUtils.DeleteAccount(netAppMgmtClient);
+                ResourceUtils.DeleteAccount(netAppMgmtClient);*/
             }
         }
 

@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Search
     /// This attribute is useful in situations where a property definition doesn't cleanly map to a <c cref="Field">Field</c>
     /// object, but its values still need to be converted to and from JSON. In that case,
     /// <c cref="Newtonsoft.Json.JsonIgnoreAttribute">JsonIgnore</c> can't be used since it would disable JSON conversion.
-    /// An example of a scenario where this is useful is when mapping between a string field in Azure Search and an enum
+    /// An example of a scenario where this is useful is when mapping between a string field in Azure Cognitive Search and an enum
     /// property.
     /// </remarks>
     [AttributeUsage(AttributeTargets.Property)]

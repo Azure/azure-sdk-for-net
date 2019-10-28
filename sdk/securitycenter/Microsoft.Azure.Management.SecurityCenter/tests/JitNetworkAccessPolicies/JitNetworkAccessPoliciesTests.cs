@@ -45,7 +45,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void JitNetworkAccessPolicies_List()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var jitNetworkAccessPolicies = securityCenterClient.JitNetworkAccessPolicies.List();
@@ -56,7 +56,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void JitNetworkAccessPolicies_Delete()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 securityCenterClient.JitNetworkAccessPolicies.Delete("mainWS", "default");
@@ -66,7 +66,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void JitNetworkAccessPolicies_Get()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var jitNetworkAccessPolicy = securityCenterClient.JitNetworkAccessPolicies.Get("myService1", "default");
@@ -77,7 +77,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void JitNetworkAccessPolicies_Initiate()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var vm = new JitNetworkAccessPolicyInitiateVirtualMachine() {
@@ -95,7 +95,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void JitNetworkAccessPolicies_ListByRegion()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var jitNetworkAccessPolicy = securityCenterClient.JitNetworkAccessPolicies.ListByRegion();
@@ -105,7 +105,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void JitNetworkAccessPolicies_CreateOrUpdate()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var vm = new List<JitNetworkAccessPolicyVirtualMachine>() { new JitNetworkAccessPolicyVirtualMachine() { Id = "/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/myService1/providers/Microsoft.Compute/virtualMachines/syslogmyservice1vm",Ports = new List<JitNetworkAccessPortRule>() { new JitNetworkAccessPortRule(8080, "TCP", "PT5H", "192.168.0.5") } } };
@@ -123,7 +123,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void JitNetworkAccessPolicies_ListByResourceGroup()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var jitNetworkAccessPolicies = securityCenterClient.JitNetworkAccessPolicies.ListByResourceGroup("myService1");
@@ -134,7 +134,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void JitNetworkAccessPolicies_ListByResourceGroupAndRegion()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var jitNetworkAccessPolicies = securityCenterClient.JitNetworkAccessPolicies.ListByResourceGroupAndRegion("myService1");

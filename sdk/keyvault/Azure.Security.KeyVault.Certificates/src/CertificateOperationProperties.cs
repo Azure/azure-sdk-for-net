@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Globalization;
 using System.Text.Json;
 
@@ -84,29 +87,37 @@ namespace Azure.Security.KeyVault.Certificates
                     case IdPropertyName:
                         var id = prop.Value.GetString();
                         Id = new Uri(id);
-                        ParseId(id);
+                        ParseId(Id);
                         break;
+
                     case IssuerProperyName:
                         IssuerName = prop.Value.GetProperty(IssuerNamePropertyName).GetString();
                         break;
+
                     case CsrPropertyName:
                         CertificateSigningRequest = prop.Value.GetString();
                         break;
+
                     case CancellationRequestedPropertyName:
                         CancellationRequested = prop.Value.GetBoolean();
                         break;
+
                     case RequestIdPropertyName:
                         RequestId = prop.Value.GetString();
                         break;
+
                     case StatusPropertyName:
                         Status = prop.Value.GetString();
                         break;
+
                     case StatusDetailsPropertyName:
                         StatusDetails = prop.Value.GetString();
                         break;
+
                     case TargetPropertyName:
                         Target = prop.Value.GetString();
                         break;
+
                     case ErrorPropertyName:
                         Error = new Error();
                         ((IJsonDeserializable)Error).ReadProperties(prop.Value);
@@ -114,16 +125,15 @@ namespace Azure.Security.KeyVault.Certificates
                 }
             }
         }
-        private void ParseId(string id)
-        {
-            var idToParse = new Uri(id, UriKind.Absolute); ;
 
+        private void ParseId(Uri idToParse)
+        {
             // We expect an identifier with either 3 or 4 segments: host + collection + name [+ version]
             if (idToParse.Segments.Length != 3 && idToParse.Segments.Length != 4)
-                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. Bad number of segments: {1}", id, idToParse.Segments.Length));
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. Bad number of segments: {1}", idToParse, idToParse.Segments.Length));
 
             if (!string.Equals(idToParse.Segments[1], "certificates" + "/", StringComparison.OrdinalIgnoreCase))
-                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. segment [1] should be 'certificates/', found '{1}'", id, idToParse.Segments[1]));
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. segment [1] should be 'certificates/', found '{1}'", idToParse, idToParse.Segments[1]));
 
             VaultUri = new Uri($"{idToParse.Scheme}://{idToParse.Authority}");
             Name = idToParse.Segments[2].Trim('/');

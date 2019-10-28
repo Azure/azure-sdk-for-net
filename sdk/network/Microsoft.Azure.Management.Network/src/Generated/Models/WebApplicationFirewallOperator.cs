@@ -26,5 +26,6 @@ namespace Microsoft.Azure.Management.Network.Models
         public const string BeginsWith = "BeginsWith";
         public const string EndsWith = "EndsWith";
         public const string Regex = "Regex";
+        public const string GeoMatch = "GeoMatch";
     }
 }
