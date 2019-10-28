@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.EventHubs.Metadata;
 
 namespace Azure.Messaging.EventHubs.Core
 {
@@ -19,27 +18,28 @@ namespace Azure.Messaging.EventHubs.Core
     internal abstract class TransportEventHubConsumer
     {
         /// <summary>
-        ///   A set of information about the enqueued state of a partition, as observed by the consumer as
-        ///   events are received from the Event Hubs service.
+        ///   Indicates whether or not this consumer has been closed.
         /// </summary>
         ///
-        /// <value><c>null</c>, if the information was not requested; otherwise, the last observed set of partition metrics.</value>
+        /// <value>
+        ///   <c>true</c> if the consumer is closed; otherwise, <c>false</c>.
+        /// </value>
         ///
-        public LastEnqueuedEventProperties LastEnqueuedEventInformation { get; }
+        public virtual bool Closed { get; }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="TransportEventHubConsumer"/> class.
+        ///   The most recent event received from the Event Hubs service by this consumer instance.
         /// </summary>
         ///
-        /// <param name="lastEnqueuedEventProperties">The set of properties for the last event enqueued in a partition.</param>
+        /// <value>
+        ///   <c>null</c>, if the <see cref="EventHubConsumerOptions.TrackLastEnqueuedEventInformation" /> was not requested; otherwise,
+        ///   the most recently received event.
+        /// </value>
         ///
-        protected TransportEventHubConsumer(LastEnqueuedEventProperties lastEnqueuedEventProperties = null)
-        {
-            LastEnqueuedEventInformation = lastEnqueuedEventProperties;
-        }
+        public EventData LastReceivedEvent { get;  protected set; }
 
         /// <summary>
-        ///   Updates the active retry policy for the client.
+        ///   Updates the active retry policy for the consumer.
         /// </summary>
         ///
         /// <param name="newRetryPolicy">The retry policy to set as active.</param>

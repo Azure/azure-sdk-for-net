@@ -39,4 +39,3 @@ namespace Microsoft.Azure.Management.Reservations
       // END: Code Generation Metadata Section
   }
 }
-

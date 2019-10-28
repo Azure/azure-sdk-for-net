@@ -30,7 +30,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 MaximumReceiveWaitTime = TimeSpan.FromMinutes(65)
             };
 
-            var clone = options.Clone();
+            EventProcessorOptions clone = options.Clone();
 
             Assert.That(clone, Is.Not.Null, "The clone should not be null.");
             Assert.That(clone, Is.Not.SameAs(options), "The clone should be a different instance.");

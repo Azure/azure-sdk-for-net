@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using Azure.Core.Testing;
 using NUnit.Framework;
@@ -28,14 +27,14 @@ namespace Azure.Data.AppConfiguration.Samples
             // There are two ways to store a Configuration Setting:
             //   -AddAsync creates a setting only if the setting does not already exist in the store.
             //   -SetAsync creates a setting if it doesn't exist or overrides an existing setting
-            client.Set(setting);
+            client.SetConfigurationSetting(setting);
 
             // Retrieve a previously stored Configuration Setting by calling GetAsync.
-            ConfigurationSetting gotSetting = client.Get("some_key");
+            ConfigurationSetting gotSetting = client.GetConfigurationSetting("some_key");
             Debug.WriteLine(gotSetting.Value);
 
             // Delete the Configuration Setting from the Configuration Store when you don't need it anymore.
-            client.Delete("some_key");
+            client.DeleteConfigurationSetting("some_key");
         }
     }
 }

@@ -51,11 +51,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="authResourceGuid">The resource guid of the
         /// authorization used for the express route circuit
         /// connection.</param>
-        /// <param name="provisioningState">Provisioning state of the peer
-        /// express route circuit connection resource. Possible values are:
-        /// 'Succeeded', 'Updating', 'Deleting', and 'Failed'.</param>
-        /// <param name="name">Gets name of the resource that is unique within
-        /// a resource group. This name can be used to access the
+        /// <param name="provisioningState">The provisioning state of the peer
+        /// express route circuit connection resource. Possible values include:
+        /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
+        /// <param name="name">The name of the resource that is unique within a
+        /// resource group. This name can be used to access the
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
@@ -124,16 +124,16 @@ namespace Microsoft.Azure.Management.Network.Models
         public string AuthResourceGuid { get; set; }
 
         /// <summary>
-        /// Gets provisioning state of the peer express route circuit
-        /// connection resource. Possible values are: 'Succeeded', 'Updating',
-        /// 'Deleting', and 'Failed'.
+        /// Gets the provisioning state of the peer express route circuit
+        /// connection resource. Possible values include: 'Succeeded',
+        /// 'Updating', 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets name of the resource that is unique within a resource group.
-        /// This name can be used to access the resource.
+        /// Gets or sets the name of the resource that is unique within a
+        /// resource group. This name can be used to access the resource.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

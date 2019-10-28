@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/luis/v3.0-preview/apps/7555b7c1-e69c-4580-9d95-1abd6dfa8291/slots/production/predict",
-      "EncodedRequestUri": "L2x1aXMvdjMuMC1wcmV2aWV3L2FwcHMvNzU1NWI3YzEtZTY5Yy00NTgwLTlkOTUtMWFiZDZkZmE4MjkxL3Nsb3RzL3Byb2R1Y3Rpb24vcHJlZGljdA==",
+      "RequestUri": "/luis/prediction/v3.0/apps/7555b7c1-e69c-4580-9d95-1abd6dfa8291/slots/production/predict",
+      "EncodedRequestUri": "L2x1aXMvcHJlZGljdGlvbi92My4wL2FwcHMvNzU1NWI3YzEtZTY5Yy00NTgwLTlkOTUtMWFiZDZkZmE4MjkxL3Nsb3RzL3Byb2R1Y3Rpb24vcHJlZGljdA==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"query\": \"this is a test with post\"\r\n}",
       "RequestHeaders": {
@@ -10,10 +10,10 @@
           "00000000000000000000000000000000"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27414.06",
+          "FxVersion/4.6.27817.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.LUISRuntimeClient/2.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.LUISRuntimeClient/3.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -30,10 +30,10 @@
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "f55e861b-c0b8-474a-a32a-f65a510de7bd"
+          "0ccdf36b-cb60-45c6-b48b-dfb20b595162"
         ],
         "Request-Id": [
-          "f55e861b-c0b8-474a-a32a-f65a510de7bd"
+          "0ccdf36b-cb60-45c6-b48b-dfb20b595162"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -48,7 +48,7 @@
           "SAMEORIGIN"
         ],
         "Date": [
-          "Mon, 29 Apr 2019 18:53:23 GMT"
+          "Fri, 18 Oct 2019 10:39:18 GMT"
         ],
         "Content-Length": [
           "154"

@@ -40,7 +40,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="protocols">Array of ApplicationRuleProtocols.</param>
         /// <param name="targetFqdns">List of FQDNs for this rule.</param>
         /// <param name="fqdnTags">List of FQDN Tags for this rule.</param>
-        public AzureFirewallApplicationRule(string name = default(string), string description = default(string), IList<string> sourceAddresses = default(IList<string>), IList<AzureFirewallApplicationRuleProtocol> protocols = default(IList<AzureFirewallApplicationRuleProtocol>), IList<string> targetFqdns = default(IList<string>), IList<string> fqdnTags = default(IList<string>))
+        /// <param name="sourceIpGroups">List of source IpGroups for this
+        /// rule.</param>
+        public AzureFirewallApplicationRule(string name = default(string), string description = default(string), IList<string> sourceAddresses = default(IList<string>), IList<AzureFirewallApplicationRuleProtocol> protocols = default(IList<AzureFirewallApplicationRuleProtocol>), IList<string> targetFqdns = default(IList<string>), IList<string> fqdnTags = default(IList<string>), IList<string> sourceIpGroups = default(IList<string>))
         {
             Name = name;
             Description = description;
@@ -48,6 +50,7 @@ namespace Microsoft.Azure.Management.Network.Models
             Protocols = protocols;
             TargetFqdns = targetFqdns;
             FqdnTags = fqdnTags;
+            SourceIpGroups = sourceIpGroups;
             CustomInit();
         }
 
@@ -91,6 +94,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "fqdnTags")]
         public IList<string> FqdnTags { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of source IpGroups for this rule.
+        /// </summary>
+        [JsonProperty(PropertyName = "sourceIpGroups")]
+        public IList<string> SourceIpGroups { get; set; }
 
     }
 }

@@ -309,7 +309,7 @@ $@"{{
             [Fact]
             public void CanReadArraysOfMixedTypes()
             {
-                // Azure Search won't return payloads like this; This test is only for pinning purposes.
+                // Azure Cognitive Search won't return payloads like this; This test is only for pinning purposes.
                 const string Json =
 @"{
     ""field"": [
@@ -378,7 +378,7 @@ $@"{{
                 const string Json = @"{ ""field"": [null, null] }";
 
                 // With only null elements, we can't tell what type of collection it is. For backward compatibility, we assume type string.
-                // This shouldn't happen in practice anyway since Azure Search generally doesn't allow nulls in collections.
+                // This shouldn't happen in practice anyway since Azure Cognitive Search generally doesn't allow nulls in collections.
                 var expectedDoc = new Document() { ["field"] = new string[] { null, null } };
 
                 Document actualDoc = Deserialize(Json);

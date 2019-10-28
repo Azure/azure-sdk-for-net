@@ -11,6 +11,10 @@
     <PackageTags>Reservations;</PackageTags>
 		<PackageReleaseNotes>
 			Update billing plan sdk
+		<Version>1.12.0-preview</Version>
+    <PackageTags>Reservations;</PackageTags>
+		<PackageReleaseNotes>
+			Release Billing Plan for Reservations.
 		</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

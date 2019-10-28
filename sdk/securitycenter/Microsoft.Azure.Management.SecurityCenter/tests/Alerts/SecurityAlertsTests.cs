@@ -45,7 +45,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void SecurityAlerts_List()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var alerts = securityCenterClient.Alerts.List();
@@ -56,7 +56,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public async Task SecurityAlerts_GetResourceGroupLevelAlerts()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
 
@@ -76,7 +76,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public async Task SecurityAlerts_GetSubscriptionLevelAlert()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
 
@@ -96,7 +96,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public async Task SecurityAlerts_ListByResourceGroup()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var alerts = await securityCenterClient.Alerts.ListAsync();
@@ -113,7 +113,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public async Task SecurityAlerts_ListResourceGroupLevelAlertsByRegion()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var alerts = await securityCenterClient.Alerts.ListAsync();
@@ -131,7 +131,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public async Task SecurityAlerts_ListSubscriptionLevelAlertsByRegion()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var alerts = await securityCenterClient.Alerts.ListAsync();
@@ -150,7 +150,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public async Task SecurityAlerts_UpdateResourceGroupLevelAlertState()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var alerts = await securityCenterClient.Alerts.ListAsync();
@@ -168,7 +168,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public async Task SecurityAlerts_UpdateSubscriptionLevelAlertState()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var alerts = await securityCenterClient.Alerts.ListAsync();

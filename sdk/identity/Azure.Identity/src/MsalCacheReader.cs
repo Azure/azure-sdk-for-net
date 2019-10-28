@@ -21,14 +21,14 @@ namespace Azure.Identity
         {
             _cachePath = cachePath;
 
-            _cacheLockPath = cachePath + ".lock";
+            _cacheLockPath = cachePath + ".lockfile";
 
             _cacheRetryCount = cacheRetryCount;
 
             _cacheRetryDelay = cacheRetryDelay;
 
             cache.SetBeforeAccessAsync(OnBeforeAccessAsync);
-        } 
+        }
 
         private async Task OnBeforeAccessAsync(TokenCacheNotificationArgs args)
         {
@@ -38,7 +38,7 @@ namespace Azure.Identity
 
                 if (File.Exists(_cachePath) && _lastReadTime < cacheTimestamp)
                 {
-                    using (var cacheLock = await SentinalFileLock.AquireAsync(_cacheLockPath, _cacheRetryCount, _cacheRetryDelay).ConfigureAwait(false))
+                    using (SentinelFileLock cacheLock = await SentinelFileLock.AcquireAsync(_cacheLockPath, _cacheRetryCount, _cacheRetryDelay).ConfigureAwait(false))
                     {
                         byte[] cacheBytesFromDisk = await ReadCacheFromProtectedStorageAsync().ConfigureAwait(false);
 

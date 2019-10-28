@@ -36,8 +36,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="type">Resource type.</param>
         /// <param name="location">Resource location.</param>
         /// <param name="tags">Resource tags.</param>
-        /// <param name="etag">Gets a unique read-only string that changes
-        /// whenever the resource is updated.</param>
+        /// <param name="etag">A unique read-only string that changes whenever
+        /// the resource is updated.</param>
         public NetworkIntentPolicy(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string))
             : base(id, name, type, location, tags)
         {
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
     }
 }

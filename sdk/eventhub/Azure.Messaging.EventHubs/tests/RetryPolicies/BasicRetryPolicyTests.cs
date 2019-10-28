@@ -29,9 +29,10 @@ namespace Azure.Messaging.EventHubs.Tests
             yield return new object[] { new TimeoutException() };
             yield return new object[] { new SocketException(500) };
 
-            // Task Canceled should use the inner exception as the decision point.
+            // Task/Operation Canceled should use the inner exception as the decision point.
 
             yield return new object[] { new TaskCanceledException("dummy", new EventHubsException(true, null)) };
+            yield return new object[] { new OperationCanceledException("dummy", new EventHubsException(true, null)) };
 
             // Aggregate should use the first inner exception as the decision point.
 
@@ -58,9 +59,10 @@ namespace Azure.Messaging.EventHubs.Tests
             yield return new object[] { new OutOfMemoryException() };
             yield return new object[] { new ObjectDisposedException("dummy") };
 
-            // Task Canceled should use the inner exception as the decision point.
+            // Task/Operation Canceled should use the inner exception as the decision point.
 
             yield return new object[] { new TaskCanceledException("dummy", new EventHubsException(false, null)) };
+            yield return new object[] { new OperationCanceledException("dummy", new EventHubsException(false, null)) };
 
             // Null is not retriable, even if it is a blessed type.
 
@@ -293,12 +295,12 @@ namespace Azure.Messaging.EventHubs.Tests
                 Mode = RetryMode.Exponential
             });
 
-            var previousDelay = TimeSpan.Zero;
+            TimeSpan previousDelay = TimeSpan.Zero;
 
             for (var index = 0; index < iterations; ++index)
             {
                 var variance = TimeSpan.FromSeconds((policy.Options.Delay.TotalSeconds * index) * policy.JitterFactor);
-                var delay = policy.CalculateRetryDelay(Mock.Of<TimeoutException>(), index);
+                TimeSpan? delay = policy.CalculateRetryDelay(Mock.Of<TimeoutException>(), index);
 
                 Assert.That(delay.HasValue, Is.True, $"Iteration: { index } did not have a value.");
                 Assert.That(delay.Value, Is.GreaterThan(previousDelay.Add(variance)), $"Iteration: { index } produced an unexpected delay.");

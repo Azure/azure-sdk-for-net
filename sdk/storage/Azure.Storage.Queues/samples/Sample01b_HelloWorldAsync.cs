@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -18,7 +17,7 @@ namespace Azure.Storage.Queues.Samples
     /// <summary>
     /// Basic Azure Queue Storage samples
     /// </summary>
-    public class Sample01a_HelloWorldAsync : SampleTest
+    public class Sample01b_HelloWorldAsync : SampleTest
     {
         /// <summary>
         /// Create a queue and add a message.
@@ -30,9 +29,9 @@ namespace Azure.Storage.Queues.Samples
             // obtain your connection string from the Azure Portal (click
             // Access Keys under Settings in the Portal Storage account blade)
             // or using the Azure CLI with:
-            // 
+            //
             //     az storage account show-connection-string --name <account_name> --resource-group <resource_group>
-            // 
+            //
             // And you can provide the connection string to your application
             // using an environment variable.
             string connectionString = ConnectionString;
@@ -43,7 +42,7 @@ namespace Azure.Storage.Queues.Samples
             try
             {
                 // Add a message to our queue
-                await queue.EnqueueMessageAsync("Hello, Azure!");
+                await queue.SendMessageAsync("Hello, Azure!");
 
                 // Verify we uploaded one message
                 Assert.AreEqual(1, (await queue.PeekMessagesAsync(10)).Value.Count());
@@ -70,15 +69,15 @@ namespace Azure.Storage.Queues.Samples
             try
             {
                 // Add several messages to the queue
-                await queue.EnqueueMessageAsync("first");
-                await queue.EnqueueMessageAsync("second");
-                await queue.EnqueueMessageAsync("third");
-                await queue.EnqueueMessageAsync("fourth");
-                await queue.EnqueueMessageAsync("fifth");
+                await queue.SendMessageAsync("first");
+                await queue.SendMessageAsync("second");
+                await queue.SendMessageAsync("third");
+                await queue.SendMessageAsync("fourth");
+                await queue.SendMessageAsync("fifth");
 
                 // Get the messages from the queue
                 List<string> messages = new List<string>();
-                foreach (DequeuedMessage message in (await queue.DequeueMessagesAsync(maxMessages: 10)).Value)
+                foreach (QueueMessage message in (await queue.ReceiveMessagesAsync(maxMessages: 10)).Value)
                 {
                     // "Process" the message
                     messages.Add(message.MessageText);
@@ -118,11 +117,11 @@ namespace Azure.Storage.Queues.Samples
             try
             {
                 // Add several messages to the queue
-                await queue.EnqueueMessageAsync("first");
-                await queue.EnqueueMessageAsync("second");
-                await queue.EnqueueMessageAsync("third");
-                await queue.EnqueueMessageAsync("fourth");
-                await queue.EnqueueMessageAsync("fifth");
+                await queue.SendMessageAsync("first");
+                await queue.SendMessageAsync("second");
+                await queue.SendMessageAsync("third");
+                await queue.SendMessageAsync("fourth");
+                await queue.SendMessageAsync("fifth");
 
                 // Get the messages from the queue
                 List<string> messages = new List<string>();
@@ -163,19 +162,19 @@ namespace Azure.Storage.Queues.Samples
             try
             {
                 // Add several messages to the queue
-                await queue.EnqueueMessageAsync("first");
-                await queue.EnqueueMessageAsync("second");
-                await queue.EnqueueMessageAsync("third");
+                await queue.SendMessageAsync("first");
+                await queue.SendMessageAsync("second");
+                await queue.SendMessageAsync("third");
 
                 // Get the messages from the queue with a short visibility timeout
-                List<DequeuedMessage> messages = new List<DequeuedMessage>();
-                foreach (DequeuedMessage message in (await queue.DequeueMessagesAsync(10, TimeSpan.FromSeconds(1))).Value)
+                List<QueueMessage> messages = new List<QueueMessage>();
+                foreach (QueueMessage message in (await queue.ReceiveMessagesAsync(10, TimeSpan.FromSeconds(1))).Value)
                 {
                     // Tell the service we need a little more time to process the message
-                    UpdatedMessage changedMessage = await queue.UpdateMessageAsync(
-                        message.MessageText,
+                    UpdateReceipt changedMessage = await queue.UpdateMessageAsync(
                         message.MessageId,
                         message.PopReceipt,
+                        message.MessageText,
                         TimeSpan.FromSeconds(5));
                     messages.Add(message.Update(changedMessage));
                 }
@@ -184,10 +183,10 @@ namespace Azure.Storage.Queues.Samples
                 await Task.Delay(TimeSpan.FromSeconds(1.5));
 
                 // Ensure the messages aren't visible yet
-                Assert.AreEqual(0, (await queue.DequeueMessagesAsync(10)).Value.Count());
+                Assert.AreEqual(0, (await queue.ReceiveMessagesAsync(10)).Value.Count());
 
                 // Finish processing the messages
-                foreach (DequeuedMessage message in messages)
+                foreach (QueueMessage message in messages)
                 {
                     // Tell the service we need a little more time to process the message
                     await queue.DeleteMessageAsync(message.MessageId, message.PopReceipt);
@@ -218,12 +217,12 @@ namespace Azure.Storage.Queues.Samples
                 // Try to create the queue again
                 await queue.CreateAsync();
             }
-            catch (StorageRequestFailedException ex)
+            catch (RequestFailedException ex)
                 when (ex.ErrorCode == QueueErrorCode.QueueAlreadyExists)
             {
                 // Ignore any errors if the queue already exists
             }
-            catch (StorageRequestFailedException ex)
+            catch (RequestFailedException ex)
             {
                 Assert.Fail($"Unexpected error: {ex}");
             }

@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System.Text.Json;
 
@@ -11,6 +10,14 @@ namespace Azure.Security.KeyVault.Certificates
     /// </summary>
     public class Contact : IJsonDeserializable, IJsonSerializable
     {
+        private const string NamePropertyName = "name";
+        private const string EmailPropertyName = "email";
+        private const string PhonePropertyName = "phone";
+
+        private static readonly JsonEncodedText s_namePropertyNameBytes = JsonEncodedText.Encode(NamePropertyName);
+        private static readonly JsonEncodedText s_emailPropertyNameBytes = JsonEncodedText.Encode(EmailPropertyName);
+        private static readonly JsonEncodedText s_phonePropertyNameBytes = JsonEncodedText.Encode(PhonePropertyName);
+
         /// <summary>
         /// Email address of the contact
         /// </summary>
@@ -25,10 +32,6 @@ namespace Azure.Security.KeyVault.Certificates
         /// </summary>
         public string Phone { get; set; }
 
-        private const string NamePropertyName = "name";
-        private const string EmailPropertyName = "email";
-        private const string PhonePropertyName = "phone";
-
         void IJsonDeserializable.ReadProperties(JsonElement json)
         {
             foreach (JsonProperty prop in json.EnumerateObject())
@@ -38,9 +41,11 @@ namespace Azure.Security.KeyVault.Certificates
                     case NamePropertyName:
                         Name = prop.Value.GetString();
                         break;
+
                     case EmailPropertyName:
                         Email = prop.Value.GetString();
                         break;
+
                     case PhonePropertyName:
                         Phone = prop.Value.GetString();
                         break;
@@ -48,25 +53,21 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
 
-        private static readonly JsonEncodedText NamePropertyNameBytes = JsonEncodedText.Encode(NamePropertyName);
-        private static readonly JsonEncodedText EmailPropertyNameBytes = JsonEncodedText.Encode(EmailPropertyName);
-        private static readonly JsonEncodedText PhonePropertyNameBytes = JsonEncodedText.Encode(PhonePropertyName);
-
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {
             if (!string.IsNullOrEmpty(Name))
             {
-                json.WriteString(NamePropertyNameBytes, Name);
+                json.WriteString(s_namePropertyNameBytes, Name);
             }
 
             if (!string.IsNullOrEmpty(Email))
             {
-                json.WriteString(EmailPropertyNameBytes, Email);
+                json.WriteString(s_emailPropertyNameBytes, Email);
             }
 
             if (!string.IsNullOrEmpty(Phone))
             {
-                json.WriteString(PhonePropertyNameBytes, Phone);
+                json.WriteString(s_phonePropertyNameBytes, Phone);
             }
         }
     }

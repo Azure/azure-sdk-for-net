@@ -36,7 +36,7 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "11999"
+          "11997"
         ],
         "x-ms-request-id": [
           "westus:917c0586-8a4f-4871-9008-80e8b5548e32"
@@ -54,7 +54,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Content-Length": [
-          "5448"
+          "5492"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"

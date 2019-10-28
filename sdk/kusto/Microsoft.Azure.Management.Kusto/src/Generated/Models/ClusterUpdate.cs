@@ -43,28 +43,46 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// <param name="tags">Resource tags.</param>
         /// <param name="location">Resource location.</param>
         /// <param name="sku">The SKU of the cluster.</param>
+        /// <param name="identity">The identity of the cluster, if
+        /// configured.</param>
         /// <param name="state">The state of the resource. Possible values
         /// include: 'Creating', 'Unavailable', 'Running', 'Deleting',
         /// 'Deleted', 'Stopping', 'Stopped', 'Starting', 'Updating'</param>
         /// <param name="provisioningState">The provisioned state of the
         /// resource. Possible values include: 'Running', 'Creating',
-        /// 'Deleting', 'Succeeded', 'Failed'</param>
+        /// 'Deleting', 'Succeeded', 'Failed', 'Moving'</param>
         /// <param name="uri">The cluster URI.</param>
         /// <param name="dataIngestionUri">The cluster data ingestion
         /// URI.</param>
         /// <param name="trustedExternalTenants">The cluster's external
         /// tenants.</param>
-        public ClusterUpdate(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), AzureSku sku = default(AzureSku), string state = default(string), string provisioningState = default(string), string uri = default(string), string dataIngestionUri = default(string), IList<TrustedExternalTenant> trustedExternalTenants = default(IList<TrustedExternalTenant>))
+        /// <param name="optimizedAutoscale">Optimized auto scale
+        /// definition.</param>
+        /// <param name="enableDiskEncryption">A boolean value that indicates
+        /// if the cluster's disks are encrypted.</param>
+        /// <param name="enableStreamingIngest">A boolean value that indicates
+        /// if the streaming ingest is enabled.</param>
+        /// <param name="virtualNetworkConfiguration">Virtual network
+        /// definition.</param>
+        /// <param name="keyVaultProperties">KeyVault properties for the
+        /// cluster encryption.</param>
+        public ClusterUpdate(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), AzureSku sku = default(AzureSku), Identity identity = default(Identity), string state = default(string), string provisioningState = default(string), string uri = default(string), string dataIngestionUri = default(string), IList<TrustedExternalTenant> trustedExternalTenants = default(IList<TrustedExternalTenant>), OptimizedAutoscale optimizedAutoscale = default(OptimizedAutoscale), bool? enableDiskEncryption = default(bool?), bool? enableStreamingIngest = default(bool?), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), KeyVaultProperties keyVaultProperties = default(KeyVaultProperties))
             : base(id, name, type)
         {
             Tags = tags;
             Location = location;
             Sku = sku;
+            Identity = identity;
             State = state;
             ProvisioningState = provisioningState;
             Uri = uri;
             DataIngestionUri = dataIngestionUri;
             TrustedExternalTenants = trustedExternalTenants;
+            OptimizedAutoscale = optimizedAutoscale;
+            EnableDiskEncryption = enableDiskEncryption;
+            EnableStreamingIngest = enableStreamingIngest;
+            VirtualNetworkConfiguration = virtualNetworkConfiguration;
+            KeyVaultProperties = keyVaultProperties;
             CustomInit();
         }
 
@@ -92,6 +110,12 @@ namespace Microsoft.Azure.Management.Kusto.Models
         public AzureSku Sku { get; set; }
 
         /// <summary>
+        /// Gets or sets the identity of the cluster, if configured.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public Identity Identity { get; set; }
+
+        /// <summary>
         /// Gets the state of the resource. Possible values include:
         /// 'Creating', 'Unavailable', 'Running', 'Deleting', 'Deleted',
         /// 'Stopping', 'Stopped', 'Starting', 'Updating'
@@ -101,7 +125,8 @@ namespace Microsoft.Azure.Management.Kusto.Models
 
         /// <summary>
         /// Gets the provisioned state of the resource. Possible values
-        /// include: 'Running', 'Creating', 'Deleting', 'Succeeded', 'Failed'
+        /// include: 'Running', 'Creating', 'Deleting', 'Succeeded', 'Failed',
+        /// 'Moving'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
@@ -125,6 +150,38 @@ namespace Microsoft.Azure.Management.Kusto.Models
         public IList<TrustedExternalTenant> TrustedExternalTenants { get; set; }
 
         /// <summary>
+        /// Gets or sets optimized auto scale definition.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.optimizedAutoscale")]
+        public OptimizedAutoscale OptimizedAutoscale { get; set; }
+
+        /// <summary>
+        /// Gets or sets a boolean value that indicates if the cluster's disks
+        /// are encrypted.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableDiskEncryption")]
+        public bool? EnableDiskEncryption { get; set; }
+
+        /// <summary>
+        /// Gets or sets a boolean value that indicates if the streaming ingest
+        /// is enabled.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableStreamingIngest")]
+        public bool? EnableStreamingIngest { get; set; }
+
+        /// <summary>
+        /// Gets or sets virtual network definition.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.virtualNetworkConfiguration")]
+        public VirtualNetworkConfiguration VirtualNetworkConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets keyVault properties for the cluster encryption.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.keyVaultProperties")]
+        public KeyVaultProperties KeyVaultProperties { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -135,6 +192,22 @@ namespace Microsoft.Azure.Management.Kusto.Models
             if (Sku != null)
             {
                 Sku.Validate();
+            }
+            if (Identity != null)
+            {
+                Identity.Validate();
+            }
+            if (OptimizedAutoscale != null)
+            {
+                OptimizedAutoscale.Validate();
+            }
+            if (VirtualNetworkConfiguration != null)
+            {
+                VirtualNetworkConfiguration.Validate();
+            }
+            if (KeyVaultProperties != null)
+            {
+                KeyVaultProperties.Validate();
             }
         }
     }

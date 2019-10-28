@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 namespace Azure.Storage
 {
@@ -21,6 +20,6 @@ namespace Azure.Storage
         /// The SAS token used to authenticate requests to the Storage service.
         /// </param>
         public SharedAccessSignatureCredentials(string sasToken) =>
-            this.SasToken = sasToken;
+            SasToken = sasToken;
     }
 }

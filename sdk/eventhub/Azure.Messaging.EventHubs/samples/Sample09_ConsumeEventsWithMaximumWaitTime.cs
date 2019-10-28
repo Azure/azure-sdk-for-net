@@ -119,7 +119,7 @@ namespace Azure.Messaging.EventHubs.Samples
                     List<EventData> receivedEvents = new List<EventData>();
                     Stopwatch watch = Stopwatch.StartNew();
 
-                    await foreach(EventData currentEvent in consumer.SubscribeToEvents(maximumWaitTime, cancellationSource.Token))
+                    await foreach (EventData currentEvent in consumer.SubscribeToEvents(maximumWaitTime, cancellationSource.Token))
                     {
                         receivedEvents.Add(currentEvent);
 

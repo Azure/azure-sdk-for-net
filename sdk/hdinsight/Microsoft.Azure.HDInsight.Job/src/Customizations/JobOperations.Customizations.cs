@@ -38,7 +38,7 @@ namespace Microsoft.Azure.HDInsight.Job
         {
             using (var requestContents = new MemoryStream(Encoding.UTF8.GetBytes(parameters.GetJobPostRequestContent())))
             {
-                return await SubmitHiveJobWithHttpMessagesAsync(requestContents, customHeaders, cancellationToken);
+                return await SubmitHiveJobWithHttpMessagesAsync(requestContents, customHeaders, cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.HDInsight.Job
         {
             using (var requestContents = new MemoryStream(Encoding.UTF8.GetBytes(parameters.GetJobPostRequestContent())))
             {
-                return await SubmitMapReduceJobWithHttpMessagesAsync(requestContents, customHeaders, cancellationToken);
+                return await SubmitMapReduceJobWithHttpMessagesAsync(requestContents, customHeaders, cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.HDInsight.Job
         {
             using (var requestContents = new MemoryStream(Encoding.UTF8.GetBytes(parameters.GetJobPostRequestContent())))
             {
-                return await SubmitMapReduceStreamingJobWithHttpMessagesAsync(requestContents, customHeaders, cancellationToken);
+                return await SubmitMapReduceStreamingJobWithHttpMessagesAsync(requestContents, customHeaders, cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.HDInsight.Job
         {
             using (var requestContents = new MemoryStream(Encoding.UTF8.GetBytes(parameters.GetJobPostRequestContent())))
             {
-                return await SubmitPigJobWithHttpMessagesAsync(requestContents, customHeaders, cancellationToken);
+                return await SubmitPigJobWithHttpMessagesAsync(requestContents, customHeaders, cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.HDInsight.Job
         {
             using (var requestContents = new MemoryStream(Encoding.UTF8.GetBytes(parameters.GetJobPostRequestContent())))
             {
-                return await SubmitSqoopJobWithHttpMessagesAsync(requestContents, customHeaders, cancellationToken);
+                return await SubmitSqoopJobWithHttpMessagesAsync(requestContents, customHeaders, cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -127,7 +127,7 @@ namespace Microsoft.Azure.HDInsight.Job
         /// </returns>
         public async Task<Stream> GetJobOutputAsync(string jobId, IStorageAccess storageAccess, CancellationToken cancellationToken)
         {
-            var blobReferencePath = await GetJobStatusDirectory(jobId, "stdout");
+            var blobReferencePath = await GetJobStatusDirectory(jobId, "stdout").ConfigureAwait(false);
             return storageAccess.GetFileContent(blobReferencePath);
         }
 
@@ -148,7 +148,7 @@ namespace Microsoft.Azure.HDInsight.Job
         /// </returns>
         public async Task<Stream> GetJobErrorLogsAsync(string jobId, IStorageAccess storageAccess, CancellationToken cancellationToken)
         {
-            var blobReferencePath = await GetJobStatusDirectory(jobId, "stderr");
+            var blobReferencePath = await GetJobStatusDirectory(jobId, "stderr").ConfigureAwait(false);
             return storageAccess.GetFileContent(blobReferencePath);
         }
 
@@ -187,14 +187,14 @@ namespace Microsoft.Azure.HDInsight.Job
             {
                 try
                 {
-                    var jobState = await this.GetAppStateAsync(appId, CancellationToken.None);
+                    var jobState = await this.GetAppStateAsync(appId, CancellationToken.None).ConfigureAwait(false);
 
                     var appState = jobState.State;
                     if (appState == ApplicationState.FINISHED || appState == ApplicationState.FAILED || appState == ApplicationState.KILLED)
                     {
                         // Get the job finished details now and keep checking if Job is complete from Templeton 
                         // as history server may not have picked up the completed job.
-                        using (jobDetail = await this.GetWithHttpMessagesAsync(jobId))
+                        using (jobDetail = await this.GetWithHttpMessagesAsync(jobId).ConfigureAwait(false))
                         {
                             if (jobDetail.Body.Status.JobComplete == true)
                             {
@@ -236,7 +236,7 @@ namespace Microsoft.Azure.HDInsight.Job
 
         private async Task<string> GetJobStatusDirectory(string jobId, string file)
         {
-            var jobDetail = await this.GetAsync(jobId);
+            var jobDetail = await this.GetAsync(jobId).ConfigureAwait(false);
             var statusDir = GetStatusFolder(jobDetail);
 
             if (statusDir == null)

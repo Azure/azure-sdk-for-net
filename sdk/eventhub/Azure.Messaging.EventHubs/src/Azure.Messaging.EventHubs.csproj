@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>Azure Event Hubs is a highly scalable publish-subscribe service that can ingest millions of events per second and stream them to multiple consumers.  This client library allow for both sending and receiving of events using Azure Event Hubs. For more information about Event Hubs, see https://azure.microsoft.com/en-us/services/event-hubs/</Description>
-    <VersionPrefix>5.0.0</VersionPrefix>
+    <Description>Azure Event Hubs is a highly scalable publish-subscribe service that can ingest millions of events per second and stream them to multiple consumers.  This client library allows for both publishing and consuming events using Azure Event Hubs. For more information about Event Hubs, see https://azure.microsoft.com/en-us/services/event-hubs/</Description>
+    <Version>5.0.0-preview.5</Version>
     <PackageTags>Azure;Event Hubs;EventHubs;.NET;AMQP;IoT</PackageTags>
     <PackageReleaseNotes>https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/CHANGELOG.md</PackageReleaseNotes>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="SharedSource\" />
     <Folder Include="Properties\" />
   </ItemGroup>
 
@@ -31,7 +32,6 @@
     <PackageReference Include="Microsoft.Azure.Amqp" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" />
     <PackageReference Include="System.Reflection.TypeExtensions" />
-    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
     <PackageReference Include="System.Threading.Channels" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
@@ -46,29 +46,13 @@
     <PackageReference Include="System.Runtime.Serialization.Primitives" />
   </ItemGroup>
 
-  <!-- Import the Azure.Core project -->
-  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
-
-  <!--
-      TRACK ONE DEPENDENCIES::TO BE REMOVED
-      Dependencies needed only for the Track One client.
-  -->
+  <!-- Import Azure.Core shared source -->
   <ItemGroup>
-    <Folder Include="TrackOneClient\" />
-
-    <Compile Update="TrackOneClient\Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>TrackOneClient\Resources.resx</DependentUpon>
-    </Compile>
-
-    <EmbeddedResource Update="TrackOneClient\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>TrackOneClient\Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-
-    <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" PrivateAssets="All" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" PrivateAssets="All" />
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="SharedSource\Argument.cs" />
+    <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" Link="SharedSource\ClientDiagnostics.cs" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" Link="SharedSource\DiagnosticScope.cs" />
   </ItemGroup>
-  <!-- END TRACK ONE DEPENDENCIES -->
+
+  <!-- Import the Azure.Core reference -->
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
 </Project>

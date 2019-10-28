@@ -1,13 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Buffers;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Storage.Common;
 
 namespace Azure.Storage
 {
@@ -49,8 +47,8 @@ namespace Azure.Storage
         /// The maximum size of the stream to allow using
         /// <paramref name="uploadStreamAsync"/>.
         /// </param>
-        /// <param name="parallelTransferOptions">
-        /// Optional <see cref="ParallelTransferOptions"/> to configure
+        /// <param name="transferOptions">
+        /// Optional <see cref="StorageTransferOptions"/> to configure
         /// parallel transfer behavior.
         /// </param>
         /// <param name="async">
@@ -71,7 +69,7 @@ namespace Azure.Storage
             Func<long, bool> uploadAsSinglePartition,
             Func<MemoryPool<byte>, StreamPartitioner> getStreamPartitioner,
             long singleUploadThreshold,
-            ParallelTransferOptions? parallelTransferOptions = default,
+            StorageTransferOptions? transferOptions = default,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
@@ -80,7 +78,7 @@ namespace Azure.Storage
             if (uploadAsSinglePartition(singleUploadThreshold))
             {
                 // When possible, upload as a single partition
-                var uploadTask = uploadStreamAsync();
+                Task<Response<T>> uploadTask = uploadStreamAsync();
                 return async ?
                     await uploadTask.ConfigureAwait(false) :
                     uploadTask.EnsureCompleted();
@@ -89,14 +87,14 @@ namespace Azure.Storage
             {
                 // Split the stream into partitions and upload in parallel
 
-                parallelTransferOptions ??= new ParallelTransferOptions();
+                transferOptions ??= new StorageTransferOptions();
 
                 var maximumThreadCount =
-                    parallelTransferOptions.Value.MaximumThreadCount ?? Constants.Blob.Block.DefaultConcurrentTransfersCount;
+                    transferOptions.Value.MaximumConcurrency ?? Constants.Blob.Block.DefaultConcurrentTransfersCount;
                 var maximumBlockLength =
                     Math.Min(
                         Constants.Blob.Block.MaxStageBytes,
-                        parallelTransferOptions.Value.MaximumTransferLength ?? Constants.DefaultBufferSize
+                        transferOptions.Value.MaximumTransferLength ?? Constants.DefaultBufferSize
                         );
 
                 var maximumActivePartitionCount = maximumThreadCount;
@@ -113,10 +111,10 @@ namespace Azure.Storage
                     ? MemoryPool<byte>.Shared
                     : new StorageMemoryPool(maximumBlockLength, maximumLoadedPartitionCount);
 
-                    using (var partitioner = getStreamPartitioner(memoryPool))
+                    using (StreamPartitioner partitioner = getStreamPartitioner(memoryPool))
                     {
                         await foreach (
-                            var partition
+                            StreamPartition partition
                             in partitioner.GetPartitionsAsync(
                                 maximumActivePartitionCount,
                                 maximumLoadedPartitionCount,
@@ -124,7 +122,7 @@ namespace Azure.Storage
                                 async,
                                 cancellationToken
                                 )
-                            )
+                            .ConfigureAwait(false))
                         {
                             // execute on background task
 
@@ -143,7 +141,7 @@ namespace Azure.Storage
                     }
 
                     // Complete the upload
-                    var commitTask = commitAsync(async, cancellationToken);
+                    Task<Response<T>> commitTask = commitAsync(async, cancellationToken);
                     return async ?
                         await commitTask.ConfigureAwait(false) :
                         commitTask.EnsureCompleted();

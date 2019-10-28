@@ -84,14 +84,18 @@ namespace Microsoft.Azure.ServiceBus
                                 });
                             }
                         }
+                        catch (OperationCanceledException) when (pumpCancellationToken.IsCancellationRequested) 
+                        {
+                            // Ignore as we are stopping the pump
+                        }
+                        catch (ObjectDisposedException) when (pumpCancellationToken.IsCancellationRequested)
+                        {
+                            // Ignore as we are stopping the pump
+                        }
                         catch (Exception exception)
                         {
-                            // Not reporting an ObjectDisposedException as we're stopping the pump
-                            if (!(exception is ObjectDisposedException && this.pumpCancellationToken.IsCancellationRequested))
-                            {
-                                MessagingEventSource.Log.MessageReceivePumpTaskException(this.messageReceiver.ClientId, string.Empty, exception);
-                                await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.Receive).ConfigureAwait(false);
-                            }
+                            MessagingEventSource.Log.MessageReceivePumpTaskException(this.messageReceiver.ClientId, string.Empty, exception);
+                            await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.Receive).ConfigureAwait(false);
                         }
                         finally
                         {
@@ -104,14 +108,18 @@ namespace Microsoft.Azure.ServiceBus
                         }
                     });
                 }
+                catch (OperationCanceledException) when (pumpCancellationToken.IsCancellationRequested)
+                {
+                    // Ignore as we are stopping the pump
+                }
+                catch (ObjectDisposedException) when (pumpCancellationToken.IsCancellationRequested)
+                {
+                    // Ignore as we are stopping the pump
+                }
                 catch (Exception exception)
                 {
-                    // Not reporting an ObjectDisposedException as we're stopping the pump
-                    if (!(exception is ObjectDisposedException && this.pumpCancellationToken.IsCancellationRequested))
-                    {
-                        MessagingEventSource.Log.MessageReceivePumpTaskException(this.messageReceiver.ClientId, string.Empty, exception);
-                        await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.Receive).ConfigureAwait(false);
-                    }
+                    MessagingEventSource.Log.MessageReceivePumpTaskException(this.messageReceiver.ClientId, string.Empty, exception);
+                    await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.Receive).ConfigureAwait(false);
                 }
             }
         }

@@ -36,7 +36,7 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "11999"
+          "11998"
         ],
         "x-ms-request-id": [
           "westus:31d6b61e-eb8e-4fb0-a0cd-2b5c4c32c2ef"

@@ -1,116 +1,210 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Security.Cryptography;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     /// <summary>
-    /// The Signature Algorithm
+    /// An algorithm used for signing and verification.
     /// </summary>
-    public enum SignatureAlgorithm
+    public readonly struct SignatureAlgorithm : IEquatable<SignatureAlgorithm>
     {
-        /// <summary>
-        /// RSA SHA-256 Signature algorithim
-        /// </summary>
-        RS256,
+        internal const string RS256Value = "RS256";
+        internal const string RS384Value = "RS384";
+        internal const string RS512Value = "RS512";
+        internal const string PS256Value = "PS256";
+        internal const string PS384Value = "PS384";
+        internal const string PS512Value = "PS512";
+        internal const string ES256Value = "ES256";
+        internal const string ES384Value = "ES384";
+        internal const string ES512Value = "ES512";
+        internal const string ES256KValue = "ES256K";
+
+        private readonly string _value;
 
         /// <summary>
-        /// RSA SHA-384 Signature algorithim
+        /// Initializes a new instance of the <see cref="SignatureAlgorithm"/> structure.
         /// </summary>
-        RS384,
-
-        /// <summary>
-        /// RSA SHA-512 Signature algorithim
-        /// </summary>
-        RS512,
-
-        /// <summary>
-        /// RSASSA-PSS using SHA-256 and MGF1 with SHA-256
-        /// </summary>
-        PS256,
-
-        /// <summary>
-        /// RSASSA-PSS using SHA-384 and MGF1 with SHA-384
-        /// </summary>
-        PS384,
-
-        /// <summary>
-        /// RSASSA-PSS using SHA-512 and MGF1 with SHA-512
-        /// </summary>
-        PS512,
-
-        /// <summary>
-        /// ECDSA with a P-256 curve.
-        /// </summary>
-        ES256,
-
-        /// <summary>
-        /// ECDSA with a P-384 curve.
-        /// </summary>
-        ES384,
-
-        /// <summary>
-        /// ECDSA with a P-521 curve.
-        /// </summary>
-        ES512,
-
-        /// <summary>
-        /// ECDSA with a secp256k1 curve.
-        /// </summary>
-        ES256K
-    }
-
-    internal static class SignatureAlgorithmExtensions
-    {
-        public static HashAlgorithm GetHashAlgorithm(this SignatureAlgorithm algorithm)
+        /// <param name="value">The string value of the instance.</param>
+        public SignatureAlgorithm(string value)
         {
-            switch (algorithm)
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        /// <summary>
+        /// Gets an RSA SHA-256 <see cref="SignatureAlgorithm"/>.
+        /// </summary>
+        public static SignatureAlgorithm RS256 { get; } = new SignatureAlgorithm(RS256Value);
+
+        /// <summary>
+        /// Gets an RSA SHA-384  <see cref="SignatureAlgorithm"/>.
+        /// </summary>
+        public static SignatureAlgorithm RS384 { get; } = new SignatureAlgorithm(RS384Value);
+
+        /// <summary>
+        /// Gets an RSA SHA-512  <see cref="SignatureAlgorithm"/>.
+        /// </summary>
+        public static SignatureAlgorithm RS512 { get; } = new SignatureAlgorithm(RS512Value);
+
+        /// <summary>
+        /// Gets an RSASSA-PSS using SHA-256 and MGF1 with SHA-256 <see cref="SignatureAlgorithm"/>.
+        /// </summary>
+        public static SignatureAlgorithm PS256 { get; } = new SignatureAlgorithm(PS256Value);
+
+        /// <summary>
+        /// Gets an RSASSA-PSS using SHA-384 and MGF1 with SHA-384 <see cref="SignatureAlgorithm"/>.
+        /// </summary>
+        public static SignatureAlgorithm PS384 { get; } = new SignatureAlgorithm(PS384Value);
+
+        /// <summary>
+        /// Gets an RSASSA-PSS using SHA-512 and MGF1 with SHA-512 <see cref="SignatureAlgorithm"/>.
+        /// </summary>
+        public static SignatureAlgorithm PS512 { get; } = new SignatureAlgorithm(PS512Value);
+
+        /// <summary>
+        /// Gets an ECDSA with a P-256 curve <see cref="SignatureAlgorithm"/>.
+        /// </summary>
+        public static SignatureAlgorithm ES256 { get; } = new SignatureAlgorithm(ES256Value);
+
+        /// <summary>
+        /// Gets an ECDSA with a P-384 curve <see cref="SignatureAlgorithm"/>.
+        /// </summary>
+        public static SignatureAlgorithm ES384 { get; } = new SignatureAlgorithm(ES384Value);
+
+        /// <summary>
+        /// Gets an ECDSA with a P-521 curve <see cref="SignatureAlgorithm"/>.
+        /// </summary>
+        public static SignatureAlgorithm ES512 { get; } = new SignatureAlgorithm(ES512Value);
+
+        /// <summary>
+        /// Gets an ECDSA with a secp256k1 curve <see cref="SignatureAlgorithm"/>.
+        /// </summary>
+        public static SignatureAlgorithm ES256K { get; } = new SignatureAlgorithm(ES256KValue);
+
+        /// <summary>
+        /// Determines if two <see cref="SignatureAlgorithm"/> values are the same.
+        /// </summary>
+        /// <param name="left">The first <see cref="SignatureAlgorithm"/> to compare.</param>
+        /// <param name="right">The second <see cref="SignatureAlgorithm"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are the same; otherwise, false.</returns>
+        public static bool operator ==(SignatureAlgorithm left, SignatureAlgorithm right) => left.Equals(right);
+
+        /// <summary>
+        /// Determines if two <see cref="SignatureAlgorithm"/> values are different.
+        /// </summary>
+        /// <param name="left">The first <see cref="SignatureAlgorithm"/> to compare.</param>
+        /// <param name="right">The second <see cref="SignatureAlgorithm"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are different; otherwise, false.</returns>
+        public static bool operator !=(SignatureAlgorithm left, SignatureAlgorithm right) => !left.Equals(right);
+
+        /// <summary>
+        /// Converts a string to a <see cref="SignatureAlgorithm"/>.
+        /// </summary>
+        /// <param name="value">The string value to convert.</param>
+        public static implicit operator SignatureAlgorithm(string value) => new SignatureAlgorithm(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is SignatureAlgorithm other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(SignatureAlgorithm other) => string.Equals(_value, other._value, StringComparison.Ordinal);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
+
+        internal HashAlgorithm GetHashAlgorithm()
+        {
+            switch (_value)
             {
-                case SignatureAlgorithm.RS256:
-                case SignatureAlgorithm.PS256:
-                case SignatureAlgorithm.ES256:
-                case SignatureAlgorithm.ES256K:
+                case RS256Value:
+                case PS256Value:
+                case ES256Value:
+                case ES256KValue:
                     return SHA256.Create();
-                case SignatureAlgorithm.RS384:
-                case SignatureAlgorithm.PS384:
-                case SignatureAlgorithm.ES384:
+
+                case RS384Value:
+                case PS384Value:
+                case ES384Value:
                     return SHA384.Create();
-                case SignatureAlgorithm.RS512:
-                case SignatureAlgorithm.PS512:
-                case SignatureAlgorithm.ES512:
+
+                case RS512Value:
+                case PS512Value:
+                case ES512Value:
                     return SHA512.Create();
+
                 default:
-                    throw new ArgumentException("Invalid Algorithm", nameof(algorithm));
+                    throw new InvalidOperationException("Invalid Algorithm");
             }
         }
 
-        public static string GetName(this SignatureAlgorithm algorithm)
+        internal HashAlgorithmName GetHashAlgorithmName()
         {
-            switch(algorithm)
+            switch (_value)
             {
-                case SignatureAlgorithm.RS256:
-                    return "RS256";
-                case SignatureAlgorithm.RS384:
-                    return "RS384";
-                case SignatureAlgorithm.RS512:
-                    return "RS512";
-                case SignatureAlgorithm.PS256:
-                    return "PS256";
-                case SignatureAlgorithm.PS384:
-                    return "PS384";
-                case SignatureAlgorithm.PS512:
-                    return "PS512";
-                case SignatureAlgorithm.ES256:
-                    return "ES256";
-                case SignatureAlgorithm.ES384:
-                    return "ES384";
-                case SignatureAlgorithm.ES512:
-                    return "ES512";
-                case SignatureAlgorithm.ES256K:
-                    return "ES256K";
+                case RS256Value:
+                case PS256Value:
+                case ES256Value:
+                case ES256KValue:
+                    return HashAlgorithmName.SHA256;
+
+                case RS384Value:
+                case PS384Value:
+                case ES384Value:
+                    return HashAlgorithmName.SHA384;
+
+                case RS512Value:
+                case PS512Value:
+                case ES512Value:
+                    return HashAlgorithmName.SHA512;
+                default:
+
+                    return default;
+            }
+        }
+
+        internal KeyCurveName GetEcKeyCurveName()
+        {
+            switch (_value)
+            {
+                case ES256Value:
+                    return KeyCurveName.P256;
+
+                case ES256KValue:
+                    return KeyCurveName.P256K;
+
+                case ES384Value:
+                    return KeyCurveName.P384;
+
+                case ES512Value:
+                    return KeyCurveName.P521;
+
+                default:
+                    return KeyCurveName.s_default;
+            }
+        }
+
+        internal RSASignaturePadding GetRsaSignaturePadding()
+        {
+            switch (_value)
+            {
+                case RS256Value:
+                case RS384Value:
+                case RS512Value:
+                    return RSASignaturePadding.Pkcs1;
+
+                case PS256Value:
+                case PS384Value:
+                case PS512Value:
+                    return RSASignaturePadding.Pss;
+
                 default:
                     return null;
             }

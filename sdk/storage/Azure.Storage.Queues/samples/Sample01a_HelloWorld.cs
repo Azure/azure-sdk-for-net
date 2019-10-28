@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -29,9 +28,9 @@ namespace Azure.Storage.Queues.Samples
             // obtain your connection string from the Azure Portal (click
             // Access Keys under Settings in the Portal Storage account blade)
             // or using the Azure CLI with:
-            // 
+            //
             //     az storage account show-connection-string --name <account_name> --resource-group <resource_group>
-            // 
+            //
             // And you can provide the connection string to your application
             // using an environment variable.
             string connectionString = ConnectionString;
@@ -42,7 +41,7 @@ namespace Azure.Storage.Queues.Samples
             try
             {
                 // Add a message to our queue
-                queue.EnqueueMessage("Hello, Azure!");
+                queue.SendMessage("Hello, Azure!");
 
                 // Verify we uploaded one message
                 Assert.AreEqual(1, queue.PeekMessages(10).Value.Count());
@@ -69,15 +68,15 @@ namespace Azure.Storage.Queues.Samples
             try
             {
                 // Add several messages to the queue
-                queue.EnqueueMessage("first");
-                queue.EnqueueMessage("second");
-                queue.EnqueueMessage("third");
-                queue.EnqueueMessage("fourth");
-                queue.EnqueueMessage("fifth");
+                queue.SendMessage("first");
+                queue.SendMessage("second");
+                queue.SendMessage("third");
+                queue.SendMessage("fourth");
+                queue.SendMessage("fifth");
 
                 // Get the next 10 messages from the queue
                 List<string> messages = new List<string>();
-                foreach (DequeuedMessage message in queue.DequeueMessages(maxMessages: 10).Value)
+                foreach (QueueMessage message in queue.ReceiveMessages(maxMessages: 10).Value)
                 {
                     // "Process" the message
                     messages.Add(message.MessageText);
@@ -117,11 +116,11 @@ namespace Azure.Storage.Queues.Samples
             try
             {
                 // Add several messages to the queue
-                queue.EnqueueMessage("first");
-                queue.EnqueueMessage("second");
-                queue.EnqueueMessage("third");
-                queue.EnqueueMessage("fourth");
-                queue.EnqueueMessage("fifth");
+                queue.SendMessage("first");
+                queue.SendMessage("second");
+                queue.SendMessage("third");
+                queue.SendMessage("fourth");
+                queue.SendMessage("fifth");
 
                 // Get the messages from the queue
                 List<string> messages = new List<string>();
@@ -162,19 +161,19 @@ namespace Azure.Storage.Queues.Samples
             try
             {
                 // Add several messages to the queue
-                queue.EnqueueMessage("first");
-                queue.EnqueueMessage("second");
-                queue.EnqueueMessage("third");
+                queue.SendMessage("first");
+                queue.SendMessage("second");
+                queue.SendMessage("third");
 
                 // Get the messages from the queue with a short visibility timeout
-                List<DequeuedMessage> messages = new List<DequeuedMessage>();
-                foreach (DequeuedMessage message in queue.DequeueMessages(10, TimeSpan.FromSeconds(1)).Value)
+                List<QueueMessage> messages = new List<QueueMessage>();
+                foreach (QueueMessage message in queue.ReceiveMessages(10, TimeSpan.FromSeconds(1)).Value)
                 {
                     // Tell the service we need a little more time to process the message
-                    UpdatedMessage changedMessage = queue.UpdateMessage(
-                        message.MessageText,
+                    UpdateReceipt changedMessage = queue.UpdateMessage(
                         message.MessageId,
                         message.PopReceipt,
+                        message.MessageText,
                         TimeSpan.FromSeconds(5));
                     messages.Add(message.Update(changedMessage));
                 }
@@ -183,10 +182,10 @@ namespace Azure.Storage.Queues.Samples
                 Thread.Sleep(TimeSpan.FromSeconds(1.5));
 
                 // Ensure the messages aren't visible yet
-                Assert.AreEqual(0, queue.DequeueMessages(10).Value.Count());
+                Assert.AreEqual(0, queue.ReceiveMessages(10).Value.Count());
 
                 // Finish processing the messages
-                foreach (DequeuedMessage message in messages)
+                foreach (QueueMessage message in messages)
                 {
                     // Tell the service we need a little more time to process the message
                     queue.DeleteMessage(message.MessageId, message.PopReceipt);
@@ -217,12 +216,12 @@ namespace Azure.Storage.Queues.Samples
                 // Try to create the queue again
                 queue.Create();
             }
-            catch (StorageRequestFailedException ex)
+            catch (RequestFailedException ex)
                 when (ex.ErrorCode == QueueErrorCode.QueueAlreadyExists)
             {
                 // Ignore any errors if the queue already exists
             }
-            catch (StorageRequestFailedException ex)
+            catch (RequestFailedException ex)
             {
                 Assert.Fail($"Unexpected error: {ex}");
             }

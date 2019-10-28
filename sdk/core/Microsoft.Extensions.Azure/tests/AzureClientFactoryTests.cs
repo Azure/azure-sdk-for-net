@@ -331,6 +331,32 @@ namespace Azure.Core.Extensions.Tests
             Assert.AreEqual("Client registration requires a TokenCredential. Configure it using UseCredential method.", exception.Message);
         }
 
+        [Test]
+        public void CanCreateClientOptionsWithMultipleParameters()
+        {
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddAzureClients(builder => builder.AddTestClientOptionsMultipleParameters("http://localhost/"));
+            ServiceProvider provider = serviceCollection.BuildServiceProvider();
+            TestClientMultipleOptionsParameters client = provider.GetService<TestClientMultipleOptionsParameters>();
+
+            Assert.NotNull(client.Options);
+            Assert.AreEqual(TestClientOptionsMultipleParameters.ServiceVersion.D, client.Options.Version);
+            Assert.AreEqual("some default value", client.Options.OtherParameter);
+        }
+
+        [Test]
+        public void CanCreateClientOptionsWithMultipleParametersAndSetVersion()
+        {
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddAzureClients(builder => builder.AddTestClientOptionsMultipleParameters("http://localhost/").WithVersion(TestClientOptionsMultipleParameters.ServiceVersion.B));
+            ServiceProvider provider = serviceCollection.BuildServiceProvider();
+            TestClientMultipleOptionsParameters client = provider.GetService<TestClientMultipleOptionsParameters>();
+
+            Assert.NotNull(client.Options);
+            Assert.AreEqual(TestClientOptionsMultipleParameters.ServiceVersion.B, client.Options.Version);
+            Assert.AreEqual("some default value", client.Options.OtherParameter);
+        }
+
         private IConfiguration GetConfiguration(params KeyValuePair<string, string>[] items)
         {
             return new ConfigurationBuilder().AddInMemoryCollection(items).Build();

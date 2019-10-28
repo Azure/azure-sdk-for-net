@@ -45,11 +45,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// gateway.</param>
         /// <param name="bgpSettings">Local network gateway's BGP speaker
         /// settings.</param>
-        /// <param name="resourceGuid">The resource GUID property of the
-        /// LocalNetworkGateway resource.</param>
-        /// <param name="provisioningState">The provisioning state of the
-        /// LocalNetworkGateway resource. Possible values are: 'Updating',
-        /// 'Deleting', and 'Failed'.</param>
+        /// <param name="resourceGuid">The resource GUID property of the local
+        /// network gateway resource.</param>
+        /// <param name="provisioningState">The provisioning state of the local
+        /// network gateway resource. Possible values include: 'Succeeded',
+        /// 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         public LocalNetworkGateway(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), AddressSpace localNetworkAddressSpace = default(AddressSpace), string gatewayIpAddress = default(string), BgpSettings bgpSettings = default(BgpSettings), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
@@ -88,25 +88,26 @@ namespace Microsoft.Azure.Management.Network.Models
         public BgpSettings BgpSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets the resource GUID property of the LocalNetworkGateway
+        /// Gets the resource GUID property of the local network gateway
         /// resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceGuid")]
-        public string ResourceGuid { get; set; }
+        public string ResourceGuid { get; private set; }
 
         /// <summary>
-        /// Gets the provisioning state of the LocalNetworkGateway resource.
-        /// Possible values are: 'Updating', 'Deleting', and 'Failed'.
+        /// Gets the provisioning state of the local network gateway resource.
+        /// Possible values include: 'Succeeded', 'Updating', 'Deleting',
+        /// 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets or sets a unique read-only string that changes whenever the
-        /// resource is updated.
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
     }
 }

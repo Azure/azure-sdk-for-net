@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -103,7 +102,7 @@ namespace Azure.Messaging.EventHubs.Samples
                     EventData receivedEvent = null;
                     Stopwatch watch = Stopwatch.StartNew();
 
-                    await foreach(EventData currentEvent in consumer.SubscribeToEvents(cancellationSource.Token))
+                    await foreach (EventData currentEvent in consumer.SubscribeToEvents(cancellationSource.Token))
                     {
                         receivedEvent = currentEvent;
                         watch.Stop();

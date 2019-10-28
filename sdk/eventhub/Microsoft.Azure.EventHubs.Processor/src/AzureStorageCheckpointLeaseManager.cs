@@ -244,7 +244,7 @@ namespace Microsoft.Azure.EventHubs.Processor
                     null,
                     continuationToken,
                     null,
-                    this.operationContext);
+                    this.operationContext).ConfigureAwait(false);
 
                 foreach (CloudBlockBlob leaseBlob in leaseBlobsResult.Results)
                 {
@@ -450,7 +450,7 @@ namespace Microsoft.Azure.EventHubs.Processor
                 await leaseBlob.SetMetadataAsync(
                     AccessCondition.GenerateLeaseCondition(leaseId),
                     null,
-                    this.operationContext);
+                    this.operationContext).ConfigureAwait(false);
 
                 await leaseBlob.UploadTextAsync(
                     JsonConvert.SerializeObject(releasedCopy),

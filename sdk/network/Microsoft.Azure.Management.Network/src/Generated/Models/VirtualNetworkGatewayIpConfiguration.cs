@@ -42,8 +42,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="publicIPAddress">The reference of the public IP
         /// resource.</param>
         /// <param name="provisioningState">The provisioning state of the
-        /// public IP resource. Possible values are: 'Updating', 'Deleting',
-        /// and 'Failed'.</param>
+        /// virtual network gateway IP configuration resource. Possible values
+        /// include: 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="name">The name of the resource that is unique within a
         /// resource group. This name can be used to access the
         /// resource.</param>
@@ -86,8 +86,9 @@ namespace Microsoft.Azure.Management.Network.Models
         public SubResource PublicIPAddress { get; set; }
 
         /// <summary>
-        /// Gets the provisioning state of the public IP resource. Possible
-        /// values are: 'Updating', 'Deleting', and 'Failed'.
+        /// Gets the provisioning state of the virtual network gateway IP
+        /// configuration resource. Possible values include: 'Succeeded',
+        /// 'Updating', 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
@@ -100,11 +101,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets a unique read-only string that changes whenever the
-        /// resource is updated.
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
     }
 }

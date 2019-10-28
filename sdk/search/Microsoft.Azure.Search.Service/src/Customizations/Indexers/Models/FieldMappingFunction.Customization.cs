@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Search.Models
         /// the input is UTF-8 encoded.
         /// </summary>
         /// <remarks>
-        /// <para>Sample use case: Only URL-safe characters can appear in an Azure Search document key (because customers
+        /// <para>Sample use case: Only URL-safe characters can appear in a search document key (because customers
         /// must be able to address the document using the Lookup API, for example). If your data contains URL-unsafe
         /// characters and you want to use it to populate a key field in your search index, use this function. 
         /// </para>
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         /// <param name="useHttpServerUtilityUrlTokenEncode">Determines how Base64 encoding is performed. See <see href="https://docs.microsoft.com/azure/search/search-indexer-field-mappings#details-of-base64-encoding-and-decoding"/> for details.</param>
         /// <remarks>
-        /// Sample use case: Only URL-safe characters can appear in an Azure Search document key (because customers
+        /// Sample use case: Only URL-safe characters can appear in a search document key (because customers
         /// must be able to address the document using the Lookup API, for example). If your data contains URL-unsafe
         /// characters and you want to use it to populate a key field in your search index, use this function. 
         /// </remarks>

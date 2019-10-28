@@ -16,7 +16,10 @@ namespace Microsoft.Azure.Management.Security.Models
     using System.Linq;
 
     /// <summary>
-    /// Pricing tier will be applied for the scope based on the resource ID
+    /// Azure Security Center is provided in two pricing tiers: free and
+    /// standard, with the standard tier available with a trial period. The
+    /// standard tier offers advanced security capabilities, while the free
+    /// tier offers basic security features.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class Pricing : Resource
@@ -32,8 +35,12 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <summary>
         /// Initializes a new instance of the Pricing class.
         /// </summary>
-        /// <param name="pricingTier">The pricing tier value. Possible values
-        /// include: 'Free', 'Standard'</param>
+        /// <param name="pricingTier">The pricing tier value. Azure Security
+        /// Center is provided in two pricing tiers: free and standard, with
+        /// the standard tier available with a trial period. The standard tier
+        /// offers advanced security capabilities, while the free tier offers
+        /// basic security features. Possible values include: 'Free',
+        /// 'Standard'</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
@@ -54,8 +61,11 @@ namespace Microsoft.Azure.Management.Security.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the pricing tier value. Possible values include:
-        /// 'Free', 'Standard'
+        /// Gets or sets the pricing tier value. Azure Security Center is
+        /// provided in two pricing tiers: free and standard, with the standard
+        /// tier available with a trial period. The standard tier offers
+        /// advanced security capabilities, while the free tier offers basic
+        /// security features. Possible values include: 'Free', 'Standard'
         /// </summary>
         [JsonProperty(PropertyName = "properties.pricingTier")]
         public string PricingTier { get; set; }

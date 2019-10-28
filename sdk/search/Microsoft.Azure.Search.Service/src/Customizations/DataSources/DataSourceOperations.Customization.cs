@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Search
     internal partial class DataSourcesOperations
     {
         /// <summary>
-        /// Creates a new Azure Search datasource or updates a datasource if it already
+        /// Creates a new datasource or updates a datasource if it already
         /// exists.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Update-Data-Source" />
         /// </summary>
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Determines whether or not the given data source exists in the Azure Search service.
+        /// Determines whether or not the given data source exists in the search service.
         /// </summary>
         /// <param name="dataSourceName">
         /// The name of the data source.

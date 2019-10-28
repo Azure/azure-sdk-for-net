@@ -40,7 +40,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="actions">Describes the actions permitted to the
         /// service upon delegation.</param>
         /// <param name="provisioningState">The provisioning state of the
-        /// resource.</param>
+        /// service delegation resource. Possible values include: 'Succeeded',
+        /// 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="name">The name of the resource that is unique within a
         /// subnet. This name can be used to access the resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
@@ -69,14 +70,16 @@ namespace Microsoft.Azure.Management.Network.Models
         public string ServiceName { get; set; }
 
         /// <summary>
-        /// Gets or sets describes the actions permitted to the service upon
+        /// Gets describes the actions permitted to the service upon
         /// delegation.
         /// </summary>
         [JsonProperty(PropertyName = "properties.actions")]
-        public IList<string> Actions { get; set; }
+        public IList<string> Actions { get; private set; }
 
         /// <summary>
-        /// Gets the provisioning state of the resource.
+        /// Gets the provisioning state of the service delegation resource.
+        /// Possible values include: 'Succeeded', 'Updating', 'Deleting',
+        /// 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
@@ -89,11 +92,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets a unique read-only string that changes whenever the
-        /// resource is updated.
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
     }
 }

@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using Azure.Core.Testing;
 using Azure.Identity;
@@ -24,7 +23,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
         {
             // Environment variable with the Key Vault endpoint.
             string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
-            
+
             // Instantiate a key client that will be used to call the service. Notice that the client is using default Azure
             // credentials. To make default credentials work, ensure that environment variables 'AZURE_CLIENT_ID',
             // 'AZURE_CLIENT_KEY' and 'AZURE_TENANT_ID' are set with the service principal credentials.
@@ -33,12 +32,13 @@ namespace Azure.Security.KeyVault.Keys.Samples
             // Let's create a RSA key valid for 1 year. If the key
             // already exists in the Key Vault, then a new version of the key is created.
             string rsaKeyName = $"CloudRsaKey-{Guid.NewGuid()}";
-            var rsaKey = new RsaKeyCreateOptions(rsaKeyName, hsm: false, keySize: 2048)
+            var rsaKey = new CreateRsaKeyOptions(rsaKeyName, hardwareProtected: false)
             {
-                Expires = DateTimeOffset.Now.AddYears(1)
+                KeySize = 2048,
+                ExpiresOn = DateTimeOffset.Now.AddYears(1)
             };
 
-            Key storedKey = await client.CreateRsaKeyAsync(rsaKey);
+            KeyVaultKey storedKey = await client.CreateRsaKeyAsync(rsaKey);
 
             // Backups are good to have if in case keys get accidentally deleted by you.
             // For long term storage, it is ideal to write the backup to a file, disk, database, etc.
@@ -50,37 +50,19 @@ namespace Azure.Security.KeyVault.Keys.Samples
                 memoryStream.Write(byteKey, 0, byteKey.Length);
 
                 // The storage account key is no longer in use, so you delete it.
-                await client.DeleteKeyAsync(rsaKeyName);
+                DeleteKeyOperation operation = await client.StartDeleteKeyAsync(rsaKeyName);
 
-                // To ensure the key is deleted on server side.
-                Assert.IsTrue(await WaitForDeletedKeyAsync(client, rsaKeyName));
+                // To ensure the key is deleted on server before we try to purge it.
+                await operation.WaitForCompletionAsync();
 
                 // If the keyvault is soft-delete enabled, then for permanent deletion, deleted key needs to be purged.
                 await client.PurgeDeletedKeyAsync(rsaKeyName);
 
                 // After sometime, the key is required again. We can use the backup value to restore it in the Key Vault.
-                KeyBase restoredKey = await client.RestoreKeyAsync(memoryStream.ToArray());
+                KeyVaultKey restoredKey = await client.RestoreKeyBackupAsync(memoryStream.ToArray());
 
-                AssertKeysEqual((KeyBase)storedKey, restoredKey);
+                AssertKeysEqual(storedKey.Properties, restoredKey.Properties);
             }
-        }
-
-        private async Task<bool> WaitForDeletedKeyAsync(KeyClient client, string keyName)
-        {
-            int maxIterations = 20;
-            for (int i = 0; i < maxIterations; i++)
-            {
-                try
-                {
-                    await client.GetDeletedKeyAsync(keyName);
-                    return true;
-                }
-                catch
-                {
-                    await Task.Delay(5000);
-                }
-            }
-            return false;
         }
     }
 }

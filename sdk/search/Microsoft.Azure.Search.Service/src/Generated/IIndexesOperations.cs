@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Search
     public partial interface IIndexesOperations
     {
         /// <summary>
-        /// Creates a new Azure Search index.
+        /// Creates a new search index.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Index" />
         /// </summary>
         /// <param name='index'>
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Search
         /// </exception>
         Task<AzureOperationResponse<Index>> CreateWithHttpMessagesAsync(Index index, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists all indexes available for an Azure Search service.
+        /// Lists all indexes available for a search service.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/List-Indexes" />
         /// </summary>
         /// <param name='select'>
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Search
         /// </exception>
         Task<AzureOperationResponse<IndexListResult>> ListWithHttpMessagesAsync(string select = default(string), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates a new Azure Search index or updates an index if it already
+        /// Creates a new search index or updates an index if it already
         /// exists.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Update-Index" />
         /// </summary>
@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Search
         /// </exception>
         Task<AzureOperationResponse<Index>> CreateOrUpdateWithHttpMessagesAsync(string indexName, Index index, bool? allowIndexDowntime = default(bool?), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes an Azure Search index and all the documents it contains.
+        /// Deletes a search index and all the documents it contains.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Delete-Index" />
         /// </summary>
         /// <param name='indexName'>
@@ -145,7 +145,7 @@ namespace Microsoft.Azure.Search
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string indexName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Retrieves an index definition from Azure Search.
+        /// Retrieves an index definition.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Get-Index" />
         /// </summary>
         /// <param name='indexName'>

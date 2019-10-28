@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "operationId");
             }
-            string apiVersion = "2017-07-01";
+            string apiVersion = "2019-05-13";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

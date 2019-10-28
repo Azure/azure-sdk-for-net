@@ -51,9 +51,10 @@ namespace Microsoft.AzureStack.Management.Backup.Admin.Models
         /// <param name="stampVersion">Azure Stack stamp version of the
         /// backup.</param>
         /// <param name="oemVersion">OEM version.</param>
+        /// <param name="isCloudRecoveryReady">True if the backup can be used for cloud recovery scenario.</param>
         /// <param name="encryptionCertThumbprint">The thumbprint of the
         /// certificate used to encrypt the backup encryption key.</param>
-        public Backup(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string backupDataVersion = default(string), IList<RoleOperationStatus> roleStatus = default(IList<RoleOperationStatus>), OperationStatus? status = default(OperationStatus?), System.DateTime? createdDateTime = default(System.DateTime?), string timeTakenToCreate = default(string), string deploymentID = default(string), string stampVersion = default(string), string oemVersion = default(string), string encryptionCertThumbprint = default(string))
+        public Backup(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string backupDataVersion = default(string), IList<RoleOperationStatus> roleStatus = default(IList<RoleOperationStatus>), OperationStatus? status = default(OperationStatus?), System.DateTime? createdDateTime = default(System.DateTime?), string timeTakenToCreate = default(string), string deploymentID = default(string), string stampVersion = default(string), string oemVersion = default(string), bool? isCloudRecoveryReady = default(bool?), string encryptionCertThumbprint = default(string))
             : base(id, name, type, location, tags)
         {
             BackupDataVersion = backupDataVersion;
@@ -64,6 +65,7 @@ namespace Microsoft.AzureStack.Management.Backup.Admin.Models
             DeploymentID = deploymentID;
             StampVersion = stampVersion;
             OemVersion = oemVersion;
+            IsCloudRecoveryReady = isCloudRecoveryReady;
             EncryptionCertThumbprint = encryptionCertThumbprint;
             CustomInit();
         }
@@ -122,6 +124,12 @@ namespace Microsoft.AzureStack.Management.Backup.Admin.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.backupInfo.oemVersion")]
         public string OemVersion { get; private set; }
+
+        /// <summary>
+        /// Gets whether the backup can be used for cloud recovery scenario.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.backupInfo.isCloudRecoveryReady")]
+        public bool? IsCloudRecoveryReady { get; private set; }
 
         /// <summary>
         /// Gets the thumbprint of the certificate used to encrypt the backup
