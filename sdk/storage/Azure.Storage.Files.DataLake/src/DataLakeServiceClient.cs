@@ -502,7 +502,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="fileSystemName">
         /// The name of the file system to delete.
         /// </param>
-        /// <param name="accessConditions">
+        /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
         /// conditions on the deletion of this file system.
         /// </param>
@@ -520,11 +520,11 @@ namespace Azure.Storage.Files.DataLake
         [ForwardsClientCalls]
         public virtual Response DeleteFileSystem(
             string fileSystemName,
-            DataLakeRequestConditions accessConditions = default,
+            DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             GetFileSystemClient(fileSystemName)
                 .Delete(
-                    accessConditions,
+                    conditions,
                     cancellationToken);
 
         /// <summary>
@@ -537,7 +537,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="fileSystemName">
         /// The name of the file system to delete.
         /// </param>
-        /// <param name="accessConditions">
+        /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
         /// conditions on the deletion of this file system.
         /// </param>
@@ -555,11 +555,11 @@ namespace Azure.Storage.Files.DataLake
         [ForwardsClientCalls]
         public virtual async Task<Response> DeleteFileSystemAsync(
             string fileSystemName,
-            DataLakeRequestConditions accessConditions = default,
+            DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await GetFileSystemClient(fileSystemName)
                 .DeleteAsync(
-                    accessConditions,
+                    conditions,
                     cancellationToken)
                     .ConfigureAwait(false);
         #endregion Delete File System

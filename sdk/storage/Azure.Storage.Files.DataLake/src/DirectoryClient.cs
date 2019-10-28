@@ -355,13 +355,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="destinationPath">
         /// The destination path to rename the path to.
         /// </param>
-        /// <param name="destConditions">
-        /// Optional <see cref="DataLakeRequestConditions"/> to add
-        /// conditions on the creation of this file or directory.
-        /// </param>
         /// <param name="sourceConditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
         /// conditions on the source on the creation of this file or directory.
+        /// </param>
+        /// <param name="destinationConditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add
+        /// conditions on the creation of this file or directory.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -378,14 +378,14 @@ namespace Azure.Storage.Files.DataLake
         [ForwardsClientCalls]
         public new virtual Response<DirectoryClient> Rename(
             string destinationPath,
-            DataLakeRequestConditions destConditions = default,
             DataLakeRequestConditions sourceConditions = default,
+            DataLakeRequestConditions destinationConditions = default,
             CancellationToken cancellationToken = default)
         {
             Response<PathClient> response = base.Rename(
                 destinationPath,
-                destConditions,
                 sourceConditions,
+                destinationConditions,
                 cancellationToken);
 
             return Response.FromValue(
@@ -401,13 +401,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="destinationPath">
         /// The destination path to rename the path to.
         /// </param>
-        /// <param name="destConditions">
-        /// Optional <see cref="DataLakeRequestConditions"/> to add
-        /// conditions on the creation of this file or directory.
-        /// </param>
         /// <param name="sourceConditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
         /// conditions on the source on the creation of this file or directory.
+        /// </param>
+        /// <param name="destinationConditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add
+        /// conditions on the creation of this file or directory.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -424,14 +424,14 @@ namespace Azure.Storage.Files.DataLake
         [ForwardsClientCalls]
         public new virtual async Task<Response<DirectoryClient>> RenameAsync(
             string destinationPath,
-            DataLakeRequestConditions destConditions = default,
             DataLakeRequestConditions sourceConditions = default,
+            DataLakeRequestConditions destinationConditions = default,
             CancellationToken cancellationToken = default)
         {
             Response<PathClient> response = await base.RenameAsync(
                 destinationPath,
-                destConditions,
                 sourceConditions,
+                destinationConditions,
                 cancellationToken)
                 .ConfigureAwait(false);
 
