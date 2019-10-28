@@ -188,7 +188,7 @@ namespace Azure.Messaging.EventHubs.Tests
             EventProcessor processor = new EventProcessor("connectionString", "consumerGroup", Mock.Of<PartitionManager>());
             processor.ProcessExceptionAsync = (context, exception) => Task.CompletedTask;
 
-            Assert.That(async () => await processor.StartAsync(), Throws.InstanceOf<InvalidOperationException>().And.Message.Contains(nameof(EventProcessor.ProcessEventsAsync)));
+            Assert.That(async () => await processor.StartAsync(), Throws.InstanceOf<InvalidOperationException>().And.Message.Contains(nameof(EventProcessor.ProcessEventAsync)));
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void StartAsyncValidatesProcessExceptionAsync()
         {
             EventProcessor processor = new EventProcessor("connectionString", "consumerGroup", Mock.Of<PartitionManager>());
-            processor.ProcessEventsAsync = (context, events) => Task.CompletedTask;
+            processor.ProcessEventAsync = partitionEvent => Task.CompletedTask;
 
             Assert.That(async () => await processor.StartAsync(), Throws.InstanceOf<InvalidOperationException>().And.Message.Contains(nameof(EventProcessor.ProcessExceptionAsync)));
         }
@@ -216,7 +216,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var fakeConnection = "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake";
             EventProcessor processor = new EventProcessor(fakeConnection, "consumerGroup", Mock.Of<PartitionManager>());
 
-            processor.ProcessEventsAsync = (context, events) => Task.CompletedTask;
+            processor.ProcessEventAsync = partitionEvent => Task.CompletedTask;
             processor.ProcessExceptionAsync = (context, exception) => Task.CompletedTask;
 
             Assert.That(async () => await processor.StartAsync(), Throws.Nothing);
@@ -234,14 +234,14 @@ namespace Azure.Messaging.EventHubs.Tests
             var fakeConnection = "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake";
             EventProcessor processor = new EventProcessor(fakeConnection, "consumerGroup", Mock.Of<PartitionManager>());
 
-            processor.ProcessEventsAsync = (context, events) => Task.CompletedTask;
+            processor.ProcessEventAsync = partitionEvent => Task.CompletedTask;
             processor.ProcessExceptionAsync = (context, exception) => Task.CompletedTask;
 
             await processor.StartAsync();
 
             Assert.That(() => processor.InitializeProcessingForPartitionAsync = ((context) => Task.CompletedTask), Throws.InstanceOf<InvalidOperationException>());
             Assert.That(() => processor.ProcessingForPartitionStoppedAsync = ((context) => Task.CompletedTask), Throws.InstanceOf<InvalidOperationException>());
-            Assert.That(() => processor.ProcessEventsAsync = ((context, events) => Task.CompletedTask), Throws.InstanceOf<InvalidOperationException>());
+            Assert.That(() => processor.ProcessEventAsync = (partitionEvent => Task.CompletedTask), Throws.InstanceOf<InvalidOperationException>());
             Assert.That(() => processor.ProcessExceptionAsync = ((context, exception) => Task.CompletedTask), Throws.InstanceOf<InvalidOperationException>());
 
             await processor.StopAsync();
@@ -257,7 +257,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var fakeConnection = "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake";
             EventProcessor processor = new EventProcessor(fakeConnection, "consumerGroup", Mock.Of<PartitionManager>());
 
-            processor.ProcessEventsAsync = (context, events) => Task.CompletedTask;
+            processor.ProcessEventAsync = partitionEvent => Task.CompletedTask;
             processor.ProcessExceptionAsync = (context, exception) => Task.CompletedTask;
 
             await processor.StartAsync();
@@ -265,7 +265,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(() => processor.InitializeProcessingForPartitionAsync = ((context) => Task.CompletedTask), Throws.Nothing);
             Assert.That(() => processor.ProcessingForPartitionStoppedAsync = ((context) => Task.CompletedTask), Throws.Nothing);
-            Assert.That(() => processor.ProcessEventsAsync = ((context, events) => Task.CompletedTask), Throws.Nothing);
+            Assert.That(() => processor.ProcessEventAsync = (partitionEvent => Task.CompletedTask), Throws.Nothing);
             Assert.That(() => processor.ProcessExceptionAsync = ((context, exception) => Task.CompletedTask), Throws.Nothing);
         }
 

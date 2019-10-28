@@ -38,8 +38,8 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <summary>The handler to be called once event processing stops for a given partition.</summary>
         private Func<PartitionProcessingStoppedContext, Task> _processingForPartitionStoppedAsync;
 
-        /// <summary>Responsible for processing sets of events received from the Event Hubs service.</summary>
-        private Func<PartitionContext, IEnumerable<EventData>, Task> _processEventsAsync;
+        /// <summary>Responsible for processing events received from the Event Hubs service.</summary>
+        private Func<PartitionEvent, Task> _processEventAsync;
 
         /// <summary>Responsible for processing unexpected exceptions thrown while this <see cref="EventProcessor" /> is running.</summary>
         private Func<PartitionContext, Exception, Task> _processExceptionAsync;
@@ -161,13 +161,13 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
-        ///   Responsible for processing sets of events received from the Event Hubs service.  Implementation is mandatory.
+        ///   Responsible for processing events received from the Event Hubs service.  Implementation is mandatory.
         /// </summary>
         ///
-        public Func<PartitionContext, IEnumerable<EventData>, Task> ProcessEventsAsync
+        public Func<PartitionEvent, Task> ProcessEventAsync
         {
-            internal get => _processEventsAsync;
-            set => EnsureNotRunningAndInvoke(() => _processEventsAsync = value);
+            internal get => _processEventAsync;
+            set => EnsureNotRunningAndInvoke(() => _processEventAsync = value);
         }
 
         /// <summary>
@@ -291,7 +291,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="ProcessEventsAsync" /> or <see cref="ProcessExceptionAsync" /> set.</exception>
+        /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="ProcessEventAsync" /> or <see cref="ProcessExceptionAsync" /> set.</exception>
         ///
         public virtual async Task StartAsync()
         {
@@ -305,9 +305,9 @@ namespace Azure.Messaging.EventHubs.Processor
                     {
                         if (RunningTask == null)
                         {
-                            if (_processEventsAsync == null)
+                            if (_processEventAsync == null)
                             {
-                                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotStartEventProcessorWithoutHandler, nameof(ProcessEventsAsync)));
+                                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotStartEventProcessorWithoutHandler, nameof(ProcessEventAsync)));
                             }
 
                             if (_processExceptionAsync == null)

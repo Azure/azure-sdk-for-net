@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -241,17 +242,17 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         private async Task RunAsync(CancellationToken cancellationToken)
         {
-            IEnumerable<EventData> receivedEvents;
+            List<EventData> receivedEvents;
             Exception unrecoverableException = null;
 
             // We'll break from the loop upon encountering a non-retriable exception.  The event processor periodically
             // checks its pumps' status, so it should be aware of when one of them stops working.
 
-            while (!cancellationToken.IsCancellationRequested)
+            while (!cancellationToken.IsCancellationRequested && unrecoverableException == null)
             {
                 try
                 {
-                    receivedEvents = await InnerConsumer.ReceiveAsync(Options.MaximumMessageCount, Options.MaximumReceiveWaitTime, cancellationToken).ConfigureAwait(false);
+                    receivedEvents = (await InnerConsumer.ReceiveAsync(Options.MaximumMessageCount, Options.MaximumReceiveWaitTime, cancellationToken).ConfigureAwait(false)).ToList();
 
                     using DiagnosticScope diagnosticScope = EventDataInstrumentation.ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName);
                     diagnosticScope.AddAttribute("kind", "server");
@@ -267,19 +268,31 @@ namespace Azure.Messaging.EventHubs.Processor
                         }
                     }
 
+                    // Small workaround to make sure we call ProcessEvents with EventData = null when no events have been received.
+                    // The code is expected to get simpler when we start using the async enumerator internally to receive events.
+
+                    if (receivedEvents.Count == 0)
+                    {
+                        receivedEvents.Add(null);
+                    }
+
                     diagnosticScope.Start();
 
-                    try
+                    foreach (var eventData in receivedEvents)
                     {
-                        await OwnerEventProcessor.ProcessEventsAsync(Context, receivedEvents).ConfigureAwait(false);
-                    }
-                    catch (Exception partitionProcessorException)
-                    {
-                        diagnosticScope.Failed(partitionProcessorException);
-                        unrecoverableException = partitionProcessorException;
-                        CloseReason = CloseReason.ProcessEventsException;
+                        try
+                        {
+                            var partitionEvent = new PartitionEvent(Context, eventData);
+                            await OwnerEventProcessor.ProcessEventAsync(partitionEvent).ConfigureAwait(false);
+                        }
+                        catch (Exception partitionProcessorException)
+                        {
+                            diagnosticScope.Failed(partitionProcessorException);
+                            unrecoverableException = partitionProcessorException;
+                            CloseReason = CloseReason.ProcessEventsException;
 
-                        break;
+                            break;
+                        }
                     }
                 }
                 catch (Exception eventHubException)

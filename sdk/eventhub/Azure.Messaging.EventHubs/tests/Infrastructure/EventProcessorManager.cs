@@ -61,10 +61,10 @@ namespace Azure.Messaging.EventHubs.Tests
         private Action<PartitionProcessingStoppedContext> OnClose { get; }
 
         /// <summary>
-        ///   A callback action to be called on <see cref="EventProcessor.ProcessEventsAsync" />.
+        ///   A callback action to be called on <see cref="EventProcessor.ProcessEventAsync" />.
         /// </summary>
         ///
-        private Action<PartitionContext, IEnumerable<EventData>> OnProcessEvents { get; }
+        private Action<PartitionEvent> OnProcessEvent { get; }
 
         /// <summary>
         ///   A callback action to be called on <see cref="EventProcessor.ProcessExceptionAsync" />.
@@ -82,7 +82,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <param name="options">The set of options to use for the event processors.</param>
         /// <param name="onInitialize">A callback action to be called on <see cref="EventProcessor.InitializeProcessingForPartitionAsync" />.</param>
         /// <param name="onClose">A callback action to be called on <see cref="EventProcessor.ProcessingForPartitionStoppedAsync" />.</param>
-        /// <param name="onProcessEvents">A callback action to be called on <see cref="EventProcessor.ProcessEventsAsync" />.</param>
+        /// <param name="onProcessEvent">A callback action to be called on <see cref="EventProcessor.ProcessEventAsync" />.</param>
         /// <param name="onProcessException">A callback action to be called on <see cref="EventProcessor.ProcessExceptionAsync" />.</param>
         ///
         public EventProcessorManager(string connectionString,
@@ -91,7 +91,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                      EventProcessorOptions options = null,
                                      Action<InitializePartitionProcessingContext> onInitialize = null,
                                      Action<PartitionProcessingStoppedContext> onClose = null,
-                                     Action<PartitionContext, IEnumerable<EventData>> onProcessEvents = null,
+                                     Action<PartitionEvent> onProcessEvent = null,
                                      Action<PartitionContext, Exception> onProcessException = null)
         {
             ConnectionString = connectionString;
@@ -110,7 +110,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             OnInitialize = onInitialize;
             OnClose = onClose;
-            OnProcessEvents = onProcessEvents;
+            OnProcessEvent = onProcessEvent;
             OnProcessException = onProcessException;
 
             EventProcessors = new List<ShortWaitTimeMock>();
@@ -152,9 +152,9 @@ namespace Azure.Messaging.EventHubs.Tests
                     };
                 }
 
-                eventProcessor.ProcessEventsAsync = (partitionContext, events) =>
+                eventProcessor.ProcessEventAsync = partitionEvent =>
                 {
-                    OnProcessEvents?.Invoke(partitionContext, events);
+                    OnProcessEvent?.Invoke(partitionEvent);
                     return Task.CompletedTask;
                 };
 

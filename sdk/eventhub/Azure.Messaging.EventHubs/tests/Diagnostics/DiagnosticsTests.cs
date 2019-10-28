@@ -286,7 +286,7 @@ namespace Azure.Messaging.EventHubs.Tests
             clientMock.Setup(c => c.CreateConsumer("cg", "pid", It.IsAny<EventPosition>(), It.IsAny<EventHubConsumerOptions>())).Returns(consumerMock.Object);
 
             var eventProcessorMock = new Mock<EventProcessor>();
-            eventProcessorMock.Object.ProcessEventsAsync = (context, manager) =>
+            eventProcessorMock.Object.ProcessEventAsync = partitionEvent =>
             {
                 processorCalledSource.SetResult(null);
                 return Task.CompletedTask;
@@ -303,7 +303,6 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(scope.Links, Has.One.EqualTo("id"));
             Assert.That(scope.Links, Has.One.EqualTo("id2"));
             Assert.That(scope.Activity.Tags, Has.One.EqualTo(new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.ServerKind)), "The activities tag should be server.");
-
         }
     }
 }

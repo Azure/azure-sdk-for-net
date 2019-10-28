@@ -180,21 +180,17 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             connectionString,
                             EventHubConsumer.DefaultConsumerGroupName,
-                            onProcessEvents: (partitionContext, events) =>
+                            onProcessEvent: partitionEvent =>
                             {
-                                // Make it a list so we can safely enumerate it.
-
-                                var eventsList = new List<EventData>(events ?? Enumerable.Empty<EventData>());
-
-                                if (eventsList.Count > 0)
+                                if (partitionEvent.Data != null)
                                 {
                                     allReceivedEvents.AddOrUpdate
                                     (
-                                        partitionContext.PartitionId,
-                                        partitionId => eventsList,
+                                        partitionEvent.Context.PartitionId,
+                                        partitionId => new List<EventData>() { partitionEvent.Data },
                                         (partitionId, list) =>
                                         {
-                                            list.AddRange(eventsList);
+                                            list.Add(partitionEvent.Data);
                                             return list;
                                         }
                                     );
@@ -278,7 +274,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 await using (var client = new EventHubClient(connectionString))
                 {
-                    var receivedEventSets = new ConcurrentBag<IEnumerable<EventData>>();
+                    var receivedEvents = new ConcurrentBag<EventData>();
 
                     // Create the event processor manager to manage our event processors.
 
@@ -286,8 +282,10 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             connectionString,
                             EventHubConsumer.DefaultConsumerGroupName,
-                            onProcessEvents: (partitionContext, events) =>
-                                receivedEventSets.Add(events)
+                            onProcessEvent: partitionEvent =>
+                            {
+                                receivedEvents.Add(partitionEvent.Data);
+                            }
                         );
 
                     eventProcessorManager.AddEventProcessors(1);
@@ -306,8 +304,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // Validate results.
 
-                    Assert.That(receivedEventSets, Is.Not.Empty);
-                    Assert.That(receivedEventSets.Any(set => (set == null || set.Any())), Is.False);
+                    Assert.That(receivedEvents, Is.Not.Empty);
+                    Assert.That(receivedEvents.Any(eventData => eventData != null), Is.False);
                 }
             }
         }
@@ -451,15 +449,11 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             connectionString,
                             EventHubConsumer.DefaultConsumerGroupName,
-                            onProcessEvents: (partitionContext, events) =>
+                            onProcessEvent: partitionEvent =>
                             {
-                                // Make it a list so we can safely enumerate it.
-
-                                var eventsList = new List<EventData>(events ?? Enumerable.Empty<EventData>());
-
-                                if (eventsList.Count > 0)
+                                if (partitionEvent.Data != null)
                                 {
-                                    Interlocked.Add(ref receivedEventsCount, eventsList.Count);
+                                    Interlocked.Increment(ref receivedEventsCount);
                                 }
                             }
                         );
@@ -586,15 +580,11 @@ namespace Azure.Messaging.EventHubs.Tests
                             connectionString,
                             EventHubConsumer.DefaultConsumerGroupName,
                             partitionManager,
-                            onProcessEvents: (partitionContext, events) =>
+                            onProcessEvent: partitionEvent =>
                             {
-                                // Make it a list so we can safely enumerate it.
-
-                                var eventsList = new List<EventData>(events ?? Enumerable.Empty<EventData>());
-
-                                if (eventsList.Count > 0)
+                                if (partitionEvent.Data != null)
                                 {
-                                    Interlocked.Add(ref receivedEventsCount, eventsList.Count);
+                                    Interlocked.Increment(ref receivedEventsCount);
                                 }
                             }
                         );
@@ -681,15 +671,11 @@ namespace Azure.Messaging.EventHubs.Tests
                             connectionString,
                             EventHubConsumer.DefaultConsumerGroupName,
                             partitionManager,
-                            onProcessEvents: (partitionContext, events) =>
+                            onProcessEvent: partitionEvent =>
                             {
-                                // Make it a list so we can safely enumerate it.
-
-                                var eventsList = new List<EventData>(events ?? Enumerable.Empty<EventData>());
-
-                                if (eventsList.Any())
+                                if (partitionEvent.Data != null)
                                 {
-                                    partitionContext.UpdateCheckpointAsync(eventsList.Last());
+                                    partitionEvent.Context.UpdateCheckpointAsync(partitionEvent.Data);
                                 }
                             }
                         );
@@ -780,15 +766,11 @@ namespace Azure.Messaging.EventHubs.Tests
                             EventHubConsumer.DefaultConsumerGroupName,
                             onInitialize: initializationContext =>
                                 initializationContext.DefaultStartingPosition = EventPosition.FromEnqueuedTime(enqueuedTime),
-                            onProcessEvents: (partitionContext, events) =>
+                            onProcessEvent: partitionEvent =>
                             {
-                                // Make it a list so we can safely enumerate it.
-
-                                var eventsList = new List<EventData>(events ?? Enumerable.Empty<EventData>());
-
-                                if (eventsList.Count > 0)
+                                if (partitionEvent.Data != null)
                                 {
-                                    Interlocked.Add(ref receivedEventsCount, eventsList.Count);
+                                    Interlocked.Increment(ref receivedEventsCount);
                                 }
                             }
                         );
@@ -843,12 +825,12 @@ namespace Azure.Messaging.EventHubs.Tests
                             options: new EventProcessorOptions { MaximumReceiveWaitTime = TimeSpan.FromSeconds(maximumWaitTimeInSecs) },
                             onInitialize: initializationContext =>
                                 timestamps.TryAdd(initializationContext.Context.PartitionId, new List<DateTimeOffset> { DateTimeOffset.UtcNow }),
-                            onProcessEvents: (partitionContext, events) =>
+                            onProcessEvent: partitionEvent =>
                                 timestamps.AddOrUpdate
                                     (
                                         // The key already exists, so the 'addValue' factory will never be called.
 
-                                        partitionContext.PartitionId,
+                                        partitionEvent.Context.PartitionId,
                                         partitionId => null,
                                         (partitionId, list) =>
                                         {
@@ -891,91 +873,6 @@ namespace Azure.Messaging.EventHubs.Tests
                             ++index;
                         }
                     }
-                }
-            }
-        }
-
-        /// <summary>
-        ///   Verifies that the <see cref="EventProcessor" /> is able to
-        ///   connect to the Event Hubs service and perform operations.
-        /// </summary>
-        ///
-        [Test]
-        [TestCase(1)]
-        [TestCase(3)]
-        [TestCase(6)]
-        [TestCase(10)]
-        [TestCase(20)]
-        [TestCase(50)]
-        public async Task EventProcessorCannotReceiveMoreThanMaximumMessageCountMessagesAtATime(int maximumMessageCount)
-        {
-            var partitions = 2;
-
-            await using (EventHubScope scope = await EventHubScope.CreateAsync(partitions))
-            {
-                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
-
-                await using (var client = new EventHubClient(connectionString))
-                {
-                    var unexpectedMessageCount = -1;
-
-                    // Send some events.
-
-                    await using (EventHubProducer producer = client.CreateProducer())
-                    {
-                        var eventSet = Enumerable
-                            .Range(0, 20 * maximumMessageCount)
-                            .Select(index => new EventData(new byte[10]))
-                            .ToList();
-
-                        // Send one set per partition.
-
-                        for (int i = 0; i < partitions; i++)
-                        {
-                            await producer.SendAsync(eventSet);
-                        }
-                    }
-
-                    // Create the event processor manager to manage our event processors.
-
-                    var eventProcessorManager = new EventProcessorManager
-                        (
-                            connectionString,
-                            EventHubConsumer.DefaultConsumerGroupName,
-                            options: new EventProcessorOptions { MaximumMessageCount = maximumMessageCount },
-                            onProcessEvents: (partitionContext, events) =>
-                            {
-                                // Make it a list so we can safely enumerate it.
-
-                                var eventsList = new List<EventData>(events ?? Enumerable.Empty<EventData>());
-
-                                // In case we find a message count greater than the allowed amount, we only store the first
-                                // occurrence and ignore the subsequent ones.
-
-                                if (eventsList.Count > maximumMessageCount)
-                                {
-                                    Interlocked.CompareExchange(ref unexpectedMessageCount, eventsList.Count, -1);
-                                }
-                            }
-                        );
-
-                    eventProcessorManager.AddEventProcessors(1);
-
-                    // Start the event processors.
-
-                    await eventProcessorManager.StartAllAsync();
-
-                    // Make sure the event processors have enough time to stabilize and receive events.
-
-                    await eventProcessorManager.WaitStabilization();
-
-                    // Stop the event processors.
-
-                    await eventProcessorManager.StopAllAsync();
-
-                    // Validate results.
-
-                    Assert.That(unexpectedMessageCount, Is.EqualTo(-1), $"A set of { unexpectedMessageCount } events was received.");
                 }
             }
         }
