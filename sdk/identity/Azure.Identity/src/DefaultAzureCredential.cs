@@ -47,7 +47,7 @@ namespace Azure.Identity
         /// <summary>
         /// Creates an instance of the <see cref="DefaultAzureCredential"/> class.
         /// </summary>
-        /// <param name="options"></param>
+        /// <param name="options">Options that configure the management of the requests sent to Azure Active Directory services, and determine which credentials are included in the <see cref="DefaultAzureCredential"/> authentication flow.</param>
         public DefaultAzureCredential(DefaultAzureCredentialOptions options)
             : this(new DefaultAzureCredentialFactory(CredentialPipeline.GetInstance(options)), options)
         {
