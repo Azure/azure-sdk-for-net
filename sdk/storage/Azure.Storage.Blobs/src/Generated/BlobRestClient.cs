@@ -3921,7 +3921,7 @@ namespace Azure.Storage.Blobs
                         }
                         if (response.Headers.TryGetValue("Content-Encoding", out _header))
                         {
-                            _value.ContentEncoding = (_header ?? "").Split(',');
+                            _value.ContentEncoding = _header;
                         }
                         if (response.Headers.TryGetValue("Content-Disposition", out _header))
                         {
@@ -3929,7 +3929,7 @@ namespace Azure.Storage.Blobs
                         }
                         if (response.Headers.TryGetValue("Content-Language", out _header))
                         {
-                            _value.ContentLanguage = (_header ?? "").Split(',');
+                            _value.ContentLanguage = _header;
                         }
                         if (response.Headers.TryGetValue("Cache-Control", out _header))
                         {
@@ -4981,8 +4981,8 @@ namespace Azure.Storage.Blobs
                 string blobCacheControl = default,
                 string blobContentType = default,
                 byte[] blobContentHash = default,
-                System.Collections.Generic.IEnumerable<string> blobContentEncoding = default,
-                System.Collections.Generic.IEnumerable<string> blobContentLanguage = default,
+                string blobContentEncoding = default,
+                string blobContentLanguage = default,
                 string leaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
@@ -5069,8 +5069,8 @@ namespace Azure.Storage.Blobs
                 string blobCacheControl = default,
                 string blobContentType = default,
                 byte[] blobContentHash = default,
-                System.Collections.Generic.IEnumerable<string> blobContentEncoding = default,
-                System.Collections.Generic.IEnumerable<string> blobContentLanguage = default,
+                string blobContentEncoding = default,
+                string blobContentLanguage = default,
                 string leaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
@@ -5100,18 +5100,8 @@ namespace Azure.Storage.Blobs
                 if (blobCacheControl != null) { _request.Headers.SetValue("x-ms-blob-cache-control", blobCacheControl); }
                 if (blobContentType != null) { _request.Headers.SetValue("x-ms-blob-content-type", blobContentType); }
                 if (blobContentHash != null) { _request.Headers.SetValue("x-ms-blob-content-md5", System.Convert.ToBase64String(blobContentHash)); }
-                if (blobContentEncoding != null) {
-                    foreach (string _item in blobContentEncoding)
-                    {
-                        _request.Headers.SetValue("x-ms-blob-content-encoding", _item);
-                    }
-                }
-                if (blobContentLanguage != null) {
-                    foreach (string _item in blobContentLanguage)
-                    {
-                        _request.Headers.SetValue("x-ms-blob-content-language", _item);
-                    }
-                }
+                if (blobContentEncoding != null) { _request.Headers.SetValue("x-ms-blob-content-encoding", blobContentEncoding); }
+                if (blobContentLanguage != null) { _request.Headers.SetValue("x-ms-blob-content-language", blobContentLanguage); }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
@@ -7283,8 +7273,8 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 Azure.Storage.Blobs.Models.AccessTier? tier = default,
                 string blobContentType = default,
-                System.Collections.Generic.IEnumerable<string> blobContentEncoding = default,
-                System.Collections.Generic.IEnumerable<string> blobContentLanguage = default,
+                string blobContentEncoding = default,
+                string blobContentLanguage = default,
                 byte[] blobContentHash = default,
                 string blobCacheControl = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
@@ -7395,8 +7385,8 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 Azure.Storage.Blobs.Models.AccessTier? tier = default,
                 string blobContentType = default,
-                System.Collections.Generic.IEnumerable<string> blobContentEncoding = default,
-                System.Collections.Generic.IEnumerable<string> blobContentLanguage = default,
+                string blobContentEncoding = default,
+                string blobContentLanguage = default,
                 byte[] blobContentHash = default,
                 string blobCacheControl = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
@@ -7434,18 +7424,8 @@ namespace Azure.Storage.Blobs
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
                 if (tier != null) { _request.Headers.SetValue("x-ms-access-tier", tier.ToString()); }
                 if (blobContentType != null) { _request.Headers.SetValue("x-ms-blob-content-type", blobContentType); }
-                if (blobContentEncoding != null) {
-                    foreach (string _item in blobContentEncoding)
-                    {
-                        _request.Headers.SetValue("x-ms-blob-content-encoding", _item);
-                    }
-                }
-                if (blobContentLanguage != null) {
-                    foreach (string _item in blobContentLanguage)
-                    {
-                        _request.Headers.SetValue("x-ms-blob-content-language", _item);
-                    }
-                }
+                if (blobContentEncoding != null) { _request.Headers.SetValue("x-ms-blob-content-encoding", blobContentEncoding); }
+                if (blobContentLanguage != null) { _request.Headers.SetValue("x-ms-blob-content-language", blobContentLanguage); }
                 if (blobContentHash != null) { _request.Headers.SetValue("x-ms-blob-content-md5", System.Convert.ToBase64String(blobContentHash)); }
                 if (blobCacheControl != null) { _request.Headers.SetValue("x-ms-blob-cache-control", blobCacheControl); }
                 if (metadata != null) {
@@ -9326,8 +9306,8 @@ namespace Azure.Storage.Blobs
                 long contentLength,
                 int? timeout = default,
                 string blobContentType = default,
-                System.Collections.Generic.IEnumerable<string> blobContentEncoding = default,
-                System.Collections.Generic.IEnumerable<string> blobContentLanguage = default,
+                string blobContentEncoding = default,
+                string blobContentLanguage = default,
                 byte[] blobContentHash = default,
                 string blobCacheControl = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
@@ -9429,8 +9409,8 @@ namespace Azure.Storage.Blobs
                 long contentLength,
                 int? timeout = default,
                 string blobContentType = default,
-                System.Collections.Generic.IEnumerable<string> blobContentEncoding = default,
-                System.Collections.Generic.IEnumerable<string> blobContentLanguage = default,
+                string blobContentEncoding = default,
+                string blobContentLanguage = default,
                 byte[] blobContentHash = default,
                 string blobCacheControl = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
@@ -9465,18 +9445,8 @@ namespace Azure.Storage.Blobs
                 _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
                 if (blobContentType != null) { _request.Headers.SetValue("x-ms-blob-content-type", blobContentType); }
-                if (blobContentEncoding != null) {
-                    foreach (string _item in blobContentEncoding)
-                    {
-                        _request.Headers.SetValue("x-ms-blob-content-encoding", _item);
-                    }
-                }
-                if (blobContentLanguage != null) {
-                    foreach (string _item in blobContentLanguage)
-                    {
-                        _request.Headers.SetValue("x-ms-blob-content-language", _item);
-                    }
-                }
+                if (blobContentEncoding != null) { _request.Headers.SetValue("x-ms-blob-content-encoding", blobContentEncoding); }
+                if (blobContentLanguage != null) { _request.Headers.SetValue("x-ms-blob-content-language", blobContentLanguage); }
                 if (blobContentHash != null) { _request.Headers.SetValue("x-ms-blob-content-md5", System.Convert.ToBase64String(blobContentHash)); }
                 if (blobCacheControl != null) { _request.Headers.SetValue("x-ms-blob-cache-control", blobCacheControl); }
                 if (metadata != null) {
@@ -10156,8 +10126,8 @@ namespace Azure.Storage.Blobs
                 long contentLength,
                 int? timeout = default,
                 string blobContentType = default,
-                System.Collections.Generic.IEnumerable<string> blobContentEncoding = default,
-                System.Collections.Generic.IEnumerable<string> blobContentLanguage = default,
+                string blobContentEncoding = default,
+                string blobContentLanguage = default,
                 byte[] blobContentHash = default,
                 string blobCacheControl = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
@@ -10265,8 +10235,8 @@ namespace Azure.Storage.Blobs
                 long contentLength,
                 int? timeout = default,
                 string blobContentType = default,
-                System.Collections.Generic.IEnumerable<string> blobContentEncoding = default,
-                System.Collections.Generic.IEnumerable<string> blobContentLanguage = default,
+                string blobContentEncoding = default,
+                string blobContentLanguage = default,
                 byte[] blobContentHash = default,
                 string blobCacheControl = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
@@ -10306,18 +10276,8 @@ namespace Azure.Storage.Blobs
                 _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
                 if (blobContentType != null) { _request.Headers.SetValue("x-ms-blob-content-type", blobContentType); }
-                if (blobContentEncoding != null) {
-                    foreach (string _item in blobContentEncoding)
-                    {
-                        _request.Headers.SetValue("x-ms-blob-content-encoding", _item);
-                    }
-                }
-                if (blobContentLanguage != null) {
-                    foreach (string _item in blobContentLanguage)
-                    {
-                        _request.Headers.SetValue("x-ms-blob-content-language", _item);
-                    }
-                }
+                if (blobContentEncoding != null) { _request.Headers.SetValue("x-ms-blob-content-encoding", blobContentEncoding); }
+                if (blobContentLanguage != null) { _request.Headers.SetValue("x-ms-blob-content-language", blobContentLanguage); }
                 if (blobContentHash != null) { _request.Headers.SetValue("x-ms-blob-content-md5", System.Convert.ToBase64String(blobContentHash)); }
                 if (blobCacheControl != null) { _request.Headers.SetValue("x-ms-blob-cache-control", blobCacheControl); }
                 if (metadata != null) {
@@ -10896,8 +10856,8 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 string blobCacheControl = default,
                 string blobContentType = default,
-                System.Collections.Generic.IEnumerable<string> blobContentEncoding = default,
-                System.Collections.Generic.IEnumerable<string> blobContentLanguage = default,
+                string blobContentEncoding = default,
+                string blobContentLanguage = default,
                 byte[] blobContentHash = default,
                 byte[] transactionalContentHash = default,
                 byte[] transactionalContentCrc64 = default,
@@ -11008,8 +10968,8 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 string blobCacheControl = default,
                 string blobContentType = default,
-                System.Collections.Generic.IEnumerable<string> blobContentEncoding = default,
-                System.Collections.Generic.IEnumerable<string> blobContentLanguage = default,
+                string blobContentEncoding = default,
+                string blobContentLanguage = default,
                 byte[] blobContentHash = default,
                 byte[] transactionalContentHash = default,
                 byte[] transactionalContentCrc64 = default,
@@ -11050,18 +11010,8 @@ namespace Azure.Storage.Blobs
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
                 if (blobCacheControl != null) { _request.Headers.SetValue("x-ms-blob-cache-control", blobCacheControl); }
                 if (blobContentType != null) { _request.Headers.SetValue("x-ms-blob-content-type", blobContentType); }
-                if (blobContentEncoding != null) {
-                    foreach (string _item in blobContentEncoding)
-                    {
-                        _request.Headers.SetValue("x-ms-blob-content-encoding", _item);
-                    }
-                }
-                if (blobContentLanguage != null) {
-                    foreach (string _item in blobContentLanguage)
-                    {
-                        _request.Headers.SetValue("x-ms-blob-content-language", _item);
-                    }
-                }
+                if (blobContentEncoding != null) { _request.Headers.SetValue("x-ms-blob-content-encoding", blobContentEncoding); }
+                if (blobContentLanguage != null) { _request.Headers.SetValue("x-ms-blob-content-language", blobContentLanguage); }
                 if (blobContentHash != null) { _request.Headers.SetValue("x-ms-blob-content-md5", System.Convert.ToBase64String(blobContentHash)); }
                 if (transactionalContentHash != null) { _request.Headers.SetValue("Content-MD5", System.Convert.ToBase64String(transactionalContentHash)); }
                 if (transactionalContentCrc64 != null) { _request.Headers.SetValue("x-ms-content-crc64", System.Convert.ToBase64String(transactionalContentCrc64)); }
@@ -15637,7 +15587,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// This header returns the value that was specified for the Content-Encoding request header
         /// </summary>
-        public System.Collections.Generic.IEnumerable<string> ContentEncoding { get; internal set; }
+        public string ContentEncoding { get; internal set; }
 
         /// <summary>
         /// This header returns the value that was specified for the 'x-ms-blob-content-disposition' header. The Content-Disposition response header field conveys additional information about how to process the response payload, and also can be used to attach additional metadata. For example, if set to attachment, it indicates that the user-agent should not display the response, but instead show a Save As dialog with a filename other than the blob name specified.
@@ -15647,7 +15597,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// This header returns the value that was specified for the Content-Language request header.
         /// </summary>
-        public System.Collections.Generic.IEnumerable<string> ContentLanguage { get; internal set; }
+        public string ContentLanguage { get; internal set; }
 
         /// <summary>
         /// This header is returned if it was previously specified for the blob.
@@ -15705,8 +15655,6 @@ namespace Azure.Storage.Blobs.Models
         public BlobProperties()
         {
             Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-            ContentEncoding = new System.Collections.Generic.List<string>();
-            ContentLanguage = new System.Collections.Generic.List<string>();
         }
     }
 
@@ -15727,9 +15675,9 @@ namespace Azure.Storage.Blobs.Models
             string destinationSnapshot,
             Azure.ETag eTag,
             byte[] contentHash,
-            System.Collections.Generic.IEnumerable<string> contentEncoding,
+            string contentEncoding,
             string contentDisposition,
-            System.Collections.Generic.IEnumerable<string> contentLanguage,
+            string contentLanguage,
             bool isIncrementalCopy,
             string cacheControl,
             Azure.Storage.Blobs.Models.CopyStatus copyStatus,

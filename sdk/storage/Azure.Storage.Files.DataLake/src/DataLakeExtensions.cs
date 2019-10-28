@@ -118,8 +118,8 @@ namespace Azure.Storage.Files.DataLake
             {
                 ContentType = pathHttpHeaders.ContentType,
                 ContentHash = pathHttpHeaders.ContentHash,
-                ContentEncoding = new string[] { pathHttpHeaders.ContentEncoding },
-                ContentLanguage = new string[] { pathHttpHeaders.ContentLanguage },
+                ContentEncoding = pathHttpHeaders.ContentEncoding,
+                ContentLanguage = pathHttpHeaders.ContentLanguage,
                 ContentDisposition = pathHttpHeaders.ContentDisposition,
                 CacheControl = pathHttpHeaders.CacheControl
             };
