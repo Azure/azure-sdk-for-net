@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
-    ///   The baseline set of options that can be specified when creating a <see cref="EventProcessor{T}" />
+    ///   The baseline set of options that can be specified when creating a <see cref="EventProcessor" />
     ///   to configure its behavior.
     /// </summary>
     ///

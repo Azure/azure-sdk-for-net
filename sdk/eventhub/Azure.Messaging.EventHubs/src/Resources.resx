@@ -222,4 +222,10 @@
   <data name="TrackLastEnqueuedEventInformationNotSet" xml:space="preserve">
     <value>This information is only available when TrackLastEnqueuedEventInformation is set on the Event Hub consumer options.</value>
   </data>
+  <data name="CannotStartEventProcessorWithoutHandler" xml:space="preserve">
+    <value>Cannot begin processing without {0} handler set.</value>
+  </data>
+  <data name="RunningEventProcessorCannotPerformOperation" xml:space="preserve">
+    <value>The event processor is already running and needs to be stopped in order to perform this operation.</value>
+  </data>
 </root>
