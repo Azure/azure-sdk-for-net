@@ -2,11 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
 
 namespace Azure.Identity
 {
     /// <summary>
-    /// An exception class raised for errors in authenticating client reqeusts.
+    /// An exception class raised for errors in authenticating client requests.
     /// </summary>
     public class AuthenticationFailedException : Exception
     {
@@ -27,6 +30,27 @@ namespace Azure.Identity
         public AuthenticationFailedException(string message, Exception innerException)
             : base(message, innerException)
         {
+        }
+
+        internal static AuthenticationFailedException CreateAggregateException(string message, ReadOnlyMemory<object> credentials, IList<Exception> innerExceptions)
+        {
+            StringBuilder exStr = new StringBuilder(message).AppendLine();
+
+            for (int i = 0; i < credentials.Length; i++)
+            {
+                if (innerExceptions[i] is CredentialUnavailableException)
+                {
+                    exStr.AppendLine($"  {credentials.Span[i].GetType().Name} is unavailable {innerExceptions[i].Message}.");
+                }
+                else
+                {
+                    exStr.AppendLine($"  {credentials.Span[i].GetType().Name} failed with {innerExceptions[i].Message}.");
+                }
+            }
+
+            exStr.Append("See inner exception for more detail.");
+
+            return new AuthenticationFailedException(exStr.ToString(), new AggregateException(message, innerExceptions.ToArray()));
         }
     }
 }

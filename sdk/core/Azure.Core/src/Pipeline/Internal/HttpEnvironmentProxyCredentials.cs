@@ -58,7 +58,7 @@ namespace Azure.Core.Pipeline
         }
 
         /// <summary>
-        /// Converts string containing user:password to NetworkCredential object
+        /// Converts string containing user:password to NetworkCredential object.
         /// </summary>
         private static NetworkCredential GetCredentialsFromString(string value)
         {

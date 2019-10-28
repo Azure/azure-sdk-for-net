@@ -112,7 +112,7 @@ namespace Azure.Storage.Files.Test
 
             // Act
             var fileUriBuilder = new FileUriBuilder(originalUri.Uri);
-            Assert.AreEqual("path/", fileUriBuilder.DirectoryOrFilePath);
+            Assert.AreEqual("path", fileUriBuilder.DirectoryOrFilePath);
             Assert.AreEqual("path", fileUriBuilder.LastDirectoryOrFileName);
         }
 
@@ -158,16 +158,16 @@ namespace Azure.Storage.Files.Test
             Assert.AreEqual("", fileUriBuilder.DirectoryOrFilePath);
             Assert.AreEqual("", fileUriBuilder.Snapshot);
 
-            Assert.AreEqual(new DateTimeOffset(2015, 4, 30, 2, 23, 26, TimeSpan.Zero), fileUriBuilder.Sas.ExpiryTime);
+            Assert.AreEqual(new DateTimeOffset(2015, 4, 30, 2, 23, 26, TimeSpan.Zero), fileUriBuilder.Sas.ExpiresOn);
             Assert.AreEqual("", fileUriBuilder.Sas.Identifier);
-            Assert.AreEqual(IPRange.Parse("168.1.5.60-168.1.5.70"), fileUriBuilder.Sas.IPRange);
+            Assert.AreEqual(SasIPRange.Parse("168.1.5.60-168.1.5.70"), fileUriBuilder.Sas.IPRange);
             Assert.AreEqual("rw", fileUriBuilder.Sas.Permissions);
             Assert.AreEqual(SasProtocol.Https, fileUriBuilder.Sas.Protocol);
             Assert.AreEqual("b", fileUriBuilder.Sas.Resource);
             Assert.IsNull(fileUriBuilder.Sas.ResourceTypes);
             Assert.IsNull(fileUriBuilder.Sas.Services);
             Assert.AreEqual("Z/RHIX5Xcg0Mq2rqI3OlWTjEg2tYkboXr1P9ZUXDtkk=", fileUriBuilder.Sas.Signature);
-            Assert.AreEqual(new DateTimeOffset(2015, 4, 29, 22, 18, 26, TimeSpan.Zero), fileUriBuilder.Sas.StartTime);
+            Assert.AreEqual(new DateTimeOffset(2015, 4, 29, 22, 18, 26, TimeSpan.Zero), fileUriBuilder.Sas.StartsOn);
             Assert.AreEqual("2015-04-05", fileUriBuilder.Sas.Version);
 
             Assert.AreEqual("comp=list", fileUriBuilder.Query);

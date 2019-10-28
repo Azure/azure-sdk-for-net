@@ -25,13 +25,13 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             // Environment variable with the Key Vault endpoint.
             string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
 
-            #region CreateClient
+            #region Snippet:CreateCertificateClient
             // Create a new certificate client using the default credential from Azure.Identity using environment variables previously set,
             // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
             var client = new CertificateClient(vaultUri: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
             #endregion
 
-            #region CreateCertificate
+            #region Snippet:CreateCertificate
             // Create a certificate. This starts a long running operation to create and sign the certificate.
             CertificateOperation operation = await client.StartCreateCertificateAsync("MyCertificate");
 
@@ -45,11 +45,11 @@ namespace Azure.Security.KeyVault.Certificates.Samples
         [Test]
         public async Task RetrieveCertificateAsync()
         {
-            #region RetrieveCertificate
+            #region Snippet:RetrieveCertificate
             CertificateWithPolicy certificateWithPolicy = await client.GetCertificateAsync("MyCertificate");
             #endregion
 
-            #region GetCertificate
+            #region Snippet:GetCertificate
             Certificate certificate = await client.GetCertificateVersionAsync(certificateWithPolicy.Name, certificateWithPolicy.Properties.Version);
             #endregion
         }
@@ -59,7 +59,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
         {
             CertificateWithPolicy certificate = await client.GetCertificateAsync("MyCertificate");
 
-            #region UpdateCertificate
+            #region Snippet:UpdateCertificate
             CertificateProperties certificateProperties = new CertificateProperties(certificate.Id)
             {
                 Tags =
@@ -73,9 +73,22 @@ namespace Azure.Security.KeyVault.Certificates.Samples
         }
 
         [Test]
+        public async Task ListCertificatesAsync()
+        {
+            #region Snippet:ListCertificates
+            AsyncPageable<CertificateProperties> allCertificates = client.GetCertificatesAsync();
+
+            await foreach (CertificateProperties certificateProperties in allCertificates)
+            {
+                Console.WriteLine(certificateProperties.Name);
+            }
+            #endregion
+        }
+
+        [Test]
         public async Task NotFoundAsync()
         {
-            #region NotFound
+            #region Snippet:CertificateNotFound
             try
             {
                 CertificateWithPolicy certificateWithPolicy = await client.GetCertificateAsync("SomeCertificate");
@@ -90,7 +103,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
         [OneTimeTearDown]
         public async Task DeleteCertificateAsync()
         {
-            #region DeleteCertificate
+            #region Snippet:DeleteCertificate
             DeletedCertificate deletedCert = await client.DeleteCertificateAsync("MyCertificate");
 
             Console.WriteLine(deletedCert.ScheduledPurgeDate);

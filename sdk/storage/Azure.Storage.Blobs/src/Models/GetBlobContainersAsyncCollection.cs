@@ -39,7 +39,7 @@ namespace Azure.Storage.Blobs.Models
             Response<BlobContainersSegment> response = isAsync ?
                 await task.ConfigureAwait(false) :
                 task.EnsureCompleted();
-            return new Page<BlobContainerItem>(
+            return Page<BlobContainerItem>.FromValues(
                 response.Value.BlobContainerItems.ToArray(),
                 response.Value.NextMarker,
                 response.GetRawResponse());

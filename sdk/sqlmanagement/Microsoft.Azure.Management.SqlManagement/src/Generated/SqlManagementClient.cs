@@ -333,11 +333,6 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IManagedBackupShortTermRetentionPoliciesOperations ManagedBackupShortTermRetentionPolicies { get; private set; }
 
         /// <summary>
-        /// Gets the IManagedDatabasesOperations.
-        /// </summary>
-        public virtual IManagedDatabasesOperations ManagedDatabases { get; private set; }
-
-        /// <summary>
         /// Gets the IManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesOperations.
         /// </summary>
         public virtual IManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesOperations ManagedRestorableDroppedDatabaseBackupShortTermRetentionPolicies { get; private set; }
@@ -486,6 +481,16 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IManagedInstancesOperations.
         /// </summary>
         public virtual IManagedInstancesOperations ManagedInstances { get; private set; }
+
+        /// <summary>
+        /// Gets the IManagedDatabaseRestoreDetailsOperations.
+        /// </summary>
+        public virtual IManagedDatabaseRestoreDetailsOperations ManagedDatabaseRestoreDetails { get; private set; }
+
+        /// <summary>
+        /// Gets the IManagedDatabasesOperations.
+        /// </summary>
+        public virtual IManagedDatabasesOperations ManagedDatabases { get; private set; }
 
         /// <summary>
         /// Gets the IPrivateEndpointConnectionsOperations.
@@ -790,7 +795,6 @@ namespace Microsoft.Azure.Management.Sql
             LongTermRetentionBackups = new LongTermRetentionBackupsOperations(this);
             BackupLongTermRetentionPolicies = new BackupLongTermRetentionPoliciesOperations(this);
             ManagedBackupShortTermRetentionPolicies = new ManagedBackupShortTermRetentionPoliciesOperations(this);
-            ManagedDatabases = new ManagedDatabasesOperations(this);
             ManagedRestorableDroppedDatabaseBackupShortTermRetentionPolicies = new ManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesOperations(this);
             ServerAutomaticTuning = new ServerAutomaticTuningOperations(this);
             ServerDnsAliases = new ServerDnsAliasesOperations(this);
@@ -821,6 +825,8 @@ namespace Microsoft.Azure.Management.Sql
             InstancePools = new InstancePoolsOperations(this);
             Usages = new UsagesOperations(this);
             ManagedInstances = new ManagedInstancesOperations(this);
+            ManagedDatabaseRestoreDetails = new ManagedDatabaseRestoreDetailsOperations(this);
+            ManagedDatabases = new ManagedDatabasesOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");

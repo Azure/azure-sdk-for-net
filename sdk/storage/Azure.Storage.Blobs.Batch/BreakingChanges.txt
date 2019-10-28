@@ -1,0 +1,6 @@
+Breaking Changes
+================
+
+Next Preview
+--------------------------
+- Azure.Storage.Blobs.Batching assembly and package are renamed to Azure.Storage.Blobs.Batch

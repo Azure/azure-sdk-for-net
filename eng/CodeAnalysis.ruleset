@@ -190,7 +190,7 @@
         <Rule Id="SA1626"  Action="None" />          <!-- Single-line comments should not use documentation style slashes -->
         <Rule Id="SA1627"  Action="None" />          <!-- Documentation text should not be empty -->
         <Rule Id="SA1628"  Action="None" />          <!-- Documentation text should begin with a capital letter -->
-        <Rule Id="SA1629"  Action="None" />          <!-- Documentation text should end with a period -->
+        <Rule Id="SA1629"  Action="Info" />          <!-- Documentation text should end with a period -->
         <Rule Id="SA1630"  Action="None" />          <!-- Documentation text should contain whitespace -->
         <Rule Id="SA1631"  Action="None" />          <!-- Documentation should meet character percentage -->
         <Rule Id="SA1632"  Action="None" />          <!-- Documentation text should meet minimum character length -->

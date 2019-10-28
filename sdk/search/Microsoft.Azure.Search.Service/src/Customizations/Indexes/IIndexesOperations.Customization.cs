@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Search
         SearchServiceClient Client { get; }
 
         /// <summary>
-        /// Creates a new Azure Search index or updates an index if it already exists.
+        /// Creates a new search index or updates an index if it already exists.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Update-Index" />
         /// </summary>
         /// <param name='index'>
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Search
         Task<AzureOperationResponse<Index>> CreateOrUpdateWithHttpMessagesAsync(Index index, bool? allowIndexDowntime = default(bool?), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Determines whether or not the given index exists in the Azure Search service.
+        /// Determines whether or not the given index exists in the search service.
         /// </summary>
         /// <param name="indexName">
         /// The name of the index.

@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Search
     public static partial class SkillsetsOperationsExtensions
     {
         /// <summary>
-        /// Creates a new Azure Search skillset or updates a skillset if it
+        /// Creates a new skillset or updates a skillset if it
         /// already exists.
         /// </summary>
         /// <param name='operations'>
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Creates a new Azure Search skillset or updates a skillset if it
+        /// Creates a new skillset or updates a skillset if it
         /// already exists.
         /// </summary>
         /// <param name='operations'>
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Determines whether or not the given skillset exists in the Azure Search service.
+        /// Determines whether or not the given skillset exists in the search service.
         /// </summary>
         /// <param name='operations'>
         /// The operations group for this extension method.
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Determines whether or not the given skillset exists in the Azure Search service.
+        /// Determines whether or not the given skillset exists in the search service.
         /// </summary>
         /// <param name='operations'>
         /// The operations group for this extension method.

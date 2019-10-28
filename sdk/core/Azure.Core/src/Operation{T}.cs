@@ -26,7 +26,7 @@ namespace Azure
         /// Final result of the LRO.
         /// </summary>
         /// <remarks>
-        /// This property can be accessed only after the operation completes succesfully (HasValue is true).
+        /// This property can be accessed only after the operation completes successfully (HasValue is true).
         /// </remarks>
         public abstract T Value { get; }
 
@@ -46,7 +46,7 @@ namespace Azure
         public abstract bool HasCompleted { get; }
 
         /// <summary>
-        /// Returns true if the LRO completed succesfully and has produced final result (accessible by Value property).
+        /// Returns true if the LRO completed successfully and has produced final result (accessible by Value property).
         /// </summary>
         public abstract bool HasValue { get; }
 
@@ -95,12 +95,15 @@ namespace Azure
         /// </remarks>
         public abstract Response UpdateStatus(CancellationToken cancellationToken = default);
 
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => base.Equals(obj);
 
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();
 
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
     }

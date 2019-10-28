@@ -62,6 +62,14 @@ namespace Azure.Storage.Test.Shared
                 () => TestConfigurations.DefaultTargetOAuthTenant);
 
         /// <summary>
+        /// Gets the tenant to use for any tests that require authentication
+        /// with Azure AD.
+        /// </summary>
+        public TenantConfiguration TestConfigHierarchicalNamespace => GetTestConfig(
+                "Storage_TestConfigHierarchicalNamespace",
+                () => TestConfigurations.DefaultTargetHierarchicalNamespaceTenant);
+
+        /// <summary>
         /// Gets a cache used for storing serialized tenant configurations.  Do
         /// not get values from this directly; use GetTestConfig.
         /// </summary>
@@ -153,7 +161,9 @@ namespace Azure.Storage.Test.Shared
             => new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
                 {
                     { "foo", "bar" },
-                    { "meta", "data" }
+                    { "meta", "data" },
+                    { "Capital", "letter" },
+                    { "UPPER", "case" }
                 };
 
         public IPAddress GetIPAddress()
@@ -182,9 +192,9 @@ namespace Azure.Storage.Test.Shared
                 appId,
                 secret,
                 Recording.InstrumentClientOptions(
-                    new AzureCredentialOptions() { AuthorityHost = authorityHost }));
+                    new TokenCredentialOptions() { AuthorityHost = authorityHost }));
 
-        public void AssertMetadataEquality(IDictionary<string, string> expected, IDictionary<string, string> actual)
+        public virtual void AssertMetadataEquality(IDictionary<string, string> expected, IDictionary<string, string> actual)
         {
             Assert.IsNotNull(expected, "Expected metadata is null");
             Assert.IsNotNull(actual, "Actual metadata is null");
@@ -252,11 +262,11 @@ namespace Azure.Storage.Test.Shared
         /// </param>
         /// <param name="totalSize">The total size we should eventually see.</param>
         /// <returns>A task that will (optionally) delay.</returns>
-        protected async Task WaitForProgressAsync(List<StorageProgress> progressList, long totalSize)
+        protected async Task WaitForProgressAsync(List<long> progressList, long totalSize)
         {
             for (var attempts = 0; attempts < 10; attempts++)
             {
-                if (progressList.LastOrDefault()?.BytesTransferred >= totalSize)
+                if (progressList.LastOrDefault() >= totalSize)
                 {
                     return;
                 }

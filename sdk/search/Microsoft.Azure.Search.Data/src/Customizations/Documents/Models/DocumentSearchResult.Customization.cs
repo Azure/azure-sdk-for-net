@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="facets">The facet query results for the search operation, or null if the query did not include any facet
         /// expressions.</param>
         /// <param name="continuationToken">A continuation token that is used to continue fetching search results. This is necessary when
-        /// Azure Search cannot fulfill a search request with a single response.</param>
+        /// Azure Cognitive Search cannot fulfill a search request with a single response.</param>
         public DocumentSearchResult(
             IList<SearchResult<T>> results, 
             long? count, 
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         /// <remarks>
         /// <para>
-        /// This property will be null unless Azure Search can't return all the requested documents in a single Search
+        /// This property will be null unless Azure Cognitive Search can't return all the requested documents in a single Search
         /// response. That can happen for different reasons which are implementation-specific and subject to change.
         /// Robust clients should always be ready to handle cases where fewer documents than expected are returned and
         /// a continuation token is included to continue retrieving documents. If this property is not null, you can

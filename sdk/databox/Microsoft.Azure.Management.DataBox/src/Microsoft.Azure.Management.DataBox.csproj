@@ -7,23 +7,20 @@
 		<PackageId>Microsoft.Azure.Management.DataBox</PackageId>
 		<Description>Microsoft Azure Management DataBox library</Description>
 		<AssemblyName>Microsoft.Azure.Management.DataBox</AssemblyName>
-		<Version>1.0.1</Version>
+		<Version>1.1.0</Version>
 		<PackageTags>AzureDataBox;DataBox;</PackageTags>
     <PackageReleaseNotes>
 
       <![CDATA[
-
-                General availability release of the Azure Databox SDK [Sha 256 signed] which allows  
-
-                1) Creation, Updation, Deletion of order along with getting order status 
-
-                2) Validating address and its supportability by Azure Data Box service
+                Changes:
                 
-                3) Getting device credentials to unlock a device
+                1) Creation, Updation, Deletion of Scheduled order along with getting order status 
                 
-                4) Ordering a pickup from logistic partners for the device
+                2) Validating Job creation inputs and its supportability by Azure Data Box service
                 
-                5) Fetching list of available skus in Data Box family based on customer location
+                3) Fetching region configuration details supported by Azure Data Box service
+                
+                4) Deprecating validate address API
 
             ]]>
 

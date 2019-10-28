@@ -36,8 +36,8 @@ namespace Azure.Storage.Files.Test
             Assert.IsNull(sasQueryParameters.Services);
             Assert.IsNull(sasQueryParameters.ResourceTypes);
             Assert.AreEqual(constants.Sas.Protocol, sasQueryParameters.Protocol);
-            Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartTime);
-            Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiryTime);
+            Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartsOn);
+            Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiresOn);
             Assert.AreEqual(constants.Sas.IPRange, sasQueryParameters.IPRange);
             Assert.AreEqual(constants.Sas.Identifier, sasQueryParameters.Identifier);
             Assert.AreEqual(Constants.Sas.Resource.File, sasQueryParameters.Resource);
@@ -64,8 +64,8 @@ namespace Azure.Storage.Files.Test
             Assert.IsNull(sasQueryParameters.Services);
             Assert.IsNull(sasQueryParameters.ResourceTypes);
             Assert.AreEqual(constants.Sas.Protocol, sasQueryParameters.Protocol);
-            Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartTime);
-            Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiryTime);
+            Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartsOn);
+            Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiresOn);
             Assert.AreEqual(constants.Sas.IPRange, sasQueryParameters.IPRange);
             Assert.AreEqual(constants.Sas.Identifier, sasQueryParameters.Identifier);
             Assert.AreEqual(Constants.Sas.Resource.Share, sasQueryParameters.Resource);
@@ -93,9 +93,8 @@ namespace Azure.Storage.Files.Test
             {
                 Version = null,
                 Protocol = constants.Sas.Protocol,
-                StartTime = constants.Sas.StartTime,
-                ExpiryTime = constants.Sas.ExpiryTime,
-                Permissions = Permissions,
+                StartsOn = constants.Sas.StartTime,
+                ExpiresOn = constants.Sas.ExpiryTime,
                 IPRange = constants.Sas.IPRange,
                 Identifier = constants.Sas.Identifier,
                 ShareName = shareName,
@@ -106,6 +105,7 @@ namespace Azure.Storage.Files.Test
                 ContentLanguage = constants.Sas.ContentLanguage,
                 ContentType = constants.Sas.ContentType
             };
+            fileSasBuilder.SetPermissions(FileSasPermissions.All);
 
             if (includeVersion)
             {
@@ -135,7 +135,7 @@ namespace Azure.Storage.Files.Test
                 canonicalName,
                 constants.Sas.Identifier,
                 constants.Sas.IPRange.ToString(),
-                constants.Sas.Protocol.ToString(),
+                constants.Sas.Protocol.ToProtocolString(),
                 includeVersion ? constants.Sas.Version : SasQueryParameters.DefaultSasVersion,
                 constants.Sas.CacheControl,
                 constants.Sas.ContentDisposition,

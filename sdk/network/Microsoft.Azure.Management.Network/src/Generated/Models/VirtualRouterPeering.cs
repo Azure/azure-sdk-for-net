@@ -112,9 +112,9 @@ namespace Microsoft.Azure.Management.Network.Models
             {
                 throw new ValidationException(ValidationRules.InclusiveMaximum, "PeerAsn", 4294967295);
             }
-            if (PeerAsn < 1)
+            if (PeerAsn < 0)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "PeerAsn", 1);
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "PeerAsn", 0);
             }
         }
     }

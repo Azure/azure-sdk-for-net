@@ -248,7 +248,6 @@ directive:
   transform: >
     $.get.description = "Returns the sku name and account kind";
     $.get.responses["200"]["x-az-response-name"] = "AccountInfo";
-    $.get.responses["200"]["x-az-struct"] = true;
 - from: swagger-document
   where: $["x-ms-paths"]
   transform: >
@@ -287,6 +286,8 @@ directive:
   where: $.definitions.SignedIdentifier
   transform: >
     delete $.xml;
+    $["x-ms-client-name"] = "BlobSignedIdentifier";
+    $.xml = {"name": "SignedIdentifier"};
 ```
 
 ### /{containerName}?comp=lease&restype=container&acquire
@@ -462,6 +463,22 @@ directive:
         $.BlobItemProperties.required = ["AccessTierInferred"];
         const path = $.BlobItem.properties.Properties.$ref.replace(/[#].*$/, "#/definitions/BlobItemProperties");
         $.BlobItem.properties.Properties = { "$ref": path };
+
+        $.BlobItemProperties.properties.CreatedOn = $.BlobItemProperties.properties.CreationTime;
+        $.BlobItemProperties.properties.CreatedOn.xml = {"name": "CreationTime"};
+        delete $.BlobItemProperties.properties.CreationTime;
+
+        $.BlobItemProperties.properties.CopyCompletedOn = $.BlobItemProperties.properties.CopyCompletionTime;
+        $.BlobItemProperties.properties.CopyCompletedOn.xml = {"name": "CopyCompletionTime"};
+        delete $.BlobItemProperties.properties.CopyCompletionTime;
+
+        $.BlobItemProperties.properties.DeletedOn = $.BlobItemProperties.properties.DeletedTime;
+        $.BlobItemProperties.properties.DeletedOn.xml = {"name": "DeletedTime"};
+        delete $.BlobItemProperties.properties.DeletedTime;
+
+        $.BlobItemProperties.properties.AccessTierChangedOn = $.BlobItemProperties.properties.AccessTierChangeTime;
+        $.BlobItemProperties.properties.AccessTierChangedOn.xml = {"name": "AccessTierChangeTime"};
+        delete $.BlobItemProperties.properties.AccessTierChangeTime;
     }
 - from: swagger-document
   where: $["x-ms-paths"]["/{containerName}/{blob}"]
@@ -502,6 +519,9 @@ directive:
     $.head.responses["200"].headers["Content-Language"].type = "array";
     $.head.responses["200"].headers["Content-Language"].collectionFormat = "csv";
     $.head.responses["200"].headers["Content-Language"].items = { "type": "string" };
+    $.head.responses["200"].headers["Content-MD5"]["x-ms-copy-completion-time"] = "CopyCompletedOn";
+    $.head.responses["200"].headers["Content-MD5"]["x-ms-creation-time"] = "CreatedOn";
+    $.head.responses["200"].headers["Content-MD5"]["x-ms-access-tier-change-time"] = "AccessTierChangedOn";
     $.head.responses["304"] = {
         "description": "The condition specified using HTTP conditional header(s) is not met.",
         "x-az-response-name": "ConditionNotMetError",
@@ -525,6 +545,9 @@ directive:
   where: $.parameters.DeleteSnapshots
   transform: >
     $["x-ms-enum"].name = "DeleteSnapshotsOption";
+    $.enum = [ "none", "include", "only" ];
+    $["x-ms-enum"].values = [ { name: "none", value: null }, { name: "IncludeSnapshots", value: "include" }, { name: "OnlySnapshots", value: "only" }];
+    $["x-az-enum-skip-value"] = "none";
 - from: swagger-document
   where: $.parameters.SequenceNumberAction
   transform: >
@@ -541,11 +564,29 @@ directive:
   where: $.definitions.LeaseStatus
   transform: >
     $["x-ms-enum"].name = "LeaseStatus";
+```
+
+### GeoReplication
+``` yaml
+directive:
 - from: swagger-document
-  where: $.definitions.GeoReplication.properties.Status
+  where: $.definitions
   transform: >
-    $["x-ms-enum"].name = "GeoReplicationStatus";
-    $["x-ms-enum"].modelAsString = false;
+    if (!$.BlobGeoReplication) {
+        $.BlobGeoReplication = $.GeoReplication;
+        delete $.GeoReplication;
+        $.BlobGeoReplication.xml = {"name": "GeoReplication"};
+        $.BlobGeoReplication.properties.Status["x-ms-enum"].name = "BlobGeoReplicationStatus";
+        $.BlobGeoReplication.properties.Status["x-ms-enum"].modelAsString = false;
+        const def = $.BlobServiceStatistics.properties.GeoReplication;
+        if (!def["$ref"].endsWith("BlobGeoReplication")) {
+            const path = def["$ref"].replace(/[#].*$/, "#/definitions/BlobGeoReplication");
+            $.BlobServiceStatistics.properties.GeoReplication = {"$ref": path};
+        }
+        $.BlobGeoReplication.properties.LastSyncedOn = $.BlobGeoReplication.properties.LastSyncTime;
+        delete $.BlobGeoReplication.properties.LastSyncTime;
+        $.BlobGeoReplication.properties.LastSyncedOn.xml = { "name": "LastSyncTime" };
+    }
 ```
 
 ### /{containerName}/{blob}?comp=properties&SetHTTPHeaders
@@ -729,7 +770,6 @@ directive:
   transform: >
     $.put.responses["201"]["x-az-response-name"] = "PageInfo";
     $.put.responses["201"].description = "The operation completed successfully.";
-    $.put.responses["201"]["x-az-struct"] = true;
     $.put.responses["201"].headers["x-ms-blob-sequence-number"].description = "The current sequence number for the page blob.  This is only returned for page blobs.";
     $.put.responses["201"].headers["x-ms-request-server-encrypted"]["x-az-demote-header"] = true;
 ```
@@ -742,7 +782,6 @@ directive:
   transform: >
     $.put.responses["201"]["x-az-response-name"] = "PageInfo";
     $.put.responses["201"].description = "The operation completed successfully.";
-    $.put.responses["201"]["x-az-struct"] = true;
     $.put.responses["201"].headers["x-ms-blob-sequence-number"].description = "The current sequence number for the page blob.  This is only returned for page blobs.";
     $.put.responses["201"].headers["x-ms-request-server-encrypted"] = {
         "x-ms-client-name": "IsServerEncrypted",
@@ -766,7 +805,6 @@ directive:
     $.put.operationId = "PageBlob_UploadPagesFromUri";
     $.put.responses["201"]["x-az-response-name"] = "PageInfo";
     $.put.responses["201"].description = "The operation completed successfully.";
-    $.put.responses["201"]["x-az-struct"] = true;
     $.put.responses["201"].headers["x-ms-blob-sequence-number"].description = "The current sequence number for the page blob.  This is only returned for page blobs.";
     $.put.responses["201"].headers["x-ms-request-server-encrypted"]["x-az-demote-header"] = true;
     $.put.responses["304"] = {
@@ -1037,9 +1075,30 @@ directive:
 - from: swagger-document
   where: $.definitions.KeyInfo
   transform: >
-    $.required = ["Expiry"];
-    $.properties.Start.format = $.properties.Expiry.format = "date-time-8601";
+    $.properties.StartsOn = $.properties.Start;
+    $.properties.StartsOn.xml = { "name": "Start"};
+    $.properties.ExpiresOn = $.properties.Expiry;
+    $.properties.ExpiresOn.xml = { "name": "Expiry"};
+    $.required = ["ExpiresOn"];
+    $.properties.StartsOn.format = $.properties.ExpiresOn.format = "date-time-8601";
     $["x-az-public"] = false;
+    delete $.properties.Start;
+    delete $.properties.Expiry;
+```
+
+### UserDelegationKey
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.UserDelegationKey
+  transform: >
+    $.properties.SignedExpiresOn = $.properties.SignedExpiry;
+    $.properties.SignedExpiresOn.xml = { "name": "SignedExpiry"};
+    $.properties.SignedStartsOn = $.properties.SignedStart;
+    $.properties.SignedStartsOn.xml = { "name": "SignedStart"};
+    $.required = ["SignedOid", "SignedTid", "SignedStartsOn", "SignedExpiresOn", "SignedService", "SignedVersion", "Value"];
+    delete $.properties.SignedExpiry;
+    delete $.properties.SignedStart;
 ```
 
 ### Hide various Include types
@@ -1252,6 +1311,9 @@ directive:
     $.BlobServiceProperties.properties.Logging.xml = { "name": "Logging"};
     $.Metrics["x-ms-client-name"] = "BlobMetrics";
     $.Metrics.xml = { "name": "Metrics"};
+    $.Metrics.properties.IncludeApis = $.Metrics.properties.IncludeAPIs;
+    $.Metrics.properties.IncludeApis.xml = { "name": "IncludeAPIs"};
+    delete $.Metrics.properties.IncludeAPIs;
     $.BlobServiceProperties.properties.HourMetrics.xml = { "name": "HourMetrics"};
     $.BlobServiceProperties.properties.MinuteMetrics.xml = { "name": "MinuteMetrics"};
     $.CorsRule["x-ms-client-name"] = "BlobCorsRule";
@@ -1284,6 +1346,7 @@ directive:
         $.BlobBlock = $.Block;
         delete $.Block;
         $.BlobBlock.xml = { "name": "Block" };
+        $.BlobBlock["x-az-struct"] = true;
         const path = $.BlockList.properties.CommittedBlocks.items.$ref.replace(/[#].*$/, "#/definitions/BlobBlock");
         $.BlockList.properties.CommittedBlocks.items.$ref = path;
         $.BlockList.properties.CommittedBlocks.xml.name = "CommittedBlocks";
@@ -1317,3 +1380,24 @@ directive:
     $.PageList["x-az-public"] = false;
     $.PageRange["x-az-public"] = false;
     $.ClearRange["x-az-public"] = false;
+```
+
+### Access Policy properties renaming
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.AccessPolicy
+  transform: >
+    $["x-ms-client-name"] = "BlobAccessPolicy";
+    $.xml = {"name": "AccessPolicy"};
+    $.properties.StartsOn = $.properties.Start;
+    $.properties.StartsOn.xml = { "name": "Start"};
+    delete $.properties.Start;
+    $.properties.ExpiresOn = $.properties.Expiry;
+    $.properties.ExpiresOn.xml = { "name": "Expiry"};
+    delete $.properties.Expiry;
+    $.properties.Permissions = $.properties.Permission;
+    $.properties.Permissions.xml = { "name": "Permission"};
+    delete $.properties.Permission;
+    $.required = ["StartsOn", "ExpiresOn", "Permissions"];
+```
