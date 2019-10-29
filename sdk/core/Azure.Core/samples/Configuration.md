@@ -31,8 +31,6 @@ SecretClientOptions options = new SecretClientOptions
 
 ## Configuring a proxy
 
-##
-
 ```C# Snippet:HttpClientProxyConfiguration
 using HttpClient client = new HttpClient(
     new HttpClientHandler()
