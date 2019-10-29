@@ -124,9 +124,10 @@
                 });
 
                 var features = await client.Model.GetEntityFeaturesAsync(GlobalAppId, versionId, entityId);
-                await client.Features.DeletePhraseListAsync(GlobalAppId, versionId, id.Value);
 
                 Assert.Equal("Month", features[0].FeatureName);
+                await client.Features.DeletePhraseListAsync(GlobalAppId, versionId, id.Value);
+                await client.Model.DeleteEntityAsync(GlobalAppId, versionId, entityId);
             });
         }
 
