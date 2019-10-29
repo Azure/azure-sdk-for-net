@@ -1067,6 +1067,10 @@ namespace Azure.Storage.Blobs
         }
         #endregion Upload
 
+        // NOTE: TransformContent is no longer called by the new implementation
+        // of parallel upload.  Leaving the virtual stub in for now to avoid
+        // any confusion.
+
         /// <summary>
         /// Performs a transform on the data for uploads. It is a no-op by default.
         /// </summary>

@@ -39,16 +39,17 @@ namespace Azure.Storage.Blobs.Tests
         {
             MemoryStream stream = new MemoryStream();
             MockDataSource dataSource = new MockDataSource(0);
-            Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict);
+            Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
+            blockClient.SetupGet(c => c.ClientDiagnostics).CallBase();
 
             SetupDownload(blockClient, dataSource);
 
             PartitionedDownloader downloader = new PartitionedDownloader(blockClient.Object);
 
-            Response<BlobProperties> result = await InvokeDownloadToAsync(downloader, stream);
+            Response result = await InvokeDownloadToAsync(downloader, stream);
 
             Assert.AreEqual(0, stream.Length);
-            AssertResult(result, 0);
+            Assert.NotNull(result);
         }
 
         [Test]
@@ -56,16 +57,17 @@ namespace Azure.Storage.Blobs.Tests
         {
             MemoryStream stream = new MemoryStream();
             MockDataSource dataSource = new MockDataSource(10);
-            Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict);
+            Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
+            blockClient.SetupGet(c => c.ClientDiagnostics).CallBase();
 
             SetupDownload(blockClient, dataSource);
 
             PartitionedDownloader downloader = new PartitionedDownloader(blockClient.Object);
 
-            Response<BlobProperties> result = await InvokeDownloadToAsync(downloader, stream);
+            Response result = await InvokeDownloadToAsync(downloader, stream);
 
             AssertContent(10, stream);
-            AssertResult(result, 10);
+            Assert.NotNull(result);
         }
 
         [Test]
@@ -73,7 +75,8 @@ namespace Azure.Storage.Blobs.Tests
         {
             MemoryStream stream = new MemoryStream();
             MockDataSource dataSource = new MockDataSource(100);
-            Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict);
+            Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
+            blockClient.SetupGet(c => c.ClientDiagnostics).CallBase();
             BlobProperties smallLengthProperties = new BlobProperties()
             {
                 ContentLength = 100
@@ -83,44 +86,12 @@ namespace Azure.Storage.Blobs.Tests
 
             PartitionedDownloader downloader = new PartitionedDownloader(blockClient.Object, new StorageTransferOptions() { MaximumTransferLength = 10}, 20);
 
-            Response<BlobProperties> result = await InvokeDownloadToAsync(downloader, stream);
+            Response result = await InvokeDownloadToAsync(downloader, stream);
 
             // First block request is 20, and 10 for every block after that.
             Assert.AreEqual(dataSource.Requests.Count, 9);
             AssertContent(100, stream);
-            AssertResult(result, 100);
-        }
-
-        private void AssertResult(Response<BlobProperties> result, long expectedLength)
-        {
-            Assert.NotNull(result.GetRawResponse());
-            var value = result.Value;
-            Assert.AreEqual(value.ContentLength, expectedLength);
-
-            Assert.AreNotEqual(value.LastModified, default(DateTimeOffset));
-            Assert.AreNotEqual(value.Metadata, default);
-            Assert.AreNotEqual(value.BlobType, default(BlobType));
-            Assert.AreNotEqual(value.CopyCompletedOn, default(DateTimeOffset));
-            Assert.AreNotEqual(value.CopyStatusDescription, default);
-            Assert.AreNotEqual(value.CopyId, default);
-            Assert.AreNotEqual(value.CopyProgress, default);
-            Assert.AreNotEqual(value.CopySource, default(Uri));
-            Assert.AreNotEqual(value.CopyStatus, default(CopyStatus));
-            Assert.AreNotEqual(value.LeaseDuration, default(LeaseDurationType));
-            Assert.AreNotEqual(value.LeaseState, default(LeaseState));
-            Assert.AreNotEqual(value.LeaseStatus, default(LeaseStatus));
-            Assert.AreNotEqual(value.ContentType, default);
-            Assert.AreNotEqual(value.ETag, default(ETag));
-            Assert.AreNotEqual(value.ContentHash, default);
-            Assert.AreNotEqual(value.ContentEncoding, default);
-            Assert.AreNotEqual(value.ContentDisposition, default);
-            Assert.AreNotEqual(value.ContentLanguage, default);
-            Assert.AreNotEqual(value.CacheControl, default);
-            Assert.AreNotEqual(value.BlobSequenceNumber, default(long));
-            Assert.AreNotEqual(value.AcceptRanges, default);
-            Assert.AreNotEqual(value.BlobCommittedBlockCount, default(int));
-            Assert.AreNotEqual(value.IsServerEncrypted, default(bool));
-            Assert.AreNotEqual(value.EncryptionKeySha256, default);
+            Assert.NotNull(result);
         }
 
         [Test]
@@ -128,7 +99,8 @@ namespace Azure.Storage.Blobs.Tests
         {
             MemoryStream stream = new MemoryStream();
             MockDataSource dataSource = new MockDataSource(100);
-            Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict);
+            Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
+            blockClient.SetupGet(c => c.ClientDiagnostics).CallBase();
             BlobProperties properties = new BlobProperties()
             {
                 ContentLength = 100,
@@ -139,11 +111,11 @@ namespace Azure.Storage.Blobs.Tests
 
             PartitionedDownloader downloader = new PartitionedDownloader(blockClient.Object, new StorageTransferOptions() { MaximumTransferLength = 10}, 10);
 
-            Response<BlobProperties> result = await InvokeDownloadToAsync(downloader, stream);
+            Response result = await InvokeDownloadToAsync(downloader, stream);
 
             Assert.AreEqual(dataSource.Requests.Count, 10);
             AssertContent(100, stream);
-            AssertResult(result, 100);
+            Assert.NotNull(result);
 
             bool first = true;
             foreach ((HttpRange Range, BlobRequestConditions Conditions) request in dataSource.Requests)
@@ -169,7 +141,8 @@ namespace Azure.Storage.Blobs.Tests
             Exception e = new Exception();
 
             MemoryStream stream = new MemoryStream();
-            Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict);
+            Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
+            blockClient.SetupGet(c => c.ClientDiagnostics).CallBase();
             BlobProperties smallLengthProperties = new BlobProperties()
             {
                 ContentLength = 100
@@ -218,7 +191,7 @@ namespace Azure.Storage.Blobs.Tests
             }
         }
 
-        private async Task<Response<BlobProperties>> InvokeDownloadToAsync(PartitionedDownloader downloader, Stream stream)
+        private async Task<Response> InvokeDownloadToAsync(PartitionedDownloader downloader, Stream stream)
         {
             if (_async)
             {

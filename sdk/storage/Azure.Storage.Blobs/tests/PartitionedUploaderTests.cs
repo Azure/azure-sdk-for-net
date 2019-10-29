@@ -44,7 +44,8 @@ namespace Azure.Storage.Blobs.Tests
             TrackingArrayPool testPool = new TrackingArrayPool();
             StagingSink sink = new StagingSink();
 
-            Mock<BlockBlobClient> clientMock = new Mock<BlockBlobClient>(MockBehavior.Strict);
+            Mock<BlockBlobClient> clientMock = new Mock<BlockBlobClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
+            clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
             SetupAsyncStaging(clientMock, sink);
 
             PartitionedUploader uploader = new PartitionedUploader(clientMock.Object, default, arrayPool: testPool);
@@ -65,7 +66,8 @@ namespace Azure.Storage.Blobs.Tests
             TrackingArrayPool testPool = new TrackingArrayPool();
             StagingSink sink = new StagingSink();
 
-            Mock<BlockBlobClient> clientMock = new Mock<BlockBlobClient>(MockBehavior.Strict);
+            Mock<BlockBlobClient> clientMock = new Mock<BlockBlobClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
+            clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
             SetupAsyncStaging(clientMock, sink);
 
             PartitionedUploader uploader = new PartitionedUploader(clientMock.Object, default, singleBlockThreshold: 20, arrayPool: testPool);
@@ -89,7 +91,8 @@ namespace Azure.Storage.Blobs.Tests
             TrackingArrayPool testPool = new TrackingArrayPool();
             StagingSink sink = new StagingSink();
 
-            Mock<BlockBlobClient> clientMock = new Mock<BlockBlobClient>(MockBehavior.Strict);
+            Mock<BlockBlobClient> clientMock = new Mock<BlockBlobClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
+            clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
             SetupAsyncStaging(clientMock, sink);
 
             PartitionedUploader uploader = new PartitionedUploader(clientMock.Object, new StorageTransferOptions() { MaximumTransferLength = 20}, arrayPool: testPool);
@@ -113,7 +116,8 @@ namespace Azure.Storage.Blobs.Tests
             TrackingArrayPool testPool = new TrackingArrayPool();
             StagingSink sink = new StagingSink();
 
-            Mock<BlockBlobClient> clientMock = new Mock<BlockBlobClient>(MockBehavior.Strict);
+            Mock<BlockBlobClient> clientMock = new Mock<BlockBlobClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
+            clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
             SetupAsyncStaging(clientMock, sink);
 
             PartitionedUploader uploader = new PartitionedUploader(clientMock.Object, default, arrayPool: testPool);
@@ -136,7 +140,8 @@ namespace Azure.Storage.Blobs.Tests
             TrackingArrayPool testPool = new TrackingArrayPool();
             StagingSink sink = new StagingSink();
 
-            Mock<BlockBlobClient> clientMock = new Mock<BlockBlobClient>(MockBehavior.Strict);
+            Mock<BlockBlobClient> clientMock = new Mock<BlockBlobClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
+            clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
             SetupAsyncStaging(clientMock, sink);
 
             PartitionedUploader uploader = new PartitionedUploader(clientMock.Object, new StorageTransferOptions() { MaximumTransferLength = 100 }, arrayPool: testPool);
@@ -165,7 +170,8 @@ namespace Azure.Storage.Blobs.Tests
             TrackingArrayPool testPool = new TrackingArrayPool();
             StagingSink sink = new StagingSink();
 
-            Mock<BlockBlobClient> clientMock = new Mock<BlockBlobClient>(MockBehavior.Strict);
+            Mock<BlockBlobClient> clientMock = new Mock<BlockBlobClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
+            clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
             SetupAsyncStaging(clientMock, sink);
 
             PartitionedUploader uploader = new PartitionedUploader(clientMock.Object, new StorageTransferOptions() { MaximumTransferLength = 20}, arrayPool: testPool);
@@ -191,7 +197,8 @@ namespace Azure.Storage.Blobs.Tests
 
             StagingSink sink = new StagingSink();
 
-            Mock<BlockBlobClient> clientMock = new Mock<BlockBlobClient>(MockBehavior.Strict);
+            Mock<BlockBlobClient> clientMock = new Mock<BlockBlobClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
+            clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
             SetupAsyncStaging(clientMock, sink);
 
             PartitionedUploader uploader = new PartitionedUploader(clientMock.Object, new StorageTransferOptions() { MaximumTransferLength = 20});

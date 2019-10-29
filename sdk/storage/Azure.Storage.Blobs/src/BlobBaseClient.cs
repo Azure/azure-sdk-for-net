@@ -756,17 +756,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Stream"/> to write the downloaded content to.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobProperties}"/> describing the
-        /// blob's properties.
+        /// A <see cref="Response"/> describing the operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        #pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
-        public virtual Response<BlobProperties> DownloadTo(Stream destination) =>
+#pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
+        public virtual Response DownloadTo(Stream destination) =>
             DownloadTo(destination, CancellationToken.None);
-        #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
+#pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
         /// The <see cref="DownloadTo(string)"/> operation downloads a blob using parallel requests,
@@ -776,17 +775,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// A file path to write the downloaded content to.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobProperties}"/> describing the
-        /// blob's properties.
+        /// A <see cref="Response"/> describing the operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        #pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
-        public virtual Response<BlobProperties> DownloadTo(string path) =>
+#pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
+        public virtual Response DownloadTo(string path) =>
             DownloadTo(path, CancellationToken.None);
-        #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
+#pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
         /// The <see cref="DownloadToAsync(Stream)"/> downloads a blob using parallel requests,
@@ -796,17 +794,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Stream"/> to write the downloaded content to.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobProperties}"/> describing the
-        /// blob's properties.
+        /// A <see cref="Response"/> describing the operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        #pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
-        public virtual async Task<Response<BlobProperties>> DownloadToAsync(Stream destination) =>
+#pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
+        public virtual async Task<Response> DownloadToAsync(Stream destination) =>
             await DownloadToAsync(destination, CancellationToken.None).ConfigureAwait(false);
-        #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
+#pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
         /// The <see cref="DownloadToAsync(string)"/> downloads a blob using parallel requests,
@@ -816,17 +813,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// A file path to write the downloaded content to.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobProperties}"/> describing the
-        /// blob's properties.
+        /// A <see cref="Response"/> describing the operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        #pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
-        public virtual async Task<Response<BlobProperties>> DownloadToAsync(string path) =>
+#pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
+        public virtual async Task<Response> DownloadToAsync(string path) =>
             await DownloadToAsync(path, CancellationToken.None).ConfigureAwait(false);
-        #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
+#pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
         /// The <see cref="DownloadTo(Stream, CancellationToken)"/> operation
@@ -841,22 +837,21 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobProperties}"/> describing the
-        /// blob's properties.
+        /// A <see cref="Response"/> describing the operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        #pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
-        public virtual Response<BlobProperties> DownloadTo(
+#pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
+        public virtual Response DownloadTo(
             Stream destination,
             CancellationToken cancellationToken) =>
             DownloadTo(
                 destination,
                 conditions: default, // Pass anything else so we don't recurse on this overload
                 cancellationToken: cancellationToken);
-        #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
+#pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
         /// The <see cref="DownloadTo(string, CancellationToken)"/> operation
@@ -871,22 +866,21 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobProperties}"/> describing the
-        /// blob's properties.
+        /// A <see cref="Response"/> describing the operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        #pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
-        public virtual Response<BlobProperties> DownloadTo(
+#pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
+        public virtual Response DownloadTo(
             string path,
             CancellationToken cancellationToken) =>
             DownloadTo(
                 path,
                 conditions: default, // Pass anything else so we don't recurse on this overload
                 cancellationToken: cancellationToken);
-        #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
+#pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
         /// The <see cref="DownloadToAsync(Stream, CancellationToken)"/> operation
@@ -901,15 +895,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobProperties}"/> describing the
-        /// blob's properties.
+        /// A <see cref="Response"/> describing the operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        #pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
-        public virtual async Task<Response<BlobProperties>> DownloadToAsync(
+#pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
+        public virtual async Task<Response> DownloadToAsync(
             Stream destination,
             CancellationToken cancellationToken) =>
             await DownloadToAsync(
@@ -917,7 +910,7 @@ namespace Azure.Storage.Blobs.Specialized
                 conditions: default, // Pass anything else so we don't recurse on this overload
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
-        #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
+#pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
         /// The <see cref="DownloadToAsync(string, CancellationToken)"/> operation
@@ -932,15 +925,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobProperties}"/> describing the
-        /// blob's properties.
+        /// A <see cref="Response"/> describing the operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        #pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
-        public virtual async Task<Response<BlobProperties>> DownloadToAsync(
+#pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
+        public virtual async Task<Response> DownloadToAsync(
             string path,
             CancellationToken cancellationToken) =>
             await DownloadToAsync(
@@ -948,7 +940,7 @@ namespace Azure.Storage.Blobs.Specialized
                 conditions: default, // Pass anything else so we don't recurse on this overload
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
-        #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
+#pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
         /// The <see cref="DownloadTo(Stream, BlobRequestConditions, StorageTransferOptions, CancellationToken)"/>
@@ -971,14 +963,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobProperties}"/> describing the
-        /// blob's properties.
+        /// A <see cref="Response"/> describing the operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<BlobProperties> DownloadTo(
+        public virtual Response DownloadTo(
             Stream destination,
             BlobRequestConditions conditions = default,
             ///// <param name="progressHandler">
@@ -1018,14 +1009,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobProperties}"/> describing the
-        /// blob's properties.
+        /// A <see cref="Response"/> describing the operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<BlobProperties> DownloadTo(
+        public virtual Response DownloadTo(
             string path,
             BlobRequestConditions conditions = default,
             ///// <param name="progressHandler">
@@ -1068,14 +1058,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobProperties}"/> describing the
-        /// blob's properties.
+        /// A <see cref="Response"/> describing the operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobProperties>> DownloadToAsync(
+        public virtual async Task<Response> DownloadToAsync(
             Stream destination,
             BlobRequestConditions conditions = default,
             ///// <param name="progressHandler">
@@ -1115,14 +1104,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobProperties}"/> describing the
-        /// blob's properties.
+        /// A <see cref="Response"/> describing the operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobProperties>> DownloadToAsync(
+        public virtual async Task<Response> DownloadToAsync(
             string path,
             BlobRequestConditions conditions = default,
             ///// <param name="progressHandler">
@@ -1147,7 +1135,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// This operation will download a blob of arbitrary size by downloading it as indiviually staged
         /// partitions if it's larger than the
-        /// <paramref name="singleBlockThreshold"/>.
+        /// <paramref name="initialTransferLength"/>.
         /// </summary>
         /// <param name="destination">
         /// A <see cref="Stream"/> to write the downloaded content to.
@@ -1156,7 +1144,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// the creation of this new block blob.
         /// </param>
-        /// <param name="singleBlockThreshold">
+        /// <param name="initialTransferLength">
         /// The maximum size stream that we'll download as a single block.  The
         /// default value is 256MB.
         /// </param>
@@ -1172,14 +1160,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobProperties}"/> describing the
-        /// blob's properties.
+        /// A <see cref="Response"/> describing the operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal async Task<Response<BlobProperties>> StagedDownloadAsync(
+        internal async Task<Response> StagedDownloadAsync(
             Stream destination,
             BlobRequestConditions conditions = default,
             ///// <param name="progressHandler">
@@ -1187,15 +1174,15 @@ namespace Azure.Storage.Blobs.Specialized
             ///// progress updates about data transfers.
             ///// </param>
             //IProgress<long> progressHandler,
-            long singleBlockThreshold = Constants.Blob.Block.MaxDownloadBytes,
+            long initialTransferLength = Constants.Blob.Block.MaxDownloadBytes,
             StorageTransferOptions transferOptions = default,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            Debug.Assert(singleBlockThreshold <= Constants.Blob.Block.MaxDownloadBytes);
+            Debug.Assert(initialTransferLength <= Constants.Blob.Block.MaxDownloadBytes);
 
             var client = new BlobBaseClient(Uri, Pipeline, ClientDiagnostics, CustomerProvidedKey);
-            PartitionedDownloader downloader = new PartitionedDownloader(client, transferOptions, singleBlockThreshold);
+            PartitionedDownloader downloader = new PartitionedDownloader(client, transferOptions, initialTransferLength);
 
             if (async)
             {
