@@ -9,7 +9,7 @@
     [Collection("TestCollection")]
     public class FeaturesTests : BaseTest
     {
-        [Fact]
+        [Fact(Skip = "Problem from API")]
         public void ListFeatures()
         {
             var appJson = File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "SessionRecords/ImportApp.json"));

@@ -17,20 +17,20 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
     using System.Linq;
 
     /// <summary>
-    /// Pattern.Any Entity Extractor.
+    /// N-Depth Entity Extractor.
     /// </summary>
-    public partial class PatternAnyEntityExtractor
+    public partial class NDepthEntityExtractor
     {
         /// <summary>
-        /// Initializes a new instance of the PatternAnyEntityExtractor class.
+        /// Initializes a new instance of the NDepthEntityExtractor class.
         /// </summary>
-        public PatternAnyEntityExtractor()
+        public NDepthEntityExtractor()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PatternAnyEntityExtractor class.
+        /// Initializes a new instance of the NDepthEntityExtractor class.
         /// </summary>
         /// <param name="id">The ID of the Entity Model.</param>
         /// <param name="readableType">Possible values include: 'Entity
@@ -41,14 +41,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// 'Closed List Entity Extractor', 'Regex Entity Extractor'</param>
         /// <param name="name">Name of the Entity Model.</param>
         /// <param name="typeId">The type ID of the Entity Model.</param>
-        public PatternAnyEntityExtractor(System.Guid id, string readableType, string name = default(string), int? typeId = default(int?), IList<EntityRole> roles = default(IList<EntityRole>), IList<ExplicitListItem> explicitList = default(IList<ExplicitListItem>))
+        /// <param name="customPrebuiltDomainName">The domain name.</param>
+        /// <param name="customPrebuiltModelName">The intent name or entity
+        /// name.</param>
+        public NDepthEntityExtractor(System.Guid id, string readableType, string name = default(string), int? typeId = default(int?), IList<EntityRole> roles = default(IList<EntityRole>), string customPrebuiltDomainName = default(string), string customPrebuiltModelName = default(string), IList<ChildEntity> children = default(IList<ChildEntity>))
         {
             Id = id;
             Name = name;
             TypeId = typeId;
             ReadableType = readableType;
             Roles = roles;
-            ExplicitList = explicitList;
+            CustomPrebuiltDomainName = customPrebuiltDomainName;
+            CustomPrebuiltModelName = customPrebuiltModelName;
+            Children = children;
             CustomInit();
         }
 
@@ -92,9 +97,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         public IList<EntityRole> Roles { get; set; }
 
         /// <summary>
+        /// Gets or sets the domain name.
         /// </summary>
-        [JsonProperty(PropertyName = "explicitList")]
-        public IList<ExplicitListItem> ExplicitList { get; set; }
+        [JsonProperty(PropertyName = "customPrebuiltDomainName")]
+        public string CustomPrebuiltDomainName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the intent name or entity name.
+        /// </summary>
+        [JsonProperty(PropertyName = "customPrebuiltModelName")]
+        public string CustomPrebuiltModelName { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "children")]
+        public IList<ChildEntity> Children { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -107,6 +124,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
             if (ReadableType == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ReadableType");
+            }
+            if (Children != null)
+            {
+                foreach (var element in Children)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }
