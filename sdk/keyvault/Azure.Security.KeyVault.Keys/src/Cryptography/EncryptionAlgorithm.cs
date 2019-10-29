@@ -8,7 +8,7 @@ using System.Security.Cryptography;
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     /// <summary>
-    /// An algorithm used for encryption and decryption
+    /// An algorithm used for encryption and decryption.
     /// </summary>
     public readonly struct EncryptionAlgorithm : IEquatable<EncryptionAlgorithm>
     {
@@ -28,17 +28,17 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         }
 
         /// <summary>
-        /// RSA1_5
+        /// Gets an RSA1_5 <see cref="EncryptionAlgorithm"/>.
         /// </summary>
         public static EncryptionAlgorithm Rsa15 { get; } = new EncryptionAlgorithm(Rsa15Value);
 
         /// <summary>
-        /// RSA-OAEP
+        /// Gets an RSA-OAEP <see cref="EncryptionAlgorithm"/>.
         /// </summary>
         public static EncryptionAlgorithm RsaOaep { get; } = new EncryptionAlgorithm(RsaOaepValue);
 
         /// <summary>
-        /// RSA-OAEP256
+        /// Gets an RSA-OAEP256 <see cref="EncryptionAlgorithm"/>.
         /// </summary>
         public static EncryptionAlgorithm RsaOaep256 { get; } = new EncryptionAlgorithm(RsaOaep256Value);
 

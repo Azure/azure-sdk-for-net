@@ -23,27 +23,27 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// Elliptic curve cryptographic algorithm.
+        /// An Elliptic Curve Cryptographic (ECC) algorithm.
         /// </summary>
         public static KeyType Ec { get; } = new KeyType("EC");
 
         /// <summary>
-        /// Elliptic curve cryptographic algorithm backed by HSM.
+        /// An Elliptic Curve Cryptographic (ECC) algorithm backed by HSM.
         /// </summary>
         public static KeyType EcHsm { get; } = new KeyType("EC-HSM");
 
         /// <summary>
-        /// RSA cryptographic algorithm.
+        /// An RSA cryptographic algorithm.
         /// </summary>
         public static KeyType Rsa { get; } = new KeyType("RSA");
 
         /// <summary>
-        /// RSA cryptographic algorithm backed by HSM.
+        /// An RSA cryptographic algorithm backed by HSM.
         /// </summary>
         public static KeyType RsaHsm { get; } = new KeyType("RSA-HSM");
 
         /// <summary>
-        /// AES cryptographic algorithm.
+        /// An AES cryptographic algorithm.
         /// </summary>
         public static KeyType Oct { get; } = new KeyType("oct");
 

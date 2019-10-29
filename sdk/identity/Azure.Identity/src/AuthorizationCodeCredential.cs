@@ -12,7 +12,7 @@ using Microsoft.Identity.Client;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Authenticates by redeeming and authorization code previously obtained from Azure Acitve Directory.  See
+    /// Authenticates by redeeming and authorization code previously obtained from Azure Active Directory.  See
     /// https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-auth-code-flow for more information
     /// about the autorization code authentication flow.
     /// </summary>
@@ -71,7 +71,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a token from the Azure Active Directory service, using the specified authorization code authenticate.
+        /// Obtains a token from the Azure Active Directory service, using the specified authorization code authenticate. This method is called by Azure SDK clients. It isn't intended for use in application code.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -82,7 +82,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a token from the Azure Active Directory service, using the specified authorization code authenticate.
+        /// Obtains a token from the Azure Active Directory service, using the specified authorization code authenticate. This method is called by Azure SDK clients. It isn't intended for use in application code.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>

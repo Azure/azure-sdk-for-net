@@ -217,28 +217,27 @@ namespace Azure.Storage.Test.Shared
                     new Uri($"{TestConfigDefault.BlobServiceEndpoint}?{sasCredentials ?? GetNewBlobServiceSasCredentialsSnapshot(containerName: containerName, blobName: blobName, snapshot: snapshot, sharedKeyCredentials: sharedKeyCredentials ?? GetNewSharedKeyCredentials())}"),
                     GetOptions()));
 
-        public IDisposable GetNewContainer(
-            out BlobContainerClient container,
+        public async Task<DisposingContainer> GetTestContainerAsync(
             BlobServiceClient service = default,
             string containerName = default,
             IDictionary<string, string> metadata = default,
             PublicAccessType publicAccessType = PublicAccessType.None,
             bool premium = default)
         {
+
             containerName ??= GetNewContainerName();
             service ??= GetServiceClient_SharedKey();
-            container = InstrumentClient(service.GetBlobContainerClient(containerName));
 
             if (publicAccessType == PublicAccessType.None)
             {
                 publicAccessType = premium ? PublicAccessType.None : PublicAccessType.BlobContainer;
             }
 
-            return new DisposingContainer(
-                container,
-                metadata ?? new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase),
-                publicAccessType);
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
+            await container.CreateAsync(metadata: metadata, publicAccessType: publicAccessType);
+            return new DisposingContainer(container);
         }
+
 
         public StorageSharedKeyCredential GetNewSharedKeyCredentials()
             => new StorageSharedKeyCredential(
@@ -467,24 +466,24 @@ namespace Azure.Storage.Test.Shared
             } while (properties.Value.DeleteRetentionPolicy.Enabled);
         }
 
-        private class DisposingContainer : IDisposable
+
+        public class DisposingContainer : IAsyncDisposable
         {
-            public BlobContainerClient ContainerClient { get; }
+            public BlobContainerClient Container;
 
-            public DisposingContainer(BlobContainerClient container, IDictionary<string, string> metadata, PublicAccessType publicAccessType = default)
+            public DisposingContainer(BlobContainerClient client)
             {
-                container.CreateAsync(metadata: metadata, publicAccessType: publicAccessType).Wait();
-
-                ContainerClient = container;
+                Container = client;
             }
 
-            public void Dispose()
+            public async ValueTask DisposeAsync()
             {
-                if (ContainerClient != null)
+                if (Container != null)
                 {
                     try
                     {
-                        ContainerClient.DeleteAsync().Wait();
+                        await Container.DeleteAsync();
+                        Container = null;
                     }
                     catch
                     {

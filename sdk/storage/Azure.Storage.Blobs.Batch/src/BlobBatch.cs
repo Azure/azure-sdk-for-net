@@ -15,8 +15,13 @@ namespace Azure.Storage.Blobs.Specialized
     /// For more information, see
     /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/blob-batch" />.
     /// </summary>
-    public class BlobBatch
+    public class BlobBatch : IDisposable
     {
+        /// <summary>
+        /// The number of pending requests in the batch.
+        /// </summary>
+        public int RequestCount => _messages.Count;
+
         /// <summary>
         /// The <see cref="BlobBatchClient"/> associated with this batch.  It
         /// provides the Uri, BatchOperationPipeline, etc.
@@ -288,6 +293,17 @@ namespace Azure.Storage.Blobs.Specialized
                 leaseId: leaseAccessConditions?.LeaseId);
             _messages.Add(message);
             return new DelayedResponse(message, BlobRestClient.Blob.SetAccessTierAsync_CreateResponse);
+        }
+
+        /// <summary>
+        /// Dispose all messages in the batch.
+        /// </summary>
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);
+            foreach (HttpMessage message in _messages) {
+                message.Dispose();
+            }
         }
         #endregion SetBlobAccessTier
     }

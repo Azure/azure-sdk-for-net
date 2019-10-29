@@ -27,10 +27,10 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task CreateAsync()
         {
-            using (GetNewDirectory(out DirectoryClient directoryClient))
+            using (GetNewDirectory(out DataLakeDirectoryClient directoryClient))
             {
                 // Arrange
-                FileClient file = InstrumentClient(directoryClient.GetFileClient(GetNewFileName()));
+                DataLakeFileClient file = InstrumentClient(directoryClient.GetFileClient(GetNewFileName()));
 
                 // Act
                 Response<PathInfo> response = await file.CreateAsync();
@@ -45,8 +45,8 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             // Arrange
             DataLakeServiceClient service = GetServiceClient_SharedKey();
-            FileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
-            FileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
+            DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
+            DataLakeFileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
@@ -57,10 +57,10 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task CreateAsync_HttpHeaders()
         {
-            using (GetNewDirectory(out DirectoryClient directoryClient))
+            using (GetNewDirectory(out DataLakeDirectoryClient directoryClient))
             {
                 // Arrange
-                FileClient file = InstrumentClient(directoryClient.GetFileClient(GetNewFileName()));
+                DataLakeFileClient file = InstrumentClient(directoryClient.GetFileClient(GetNewFileName()));
                 PathHttpHeaders headers = new PathHttpHeaders
                 {
                     ContentType = ContentType,
@@ -88,11 +88,11 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task CreateAsync_Metadata()
         {
-            using (GetNewDirectory(out DirectoryClient directoryClient))
+            using (GetNewDirectory(out DataLakeDirectoryClient directoryClient))
             {
                 // Arrange
                 IDictionary<string, string> metadata = BuildMetadata();
-                FileClient file = InstrumentClient(directoryClient.GetFileClient(GetNewFileName()));
+                DataLakeFileClient file = InstrumentClient(directoryClient.GetFileClient(GetNewFileName()));
 
                 // Act
                 await file.CreateAsync(metadata: metadata);
@@ -106,10 +106,10 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task CreateAsync_PermissionAndUmask()
         {
-            using (GetNewDirectory(out DirectoryClient directoryClient))
+            using (GetNewDirectory(out DataLakeDirectoryClient directoryClient))
             {
                 // Arrange
-                FileClient file = InstrumentClient(directoryClient.GetFileClient(GetNewFileName()));
+                DataLakeFileClient file = InstrumentClient(directoryClient.GetFileClient(GetNewFileName()));
                 string permissions = "0777";
                 string umask = "0057";
 
@@ -125,27 +125,27 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task CreateAsync_AccessConditions()
+        public async Task CreateAsync_Conditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();
-            foreach (AccessConditionParameters parameters in AccessConditions_Data)
+            foreach (AccessConditionParameters parameters in Conditions_Data)
             {
-                using (GetNewDirectory(out DirectoryClient directoryClient))
+                using (GetNewDirectory(out DataLakeDirectoryClient directoryClient))
                 {
                     // Arrange
                     // This directory is intentionally created twice
-                    FileClient file = await directoryClient.CreateFileAsync(GetNewFileName());
+                    DataLakeFileClient file = await directoryClient.CreateFileAsync(GetNewFileName());
 
                     parameters.Match = await SetupPathMatchCondition(file, parameters.Match);
                     parameters.LeaseId = await SetupPathLeaseCondition(file, parameters.LeaseId, garbageLeaseId);
 
-                    DataLakeRequestConditions accessConditions = BuildDataLakeRequestAccessConditions(
+                    DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(
                         parameters: parameters,
                         lease: true);
 
                     // Act
                     Response<PathInfo> response = await file.CreateAsync(
-                        conditions: accessConditions);
+                        conditions: conditions);
 
                     // Assert
                     Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -154,24 +154,24 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task CreateAsync_AccessConditionsFail()
+        public async Task CreateAsync_ConditionsFail()
         {
             var garbageLeaseId = GetGarbageLeaseId();
-            foreach (AccessConditionParameters parameters in GetAccessConditionsFail_Data(garbageLeaseId))
+            foreach (AccessConditionParameters parameters in GetConditionsFail_Data(garbageLeaseId))
             {
-                using (GetNewDirectory(out DirectoryClient directoryClient))
+                using (GetNewDirectory(out DataLakeDirectoryClient directoryClient))
                 {
                     // Arrange
                     // This directory is intentionally created twice
-                    FileClient file = await directoryClient.CreateFileAsync(GetNewFileName());
+                    DataLakeFileClient file = await directoryClient.CreateFileAsync(GetNewFileName());
                     parameters.NoneMatch = await SetupPathMatchCondition(file, parameters.NoneMatch);
-                    DataLakeRequestConditions accessConditions = BuildDataLakeRequestAccessConditions(
+                    DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(
                         parameters: parameters,
                         lease: true);
 
                     // Act
                     await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                        file.CreateAsync(conditions: accessConditions),
+                        file.CreateAsync(conditions: conditions),
                         e => { });
                 }
             }
@@ -180,10 +180,10 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task DeleteAsync()
         {
-            using (GetNewDirectory(out DirectoryClient directoryClient))
+            using (GetNewDirectory(out DataLakeDirectoryClient directoryClient))
             {
                 // Arrange
-                FileClient fileClient = await directoryClient.CreateFileAsync(GetNewFileName());
+                DataLakeFileClient fileClient = await directoryClient.CreateFileAsync(GetNewFileName());
 
                 // Act
                 await fileClient.DeleteAsync();
@@ -193,10 +193,10 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task DeleteFileAsync_Error()
         {
-            using (GetNewDirectory(out DirectoryClient directoryClient))
+            using (GetNewDirectory(out DataLakeDirectoryClient directoryClient))
             {
                 // Arrange
-                FileClient fileClient = directoryClient.GetFileClient(GetNewFileName());
+                DataLakeFileClient fileClient = directoryClient.GetFileClient(GetNewFileName());
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
@@ -206,47 +206,47 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task DeleteAsync_AccessConditions()
+        public async Task DeleteAsync_Conditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();
-            foreach (AccessConditionParameters parameters in AccessConditions_Data)
+            foreach (AccessConditionParameters parameters in Conditions_Data)
             {
-                using (GetNewFileSystem(out FileSystemClient fileSystem))
+                using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
                 {
                     // Arrange
-                    FileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
+                    DataLakeFileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
 
                     parameters.Match = await SetupPathMatchCondition(file, parameters.Match);
                     parameters.LeaseId = await SetupPathLeaseCondition(file, parameters.LeaseId, garbageLeaseId);
-                    DataLakeRequestConditions accessConditions = BuildDataLakeRequestAccessConditions(
+                    DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(
                         parameters: parameters,
                         lease: true);
 
                     // Act
-                    await file.DeleteAsync(conditions: accessConditions);
+                    await file.DeleteAsync(conditions: conditions);
                 }
             }
         }
 
         [Test]
-        public async Task DeleteAsync_AccessConditionsFail()
+        public async Task DeleteAsync_ConditionsFail()
         {
             var garbageLeaseId = GetGarbageLeaseId();
-            foreach (AccessConditionParameters parameters in GetAccessConditionsFail_Data(garbageLeaseId))
+            foreach (AccessConditionParameters parameters in GetConditionsFail_Data(garbageLeaseId))
             {
-                using (GetNewFileSystem(out FileSystemClient fileSystem))
+                using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
                 {
                     // Arrange
-                    FileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
+                    DataLakeFileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
 
                     parameters.NoneMatch = await SetupPathMatchCondition(file, parameters.NoneMatch);
-                    DataLakeRequestConditions accessConditions = BuildDataLakeRequestAccessConditions(
+                    DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(
                         parameters: parameters,
                         lease: true);
 
                     // Act
                     await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                        file.DeleteAsync(conditions: accessConditions),
+                        file.DeleteAsync(conditions: conditions),
                         e => { });
                 }
             }
@@ -255,14 +255,14 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task RenameAsync()
         {
-            using (GetNewFileSystem(out FileSystemClient fileSystem))
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
             {
                 // Arrange
-                FileClient sourceFile = await fileSystem.CreateFileAsync(GetNewFileName());
+                DataLakeFileClient sourceFile = await fileSystem.CreateFileAsync(GetNewFileName());
                 string destFileName = GetNewDirectoryName();
 
                 // Act
-                FileClient destFile = await sourceFile.RenameAsync(destinationPath: destFileName);
+                DataLakeFileClient destFile = await sourceFile.RenameAsync(destinationPath: destFileName);
 
                 // Assert
                 Response<PathProperties> response = await destFile.GetPropertiesAsync();
@@ -272,10 +272,10 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task RenameAsync_Error()
         {
-            using (GetNewFileSystem(out FileSystemClient fileSystem))
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
             {
                 // Arrange
-                FileClient sourceFile = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
+                DataLakeFileClient sourceFile = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
                 string destPath = GetNewFileName();
 
                 // Act
@@ -286,28 +286,28 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task RenameAsync_DestinationAccessConditions()
+        public async Task RenameAsync_DestinationConditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();
-            foreach (AccessConditionParameters parameters in AccessConditions_Data)
+            foreach (AccessConditionParameters parameters in Conditions_Data)
             {
-                using (GetNewFileSystem(out FileSystemClient fileSystem))
+                using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
                 {
                     // Arrange
-                    FileClient sourceFile = await fileSystem.CreateFileAsync(GetNewFileName());
-                    FileClient destFile = await fileSystem.CreateFileAsync(GetNewFileName());
+                    DataLakeFileClient sourceFile = await fileSystem.CreateFileAsync(GetNewFileName());
+                    DataLakeFileClient destFile = await fileSystem.CreateFileAsync(GetNewFileName());
 
                     parameters.Match = await SetupPathMatchCondition(destFile, parameters.Match);
                     parameters.LeaseId = await SetupPathLeaseCondition(destFile, parameters.LeaseId, garbageLeaseId);
 
-                    DataLakeRequestConditions accessConditions = BuildDataLakeRequestAccessConditions(
+                    DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(
                         parameters: parameters,
                         lease: true);
 
                     // Act
                     destFile = await sourceFile.RenameAsync(
                         destinationPath: destFile.Name,
-                        destConditions: accessConditions);
+                        destinationConditions: conditions);
 
                     // Assert
                     Response<PathProperties> response = await destFile.GetPropertiesAsync();
@@ -316,19 +316,19 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task RenameAsync_DestinationAccessConditionsFail()
+        public async Task RenameAsync_DestinationConditionsFail()
         {
             var garbageLeaseId = GetGarbageLeaseId();
-            foreach (AccessConditionParameters parameters in GetAccessConditionsFail_Data(garbageLeaseId))
+            foreach (AccessConditionParameters parameters in GetConditionsFail_Data(garbageLeaseId))
             {
-                using (GetNewFileSystem(out FileSystemClient fileSystem))
+                using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
                 {
                     // Arrange
-                    FileClient sourceFile = await fileSystem.CreateFileAsync(GetNewFileName());
-                    FileClient destFile = await fileSystem.CreateFileAsync(GetNewFileName());
+                    DataLakeFileClient sourceFile = await fileSystem.CreateFileAsync(GetNewFileName());
+                    DataLakeFileClient destFile = await fileSystem.CreateFileAsync(GetNewFileName());
 
                     parameters.NoneMatch = await SetupPathMatchCondition(destFile, parameters.NoneMatch);
-                    DataLakeRequestConditions accessConditions = BuildDataLakeRequestAccessConditions(
+                    DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(
                         parameters: parameters,
                         lease: true);
 
@@ -336,35 +336,35 @@ namespace Azure.Storage.Files.DataLake.Tests
                     await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         sourceFile.RenameAsync(
                             destinationPath: destFile.Name,
-                            destConditions: accessConditions),
+                            destinationConditions: conditions),
                         e => { });
                 }
             }
         }
 
         [Test]
-        public async Task RenameAsync_SourceAccessConditions()
+        public async Task RenameAsync_SourceConditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();
-            foreach (AccessConditionParameters parameters in AccessConditions_Data)
+            foreach (AccessConditionParameters parameters in Conditions_Data)
             {
-                using (GetNewFileSystem(out FileSystemClient fileSystem))
+                using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
                 {
                     // Arrange
-                    FileClient sourceFile = await fileSystem.CreateFileAsync(GetNewFileName());
-                    FileClient destFile = await fileSystem.CreateFileAsync(GetNewFileName());
+                    DataLakeFileClient sourceFile = await fileSystem.CreateFileAsync(GetNewFileName());
+                    DataLakeFileClient destFile = await fileSystem.CreateFileAsync(GetNewFileName());
 
                     parameters.Match = await SetupPathMatchCondition(sourceFile, parameters.Match);
                     parameters.LeaseId = await SetupPathLeaseCondition(sourceFile, parameters.LeaseId, garbageLeaseId);
 
-                    DataLakeRequestConditions accessConditions = BuildDataLakeRequestAccessConditions(
+                    DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(
                         parameters: parameters,
                         lease: true);
 
                     // Act
                     destFile = await sourceFile.RenameAsync(
                         destinationPath: destFile.Name,
-                        sourceConditions: accessConditions);
+                        sourceConditions: conditions);
 
                     // Assert
                     Response<PathProperties> response = await destFile.GetPropertiesAsync();
@@ -373,19 +373,19 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task RenameAsync_SourceAccessConditionsFail()
+        public async Task RenameAsync_SourceConditionsFail()
         {
             var garbageLeaseId = GetGarbageLeaseId();
-            foreach (AccessConditionParameters parameters in GetAccessConditionsFail_Data(garbageLeaseId))
+            foreach (AccessConditionParameters parameters in GetConditionsFail_Data(garbageLeaseId))
             {
-                using (GetNewFileSystem(out FileSystemClient fileSystem))
+                using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
                 {
                     // Arrange
-                    FileClient sourceFile = await fileSystem.CreateFileAsync(GetNewFileName());
-                    FileClient destFile = await fileSystem.CreateFileAsync(GetNewFileName());
+                    DataLakeFileClient sourceFile = await fileSystem.CreateFileAsync(GetNewFileName());
+                    DataLakeFileClient destFile = await fileSystem.CreateFileAsync(GetNewFileName());
 
                     parameters.NoneMatch = await SetupPathMatchCondition(sourceFile, parameters.NoneMatch);
-                    DataLakeRequestConditions accessConditions = BuildDataLakeRequestAccessConditions(
+                    DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(
                         parameters: parameters,
                         lease: true);
 
@@ -393,7 +393,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         sourceFile.RenameAsync(
                             destinationPath: destFile.Name,
-                            sourceConditions: accessConditions),
+                            sourceConditions: conditions),
                         e => { });
                 }
             }
@@ -402,7 +402,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task GetAccessControlAsync()
         {
-            using (GetNewFile(out FileClient fileClient))
+            using (GetNewFile(out DataLakeFileClient fileClient))
             {
                 // Act
                 PathAccessControl accessControl = await fileClient.GetAccessControlAsync();
@@ -422,11 +422,11 @@ namespace Azure.Storage.Files.DataLake.Tests
             string fileSystemName = GetNewFileSystemName();
             string directoryName = GetNewDirectoryName();
             string fileName = GetNewFileName();
-            using (GetNewDirectory(out DirectoryClient directoryClient, fileSystemName: fileSystemName, directoryName: directoryName))
+            using (GetNewDirectory(out DataLakeDirectoryClient directoryClient, fileSystemName: fileSystemName, directoryName: directoryName))
             {
                 // Arrange
-                FileClient file = await directoryClient.CreateFileAsync(fileName);
-                FileClient oauthFile = oauthService
+                DataLakeFileClient file = await directoryClient.CreateFileAsync(fileName);
+                DataLakeFileClient oauthFile = oauthService
                     .GetFileSystemClient(fileSystemName)
                     .GetDirectoryClient(directoryName)
                     .GetFileClient(fileName);
@@ -448,12 +448,12 @@ namespace Azure.Storage.Files.DataLake.Tests
             string fileSystemName = GetNewFileSystemName();
             string directoryName = GetNewDirectoryName();
             string fileName = GetNewFileName();
-            using (GetNewDirectory(out DirectoryClient directoryClient, fileSystemName: fileSystemName, directoryName: directoryName))
+            using (GetNewDirectory(out DataLakeDirectoryClient directoryClient, fileSystemName: fileSystemName, directoryName: directoryName))
             {
                 // Arrange
-                FileClient file = await directoryClient.CreateFileAsync(fileName);
+                DataLakeFileClient file = await directoryClient.CreateFileAsync(fileName);
 
-                FileClient sasFile = InstrumentClient(
+                DataLakeFileClient sasFile = InstrumentClient(
                     GetServiceClient_DataLakeServiceSas_FileSystem(
                         fileSystemName: fileSystemName)
                     .GetFileSystemClient(fileSystemName)
@@ -478,16 +478,16 @@ namespace Azure.Storage.Files.DataLake.Tests
             string fileSystemName = GetNewFileSystemName();
             string directoryName = GetNewDirectoryName();
             string fileName = GetNewFileName();
-            using (GetNewDirectory(out DirectoryClient directoryClient, fileSystemName: fileSystemName, directoryName: directoryName))
+            using (GetNewDirectory(out DataLakeDirectoryClient directoryClient, fileSystemName: fileSystemName, directoryName: directoryName))
             {
                 // Arrange
-                FileClient file = await directoryClient.CreateFileAsync(fileName);
+                DataLakeFileClient file = await directoryClient.CreateFileAsync(fileName);
 
                 Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
                     start: null,
                     expiry: Recording.UtcNow.AddHours(1));
 
-                FileClient identitySasFile = InstrumentClient(
+                DataLakeFileClient identitySasFile = InstrumentClient(
                     GetServiceClient_DataLakeServiceIdentitySas_FileSystem(
                         fileSystemName: fileSystemName,
                         userDelegationKey: userDelegationKey)
@@ -512,12 +512,12 @@ namespace Azure.Storage.Files.DataLake.Tests
             string fileSystemName = GetNewFileSystemName();
             string directoryName = GetNewDirectoryName();
             string fileName = GetNewFileName();
-            using (GetNewDirectory(out DirectoryClient directoryClient, fileSystemName: fileSystemName, directoryName: directoryName))
+            using (GetNewDirectory(out DataLakeDirectoryClient directoryClient, fileSystemName: fileSystemName, directoryName: directoryName))
             {
                 // Arrange
-                FileClient file = await directoryClient.CreateFileAsync(fileName);
+                DataLakeFileClient file = await directoryClient.CreateFileAsync(fileName);
 
-                FileClient sasFile = InstrumentClient(
+                DataLakeFileClient sasFile = InstrumentClient(
                     GetServiceClient_DataLakeServiceSas_Path(
                         fileSystemName: fileSystemName,
                         path: directoryName + "/" + fileName)
@@ -543,16 +543,16 @@ namespace Azure.Storage.Files.DataLake.Tests
             string fileSystemName = GetNewFileSystemName();
             string directoryName = GetNewDirectoryName();
             string fileName = GetNewFileName();
-            using (GetNewDirectory(out DirectoryClient directoryClient, fileSystemName: fileSystemName, directoryName: directoryName))
+            using (GetNewDirectory(out DataLakeDirectoryClient directoryClient, fileSystemName: fileSystemName, directoryName: directoryName))
             {
                 // Arrange
-                FileClient file = await directoryClient.CreateFileAsync(fileName);
+                DataLakeFileClient file = await directoryClient.CreateFileAsync(fileName);
 
                 Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
                     start: null,
                     expiry: Recording.UtcNow.AddHours(1));
 
-                FileClient identitySasFile = InstrumentClient(
+                DataLakeFileClient identitySasFile = InstrumentClient(
                     GetServiceClient_DataLakeServiceIdentitySas_Path(
                         fileSystemName: fileSystemName,
                         path: directoryName + "/" + fileName,
@@ -575,10 +575,10 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task GetAccessControlAsync_Error()
         {
-            using (GetNewFileSystem(out FileSystemClient fileSystemClient))
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystemClient))
             {
                 // Arrange
-                FileClient file = InstrumentClient(fileSystemClient.GetFileClient(GetNewFileName()));
+                DataLakeFileClient file = InstrumentClient(fileSystemClient.GetFileClient(GetNewFileName()));
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
@@ -588,46 +588,46 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task GetAccessControlAsync_AccessConditions()
+        public async Task GetAccessControlAsync_Conditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();
-            foreach (AccessConditionParameters parameters in AccessConditions_Data)
+            foreach (AccessConditionParameters parameters in Conditions_Data)
             {
-                using (GetNewFileSystem(out FileSystemClient fileSystem))
+                using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
                 {
                     // Arrange
-                    FileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
+                    DataLakeFileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
 
                     parameters.Match = await SetupPathMatchCondition(file, parameters.Match);
                     parameters.LeaseId = await SetupPathLeaseCondition(file, parameters.LeaseId, garbageLeaseId);
-                    DataLakeRequestConditions accessConditions = BuildDataLakeRequestAccessConditions(
+                    DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(
                         parameters: parameters,
                         lease: true);
 
                     // Act
-                    await file.GetAccessControlAsync(conditions: accessConditions);
+                    await file.GetAccessControlAsync(conditions: conditions);
                 }
             }
         }
 
         [Ignore("service bug")]
         [Test]
-        public async Task GetAccessControlAsync_AccessConditionsFail()
+        public async Task GetAccessControlAsync_ConditionsFail()
         {
             var garbageLeaseId = GetGarbageLeaseId();
-            foreach (AccessConditionParameters parameters in GetAccessConditionsFail_Data(garbageLeaseId))
+            foreach (AccessConditionParameters parameters in GetConditionsFail_Data(garbageLeaseId))
             {
-                using (GetNewFileSystem(out FileSystemClient fileSystem))
+                using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
                 {
                     // Arrange
-                    FileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
+                    DataLakeFileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
 
                     parameters.NoneMatch = await SetupPathMatchCondition(file, parameters.NoneMatch);
-                    DataLakeRequestConditions accessConditions = BuildDataLakeRequestAccessConditions(parameters);
+                    DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(parameters);
 
                     // Act
                     await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                        file.GetAccessControlAsync(conditions: accessConditions),
+                        file.GetAccessControlAsync(conditions: conditions),
                         e => { });
                 }
             }
@@ -637,10 +637,10 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task GetAccessControlAsync_InvalidLease()
         {
-            using (GetNewFileSystem(out FileSystemClient fileSystemClient))
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystemClient))
             {
                 // Arrange
-                FileClient file = await fileSystemClient.CreateFileAsync(GetNewFileName());
+                DataLakeFileClient file = await fileSystemClient.CreateFileAsync(GetNewFileName());
                 DataLakeRequestConditions conditions = new DataLakeRequestConditions()
                 {
                     LeaseId = GetGarbageLeaseId()
@@ -656,7 +656,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task SetAccessControlAsync()
         {
-            using (GetNewFile(out FileClient fileClient))
+            using (GetNewFile(out DataLakeFileClient fileClient))
             {
                 // Arrange
                 PathAccessControl accessControl = new PathAccessControl()
@@ -675,7 +675,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task SetAccessControlAsync_Error()
         {
-            using (GetNewFile(out FileClient fileClient))
+            using (GetNewFile(out DataLakeFileClient fileClient))
             {
                 // Arrange
                 PathAccessControl accessControl = new PathAccessControl()
@@ -695,19 +695,19 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task SetAccessControlAsync_AccessConditions()
+        public async Task SetAccessControlAsync_Conditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();
-            foreach (AccessConditionParameters parameters in AccessConditions_Data)
+            foreach (AccessConditionParameters parameters in Conditions_Data)
             {
-                using (GetNewFileSystem(out FileSystemClient fileSystem))
+                using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
                 {
                     // Arrange
-                    FileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
+                    DataLakeFileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
 
                     parameters.Match = await SetupPathMatchCondition(file, parameters.Match);
                     parameters.LeaseId = await SetupPathLeaseCondition(file, parameters.LeaseId, garbageLeaseId);
-                    DataLakeRequestConditions accessConditions = BuildDataLakeRequestAccessConditions(
+                    DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(
                         parameters: parameters,
                         lease: true);
 
@@ -717,7 +717,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                         {
                             Permissions = "0777"
                         },
-                        conditions: accessConditions);
+                        conditions: conditions);
 
                     // Assert
                     Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -726,18 +726,18 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task SetAccessControlAsync_AccessConditionsFail()
+        public async Task SetAccessControlAsync_ConditionsFail()
         {
             var garbageLeaseId = GetGarbageLeaseId();
-            foreach (AccessConditionParameters parameters in GetAccessConditionsFail_Data(garbageLeaseId))
+            foreach (AccessConditionParameters parameters in GetConditionsFail_Data(garbageLeaseId))
             {
-                using (GetNewFileSystem(out FileSystemClient fileSystem))
+                using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
                 {
                     // Arrange
-                    FileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
+                    DataLakeFileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
 
                     parameters.NoneMatch = await SetupPathMatchCondition(file, parameters.NoneMatch);
-                    DataLakeRequestConditions accessConditions = BuildDataLakeRequestAccessConditions(parameters);
+                    DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(parameters);
 
                     // Act
                     await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
@@ -746,7 +746,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                             {
                                 Permissions = "0777"
                             },
-                            conditions: accessConditions),
+                            conditions: conditions),
                         e => { });
                 }
             }
@@ -755,7 +755,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task GetPropertiesAsync()
         {
-            using (GetNewFile(out FileClient file))
+            using (GetNewFile(out DataLakeFileClient file))
             {
                 // Act
                 Response<PathProperties> response = await file.GetPropertiesAsync();
@@ -772,11 +772,11 @@ namespace Azure.Storage.Files.DataLake.Tests
             string fileSystemName = GetNewFileSystemName();
             string directoryName = GetNewDirectoryName();
             string fileName = GetNewFileName();
-            using (GetNewDirectory(out DirectoryClient directoryClient, fileSystemName: fileSystemName, directoryName: directoryName))
+            using (GetNewDirectory(out DataLakeDirectoryClient directoryClient, fileSystemName: fileSystemName, directoryName: directoryName))
             {
                 // Arrange
-                FileClient file = await directoryClient.CreateFileAsync(fileName);
-                FileClient oauthFile = oauthService
+                DataLakeFileClient file = await directoryClient.CreateFileAsync(fileName);
+                DataLakeFileClient oauthFile = oauthService
                     .GetFileSystemClient(fileSystemName)
                     .GetDirectoryClient(directoryName)
                     .GetFileClient(fileName);
@@ -795,12 +795,12 @@ namespace Azure.Storage.Files.DataLake.Tests
             string fileSystemName = GetNewFileSystemName();
             string directoryName = GetNewDirectoryName();
             string fileName = GetNewFileName();
-            using (GetNewDirectory(out DirectoryClient directoryClient, fileSystemName: fileSystemName, directoryName: directoryName))
+            using (GetNewDirectory(out DataLakeDirectoryClient directoryClient, fileSystemName: fileSystemName, directoryName: directoryName))
             {
                 // Arrange
-                FileClient file = await directoryClient.CreateFileAsync(fileName);
+                DataLakeFileClient file = await directoryClient.CreateFileAsync(fileName);
 
-                FileClient sasFile = InstrumentClient(
+                DataLakeFileClient sasFile = InstrumentClient(
                     GetServiceClient_DataLakeServiceSas_FileSystem(
                         fileSystemName: fileSystemName)
                     .GetFileSystemClient(fileSystemName)
@@ -822,16 +822,16 @@ namespace Azure.Storage.Files.DataLake.Tests
             string fileSystemName = GetNewFileSystemName();
             string directoryName = GetNewDirectoryName();
             string fileName = GetNewFileName();
-            using (GetNewDirectory(out DirectoryClient directoryClient, fileSystemName: fileSystemName, directoryName: directoryName))
+            using (GetNewDirectory(out DataLakeDirectoryClient directoryClient, fileSystemName: fileSystemName, directoryName: directoryName))
             {
                 // Arrange
-                FileClient file = await directoryClient.CreateFileAsync(fileName);
+                DataLakeFileClient file = await directoryClient.CreateFileAsync(fileName);
 
                 Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
                     start: null,
                     expiry: Recording.UtcNow.AddHours(1));
 
-                FileClient identitySasFile = InstrumentClient(
+                DataLakeFileClient identitySasFile = InstrumentClient(
                     GetServiceClient_DataLakeServiceIdentitySas_FileSystem(
                         fileSystemName: fileSystemName,
                         userDelegationKey: userDelegationKey)
@@ -853,12 +853,12 @@ namespace Azure.Storage.Files.DataLake.Tests
             var fileSystemName = GetNewFileSystemName();
             var directoryName = GetNewDirectoryName();
             string fileName = GetNewFileName();
-            using (GetNewDirectory(out DirectoryClient directoryClient, fileSystemName: fileSystemName, directoryName: directoryName))
+            using (GetNewDirectory(out DataLakeDirectoryClient directoryClient, fileSystemName: fileSystemName, directoryName: directoryName))
             {
                 // Arrange
-                FileClient file = await directoryClient.CreateFileAsync(fileName);
+                DataLakeFileClient file = await directoryClient.CreateFileAsync(fileName);
 
-                FileClient sasFile = InstrumentClient(
+                DataLakeFileClient sasFile = InstrumentClient(
                     GetServiceClient_DataLakeServiceSas_Path(
                         fileSystemName: fileSystemName,
                         path: directoryName + "/" + fileName)
@@ -881,16 +881,16 @@ namespace Azure.Storage.Files.DataLake.Tests
             string fileSystemName = GetNewFileSystemName();
             string directoryName = GetNewDirectoryName();
             string fileName = GetNewFileName();
-            using (GetNewDirectory(out DirectoryClient directoryClient, fileSystemName: fileSystemName, directoryName: directoryName))
+            using (GetNewDirectory(out DataLakeDirectoryClient directoryClient, fileSystemName: fileSystemName, directoryName: directoryName))
             {
                 // Arrange
-                FileClient file = await directoryClient.CreateFileAsync(fileName);
+                DataLakeFileClient file = await directoryClient.CreateFileAsync(fileName);
 
                 Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
                     start: null,
                     expiry: Recording.UtcNow.AddHours(1));
 
-                FileClient identitySasFile = InstrumentClient(
+                DataLakeFileClient identitySasFile = InstrumentClient(
                     GetServiceClient_DataLakeServiceIdentitySas_Path(
                         fileSystemName: fileSystemName,
                         path: directoryName + "/" + fileName,
@@ -908,22 +908,22 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task GetPropertiesAsync_AccessConditions()
+        public async Task GetPropertiesAsync_Conditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();
-            foreach (AccessConditionParameters parameters in AccessConditions_Data)
+            foreach (AccessConditionParameters parameters in Conditions_Data)
             {
-                using (GetNewFile(out FileClient file))
+                using (GetNewFile(out DataLakeFileClient file))
                 {
                     // Arrange
                     parameters.Match = await SetupPathMatchCondition(file, parameters.Match);
                     parameters.LeaseId = await SetupPathLeaseCondition(file, parameters.LeaseId, garbageLeaseId);
-                    DataLakeRequestConditions accessConditions = BuildDataLakeRequestAccessConditions(
+                    DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(
                         parameters: parameters,
                         lease: true);
 
                     // Act
-                    Response<PathProperties> response = await file.GetPropertiesAsync(conditions: accessConditions);
+                    Response<PathProperties> response = await file.GetPropertiesAsync(conditions: conditions);
 
                     // Assert
                     Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -932,23 +932,23 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task GetPropertiesAsync_AccessConditionsFail()
+        public async Task GetPropertiesAsync_ConditionsFail()
         {
             var garbageLeaseId = GetGarbageLeaseId();
-            foreach (AccessConditionParameters parameters in GetAccessConditionsFail_Data(garbageLeaseId))
+            foreach (AccessConditionParameters parameters in GetConditionsFail_Data(garbageLeaseId))
             {
-                using (GetNewFile(out FileClient file))
+                using (GetNewFile(out DataLakeFileClient file))
                 {
                     // Arrange
                     parameters.NoneMatch = await SetupPathMatchCondition(file, parameters.NoneMatch);
-                    DataLakeRequestConditions accessConditions = BuildDataLakeRequestAccessConditions(parameters);
+                    DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(parameters);
 
                     // Act
                     Assert.CatchAsync<Exception>(
                         async () =>
                         {
                             var _ = (await file.GetPropertiesAsync(
-                                conditions: accessConditions)).Value;
+                                conditions: conditions)).Value;
                         });
                 }
             }
@@ -957,10 +957,10 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task GetPropertiesAsync_Error()
         {
-            using (GetNewFileSystem(out FileSystemClient fileSystem))
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
             {
                 // Arrange
-                FileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
+                DataLakeFileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
@@ -973,7 +973,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task SetHttpHeadersAsync()
         {
             var constants = new TestConstants(this);
-            using (GetNewFile(out FileClient file))
+            using (GetNewFile(out DataLakeFileClient file))
             {
                 // Act
                 await file.SetHttpHeadersAsync(new PathHttpHeaders
@@ -1003,10 +1003,10 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task SetHttpHeadersAsync_Error()
         {
             var constants = new TestConstants(this);
-            using (GetNewFileSystem(out FileSystemClient fileSystem))
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
             {
                 // Arrange
-                FileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
+                DataLakeFileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
@@ -1024,20 +1024,20 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task SetHttpHeadersAsync_AccessConditions()
+        public async Task SetHttpHeadersAsync_Conditions()
         {
             var constants = new TestConstants(this);
             var garbageLeaseId = GetGarbageLeaseId();
-            foreach (AccessConditionParameters parameters in AccessConditions_Data)
+            foreach (AccessConditionParameters parameters in Conditions_Data)
             {
-                using (GetNewFileSystem(out FileSystemClient fileSystem))
+                using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
                 {
                     // Arrange
-                    FileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
+                    DataLakeFileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
 
                     parameters.Match = await SetupPathMatchCondition(file, parameters.Match);
                     parameters.LeaseId = await SetupPathLeaseCondition(file, parameters.LeaseId, garbageLeaseId);
-                    DataLakeRequestConditions accessConditions = BuildDataLakeRequestAccessConditions(
+                    DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(
                         parameters: parameters,
                         lease: true);
 
@@ -1052,7 +1052,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                             ContentHash = constants.ContentMD5,
                             ContentType = constants.ContentType
                         },
-                        conditions: accessConditions);
+                        conditions: conditions);
 
                     // Assert
                     Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -1061,19 +1061,19 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task SetHttpHeadersAsync_AccessConditionsFail()
+        public async Task SetHttpHeadersAsync_ConditionsFail()
         {
             var constants = new TestConstants(this);
             var garbageLeaseId = GetGarbageLeaseId();
-            foreach (AccessConditionParameters parameters in GetAccessConditionsFail_Data(garbageLeaseId))
+            foreach (AccessConditionParameters parameters in GetConditionsFail_Data(garbageLeaseId))
             {
-                using (GetNewFileSystem(out FileSystemClient fileSystem))
+                using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
                 {
                     // Arrange
-                    FileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
+                    DataLakeFileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
 
                     parameters.NoneMatch = await SetupPathMatchCondition(file, parameters.NoneMatch);
-                    DataLakeRequestConditions accessConditions = BuildDataLakeRequestAccessConditions(parameters);
+                    DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(parameters);
 
                     // Act
                     await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
@@ -1087,7 +1087,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                                 ContentHash = constants.ContentMD5,
                                 ContentType = constants.ContentType
                             },
-                            conditions: accessConditions),
+                            conditions: conditions),
                         e => { });
                 }
             }
@@ -1096,7 +1096,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task SetMetadataAsync()
         {
-            using (GetNewFile(out FileClient file))
+            using (GetNewFile(out DataLakeFileClient file))
             {
                 // Arrange
                 IDictionary<string, string> metadata = BuildMetadata();
@@ -1113,10 +1113,10 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task SetMetadataAsync_Error()
         {
-            using (GetNewFileSystem(out FileSystemClient fileSystem))
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
             {
                 // Arrange
-                FileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
+                DataLakeFileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
                 IDictionary<string, string> metadata = BuildMetadata();
 
                 // Act
@@ -1127,27 +1127,27 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task SetMetadataAsync_AccessConditions()
+        public async Task SetMetadataAsync_Conditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();
-            foreach (AccessConditionParameters parameters in AccessConditions_Data)
+            foreach (AccessConditionParameters parameters in Conditions_Data)
             {
-                using (GetNewFileSystem(out FileSystemClient fileSystem))
+                using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
                 {
                     // Arrange
-                    FileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
+                    DataLakeFileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
                     IDictionary<string, string> metadata = BuildMetadata();
 
                     parameters.Match = await SetupPathMatchCondition(file, parameters.Match);
                     parameters.LeaseId = await SetupPathLeaseCondition(file, parameters.LeaseId, garbageLeaseId);
-                    DataLakeRequestConditions accessConditions = BuildDataLakeRequestAccessConditions(
+                    DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(
                         parameters: parameters,
                         lease: true);
 
                     // Act
                     Response<PathInfo> response = await file.SetMetadataAsync(
                         metadata: metadata,
-                        conditions: accessConditions);
+                        conditions: conditions);
 
                     // Assert
                     Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -1156,25 +1156,25 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task SetMetadataAsync_AccessConditionsFail()
+        public async Task SetMetadataAsync_ConditionsFail()
         {
             var garbageLeaseId = GetGarbageLeaseId();
-            foreach (AccessConditionParameters parameters in GetAccessConditionsFail_Data(garbageLeaseId))
+            foreach (AccessConditionParameters parameters in GetConditionsFail_Data(garbageLeaseId))
             {
-                using (GetNewFileSystem(out FileSystemClient fileSystem))
+                using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
                 {
                     // Arrange
-                    FileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
+                    DataLakeFileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
                     IDictionary<string, string> metadata = BuildMetadata();
 
                     parameters.NoneMatch = await SetupPathMatchCondition(file, parameters.NoneMatch);
-                    DataLakeRequestConditions accessConditions = BuildDataLakeRequestAccessConditions(parameters);
+                    DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(parameters);
 
                     // Act
                     await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         file.SetMetadataAsync(
                             metadata: metadata,
-                            conditions: accessConditions),
+                            conditions: conditions),
                         e => { });
                 }
             }
@@ -1183,10 +1183,10 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task AppendDataAsync()
         {
-            using (GetNewFileSystem(out FileSystemClient fileSystem))
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
             {
                 // Arrange
-                FileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
+                DataLakeFileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
                 await file.CreateAsync();
                 var data = GetRandomBuffer(Size);
 
@@ -1201,10 +1201,10 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task AppendDataAsync_ContentHash()
         {
-            using (GetNewFileSystem(out FileSystemClient fileSystem))
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
             {
                 // Arrange
-                FileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
+                DataLakeFileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
                 await file.CreateAsync();
                 var data = GetRandomBuffer(Size);
                 byte[] contentHash = MD5.Create().ComputeHash(data);
@@ -1220,10 +1220,10 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task AppendDataAsync_Error()
         {
-            using (GetNewFileSystem(out FileSystemClient fileSystem))
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
             {
                 // Arrange
-                FileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
+                DataLakeFileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
                 var data = GetRandomBuffer(Size);
 
                 // Act
@@ -1239,10 +1239,10 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task AppendDataAsync_Position()
         {
-            using (GetNewFileSystem(out FileSystemClient fileSystem))
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
             {
                 // Arrange
-                FileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
+                DataLakeFileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
                 await file.CreateAsync();
                 var data0 = GetRandomBuffer(Constants.KB);
                 var data1 = GetRandomBuffer(Constants.KB);
@@ -1270,15 +1270,15 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task AppendDataAsync_Lease()
         {
-            using (GetNewFileSystem(out FileSystemClient fileSystem))
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
             {
                 // Arrange
-                FileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
+                DataLakeFileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
                 await file.CreateAsync();
                 var data = GetRandomBuffer(Size);
                 var leaseId = Recording.Random.NewGuid().ToString();
                 var duration = TimeSpan.FromSeconds(15);
-                Response<DataLakeLease> response = await InstrumentClient(file.GetLeaseClient(leaseId)).AcquireAsync(duration);
+                Response<DataLakeLease> response = await InstrumentClient(file.GetDataLakeLeaseClient(leaseId)).AcquireAsync(duration);
 
                 // Act
                 using (var stream = new MemoryStream(data))
@@ -1291,10 +1291,10 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task AppendDataAsync_InvalidLease()
         {
-            using (GetNewFileSystem(out FileSystemClient fileSystem))
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
             {
                 // Arrange
-                FileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
+                DataLakeFileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
                 await file.CreateAsync();
                 var data = GetRandomBuffer(Size);
 
@@ -1311,10 +1311,10 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task FlushDataAsync()
         {
-            using (GetNewFileSystem(out FileSystemClient fileSystem))
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
             {
                 // Arrange
-                FileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
+                DataLakeFileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
                 await file.CreateAsync();
                 var data = GetRandomBuffer(Constants.KB);
 
@@ -1334,10 +1334,10 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task FlushDataAsync_HttpHeaders()
         {
-            using (GetNewFileSystem(out FileSystemClient fileSystem))
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
             {
                 // Arrange
-                FileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
+                DataLakeFileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
                 await file.CreateAsync();
                 byte[] data = GetRandomBuffer(Constants.KB);
                 byte[] contentHash = MD5.Create().ComputeHash(data);
@@ -1375,10 +1375,10 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task FlushDataAsync_Position()
         {
-            using (GetNewFileSystem(out FileSystemClient fileSystem))
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
             {
                 // Arrange
-                FileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
+                DataLakeFileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
                 await file.CreateAsync();
                 var data = GetRandomBuffer(Constants.KB);
 
@@ -1398,10 +1398,10 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task FlushDataAsync_RetainUncommittedData()
         {
-            using (GetNewFileSystem(out FileSystemClient fileSystem))
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
             {
                 // Arrange
-                FileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
+                DataLakeFileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
                 await file.CreateAsync();
                 var data = GetRandomBuffer(Constants.KB);
 
@@ -1421,10 +1421,10 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task FlushDataAsync_Close()
         {
-            using (GetNewFileSystem(out FileSystemClient fileSystem))
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
             {
                 // Arrange
-                FileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
+                DataLakeFileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
                 await file.CreateAsync();
                 var data = GetRandomBuffer(Constants.KB);
 
@@ -1442,15 +1442,15 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task FlushDataAsync_AccessConditions()
+        public async Task FlushDataAsync_Conditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();
-            foreach (AccessConditionParameters parameters in AccessConditions_Data)
+            foreach (AccessConditionParameters parameters in Conditions_Data)
             {
-                using (GetNewFileSystem(out FileSystemClient fileSystem))
+                using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
                 {
                     // Arrange
-                    FileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
+                    DataLakeFileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
                     await file.CreateAsync();
                     var data = GetRandomBuffer(Constants.KB);
 
@@ -1461,26 +1461,26 @@ namespace Azure.Storage.Files.DataLake.Tests
 
                     parameters.Match = await SetupPathMatchCondition(file, parameters.Match);
                     parameters.LeaseId = await SetupPathLeaseCondition(file, parameters.LeaseId, garbageLeaseId);
-                    DataLakeRequestConditions accessConditions = BuildDataLakeRequestAccessConditions(
+                    DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(
                         parameters: parameters,
                         lease: true);
 
                     // Act
-                    await file.FlushAsync(Constants.KB, conditions: accessConditions);
+                    await file.FlushAsync(Constants.KB, conditions: conditions);
                 }
             }
         }
 
         [Test]
-        public async Task FlushDataAsync_AccessConditionsFail()
+        public async Task FlushDataAsync_ConditionsFail()
         {
             var garbageLeaseId = GetGarbageLeaseId();
-            foreach (AccessConditionParameters parameters in GetAccessConditionsFail_Data(garbageLeaseId))
+            foreach (AccessConditionParameters parameters in GetConditionsFail_Data(garbageLeaseId))
             {
-                using (GetNewFileSystem(out FileSystemClient fileSystem))
+                using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
                 {
                     // Arrange
-                    FileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
+                    DataLakeFileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
                     await file.CreateAsync();
                     var data = GetRandomBuffer(Size);
 
@@ -1490,11 +1490,11 @@ namespace Azure.Storage.Files.DataLake.Tests
                     }
 
                     parameters.NoneMatch = await SetupPathMatchCondition(file, parameters.NoneMatch);
-                    DataLakeRequestConditions accessConditions = BuildDataLakeRequestAccessConditions(parameters);
+                    DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(parameters);
 
                     // Act
                     await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                        file.FlushAsync(Constants.KB, conditions: accessConditions),
+                        file.FlushAsync(Constants.KB, conditions: conditions),
                         e => { });
                 }
             }
@@ -1503,10 +1503,10 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task FlushDataAsync_Error()
         {
-            using (GetNewFileSystem(out FileSystemClient fileSystem))
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
             {
                 // Arrange
-                FileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
+                DataLakeFileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
@@ -1518,11 +1518,11 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task ReadAsync()
         {
-            using (GetNewFileSystem(out FileSystemClient fileSystem))
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
             {
                 // Arrange
                 var data = GetRandomBuffer(Constants.KB);
-                FileClient fileClient = await fileSystem.CreateFileAsync(GetNewFileName());
+                DataLakeFileClient fileClient = await fileSystem.CreateFileAsync(GetNewFileName());
                 using (var stream = new MemoryStream(data))
                 {
                     await fileClient.AppendAsync(stream, 0);
@@ -1552,11 +1552,11 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task ReadAsync_Range()
         {
-            using (GetNewFileSystem(out FileSystemClient fileSystem))
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
             {
                 // Arrange
                 var data = GetRandomBuffer(Constants.KB);
-                FileClient fileClient = await fileSystem.CreateFileAsync(GetNewFileName());
+                DataLakeFileClient fileClient = await fileSystem.CreateFileAsync(GetNewFileName());
                 using (var stream = new MemoryStream(data))
                 {
                     await fileClient.AppendAsync(stream, 0);
@@ -1580,11 +1580,11 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task ReadAsync_RangeGetContentHash()
         {
-            using (GetNewFileSystem(out FileSystemClient fileSystem))
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
             {
                 // Arrange
                 var data = GetRandomBuffer(Constants.KB);
-                FileClient fileClient = await fileSystem.CreateFileAsync(GetNewFileName());
+                DataLakeFileClient fileClient = await fileSystem.CreateFileAsync(GetNewFileName());
                 using (var stream = new MemoryStream(data))
                 {
                     await fileClient.AppendAsync(stream, 0);
@@ -1604,16 +1604,16 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task ReadAsync_AccessConditions()
+        public async Task ReadAsync_Conditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();
-            foreach (AccessConditionParameters parameters in AccessConditions_Data)
+            foreach (AccessConditionParameters parameters in Conditions_Data)
             {
-                using (GetNewFileSystem(out FileSystemClient fileSystem))
+                using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
                 {
                     // Arrange
                     var data = GetRandomBuffer(Constants.KB);
-                    FileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
+                    DataLakeFileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
                     using (var stream = new MemoryStream(data))
                     {
                         await file.AppendAsync(stream, 0);
@@ -1623,13 +1623,13 @@ namespace Azure.Storage.Files.DataLake.Tests
 
                     parameters.Match = await SetupPathMatchCondition(file, parameters.Match);
                     parameters.LeaseId = await SetupPathLeaseCondition(file, parameters.LeaseId, garbageLeaseId);
-                    DataLakeRequestConditions accessConditions = BuildDataLakeRequestAccessConditions(
+                    DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(
                         parameters: parameters,
                         lease: true);
 
                     // Act
                     Response<FileDownloadInfo> response = await file.ReadAsync(
-                        conditions: accessConditions);
+                        conditions: conditions);
 
                     // Assert
                     Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -1638,16 +1638,16 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task ReadAsync_AccessConditionsFail()
+        public async Task ReadAsync_ConditionsFail()
         {
             var garbageLeaseId = GetGarbageLeaseId();
-            foreach (AccessConditionParameters parameters in GetAccessConditionsFail_Data(garbageLeaseId))
+            foreach (AccessConditionParameters parameters in GetConditionsFail_Data(garbageLeaseId))
             {
-                using (GetNewFileSystem(out FileSystemClient fileSystem))
+                using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
                 {
                     // Arrange
                     var data = GetRandomBuffer(Constants.KB);
-                    FileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
+                    DataLakeFileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
                     using (var stream = new MemoryStream(data))
                     {
                         await file.AppendAsync(stream, 0);
@@ -1656,14 +1656,14 @@ namespace Azure.Storage.Files.DataLake.Tests
                     await file.FlushAsync(Constants.KB);
 
                     parameters.NoneMatch = await SetupPathMatchCondition(file, parameters.NoneMatch);
-                    DataLakeRequestConditions accessConditions = BuildDataLakeRequestAccessConditions(parameters);
+                    DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(parameters);
 
                     // Act
                     Assert.CatchAsync<Exception>(
                         async () =>
                         {
                             var _ = (await file.ReadAsync(
-                                conditions: accessConditions)).Value;
+                                conditions: conditions)).Value;
                         });
                 }
             }
@@ -1672,10 +1672,10 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task ReadAsync_Error()
         {
-            using (GetNewFileSystem(out FileSystemClient fileSystem))
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
             {
                 // Arrange
-                FileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
+                DataLakeFileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
@@ -1687,16 +1687,16 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task AcquireLeaseAsync()
         {
-            using (GetNewFileSystem(out FileSystemClient fileSystem))
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
             {
                 // Arrange
-                FileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
+                DataLakeFileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
 
                 var leaseId = Recording.Random.NewGuid().ToString();
                 var duration = TimeSpan.FromSeconds(15);
 
                 // Act
-                Response<DataLakeLease> response = await InstrumentClient(file.GetLeaseClient(leaseId)).AcquireAsync(duration);
+                Response<DataLakeLease> response = await InstrumentClient(file.GetDataLakeLeaseClient(leaseId)).AcquireAsync(duration);
 
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -1704,14 +1704,14 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task AcquireLeaseAsync_AccessConditions()
+        public async Task AcquireLeaseAsync_Conditions()
         {
-            foreach (AccessConditionParameters parameters in NoLease_AccessConditions_Data)
+            foreach (AccessConditionParameters parameters in NoLease_Conditions_Data)
             {
-                using (GetNewFileSystem(out FileSystemClient fileSystem))
+                using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
                 {
                     // Arrange
-                    FileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
+                    DataLakeFileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
 
                     var leaseId = Recording.Random.NewGuid().ToString();
                     var duration = TimeSpan.FromSeconds(15);
@@ -1721,7 +1721,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                         parameters: parameters);
 
                     // Act
-                    Response<DataLakeLease> response = await InstrumentClient(file.GetLeaseClient(leaseId)).AcquireAsync(
+                    Response<DataLakeLease> response = await InstrumentClient(file.GetDataLakeLeaseClient(leaseId)).AcquireAsync(
                         duration: duration,
                         conditions: conditions);
 
@@ -1732,14 +1732,14 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task AcquireLeaseAsync_AccessConditionsFail()
+        public async Task AcquireLeaseAsync_ConditionsFail()
         {
-            foreach (AccessConditionParameters parameters in NoLease_AccessConditionsFail_Data)
+            foreach (AccessConditionParameters parameters in NoLease_ConditionsFail_Data)
             {
-                using (GetNewFileSystem(out FileSystemClient fileSystem))
+                using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
                 {
                     // Arrange
-                    FileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
+                    DataLakeFileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
 
                     var leaseId = Recording.Random.NewGuid().ToString();
                     var duration = TimeSpan.FromSeconds(15);
@@ -1749,7 +1749,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
                     // Act
                     await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                        InstrumentClient(file.GetLeaseClient(leaseId)).AcquireAsync(
+                        InstrumentClient(file.GetDataLakeLeaseClient(leaseId)).AcquireAsync(
                             duration: duration,
                             conditions: conditions),
                         e => { });
@@ -1760,16 +1760,16 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task AcquireLeaseAsync_Error()
         {
-            using (GetNewFileSystem(out FileSystemClient fileSystem))
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
             {
                 // Arrange
-                FileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
+                DataLakeFileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
                 var leaseId = Recording.Random.NewGuid().ToString();
                 var duration = TimeSpan.FromSeconds(15);
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                    InstrumentClient(file.GetLeaseClient(leaseId)).AcquireAsync(duration),
+                    InstrumentClient(file.GetDataLakeLeaseClient(leaseId)).AcquireAsync(duration),
                     e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
             }
         }
@@ -1777,15 +1777,15 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task RenewLeaseAsync()
         {
-            using (GetNewFileSystem(out FileSystemClient fileSystem))
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
             {
                 // Arrange
-                FileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
+                DataLakeFileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
 
                 var leaseId = Recording.Random.NewGuid().ToString();
                 var duration = TimeSpan.FromSeconds(15);
 
-                DataLakeLeaseClient lease = InstrumentClient(file.GetLeaseClient(leaseId));
+                DataLakeLeaseClient lease = InstrumentClient(file.GetDataLakeLeaseClient(leaseId));
                 await lease.AcquireAsync(duration);
 
                 // Act
@@ -1797,14 +1797,14 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task RenewLeaseAsync_AccessConditions()
+        public async Task RenewLeaseAsync_Conditions()
         {
-            foreach (AccessConditionParameters parameters in NoLease_AccessConditions_Data)
+            foreach (AccessConditionParameters parameters in NoLease_Conditions_Data)
             {
-                using (GetNewFileSystem(out FileSystemClient fileSystem))
+                using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
                 {
                     // Arrange
-                    FileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
+                    DataLakeFileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
 
                     var leaseId = Recording.Random.NewGuid().ToString();
                     var duration = TimeSpan.FromSeconds(15);
@@ -1813,7 +1813,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     RequestConditions conditions = BuildRequestConditions(
                         parameters: parameters);
 
-                    DataLakeLeaseClient lease = InstrumentClient(file.GetLeaseClient(leaseId));
+                    DataLakeLeaseClient lease = InstrumentClient(file.GetDataLakeLeaseClient(leaseId));
                     await lease.AcquireAsync(duration: duration);
 
                     // Act
@@ -1826,14 +1826,14 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task RenewLeaseAsync_AccessConditionsFail()
+        public async Task RenewLeaseAsync_ConditionsFail()
         {
-            foreach (AccessConditionParameters parameters in NoLease_AccessConditionsFail_Data)
+            foreach (AccessConditionParameters parameters in NoLease_ConditionsFail_Data)
             {
-                using (GetNewFileSystem(out FileSystemClient fileSystem))
+                using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
                 {
                     // Arrange
-                    FileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
+                    DataLakeFileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
 
                     var leaseId = Recording.Random.NewGuid().ToString();
                     var duration = TimeSpan.FromSeconds(15);
@@ -1841,7 +1841,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     parameters.NoneMatch = await SetupPathMatchCondition(file, parameters.NoneMatch);
                     RequestConditions conditions = BuildRequestConditions(parameters);
 
-                    DataLakeLeaseClient lease = InstrumentClient(file.GetLeaseClient(leaseId));
+                    DataLakeLeaseClient lease = InstrumentClient(file.GetDataLakeLeaseClient(leaseId));
                     await lease.AcquireAsync(duration: duration);
 
                     // Act
@@ -1855,15 +1855,15 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task RenewLeaseAsync_Error()
         {
-            using (GetNewFileSystem(out FileSystemClient fileSystem))
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
             {
                 // Arrange
-                FileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
+                DataLakeFileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
                 var leaseId = Recording.Random.NewGuid().ToString();
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                    InstrumentClient(file.GetLeaseClient(leaseId)).ReleaseAsync(),
+                    InstrumentClient(file.GetDataLakeLeaseClient(leaseId)).ReleaseAsync(),
                     e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
             }
         }
@@ -1871,15 +1871,15 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task ReleaseLeaseAsync()
         {
-            using (GetNewFileSystem(out FileSystemClient fileSystem))
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
             {
                 // Arrange
-                FileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
+                DataLakeFileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
 
                 var leaseId = Recording.Random.NewGuid().ToString();
                 var duration = TimeSpan.FromSeconds(15);
 
-                DataLakeLeaseClient lease = InstrumentClient(file.GetLeaseClient(leaseId));
+                DataLakeLeaseClient lease = InstrumentClient(file.GetDataLakeLeaseClient(leaseId));
                 await lease.AcquireAsync(duration);
 
                 // Act
@@ -1891,14 +1891,14 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task ReleaseLeaseAsync_AccessConditions()
+        public async Task ReleaseLeaseAsync_Conditions()
         {
-            foreach (AccessConditionParameters parameters in NoLease_AccessConditions_Data)
+            foreach (AccessConditionParameters parameters in NoLease_Conditions_Data)
             {
-                using (GetNewFileSystem(out FileSystemClient fileSystem))
+                using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
                 {
                     // Arrange
-                    FileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
+                    DataLakeFileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
 
                     var leaseId = Recording.Random.NewGuid().ToString();
                     var duration = TimeSpan.FromSeconds(15);
@@ -1907,7 +1907,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     RequestConditions conditions = BuildRequestConditions(
                         parameters: parameters);
 
-                    DataLakeLeaseClient lease = InstrumentClient(file.GetLeaseClient(leaseId));
+                    DataLakeLeaseClient lease = InstrumentClient(file.GetDataLakeLeaseClient(leaseId));
                     await lease.AcquireAsync(duration: duration);
 
                     // Act
@@ -1920,14 +1920,14 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task ReleaseLeaseAsync_AccessConditionsFail()
+        public async Task ReleaseLeaseAsync_ConditionsFail()
         {
-            foreach (AccessConditionParameters parameters in NoLease_AccessConditionsFail_Data)
+            foreach (AccessConditionParameters parameters in NoLease_ConditionsFail_Data)
             {
-                using (GetNewFileSystem(out FileSystemClient fileSystem))
+                using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
                 {
                     // Arrange
-                    FileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
+                    DataLakeFileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
 
                     var leaseId = Recording.Random.NewGuid().ToString();
                     var duration = TimeSpan.FromSeconds(15);
@@ -1935,7 +1935,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     parameters.NoneMatch = await SetupPathMatchCondition(file, parameters.NoneMatch);
                     RequestConditions conditions = BuildRequestConditions(parameters);
 
-                    DataLakeLeaseClient lease = InstrumentClient(file.GetLeaseClient(leaseId));
+                    DataLakeLeaseClient lease = InstrumentClient(file.GetDataLakeLeaseClient(leaseId));
                     await lease.AcquireAsync(duration: duration);
 
                     // Act
@@ -1949,15 +1949,15 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task ReleaseLeaseAsync_Error()
         {
-            using (GetNewFileSystem(out FileSystemClient fileSystem))
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
             {
                 // Arrange
-                FileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
+                DataLakeFileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
                 var leaseId = Recording.Random.NewGuid().ToString();
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                    InstrumentClient(file.GetLeaseClient(leaseId)).RenewAsync(),
+                    InstrumentClient(file.GetDataLakeLeaseClient(leaseId)).RenewAsync(),
                     e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
             }
         }
@@ -1965,16 +1965,16 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task ChangeLeaseAsync()
         {
-            using (GetNewFileSystem(out FileSystemClient fileSystem))
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
             {
                 // Arrange
-                FileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
+                DataLakeFileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
 
                 var leaseId = Recording.Random.NewGuid().ToString();
                 var newLeaseId = Recording.Random.NewGuid().ToString();
                 var duration = TimeSpan.FromSeconds(15);
 
-                DataLakeLeaseClient lease = InstrumentClient(file.GetLeaseClient(leaseId));
+                DataLakeLeaseClient lease = InstrumentClient(file.GetDataLakeLeaseClient(leaseId));
                 await lease.AcquireAsync(duration);
 
                 // Act
@@ -1986,14 +1986,14 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task ChangeLeaseAsync_AccessConditions()
+        public async Task ChangeLeaseAsync_Conditions()
         {
-            foreach (AccessConditionParameters parameters in NoLease_AccessConditions_Data)
+            foreach (AccessConditionParameters parameters in NoLease_Conditions_Data)
             {
-                using (GetNewFileSystem(out FileSystemClient fileSystem))
+                using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
                 {
                     // Arrange
-                    FileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
+                    DataLakeFileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
 
                     var leaseId = Recording.Random.NewGuid().ToString();
                     var newLeaseId = Recording.Random.NewGuid().ToString();
@@ -2003,7 +2003,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     RequestConditions conditions = BuildRequestConditions(
                         parameters: parameters);
 
-                    DataLakeLeaseClient lease = InstrumentClient(file.GetLeaseClient(leaseId));
+                    DataLakeLeaseClient lease = InstrumentClient(file.GetDataLakeLeaseClient(leaseId));
                     await lease.AcquireAsync(duration: duration);
 
                     // Act
@@ -2018,14 +2018,14 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task ChangeLeaseAsync_AccessConditionsFail()
+        public async Task ChangeLeaseAsync_ConditionsFail()
         {
-            foreach (AccessConditionParameters parameters in NoLease_AccessConditionsFail_Data)
+            foreach (AccessConditionParameters parameters in NoLease_ConditionsFail_Data)
             {
-                using (GetNewFileSystem(out FileSystemClient fileSystem))
+                using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
                 {
                     // Arrange
-                    FileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
+                    DataLakeFileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
 
                     var leaseId = Recording.Random.NewGuid().ToString();
                     var newLeaseId = Recording.Random.NewGuid().ToString();
@@ -2034,7 +2034,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     parameters.NoneMatch = await SetupPathMatchCondition(file, parameters.NoneMatch);
                     RequestConditions conditions = BuildRequestConditions(parameters);
 
-                    DataLakeLeaseClient lease = InstrumentClient(file.GetLeaseClient(leaseId));
+                    DataLakeLeaseClient lease = InstrumentClient(file.GetDataLakeLeaseClient(leaseId));
                     await lease.AcquireAsync(duration: duration);
 
                     // Act
@@ -2050,16 +2050,16 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task ChangeLeaseAsync_Error()
         {
-            using (GetNewFileSystem(out FileSystemClient fileSystem))
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
             {
                 // Arrange
-                FileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
+                DataLakeFileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
                 var leaseId = Recording.Random.NewGuid().ToString();
                 var newLeaseId = Recording.Random.NewGuid().ToString();
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                    InstrumentClient(file.GetLeaseClient(leaseId)).ChangeAsync(proposedId: newLeaseId),
+                    InstrumentClient(file.GetDataLakeLeaseClient(leaseId)).ChangeAsync(proposedId: newLeaseId),
                     e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
             }
         }
@@ -2067,15 +2067,15 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task BreakLeaseAsync()
         {
-            using (GetNewFileSystem(out FileSystemClient fileSystem))
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
             {
                 // Arrange
-                FileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
+                DataLakeFileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
 
                 var leaseId = Recording.Random.NewGuid().ToString();
                 var duration = TimeSpan.FromSeconds(15);
 
-                DataLakeLeaseClient lease = InstrumentClient(file.GetLeaseClient(leaseId));
+                DataLakeLeaseClient lease = InstrumentClient(file.GetDataLakeLeaseClient(leaseId));
                 await lease.AcquireAsync(duration);
 
                 // Act
@@ -2087,14 +2087,14 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task BreakLeaseAsync_AccessConditions()
+        public async Task BreakLeaseAsync_Conditions()
         {
-            foreach (AccessConditionParameters parameters in NoLease_AccessConditions_Data)
+            foreach (AccessConditionParameters parameters in NoLease_Conditions_Data)
             {
-                using (GetNewFileSystem(out FileSystemClient fileSystem))
+                using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
                 {
                     // Arrange
-                    FileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
+                    DataLakeFileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
 
                     var leaseId = Recording.Random.NewGuid().ToString();
                     var duration = TimeSpan.FromSeconds(15);
@@ -2103,7 +2103,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     RequestConditions conditions = BuildRequestConditions(
                         parameters: parameters);
 
-                    DataLakeLeaseClient lease = InstrumentClient(file.GetLeaseClient(leaseId));
+                    DataLakeLeaseClient lease = InstrumentClient(file.GetDataLakeLeaseClient(leaseId));
                     await lease.AcquireAsync(duration: duration);
 
                     // Act
@@ -2116,14 +2116,14 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task BreakLeaseAsync_AccessConditionsFail()
+        public async Task BreakLeaseAsync_ConditionsFail()
         {
-            foreach (AccessConditionParameters parameters in NoLease_AccessConditionsFail_Data)
+            foreach (AccessConditionParameters parameters in NoLease_ConditionsFail_Data)
             {
-                using (GetNewFileSystem(out FileSystemClient fileSystem))
+                using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
                 {
                     // Arrange
-                    FileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
+                    DataLakeFileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
 
                     var leaseId = Recording.Random.NewGuid().ToString();
                     var duration = TimeSpan.FromSeconds(15);
@@ -2131,7 +2131,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     parameters.NoneMatch = await SetupPathMatchCondition(file, parameters.NoneMatch);
                     RequestConditions conditions = BuildRequestConditions(parameters);
 
-                    DataLakeLeaseClient lease = InstrumentClient(file.GetLeaseClient(leaseId));
+                    DataLakeLeaseClient lease = InstrumentClient(file.GetDataLakeLeaseClient(leaseId));
                     await lease.AcquireAsync(duration: duration);
 
                     // Act
@@ -2145,14 +2145,14 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task BreakLeaseAsync_Error()
         {
-            using (GetNewFileSystem(out FileSystemClient fileSystem))
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
             {
                 // Arrange
-                FileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
+                DataLakeFileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                    InstrumentClient(file.GetLeaseClient()).BreakAsync(),
+                    InstrumentClient(file.GetDataLakeLeaseClient()).BreakAsync(),
                     e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
             }
         }

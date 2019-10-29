@@ -326,20 +326,6 @@ namespace Azure.Storage.Files.DataLake.Models
             };
         #endregion PathProperties
 
-        #region PathSegment
-        /// <summary>
-        /// Creates a new PathSegment instance for mocking.
-        /// </summary>
-        public static PathSegment PathSegment(
-            string continuation,
-            IEnumerable<PathItem> paths)
-            => new PathSegment()
-            {
-                Continuation = continuation,
-                Paths = paths
-            };
-        #endregion PathSegment
-
         #region UserDelegationKey
         /// <summary>
         /// Creates a new UserDelegationKey instance for mocking.

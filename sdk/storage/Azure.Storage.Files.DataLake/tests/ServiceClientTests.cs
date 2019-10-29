@@ -68,7 +68,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             DataLakeServiceClient service = GetServiceClient_SharedKey();
             // Ensure at least one container
-            using (GetNewFileSystem(out FileSystemClient fileSystem, service: service))
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem, service: service))
             {
                 var marker = default(string);
                 var fileSystems = new List<FileSystemItem>();
@@ -91,7 +91,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeServiceClient service = GetServiceClient_SharedKey();
             // Ensure at least one container
             using (GetNewFileSystem(out _, service: service))
-            using (GetNewFileSystem(out FileSystemClient fileSystem, service: service))
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem, service: service))
             {
                 // Act
                 Page<FileSystemItem> page = await
@@ -111,7 +111,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             var prefix = "aaa";
             var fileSystemName = prefix + GetNewFileSystemName();
             // Ensure at least one container
-            using (GetNewFileSystem(out FileSystemClient fileSystem, service: service, fileSystemName: fileSystemName))
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem, service: service, fileSystemName: fileSystemName))
             {
                 // Act
                 AsyncPageable<FileSystemItem> fileSystems = service.GetFileSystemsAsync(prefix: prefix);
@@ -128,7 +128,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             DataLakeServiceClient service = GetServiceClient_SharedKey();
             // Ensure at least one container
-            using (GetNewFileSystem(out FileSystemClient fileSystem, service: service))
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem, service: service))
             {
                 // Arrange
                 IDictionary<string, string> metadata = BuildMetadata();
@@ -166,7 +166,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeServiceClient service = GetServiceClient_SharedKey();
             try
             {
-                FileSystemClient fileSystem = InstrumentClient((await service.CreateFileSystemAsync(name)).Value);
+                DataLakeFileSystemClient fileSystem = InstrumentClient((await service.CreateFileSystemAsync(name)).Value);
                 Response<FileSystemItem> properties = await fileSystem.GetPropertiesAsync();
                 Assert.IsNotNull(properties.Value);
             }
@@ -181,7 +181,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             var name = GetNewFileSystemName();
             DataLakeServiceClient service = GetServiceClient_SharedKey();
-            FileSystemClient fileSystem = InstrumentClient((await service.CreateFileSystemAsync(name)).Value);
+            DataLakeFileSystemClient fileSystem = InstrumentClient((await service.CreateFileSystemAsync(name)).Value);
 
             await service.DeleteFileSystemAsync(name);
             Assert.ThrowsAsync<RequestFailedException>(

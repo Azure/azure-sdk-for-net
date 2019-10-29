@@ -10,20 +10,25 @@ namespace Azure.Data.AppConfiguration.Samples
     public partial class ConfigurationSamples
     {
         [Test]
+        /*
+         * This sample illustrates how to use Moq to create a unit test that
+         * mocks the reponse from a ConfigurationClient method.  For more
+         * examples of mocking, see the Azure.Data.AppConfiguration.Tests project.
+         */
         public void MockClient()
         {
-            // Create a mock response
+            // Create a mock response.
             var mockResponse = new Mock<Response>();
 
-            // Create a client mock
-            var mock = new Mock<ConfigurationClient>();
+            // Create a mock client.
+            var mockClient = new Mock<ConfigurationClient>();
 
-            // Setup client method
-            mock.Setup(c => c.GetConfigurationSetting("Key", It.IsAny<string>(), It.IsAny<CancellationToken>()))
+            // Set up a client method that will be called when GetConfigurationSetting is called on the mock client.
+            mockClient.Setup(c => c.GetConfigurationSetting("Key", It.IsAny<string>(), It.IsAny<CancellationToken>()))
                 .Returns(Response.FromValue(ConfigurationModelFactory.ConfigurationSetting("Key", "Value"), mockResponse.Object));
 
-            // Use the client mock
-            ConfigurationClient client = mock.Object;
+            // Use the mock client to validate client functionality without making a network call.
+            ConfigurationClient client = mockClient.Object;
             ConfigurationSetting setting = client.GetConfigurationSetting("Key");
             Assert.AreEqual("Value", setting.Value);
         }

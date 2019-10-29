@@ -311,20 +311,18 @@ namespace Azure.Storage.Blobs.Test
             var garbageLeaseId = GetGarbageLeaseId();
             foreach (AccessConditionParameters parameters in AccessConditionsFail_Data)
             {
-                using (GetNewContainer(out BlobContainerClient container))
-                {
-                    // Arrange
-                    parameters.LeaseId = await SetupContainerLeaseCondition(container, parameters.LeaseId, garbageLeaseId);
-                    BlobRequestConditions accessConditions = BuildContainerAccessConditions(
-                        parameters: parameters,
-                        ifUnmodifiedSince: true,
-                        lease: true);
+                await using DisposingContainer test = await GetTestContainerAsync();
+                // Arrange
+                parameters.LeaseId = await SetupContainerLeaseCondition(test.Container, parameters.LeaseId, garbageLeaseId);
+                BlobRequestConditions accessConditions = BuildContainerAccessConditions(
+                    parameters: parameters,
+                    ifUnmodifiedSince: true,
+                    lease: true);
 
-                    // Act
-                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                        container.DeleteAsync(conditions: accessConditions),
-                        e => { });
-                }
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    test.Container.DeleteAsync(conditions: accessConditions),
+                    e => { });
             }
         }
 
@@ -360,14 +358,13 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task GetPropertiesAsync()
         {
-            using (GetNewContainer(out BlobContainerClient container, publicAccessType: PublicAccessType.BlobContainer))
-            {
-                // Act
-                Response<BlobContainerItem> response = await container.GetPropertiesAsync();
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Assert
-                Assert.AreEqual(PublicAccessType.BlobContainer, response.Value.Properties.PublicAccess);
-            }
+            // Act
+            Response<BlobContainerItem> response = await test.Container.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(PublicAccessType.BlobContainer, response.Value.Properties.PublicAccess);
         }
 
         [Test]
@@ -386,18 +383,17 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task SetMetadataAsync()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                IDictionary<string, string> metadata = BuildMetadata();
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Act
-                await container.SetMetadataAsync(metadata);
+            // Arrange
+            IDictionary<string, string> metadata = BuildMetadata();
 
-                // Assert
-                Response<BlobContainerItem> response = await container.GetPropertiesAsync();
-                AssertMetadataEquality(metadata, response.Value.Metadata);
-            }
+            // Act
+            await test.Container.SetMetadataAsync(metadata);
+
+            // Assert
+            Response<BlobContainerItem> response = await test.Container.GetPropertiesAsync();
+            AssertMetadataEquality(metadata, response.Value.Metadata);
         }
 
         [Test]
@@ -463,36 +459,34 @@ namespace Azure.Storage.Blobs.Test
             };
             foreach (AccessConditionParameters parameters in data)
             {
-                using (GetNewContainer(out BlobContainerClient container))
-                {
-                    // Arrange
-                    IDictionary<string, string> metadata = BuildMetadata();
-                    BlobRequestConditions accessConditions = BuildContainerAccessConditions(
-                        parameters: parameters,
-                        ifUnmodifiedSince: false,
-                        lease: true);
+                await using DisposingContainer test = await GetTestContainerAsync();
 
-                    // Act
-                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                        container.SetMetadataAsync(
-                            metadata: metadata,
-                            conditions: accessConditions),
-                        e => { });
-                }
+                // Arrange
+                IDictionary<string, string> metadata = BuildMetadata();
+                BlobRequestConditions accessConditions = BuildContainerAccessConditions(
+                    parameters: parameters,
+                    ifUnmodifiedSince: false,
+                    lease: true);
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    test.Container.SetMetadataAsync(
+                        metadata: metadata,
+                        conditions: accessConditions),
+                    e => { });
             }
         }
 
         [Test]
         public async Task GetAccessPolicyAsync()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Act
-                Response<BlobContainerAccessPolicy> response = await container.GetAccessPolicyAsync();
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Assert
-                Assert.IsNotNull(response);
-            }
+            // Act
+            Response<BlobContainerAccessPolicy> response = await test.Container.GetAccessPolicyAsync();
+
+            // Assert
+            Assert.IsNotNull(response);
         }
 
         [Test]
@@ -523,19 +517,18 @@ namespace Azure.Storage.Blobs.Test
         public async Task GetAccessPolicyAsync_LeaseFail()
         {
             var garbageLeaseId = GetGarbageLeaseId();
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                var leaseAccessConditions = new BlobRequestConditions
-                {
-                    LeaseId = garbageLeaseId
-                };
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Act
-                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                    container.GetAccessPolicyAsync(conditions: leaseAccessConditions),
-                    e => Assert.AreEqual("LeaseNotPresentWithContainerOperation", e.ErrorCode.Split('\n')[0]));
-            }
+            // Arrange
+            var leaseAccessConditions = new BlobRequestConditions
+            {
+                LeaseId = garbageLeaseId
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                test.Container.GetAccessPolicyAsync(conditions: leaseAccessConditions),
+                e => Assert.AreEqual("LeaseNotPresentWithContainerOperation", e.ErrorCode.Split('\n')[0]));
         }
 
         [Test]
@@ -554,31 +547,30 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task SetAccessPolicyAsync()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                PublicAccessType publicAccessType = PublicAccessType.BlobContainer;
-                BlobSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Act
-                await container.SetAccessPolicyAsync(
-                    accessType: publicAccessType,
-                    permissions: signedIdentifiers
-                );
+            // Arrange
+            PublicAccessType publicAccessType = PublicAccessType.BlobContainer;
+            BlobSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
 
-                // Assert
-                Response<BlobContainerItem> propertiesResponse = await container.GetPropertiesAsync();
-                Assert.AreEqual(publicAccessType, propertiesResponse.Value.Properties.PublicAccess);
+            // Act
+            await test.Container.SetAccessPolicyAsync(
+                accessType: publicAccessType,
+                permissions: signedIdentifiers
+            );
 
-                Response<BlobContainerAccessPolicy> response = await container.GetAccessPolicyAsync();
-                Assert.AreEqual(1, response.Value.SignedIdentifiers.Count());
+            // Assert
+            Response<BlobContainerItem> propertiesResponse = await test.Container.GetPropertiesAsync();
+            Assert.AreEqual(publicAccessType, propertiesResponse.Value.Properties.PublicAccess);
 
-                BlobSignedIdentifier acl = response.Value.SignedIdentifiers.First();
-                Assert.AreEqual(signedIdentifiers[0].Id, acl.Id);
-                Assert.AreEqual(signedIdentifiers[0].AccessPolicy.StartsOn, acl.AccessPolicy.StartsOn);
-                Assert.AreEqual(signedIdentifiers[0].AccessPolicy.ExpiresOn, acl.AccessPolicy.ExpiresOn);
-                Assert.AreEqual(signedIdentifiers[0].AccessPolicy.Permissions, acl.AccessPolicy.Permissions);
-            }
+            Response<BlobContainerAccessPolicy> response = await test.Container.GetAccessPolicyAsync();
+            Assert.AreEqual(1, response.Value.SignedIdentifiers.Count());
+
+            BlobSignedIdentifier acl = response.Value.SignedIdentifiers.First();
+            Assert.AreEqual(signedIdentifiers[0].Id, acl.Id);
+            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.StartsOn, acl.AccessPolicy.StartsOn);
+            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.ExpiresOn, acl.AccessPolicy.ExpiresOn);
+            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.Permissions, acl.AccessPolicy.Permissions);
         }
 
         [Test]
@@ -633,24 +625,23 @@ namespace Azure.Storage.Blobs.Test
         {
             foreach (AccessConditionParameters parameters in AccessConditionsFail_Data)
             {
-                using (GetNewContainer(out BlobContainerClient container))
-                {
-                    // Arrange
-                    PublicAccessType publicAccessType = PublicAccessType.BlobContainer;
-                    BlobSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
-                    BlobRequestConditions accessConditions = BuildContainerAccessConditions(
-                        parameters: parameters,
-                        ifUnmodifiedSince: true,
-                        lease: true);
+                await using DisposingContainer test = await GetTestContainerAsync();
 
-                    // Act
-                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                        container.SetAccessPolicyAsync(
-                            accessType: publicAccessType,
-                            permissions: signedIdentifiers,
-                            conditions: accessConditions),
-                        e => { });
-                }
+                // Arrange
+                PublicAccessType publicAccessType = PublicAccessType.BlobContainer;
+                BlobSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
+                BlobRequestConditions accessConditions = BuildContainerAccessConditions(
+                    parameters: parameters,
+                    ifUnmodifiedSince: true,
+                    lease: true);
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    test.Container.SetAccessPolicyAsync(
+                        accessType: publicAccessType,
+                        permissions: signedIdentifiers,
+                        conditions: accessConditions),
+                    e => { });
             }
         }
 
@@ -739,24 +730,23 @@ namespace Azure.Storage.Blobs.Test
         {
             foreach (AccessConditionParameters parameters in NoLease_AccessConditionsFail_Data)
             {
-                using (GetNewContainer(out BlobContainerClient container))
-                {
-                    // Arrange
-                    BlobRequestConditions accessConditions = BuildContainerAccessConditions(
-                        parameters: parameters,
-                        ifUnmodifiedSince: true,
-                        lease: false);
+                await using DisposingContainer test = await GetTestContainerAsync();
 
-                    var id = Recording.Random.NewGuid().ToString();
-                    var duration = TimeSpan.FromSeconds(15);
+                // Arrange
+                BlobRequestConditions accessConditions = BuildContainerAccessConditions(
+                    parameters: parameters,
+                    ifUnmodifiedSince: true,
+                    lease: false);
 
-                    // Act
-                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                        InstrumentClient(container.GetBlobLeaseClient(id)).AcquireAsync(
-                            duration: duration,
-                            conditions: accessConditions),
-                        e => { });
-                }
+                var id = Recording.Random.NewGuid().ToString();
+                var duration = TimeSpan.FromSeconds(15);
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    InstrumentClient(test.Container.GetBlobLeaseClient(id)).AcquireAsync(
+                        duration: duration,
+                        conditions: accessConditions),
+                    e => { });
             }
         }
 
@@ -861,22 +851,21 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task ReleaseLeaseAsync()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                var id = Recording.Random.NewGuid().ToString();
-                var duration = TimeSpan.FromSeconds(15);
-                Response<BlobLease> leaseResponse = await InstrumentClient(container.GetBlobLeaseClient(id)).AcquireAsync(duration);
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Act
-                Response<ReleasedObjectInfo> releaseResponse = await InstrumentClient(container.GetBlobLeaseClient(leaseResponse.Value.LeaseId)).ReleaseAsync();
+            // Arrange
+            var id = Recording.Random.NewGuid().ToString();
+            var duration = TimeSpan.FromSeconds(15);
+            Response<BlobLease> leaseResponse = await InstrumentClient(test.Container.GetBlobLeaseClient(id)).AcquireAsync(duration);
 
-                // Assert
-                Response<BlobContainerItem> response = await container.GetPropertiesAsync();
+            // Act
+            Response<ReleasedObjectInfo> releaseResponse = await InstrumentClient(test.Container.GetBlobLeaseClient(leaseResponse.Value.LeaseId)).ReleaseAsync();
 
-                Assert.AreEqual(LeaseStatus.Unlocked, response.Value.Properties.LeaseStatus);
-                Assert.AreEqual(LeaseState.Available, response.Value.Properties.LeaseState);
-            }
+            // Assert
+            Response<BlobContainerItem> response = await test.Container.GetPropertiesAsync();
+
+            Assert.AreEqual(LeaseStatus.Unlocked, response.Value.Properties.LeaseStatus);
+            Assert.AreEqual(LeaseState.Available, response.Value.Properties.LeaseState);
         }
 
         [Test]
@@ -898,26 +887,25 @@ namespace Azure.Storage.Blobs.Test
         {
             foreach (AccessConditionParameters parameters in NoLease_AccessConditions_Data)
             {
+                await using DisposingContainer test = await GetTestContainerAsync();
+
                 // Arrange
-                using (GetNewContainer(out BlobContainerClient container))
-                {
-                    BlobRequestConditions accessConditions = BuildContainerAccessConditions(
-                        parameters: parameters,
-                        ifUnmodifiedSince: true,
-                        lease: false);
+                BlobRequestConditions accessConditions = BuildContainerAccessConditions(
+                    parameters: parameters,
+                    ifUnmodifiedSince: true,
+                    lease: false);
 
-                    var id = Recording.Random.NewGuid().ToString();
-                    var duration = TimeSpan.FromSeconds(15);
+                var id = Recording.Random.NewGuid().ToString();
+                var duration = TimeSpan.FromSeconds(15);
 
-                    BlobLeaseClient lease = InstrumentClient(container.GetBlobLeaseClient(id));
-                    Response<BlobLease> aquireLeaseResponse = await lease.AcquireAsync(duration: duration);
+                BlobLeaseClient lease = InstrumentClient(test.Container.GetBlobLeaseClient(id));
+                Response<BlobLease> aquireLeaseResponse = await lease.AcquireAsync(duration: duration);
 
-                    // Act
-                    Response<ReleasedObjectInfo> response = await lease.ReleaseAsync(conditions: accessConditions);
+                // Act
+                Response<ReleasedObjectInfo> response = await lease.ReleaseAsync(conditions: accessConditions);
 
-                    // Assert
-                    Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
-                }
+                // Assert
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
         }
 
@@ -954,22 +942,21 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task BreakLeaseAsync()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                var id = Recording.Random.NewGuid().ToString();
-                var duration = TimeSpan.FromSeconds(15);
-                await InstrumentClient(container.GetBlobLeaseClient(id)).AcquireAsync(duration);
-                TimeSpan breakPeriod = TimeSpan.FromSeconds(0);
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Act
-                Response<BlobLease> breakResponse = await InstrumentClient(container.GetBlobLeaseClient()).BreakAsync(breakPeriod);
+            // Arrange
+            var id = Recording.Random.NewGuid().ToString();
+            var duration = TimeSpan.FromSeconds(15);
+            await InstrumentClient(test.Container.GetBlobLeaseClient(id)).AcquireAsync(duration);
+            TimeSpan breakPeriod = TimeSpan.FromSeconds(0);
 
-                // Assert
-                Response<BlobContainerItem> response = await container.GetPropertiesAsync();
-                Assert.AreEqual(LeaseStatus.Unlocked, response.Value.Properties.LeaseStatus);
-                Assert.AreEqual(LeaseState.Broken, response.Value.Properties.LeaseState);
-            }
+            // Act
+            Response<BlobLease> breakResponse = await InstrumentClient(test.Container.GetBlobLeaseClient()).BreakAsync(breakPeriod);
+
+            // Assert
+            Response<BlobContainerItem> response = await test.Container.GetPropertiesAsync();
+            Assert.AreEqual(LeaseStatus.Unlocked, response.Value.Properties.LeaseStatus);
+            Assert.AreEqual(LeaseState.Broken, response.Value.Properties.LeaseState);
         }
 
         [Test]
@@ -1051,23 +1038,22 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task ChangeLeaseAsync()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                var id = Recording.Random.NewGuid().ToString();
-                var duration = TimeSpan.FromSeconds(15);
-                Response<BlobLease> leaseResponse = await InstrumentClient(container.GetBlobLeaseClient(id)).AcquireAsync(duration);
-                var newId = Recording.Random.NewGuid().ToString();
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Act
-                Response<BlobLease> changeResponse = await InstrumentClient(container.GetBlobLeaseClient(id)).ChangeAsync(newId);
+            // Arrange
+            var id = Recording.Random.NewGuid().ToString();
+            var duration = TimeSpan.FromSeconds(15);
+            Response<BlobLease> leaseResponse = await InstrumentClient(test.Container.GetBlobLeaseClient(id)).AcquireAsync(duration);
+            var newId = Recording.Random.NewGuid().ToString();
 
-                // Assert
-                Assert.AreEqual(newId, changeResponse.Value.LeaseId);
+            // Act
+            Response<BlobLease> changeResponse = await InstrumentClient(test.Container.GetBlobLeaseClient(id)).ChangeAsync(newId);
 
-                // Cleanup
-                await InstrumentClient(container.GetBlobLeaseClient(changeResponse.Value.LeaseId)).ReleaseAsync();
-            }
+            // Assert
+            Assert.AreEqual(newId, changeResponse.Value.LeaseId);
+
+            // Cleanup
+            await InstrumentClient(test.Container.GetBlobLeaseClient(changeResponse.Value.LeaseId)).ReleaseAsync();
         }
 
         [Test]
@@ -1153,151 +1139,143 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task ListBlobsFlatSegmentAsync()
         {
-            using (GetNewContainer(out BlobContainerClient container))
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            await SetUpContainerForListing(test.Container);
+
+            // Act
+            var blobs = new List<BlobItem>();
+            await foreach (Page<BlobItem> page in test.Container.GetBlobsAsync().AsPages())
             {
-                // Arrange
-                await SetUpContainerForListing(container);
-
-                // Act
-                var blobs = new List<BlobItem>();
-                await foreach (Page<BlobItem> page in container.GetBlobsAsync().AsPages())
-                {
-                    blobs.AddRange(page.Values);
-                }
-
-                // Assert
-                Assert.AreEqual(BlobNames.Length, blobs.Count);
-
-                var foundBlobNames = blobs.Select(blob => blob.Name).ToArray();
-
-                Assert.IsTrue(BlobNames.All(blobName => foundBlobNames.Contains(blobName)));
+                blobs.AddRange(page.Values);
             }
+
+            // Assert
+            Assert.AreEqual(BlobNames.Length, blobs.Count);
+
+            var foundBlobNames = blobs.Select(blob => blob.Name).ToArray();
+
+            Assert.IsTrue(BlobNames.All(blobName => foundBlobNames.Contains(blobName)));
         }
 
         [Test]
         [AsyncOnly]
         public async Task ListBlobsFlatSegmentAsync_MaxResults()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                await SetUpContainerForListing(container);
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Act
-                Page<BlobItem> page = await container.GetBlobsAsync().AsPages(pageSizeHint: 2).FirstAsync();
+            // Arrange
+            await SetUpContainerForListing(test.Container);
 
-                // Assert
-                Assert.AreEqual(2, page.Values.Count);
-            }
+            // Act
+            Page<BlobItem> page = await test.Container.GetBlobsAsync().AsPages(pageSizeHint: 2).FirstAsync();
+
+            // Assert
+            Assert.AreEqual(2, page.Values.Count);
         }
 
         [Test]
         public async Task ListBlobsFlatSegmentAsync_Metadata()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(GetNewBlobName()));
-                IDictionary<string, string> metadata = BuildMetadata();
-                await blob.CreateAsync(metadata: metadata);
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Act
-                IList<BlobItem> blobs = await container.GetBlobsAsync(traits: BlobTraits.Metadata).ToListAsync();
+            // Arrange
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            IDictionary<string, string> metadata = BuildMetadata();
+            await blob.CreateAsync(metadata: metadata);
 
-                // Assert
-                AssertMetadataEquality(metadata, blobs.First().Metadata);
-            }
+            // Act
+            IList<BlobItem> blobs = await test.Container.GetBlobsAsync(traits: BlobTraits.Metadata).ToListAsync();
+
+            // Assert
+            AssertMetadataEquality(metadata, blobs.First().Metadata);
         }
 
         [Test]
         [NonParallelizable]
         public async Task ListBlobsFlatSegmentAsync_Deleted()
         {
-            using (GetNewContainer(out BlobContainerClient container))
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            await EnableSoftDelete();
+            var blobName = GetNewBlobName();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            await blob.CreateAsync();
+            await blob.DeleteAsync();
+
+            // Act
+            IList<BlobItem> blobs = await test.Container.GetBlobsAsync(states: BlobStates.Deleted).ToListAsync();
+
+            // Assert
+            if (blobs.Count == 0)
             {
-                // Arrange
-                await EnableSoftDelete();
-                var blobName = GetNewBlobName();
-                AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(blobName));
-                await blob.CreateAsync();
-                await blob.DeleteAsync();
-
-                // Act
-                IList<BlobItem> blobs = await container.GetBlobsAsync(states: BlobStates.Deleted).ToListAsync();
-
-                // Assert
-                if (blobs.Count == 0)
-                {
-                    Assert.Inconclusive("Delete may have happened before soft delete was fully enabled!");
-                }
-                Assert.AreEqual(1, blobs.Count);
-                Assert.AreEqual(blobName, blobs.First().Name);
-
-                // Cleanup
-                await DisableSoftDelete();
+                Assert.Inconclusive("Delete may have happened before soft delete was fully enabled!");
             }
+            Assert.AreEqual(1, blobs.Count);
+            Assert.AreEqual(blobName, blobs.First().Name);
+
+            // Cleanup
+            await DisableSoftDelete();
         }
 
         [Test]
         public async Task ListBlobsFlatSegmentAsync_Uncommited()
         {
-            using (GetNewContainer(out BlobContainerClient container))
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var blobName = GetNewBlobName();
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(blobName));
+            var data = GetRandomBuffer(Constants.KB);
+            var blockId = ToBase64(GetNewBlockName());
+
+            using (var stream = new MemoryStream(data))
             {
-                // Arrange
-                var blobName = GetNewBlobName();
-                BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(blobName));
-                var data = GetRandomBuffer(Constants.KB);
-                var blockId = ToBase64(GetNewBlockName());
-
-                using (var stream = new MemoryStream(data))
-                {
-                    await blob.StageBlockAsync(
-                        base64BlockId: blockId,
-                        content: stream);
-                }
-
-                // Act
-                IList<BlobItem> blobs = await container.GetBlobsAsync(states: BlobStates.Uncommitted).ToListAsync();
-
-                // Assert
-                Assert.AreEqual(1, blobs.Count);
-                Assert.AreEqual(blobName, blobs.First().Name);
+                await blob.StageBlockAsync(
+                    base64BlockId: blockId,
+                    content: stream);
             }
+
+            // Act
+            IList<BlobItem> blobs = await test.Container.GetBlobsAsync(states: BlobStates.Uncommitted).ToListAsync();
+
+            // Assert
+            Assert.AreEqual(1, blobs.Count);
+            Assert.AreEqual(blobName, blobs.First().Name);
         }
 
         [Test]
         public async Task ListBlobsFlatSegmentAsync_Snapshot()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(GetNewBlobName()));
-                await blob.CreateAsync();
-                Response<BlobSnapshotInfo> snapshotResponse = await blob.CreateSnapshotAsync();
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Act
-                IList<BlobItem> blobs = await container.GetBlobsAsync(states: BlobStates.Snapshots).ToListAsync();
+            // Arrange
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            await blob.CreateAsync();
+            Response<BlobSnapshotInfo> snapshotResponse = await blob.CreateSnapshotAsync();
 
-                // Assert
-                Assert.AreEqual(2, blobs.Count);
-                Assert.AreEqual(snapshotResponse.Value.Snapshot.ToString(), blobs.First().Snapshot);
-            }
+            // Act
+            IList<BlobItem> blobs = await test.Container.GetBlobsAsync(states: BlobStates.Snapshots).ToListAsync();
+
+            // Assert
+            Assert.AreEqual(2, blobs.Count);
+            Assert.AreEqual(snapshotResponse.Value.Snapshot.ToString(), blobs.First().Snapshot);
         }
 
         [Test]
         public async Task ListBlobsFlatSegmentAsync_Prefix()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                await SetUpContainerForListing(container);
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Act
-                IList<BlobItem> blobs = await container.GetBlobsAsync(prefix: "foo").ToListAsync();
+            // Arrange
+            await SetUpContainerForListing(test.Container);
 
-                // Assert
-                Assert.AreEqual(3, blobs.Count);
-            }
+            // Act
+            IList<BlobItem> blobs = await test.Container.GetBlobsAsync(prefix: "foo").ToListAsync();
+
+            // Assert
+            Assert.AreEqual(3, blobs.Count);
         }
 
         [Test]
@@ -1323,187 +1301,178 @@ namespace Azure.Storage.Blobs.Test
 
             async Task VerifyBlobNameWhitespaceRoundtrips(string blobName)
             {
-                using (GetNewContainer(out BlobContainerClient container))
-                {
-                    BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(blobName));
-                    await blob.UploadAsync(new MemoryStream(Encoding.UTF8.GetBytes("data")));
-                    BlobItem blobItem = await container.GetBlobsAsync().FirstAsync();
-                    Assert.AreEqual(blobName, blobItem.Name);
-                }
+                await using DisposingContainer test = await GetTestContainerAsync();
+                BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(blobName));
+                await blob.UploadAsync(new MemoryStream(Encoding.UTF8.GetBytes("data")));
+                BlobItem blobItem = await test.Container.GetBlobsAsync().FirstAsync();
+                Assert.AreEqual(blobName, blobItem.Name);
             }
         }
 
         [Test]
         public async Task ListBlobsHierarchySegmentAsync()
         {
-            using (GetNewContainer(out BlobContainerClient container))
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            await SetUpContainerForListing(test.Container);
+
+            var blobs = new List<BlobItem>();
+            var prefixes = new List<string>();
+            var delimiter = "/";
+
+            await foreach (Page<BlobHierarchyItem> page in test.Container.GetBlobsByHierarchyAsync(delimiter: delimiter).AsPages())
             {
-                // Arrange
-                await SetUpContainerForListing(container);
-
-                var blobs = new List<BlobItem>();
-                var prefixes = new List<string>();
-                var delimiter = "/";
-
-                await foreach (Page<BlobHierarchyItem> page in container.GetBlobsByHierarchyAsync(delimiter: delimiter).AsPages())
-                {
-                    blobs.AddRange(page.Values.Where(item => item.IsBlob).Select(item => item.Blob));
-                    prefixes.AddRange(page.Values.Where(item => item.IsPrefix).Select(item => item.Prefix));
-                }
-
-                Assert.AreEqual(3, blobs.Count);
-                Assert.AreEqual(2, prefixes.Count);
-
-                var foundBlobNames = blobs.Select(blob => blob.Name).ToArray();
-                var foundBlobPrefixes = prefixes.ToArray();
-                IEnumerable<string> expectedPrefixes =
-                    BlobNames
-                    .Where(blobName => blobName.Contains(delimiter))
-                    .Select(blobName => blobName.Split(new[] { delimiter[0] })[0] + delimiter)
-                    .Distinct()
-                    ;
-
-                Assert.IsTrue(
-                    BlobNames
-                    .Where(blobName => !blobName.Contains(delimiter))
-                    .All(blobName => foundBlobNames.Contains(blobName))
-                    );
-
-                Assert.IsTrue(
-                    expectedPrefixes
-                    .All(prefix => foundBlobPrefixes.Contains(prefix))
-                    );
+                blobs.AddRange(page.Values.Where(item => item.IsBlob).Select(item => item.Blob));
+                prefixes.AddRange(page.Values.Where(item => item.IsPrefix).Select(item => item.Prefix));
             }
+
+            Assert.AreEqual(3, blobs.Count);
+            Assert.AreEqual(2, prefixes.Count);
+
+            var foundBlobNames = blobs.Select(blob => blob.Name).ToArray();
+            var foundBlobPrefixes = prefixes.ToArray();
+            IEnumerable<string> expectedPrefixes =
+                BlobNames
+                .Where(blobName => blobName.Contains(delimiter))
+                .Select(blobName => blobName.Split(new[] { delimiter[0] })[0] + delimiter)
+                .Distinct()
+                ;
+
+            Assert.IsTrue(
+                BlobNames
+                .Where(blobName => !blobName.Contains(delimiter))
+                .All(blobName => foundBlobNames.Contains(blobName))
+                );
+
+            Assert.IsTrue(
+                expectedPrefixes
+                .All(prefix => foundBlobPrefixes.Contains(prefix))
+                );
         }
 
         [Test]
         [AsyncOnly]
         public async Task ListBlobsHierarchySegmentAsync_MaxResults()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                await SetUpContainerForListing(container);
-                var delimiter = "/";
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Act
-                Page<BlobHierarchyItem> page = await container.GetBlobsByHierarchyAsync(delimiter: delimiter)
-                    .AsPages(pageSizeHint: 2)
-                    .FirstAsync();
+            // Arrange
+            await SetUpContainerForListing(test.Container);
+            var delimiter = "/";
 
-                // Assert
-                Assert.AreEqual(2, page.Values.Count);
-            }
+            // Act
+            Page<BlobHierarchyItem> page = await test.Container.GetBlobsByHierarchyAsync(delimiter: delimiter)
+                .AsPages(pageSizeHint: 2)
+                .FirstAsync();
+
+            // Assert
+            Assert.AreEqual(2, page.Values.Count);
         }
 
         [Test]
         public async Task ListBlobsHierarchySegmentAsync_Metadata()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(GetNewBlobName()));
-                IDictionary<string, string> metadata = BuildMetadata();
-                await blob.CreateAsync(metadata: metadata);
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Act
-                BlobHierarchyItem item = await container.GetBlobsByHierarchyAsync(traits: BlobTraits.Metadata).FirstAsync();
+            // Arrange
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            IDictionary<string, string> metadata = BuildMetadata();
+            await blob.CreateAsync(metadata: metadata);
 
-                // Assert
-                AssertMetadataEquality(metadata, item.Blob.Metadata);
-            }
+            // Act
+            BlobHierarchyItem item = await test.Container.GetBlobsByHierarchyAsync(traits: BlobTraits.Metadata).FirstAsync();
+
+            // Assert
+            AssertMetadataEquality(metadata, item.Blob.Metadata);
         }
 
         [Test]
         [NonParallelizable]
         public async Task ListBlobsHierarchySegmentAsync_Deleted()
         {
-            using (GetNewContainer(out BlobContainerClient container))
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            await EnableSoftDelete();
+            var blobName = GetNewBlobName();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            await blob.CreateAsync();
+            await blob.DeleteAsync();
+
+            // Act
+            IList<BlobHierarchyItem> blobs = await test.Container.GetBlobsByHierarchyAsync(states: BlobStates.Deleted).ToListAsync();
+
+            // Assert
+            if (blobs.Count == 0)
             {
-                // Arrange
-                await EnableSoftDelete();
-                var blobName = GetNewBlobName();
-                AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(blobName));
-                await blob.CreateAsync();
-                await blob.DeleteAsync();
-
-                // Act
-                IList<BlobHierarchyItem> blobs = await container.GetBlobsByHierarchyAsync(states: BlobStates.Deleted).ToListAsync();
-
-                // Assert
-                if (blobs.Count == 0)
-                {
-                    Assert.Inconclusive("Delete may have happened before soft delete was fully enabled!");
-                }
-                Assert.AreEqual(1, blobs.Count);
-                Assert.AreEqual(blobName, blobs.First().Blob.Name);
-
-                // Cleanup
-                await DisableSoftDelete();
+                Assert.Inconclusive("Delete may have happened before soft delete was fully enabled!");
             }
+            Assert.AreEqual(1, blobs.Count);
+            Assert.AreEqual(blobName, blobs.First().Blob.Name);
+
+            // Cleanup
+            await DisableSoftDelete();
         }
 
         [Test]
         public async Task ListBlobsHierarchySegmentAsync_Uncommited()
         {
-            using (GetNewContainer(out BlobContainerClient container))
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var blobName = GetNewBlobName();
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(blobName));
+            var data = GetRandomBuffer(Constants.KB);
+            var blockId = ToBase64(GetNewBlockName());
+
+            using (var stream = new MemoryStream(data))
             {
-                // Arrange
-                var blobName = GetNewBlobName();
-                BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(blobName));
-                var data = GetRandomBuffer(Constants.KB);
-                var blockId = ToBase64(GetNewBlockName());
-
-                using (var stream = new MemoryStream(data))
-                {
-                    await blob.StageBlockAsync(
-                        base64BlockId: blockId,
-                        content: stream);
-                }
-
-                // Act
-                IList<BlobHierarchyItem> blobs = await container.GetBlobsByHierarchyAsync(states: BlobStates.Uncommitted).ToListAsync();
-
-                // Assert
-                Assert.AreEqual(1, blobs.Count);
-                Assert.AreEqual(blobName, blobs.First().Blob.Name);
+                await blob.StageBlockAsync(
+                    base64BlockId: blockId,
+                    content: stream);
             }
+
+            // Act
+            IList<BlobHierarchyItem> blobs = await test.Container.GetBlobsByHierarchyAsync(states: BlobStates.Uncommitted).ToListAsync();
+
+            // Assert
+            Assert.AreEqual(1, blobs.Count);
+            Assert.AreEqual(blobName, blobs.First().Blob.Name);
         }
 
         [Test]
         public async Task ListBlobsHierarchySegmentAsync_Snapshot()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(GetNewBlobName()));
-                await blob.CreateAsync();
-                Response<BlobSnapshotInfo> snapshotResponse = await blob.CreateSnapshotAsync();
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Act
-                IList<BlobHierarchyItem> blobs = await container.GetBlobsByHierarchyAsync(states: BlobStates.Snapshots).ToListAsync();
+            // Arrange
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            await blob.CreateAsync();
+            Response<BlobSnapshotInfo> snapshotResponse = await blob.CreateSnapshotAsync();
 
-                // Assert
-                Assert.AreEqual(2, blobs.Count);
-                Assert.AreEqual(snapshotResponse.Value.Snapshot.ToString(), blobs.First().Blob.Snapshot);
-            }
+            // Act
+            IList<BlobHierarchyItem> blobs = await test.Container.GetBlobsByHierarchyAsync(states: BlobStates.Snapshots).ToListAsync();
+
+            // Assert
+            Assert.AreEqual(2, blobs.Count);
+            Assert.AreEqual(snapshotResponse.Value.Snapshot.ToString(), blobs.First().Blob.Snapshot);
         }
 
         [Test]
         public async Task ListBlobsHierarchySegmentAsync_Prefix()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                await SetUpContainerForListing(container);
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Act
-                IList<BlobHierarchyItem> blobs = await container.GetBlobsByHierarchyAsync(prefix: "foo" ).ToListAsync();
+            // Arrange
+            await SetUpContainerForListing(test.Container);
+
+            // Act
+            IList<BlobHierarchyItem> blobs = await test.Container.GetBlobsByHierarchyAsync(prefix: "foo").ToListAsync();
 
 
-                // Assert
-                Assert.AreEqual(3, blobs.Count);
-            }
+            // Assert
+            Assert.AreEqual(3, blobs.Count);
         }
 
         [Test]
@@ -1523,79 +1492,75 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task UploadBlobAsync()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                var name = GetNewBlobName();
-                using var stream = new MemoryStream(GetRandomBuffer(100));
-                await container.UploadBlobAsync(name, stream);
-                Response<BlobProperties> properties = await InstrumentClient(container.GetBlobClient(name)).GetPropertiesAsync();
-                Assert.AreEqual(BlobType.Block, properties.Value.BlobType);
-            }
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            var name = GetNewBlobName();
+            using var stream = new MemoryStream(GetRandomBuffer(100));
+            await test.Container.UploadBlobAsync(name, stream);
+            Response<BlobProperties> properties = await InstrumentClient(test.Container.GetBlobClient(name)).GetPropertiesAsync();
+            Assert.AreEqual(BlobType.Block, properties.Value.BlobType);
         }
 
         [Test]
         public async Task DeleteBlobAsync()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                var name = GetNewBlobName();
-                BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(name));
-                using (var stream = new MemoryStream(GetRandomBuffer(100)))
-                {
-                    await blob.UploadAsync(stream);
-                }
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                await container.DeleteBlobAsync(name);
-                Assert.ThrowsAsync<RequestFailedException>(
-                    async () => await blob.GetPropertiesAsync());
+            var name = GetNewBlobName();
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(name));
+            using (var stream = new MemoryStream(GetRandomBuffer(100)))
+            {
+                await blob.UploadAsync(stream);
             }
+
+            await test.Container.DeleteBlobAsync(name);
+            Assert.ThrowsAsync<RequestFailedException>(
+                async () => await blob.GetPropertiesAsync());
         }
 
         [Test]
         public async Task DeleteBlobIfExistsAsync()
         {
-            using (GetNewContainer(out BlobContainerClient container))
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var name = GetNewBlobName();
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(name));
+            using (var stream = new MemoryStream(GetRandomBuffer(100)))
             {
-                // Arrange
-                var name = GetNewBlobName();
-                BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(name));
-                using (var stream = new MemoryStream(GetRandomBuffer(100)))
-                {
-                    await blob.UploadAsync(stream);
-                }
-
-                // Act
-                Response<bool> response= await container.DeleteBlobIfExistsAsync(name);
-
-                // Assert
-                Assert.IsTrue(response.Value);
-                Assert.ThrowsAsync<RequestFailedException>(
-                    async () => await blob.GetPropertiesAsync());
+                await blob.UploadAsync(stream);
             }
+
+            // Act
+            Response<bool> response = await test.Container.DeleteBlobIfExistsAsync(name);
+
+            // Assert
+            Assert.IsTrue(response.Value);
+            Assert.ThrowsAsync<RequestFailedException>(
+                async () => await blob.GetPropertiesAsync());
         }
 
         [Test]
         public async Task DeleteBlobIfExistsAsync_Exists()
         {
-            using (GetNewContainer(out BlobContainerClient container))
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var name = GetNewBlobName();
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(name));
+            using (var stream = new MemoryStream(GetRandomBuffer(100)))
             {
-                // Arrange
-                var name = GetNewBlobName();
-                BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(name));
-                using (var stream = new MemoryStream(GetRandomBuffer(100)))
-                {
-                    await blob.UploadAsync(stream);
-                }
-                await container.DeleteBlobAsync(name);
-
-                //Act
-                Response<bool> response = await container.DeleteBlobIfExistsAsync(name);
-
-                // Assert
-                Assert.IsFalse(response.Value);
-                Assert.ThrowsAsync<RequestFailedException>(
-                    async () => await blob.GetPropertiesAsync());
+                await blob.UploadAsync(stream);
             }
+            await test.Container.DeleteBlobAsync(name);
+
+            //Act
+            Response<bool> response = await test.Container.DeleteBlobIfExistsAsync(name);
+
+            // Assert
+            Assert.IsFalse(response.Value);
+            Assert.ThrowsAsync<RequestFailedException>(
+                async () => await blob.GetPropertiesAsync());
         }
 
         [Test]

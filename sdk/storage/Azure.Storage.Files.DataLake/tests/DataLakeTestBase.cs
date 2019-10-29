@@ -85,7 +85,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
 
         public IDisposable GetNewFileSystem(
-            out FileSystemClient fileSystem,
+            out DataLakeFileSystemClient fileSystem,
             DataLakeServiceClient service = default,
             string fileSystemName = default,
             IDictionary<string, string> metadata = default,
@@ -107,18 +107,18 @@ namespace Azure.Storage.Files.DataLake.Tests
                 publicAccessType);
         }
 
-        public IDisposable GetNewDirectory(out DirectoryClient directory, DataLakeServiceClient service = default, string fileSystemName = default, string directoryName = default)
+        public IDisposable GetNewDirectory(out DataLakeDirectoryClient directory, DataLakeServiceClient service = default, string fileSystemName = default, string directoryName = default)
         {
-            IDisposable disposingFileSystem = GetNewFileSystem(out FileSystemClient fileSystem, service, fileSystemName);
+            IDisposable disposingFileSystem = GetNewFileSystem(out DataLakeFileSystemClient fileSystem, service, fileSystemName);
             directory = InstrumentClient(fileSystem.GetDirectoryClient(directoryName ?? GetNewDirectoryName()));
             _ = directory.CreateAsync().Result;
             return disposingFileSystem;
         }
 
-        public IDisposable GetNewFile(out FileClient file, DataLakeServiceClient service = default, string fileSystemName = default, string directoryName = default, string fileName = default)
+        public IDisposable GetNewFile(out DataLakeFileClient file, DataLakeServiceClient service = default, string fileSystemName = default, string directoryName = default, string fileName = default)
         {
-            IDisposable disposingFileSystem = GetNewFileSystem(out FileSystemClient fileSystem, service, fileSystemName);
-            DirectoryClient directory = InstrumentClient(fileSystem.GetDirectoryClient(directoryName ?? GetNewDirectoryName()));
+            IDisposable disposingFileSystem = GetNewFileSystem(out DataLakeFileSystemClient fileSystem, service, fileSystemName);
+            DataLakeDirectoryClient directory = InstrumentClient(fileSystem.GetDirectoryClient(directoryName ?? GetNewDirectoryName()));
             _ = directory.CreateAsync().Result;
 
             file = InstrumentClient(directory.GetFileClient(fileName ?? GetNewFileName()));
@@ -303,7 +303,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         //TODO consider removing this.
-        public async Task<string> SetupPathMatchCondition(PathClient path, string match)
+        public async Task<string> SetupPathMatchCondition(DataLakePathClient path, string match)
         {
             if (match == ReceivedETag)
             {
@@ -317,32 +317,32 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         //TODO consider removing this.
-        public async Task<string> SetupPathLeaseCondition(PathClient path, string leaseId, string garbageLeaseId)
+        public async Task<string> SetupPathLeaseCondition(DataLakePathClient path, string leaseId, string garbageLeaseId)
         {
             Models.DataLakeLease lease = null;
             if (leaseId == ReceivedLeaseId || leaseId == garbageLeaseId)
             {
-                lease = await InstrumentClient(path.GetLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync(DataLakeLeaseClient.InfiniteLeaseDuration);
+                lease = await InstrumentClient(path.GetDataLakeLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync(DataLakeLeaseClient.InfiniteLeaseDuration);
             }
             return leaseId == ReceivedLeaseId ? lease.LeaseId : leaseId;
         }
 
         //TODO consider removing this.
-        public async Task<string> SetupFileSystemLeaseCondition(FileSystemClient fileSystem, string leaseId, string garbageLeaseId)
+        public async Task<string> SetupFileSystemLeaseCondition(DataLakeFileSystemClient fileSystem, string leaseId, string garbageLeaseId)
         {
             Models.DataLakeLease lease = null;
             if (leaseId == ReceivedLeaseId || leaseId == garbageLeaseId)
             {
-                lease = await InstrumentClient(fileSystem.GetLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync(DataLakeLeaseClient.InfiniteLeaseDuration);
+                lease = await InstrumentClient(fileSystem.GetDataLakeLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync(DataLakeLeaseClient.InfiniteLeaseDuration);
             }
             return leaseId == ReceivedLeaseId ? lease.LeaseId : leaseId;
         }
 
         private class DisposingFileSystem : IDisposable
         {
-            public FileSystemClient FileSystemClient { get; }
+            public DataLakeFileSystemClient FileSystemClient { get; }
 
-            public DisposingFileSystem(FileSystemClient fileSystem, IDictionary<string, string> metadata, Models.PublicAccessType publicAccessType = default)
+            public DisposingFileSystem(DataLakeFileSystemClient fileSystem, IDictionary<string, string> metadata, Models.PublicAccessType publicAccessType = default)
             {
                 fileSystem.CreateAsync(metadata: metadata, publicAccessType: publicAccessType).Wait();
 
