@@ -76,6 +76,7 @@ known_content_issues:
   - ['sdk/cognitiveservices/Personalizer/src/Readme.md','#5499']
   - ['sdk/batch/Microsoft.Azure.Batch/README.md','#5499']
   - ['sdk/batch/Microsoft.Azure.Batch.Conventions.Files/README.md','#5499']
+  - ['docs/README.md','#5499']
 
 # .net climbs upwards. placing these to prevent assigning readmes to the wrong project
 package_indexing_exclusion_list:
