@@ -48,10 +48,12 @@ namespace Microsoft.Azure.EventGrid.Models
         /// logical sequence of events for any particular blob name. Users can
         /// use standard string comparison to understand the relative sequence
         /// of two events on the same blob name.</param>
+        /// <param name="identity">The identity of the requester that triggered
+        /// this event.</param>
         /// <param name="storageDiagnostics">For service use only. Diagnostic
         /// data occasionally included by the Azure Storage service. This
         /// property should be ignored by event consumers.</param>
-        public StorageBlobDeletedEventData(string api = default(string), string clientRequestId = default(string), string requestId = default(string), string contentType = default(string), string blobType = default(string), string url = default(string), string sequencer = default(string), object storageDiagnostics = default(object))
+        public StorageBlobDeletedEventData(string api = default(string), string clientRequestId = default(string), string requestId = default(string), string contentType = default(string), string blobType = default(string), string url = default(string), string sequencer = default(string), string identity = default(string), object storageDiagnostics = default(object))
         {
             Api = api;
             ClientRequestId = clientRequestId;
@@ -60,6 +62,7 @@ namespace Microsoft.Azure.EventGrid.Models
             BlobType = blobType;
             Url = url;
             Sequencer = sequencer;
+            Identity = identity;
             StorageDiagnostics = storageDiagnostics;
             CustomInit();
         }
@@ -117,6 +120,13 @@ namespace Microsoft.Azure.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "sequencer")]
         public string Sequencer { get; set; }
+
+        /// <summary>
+        /// Gets or sets the identity of the requester that triggered this
+        /// event.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public string Identity { get; set; }
 
         /// <summary>
         /// Gets or sets for service use only. Diagnostic data occasionally

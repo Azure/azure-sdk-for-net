@@ -85,5 +85,9 @@ namespace Microsoft.Azure.EventGrid
         // Storage events
         public const string StorageBlobCreatedEvent = "Microsoft.Storage.BlobCreated";
         public const string StorageBlobDeletedEvent = "Microsoft.Storage.BlobDeleted";
+        public const string StorageBlobRenamedEvent = "Microsoft.Storage.BlobRenamed";
+        public const string StorageDirectoryCreatedEvent = "Microsoft.Storage.DirectoryCreated";
+        public const string StorageDirectoryDeletedEvent = "Microsoft.Storage.DirectoryDeleted";
+        public const string StorageDirectoryRenamedEvent = "Microsoft.Storage.DirectoryRenamed";
     }
 }
