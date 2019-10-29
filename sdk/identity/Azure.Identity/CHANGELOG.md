@@ -34,7 +34,7 @@
   - `TokenCredential` implementations in the Azure.Identity library now throw exceptions rather than returning `default`(`AccessToken`) when no token is obtained
   - Added the `CredentialUnavailableExcpetion` exception type to distinguish cases when failure to obtain an `AccessToken` was expected
   
-### DependencyChanges
+### Dependency Changes
 - Adopted Azure.Core 1.0.0
 
 ### Fixes and improvements
@@ -43,7 +43,7 @@
 
 ## 1.0.0-preview.5
 
-### DependencyChanges
+### Dependency Changes
 - Adopted Azure.Core 1.0.0-preview.9
 
 ### New Features
@@ -58,7 +58,7 @@
 ### Breaking Changes
 - Modified GetToken abstraction to accept `TokenRequest` structure rather than `string[]` for forwards compatibility
 
-### DependencyChanges
+### Dependency Changes
 - Adopted Azure.Core 1.0.0-preview.8
 
 ### New Features
@@ -68,7 +68,7 @@
 
 ## 1.0.0-preview.3
 
-### DependencyChanges
+### Dependency Changes
 - Adopted Azure.Core 1.0.0-preview.7
 - Adopted Microsoft.Identity.Client 4.1.0
 
