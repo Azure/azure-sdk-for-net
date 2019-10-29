@@ -194,7 +194,7 @@ Message: Azure.RequestFailedException : StatusCode: 404, ReasonPhrase: 'Not Foun
 }
 ```
 
-## Next Steps
+## Next steps
 
 ### More sample code
 
