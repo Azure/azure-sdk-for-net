@@ -129,8 +129,17 @@ foreach (SecretProperties secretProperties in response)
 
 ## Handling exceptions
 
-When request fails the `RequestFailedException` is thrown by client methods. The exception exposes HTTP status code as the `Status` property and 
+When request fails the `RequestFailedException` is thrown by client methods. The exception exposes HTTP status code as the `Status` property and service specific `ErrorCode`.
 
-``` C# Snippet:RequestFailedException
-
+```C# Snippet:RequestFailedException
+try
+{
+    KeyVaultSecret properties = client.GetSecret("NonexistentSecret");
+}
+// handle exception with status code 404
+catch (RequestFailedException e) when (e.Status == 404)
+{
+    // handle not found error
+    Console.WriteLine("ErrorCode " + e.ErrorCode);
+}
 ```

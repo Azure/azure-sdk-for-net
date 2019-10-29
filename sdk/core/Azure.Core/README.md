@@ -40,24 +40,19 @@ These options are passed as a parameter that extends ```ClientOptions``` class e
 Various service specific options are usually added to its subclasses, but a set of SDK-wide options are 
 available directly on ```ClientOptions```.
 
-```csharp
-public void ConfigureServiceClient()
+```C# Snippet:RetryOptions
+SecretClientOptions options = new SecretClientOptions()
 {
-    // BlobConnectionOptions inherits/extends ClientOptions
-    ClientOptions options = new BlobConnectionOptions();     
-    
-    // configure retries
-    options.RetryPolicy.MaxRetries = 5; // default is 3
-    options.RetryPolicy.Mode = RetryMode.Exponential; // default is fixed retry policy
-    options.RetryPolicy.Delay = TimeSpan.FromSeconds(1); // default is 0.8s
-
-    // finally create BlobContainerClient, but many Azure SDK clients will work similarly
-    var client = new BlobContainerClient(connectionString, "container", options);
-
-    // if you don't specify the options, default options will be used, e.g.
-    var clientWithDefaultOptions = new BlobContainerClient(connectionString, "container");
-}
+    Retry =
+    {
+        Delay = TimeSpan.FromSeconds(2),
+        MaxRetries = 10,
+        Mode = RetryMode.Fixed
+    }
+};
 ```
+
+More on client configuration in [client configuration samples](samples/Configuration.md)
 
 ### Accessing HTTP Response Details Using ```Response<T>```
 _Service clients_ have methods that can be used to call Azure services. 
@@ -90,8 +85,49 @@ foreach (HttpHeader header in http.Headers)
 }
 ```
 
+More on response types in [response samples](samples/Response.md)
+
+### Setting up console logging
+
+To create an Azure SDK log listener that outputs messages to console use `AzureEventSourceListener.CreateConsoleLogger` method.
+
+```C# Snippet:ConsoleLogging
+// Setup a listener to monitor logged events.
+using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
+```
+
+### Reporting Errors ```RequestFailedException```
+
+```C# Snippet:RequestFailedException
+try
+{
+    KeyVaultSecret properties = client.GetSecret("NonexistentSecret");
+}
+// handle exception with status code 404
+catch (RequestFailedException e) when (e.Status == 404)
+{
+    // handle not found error
+    Console.WriteLine("ErrorCode " + e.ErrorCode);
+}
+```
+
+### Consuming Service Methods Returning ```AsyncPageable<T>```
+
+```C# Snippet:AsyncPageable
+// call a service method, which returns AsyncPageable<T>
+AsyncPageable<SecretProperties> response = client.GetPropertiesOfSecretsAsync();
+
+await foreach (SecretProperties secretProperties in response)
+{
+    Console.WriteLine(secretProperties.Name);
+}
+```
+
+### Consuming Long Running Operations Using ```Operation<T>```
+Comming soon ...
+
 ### Mocking
-One of the most important cross-cutting features of our new client libraries using Azure.Core is that they are designed for mocking. 
+One of the most important cross-cutting features of our new client libraries using Azure.Core is that they are designed for mocking.
 Mocking is enabled by:
 
 - providing a protected parameterless constructor on client types.
@@ -120,21 +156,3 @@ mock.Setup(c => c.GetSecret("Name", null, default))
 SecretClient client = mock.Object;
 KeyVaultSecret secret = client.GetSecret("Name");
 ```
-
-### Setting up console logging
-
-```C# Snippet:ConsoleLogging
-// Setup a listener to monitor logged events.
-using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
-```
-
-### Reporting Errors ```RequestFailedException```
-Coming soon ...
-
-### Consuming Service Methods Returning ```AsyncPageable<T>```
-
-``` C# Snippet:AsyncPageable
-```
-
-### Consuming Long Running Operations Using ```Operation<T>```
-Comming soon ...
