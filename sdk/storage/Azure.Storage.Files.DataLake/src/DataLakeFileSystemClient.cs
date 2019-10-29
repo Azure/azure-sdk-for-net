@@ -512,7 +512,7 @@ namespace Azure.Storage.Files.DataLake
             CancellationToken cancellationToken = default)
         {
             Response<BlobContainerProperties> containerResponse = _containerClient.GetProperties(
-                conditions,
+                conditions.ToBlobRequestConditions(),
                 cancellationToken);
 
             return Response.FromValue(
@@ -550,7 +550,7 @@ namespace Azure.Storage.Files.DataLake
             CancellationToken cancellationToken = default)
         {
             Response<BlobContainerProperties> response = await _containerClient.GetPropertiesAsync(
-                conditions,
+                conditions.ToBlobRequestConditions(),
                 cancellationToken)
                 .ConfigureAwait(false);
 

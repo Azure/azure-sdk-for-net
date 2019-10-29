@@ -166,7 +166,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeServiceClient service = GetServiceClient_SharedKey();
             try
             {
-                FileSystemClient fileSystem = InstrumentClient((await service.CreateFileSystemAsync(name)).Value);
+                DataLakeFileSystemClient fileSystem = InstrumentClient((await service.CreateFileSystemAsync(name)).Value);
                 Response<FileSystemProperties> properties = await fileSystem.GetPropertiesAsync();
                 Assert.IsNotNull(properties.Value);
             }
