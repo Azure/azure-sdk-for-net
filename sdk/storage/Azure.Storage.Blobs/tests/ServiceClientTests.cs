@@ -200,10 +200,11 @@ namespace Azure.Storage.Blobs.Test
             await test.Container.SetMetadataAsync(metadata);
 
             // Act
-            BlobContainerItem first = await service.GetBlobContainersAsync(BlobContainerTraits.Metadata).FirstAsync();
+            IList<BlobContainerItem> containers = await service.GetBlobContainersAsync(BlobContainerTraits.Metadata).ToListAsync();
 
             // Assert
-            Assert.IsNotNull(first.Properties.Metadata);
+            Assert.IsTrue(
+                containers.Where(c => c.Name == test.Container.Name).FirstOrDefault().Properties.Metadata.Count > 0);
         }
 
         [Test]

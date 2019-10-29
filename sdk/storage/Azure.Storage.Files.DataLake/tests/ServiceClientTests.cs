@@ -135,10 +135,11 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await fileSystem.SetMetadataAsync(metadata);
 
                 // Act
-                FileSystemItem first = await service.GetFileSystemsAsync(FileSystemTraits.Metadata).FirstAsync();
+                IList<FileSystemItem> items = await service.GetFileSystemsAsync(FileSystemTraits.Metadata).ToListAsync();
 
                 // Assert
-                Assert.IsNotNull(first.Properties.Metadata);
+                Assert.IsTrue(
+                items.Where(c => c.Name == fileSystem.Name).FirstOrDefault().Properties.Metadata.Count > 0);
             }
         }
 
