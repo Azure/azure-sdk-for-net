@@ -1,5 +1,11 @@
 # Release History
 
+## 4.0.0-preview.6 (2019-11)
+
+### Major changes
+
+- Updated to work with the 1.0.0 release versions of Azure.Core and Azure.Identity.
+
 ## 4.0.0-preview.5 (2019-10-07)
 
 ### Breaking changes
