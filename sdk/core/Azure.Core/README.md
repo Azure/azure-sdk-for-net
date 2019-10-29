@@ -40,7 +40,7 @@ These options are passed as a parameter that extends ```ClientOptions``` class e
 Various service specific options are usually added to its subclasses, but a set of SDK-wide options are 
 available directly on ```ClientOptions```.
 
-```C# Snippet:RetryOptions
+```C# Snippet:ConfigurationHelloWorld
 SecretClientOptions options = new SecretClientOptions()
 {
     Retry =
@@ -48,8 +48,15 @@ SecretClientOptions options = new SecretClientOptions()
         Delay = TimeSpan.FromSeconds(2),
         MaxRetries = 10,
         Mode = RetryMode.Fixed
+    },
+    Diagnostics =
+    {
+        IsLoggingContentEnabled = true,
+        ApplicationId = "myApplicationId"
     }
 };
+
+SecretClient client = new SecretClient(new Uri("http://example.com"), new DefaultAzureCredential(), options);
 ```
 
 More on client configuration in [client configuration samples](samples/Configuration.md)
