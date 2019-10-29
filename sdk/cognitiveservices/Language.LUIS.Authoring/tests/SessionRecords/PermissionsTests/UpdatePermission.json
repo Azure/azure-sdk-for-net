@@ -1,19 +1,19 @@
 {
   "Entries": [
     {
-      "RequestUri": "/luis/api/v2.0/apps/3327b33c-35df-40d0-a661-c9ade29da239/permissions",
-      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy8zMzI3YjMzYy0zNWRmLTQwZDAtYTY2MS1jOWFkZTI5ZGEyMzkvcGVybWlzc2lvbnM=",
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/6c859d36-47a0-4dd9-a2ab-7817e211646b/permissions",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzZjODU5ZDM2LTQ3YTAtNGRkOS1hMmFiLTc4MTdlMjExNjQ2Yi9wZXJtaXNzaW9ucw==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"emails\": [\r\n    \"guest@outlook.com\",\r\n    \"invited.user@live.com\"\r\n  ]\r\n}",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          "62b834e0069943d9b035f32abd230359"
+          "120f721e60454544a884022b1bc988a5"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27617.04",
+          "FxVersion/4.6.27817.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.8.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -30,10 +30,13 @@
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "a19d58b2-1114-4986-8f0e-7fe150011b85"
+          "dd5c059f-9b94-4937-ba44-0f1904ff1074"
         ],
         "Request-Id": [
-          "a19d58b2-1114-4986-8f0e-7fe150011b85"
+          "dd5c059f-9b94-4937-ba44-0f1904ff1074"
+        ],
+        "X-API-Deprecation-Date": [
+          "2020-09-02T00:00:00Z"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -48,7 +51,7 @@
           "SAMEORIGIN"
         ],
         "Date": [
-          "Sun, 25 Aug 2019 19:21:23 GMT"
+          "Tue, 29 Oct 2019 13:23:13 GMT"
         ],
         "Content-Length": [
           "51"
@@ -61,19 +64,19 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/luis/api/v2.0/apps/3327b33c-35df-40d0-a661-c9ade29da239/permissions",
-      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy8zMzI3YjMzYy0zNWRmLTQwZDAtYTY2MS1jOWFkZTI5ZGEyMzkvcGVybWlzc2lvbnM=",
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/6c859d36-47a0-4dd9-a2ab-7817e211646b/permissions",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzZjODU5ZDM2LTQ3YTAtNGRkOS1hMmFiLTc4MTdlMjExNjQ2Yi9wZXJtaXNzaW9ucw==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"emails\": []\r\n}",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          "62b834e0069943d9b035f32abd230359"
+          "120f721e60454544a884022b1bc988a5"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27617.04",
+          "FxVersion/4.6.27817.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.8.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -90,10 +93,13 @@
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "f62acd19-cbb1-452a-ac1b-27707003abdb"
+          "3f6ffc3d-9282-4c22-b6a7-4e5843434e01"
         ],
         "Request-Id": [
-          "f62acd19-cbb1-452a-ac1b-27707003abdb"
+          "3f6ffc3d-9282-4c22-b6a7-4e5843434e01"
+        ],
+        "X-API-Deprecation-Date": [
+          "2020-09-02T00:00:00Z"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -108,7 +114,7 @@
           "SAMEORIGIN"
         ],
         "Date": [
-          "Sun, 25 Aug 2019 19:21:24 GMT"
+          "Tue, 29 Oct 2019 13:23:14 GMT"
         ],
         "Content-Length": [
           "51"
@@ -121,19 +127,19 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/luis/api/v2.0/apps/3327b33c-35df-40d0-a661-c9ade29da239/permissions",
-      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy8zMzI3YjMzYy0zNWRmLTQwZDAtYTY2MS1jOWFkZTI5ZGEyMzkvcGVybWlzc2lvbnM=",
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/6c859d36-47a0-4dd9-a2ab-7817e211646b/permissions",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzZjODU5ZDM2LTQ3YTAtNGRkOS1hMmFiLTc4MTdlMjExNjQ2Yi9wZXJtaXNzaW9ucw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          "62b834e0069943d9b035f32abd230359"
+          "120f721e60454544a884022b1bc988a5"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27617.04",
+          "FxVersion/4.6.27817.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.8.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -144,10 +150,13 @@
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "ce53f461-01d7-49b8-96e4-41062879965c"
+          "cc502219-4545-4bc9-b2e6-baa9cff836af"
         ],
         "Request-Id": [
-          "ce53f461-01d7-49b8-96e4-41062879965c"
+          "cc502219-4545-4bc9-b2e6-baa9cff836af"
+        ],
+        "X-API-Deprecation-Date": [
+          "2020-09-02T00:00:00Z"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -162,7 +171,7 @@
           "SAMEORIGIN"
         ],
         "Date": [
-          "Sun, 25 Aug 2019 19:21:23 GMT"
+          "Tue, 29 Oct 2019 13:23:14 GMT"
         ],
         "Content-Length": [
           "89"
@@ -171,7 +180,7 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"owner\": \"a-omsami@microsoft.com\",\r\n  \"emails\": [\r\n    \"guest@outlook.com\",\r\n    \"invited.user@live.com\"\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"owner\": \"a-nebadr@microsoft.com\",\r\n  \"emails\": [\r\n    \"guest@outlook.com\",\r\n    \"invited.user@live.com\"\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],

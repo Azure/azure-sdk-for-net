@@ -1,19 +1,19 @@
 {
   "Entries": [
     {
-      "RequestUri": "/luis/api/v2.0/apps/",
-      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy8=",
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLw==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"culture\": \"en-us\",\r\n  \"domain\": \"Comics\",\r\n  \"description\": \"New LUIS App\",\r\n  \"usageScenario\": \"IoT\",\r\n  \"name\": \"LUIS App to be exported\"\r\n}",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          "62b834e0069943d9b035f32abd230359"
+          "120f721e60454544a884022b1bc988a5"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27617.04",
+          "FxVersion/4.6.27817.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.8.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -30,16 +30,16 @@
           "no-cache"
         ],
         "Location": [
-          "https://westus.api.cognitive.microsoft.com/luis/api/v2.0/apps/3c37d554-bec6-46ba-9950-ccdac126eaf5"
+          "https://westus.api.cognitive.microsoft.com/luis/api/v3.0-preview/apps/cb00a3f9-8fac-442d-b56f-43bb617b9825"
         ],
         "Apim-Request-Id": [
-          "6b76dfb7-1c9b-4f33-aa6d-78cfb9aba302"
+          "b5a16f73-5fb6-4864-86a0-e682ad4caed6"
         ],
         "Request-Id": [
-          "6b76dfb7-1c9b-4f33-aa6d-78cfb9aba302"
+          "b5a16f73-5fb6-4864-86a0-e682ad4caed6"
         ],
         "Operation-Location": [
-          "https://westus.api.cognitive.microsoft.com/luis/api/v2.0/apps/3c37d554-bec6-46ba-9950-ccdac126eaf5"
+          "https://westus.api.cognitive.microsoft.com/luis/api/v3.0-preview/apps/cb00a3f9-8fac-442d-b56f-43bb617b9825"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -54,7 +54,7 @@
           "SAMEORIGIN"
         ],
         "Date": [
-          "Sun, 25 Aug 2019 19:18:09 GMT"
+          "Tue, 29 Oct 2019 13:19:08 GMT"
         ],
         "Content-Length": [
           "38"
@@ -63,23 +63,23 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "\"3c37d554-bec6-46ba-9950-ccdac126eaf5\"",
+      "ResponseBody": "\"cb00a3f9-8fac-442d-b56f-43bb617b9825\"",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/luis/api/v2.0/apps/3c37d554-bec6-46ba-9950-ccdac126eaf5/versions/0.1/export",
-      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy8zYzM3ZDU1NC1iZWM2LTQ2YmEtOTk1MC1jY2RhYzEyNmVhZjUvdmVyc2lvbnMvMC4xL2V4cG9ydA==",
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/cb00a3f9-8fac-442d-b56f-43bb617b9825/versions/0.1/export",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzL2NiMDBhM2Y5LThmYWMtNDQyZC1iNTZmLTQzYmI2MTdiOTgyNS92ZXJzaW9ucy8wLjEvZXhwb3J0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          "62b834e0069943d9b035f32abd230359"
+          "120f721e60454544a884022b1bc988a5"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27617.04",
+          "FxVersion/4.6.27817.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.8.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -90,10 +90,10 @@
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "fd0e7e80-8964-4f2b-a230-b7ae60d4b7e7"
+          "b4e98322-3c51-470c-8de7-4e1d0e16fd9a"
         ],
         "Request-Id": [
-          "fd0e7e80-8964-4f2b-a230-b7ae60d4b7e7"
+          "b4e98322-3c51-470c-8de7-4e1d0e16fd9a"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -108,10 +108,10 @@
           "SAMEORIGIN"
         ],
         "Date": [
-          "Sun, 25 Aug 2019 19:18:10 GMT"
+          "Tue, 29 Oct 2019 13:19:08 GMT"
         ],
         "Content-Length": [
-          "491"
+          "512"
         ],
         "Content-Type": [
           "application/json"
@@ -120,23 +120,23 @@
           "attachment; filename=\"LUIS App to be exported.json\""
         ]
       },
-      "ResponseBody": "{\r\n  \"luis_schema_version\": \"3.2.0\",\r\n  \"versionId\": \"0.1\",\r\n  \"name\": \"LUIS App to be exported\",\r\n  \"desc\": \"New LUIS App\",\r\n  \"culture\": \"en-us\",\r\n  \"tokenizerVersion\": \"1.0.0\",\r\n  \"intents\": [\r\n    {\r\n      \"name\": \"None\"\r\n    }\r\n  ],\r\n  \"entities\": [],\r\n  \"composites\": [],\r\n  \"closedLists\": [],\r\n  \"patternAnyEntities\": [],\r\n  \"regex_entities\": [],\r\n  \"prebuiltEntities\": [],\r\n  \"model_features\": [],\r\n  \"regex_features\": [],\r\n  \"patterns\": [],\r\n  \"utterances\": [],\r\n  \"settings\": []\r\n}",
+      "ResponseBody": "{\r\n  \"luis_schema_version\": \"6.0.0\",\r\n  \"intents\": [\r\n    {\r\n      \"name\": \"None\"\r\n    }\r\n  ],\r\n  \"entities\": [],\r\n  \"hierarchicals\": [],\r\n  \"composites\": [],\r\n  \"closedLists\": [],\r\n  \"prebuiltEntities\": [],\r\n  \"utterances\": [],\r\n  \"versionId\": \"0.1\",\r\n  \"name\": \"LUIS App to be exported\",\r\n  \"desc\": \"New LUIS App\",\r\n  \"culture\": \"en-us\",\r\n  \"tokenizerVersion\": \"1.0.0\",\r\n  \"patternAnyEntities\": [],\r\n  \"regex_entities\": [],\r\n  \"phraselists\": [],\r\n  \"regex_features\": [],\r\n  \"patterns\": [],\r\n  \"settings\": []\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/luis/api/v2.0/apps/3c37d554-bec6-46ba-9950-ccdac126eaf5?force=false",
-      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy8zYzM3ZDU1NC1iZWM2LTQ2YmEtOTk1MC1jY2RhYzEyNmVhZjU/Zm9yY2U9ZmFsc2U=",
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/cb00a3f9-8fac-442d-b56f-43bb617b9825?force=false",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzL2NiMDBhM2Y5LThmYWMtNDQyZC1iNTZmLTQzYmI2MTdiOTgyNT9mb3JjZT1mYWxzZQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          "62b834e0069943d9b035f32abd230359"
+          "120f721e60454544a884022b1bc988a5"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27617.04",
+          "FxVersion/4.6.27817.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.8.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -147,10 +147,10 @@
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "17fa019a-e515-4f3f-adec-440fe6c886d1"
+          "8f87d76a-6601-4ed3-829a-30d6b76b971d"
         ],
         "Request-Id": [
-          "17fa019a-e515-4f3f-adec-440fe6c886d1"
+          "8f87d76a-6601-4ed3-829a-30d6b76b971d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -165,7 +165,7 @@
           "SAMEORIGIN"
         ],
         "Date": [
-          "Sun, 25 Aug 2019 19:18:10 GMT"
+          "Tue, 29 Oct 2019 13:19:09 GMT"
         ],
         "Content-Length": [
           "51"
