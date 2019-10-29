@@ -14,8 +14,8 @@ namespace Azure.Data.AppConfiguration.Samples
     {
         [Test]
         /*
-         * This sample demonstrates how to read the revision history of one or
-         * more Configuration Settings in a Configuration Store. To do this, we
+         * This sample demonstrates how to read the revision history of a
+         * Configuration Settings in a Configuration Store. To do this, we
          * create a setting, change it twice to create revisions, then read the
          * revision history for that setting.
          */
