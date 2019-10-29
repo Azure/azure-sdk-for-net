@@ -2,7 +2,8 @@
 
 ## 1.0.0
 
-- GA release of Azure.Core package.
+- Updating versioning and packaging for general availability.
+- Make types and namespace names consistent.
 
 ## 1.0.0-preview.9
 
