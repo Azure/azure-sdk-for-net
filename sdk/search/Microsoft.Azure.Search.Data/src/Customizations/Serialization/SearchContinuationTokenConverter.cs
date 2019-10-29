@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Search.Serialization
     internal class SearchContinuationTokenConverter : JsonConverter
     {
         // MAINTENANCE NOTE: Remember to change this when the REST API version changes.
-        private const string TargetApiVersion = "2019-05-06";
+        private const string TargetApiVersion = "2019-05-06-Preview";
 
         public override bool CanConvert(Type objectType) => objectType == typeof(SearchContinuationToken);
 

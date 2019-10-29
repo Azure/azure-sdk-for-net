@@ -161,12 +161,17 @@ namespace Microsoft.Azure.Search
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='select'>
+            /// Selects which top-level properties of the skillsets to retrieve. Specified
+            /// as a comma-separated list of JSON property names, or '*' for all
+            /// properties. The default is all properties.
+            /// </param>
             /// <param name='searchRequestOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static SkillsetListResult List(this ISkillsetsOperations operations, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
+            public static SkillsetListResult List(this ISkillsetsOperations operations, string select = default(string), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
             {
-                return operations.ListAsync(searchRequestOptions).GetAwaiter().GetResult();
+                return operations.ListAsync(select, searchRequestOptions).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -176,15 +181,20 @@ namespace Microsoft.Azure.Search
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='select'>
+            /// Selects which top-level properties of the skillsets to retrieve. Specified
+            /// as a comma-separated list of JSON property names, or '*' for all
+            /// properties. The default is all properties.
+            /// </param>
             /// <param name='searchRequestOptions'>
             /// Additional parameters for the operation
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SkillsetListResult> ListAsync(this ISkillsetsOperations operations, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SkillsetListResult> ListAsync(this ISkillsetsOperations operations, string select = default(string), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(searchRequestOptions, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(select, searchRequestOptions, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

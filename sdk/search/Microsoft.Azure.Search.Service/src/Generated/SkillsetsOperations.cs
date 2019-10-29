@@ -711,6 +711,11 @@ namespace Microsoft.Azure.Search
         /// List all skillsets in a search service.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/list-skillset" />
         /// </summary>
+        /// <param name='select'>
+        /// Selects which top-level properties of the skillsets to retrieve. Specified
+        /// as a comma-separated list of JSON property names, or '*' for all
+        /// properties. The default is all properties.
+        /// </param>
         /// <param name='searchRequestOptions'>
         /// Additional parameters for the operation
         /// </param>
@@ -735,7 +740,7 @@ namespace Microsoft.Azure.Search
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SkillsetListResult>> ListWithHttpMessagesAsync(SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SkillsetListResult>> ListWithHttpMessagesAsync(string select = default(string), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SearchServiceName == null)
             {
@@ -761,6 +766,7 @@ namespace Microsoft.Azure.Search
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("select", select);
                 tracingParameters.Add("clientRequestId", clientRequestId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
@@ -771,6 +777,10 @@ namespace Microsoft.Azure.Search
             _url = _url.Replace("{searchServiceName}", Client.SearchServiceName);
             _url = _url.Replace("{searchDnsSuffix}", Client.SearchDnsSuffix);
             List<string> _queryParameters = new List<string>();
+            if (select != null)
+            {
+                _queryParameters.Add(string.Format("$select={0}", System.Uri.EscapeDataString(select)));
+            }
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));

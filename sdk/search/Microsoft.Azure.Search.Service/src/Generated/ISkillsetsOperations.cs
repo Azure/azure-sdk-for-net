@@ -107,6 +107,11 @@ namespace Microsoft.Azure.Search
         /// List all skillsets in a search service.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/list-skillset" />
         /// </summary>
+        /// <param name='select'>
+        /// Selects which top-level properties of the skillsets to retrieve.
+        /// Specified as a comma-separated list of JSON property names, or '*'
+        /// for all properties. The default is all properties.
+        /// </param>
         /// <param name='searchRequestOptions'>
         /// Additional parameters for the operation
         /// </param>
@@ -125,7 +130,7 @@ namespace Microsoft.Azure.Search
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SkillsetListResult>> ListWithHttpMessagesAsync(SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SkillsetListResult>> ListWithHttpMessagesAsync(string select = default(string), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a new skillset in a search service.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/create-skillset" />

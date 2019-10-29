@@ -112,6 +112,11 @@ namespace Microsoft.Azure.Search
         /// Lists all synonym maps available for a search service.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/List-Synonym-Maps" />
         /// </summary>
+        /// <param name='select'>
+        /// Selects which top-level properties of the synonym maps to retrieve.
+        /// Specified as a comma-separated list of JSON property names, or '*'
+        /// for all properties. The default is all properties.
+        /// </param>
         /// <param name='searchRequestOptions'>
         /// Additional parameters for the operation
         /// </param>
@@ -130,7 +135,7 @@ namespace Microsoft.Azure.Search
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SynonymMapListResult>> ListWithHttpMessagesAsync(SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SynonymMapListResult>> ListWithHttpMessagesAsync(string select = default(string), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a new synonym map.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Synonym-Map" />

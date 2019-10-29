@@ -157,6 +157,11 @@ namespace Microsoft.Azure.Search
         /// Lists all indexers available for a search service.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/List-Indexers" />
         /// </summary>
+        /// <param name='select'>
+        /// Selects which top-level properties of the indexers to retrieve.
+        /// Specified as a comma-separated list of JSON property names, or '*'
+        /// for all properties. The default is all properties.
+        /// </param>
         /// <param name='searchRequestOptions'>
         /// Additional parameters for the operation
         /// </param>
@@ -175,7 +180,7 @@ namespace Microsoft.Azure.Search
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IndexerListResult>> ListWithHttpMessagesAsync(SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IndexerListResult>> ListWithHttpMessagesAsync(string select = default(string), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a new indexer.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Indexer" />

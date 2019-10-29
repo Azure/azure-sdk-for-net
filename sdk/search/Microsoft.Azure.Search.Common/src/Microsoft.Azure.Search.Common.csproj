@@ -5,6 +5,6 @@
     <AssemblyTitle>Microsoft Azure Cognitive Search Common Library</AssemblyTitle>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <PackageReleaseNotes>See the Microsoft.Azure.Search package for detailed release notes on the entire Azure Cognitive Search .NET SDK.</PackageReleaseNotes>
-    <Version>10.1.0</Version>
+    <Version>11.0.0-preview.1</Version>
   </PropertyGroup>
 </Project>
