@@ -16,9 +16,16 @@ steps:
     displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
     inputs:
       version: $(DotNetCoreSDKVersion)
-  - pwsh: GCI . -Recurse
-    displayName: Dump Source Directory
-    workingDirectory: $(Pipeline.Workspace)
+  - task: UsePythonVersion@0
+    displayName: 'Use Python 3.6'
+    inputs:
+      versionSpec: '3.6'
+  - template: eng/pipelines/templates/scripts/replace-relative-links.yml@azure-sdk-tools
+    parameters:
+      TargetFolder: '.'
+      RootFolder: '.'
+      BuildSHA: $(Build.SourceVersion)
+      RepoId: 'Azure/azure-sdk-for-net'
   - ${{ if ne(variables['Build.DefinitionName'], 'net - client - ci')}}:
     - ${{ each artifact in parameters.Artifacts }}:
       - pwsh: |
@@ -37,7 +44,6 @@ steps:
             $safeName = $safeName.Substring($safeName.LastIndexOf('.Management') + 1)
             echo "##vso[task.setvariable variable=artifactSafeName]$($safeName)"
           }
-          echo "##vso[task.setvariable variable=sourcedir]$(Build.SourcesDirectory)
         displayName: Set Variables for current Loop
       - pwsh: |
           mkdir $(artifactSafeName)/dll-docs/my-api
@@ -59,6 +65,25 @@ steps:
       - script: dotnet msbuild eng/mgmt.proj /p:scope=$(packageLocation) /p:OutputPath=$(Build.BinariesDirectory)/$(artifactSafeName)/dll-docs/dependencies/my-api /p:CopyLocalLockFileAssemblies=true -maxcpucount:1 -nodeReuse:false
         displayName: Build Mgmt Packages, Include Dependencies
         condition: and(succeeded(), eq(True, '${{ parameters.LibType }}'))
+      - pwsh: |
+          if (('${{artifact.name}}' -eq 'Microsoft.Extensions.Azure') -or ('${{parameters.ServiceDirectory}}' -ne '*')){
+            Remove-Item –path "$(Build.BinariesDirectory)/$(artifactSafeName)/dll-docs/my-api/*" -include Azure.Core.dll, Azure.Core.xml, Azure.Core.deps.json, Azure.Core.pdb
+          }
+          if ('${{parameters.ServiceDirectory}}' -ne 'identity'){
+            Remove-Item –path "$(Build.BinariesDirectory)/$(artifactSafeName)/dll-docs/my-api/*" -include Azure.Identity.dll, Azure.Identity.xml, Azure.Identity.deps.json, Azure.Identity.pdb
+          }
+          if (('${{artifact.name}}' -eq 'Azure.Storage.Blobs') -or ('${{artifact.name}}' -eq 'Azure.Storage.Blobs.Cryptography') -or ('${{artifact.name}}' -eq 'Azure.Storage.Files.DataLake') -or ('${{artifact.name}}' -eq 'Azure.Storage.Files.Shares') -or ('${{artifact.name}}' -eq 'Azure.Storage.Queues') -or ('${{artifact.name}}' -eq 'Azure.Storage.Blobs.Batch') -or ('${{artifact.name}}' -eq 'Azure.Storage.Queues.Cryptography')){
+            Remove-Item –path "$(Build.BinariesDirectory)/$(artifactSafeName)/dll-docs/my-api/*" -include Azure.Storage.Common.dll, Azure.Storage.Common.xml, Azure.Storage.Common.deps.json, Azure.Storage.Common.pdb
+          }
+          if (('${{artifact.name}}' -eq 'Azure.Messaging.EventHubs.CheckpointStore.Blobs') -or ('${{artifact.name}}' -eq 'Azure.Storage.Blobs.Cryptography') -or ('${{artifact.name}}' -eq 'Azure.Storage.Files.DataLake') -or ('${{artifact.name}}' -eq 'Azure.Storage.Blobs.Batch')){
+            Remove-Item –path "$(Build.BinariesDirectory)/$(artifactSafeName)/dll-docs/my-api/*" -include Azure.Storage.Blobs.dll, Azure.Storage.Blobs.xml, Azure.Storage.Blobs.deps.json, Azure.Storage.Blobs.pdb
+          }
+          if ('${{artifact.name}}' -eq 'Azure.Messaging.EventHubs.CheckpointStore.Blobs'){
+            Remove-Item –path "$(Build.BinariesDirectory)/$(artifactSafeName)/dll-docs/my-api/*" -include Azure.Messaging.EventHubs.dll, Azure.Messaging.EventHubs.xml, Azure.Messaging.EventHubs.deps.json, Azure.Messaging.EventHubs.pdb, Azure.Storage.*
+          }
+          if ('${{artifact.name}}' -eq 'Azure.Storage.Queues.Cryptography'){
+            Remove-Item –path "$(Build.BinariesDirectory)/$(artifactSafeName)/dll-docs/my-api/*" -include Azure.Storage.Queues.dll, Azure.Storage.Queues.xml, Azure.Storage.Queues.deps.json, Azure.Storage.Queues.pdb
+          }
       - task: DeleteFiles@1
         displayName: "Delete files from $(Build.BinariesDirectory)/$(artifactSafeName)/dll-docs/my-api"
         inputs:
@@ -96,21 +121,6 @@ steps:
           script: $(Build.BinariesDirectory)/docfx/docfx.exe init -q
           workingDirectory: $(Build.BinariesDirectory)/$(artifactSafeName)/docfx-output
           failOnStderr: true
-      - task: UsePythonVersion@0
-        displayName: 'Use Python 3.6'
-        inputs:
-          versionSpec: '3.6'
-      - template: eng/pipelines/templates/scripts/replace-relative-links.yml@azure-sdk-tools
-        parameters:
-          TargetFolder: '$(sourcedir)'
-          RootFolder: '$(sourcedir)'
-          BuildSHA: $(Build.SourceVersion)
-          RepoId: 'Azure/azure-sdk-for-net'
-      - task: PublishPipelineArtifact@0
-        condition: succeeded()
-        inputs:
-          artifactName: ReadMe.${{artifact.name}}
-          targetPath: $(Build.SourcesDirectory)/sdk/$(packageLocation)/README.md
       - pwsh: |
           # Copy Package ReadMe
           $PkgReadMePath = "$(Build.SourcesDirectory)/sdk/$(packageLocation)/README.md"

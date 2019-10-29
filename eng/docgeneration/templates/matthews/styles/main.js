@@ -60,12 +60,21 @@ $(function () {
     });
 })
 
-// Inject line breaks and spaces into the code sections
+
 $(function () {
+    // Inject line breaks and spaces into the code sections
     $(".lang-csharp").each(function () {
         var text = $(this).html();
         text = text.replace(/, /g, ",</br>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;");
         $(this).html(text);
+    });
+
+    // Add text to empty links
+    $("p > a").each(function () {
+        var link = $(this).attr('href')
+        if ($(this).text() === "") {
+            $(this).html(link)
+        }
     });
 })
 
