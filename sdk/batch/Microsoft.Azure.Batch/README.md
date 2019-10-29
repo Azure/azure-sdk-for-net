@@ -48,4 +48,4 @@ Once `BatchProperties.json` is updated with your changes, mark the `ObjectModelC
 
 
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsrc%2FSDKs%2FBatch%2FDataPlane%2FREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fbatch%2FMicrosoft.Azure.Batch%2FREADME.png)
