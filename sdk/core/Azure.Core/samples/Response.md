@@ -126,3 +126,11 @@ foreach (SecretProperties secretProperties in response)
     Console.WriteLine(secretProperties.Name);
 }
 ```
+
+## Handling exceptions
+
+When request fails the `RequestFailedException` is thrown by client methods. The exception exposes HTTP status code as the `Status` property and 
+
+``` C# Snippet:RequestFailedException
+
+```

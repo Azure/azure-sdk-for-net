@@ -1,12 +1,49 @@
-# Azure.Core logging samples
+# Azure client configuration samples
 
-## Enabling console logging
+## Configuring retry options
 
-To enable console logging in you app use the `AzureEventSourceListener.CreateConsoleLogger` method
+To modify the retry options use the `Retry` property of client options class.
 
-```C# Snippet:ConsoleLogging
-// Setup a listener to monitor logged events.
-using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
+Be default clients are setup to retry 3 times with exponential retry kind and initial delay of 0.8 sec.
+
+```C# Snippet:RetryOptions
+SecretClientOptions options = new SecretClientOptions()
+{
+    Retry =
+    {
+        Delay = TimeSpan.FromSeconds(2),
+        MaxRetries = 10,
+        Mode = RetryMode.Fixed
+    }
+};
+```
+
+## User provided HttpClientInstance
+
+```C# Snippet:SettingHttpClient
+using HttpClient client = new HttpClient();
+
+SecretClientOptions options = new SecretClientOptions
+{
+    Transport = new HttpClientTransport(client)
+};
+```
+
+## Configuring a proxy
+
+##
+
+```C# Snippet:HttpClientProxyConfiguration
+using HttpClient client = new HttpClient(
+    new HttpClientHandler()
+    {
+        Proxy = new WebProxy(new Uri("http://example.com"))
+    });
+
+SecretClientOptions options = new SecretClientOptions
+{
+    Transport = new HttpClientTransport(client)
+};
 ```
 
 ## Enabling content logging

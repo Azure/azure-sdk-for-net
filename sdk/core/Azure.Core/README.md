@@ -96,7 +96,7 @@ Mocking is enabled by:
 
 - providing a protected parameterless constructor on client types.
 - making service methods virtual.
-- providing APIs for constructing model types returned from virtual service methods. To find these factory methods look for types with the _ModelFactory_ suffix, e.g. `ConfigurationModelFactory`.
+- providing APIs for constructing model types returned from virtual service methods. To find these factory methods look for types with the _ModelFactory_ suffix, e.g. `SecretModelFactory`.
 
 For example, the ConfigurationClient.Get method can be mocked (with [Moq](https://github.com/moq/moq4)) as follows:
 
@@ -131,8 +131,10 @@ using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsole
 ### Reporting Errors ```RequestFailedException```
 Coming soon ...
 
-### Consuming Service Methods Returning ```IAsyncEnumerable<T>```
-Coming soon ...
+### Consuming Service Methods Returning ```AsyncPageable<T>```
+
+``` C# Snippet:AsyncPageable
+```
 
 ### Consuming Long Running Operations Using ```Operation<T>```
 Comming soon ...

@@ -160,5 +160,26 @@ namespace Azure.Core.Samples
             }
             #endregion
         }
+
+        [Test]
+        public void RequestFailedException()
+        {
+
+            // create a client
+            var client = new SecretClient(new Uri("http://example.com"), new DefaultAzureCredential());
+
+            #region Snippet:RequestFailedException
+            try
+            {
+                KeyVaultSecret properties = client.GetSecret("NonexistentSecret");
+            }
+            // handle exception with status code 404
+            catch (RequestFailedException e) when (e.Status == 404)
+            {
+                // handle not found error
+                Console.WriteLine("ErrorCode " + e.ErrorCode);
+            }
+            #endregion
+        }
     }
 }
