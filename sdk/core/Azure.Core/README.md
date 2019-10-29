@@ -141,7 +141,7 @@ More on paged responses in [response samples](samples/Response.md)
 
 ### Consuming Long-Running Operations Using ```Operation<T>```
 
-Some operations take long time to complete and require polling for their status such operations are exposed as methods returning `*Operation<T>` types.
+Some operations take long time to complete and require polling for their status. Methods starting long-running operations return `*Operation<T>` types.
 
 The `WaitForCompletionAsync` method is an easy way to wait for operation completion and get the resulting value.
 

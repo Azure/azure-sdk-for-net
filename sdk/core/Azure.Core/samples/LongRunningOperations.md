@@ -1,6 +1,6 @@
 # Azure.Core long-running operation samples
 
-Some operations take long time to complete and requre polling for their status such operations are exposed as methods returning `*Operation<T>` types.
+Some operations take long time to complete and require polling for their status. Methods starting long-running operations return `*Operation<T>` types.
 
 ## Awaiting completion of the operation
 
