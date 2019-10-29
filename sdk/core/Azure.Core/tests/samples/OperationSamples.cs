@@ -16,7 +16,6 @@ namespace Azure.Core.Samples
         public async Task OperationCompletion()
         {
             #region Snippet:OperationCompletion
-
             // create a client
             SecretClient client = new SecretClient(new Uri("http://example.com"), new DefaultAzureCredential());
 

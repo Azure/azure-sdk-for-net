@@ -16,12 +16,10 @@ namespace Azure.Core.Samples
         public void AddingPerCallPolicy()
         {
             #region Snippet:AddingPerCallPolicy
-
             SecretClientOptions options = new SecretClientOptions();
             options.AddPolicy(new CustomRequestPolicy(), HttpPipelinePosition.PerCall);
 
             options.AddPolicy(new StopwatchPolicy(), HttpPipelinePosition.PerRetry);
-
             #endregion
         }
 
@@ -53,7 +51,6 @@ namespace Azure.Core.Samples
                 Console.WriteLine($"Request to {message.Request.Uri} took {stopwatch.Elapsed}");
             }
         }
-
         #endregion
 
         #region Snippet:SyncPolicy

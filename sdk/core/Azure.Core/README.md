@@ -12,7 +12,7 @@ The main shared concepts of Azure.Core (and so Azure SDK libraries using Azure.C
 
 - Configuring service clients, e.g. configuring retries, logging.
 - Accessing HTTP response details.
-- Calling long running operations (LROs).
+- Calling long-running operations (LROs).
 - Paging and asynchronous streams (```AsyncPageable<T>```) 
 - Exceptions for reporting errors from service requests in a consistent fashion.
 - Abstractions for representing Azure SDK credentials.
@@ -139,9 +139,9 @@ await foreach (SecretProperties secretProperties in response)
 
 More on paged responses in [response samples](samples/Response.md)
 
-### Consuming Long Running Operations Using ```Operation<T>```
+### Consuming Long-Running Operations Using ```Operation<T>```
 
-Some operations take long time to complete and requre polling for their status such operations are exposed as methods returning `*Operation<T>` types.
+Some operations take long time to complete and require polling for their status such operations are exposed as methods returning `*Operation<T>` types.
 
 The `WaitForCompletionAsync` method is an easy way to wait for operation completion and get the resulting value.
 
@@ -159,7 +159,7 @@ Console.WriteLine(value.Name);
 Console.WriteLine(value.ScheduledPurgeDate);
 ```
 
-More on long running operations in [long running operation samples](samples/LongRunningOperations.md)
+More on long-running operations in [long-running operation samples](samples/LongRunningOperations.md)
 
 ### Mocking
 One of the most important cross-cutting features of our new client libraries using Azure.Core is that they are designed for mocking.
