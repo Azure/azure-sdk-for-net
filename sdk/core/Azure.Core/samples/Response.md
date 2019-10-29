@@ -5,6 +5,7 @@ Most client methods return one of the following types:
  - `Response<T>` -  a value and HTTP response
  - `Pageable<T>` -  a collection of values retrieved in pages
  - `AsyncPageable<T>` - a collection of values asyncrounosly retrieved in pages
+ - `*Operation<T>` - a long-running operation see [long running operation samples](LongRunningOperations.md)
 
 ## Accessing HTTP response propreties
 
@@ -68,7 +69,7 @@ Console.WriteLine("Content-Type " + http.Headers.ContentType);
 
 ## Iterating over AsyncPageable using await foreach
 
-This sample required C# 8 compiler.
+This sample requires C# 8 compiler.
 
 ```C# Snippet:AsyncPageable
 // call a service method, which returns AsyncPageable<T>
@@ -81,6 +82,8 @@ await foreach (SecretProperties secretProperties in response)
 ```
 
 ## Iterating over AsyncPageable using while loop
+
+If your project doesn't have C# 8.0 enabled you can still iterate over `AsyncPageable` using a `while` loop.
 
 ```C# Snippet:AsyncPageableLoop
 // call a service method, which returns AsyncPageable<T>
@@ -116,6 +119,8 @@ await foreach (Page<SecretProperties> page in response.AsPages())
 ```
 
 ## Iterating over pageable
+
+`Pageable<T>` is a syncronous version of `AsyncPageable<T>`, it can be used with a normal `foreach` loop.
 
 ```C# Snippet:Pageable
 // call a service method, which returns Pageable<T>
