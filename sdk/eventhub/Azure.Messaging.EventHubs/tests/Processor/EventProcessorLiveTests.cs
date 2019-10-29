@@ -15,7 +15,7 @@ using NUnit.Framework;
 namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
-    ///   The suite of live tests for the <see cref="EventProcessor{T}" />
+    ///   The suite of live tests for the <see cref="EventProcessor" />
     ///   class.
     /// </summary>
     ///
@@ -33,7 +33,7 @@ namespace Azure.Messaging.EventHubs.Tests
         private const int ReceiveRetryLimit = 10;
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessor{T}" /> is able to
+        ///   Verifies that the <see cref="EventProcessor" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
@@ -93,7 +93,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessor{T}" /> is able to
+        ///   Verifies that the <see cref="EventProcessor" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
@@ -116,10 +116,10 @@ namespace Azure.Messaging.EventHubs.Tests
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
                             onClose: (partitionContext, reason) =>
-                                {
-                                    closeCalls.AddOrUpdate(partitionContext.PartitionId, 1, (partitionId, value) => value + 1);
-                                    closeReasons[partitionContext.PartitionId] = reason;
-                                }
+                            {
+                                closeCalls.AddOrUpdate(partitionContext.PartitionId, 1, (partitionId, value) => value + 1);
+                                closeReasons[partitionContext.PartitionId] = reason;
+                            }
                         );
 
                     eventProcessorManager.AddEventProcessors(1);
@@ -159,7 +159,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessor{T}" /> is able to
+        ///   Verifies that the <see cref="EventProcessor" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
@@ -180,7 +180,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
-                            onProcessEvents: (partitionContext, events, cancellationToken) =>
+                            onProcessEvents: (partitionContext, events) =>
                             {
                                 // Make it a list so we can safely enumerate it.
 
@@ -265,7 +265,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessor{T}" /> is able to
+        ///   Verifies that the <see cref="EventProcessor" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
@@ -286,7 +286,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
-                            onProcessEvents: (partitionContext, events, cancellationToken) =>
+                            onProcessEvents: (partitionContext, events) =>
                                 receivedEventSets.Add(events)
                         );
 
@@ -313,7 +313,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessor{T}" /> is able to
+        ///   Verifies that the <see cref="EventProcessor" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
@@ -370,7 +370,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessor{T}" /> is able to
+        ///   Verifies that the <see cref="EventProcessor" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
@@ -429,7 +429,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessor{T}" /> is able to
+        ///   Verifies that the <see cref="EventProcessor" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
@@ -451,7 +451,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
-                            onProcessEvents: (partitionContext, events, cancellationToken) =>
+                            onProcessEvents: (partitionContext, events) =>
                             {
                                 // Make it a list so we can safely enumerate it.
 
@@ -508,7 +508,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessor{T}" /> is able to
+        ///   Verifies that the <see cref="EventProcessor" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
@@ -586,7 +586,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
                             partitionManager,
-                            onProcessEvents: (partitionContext, events, cancellationToken) =>
+                            onProcessEvents: (partitionContext, events) =>
                             {
                                 // Make it a list so we can safely enumerate it.
 
@@ -621,7 +621,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessor{T}" /> is able to
+        ///   Verifies that the <see cref="EventProcessor" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
@@ -681,7 +681,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
                             partitionManager,
-                            onProcessEvents: (partitionContext, events, cancellationToken) =>
+                            onProcessEvents: (partitionContext, events) =>
                             {
                                 // Make it a list so we can safely enumerate it.
 
@@ -727,7 +727,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessor{T}" /> is able to
+        ///   Verifies that the <see cref="EventProcessor" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
@@ -779,7 +779,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
                             options: new EventProcessorOptions { InitialEventPosition = EventPosition.FromEnqueuedTime(enqueuedTime) },
-                            onProcessEvents: (partitionContext, events, cancellationToken) =>
+                            onProcessEvents: (partitionContext, events) =>
                             {
                                 // Make it a list so we can safely enumerate it.
 
@@ -814,7 +814,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessor{T}" /> is able to
+        ///   Verifies that the <see cref="EventProcessor" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
@@ -842,7 +842,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             options: new EventProcessorOptions { MaximumReceiveWaitTime = TimeSpan.FromSeconds(maximumWaitTimeInSecs) },
                             onInitialize: partitionContext =>
                                 timestamps.TryAdd(partitionContext.PartitionId, new List<DateTimeOffset> { DateTimeOffset.UtcNow }),
-                            onProcessEvents: (partitionContext, events, cancellationToken) =>
+                            onProcessEvents: (partitionContext, events) =>
                                 timestamps.AddOrUpdate
                                     (
                                         // The key already exists, so the 'addValue' factory will never be called.
@@ -895,7 +895,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessor{T}" /> is able to
+        ///   Verifies that the <see cref="EventProcessor" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
@@ -942,7 +942,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
                             options: new EventProcessorOptions { MaximumMessageCount = maximumMessageCount },
-                            onProcessEvents: (partitionContext, events, cancellationToken) =>
+                            onProcessEvents: (partitionContext, events) =>
                             {
                                 // Make it a list so we can safely enumerate it.
 
@@ -980,7 +980,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessor{T}" /> is able to
+        ///   Verifies that the <see cref="EventProcessor" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
@@ -1048,7 +1048,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessor{T}" /> is able to
+        ///   Verifies that the <see cref="EventProcessor" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///

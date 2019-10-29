@@ -4,6 +4,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.Common client library</AssemblyTitle>
+    <Version>12.0.0-preview.5</Version>
     <DefineConstants>CommonSDK;$(DefineConstants)</DefineConstants>
     <PackageTags>Microsoft Azure Storage Common, Microsoft, Azure, StorageScalable, azureofficial</PackageTags>
     <PackageReleaseNotes>
@@ -28,5 +29,6 @@
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" Link="AzureCoreShared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" Link="AzureCoreShared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" Link="AzureCoreShared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)NoBodyResponse{T}.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
 </Project>

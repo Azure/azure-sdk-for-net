@@ -1410,6 +1410,12 @@ namespace Azure.Storage.Files
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
 
+                    // Return an exploding Response on 304
+                    if (jsonResponse.IsUnavailable())
+                    {
+                        return jsonResponse;
+                    }
+
                     // Parse the JSON object
                     using var doc = JsonDocument.Parse(jsonResponse.Value);
                     if (doc.RootElement.ValueKind != JsonValueKind.Object ||

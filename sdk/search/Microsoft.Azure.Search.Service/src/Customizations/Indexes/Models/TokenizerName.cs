@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Search.Models
     using Serialization;
 
     /// <summary>
-    /// Defines the names of all tokenizers supported by Azure Search.
+    /// Defines the names of all tokenizers supported by Azure Cognitive Search.
     /// <see href="https://docs.microsoft.com/rest/api/searchservice/Custom-analyzers-in-Azure-Search"/>
     /// </summary>
     [JsonConverter(typeof(ExtensibleEnumConverter<TokenizerName>))]

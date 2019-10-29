@@ -6,10 +6,13 @@ using System.IO;
 
 namespace Azure.Core
 {
+    /// <summary>
+    /// A type that analyzes HTTP responses and exceptions and determines if they should be retried.
+    /// </summary>
     public class ResponseClassifier
     {
         /// <summary>
-        /// Specifies if the request should be retried.
+        /// Specifies if the request contained in the <paramref name="message"/> should be retried.
         /// </summary>
         public virtual bool IsRetriableResponse(HttpMessage message)
         {
@@ -26,7 +29,7 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Specifies if the response is not successful but can be retried.
+        /// Specifies if the response contained in the <paramref name="message"/> is not successful.
         /// </summary>
         public virtual bool IsErrorResponse(HttpMessage message)
         {

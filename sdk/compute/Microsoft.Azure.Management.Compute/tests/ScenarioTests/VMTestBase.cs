@@ -100,7 +100,7 @@ namespace Compute.Tests
                 Trace.TraceInformation("Querying available Ubuntu image from PIR...");
                 // If this sku disappears, query latest with 
                 // GET https://management.azure.com/subscriptions/<subId>/providers/Microsoft.Compute/locations/SoutheastAsia/publishers/Canonical/artifacttypes/vmimage/offers/UbuntuServer/skus?api-version=2015-06-15
-                m_linuxImageReference = FindVMImage("Canonical", "UbuntuServer", "17.10");
+                m_linuxImageReference = FindVMImage("Canonical", "UbuntuServer", "19.04");
             }
             return m_linuxImageReference;
         }
@@ -148,6 +148,11 @@ namespace Compute.Tests
                 };
             }
             return diskEncryptionSettings;
+        }
+
+        protected string getDefaultDiskEncryptionSetId()
+        {
+            return "/subscriptions/0296790d-427c-48ca-b204-8b729bbd8670/resourceGroups/longrunningrg-centraluseuap/providers/Microsoft.Compute/diskEncryptionSets/longlivedBvtDES";
         }
 
         protected StorageAccount CreateStorageAccount(string rgName, string storageAccountName)
@@ -215,7 +220,8 @@ namespace Compute.Tests
             string dataDiskStorageAccountType = "Standard_LRS",
             bool? writeAcceleratorEnabled = null,
             IList<string> zones = null,
-            string ppgName = null)
+            string ppgName = null,
+            string diskEncryptionSetId = null)
         {
             try
             {
@@ -247,7 +253,7 @@ namespace Compute.Tests
                 string asetId = CreateAvailabilitySet(rgName, asName, hasManagedDisks, ppgId: ppgId);
 
                 inputVM = CreateDefaultVMInput(rgName, storageAccountName, imageRef, asetId, nicResponse.Id, hasManagedDisks, vmSize, osDiskStorageAccountType, 
-                    dataDiskStorageAccountType, writeAcceleratorEnabled);
+                    dataDiskStorageAccountType, writeAcceleratorEnabled, diskEncryptionSetId);
 
                 if (hasDiffDisks)
                 {
@@ -747,8 +753,8 @@ namespace Compute.Tests
                         {"RG", "rg"},
                         {"testTag", "1"}
                     },
-                PlatformFaultDomainCount = hasManagedDisks ? 2 : 3,
-                PlatformUpdateDomainCount = 5,
+                PlatformFaultDomainCount = hasManagedDisks ? 1 : 3,
+                PlatformUpdateDomainCount = hasManagedDisks ? 1 : 5,
                 Sku = new CM.Sku
                 {
                     Name = hasManagedDisks ? AvailabilitySetSkuTypes.Aligned : AvailabilitySetSkuTypes.Classic
@@ -800,7 +806,8 @@ namespace Compute.Tests
         }
         
         protected VirtualMachine CreateDefaultVMInput(string rgName, string storageAccountName, ImageReference imageRef, string asetId, string nicId, bool hasManagedDisks = false,
-            string vmSize = "Standard_A0", string osDiskStorageAccountType = "Standard_LRS", string dataDiskStorageAccountType = "Standard_LRS", bool? writeAcceleratorEnabled = null)
+            string vmSize = "Standard_A0", string osDiskStorageAccountType = "Standard_LRS", string dataDiskStorageAccountType = "Standard_LRS", bool? writeAcceleratorEnabled = null,
+            string diskEncryptionSetId = null)
         {
             // Generate Container name to hold disk VHds
             string containerName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
@@ -838,7 +845,12 @@ namespace Compute.Tests
                         },
                         ManagedDisk = !hasManagedDisks ? null : new ManagedDiskParameters
                         {
-                            StorageAccountType = osDiskStorageAccountType
+                            StorageAccountType = osDiskStorageAccountType,
+                            DiskEncryptionSet = diskEncryptionSetId == null ? null :
+                                new DiskEncryptionSetParameters()
+                                {
+                                    Id = diskEncryptionSetId
+                                }
                         }
                     },
                     DataDisks = !hasManagedDisks ? null : new List<DataDisk>()
@@ -852,7 +864,12 @@ namespace Compute.Tests
                             DiskSizeGB = 30,
                             ManagedDisk = new ManagedDiskParameters()
                             {
-                                StorageAccountType = dataDiskStorageAccountType
+                                StorageAccountType = dataDiskStorageAccountType,
+                                DiskEncryptionSet = diskEncryptionSetId == null ? null :
+                                    new DiskEncryptionSetParameters()
+                                    {
+                                        Id = diskEncryptionSetId
+                                    }
                             }
                         }
                     },

@@ -303,52 +303,6 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Updates VpnSite tags.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name of the VpnSite.
-            /// </param>
-            /// <param name='vpnSiteName'>
-            /// The name of the VpnSite being updated.
-            /// </param>
-            /// <param name='vpnSiteParameters'>
-            /// Parameters supplied to update VpnSite tags.
-            /// </param>
-            public static VpnSite BeginUpdateTags(this IVpnSitesOperations operations, string resourceGroupName, string vpnSiteName, TagsObject vpnSiteParameters)
-            {
-                return operations.BeginUpdateTagsAsync(resourceGroupName, vpnSiteName, vpnSiteParameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates VpnSite tags.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name of the VpnSite.
-            /// </param>
-            /// <param name='vpnSiteName'>
-            /// The name of the VpnSite being updated.
-            /// </param>
-            /// <param name='vpnSiteParameters'>
-            /// Parameters supplied to update VpnSite tags.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<VpnSite> BeginUpdateTagsAsync(this IVpnSitesOperations operations, string resourceGroupName, string vpnSiteName, TagsObject vpnSiteParameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.BeginUpdateTagsWithHttpMessagesAsync(resourceGroupName, vpnSiteName, vpnSiteParameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Deletes a VpnSite.
             /// </summary>
             /// <param name='operations'>

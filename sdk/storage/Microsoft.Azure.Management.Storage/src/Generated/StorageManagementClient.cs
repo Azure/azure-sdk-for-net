@@ -100,6 +100,16 @@ namespace Microsoft.Azure.Management.Storage
         public virtual IManagementPoliciesOperations ManagementPolicies { get; private set; }
 
         /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
+
+        /// <summary>
         /// Gets the IBlobServicesOperations.
         /// </summary>
         public virtual IBlobServicesOperations BlobServices { get; private set; }
@@ -365,12 +375,14 @@ namespace Microsoft.Azure.Management.Storage
             StorageAccounts = new StorageAccountsOperations(this);
             Usages = new UsagesOperations(this);
             ManagementPolicies = new ManagementPoliciesOperations(this);
+            PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
+            PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             BlobServices = new BlobServicesOperations(this);
             BlobContainers = new BlobContainersOperations(this);
             FileServices = new FileServicesOperations(this);
             FileShares = new FileSharesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-04-01";
+            ApiVersion = "2019-06-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

@@ -224,15 +224,15 @@ namespace Azure.Storage
                 /// The Azure Storage Operation Names for Blob Lease Client.
                 /// </summary>
                 public const string AcquireOperationName =
-                    "Azure.Storage.Blobs.Specialized.LeaseClient.Acquire";
+                    "Azure.Storage.Blobs.Specialized.BlobLeaseClient.Acquire";
                 public const string RenewOperationName =
-                    "Azure.Storage.Blobs.Specialized.LeaseClient.Renew";
+                    "Azure.Storage.Blobs.Specialized.BlobLeaseClient.Renew";
                 public const string ReleaseOperationName =
-                    "Azure.Storage.Blobs.Specialized.LeaseClient.Release";
+                    "Azure.Storage.Blobs.Specialized.BlobLeaseClient.Release";
                 public const string ChangeOperationName =
-                    "Azure.Storage.Blobs.Specialized.LeaseClient.Change";
+                    "Azure.Storage.Blobs.Specialized.BlobLeaseClient.Change";
                 public const string BreakOperationName =
-                    "Azure.Storage.Blobs.Specialized.LeaseClient.Break";
+                    "Azure.Storage.Blobs.Specialized.BlobLeaseClient.Break";
             }
 
             internal static class Page
@@ -353,6 +353,37 @@ namespace Azure.Storage
                 public const string CreatePermissionOperationName =
                     "Azure.Storage.Files.ShareClient.CreatePermission";
             }
+        }
+
+        /// <summary>
+        /// Data Lake constant values;
+        /// </summary>
+        internal static class DataLake
+        {
+            /// <summary>
+            /// The blob URI suffex.
+            /// </summary>
+            public const string BlobUriSuffix = "blob";
+
+            /// <summary>
+            /// The DFS URI suffex.
+            /// </summary>
+            public const string DfsUriSuffix = "dfs";
+
+            /// <summary>
+            /// The key of the object json object returned for errors.
+            /// </summary>
+            public const string ErrorKey = "error";
+
+            /// <summary>
+            /// The key of the error code returned for errors.
+            /// </summary>
+            public const string ErrorCodeKey = "code";
+
+            /// <summary>
+            /// The key of the error message returned for errors.
+            /// </summary>
+            public const string ErrorMessageKey = "message";
         }
 
         /// <summary>

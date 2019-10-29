@@ -285,13 +285,14 @@ namespace Azure.Messaging.EventHubs.Tests
             var clientMock = new Mock<EventHubClient>();
             clientMock.Setup(c => c.CreateConsumer("cg", "pid", It.IsAny<EventPosition>(), It.IsAny<EventHubConsumerOptions>())).Returns(consumerMock.Object);
 
-            var processorMock = new Mock<BasePartitionProcessor>();
-            processorMock.Setup(p => p.InitializeAsync(It.IsAny<PartitionContext>())).Returns(Task.CompletedTask);
-            processorMock.Setup(p => p.ProcessEventsAsync(It.IsAny<PartitionContext>(), It.IsAny<IEnumerable<EventData>>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.CompletedTask)
-                .Callback(() => processorCalledSource.SetResult(null));
+            var eventProcessorMock = new Mock<EventProcessor>();
+            eventProcessorMock.Object.ProcessEventsAsync = (context, manager) =>
+            {
+                processorCalledSource.SetResult(null);
+                return Task.CompletedTask;
+            };
 
-            var manager = new PartitionPump(clientMock.Object, "cg", new PartitionContext("ns", "eh", "cg", "pid", "oid", new InMemoryPartitionManager()), processorMock.Object, new EventProcessorOptions());
+            var manager = new PartitionPump(eventProcessorMock.Object, clientMock.Object, "cg", new PartitionContext("ns", "eh", "cg", "pid", "oid", new InMemoryPartitionManager()), new EventProcessorOptions());
 
             await manager.StartAsync();
             await processorCalledSource.Task;

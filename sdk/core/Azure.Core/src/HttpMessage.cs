@@ -79,7 +79,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="name">The property name.</param>
         /// <param name="value">The property value.</param>
-        /// <returns><code>true</code> if property exists, otherwise. <code>false</code>.</returns>
+        /// <returns><c>true</c> if property exists, otherwise. <c>false</c>.</returns>
         public bool TryGetProperty(string name, out object? value)
         {
             value = null;

@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Linq;
 using System.Text.Json;
+using Azure.Security.KeyVault.Tests;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Certificates.Tests

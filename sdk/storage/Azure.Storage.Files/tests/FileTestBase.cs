@@ -5,12 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 using Azure.Storage.Files.Models;
 using Azure.Storage.Sas;
-using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 
@@ -52,25 +51,30 @@ namespace Azure.Storage.Files.Tests
             return Recording.InstrumentClientOptions(options);
         }
 
-        public IDisposable GetNewDirectory(out DirectoryClient directory, FileServiceClient service = default)
+        public async Task<DisposingShare> GetTestShareAsync(FileServiceClient service = default, string shareName = default, IDictionary<string, string> metadata = default)
         {
-            IDisposable disposingShare = GetNewShare(out ShareClient share, default, service);
-            var directoryName = GetNewDirectoryName();
-            directory = InstrumentClient(share.GetDirectoryClient(directoryName));
-            _ = directory.CreateAsync().Result;
-            return disposingShare;
+            service ??= GetServiceClient_SharedKey();
+            metadata ??= new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            shareName ??= GetNewShareName();
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+            return await DisposingShare.CreateAsync(share, metadata);
         }
 
-        public IDisposable GetNewFile(out FileClient file, FileServiceClient service = default, string shareName = default, string directoryName = default, string fileName = default)
+        public async Task<DisposingDirectory> GetTestDirectoryAsync(FileServiceClient service = default, string shareName = default, string directoryName = default)
         {
-            IDisposable disposingShare = GetNewShare(out ShareClient share, shareName, service);
-            DirectoryClient directory = InstrumentClient(share.GetDirectoryClient(directoryName ?? GetNewDirectoryName()));
-            _ = directory.CreateAsync().Result;
+            DisposingShare test = await GetTestShareAsync(service, shareName);
+            directoryName ??= GetNewDirectoryName();
 
-            file = InstrumentClient(directory.GetFileClient(fileName ?? GetNewFileName()));
-            _ = file.CreateAsync(maxSize: Constants.MB).Result;
+            DirectoryClient directory = InstrumentClient(test.Share.GetDirectoryClient(directoryName));
+            return await DisposingDirectory.CreateAsync(test, directory);
+        }
 
-            return disposingShare;
+        public async Task<DisposingFile> GetTestFileAsync(FileServiceClient service = default, string shareName = default, string directoryName = default, string fileName = default)
+        {
+            DisposingDirectory test = await GetTestDirectoryAsync(service, shareName, directoryName);
+            fileName ??= GetNewFileName();
+            FileClient file = InstrumentClient(test.Directory.GetFileClient(fileName));
+            return await DisposingFile.CreateAsync(test, file);
         }
 
         public FileClientOptions GetFaultyFileConnectionOptions(
@@ -109,13 +113,6 @@ namespace Azure.Storage.Files.Tests
                 new FileServiceClient(
                     new Uri($"{TestConfigDefault.FileServiceEndpoint}?{sasCredentials ?? GetNewFileServiceSasCredentialsFile(shareName, filePath, sharedKeyCredentials ?? GetNewSharedKeyCredentials())}"),
                     GetOptions()));
-
-        public IDisposable GetNewShare(out ShareClient share, string shareName = default, FileServiceClient service = default, IDictionary<string, string> metadata = default)
-        {
-            service ??= GetServiceClient_SharedKey();
-            share = InstrumentClient(service.GetShareClient(shareName ?? GetNewShareName()));
-            return new DisposingShare(share, metadata ?? new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase));
-        }
 
         public StorageSharedKeyCredential GetNewSharedKeyCredentials()
             => new StorageSharedKeyCredential(
@@ -203,9 +200,9 @@ namespace Azure.Storage.Files.Tests
         {
             Assert.IsNotNull(fileSmbProperties.FileAttributes);
             Assert.IsNotNull(fileSmbProperties.FilePermissionKey);
-            Assert.IsNotNull(fileSmbProperties.FileCreationTime);
-            Assert.IsNotNull(fileSmbProperties.FileLastWriteTime);
-            Assert.IsNotNull(fileSmbProperties.FileChangeTime);
+            Assert.IsNotNull(fileSmbProperties.FileCreatedOn);
+            Assert.IsNotNull(fileSmbProperties.FileLastWrittenOn);
+            Assert.IsNotNull(fileSmbProperties.FileChangedOn);
             Assert.IsNotNull(fileSmbProperties.FileId);
             Assert.IsNotNull(fileSmbProperties.ParentId);
         }
@@ -213,38 +210,94 @@ namespace Azure.Storage.Files.Tests
         internal static void AssertPropertiesEqual(FileSmbProperties left, FileSmbProperties right)
         {
             Assert.AreEqual(left.FileAttributes, right.FileAttributes);
-            Assert.AreEqual(left.FileCreationTime, right.FileCreationTime);
-            Assert.AreEqual(left.FileChangeTime, right.FileChangeTime);
+            Assert.AreEqual(left.FileCreatedOn, right.FileCreatedOn);
+            Assert.AreEqual(left.FileChangedOn, right.FileChangedOn);
             Assert.AreEqual(left.FileId, right.FileId);
-            Assert.AreEqual(left.FileLastWriteTime, right.FileLastWriteTime);
+            Assert.AreEqual(left.FileLastWrittenOn, right.FileLastWrittenOn);
             Assert.AreEqual(left.FilePermissionKey, right.FilePermissionKey);
             Assert.AreEqual(left.ParentId, right.ParentId);
         }
 
-        private class DisposingShare : IDisposable
+        public class DisposingShare : IAsyncDisposable
         {
-            public ShareClient ShareClient { get; }
+            public ShareClient Share { get; private set; }
 
-            public DisposingShare(ShareClient share, IDictionary<string, string> metadata)
+            public static async Task<DisposingShare> CreateAsync(ShareClient share, IDictionary<string, string> metadata)
             {
-                share.CreateAsync(metadata: metadata, quotaInGB: 1).Wait();
-
-                ShareClient = share;
+                await share.CreateAsync(metadata: metadata, quotaInGB: 1);
+                return new DisposingShare(share);
             }
 
-            public void Dispose()
+            public DisposingShare(ShareClient share)
             {
-                if (ShareClient != null)
+                Share = share;
+            }
+
+            public async ValueTask DisposeAsync()
+            {
+                if (Share != null)
                 {
                     try
                     {
-                        ShareClient.DeleteAsync(default/*, new DeleteSnapshotsOptionType()*/).Wait();
+                        await Share.DeleteAsync(true);
+                        Share = null;
                     }
                     catch
                     {
                         // swallow the exception to avoid hiding another test failure
                     }
                 }
+            }
+        }
+
+        public class DisposingDirectory : IAsyncDisposable
+        {
+            private DisposingShare _test;
+
+            public ShareClient Share => _test.Share;
+            public DirectoryClient Directory { get; }
+
+            public static async Task<DisposingDirectory> CreateAsync(DisposingShare test, DirectoryClient directory)
+            {
+                await directory.CreateAsync();
+                return new DisposingDirectory(test, directory);
+            }
+
+            private DisposingDirectory(DisposingShare test, DirectoryClient directory)
+            {
+                _test = test;
+                Directory = directory;
+            }
+
+            public async ValueTask DisposeAsync()
+            {
+                await _test.DisposeAsync();
+            }
+        }
+
+        public class DisposingFile : IAsyncDisposable
+        {
+            private DisposingDirectory _test;
+
+            public ShareClient Share => _test.Share;
+            public DirectoryClient Directory => _test.Directory;
+            public FileClient File { get; }
+
+            public static async Task<DisposingFile> CreateAsync(DisposingDirectory test, FileClient file)
+            {
+                await file.CreateAsync(maxSize: Constants.MB);
+                return new DisposingFile(test, file);
+            }
+
+            private DisposingFile(DisposingDirectory test, FileClient file)
+            {
+                _test = test;
+                File = file;
+            }
+
+            public async ValueTask DisposeAsync()
+            {
+                await _test.DisposeAsync();
             }
         }
     }

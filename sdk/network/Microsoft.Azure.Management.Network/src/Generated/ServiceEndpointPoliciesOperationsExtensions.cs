@@ -153,7 +153,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Updates service Endpoint Policies.
+            /// Updates tags of a service endpoint policy.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -167,13 +167,13 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='parameters'>
             /// Parameters supplied to update service endpoint policy tags.
             /// </param>
-            public static ServiceEndpointPolicy Update(this IServiceEndpointPoliciesOperations operations, string resourceGroupName, string serviceEndpointPolicyName, TagsObject parameters)
+            public static ServiceEndpointPolicy UpdateTags(this IServiceEndpointPoliciesOperations operations, string resourceGroupName, string serviceEndpointPolicyName, TagsObject parameters)
             {
-                return operations.UpdateAsync(resourceGroupName, serviceEndpointPolicyName, parameters).GetAwaiter().GetResult();
+                return operations.UpdateTagsAsync(resourceGroupName, serviceEndpointPolicyName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Updates service Endpoint Policies.
+            /// Updates tags of a service endpoint policy.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -190,9 +190,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ServiceEndpointPolicy> UpdateAsync(this IServiceEndpointPoliciesOperations operations, string resourceGroupName, string serviceEndpointPolicyName, TagsObject parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ServiceEndpointPolicy> UpdateTagsAsync(this IServiceEndpointPoliciesOperations operations, string resourceGroupName, string serviceEndpointPolicyName, TagsObject parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceEndpointPolicyName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateTagsWithHttpMessagesAsync(resourceGroupName, serviceEndpointPolicyName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -340,52 +340,6 @@ namespace Microsoft.Azure.Management.Network
             public static async Task<ServiceEndpointPolicy> BeginCreateOrUpdateAsync(this IServiceEndpointPoliciesOperations operations, string resourceGroupName, string serviceEndpointPolicyName, ServiceEndpointPolicy parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceEndpointPolicyName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Updates service Endpoint Policies.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceEndpointPolicyName'>
-            /// The name of the service endpoint policy.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to update service endpoint policy tags.
-            /// </param>
-            public static ServiceEndpointPolicy BeginUpdate(this IServiceEndpointPoliciesOperations operations, string resourceGroupName, string serviceEndpointPolicyName, TagsObject parameters)
-            {
-                return operations.BeginUpdateAsync(resourceGroupName, serviceEndpointPolicyName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates service Endpoint Policies.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceEndpointPolicyName'>
-            /// The name of the service endpoint policy.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to update service endpoint policy tags.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ServiceEndpointPolicy> BeginUpdateAsync(this IServiceEndpointPoliciesOperations operations, string resourceGroupName, string serviceEndpointPolicyName, TagsObject parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, serviceEndpointPolicyName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

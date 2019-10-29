@@ -1,3 +1,7 @@
+# 4.1.1
+## Bug fixes
+- Ignore OperationCanceledException while closing Message Pump. [PR 8449](https://github.com/Azure/azure-sdk-for-net/pull/8449)
+
 # 4.1.0
 ## Improvements
 - Support for creation of `SqlFilter` for subscriptions with parameter of type `TimeSpan`. [PR 7325](https://github.com/Azure/azure-sdk-for-net/pull/7325)

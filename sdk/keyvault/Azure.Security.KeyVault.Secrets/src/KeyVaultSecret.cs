@@ -34,22 +34,22 @@ namespace Azure.Security.KeyVault.Secrets
         }
 
         /// <summary>
-        /// Secret identifier.
+        /// Gets the secret identifier.
         /// </summary>
         public Uri Id => Properties.Id;
 
         /// <summary>
-        /// Name of the secret.
+        /// Gets the the name of the secret.
         /// </summary>
         public string Name => Properties.Name;
 
         /// <summary>
-        /// Additional properties of the <see cref="KeyVaultSecret"/>.
+        /// Gets additional properties of the <see cref="KeyVaultSecret"/>.
         /// </summary>
         public SecretProperties Properties { get; }
 
         /// <summary>
-        /// The value of the secret.
+        /// Gets the value of the secret.
         /// </summary>
         public string Value { get; internal set; }
 

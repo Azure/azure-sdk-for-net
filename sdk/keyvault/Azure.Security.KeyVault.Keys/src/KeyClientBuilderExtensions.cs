@@ -11,17 +11,17 @@ namespace Microsoft.Extensions.Azure
 #pragma warning restore AZC0001
 {
     /// <summary>
-    /// Extension methods to <see cref="KeyClient"/> or <see cref="CryptographyClient"/> to clients builder
+    /// Extension methods to <see cref="KeyClient"/> or <see cref="CryptographyClient"/> to clients builder.
     /// </summary>
     public static class KeyClientBuilderExtensions
     {
         /// <summary>
-        /// Registers a <see cref="KeyClient"/> instance with the provided <paramref name="vaultEndpoint"/>
+        /// Registers a <see cref="KeyClient"/> instance with the provided <paramref name="vaultUri"/>
         /// </summary>
-        public static IAzureClientBuilder<KeyClient, KeyClientOptions> AddKeyClient<TBuilder>(this TBuilder builder, Uri vaultEndpoint)
+        public static IAzureClientBuilder<KeyClient, KeyClientOptions> AddKeyClient<TBuilder>(this TBuilder builder, Uri vaultUri)
             where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<KeyClient, KeyClientOptions>((options, cred) => new KeyClient(vaultEndpoint, cred, options));
+            return builder.RegisterClientFactory<KeyClient, KeyClientOptions>((options, cred) => new KeyClient(vaultUri, cred, options));
         }
 
         /// <summary>
@@ -34,12 +34,12 @@ namespace Microsoft.Extensions.Azure
         }
 
         /// <summary>
-        /// Registers a <see cref="KeyClient"/> instance with the provided <paramref name="vaultEndpoint"/>
+        /// Registers a <see cref="KeyClient"/> instance with the provided <paramref name="vaultUri"/>
         /// </summary>
-        public static IAzureClientBuilder<CryptographyClient, CryptographyClientOptions> AddCryptographyClient<TBuilder>(this TBuilder builder, Uri vaultEndpoint)
+        public static IAzureClientBuilder<CryptographyClient, CryptographyClientOptions> AddCryptographyClient<TBuilder>(this TBuilder builder, Uri vaultUri)
             where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<CryptographyClient, CryptographyClientOptions>((options, cred) => new CryptographyClient(vaultEndpoint, cred, options));
+            return builder.RegisterClientFactory<CryptographyClient, CryptographyClientOptions>((options, cred) => new CryptographyClient(vaultUri, cred, options));
         }
 
         /// <summary>

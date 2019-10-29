@@ -169,12 +169,12 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<ApplicationSecurityGroup> ApplicationSecurityGroups { get; set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the network interface IP
+        /// Gets the provisioning state of the network interface IP
         /// configuration. Possible values include: 'Succeeded', 'Updating',
         /// 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets privateLinkConnection properties for the network interface.
@@ -190,11 +190,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets a unique read-only string that changes whenever the
-        /// resource is updated.
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
     }
 }
