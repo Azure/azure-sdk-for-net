@@ -58,9 +58,9 @@ In this sample, we show how to make the SetConfigurationSetting operation condit
 
 ## Mock Client
 
-In this sample, we show how to use the [Moq](moq) library to mock a ConfigurationClient for use in testing.  For additional examples of using mocks in tests, please refer to [ConfigurationMockTests.cs][mock_tests].
+In this sample, we give a simple example illustrating how the [Moq](moq) library can be used to mock a ConfigurationClient for use in testing.  For additional examples of using mocks in tests, please refer to [ConfigurationMockTests.cs][mock_tests].
 
-[Mock Client Sample](Sample6_UpdateSettingIfUnchanged.cs)
+[Mock Client Sample](Sample7_MockClient.cs)
 
 
 <!-- Links -->
