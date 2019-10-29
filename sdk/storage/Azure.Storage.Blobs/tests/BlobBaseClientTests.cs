@@ -1543,6 +1543,27 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task SetHttpHeadersAsync_MultipleHeaders()
+        {
+            var constants = new TestConstants(this);
+            await using DisposingContainer test = await GetTestContainerAsync();
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            // Act
+            await blob.SetHttpHeadersAsync(new BlobHttpHeaders
+            {
+                ContentEncoding = "deflate, gzip",
+                ContentLanguage = "de-DE, en-CA",
+            });
+
+            // Assert
+            Response<BlobProperties> response = await blob.GetPropertiesAsync();
+            Assert.AreEqual("deflate,gzip", response.Value.ContentEncoding);
+            Assert.AreEqual("de-DE,en-CA", response.Value.ContentLanguage);
+        }
+
+        [Test]
         public async Task SetHttpHeadersAsync_AccessConditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();
