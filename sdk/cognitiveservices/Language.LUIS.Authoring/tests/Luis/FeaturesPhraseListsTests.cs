@@ -98,6 +98,38 @@
             });
         }
 
+        [Fact (Skip = "Problem from API")]
+        public void UpdatePhraseListWithEnabledForAllModels()
+        {
+            UseClientFor(async client =>
+            {
+                var entityId = await client.Model.AddEntityAsync(GlobalAppId, versionId, new EntityModelCreateObject
+                {
+                    Name = "entity added"
+                });
+
+                var id = await client.Features.AddPhraseListAsync(GlobalAppId, versionId, new PhraselistCreateObject
+                {
+                    Name = "DayOfWeek",
+                    Phrases = "monday,tuesday,wednesday,thursday,friday,saturday,sunday",
+                    IsExchangeable = true
+                });
+
+                await client.Features.UpdatePhraseListAsync(GlobalAppId, versionId, id.Value, new PhraselistUpdateObject
+                {
+                    IsActive = false,
+                    Name = "Month",
+                    Phrases = "january,february,march,april,may,june,july,august,september,october,november,december",
+                    EnabledForAllModels = true
+                });
+
+                var features = await client.Model.GetEntityFeaturesAsync(GlobalAppId, versionId, entityId);
+                await client.Features.DeletePhraseListAsync(GlobalAppId, versionId, id.Value);
+
+                Assert.Equal("Month", features[0].FeatureName);
+            });
+        }
+
         [Fact]
         public void DeletePhraseList()
         {
