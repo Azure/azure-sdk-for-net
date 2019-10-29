@@ -1,59 +1,6 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License.
 
-function DisplayHelp
-{
-  <#
-    .SYNOPSIS
-      Displays the usage help text.
-
-    .DESCRIPTION
-      Displays the help text for usage.
-
-    .OUTPUTS
-      Help text for usage to the console window.
-  #>
-
-  $indent = "    "
-
-  Write-Host "`n"
-  Write-Host "Event Hubs Live Test Environment Setup"
-  Write-Host ""
-  Write-Host "$($indent)This script handles creation and configuration of needed resources within an Azure subscription"
-  Write-Host "$($indent)for use with the Event Hubs client library Live test suite."
-  Write-Host ""
-  Write-Host "$($indent)Upon completion, the script will output a set of environment variables with sensitive information which"
-  Write-Host "$($indent)are used for testing.  When running Live tests, please be sure to have these environment variables available,"
-  Write-Host "$($indent)either within Visual Studio or command line environment."
-  Write-Host ""
-  Write-Host "$($indent)NOTE: Some of these values, such as the client secret, are difficult to recover; please copy them and keep in a"
-  Write-Host "$($indent)safe place."
-  Write-Host ""
-  Write-Host ""
-  Write-Host "$($indent)Available Parameters:"
-  Write-Host ""
-  Write-Host "$($indent)-Help`t`t`tDisplays this message."
-  Write-Host ""
-
-  Write-Host "$($indent)-SubscriptionName`t`tRequired.  The name of the Azure subscription to be used for"
-  Write-Host "$($indent)`t`t`t`trunning the Live tests."
-  Write-Host ""
-    
-  Write-Host "$($indent)-ResourceGroupName`t`tThe name of the Azure Resource Group that will contain the resources"
-  Write-Host "$($indent)`t`t`t`tused for the tests.  This will be created if it does not exist."
-  Write-Host ""
-
-  Write-Host "$($indent)-ServicePrincipalName`tThe name to use for the service principal that will"
-  Write-Host "$($indent)`t`t`t`tbe created to manage the Event Hub instances dynamically for the tests.  This"
-  Write-Host "$($indent)`t`t`t`tprincipal must not already exist."
-  Write-Host ""
-
-  Write-Host "$($indent)-AzureRegion`t`tThe Azure region that resources should be created in.  This value should be"
-  Write-Host "$($indent)the name of the region, in lowercase, with no spaces.  For example: southcentralus"
-  Write-Host ""
-  Write-Host "$($indent)`t`t`t`tDefault: South Central US (southcentralus)"
-  Write-Host ""  
-}
 
 function SelectRandomCharacters
 {    
