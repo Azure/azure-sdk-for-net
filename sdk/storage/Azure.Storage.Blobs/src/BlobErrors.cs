@@ -32,6 +32,6 @@ namespace Azure.Storage.Blobs
         }
 
         public static ArgumentException ParsingFullHttpRangeFailed(string range)
-            => new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Could not obtain the total length from HTTP range {0}", range));
+            => new ArgumentException("Could not obtain the total length from HTTP range " + range);
     }
 }

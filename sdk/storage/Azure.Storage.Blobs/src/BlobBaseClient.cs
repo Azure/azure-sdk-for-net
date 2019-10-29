@@ -982,7 +982,7 @@ namespace Azure.Storage.Blobs.Specialized
             StagedDownloadAsync(
                 destination,
                 conditions,
-                //progressHandler,
+                //progressHandler, // TODO: #8506
                 transferOptions: transferOptions,
                 async: false,
                 cancellationToken: cancellationToken)
@@ -1030,7 +1030,7 @@ namespace Azure.Storage.Blobs.Specialized
             return StagedDownloadAsync(
                 destination,
                 conditions,
-                //progressHandler,
+                //progressHandler, // TODO: #8506
                 transferOptions: transferOptions,
                 async: false,
                 cancellationToken: cancellationToken)
@@ -1077,7 +1077,7 @@ namespace Azure.Storage.Blobs.Specialized
             await StagedDownloadAsync(
                 destination,
                 conditions,
-                //progressHandler,
+                //progressHandler, // TODO: #8506
                 transferOptions: transferOptions,
                 async: true,
                 cancellationToken: cancellationToken)
@@ -1125,7 +1125,7 @@ namespace Azure.Storage.Blobs.Specialized
             return await StagedDownloadAsync(
                 destination,
                 conditions,
-                //progressHandler,
+                //progressHandler, // TODO: #8506
                 transferOptions: transferOptions,
                 async: true,
                 cancellationToken: cancellationToken)
@@ -1173,7 +1173,7 @@ namespace Azure.Storage.Blobs.Specialized
             ///// Optional <see cref="IProgress{Long}"/> to provide
             ///// progress updates about data transfers.
             ///// </param>
-            //IProgress<long> progressHandler,
+            //IProgress<long> progressHandler, // TODO: #8506
             long initialTransferLength = Constants.Blob.Block.MaxDownloadBytes,
             StorageTransferOptions transferOptions = default,
             bool async = true,

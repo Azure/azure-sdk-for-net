@@ -27,20 +27,24 @@ namespace Azure.Storage.Blobs
 
         // The size we use to determine whether to upload as a single PUT BLOB
         // request or stage as multiple blocks.
-        private readonly long _singleBlockThreshold;
+        private readonly long _singleUploadThreshold;
 
         // The size of each staged block.  If null, we'll change between 4MB
         // and 8MB depending on the size of the content.
         private readonly int? _blockSize;
 
-        public PartitionedUploader(BlockBlobClient client, StorageTransferOptions transferOptions, long? singleBlockThreshold = null, ArrayPool<byte> arrayPool = null)
+        public PartitionedUploader(
+            BlockBlobClient client,
+            StorageTransferOptions transferOptions,
+            long? singleUploadThreshold = null,
+            ArrayPool<byte> arrayPool = null)
         {
             _client = client;
             _arrayPool = arrayPool ?? ArrayPool<byte>.Shared;
             _maxWorkerCount =
                 transferOptions.MaximumConcurrency ??
                 Constants.Blob.Block.DefaultConcurrentTransfersCount;
-            _singleBlockThreshold = singleBlockThreshold ?? Constants.Blob.Block.MaxUploadBytes;
+            _singleUploadThreshold = singleUploadThreshold ?? Constants.Blob.Block.MaxUploadBytes;
             _blockSize = null;
             if (transferOptions.MaximumTransferLength != null)
             {
@@ -60,7 +64,7 @@ namespace Azure.Storage.Blobs
             CancellationToken cancellationToken = default)
         {
             // If we can compute the size and it's small enough
-            if (TryGetLength(content, out long length) && length < _singleBlockThreshold)
+            if (TryGetLength(content, out long length) && length < _singleUploadThreshold)
             {
                 // Upload it in a single request
                 return await _client.UploadAsync(
@@ -106,7 +110,7 @@ namespace Azure.Storage.Blobs
             CancellationToken cancellationToken = default)
         {
             // If we can compute the size and it's small enough
-            if (TryGetLength(content, out long length) && length < _singleBlockThreshold)
+            if (TryGetLength(content, out long length) && length < _singleUploadThreshold)
             {
                 // Upload it in a single request
                 return _client.Upload(

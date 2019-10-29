@@ -28,7 +28,10 @@ namespace Azure.Storage.Blobs
         // The size of subsequent ranges
         private readonly int _rangeSize;
 
-        public PartitionedDownloader(BlobBaseClient client, StorageTransferOptions transferOptions = default, long? initialTransferLength = null)
+        public PartitionedDownloader(
+            BlobBaseClient client,
+            StorageTransferOptions transferOptions = default,
+            long? initialTransferLength = null)
         {
             _client = client;
             _maxWorkerCount =
@@ -43,7 +46,10 @@ namespace Azure.Storage.Blobs
                 transferOptions.MaximumTransferLength ?? Constants.DefaultBufferSize);
         }
 
-        public async Task<Response> DownloadToAsync(Stream destination, BlobRequestConditions conditions, CancellationToken cancellationToken)
+        public async Task<Response> DownloadToAsync(
+            Stream destination,
+            BlobRequestConditions conditions,
+            CancellationToken cancellationToken)
         {
             // Wrap the download range calls in a Download span for distributed
             // tracing
@@ -57,8 +63,14 @@ namespace Azure.Storage.Blobs
                 // a large blob, we'll get its full size in Content-Range and
                 // can keep downloading it in segments.
                 var initialRange = new HttpRange(0, _initialRangeSize);
-                Task<Response<BlobDownloadInfo>> initialResponseTask = _client.DownloadAsync(initialRange, conditions, rangeGetContentHash: false, cancellationToken);
-                Response<BlobDownloadInfo> initialResponse = await initialResponseTask.ConfigureAwait(false);
+                Task<Response<BlobDownloadInfo>> initialResponseTask =
+                    _client.DownloadAsync(
+                        initialRange,
+                        conditions,
+                        rangeGetContentHash: false,
+                        cancellationToken);
+                Response<BlobDownloadInfo> initialResponse =
+                    await initialResponseTask.ConfigureAwait(false);
 
                 // If the initial request returned no content (i.e., a 304),
                 // we'll pass that back to the user immediately
@@ -73,7 +85,11 @@ namespace Azure.Storage.Blobs
                 long totalLength = ParseRangeTotalLength(initialResponse.Value.Details.ContentRange);
                 if (initialLength == totalLength)
                 {
-                    await CopyToAsync(initialResponse, destination, cancellationToken).ConfigureAwait(false);
+                    await CopyToAsync(
+                        initialResponse,
+                        destination,
+                        cancellationToken)
+                        .ConfigureAwait(false);
                     return initialResponse.GetRawResponse();
                 }
 
@@ -87,7 +103,7 @@ namespace Azure.Storage.Blobs
                 // of the blob.  The queue maintains the order of the segments
                 // so we can keep appending to the end of the destination
                 // stream when each segment finishes.
-                Queue<Task<Response<BlobDownloadInfo>>> runningTasks = new Queue<Task<Response<BlobDownloadInfo>>>();
+                var runningTasks = new Queue<Task<Response<BlobDownloadInfo>>>();
                 runningTasks.Enqueue(initialResponseTask);
 
                 // Fill the queue with tasks to download each of the remaining
@@ -130,12 +146,17 @@ namespace Azure.Storage.Blobs
                     // Don't need to worry about 304s here because the ETag
                     // condition will turn into a 412 and throw a proper
                     // RequestFailedException
-                    using BlobDownloadInfo result = await runningTasks.Dequeue().ConfigureAwait(false);
+                    using BlobDownloadInfo result =
+                        await runningTasks.Dequeue().ConfigureAwait(false);
 
                     // Even though the BlobDownloadInfo is returned immediately,
                     // CopyToAsync causes ConsumeQueuedTask to wait until the
                     // download is complete
-                    await CopyToAsync(result, destination, cancellationToken).ConfigureAwait(false);
+                    await CopyToAsync(
+                        result,
+                        destination,
+                        cancellationToken)
+                        .ConfigureAwait(false);
                 }
             }
             catch (Exception ex)
@@ -149,7 +170,10 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        public Response DownloadTo(Stream destination, BlobRequestConditions conditions, CancellationToken cancellationToken)
+        public Response DownloadTo(
+            Stream destination,
+            BlobRequestConditions conditions,
+            CancellationToken cancellationToken)
         {
             // Wrap the download range calls in a Download span for distributed
             // tracing
@@ -240,14 +264,20 @@ namespace Azure.Storage.Blobs
                 IfUnmodifiedSince = conditions?.IfUnmodifiedSince
             };
 
-        private static async Task CopyToAsync(BlobDownloadInfo result, Stream destination, CancellationToken cancellationToken) =>
+        private static async Task CopyToAsync(
+            BlobDownloadInfo result,
+            Stream destination,
+            CancellationToken cancellationToken) =>
             await result.Content.CopyToAsync(
                 destination,
                 Constants.DefaultDownloadCopyBufferSize,
                 cancellationToken)
                 .ConfigureAwait(false);
 
-        private static void CopyTo(BlobDownloadInfo result, Stream destination, CancellationToken cancellationToken)
+        private static void CopyTo(
+            BlobDownloadInfo result,
+            Stream destination,
+            CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
             result.Content.CopyTo(destination, Constants.DefaultDownloadCopyBufferSize);

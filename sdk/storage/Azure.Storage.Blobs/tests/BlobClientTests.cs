@@ -412,7 +412,7 @@ namespace Azure.Storage.Blobs.Test
                     metadata: default,
                     conditions: default,
                     progressHandler: default,
-                    singleBlockThreshold: singleBlockThreshold,
+                    singleUploadThreshold: singleBlockThreshold,
                     transferOptions: transferOptions,
                     async: true);
             }
@@ -462,7 +462,7 @@ namespace Azure.Storage.Blobs.Test
                         metadata: default,
                         conditions: default,
                         progressHandler: default,
-                        singleBlockThreshold: singleBlockThreshold,
+                        singleUploadThreshold: singleBlockThreshold,
                         transferOptions: transferOptions,
                         async: true);
                 }
@@ -701,7 +701,8 @@ namespace Azure.Storage.Blobs.Test
         #endregion Upload
 
         [Test]
-        [LiveOnly] // Don't want to record 1000 downloads of the same bytes
+        [Explicit]
+        [Ignore("The latest test runner isn't handling the [Explicit] attribute properly")]
         public async Task Perf_SmallBlobs()
         {
             // Turn off logging and diagnostics
@@ -732,8 +733,8 @@ namespace Azure.Storage.Blobs.Test
         } // Add breakpoint here to stop collecting traces
 
         [Test]
-        [LiveOnly]
         [Explicit] // This runs for a full minute and uploads a ton of data.  Don't want this on every run.
+        [Ignore("The latest test runner isn't handling the [Explicit] attribute properly")]
         public async Task Upload_Stress()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
