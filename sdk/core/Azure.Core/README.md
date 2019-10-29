@@ -103,6 +103,8 @@ To create an Azure SDK log listener that outputs messages to console use `AzureE
 using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
 ```
 
+More on logging in [configuration samples](samples/Configuration.md)
+
 ### Reporting Errors ```RequestFailedException```
 
 ```C# Snippet:RequestFailedException
@@ -117,6 +119,8 @@ catch (RequestFailedException e) when (e.Status == 404)
     Console.WriteLine("ErrorCode " + e.ErrorCode);
 }
 ```
+
+More on handling responses in [response samples](samples/Response.md)
 
 ### Consuming Service Methods Returning ```AsyncPageable<T>```
 
@@ -187,3 +191,5 @@ mock.Setup(c => c.GetSecret("Name", null, default))
 SecretClient client = mock.Object;
 KeyVaultSecret secret = client.GetSecret("Name");
 ```
+
+More on mocking in [mocking samples](samples/Mocking.md)
