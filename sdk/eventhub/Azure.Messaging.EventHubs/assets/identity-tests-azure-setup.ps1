@@ -38,6 +38,10 @@ param
 
   [Parameter(Mandatory=$true, ParameterSetName="Execute")]
   [ValidateNotNullOrEmpty()]
+  [string] $EventHubsName,
+
+  [Parameter(Mandatory=$true, ParameterSetName="Execute")]
+  [ValidateNotNullOrEmpty()]
   [ValidateScript({ $_.Length -ge 6})]
   [string] $ServicePrincipalName
 )
@@ -53,6 +57,59 @@ Import-Module Az.Resources
 # ==========================
 
 . .\functions\live-tests-functions.ps1
+
+function DisplayHelp
+{
+  <#
+    .SYNOPSIS
+      Displays the usage help text.
+
+    .DESCRIPTION
+      Displays the help text for usage.
+
+    .OUTPUTS
+      Help text for usage to the console window.
+  #>
+
+  $indent = "    "
+
+  Write-Host "`n"
+  Write-Host "Event Hubs With Azure Identity Test Environment Setup"
+  Write-Host ""
+  Write-Host "$($indent)This script handles creation and configuration of needed resources within an Azure subscription"
+  Write-Host "$($indent)for use with the Event Hubs client library Live test suite regarding authentication with Azure Active Directory"
+  Write-Host "$($indent)and the Azure.Identity SDK."
+  Write-Host ""
+  Write-Host "$($indent)Upon completion, the script will output a set of environment variables with sensitive information which"
+  Write-Host "$($indent)are used for testing.  When running Live tests, please be sure to have these environment variables available,"
+  Write-Host "$($indent)either within Visual Studio or command line environment."
+  Write-Host ""
+  Write-Host "$($indent)NOTE: Some of these values, such as the client secret, are difficult to recover; please copy them and keep in a"
+  Write-Host "$($indent)safe place."
+  Write-Host ""
+  Write-Host ""
+  Write-Host "$($indent)Available Parameters:"
+  Write-Host ""
+  Write-Host "$($indent)-Help`t`t`tDisplays this message."
+  Write-Host ""
+
+  Write-Host "$($indent)-SubscriptionName`t`tRequired.  The name of the Azure subscription to be used for"
+  Write-Host "$($indent)`t`t`t`trunning the Live tests."
+  Write-Host ""
+    
+  Write-Host "$($indent)-ResourceGroupName`t`tThe name of the Azure Resource Group that will contain the resources"
+  Write-Host "$($indent)`t`t`t`tused for the tests.  This will be created if it does not exist."
+  Write-Host ""
+  Write-Host ""
+    
+  Write-Host "$($indent)-EventHubsName`t`tThe name of the Event Hubs that will be used for testings."
+  Write-Host ""
+
+  Write-Host "$($indent)-ServicePrincipalName`tThe name to use for the service principal that will"
+  Write-Host "$($indent)`t`t`t`tbe created to manage the Event Hub instances dynamically for the tests.  This"
+  Write-Host "$($indent)`t`t`t`tprincipal must not already exist."
+  Write-Host ""
+}
 
 # ====================
 # == Script Actions ==
@@ -104,23 +161,11 @@ if ($subscription -eq $null)
 
 Set-AzContext -SubscriptionId "$($subscription.Id)" -Scope "Process" | Out-Null
 
-# Create the resource group, if needed.
+# Tries to retrieve the resource group created with the script 'live-tests-azure-setup.ps1'
 
 Write-Host "`t...Requesting resource group"
 
-$createResourceGroup = $false
 $resourceGroup = (Get-AzResourceGroup -ResourceGroupName "$($ResourceGroupName)" -ErrorAction SilentlyContinue)
-
-if ($resourceGroup -eq $null)
-{
-    $createResourceGroup = $true
-}
-
-if ($createResourceGroup)
-{
-    Write-Host "`t...Creating new resource group"
-    $resourceGroup = (New-AzResourceGroup -Name "$($ResourceGroupName)" -Location "$($AzureRegion)")
-}
 
 if ($resourceGroup -eq $null)
 {
@@ -133,9 +178,9 @@ if ($resourceGroup -eq $null)
 
 try 
 {
-    # Create the service principal and grant contributor access for management in the resource group.
+    # Create the service principal and grant contributor access for management in the event hubs.
 
-    Write-Host "`t...Creating new service principal"
+    Write-Host "`t...Creating new service principal for use with Azure.Identity"
     Start-Sleep 1
 
     $credentials = New-Object Microsoft.Azure.Commands.ActiveDirectory.PSADPasswordCredential -Property @{StartDate=Get-Date; EndDate=Get-Date -Year 2099; Password="$(GenerateRandomPassword)"}            
@@ -144,7 +189,6 @@ try
     if ($principal -eq $null)
     {
         Write-Error "Unable to create the service principal: $($ServicePrincipalName)"
-        TearDownResources $createResourceGroup
         exit -1
     }
     
@@ -156,25 +200,19 @@ try
 
     try 
     {
-        New-AzRoleAssignment -ApplicationId "$($principal.ApplicationId)" -RoleDefinitionName "Contributor" -ResourceGroupName "$($ResourceGroupName)" | Out-Null
+        New-AzRoleAssignment -ApplicationId "$($principal.ApplicationId)" -RoleDefinitionName "Azure Event Hubs Data Owner" -ResourceName "$($EventHubsName)" -ResourceType "Microsoft.EventHub/namespaces" -ResourceGroupName "$($ResourceGroupName)" | Out-Null
     }
     catch 
     {
         Write-Host "`t...Still waiting for identity propagation (this will take a moment)"
         Start-Sleep 60
-        New-AzRoleAssignment -ApplicationId "$($principal.ApplicationId)" -RoleDefinitionName "Contributor" -ResourceGroupName "$($ResourceGroupName)" | Out-Null
+        New-AzRoleAssignment -ApplicationId "$($principal.ApplicationId)" -RoleDefinitionName "Azure Event Hubs Data Owner" -ResourceName "$($EventHubsName)" -ResourceType "Microsoft.EventHub/namespaces" -ResourceGroupName "$($ResourceGroupName)" | Out-Null
     }    
 
     # Write the environment variables.
 
     Write-Host "Done."
     Write-Host ""
-    Write-Host ""
-    Write-Host "EVENT_HUBS_RESOURCEGROUP=$($ResourceGroupName)"
-    Write-Host ""
-    Write-Host "EVENT_HUBS_SUBSCRIPTION=$($subscription.SubscriptionId)"
-    Write-Host ""
-    Write-Host "EVENT_HUBS_TENANT=$($subscription.TenantId)"
     Write-Host ""
     Write-Host "EVENT_HUBS_CLIENT=$($principal.ApplicationId)"
     Write-Host ""
@@ -184,6 +222,5 @@ try
 catch 
 {
     Write-Error $_.Exception.Message
-    TearDownResources $createResourceGroup
     exit -1
 }
