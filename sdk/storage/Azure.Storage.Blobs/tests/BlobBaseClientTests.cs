@@ -498,7 +498,7 @@ namespace Azure.Storage.Blobs.Test
                 Stream.Null,
                 new BlobRequestConditions
                 {
-                    IfModifiedSince = DateTimeOffset.Now
+                    IfModifiedSince = Recording.UtcNow
                 });
             Assert.AreEqual(304, result.Status);
         }
