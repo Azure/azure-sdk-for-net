@@ -124,7 +124,26 @@ await foreach (SecretProperties secretProperties in response)
 ```
 
 ### Consuming Long Running Operations Using ```Operation<T>```
-Comming soon ...
+
+Some operations take long time to complete and requre polling for their status such operations are exposed as methods returning `*Operation<T>` types.
+
+The `WaitForCompletionAsync` method is an easy way to wait for operation completion and get the resulting value.
+
+```C# Snippet:OperationCompletion
+// create a client
+SecretClient client = new SecretClient(new Uri("http://example.com"), new DefaultAzureCredential());
+
+// Start the operation
+DeleteSecretOperation operation = client.StartDeleteSecret("SecretName");
+
+Response<DeletedSecret> response = await operation.WaitForCompletionAsync();
+DeletedSecret value = response.Value;
+
+Console.WriteLine(value.Name);
+Console.WriteLine(value.ScheduledPurgeDate);
+```
+
+More on long running operations in [long running operation samples](samples/LongRunningOperations.md)
 
 ### Mocking
 One of the most important cross-cutting features of our new client libraries using Azure.Core is that they are designed for mocking.
