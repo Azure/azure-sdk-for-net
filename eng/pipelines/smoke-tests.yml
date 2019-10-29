@@ -1,0 +1,52 @@
+variables:
+  - template: ./templates/variables/globals.yml
+
+jobs:
+  - job: SmokeTest
+
+    strategy:
+      matrix:
+        Linux:
+          OSName: "Linux"
+          OSVmImage: "ubuntu-16.04"
+          TestTargetFramework: netcoreapp2.1
+        Windows_NetCoreApp:
+          OSName: "Windows"
+          OSVmImage: "windows-2019"
+          TestTargetFramework: netcoreapp2.1
+        Windows_NetFramework:
+          OSName: "Windows"
+          OSVmImage: "windows-2019"
+          TestTargetFramework: net461
+        MacOs:
+          OSName: "MacOS"
+          OSVmImage: "macOS-10.13"
+          TestTargetFramework: netcoreapp2.1
+
+    pool:
+      vmImage: $(OSVmImage)
+
+    steps:
+      - task: DotNetCoreInstaller@2
+        displayName: "Use .NET Core runtime $(DotNetCoreRuntimeVersion)"
+        inputs:
+          packageType: runtime
+          version: "$(DotNetCoreRuntimeVersion)"
+
+      - task: DotNetCoreInstaller@2
+        displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
+        inputs:
+          packageType: sdk
+          version: "$(DotNetCoreSDKVersion)"
+
+      - script: dotnet run -p ./samples/SmokeTest/SmokeTest/SmokeTest.csproj --framework $(TestTargetFramework)
+        displayName: "Run Smoke Tests"
+        env:
+          KEY_VAULT_URI: $(smoke-tests-key-vault-project-url)
+          EVENT_HUBS_CONNECTION_STRING: $(smoke-tests-event-hubs-connection-string)
+          BLOB_CONNECTION_STRING: $(smoke-tests-storage-connection-string)
+          CLIENT_SECRET: $(aad-azure-sdk-test-client-secret)
+          DIR_TENANT_ID: $(aad-azure-sdk-test-tenant-id)
+          APP_CLIENT_ID: $(aad-azure-sdk-test-client-id)
+          COSMOS_AUTH_KEY: $(smoke-tests-cosmos-key)
+          COSMOS_URI: $(smoke-tests-cosmos-endpoint)

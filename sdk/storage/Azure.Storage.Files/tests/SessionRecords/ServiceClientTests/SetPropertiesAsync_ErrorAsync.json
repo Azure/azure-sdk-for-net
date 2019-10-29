@@ -1,0 +1,73 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "http:\u002f\u002fgapradev.file.core.windows.net\u002f?restype=service\u0026comp=properties",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Request-Id": "|c5886092-4f48765b1e07fd68.",
+        "User-Agent": [
+          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190912.1\u002b9a86ae3367dccb76004b59b244c982904496250d",
+          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "e760b9aa-d7fb-6a17-467c-ac8a3a2dca3f",
+        "x-ms-date": "Thu, 12 Sep 2019 22:40:14 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-02-02"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application\u002fxml",
+        "Date": "Thu, 12 Sep 2019 22:40:14 GMT",
+        "Server": [
+          "Windows-Azure-File\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
+        ],
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "e760b9aa-d7fb-6a17-467c-ac8a3a2dca3f",
+        "x-ms-request-id": "9fccd986-901a-0004-52bb-691f3c000000",
+        "x-ms-version": "2019-02-02"
+      },
+      "ResponseBody": "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cStorageServiceProperties\u003e\u003cHourMetrics\u003e\u003cVersion\u003e1.0\u003c\u002fVersion\u003e\u003cEnabled\u003etrue\u003c\u002fEnabled\u003e\u003cIncludeAPIs\u003efalse\u003c\u002fIncludeAPIs\u003e\u003cRetentionPolicy\u003e\u003cEnabled\u003etrue\u003c\u002fEnabled\u003e\u003cDays\u003e3\u003c\u002fDays\u003e\u003c\u002fRetentionPolicy\u003e\u003c\u002fHourMetrics\u003e\u003cMinuteMetrics\u003e\u003cVersion\u003e1.0\u003c\u002fVersion\u003e\u003cEnabled\u003etrue\u003c\u002fEnabled\u003e\u003cIncludeAPIs\u003efalse\u003c\u002fIncludeAPIs\u003e\u003cRetentionPolicy\u003e\u003cEnabled\u003etrue\u003c\u002fEnabled\u003e\u003cDays\u003e3\u003c\u002fDays\u003e\u003c\u002fRetentionPolicy\u003e\u003c\u002fMinuteMetrics\u003e\u003cCors\u003e\u003cCorsRule\u003e\u003cAllowedMethods\u003ePUT,GET\u003c\u002fAllowedMethods\u003e\u003cAllowedOrigins\u003e*\u003c\u002fAllowedOrigins\u003e\u003cAllowedHeaders\u003ex-ms-meta-abc,x-ms-meta-data*,x-ms-meta-target*\u003c\u002fAllowedHeaders\u003e\u003cExposedHeaders\u003ex-ms-meta-*\u003c\u002fExposedHeaders\u003e\u003cMaxAgeInSeconds\u003e1000\u003c\u002fMaxAgeInSeconds\u003e\u003c\u002fCorsRule\u003e\u003c\u002fCors\u003e\u003c\u002fStorageServiceProperties\u003e"
+    },
+    {
+      "RequestUri": "https:\u002f\u002ferror.file.core.windows.net\u002f?restype=service\u0026comp=properties",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "680",
+        "Content-Type": "application\u002fxml",
+        "Request-Id": "|c5886093-4f48765b1e07fd68.",
+        "User-Agent": [
+          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190912.1\u002b9a86ae3367dccb76004b59b244c982904496250d",
+          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "5357683d-0c87-0d92-1265-0f071a36bc17",
+        "x-ms-date": "Thu, 12 Sep 2019 22:40:14 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-02-02"
+      },
+      "RequestBody": "\u003cStorageServiceProperties\u003e\u003cHourMetrics\u003e\u003cVersion\u003e1.0\u003c\u002fVersion\u003e\u003cEnabled\u003etrue\u003c\u002fEnabled\u003e\u003cIncludeAPIs\u003efalse\u003c\u002fIncludeAPIs\u003e\u003cRetentionPolicy\u003e\u003cEnabled\u003etrue\u003c\u002fEnabled\u003e\u003cDays\u003e3\u003c\u002fDays\u003e\u003c\u002fRetentionPolicy\u003e\u003c\u002fHourMetrics\u003e\u003cMinuteMetrics\u003e\u003cVersion\u003e1.0\u003c\u002fVersion\u003e\u003cEnabled\u003etrue\u003c\u002fEnabled\u003e\u003cIncludeAPIs\u003efalse\u003c\u002fIncludeAPIs\u003e\u003cRetentionPolicy\u003e\u003cEnabled\u003etrue\u003c\u002fEnabled\u003e\u003cDays\u003e3\u003c\u002fDays\u003e\u003c\u002fRetentionPolicy\u003e\u003c\u002fMinuteMetrics\u003e\u003cCors\u003e\u003cCorsRule\u003e\u003cAllowedOrigins\u003e*\u003c\u002fAllowedOrigins\u003e\u003cAllowedMethods\u003ePUT,GET\u003c\u002fAllowedMethods\u003e\u003cAllowedHeaders\u003ex-ms-meta-abc,x-ms-meta-data*,x-ms-meta-target*\u003c\u002fAllowedHeaders\u003e\u003cExposedHeaders\u003ex-ms-meta-*\u003c\u002fExposedHeaders\u003e\u003cMaxAgeInSeconds\u003e1000\u003c\u002fMaxAgeInSeconds\u003e\u003c\u002fCorsRule\u003e\u003c\u002fCors\u003e\u003c\u002fStorageServiceProperties\u003e",
+      "StatusCode": 403,
+      "ResponseHeaders": {
+        "Content-Length": "461",
+        "Content-Type": "application\u002fxml",
+        "Date": "Thu, 12 Sep 2019 22:40:14 GMT",
+        "Server": "Microsoft-HTTPAPI\u002f2.0",
+        "x-ms-error-code": "AuthenticationFailed",
+        "x-ms-request-id": "976ef14d-401a-0067-34bb-69eaa4000000"
+      },
+      "ResponseBody": [
+        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eAuthenticationFailed\u003c\u002fCode\u003e\u003cMessage\u003eServer failed to authenticate the request. Make sure the value of Authorization header is formed correctly including the signature.\n",
+        "RequestId:976ef14d-401a-0067-34bb-69eaa4000000\n",
+        "Time:2019-09-12T22:40:14.5647526Z\u003c\u002fMessage\u003e\u003cAuthenticationErrorDetail\u003eCannot find the claimed account when trying to GetProperties for the account gapradev.\u003c\u002fAuthenticationErrorDetail\u003e\u003c\u002fError\u003e"
+      ]
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1513191547",
+    "Storage_TestConfigDefault": "ProductionTenant\ngapradev\nU2FuaXRpemVk\nhttp:\u002f\u002fgapradev.blob.core.windows.net\nhttp:\u002f\u002fgapradev.file.core.windows.net\nhttp:\u002f\u002fgapradev.queue.core.windows.net\nhttp:\u002f\u002fgapradev.table.core.windows.net\n\n\n\n\nhttp:\u002f\u002fgapradev-secondary.blob.core.windows.net\nhttp:\u002f\u002fgapradev-secondary.file.core.windows.net\nhttp:\u002f\u002fgapradev-secondary.queue.core.windows.net\nhttp:\u002f\u002fgapradev-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http:\u002f\u002fgapradev.blob.core.windows.net\u002f;QueueEndpoint=http:\u002f\u002fgapradev.queue.core.windows.net\u002f;TableEndpoint=http:\u002f\u002fgapradev.table.core.windows.net\u002f;FileEndpoint=http:\u002f\u002fgapradev.file.core.windows.net\u002f;BlobSecondaryEndpoint=http:\u002f\u002fgapradev-secondary.blob.core.windows.net\u002f;QueueSecondaryEndpoint=http:\u002f\u002fgapradev-secondary.queue.core.windows.net\u002f;TableSecondaryEndpoint=http:\u002f\u002fgapradev-secondary.table.core.windows.net\u002f;FileSecondaryEndpoint=http:\u002f\u002fgapradev-secondary.file.core.windows.net\u002f;AccountName=gapradev;AccountKey=Sanitized"
+  }
+}

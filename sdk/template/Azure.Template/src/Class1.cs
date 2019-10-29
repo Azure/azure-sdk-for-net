@@ -1,7 +1,11 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
-namespace Microsoft.Azure.Template
+using System;
+
+namespace Azure.Data
 {
+    /// <summary> test </summary>
     public class Class1
     {
     }

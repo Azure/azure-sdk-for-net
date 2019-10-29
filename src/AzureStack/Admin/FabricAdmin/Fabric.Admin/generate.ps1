@@ -1,1 +1,0 @@
-Start-AutoRestCodeGeneration -ResourceProvider "azsadmin/resource-manager/fabric" -AutoRestVersion "latest" -SdkRootDirectory $PSScriptRoot -ConfigFileTag "package-2018-10-01"
