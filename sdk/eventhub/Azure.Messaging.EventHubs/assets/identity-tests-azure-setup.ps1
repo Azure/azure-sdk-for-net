@@ -214,9 +214,9 @@ try
     Write-Host "Done."
     Write-Host ""
     Write-Host ""
-    Write-Host "EVENT_HUBS_CLIENT=$($principal.ApplicationId)"
+    Write-Host "EVENT_HUBS_IDENTITY_CLIENT=$($principal.ApplicationId)"
     Write-Host ""
-    Write-Host "EVENT_HUBS_SECRET=$($credentials.Password)"
+    Write-Host "EVENT_HUBS_IDENTITY_SECRET=$($credentials.Password)"
     Write-Host ""
 }
 catch 
