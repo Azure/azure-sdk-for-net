@@ -63,7 +63,6 @@ known_content_issues:
   - ['sdk/servicebus/Microsoft.Azure.ServiceBus/README.md','#5499']
   - ['sdk/eventhub/Microsoft.Azure.EventHubs/README.md','#5499']
   - ['sdk/alertsmanagement/Microsoft.Azure.Management.AlertsManagement/README.md','#5499']
-  - ['sdk/appconfiguration/Azure.Data.AppConfiguration/README.md','#5499']
   - ['sdk/appconfiguration/Azure.Data.AppConfiguration/tests/Readme.md','#5499']
   - ['sdk/appconfiguration/Azure.Data.AppConfiguration/samples/README.md','#5499']
   - ['sdk/core/Azure.Core/README.md','#5499']
@@ -77,7 +76,6 @@ known_content_issues:
   - ['sdk/cognitiveservices/Personalizer/src/Readme.md','#5499']
   - ['sdk/batch/Microsoft.Azure.Batch/README.md','#5499']
   - ['sdk/batch/Microsoft.Azure.Batch.Conventions.Files/README.md','#5499']
-  - ['docs/README.md','#5499']
 
 # .net climbs upwards. placing these to prevent assigning readmes to the wrong project
 package_indexing_exclusion_list:
