@@ -113,6 +113,9 @@ catch (RequestFailedException e) when (e.Status == 404)
 
 ### Consuming Service Methods Returning ```AsyncPageable<T>```
 
+If a service call returns multiple values in pages it would return `Pageable<T>/AsyncPageable<T>` as a result.
+You can iterate over `AsyncPageable` directly or in pages.
+
 ```C# Snippet:AsyncPageable
 // call a service method, which returns AsyncPageable<T>
 AsyncPageable<SecretProperties> response = client.GetPropertiesOfSecretsAsync();
@@ -122,6 +125,8 @@ await foreach (SecretProperties secretProperties in response)
     Console.WriteLine(secretProperties.Name);
 }
 ```
+
+More on paged responses in [response samples](samples/Response.md)
 
 ### Consuming Long Running Operations Using ```Operation<T>```
 
