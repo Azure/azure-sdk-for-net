@@ -123,7 +123,7 @@ namespace Azure.Messaging.EventHubs.Samples
                     return Task.CompletedTask;
                 };
 
-                eventProcessor.ProcessExceptionAsync = (PartitionContext partitionContext, Exception exception) =>
+                eventProcessor.ProcessExceptionAsync = (ProcessorErrorContext errorContext) =>
                 {
                     // All the unhandled exceptions encountered during the event processor execution are passed to this method so
                     // the user can decide how to handle them.
@@ -131,7 +131,7 @@ namespace Azure.Messaging.EventHubs.Samples
                     // This piece of code is not supposed to be reached by this sample.  If the following message has been printed
                     // to the Console, then something unexpected has happened.
 
-                    Console.WriteLine($"\tPartition '{ partitionContext.PartitionId }': an unhandled exception was encountered. This was not expected to happen.");
+                    Console.WriteLine($"\tPartition '{ errorContext.PartitionId }': an unhandled exception was encountered. This was not expected to happen.");
 
                     // This method is asynchronous, which means it's expected to return a Task.
 

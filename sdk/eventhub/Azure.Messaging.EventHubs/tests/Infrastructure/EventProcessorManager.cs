@@ -70,7 +70,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   A callback action to be called on <see cref="EventProcessor.ProcessExceptionAsync" />.
         /// </summary>
         ///
-        private Action<PartitionContext, Exception> OnProcessException { get; }
+        private Action<ProcessorErrorContext> OnProcessException { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventProcessorManager"/> class.
@@ -92,7 +92,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                      Action<InitializePartitionProcessingContext> onInitialize = null,
                                      Action<PartitionProcessingStoppedContext> onClose = null,
                                      Action<PartitionEvent> onProcessEvent = null,
-                                     Action<PartitionContext, Exception> onProcessException = null)
+                                     Action<ProcessorErrorContext> onProcessException = null)
         {
             ConnectionString = connectionString;
             ConsumerGroup = consumerGroup;
@@ -158,9 +158,9 @@ namespace Azure.Messaging.EventHubs.Tests
                     return Task.CompletedTask;
                 };
 
-                eventProcessor.ProcessExceptionAsync = (partitionContext, exception) =>
+                eventProcessor.ProcessExceptionAsync = errorContext =>
                 {
-                    OnProcessException?.Invoke(partitionContext, exception);
+                    OnProcessException?.Invoke(errorContext);
                     return Task.CompletedTask;
                 };
 

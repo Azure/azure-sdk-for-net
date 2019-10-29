@@ -42,7 +42,7 @@ namespace Azure.Messaging.EventHubs.Processor
         private Func<PartitionEvent, Task> _processEventAsync;
 
         /// <summary>Responsible for processing unexpected exceptions thrown while this <see cref="EventProcessor" /> is running.</summary>
-        private Func<PartitionContext, Exception, Task> _processExceptionAsync;
+        private Func<ProcessorErrorContext, Task> _processExceptionAsync;
 
         /// <summary>
         ///   The minimum amount of time to be elapsed between two load balancing verifications.
@@ -175,7 +175,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Implementation is mandatory.
         /// </summary>
         ///
-        public Func<PartitionContext, Exception, Task> ProcessExceptionAsync
+        public Func<ProcessorErrorContext, Task> ProcessExceptionAsync
         {
             internal get => _processExceptionAsync;
             set => EnsureNotRunningAndInvoke(() => _processExceptionAsync = value);

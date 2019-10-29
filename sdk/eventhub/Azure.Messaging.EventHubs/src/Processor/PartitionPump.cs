@@ -314,7 +314,8 @@ namespace Azure.Messaging.EventHubs.Processor
                 // In case an exception is encountered while the exception is being processed, don't catch it
                 // and let the calling method (StopAsync) handle it.
 
-                await OwnerEventProcessor.ProcessExceptionAsync(Context, unrecoverableException).ConfigureAwait(false);
+                var errorContext = new ProcessorErrorContext(Context.PartitionId, unrecoverableException);
+                await OwnerEventProcessor.ProcessExceptionAsync(errorContext).ConfigureAwait(false);
             }
         }
     }
