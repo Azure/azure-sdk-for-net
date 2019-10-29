@@ -1,6 +1,8 @@
 # Release History
 
 ## 1.0.0
+- First stable release of Azure.Identity package.
+
 ### Breaking Changes
 - Rename `AzureCredentialOptions` -> `TokenCredentialOptions`
   - Renamed property `VerificationUrl` -> `VerificationUri` and changed type from `string` to `Uri`
@@ -31,6 +33,10 @@
 - Updated exception model across the Azure.Identity library.
   - `TokenCredential` implementations in the Azure.Identity library now throw exceptions rather than returning `default`(`AccessToken`) when no token is obtained
   - Added the `CredentialUnavailableExcpetion` exception type to distinguish cases when failure to obtain an `AccessToken` was expected
+  
+### DependencyChanges
+- Adopted Azure.Core 1.0.0
+
 ### Fixes and improvements
 - Update `ManagedIdentityCredential` IMDS availability check to handle immediate network failures
 - Added a `DefaultAzureCredential` constructor overload to enable interactive credential types by default
