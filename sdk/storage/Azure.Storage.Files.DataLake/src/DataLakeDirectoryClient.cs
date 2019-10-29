@@ -14,7 +14,7 @@ namespace Azure.Storage.Files.DataLake
     /// <summary>
     /// A DirectoryClient represents a URI to the Azure DataLake service allowing you to manipulate a directory.
     /// </summary>
-    public class DirectoryClient : PathClient
+    public class DataLakeDirectoryClient : DataLakePathClient
     {
         /// <summary>
         /// The name of the directory.
@@ -35,15 +35,29 @@ namespace Azure.Storage.Files.DataLake
 
         #region ctors
         /// <summary>
-        /// Initializes a new instance of the <see cref="DirectoryClient"/>
+        /// Initializes a new instance of the <see cref="DataLakeDirectoryClient"/>
         /// class for mocking.
         /// </summary>
-        protected DirectoryClient()
+        protected DataLakeDirectoryClient()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DirectoryClient"/>
+        /// Initializes a new instance of the <see cref="DataLakeDirectoryClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="directoryUri">
+        /// A <see cref="Uri"/> referencing the directory that includes the
+        /// name of the account, the name of the file system, and the path of the
+        /// directory.
+        /// </param>
+        public DataLakeDirectoryClient(Uri directoryUri)
+            : this(directoryUri, (HttpPipelinePolicy)null, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeDirectoryClient"/>
         /// class.
         /// </summary>
         /// <param name="directoryUri">
@@ -56,13 +70,30 @@ namespace Azure.Storage.Files.DataLake
         /// pipeline policies for authentication, retries, etc., that are
         /// applied to every request.
         /// </param>
-        public DirectoryClient(Uri directoryUri, DataLakeClientOptions options = default)
+        public DataLakeDirectoryClient(Uri directoryUri, DataLakeClientOptions options)
             : this(directoryUri, (HttpPipelinePolicy)null, options)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DirectoryClient"/>
+        /// Initializes a new instance of the <see cref="DataLakeDirectoryClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="directoryUri">
+        /// A <see cref="Uri"/> referencing the directory that includes the
+        /// name of the account, the name of the file system, and the path of the
+        /// directory.
+        /// </param>
+        /// <param name="credential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        public DataLakeDirectoryClient(Uri directoryUri, StorageSharedKeyCredential credential)
+            : this(directoryUri, credential.AsPolicy(), null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeDirectoryClient"/>
         /// class.
         /// </summary>
         /// <param name="directoryUri">
@@ -78,13 +109,52 @@ namespace Azure.Storage.Files.DataLake
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public DirectoryClient(Uri directoryUri, StorageSharedKeyCredential credential, DataLakeClientOptions options = default)
+        public DataLakeDirectoryClient(Uri directoryUri, StorageSharedKeyCredential credential, DataLakeClientOptions options)
             : this(directoryUri, credential.AsPolicy(), options)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DirectoryClient"/>
+        /// Initializes a new instance of the <see cref="DataLakeDirectoryClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="directoryUri">
+        /// A <see cref="Uri"/> referencing the directory that includes the
+        /// name of the account, the name of the file system, and the path of the
+        /// directory.
+        /// </param>
+        /// <param name="credential">
+        /// The token credential used to sign requests.
+        /// </param>
+        public DataLakeDirectoryClient(Uri directoryUri, TokenCredential credential)
+            : this(directoryUri, credential.AsPolicy(), null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeDirectoryClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="directoryUri">
+        /// A <see cref="Uri"/> referencing the directory that includes the
+        /// name of the account, the name of the file system, and the path of the
+        /// directory.
+        /// </param>
+        /// <param name="credential">
+        /// The token credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        public DataLakeDirectoryClient(Uri directoryUri, TokenCredential credential, DataLakeClientOptions options)
+            : this(directoryUri, credential.AsPolicy(), options)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeDirectoryClient"/>
         /// class.
         /// </summary>
         /// <param name="directoryUri">
@@ -100,13 +170,13 @@ namespace Azure.Storage.Files.DataLake
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        internal DirectoryClient(Uri directoryUri, HttpPipelinePolicy authentication, DataLakeClientOptions options)
+        internal DataLakeDirectoryClient(Uri directoryUri, HttpPipelinePolicy authentication, DataLakeClientOptions options)
             : base(directoryUri, authentication, options)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DirectoryClient"/>
+        /// Initializes a new instance of the <see cref="DataLakeDirectoryClient"/>
         /// class.
         /// </summary>
         /// <param name="directoryUri">
@@ -117,37 +187,37 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        internal DirectoryClient(Uri directoryUri, HttpPipeline pipeline) : base(directoryUri, pipeline)
+        internal DataLakeDirectoryClient(Uri directoryUri, HttpPipeline pipeline) : base(directoryUri, pipeline)
         {
         }
         #endregion ctors
 
         /// <summary>
-        /// Creates a new <see cref="FileClient"/> object by appending
+        /// Creates a new <see cref="DataLakeFileClient"/> object by appending
         /// <paramref name="fileName"/> to the end of <see cref="Uri"/>.  The
-        /// new <see cref="FileClient"/> uses the same request policy
-        /// pipeline as the <see cref="DirectoryClient"/>.
+        /// new <see cref="DataLakeFileClient"/> uses the same request policy
+        /// pipeline as the <see cref="DataLakeDirectoryClient"/>.
         /// </summary>
         /// <param name="fileName">The name of the file.</param>
-        /// <returns>A new <see cref="FileClient"/> instance.</returns>
-        public virtual FileClient GetFileClient(string fileName)
-            => new FileClient(Uri.AppendToPath(fileName), Pipeline);
+        /// <returns>A new <see cref="DataLakeFileClient"/> instance.</returns>
+        public virtual DataLakeFileClient GetFileClient(string fileName)
+            => new DataLakeFileClient(Uri.AppendToPath(fileName), Pipeline);
 
         /// <summary>
-        /// Creates a new <see cref="DirectoryClient"/> object by appending
+        /// Creates a new <see cref="DataLakeDirectoryClient"/> object by appending
         /// <paramref name="subdirectoryName"/> to the end of <see cref="Uri"/>.
-        /// The new <see cref="DirectoryClient"/> uses the same request policy
-        /// pipeline as the <see cref="DirectoryClient"/>.
+        /// The new <see cref="DataLakeDirectoryClient"/> uses the same request policy
+        /// pipeline as the <see cref="DataLakeDirectoryClient"/>.
         /// </summary>
         /// <param name="subdirectoryName">The name of the subdirectory.</param>
-        /// <returns>A new <see cref="DirectoryClient"/> instance.</returns>
-        public virtual DirectoryClient GetSubDirectoryClient(string subdirectoryName)
-            => new DirectoryClient(Uri.AppendToPath(subdirectoryName), Pipeline);
+        /// <returns>A new <see cref="DataLakeDirectoryClient"/> instance.</returns>
+        public virtual DataLakeDirectoryClient GetSubDirectoryClient(string subdirectoryName)
+            => new DataLakeDirectoryClient(Uri.AppendToPath(subdirectoryName), Pipeline);
 
         /// <summary>
         /// Sets the various name fields if they are currently null.
         /// </summary>
-        protected override void SetNameFieldsIfNull()
+        internal override void SetNameFieldsIfNull()
         {
             base.SetNameFieldsIfNull();
 
@@ -204,7 +274,7 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         [ForwardsClientCalls]
         public virtual Response<PathInfo> Create(
-            PathHttpHeaders? httpHeaders = default,
+            PathHttpHeaders httpHeaders = default,
             Metadata metadata = default,
             string permissions = default,
             string umask = default,
@@ -264,7 +334,7 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<PathInfo>> CreateAsync(
-            PathHttpHeaders? httpHeaders = default,
+            PathHttpHeaders httpHeaders = default,
             Metadata metadata = default,
             string permissions = default,
             string umask = default,
@@ -376,20 +446,20 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
-        public new virtual Response<DirectoryClient> Rename(
+        public new virtual Response<DataLakeDirectoryClient> Rename(
             string destinationPath,
             DataLakeRequestConditions sourceConditions = default,
             DataLakeRequestConditions destinationConditions = default,
             CancellationToken cancellationToken = default)
         {
-            Response<PathClient> response = base.Rename(
+            Response<DataLakePathClient> response = base.Rename(
                 destinationPath,
                 sourceConditions,
                 destinationConditions,
                 cancellationToken);
 
             return Response.FromValue(
-                new DirectoryClient(response.Value.DfsUri, response.Value.Pipeline),
+                new DataLakeDirectoryClient(response.Value.DfsUri, response.Value.Pipeline),
                 response.GetRawResponse());
         }
 
@@ -422,13 +492,13 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<DirectoryClient>> RenameAsync(
+        public new virtual async Task<Response<DataLakeDirectoryClient>> RenameAsync(
             string destinationPath,
             DataLakeRequestConditions sourceConditions = default,
             DataLakeRequestConditions destinationConditions = default,
             CancellationToken cancellationToken = default)
         {
-            Response<PathClient> response = await base.RenameAsync(
+            Response<DataLakePathClient> response = await base.RenameAsync(
                 destinationPath,
                 sourceConditions,
                 destinationConditions,
@@ -436,7 +506,7 @@ namespace Azure.Storage.Files.DataLake
                 .ConfigureAwait(false);
 
             return Response.FromValue(
-                new DirectoryClient(response.Value.DfsUri, response.Value.Pipeline),
+                new DataLakeDirectoryClient(response.Value.DfsUri, response.Value.Pipeline),
                 response.GetRawResponse());
         }
         #endregion Move
@@ -489,16 +559,16 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
-        public virtual Response<FileClient> CreateFile(
+        public virtual Response<DataLakeFileClient> CreateFile(
             string fileName,
-            PathHttpHeaders? httpHeaders = default,
+            PathHttpHeaders httpHeaders = default,
             Metadata metadata = default,
             string permissions = default,
             string umask = default,
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            FileClient fileClient = GetFileClient(fileName);
+            DataLakeFileClient fileClient = GetFileClient(fileName);
 
             Response<PathInfo> response = fileClient.Create(
                 httpHeaders,
@@ -560,16 +630,16 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
-        public virtual async Task<Response<FileClient>> CreateFileAsync(
+        public virtual async Task<Response<DataLakeFileClient>> CreateFileAsync(
             string fileName,
-            PathHttpHeaders? httpHeaders = default,
+            PathHttpHeaders httpHeaders = default,
             Metadata metadata = default,
             string permissions = default,
             string umask = default,
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            FileClient fileClient = GetFileClient(fileName);
+            DataLakeFileClient fileClient = GetFileClient(fileName);
 
             Response<PathInfo> response = await fileClient.CreateAsync(
                 httpHeaders,
@@ -703,16 +773,16 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
-        public virtual Response<DirectoryClient> CreateSubDirectory(
+        public virtual Response<DataLakeDirectoryClient> CreateSubDirectory(
             string path,
-            PathHttpHeaders? httpHeaders = default,
+            PathHttpHeaders httpHeaders = default,
             Metadata metadata = default,
             string permissions = default,
             string umask = default,
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DirectoryClient directoryClient = GetSubDirectoryClient(path);
+            DataLakeDirectoryClient directoryClient = GetSubDirectoryClient(path);
 
             Response<PathInfo> response = directoryClient.Create(
                 PathResourceType.Directory,
@@ -775,16 +845,16 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DirectoryClient>> CreateSubDirectoryAsync(
+        public virtual async Task<Response<DataLakeDirectoryClient>> CreateSubDirectoryAsync(
             string path,
-            PathHttpHeaders? httpHeaders = default,
+            PathHttpHeaders httpHeaders = default,
             Metadata metadata = default,
             string permissions = default,
             string umask = default,
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DirectoryClient directoryClient = GetSubDirectoryClient(path);
+            DataLakeDirectoryClient directoryClient = GetSubDirectoryClient(path);
 
             Response<PathInfo> response = await directoryClient.CreateAsync(
                 PathResourceType.Directory,

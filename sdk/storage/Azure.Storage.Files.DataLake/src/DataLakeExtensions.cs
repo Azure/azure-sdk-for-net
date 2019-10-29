@@ -98,7 +98,7 @@ namespace Azure.Storage.Files.DataLake
                 AccessTierChangedOn = blobProperties.AccessTierChangedOn
             };
 
-        internal static DataLakeLease ToDataLakeLease(this Blobs.Models.BlobLease blobLease) =>
+        internal static DataLakeLease ToDataLakeLease(this BlobLease blobLease) =>
             new DataLakeLease()
             {
                 ETag = blobLease.ETag,
@@ -107,16 +107,40 @@ namespace Azure.Storage.Files.DataLake
                 LeaseTime = blobLease.LeaseTime
             };
 
-        internal static BlobHttpHeaders ToBlobHttpHeaders(this PathHttpHeaders pathHttpHeaders) =>
-             new BlobHttpHeaders()
-             {
-                 ContentType = pathHttpHeaders.ContentType,
-                 ContentHash = pathHttpHeaders.ContentHash,
-                 ContentEncoding = new string[] { pathHttpHeaders.ContentEncoding },
-                 ContentLanguage = new string[] { pathHttpHeaders.ContentLanguage },
-                 ContentDisposition = pathHttpHeaders.ContentDisposition,
-                 CacheControl = pathHttpHeaders.CacheControl
-             };
+        internal static BlobHttpHeaders ToBlobHttpHeaders(this PathHttpHeaders pathHttpHeaders)
+        {
+            if (pathHttpHeaders == null)
+            {
+                return null;
+            }
+
+            return new BlobHttpHeaders()
+            {
+                ContentType = pathHttpHeaders.ContentType,
+                ContentHash = pathHttpHeaders.ContentHash,
+                ContentEncoding = new string[] { pathHttpHeaders.ContentEncoding },
+                ContentLanguage = new string[] { pathHttpHeaders.ContentLanguage },
+                ContentDisposition = pathHttpHeaders.ContentDisposition,
+                CacheControl = pathHttpHeaders.CacheControl
+            };
+        }
+
+        internal static BlobRequestConditions ToBlobRequestConditions(this DataLakeRequestConditions dataLakeRequestConditions)
+        {
+            if (dataLakeRequestConditions == null)
+            {
+                return null;
+            }
+
+            return new BlobRequestConditions()
+            {
+                IfMatch = dataLakeRequestConditions.IfMatch,
+                IfNoneMatch = dataLakeRequestConditions.IfNoneMatch,
+                IfModifiedSince = dataLakeRequestConditions.IfModifiedSince,
+                IfUnmodifiedSince = dataLakeRequestConditions.IfUnmodifiedSince,
+                LeaseId = dataLakeRequestConditions.LeaseId
+            };
+        }
 
         internal static PathItem ToPathItem(this Dictionary<string, string> dictionary)
         {

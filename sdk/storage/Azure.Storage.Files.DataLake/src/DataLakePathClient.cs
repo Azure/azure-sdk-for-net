@@ -17,7 +17,7 @@ namespace Azure.Storage.Files.DataLake
     /// <summary>
     /// A PathClient represents a URI to the Azure DataLake service allowing you to manipulate a file or directory.
     /// </summary>
-    public class PathClient
+    public class DataLakePathClient
     {
         /// <summary>
         /// A <see cref="BlockBlobClient"/> associated with the path;
@@ -114,15 +114,29 @@ namespace Azure.Storage.Files.DataLake
 
         #region ctors
         /// <summary>
-        /// Initializes a new instance of the <see cref="PathClient"/>
+        /// Initializes a new instance of the <see cref="DataLakePathClient"/>
         /// class for mocking.
         /// </summary>
-        protected PathClient()
+        protected DataLakePathClient()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PathClient"/>
+        /// Initializes a new instance of the <see cref="DataLakePathClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="pathUri">
+        /// A <see cref="Uri"/> referencing the resource that includes the
+        /// name of the account, the name of the file system, and the path to the
+        /// resource.
+        /// </param>
+        public DataLakePathClient(Uri pathUri)
+            : this(pathUri, (HttpPipelinePolicy)null, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakePathClient"/>
         /// class.
         /// </summary>
         /// <param name="pathUri">
@@ -135,13 +149,30 @@ namespace Azure.Storage.Files.DataLake
         /// pipeline policies for authentication, retries, etc., that are
         /// applied to every request.
         /// </param>
-        public PathClient(Uri pathUri, DataLakeClientOptions options = default)
+        public DataLakePathClient(Uri pathUri, DataLakeClientOptions options)
             : this(pathUri, (HttpPipelinePolicy)null, options)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PathClient"/>
+        /// Initializes a new instance of the <see cref="DataLakePathClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="pathUri">
+        /// A <see cref="Uri"/> referencing the resource that includes the
+        /// name of the account, the name of the file system, and the path to the
+        /// resource.
+        /// </param>
+        /// <param name="credential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        public DataLakePathClient(Uri pathUri, StorageSharedKeyCredential credential)
+            : this(pathUri, credential.AsPolicy(), null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakePathClient"/>
         /// class.
         /// </summary>
         /// <param name="pathUri">
@@ -157,13 +188,52 @@ namespace Azure.Storage.Files.DataLake
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public PathClient(Uri pathUri, StorageSharedKeyCredential credential, DataLakeClientOptions options = default)
+        public DataLakePathClient(Uri pathUri, StorageSharedKeyCredential credential, DataLakeClientOptions options)
             : this(pathUri, credential.AsPolicy(), options)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PathClient"/>
+        /// Initializes a new instance of the <see cref="DataLakePathClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="pathUri">
+        /// A <see cref="Uri"/> referencing the resource that includes the
+        /// name of the account, the name of the file system, and the path to the
+        /// resource.
+        /// </param>
+        /// <param name="credential">
+        /// The token credential used to sign requests.
+        /// </param>
+        public DataLakePathClient(Uri pathUri, TokenCredential credential)
+            : this(pathUri, credential.AsPolicy(), null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakePathClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="pathUri">
+        /// A <see cref="Uri"/> referencing the resource that includes the
+        /// name of the account, the name of the file system, and the path to the
+        /// resource.
+        /// </param>
+        /// <param name="credential">
+        /// The token credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        public DataLakePathClient(Uri pathUri, TokenCredential credential, DataLakeClientOptions options)
+            : this(pathUri, credential.AsPolicy(), options)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakePathClient"/>
         /// class.
         /// </summary>
         /// <param name="pathUri">
@@ -179,7 +249,7 @@ namespace Azure.Storage.Files.DataLake
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        internal PathClient(Uri pathUri, HttpPipelinePolicy authentication, DataLakeClientOptions options)
+        internal DataLakePathClient(Uri pathUri, HttpPipelinePolicy authentication, DataLakeClientOptions options)
         {
             _uri = pathUri;
             _blobUri = GetBlobUri(pathUri);
@@ -191,7 +261,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PathClient"/>
+        /// Initializes a new instance of the <see cref="DataLakePathClient"/>
         /// class.
         /// </summary>
         /// <param name="pathUri">
@@ -206,7 +276,7 @@ namespace Azure.Storage.Files.DataLake
         /// Optional client options that define the transport pipeline
         /// policies for authentication, retries, etc., that are applied to
         /// </param>
-        internal PathClient(Uri pathUri, HttpPipeline pipeline, DataLakeClientOptions options = default)
+        internal DataLakePathClient(Uri pathUri, HttpPipeline pipeline, DataLakeClientOptions options = default)
         {
             _uri = pathUri;
             _blobUri = GetBlobUri(pathUri);
@@ -262,7 +332,7 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// Converts metadata in DFS metadata string
         /// </summary>
-        protected static string BuildMetadataString(Metadata metadata)
+        internal static string BuildMetadataString(Metadata metadata)
         {
             if (metadata == null)
             {
@@ -284,7 +354,7 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// Sets the various name fields if they are currently null.
         /// </summary>
-        protected virtual void SetNameFieldsIfNull()
+        internal virtual void SetNameFieldsIfNull()
         {
             if (_fileSystemName == null || _accountName == null)
             {
@@ -344,7 +414,7 @@ namespace Azure.Storage.Files.DataLake
         [ForwardsClientCalls]
         protected virtual Response<PathInfo> Create(
             PathResourceType resourceType,
-            PathHttpHeaders? httpHeaders = default,
+            PathHttpHeaders httpHeaders = default,
             Metadata metadata = default,
             string permissions = default,
             string umask = default,
@@ -410,7 +480,7 @@ namespace Azure.Storage.Files.DataLake
         [ForwardsClientCalls]
         public virtual async Task<Response<PathInfo>> CreateAsync(
             PathResourceType resourceType,
-            PathHttpHeaders? httpHeaders = default,
+            PathHttpHeaders httpHeaders = default,
             Metadata metadata = default,
             string permissions = default,
             string umask = default,
@@ -478,7 +548,7 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         private async Task<Response<PathInfo>> CreateInternal(
             PathResourceType resourceType,
-            PathHttpHeaders? httpHeaders,
+            PathHttpHeaders httpHeaders,
             Metadata metadata,
             string permissions,
             string umask,
@@ -486,10 +556,10 @@ namespace Azure.Storage.Files.DataLake
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(PathClient)))
+            using (Pipeline.BeginLoggingScope(nameof(DataLakePathClient)))
             {
                 Pipeline.LogMethodEnter(
-                    nameof(PathClient),
+                    nameof(DataLakePathClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(httpHeaders)}: {httpHeaders}\n" +
@@ -536,7 +606,7 @@ namespace Azure.Storage.Files.DataLake
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(PathClient));
+                    Pipeline.LogMethodExit(nameof(DataLakePathClient));
                 }
             }
         }
@@ -652,7 +722,7 @@ namespace Azure.Storage.Files.DataLake
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(PathClient)))
+            using (Pipeline.BeginLoggingScope(nameof(DataLakePathClient)))
             {
                 Pipeline.LogMethodEnter(
                     nameof(BlobBaseClient),
@@ -685,7 +755,7 @@ namespace Azure.Storage.Files.DataLake
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(PathClient));
+                    Pipeline.LogMethodExit(nameof(DataLakePathClient));
                 }
             }
         }
@@ -721,7 +791,7 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
-        public virtual Response<PathClient> Rename(
+        public virtual Response<DataLakePathClient> Rename(
             string destinationPath,
             DataLakeRequestConditions sourceConditions = default,
             DataLakeRequestConditions destinationConditions = default,
@@ -763,7 +833,7 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PathClient>> RenameAsync(
+        public virtual async Task<Response<DataLakePathClient>> RenameAsync(
             string destinationPath,
             DataLakeRequestConditions sourceConditions = default,
             DataLakeRequestConditions destinationConditions = default,
@@ -807,17 +877,17 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<PathClient>> RenameInternal(
+        private async Task<Response<DataLakePathClient>> RenameInternal(
             string destinationPath,
             DataLakeRequestConditions sourceConditions,
             DataLakeRequestConditions destinationConditions,
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(PathClient)))
+            using (Pipeline.BeginLoggingScope(nameof(DataLakePathClient)))
             {
                 Pipeline.LogMethodEnter(
-                    nameof(PathClient),
+                    nameof(DataLakePathClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(destinationPath)}: {destinationPath}\n" +
@@ -829,7 +899,7 @@ namespace Azure.Storage.Files.DataLake
                     string renameSource = "/" + uriBuilder.FileSystemName + "/" + uriBuilder.DirectoryOrFilePath;
 
                     uriBuilder.DirectoryOrFilePath = destinationPath;
-                    PathClient destPathClient = new PathClient(uriBuilder.ToUri(), Pipeline);
+                    DataLakePathClient destPathClient = new DataLakePathClient(uriBuilder.ToUri(), Pipeline);
 
                     Response<PathCreateResult> response = await DataLakeRestClient.Path.CreateAsync(
                         clientDiagnostics: _clientDiagnostics,
@@ -862,7 +932,7 @@ namespace Azure.Storage.Files.DataLake
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(PathClient));
+                    Pipeline.LogMethodExit(nameof(DataLakePathClient));
                 }
             }
         }
@@ -992,10 +1062,10 @@ namespace Azure.Storage.Files.DataLake
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(PathClient)))
+            using (Pipeline.BeginLoggingScope(nameof(DataLakePathClient)))
             {
                 Pipeline.LogMethodEnter(
-                    nameof(PathClient),
+                    nameof(DataLakePathClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n");
                 try
@@ -1032,7 +1102,7 @@ namespace Azure.Storage.Files.DataLake
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(PathClient));
+                    Pipeline.LogMethodExit(nameof(DataLakePathClient));
                 }
             }
         }
@@ -1147,10 +1217,10 @@ namespace Azure.Storage.Files.DataLake
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(PathClient)))
+            using (Pipeline.BeginLoggingScope(nameof(DataLakePathClient)))
             {
                 Pipeline.LogMethodEnter(
-                    nameof(PathClient),
+                    nameof(DataLakePathClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(accessControl)}: {accessControl}\n" +
@@ -1190,7 +1260,7 @@ namespace Azure.Storage.Files.DataLake
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(PathClient));
+                    Pipeline.LogMethodExit(nameof(DataLakePathClient));
                 }
             }
         }
@@ -1227,7 +1297,7 @@ namespace Azure.Storage.Files.DataLake
             CancellationToken cancellationToken = default)
         {
             Response<Blobs.Models.BlobProperties> response = _blockBlobClient.GetProperties(
-                conditions,
+                conditions.ToBlobRequestConditions(),
                 cancellationToken);
 
             return Response.FromValue(
@@ -1265,7 +1335,7 @@ namespace Azure.Storage.Files.DataLake
             CancellationToken cancellationToken = default)
         {
             Response<Blobs.Models.BlobProperties> response = await _blockBlobClient.GetPropertiesAsync(
-                conditions,
+                conditions.ToBlobRequestConditions(),
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -1303,13 +1373,13 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         [ForwardsClientCalls]
         public virtual Response<PathInfo> SetHttpHeaders(
-            PathHttpHeaders? httpHeaders = default,
+            PathHttpHeaders httpHeaders = default,
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
             Response<Blobs.Models.BlobInfo> response = _blockBlobClient.SetHttpHeaders(
-                httpHeaders?.ToBlobHttpHeaders(),
-                conditions,
+                httpHeaders.ToBlobHttpHeaders(),
+                conditions.ToBlobRequestConditions(),
                 cancellationToken);
 
             return Response.FromValue(
@@ -1348,13 +1418,13 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<PathInfo>> SetHttpHeadersAsync(
-            PathHttpHeaders? httpHeaders = default,
+            PathHttpHeaders httpHeaders = default,
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
             Response<Blobs.Models.BlobInfo> response = await _blockBlobClient.SetHttpHeadersAsync(
-                httpHeaders?.ToBlobHttpHeaders(),
-                conditions,
+                httpHeaders.ToBlobHttpHeaders(),
+                conditions.ToBlobRequestConditions(),
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -1402,7 +1472,7 @@ namespace Azure.Storage.Files.DataLake
         {
             Response<Blobs.Models.BlobInfo> response = _blockBlobClient.SetMetadata(
                 metadata,
-                conditions);
+                conditions.ToBlobRequestConditions());
 
             return Response.FromValue(
                 new PathInfo()
@@ -1446,7 +1516,7 @@ namespace Azure.Storage.Files.DataLake
         {
             Response<Blobs.Models.BlobInfo> response = await _blockBlobClient.SetMetadataAsync(
                 metadata,
-                conditions)
+                conditions.ToBlobRequestConditions())
                 .ConfigureAwait(false);
 
             return Response.FromValue(

@@ -8,7 +8,7 @@ namespace Azure.Storage.Files.DataLake.Models
     /// <summary>
     /// An enumeration of paths.
     /// </summary>
-    public class PathSegment
+    internal class PathSegment
     {
         /// <summary>
         /// If the number of paths to be listed exceeds the maxResults limit, a continuation token is returned.
