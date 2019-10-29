@@ -49,6 +49,7 @@ using Azure.Storage;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Models;
+using System;
 
 // Get a connection string to our Azure Storage account.  You can
 // obtain your connection string from the Azure Portal (click
@@ -88,7 +89,7 @@ Uri c = serviceClient.GetBlobContainerClient("letters").GetBlobClient("c").Uri;
 BlobBatchClient batchClient = serviceClient.GetBlobBatchClient();
 
 // Set the access tier for several blobs in one batched request
-batchClient.SetBlobsAccessTier(new Uri[] { a, b, c }, AccessTier.Hot);
+batchClient.SetBlobsAccessTier(new Uri[] { a, b, c }, AccessTier.Cool);
 ```
 
 ### Fine-grained control
@@ -100,7 +101,7 @@ BlobServiceClient serviceClient = new BlobServiceClient(connectionString);
 BlobBatchClient batchClient = serviceClient.GetBlobBatchClient();
 
 // Create a batch
-BlobBatch batch = batchClient.GetBlobBatchClient();
+BlobBatch batch = batchClient.CreateBatch();
 
 // Add a few deletions to the batch
 batch.DeleteBlob("letters", "a");
