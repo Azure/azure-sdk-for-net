@@ -18,7 +18,7 @@ SecretClientOptions options = new SecretClientOptions()
 };
 ```
 
-## User provided HttpClientInstance
+## User provided HttpClient instance
 
 ```C# Snippet:SettingHttpClient
 using HttpClient client = new HttpClient();
