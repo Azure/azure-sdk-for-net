@@ -105,52 +105,6 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Updates a Firewall Policy Tags.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name of the Firewall Policy.
-            /// </param>
-            /// <param name='firewallPolicyName'>
-            /// The name of the Firewall Policy being updated.
-            /// </param>
-            /// <param name='firewallPolicyParameters'>
-            /// Parameters supplied to Update Firewall Policy tags.
-            /// </param>
-            public static FirewallPolicy UpdateTags(this IFirewallPoliciesOperations operations, string resourceGroupName, string firewallPolicyName, TagsObject firewallPolicyParameters)
-            {
-                return operations.UpdateTagsAsync(resourceGroupName, firewallPolicyName, firewallPolicyParameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates a Firewall Policy Tags.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name of the Firewall Policy.
-            /// </param>
-            /// <param name='firewallPolicyName'>
-            /// The name of the Firewall Policy being updated.
-            /// </param>
-            /// <param name='firewallPolicyParameters'>
-            /// Parameters supplied to Update Firewall Policy tags.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<FirewallPolicy> UpdateTagsAsync(this IFirewallPoliciesOperations operations, string resourceGroupName, string firewallPolicyName, TagsObject firewallPolicyParameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.UpdateTagsWithHttpMessagesAsync(resourceGroupName, firewallPolicyName, firewallPolicyParameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Creates or updates the specified Firewall Policy.
             /// </summary>
             /// <param name='operations'>

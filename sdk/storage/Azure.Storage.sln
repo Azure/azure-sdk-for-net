@@ -109,16 +109,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Files.DataLak
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Files.DataLake.Samples.Tests", "Azure.Storage.Files.DataLake\samples\Azure.Storage.Files.DataLake.Samples.Tests.csproj", "{E53736D7-EAF8-417C-9ADA-7ED931916502}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Batching", "Azure.Storage.Blobs.Batching\src\Azure.Storage.Blobs.Batching.csproj", "{4E5FCA87-0AF9-4AB9-8D73-D679604C465D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Batch", "Azure.Storage.Blobs.Batch\src\Azure.Storage.Blobs.Batch.csproj", "{4E5FCA87-0AF9-4AB9-8D73-D679604C465D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Batching", "Batching", "{610DBA57-60FD-4115-8D74-F13A8428973E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Batch", "Batch", "{610DBA57-60FD-4115-8D74-F13A8428973E}"
 	ProjectSection(SolutionItems) = preProject
-		Azure.Storage.Blobs.Batching\BreakingChanges.txt = Azure.Storage.Blobs.Batching\BreakingChanges.txt
-		Azure.Storage.Blobs.Batching\Changelog.txt = Azure.Storage.Blobs.Batching\Changelog.txt
-		Azure.Storage.Blobs.Batching\README.md = Azure.Storage.Blobs.Batching\README.md
+		Azure.Storage.Blobs.Batch\BreakingChanges.txt = Azure.Storage.Blobs.Batch\BreakingChanges.txt
+		Azure.Storage.Blobs.Batch\Changelog.txt = Azure.Storage.Blobs.Batch\Changelog.txt
+		Azure.Storage.Blobs.Batch\README.md = Azure.Storage.Blobs.Batch\README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Batching.Tests", "Azure.Storage.Blobs.Batching\tests\Azure.Storage.Blobs.Batching.Tests.csproj", "{2C48AA18-94E2-4B8E-9345-DCA941B13EB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Batch.Tests", "Azure.Storage.Blobs.Batch\tests\Azure.Storage.Blobs.Batch.Tests.csproj", "{2C48AA18-94E2-4B8E-9345-DCA941B13EB1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

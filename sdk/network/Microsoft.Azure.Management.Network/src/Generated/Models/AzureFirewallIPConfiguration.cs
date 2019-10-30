@@ -88,12 +88,12 @@ namespace Microsoft.Azure.Management.Network.Models
         public SubResource PublicIPAddress { get; set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the Azure firewall IP
-        /// configuration resource. Possible values include: 'Succeeded',
-        /// 'Updating', 'Deleting', 'Failed'
+        /// Gets the provisioning state of the Azure firewall IP configuration
+        /// resource. Possible values include: 'Succeeded', 'Updating',
+        /// 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets name of the resource that is unique within a resource

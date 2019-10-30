@@ -21,11 +21,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Identity.Tests", "..\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs", "..\..\eventhub\Azure.Messaging.EventHubs\src\Azure.Messaging.EventHubs.csproj", "{227CB61F-A6E3-449D-80B8-A89EA38BFA70}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.CheckpointStore.Blob", "..\..\eventhub\Azure.Messaging.EventHubs.CheckpointStore.Blob\src\Azure.Messaging.EventHubs.CheckpointStore.Blob.csproj", "{ED2547CD-2059-4517-BA48-7538F57A3DAE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.CheckpointStore.Blobs", "..\..\eventhub\Azure.Messaging.EventHubs.CheckpointStore.Blobs\src\Azure.Messaging.EventHubs.CheckpointStore.Blobs.csproj", "{ED2547CD-2059-4517-BA48-7538F57A3DAE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.CheckpointStore.Blob.Samples", "..\..\eventhub\Azure.Messaging.EventHubs.CheckpointStore.Blob\samples\Azure.Messaging.EventHubs.CheckpointStore.Blob.Samples.csproj", "{45A71353-4A4D-4558-9FFD-01C89D117356}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.CheckpointStore.Blobs.Samples", "..\..\eventhub\Azure.Messaging.EventHubs.CheckpointStore.Blobs\samples\Azure.Messaging.EventHubs.CheckpointStore.Blobs.Samples.csproj", "{45A71353-4A4D-4558-9FFD-01C89D117356}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests", "..\..\eventhub\Azure.Messaging.EventHubs.CheckpointStore.Blob\tests\Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests.csproj", "{EF1A1437-4877-4FD5-9EBF-5EFCBA811C03}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.CheckpointStore.Blobs.Tests", "..\..\eventhub\Azure.Messaging.EventHubs.CheckpointStore.Blobs\tests\Azure.Messaging.EventHubs.CheckpointStore.Blobs.Tests.csproj", "{EF1A1437-4877-4FD5-9EBF-5EFCBA811C03}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.Samples", "..\..\eventhub\Azure.Messaging.EventHubs\samples\Azure.Messaging.EventHubs.Samples.csproj", "{394E0E71-2B87-42CA-BC26-58191F6E10F7}"
 EndProject
@@ -82,12 +82,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.Azure.Samples", "..\Microsoft.Extensions.Azure\samples\Microsoft.Extensions.Azure.Samples.csproj", "{A1FC5DBE-8BAD-4D54-88C3-9D61F71EF341}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.Azure.Tests", "..\Microsoft.Extensions.Azure\tests\Microsoft.Extensions.Azure.Tests.csproj", "{6DCD39C5-6302-43BD-8CB3-815DFC229AA4}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Samples.Tests", "samples\Azure.Core.Samples.Tests.csproj", "{63C4E320-5D05-4574-ACA5-7EE41E814CF4}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Batching", "..\..\storage\Azure.Storage.Blobs.Batching\src\Azure.Storage.Blobs.Batching.csproj", "{31DEE386-C8F8-4845-9C67-0E5EF328055C}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Batching.Tests", "..\..\storage\Azure.Storage.Blobs.Batching\tests\Azure.Storage.Blobs.Batching.Tests.csproj", "{707974B7-C93D-494D-ADEF-FCEFC6687D7E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -579,42 +573,6 @@ Global
 		{6DCD39C5-6302-43BD-8CB3-815DFC229AA4}.Release|x64.Build.0 = Release|Any CPU
 		{6DCD39C5-6302-43BD-8CB3-815DFC229AA4}.Release|x86.ActiveCfg = Release|Any CPU
 		{6DCD39C5-6302-43BD-8CB3-815DFC229AA4}.Release|x86.Build.0 = Release|Any CPU
-		{63C4E320-5D05-4574-ACA5-7EE41E814CF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{63C4E320-5D05-4574-ACA5-7EE41E814CF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{63C4E320-5D05-4574-ACA5-7EE41E814CF4}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{63C4E320-5D05-4574-ACA5-7EE41E814CF4}.Debug|x64.Build.0 = Debug|Any CPU
-		{63C4E320-5D05-4574-ACA5-7EE41E814CF4}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{63C4E320-5D05-4574-ACA5-7EE41E814CF4}.Debug|x86.Build.0 = Debug|Any CPU
-		{63C4E320-5D05-4574-ACA5-7EE41E814CF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{63C4E320-5D05-4574-ACA5-7EE41E814CF4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{63C4E320-5D05-4574-ACA5-7EE41E814CF4}.Release|x64.ActiveCfg = Release|Any CPU
-		{63C4E320-5D05-4574-ACA5-7EE41E814CF4}.Release|x64.Build.0 = Release|Any CPU
-		{63C4E320-5D05-4574-ACA5-7EE41E814CF4}.Release|x86.ActiveCfg = Release|Any CPU
-		{63C4E320-5D05-4574-ACA5-7EE41E814CF4}.Release|x86.Build.0 = Release|Any CPU
-		{31DEE386-C8F8-4845-9C67-0E5EF328055C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{31DEE386-C8F8-4845-9C67-0E5EF328055C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{31DEE386-C8F8-4845-9C67-0E5EF328055C}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{31DEE386-C8F8-4845-9C67-0E5EF328055C}.Debug|x64.Build.0 = Debug|Any CPU
-		{31DEE386-C8F8-4845-9C67-0E5EF328055C}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{31DEE386-C8F8-4845-9C67-0E5EF328055C}.Debug|x86.Build.0 = Debug|Any CPU
-		{31DEE386-C8F8-4845-9C67-0E5EF328055C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{31DEE386-C8F8-4845-9C67-0E5EF328055C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{31DEE386-C8F8-4845-9C67-0E5EF328055C}.Release|x64.ActiveCfg = Release|Any CPU
-		{31DEE386-C8F8-4845-9C67-0E5EF328055C}.Release|x64.Build.0 = Release|Any CPU
-		{31DEE386-C8F8-4845-9C67-0E5EF328055C}.Release|x86.ActiveCfg = Release|Any CPU
-		{31DEE386-C8F8-4845-9C67-0E5EF328055C}.Release|x86.Build.0 = Release|Any CPU
-		{707974B7-C93D-494D-ADEF-FCEFC6687D7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{707974B7-C93D-494D-ADEF-FCEFC6687D7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{707974B7-C93D-494D-ADEF-FCEFC6687D7E}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{707974B7-C93D-494D-ADEF-FCEFC6687D7E}.Debug|x64.Build.0 = Debug|Any CPU
-		{707974B7-C93D-494D-ADEF-FCEFC6687D7E}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{707974B7-C93D-494D-ADEF-FCEFC6687D7E}.Debug|x86.Build.0 = Debug|Any CPU
-		{707974B7-C93D-494D-ADEF-FCEFC6687D7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{707974B7-C93D-494D-ADEF-FCEFC6687D7E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{707974B7-C93D-494D-ADEF-FCEFC6687D7E}.Release|x64.ActiveCfg = Release|Any CPU
-		{707974B7-C93D-494D-ADEF-FCEFC6687D7E}.Release|x64.Build.0 = Release|Any CPU
-		{707974B7-C93D-494D-ADEF-FCEFC6687D7E}.Release|x86.ActiveCfg = Release|Any CPU
-		{707974B7-C93D-494D-ADEF-FCEFC6687D7E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

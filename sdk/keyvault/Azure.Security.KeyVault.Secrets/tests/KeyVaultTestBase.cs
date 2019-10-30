@@ -17,7 +17,7 @@ namespace Azure.Security.KeyVault.Test
 
         public SecretClient Client { get; set; }
 
-        public Uri VaultEndpoint { get; set; }
+        public Uri VaultUri { get; set; }
 
         private readonly Queue<(string Name, bool Delete)> _secretsToCleanup = new Queue<(string, bool)>();
 
@@ -41,7 +41,7 @@ namespace Azure.Security.KeyVault.Test
             base.StartTestRecording();
 
             Client = GetClient();
-            VaultEndpoint = new Uri(Recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable));
+            VaultUri = new Uri(Recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable));
         }
 
         [TearDown]
@@ -104,6 +104,31 @@ namespace Azure.Security.KeyVault.Test
             Assert.AreEqual(exp.Enabled, act.Enabled);
             Assert.AreEqual(exp.ExpiresOn, act.ExpiresOn);
             Assert.AreEqual(exp.NotBefore, act.NotBefore);
+        }
+
+        protected static void AssertAreEqual<T>(IReadOnlyCollection<T> exp, IReadOnlyCollection<T> act)
+        {
+            if (exp is null && act is null)
+                return;
+
+            CollectionAssert.AreEqual(exp, act);
+        }
+
+        protected static void AssertAreEqual<TKey, TValue>(IDictionary<TKey, TValue> exp, IDictionary<TKey, TValue> act)
+        {
+            if (exp == null && act == null)
+                return;
+
+            if (exp?.Count != act?.Count)
+                Assert.Fail("Actual count {0} does not match expected count {1}", act?.Count, exp?.Count);
+
+            foreach (KeyValuePair<TKey, TValue> pair in exp)
+            {
+                if (!act.TryGetValue(pair.Key, out TValue value))
+                    Assert.Fail("Actual dictionary does not contain expected key '{0}'", pair.Key);
+
+                Assert.AreEqual(pair.Value, value);
+            }
         }
 
         protected Task WaitForDeletedSecret(string name)

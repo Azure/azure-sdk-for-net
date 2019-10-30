@@ -1259,7 +1259,7 @@ namespace Azure.Storage.Queues
                     $"{nameof(visibilityTimeout)}: {visibilityTimeout}");
                 try
                 {
-                    var receivedMessage = await QueueRestClient.Messages.DequeueAsync(
+                    var response = await QueueRestClient.Messages.DequeueAsync(
                         ClientDiagnostics,
                         Pipeline,
                         MessagesUri,
@@ -1269,7 +1269,11 @@ namespace Azure.Storage.Queues
                         operationName: Constants.Queue.ReceiveMessagesOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
-                    return Response.FromValue(receivedMessage.Value.ToArray(), receivedMessage.GetRawResponse());
+
+                    // Return an exploding Response on 304
+                    return response.IsUnavailable() ?
+                        response.GetRawResponse().AsNoBodyResponse<QueueMessage[]>() :
+                        Response.FromValue(response.Value.ToArray(), response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -1362,7 +1366,7 @@ namespace Azure.Storage.Queues
                     $"{nameof(maxMessages)}: {maxMessages}");
                 try
                 {
-                    var peekedMessages = await QueueRestClient.Messages.PeekAsync(
+                    Response<IEnumerable<PeekedMessage>> response = await QueueRestClient.Messages.PeekAsync(
                         ClientDiagnostics,
                         Pipeline,
                         MessagesUri,
@@ -1371,7 +1375,11 @@ namespace Azure.Storage.Queues
                         operationName: Constants.Queue.PeekMessagesOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
-                    return Response.FromValue(peekedMessages.Value.ToArray(), peekedMessages.GetRawResponse());
+
+                    // Return an exploding Response on 304
+                    return response.IsUnavailable() ?
+                        response.GetRawResponse().AsNoBodyResponse<PeekedMessage[]>() :
+                        Response.FromValue(response.Value.ToArray(), response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {

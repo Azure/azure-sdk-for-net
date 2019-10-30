@@ -81,7 +81,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         ///
         /// <returns>The token representing the shared access signature for this credential.</returns>
         ///
-        public override Task<AccessToken> GetTokenAsync(TokenRequestContext requestContext,
+        public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext,
                                                         CancellationToken cancellationToken) => Credential.GetTokenAsync(requestContext, cancellationToken);
     }
 }

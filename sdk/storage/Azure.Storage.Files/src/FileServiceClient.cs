@@ -358,7 +358,7 @@ namespace Azure.Storage.Files
                     $"{nameof(marker)}: {marker}");
                 try
                 {
-                    return await FileRestClient.Service.ListSharesSegmentAsync(
+                    Response<SharesSegment> response = await FileRestClient.Service.ListSharesSegmentAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
@@ -369,6 +369,15 @@ namespace Azure.Storage.Files
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
+                    if ((traits & ShareTraits.Metadata) != ShareTraits.Metadata)
+                    {
+                        IEnumerable<ShareItem> shareItems = response.Value.ShareItems;
+                        foreach (ShareItem shareItem in shareItems)
+                        {
+                            shareItem.Properties.Metadata = null;
+                        }
+                    }
+                    return response;
                 }
                 catch (Exception ex)
                 {

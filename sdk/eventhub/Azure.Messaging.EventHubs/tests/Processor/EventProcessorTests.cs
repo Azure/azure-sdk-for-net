@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Processor;
 using Moq;
@@ -13,7 +12,7 @@ using NUnit.Framework;
 namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
-    ///   The suite of tests for the <see cref="EventProcessor{T}" />
+    ///   The suite of tests for the <see cref="EventProcessor" />
     ///   class.
     /// </summary>
     ///
@@ -26,16 +25,12 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         public static IEnumerable<object[]> ConstructorCreatesDefaultOptionsCases()
         {
-            EventHubClient mockClient = Mock.Of<EventHubClient>();
-            Func<PartitionContext, PartitionProcessor> mockFactory = Mock.Of<Func<PartitionContext, PartitionProcessor>>();
-            PartitionManager mockPartitionManager = Mock.Of<PartitionManager>();
-
-            yield return new object[] { new ReadableOptionsMock(EventHubConsumer.DefaultConsumerGroupName, mockClient, mockFactory, mockPartitionManager), "no options" };
-            yield return new object[] { new ReadableOptionsMock(EventHubConsumer.DefaultConsumerGroupName, mockClient, mockFactory, mockPartitionManager, null), "null options" };
+            yield return new object[] { new ReadableOptionsMock("consumerGroup", Mock.Of<EventHubClient>(), Mock.Of<PartitionManager>()), "no options" };
+            yield return new object[] { new ReadableOptionsMock("consumerGroup", Mock.Of<EventHubClient>(), Mock.Of<PartitionManager>(), null), "null options" };
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="EventProcessor{T}" />
+        ///    Verifies functionality of the <see cref="EventProcessor" />
         ///    constructor.
         /// </summary>
         ///
@@ -44,57 +39,33 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ConstructorValidatesTheConsumerGroup(string consumerGroup)
         {
-            EventHubClient mockClient = Mock.Of<EventHubClient>();
-            Func<PartitionContext, PartitionProcessor> mockFactory = Mock.Of<Func<PartitionContext, PartitionProcessor>>();
-            PartitionManager mockPartitionManager = Mock.Of<PartitionManager>();
-
-            Assert.That(() => new EventProcessor<PartitionProcessor>(consumerGroup, mockClient, mockFactory, mockPartitionManager), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new EventProcessor(consumerGroup, Mock.Of<EventHubClient>(), Mock.Of<PartitionManager>()), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="EventProcessor{T}" />
+        ///    Verifies functionality of the <see cref="EventProcessor" />
         ///    constructor.
         /// </summary>
         ///
         [Test]
         public void ConstructorValidatesTheEventHubClient()
         {
-            Func<PartitionContext, PartitionProcessor> mockFactory = Mock.Of<Func<PartitionContext, PartitionProcessor>>();
-            PartitionManager mockPartitionManager = Mock.Of<PartitionManager>();
-
-            Assert.That(() => new EventProcessor<PartitionProcessor>(EventHubConsumer.DefaultConsumerGroupName, null, mockFactory, mockPartitionManager), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new EventProcessor("consumerGroup", null, Mock.Of<PartitionManager>()), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="EventProcessor{T}" />
-        ///    constructor.
-        /// </summary>
-        ///
-        [Test]
-        public void ConstructorValidatesThePartitionProcessorFactory()
-        {
-            EventHubClient mockClient = Mock.Of<EventHubClient>();
-            PartitionManager mockPartitionManager = Mock.Of<PartitionManager>();
-
-            Assert.That(() => new EventProcessor<PartitionProcessor>(EventHubConsumer.DefaultConsumerGroupName, mockClient, null, mockPartitionManager), Throws.InstanceOf<ArgumentException>());
-        }
-
-        /// <summary>
-        ///    Verifies functionality of the <see cref="EventProcessor{T}" />
+        ///    Verifies functionality of the <see cref="EventProcessor" />
         ///    constructor.
         /// </summary>
         ///
         [Test]
         public void ConstructorValidatesThePartitionManager()
         {
-            EventHubClient mockClient = Mock.Of<EventHubClient>();
-            Func<PartitionContext, PartitionProcessor> mockFactory = Mock.Of<Func<PartitionContext, PartitionProcessor>>();
-
-            Assert.That(() => new EventProcessor<PartitionProcessor>(EventHubConsumer.DefaultConsumerGroupName, mockClient, mockFactory, null), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new EventProcessor("consumerGroup", Mock.Of<EventHubClient>(), null), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="EventProcessor{T}" />
+        ///    Verifies functionality of the <see cref="EventProcessor" />
         ///    constructor.
         /// </summary>
         ///
@@ -114,17 +85,13 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="EventProcessor{T}" />
+        ///    Verifies functionality of the <see cref="EventProcessor" />
         ///    constructor.
         /// </summary>
         ///
         [Test]
         public void ConstructorClonesOptions()
         {
-            EventHubClient mockClient = Mock.Of<EventHubClient>();
-            Func<PartitionContext, PartitionProcessor> mockFactory = Mock.Of<Func<PartitionContext, PartitionProcessor>>();
-            PartitionManager mockPartitionManager = Mock.Of<PartitionManager>();
-
             var options = new EventProcessorOptions
             {
                 InitialEventPosition = EventPosition.FromOffset(55),
@@ -132,7 +99,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 MaximumReceiveWaitTime = TimeSpan.FromMinutes(65)
             };
 
-            var eventProcessor = new ReadableOptionsMock(EventHubConsumer.DefaultConsumerGroupName, mockClient, mockFactory, mockPartitionManager, options);
+            var eventProcessor = new ReadableOptionsMock("consumerGroup", Mock.Of<EventHubClient>(), Mock.Of<PartitionManager>(), options);
             EventProcessorOptions clonedOptions = eventProcessor.Options;
 
             Assert.That(clonedOptions, Is.Not.Null, "The constructor should have set the options.");
@@ -143,68 +110,130 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="EventProcessor{T}" />
+        ///    Verifies functionality of the <see cref="EventProcessor" />
         ///    constructor.
         /// </summary>
         ///
         [Test]
         public void ConstructorCreatesTheIdentifier()
         {
-            EventHubClient mockClient = Mock.Of<EventHubClient>();
-            Func<PartitionContext, PartitionProcessor> mockFactory = Mock.Of<Func<PartitionContext, PartitionProcessor>>();
-            PartitionManager mockPartitionManager = Mock.Of<PartitionManager>();
-
-            var eventProcessor = new EventProcessor<PartitionProcessor>(EventHubConsumer.DefaultConsumerGroupName, mockClient, mockFactory, mockPartitionManager);
+            var eventProcessor = new EventProcessor("consumerGroup", Mock.Of<EventHubClient>(), Mock.Of<PartitionManager>());
 
             Assert.That(eventProcessor.Identifier, Is.Not.Null);
             Assert.That(eventProcessor.Identifier, Is.Not.Empty);
         }
 
         /// <summary>
+        ///    Verifies functionality of the <see cref="EventProcessor.StartAsync" />
+        ///    method.
+        /// </summary>
+        ///
+        [Test]
+        public void StartAsyncValidatesProcessEventsAsync()
+        {
+            EventProcessor processor = new EventProcessor("consumerGroup", Mock.Of<EventHubClient>(), Mock.Of<PartitionManager>());
+            processor.ProcessExceptionAsync = (context, exception) => Task.CompletedTask;
+
+            Assert.That(async () => await processor.StartAsync(), Throws.InstanceOf<InvalidOperationException>().And.Message.Contains(nameof(EventProcessor.ProcessEventsAsync)));
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="EventProcessor.StartAsync" />
+        ///    method.
+        /// </summary>
+        ///
+        [Test]
+        public void StartAsyncValidatesProcessExceptionAsync()
+        {
+            EventProcessor processor = new EventProcessor("consumerGroup", Mock.Of<EventHubClient>(), Mock.Of<PartitionManager>());
+            processor.ProcessEventsAsync = (context, events) => Task.CompletedTask;
+
+            Assert.That(async () => await processor.StartAsync(), Throws.InstanceOf<InvalidOperationException>().And.Message.Contains(nameof(EventProcessor.ProcessExceptionAsync)));
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="EventProcessor.StartAsync" />
+        ///    method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task StartAsyncStartsTheEventProcessorWhenProcessingHandlerPropertiesAreSet()
+        {
+            EventProcessor processor = new EventProcessor("consumerGroup", Mock.Of<EventHubClient>(), Mock.Of<PartitionManager>());
+
+            processor.ProcessEventsAsync = (context, events) => Task.CompletedTask;
+            processor.ProcessExceptionAsync = (context, exception) => Task.CompletedTask;
+
+            Assert.That(async () => await processor.StartAsync(), Throws.Nothing);
+
+            await processor.StopAsync();
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="EventProcessor" /> properties.
+        /// </summary>
+        ///
+        [Test]
+        public async Task HandlerPropertiesCannotBeSetWhenEventProcessorIsRunning()
+        {
+            EventProcessor processor = new EventProcessor("consumerGroup", Mock.Of<EventHubClient>(), Mock.Of<PartitionManager>());
+
+            processor.ProcessEventsAsync = (context, events) => Task.CompletedTask;
+            processor.ProcessExceptionAsync = (context, exception) => Task.CompletedTask;
+
+            await processor.StartAsync();
+
+            Assert.That(() => processor.InitializeProcessingForPartitionAsync = ((context) => Task.CompletedTask), Throws.InstanceOf<InvalidOperationException>());
+            Assert.That(() => processor.ProcessingForPartitionStoppedAsync = ((context, reason) => Task.CompletedTask), Throws.InstanceOf<InvalidOperationException>());
+            Assert.That(() => processor.ProcessEventsAsync = ((context, events) => Task.CompletedTask), Throws.InstanceOf<InvalidOperationException>());
+            Assert.That(() => processor.ProcessExceptionAsync = ((context, exception) => Task.CompletedTask), Throws.InstanceOf<InvalidOperationException>());
+
+            await processor.StopAsync();
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="EventProcessor" /> properties.
+        /// </summary>
+        ///
+        [Test]
+        public async Task HandlerPropertiesCanBeSetAfterEventProcessorHasStopped()
+        {
+            EventProcessor processor = new EventProcessor("consumerGroup", Mock.Of<EventHubClient>(), Mock.Of<PartitionManager>());
+
+            processor.ProcessEventsAsync = (context, events) => Task.CompletedTask;
+            processor.ProcessExceptionAsync = (context, exception) => Task.CompletedTask;
+
+            await processor.StartAsync();
+            await processor.StopAsync();
+
+            Assert.That(() => processor.InitializeProcessingForPartitionAsync = ((context) => Task.CompletedTask), Throws.Nothing);
+            Assert.That(() => processor.ProcessingForPartitionStoppedAsync = ((context, reason) => Task.CompletedTask), Throws.Nothing);
+            Assert.That(() => processor.ProcessEventsAsync = ((context, events) => Task.CompletedTask), Throws.Nothing);
+            Assert.That(() => processor.ProcessExceptionAsync = ((context, exception) => Task.CompletedTask), Throws.Nothing);
+        }
+
+        /// <summary>
         ///   Allows for the options used by the event processor to be exposed for testing purposes.
         /// </summary>
         ///
-        public class ReadableOptionsMock : EventProcessor<PartitionProcessor>
+        public class ReadableOptionsMock : EventProcessor
         {
             public EventProcessorOptions Options =>
-                typeof(EventProcessor<PartitionProcessor>)
+                typeof(EventProcessor)
                     .GetProperty(nameof(Options), BindingFlags.Instance | BindingFlags.NonPublic)
                     .GetValue(this) as EventProcessorOptions;
 
             public ReadableOptionsMock(string consumerGroup,
                                        EventHubClient eventHubClient,
-                                       Func<PartitionContext, PartitionProcessor> partitionProcessorFactory,
-                                       PartitionManager partitionManager) : base(consumerGroup, eventHubClient, partitionProcessorFactory, partitionManager)
+                                       PartitionManager partitionManager) : base(consumerGroup, eventHubClient, partitionManager)
             {
             }
 
             public ReadableOptionsMock(string consumerGroup,
                                        EventHubClient eventHubClient,
-                                       Func<PartitionContext, PartitionProcessor> partitionProcessorFactory,
                                        PartitionManager partitionManager,
-                                       EventProcessorOptions options) : base(consumerGroup, eventHubClient, partitionProcessorFactory, partitionManager, options)
+                                       EventProcessorOptions options) : base(consumerGroup, eventHubClient, partitionManager, options)
             {
-            }
-        }
-
-        /// <summary>
-        ///   A test helper class derived from <see cref="BasePartitionProcessor" />.
-        /// </summary>
-        ///
-        public class PartitionProcessor : BasePartitionProcessor
-        {
-            public override Task ProcessErrorAsync(PartitionContext partitionContext,
-                                                   Exception exception,
-                                                   CancellationToken cancellationToken)
-            {
-                return Task.CompletedTask;
-            }
-
-            public override Task ProcessEventsAsync(PartitionContext partitionContext,
-                                                    IEnumerable<EventData> events,
-                                                    CancellationToken cancellationToken)
-            {
-                return Task.CompletedTask;
             }
         }
     }

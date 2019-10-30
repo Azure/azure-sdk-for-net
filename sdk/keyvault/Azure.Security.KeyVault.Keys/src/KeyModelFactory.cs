@@ -73,7 +73,7 @@ namespace Azure.Security.KeyVault.Keys
         /// Initializes a new instance of the <see cref="Keys.KeyProperties"/> for mocking purposes.
         /// </summary>
         /// <param name="id">Sets the <see cref="Keys.KeyProperties.Id"/> property.</param>
-        /// <param name="vaultEndpoint">Sets the <see cref="Keys.KeyProperties.VaultEndpoint"/> property.</param>
+        /// <param name="vaultUri">Sets the <see cref="Keys.KeyProperties.VaultUri"/> property.</param>
         /// <param name="name">Sets the <see cref="Keys.KeyProperties.Name"/> property.</param>
         /// <param name="version">Sets the <see cref="Keys.KeyProperties.Version"/> property.</param>
         /// <param name="managed">Sets the <see cref="Keys.KeyProperties.Managed"/> property.</param>
@@ -83,7 +83,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <returns>A new instance of the <see cref="Keys.KeyProperties"/> for mocking purposes.</returns>
         public static KeyProperties KeyProperties(
             Uri id = default,
-            Uri vaultEndpoint = default,
+            Uri vaultUri = default,
             string name = default,
             string version = default,
             bool managed = default,
@@ -94,7 +94,7 @@ namespace Azure.Security.KeyVault.Keys
             return new KeyProperties
             {
                 Id = id,
-                VaultEndpoint = vaultEndpoint,
+                VaultUri = vaultUri,
                 Name = name,
                 Version = version,
                 Managed = managed,

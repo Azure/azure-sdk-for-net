@@ -223,34 +223,6 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse<PublicIPPrefix>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string publicIpPrefixName, PublicIPPrefix parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates public IP prefix tags.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='publicIpPrefixName'>
-        /// The name of the public IP prefix.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to update public IP prefix tags.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<PublicIPPrefix>> BeginUpdateTagsWithHttpMessagesAsync(string resourceGroupName, string publicIpPrefixName, TagsObject parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Gets all the public IP prefixes in a subscription.
         /// </summary>
         /// <param name='nextPageLink'>

@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference Update="ApprovalTests" Version="3.0.22" />
     <PackageReference Update="ApprovalUtilities" Version="3.0.22" />
-    <PackageReference Update="Azure.Core" Version="1.0.0-preview.9" />
+    <PackageReference Update="Azure.Core" Version="1.0.0" />
     <PackageReference Update="Azure.Identity" Version="1.0.0-preview.5" />
     <PackageReference Update="Azure.Messaging.EventHubs" Version="5.0.0-preview.4" />
     <PackageReference Update="Azure.Storage.Blobs" Version="12.0.0-preview.4" />
@@ -83,7 +83,6 @@
     <PackageReference Update="System.Net.WebSockets.Client" Version="4.3.2" />
     <PackageReference Update="System.Numerics.Vectors" Version="4.5.0" />
     <PackageReference Update="System.Reflection.TypeExtensions" Version="[4.5.1, 4.9.0)" />
-    <PackageReference Update="System.Runtime.CompilerServices.Unsafe" Version="4.5.2" />
     <PackageReference Update="System.Runtime.Extensions" Version="4.3.0" />
     <PackageReference Update="System.Runtime.InteropServices" Version="4.3.0" />
     <PackageReference Update="System.Runtime.Serialization.Primitives" Version="4.3.0" />

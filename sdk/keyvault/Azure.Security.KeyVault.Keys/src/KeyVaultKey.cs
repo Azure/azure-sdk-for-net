@@ -23,23 +23,25 @@ namespace Azure.Security.KeyVault.Keys
         /// Initializes a new instance of the <see cref="KeyVaultKey"/> class.
         /// </summary>
         /// <param name="name">The name of the key.</param>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
         public KeyVaultKey(string name)
         {
             Properties = new KeyProperties(name);
         }
 
         /// <summary>
-        /// Key identifier.
+        /// Gets the key identifier.
         /// </summary>
         public Uri Id => Properties.Id;
 
         /// <summary>
-        /// Name of the key.
+        /// Gets the name of the key.
         /// </summary>
         public string Name => Properties.Name;
 
         /// <summary>
-        /// The cryptographic keys, the key type, and operations you can perform using the key.
+        /// Gets the cryptographic key, the key type, and the operations you can perform using the key.
         /// </summary>
         /// <remarks>
         /// See http://tools.ietf.org/html/draft-ietf-jose-json-web-key-18 for specifications of a JSON web key.
@@ -47,17 +49,17 @@ namespace Azure.Security.KeyVault.Keys
         public JsonWebKey Key { get; internal set; }
 
         /// <summary>
-        /// Gets or sets the <see cref="KeyType"/> for this <see cref="JsonWebKey"/>.
+        /// Gets the <see cref="KeyType"/> for this <see cref="JsonWebKey"/>.
         /// </summary>
         public KeyType KeyType => Key.KeyType;
 
         /// <summary>
-        /// Gets supported key operations.
+        /// Gets the operations you can perform using the key.
         /// </summary>
         public IReadOnlyCollection<KeyOperation> KeyOperations => Key.KeyOps;
 
         /// <summary>
-        /// Additional properties of the <see cref="KeyVaultKey"/>.
+        /// Gets additional properties of the <see cref="KeyVaultKey"/>.
         /// </summary>
         public KeyProperties Properties { get; }
 

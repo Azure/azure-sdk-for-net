@@ -22,31 +22,29 @@ namespace Azure.Storage.Queues.Test
         public async Task EnqueueAsync()
         {
             // Arrange
-            using (GetNewQueue(out QueueClient queue))
-            {
-                // Act
-                Response<Models.SendReceipt> response = await queue.SendMessageAsync(
-                    messageText: GetNewString(),
-                    visibilityTimeout: new TimeSpan(0, 0, 1),
-                    timeToLive: new TimeSpan(1, 0, 0));
+            await using DisposingQueue test = await GetTestQueueAsync();
 
-                // Assert
-                Assert.NotNull(response.Value);
-            }
+            // Act
+            Response<Models.SendReceipt> response = await test.Queue.SendMessageAsync(
+                messageText: GetNewString(),
+                visibilityTimeout: new TimeSpan(0, 0, 1),
+                timeToLive: new TimeSpan(1, 0, 0));
+
+            // Assert
+            Assert.NotNull(response.Value);
         }
 
         [Test]
         public async Task EnqueueAsync_Min()
         {
             // Arrange
-            using (GetNewQueue(out QueueClient queue))
-            {
-                // Act
-                Response<Models.SendReceipt> response = await queue.SendMessageAsync(string.Empty);
+            await using DisposingQueue test = await GetTestQueueAsync();
 
-                // Assert
-                Assert.NotNull(response.Value);
-            }
+            // Act
+            Response<Models.SendReceipt> response = await test.Queue.SendMessageAsync(string.Empty);
+
+            // Assert
+            Assert.NotNull(response.Value);
         }
 
         // Note that this test intentionally does not call queue.CreateAsync()
@@ -68,38 +66,36 @@ namespace Azure.Storage.Queues.Test
         public async Task DequeueAsync()
         {
             // Arrange
-            using (GetNewQueue(out QueueClient queue))
-            {
-                await queue.SendMessageAsync(GetNewString());
-                await queue.SendMessageAsync(GetNewString());
-                await queue.SendMessageAsync(GetNewString());
+            await using DisposingQueue test = await GetTestQueueAsync();
 
-                // Act
-                Response<Models.QueueMessage[]> response = await queue.ReceiveMessagesAsync(
-                    maxMessages: 2,
-                    visibilityTimeout: new TimeSpan(1, 0, 0));
+            await test.Queue.SendMessageAsync(GetNewString());
+            await test.Queue.SendMessageAsync(GetNewString());
+            await test.Queue.SendMessageAsync(GetNewString());
 
-                // Assert
-                Assert.AreEqual(2, response.Value.Count());
-            }
+            // Act
+            Response<Models.QueueMessage[]> response = await test.Queue.ReceiveMessagesAsync(
+                maxMessages: 2,
+                visibilityTimeout: new TimeSpan(1, 0, 0));
+
+            // Assert
+            Assert.AreEqual(2, response.Value.Count());
         }
 
         [Test]
         public async Task DequeueAsync_Min()
         {
             // Arrange
-            using (GetNewQueue(out QueueClient queue))
-            {
-                await queue.SendMessageAsync(GetNewString());
-                await queue.SendMessageAsync(GetNewString());
-                await queue.SendMessageAsync(GetNewString());
+            await using DisposingQueue test = await GetTestQueueAsync();
 
-                // Act
-                Response<Models.QueueMessage[]> response = await queue.ReceiveMessagesAsync();
+            await test.Queue.SendMessageAsync(GetNewString());
+            await test.Queue.SendMessageAsync(GetNewString());
+            await test.Queue.SendMessageAsync(GetNewString());
 
-                // Assert
-                Assert.AreEqual(1, response.Value.Count());
-            }
+            // Act
+            Response<Models.QueueMessage[]> response = await test.Queue.ReceiveMessagesAsync();
+
+            // Assert
+            Assert.AreEqual(1, response.Value.Count());
         }
 
         // Note that this test intentionally does not call queue.CreateAsync()
@@ -121,36 +117,34 @@ namespace Azure.Storage.Queues.Test
         public async Task PeekAsync()
         {
             // Arrange
-            using (GetNewQueue(out QueueClient queue))
-            {
-                await queue.SendMessageAsync(GetNewString());
-                await queue.SendMessageAsync(GetNewString());
-                await queue.SendMessageAsync(GetNewString());
+            await using DisposingQueue test = await GetTestQueueAsync();
 
-                // Act
-                Response<Models.PeekedMessage[]> response = await queue.PeekMessagesAsync(maxMessages: 2);
+            await test.Queue.SendMessageAsync(GetNewString());
+            await test.Queue.SendMessageAsync(GetNewString());
+            await test.Queue.SendMessageAsync(GetNewString());
 
-                // Assert
-                Assert.AreEqual(2, response.Value.Count());
-            }
+            // Act
+            Response<Models.PeekedMessage[]> response = await test.Queue.PeekMessagesAsync(maxMessages: 2);
+
+            // Assert
+            Assert.AreEqual(2, response.Value.Count());
         }
 
         [Test]
         public async Task PeekAsync_Min()
         {
             // Arrange
-            using (GetNewQueue(out QueueClient queue))
-            {
-                await queue.SendMessageAsync(GetNewString());
-                await queue.SendMessageAsync(GetNewString());
-                await queue.SendMessageAsync(GetNewString());
+            await using DisposingQueue test = await GetTestQueueAsync();
 
-                // Act
-                Response<Models.PeekedMessage[]> response = await queue.PeekMessagesAsync();
+            await test.Queue.SendMessageAsync(GetNewString());
+            await test.Queue.SendMessageAsync(GetNewString());
+            await test.Queue.SendMessageAsync(GetNewString());
 
-                // Assert
-                Assert.AreEqual(1, response.Value.Count());
-            }
+            // Act
+            Response<Models.PeekedMessage[]> response = await test.Queue.PeekMessagesAsync();
+
+            // Assert
+            Assert.AreEqual(1, response.Value.Count());
         }
 
         // Note that this test intentionally does not call queue.CreateAsync()
@@ -172,18 +166,17 @@ namespace Azure.Storage.Queues.Test
         public async Task ClearAsync()
         {
             // Arrange
-            using (GetNewQueue(out QueueClient queue))
-            {
-                await queue.SendMessageAsync(GetNewString());
-                await queue.SendMessageAsync(GetNewString());
-                await queue.SendMessageAsync(GetNewString());
+            await using DisposingQueue test = await GetTestQueueAsync();
 
-                // Act
-                Response response = await queue.ClearMessagesAsync();
+            await test.Queue.SendMessageAsync(GetNewString());
+            await test.Queue.SendMessageAsync(GetNewString());
+            await test.Queue.SendMessageAsync(GetNewString());
 
-                // Assert
-                Assert.IsNotNull(response.Headers.RequestId);
-            }
+            // Act
+            Response response = await test.Queue.ClearMessagesAsync();
+
+            // Assert
+            Assert.IsNotNull(response.Headers.RequestId);
         }
 
         // Note that this test intentionally does not call queue.CreateAsync()

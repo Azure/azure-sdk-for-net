@@ -9,7 +9,7 @@ using Azure.Core;
 namespace Azure.Security.KeyVault.Keys
 {
     /// <summary>
-    /// The key import parameters.
+    /// The properties needed to import a key.
     /// </summary>
     public class ImportKeyOptions : IJsonSerializable
     {
@@ -22,10 +22,10 @@ namespace Azure.Security.KeyVault.Keys
         private static readonly JsonEncodedText s_hsmPropertyNameBytes = JsonEncodedText.Encode(HsmPropertyName);
 
         /// <summary>
-        /// Initializes a new instance of the KeyImportOptions class.
+        /// Initializes a new instance of the <see cref="ImportKeyOptions"/> class.
         /// </summary>
-        /// <param name="name">The name of the key.</param>
-        /// <param name="keyMaterial">The <see cref="JsonWebKey"/> properties of the key.</param>
+        /// <param name="name">The name of the key to import.</param>
+        /// <param name="keyMaterial">A <see cref="JsonWebKey"/> containing properties of the key to import.</param>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="keyMaterial"/> is null.</exception>
         public ImportKeyOptions(string name, JsonWebKey keyMaterial)
@@ -37,17 +37,12 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// Key identifier.
-        /// </summary>
-        public Uri Id => Properties.Id;
-
-        /// <summary>
-        /// Name of the key.
+        /// Gets the name of the key to import.
         /// </summary>
         public string Name => Properties.Name;
 
         /// <summary>
-        /// The cryptographic keys, the key type, and operations you can perform using the key.
+        /// Gets the cryptographic key, the key type, and the operations you can perform using the key.
         /// </summary>
         /// <remarks>
         /// See http://tools.ietf.org/html/draft-ietf-jose-json-web-key-18 for specifications of a JSON web key.
@@ -55,12 +50,12 @@ namespace Azure.Security.KeyVault.Keys
         public JsonWebKey Key { get; }
 
         /// <summary>
-        /// Whether it is a hardware-protected key (HSM) or software key.
+        /// Gets or sets a value indicating whether to import the key into a hardware security module (HSM).
         /// </summary>
         public bool? HardwareProtected { get; set; }
 
         /// <summary>
-        /// Additional properties of the <see cref="KeyVaultKey"/>.
+        /// Gets additional properties of the <see cref="KeyVaultKey"/>.
         /// </summary>
         public KeyProperties Properties { get; }
 

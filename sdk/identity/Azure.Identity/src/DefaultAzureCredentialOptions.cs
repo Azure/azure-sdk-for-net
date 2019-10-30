@@ -13,7 +13,7 @@ namespace Azure.Identity
         /// development tools. In the case multiple accounts are found in the shared token.
         /// </summary>
         /// <remarks>
-        /// If multiple accounts are found in the shared token cache and no value is specifed, or the specfied value matches no accounts in
+        /// If multiple accounts are found in the shared token cache and no value is specified, or the specified value matches no accounts in
         /// the cache the SharedTokenCacheCredential will not be used for authentication.
         /// </remarks>
         public string SharedTokenCacheUsername { get; set; }

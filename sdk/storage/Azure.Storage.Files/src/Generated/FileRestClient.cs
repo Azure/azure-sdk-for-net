@@ -271,6 +271,10 @@ namespace Azure.Storage.Files
                         // Create the response
                         return Response.FromValue(_value, response);
                     }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Files.Models.FileServiceProperties>(response);
+                    }
                     default:
                     {
                         // Create the result
@@ -418,6 +422,10 @@ namespace Azure.Storage.Files
 
                         // Create the response
                         return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Files.Models.SharesSegment>(response);
                     }
                     default:
                     {
@@ -602,7 +610,7 @@ namespace Azure.Storage.Files
             /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response{Azure.Storage.Files.Models.ShareProperties}</returns>
+            /// <returns>Properties of a share.</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.ShareProperties>> GetPropertiesAsync(
                 Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -729,6 +737,10 @@ namespace Azure.Storage.Files
 
                         // Create the response
                         return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Files.Models.ShareProperties>(response);
                     }
                     default:
                     {
@@ -1295,6 +1307,10 @@ namespace Azure.Storage.Files
                         // Create the response
                         return Response.FromValue(_value, response);
                     }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<string>(response);
+                    }
                     default:
                     {
                         // Create the result
@@ -1711,6 +1727,10 @@ namespace Azure.Storage.Files
                         // Create the response
                         return Response.FromValue(_value, response);
                     }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.FileSignedIdentifier>>(response);
+                    }
                     default:
                     {
                         // Create the result
@@ -1989,6 +2009,10 @@ namespace Azure.Storage.Files
 
                         // Create the response
                         return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Files.Models.ShareStatistics>(response);
                     }
                     default:
                     {
@@ -2392,6 +2416,10 @@ namespace Azure.Storage.Files
 
                         // Create the response
                         return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Files.Models.RawStorageDirectoryProperties>(response);
                     }
                     default:
                     {
@@ -3012,6 +3040,10 @@ namespace Azure.Storage.Files
                         // Create the response
                         return Response.FromValue(_value, response);
                     }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Files.Models.FilesAndDirectoriesSegment>(response);
+                    }
                     default:
                     {
                         // Create the result
@@ -3163,6 +3195,10 @@ namespace Azure.Storage.Files
 
                         // Create the response
                         return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Files.Models.StorageHandlesSegment>(response);
                     }
                     default:
                     {
@@ -3989,6 +4025,10 @@ namespace Azure.Storage.Files
                         // Create the response
                         return Response.FromValue(_value, response);
                     }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Files.Models.FlattenedStorageFileProperties>(response);
+                    }
                     default:
                     {
                         // Create the result
@@ -4219,6 +4259,10 @@ namespace Azure.Storage.Files
 
                         // Create the response
                         return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Files.Models.RawStorageFileProperties>(response);
                     }
                     default:
                     {
@@ -5280,6 +5324,10 @@ namespace Azure.Storage.Files
                         // Create the response
                         return Response.FromValue(_value, response);
                     }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Files.Models.StorageFileRangeInfo>(response);
+                    }
                     default:
                     {
                         // Create the result
@@ -5713,6 +5761,10 @@ namespace Azure.Storage.Files
 
                         // Create the response
                         return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Files.Models.StorageHandlesSegment>(response);
                     }
                     default:
                     {
@@ -8170,12 +8222,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// Properties of a share.
         /// </summary>
-        public Azure.Storage.Files.Models.ShareItemProperties Properties { get; internal set; }
-
-        /// <summary>
-        /// Metadata
-        /// </summary>
-        public System.Collections.Generic.IDictionary<string, string> Metadata { get; internal set; }
+        public Azure.Storage.Files.Models.ShareProperties Properties { get; internal set; }
 
         /// <summary>
         /// Creates a new ShareItem instance
@@ -8193,8 +8240,7 @@ namespace Azure.Storage.Files.Models
         {
             if (!skipInitialization)
             {
-                Properties = new Azure.Storage.Files.Models.ShareItemProperties();
-                Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+                Properties = new Azure.Storage.Files.Models.ShareProperties();
             }
         }
 
@@ -8221,16 +8267,7 @@ namespace Azure.Storage.Files.Models
             _child = element.Element(System.Xml.Linq.XName.Get("Properties", ""));
             if (_child != null)
             {
-                _value.Properties = Azure.Storage.Files.Models.ShareItemProperties.FromXml(_child);
-            }
-            _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-            _child = element.Element(System.Xml.Linq.XName.Get("Metadata", ""));
-            if (_child != null)
-            {
-                foreach (System.Xml.Linq.XElement _pair in _child.Elements())
-                {
-                    _value.Metadata[_pair.Name.LocalName] = _pair.Value;
-                }
+                _value.Properties = Azure.Storage.Files.Models.ShareProperties.FromXml(_child);
             }
             CustomizeFromXml(element, _value);
             return _value;
@@ -8249,29 +8286,27 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         public static ShareItem ShareItem(
             string name,
-            Azure.Storage.Files.Models.ShareItemProperties properties,
-            string snapshot = default,
-            System.Collections.Generic.IDictionary<string, string> metadata = default)
+            Azure.Storage.Files.Models.ShareProperties properties,
+            string snapshot = default)
         {
             return new ShareItem()
             {
                 Name = name,
                 Properties = properties,
                 Snapshot = snapshot,
-                Metadata = metadata,
             };
         }
     }
 }
 #endregion class ShareItem
 
-#region class ShareItemProperties
+#region class ShareProperties
 namespace Azure.Storage.Files.Models
 {
     /// <summary>
     /// Properties of a share.
     /// </summary>
-    public partial class ShareItemProperties
+    public partial class ShareProperties
     {
         /// <summary>
         /// Last-Modified
@@ -8281,7 +8316,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// Etag
         /// </summary>
-        public Azure.ETag? Etag { get; internal set; }
+        public Azure.ETag? ETag { get; internal set; }
 
         /// <summary>
         /// QuotaInGB
@@ -8289,21 +8324,40 @@ namespace Azure.Storage.Files.Models
         public int? QuotaInGB { get; internal set; }
 
         /// <summary>
-        /// Prevent direct instantiation of ShareItemProperties instances.
-        /// You can use FilesModelFactory.ShareItemProperties instead.
+        /// Metadata
         /// </summary>
-        internal ShareItemProperties() { }
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get; internal set; }
 
         /// <summary>
-        /// Deserializes XML into a new ShareItemProperties instance.
+        /// Creates a new ShareProperties instance
+        /// </summary>
+        internal ShareProperties()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new ShareProperties instance
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal ShareProperties(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+            }
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new ShareProperties instance.
         /// </summary>
         /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized ShareItemProperties instance.</returns>
-        internal static Azure.Storage.Files.Models.ShareItemProperties FromXml(System.Xml.Linq.XElement element)
+        /// <returns>A deserialized ShareProperties instance.</returns>
+        internal static Azure.Storage.Files.Models.ShareProperties FromXml(System.Xml.Linq.XElement element)
         {
             System.Diagnostics.Debug.Assert(element != null);
             System.Xml.Linq.XElement _child;
-            Azure.Storage.Files.Models.ShareItemProperties _value = new Azure.Storage.Files.Models.ShareItemProperties();
+            Azure.Storage.Files.Models.ShareProperties _value = new Azure.Storage.Files.Models.ShareProperties(true);
             _child = element.Element(System.Xml.Linq.XName.Get("Last-Modified", ""));
             if (_child != null)
             {
@@ -8312,79 +8366,27 @@ namespace Azure.Storage.Files.Models
             _child = element.Element(System.Xml.Linq.XName.Get("Etag", ""));
             if (_child != null)
             {
-                _value.Etag = new Azure.ETag(_child.Value);
+                _value.ETag = new Azure.ETag(_child.Value);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("Quota", ""));
             if (_child != null)
             {
                 _value.QuotaInGB = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
             }
+            _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+            _child = element.Element(System.Xml.Linq.XName.Get("Metadata", ""));
+            if (_child != null)
+            {
+                foreach (System.Xml.Linq.XElement _pair in _child.Elements())
+                {
+                    _value.Metadata[_pair.Name.LocalName] = _pair.Value;
+                }
+            }
             CustomizeFromXml(element, _value);
             return _value;
         }
 
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.ShareItemProperties value);
-    }
-
-    /// <summary>
-    /// FilesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class FilesModelFactory
-    {
-        /// <summary>
-        /// Creates a new ShareItemProperties instance for mocking.
-        /// </summary>
-        public static ShareItemProperties ShareItemProperties(
-            System.DateTimeOffset? lastModified = default,
-            Azure.ETag? etag = default,
-            int? quotaInGB = default)
-        {
-            return new ShareItemProperties()
-            {
-                LastModified = lastModified,
-                Etag = etag,
-                QuotaInGB = quotaInGB,
-            };
-        }
-    }
-}
-#endregion class ShareItemProperties
-
-#region class ShareProperties
-namespace Azure.Storage.Files.Models
-{
-    /// <summary>
-    /// ShareProperties
-    /// </summary>
-    public partial class ShareProperties
-    {
-        /// <summary>
-        /// A set of name-value pairs that contain the user-defined metadata of the share.
-        /// </summary>
-        public System.Collections.Generic.IDictionary<string, string> Metadata { get; internal set; }
-
-        /// <summary>
-        /// The ETag contains a value that you can use to perform operations conditionally, in quotes.
-        /// </summary>
-        public Azure.ETag ETag { get; internal set; }
-
-        /// <summary>
-        /// Returns the date and time the share was last modified. Any operation that modifies the share or its properties updates the last modified time. Operations on files do not affect the last modified time of the share.
-        /// </summary>
-        public System.DateTimeOffset LastModified { get; internal set; }
-
-        /// <summary>
-        /// Returns the current share quota in GB.
-        /// </summary>
-        public int QuotaInGB { get; internal set; }
-
-        /// <summary>
-        /// Creates a new ShareProperties instance
-        /// </summary>
-        public ShareProperties()
-        {
-            Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-        }
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.ShareProperties value);
     }
 
     /// <summary>
@@ -8396,17 +8398,17 @@ namespace Azure.Storage.Files.Models
         /// Creates a new ShareProperties instance for mocking.
         /// </summary>
         public static ShareProperties ShareProperties(
-            System.Collections.Generic.IDictionary<string, string> metadata,
-            Azure.ETag eTag,
-            System.DateTimeOffset lastModified,
-            int quotaInGB)
+            System.DateTimeOffset? lastModified = default,
+            Azure.ETag? eTag = default,
+            int? quotaInGB = default,
+            System.Collections.Generic.IDictionary<string, string> metadata = default)
         {
             return new ShareProperties()
             {
-                Metadata = metadata,
-                ETag = eTag,
                 LastModified = lastModified,
+                ETag = eTag,
                 QuotaInGB = quotaInGB,
+                Metadata = metadata,
             };
         }
     }

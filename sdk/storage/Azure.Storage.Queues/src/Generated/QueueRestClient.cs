@@ -283,6 +283,10 @@ namespace Azure.Storage.Queues
                         // Create the response
                         return Response.FromValue(_value, response);
                     }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Queues.Models.QueueServiceProperties>(response);
+                    }
                     default:
                     {
                         // Create the result
@@ -413,6 +417,10 @@ namespace Azure.Storage.Queues
 
                         // Create the response
                         return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Queues.Models.QueueServiceStatistics>(response);
                     }
                     default:
                     {
@@ -567,6 +575,10 @@ namespace Azure.Storage.Queues
 
                         // Create the response
                         return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Queues.Models.QueuesSegment>(response);
                     }
                     default:
                     {
@@ -983,6 +995,10 @@ namespace Azure.Storage.Queues
                         // Create the response
                         return Response.FromValue(_value, response);
                     }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Queues.Models.QueueProperties>(response);
+                    }
                     default:
                     {
                         // Create the result
@@ -1252,6 +1268,10 @@ namespace Azure.Storage.Queues
 
                         // Create the response
                         return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.QueueSignedIdentifier>>(response);
                     }
                     default:
                     {
@@ -1549,6 +1569,10 @@ namespace Azure.Storage.Queues
 
                         // Create the response
                         return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.QueueMessage>>(response);
                     }
                     default:
                     {
@@ -1974,6 +1998,10 @@ namespace Azure.Storage.Queues
 
                         // Create the response
                         return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.PeekedMessage>>(response);
                     }
                     default:
                     {

@@ -1,13 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     /// <summary>
-    /// Represents information about a verify operation
+    /// Represents information about a verify operation.
     /// </summary>
     public class VerifyResult : IJsonDeserializable
     {
@@ -19,17 +18,17 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         }
 
         /// <summary>
-        /// The <see cref="KeyProperties.Id"/> of the <see cref="KeyVaultKey"/> used to decrypt
+        /// Gets the <see cref="KeyProperties.Id"/> of the <see cref="KeyVaultKey"/> used to verify.
         /// </summary>
         public string KeyId { get; internal set; }
 
         /// <summary>
-        /// The result of the verification, true if the signature was valid otherwise false.
+        /// Gets a value indicating whether the specified signature is valid.
         /// </summary>
         public bool IsValid { get; internal set; }
 
         /// <summary>
-        /// The algorithm used
+        /// Gets the <see cref="SignatureAlgorithm"/>.
         /// </summary>
         public SignatureAlgorithm Algorithm { get; internal set; }
 

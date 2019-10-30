@@ -6,7 +6,6 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
-using Azure.Storage.Common;
 using Azure.Storage.Files.Models;
 using Azure.Storage.Files.Tests;
 using Azure.Storage.Test;
@@ -182,61 +181,61 @@ namespace Azure.Storage.Files.Test
         [Test]
         public async Task CreateAndGetPermissionAsync()
         {
-            using (GetNewShare(out ShareClient share))
-            {
-                // Arrange
-                var permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)S:NO_ACCESS_CONTROL";
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareClient share = test.Share;
 
-                // Act
-                Response<PermissionInfo> createResponse = await share.CreatePermissionAsync(permission);
-                Response<string> getResponse = await share.GetPermissionAsync(createResponse.Value.FilePermissionKey);
+            // Arrange
+            var permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)S:NO_ACCESS_CONTROL";
 
-                // Assert
-                Assert.AreEqual(permission, getResponse.Value);
-            }
+            // Act
+            Response<PermissionInfo> createResponse = await share.CreatePermissionAsync(permission);
+            Response<string> getResponse = await share.GetPermissionAsync(createResponse.Value.FilePermissionKey);
+
+            // Assert
+            Assert.AreEqual(permission, getResponse.Value);
         }
 
         [Test]
         public async Task CreatePermissionAsync_Error()
         {
-            using (GetNewShare(out ShareClient share))
-            {
-                // Arrange
-                var permission = "invalidPermission";
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareClient share = test.Share;
 
-                // Act
-                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                    share.CreatePermissionAsync(permission),
-                    e => Assert.AreEqual("FileInvalidPermission", e.ErrorCode));
-            }
+            // Arrange
+            var permission = "invalidPermission";
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                share.CreatePermissionAsync(permission),
+                e => Assert.AreEqual("FileInvalidPermission", e.ErrorCode));
         }
 
         [Test]
         public async Task GetPermissionAsync_Error()
         {
-            using (GetNewShare(out ShareClient share))
-            {
-                // Arrange
-                var permissionKey = "invalidPermission";
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareClient share = test.Share;
 
-                // Act
-                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                    share.GetPermissionAsync(permissionKey),
-                    e => Assert.AreEqual("InvalidHeaderValue", e.ErrorCode));
-            }
+            // Arrange
+            var permissionKey = "invalidPermission";
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                share.GetPermissionAsync(permissionKey),
+                e => Assert.AreEqual("InvalidHeaderValue", e.ErrorCode));
         }
 
         [Test]
         public async Task GetPropertiesAsync()
         {
-            using (GetNewShare(out ShareClient share))
-            {
-                // Act
-                Response<ShareProperties> reponse = await share.GetPropertiesAsync();
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareClient share = test.Share;
 
-                // Assert
-                Assert.IsNotNull(reponse.GetRawResponse().Headers.RequestId);
-            }
+            // Act
+            Response<ShareProperties> reponse = await share.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(reponse.GetRawResponse().Headers.RequestId);
         }
 
         [Test]
@@ -256,18 +255,18 @@ namespace Azure.Storage.Files.Test
         [Test]
         public async Task SetMetadataAsync()
         {
-            using (GetNewShare(out ShareClient share))
-            {
-                // Arrange
-                System.Collections.Generic.IDictionary<string, string> metadata = BuildMetadata();
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareClient share = test.Share;
 
-                // Act
-                await share.SetMetadataAsync(metadata);
+            // Arrange
+            System.Collections.Generic.IDictionary<string, string> metadata = BuildMetadata();
 
-                // Assert
-                Response<ShareProperties> response = await share.GetPropertiesAsync();
-                AssertMetadataEquality(metadata, response.Value.Metadata);
-            }
+            // Act
+            await share.SetMetadataAsync(metadata);
+
+            // Assert
+            Response<ShareProperties> response = await share.GetPropertiesAsync();
+            AssertMetadataEquality(metadata, response.Value.Metadata);
         }
 
         [Test]
@@ -288,24 +287,24 @@ namespace Azure.Storage.Files.Test
         [Test]
         public async Task GetAccessPolicyAsync()
         {
-            using (GetNewShare(out ShareClient share))
-            {
-                // Arrange
-                FileSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
-                await share.SetAccessPolicyAsync(signedIdentifiers);
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareClient share = test.Share;
 
-                // Act
-                Response<System.Collections.Generic.IEnumerable<FileSignedIdentifier>> response = await share.GetAccessPolicyAsync();
+            // Arrange
+            FileSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
+            await share.SetAccessPolicyAsync(signedIdentifiers);
 
-                // Assert
-                FileSignedIdentifier acl = response.Value.First();
+            // Act
+            Response<System.Collections.Generic.IEnumerable<FileSignedIdentifier>> response = await share.GetAccessPolicyAsync();
 
-                Assert.AreEqual(1, response.Value.Count());
-                Assert.AreEqual(signedIdentifiers[0].Id, acl.Id);
-                Assert.AreEqual(signedIdentifiers[0].AccessPolicy.StartsOn, acl.AccessPolicy.StartsOn);
-                Assert.AreEqual(signedIdentifiers[0].AccessPolicy.ExpiresOn, acl.AccessPolicy.ExpiresOn);
-                Assert.AreEqual(signedIdentifiers[0].AccessPolicy.Permissions, acl.AccessPolicy.Permissions);
-            }
+            // Assert
+            FileSignedIdentifier acl = response.Value.First();
+
+            Assert.AreEqual(1, response.Value.Count());
+            Assert.AreEqual(signedIdentifiers[0].Id, acl.Id);
+            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.StartsOn, acl.AccessPolicy.StartsOn);
+            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.ExpiresOn, acl.AccessPolicy.ExpiresOn);
+            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.Permissions, acl.AccessPolicy.Permissions);
         }
 
         [Test]
@@ -325,17 +324,17 @@ namespace Azure.Storage.Files.Test
         [Test]
         public async Task SetAccessPolicyAsync()
         {
-            using (GetNewShare(out ShareClient share))
-            {
-                // Arrange
-                FileSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareClient share = test.Share;
 
-                // Act
-                Response<ShareInfo> response = await share.SetAccessPolicyAsync(signedIdentifiers);
+            // Arrange
+            FileSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
 
-                // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
-            }
+            // Act
+            Response<ShareInfo> response = await share.SetAccessPolicyAsync(signedIdentifiers);
+
+            // Assert
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
         }
 
         [Test]
@@ -356,14 +355,14 @@ namespace Azure.Storage.Files.Test
         [Test]
         public async Task GetStatisticsAsync()
         {
-            using (GetNewShare(out ShareClient share))
-            {
-                // Act
-                Response<ShareStatistics> response = await share.GetStatisticsAsync();
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareClient share = test.Share;
 
-                // Assert
-                Assert.IsNotNull(response);
-            }
+            // Act
+            Response<ShareStatistics> response = await share.GetStatisticsAsync();
+
+            // Assert
+            Assert.IsNotNull(response);
         }
 
         [Test]
@@ -384,14 +383,14 @@ namespace Azure.Storage.Files.Test
         [Test]
         public async Task CreateSnapshotAsync()
         {
-            using (GetNewShare(out ShareClient share))
-            {
-                // Act
-                Response<ShareSnapshotInfo> response = await share.CreateSnapshotAsync();
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareClient share = test.Share;
 
-                // Assert
-                Assert.IsNotNull(response);
-            }
+            // Act
+            Response<ShareSnapshotInfo> response = await share.CreateSnapshotAsync();
+
+            // Assert
+            Assert.IsNotNull(response);
         }
 
         [Test]
@@ -411,15 +410,15 @@ namespace Azure.Storage.Files.Test
         [Test]
         public async Task SetQuotaAsync()
         {
-            using (GetNewShare(out ShareClient share))
-            {
-                // Act
-                await share.SetQuotaAsync(Constants.KB);
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareClient share = test.Share;
 
-                // Assert
-                Response<ShareProperties> response = await share.GetPropertiesAsync();
-                Assert.AreEqual(Constants.KB, response.Value.QuotaInGB);
-            }
+            // Act
+            await share.SetQuotaAsync(Constants.KB);
+
+            // Assert
+            Response<ShareProperties> response = await share.GetPropertiesAsync();
+            Assert.AreEqual(Constants.KB, response.Value.QuotaInGB);
         }
 
         [Test]
@@ -470,27 +469,27 @@ namespace Azure.Storage.Files.Test
         [Test]
         public async Task CreateDirectoryAsync()
         {
-            using (GetNewShare(out ShareClient share))
-            {
-                DirectoryClient dir = InstrumentClient((await share.CreateDirectoryAsync(GetNewDirectoryName())).Value);
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareClient share = test.Share;
 
-                Response<StorageDirectoryProperties> properties = await dir.GetPropertiesAsync();
-                Assert.IsNotNull(properties.Value);
-            }
+            DirectoryClient dir = InstrumentClient((await share.CreateDirectoryAsync(GetNewDirectoryName())).Value);
+
+            Response<StorageDirectoryProperties> properties = await dir.GetPropertiesAsync();
+            Assert.IsNotNull(properties.Value);
         }
 
         [Test]
         public async Task DeleteDirectoryAsync()
         {
-            using (GetNewShare(out ShareClient share))
-            {
-                var name = GetNewDirectoryName();
-                DirectoryClient dir = InstrumentClient((await share.CreateDirectoryAsync(name)).Value);
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareClient share = test.Share;
 
-                await share.DeleteDirectoryAsync(name);
-                Assert.ThrowsAsync<RequestFailedException>(
-                    async () => await dir.GetPropertiesAsync());
-            }
+            var name = GetNewDirectoryName();
+            DirectoryClient dir = InstrumentClient((await share.CreateDirectoryAsync(name)).Value);
+
+            await share.DeleteDirectoryAsync(name);
+            Assert.ThrowsAsync<RequestFailedException>(
+                async () => await dir.GetPropertiesAsync());
         }
     }
 }
