@@ -45,7 +45,7 @@ jobs:
 
     - pwsh: |
         Write-Host "Creating resource group: $(net-keyvault-azure-keyvault-name)rg"
-        az group create --name "$(net-keyvault-azure-keyvault-name)rg" --location westus --tags service-directory=keyvault test-resource=true
+        az group create --name "$(net-keyvault-azure-keyvault-name)rg" --location westus --tags ServiceDirectory=keyvault DeleteAfter="$([DateTime]::UtcNow.ToString('o'))"
         az group wait --name "$(net-keyvault-azure-keyvault-name)rg"
 
         Write-Host "Creating key vault: $(net-keyvault-azure-keyvault-name)"
