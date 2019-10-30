@@ -11,32 +11,30 @@
 namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// A hierarchical entity extractor.
+    /// An entity extractor update object.
     /// </summary>
-    public partial class HierarchicalEntityModel
+    public partial class EntityModelUpdateObject
     {
         /// <summary>
-        /// Initializes a new instance of the HierarchicalEntityModel class.
+        /// Initializes a new instance of the EntityModelUpdateObject class.
         /// </summary>
-        public HierarchicalEntityModel()
+        public EntityModelUpdateObject()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the HierarchicalEntityModel class.
+        /// Initializes a new instance of the EntityModelUpdateObject class.
         /// </summary>
-        /// <param name="children">Child entities.</param>
         /// <param name="name">Entity name.</param>
-        public HierarchicalEntityModel(IList<string> children = default(IList<string>), string name = default(string))
+        /// <param name="instanceOf">The instance of model name</param>
+        public EntityModelUpdateObject(string name = default(string), string instanceOf = default(string))
         {
-            Children = children;
             Name = name;
+            InstanceOf = instanceOf;
             CustomInit();
         }
 
@@ -46,16 +44,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets child entities.
-        /// </summary>
-        [JsonProperty(PropertyName = "children")]
-        public IList<string> Children { get; set; }
-
-        /// <summary>
         /// Gets or sets entity name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the instance of model name
+        /// </summary>
+        [JsonProperty(PropertyName = "instanceOf")]
+        public string InstanceOf { get; set; }
 
     }
 }

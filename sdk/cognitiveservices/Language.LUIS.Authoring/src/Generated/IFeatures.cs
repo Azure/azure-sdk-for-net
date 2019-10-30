@@ -23,40 +23,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
     public partial interface IFeatures
     {
         /// <summary>
-        /// [DEPRECATED NOTICE: This operation will soon be removed] Gets all
-        /// the pattern features.
-        /// </summary>
-        /// <param name='appId'>
-        /// The application ID.
-        /// </param>
-        /// <param name='versionId'>
-        /// The version ID.
-        /// </param>
-        /// <param name='skip'>
-        /// The number of entries to skip. Default value is 0.
-        /// </param>
-        /// <param name='take'>
-        /// The number of entries to return. Maximum page size is 500. Default
-        /// is 100.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
-        Task<HttpOperationResponse<IList<PatternFeatureInfo>>> ListApplicationVersionPatternFeaturesWithHttpMessagesAsync(System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Creates a new phraselist feature in a version of the application.
         /// </summary>
         /// <param name='appId'>
@@ -241,5 +207,69 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// Thrown when a required parameter is null
         /// </exception>
         Task<HttpOperationResponse<OperationStatus>> DeletePhraseListWithHttpMessagesAsync(System.Guid appId, string versionId, int phraselistId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Adds a new feature relation to be used by the intent in a version
+        /// of the application.
+        /// </summary>
+        /// <param name='appId'>
+        /// The application ID.
+        /// </param>
+        /// <param name='versionId'>
+        /// The version ID.
+        /// </param>
+        /// <param name='intentId'>
+        /// The intent classifier ID.
+        /// </param>
+        /// <param name='featureRelationCreateObject'>
+        /// A Feature relation information object.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse<OperationStatus>> AddIntentFeatureWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid intentId, ModelFeatureInformation featureRelationCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Adds a new feature relation to be used by the entity in a version
+        /// of the application.
+        /// </summary>
+        /// <param name='appId'>
+        /// The application ID.
+        /// </param>
+        /// <param name='versionId'>
+        /// The version ID.
+        /// </param>
+        /// <param name='entityId'>
+        /// The entity extractor ID.
+        /// </param>
+        /// <param name='featureRelationCreateObject'>
+        /// A Feature relation information object.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse<OperationStatus>> AddEntityFeatureWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, ModelFeatureInformation featureRelationCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
