@@ -10,7 +10,7 @@
     <PackageReference Update="ApprovalTests" Version="3.0.22" />
     <PackageReference Update="ApprovalUtilities" Version="3.0.22" />
     <PackageReference Update="Azure.Core" Version="1.0.0" />
-    <PackageReference Update="Azure.Identity" Version="1.0.0-preview.5" />
+    <PackageReference Update="Azure.Identity" Version="1.0.0" />
     <PackageReference Update="Azure.Messaging.EventHubs" Version="5.0.0-preview.4" />
     <PackageReference Update="Azure.Storage.Blobs" Version="12.0.0-preview.4" />
     <PackageReference Update="BenchmarkDotNet" Version="0.11.5" />
