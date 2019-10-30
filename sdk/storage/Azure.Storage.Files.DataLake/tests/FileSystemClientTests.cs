@@ -37,6 +37,10 @@ namespace Azure.Storage.Files.DataLake.Tests
 
                 // Act
                 await fileSystemClient.GetPropertiesAsync();
+
+                // Assert
+                Assert.AreEqual(fileSystemName, fileSystemClient.Name);
+                Assert.AreEqual(uri, fileSystemClient.Uri);
             }
             finally
             {
@@ -62,6 +66,10 @@ namespace Azure.Storage.Files.DataLake.Tests
 
                 // Act
                 await fileSystemClient.GetPropertiesAsync();
+
+                // Assert
+                Assert.AreEqual(fileSystemName, fileSystemClient.Name);
+                Assert.AreEqual(uri, fileSystemClient.Uri);
             }
             finally
             {

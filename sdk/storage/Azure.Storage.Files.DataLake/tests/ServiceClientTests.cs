@@ -32,6 +32,9 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Act
             await serviceClient.GetFileSystemsAsync().ToListAsync();
+
+            // Assert
+            Assert.AreEqual(uri, serviceClient.Uri);
         }
 
         [Test]
@@ -46,6 +49,9 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Act
             await serviceClient.GetFileSystemsAsync().ToListAsync();
+
+            // Assert
+            Assert.AreEqual(uri, serviceClient.Uri);
         }
 
         [Test]
@@ -58,6 +64,9 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Act
             await serviceClient.GetFileSystemsAsync().ToListAsync();
+
+            // Assert
+            Assert.AreEqual(uri, serviceClient.Uri);
         }
 
         [Test]

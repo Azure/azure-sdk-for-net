@@ -32,6 +32,10 @@ namespace Azure.Storage.Files.DataLake.Tests
 
                 // Act
                 await pathClient.GetPropertiesAsync();
+
+                // Assert
+                Assert.AreEqual(fileSystemName, pathClient.FileSystemName);
+                Assert.AreEqual(uri, pathClient.Uri);
             }
         }
 
@@ -53,6 +57,10 @@ namespace Azure.Storage.Files.DataLake.Tests
 
                 // Act
                 await pathClient.GetPropertiesAsync();
+
+                // Assert
+                Assert.AreEqual(fileSystemName, pathClient.FileSystemName);
+                Assert.AreEqual(uri, pathClient.Uri);
             }
         }
 
@@ -72,6 +80,10 @@ namespace Azure.Storage.Files.DataLake.Tests
 
                 // Act
                 await pathClient.GetPropertiesAsync();
+
+                // Assert
+                Assert.AreEqual(fileSystemName, pathClient.FileSystemName);
+                Assert.AreEqual(uri, pathClient.Uri);
             }
         }
     }
