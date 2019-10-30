@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core.Testing;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Files.Shares.Tests;
 using Azure.Storage.Test;
@@ -148,7 +149,7 @@ namespace Azure.Storage.Files.Shares.Test
         public async Task ListSharesSegmentAsync_Metadata()
         {
             // Arrange
-            FileServiceClient service = GetServiceClient_SharedKey();
+            ShareServiceClient service = GetServiceClient_SharedKey();
             IDictionary<string, string> metadata = BuildMetadata();
 
             // Ensure at least one share

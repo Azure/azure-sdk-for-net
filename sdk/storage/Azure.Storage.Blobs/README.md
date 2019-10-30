@@ -55,47 +55,33 @@ Learn more about options for authentication _(including Connection Strings, Shar
 
 ### Uploading a blob
 
-```C# Snippet:Upload
-public void Upload()
+```c#
+using Azure.Storage;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+
+// Get a connection string to our Azure Storage account.  You can
+// obtain your connection string from the Azure Portal (click
+// Access Keys under Settings in the Portal Storage account blade)
+// or using the Azure CLI with:
+//
+//     az storage account show-connection-string --name <account_name> --resource-group <resource_group>
+//
+// And you can provide the connection string to your application
+// using an environment variable.
+string connectionString = "<connection_string>";
+
+// Get a reference to a container named "sample-container" and then create it
+BlobContainerClient container = new BlobContainerClient(connectionString, "sample-container");
+container.Create();
+
+// Get a reference to a blob named "sample-file" in a container named "sample-container"
+BlobClient blob = container.GetBlobClient("sample-file");
+
+// Open a file and upload it's data
+using (FileStream file = File.OpenRead("local-file.jpg"))
 {
-    // Create a temporary Lorem Ipsum file on disk that we can upload
-    string path = CreateTempFile(SampleFileContent);
-
-    // Get a connection string to our Azure Storage account.  You can
-    // obtain your connection string from the Azure Portal (click
-    // Access Keys under Settings in the Portal Storage account blade)
-    // or using the Azure CLI with:
-    //
-    //     az storage account show-connection-string --name <account_name> --resource-group <resource_group>
-    //
-    // And you can provide the connection string to your application
-    // using an environment variable.
-    string connectionString = ConnectionString;
-
-    // Get a reference to a container named "sample-container" and then create it
-    BlobContainerClient container = new BlobContainerClient(connectionString, Randomize("sample-container"));
-    container.Create();
-    try
-    {
-        // Get a reference to a blob named "sample-file" in a container named "sample-container"
-        BlobClient blob = container.GetBlobClient(Randomize("sample-file"));
-
-        // Open the file and upload its data
-        using (FileStream file = File.OpenRead(path))
-        {
-            blob.Upload(file);
-        }
-
-        // Verify we uploaded one blob with some content
-        Assert.AreEqual(1, container.GetBlobs().Count());
-        BlobProperties properties = blob.GetProperties();
-        Assert.AreEqual(SampleFileContent.Length, properties.ContentLength);
-    }
-    finally
-    {
-        // Clean up after the test when we're finished
-        container.Delete();
-    }
+    blob.Upload(file);
 }
 ```
 

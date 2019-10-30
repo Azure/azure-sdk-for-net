@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Storage.Files.Models
+namespace Azure.Storage.Files.Shares.Models
 {
     public partial class ShareProperties
     {
@@ -11,7 +11,7 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         /// <param name="element">XML element</param>
         /// <param name="value">value for element</param>
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.ShareProperties value)
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Shares.Models.ShareProperties value)
         {
             System.Xml.Linq.XElement parent = element.Parent;
             value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);

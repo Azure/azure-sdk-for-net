@@ -203,9 +203,9 @@ additional questions or comments.
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Files.Shares%2FREADME.png)
 
 <!-- LINKS -->
-[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Files/src
-[package]: https://www.nuget.org/packages/Azure.Storage.Files/
-[docs]: https://azure.github.io/azure-sdk-for-net/api/Azure.Storage.Files.html
+[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Files.Shares/src
+[package]: https://www.nuget.org/packages/Azure.Storage.Files.Shares/
+[docs]: https://azure.github.io/azure-sdk-for-net/api/Azure.Storage.Files.Shares.html
 [rest_docs]: https://docs.microsoft.com/en-us/rest/api/storageservices/file-service-rest-api
 [product_docs]: https://docs.microsoft.com/en-us/azure/storage/files/storage-files-introduction
 [nuget]: https://www.nuget.org/

@@ -46,7 +46,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Queues", "Queues", "{F4218B
 		Azure.Storage.Queues\README.md = Azure.Storage.Queues\README.md
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Files", "Files", "{9EF57C69-DC48-4E5C-BBD5-76E23E4ADDA6}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shares", "Shares", "{9EF57C69-DC48-4E5C-BBD5-76E23E4ADDA6}"
 	ProjectSection(SolutionItems) = preProject
 		Azure.Storage.Files.Shares\BreakingChanges.txt = Azure.Storage.Files.Shares\BreakingChanges.txt
 		Azure.Storage.Files.Shares\Changelog.txt = Azure.Storage.Files.Shares\Changelog.txt

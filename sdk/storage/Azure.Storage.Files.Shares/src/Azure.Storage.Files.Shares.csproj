@@ -3,16 +3,15 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyTitle>Microsoft Azure.Storage.Files client library</AssemblyTitle>
-    <Version>12.0.0-preview.5</Version>
     <AssemblyTitle>Microsoft Azure.Storage.Files.Shares client library</AssemblyTitle>
+    <Version>12.0.0-preview.5</Version>
     <DefineConstants>FileSDK;$(DefineConstants)</DefineConstants>
     <PackageTags>Microsoft Azure Storage Files, Microsoft, Azure, File, Files, Storage, StorageScalable, azureofficial</PackageTags>
     <PackageReleaseNotes>
       For release notes and more information please visit https://aka.ms/azure-sdk-preview3-net
     </PackageReleaseNotes>
     <Description>
-      This client library enables working with the Microsoft Azure Storage File service for storing binary and text data.
+      This client library enables working with the Microsoft Azure Storage File Shares service for storing binary and text data.
       For this release see notes - https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Files.Shares/README.md and https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Files/Changelog.txt
       in addition to the breaking changes https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Files.Shares/BreakingChanges.txt
       Microsoft Azure Storage quickstarts and tutorials - https://docs.microsoft.com/en-us/azure/storage/
