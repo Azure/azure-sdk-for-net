@@ -50,7 +50,7 @@ jobs:
       displayName: Create Key Vault
 
     - script: >-
-        az keyvault set-policy --name "$(net-keyvault-azure-keyvault-name) --resource-group "$(net-keyvault-azure-keyvault-name)rg" --spn "$(net-keyvault-azure-client-id)"
+        az keyvault set-policy --name "$(net-keyvault-azure-keyvault-name)" --resource-group "$(net-keyvault-azure-keyvault-name)rg" --spn "$(net-keyvault-azure-client-id)"
         --certificate-permissions backup create delete deleteissuers get getissuers import list listissuers managecontacts manageissuers purge recover restore setissuers update
         --key-permissions backup create decrypt delete encrypt get import list purge recover restore sign unwrapKey update verify wrapKey
         --secret-permissions backup delete get list purge recover restore set
