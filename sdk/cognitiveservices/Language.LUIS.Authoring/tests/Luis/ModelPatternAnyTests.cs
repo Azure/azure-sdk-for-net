@@ -103,7 +103,7 @@
                 Assert.Equal("Pattern.Any Entity Extractor", result.ReadableType);
                 Assert.Equal("item1", result.ExplicitList.Single().ExplicitListItemProperty);
 
-                await client.Model.DeleteEntityAsync(GlobalAppId, versionId, entityId);
+                await client.Model.DeletePatternAnyEntityModelAsync(GlobalAppId, versionId, entityId);
             });
         }
 

@@ -164,8 +164,8 @@
                 var version = versionsApp.FirstOrDefault().Version;
                 var prebuiltModel = new PrebuiltDomainModelCreateObject
                 {
-                    DomainName = "Communication",
-                    ModelName = "AddContact"
+                    DomainName = "Calendar",
+                    ModelName = "Cancel"
                 };
 
                 var guidModel = await client.Model.AddCustomPrebuiltIntentAsync(GlobalAppId, version, prebuiltModel);
@@ -193,7 +193,7 @@
                 var version = versionsApp.FirstOrDefault().Version;
                 var prebuiltDomain = new PrebuiltDomainCreateBaseObject
                 {
-                    DomainName = "Communication"
+                    DomainName = "Calendar"
                 };
 
                 var results = await client.Model.AddCustomPrebuiltDomainAsync(testAppId, version, prebuiltDomain);
@@ -201,7 +201,7 @@
                 await client.Model.DeleteCustomPrebuiltDomainAsync(testAppId, version, "Communication");
                 await client.Apps.DeleteAsync(testAppId);
 
-                var validTypes = new string[] { "Intent Classifier", "Entity Extractor" };
+                var validTypes = new string[] { "Intent Classifier", "Closed List Entity Extractor", "Entity Extractor" };
 
                 Assert.True(prebuiltModels.All(m => validTypes.Contains(m.ReadableType)));
             });

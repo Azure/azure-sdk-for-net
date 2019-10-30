@@ -40,7 +40,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.HttpOperationException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// </exception>
         Task<HttpOperationResponse<IList<IntentClassifier>>> ListIntentsWithHttpMessagesAsync(System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Adds a simple entity extractor to a version of the application.
+        /// Adds an entity extractor to a version of the application.
         /// </summary>
         /// <param name='appId'>
         /// The application ID.
@@ -92,9 +92,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <param name='versionId'>
         /// The version ID.
         /// </param>
-        /// <param name='modelCreateObject'>
-        /// A model object containing the name for the new simple entity
-        /// extractor.
+        /// <param name='entityModelCreateObject'>
+        /// A model object containing the name of the new entity extractor and
+        /// its children.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<System.Guid>> AddEntityWithHttpMessagesAsync(System.Guid appId, string versionId, ModelCreateObject modelCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<System.Guid>> AddEntityWithHttpMessagesAsync(System.Guid appId, string versionId, EntityModelCreateObject entityModelCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets information about all the simple entity models in a version of
         /// the application.
@@ -144,37 +144,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<EntityExtractor>>> ListEntitiesWithHttpMessagesAsync(System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Adds a hierarchical entity extractor to a version of the
-        /// application.
-        /// </summary>
-        /// <param name='appId'>
-        /// The application ID.
-        /// </param>
-        /// <param name='versionId'>
-        /// The version ID.
-        /// </param>
-        /// <param name='hierarchicalModelCreateObject'>
-        /// A model containing the name and children of the new entity
-        /// extractor.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<HttpOperationResponse<System.Guid>> AddHierarchicalEntityWithHttpMessagesAsync(System.Guid appId, string versionId, HierarchicalEntityModel hierarchicalModelCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<NDepthEntityExtractor>>> ListEntitiesWithHttpMessagesAsync(System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets information about all the hierarchical entity models in a
         /// version of the application.
@@ -208,35 +178,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// Thrown when a required parameter is null
         /// </exception>
         Task<HttpOperationResponse<IList<HierarchicalEntityExtractor>>> ListHierarchicalEntitiesWithHttpMessagesAsync(System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Adds a composite entity extractor to a version of the application.
-        /// </summary>
-        /// <param name='appId'>
-        /// The application ID.
-        /// </param>
-        /// <param name='versionId'>
-        /// The version ID.
-        /// </param>
-        /// <param name='compositeModelCreateObject'>
-        /// A model containing the name and children of the new entity
-        /// extractor.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<HttpOperationResponse<System.Guid>> AddCompositeEntityWithHttpMessagesAsync(System.Guid appId, string versionId, CompositeEntityModel compositeModelCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets information about all the composite entity models in a version
         /// of the application.
@@ -609,9 +550,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<EntityExtractor>> GetEntityWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<NDepthEntityExtractor>> GetEntityWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates the name of an entity in a version of the application.
+        /// Deletes an entity or a child from a version of the application.
         /// </summary>
         /// <param name='appId'>
         /// The application ID.
@@ -620,38 +561,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// The version ID.
         /// </param>
         /// <param name='entityId'>
-        /// The entity extractor ID.
-        /// </param>
-        /// <param name='modelUpdateObject'>
-        /// A model object containing the new entity extractor name.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> UpdateEntityWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, ModelUpdateObject modelUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Deletes an entity from a version of the application.
-        /// </summary>
-        /// <param name='appId'>
-        /// The application ID.
-        /// </param>
-        /// <param name='versionId'>
-        /// The version ID.
-        /// </param>
-        /// <param name='entityId'>
-        /// The entity extractor ID.
+        /// The entity extractor or the child entity extractor ID.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -669,6 +579,229 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// Thrown when a required parameter is null
         /// </exception>
         Task<HttpOperationResponse<OperationStatus>> DeleteEntityWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Updates the name of an entity extractor or the name and instanceOf
+        /// model of a child entity extractor.
+        /// </summary>
+        /// <param name='appId'>
+        /// The application ID.
+        /// </param>
+        /// <param name='versionId'>
+        /// The version ID.
+        /// </param>
+        /// <param name='entityId'>
+        /// The entity extractor or the child entity extractor ID.
+        /// </param>
+        /// <param name='entityModelUpdateObject'>
+        /// A model object containing the name new entity extractor or the name
+        /// and instance of model of a child entity extractor
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse<OperationStatus>> UpdateEntityChildWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, EntityModelUpdateObject entityModelUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets the information of the features used by the intent in a
+        /// version of the application.
+        /// </summary>
+        /// <param name='appId'>
+        /// The application ID.
+        /// </param>
+        /// <param name='versionId'>
+        /// The version ID.
+        /// </param>
+        /// <param name='intentId'>
+        /// The intent classifier ID.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse<IList<ModelFeatureInformation>>> GetIntentFeaturesWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid intentId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Updates the information of the features used by the intent in a
+        /// version of the application.
+        /// </summary>
+        /// <param name='appId'>
+        /// The application ID.
+        /// </param>
+        /// <param name='versionId'>
+        /// The version ID.
+        /// </param>
+        /// <param name='intentId'>
+        /// The intent classifier ID.
+        /// </param>
+        /// <param name='featureRelationsUpdateObject'>
+        /// A list of feature information objects containing the new feature
+        /// relations.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse<OperationStatus>> ReplaceIntentFeaturesWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid intentId, IList<ModelFeatureInformation> featureRelationsUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Deletes a relation from the feature relations used by the intent in
+        /// a version of the application.
+        /// </summary>
+        /// <param name='appId'>
+        /// The application ID.
+        /// </param>
+        /// <param name='versionId'>
+        /// The version ID.
+        /// </param>
+        /// <param name='intentId'>
+        /// The intent classifier ID.
+        /// </param>
+        /// <param name='featureRelationDeleteObject'>
+        /// A feature information object containing the feature relation to
+        /// delete.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse<OperationStatus>> DeleteIntentFeatureWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid intentId, ModelFeatureInformation featureRelationDeleteObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets the information of the features used by the entity in a
+        /// version of the application.
+        /// </summary>
+        /// <param name='appId'>
+        /// The application ID.
+        /// </param>
+        /// <param name='versionId'>
+        /// The version ID.
+        /// </param>
+        /// <param name='entityId'>
+        /// The entity extractor ID.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse<IList<ModelFeatureInformation>>> GetEntityFeaturesWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Updates the information of the features used by the entity in a
+        /// version of the application.
+        /// </summary>
+        /// <param name='appId'>
+        /// The application ID.
+        /// </param>
+        /// <param name='versionId'>
+        /// The version ID.
+        /// </param>
+        /// <param name='entityId'>
+        /// The entity extractor ID.
+        /// </param>
+        /// <param name='featureRelationsUpdateObject'>
+        /// A list of feature information objects containing the new feature
+        /// relations.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse<OperationStatus>> ReplaceEntityFeaturesWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, IList<ModelFeatureInformation> featureRelationsUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Deletes a relation from the feature relations used by the entity in
+        /// a version of the application.
+        /// </summary>
+        /// <param name='appId'>
+        /// The application ID.
+        /// </param>
+        /// <param name='versionId'>
+        /// The version ID.
+        /// </param>
+        /// <param name='entityId'>
+        /// The entity extractor ID.
+        /// </param>
+        /// <param name='featureRelationDeleteObject'>
+        /// A feature information object containing the feature relation to
+        /// delete.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse<OperationStatus>> DeleteEntityFeatureWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, ModelFeatureInformation featureRelationDeleteObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets information about a hierarchical entity in a version of the
         /// application.
@@ -699,8 +832,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// </exception>
         Task<HttpOperationResponse<HierarchicalEntityExtractor>> GetHierarchicalEntityWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid hEntityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates the name and children of a hierarchical entity model in a
-        /// version of the application.
+        /// Updates the name of a hierarchical entity model in a version of the
+        /// application.
         /// </summary>
         /// <param name='appId'>
         /// The application ID.
@@ -711,8 +844,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <param name='hEntityId'>
         /// The hierarchical entity extractor ID.
         /// </param>
-        /// <param name='hierarchicalModelUpdateObject'>
-        /// Model containing names of the children of the hierarchical entity.
+        /// <param name='modelUpdateObject'>
+        /// Model containing names of the hierarchical entity.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -729,7 +862,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> UpdateHierarchicalEntityWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid hEntityId, HierarchicalEntityModel hierarchicalModelUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> UpdateHierarchicalEntityWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid hEntityId, ModelUpdateObject modelUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a hierarchical entity from a version of the application.
         /// </summary>
@@ -1385,6 +1518,39 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// </exception>
         Task<HttpOperationResponse<OperationStatus>> DeleteCustomPrebuiltDomainWithHttpMessagesAsync(System.Guid appId, string versionId, string domainName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Creates a single child in an existing entity model hierarchy in a
+        /// version of the application.
+        /// </summary>
+        /// <param name='appId'>
+        /// The application ID.
+        /// </param>
+        /// <param name='versionId'>
+        /// The version ID.
+        /// </param>
+        /// <param name='entityId'>
+        /// The entity extractor ID.
+        /// </param>
+        /// <param name='childEntityModelCreateObject'>
+        /// A model object containing the name of the new child model and its
+        /// children.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse<System.Guid>> AddEntityChildWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, ChildEntityModelCreateObject childEntityModelCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Gets information about the child's model contained in an
         /// hierarchical entity child model in a version of the application.
         /// </summary>
@@ -1483,39 +1649,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// Thrown when a required parameter is null
         /// </exception>
         Task<HttpOperationResponse<OperationStatus>> DeleteHierarchicalEntityChildWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid hEntityId, System.Guid hChildId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Creates a single child in an existing hierarchical entity model in
-        /// a version of the application.
-        /// </summary>
-        /// <param name='appId'>
-        /// The application ID.
-        /// </param>
-        /// <param name='versionId'>
-        /// The version ID.
-        /// </param>
-        /// <param name='hEntityId'>
-        /// The hierarchical entity extractor ID.
-        /// </param>
-        /// <param name='hierarchicalChildModelCreateObject'>
-        /// A model object containing the name of the new hierarchical child
-        /// model.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<HttpOperationResponse<System.Guid>> AddHierarchicalEntityChildWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid hEntityId, HierarchicalChildModelCreateObject hierarchicalChildModelCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a single child in an existing composite entity model in a
         /// version of the application.
