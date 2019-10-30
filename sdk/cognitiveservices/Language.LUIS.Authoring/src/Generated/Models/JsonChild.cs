@@ -15,26 +15,25 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
     using System.Collections.Generic;
     using System.Linq;
 
-    public partial class HierarchicalModel
+    public partial class JsonChild
     {
         /// <summary>
-        /// Initializes a new instance of the HierarchicalModel class.
+        /// Initializes a new instance of the JsonChild class.
         /// </summary>
-        public HierarchicalModel()
+        public JsonChild()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the HierarchicalModel class.
+        /// Initializes a new instance of the JsonChild class.
         /// </summary>
-        public HierarchicalModel(string name = default(string), IList<JsonChild> children = default(IList<JsonChild>), IList<JsonModelFeatureInformation> features = default(IList<JsonModelFeatureInformation>), IList<string> roles = default(IList<string>), PrebuiltDomainObject inherits = default(PrebuiltDomainObject))
+        public JsonChild(string name = default(string), string instanceOf = default(string), IList<JsonChild> children = default(IList<JsonChild>), IList<JsonModelFeatureInformation> features = default(IList<JsonModelFeatureInformation>))
         {
             Name = name;
+            InstanceOf = instanceOf;
             Children = children;
             Features = features;
-            Roles = roles;
-            Inherits = inherits;
             CustomInit();
         }
 
@@ -50,6 +49,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
 
         /// <summary>
         /// </summary>
+        [JsonProperty(PropertyName = "instanceOf")]
+        public string InstanceOf { get; set; }
+
+        /// <summary>
+        /// </summary>
         [JsonProperty(PropertyName = "children")]
         public IList<JsonChild> Children { get; set; }
 
@@ -57,16 +61,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// </summary>
         [JsonProperty(PropertyName = "features")]
         public IList<JsonModelFeatureInformation> Features { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "roles")]
-        public IList<string> Roles { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "inherits")]
-        public PrebuiltDomainObject Inherits { get; set; }
 
     }
 }
