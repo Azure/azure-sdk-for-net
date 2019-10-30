@@ -1526,8 +1526,8 @@ namespace Azure.Storage.Blobs.Test
             {
                 CacheControl = constants.CacheControl,
                 ContentDisposition = constants.ContentDisposition,
-                ContentEncoding = new string[] { constants.ContentEncoding },
-                ContentLanguage = new string[] { constants.ContentLanguage },
+                ContentEncoding = constants.ContentEncoding,
+                ContentLanguage = constants.ContentLanguage,
                 ContentHash = constants.ContentMD5,
                 ContentType = constants.ContentType
             });
@@ -1536,12 +1536,31 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobProperties> response = await blob.GetPropertiesAsync();
             Assert.AreEqual(constants.ContentType, response.Value.ContentType);
             TestHelper.AssertSequenceEqual(constants.ContentMD5, response.Value.ContentHash);
-            Assert.AreEqual(1, response.Value.ContentEncoding.Count());
-            Assert.AreEqual(constants.ContentEncoding, response.Value.ContentEncoding.First());
-            Assert.AreEqual(1, response.Value.ContentLanguage.Count());
-            Assert.AreEqual(constants.ContentLanguage, response.Value.ContentLanguage.First());
+            Assert.AreEqual(constants.ContentEncoding, response.Value.ContentEncoding);
+            Assert.AreEqual(constants.ContentLanguage, response.Value.ContentLanguage);
             Assert.AreEqual(constants.ContentDisposition, response.Value.ContentDisposition);
             Assert.AreEqual(constants.CacheControl, response.Value.CacheControl);
+        }
+
+        [Test]
+        public async Task SetHttpHeadersAsync_MultipleHeaders()
+        {
+            var constants = new TestConstants(this);
+            await using DisposingContainer test = await GetTestContainerAsync();
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            // Act
+            await blob.SetHttpHeadersAsync(new BlobHttpHeaders
+            {
+                ContentEncoding = "deflate, gzip",
+                ContentLanguage = "de-DE, en-CA",
+            });
+
+            // Assert
+            Response<BlobProperties> response = await blob.GetPropertiesAsync();
+            Assert.AreEqual("deflate,gzip", response.Value.ContentEncoding);
+            Assert.AreEqual("de-DE,en-CA", response.Value.ContentLanguage);
         }
 
         [Test]
