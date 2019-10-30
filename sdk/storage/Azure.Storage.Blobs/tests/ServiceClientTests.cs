@@ -186,6 +186,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreNotEqual(0, items.Count());
             Assert.IsTrue(items.All(c => c.Name.StartsWith(prefix)));
             Assert.IsNotNull(items.Single(c => c.Name == containerName));
+            Assert.IsTrue(items.All(c => c.Properties.Metadata == null));
         }
 
         [Test]

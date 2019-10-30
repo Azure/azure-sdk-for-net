@@ -1157,6 +1157,7 @@ namespace Azure.Storage.Blobs.Test
             var foundBlobNames = blobs.Select(blob => blob.Name).ToArray();
 
             Assert.IsTrue(BlobNames.All(blobName => foundBlobNames.Contains(blobName)));
+
         }
 
         [Test]
@@ -1173,6 +1174,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(2, page.Values.Count);
+            Assert.IsTrue(page.Values.All(b => b.Metadata == null));
         }
 
         [Test]
