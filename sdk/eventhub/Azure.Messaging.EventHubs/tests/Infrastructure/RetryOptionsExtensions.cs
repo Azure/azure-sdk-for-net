@@ -51,6 +51,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 && instance.Delay == other.Delay
                 && instance.MaximumDelay == other.MaximumDelay
                 && instance.TryTimeout == other.TryTimeout
+                && instance.CustomRetryPolicy == other.CustomRetryPolicy
             );
         }
     }
