@@ -150,9 +150,10 @@ namespace Azure.Storage.Files.Test
         {
             // Arrange
             FileServiceClient service = GetServiceClient_SharedKey();
+            IDictionary<string, string> metadata = BuildMetadata();
 
             // Ensure at least one share
-            await using DisposingShare test = await GetTestShareAsync(service, metadata: BuildMetadata());
+            await using DisposingShare test = await GetTestShareAsync(service, metadata: metadata);
             ShareClient share = test.Share;
 
             var shares = new List<ShareItem>();
@@ -165,8 +166,9 @@ namespace Azure.Storage.Files.Test
             Assert.AreNotEqual(0, shares.Count);
             Assert.AreEqual(shares.Count, shares.Select(c => c.Name).Distinct().Count());
             Assert.IsTrue(shares.Any(c => share.Uri == service.GetShareClient(c.Name).Uri));
-            Assert.IsTrue(
-               shares.Where(c => c.Name == test.Share.Name).FirstOrDefault().Properties.Metadata.Count > 0);
+            AssertMetadataEquality(
+                metadata,
+                shares.Where(s => s.Name == test.Share.Name).FirstOrDefault().Properties.Metadata);
         }
 
         [Test]
