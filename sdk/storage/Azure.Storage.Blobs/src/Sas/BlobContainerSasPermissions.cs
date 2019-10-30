@@ -2,154 +2,98 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ComponentModel;
 using System.Text;
+using Azure.Storage.Sas;
 
 namespace Azure.Storage.Sas
 {
     /// <summary>
-    /// <see cref="BlobContainerSasPermissions"/> supports reading and writing
-    /// permissions string for a blob containers's access policy.  Use <see cref="ToString"/>
-    /// to generate a permissions string you can provide to
-    /// <see cref="BlobSasBuilder.Permissions"/>.
+    /// <see cref="BlobContainerSasPermissions"/> contains the list of
+    /// permissions that can be set for a blob's access policy.  Use
+    /// <see cref="BlobSasBuilder.SetPermissions(BlobContainerSasPermissions)"/>
+    /// to set the permissions on the <see cref="BlobSasBuilder"/>.
     /// </summary>
-    public struct BlobContainerSasPermissions : IEquatable<BlobContainerSasPermissions>
+    [Flags]
+    public enum BlobContainerSasPermissions
     {
         /// <summary>
-        /// Get or sets whether Read is permitted.
+        /// Indicates that Read is permitted.
         /// </summary>
-        public bool Read { get; set; }
+        Read = 1,
 
         /// <summary>
-        /// Get or sets whether Add is permitted.
+        /// Indicates that Add is permitted.
         /// </summary>
-        public bool Add { get; set; }
+        Add = 2,
 
         /// <summary>
-        /// Get or sets whether Create is permitted.
+        /// Indicates that Create is permitted.
         /// </summary>
-        public bool Create { get; set; }
+        Create = 4,
 
         /// <summary>
-        /// Get or sets whether Write is permitted.
+        /// Indicates that Write is permitted.
         /// </summary>
-        public bool Write { get; set; }
+        Write = 8,
 
         /// <summary>
-        /// Get or sets whether Delete is permitted.
+        /// Indicates that Delete is permitted.
         /// </summary>
-        public bool Delete { get; set; }
+        Delete = 16,
 
         /// <summary>
-        /// Get or sets whether List is permitted.
+        /// Indicates that List is permitted.
         /// </summary>
-        public bool List { get; set; }
+        List = 32,
+
+        /// <summary>
+        /// Indicates that all permissions are set.
+        /// </summary>
+        All = ~0
+    }
+}
+
+namespace Azure.Storage.Blobs
+{
+    /// <summary>
+    /// Blob enum extensions.
+    /// </summary>
+    internal static partial class BlobExtensions
+    {
 
         /// <summary>
         /// Create a permissions string to provide
         /// <see cref="BlobSasBuilder.Permissions"/>.
         /// </summary>
         /// <returns>A permissions string.</returns>
-        public override string ToString()
+        internal static string ToPermissionsString(this BlobContainerSasPermissions permissions)
         {
             var sb = new StringBuilder();
-            if (Read) { sb.Append(Constants.Sas.Permissions.Read); }
-            if (Add) { sb.Append(Constants.Sas.Permissions.Add); }
-            if (Create) { sb.Append(Constants.Sas.Permissions.Create); }
-            if (Write) { sb.Append(Constants.Sas.Permissions.Write); }
-            if (Delete) { sb.Append(Constants.Sas.Permissions.Delete); }
-            if (List) { sb.Append(Constants.Sas.Permissions.List); }
+            if ((permissions & BlobContainerSasPermissions.Read) == BlobContainerSasPermissions.Read)
+            {
+                sb.Append(Constants.Sas.Permissions.Read);
+            }
+            if ((permissions & BlobContainerSasPermissions.Add) == BlobContainerSasPermissions.Add)
+            {
+                sb.Append(Constants.Sas.Permissions.Add);
+            }
+            if ((permissions & BlobContainerSasPermissions.Create) == BlobContainerSasPermissions.Create)
+            {
+                sb.Append(Constants.Sas.Permissions.Create);
+            }
+            if ((permissions & BlobContainerSasPermissions.Write) == BlobContainerSasPermissions.Write)
+            {
+                sb.Append(Constants.Sas.Permissions.Write);
+            }
+            if ((permissions & BlobContainerSasPermissions.Delete) == BlobContainerSasPermissions.Delete)
+            {
+                sb.Append(Constants.Sas.Permissions.Delete);
+            }
+            if ((permissions & BlobContainerSasPermissions.List) == BlobContainerSasPermissions.List)
+            {
+                sb.Append(Constants.Sas.Permissions.List);
+            }
             return sb.ToString();
         }
-
-        /// <summary>
-        /// Parse a permissions string into a new <see cref="BlobContainerSasPermissions"/>.
-        /// </summary>
-        /// <param name="s">Permissions string to parse.</param>
-        /// <returns>The parsed <see cref="BlobContainerSasPermissions"/>.</returns>
-        public static BlobContainerSasPermissions Parse(string s)
-        {
-            var p = new BlobContainerSasPermissions();
-            foreach (var c in s)
-            {
-                switch (c)
-                {
-                    case Constants.Sas.Permissions.Read:
-                        p.Read = true;
-                        break;
-                    case Constants.Sas.Permissions.Add:
-                        p.Add = true;
-                        break;
-                    case Constants.Sas.Permissions.Create:
-                        p.Create = true;
-                        break;
-                    case Constants.Sas.Permissions.Write:
-                        p.Write = true;
-                        break;
-                    case Constants.Sas.Permissions.Delete:
-                        p.Delete = true;
-                        break;
-                    case Constants.Sas.Permissions.List:
-                        p.List = true;
-                        break;
-                    default:
-                        throw Errors.InvalidPermission(c);
-                }
-            }
-            return p;
-        }
-
-        /// <summary>
-        /// Check if two BlobContainerSasPermissions instances are equal.
-        /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) =>
-            obj is BlobContainerSasPermissions other && Equals(other);
-
-        /// <summary>
-        /// Get a hash code for the BlobContainerSasPermissions.
-        /// </summary>
-        /// <returns>Hash code for the BlobContainerSasPermissions.</returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() =>
-            (Read ? 0b000001 : 0) +
-            (Add ? 0b000010 : 0) +
-            (Create ? 0b000100 : 0) +
-            (Write ? 0b001000 : 0) +
-            (Delete ? 0b010000 : 0) +
-            (List ? 0b100000 : 0);
-
-        /// <summary>
-        /// Check if two BlobContainerSasPermissions instances are equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(BlobContainerSasPermissions left, BlobContainerSasPermissions right) =>
-            left.Equals(right);
-
-        /// <summary>
-        /// Check if two BlobContainerSasPermissions instances are not equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(BlobContainerSasPermissions left, BlobContainerSasPermissions right) =>
-            !(left == right);
-
-        /// <summary>
-        /// Check if two BlobContainerSasPermissions instances are equal.
-        /// </summary>
-        /// <param name="other">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(BlobContainerSasPermissions other) =>
-            Read == other.Read &&
-            Add == other.Add &&
-            Create == other.Create &&
-            Write == other.Write &&
-            Delete == other.Delete &&
-            List == other.List;
     }
 }

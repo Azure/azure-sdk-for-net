@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -13,7 +14,7 @@ namespace Azure.Storage.Blobs.Models
     ///
     /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-and-retrieving-properties-and-metadata-for-blob-resources" />.
     /// </summary>
-    public struct BlobHttpHeaders : IEquatable<BlobHttpHeaders>
+    public class BlobHttpHeaders
     {
         /// <summary>
         /// The MIME content type of the blob.
@@ -36,12 +37,12 @@ namespace Azure.Storage.Blobs.Models
         /// is performed on the blob resource. The client can use this value
         /// when returned to decode the blob content.
         /// </summary>
-        public string[] ContentEncoding { get; set; }
+        public string ContentEncoding { get; set; }
 
         /// <summary>
         /// Specifies the natural languages used by this resource.
         /// </summary>
-        public string[] ContentLanguage { get; set; }
+        public string ContentLanguage { get; set; }
 #pragma warning restore CA1819 // Properties should not return arrays
 
         /// <summary>
@@ -59,53 +60,25 @@ namespace Azure.Storage.Blobs.Models
         public string CacheControl { get; set; }
 
         /// <summary>
-        /// Check if two BlobHttpHeaders instances are equal.
+        /// Creates a string representation of a
+        /// <see cref="BlobHttpHeaders"/>.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override string ToString() => base.ToString();
+
+        /// <summary>
+        /// Check if two <see cref="BlobHttpHeaders"/> instances are equal.
         /// </summary>
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
-        public override bool Equals(object obj)
-            => obj is BlobHttpHeaders other && Equals(other);
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => base.Equals(obj);
 
         /// <summary>
-        /// Get a hash code for the BlobHttpHeaders.
+        /// Get a hash code for the <see cref="BlobHttpHeaders"/>.
         /// </summary>
-        /// <returns>Hash code for the BlobHttpHeaders.</returns>
-        public override int GetHashCode()
-            => CacheControl.GetHashCode()
-            ^ ContentDisposition.GetHashCode()
-            ^ ContentEncoding.GetHashCode()
-            ^ ContentLanguage.GetHashCode()
-            ^ ContentHash.GetHashCode()
-            ^ ContentType.GetHashCode()
-            ;
-
-        /// <summary>
-        /// Check if two BlobHttpHeaders instances are equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(BlobHttpHeaders left, BlobHttpHeaders right) => left.Equals(right);
-
-        /// <summary>
-        /// Check if two BlobHttpHeaders instances are not equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(BlobHttpHeaders left, BlobHttpHeaders right) => !(left == right);
-
-        /// <summary>
-        /// Check if two BlobHttpHeaders instances are equal.
-        /// </summary>
-        /// <param name="other">The instance to compare to.</param>
-        public bool Equals(BlobHttpHeaders other)
-            => CacheControl == other.CacheControl
-            && ContentDisposition == other.ContentDisposition
-            && ContentEncoding == other.ContentEncoding
-            && ContentLanguage == other.ContentLanguage
-            && ContentHash == other.ContentHash
-            && ContentType == other.ContentType
-            ;
+        /// <returns>Hash code for the <see cref="BlobHttpHeaders"/>.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => base.GetHashCode();
     }
 }

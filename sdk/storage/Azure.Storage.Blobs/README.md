@@ -147,7 +147,7 @@ Learn more about enabling Azure Active Directory for authentication with Azure S
 ## Troubleshooting
 
 All Blob service operations will throw a
-[StorageRequestFailedException][StorageRequestFailedException] on failure with
+[RequestFailedException][RequestFailedException] on failure with
 helpful [`ErrorCode`s][error_codes].  Many of these errors are recoverable.
 
 ```c#
@@ -160,7 +160,7 @@ try
 {
     container.Create();
 }
-catch (StorageRequestFailedException ex)
+catch (RequestFailedException ex)
     when (ex.ErrorCode == BlobErrorCode.ContainerAlreadyExists)
 {
     // Ignore any errors if the container already exists
@@ -194,7 +194,7 @@ additional questions or comments.
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Blobs/src
 [package]: https://www.nuget.org/packages/Azure.Storage.Blobs/
-[docs]: https://azure.github.io/azure-sdk-for-net/api/Azure.Storage.Blobs.html
+[docs]: https://azure.github.io/azure-sdk-for-net/storage.html
 [rest_docs]: https://docs.microsoft.com/en-us/rest/api/storageservices/blob-service-rest-api
 [product_docs]: https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blobs-overview
 [nuget]: https://www.nuget.org/
@@ -207,7 +207,7 @@ additional questions or comments.
 [identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity/README.md
 [storage_ad]: https://docs.microsoft.com/en-us/azure/storage/common/storage-auth-aad
 [storage_ad_sample]: samples/Sample02c_Auth_ActiveDirectory.cs
-[StorageRequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Common/src/StorageRequestFailedException.cs
+[RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/src/RequestFailedException.cs
 [error_codes]: https://docs.microsoft.com/en-us/rest/api/storageservices/blob-service-error-codes
 [samples]: samples/
 [storage_contrib]: ../CONTRIBUTING.md

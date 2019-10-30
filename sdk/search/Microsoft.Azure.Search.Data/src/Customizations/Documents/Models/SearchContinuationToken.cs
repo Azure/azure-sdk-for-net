@@ -9,12 +9,12 @@ using Newtonsoft.Json;
 namespace Microsoft.Azure.Search.Models
 {
     /// <summary>
-    /// Encapsulates state required to continue fetching search results. This is necessary when Azure Search cannot
+    /// Encapsulates state required to continue fetching search results. This is necessary when Azure Cognitive Search cannot
     /// fulfill a search request with a single response.
     /// </summary>
     /// <remarks>
     /// This class supports using <c cref="JsonConvert">JsonConvert</c> to convert to and from a JSON payload. This can be useful if you
-    /// call Azure Search from a web application and you need to exchange continuation tokens with a browser or mobile client while paging
+    /// call Azure Cognitive Search from a web application and you need to exchange continuation tokens with a browser or mobile client while paging
     /// through search results.
     /// </remarks>
     [JsonConverter(typeof(SearchContinuationTokenConverter))]

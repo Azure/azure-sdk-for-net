@@ -42,7 +42,7 @@ TODO: Add Examples
 ## Troubleshooting
 
 All File DataLake service operations will throw a
-[StorageRequestFailedException][StorageRequestFailedException] on failure with
+[RequestFailedException][RequestFailedException] on failure with
 helpful [`ErrorCode`s][error_codes].  Many of these errors are recoverable.
 
 TODO: Update sample
@@ -56,7 +56,7 @@ try
 {
     container.Create();
 }
-catch (StorageRequestFailedException ex)
+catch (RequestFailedException ex)
     when (ex.ErrorCode == BlobErrorCode.ContainerAlreadyExists)
 {
     // Ignore any errors if the container already exists
@@ -87,7 +87,7 @@ additional questions or comments.
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Files.DataLake/src
 [package]: https://www.nuget.org/packages/Azure.Storage.Files.DataLake/
-[docs]: https://azure.github.io/azure-sdk-for-net/api/Azure.Storage.Files.DataLake.html
+[docs]: https://azure.github.io/azure-sdk-for-net/storage.html
 [rest_docs]: https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/filesystem
 [product_docs]: https://docs.microsoft.com/en-us/azure/storage/blobs/?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
 [nuget]: https://www.nuget.org/
@@ -98,7 +98,7 @@ additional questions or comments.
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/
 [identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity/README.md
-[StorageRequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Common/src/StorageRequestFailedException.cs
+[RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/src/RequestFailedException.cs
 [error_codes]: https://docs.microsoft.com/en-us/rest/api/storageservices/blob-service-error-codes
 [storage_contrib]: ../CONTRIBUTING.md
 [cla]: https://cla.microsoft.com

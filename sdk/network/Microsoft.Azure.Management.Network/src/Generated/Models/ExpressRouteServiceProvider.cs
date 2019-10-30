@@ -74,12 +74,12 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<ExpressRouteServiceProviderBandwidthsOffered> BandwidthsOffered { get; set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the express route service
-        /// provider resource. Possible values include: 'Succeeded',
-        /// 'Updating', 'Deleting', 'Failed'
+        /// Gets the provisioning state of the express route service provider
+        /// resource. Possible values include: 'Succeeded', 'Updating',
+        /// 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
     }
 }

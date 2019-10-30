@@ -7,25 +7,29 @@ using System.Text.Json;
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     /// <summary>
-    /// Represents information about an dencryption operation
+    /// Represents information about a decrypt operation.
     /// </summary>
     public class DecryptResult : IJsonDeserializable
     {
         private const string KeyIdPropertyName = "kid";
         private const string PlaintextPropertyName = "value";
 
+        internal DecryptResult()
+        {
+        }
+
         /// <summary>
-        /// The <see cref="KeyProperties.Id"/> of the <see cref="Key"/> used to decrypt
+        /// Gets the <see cref="KeyProperties.Id"/> of the <see cref="KeyVaultKey"/> used to decrypt.
         /// </summary>
         public string KeyId { get; internal set; }
 
         /// <summary>
-        /// The decrypted data
+        /// Gets the decrypted data.
         /// </summary>
         public byte[] Plaintext { get; internal set; }
 
         /// <summary>
-        /// The algorithm used for the decryption
+        /// Gets the <see cref="EncryptionAlgorithm"/> used for the decryption.
         /// </summary>
         public EncryptionAlgorithm Algorithm { get; internal set; }
 

@@ -8,7 +8,7 @@ namespace Azure.Security.KeyVault.Secrets
 {
     internal struct ObjectId
     {
-        public Uri Id { get; private set; }
+        public Uri Id { get; set; }
 
         public Uri VaultUri { get; set; }
 

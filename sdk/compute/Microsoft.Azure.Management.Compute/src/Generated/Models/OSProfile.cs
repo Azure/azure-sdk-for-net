@@ -97,7 +97,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// operations should be allowed on the virtual machine.
         /// &lt;br&gt;&lt;br&gt;This may only be set to False when no
         /// extensions are present on the virtual machine.</param>
-        public OSProfile(string computerName = default(string), string adminUsername = default(string), string adminPassword = default(string), string customData = default(string), WindowsConfiguration windowsConfiguration = default(WindowsConfiguration), LinuxConfiguration linuxConfiguration = default(LinuxConfiguration), IList<VaultSecretGroup> secrets = default(IList<VaultSecretGroup>), bool? allowExtensionOperations = default(bool?))
+        /// <param name="requireGuestProvisionSignal">Specifies whether the
+        /// guest provision signal is required from the virtual
+        /// machine.</param>
+        public OSProfile(string computerName = default(string), string adminUsername = default(string), string adminPassword = default(string), string customData = default(string), WindowsConfiguration windowsConfiguration = default(WindowsConfiguration), LinuxConfiguration linuxConfiguration = default(LinuxConfiguration), IList<VaultSecretGroup> secrets = default(IList<VaultSecretGroup>), bool? allowExtensionOperations = default(bool?), bool? requireGuestProvisionSignal = default(bool?))
         {
             ComputerName = computerName;
             AdminUsername = adminUsername;
@@ -107,6 +110,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             LinuxConfiguration = linuxConfiguration;
             Secrets = secrets;
             AllowExtensionOperations = allowExtensionOperations;
+            RequireGuestProvisionSignal = requireGuestProvisionSignal;
             CustomInit();
         }
 
@@ -226,6 +230,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "allowExtensionOperations")]
         public bool? AllowExtensionOperations { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies whether the guest provision signal is
+        /// required from the virtual machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "requireGuestProvisionSignal")]
+        public bool? RequireGuestProvisionSignal { get; set; }
 
     }
 }

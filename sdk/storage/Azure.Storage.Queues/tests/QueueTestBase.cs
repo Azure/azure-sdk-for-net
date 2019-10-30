@@ -4,10 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Testing;
-using Azure.Storage.Common.Test;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
@@ -123,12 +123,12 @@ namespace Azure.Storage.Queues.Tests
                     GetOAuthCredential(config),
                     GetOptions()));
 
-        public IDisposable GetNewQueue(out QueueClient queue, QueueServiceClient service = default, IDictionary<string, string> metadata = default)
+        public async Task<DisposingQueue> GetTestQueueAsync(QueueServiceClient service = default, IDictionary<string, string> metadata = default)
         {
-            var containerName = GetNewQueueName();
             service ??= GetServiceClient_SharedKey();
-            queue = InstrumentClient(service.GetQueueClient(containerName));
-            return new DisposingQueue(queue, metadata ?? new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase));
+            metadata ??= new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            QueueClient queue = InstrumentClient(service.GetQueueClient(GetNewQueueName()));
+            return await DisposingQueue.CreateAsync(queue, metadata);
         }
 
         public StorageSharedKeyCredential GetNewSharedKeyCredentials()
@@ -137,46 +137,64 @@ namespace Azure.Storage.Queues.Tests
                 TestConfigDefault.AccountKey);
 
         public SasQueryParameters GetNewAccountSasCredentials(StorageSharedKeyCredential sharedKeyCredentials = default)
-            => new AccountSasBuilder
+        {
+            var builder = new AccountSasBuilder
             {
                 Protocol = SasProtocol.None,
-                Services = new AccountSasServices { Queues = true }.ToString(),
-                ResourceTypes = new AccountSasResourceTypes { BlobContainer = true }.ToString(),
-                StartTime = Recording.UtcNow.AddHours(-1),
-                ExpiryTime = Recording.UtcNow.AddHours(+1),
-                Permissions = new QueueAccountSasPermissions { Read = true, Write = true, Update = true, Process = true, Add = true, Delete = true, List = true }.ToString(),
-                IPRange = new IPRange(IPAddress.None, IPAddress.None)
-            }.ToSasQueryParameters(sharedKeyCredentials);
+                Services = AccountSasServices.Queues,
+                ResourceTypes = AccountSasResourceTypes.Container,
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(+1),
+                IPRange = new SasIPRange(IPAddress.None, IPAddress.None)
+            };
+            builder.SetPermissions(
+                AccountSasPermissions.Read |
+                AccountSasPermissions.Write |
+                AccountSasPermissions.Update |
+                AccountSasPermissions.Process |
+                AccountSasPermissions.Add |
+                AccountSasPermissions.Delete |
+                AccountSasPermissions.List);
+            return builder.ToSasQueryParameters(sharedKeyCredentials);
+        }
 
         public SasQueryParameters GetNewQueueServiceSasCredentials(string queueName, StorageSharedKeyCredential sharedKeyCredentials = default)
-            => new QueueSasBuilder
+        {
+            var builder = new QueueSasBuilder
             {
                 QueueName = queueName,
                 Protocol = SasProtocol.None,
-                StartTime = Recording.UtcNow.AddHours(-1),
-                ExpiryTime = Recording.UtcNow.AddHours(+1),
-                Permissions = new QueueAccountSasPermissions { Read = true, Update = true, Process = true, Add = true }.ToString(),
-                IPRange = new IPRange(IPAddress.None, IPAddress.None)
-            }.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(+1),
+                IPRange = new SasIPRange(IPAddress.None, IPAddress.None)
+            };
+            builder.SetPermissions(QueueAccountSasPermissions.Read | QueueAccountSasPermissions.Update | QueueAccountSasPermissions.Process | QueueAccountSasPermissions.Add);
+            return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
+        }
 
-        private class DisposingQueue : IDisposable
+        public class DisposingQueue : IAsyncDisposable
         {
-            public QueueClient QueueClient { get; }
+            public QueueClient Queue { get; private set; }
 
-            public DisposingQueue(QueueClient queue, IDictionary<string, string> metadata)
+            public static async Task<DisposingQueue> CreateAsync(QueueClient queue, IDictionary<string, string> metadata)
             {
-                queue.CreateAsync(metadata: metadata).Wait();
-
-                QueueClient = queue;
+                await queue.CreateAsync(metadata: metadata);
+                return new DisposingQueue(queue);
             }
 
-            public void Dispose()
+            private DisposingQueue(QueueClient queue)
             {
-                if (QueueClient != null)
+                Queue = queue;
+            }
+
+            public async ValueTask DisposeAsync()
+            {
+                if (Queue != null)
                 {
                     try
                     {
-                        QueueClient.DeleteAsync().Wait();
+                        await Queue.DeleteAsync();
+                        Queue = null;
                     }
                     catch
                     {
@@ -186,18 +204,18 @@ namespace Azure.Storage.Queues.Tests
             }
         }
 
-        public SignedIdentifier[] BuildSignedIdentifiers() =>
+        public QueueSignedIdentifier[] BuildSignedIdentifiers() =>
             new[]
             {
-                new SignedIdentifier
+                new QueueSignedIdentifier
                 {
                     Id = GetNewString(),
                     AccessPolicy =
-                        new AccessPolicy
+                        new QueueAccessPolicy
                         {
-                            Start =  Recording.UtcNow.AddHours(-1),
-                            Expiry =  Recording.UtcNow.AddHours(1),
-                            Permission = "raup"
+                            StartsOn =  Recording.UtcNow.AddHours(-1),
+                            ExpiresOn =  Recording.UtcNow.AddHours(1),
+                            Permissions = "raup"
                         }
                 }
             };

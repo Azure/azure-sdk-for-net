@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure.Core.Testing;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.Common;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
@@ -59,101 +58,97 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task CreateAsync_Min()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                PageBlobClient blob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Act
-                Response<BlobContentInfo> response = await blob.CreateAsync(Constants.KB);
+            // Arrange
+            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
 
-                // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
-            }
+            // Act
+            Response<BlobContentInfo> response = await blob.CreateAsync(Constants.KB);
+
+            // Assert
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
         }
 
         [Test]
         public async Task CreateAsync_SequenceNumber()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                PageBlobClient blob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Act
-                await blob.CreateAsync(
-                    size: Constants.KB,
-                    sequenceNumber: 2);
+            // Arrange
+            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
 
-                // Assert
-                Response<BlobProperties> response = await blob.GetPropertiesAsync();
-                Assert.AreEqual(2, response.Value.BlobSequenceNumber);
-            }
+            // Act
+            await blob.CreateAsync(
+                size: Constants.KB,
+                sequenceNumber: 2);
+
+            // Assert
+            Response<BlobProperties> response = await blob.GetPropertiesAsync();
+            Assert.AreEqual(2, response.Value.BlobSequenceNumber);
         }
 
         [Test]
         public async Task CreateAsync_Metadata()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                IDictionary<string, string> metadata = BuildMetadata();
-                PageBlobClient blob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Act
-                await blob.CreateAsync(Constants.KB, metadata: metadata);
+            // Arrange
+            IDictionary<string, string> metadata = BuildMetadata();
+            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
 
-                // Assert
-                Response<BlobProperties> getPropertiesResponse = await blob.GetPropertiesAsync();
-                AssertMetadataEquality(metadata, getPropertiesResponse.Value.Metadata);
-                Assert.AreEqual(BlobType.PageBlob, getPropertiesResponse.Value.BlobType);
-            }
+            // Act
+            await blob.CreateAsync(Constants.KB, metadata: metadata);
+
+            // Assert
+            Response<BlobProperties> getPropertiesResponse = await blob.GetPropertiesAsync();
+            AssertMetadataEquality(metadata, getPropertiesResponse.Value.Metadata);
+            Assert.AreEqual(BlobType.Page, getPropertiesResponse.Value.BlobType);
         }
 
         [Test]
         public async Task CreateAsync_CPK()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                PageBlobClient blob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
-                CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-                blob = InstrumentClient(blob.WithCustomerProvidedKey(customerProvidedKey));
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Act
-                Response<BlobContentInfo> response = await blob.CreateAsync(Constants.KB);
+            // Arrange
+            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            blob = InstrumentClient(blob.WithCustomerProvidedKey(customerProvidedKey));
 
-                // Assert
-                Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
-            }
+            // Act
+            Response<BlobContentInfo> response = await blob.CreateAsync(Constants.KB);
+
+            // Assert
+            Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
         }
 
         [Test]
         public async Task CreateAsync_CpkHttpError()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                var blobName = GetNewBlobName();
-                PageBlobClient blob = InstrumentClient(container.GetPageBlobClient(blobName));
-                CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-                blob = InstrumentClient(new PageBlobClient(
-                    blob.Uri,
-                    blob.Pipeline,
-                    new BlobClientOptions(customerProvidedKey: customerProvidedKey)));
-                Assert.AreEqual(Constants.Blob.Http, blob.Uri.Scheme);
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var blobName = GetNewBlobName();
+            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(blobName));
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            blob = InstrumentClient(new PageBlobClient(
+                blob.Uri,
+                blob.Pipeline,
+                blob.ClientDiagnostics,
+                customerProvidedKey));
+            Assert.AreEqual(Constants.Blob.Http, blob.Uri.Scheme);
 
 
-                // Act
-                await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
-                    blob.CreateAsync(Constants.KB),
-                    actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
-            }
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                blob.CreateAsync(Constants.KB),
+                actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
         }
 
         /// <summary>
         /// Data for CreateAsync, GetPageRangesAsync, GetPageRangesDiffAsync, ResizeAsync, and
-        /// UpdateSequenceNumber AccessConditions tests
+        /// UpdateSequenceNumber AccessConditions tests.
         /// </summary>
         public IEnumerable<AccessConditionParameters> Reduced_AccessConditions_Data
             => new[]
@@ -172,32 +167,31 @@ namespace Azure.Storage.Blobs.Test
             var garbageLeaseId = GetGarbageLeaseId();
             foreach (AccessConditionParameters parameters in Reduced_AccessConditions_Data)
             {
-                using (GetNewContainer(out BlobContainerClient container))
-                {
-                    // Arrange
-                    // This PageBlob is intentionally created twice to test the PageBlobAccessConditions
-                    PageBlobClient blob = await CreatePageBlobClientAsync(container, Constants.KB);
+                await using DisposingContainer test = await GetTestContainerAsync();
 
-                    parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
-                    parameters.LeaseId = await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
+                // Arrange
+                // This PageBlob is intentionally created twice to test the PageBlobAccessConditions
+                PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, Constants.KB);
 
-                    PageBlobAccessConditions accessConditions = BuildAccessConditions(
-                        parameters: parameters,
-                        lease: true);
+                parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
+                parameters.LeaseId = await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
 
-                    // Act
-                    Response<BlobContentInfo> response = await blob.CreateAsync(
-                        size: Constants.KB,
-                        accessConditions: accessConditions);
+                PageBlobRequestConditions accessConditions = BuildAccessConditions(
+                    parameters: parameters,
+                    lease: true);
 
-                    // Assert
-                    Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
-                }
+                // Act
+                Response<BlobContentInfo> response = await blob.CreateAsync(
+                    size: Constants.KB,
+                    conditions: accessConditions);
+
+                // Assert
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
         }
 
         /// <summary>
-        /// Data for CreateAsync, GetPageRangesAsync, and GetPageRangesDiffAsync AccessConditions Fail tests
+        /// Data for CreateAsync, GetPageRangesAsync, and GetPageRangesDiffAsync AccessConditions Fail tests.
         /// </summary>
         public IEnumerable<AccessConditionParameters> GetReduced_AccessConditionsFail_Data(string garbageLeaseId)
             => new[]
@@ -215,26 +209,25 @@ namespace Azure.Storage.Blobs.Test
             var garbageLeaseId = GetGarbageLeaseId();
             foreach (AccessConditionParameters parameters in GetReduced_AccessConditionsFail_Data(garbageLeaseId))
             {
-                using (GetNewContainer(out BlobContainerClient container))
-                {
-                    // Arrange
-                    // This PageBlob is intentionally created twice to test the PageBlobAccessConditions
-                    PageBlobClient blob = await CreatePageBlobClientAsync(container, Constants.KB);
+                await using DisposingContainer test = await GetTestContainerAsync();
 
-                    parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
-                    await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
+                // Arrange
+                // This PageBlob is intentionally created twice to test the PageBlobAccessConditions
+                PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, Constants.KB);
 
-                    PageBlobAccessConditions accessConditions = BuildAccessConditions(
-                        parameters: parameters,
-                        lease: true);
+                parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
+                await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
 
-                    // Act
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                        blob.CreateAsync(
-                            size: Constants.KB,
-                            accessConditions: accessConditions),
-                        actualException => Assert.IsTrue(true));
-                }
+                PageBlobRequestConditions accessConditions = BuildAccessConditions(
+                    parameters: parameters,
+                    lease: true);
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    blob.CreateAsync(
+                        size: Constants.KB,
+                        conditions: accessConditions),
+                    actualException => Assert.IsTrue(true));
             }
         }
 
@@ -242,158 +235,150 @@ namespace Azure.Storage.Blobs.Test
         public async Task CreateAsync_Headers()
         {
             var contentMD5 = MD5.Create().ComputeHash(GetRandomBuffer(16));
-            using (GetNewContainer(out BlobContainerClient container))
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var headers = new BlobHttpHeaders
             {
-                // Arrange
-                var headers = new BlobHttpHeaders
-                {
-                    ContentType = ContentType,
-                    ContentHash = contentMD5,
-                    ContentEncoding = new string[] { ContentEncoding },
-                    ContentLanguage = new string[] { ContentLanguage },
-                    ContentDisposition = ContentDisposition,
-                    CacheControl = CacheControl
-                };
-                PageBlobClient blob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
+                ContentType = ContentType,
+                ContentHash = contentMD5,
+                ContentEncoding = ContentEncoding,
+                ContentLanguage = ContentLanguage,
+                ContentDisposition = ContentDisposition,
+                CacheControl = CacheControl
+            };
+            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
 
-                // Act
-                await blob.CreateAsync(
-                    size: Constants.KB,
-                    httpHeaders: headers);
+            // Act
+            await blob.CreateAsync(
+                size: Constants.KB,
+                httpHeaders: headers);
 
-                // Assert
-                Response<BlobProperties> response = await blob.GetPropertiesAsync();
-                Assert.AreEqual(ContentType, response.Value.ContentType);
-                TestHelper.AssertSequenceEqual(contentMD5, response.Value.ContentHash);
-                Assert.AreEqual(1, response.Value.ContentEncoding.Count());
-                Assert.AreEqual(ContentEncoding, response.Value.ContentEncoding.First());
-                Assert.AreEqual(1, response.Value.ContentLanguage.Count());
-                Assert.AreEqual(ContentLanguage, response.Value.ContentLanguage.First());
-                Assert.AreEqual(ContentDisposition, response.Value.ContentDisposition);
-                Assert.AreEqual(CacheControl, response.Value.CacheControl);
-            }
+            // Assert
+            Response<BlobProperties> response = await blob.GetPropertiesAsync();
+            Assert.AreEqual(ContentType, response.Value.ContentType);
+            TestHelper.AssertSequenceEqual(contentMD5, response.Value.ContentHash);
+            Assert.AreEqual(ContentEncoding, response.Value.ContentEncoding);
+            Assert.AreEqual(ContentLanguage, response.Value.ContentLanguage);
+            Assert.AreEqual(ContentDisposition, response.Value.ContentDisposition);
+            Assert.AreEqual(CacheControl, response.Value.CacheControl);
         }
 
         [Test]
         public async Task CreateAsync_Error()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                var invalidPageSize = 511;
-                PageBlobClient blob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    blob.CreateAsync(invalidPageSize),
-                    e =>
-                    {
-                        Assert.AreEqual("InvalidHeaderValue", e.ErrorCode);
-                        Assert.AreEqual("The value for one of the HTTP headers is not in the correct format.",
-                            e.Message.Split('\n')[0]);
-                    });
-            }
+            // Arrange
+            var invalidPageSize = 511;
+            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.CreateAsync(invalidPageSize),
+                e =>
+                {
+                    Assert.AreEqual("InvalidHeaderValue", e.ErrorCode);
+                    Assert.AreEqual("The value for one of the HTTP headers is not in the correct format.",
+                        e.Message.Split('\n')[0]);
+                });
         }
-
         [Test]
         public async Task UploadPagesAsync()
         {
-            using (GetNewContainer(out BlobContainerClient container))
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+            var data = GetRandomBuffer(Constants.KB);
+
+            using (var stream = new MemoryStream(data))
             {
-                // Arrange
-                PageBlobClient blob = await CreatePageBlobClientAsync(container, 4 * Constants.KB);
-                var data = GetRandomBuffer(Constants.KB);
-
-                using (var stream = new MemoryStream(data))
-                {
-                    // Act
-                    await blob.UploadPagesAsync(
-                        content: stream,
-                        offset: Constants.KB);
-                }
-
-                // Assert
-                var expectedData = new byte[4 * Constants.KB];
-                data.CopyTo(expectedData, Constants.KB);
-                Response<BlobDownloadInfo> response = await blob.DownloadAsync(range: new HttpRange(0, 4 * Constants.KB));
-
-                var actualData = new byte[4 * Constants.KB];
-                using var actualStream = new MemoryStream(actualData);
-                await response.Value.Content.CopyToAsync(actualStream);
-                TestHelper.AssertSequenceEqual(expectedData, actualData);
+                // Act
+                await blob.UploadPagesAsync(
+                    content: stream,
+                    offset: Constants.KB);
             }
+
+            // Assert
+            var expectedData = new byte[4 * Constants.KB];
+            data.CopyTo(expectedData, Constants.KB);
+            Response<BlobDownloadInfo> response = await blob.DownloadAsync(range: new HttpRange(0, 4 * Constants.KB));
+
+            var actualData = new byte[4 * Constants.KB];
+            using var actualStream = new MemoryStream(actualData);
+            await response.Value.Content.CopyToAsync(actualStream);
+            TestHelper.AssertSequenceEqual(expectedData, actualData);
         }
 
         [Test]
         public async Task UploadPagesAsync_CPK()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                var blobName = GetNewBlobName();
-                PageBlobClient blob = InstrumentClient(container.GetPageBlobClient(blobName));
-                CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-                blob = InstrumentClient(blob.WithCustomerProvidedKey(customerProvidedKey));
-                var data = GetRandomBuffer(Constants.KB);
-                await blob.CreateAsync(Constants.KB);
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                using var stream = new MemoryStream(data);
+            // Arrange
+            var blobName = GetNewBlobName();
+            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(blobName));
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            blob = InstrumentClient(blob.WithCustomerProvidedKey(customerProvidedKey));
+            var data = GetRandomBuffer(Constants.KB);
+            await blob.CreateAsync(Constants.KB);
 
-                // Act
-                Response<PageInfo> response = await blob.UploadPagesAsync(
-                    content: stream,
-                    offset: 0);
+            using var stream = new MemoryStream(data);
 
-                // Assert
-                Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
-            }
+            // Act
+            Response<PageInfo> response = await blob.UploadPagesAsync(
+                content: stream,
+                offset: 0);
+
+            // Assert
+            Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
         }
 
         [Test]
         public async Task UploadPagesAsync_CpkHttpError()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                var blobName = GetNewBlobName();
-                PageBlobClient httpBlob = InstrumentClient(container.GetPageBlobClient(blobName));
-                CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-                httpBlob = InstrumentClient(new PageBlobClient(
-                    httpBlob.Uri,
-                    httpBlob.Pipeline,
-                    new BlobClientOptions(customerProvidedKey: customerProvidedKey)));
-                Assert.AreEqual(Constants.Blob.Http, httpBlob.Uri.Scheme);
-                PageBlobClient httpsBlob = InstrumentClient(httpBlob.WithCustomerProvidedKey(customerProvidedKey));
-                var data = GetRandomBuffer(Constants.KB);
-                await httpsBlob.CreateAsync(Constants.KB);
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                using var stream = new MemoryStream(data);
+            // Arrange
+            var blobName = GetNewBlobName();
+            PageBlobClient httpBlob = InstrumentClient(test.Container.GetPageBlobClient(blobName));
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            httpBlob = InstrumentClient(new PageBlobClient(
+                httpBlob.Uri,
+                httpBlob.Pipeline,
+                httpBlob.ClientDiagnostics,
+                customerProvidedKey));
+            Assert.AreEqual(Constants.Blob.Http, httpBlob.Uri.Scheme);
+            PageBlobClient httpsBlob = InstrumentClient(httpBlob.WithCustomerProvidedKey(customerProvidedKey));
+            var data = GetRandomBuffer(Constants.KB);
+            await httpsBlob.CreateAsync(Constants.KB);
 
-                // Act
-                await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
-                    httpBlob.UploadPagesAsync(
-                        content: stream,
-                        offset: 0),
-                    actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
-            }
+            using var stream = new MemoryStream(data);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                httpBlob.UploadPagesAsync(
+                    content: stream,
+                    offset: 0),
+                actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
         }
 
         [Test]
         public async Task UploadPagesAsync_Error()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                PageBlobClient blob = await CreatePageBlobClientAsync(container, 4 * Constants.KB);
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Act
-                var data = GetRandomBuffer(Constants.KB);
-                using (var stream = new MemoryStream(data))
-                {
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                        blob.UploadPagesAsync(stream, 5 * Constants.KB),
-                        e => Assert.AreEqual("InvalidPageRange", e.ErrorCode));
-                }
+            // Arrange
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+
+            // Act
+            var data = GetRandomBuffer(Constants.KB);
+            using (var stream = new MemoryStream(data))
+            {
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    blob.UploadPagesAsync(stream, 5 * Constants.KB),
+                    e => Assert.AreEqual("InvalidPageRange", e.ErrorCode));
             }
         }
 
@@ -417,31 +402,30 @@ namespace Azure.Storage.Blobs.Test
             var garbageLeaseId = GetGarbageLeaseId();
             foreach (AccessConditionParameters parameters in UploadClearAsync_AccessConditions_Data)
             {
-                using (GetNewContainer(out BlobContainerClient container))
+                await using DisposingContainer test = await GetTestContainerAsync();
+
+                // Arrange
+                PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, Constants.KB);
+
+                parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
+                parameters.LeaseId = await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
+
+                PageBlobRequestConditions accessConditions = BuildAccessConditions(
+                    parameters: parameters,
+                    lease: true,
+                    sequenceNumbers: true);
+
+                var data = GetRandomBuffer(Constants.KB);
+                using (var stream = new MemoryStream(data))
                 {
-                    // Arrange
-                    PageBlobClient blob = await CreatePageBlobClientAsync(container, Constants.KB);
+                    // Act
+                    Response<PageInfo> response = await blob.UploadPagesAsync(
+                        content: stream,
+                        offset: 0,
+                        conditions: accessConditions);
 
-                    parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
-                    parameters.LeaseId = await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
-
-                    PageBlobAccessConditions accessConditions = BuildAccessConditions(
-                        parameters: parameters,
-                        lease: true,
-                        sequenceNumbers: true);
-
-                    var data = GetRandomBuffer(Constants.KB);
-                    using (var stream = new MemoryStream(data))
-                    {
-                        // Act
-                        Response<PageInfo> response = await blob.UploadPagesAsync(
-                            content: stream,
-                            offset: 0,
-                            accessConditions: accessConditions);
-
-                        // Assert
-                        Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
-                    }
+                    // Assert
+                    Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
                 }
             }
         }
@@ -465,187 +449,179 @@ namespace Azure.Storage.Blobs.Test
             var garbageLeaseId = GetGarbageLeaseId();
             foreach (AccessConditionParameters parameters in GetUploadClearAsync_AccessConditionsFail_Data(garbageLeaseId))
             {
-                using (GetNewContainer(out BlobContainerClient container))
+                await using DisposingContainer test = await GetTestContainerAsync();
+
+                // Arrange
+                PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, Constants.KB);
+
+                parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
+                await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
+
+                PageBlobRequestConditions accessConditions = BuildAccessConditions(
+                    parameters: parameters,
+                    lease: true,
+                    sequenceNumbers: true);
+
+                var data = GetRandomBuffer(Constants.KB);
+                using (var stream = new MemoryStream(data))
                 {
-                    // Arrange
-                    PageBlobClient blob = await CreatePageBlobClientAsync(container, Constants.KB);
-
-                    parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
-                    await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
-
-                    PageBlobAccessConditions accessConditions = BuildAccessConditions(
-                        parameters: parameters,
-                        lease: true,
-                        sequenceNumbers: true);
-
-                    var data = GetRandomBuffer(Constants.KB);
-                    using (var stream = new MemoryStream(data))
-                    {
-                        // Act
-                        await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                            blob.UploadPagesAsync(
-                                content: stream,
-                                offset: 0,
-                                accessConditions: accessConditions),
-                            e => Assert.IsTrue(true));
-                    }
+                    // Act
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                        blob.UploadPagesAsync(
+                            content: stream,
+                            offset: 0,
+                            conditions: accessConditions),
+                        e => Assert.IsTrue(true));
                 }
             }
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8354")]
         public async Task UploadPagesAsync_WithUnreliableConnection()
         {
             const int blobSize = 1 * Constants.MB;
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-            using (GetNewContainer(out BlobContainerClient container))
+            var credentials = new StorageSharedKeyCredential(
+                TestConfigDefault.AccountName,
+                TestConfigDefault.AccountKey);
+            BlobContainerClient containerClientFaulty = InstrumentClient(
+                new BlobContainerClient(
+                    test.Container.Uri,
+                    credentials,
+                    GetFaultyBlobConnectionOptions()));
+
+            // Arrange
+            var pageBlobName = GetNewBlobName();
+            PageBlobClient blobFaulty = InstrumentClient(containerClientFaulty.GetPageBlobClient(pageBlobName));
+            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(pageBlobName));
+
+            await blob.CreateAsync(blobSize)
+                .ConfigureAwait(false);
+
+            var offset = 0 * Constants.KB;
+            var data = GetRandomBuffer(blobSize);
+            var progressList = new List<long>();
+            var progressHandler = new Progress<long>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
+
+            // Act
+            using (var stream = new FaultyStream(new MemoryStream(data), 256 * Constants.KB, 1, new Exception("Simulated stream fault")))
             {
-                var credentials = new StorageSharedKeyCredential(
-                    TestConfigDefault.AccountName,
-                    TestConfigDefault.AccountKey);
-                BlobContainerClient containerClientFaulty = InstrumentClient(
-                    new BlobContainerClient(
-                        container.Uri,
-                        credentials,
-                        GetFaultyBlobConnectionOptions()));
+                await blobFaulty.UploadPagesAsync(stream, offset, progressHandler: progressHandler);
 
-                // Arrange
-                var pageBlobName = GetNewBlobName();
-                PageBlobClient blobFaulty = InstrumentClient(containerClientFaulty.GetPageBlobClient(pageBlobName));
-                PageBlobClient blob = InstrumentClient(container.GetPageBlobClient(pageBlobName));
-
-                await blob.CreateAsync(blobSize)
-                    .ConfigureAwait(false);
-
-                var offset = 0 * Constants.KB;
-                var data = GetRandomBuffer(blobSize);
-                var progressList = new List<StorageProgress>();
-                var progressHandler = new Progress<StorageProgress>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
-
-                // Act
-                using (var stream = new FaultyStream(new MemoryStream(data), 256 * Constants.KB, 1, new Exception("Simulated stream fault")))
-                {
-                    await blobFaulty.UploadPagesAsync(stream, offset, progressHandler: progressHandler);
-
-                    await WaitForProgressAsync(progressList, data.LongLength);
-                    Assert.IsTrue(progressList.Count > 1, "Too few progress received");
-                    // Changing from Assert.AreEqual because these don't always update fast enough
-                    Assert.GreaterOrEqual(data.LongLength, progressList.Last().BytesTransferred, "Final progress has unexpected value");
-                }
-
-                // Assert
-                Response<BlobDownloadInfo> downloadResponse = await blob.DownloadAsync(
-                    new HttpRange(offset, data.LongLength));
-                var actual = new MemoryStream();
-                await downloadResponse.Value.Content.CopyToAsync(actual);
-                TestHelper.AssertSequenceEqual(data, actual.ToArray());
+                await WaitForProgressAsync(progressList, data.LongLength);
+                Assert.IsTrue(progressList.Count > 1, "Too few progress received");
+                // Changing from Assert.AreEqual because these don't always update fast enough
+                Assert.GreaterOrEqual(data.LongLength, progressList.Last(), "Final progress has unexpected value");
             }
+
+            // Assert
+            Response<BlobDownloadInfo> downloadResponse = await blob.DownloadAsync(
+                new HttpRange(offset, data.LongLength));
+            var actual = new MemoryStream();
+            await downloadResponse.Value.Content.CopyToAsync(actual);
+            TestHelper.AssertSequenceEqual(data, actual.ToArray());
         }
 
         [Test]
         public async Task ClearPagesAsync()
         {
-            using (GetNewContainer(out BlobContainerClient container))
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+            var data = GetRandomBuffer(4 * Constants.KB);
+
+            using (var stream = new MemoryStream(data))
             {
-                // Arrange
-                PageBlobClient blob = await CreatePageBlobClientAsync(container, 4 * Constants.KB);
-                var data = GetRandomBuffer(4 * Constants.KB);
-
-                using (var stream = new MemoryStream(data))
-                {
-                    await blob.UploadPagesAsync(stream, 0);
-                }
-
-                // Act
-                await blob.ClearPagesAsync(range: new HttpRange(Constants.KB, Constants.KB));
-
-                // Assert
-                var expectedData = new byte[4 * Constants.KB];
-                Array.Copy(data, expectedData, 4 * Constants.KB);
-                Array.Clear(expectedData, Constants.KB, Constants.KB);
-                Response<BlobDownloadInfo> downloadResponse = await blob.DownloadAsync();
-                var actual = new MemoryStream();
-                await downloadResponse.Value.Content.CopyToAsync(actual);
-                TestHelper.AssertSequenceEqual(expectedData, actual.ToArray());
+                await blob.UploadPagesAsync(stream, 0);
             }
+
+            // Act
+            await blob.ClearPagesAsync(range: new HttpRange(Constants.KB, Constants.KB));
+
+            // Assert
+            var expectedData = new byte[4 * Constants.KB];
+            Array.Copy(data, expectedData, 4 * Constants.KB);
+            Array.Clear(expectedData, Constants.KB, Constants.KB);
+            Response<BlobDownloadInfo> downloadResponse = await blob.DownloadAsync();
+            var actual = new MemoryStream();
+            await downloadResponse.Value.Content.CopyToAsync(actual);
+            TestHelper.AssertSequenceEqual(expectedData, actual.ToArray());
         }
 
         [Ignore("Backend bug")]
         [Test]
         public async Task ClearPagesAsync_CPK()
         {
-            using (GetNewContainer(out BlobContainerClient container))
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            blob = InstrumentClient(blob.WithCustomerProvidedKey(customerProvidedKey));
+            await blob.CreateAsync(4 * Constants.KB);
+            var data = GetRandomBuffer(4 * Constants.KB);
+            using (var stream = new MemoryStream(data))
             {
-                // Arrange
-                PageBlobClient blob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
-                CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-                blob = InstrumentClient(new PageBlobClient(
-                    GetHttpsUri(blob.Uri),
-                    blob.Pipeline,
-                    new BlobClientOptions(customerProvidedKey: customerProvidedKey)));
-                await blob.CreateAsync(4 * Constants.KB);
-                var data = GetRandomBuffer(4 * Constants.KB);
-                using (var stream = new MemoryStream(data))
-                {
-                    await blob.UploadPagesAsync(stream, 0);
-                }
-
-                // Act
-                Response<PageInfo> response = await blob.ClearPagesAsync(
-                    range: new HttpRange(Constants.KB, Constants.KB));
-
-                // Assert
-                Assert.IsNotNull(response.Value.ETag);
+                await blob.UploadPagesAsync(stream, 0);
             }
+
+            // Act
+            Response<PageInfo> response = await blob.ClearPagesAsync(
+                range: new HttpRange(Constants.KB, Constants.KB));
+
+            // Assert
+            Assert.IsNotNull(response.Value.ETag);
         }
 
         [Test]
         public async Task ClearPagesAsync_CpkHttpError()
         {
-            using (GetNewContainer(out BlobContainerClient container))
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            PageBlobClient httpBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            httpBlob = InstrumentClient(new PageBlobClient(
+                httpBlob.Uri,
+                httpBlob.Pipeline,
+                httpBlob.ClientDiagnostics,
+                customerProvidedKey));
+            Assert.AreEqual(Constants.Blob.Http, httpBlob.Uri.Scheme);
+            PageBlobClient httpsBlob = InstrumentClient(httpBlob.WithCustomerProvidedKey(customerProvidedKey));
+
+            await httpsBlob.CreateAsync(4 * Constants.KB);
+            var data = GetRandomBuffer(4 * Constants.KB);
+            using (var stream = new MemoryStream(data))
             {
-                // Arrange
-                PageBlobClient httpBlob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
-                CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-                httpBlob = InstrumentClient(new PageBlobClient(
-                    httpBlob.Uri,
-                    httpBlob.Pipeline,
-                    new BlobClientOptions(customerProvidedKey: customerProvidedKey)));
-                Assert.AreEqual(Constants.Blob.Http, httpBlob.Uri.Scheme);
-                PageBlobClient httpsBlob = InstrumentClient(httpBlob.WithCustomerProvidedKey(customerProvidedKey));
-
-                await httpsBlob.CreateAsync(4 * Constants.KB);
-                var data = GetRandomBuffer(4 * Constants.KB);
-                using (var stream = new MemoryStream(data))
-                {
-                    await httpsBlob.UploadPagesAsync(stream, 0);
-                }
-
-                // Act
-                await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
-                    httpBlob.ClearPagesAsync(
-                        range: new HttpRange(Constants.KB, Constants.KB)),
-                    actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
+                await httpsBlob.UploadPagesAsync(stream, 0);
             }
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                httpBlob.ClearPagesAsync(
+                    range: new HttpRange(Constants.KB, Constants.KB)),
+                actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
         }
 
         [Test]
         public async Task ClearPagesAsync_Error()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                PageBlobClient blob = await CreatePageBlobClientAsync(container, 4 * Constants.KB);
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    blob.ClearPagesAsync(range: new HttpRange(5 * Constants.KB, Constants.KB)),
-                    e =>
-                    {
-                        Assert.AreEqual("InvalidPageRange", e.ErrorCode);
-                        Assert.AreEqual("The page range specified is invalid.", e.Message.Split('\n')[0]);
-                    });
-            }
+            // Arrange
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.ClearPagesAsync(range: new HttpRange(5 * Constants.KB, Constants.KB)),
+                e =>
+                {
+                    Assert.AreEqual("InvalidPageRange", e.ErrorCode);
+                    Assert.AreEqual("The page range specified is invalid.", e.Message.Split('\n')[0]);
+                });
         }
 
         [Test]
@@ -654,25 +630,24 @@ namespace Azure.Storage.Blobs.Test
             var garbageLeaseId = GetGarbageLeaseId();
             foreach (AccessConditionParameters parameters in UploadClearAsync_AccessConditions_Data)
             {
-                using (GetNewContainer(out BlobContainerClient container))
-                {
-                    // Arrange
-                    PageBlobClient blob = await CreatePageBlobClientAsync(container, Constants.KB);
+                await using DisposingContainer test = await GetTestContainerAsync();
 
-                    parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
-                    parameters.LeaseId = await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
+                // Arrange
+                PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, Constants.KB);
 
-                    PageBlobAccessConditions accessConditions = BuildAccessConditions(
-                        parameters: parameters,
-                        lease: true,
-                        sequenceNumbers: true);
+                parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
+                parameters.LeaseId = await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
 
-                    Response<PageInfo> response = await blob.ClearPagesAsync(
-                        range: new HttpRange(0, Constants.KB),
-                        accessConditions: accessConditions);
+                PageBlobRequestConditions accessConditions = BuildAccessConditions(
+                    parameters: parameters,
+                    lease: true,
+                    sequenceNumbers: true);
 
-                    Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
-                }
+                Response<PageInfo> response = await blob.ClearPagesAsync(
+                    range: new HttpRange(0, Constants.KB),
+                    conditions: accessConditions);
+
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
         }
 
@@ -682,78 +657,125 @@ namespace Azure.Storage.Blobs.Test
             var garbageLeaseId = GetGarbageLeaseId();
             foreach (AccessConditionParameters parameters in GetUploadClearAsync_AccessConditionsFail_Data(garbageLeaseId))
             {
-                using (GetNewContainer(out BlobContainerClient container))
-                {
-                    // Arrange
-                    PageBlobClient blob = await CreatePageBlobClientAsync(container, Constants.KB);
+                await using DisposingContainer test = await GetTestContainerAsync();
 
-                    parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
-                    await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
+                // Arrange
+                PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, Constants.KB);
 
-                    PageBlobAccessConditions accessConditions = BuildAccessConditions(
-                        parameters: parameters,
-                        lease: true,
-                        sequenceNumbers: true);
+                parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
+                await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
 
-                    // Act
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                        blob.ClearPagesAsync(
-                            range: new HttpRange(0, Constants.KB),
-                            accessConditions: accessConditions),
-                        e => Assert.IsTrue(true));
-                }
+                PageBlobRequestConditions accessConditions = BuildAccessConditions(
+                    parameters: parameters,
+                    lease: true,
+                    sequenceNumbers: true);
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    blob.ClearPagesAsync(
+                        range: new HttpRange(0, Constants.KB),
+                        conditions: accessConditions),
+                    e => Assert.IsTrue(true));
             }
         }
 
         [Test]
         public async Task GetPageRangesAsync()
         {
-            using (GetNewContainer(out BlobContainerClient container))
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+            var data = GetRandomBuffer(Constants.KB);
+
+            using (var stream = new MemoryStream(data))
             {
-                // Arrange
-                PageBlobClient blob = await CreatePageBlobClientAsync(container, 4 * Constants.KB);
-                var data = GetRandomBuffer(Constants.KB);
+                await blob.UploadPagesAsync(stream, 0);
 
-                using (var stream = new MemoryStream(data))
-                {
-                    await blob.UploadPagesAsync(stream, 0);
-
-                }
-                using (var stream = new MemoryStream(data))
-                {
-                    await blob.UploadPagesAsync(stream, 2 * Constants.KB);
-                }
-
-                // Act
-                Response<PageRangesInfo> result = await blob.GetPageRangesAsync(range: new HttpRange(0, 4 * Constants.KB));
-
-                // Assert
-                Assert.AreEqual(2, result.Value.Body.PageRange.Count());
-                Assert.AreEqual(0, result.Value.Body.PageRange.First().Start);
-                Assert.AreEqual(Constants.KB - 1, result.Value.Body.PageRange.First().End);
-                Assert.AreEqual(2 * Constants.KB, result.Value.Body.PageRange.ElementAt(1).Start);
-                Assert.AreEqual((3 * Constants.KB) - 1, result.Value.Body.PageRange.ElementAt(1).End);
             }
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadPagesAsync(stream, 2 * Constants.KB);
+            }
+
+            // Act
+            Response<PageRangesInfo> result = await blob.GetPageRangesAsync(range: new HttpRange(0, 4 * Constants.KB));
+
+            // Assert
+            Assert.AreEqual(2, result.Value.PageRanges.Count());
+            HttpRange range1 = result.Value.PageRanges.First();
+            Assert.AreEqual(0, range1.Offset);
+            Assert.AreEqual(Constants.KB, range1.Offset + range1.Length);
+
+            HttpRange range2 = result.Value.PageRanges.ElementAt(1);
+            Assert.AreEqual(2 * Constants.KB, range2.Offset);
+            Assert.AreEqual(3 * Constants.KB, range2.Offset + range2.Length);
+        }
+
+        [Test]
+        public async Task GetPageRangesAsync_Clear()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 6 * Constants.KB);
+            var data = GetRandomBuffer(2 * Constants.KB);
+
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadPagesAsync(stream, 0);
+
+            }
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadPagesAsync(stream, 4 * Constants.KB);
+            }
+
+            Response<BlobSnapshotInfo> snapshot = await blob.CreateSnapshotAsync();
+
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.ClearPagesAsync(new HttpRange(4 * Constants.KB, Constants.KB));
+            }
+
+            // Act
+            Response<PageRangesInfo> result = await blob.GetPageRangesAsync(range: new HttpRange(0, 6 * Constants.KB));
+
+            Response<PageRangesInfo> diff = await blob.GetPageRangesDiffAsync(range: new HttpRange(0, 6 * Constants.KB), previousSnapshot: snapshot.Value.Snapshot);
+
+
+            // Assert
+            Assert.AreEqual(2, result.Value.PageRanges.Count());
+            HttpRange pageRange1 = result.Value.PageRanges.First();
+            Assert.AreEqual(0, pageRange1.Offset);
+            Assert.AreEqual(2 * Constants.KB, pageRange1.Offset + pageRange1.Length);
+
+            HttpRange pageRange2 = result.Value.PageRanges.ElementAt(1);
+            Assert.AreEqual(5 * Constants.KB, pageRange2.Offset); // since the first part of the page was cleared, it should start at 5 rather than 4 KB
+            Assert.AreEqual(6 * Constants.KB, pageRange2.Offset + pageRange2.Length);
+
+            Assert.AreEqual(1, diff.Value.ClearRanges.Count());
+            HttpRange clearRange = diff.Value.ClearRanges.First(); // ClearRange is only populated by GetPageRangesDiff API, and only if passing previous snapshot parameter
+            Assert.AreEqual(4 * Constants.KB, clearRange.Offset);
         }
 
         [Test]
         public async Task GetPageRangesAsync_Error()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                PageBlobClient blob = await CreatePageBlobClientAsync(container, 4 * Constants.KB);
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    blob.GetPageRangesAsync(range: new HttpRange(5 * Constants.KB, 4 * Constants.KB)),
-                    e =>
-                    {
-                        Assert.AreEqual("InvalidRange", e.ErrorCode);
-                        Assert.AreEqual("The range specified is invalid for the current size of the resource.",
-                            e.Message.Split('\n')[0]);
-                    });
-            }
+            // Arrange
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.GetPageRangesAsync(range: new HttpRange(5 * Constants.KB, 4 * Constants.KB)),
+                e =>
+                {
+                    Assert.AreEqual("InvalidRange", e.ErrorCode);
+                    Assert.AreEqual("The range specified is invalid for the current size of the resource.",
+                        e.Message.Split('\n')[0]);
+                });
         }
 
         [Test]
@@ -762,26 +784,25 @@ namespace Azure.Storage.Blobs.Test
             var garbageLeaseId = GetGarbageLeaseId();
             foreach (AccessConditionParameters parameters in Reduced_AccessConditions_Data)
             {
-                using (GetNewContainer(out BlobContainerClient container))
-                {
-                    // Arrange
-                    PageBlobClient blob = await CreatePageBlobClientAsync(container, 4 * Constants.KB);
+                await using DisposingContainer test = await GetTestContainerAsync();
 
-                    parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
-                    parameters.LeaseId = await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
+                // Arrange
+                PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
 
-                    PageBlobAccessConditions accessConditions = BuildAccessConditions(
-                        parameters: parameters,
-                        lease: true);
+                parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
+                parameters.LeaseId = await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
 
-                    // Act
-                    Response<PageRangesInfo> response = await blob.GetPageRangesAsync(
-                        range: new HttpRange(0, Constants.KB),
-                        accessConditions: accessConditions);
+                PageBlobRequestConditions accessConditions = BuildAccessConditions(
+                    parameters: parameters,
+                    lease: true);
 
-                    // Assert
-                    Assert.IsNotNull(response.Value.Body.PageRange);
-                }
+                // Act
+                Response<PageRangesInfo> response = await blob.GetPageRangesAsync(
+                    range: new HttpRange(0, Constants.KB),
+                    conditions: accessConditions);
+
+                // Assert
+                Assert.IsNotNull(response.Value.PageRanges);
             }
         }
 
@@ -791,35 +812,147 @@ namespace Azure.Storage.Blobs.Test
             var garbageLeaseId = GetGarbageLeaseId();
             foreach (AccessConditionParameters parameters in GetReduced_AccessConditionsFail_Data(garbageLeaseId))
             {
-                using (GetNewContainer(out BlobContainerClient container))
-                {
-                    // Arrange
-                    PageBlobClient blob = await CreatePageBlobClientAsync(container, 4 * Constants.KB);
+                await using DisposingContainer test = await GetTestContainerAsync();
 
-                    parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
-                    await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
+                // Arrange
+                PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
 
-                    PageBlobAccessConditions accessConditions = BuildAccessConditions(
-                        parameters: parameters,
-                        lease: true);
+                parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
+                await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
 
-                    // Act
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                        blob.GetPageRangesAsync(
+                PageBlobRequestConditions accessConditions = BuildAccessConditions(
+                    parameters: parameters,
+                    lease: true);
+
+                // Act
+                Assert.CatchAsync<Exception>(
+                    async () =>
+                    {
+                        var _ = (await blob.GetPageRangesAsync(
                             range: new HttpRange(0, Constants.KB),
-                            accessConditions: accessConditions),
-                        actualException => Assert.IsTrue(true));
-                }
+                            conditions: accessConditions)).Value;
+                    });
             }
         }
 
         [Test]
         public async Task GetPageRangesDiffAsync()
         {
-            using (GetNewContainer(out BlobContainerClient container))
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+
+            // Upload some Pages
+            var data = GetRandomBuffer(Constants.KB);
+            using (var stream = new MemoryStream(data))
             {
+                await blob.UploadPagesAsync(stream, 0);
+            }
+
+            // Create prevSnapshot
+            Response<BlobSnapshotInfo> response = await blob.CreateSnapshotAsync();
+            var prevSnapshot = response.Value.Snapshot;
+
+            // Upload additional Pages
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadPagesAsync(stream, 2 * Constants.KB);
+            }
+
+            // create snapshot
+            response = await blob.CreateSnapshotAsync();
+            var snapshot = response.Value.Snapshot;
+
+            // Act
+            Response<PageRangesInfo> result = await blob.GetPageRangesDiffAsync(
+                range: new HttpRange(0, 4 * Constants.KB),
+                snapshot,
+                prevSnapshot);
+
+            // Assert
+            Assert.AreEqual(1, result.Value.PageRanges.Count());
+            HttpRange range = result.Value.PageRanges.First();
+
+            Assert.AreEqual(2 * Constants.KB, range.Offset);
+            Assert.AreEqual(3 * Constants.KB, range.Offset + range.Length);
+        }
+
+        [Test]
+        public async Task GetPageRangesDiffAsync_Error()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.GetPageRangesDiffAsync(range: new HttpRange(5 * Constants.KB, 4 * Constants.KB)),
+                e =>
+                {
+                    Assert.AreEqual("InvalidRange", e.ErrorCode);
+                    Assert.AreEqual("The range specified is invalid for the current size of the resource.",
+                        e.Message.Split('\n')[0]);
+                });
+        }
+
+        [Test]
+        public async Task GetPageRangesDiffAsync_AccessConditions()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            foreach (AccessConditionParameters parameters in Reduced_AccessConditions_Data)
+            {
+                await using DisposingContainer test = await GetTestContainerAsync();
+
                 // Arrange
-                PageBlobClient blob = await CreatePageBlobClientAsync(container, 4 * Constants.KB);
+                PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+
+                // Upload some Pages
+                var data = GetRandomBuffer(Constants.KB);
+                using (var stream = new MemoryStream(data))
+                {
+                    await blob.UploadPagesAsync(stream, 0);
+                }
+
+                // Create prevSnapshot
+                Response<BlobSnapshotInfo> snapshotCreateResult = await blob.CreateSnapshotAsync();
+                var prevSnapshot = snapshotCreateResult.Value.Snapshot;
+
+                // Upload additional Pages
+                using (var stream = new MemoryStream(data))
+                {
+                    await blob.UploadPagesAsync(stream, 2 * Constants.KB);
+                }
+
+                parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
+                parameters.LeaseId = await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
+
+                PageBlobRequestConditions accessConditions = BuildAccessConditions(
+                    parameters: parameters,
+                    lease: true);
+
+                // Act
+                Response<PageRangesInfo> response = await blob.GetPageRangesDiffAsync(
+                    range: new HttpRange(0, Constants.KB),
+                    previousSnapshot: prevSnapshot,
+                    conditions: accessConditions);
+
+                // Assert
+                Assert.IsNotNull(response.Value.PageRanges);
+            }
+        }
+
+        [Test]
+        public async Task GetPageRangesDiffAsync_AccessConditionsFail()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            foreach (AccessConditionParameters parameters in GetReduced_AccessConditionsFail_Data(garbageLeaseId))
+            {
+                await using DisposingContainer test = await GetTestContainerAsync();
+
+                // Arrange
+                PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
 
                 // Upload some Pages
                 var data = GetRandomBuffer(Constants.KB);
@@ -838,219 +971,109 @@ namespace Azure.Storage.Blobs.Test
                     await blob.UploadPagesAsync(stream, 2 * Constants.KB);
                 }
 
-                // create snapshot
-                response = await blob.CreateSnapshotAsync();
-                var snapshot = response.Value.Snapshot;
+                parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
+                await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
+
+                PageBlobRequestConditions accessConditions = BuildAccessConditions(
+                    parameters: parameters,
+                    lease: true);
 
                 // Act
-                Response<PageRangesInfo> result = await blob.GetPageRangesDiffAsync(
-                    range: new HttpRange(0, 4 * Constants.KB),
-                    snapshot,
-                    prevSnapshot);
-
-                // Assert
-                Assert.AreEqual(1, result.Value.Body.PageRange.Count());
-                Assert.AreEqual(2 * Constants.KB, result.Value.Body.PageRange.First().Start);
-                Assert.AreEqual((3 * Constants.KB) - 1, result.Value.Body.PageRange.First().End);
-            }
-        }
-
-        [Test]
-        public async Task GetPageRangesDiffAsync_Error()
-        {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                PageBlobClient blob = await CreatePageBlobClientAsync(container, 4 * Constants.KB);
-
-                // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    blob.GetPageRangesDiffAsync(range: new HttpRange(5 * Constants.KB, 4 * Constants.KB)),
-                    e =>
+                Assert.CatchAsync<Exception>(
+                    async () =>
                     {
-                        Assert.AreEqual("InvalidRange", e.ErrorCode);
-                        Assert.AreEqual("The range specified is invalid for the current size of the resource.",
-                            e.Message.Split('\n')[0]);
-                    });
-            }
-        }
-
-        [Test]
-        public async Task GetPageRangesDiffAsync_AccessConditions()
-        {
-            var garbageLeaseId = GetGarbageLeaseId();
-            foreach (AccessConditionParameters parameters in Reduced_AccessConditions_Data)
-            {
-                using (GetNewContainer(out BlobContainerClient container))
-                {
-                    // Arrange
-                    PageBlobClient blob = await CreatePageBlobClientAsync(container, 4 * Constants.KB);
-
-                    // Upload some Pages
-                    var data = GetRandomBuffer(Constants.KB);
-                    using (var stream = new MemoryStream(data))
-                    {
-                        await blob.UploadPagesAsync(stream, 0);
-                    }
-
-                    // Create prevSnapshot
-                    Response<BlobSnapshotInfo> snapshotCreateResult = await blob.CreateSnapshotAsync();
-                    var prevSnapshot = snapshotCreateResult.Value.Snapshot;
-
-                    // Upload additional Pages
-                    using (var stream = new MemoryStream(data))
-                    {
-                        await blob.UploadPagesAsync(stream, 2 * Constants.KB);
-                    }
-
-                    parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
-                    parameters.LeaseId = await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
-
-                    PageBlobAccessConditions accessConditions = BuildAccessConditions(
-                        parameters: parameters,
-                        lease: true);
-
-                    // Act
-                    Response<PageRangesInfo> response = await blob.GetPageRangesDiffAsync(
-                        range: new HttpRange(0, Constants.KB),
-                        previousSnapshot: prevSnapshot,
-                        accessConditions: accessConditions);
-
-                    // Assert
-                    Assert.IsNotNull(response.Value.Body.PageRange);
-                }
-            }
-        }
-
-        [Test]
-        public async Task GetPageRangesDiffAsync_AccessConditionsFail()
-        {
-            var garbageLeaseId = GetGarbageLeaseId();
-            foreach (AccessConditionParameters parameters in GetReduced_AccessConditionsFail_Data(garbageLeaseId))
-            {
-                using (GetNewContainer(out BlobContainerClient container))
-                {
-                    // Arrange
-                    PageBlobClient blob = await CreatePageBlobClientAsync(container, 4 * Constants.KB);
-
-                    // Upload some Pages
-                    var data = GetRandomBuffer(Constants.KB);
-                    using (var stream = new MemoryStream(data))
-                    {
-                        await blob.UploadPagesAsync(stream, 0);
-                    }
-
-                    // Create prevSnapshot
-                    Response<BlobSnapshotInfo> response = await blob.CreateSnapshotAsync();
-                    var prevSnapshot = response.Value.Snapshot;
-
-                    // Upload additional Pages
-                    using (var stream = new MemoryStream(data))
-                    {
-                        await blob.UploadPagesAsync(stream, 2 * Constants.KB);
-                    }
-
-                    parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
-                    await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
-
-                    PageBlobAccessConditions accessConditions = BuildAccessConditions(
-                        parameters: parameters,
-                        lease: true);
-
-                    // Act
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                        blob.GetPageRangesDiffAsync(
+                        var _ = (await blob.GetPageRangesDiffAsync(
                             range: new HttpRange(0, Constants.KB),
                             previousSnapshot: prevSnapshot,
-                            accessConditions: accessConditions),
-                        e => Assert.IsTrue(true));
-                }
+                            conditions: accessConditions)).Value;
+                    });
             }
         }
 
         [Test]
         public async Task ResizeAsync()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                PageBlobClient blob = await CreatePageBlobClientAsync(container, 4 * Constants.KB);
-                var newSize = 8 * Constants.KB;
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Act
-                Response<PageBlobInfo> result = await blob.ResizeAsync(size: newSize);
+            // Arrange
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+            var newSize = 8 * Constants.KB;
 
-                // Assert
-                Response<BlobProperties> response = await blob.GetPropertiesAsync();
-                Assert.AreEqual(newSize, response.Value.ContentLength);
-            }
+            // Act
+            Response<PageBlobInfo> result = await blob.ResizeAsync(size: newSize);
+
+            // Assert
+            Response<BlobProperties> response = await blob.GetPropertiesAsync();
+            Assert.AreEqual(newSize, response.Value.ContentLength);
+
         }
 
         [Test]
         public async Task ResizeAsync_CPK()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                PageBlobClient blob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
-                CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-                blob = InstrumentClient(blob.WithCustomerProvidedKey(customerProvidedKey));
-                await blob.CreateAsync(Constants.KB);
-                var newSize = 8 * Constants.KB;
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Act
-                Response<PageBlobInfo> response = await blob.ResizeAsync(size: newSize);
+            // Arrange
+            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            blob = InstrumentClient(blob.WithCustomerProvidedKey(customerProvidedKey));
+            await blob.CreateAsync(Constants.KB);
+            var newSize = 8 * Constants.KB;
 
-                // Assert
-                Assert.IsNotNull(response.Value.ETag);
-            }
+            // Act
+            Response<PageBlobInfo> response = await blob.ResizeAsync(size: newSize);
+
+            // Assert
+            Assert.IsNotNull(response.Value.ETag);
+
         }
 
         [Test]
         public async Task ResizeAsync_CpkHttpError()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                PageBlobClient httpBlob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
-                CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-                httpBlob = InstrumentClient(new PageBlobClient(
-                    httpBlob.Uri,
-                    httpBlob.Pipeline,
-                    new BlobClientOptions(customerProvidedKey: customerProvidedKey)));
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                Assert.AreEqual(Constants.Blob.Http, httpBlob.Uri.Scheme);
-                PageBlobClient httpsBlob = InstrumentClient(httpBlob.WithCustomerProvidedKey(customerProvidedKey));
+            // Arrange
+            PageBlobClient httpBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            httpBlob = InstrumentClient(new PageBlobClient(
+                httpBlob.Uri,
+                httpBlob.Pipeline,
+                httpBlob.ClientDiagnostics,
+                customerProvidedKey));
 
-                await httpsBlob.CreateAsync(Constants.KB);
-                var newSize = 8 * Constants.KB;
+            Assert.AreEqual(Constants.Blob.Http, httpBlob.Uri.Scheme);
+            PageBlobClient httpsBlob = InstrumentClient(httpBlob.WithCustomerProvidedKey(customerProvidedKey));
 
-                // Act
-                await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
-                    httpBlob.ResizeAsync(size: newSize),
-                    actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
-            }
+            await httpsBlob.CreateAsync(Constants.KB);
+            var newSize = 8 * Constants.KB;
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                httpBlob.ResizeAsync(size: newSize),
+                actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
+
         }
 
         [Test]
         public async Task ResizeAsync_Error()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                PageBlobClient blob = await CreatePageBlobClientAsync(container, 4 * Constants.KB);
-                var invalidSize = 511;
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    blob.ResizeAsync(size: invalidSize),
-                    e =>
-                    {
-                        Assert.AreEqual("InvalidHeaderValue", e.ErrorCode);
-                        Assert.AreEqual("The value for one of the HTTP headers is not in the correct format.",
-                            e.Message.Split('\n')[0]);
-                    });
-            }
+            // Arrange
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+            var invalidSize = 511;
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.ResizeAsync(size: invalidSize),
+                e =>
+                {
+                    Assert.AreEqual("InvalidHeaderValue", e.ErrorCode);
+                    Assert.AreEqual("The value for one of the HTTP headers is not in the correct format.",
+                        e.Message.Split('\n')[0]);
+                });
+
         }
 
         [Test]
@@ -1059,27 +1082,27 @@ namespace Azure.Storage.Blobs.Test
             var garbageLeaseId = GetGarbageLeaseId();
             foreach (AccessConditionParameters parameters in Reduced_AccessConditions_Data)
             {
-                using (GetNewContainer(out BlobContainerClient container))
-                {
-                    // Arrange
-                    PageBlobClient blob = await CreatePageBlobClientAsync(container, 4 * Constants.KB);
-                    var newSize = 8 * Constants.KB;
+                await using DisposingContainer test = await GetTestContainerAsync();
 
-                    parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
-                    parameters.LeaseId = await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
+                // Arrange
+                PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+                var newSize = 8 * Constants.KB;
 
-                    PageBlobAccessConditions accessConditions = BuildAccessConditions(
-                        parameters: parameters,
-                        lease: true);
+                parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
+                parameters.LeaseId = await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
 
-                    // Act
-                    Response<PageBlobInfo> response = await blob.ResizeAsync(
-                        size: newSize,
-                        accessConditions: accessConditions);
+                PageBlobRequestConditions accessConditions = BuildAccessConditions(
+                    parameters: parameters,
+                    lease: true);
 
-                    // Assert
-                    Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
-                }
+                // Act
+                Response<PageBlobInfo> response = await blob.ResizeAsync(
+                    size: newSize,
+                    conditions: accessConditions);
+
+                // Assert
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+
             }
         }
 
@@ -1089,47 +1112,47 @@ namespace Azure.Storage.Blobs.Test
             var garbageLeaseId = GetGarbageLeaseId();
             foreach (AccessConditionParameters parameters in GetReduced_AccessConditionsFail_Data(garbageLeaseId))
             {
-                using (GetNewContainer(out BlobContainerClient container))
-                {
-                    // Arrange
-                    PageBlobClient blob = await CreatePageBlobClientAsync(container, 4 * Constants.KB);
-                    var newSize = 8 * Constants.KB;
+                await using DisposingContainer test = await GetTestContainerAsync();
 
-                    parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
-                    await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
+                // Arrange
+                PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+                var newSize = 8 * Constants.KB;
 
-                    PageBlobAccessConditions accessConditions = BuildAccessConditions(
-                        parameters: parameters,
-                        lease: true);
+                parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
+                await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
 
-                    // Act
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                        blob.ResizeAsync(
-                            size: newSize,
-                            accessConditions: accessConditions),
-                        e => Assert.IsTrue(true));
-                }
+                PageBlobRequestConditions accessConditions = BuildAccessConditions(
+                    parameters: parameters,
+                    lease: true);
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    blob.ResizeAsync(
+                        size: newSize,
+                        conditions: accessConditions),
+                    e => Assert.IsTrue(true));
+
             }
         }
 
         [Test]
         public async Task UpdateSequenceNumberAsync()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                PageBlobClient blob = await CreatePageBlobClientAsync(container, 4 * Constants.KB);
-                long sequenceAccessNumber = 5;
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Act
-                await blob.UpdateSequenceNumberAsync(
-                    action: SequenceNumberAction.Update,
-                    sequenceNumber: sequenceAccessNumber);
+            // Arrange
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+            long sequenceAccessNumber = 5;
 
-                // Assert
-                Response<BlobProperties> response = await blob.GetPropertiesAsync();
-                Assert.AreEqual(sequenceAccessNumber, response.Value.BlobSequenceNumber);
-            }
+            // Act
+            await blob.UpdateSequenceNumberAsync(
+                action: SequenceNumberAction.Update,
+                sequenceNumber: sequenceAccessNumber);
+
+            // Assert
+            Response<BlobProperties> response = await blob.GetPropertiesAsync();
+            Assert.AreEqual(sequenceAccessNumber, response.Value.BlobSequenceNumber);
+
         }
 
         [Test]
@@ -1138,28 +1161,27 @@ namespace Azure.Storage.Blobs.Test
             var garbageLeaseId = GetGarbageLeaseId();
             foreach (AccessConditionParameters parameters in Reduced_AccessConditions_Data)
             {
-                using (GetNewContainer(out BlobContainerClient container))
-                {
-                    // Arrange
-                    PageBlobClient blob = await CreatePageBlobClientAsync(container, 4 * Constants.KB);
-                    long sequenceAccessNumber = 5;
+                await using DisposingContainer test = await GetTestContainerAsync();
 
-                    parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
-                    parameters.LeaseId = await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
+                // Arrange
+                PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+                long sequenceAccessNumber = 5;
 
-                    PageBlobAccessConditions accessConditions = BuildAccessConditions(
-                        parameters: parameters,
-                        lease: true);
+                parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
+                parameters.LeaseId = await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
 
-                    // Act
-                    Response<PageBlobInfo> response = await blob.UpdateSequenceNumberAsync(
-                        action: SequenceNumberAction.Update,
-                        sequenceNumber: sequenceAccessNumber,
-                        accessConditions: accessConditions);
+                PageBlobRequestConditions accessConditions = BuildAccessConditions(
+                    parameters: parameters,
+                    lease: true);
 
-                    // Assert
-                    Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
-                }
+                // Act
+                Response<PageBlobInfo> response = await blob.UpdateSequenceNumberAsync(
+                    action: SequenceNumberAction.Update,
+                    sequenceNumber: sequenceAccessNumber,
+                    conditions: accessConditions);
+
+                // Assert
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
         }
 
@@ -1169,67 +1191,137 @@ namespace Azure.Storage.Blobs.Test
             var garbageLeaseId = GetGarbageLeaseId();
             foreach (AccessConditionParameters parameters in GetReduced_AccessConditionsFail_Data(garbageLeaseId))
             {
-                using (GetNewContainer(out BlobContainerClient container))
-                {
-                    // Arrange
-                    PageBlobClient blob = await CreatePageBlobClientAsync(container, 4 * Constants.KB);
-                    long sequenceAccessNumber = 5;
+                await using DisposingContainer test = await GetTestContainerAsync();
 
-                    parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
-                    await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
+                // Arrange
+                PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+                long sequenceAccessNumber = 5;
 
-                    PageBlobAccessConditions accessConditions = BuildAccessConditions(
-                        parameters: parameters,
-                        lease: true);
+                parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
+                await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
 
-                    // Act
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                        blob.UpdateSequenceNumberAsync(
-                            action: SequenceNumberAction.Update,
-                            sequenceNumber: sequenceAccessNumber,
-                            accessConditions: accessConditions),
-                        e => Assert.IsTrue(true));
-                }
+                PageBlobRequestConditions accessConditions = BuildAccessConditions(
+                    parameters: parameters,
+                    lease: true);
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    blob.UpdateSequenceNumberAsync(
+                        action: SequenceNumberAction.Update,
+                        sequenceNumber: sequenceAccessNumber,
+                        conditions: accessConditions),
+                    e => Assert.IsTrue(true));
+
             }
         }
 
         [Test]
         public async Task UpdateSequenceNumberAsync_Error()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                PageBlobClient blob = await CreatePageBlobClientAsync(container, 4 * Constants.KB);
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    blob.UpdateSequenceNumberAsync(
-                        action: SequenceNumberAction.Update,
-                        sequenceNumber: -1),
-                    e =>
-                    {
-                        Assert.AreEqual("InvalidHeaderValue", e.ErrorCode);
-                        Assert.AreEqual("The value for one of the HTTP headers is not in the correct format.",
-                            e.Message.Split('\n')[0]);
-                    });
-            }
+            // Arrange
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.UpdateSequenceNumberAsync(
+                    action: SequenceNumberAction.Update,
+                    sequenceNumber: -1),
+                e =>
+                {
+                    Assert.AreEqual("InvalidHeaderValue", e.ErrorCode);
+                    Assert.AreEqual("The value for one of the HTTP headers is not in the correct format.",
+                        e.Message.Split('\n')[0]);
+                });
         }
 
         [Test]
         public async Task StartCopyIncrementalAsync()
         {
-            using (GetNewContainer(out BlobContainerClient container))
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+            var data = GetRandomBuffer(Constants.KB);
+            var expectedData = new byte[4 * Constants.KB];
+            data.CopyTo(expectedData, 0);
+
+            // Create Page Blob
+            PageBlobClient sourceBlob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+
+            // Update data to firstPageBlob
+            using (var stream = new MemoryStream(data))
             {
+                await sourceBlob.UploadPagesAsync(stream, Constants.KB);
+            }
+
+            // Create Snapshot
+            Response<BlobSnapshotInfo> snapshotResponse = await sourceBlob.CreateSnapshotAsync();
+
+            var snapshot = snapshotResponse.Value.Snapshot;
+
+            PageBlobClient destinationBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+
+            // Act
+            Operation<long> operation = await destinationBlob.StartCopyIncrementalAsync(
+                sourceUri: sourceBlob.Uri,
+                snapshot: snapshot);
+            if (Mode == RecordedTestMode.Playback)
+            {
+                await operation.WaitForCompletionAsync(TimeSpan.FromMilliseconds(10), CancellationToken.None);
+            }
+            else
+            {
+                await operation.WaitForCompletionAsync();
+            }
+
+            // Assert
+
+            Response<BlobProperties> properties = await destinationBlob.GetPropertiesAsync();
+
+            Assert.AreEqual(CopyStatus.Success, properties.Value.CopyStatus);
+        }
+
+        [Test]
+        public async Task StartCopyIncrementalAsync_Error()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+            PageBlobClient sourceBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.StartCopyIncrementalAsync(
+                    sourceUri: sourceBlob.Uri,
+                    // dummy snapshot value.
+                    snapshot: "2019-03-29T18:12:15.6608647Z"),
+                e =>
+                {
+                    Assert.AreEqual("CannotVerifyCopySource", e.ErrorCode);
+                    Assert.AreEqual("The specified blob does not exist.", e.Message.Split('\n')[0]);
+                });
+        }
+
+        [Test]
+        public async Task StartCopyIncrementalAsync_AccessConditions()
+        {
+            foreach (AccessConditionParameters parameters in Reduced_AccessConditions_Data)
+            {
+                await using DisposingContainer test = await GetTestContainerAsync();
+
                 // Arrange
-                await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+                await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
                 var data = GetRandomBuffer(Constants.KB);
                 var expectedData = new byte[4 * Constants.KB];
                 data.CopyTo(expectedData, 0);
 
-                // Create Page Blob
-                PageBlobClient sourceBlob = await CreatePageBlobClientAsync(container, 4 * Constants.KB);
+                // Create sourceBlob
+                PageBlobClient sourceBlob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
 
-                // Update data to firstPageBlob
+                // Update data to sourceBlob
                 using (var stream = new MemoryStream(data))
                 {
                     await sourceBlob.UploadPagesAsync(stream, Constants.KB);
@@ -1240,10 +1332,9 @@ namespace Azure.Storage.Blobs.Test
 
                 var snapshot = snapshotResponse.Value.Snapshot;
 
-                PageBlobClient destinationBlob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
+                PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
 
-                // Act
-                Operation<long> operation = await destinationBlob.StartCopyIncrementalAsync(
+                Operation<long> operation = await blob.StartCopyIncrementalAsync(
                     sourceUri: sourceBlob.Uri,
                     snapshot: snapshot);
                 if (Mode == RecordedTestMode.Playback)
@@ -1254,94 +1345,22 @@ namespace Azure.Storage.Blobs.Test
                 {
                     await operation.WaitForCompletionAsync();
                 }
+                parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
 
-                // Assert
+                PageBlobRequestConditions accessConditions = BuildAccessConditions(parameters: parameters);
 
-                Response<BlobProperties> properties = await destinationBlob.GetPropertiesAsync();
-
-                Assert.AreEqual(CopyStatus.Success, properties.Value.CopyStatus);
-            }
-        }
-
-        [Test]
-        public async Task StartCopyIncrementalAsync_Error()
-        {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                PageBlobClient blob = await CreatePageBlobClientAsync(container, 4 * Constants.KB);
-                PageBlobClient sourceBlob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
+                snapshotResponse = await sourceBlob.CreateSnapshotAsync();
+                snapshot = snapshotResponse.Value.Snapshot;
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    blob.StartCopyIncrementalAsync(
-                        sourceUri: sourceBlob.Uri,
-                        // dummy snapshot value.
-                        snapshot: "2019-03-29T18:12:15.6608647Z"),
-                    e =>
-                    {
-                        Assert.AreEqual("CannotVerifyCopySource", e.ErrorCode);
-                        Assert.AreEqual("The specified blob does not exist.", e.Message.Split('\n')[0]);
-                    });
-            }
-        }
+                Operation<long> response = await blob.StartCopyIncrementalAsync(
+                    sourceUri: sourceBlob.Uri,
+                    snapshot: snapshot,
+                    conditions: accessConditions);
 
-        [Test]
-        public async Task StartCopyIncrementalAsync_AccessConditions()
-        {
-            foreach (AccessConditionParameters parameters in Reduced_AccessConditions_Data)
-            {
-                using (GetNewContainer(out BlobContainerClient container))
-                {
-                    // Arrange
-                    await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
-                    var data = GetRandomBuffer(Constants.KB);
-                    var expectedData = new byte[4 * Constants.KB];
-                    data.CopyTo(expectedData, 0);
+                // Assert
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
 
-                    // Create sourceBlob
-                    PageBlobClient sourceBlob = await CreatePageBlobClientAsync(container, 4 * Constants.KB);
-
-                    // Update data to sourceBlob
-                    using (var stream = new MemoryStream(data))
-                    {
-                        await sourceBlob.UploadPagesAsync(stream, Constants.KB);
-                    }
-
-                    // Create Snapshot
-                    Response<BlobSnapshotInfo> snapshotResponse = await sourceBlob.CreateSnapshotAsync();
-
-                    var snapshot = snapshotResponse.Value.Snapshot;
-
-                    PageBlobClient blob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
-
-                    Operation<long> operation = await blob.StartCopyIncrementalAsync(
-                        sourceUri: sourceBlob.Uri,
-                        snapshot: snapshot);
-                    if (Mode == RecordedTestMode.Playback)
-                    {
-                        await operation.WaitForCompletionAsync(TimeSpan.FromMilliseconds(10), CancellationToken.None);
-                    }
-                    else
-                    {
-                        await operation.WaitForCompletionAsync();
-                    }
-                    parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
-
-                    PageBlobAccessConditions accessConditions = BuildAccessConditions(parameters: parameters);
-
-                    snapshotResponse = await sourceBlob.CreateSnapshotAsync();
-                    snapshot = snapshotResponse.Value.Snapshot;
-
-                    // Act
-                    Operation<long> response = await blob.StartCopyIncrementalAsync(
-                        sourceUri: sourceBlob.Uri,
-                        snapshot: snapshot,
-                        accessConditions: accessConditions);
-
-                    // Assert
-                    Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
-                }
             }
         }
 
@@ -1351,75 +1370,18 @@ namespace Azure.Storage.Blobs.Test
             var garbageLeaseId = GetGarbageLeaseId();
             foreach (AccessConditionParameters parameters in GetReduced_AccessConditionsFail_Data(garbageLeaseId))
             {
-                using (GetNewContainer(out BlobContainerClient container))
-                {
-                    // Arrange
-                    await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
-                    var data = GetRandomBuffer(Constants.KB);
-                    var expectedData = new byte[4 * Constants.KB];
-                    data.CopyTo(expectedData, 0);
+                await using DisposingContainer test = await GetTestContainerAsync();
 
-                    // Create sourceBlob
-                    PageBlobClient sourceBlob = await CreatePageBlobClientAsync(container, 4 * Constants.KB);
-
-                    // Update data to sourceBlob
-                    using (var stream = new MemoryStream(data))
-                    {
-                        await sourceBlob.UploadPagesAsync(stream, Constants.KB);
-                    }
-
-                    // Create Snapshot
-                    Response<BlobSnapshotInfo> snapshotResponse = await sourceBlob.CreateSnapshotAsync();
-
-                    var snapshot = snapshotResponse.Value.Snapshot;
-
-                    PageBlobClient blob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
-
-                    Operation<long> operation = await blob.StartCopyIncrementalAsync(
-                        sourceUri: sourceBlob.Uri,
-                        snapshot: snapshot);
-                    if (Mode == RecordedTestMode.Playback)
-                    {
-                        await operation.WaitForCompletionAsync(TimeSpan.FromMilliseconds(10), CancellationToken.None);
-                    }
-                    else
-                    {
-                        await operation.WaitForCompletionAsync();
-                    }
-                    parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
-                    await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
-
-                    PageBlobAccessConditions accessConditions = BuildAccessConditions(parameters: parameters);
-
-                    snapshotResponse = await sourceBlob.CreateSnapshotAsync();
-                    snapshot = snapshotResponse.Value.Snapshot;
-
-                    // Act
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                        blob.StartCopyIncrementalAsync(
-                            sourceUri: sourceBlob.Uri,
-                            snapshot: snapshot,
-                            accessConditions: accessConditions),
-                        e => Assert.IsTrue(true));
-                }
-            }
-        }
-
-        [Test]
-        public async Task StartCopyIncrementalAsync_AccessTier()
-        {
-            BlobServiceClient premiumService = GetServiceClient_PremiumBlobAccount_SharedKey();
-            using (GetNewContainer(out BlobContainerClient container, service: premiumService, premium: true))
-            {
                 // Arrange
+                await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
                 var data = GetRandomBuffer(Constants.KB);
                 var expectedData = new byte[4 * Constants.KB];
                 data.CopyTo(expectedData, 0);
 
-                // Create Page Blob
-                PageBlobClient sourceBlob = await CreatePageBlobClientAsync(container, 4 * Constants.KB);
+                // Create sourceBlob
+                PageBlobClient sourceBlob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
 
-                // Update data to firstPageBlob
+                // Update data to sourceBlob
                 using (var stream = new MemoryStream(data))
                 {
                     await sourceBlob.UploadPagesAsync(stream, Constants.KB);
@@ -1430,12 +1392,11 @@ namespace Azure.Storage.Blobs.Test
 
                 var snapshot = snapshotResponse.Value.Snapshot;
 
-                PageBlobClient destinationBlob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
+                PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
 
-                // Act
-                Operation<long> operation = await destinationBlob.StartCopyFromUriAsync(
-                    sourceBlob.Uri,
-                    accessTier: AccessTier.P20);
+                Operation<long> operation = await blob.StartCopyIncrementalAsync(
+                    sourceUri: sourceBlob.Uri,
+                    snapshot: snapshot);
                 if (Mode == RecordedTestMode.Playback)
                 {
                     await operation.WaitForCompletionAsync(TimeSpan.FromMilliseconds(10), CancellationToken.None);
@@ -1444,131 +1405,153 @@ namespace Azure.Storage.Blobs.Test
                 {
                     await operation.WaitForCompletionAsync();
                 }
-                Assert.IsTrue(operation.HasCompleted);
-                Assert.IsTrue(operation.HasValue);
+                parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
+                await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
 
-                Response<BlobProperties> response = await destinationBlob.GetPropertiesAsync();
-                Assert.AreEqual(AccessTier.P20.ToString(), response.Value.AccessTier);
+                PageBlobRequestConditions accessConditions = BuildAccessConditions(parameters: parameters);
+
+                snapshotResponse = await sourceBlob.CreateSnapshotAsync();
+                snapshot = snapshotResponse.Value.Snapshot;
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    blob.StartCopyIncrementalAsync(
+                        sourceUri: sourceBlob.Uri,
+                        snapshot: snapshot,
+                        conditions: accessConditions),
+                    e => Assert.IsTrue(true));
+
             }
+        }
+
+        [Test]
+        public async Task StartCopyIncrementalAsync_AccessTier()
+        {
+            BlobServiceClient premiumService = GetServiceClient_PremiumBlobAccount_SharedKey();
+            await using DisposingContainer test = await GetTestContainerAsync(service: premiumService, premium: true);
+            // Arrange
+            var data = GetRandomBuffer(Constants.KB);
+            var expectedData = new byte[4 * Constants.KB];
+            data.CopyTo(expectedData, 0);
+
+            // Create Page Blob
+            PageBlobClient sourceBlob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+
+            // Update data to firstPageBlob
+            using (var stream = new MemoryStream(data))
+            {
+                await sourceBlob.UploadPagesAsync(stream, Constants.KB);
+            }
+
+            // Create Snapshot
+            Response<BlobSnapshotInfo> snapshotResponse = await sourceBlob.CreateSnapshotAsync();
+
+            var snapshot = snapshotResponse.Value.Snapshot;
+
+            PageBlobClient destinationBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+
+            // Act
+            Operation<long> operation = await destinationBlob.StartCopyFromUriAsync(
+                sourceBlob.Uri,
+                accessTier: AccessTier.P20);
+            if (Mode == RecordedTestMode.Playback)
+            {
+                await operation.WaitForCompletionAsync(TimeSpan.FromMilliseconds(10), CancellationToken.None);
+            }
+            else
+            {
+                await operation.WaitForCompletionAsync();
+            }
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsTrue(operation.HasValue);
+
+            Response<BlobProperties> response = await destinationBlob.GetPropertiesAsync();
+            Assert.AreEqual(AccessTier.P20.ToString(), response.Value.AccessTier);
         }
 
         [Test]
         public async Task StartCopyIncrementalAsync_AccessTierFail()
         {
             BlobServiceClient premiumService = GetServiceClient_PremiumBlobAccount_SharedKey();
-            using (GetNewContainer(out BlobContainerClient container, service: premiumService, premium: true))
+            await using DisposingContainer test = await GetTestContainerAsync(service: premiumService, premium: true);
+
+            // Arrange
+            var data = GetRandomBuffer(Constants.KB);
+            var expectedData = new byte[4 * Constants.KB];
+            data.CopyTo(expectedData, 0);
+
+            // Create Page Blob
+            PageBlobClient sourceBlob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+
+            // Update data to firstPageBlob
+            using (var stream = new MemoryStream(data))
             {
-                // Arrange
-                var data = GetRandomBuffer(Constants.KB);
-                var expectedData = new byte[4 * Constants.KB];
-                data.CopyTo(expectedData, 0);
-
-                // Create Page Blob
-                PageBlobClient sourceBlob = await CreatePageBlobClientAsync(container, 4 * Constants.KB);
-
-                // Update data to firstPageBlob
-                using (var stream = new MemoryStream(data))
-                {
-                    await sourceBlob.UploadPagesAsync(stream, Constants.KB);
-                }
-
-                // Create Snapshot
-                Response<BlobSnapshotInfo> snapshotResponse = await sourceBlob.CreateSnapshotAsync();
-
-                var snapshot = snapshotResponse.Value.Snapshot;
-
-                PageBlobClient destinationBlob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
-
-                // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    destinationBlob.StartCopyFromUriAsync(
-                    sourceBlob.Uri,
-                    accessTier: AccessTier.Cool),
-                    e => Assert.AreEqual(BlobErrorCode.InvalidBlobTier.ToString(), e.ErrorCode));
+                await sourceBlob.UploadPagesAsync(stream, Constants.KB);
             }
+
+            // Create Snapshot
+            Response<BlobSnapshotInfo> snapshotResponse = await sourceBlob.CreateSnapshotAsync();
+
+            var snapshot = snapshotResponse.Value.Snapshot;
+
+            PageBlobClient destinationBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                destinationBlob.StartCopyFromUriAsync(
+                sourceBlob.Uri,
+                accessTier: AccessTier.Cool),
+                e => Assert.AreEqual(BlobErrorCode.InvalidBlobTier.ToString(), e.ErrorCode));
         }
 
         [Test]
         public async Task SetTierAsync_AccessTier()
         {
             BlobServiceClient premiumService = GetServiceClient_PremiumBlobAccount_SharedKey();
-            using (GetNewContainer(out BlobContainerClient container, service: premiumService, premium: true))
-            {
-                // Arrange
-                PageBlobClient blob = await CreatePageBlobClientAsync(container, Constants.KB);
+            await using DisposingContainer test = await GetTestContainerAsync(service: premiumService, premium: true);
 
-                // Act
-                Response response = await blob.SetAccessTierAsync(AccessTier.P20);
+            // Arrange
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, Constants.KB);
 
-                // Assert
-                Response<BlobProperties> responseProperties = await blob.GetPropertiesAsync();
-                Assert.AreEqual(AccessTier.P20.ToString(), responseProperties.Value.AccessTier);
-            }
+            // Act
+            Response response = await blob.SetAccessTierAsync(AccessTier.P20);
+
+            // Assert
+            Response<BlobProperties> responseProperties = await blob.GetPropertiesAsync();
+            Assert.AreEqual(AccessTier.P20.ToString(), responseProperties.Value.AccessTier);
         }
 
         [Test]
         public async Task SetTierAsync_AccessTierFail()
         {
             BlobServiceClient premiumService = GetServiceClient_PremiumBlobAccount_SharedKey();
-            using (GetNewContainer(out BlobContainerClient container, service: premiumService, premium: true))
-            {
-                // Arrange
-                PageBlobClient blob = await CreatePageBlobClientAsync(container, Constants.KB);
+            await using DisposingContainer test = await GetTestContainerAsync(service: premiumService, premium: true);
+            // Arrange
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, Constants.KB);
 
-                // Assert
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    blob.SetAccessTierAsync(AccessTier.Cool),
-                    e => Assert.AreEqual(BlobErrorCode.InvalidBlobTier.ToString(), e.ErrorCode));
-            }
+            // Assert
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.SetAccessTierAsync(AccessTier.Cool),
+                e => Assert.AreEqual(BlobErrorCode.InvalidBlobTier.ToString(), e.ErrorCode));
         }
 
         [Test]
         public async Task UploadPagesFromUriAsync_Min()
         {
-            using (GetNewContainer(out BlobContainerClient container))
+            await using DisposingContainer test = await GetTestContainerAsync();
+            // Arrange
+
+            await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+
+            var data = GetRandomBuffer(Constants.KB);
+
+            using (var stream = new MemoryStream(data))
             {
-                // Arrange
-                await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
-
-                var data = GetRandomBuffer(Constants.KB);
-
-                using (var stream = new MemoryStream(data))
-                {
-                    PageBlobClient sourceBlob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
-                    await sourceBlob.CreateAsync(Constants.KB);
-                    await sourceBlob.UploadPagesAsync(stream, 0);
-
-                    PageBlobClient destBlob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
-                    await destBlob.CreateAsync(Constants.KB);
-                    var range = new HttpRange(0, Constants.KB);
-
-                    // Act
-                    await destBlob.UploadPagesFromUriAsync(
-                        sourceUri: sourceBlob.Uri,
-                        sourceRange: range,
-                        range: range);
-                }
-            }
-        }
-
-        [Test]
-        public async Task UploadPagesFromUriAsync_CPK()
-        {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
-
-                var data = GetRandomBuffer(Constants.KB);
-
-                using var stream = new MemoryStream(data);
-                PageBlobClient sourceBlob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
+                PageBlobClient sourceBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
                 await sourceBlob.CreateAsync(Constants.KB);
                 await sourceBlob.UploadPagesAsync(stream, 0);
 
-                PageBlobClient destBlob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
-                CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-                destBlob = InstrumentClient(destBlob.WithCustomerProvidedKey(customerProvidedKey));
+                PageBlobClient destBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
                 await destBlob.CreateAsync(Constants.KB);
                 var range = new HttpRange(0, Constants.KB);
 
@@ -1581,138 +1564,164 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8353")]
+        public async Task UploadPagesFromUriAsync_CPK()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+
+            var data = GetRandomBuffer(Constants.KB);
+
+            using var stream = new MemoryStream(data);
+            PageBlobClient sourceBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+            await sourceBlob.CreateAsync(Constants.KB);
+            await sourceBlob.UploadPagesAsync(stream, 0);
+
+            PageBlobClient destBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            destBlob = InstrumentClient(destBlob.WithCustomerProvidedKey(customerProvidedKey));
+            await destBlob.CreateAsync(Constants.KB);
+            var range = new HttpRange(0, Constants.KB);
+
+            // Act
+            await destBlob.UploadPagesFromUriAsync(
+                sourceUri: sourceBlob.Uri,
+                sourceRange: range,
+                range: range);
+        }
+
+        [Test]
         public async Task UploadPagesFromUriAsync_CpkHttpError()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                var data = GetRandomBuffer(Constants.KB);
+            // Arrange
+            await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
 
-                using var stream = new MemoryStream(data);
-                PageBlobClient sourceBlob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
-                await sourceBlob.CreateAsync(Constants.KB);
-                await sourceBlob.UploadPagesAsync(stream, 0);
+            var data = GetRandomBuffer(Constants.KB);
 
-                PageBlobClient httpDestBlob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
-                CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-                httpDestBlob = InstrumentClient(new PageBlobClient(
-                    httpDestBlob.Uri,
-                    httpDestBlob.Pipeline,
-                    new BlobClientOptions(customerProvidedKey: customerProvidedKey)));
-                Assert.AreEqual(Constants.Blob.Http, httpDestBlob.Uri.Scheme);
-                PageBlobClient httpsDestBlob = InstrumentClient(httpDestBlob.WithCustomerProvidedKey(customerProvidedKey));
+            using var stream = new MemoryStream(data);
+            PageBlobClient sourceBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+            await sourceBlob.CreateAsync(Constants.KB);
+            await sourceBlob.UploadPagesAsync(stream, 0);
 
-                await httpsDestBlob.CreateAsync(Constants.KB);
-                var range = new HttpRange(0, Constants.KB);
+            PageBlobClient httpDestBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            httpDestBlob = InstrumentClient(new PageBlobClient(
+                httpDestBlob.Uri,
+                httpDestBlob.Pipeline,
+                httpDestBlob.ClientDiagnostics,
+                customerProvidedKey));
+            Assert.AreEqual(Constants.Blob.Http, httpDestBlob.Uri.Scheme);
+            PageBlobClient httpsDestBlob = InstrumentClient(httpDestBlob.WithCustomerProvidedKey(customerProvidedKey));
 
-                // Act
-                await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
-                    httpDestBlob.UploadPagesFromUriAsync(
-                        sourceUri: sourceBlob.Uri,
-                        sourceRange: range,
-                        range: range),
-                    actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
-            }
+            await httpsDestBlob.CreateAsync(Constants.KB);
+            var range = new HttpRange(0, Constants.KB);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                httpDestBlob.UploadPagesFromUriAsync(
+                    sourceUri: sourceBlob.Uri,
+                    sourceRange: range,
+                    range: range),
+                actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
         }
 
         [Test]
         public async Task UploadPagesFromUriAsync_Range()
         {
-            using (GetNewContainer(out BlobContainerClient container))
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+
+            var data = GetRandomBuffer(4 * Constants.KB);
+
+            using (var stream = new MemoryStream(data))
             {
-                // Arrange
-                await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+                PageBlobClient sourceBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+                await sourceBlob.CreateAsync(4 * Constants.KB);
+                await sourceBlob.UploadPagesAsync(stream, 0);
 
-                var data = GetRandomBuffer(4 * Constants.KB);
+                PageBlobClient destBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+                await destBlob.CreateAsync(2 * Constants.KB);
+                var range = new HttpRange(0, 2 * Constants.KB);
 
-                using (var stream = new MemoryStream(data))
-                {
-                    PageBlobClient sourceBlob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
-                    await sourceBlob.CreateAsync(4 * Constants.KB);
-                    await sourceBlob.UploadPagesAsync(stream, 0);
+                // Act
+                await destBlob.UploadPagesFromUriAsync(
+                    sourceUri: sourceBlob.Uri,
+                    sourceRange: new HttpRange(2 * Constants.KB, 2 * Constants.KB),
+                    range: range);
 
-                    PageBlobClient destBlob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
-                    await destBlob.CreateAsync(2 * Constants.KB);
-                    var range = new HttpRange(0, 2 * Constants.KB);
-
-                    // Act
-                    await destBlob.UploadPagesFromUriAsync(
-                        sourceUri: sourceBlob.Uri,
-                        sourceRange: new HttpRange(2 * Constants.KB, 2 * Constants.KB),
-                        range: range);
-
-                    // Assert
-                    Response<BlobDownloadInfo> response = await destBlob.DownloadAsync(new HttpRange(0, 2 * Constants.KB));
-                    var dataResult = new MemoryStream();
-                    await response.Value.Content.CopyToAsync(dataResult);
-                    Assert.AreEqual(2 * Constants.KB, dataResult.Length);
-                    TestHelper.AssertSequenceEqual(data.Skip(2 * Constants.KB).Take(2 * Constants.KB), dataResult.ToArray());
-                }
+                // Assert
+                Response<BlobDownloadInfo> response = await destBlob.DownloadAsync(new HttpRange(0, 2 * Constants.KB));
+                var dataResult = new MemoryStream();
+                await response.Value.Content.CopyToAsync(dataResult);
+                Assert.AreEqual(2 * Constants.KB, dataResult.Length);
+                TestHelper.AssertSequenceEqual(data.Skip(2 * Constants.KB).Take(2 * Constants.KB), dataResult.ToArray());
             }
         }
 
         [Test]
         public async Task UploadPagesFromUriAsync_MD5()
         {
-            using (GetNewContainer(out BlobContainerClient container))
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+
+            var data = GetRandomBuffer(Constants.KB);
+
+            using (var stream = new MemoryStream(data))
             {
-                // Arrange
-                await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+                PageBlobClient sourceBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+                await sourceBlob.CreateAsync(Constants.KB);
+                await sourceBlob.UploadPagesAsync(stream, 0);
 
-                var data = GetRandomBuffer(Constants.KB);
+                PageBlobClient destBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+                await destBlob.CreateAsync(Constants.KB);
+                var range = new HttpRange(0, Constants.KB);
 
-                using (var stream = new MemoryStream(data))
-                {
-                    PageBlobClient sourceBlob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
-                    await sourceBlob.CreateAsync(Constants.KB);
-                    await sourceBlob.UploadPagesAsync(stream, 0);
-
-                    PageBlobClient destBlob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
-                    await destBlob.CreateAsync(Constants.KB);
-                    var range = new HttpRange(0, Constants.KB);
-
-                    // Act
-                    await destBlob.UploadPagesFromUriAsync(
-                        sourceUri: sourceBlob.Uri,
-                        sourceRange: range,
-                        range: range,
-                        sourceContentHash: MD5.Create().ComputeHash(data));
-                }
+                // Act
+                await destBlob.UploadPagesFromUriAsync(
+                    sourceUri: sourceBlob.Uri,
+                    sourceRange: range,
+                    range: range,
+                    sourceContentHash: MD5.Create().ComputeHash(data));
             }
         }
 
         [Test]
         public async Task UploadPagesFromUriAsync_MD5_Fail()
         {
-            using (GetNewContainer(out BlobContainerClient container))
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+
+            var data = GetRandomBuffer(Constants.KB);
+
+            using (var stream = new MemoryStream(data))
             {
-                // Arrange
-                await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+                PageBlobClient sourceBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+                await sourceBlob.CreateAsync(Constants.KB);
+                await sourceBlob.UploadPagesAsync(stream, 0);
 
-                var data = GetRandomBuffer(Constants.KB);
+                PageBlobClient destBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+                await destBlob.CreateAsync(Constants.KB);
+                var range = new HttpRange(0, Constants.KB);
 
-                using (var stream = new MemoryStream(data))
-                {
-                    PageBlobClient sourceBlob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
-                    await sourceBlob.CreateAsync(Constants.KB);
-                    await sourceBlob.UploadPagesAsync(stream, 0);
-
-                    PageBlobClient destBlob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
-                    await destBlob.CreateAsync(Constants.KB);
-                    var range = new HttpRange(0, Constants.KB);
-
-                    // Act
-                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                        destBlob.UploadPagesFromUriAsync(
-                            sourceUri: sourceBlob.Uri,
-                            sourceRange: range,
-                            range: range,
-                            sourceContentHash: MD5.Create().ComputeHash(Encoding.UTF8.GetBytes("garabage"))),
-                        actualException => Assert.AreEqual("Md5Mismatch", actualException.ErrorCode)
-                    );
-                }
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    destBlob.UploadPagesFromUriAsync(
+                        sourceUri: sourceBlob.Uri,
+                        sourceRange: range,
+                        range: range,
+                        sourceContentHash: MD5.Create().ComputeHash(Encoding.UTF8.GetBytes("garabage"))),
+                    actualException => Assert.AreEqual("Md5Mismatch", actualException.ErrorCode)
+                );
             }
         }
 
@@ -1740,42 +1749,41 @@ namespace Azure.Storage.Blobs.Test
             var garbageLeaseId = GetGarbageLeaseId();
             foreach (AccessConditionParameters parameters in UploadPagesFromUriAsync_AccessConditions_Data)
             {
-                using (GetNewContainer(out BlobContainerClient container))
+                await using DisposingContainer test = await GetTestContainerAsync();
+
+                // Arrange
+                await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+
+                var data = GetRandomBuffer(Constants.KB);
+
+                using (var stream = new MemoryStream(data))
                 {
-                    // Arrange
-                    await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+                    PageBlobClient sourceBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+                    await sourceBlob.CreateAsync(Constants.KB);
+                    await sourceBlob.UploadPagesAsync(stream, 0);
 
-                    var data = GetRandomBuffer(Constants.KB);
+                    PageBlobClient destBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+                    await destBlob.CreateAsync(Constants.KB);
 
-                    using (var stream = new MemoryStream(data))
-                    {
-                        PageBlobClient sourceBlob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
-                        await sourceBlob.CreateAsync(Constants.KB);
-                        await sourceBlob.UploadPagesAsync(stream, 0);
+                    parameters.Match = await SetupBlobMatchCondition(destBlob, parameters.Match);
+                    parameters.SourceIfMatch = await SetupBlobMatchCondition(sourceBlob, parameters.SourceIfMatch);
+                    parameters.LeaseId = await SetupBlobLeaseCondition(destBlob, parameters.LeaseId, garbageLeaseId);
 
-                        PageBlobClient destBlob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
-                        await destBlob.CreateAsync(Constants.KB);
+                    PageBlobRequestConditions accessConditions = BuildAccessConditions(
+                        parameters: parameters,
+                        lease: true,
+                        sequenceNumbers: true);
+                    PageBlobRequestConditions sourceAccessConditions = BuildSourceAccessConditions(parameters);
 
-                        parameters.Match = await SetupBlobMatchCondition(destBlob, parameters.Match);
-                        parameters.SourceIfMatch = await SetupBlobMatchCondition(sourceBlob, parameters.SourceIfMatch);
-                        parameters.LeaseId = await SetupBlobLeaseCondition(destBlob, parameters.LeaseId, garbageLeaseId);
+                    var range = new HttpRange(0, Constants.KB);
 
-                        PageBlobAccessConditions accessConditions = BuildAccessConditions(
-                            parameters: parameters,
-                            lease: true,
-                            sequenceNumbers: true);
-                        PageBlobAccessConditions sourceAccessConditions = BuildSourceAccessConditions(parameters);
-
-                        var range = new HttpRange(0, Constants.KB);
-
-                        // Act
-                        await destBlob.UploadPagesFromUriAsync(
-                            sourceUri: sourceBlob.Uri,
-                            sourceRange: range,
-                            range: range,
-                            accessConditions: accessConditions,
-                            sourceAccessConditions: sourceAccessConditions);
-                    }
+                    // Act
+                    await destBlob.UploadPagesFromUriAsync(
+                        sourceUri: sourceBlob.Uri,
+                        sourceRange: range,
+                        range: range,
+                        conditions: accessConditions,
+                        sourceConditions: sourceAccessConditions);
                 }
             }
         }
@@ -1803,44 +1811,43 @@ namespace Azure.Storage.Blobs.Test
             var garbageLeaseId = GetGarbageLeaseId();
             foreach (AccessConditionParameters parameters in GetUploadPagesFromUriAsync_AccessConditionsFail_Data(garbageLeaseId))
             {
-                using (GetNewContainer(out BlobContainerClient container))
+                await using DisposingContainer test = await GetTestContainerAsync();
+
+                // Arrange
+                await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+
+                var data = GetRandomBuffer(Constants.KB);
+
+                using (var stream = new MemoryStream(data))
                 {
-                    // Arrange
-                    await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+                    PageBlobClient sourceBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+                    await sourceBlob.CreateAsync(Constants.KB);
+                    await sourceBlob.UploadPagesAsync(stream, 0);
 
-                    var data = GetRandomBuffer(Constants.KB);
+                    PageBlobClient destBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+                    await destBlob.CreateAsync(Constants.KB);
 
-                    using (var stream = new MemoryStream(data))
-                    {
-                        PageBlobClient sourceBlob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
-                        await sourceBlob.CreateAsync(Constants.KB);
-                        await sourceBlob.UploadPagesAsync(stream, 0);
+                    parameters.NoneMatch = await SetupBlobMatchCondition(destBlob, parameters.NoneMatch);
+                    parameters.SourceIfNoneMatch = await SetupBlobMatchCondition(sourceBlob, parameters.SourceIfNoneMatch);
 
-                        PageBlobClient destBlob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
-                        await destBlob.CreateAsync(Constants.KB);
+                    PageBlobRequestConditions accessConditions = BuildAccessConditions(
+                        parameters: parameters,
+                        lease: true,
+                        sequenceNumbers: true);
+                    PageBlobRequestConditions sourceAccessConditions = BuildSourceAccessConditions(parameters);
 
-                        parameters.NoneMatch = await SetupBlobMatchCondition(destBlob, parameters.NoneMatch);
-                        parameters.SourceIfNoneMatch = await SetupBlobMatchCondition(sourceBlob, parameters.SourceIfNoneMatch);
+                    var range = new HttpRange(0, Constants.KB);
 
-                        PageBlobAccessConditions accessConditions = BuildAccessConditions(
-                            parameters: parameters,
-                            lease: true,
-                            sequenceNumbers: true);
-                        PageBlobAccessConditions sourceAccessConditions = BuildSourceAccessConditions(parameters);
-
-                        var range = new HttpRange(0, Constants.KB);
-
-                        // Act
-                        await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                            destBlob.UploadPagesFromUriAsync(
-                                sourceUri: sourceBlob.Uri,
-                                sourceRange: range,
-                                range: range,
-                                accessConditions: accessConditions,
-                                sourceAccessConditions: sourceAccessConditions),
-                            actualException => Assert.IsTrue(true)
-                        );
-                    }
+                    // Act
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                        destBlob.UploadPagesFromUriAsync(
+                            sourceUri: sourceBlob.Uri,
+                            sourceRange: range,
+                            range: range,
+                            conditions: accessConditions,
+                            sourceConditions: sourceAccessConditions),
+                        actualException => Assert.IsTrue(true)
+                    );
                 }
             }
         }
@@ -1877,80 +1884,70 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task CreateIfNotExistsAsync()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                PageBlobClient blob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Act
-                Response<BlobContentInfo> response = await blob.CreateIfNotExistsAsync(Constants.KB);
+            // Arrange
+            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
 
-                // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
-            }
+            // Act
+            Response<BlobContentInfo> response = await blob.CreateIfNotExistsAsync(Constants.KB);
+
+            // Assert
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
         }
 
         [Test]
         public async Task CreateIfNotExistsAsync_Exists()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                PageBlobClient blob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
-                Response<BlobContentInfo> response = await blob.CreateAsync(Constants.KB);
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Act
-                Response<BlobContentInfo> responseExists = await blob.CreateIfNotExistsAsync(Constants.KB);
+            // Arrange
+            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> response = await blob.CreateAsync(Constants.KB);
 
-                // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
-            }
+            // Act
+            Response<BlobContentInfo> responseExists = await blob.CreateIfNotExistsAsync(Constants.KB);
+
+            // Assert
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
         }
 
         [Test]
         public async Task CreateIfNotExistsAsync_Error()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                // Arrange
-                var invalidPageSize = 511;
-                PageBlobClient blob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    blob.CreateIfNotExistsAsync(invalidPageSize),
-                    e =>
-                    {
-                        Assert.AreEqual("InvalidHeaderValue", e.ErrorCode);
-                        Assert.AreEqual("The value for one of the HTTP headers is not in the correct format.",
-                            e.Message.Split('\n')[0]);
-                    });
-            }
+            // Arrange
+            var invalidPageSize = 511;
+            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.CreateIfNotExistsAsync(invalidPageSize),
+                e =>
+                {
+                    Assert.AreEqual("InvalidHeaderValue", e.ErrorCode);
+                    Assert.AreEqual("The value for one of the HTTP headers is not in the correct format.",
+                        e.Message.Split('\n')[0]);
+                });
         }
 
-        private PageBlobAccessConditions BuildAccessConditions(
+        private PageBlobRequestConditions BuildAccessConditions(
             AccessConditionParameters parameters,
             bool lease = false,
             bool sequenceNumbers = false)
         {
-            var accessConditions = new PageBlobAccessConditions
+            var accessConditions = new PageBlobRequestConditions
             {
-                HttpAccessConditions = new HttpAccessConditions
-                {
-                    IfMatch = parameters.Match != null ? new ETag(parameters.Match) : default(ETag?),
-                    IfNoneMatch = parameters.NoneMatch != null ? new ETag(parameters.NoneMatch) : default(ETag?),
-                    IfModifiedSince = parameters.IfModifiedSince,
-                    IfUnmodifiedSince = parameters.IfUnmodifiedSince
-                }
-
+                IfMatch = parameters.Match != null ? new ETag(parameters.Match) : default(ETag?),
+                IfNoneMatch = parameters.NoneMatch != null ? new ETag(parameters.NoneMatch) : default(ETag?),
+                IfModifiedSince = parameters.IfModifiedSince,
+                IfUnmodifiedSince = parameters.IfUnmodifiedSince
             };
 
             if (lease)
             {
-                accessConditions.LeaseAccessConditions = new LeaseAccessConditions
-                {
-                    LeaseId = parameters.LeaseId
-                };
+                accessConditions.LeaseId = parameters.LeaseId;
             }
 
             if (sequenceNumbers)
@@ -1963,16 +1960,13 @@ namespace Azure.Storage.Blobs.Test
             return accessConditions;
         }
 
-        private PageBlobAccessConditions BuildSourceAccessConditions(AccessConditionParameters parameters)
-            => new PageBlobAccessConditions
+        private PageBlobRequestConditions BuildSourceAccessConditions(AccessConditionParameters parameters) =>
+            new PageBlobRequestConditions
             {
-                HttpAccessConditions = new HttpAccessConditions
-                {
-                    IfMatch = parameters.SourceIfMatch != null ? new ETag(parameters.SourceIfMatch) : default(ETag?),
-                    IfNoneMatch = parameters.SourceIfNoneMatch != null ? new ETag(parameters.SourceIfNoneMatch) : default(ETag?),
-                    IfModifiedSince = parameters.SourceIfModifiedSince,
-                    IfUnmodifiedSince = parameters.SourceIfUnmodifiedSince
-                },
+                IfMatch = parameters.SourceIfMatch != null ? new ETag(parameters.SourceIfMatch) : default(ETag?),
+                IfNoneMatch = parameters.SourceIfNoneMatch != null ? new ETag(parameters.SourceIfNoneMatch) : default(ETag?),
+                IfModifiedSince = parameters.SourceIfModifiedSince,
+                IfUnmodifiedSince = parameters.SourceIfUnmodifiedSince
             };
 
         public class AccessConditionParameters

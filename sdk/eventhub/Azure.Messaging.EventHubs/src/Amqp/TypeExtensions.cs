@@ -13,7 +13,7 @@ namespace Azure.Messaging.EventHubs.Amqp
     internal static class TypeExtensions
     {
         /// <summary>The set of mappings from CLR types to AMQP types for property values.</summary>
-        private static readonly IReadOnlyDictionary<Type, AmqpProperty.Type> s_amqpPropertyTypeMap = new Dictionary<Type, AmqpProperty.Type>
+        private static readonly IReadOnlyDictionary<Type, AmqpProperty.Type> AmqpPropertyTypeMap = new Dictionary<Type, AmqpProperty.Type>
         {
             { typeof(byte), AmqpProperty.Type.Byte },
             { typeof(sbyte), AmqpProperty.Type.SByte },
@@ -52,7 +52,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                 return AmqpProperty.Type.Null;
             }
 
-            if (s_amqpPropertyTypeMap.TryGetValue(instance, out AmqpProperty.Type amqpType))
+            if (AmqpPropertyTypeMap.TryGetValue(instance, out AmqpProperty.Type amqpType))
             {
                 return amqpType;
             }

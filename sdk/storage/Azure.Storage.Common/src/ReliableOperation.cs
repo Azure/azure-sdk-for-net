@@ -4,7 +4,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Azure.Storage.Common
+namespace Azure.Storage
 {
     internal static class ReliableOperation
     {

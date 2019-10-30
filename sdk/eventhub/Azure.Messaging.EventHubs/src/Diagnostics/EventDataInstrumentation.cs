@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Diagnostics;
-using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
 
 namespace Azure.Messaging.EventHubs.Diagnostics
@@ -30,7 +29,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
             if (!eventData.Properties.ContainsKey(DiagnosticProperty.DiagnosticIdAttribute))
             {
                 using DiagnosticScope messageScope = ClientDiagnostics.CreateScope(DiagnosticProperty.EventActivityName);
-                messageScope.AddAttribute("kind", "internal");
+                messageScope.AddAttribute(DiagnosticProperty.KindAttribute, DiagnosticProperty.InternalKind);
                 messageScope.Start();
 
                 Activity activity = Activity.Current;

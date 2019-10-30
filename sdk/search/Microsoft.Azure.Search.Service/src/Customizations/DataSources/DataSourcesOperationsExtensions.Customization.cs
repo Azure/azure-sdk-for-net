@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Search
     public static partial class DataSourcesOperationsExtensions
     {
         /// <summary>
-        /// Creates a new Azure Search datasource or updates a datasource if it already
+        /// Creates a new datasource or updates a datasource if it already
         /// exists.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Update-Data-Source" />
         /// </summary>
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Creates a new Azure Search datasource or updates a datasource if it already
+        /// Creates a new datasource or updates a datasource if it already
         /// exists.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Update-Data-Source" />
         /// </summary>
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Determines whether or not the given data source exists in the Azure Search service.
+        /// Determines whether or not the given data source exists in the search service.
         /// </summary>
         /// <param name='operations'>
         /// The operations group for this extension method.
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Determines whether or not the given data source exists in the Azure Search service.
+        /// Determines whether or not the given data source exists in the search service.
         /// </summary>
         /// <param name='operations'>
         /// The operations group for this extension method.

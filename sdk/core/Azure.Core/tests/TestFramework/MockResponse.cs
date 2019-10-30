@@ -29,8 +29,6 @@ namespace Azure.Core.Testing
 
         public bool IsDisposed { get; private set; }
 
-        public override string ToString() => $"{Status}";
-
         public void SetContent(byte[] content)
         {
             ContentStream = new MemoryStream(content);

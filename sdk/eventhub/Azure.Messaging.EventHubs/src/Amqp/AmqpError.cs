@@ -55,7 +55,7 @@ namespace Azure.Messaging.EventHubs
         private static Regex NotFoundExpression { get; } = new Regex("The messaging entity .* could not be found", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.CultureInvariant);
 
         /// <summary>The set of mappings from AMQP error conditions to response status codes.</summary>
-        private static readonly IReadOnlyDictionary<AmqpResponseStatusCode, AmqpSymbol> s_statusCodeMap = new Dictionary<AmqpResponseStatusCode, AmqpSymbol>()
+        private static readonly IReadOnlyDictionary<AmqpResponseStatusCode, AmqpSymbol> StatusCodeMap = new Dictionary<AmqpResponseStatusCode, AmqpSymbol>()
         {
             { AmqpResponseStatusCode.NotFound, AmqpErrorCode.NotFound },
             { AmqpResponseStatusCode.NotImplemented, AmqpErrorCode.NotImplemented},
@@ -247,7 +247,7 @@ namespace Azure.Messaging.EventHubs
             // condition from the response status code.
 
             if ((response.ApplicationProperties.Map.TryGetValue<int>(AmqpResponse.StatusCode, out var statusCode))
-                && (s_statusCodeMap.TryGetValue((AmqpResponseStatusCode)statusCode, out condition)))
+                && (StatusCodeMap.TryGetValue((AmqpResponseStatusCode)statusCode, out condition)))
             {
                 return condition;
             }

@@ -179,12 +179,12 @@ namespace Microsoft.Azure.Management.Network.Models
         public bool? UseLocalAzureIpAddress { get; set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the VPN site link connection
+        /// Gets the provisioning state of the VPN site link connection
         /// resource. Possible values include: 'Succeeded', 'Updating',
         /// 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets the name of the resource that is unique within a

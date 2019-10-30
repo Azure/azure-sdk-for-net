@@ -10,7 +10,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     internal class AesCryptographyProvider : LocalCryptographyProvider
     {
-        internal AesCryptographyProvider(Key key) : base(key)
+        internal AesCryptographyProvider(KeyVaultKey key) : base(key)
         {
         }
 
@@ -34,7 +34,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             int algorithmKeySizeBytes = algorithm.GetKeySizeInBytes();
             if (algorithmKeySizeBytes == 0)
             {
-                // TODO: Log that we don't support the algorithm locally.
+                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(UnwrapKey), algorithm);
                 return null;
             }
 
@@ -66,7 +66,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             int algorithmKeySizeBytes = algorithm.GetKeySizeInBytes();
             if (algorithmKeySizeBytes == 0)
             {
-                // TODO: Log that we don't support the algorithm locally.
+                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(WrapKey), algorithm);
                 return null;
             }
 

@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>Azure.Messaging.EventHubs.CheckpointStore.Blobs.Tests</AssemblyName>
+    <VersionPrefix>1.0.0</VersionPrefix>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <ExcludeRecordingFramework>true</ExcludeRecordingFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="System.Net.WebSockets.Client" />
+    <PackageReference Include="System.ValueTuple" />
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="Moq" />
+    <PackageReference Include="Polly" />
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
+    <PackageReference Include="System.Threading.Tasks.Extensions" />
+    <PackageReference Include="Microsoft.Azure.Management.Storage" />
+    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\src\Azure.Messaging.EventHubs.CheckpointStore.Blobs.csproj" />
+    <ProjectReference Include="..\samples\Azure.Messaging.EventHubs.CheckpointStore.Blobs.Samples.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.EventHubs\tests\Azure.Messaging.EventHubs.Tests.csproj" />
+  </ItemGroup>
+</Project>

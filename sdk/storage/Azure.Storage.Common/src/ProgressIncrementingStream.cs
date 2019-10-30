@@ -6,7 +6,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Azure.Storage.Common
+namespace Azure.Storage
 {
     /// <summary>
     /// Wraps a stream, and reports position updates to a progress incrementer

@@ -2,14 +2,14 @@
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure Cognitive Services Language LUIS Authoring</AssemblyTitle>
     <Description>Provides API functions for consuming the Microsoft Azure Cognitive Services LUIS Authoring API.</Description>
-    <VersionPrefix>3.1.0</VersionPrefix>
+    <Version>3.2.0-preview.1</Version>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;LUIS;Language Understanding Intelligent Service;Language Understanding;REST HTTP client</PackageTags>
     <PackageReleaseNotes>
     <![CDATA[
     This is a public release of the Cognitive Services LUIS Authoring SDK.
 
     Changes in this release:
-    1. Supporting Roles for Entities.
+    1. LUIS Authoring v3.0-preview APIs.
     ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

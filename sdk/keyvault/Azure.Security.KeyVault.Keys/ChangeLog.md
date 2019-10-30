@@ -1,5 +1,38 @@
 # Release History
 
+## 4.0.0 (2019-11)
+
+### Breaking changes
+
+- `Key` has been renamed to `KeyVaultKey` to avoid ambiguity with other libraries and to yield better search results.
+- `Key.KeyMaterial` has been renamed to `KeyVaultKey.Key`.
+- The default `JsonWebKey` constructor has been removed.
+- `JsonWebKey` constructors now take an optional collection of key operations.
+- `JsonWebKey.KeyOps` is now read-only. You must pass a collection of key operations at construction time.
+- `Hsm` properties and `hsm` parameters have been renamed to `HardwareProtected` and `hardwareProtected` respectively.
+- On the `KeyProperties` class, `Expires`, `Created`, and `Updated` have been renamed to `ExpiresOn`, `CreatedOn`, and `UpdatedOn` respectively.
+- On the `DeletedKey` class, `DeletedDate` has been renamed to `DeletedOn`.
+- `KeyClient.GetKeys` and `KeyClient.GetKeyVersions` have been renamed to `KeyClient.GetPropertiesOfKeys` and `KeyClient.GetPropertiesOfKeyVersions` respectively.
+- `KeyClient.RestoreKey` has been renamed to `KeyClient.RestoreKeyBackup` to better associate it with `KeyClient.BackupKey`.
+- `KeyClient.DeleteKey` has been renamed to `KeyClient.StartDeleteKey` and now returns a `DeleteKeyOperation` to track this long-running operation.
+- `KeyClient.RecoverDeletedKey` has been renamed to `KeyClient.StartRecoverDeletedKey` and now returns a `RecoverDeletedKeyOperation` to track this long-running operation.
+- `KeyCreateOptions` has been renamed to `CreateKeyOptions`.
+- `KeyImportOptions` has been renamed to `ImportKeyOptions`.
+- `EcCreateKeyOptions` has been renamed to `CreateEcKeyOptions`.
+- `CreateEcKeyOptions.Curve` has been renamed to `CurveName` to be consistent across the library.
+- The `curveName` optional parameter has been removed from  the `CreateEcKeyOptions` constructor. Set it using the `CurveName` property instead.
+- `RsaKeyCreateOptions` has been renamed to `CreateRsaKeyOptions`.
+- The `keySize` optional parameter has been removed from  the `CreateRsaKeyOptions` constructor. Set it using the `KeySize` property instead.
+
+### Major changes
+
+- Updated to work with the 1.0.0 release versions of Azure.Core and Azure.Identity.
+- `JsonWebKey.KeyType` and `JsonWebKey.KeyOps` have been exposed as `KeyVaultKey.KeyType` and `KeyVaultKey.KeyOperations` respectively.
+- `KeyModelFactory` added to create mocks of model types for testing.
+- `CryptographyModeFactory` added to create mocks of model types for testing.
+- Added ETW trace logger "Azure-Security-KeyVault-Keys" with provider ID "{657a121e-762e-50da-b233-05d7cdb24eb8}"
+  for cases in `CryptographyClient` when the available `KeyVaultKey` cannot be used for an operation and the service will perform the operation instead.
+
 ## 4.0.0-preview.5 (2019-10-07)
 
 ### Breaking changes

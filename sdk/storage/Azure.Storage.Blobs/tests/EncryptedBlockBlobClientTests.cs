@@ -22,22 +22,21 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task DeleteAsync()
         {
-            using (this.GetNewContainer(out var container))
-            {
-                // First upload a regular block blob
-                var blobName = this.GetNewBlobName();
-                var blob = this.InstrumentClient(container.GetBlockBlobClient(blobName));
-                var data = this.GetRandomBuffer(Constants.KB);
-                using var stream = new MemoryStream(data);
-                await blob.UploadAsync(stream);
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Create an EncryptedBlockBlobClient pointing at the same blob
-                var encryptedBlob = this.InstrumentClient(container.GetEncryptedBlockBlobClient(blobName));
+            // First upload a regular block blob
+            var blobName = this.GetNewBlobName();
+            var blob = this.InstrumentClient(test.Container.GetBlockBlobClient(blobName));
+            var data = this.GetRandomBuffer(Constants.KB);
+            using var stream = new MemoryStream(data);
+            await blob.UploadAsync(stream);
 
-                // Delete the blob
-                var response = await encryptedBlob.DeleteAsync();
-                Assert.IsNotNull(response.Headers.RequestId);
-            }
+            // Create an EncryptedBlockBlobClient pointing at the same blob
+            var encryptedBlob = this.InstrumentClient(test.Container.GetEncryptedBlockBlobClient(blobName));
+
+            // Delete the blob
+            var response = await encryptedBlob.DeleteAsync();
+            Assert.IsNotNull(response.Headers.RequestId);
         }
     }
 }

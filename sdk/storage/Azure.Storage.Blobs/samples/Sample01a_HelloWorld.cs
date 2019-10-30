@@ -179,12 +179,12 @@ namespace Azure.Storage.Blobs.Samples
                 // Try to create the container again
                 container.Create();
             }
-            catch (StorageRequestFailedException ex)
+            catch (RequestFailedException ex)
                 when (ex.ErrorCode == BlobErrorCode.ContainerAlreadyExists)
             {
                 // Ignore any errors if the container already exists
             }
-            catch (StorageRequestFailedException ex)
+            catch (RequestFailedException ex)
             {
                 Assert.Fail($"Unexpected error: {ex}");
             }

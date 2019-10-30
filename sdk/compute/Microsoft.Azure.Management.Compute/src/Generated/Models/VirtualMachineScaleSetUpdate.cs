@@ -41,10 +41,17 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="plan">The purchase plan when deploying a virtual
         /// machine scale set from VM Marketplace images.</param>
         /// <param name="upgradePolicy">The upgrade policy.</param>
+        /// <param name="automaticRepairsPolicy">Policy for automatic
+        /// repairs.</param>
         /// <param name="virtualMachineProfile">The virtual machine
         /// profile.</param>
         /// <param name="overprovision">Specifies whether the Virtual Machine
         /// Scale Set should be overprovisioned.</param>
+        /// <param name="doNotRunExtensionsOnOverprovisionedVMs">When
+        /// Overprovision is enabled, extensions are launched only on the
+        /// requested number of VMs which are finally kept. This property will
+        /// hence ensure that the extensions do not run on the extra
+        /// overprovisioned VMs.</param>
         /// <param name="singlePlacementGroup">When true this limits the scale
         /// set to a single placement group, of max size 100 virtual
         /// machines.</param>
@@ -53,18 +60,24 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Virtual Machine Scale Set. For instance: whether the Virtual
         /// Machines have the capability to support attaching managed data
         /// disks with UltraSSD_LRS storage account type.</param>
+        /// <param name="scaleInPolicy">Specifies the scale-in policy that
+        /// decides which virtual machines are chosen for removal when a
+        /// Virtual Machine Scale Set is scaled-in.</param>
         /// <param name="identity">The identity of the virtual machine scale
         /// set, if configured.</param>
-        public VirtualMachineScaleSetUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), Plan plan = default(Plan), UpgradePolicy upgradePolicy = default(UpgradePolicy), VirtualMachineScaleSetUpdateVMProfile virtualMachineProfile = default(VirtualMachineScaleSetUpdateVMProfile), bool? overprovision = default(bool?), bool? singlePlacementGroup = default(bool?), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), VirtualMachineScaleSetIdentity identity = default(VirtualMachineScaleSetIdentity))
+        public VirtualMachineScaleSetUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), Plan plan = default(Plan), UpgradePolicy upgradePolicy = default(UpgradePolicy), AutomaticRepairsPolicy automaticRepairsPolicy = default(AutomaticRepairsPolicy), VirtualMachineScaleSetUpdateVMProfile virtualMachineProfile = default(VirtualMachineScaleSetUpdateVMProfile), bool? overprovision = default(bool?), bool? doNotRunExtensionsOnOverprovisionedVMs = default(bool?), bool? singlePlacementGroup = default(bool?), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), ScaleInPolicy scaleInPolicy = default(ScaleInPolicy), VirtualMachineScaleSetIdentity identity = default(VirtualMachineScaleSetIdentity))
             : base(tags)
         {
             Sku = sku;
             Plan = plan;
             UpgradePolicy = upgradePolicy;
+            AutomaticRepairsPolicy = automaticRepairsPolicy;
             VirtualMachineProfile = virtualMachineProfile;
             Overprovision = overprovision;
+            DoNotRunExtensionsOnOverprovisionedVMs = doNotRunExtensionsOnOverprovisionedVMs;
             SinglePlacementGroup = singlePlacementGroup;
             AdditionalCapabilities = additionalCapabilities;
+            ScaleInPolicy = scaleInPolicy;
             Identity = identity;
             CustomInit();
         }
@@ -94,6 +107,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         public UpgradePolicy UpgradePolicy { get; set; }
 
         /// <summary>
+        /// Gets or sets policy for automatic repairs.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.automaticRepairsPolicy")]
+        public AutomaticRepairsPolicy AutomaticRepairsPolicy { get; set; }
+
+        /// <summary>
         /// Gets or sets the virtual machine profile.
         /// </summary>
         [JsonProperty(PropertyName = "properties.virtualMachineProfile")]
@@ -105,6 +124,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.overprovision")]
         public bool? Overprovision { get; set; }
+
+        /// <summary>
+        /// Gets or sets when Overprovision is enabled, extensions are launched
+        /// only on the requested number of VMs which are finally kept. This
+        /// property will hence ensure that the extensions do not run on the
+        /// extra overprovisioned VMs.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.doNotRunExtensionsOnOverprovisionedVMs")]
+        public bool? DoNotRunExtensionsOnOverprovisionedVMs { get; set; }
 
         /// <summary>
         /// Gets or sets when true this limits the scale set to a single
@@ -122,6 +150,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.additionalCapabilities")]
         public AdditionalCapabilities AdditionalCapabilities { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the scale-in policy that decides which
+        /// virtual machines are chosen for removal when a Virtual Machine
+        /// Scale Set is scaled-in.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.scaleInPolicy")]
+        public ScaleInPolicy ScaleInPolicy { get; set; }
 
         /// <summary>
         /// Gets or sets the identity of the virtual machine scale set, if

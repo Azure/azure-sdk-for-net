@@ -32,11 +32,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// </summary>
         /// <param name="id">The ID of the Entity Model.</param>
         /// <param name="readableType">Possible values include: 'Entity
-        /// Extractor', 'Hierarchical Entity Extractor', 'Hierarchical Child
-        /// Entity Extractor', 'Composite Entity Extractor', 'List Entity
-        /// Extractor', 'Prebuilt Entity Extractor', 'Intent Classifier',
-        /// 'Pattern.Any Entity Extractor', 'Regular Expression Entity
-        /// Extractor'</param>
+        /// Extractor', 'Child Entity Extractor', 'Hierarchical Entity
+        /// Extractor', 'Hierarchical Child Entity Extractor', 'Composite
+        /// Entity Extractor', 'List Entity Extractor', 'Prebuilt Entity
+        /// Extractor', 'Intent Classifier', 'Pattern.Any Entity Extractor',
+        /// 'Closed List Entity Extractor', 'Regex Entity Extractor'</param>
         /// <param name="name">Name of the Entity Model.</param>
         /// <param name="typeId">The type ID of the Entity Model.</param>
         public ModelInfo(System.Guid id, string readableType, string name = default(string), int? typeId = default(int?))
@@ -72,11 +72,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         public int? TypeId { get; set; }
 
         /// <summary>
-        /// Gets or sets possible values include: 'Entity Extractor',
-        /// 'Hierarchical Entity Extractor', 'Hierarchical Child Entity
-        /// Extractor', 'Composite Entity Extractor', 'List Entity Extractor',
-        /// 'Prebuilt Entity Extractor', 'Intent Classifier', 'Pattern.Any
-        /// Entity Extractor', 'Regular Expression Entity Extractor'
+        /// Gets or sets possible values include: 'Entity Extractor', 'Child
+        /// Entity Extractor', 'Hierarchical Entity Extractor', 'Hierarchical
+        /// Child Entity Extractor', 'Composite Entity Extractor', 'List Entity
+        /// Extractor', 'Prebuilt Entity Extractor', 'Intent Classifier',
+        /// 'Pattern.Any Entity Extractor', 'Closed List Entity Extractor',
+        /// 'Regex Entity Extractor'
         /// </summary>
         [JsonProperty(PropertyName = "readableType")]
         public string ReadableType { get; set; }

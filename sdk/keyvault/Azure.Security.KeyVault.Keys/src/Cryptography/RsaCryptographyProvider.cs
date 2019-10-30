@@ -9,7 +9,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     internal class RsaCryptographyProvider : LocalCryptographyProvider
     {
-        internal RsaCryptographyProvider(Key key) : base(key)
+        internal RsaCryptographyProvider(KeyVaultKey key) : base(key)
         {
         }
 
@@ -26,15 +26,20 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             return false;
         }
 
-        public override EncryptResult Encrypt(EncryptionAlgorithm algorithm, byte[] plaintext, byte[] iv, byte[] authenticationData, CancellationToken cancellationToken)
+        public override EncryptResult Encrypt(EncryptionAlgorithm algorithm, byte[] plaintext, CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(plaintext, nameof(plaintext));
 
             ThrowIfTimeInvalid();
 
             RSAEncryptionPadding padding = algorithm.GetRsaEncryptionPadding();
-            byte[] ciphertext = Encrypt(plaintext, padding);
+            if (padding is null)
+            {
+                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(Encrypt), algorithm);
+                return null;
+            }
 
+            byte[] ciphertext = Encrypt(plaintext, padding);
             EncryptResult result = null;
 
             if (ciphertext != null)
@@ -50,13 +55,25 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             return result;
         }
 
-        public override DecryptResult Decrypt(EncryptionAlgorithm algorithm, byte[] ciphertext, byte[] iv, byte[] authenticationData, byte[] authenticationTag, CancellationToken cancellationToken)
+        public override DecryptResult Decrypt(EncryptionAlgorithm algorithm, byte[] ciphertext, CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(ciphertext, nameof(ciphertext));
 
-            RSAEncryptionPadding padding = algorithm.GetRsaEncryptionPadding();
-            byte[] plaintext = Decrypt(ciphertext, padding);
+            if (MustRemote)
+            {
+                // A private key is required to decrypt. Send to the server.
+                KeysEventSource.Singleton.PrivateKeyRequired(nameof(Decrypt));
+                return null;
+            }
 
+            RSAEncryptionPadding padding = algorithm.GetRsaEncryptionPadding();
+            if (padding is null)
+            {
+                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(Decrypt), algorithm);
+                return null;
+            }
+
+            byte[] plaintext = Decrypt(ciphertext, padding);
             DecryptResult result = null;
 
             if (plaintext != null)
@@ -81,21 +98,21 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             // A private key is required to sign. Send to the server.
             if (MustRemote)
             {
-                // TODO: Log that we need a private key.
+                KeysEventSource.Singleton.PrivateKeyRequired(nameof(Sign));
                 return null;
             }
 
             HashAlgorithmName hashAlgorithm = algorithm.GetHashAlgorithmName();
             if (hashAlgorithm == default)
             {
-                // TODO: Log that we don't support the given algorithm.
+                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(Sign), algorithm);
                 return null;
             }
 
             RSASignaturePadding padding = algorithm.GetRsaSignaturePadding();
             if (padding is null)
             {
-                // TODO: Log that we don't support the given algorithm.
+                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(Sign), algorithm);
                 return null;
             }
 
@@ -118,14 +135,14 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             HashAlgorithmName hashAlgorithm = algorithm.GetHashAlgorithmName();
             if (hashAlgorithm == default)
             {
-                // TODO: Log that we don't support the given algorithm.
+                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(Verify), algorithm);
                 return null;
             }
 
             RSASignaturePadding padding = algorithm.GetRsaSignaturePadding();
             if (padding is null)
             {
-                // TODO: Log that we don't support the given algorithm.
+                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(Verify), algorithm);
                 return null;
             }
 
@@ -147,8 +164,13 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             ThrowIfTimeInvalid();
 
             RSAEncryptionPadding padding = algorithm.GetRsaEncryptionPadding();
-            byte[] encryptedKey = Encrypt(key, padding);
+            if (padding is null)
+            {
+                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(WrapKey), algorithm);
+                return null;
+            }
 
+            byte[] encryptedKey = Encrypt(key, padding);
             WrapResult result = null;
 
             if (encryptedKey != null)
@@ -168,9 +190,21 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             Argument.AssertNotNull(encryptedKey, nameof(encryptedKey));
 
-            RSAEncryptionPadding padding = algorithm.GetRsaEncryptionPadding();
-            byte[] key = Decrypt(encryptedKey, padding);
+            if (MustRemote)
+            {
+                // A private key is required to decrypt. Send to the server.
+                KeysEventSource.Singleton.PrivateKeyRequired(nameof(UnwrapKey));
+                return null;
+            }
 
+            RSAEncryptionPadding padding = algorithm.GetRsaEncryptionPadding();
+            if (padding is null)
+            {
+                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(UnwrapKey), algorithm);
+                return null;
+            }
+
+            byte[] key = Decrypt(encryptedKey, padding);
             UnwrapResult result = null;
 
             if (key != null)
@@ -188,31 +222,12 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         private byte[] Encrypt(byte[] data, RSAEncryptionPadding padding)
         {
-            if (padding is null)
-            {
-                // TODO: Log that we don't support the given algorithm.
-                return null;
-            }
-
             using RSA rsa = KeyMaterial.ToRSA(true);
             return rsa.Encrypt(data, padding);
         }
 
         private byte[] Decrypt(byte[] data, RSAEncryptionPadding padding)
         {
-            // A private key is required to decrypt. Send to the server.
-            if (MustRemote)
-            {
-                // TODO: Log that we need a private key.
-                return null;
-            }
-
-            if (padding is null)
-            {
-                // TODO: Log that we don't support the given algorithm.
-                return null;
-            }
-
             using RSA rsa = KeyMaterial.ToRSA();
             return rsa.Decrypt(data, padding);
         }

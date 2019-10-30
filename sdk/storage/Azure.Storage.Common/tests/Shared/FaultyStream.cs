@@ -40,7 +40,13 @@ namespace Azure.Storage.Test.Shared
             set => _innerStream.Position = value;
         }
 
+        public override async Task CopyToAsync(Stream destination, int bufferSize, CancellationToken cancellationToken) =>
+            await _innerStream.CopyToAsync(destination, bufferSize, cancellationToken);
+
         public override void Flush() => _innerStream.Flush();
+
+        public override Task FlushAsync(CancellationToken cancellationToken) =>
+            _innerStream.FlushAsync(cancellationToken);
 
         public override int Read(byte[] buffer, int offset, int count)
         {
@@ -86,5 +92,8 @@ namespace Azure.Storage.Test.Shared
         public override void SetLength(long value) => _innerStream.SetLength(value);
 
         public override void Write(byte[] buffer, int offset, int count) => _innerStream.Write(buffer, offset, count);
+
+        public override Task WriteAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken) =>
+            _innerStream.WriteAsync(buffer, offset, count, cancellationToken);
     }
 }

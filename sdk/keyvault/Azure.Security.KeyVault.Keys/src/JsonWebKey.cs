@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text.Json;
@@ -56,72 +57,93 @@ namespace Azure.Security.KeyVault.Keys
         private static readonly KeyOperation[] s_eCPublicKeyOperation = { KeyOperation.Sign };
         private static readonly KeyOperation[] s_eCPrivateKeyOperation = { KeyOperation.Sign, KeyOperation.Verify };
 
-        /// <summary>
-        /// The identifier of the key. This is not limited to a <see cref="Uri"/>.
-        /// </summary>
-        public string Id { get; set; }
+        private readonly IList<KeyOperation> _keyOps;
 
         /// <summary>
-        /// Supported JsonWebKey key types (kty) based on the cryptographic algorithm used for the key.
-        /// For valid values, see <see cref="KeyType"/>.
+        /// Gets the identifier of the key. This is not limited to a <see cref="Uri"/>.
         /// </summary>
-        public KeyType KeyType { get; set; }
+        public string Id { get; internal set; }
 
         /// <summary>
-        /// Supported Key Operations.
+        /// Gets the <see cref="KeyType"/> for this <see cref="JsonWebKey"/>.
         /// </summary>
-        public IList<KeyOperation> KeyOps { get; set; }
+        public KeyType KeyType { get; internal set; }
 
         /// <summary>
-        /// Creates an instance of <see cref="JsonWebKey"/>.
+        /// Gets a list of <see cref="KeyOperation"/> values supported by this key.
         /// </summary>
-        public JsonWebKey()
+        public IReadOnlyCollection<KeyOperation> KeyOps { get; }
+
+        internal JsonWebKey() : this(null)
         {
-            KeyOps = new List<KeyOperation>();
+        }
+
+        internal JsonWebKey(IEnumerable<KeyOperation> keyOps)
+        {
+            _keyOps = keyOps is null ? new List<KeyOperation>() : new List<KeyOperation>(keyOps);
+            KeyOps = new ReadOnlyCollection<KeyOperation>(_keyOps);
         }
 
         /// <summary>
-        /// Creates an instance of <see cref="JsonWebKey"/> using type <see cref="KeyType.Oct"/>.
+        /// Initializes a new instance of the <see cref="JsonWebKey"/> class using type <see cref="KeyType.Oct"/>.
         /// </summary>
         /// <param name="aesProvider">An <see cref="Aes"/> provider.</param>
+        /// <param name="keyOps">
+        /// Optional list of supported <see cref="KeyOperation"/> values. If null, the default for the key type is used, including:
+        /// <see cref="KeyOperation.Encrypt"/>, <see cref="KeyOperation.Decrypt"/>, <see cref="KeyOperation.WrapKey"/>, and <see cref="KeyOperation.UnwrapKey"/>.
+        /// </param>
         /// <exception cref="ArgumentNullException"><paramref name="aesProvider"/> is null.</exception>
-        public JsonWebKey(Aes aesProvider)
+        public JsonWebKey(Aes aesProvider, IEnumerable<KeyOperation> keyOps = default)
         {
             Argument.AssertNotNull(aesProvider, nameof(aesProvider));
 
-            KeyType = KeyType.Oct;
-            KeyOps = new List<KeyOperation>(s_aesKeyOperation);
+            _keyOps = new List<KeyOperation>(keyOps ?? s_aesKeyOperation);
+            KeyOps = new ReadOnlyCollection<KeyOperation>(_keyOps);
 
+            KeyType = KeyType.Oct;
             K = aesProvider.Key;
         }
 
         /// <summary>
-        /// Creates an instance of <see cref="JsonWebKey"/> using type <see cref="KeyType.Ec"/>.
+        /// Initializes a new instance of the <see cref="JsonWebKey"/> class using type <see cref="KeyType.Ec"/>.
         /// </summary>
         /// <param name="ecdsa">An <see cref="ECDsa"/> provider.</param>
-        /// <param name="includePrivateParameters">Whether to include private parameters.</param>
+        /// <param name="includePrivateParameters">Whether to include the private key.</param>
+        /// <param name="keyOps">
+        /// Optional list of supported <see cref="KeyOperation"/> values. If null, the default for the key type is used, including:
+        /// <see cref="KeyOperation.Sign"/>, and <see cref="KeyOperation.Decrypt"/> if <paramref name="includePrivateParameters"/> is true.
+        /// </param>
         /// <exception cref="ArgumentNullException"><paramref name="ecdsa"/> is null.</exception>
         /// <exception cref="InvalidOperationException">The elliptic curve name is invalid.</exception>
-        public JsonWebKey(ECDsa ecdsa, bool includePrivateParameters = default)
+        public JsonWebKey(ECDsa ecdsa, bool includePrivateParameters = default, IEnumerable<KeyOperation> keyOps = default)
         {
             Argument.AssertNotNull(ecdsa, nameof(ecdsa));
+
+            _keyOps = new List<KeyOperation>(keyOps ?? (includePrivateParameters ? s_eCPrivateKeyOperation : s_eCPublicKeyOperation));
+            KeyOps = new ReadOnlyCollection<KeyOperation>(_keyOps);
 
             Initialize(ecdsa, includePrivateParameters);
         }
 
         /// <summary>
-        /// Creates an instance of <see cref="JsonWebKey"/> using type <see cref="KeyType.Rsa"/>.
+        /// Initializes a new instance of the <see cref="JsonWebKey"/> class using type <see cref="KeyType.Rsa"/>.
         /// </summary>
         /// <param name="rsaProvider">An <see cref="RSA"/> provider.</param>
-        /// <param name="includePrivateParameters">Whether to include private parameters.</param>
+        /// <param name="includePrivateParameters">Whether to include the private key.</param>
+        /// <param name="keyOps">
+        /// Optional list of supported <see cref="KeyOperation"/> values. If null, the default for the key type is used, including:
+        /// <see cref="KeyOperation.Encrypt"/>, <see cref="KeyOperation.Verify"/>, and <see cref="KeyOperation.WrapKey"/>;
+        /// and <see cref="KeyOperation.Decrypt"/>, <see cref="KeyOperation.Sign"/>, and <see cref="KeyOperation.UnwrapKey"/> if <paramref name="includePrivateParameters"/> is true.
+        /// </param>
         /// <exception cref="ArgumentNullException"><paramref name="rsaProvider"/> is null.</exception>
-        public JsonWebKey(RSA rsaProvider, bool includePrivateParameters = default)
+        public JsonWebKey(RSA rsaProvider, bool includePrivateParameters = default, IEnumerable<KeyOperation> keyOps = default)
         {
             Argument.AssertNotNull(rsaProvider, nameof(rsaProvider));
 
-            KeyType = KeyType.Rsa;
-            KeyOps = new List<KeyOperation>(includePrivateParameters ? s_rSAPrivateKeyOperation : s_rSAPublicKeyOperation);
+            _keyOps = new List<KeyOperation>(keyOps ?? (includePrivateParameters ? s_rSAPrivateKeyOperation : s_rSAPublicKeyOperation));
+            KeyOps = new ReadOnlyCollection<KeyOperation>(_keyOps);
 
+            KeyType = KeyType.Rsa;
             RSAParameters rsaParameters = rsaProvider.ExportParameters(includePrivateParameters);
 
             E = rsaParameters.Exponent;
@@ -138,87 +160,87 @@ namespace Azure.Security.KeyVault.Keys
         #region RSA Public Key Parameters
 
         /// <summary>
-        /// RSA modulus, in Base64.
+        /// Gets the RSA modulus.
         /// </summary>
-        public byte[] N { get; set; }
+        public byte[] N { get; internal set; }
 
         /// <summary>
-        /// RSA public exponent, in Base64.
+        /// Gets RSA public exponent.
         /// </summary>
-        public byte[] E { get; set; }
+        public byte[] E { get; internal set; }
 
         #endregion
 
         #region RSA Private Key Parameters
 
         /// <summary>
-        /// RSA Private Key Parameter
+        /// Gets the RSA private key parameter.
         /// </summary>
-        public byte[] DP { get; set; }
+        public byte[] DP { get; internal set; }
 
         /// <summary>
-        /// RSA Private Key Parameter
+        /// Gets the RSA private key parameter.
         /// </summary>
-        public byte[] DQ { get; set; }
+        public byte[] DQ { get; internal set; }
 
         /// <summary>
-        /// RSA Private Key Parameter
+        /// Gets the RSA private key parameter.
         /// </summary>
-        public byte[] QI { get; set; }
+        public byte[] QI { get; internal set; }
 
         /// <summary>
-        /// RSA secret prime
+        /// Gets the RSA secret prime.
         /// </summary>
-        public byte[] P { get; set; }
+        public byte[] P { get; internal set; }
 
         /// <summary>
-        /// RSA secret prime, with p &lt; q
+        /// Gets the RSA secret prime.
         /// </summary>
-        public byte[] Q { get; set; }
+        public byte[] Q { get; internal set; }
 
         #endregion
 
         #region EC Public Key Parameters
 
         /// <summary>
-        /// The curve for Elliptic Curve Cryptography (ECC) algorithms.
+        /// Gets the name of the elliptical curve.
         /// </summary>
-        public KeyCurveName? CurveName { get; set; }
+        public KeyCurveName? CurveName { get; internal set; }
 
         /// <summary>
-        /// X coordinate for the Elliptic Curve point.
+        /// Gets the X coordinate of the elliptic curve point.
         /// </summary>
-        public byte[] X { get; set; }
+        public byte[] X { get; internal set; }
 
         /// <summary>
-        /// Y coordinate for the Elliptic Curve point.
+        /// Gets the Y coordinate for the elliptic curve point.
         /// </summary>
-        public byte[] Y { get; set; }
+        public byte[] Y { get; internal set; }
 
         #endregion
 
         #region EC and RSA Private Key Parameters
 
         /// <summary>
-        /// RSA private exponent or ECC private key.
+        /// Gets the RSA private exponent or EC private key.
         /// </summary>
-        public byte[] D { get; set; }
+        public byte[] D { get; internal set; }
 
         #endregion
 
         #region Symmetric Key Parameters
 
         /// <summary>
-        /// Symmetric key
+        /// Gets the symmetric key.
         /// </summary>
-        public byte[] K { get; set; }
+        public byte[] K { get; internal set; }
 
         #endregion
 
         /// <summary>
-        /// HSM Token, used with "Bring Your Own Key".
+        /// Gets the HSM token used with "Bring Your Own Key".
         /// </summary>
-        public byte[] T { get; set; }
+        public byte[] T { get; internal set; }
 
         internal bool HasPrivateKey
         {
@@ -301,7 +323,7 @@ namespace Azure.Security.KeyVault.Keys
             // Key parameter length requirements defined by 2.2.2.9.1 RSA Private Key BLOB specification: https://docs.microsoft.com/openspecs/windows_protocols/ms-wcce/5cf2e6b9-3195-4f85-bc18-05b50e6d4e11
             var rsaParameters = new RSAParameters
             {
-                Exponent = ForceBufferLength(nameof(E), E, 4),
+                Exponent = E,
                 Modulus = TrimBuffer(N),
             };
 
@@ -330,7 +352,7 @@ namespace Azure.Security.KeyVault.Keys
             {
                 for (int i = 0; i < KeyOps.Count; ++i)
                 {
-                    if (KeyOps[i] == operation)
+                    if (_keyOps[i] == operation)
                     {
                         return true;
                     }
@@ -355,7 +377,7 @@ namespace Azure.Security.KeyVault.Keys
                     case KeyOpsPropertyName:
                         foreach (JsonElement element in prop.Value.EnumerateArray())
                         {
-                            KeyOps.Add(element.ToString());
+                            _keyOps.Add(element.ToString());
                         }
                         break;
                     case CurveNamePropertyName:
@@ -553,7 +575,6 @@ namespace Azure.Security.KeyVault.Keys
         private void Initialize(ECDsa ecdsa, bool includePrivateParameters)
         {
             KeyType = KeyType.Ec;
-            KeyOps = new List<KeyOperation>(includePrivateParameters ? s_eCPrivateKeyOperation : s_eCPublicKeyOperation);
 
             ECParameters ecParameters = ecdsa.ExportParameters(includePrivateParameters);
             CurveName = KeyCurveName.FromOid(ecParameters.Curve.Oid, ecdsa.KeySize).ToString() ?? throw new InvalidOperationException("elliptic curve name is invalid");

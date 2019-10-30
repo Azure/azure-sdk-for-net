@@ -6,12 +6,17 @@ namespace Azure.Identity
     /// <summary>
     /// Options to configure the <see cref="DefaultAzureCredential"/> authentication flow and requests made to Azure Identity services.
     /// </summary>
-    public class DefaultAzureCredentialOptions : AzureCredentialOptions
+    public class DefaultAzureCredentialOptions : TokenCredentialOptions
     {
         /// <summary>
-        /// Specifies the preferred authentication account in the case multiple accounts are found.
+        /// Specifies the preferred authentication account to be retrieved from the shared token cache for single sign on authentication with
+        /// development tools. In the case multiple accounts are found in the shared token.
         /// </summary>
-        public string PreferredAccountUsername { get; set; }
+        /// <remarks>
+        /// If multiple accounts are found in the shared token cache and no value is specified, or the specified value matches no accounts in
+        /// the cache the SharedTokenCacheCredential will not be used for authentication.
+        /// </remarks>
+        public string SharedTokenCacheUsername { get; set; }
 
         /// <summary>
         /// Specifies the client id of the azure ManagedIdentity in the case of user assigned identity.
@@ -19,23 +24,27 @@ namespace Azure.Identity
         public string ManagedIdentityClientId { get; set; }
 
         /// <summary>
-        /// Specifies whether the EnvironmentCredential will be included to potentially read authentication details from the process' environment variables.
+        /// Specifies whether the <see cref="EnvironmentCredential"/> will be excluded from the authentication flow. Setting to true disables reading
+        /// authentication details from the process' environment variables.
         /// </summary>
-        public bool IncludeEnvironmentCredential { get; set; } = true;
+        public bool ExcludeEnvironmentCredential { get; set; } = false;
 
         /// <summary>
-        /// Specifies whether the ManagedIdentityCredential will be included to potentially get tokens from the a managed identity endpoint if available.
+        /// Specifies whether the <see cref="ManagedIdentityCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
+        /// Setting to true disables authenticating with managed identity endpoints.
         /// </summary>
-        public bool IncludeManagedIdentityCredential { get; set; } = true;
+        public bool ExcludeManagedIdentityCredential { get; set; } = false;
 
         /// <summary>
-        /// Specifies whether the SharedTokenCacheCredential will be included to potentially get tokens from the shared token cache if avaliable.
+        /// Specifies whether the <see cref="SharedTokenCacheCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
+        /// Setting to true disables single sign on authentication with development tools which write to the shared token cache.
         /// </summary>
-        public bool IncludeSharedTokenCacheCredential { get; set; } = true;
+        public bool ExcludeSharedTokenCacheCredential { get; set; } = false;
 
         /// <summary>
-        /// Specifies whether the InteractiveBrowserCredential will be included to potentially get tokens by launching the system default browser to enable a user to log in.
+        /// Specifies whether the <see cref="InteractiveBrowserCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
+        /// Setting to true disables launching the default system browser to authenticate in developement environments.
         /// </summary>
-        public bool IncludeInteractiveBrowserCredential { get; set; } = false;
+        public bool ExcludeInteractiveBrowserCredential { get; set; } = true;
     }
 }

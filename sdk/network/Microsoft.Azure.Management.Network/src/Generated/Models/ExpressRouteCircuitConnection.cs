@@ -105,11 +105,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public string AuthorizationKey { get; set; }
 
         /// <summary>
-        /// Gets or sets express Route Circuit connection state. Possible
-        /// values include: 'Connected', 'Connecting', 'Disconnected'
+        /// Gets express Route Circuit connection state. Possible values
+        /// include: 'Connected', 'Connecting', 'Disconnected'
         /// </summary>
         [JsonProperty(PropertyName = "properties.circuitConnectionStatus")]
-        public string CircuitConnectionStatus { get; set; }
+        public string CircuitConnectionStatus { get; private set; }
 
         /// <summary>
         /// Gets the provisioning state of the express route circuit connection

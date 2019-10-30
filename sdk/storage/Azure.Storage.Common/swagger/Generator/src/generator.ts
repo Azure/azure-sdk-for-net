@@ -352,10 +352,12 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
             for (const query of operation.request.queries) {
                 const constant = isEnumType(query.model) && query.model.constant;
                 useParameter(query, value => {
-                    if (!query.skipUrlEncoding && !constant) {
-                        value = `System.Uri.EscapeDataString(${value})`
+                    w.write(`${requestName}.Uri.AppendQuery("${query.name}", ${value}`);
+                    if (query.skipUrlEncoding || constant) {
+                        w.write(`, escapeValue: false`);
                     }
-                    w.write(`${requestName}.Uri.AppendQuery("${query.name}", ${value});`);
+
+                    w.write(`);`);
                 });
             }
         }
@@ -372,6 +374,9 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                     if (isPrimitiveType(header.model) && header.model.type === `dictionary`) {
                         name = `"${header.model.dictionaryPrefix || 'x-ms-meta-'}" + ${value}.Key`;
                         value = `${value}.Value`;
+                    }
+                    if (isEnumType(header.model) && header.model.modelAsString) {
+                        value = `${value}.ToString()`
                     }
                     w.write(`${requestName}.Headers.SetValue(${name}, ${value});`);
                 });
@@ -474,8 +479,32 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                     }
                 });
             }
+
+            // We don't throw for 304s on read
+            // (this may be too ambitious for all services, but works for
+            // Storage so I'm not adding x-az- vendor extensions right now)
+            const isReadOperation =
+                operation.method.toLowerCase() == `get` ||
+                operation.method.toLowerCase() == `head`;
+            if (isReadOperation) {
+                w.line(`case 304:`);
+                w.scope('{', '}', () => {
+                    if (result.type === `void`) {
+                        // Just return the response if there's no model
+                        w.line(`return ${responseName};`);
+                    } else {
+                        // Return an exploding Response if there's a model type
+                        // (NoBodyResponse is shared source)
+                        w.line(`return new Azure.NoBodyResponse<${types.getName(result)}>(${responseName});`);
+                    }
+                });
+            }
+
             for (const response of operation.response.failures) {
-                if (response.code === `default`) {
+                if (response.code === `304` && isReadOperation) {
+                    // Ignore 304s handled above
+                    continue;
+                } else if (response.code === `default`) {
                     w.line(`default:`);
                 } else {
                     w.line(`case ${response.code}:`);
@@ -483,7 +512,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                 w.scope('{', '}', () => {
                     processResponse(response);
                     if (response.exception) {
-                        // If we're using x-ms-create-exception, we'll pass the response to
+                        // If we're using x-ms-create-exception we'll pass the response to
                         // an unimplemented method on the partial class
                         w.line(`throw ${valueName}.CreateException(${responseName});`);
                     } else {
@@ -752,10 +781,20 @@ function generateEnumStrings(w: IndentWriter, model: IServiceModel, type: IEnumT
         w.line(`/// </summary>`);
         const enumName = naming.type(type.name);
         const enumFullName = types.getName(type, false, false);
-        w.line(`${type.public ? 'public' : 'internal'} partial struct ${enumName} : System.IEquatable<${enumName}>`);
+        w.line(`${type.public ? 'public' : 'internal'} readonly struct ${enumName} : System.IEquatable<${enumName}>`);
         w.scope(`{`, `}`, () => {
+            w.line(`/// <summary>`);
+            w.line(`/// The ${enumName} value.`);
+            w.line(`/// </summary>`);
+            w.line(`private readonly string _value;`);
+            w.line(``);
+            w.line(`/// <summary>`);
+            w.line(`/// Initializes a new instance of the <see cref="${enumName}"/> structure.`);
+            w.line(`/// </summary>`);
+            w.line(`/// <param name="value">The string value of the instance.</param>`);
+            w.line(`public ${enumName}(string value) { _value = value ?? throw new System.ArgumentNullException(nameof(value)); }`);
+            w.line(``);
             // Dump out the values
-            w.line(`#pragma warning disable CA2211 // Non-constant fields should not be visible`);
             const separator = IndentWriter.createFenceposter();
             for (const value of type.values) {
                 if (separator()) { w.line(); }
@@ -764,80 +803,61 @@ function generateEnumStrings(w: IndentWriter, model: IServiceModel, type: IEnumT
                 w.line(`/// <summary>`);
                 w.line(`/// ${value.description || text}`);
                 w.line(`/// </summary>`);
-                w.line(`public static ${enumFullName} ${name} { get; } = @"${text}";`)
+                w.line(`public static ${enumFullName} ${name} { get; } = new ${enumName}(@"${text}");`)
             }
-            w.line(`#pragma warning restore CA2211 // Non-constant fields should not be visible`);
             if (separator()) { w.line(); }
 
             // Dump out the infrastructure
             w.line(`/// <summary>`);
-            w.line(`/// The ${enumName} value.`);
+            w.line(`/// Determines if two <see cref="${enumName}"/> values are the same.`);
             w.line(`/// </summary>`);
-            w.line(`private readonly string _value;`);
-            w.line(``);
-            w.line(`/// <summary>`);
-            w.line(`/// Creates a new ${enumName} instance.`);
-            w.line(`/// </summary>`);
-            w.line(`/// <param name="value">The ${enumName} value.</param>`);
-            w.line(`private ${enumName}(string value) { _value = value; }`);
-            w.line(``);
-            w.line(`/// <summary>`);
-            w.line(`/// Check if two ${enumName} instances are equal.`);
-            w.line(`/// </summary>`);
-            w.line(`/// <param name="other">The instance to compare to.</param>`);
-            w.line(`/// <returns>True if they're equal, false otherwise.</returns>`);
-            w.line(`public bool Equals(${enumFullName} other) => _value.Equals(other._value, System.StringComparison.InvariantCulture);`)
-            w.line(``);
-            w.line(`/// <summary>`);
-            w.line(`/// Check if two ${enumName} instances are equal.`);
-            w.line(`/// </summary>`);
-            w.line(`/// <param name="o">The instance to compare to.</param>`);
-            w.line(`/// <returns>True if they're equal, false otherwise.</returns>`);
-            w.line(`public override bool Equals(object o) => o is ${enumFullName} other && Equals(other);`);
-            w.line(``);
-            w.line(`/// <summary>`);
-            w.line(`/// Get a hash code for the ${enumName}.`);
-            w.line(`/// </summary>`);
-            w.line(`/// <returns>Hash code for the ${enumName}.</returns>`);
-            w.line(`public override int GetHashCode() => _value.GetHashCode();`);
-            w.line(``);
-            w.line(`/// <summary>`);
-            w.line(`/// Convert the ${enumName} to a string.`);
-            w.line(`/// </summary>`);
-            w.line(`/// <returns>String representation of the ${enumName}.</returns>`);
-            w.line(`public override string ToString() => _value;`);
-            w.line(``);
-            w.line(`#pragma warning disable CA2225 // Operator overloads have named alternates`);
-            w.line(`/// <summary>`);
-            w.line(`/// Convert a string a ${enumName}.`);
-            w.line(`/// </summary>`);
-            w.line(`/// <param name="value">The string to convert.</param>`);
-            w.line(`/// <returns>The ${enumName} value.</returns>`);
-            w.line(`public static implicit operator ${enumName}(string value) => new ${enumFullName}(value);`);
-            w.line(`#pragma warning restore CA2225 // Operator overloads have named alternates`);
-            w.line(``);
-            w.line(`/// <summary>`);
-            w.line(`/// Convert an ${enumName} to a string.`);
-            w.line(`/// </summary>`);
-            w.line(`/// <param name="value">The ${enumName} value.</param>`);
-            w.line(`/// <returns>String representation of the ${enumName} value.</returns>`);
-            w.line(`public static implicit operator string(${enumFullName} value) => value._value;`);
-            w.line(``);
-            w.line(`/// <summary>`);
-            w.line(`/// Check if two ${enumName} instances are equal.`);
-            w.line(`/// </summary>`);
-            w.line(`/// <param name="left">The first instance to compare.</param>`);
-            w.line(`/// <param name="right">The second instance to compare.</param>`);
-            w.line(`/// <returns>True if they're equal, false otherwise.</returns>`);
+            w.line(`/// <param name="left">The first <see cref="${enumName}"/> to compare.</param>`);
+            w.line(`/// <param name="right">The second <see cref="${enumName}"/> to compare.</param>`);
+            w.line(`/// <returns>True if <paramref name="left"/> and <paramref name="right"/> are the same; otherwise, false.</returns>`);
             w.line(`public static bool operator ==(${enumFullName} left, ${enumFullName} right) => left.Equals(right);`);
             w.line(``);
             w.line(`/// <summary>`);
-            w.line(`/// Check if two ${enumName} instances are not equal.`);
+            w.line(`/// Determines if two <see cref="${enumName}"/> values are different.`);
             w.line(`/// </summary>`);
-            w.line(`/// <param name="left">The first instance to compare.</param>`);
-            w.line(`/// <param name="right">The second instance to compare.</param>`);
-            w.line(`/// <returns>True if they're not equal, false otherwise.</returns>`);
+            w.line(`/// <param name="left">The first <see cref="${enumName}"/> to compare.</param>`);
+            w.line(`/// <param name="right">The second <see cref="${enumName}"/> to compare.</param>`);
+            w.line(`/// <returns>True if <paramref name="left"/> and <paramref name="right"/> are different; otherwise, false.</returns>`);
             w.line(`public static bool operator !=(${enumFullName} left, ${enumFullName} right) => !left.Equals(right);`);
+            w.line(``);
+            w.line(`/// <summary>`);
+            w.line(`/// Converts a string to a <see cref="${enumName}"/>.`);
+            w.line(`/// </summary>`);
+            w.line(`/// <param name="value">The string value to convert.</param>`);
+            w.line(`/// <returns>The ${enumName} value.</returns>`);
+            w.line(`public static implicit operator ${enumName}(string value) => new ${enumFullName}(value);`);
+            w.line(``);
+            w.line(`/// <summary>`);
+            w.line(`/// Check if two <see cref="${enumName}"/> instances are equal.`);
+            w.line(`/// </summary>`);
+            w.line(`/// <param name="obj">The instance to compare to.</param>`);
+            w.line(`/// <returns>True if they're equal, false otherwise.</returns>`);
+            w.line(`[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]`);
+            w.line(`public override bool Equals(object obj) => obj is ${enumFullName} other && Equals(other);`);
+            w.line(``);
+            w.line(`/// <summary>`);
+            w.line(`/// Check if two <see cref="${enumName}"/> instances are equal.`);
+            w.line(`/// </summary>`);
+            w.line(`/// <param name="other">The instance to compare to.</param>`);
+            w.line(`/// <returns>True if they're equal, false otherwise.</returns>`);
+            w.line(`public bool Equals(${enumFullName} other) => string.Equals(_value, other._value, System.StringComparison.Ordinal);`)
+            w.line(``);
+            w.line(`/// <summary>`);
+            w.line(`/// Get a hash code for the <see cref="${enumName}"/>.`);
+            w.line(`/// </summary>`);
+            w.line(`/// <returns>Hash code for the ${enumName}.</returns>`);
+            w.line(`[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]`);
+            w.line(`public override int GetHashCode() => _value?.GetHashCode() ?? 0;`);
+            w.line(``);
+            w.line(`/// <summary>`);
+            w.line(`/// Convert the <see cref="${enumName}"/> to a string.`);
+            w.line(`/// </summary>`);
+            w.line(`/// <returns>String representation of the ${enumName}.</returns>`);
+            w.line(`public override string ToString() => _value;`);
         });
     });
     w.line(`#endregion ${regionName}`);
@@ -881,6 +901,7 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
             }
 
             // Instantiate nested models if necessary
+            const readonlyModel = Object.values(type.properties).every(p => (<IProperty>p).readonly);
             const nested = (<IProperty[]>Object.values(type.properties)).filter(p => !p.isNullable && (isObjectType(p.model) || (isPrimitiveType(p.model) && (p.model.itemType || p.model.type === `dictionary`))));
             if (nested.length > 0) {
                 const skipInitName = `skipInitialization`;
@@ -890,7 +911,7 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                 w.line(`/// </summary>`);
                 if (type.deserialize) {
                     // Add an optional overload that prevents initialization for deserialiation
-                    w.write(`public ${naming.type(type.name)}()`);
+                    w.write(`${!type.public || !readonlyModel ? 'public' : 'internal'} ${naming.type(type.name)}()`);
                     w.scope(() => w.write(`: this(false)`));
                     w.scope(`{`, `}`, () => null);
                     w.line();
@@ -1109,7 +1130,7 @@ function generateSerialize(w: IndentWriter, service: IService, type: IObjectType
         const properties = <IProperty[]>Object.values(type.properties);
         for (const property of properties) {
             let current = elementName;
-            const { xname: childName } = getXmlShape(property.name, { ...type.xml, name: property.name });
+            const { xname: childName } = getXmlShape(property.name, property.xml);
             if (!property.required) {
                 w.line(`if (value.${naming.property(property.name)} != null)`);
                 w.pushScope('{');

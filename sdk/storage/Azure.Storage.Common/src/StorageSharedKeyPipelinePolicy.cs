@@ -9,12 +9,12 @@ using System.Text;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Storage.Common
+namespace Azure.Storage
 {
     /// <summary>
     /// HttpPipelinePolicy to sign requests using an Azure Storage shared key.
     /// </summary>
-    public sealed class StorageSharedKeyPipelinePolicy : HttpPipelineSynchronousPolicy
+    internal sealed class StorageSharedKeyPipelinePolicy : HttpPipelineSynchronousPolicy
     {
         /// <summary>
         /// Whether to always add the x-ms-date header.
@@ -95,10 +95,10 @@ namespace Azure.Storage.Common
             var sb = new StringBuilder();
             foreach (var headerName in
                 message.Request.Headers
-                .Select(h => h.Name)
+                .Select(h => h.Name.ToLowerInvariant())
                 .Where(name => name.StartsWith(Constants.HeaderNames.XMsPrefix, StringComparison.OrdinalIgnoreCase))
 #pragma warning disable CA1308 // Normalize strings to uppercase
-                .OrderBy(name => name.Trim().ToLowerInvariant()))
+                .OrderBy(name => name.Trim()))
 #pragma warning restore CA1308 // Normalize strings to uppercase
             {
                 if (sb.Length > 0)

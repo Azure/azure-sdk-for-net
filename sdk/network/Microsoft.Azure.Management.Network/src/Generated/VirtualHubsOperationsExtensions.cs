@@ -303,52 +303,6 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Updates VirtualHub tags.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name of the VirtualHub.
-            /// </param>
-            /// <param name='virtualHubName'>
-            /// The name of the VirtualHub.
-            /// </param>
-            /// <param name='virtualHubParameters'>
-            /// Parameters supplied to update VirtualHub tags.
-            /// </param>
-            public static VirtualHub BeginUpdateTags(this IVirtualHubsOperations operations, string resourceGroupName, string virtualHubName, TagsObject virtualHubParameters)
-            {
-                return operations.BeginUpdateTagsAsync(resourceGroupName, virtualHubName, virtualHubParameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates VirtualHub tags.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name of the VirtualHub.
-            /// </param>
-            /// <param name='virtualHubName'>
-            /// The name of the VirtualHub.
-            /// </param>
-            /// <param name='virtualHubParameters'>
-            /// Parameters supplied to update VirtualHub tags.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<VirtualHub> BeginUpdateTagsAsync(this IVirtualHubsOperations operations, string resourceGroupName, string virtualHubName, TagsObject virtualHubParameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.BeginUpdateTagsWithHttpMessagesAsync(resourceGroupName, virtualHubName, virtualHubParameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Deletes a VirtualHub.
             /// </summary>
             /// <param name='operations'>

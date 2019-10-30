@@ -14,30 +14,46 @@ using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline
 {
+    /// <summary>
+    /// An <see cref="HttpPipelineTransport"/> implementation that uses <see cref="HttpClient"/> as the transport.
+    /// </summary>
     public class HttpClientTransport : HttpPipelineTransport
     {
         private readonly HttpClient _client;
 
+        /// <summary>
+        /// Creates a new <see cref="HttpClientTransport"/> instance using default configuration.
+        /// </summary>
         public HttpClientTransport() : this(CreateDefaultClient())
         {
         }
 
+        /// <summary>
+        /// Creates a new instance of <see cref="HttpClientTransport"/> using the provided client instance.
+        /// </summary>
+        /// <param name="client">The instance of <see cref="HttpClient"/> to use.</param>
         public HttpClientTransport(HttpClient client)
         {
             _client = client ?? throw new ArgumentNullException(nameof(client));
         }
 
+        /// <summary>
+        /// A shared instance of <see cref="HttpClientTransport"/> with default parameters.
+        /// </summary>
         public static readonly HttpClientTransport Shared = new HttpClientTransport();
 
+        /// <inheritdoc />
         public sealed override Request CreateRequest()
             => new PipelineRequest();
 
+        /// <inheritdoc />
         public override void Process(HttpMessage message)
         {
             // Intentionally blocking here
             ProcessAsync(message).GetAwaiter().GetResult();
         }
 
+        /// <inheritdoc />
         public sealed override async ValueTask ProcessAsync(HttpMessage message)
         {
             using (HttpRequestMessage httpRequest = BuildRequestMessage(message))
@@ -79,7 +95,7 @@ namespace Azure.Core.Pipeline
 
         internal static bool TryGetHeader(HttpHeaders headers, HttpContent? content, string name, [NotNullWhen(true)] out string? value)
         {
-            if (TryGetHeader(headers, content, name, out IEnumerable<string> values))
+            if (TryGetHeader(headers, content, name, out IEnumerable<string>? values))
             {
                 value = JoinHeaderValues(values);
                 return true;
@@ -89,7 +105,7 @@ namespace Azure.Core.Pipeline
             return false;
         }
 
-        internal static bool TryGetHeader(HttpHeaders headers, HttpContent? content, string name, out IEnumerable<string> values)
+        internal static bool TryGetHeader(HttpHeaders headers, HttpContent? content, string name, [NotNullWhen(true)] out IEnumerable<string>? values)
         {
             return headers.TryGetValues(name, out values) || content?.Headers.TryGetValues(name, out values) == true;
         }
@@ -187,7 +203,7 @@ namespace Azure.Core.Pipeline
 
             protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value) => HttpClientTransport.TryGetHeader(_requestMessage.Headers, _requestContent, name, out value);
 
-            protected internal override bool TryGetHeaderValues(string name, out IEnumerable<string> values) => HttpClientTransport.TryGetHeader(_requestMessage.Headers, _requestContent, name, out values);
+            protected internal override bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values) => HttpClientTransport.TryGetHeader(_requestMessage.Headers, _requestContent, name, out values);
 
             protected internal override bool ContainsHeader(string name) => HttpClientTransport.ContainsHeader(_requestMessage.Headers, _requestContent, name);
 
@@ -377,7 +393,7 @@ namespace Azure.Core.Pipeline
 
             protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value) => HttpClientTransport.TryGetHeader(_responseMessage.Headers, _responseContent, name, out value);
 
-            protected internal override bool TryGetHeaderValues(string name, out IEnumerable<string> values) => HttpClientTransport.TryGetHeader(_responseMessage.Headers, _responseContent, name, out values);
+            protected internal override bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values) => HttpClientTransport.TryGetHeader(_responseMessage.Headers, _responseContent, name, out values);
 
             protected internal override bool ContainsHeader(string name) => HttpClientTransport.ContainsHeader(_responseMessage.Headers, _responseContent, name);
 
