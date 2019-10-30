@@ -1,6 +1,6 @@
 # Release History
 
-## 4.0.0-preview.6
+## 4.0.0 (2019-11)
 
 ### Breaking changes
 
@@ -26,6 +26,7 @@
 
 ### Major changes
 
+- Updated to work with the 1.0.0 release versions of Azure.Core and Azure.Identity.
 - `JsonWebKey.KeyType` and `JsonWebKey.KeyOps` have been exposed as `KeyVaultKey.KeyType` and `KeyVaultKey.KeyOperations` respectively.
 - `KeyModelFactory` added to create mocks of model types for testing.
 - `CryptographyModeFactory` added to create mocks of model types for testing.
