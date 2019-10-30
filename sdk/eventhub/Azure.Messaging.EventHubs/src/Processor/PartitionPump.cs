@@ -14,7 +14,7 @@ namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
     ///   Constantly receives <see cref="EventData" /> from a single partition in the context of a given consumer
-    ///   group.  The received data is sent to its owner <see cref="EventProcessor" /> to be processed.
+    ///   group.  The received data is sent to its owner <see cref="EventProcessorClient" /> to be processed.
     /// </summary>
     ///
     internal class PartitionPump
@@ -32,10 +32,10 @@ namespace Azure.Messaging.EventHubs.Processor
         public bool IsRunning => RunningTask != null && !RunningTask.IsCompleted;
 
         /// <summary>
-        ///   The <see cref="EventProcessor" /> that owns this instance.
+        ///   The <see cref="EventProcessorClient" /> that owns this instance.
         /// </summary>
         ///
-        private EventProcessor OwnerEventProcessor { get; }
+        private EventProcessorClient OwnerEventProcessor { get; }
 
         /// <summary>
         ///   The client used to interact with the Azure Event Hubs service.
@@ -97,14 +97,14 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Initializes a new instance of the <see cref="PartitionPump"/> class.
         /// </summary>
         ///
-        /// <param name="eventProcessor">The <see cref="EventProcessor" /> that owns this instance.</param>
+        /// <param name="eventProcessor">The <see cref="EventProcessorClient" /> that owns this instance.</param>
         /// <param name="eventHubClient">The client used to interact with the Azure Event Hubs service.</param>
         /// <param name="consumerGroup">The name of the consumer group this partition pump is associated with.  Events are read in the context of this group.</param>
         /// <param name="partitionContext">The context of the Event Hub partition this partition pump is associated with.  Events will be read only from this partition.</param>
         /// <param name="startingPosition">The position within the partition where the pump should begin reading events.</param>
         /// <param name="options">The set of options to use for this partition pump.</param>
         ///
-        internal PartitionPump(EventProcessor eventProcessor,
+        internal PartitionPump(EventProcessorClient eventProcessor,
                                EventHubClient eventHubClient,
                                string consumerGroup,
                                PartitionContext partitionContext,

@@ -49,25 +49,25 @@ namespace Azure.Messaging.EventHubs.Tests
         private List<ShortWaitTimeMock> EventProcessors { get; }
 
         /// <summary>
-        ///   A callback action to be called on <see cref="EventProcessor.InitializeProcessingForPartitionAsync" />.
+        ///   A callback action to be called on <see cref="EventProcessorClient.InitializeProcessingForPartitionAsync" />.
         /// </summary>
         ///
         private Action<InitializePartitionProcessingContext> OnInitialize { get; }
 
         /// <summary>
-        ///   A callback action to be called on <see cref="EventProcessor.ProcessingForPartitionStoppedAsync" />.
+        ///   A callback action to be called on <see cref="EventProcessorClient.ProcessingForPartitionStoppedAsync" />.
         /// </summary>
         ///
         private Action<PartitionProcessingStoppedContext> OnClose { get; }
 
         /// <summary>
-        ///   A callback action to be called on <see cref="EventProcessor.ProcessEventAsync" />.
+        ///   A callback action to be called on <see cref="EventProcessorClient.ProcessEventAsync" />.
         /// </summary>
         ///
         private Action<PartitionEvent> OnProcessEvent { get; }
 
         /// <summary>
-        ///   A callback action to be called on <see cref="EventProcessor.ProcessExceptionAsync" />.
+        ///   A callback action to be called on <see cref="EventProcessorClient.ProcessExceptionAsync" />.
         /// </summary>
         ///
         private Action<ProcessorErrorContext> OnProcessException { get; }
@@ -80,10 +80,10 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <param name="consumerGroup">The name of the consumer group the event processors are associated with.  Events are read in the context of this group.</param>
         /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.</param>
         /// <param name="options">The set of options to use for the event processors.</param>
-        /// <param name="onInitialize">A callback action to be called on <see cref="EventProcessor.InitializeProcessingForPartitionAsync" />.</param>
-        /// <param name="onClose">A callback action to be called on <see cref="EventProcessor.ProcessingForPartitionStoppedAsync" />.</param>
-        /// <param name="onProcessEvent">A callback action to be called on <see cref="EventProcessor.ProcessEventAsync" />.</param>
-        /// <param name="onProcessException">A callback action to be called on <see cref="EventProcessor.ProcessExceptionAsync" />.</param>
+        /// <param name="onInitialize">A callback action to be called on <see cref="EventProcessorClient.InitializeProcessingForPartitionAsync" />.</param>
+        /// <param name="onClose">A callback action to be called on <see cref="EventProcessorClient.ProcessingForPartitionStoppedAsync" />.</param>
+        /// <param name="onProcessEvent">A callback action to be called on <see cref="EventProcessorClient.ProcessEventAsync" />.</param>
+        /// <param name="onProcessException">A callback action to be called on <see cref="EventProcessorClient.ProcessExceptionAsync" />.</param>
         ///
         public EventProcessorManager(string connectionString,
                                      string consumerGroup,
@@ -331,7 +331,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   for testing purposes.
         /// </summary>
         ///
-        private class ShortWaitTimeMock : EventProcessor
+        private class ShortWaitTimeMock : EventProcessorClient
         {
             /// <summary>A value used to override event processors' load balance update time span.</summary>
             public static readonly TimeSpan s_shortLoadBalanceUpdate = TimeSpan.FromSeconds(1);
@@ -344,7 +344,7 @@ namespace Azure.Messaging.EventHubs.Tests
             /// </summary>
             ///
             public EventHubClient InnerClient =>
-                typeof(EventProcessor)
+                typeof(EventProcessorClient)
                     .GetProperty(nameof(InnerClient), BindingFlags.Instance | BindingFlags.NonPublic)
                     .GetValue(this) as EventHubClient;
 

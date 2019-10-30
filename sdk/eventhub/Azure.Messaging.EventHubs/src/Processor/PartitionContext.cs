@@ -10,7 +10,7 @@ using Azure.Messaging.EventHubs.Diagnostics;
 namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
-    ///   Contains information about a partition that an <see cref="EventProcessor" /> will be
+    ///   Contains information about a partition that an <see cref="EventProcessorClient" /> will be
     ///   processing events from.  It's also responsible for the creation of checkpoints.  The
     ///   interaction with the chosen storage service is done via <see cref="PartitionManager" />.
     /// </summary>
@@ -44,7 +44,7 @@ namespace Azure.Messaging.EventHubs.Processor
         public string PartitionId { get; }
 
         /// <summary>
-        ///   The identifier of the associated <see cref="EventProcessor" /> instance.
+        ///   The identifier of the associated <see cref="EventProcessorClient" /> instance.
         /// </summary>
         ///
         public string OwnerIdentifier { get; }
@@ -64,7 +64,7 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="consumerGroup">The name of the consumer group this context is associated with.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition this context is associated with.</param>
         /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints.</param>
-        /// <param name="ownerIdentifier">The identifier of the associated <see cref="EventProcessor" /> instance.</param>
+        /// <param name="ownerIdentifier">The identifier of the associated <see cref="EventProcessorClient" /> instance.</param>
         ///
         protected internal PartitionContext(string fullyQualifiedNamespace,
                                             string eventHubName,

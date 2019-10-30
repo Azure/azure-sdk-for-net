@@ -18,7 +18,7 @@ namespace Azure.Messaging.EventHubs.Processor
     ///   through the provided handlers.
     /// </summary>
     ///
-    public class EventProcessor
+    public class EventProcessorClient
     {
         /// <summary>The seed to use for initializing random number generated for a given thread-specific instance.</summary>
         private static int s_randomSeed = Environment.TickCount;
@@ -41,7 +41,7 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <summary>Responsible for processing events received from the Event Hubs service.</summary>
         private Func<PartitionEvent, Task> _processEventAsync;
 
-        /// <summary>Responsible for processing unexpected exceptions thrown while this <see cref="EventProcessor" /> is running.</summary>
+        /// <summary>Responsible for processing unexpected exceptions thrown while this <see cref="EventProcessorClient" /> is running.</summary>
         private Func<ProcessorErrorContext, Task> _processExceptionAsync;
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace Azure.Messaging.EventHubs.Processor
         private Dictionary<string, PartitionOwnership> InstanceOwnership { get; set; }
 
         /// <summary>
-        ///   The running task responsible for performing partition load balancing between multiple <see cref="EventProcessor" />
+        ///   The running task responsible for performing partition load balancing between multiple <see cref="EventProcessorClient" />
         ///   instances, as well as managing partition pumps and ownership.
         /// </summary>
         ///
@@ -171,7 +171,7 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
-        ///   Responsible for processing unexpected exceptions thrown while this <see cref="EventProcessor" /> is running.
+        ///   Responsible for processing unexpected exceptions thrown while this <see cref="EventProcessorClient" /> is running.
         ///   Implementation is mandatory.
         /// </summary>
         ///
@@ -182,7 +182,7 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventProcessor"/> class.
+        ///   Initializes a new instance of the <see cref="EventProcessorClient"/> class.
         /// </summary>
         ///
         /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub name and the shared key properties are contained in this connection string.</param>
@@ -199,15 +199,15 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Event Hub will result in a connection string that contains the name.
         /// </remarks>
         ///
-        public EventProcessor(string connectionString,
-                              string consumerGroup,
-                              PartitionManager partitionManager,
-                              EventProcessorClientOptions options = default) : this(connectionString, null, consumerGroup, partitionManager, options)
+        public EventProcessorClient(string connectionString,
+                                    string consumerGroup,
+                                    PartitionManager partitionManager,
+                                    EventProcessorClientOptions options = default) : this(connectionString, null, consumerGroup, partitionManager, options)
         {
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventProcessor"/> class.
+        ///   Initializes a new instance of the <see cref="EventProcessorClient"/> class.
         /// </summary>
         ///
         /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the shared key properties are contained in this connection string, but not the Event Hub name.</param>
@@ -222,11 +222,11 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
-        public EventProcessor(string connectionString,
-                              string eventHubName,
-                              string consumerGroup,
-                              PartitionManager partitionManager,
-                              EventProcessorClientOptions options = default)
+        public EventProcessorClient(string connectionString,
+                                    string eventHubName,
+                                    string consumerGroup,
+                                    PartitionManager partitionManager,
+                                    EventProcessorClientOptions options = default)
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
@@ -243,7 +243,7 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventProcessor"/> class.
+        ///   Initializes a new instance of the <see cref="EventProcessorClient"/> class.
         /// </summary>
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
@@ -253,12 +253,12 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.</param>
         /// <param name="options">The set of options to use for this event processor.</param>
         ///
-        public EventProcessor(string fullyQualifiedNamespace,
-                              string eventHubName,
-                              TokenCredential credential,
-                              string consumerGroup,
-                              PartitionManager partitionManager,
-                              EventProcessorClientOptions options = default)
+        public EventProcessorClient(string fullyQualifiedNamespace,
+                                    string eventHubName,
+                                    TokenCredential credential,
+                                    string consumerGroup,
+                                    PartitionManager partitionManager,
+                                    EventProcessorClientOptions options = default)
         {
             Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
@@ -278,10 +278,10 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventProcessor"/> class.
+        ///   Initializes a new instance of the <see cref="EventProcessorClient"/> class.
         /// </summary>
         ///
-        protected EventProcessor()
+        protected EventProcessorClient()
         {
         }
 
@@ -410,7 +410,7 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
-        ///   Performs load balancing between multiple <see cref="EventProcessor" /> instances, claiming others' partitions to enforce
+        ///   Performs load balancing between multiple <see cref="EventProcessorClient" /> instances, claiming others' partitions to enforce
         ///   a more equal distribution when necessary.  It also manages its own partition pumps and ownership.
         /// </summary>
         ///
@@ -501,7 +501,7 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
-        ///   Finds and tries to claim an ownership if this <see cref="EventProcessor" /> instance is eligible to increase its ownership
+        ///   Finds and tries to claim an ownership if this <see cref="EventProcessorClient" /> instance is eligible to increase its ownership
         ///   list.
         /// </summary>
         ///
@@ -748,7 +748,7 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
-        ///   Invokes a specified action only if this <see cref="EventProcessor" /> instance is not running.
+        ///   Invokes a specified action only if this <see cref="EventProcessorClient" /> instance is not running.
         /// </summary>
         ///
         /// <param name="action">The action to invoke.</param>

@@ -20,7 +20,7 @@ namespace Azure.Messaging.EventHubs.Processor
         public string PartitionId { get; }
 
         /// <summary>
-        ///   The exception that was thrown by the <see cref="EventProcessor" />.
+        ///   The exception that was thrown by the <see cref="EventProcessorClient" />.
         /// </summary>
         ///
         public Exception ProcessorException { get; }
@@ -30,7 +30,7 @@ namespace Azure.Messaging.EventHubs.Processor
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the partition whose processing threw an exception.</param>
-        /// <param name="exception">The exception that was thrown by the <see cref="EventProcessor" />.</param>
+        /// <param name="exception">The exception that was thrown by the <see cref="EventProcessorClient" />.</param>
         ///
         protected internal ProcessorErrorContext(string partitionId,
                                                  Exception exception)

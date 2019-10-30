@@ -14,7 +14,7 @@ using NUnit.Framework.Constraints;
 namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
-    ///   The suite of tests for the <see cref="EventProcessor" />
+    ///   The suite of tests for the <see cref="EventProcessorClient" />
     ///   class.
     /// </summary>
     ///
@@ -65,7 +65,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="EventProcessor" />
+        ///    Verifies functionality of the <see cref="EventProcessorClient" />
         ///    constructor.
         /// </summary>
         ///
@@ -77,12 +77,12 @@ namespace Azure.Messaging.EventHubs.Tests
             // Seems ExactTypeConstraints is not re-entrant.
             ExactTypeConstraint TypeConstraint() => connectionString is null ? Throws.ArgumentNullException : Throws.ArgumentException;
 
-            Assert.That(() => new EventProcessor(connectionString, "consumerGroup", Mock.Of<PartitionManager>()), TypeConstraint(), "The constructor with no event hub should perform validation.");
-            Assert.That(() => new EventProcessor(connectionString, "eventHubName", "consumerGroup", Mock.Of<PartitionManager>()), TypeConstraint(), "The constructor with the event hub should perform validation.");
+            Assert.That(() => new EventProcessorClient(connectionString, "consumerGroup", Mock.Of<PartitionManager>()), TypeConstraint(), "The constructor with no event hub should perform validation.");
+            Assert.That(() => new EventProcessorClient(connectionString, "eventHubName", "consumerGroup", Mock.Of<PartitionManager>()), TypeConstraint(), "The constructor with the event hub should perform validation.");
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="EventProcessor" />
+        ///    Verifies functionality of the <see cref="EventProcessorClient" />
         ///    constructor.
         /// </summary>
         ///
@@ -94,26 +94,26 @@ namespace Azure.Messaging.EventHubs.Tests
             // Seems ExactTypeConstraints is not re-entrant.
             ExactTypeConstraint TypeConstraint() => consumerGroup is null ? Throws.ArgumentNullException : Throws.ArgumentException;
 
-            Assert.That(() => new EventProcessor("connectionString", consumerGroup, Mock.Of<PartitionManager>()), TypeConstraint(), "The constructor with connection string and no event hub should perform validation.");
-            Assert.That(() => new EventProcessor("connectionString", "eventHubName", consumerGroup, Mock.Of<PartitionManager>()), TypeConstraint(), "The constructor with connection string and event hub should perform validation.");
-            Assert.That(() => new EventProcessor("namespace", "eventHubName", Mock.Of<TokenCredential>(), consumerGroup, Mock.Of<PartitionManager>()), TypeConstraint(), "The constructor with expanded arguments should perform validation.");
+            Assert.That(() => new EventProcessorClient("connectionString", consumerGroup, Mock.Of<PartitionManager>()), TypeConstraint(), "The constructor with connection string and no event hub should perform validation.");
+            Assert.That(() => new EventProcessorClient("connectionString", "eventHubName", consumerGroup, Mock.Of<PartitionManager>()), TypeConstraint(), "The constructor with connection string and event hub should perform validation.");
+            Assert.That(() => new EventProcessorClient("namespace", "eventHubName", Mock.Of<TokenCredential>(), consumerGroup, Mock.Of<PartitionManager>()), TypeConstraint(), "The constructor with expanded arguments should perform validation.");
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="EventProcessor" />
+        ///    Verifies functionality of the <see cref="EventProcessorClient" />
         ///    constructor.
         /// </summary>
         ///
         [Test]
         public void ConstructorRequiresPartitionManager()
         {
-            Assert.That(() => new EventProcessor("connectionString", "consumerGroup", null), Throws.InstanceOf<ArgumentNullException>(), "The constructor with connection string and no event hub should perform validation.");
-            Assert.That(() => new EventProcessor("connectionString", "eventHubName", "consumerGroup", null), Throws.InstanceOf<ArgumentNullException>(), "The constructor with connection string and event hub should perform validation.");
-            Assert.That(() => new EventProcessor("namespace", "eventHubName", Mock.Of<TokenCredential>(), "consumerGroup", null), Throws.InstanceOf<ArgumentNullException>(), "The constructor with expanded arguments should perform validation.");
+            Assert.That(() => new EventProcessorClient("connectionString", "consumerGroup", null), Throws.InstanceOf<ArgumentNullException>(), "The constructor with connection string and no event hub should perform validation.");
+            Assert.That(() => new EventProcessorClient("connectionString", "eventHubName", "consumerGroup", null), Throws.InstanceOf<ArgumentNullException>(), "The constructor with connection string and event hub should perform validation.");
+            Assert.That(() => new EventProcessorClient("namespace", "eventHubName", Mock.Of<TokenCredential>(), "consumerGroup", null), Throws.InstanceOf<ArgumentNullException>(), "The constructor with expanded arguments should perform validation.");
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="EventProcessor" />
+        ///    Verifies functionality of the <see cref="EventProcessorClient" />
         ///    constructor.
         /// </summary>
         ///
@@ -127,7 +127,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="EventProcessor" />
+        ///    Verifies functionality of the <see cref="EventProcessorClient" />
         ///    constructor.
         /// </summary>
         ///
@@ -146,7 +146,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="EventProcessor" />
+        ///    Verifies functionality of the <see cref="EventProcessorClient" />
         ///    constructor.
         /// </summary>
         ///
@@ -165,48 +165,48 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="EventProcessor" />
+        ///    Verifies functionality of the <see cref="EventProcessorClient" />
         ///    constructor.
         /// </summary>
         ///
         [Test]
         [TestCaseSource(nameof(MultipleConstructorsCases))]
-        public void ConstructorCreatesTheIdentifier(EventProcessor eventProcessor,
+        public void ConstructorCreatesTheIdentifier(EventProcessorClient eventProcessor,
                                                     string constructorDescription)
         {
             Assert.That(eventProcessor.Identifier, Is.Not.Null.And.Not.Empty, $"The { constructorDescription } constructor should have set the identifier.");
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="EventProcessor.StartAsync" />
+        ///    Verifies functionality of the <see cref="EventProcessorClient.StartAsync" />
         ///    method.
         /// </summary>
         ///
         [Test]
         public void StartAsyncValidatesProcessEventsAsync()
         {
-            EventProcessor processor = new EventProcessor("connectionString", "consumerGroup", Mock.Of<PartitionManager>());
+            EventProcessorClient processor = new EventProcessorClient("connectionString", "consumerGroup", Mock.Of<PartitionManager>());
             processor.ProcessExceptionAsync = errorContext => Task.CompletedTask;
 
-            Assert.That(async () => await processor.StartAsync(), Throws.InstanceOf<InvalidOperationException>().And.Message.Contains(nameof(EventProcessor.ProcessEventAsync)));
+            Assert.That(async () => await processor.StartAsync(), Throws.InstanceOf<InvalidOperationException>().And.Message.Contains(nameof(EventProcessorClient.ProcessEventAsync)));
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="EventProcessor.StartAsync" />
+        ///    Verifies functionality of the <see cref="EventProcessorClient.StartAsync" />
         ///    method.
         /// </summary>
         ///
         [Test]
         public void StartAsyncValidatesProcessExceptionAsync()
         {
-            EventProcessor processor = new EventProcessor("connectionString", "consumerGroup", Mock.Of<PartitionManager>());
+            EventProcessorClient processor = new EventProcessorClient("connectionString", "consumerGroup", Mock.Of<PartitionManager>());
             processor.ProcessEventAsync = partitionEvent => Task.CompletedTask;
 
-            Assert.That(async () => await processor.StartAsync(), Throws.InstanceOf<InvalidOperationException>().And.Message.Contains(nameof(EventProcessor.ProcessExceptionAsync)));
+            Assert.That(async () => await processor.StartAsync(), Throws.InstanceOf<InvalidOperationException>().And.Message.Contains(nameof(EventProcessorClient.ProcessExceptionAsync)));
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="EventProcessor.StartAsync" />
+        ///    Verifies functionality of the <see cref="EventProcessorClient.StartAsync" />
         ///    method.
         /// </summary>
         ///
@@ -214,7 +214,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task StartAsyncStartsTheEventProcessorWhenProcessingHandlerPropertiesAreSet()
         {
             var fakeConnection = "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake";
-            EventProcessor processor = new EventProcessor(fakeConnection, "consumerGroup", Mock.Of<PartitionManager>());
+            EventProcessorClient processor = new EventProcessorClient(fakeConnection, "consumerGroup", Mock.Of<PartitionManager>());
 
             processor.ProcessEventAsync = partitionEvent => Task.CompletedTask;
             processor.ProcessExceptionAsync = errorContext => Task.CompletedTask;
@@ -225,14 +225,14 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="EventProcessor" /> properties.
+        ///    Verifies functionality of the <see cref="EventProcessorClient" /> properties.
         /// </summary>
         ///
         [Test]
         public async Task HandlerPropertiesCannotBeSetWhenEventProcessorIsRunning()
         {
             var fakeConnection = "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake";
-            EventProcessor processor = new EventProcessor(fakeConnection, "consumerGroup", Mock.Of<PartitionManager>());
+            EventProcessorClient processor = new EventProcessorClient(fakeConnection, "consumerGroup", Mock.Of<PartitionManager>());
 
             processor.ProcessEventAsync = partitionEvent => Task.CompletedTask;
             processor.ProcessExceptionAsync = errorContext => Task.CompletedTask;
@@ -248,14 +248,14 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="EventProcessor" /> properties.
+        ///    Verifies functionality of the <see cref="EventProcessorClient" /> properties.
         /// </summary>
         ///
         [Test]
         public async Task HandlerPropertiesCanBeSetAfterEventProcessorHasStopped()
         {
             var fakeConnection = "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake";
-            EventProcessor processor = new EventProcessor(fakeConnection, "consumerGroup", Mock.Of<PartitionManager>());
+            EventProcessorClient processor = new EventProcessorClient(fakeConnection, "consumerGroup", Mock.Of<PartitionManager>());
 
             processor.ProcessEventAsync = partitionEvent => Task.CompletedTask;
             processor.ProcessExceptionAsync = errorContext => Task.CompletedTask;
@@ -273,10 +273,10 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   Allows for the options used by the event processor to be exposed for testing purposes.
         /// </summary>
         ///
-        public class ReadableOptionsMock : EventProcessor
+        public class ReadableOptionsMock : EventProcessorClient
         {
             public EventProcessorClientOptions Options =>
-                typeof(EventProcessor)
+                typeof(EventProcessorClient)
                     .GetProperty(nameof(Options), BindingFlags.Instance | BindingFlags.NonPublic)
                     .GetValue(this) as EventProcessorClientOptions;
 

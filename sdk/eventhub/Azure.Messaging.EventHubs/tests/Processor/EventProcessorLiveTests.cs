@@ -15,7 +15,7 @@ using NUnit.Framework;
 namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
-    ///   The suite of live tests for the <see cref="EventProcessor" />
+    ///   The suite of live tests for the <see cref="EventProcessorClient" />
     ///   class.
     /// </summary>
     ///
@@ -33,7 +33,7 @@ namespace Azure.Messaging.EventHubs.Tests
         private const int ReceiveRetryLimit = 10;
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessor" /> is able to
+        ///   Verifies that the <see cref="EventProcessorClient" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
@@ -93,7 +93,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessor" /> is able to
+        ///   Verifies that the <see cref="EventProcessorClient" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
@@ -159,7 +159,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessor" /> is able to
+        ///   Verifies that the <see cref="EventProcessorClient" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
@@ -261,7 +261,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessor" /> is able to
+        ///   Verifies that the <see cref="EventProcessorClient" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
@@ -311,7 +311,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessor" /> is able to
+        ///   Verifies that the <see cref="EventProcessorClient" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
@@ -368,7 +368,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessor" /> is able to
+        ///   Verifies that the <see cref="EventProcessorClient" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
@@ -427,7 +427,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessor" /> is able to
+        ///   Verifies that the <see cref="EventProcessorClient" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
@@ -502,7 +502,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessor" /> is able to
+        ///   Verifies that the <see cref="EventProcessorClient" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
@@ -611,7 +611,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessor" /> is able to
+        ///   Verifies that the <see cref="EventProcessorClient" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
@@ -713,7 +713,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessor" /> is able to
+        ///   Verifies that the <see cref="EventProcessorClient" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
@@ -797,7 +797,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessor" /> is able to
+        ///   Verifies that the <see cref="EventProcessorClient" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
@@ -878,7 +878,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessor" /> is able to
+        ///   Verifies that the <see cref="EventProcessorClient" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
@@ -946,7 +946,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessor" /> is able to
+        ///   Verifies that the <see cref="EventProcessorClient" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///

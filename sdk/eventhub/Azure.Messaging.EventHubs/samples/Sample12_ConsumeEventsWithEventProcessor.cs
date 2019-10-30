@@ -65,7 +65,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
                 // Let's finally create our event processor.  We're using the default consumer group that was created with the Event Hub.
 
-                var eventProcessor = new EventProcessor(connectionString, eventHubName, EventHubConsumer.DefaultConsumerGroupName, partitionManager, eventProcessorOptions);
+                var eventProcessor = new EventProcessorClient(connectionString, eventHubName, EventHubConsumer.DefaultConsumerGroupName, partitionManager, eventProcessorOptions);
 
                 int totalEventsCount = 0;
                 int partitionsBeingProcessedCount = 0;
