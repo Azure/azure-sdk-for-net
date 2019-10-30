@@ -56,7 +56,7 @@ namespace Azure.Data.AppConfiguration.Samples
                 latestSetting = response.Value;
             }
 
-            Debug.WriteLine($"Latest version of setting is {latestSetting}");
+            Debug.WriteLine($"Latest version of setting is {latestSetting}.");
 
             // Delete the Configuration Setting from the Configuration Store when you don't need it anymore.
             client.DeleteConfigurationSetting("some_key");
