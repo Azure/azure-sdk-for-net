@@ -26,15 +26,8 @@ jobs:
         architecture: x64
 
     - pwsh: |
-        Write-Host "Upgrading pip"
-        python -m pip install --upgrade pip
-
-        Write-Host "Installing azure-cli"
-        pip install azure-cli
         az --version
-      displayName: Update azure-cli
-
-    - pwsh: az login --service-principal -u "$(net-keyvault-azure-client-id)" --password "$(net-keyvault-azure-client-secret)" --tenant "$(aad-azure-sdk-test-tenant-id)"
+        az login --service-principal -u "$(net-keyvault-azure-client-id)" --password "$(net-keyvault-azure-client-secret)" --tenant "$(aad-azure-sdk-test-tenant-id)"
       displayName: Log into azure-cli
 
     - pwsh: |
@@ -70,3 +63,4 @@ jobs:
     - pwsh: |
         az group delete --name "$(net-keyvault-azure-keyvault-name)rg" --yes
       displayName: Delete Key Vault
+      condition: always()

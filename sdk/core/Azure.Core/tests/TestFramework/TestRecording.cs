@@ -59,6 +59,7 @@ namespace Azure.Core.Testing
 
         private RecordSession _previousSession;
 
+        private static readonly Random s_random = new Random();
         private Random _random;
 
         public Random Random
@@ -70,7 +71,8 @@ namespace Azure.Core.Testing
                     switch (Mode)
                     {
                         case RecordedTestMode.Live:
-                            _random = new Random();
+                            // Generate random values across all instances in the current domain.
+                            _random = s_random;
                             break;
                         case RecordedTestMode.Record:
                             // Try get the seed from existing session
