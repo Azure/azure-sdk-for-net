@@ -20,10 +20,10 @@ To quickly create the needed resources in Azure and to receive connection string
 
 ### Install the package
 
-Install the Azure Event Hubs Checkpoint Store for Azure Storage blobs client library for .NET using [NuGet](https://www.nuget.org/):
+Install the Azure Event Hubs Checkpoint Store for Azure Storage Blobs client library for .NET using [NuGet](https://www.nuget.org/):
 
 ```PowerShell
-Install-Package Azure.Messaging.EventHubs.CheckpointStore.Blob -Version 1.0.0-preview.2
+Install-Package Azure.Messaging.EventHubs.CheckpointStore.Blobs -Version 1.0.0-preview.3
 ```
 
 ### Obtain an Event Hubs connection string
@@ -34,7 +34,7 @@ For the event processor to interact with an Event Hub, it will need to understan
 
 For checkpoint storage to make use of Azure Storage blobs, it will need to understand how to connect to a storage account and authorize with it.  The most straightforward method of doing so is to use a connection string, which is generated at the time that the storage account is created.  If you aren't familiar with storage accounts in Azure, you may wish to follow the step-by-step guide to [configure Azure Storage connection strings](https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string).
 
-### Create an Event Processor that persists checkpoints in Azure Storage blobs
+### Create an Event Processor that persists checkpoints in Azure Storage Blobs
 
 Once the Azure resources and connection strings are available, they can be used to create an event processor for interacting with Azure Event Hubs which persists its state via checkpoints in Azure Storage blobs.  The simplest way to create an `EventProcessor` that uses the `**TODO: CHECKPOINT BLOB NAME THING HERE**` is:
 
