@@ -1,5 +1,6 @@
 parameters:
   PreSteps: []
+  PostSteps: []
   EnvVars: {}
   MaxParallel: 0
 
@@ -70,3 +71,5 @@ jobs:
           testRunTitle: "$(OSName) $(TestTargetFramework)"
           testResultsFormat: "VSTest"
           mergeTestResults: true
+
+      - ${{ parameters.PostSteps }}

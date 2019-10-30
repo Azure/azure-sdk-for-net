@@ -20,11 +20,20 @@ jobs:
       AZURE_KEYVAULT_TEST_MODE: Live
 
     PreSteps:
-    - template: ../steps/azure-cli-login.yml
-      parameters:
-        ClientID: $(net-keyvault-azure-client-id)
-        ClientSecret: $(net-keyvault-azure-client-secret)
-        TenantID: $(aad-azure-sdk-test-tenant-id)
+    - task: UsePythonVersion@0
+      displayName: Use Python 3.x
+      inputs:
+        versionSpec: '3.x'
+        architecture: x64
+
+    - script: |
+        python -m pip install --upgrade pip
+        pip install azure-cli
+        az --version
+      displayName: Update azure-cli
+
+    - script: az login --service-principal -u "$(net-keyvault-azure-client-id)" --password "$(net-keyvault-azure-client-secret)" --tenant "$(aad-azure-sdk-test-tenant-id)"
+      displayName: Log into azure-cli
 
     - pwsh: |
         $name = 'adpnet{0}-{1}-{2}' -f $(Build.BuildId), @{Linux='lnx'; MacOS='mac'; Windows='win'}['$(OSName)'], @{net461='net461'; 'netcoreapp2.1'='core21'}['$(TestTargetFramework)']
@@ -47,13 +56,7 @@ jobs:
         --secret-permissions backup delete get list purge recover restore set
       displayName: Set Key Vault permissions
 
-# PostSteps
-- template: ../../eng/pipelines/templates/steps/azure-cli-login.yml
-  parameters:
-    ClientID: $(net-keyvault-azure-client-id)
-    ClientSecret: $(net-keyvault-azure-client-secret)
-    TenantID: $(aad-azure-sdk-test-tenant-id)
-
-- script: |
-    az group delete --name "$(net-keyvault-azure-keyvault-name)rg" --yes
-  displayName: Delete Key Vault
+    PostSteps:
+    - script: |
+        az group delete --name "$(net-keyvault-azure-keyvault-name)rg" --yes
+      displayName: Delete Key Vault
