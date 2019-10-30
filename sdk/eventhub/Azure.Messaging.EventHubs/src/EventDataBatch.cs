@@ -44,7 +44,7 @@ namespace Azure.Messaging.EventHubs
 
         /// <summary>
         ///   The transport-specific batch responsible for performing the batch operations
-        ///   in a manner compatible with the associated <see cref="TransportEventHubProducer" />.
+        ///   in a manner compatible with the associated <see cref="TransportProducer" />.
         /// </summary>
         ///
         private TransportEventBatch InnerBatch { get; }

@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.Files;
-using Azure.Storage.Files.Models;
+using Azure.Storage.Files.Shares;
+using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Test;
@@ -76,14 +76,14 @@ namespace Azure.Storage.Test
                 }
 
                 // Files
-                var files = new FileServiceClient(config.ConnectionString);
+                var files = new ShareServiceClient(config.ConnectionString);
                 await foreach (ShareItem share in files.GetSharesAsync())
                 {
                     try
                     {
                         await files.DeleteShareAsync(share.Name);
                     }
-                    catch (RequestFailedException ex) when (ex.ErrorCode == FileErrorCode.ShareBeingDeleted)
+                    catch (RequestFailedException ex) when (ex.ErrorCode == ShareErrorCode.ShareBeingDeleted)
                     {
                         // Ignore anything already being deleted
                     }

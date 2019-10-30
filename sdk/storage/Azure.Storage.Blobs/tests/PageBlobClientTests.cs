@@ -242,8 +242,8 @@ namespace Azure.Storage.Blobs.Test
             {
                 ContentType = ContentType,
                 ContentHash = contentMD5,
-                ContentEncoding = new string[] { ContentEncoding },
-                ContentLanguage = new string[] { ContentLanguage },
+                ContentEncoding = ContentEncoding,
+                ContentLanguage = ContentLanguage,
                 ContentDisposition = ContentDisposition,
                 CacheControl = CacheControl
             };
@@ -258,10 +258,8 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobProperties> response = await blob.GetPropertiesAsync();
             Assert.AreEqual(ContentType, response.Value.ContentType);
             TestHelper.AssertSequenceEqual(contentMD5, response.Value.ContentHash);
-            Assert.AreEqual(1, response.Value.ContentEncoding.Count());
-            Assert.AreEqual(ContentEncoding, response.Value.ContentEncoding.First());
-            Assert.AreEqual(1, response.Value.ContentLanguage.Count());
-            Assert.AreEqual(ContentLanguage, response.Value.ContentLanguage.First());
+            Assert.AreEqual(ContentEncoding, response.Value.ContentEncoding);
+            Assert.AreEqual(ContentLanguage, response.Value.ContentLanguage);
             Assert.AreEqual(ContentDisposition, response.Value.ContentDisposition);
             Assert.AreEqual(CacheControl, response.Value.CacheControl);
         }

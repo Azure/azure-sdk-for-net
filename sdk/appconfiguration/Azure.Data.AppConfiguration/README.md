@@ -133,7 +133,7 @@ Create a Configuration Setting to be stored in the Configuration Store. There ar
 string connectionString = <connection_string>;
 var client = new ConfigurationClient(connectionString);
 var setting = new ConfigurationSetting("some_key", "some_value");
-client.Set(setting);
+client.SetConfigurationSetting(setting);
 ```
 
 ### Retrieve a Configuration Setting
@@ -143,7 +143,7 @@ Retrieve a previously stored Configuration Setting by calling Get.  This snippet
 ```c#
 string connectionString = <connection_string>;
 var client = new ConfigurationClient(connectionString);
-ConfigurationSetting setting = client.Get("some_key");
+ConfigurationSetting setting = client.GetConfigurationSetting("some_key");
 ```
 
 ### Update an existing Configuration Setting
@@ -153,7 +153,7 @@ Update an existing Configuration Setting by calling Set.  This snippet assumes t
 ```c#
 string connectionString = <connection_string>;
 var client = new ConfigurationClient(connectionString);
-ConfigurationSetting setting = client.Set("some_key", "new_value");
+ConfigurationSetting setting = client.SetConfigurationSetting("some_key", "new_value");
 ```
 
 ### Delete a Configuration Setting
@@ -163,7 +163,7 @@ Delete an existing Configuration Setting by calling Delete.  This snippet assume
 ```c#
 string connectionString = <connection_string>;
 var client = new ConfigurationClient(connectionString);
-ConfigurationSetting setting = client.Delete("some_key");
+ConfigurationSetting setting = client.DeleteConfigurationSetting("some_key");
 ```
 
 ## Troubleshooting
@@ -175,7 +175,7 @@ For example, if you try to retrieve a Configuration Setting that doesn't exist i
 ```c#
 string connectionString = <connection_string>;
 var client = new ConfigurationClient(connectionString);
-ConfigurationSetting setting = client.Get("nonexistent_key");
+ConfigurationSetting setting = client.GetConfigurationSetting("nonexistent_key");
 ```
 
 You will notice that additional information is logged, like the Client Request ID of the operation.
@@ -194,14 +194,20 @@ Message: Azure.RequestFailedException : StatusCode: 404, ReasonPhrase: 'Not Foun
 }
 ```
 
-## Next Steps
+## Next steps
 
 ### More sample code
 
 Several App Configuration client library samples are available to you in this GitHub repository.  These include: 
 - [Hello world](samples/Sample1_HelloWorld.cs): Create and delete a configuration setting.
 - [Hello world async with labels](samples/Sample2_HelloWorldExtended.cs): Asynchronously create, update and delete configuration settings with labels.
-- [Make a configuration setting readonly](samples/Sample3_SetClearReadOnly.cs): Make a configuration setting read only, and then return it to a writeable state.
+- [Make a configuration setting readonly](samples/Sample3_SetClearReadOnly.cs): Make a configuration setting read-only, and then return it to a read-write state.
+- [Read revision history](samples/Sample4_ReadRevisionHistory.cs): Read the revision history of a configuration setting that has been changed.
+- [Get a setting if changed](samples/Sample5_GetSettingIfChanged.cs): Save bandwidth by using a conditional request to retrieve a setting only if it is different from your local copy.
+- [Update a setting if it hasn't changed](samples/Sample6_UpdateSettingIfUnchanged.cs): Prevent lost updates by using optimistic concurrency to update a setting only if your local updates were applied to the same version as the resource in the configuration store.
+- [Create a mock client](samples/Sample7_MockClient.cs): Mock a client for testing using the [Moq library][moq].
+
+ For more details see the [samples README][samples_readme].
 
 
 ## Contributing
@@ -220,7 +226,7 @@ This project has adopted the Microsoft Open Source Code of Conduct. For more inf
 [azconfig_asof_snapshot]: https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-point-time-snapshot
 [source_root]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/appconfiguration/Azure.Data.AppConfiguration
 [source_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/appconfiguration/Azure.Data.AppConfiguration/samples
-[reference_docs]: https://azure.github.io/azure-sdk-for-net/api/Azure.Data.AppConfiguration.html
+[reference_docs]: https://azure.github.io/azure-sdk-for-net/appconfiguration.html
 [azconfig_rest]: https://github.com/Azure/AppConfiguration#rest-api-reference
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/
@@ -229,3 +235,5 @@ This project has adopted the Microsoft Open Source Code of Conduct. For more inf
 [label_concept]: https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-key-value#label-keys
 [nuget]: https://www.nuget.org/
 [package]: https://www.nuget.org/packages/Azure.ApplicationModel.Configuration/
+[samples_readme]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/README.md
+[moq]: https://github.com/Moq/moq4/

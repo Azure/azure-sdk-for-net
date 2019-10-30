@@ -22,7 +22,7 @@ Install the Azure Storage client library for .NET you'd like to use with
 ```Powershell
 dotnet add package Azure.Storage.Blobs --version 12.0.0-preview.4
 dotnet add package Azure.Storage.Queues --version 12.0.0-preview.4
-dotnet add package Azure.Storage.Files --version 12.0.0-preview.4
+dotnet add package Azure.Storage.Files.Shares --version 12.0.0-preview.4
 ```
 
 ### Prerequisites
@@ -76,7 +76,7 @@ additional questions or comments.
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Common/src
 [package]: https://www.nuget.org/packages/Azure.Storage.Common/
-[docs]: https://azure.github.io/azure-sdk-for-net/api/Azure.Storage.html
+[docs]: https://azure.github.io/azure-sdk-for-net/storage.html
 [rest_docs]: https://docs.microsoft.com/en-us/rest/api/storageservices/
 [product_docs]: https://docs.microsoft.com/en-us/azure/storage/
 [nuget]: https://www.nuget.org/
@@ -88,13 +88,13 @@ additional questions or comments.
 [azure_sub]: https://azure.microsoft.com/free/
 [auth_credentials]: src/SharedKeyCredential.cs
 [blobs_examples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Blobs/README.md#Examples
-[files_examples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Files/README.md#Examples
+[files_examples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Files.Shares/README.md#Examples
 [queues_examples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Queues/README.md#Examples
 [RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/src/RequestFailedException.cs
 [error_codes]: https://docs.microsoft.com/en-us/rest/api/storageservices/common-rest-api-error-codes
 [samples]: samples/
 [blobs_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Blobs/README.md#next-steps
-[files_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Files/README.md#next-steps
+[files_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Files.Shares/README.md#next-steps
 [queues_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Queues/README.md#next-steps
 [storage_contrib]: ../CONTRIBUTING.md
 [cla]: https://cla.microsoft.com

@@ -176,7 +176,7 @@ additional questions or comments.
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Queues/src
 [package]: https://www.nuget.org/packages/Azure.Storage.Queues/
-[docs]: https://azure.github.io/azure-sdk-for-net/api/Azure.Storage.Queues.html
+[docs]: https://azure.github.io/azure-sdk-for-net/storage.html
 [rest_docs]: https://docs.microsoft.com/en-us/rest/api/storageservices/queue-service-rest-api
 [product_docs]: https://docs.microsoft.com/en-us/azure/storage/queues/storage-queues-introduction
 [nuget]: https://www.nuget.org/

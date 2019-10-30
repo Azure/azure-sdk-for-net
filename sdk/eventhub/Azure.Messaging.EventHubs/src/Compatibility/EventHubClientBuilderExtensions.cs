@@ -9,44 +9,44 @@ namespace Microsoft.Extensions.Azure
 #pragma warning restore AZC0001
 {
     /// <summary>
-    /// Extension methods to add <see cref="EventHubClient"/> client to clients builder
+    /// Extension methods to add <see cref="EventHubConnection"/> client to clients builder
     /// </summary>
     public static class EventHubClientBuilderExtensions
     {
         /// <summary>
-        /// Registers a <see cref="EventHubClient"/> instance with the provided <paramref name="connectionString"/>
+        /// Registers a <see cref="EventHubConnection"/> instance with the provided <paramref name="connectionString"/>
         /// </summary>
-        public static IAzureClientBuilder<EventHubClient, EventHubClientOptions> AddEventHubClient<TBuilder>(this TBuilder builder, string connectionString)
+        public static IAzureClientBuilder<EventHubConnection, EventHubConnectionOptions> AddEventHubClient<TBuilder>(this TBuilder builder, string connectionString)
             where TBuilder : IAzureClientFactoryBuilder
         {
-            return builder.RegisterClientFactory<EventHubClient, EventHubClientOptions>(options => new EventHubClient(connectionString, options));
+            return builder.RegisterClientFactory<EventHubConnection, EventHubConnectionOptions>(options => new EventHubConnection(connectionString, options));
         }
 
         /// <summary>
-        /// Registers a <see cref="EventHubClient"/> instance with the provided <paramref name="connectionString"/> and <paramref name="eventHubName"/>
+        /// Registers a <see cref="EventHubConnection"/> instance with the provided <paramref name="connectionString"/> and <paramref name="eventHubName"/>
         /// </summary>
-        public static IAzureClientBuilder<EventHubClient, EventHubClientOptions> AddEventHubClient<TBuilder>(this TBuilder builder, string connectionString, string eventHubName)
+        public static IAzureClientBuilder<EventHubConnection, EventHubConnectionOptions> AddEventHubClient<TBuilder>(this TBuilder builder, string connectionString, string eventHubName)
             where TBuilder : IAzureClientFactoryBuilder
         {
-            return builder.RegisterClientFactory<EventHubClient, EventHubClientOptions>(options => new EventHubClient(connectionString, eventHubName, options));
+            return builder.RegisterClientFactory<EventHubConnection, EventHubConnectionOptions>(options => new EventHubConnection(connectionString, eventHubName, options));
         }
 
         /// <summary>
-        /// Registers a <see cref="EventHubClient"/> instance with the provided <paramref name="host"/> and <paramref name="eventHubName"/>
+        /// Registers a <see cref="EventHubConnection"/> instance with the provided <paramref name="host"/> and <paramref name="eventHubName"/>
         /// </summary>
-        public static IAzureClientBuilder<EventHubClient, EventHubClientOptions> AddEventHubClientWithHost<TBuilder>(this TBuilder builder, string host, string eventHubName)
+        public static IAzureClientBuilder<EventHubConnection, EventHubConnectionOptions> AddEventHubClientWithHost<TBuilder>(this TBuilder builder, string host, string eventHubName)
             where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<EventHubClient, EventHubClientOptions>((options, token) => new EventHubClient(host, eventHubName, token, options));
+            return builder.RegisterClientFactory<EventHubConnection, EventHubConnectionOptions>((options, token) => new EventHubConnection(host, eventHubName, token, options));
         }
 
         /// <summary>
-        /// Registers a <see cref="EventHubClient"/> instance with connection options loaded from the provided <paramref name="configuration"/> instance.
+        /// Registers a <see cref="EventHubConnection"/> instance with connection options loaded from the provided <paramref name="configuration"/> instance.
         /// </summary>
-        public static IAzureClientBuilder<EventHubClient, EventHubClientOptions> AddEventHubClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<EventHubConnection, EventHubConnectionOptions> AddEventHubClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClientFactory<EventHubClient, EventHubClientOptions>(configuration);
+            return builder.RegisterClientFactory<EventHubConnection, EventHubConnectionOptions>(configuration);
         }
     }
 }

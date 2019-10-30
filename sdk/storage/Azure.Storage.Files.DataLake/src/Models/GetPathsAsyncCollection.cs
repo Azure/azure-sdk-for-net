@@ -9,15 +9,21 @@ namespace Azure.Storage.Files.DataLake.Models
 {
     internal class GetPathsAsyncCollection : StorageCollectionEnumerator<PathItem>
     {
-        private readonly FileSystemClient _client;
-        private readonly GetPathsOptions? _options;
+        private readonly DataLakeFileSystemClient _client;
+        private readonly string _path;
+        private readonly bool _recursive;
+        private readonly bool _upn;
 
         public GetPathsAsyncCollection(
-            FileSystemClient client,
-            GetPathsOptions? options)
+            DataLakeFileSystemClient client,
+            string path,
+            bool recursive,
+            bool upn)
         {
             _client = client;
-            _options = options;
+            _path = path;
+            _recursive = recursive;
+            _upn = upn;
         }
 
         public override async ValueTask<Page<PathItem>> GetNextPageAsync(
@@ -27,7 +33,9 @@ namespace Azure.Storage.Files.DataLake.Models
             CancellationToken cancellationToken)
         {
             Task<Response<PathSegment>> task = _client.ListPathsInternal(
-                _options,
+                _path,
+                _recursive,
+                _upn,
                 continuationToken,
                 pageSizeHint,
                 isAsync,
