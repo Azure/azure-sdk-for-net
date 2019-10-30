@@ -1,19 +1,19 @@
 {
   "Entries": [
     {
-      "RequestUri": "/luis/api/v2.0/apps/3327b33c-35df-40d0-a661-c9ade29da239/permissions",
-      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy8zMzI3YjMzYy0zNWRmLTQwZDAtYTY2MS1jOWFkZTI5ZGEyMzkvcGVybWlzc2lvbnM=",
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/6c859d36-47a0-4dd9-a2ab-7817e211646b/permissions",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzZjODU5ZDM2LTQ3YTAtNGRkOS1hMmFiLTc4MTdlMjExNjQ2Yi9wZXJtaXNzaW9ucw==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"email\": \"guest@outlook.com\"\r\n}",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          "62b834e0069943d9b035f32abd230359"
+          "120f721e60454544a884022b1bc988a5"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27617.04",
+          "FxVersion/4.6.27817.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.8.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -30,10 +30,13 @@
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "b40f0d32-8c27-49b1-822f-02c88e45601b"
+          "b8085e32-f5fe-4921-a7f4-681cf2acb54f"
         ],
         "Request-Id": [
-          "b40f0d32-8c27-49b1-822f-02c88e45601b"
+          "b8085e32-f5fe-4921-a7f4-681cf2acb54f"
+        ],
+        "X-API-Deprecation-Date": [
+          "2020-09-02T00:00:00Z"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -48,7 +51,7 @@
           "SAMEORIGIN"
         ],
         "Date": [
-          "Sun, 25 Aug 2019 19:21:20 GMT"
+          "Tue, 29 Oct 2019 13:23:13 GMT"
         ],
         "Content-Length": [
           "51"
@@ -61,19 +64,19 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/luis/api/v2.0/apps/3327b33c-35df-40d0-a661-c9ade29da239/permissions",
-      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy8zMzI3YjMzYy0zNWRmLTQwZDAtYTY2MS1jOWFkZTI5ZGEyMzkvcGVybWlzc2lvbnM=",
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/6c859d36-47a0-4dd9-a2ab-7817e211646b/permissions",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzZjODU5ZDM2LTQ3YTAtNGRkOS1hMmFiLTc4MTdlMjExNjQ2Yi9wZXJtaXNzaW9ucw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          "62b834e0069943d9b035f32abd230359"
+          "120f721e60454544a884022b1bc988a5"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27617.04",
+          "FxVersion/4.6.27817.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.8.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -84,10 +87,13 @@
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "c87d0702-ae12-43d4-a517-3cb1d03726dd"
+          "7236e438-75de-427b-848a-0a77bdaf6570"
         ],
         "Request-Id": [
-          "c87d0702-ae12-43d4-a517-3cb1d03726dd"
+          "7236e438-75de-427b-848a-0a77bdaf6570"
+        ],
+        "X-API-Deprecation-Date": [
+          "2020-09-02T00:00:00Z"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -102,7 +108,7 @@
           "SAMEORIGIN"
         ],
         "Date": [
-          "Sun, 25 Aug 2019 19:21:21 GMT"
+          "Tue, 29 Oct 2019 13:23:13 GMT"
         ],
         "Content-Length": [
           "65"
@@ -111,23 +117,23 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"owner\": \"a-omsami@microsoft.com\",\r\n  \"emails\": [\r\n    \"guest@outlook.com\"\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"owner\": \"a-nebadr@microsoft.com\",\r\n  \"emails\": [\r\n    \"guest@outlook.com\"\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/luis/api/v2.0/apps/3327b33c-35df-40d0-a661-c9ade29da239/permissions",
-      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy8zMzI3YjMzYy0zNWRmLTQwZDAtYTY2MS1jOWFkZTI5ZGEyMzkvcGVybWlzc2lvbnM=",
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/6c859d36-47a0-4dd9-a2ab-7817e211646b/permissions",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzZjODU5ZDM2LTQ3YTAtNGRkOS1hMmFiLTc4MTdlMjExNjQ2Yi9wZXJtaXNzaW9ucw==",
       "RequestMethod": "DELETE",
       "RequestBody": "{\r\n  \"email\": \"guest@outlook.com\"\r\n}",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          "62b834e0069943d9b035f32abd230359"
+          "120f721e60454544a884022b1bc988a5"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27617.04",
+          "FxVersion/4.6.27817.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.8.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -144,10 +150,13 @@
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "c148f6b5-329a-441c-bcbf-28f3990dde57"
+          "78a2aa3a-104a-4794-9c06-0044c41cdbd8"
         ],
         "Request-Id": [
-          "c148f6b5-329a-441c-bcbf-28f3990dde57"
+          "78a2aa3a-104a-4794-9c06-0044c41cdbd8"
+        ],
+        "X-API-Deprecation-Date": [
+          "2020-09-02T00:00:00Z"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -162,7 +171,7 @@
           "SAMEORIGIN"
         ],
         "Date": [
-          "Sun, 25 Aug 2019 19:21:21 GMT"
+          "Tue, 29 Oct 2019 13:23:13 GMT"
         ],
         "Content-Length": [
           "51"

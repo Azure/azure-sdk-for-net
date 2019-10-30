@@ -1,9 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
-using Azure.Storage.Blobs.Models;
-
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
@@ -20,11 +17,6 @@ namespace Azure.Storage.Files.DataLake.Models
         /// Properties of a file system.
         /// </summary>
         public FileSystemProperties Properties { get; internal set; }
-
-        /// <summary>
-        /// Metadata
-        /// </summary>
-        public IDictionary<string, string> Metadata { get; internal set; }
 
         /// <summary>
         /// Prevent direct instantiation of FileSystemItem instances.

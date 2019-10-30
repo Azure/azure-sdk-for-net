@@ -3,13 +3,7 @@
     <AzureCoreSharedSources>$(MSBuildThisFileDirectory)\Shared\</AzureCoreSharedSources>
   </PropertyGroup>
 
-  <!-- Project references -->
-  <ItemGroup Condition="'$(UseProjectReferenceToAzureCore)'=='true'">
-    <ProjectReference Include="$(MSBuildThisFileDirectory)Azure.Core.csproj" />
-  </ItemGroup>
-
-  <!-- Package references -->
-  <ItemGroup Condition="'$(UseProjectReferenceToAzureCore)'!='true'">
+  <ItemGroup>
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
 

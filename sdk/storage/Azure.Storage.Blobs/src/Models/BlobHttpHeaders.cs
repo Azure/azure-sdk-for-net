@@ -37,12 +37,12 @@ namespace Azure.Storage.Blobs.Models
         /// is performed on the blob resource. The client can use this value
         /// when returned to decode the blob content.
         /// </summary>
-        public string[] ContentEncoding { get; set; }
+        public string ContentEncoding { get; set; }
 
         /// <summary>
         /// Specifies the natural languages used by this resource.
         /// </summary>
-        public string[] ContentLanguage { get; set; }
+        public string ContentLanguage { get; set; }
 #pragma warning restore CA1819 // Properties should not return arrays
 
         /// <summary>

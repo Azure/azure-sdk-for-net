@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
@@ -49,6 +50,11 @@ namespace Azure.Storage.Files.DataLake.Models
         /// ETag
         /// </summary>
         public ETag ETag { get; internal set; }
+
+        /// <summary>
+        /// Metadata
+        /// </summary>
+        public IDictionary<string, string> Metadata { get; internal set; }
 
         /// <summary>
         /// Prevent direct instantiation of FileSystemProperties instances.

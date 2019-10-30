@@ -1,9 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
@@ -15,7 +13,7 @@ namespace Azure.Storage.Files.DataLake.Models
     ///
     /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-and-retrieving-properties-and-metadata-for-blob-resources" />.
     /// </summary>
-    public struct PathHttpHeaders : IEquatable<PathHttpHeaders>
+    public class PathHttpHeaders
     {
         /// <summary>
         /// The MIME content type of the path.
@@ -61,53 +59,25 @@ namespace Azure.Storage.Files.DataLake.Models
         public string CacheControl { get; set; }
 
         /// <summary>
-        /// Check if two PathHttpHeaders instances are equal.
+        /// Creates a string representation of a
+        /// <see cref="PathHttpHeaders"/>.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override string ToString() => base.ToString();
+
+        /// <summary>
+        /// Check if two <see cref="PathHttpHeaders"/> instances are equal.
         /// </summary>
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
-        public override bool Equals(object obj)
-            => obj is PathHttpHeaders other && Equals(other);
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => base.Equals(obj);
 
         /// <summary>
-        /// Get a hash code for the PathHttpHeaders.
+        /// Get a hash code for the <see cref="PathHttpHeaders"/>.
         /// </summary>
-        /// <returns>Hash code for the PathHttpHeaders.</returns>
-        public override int GetHashCode()
-            => CacheControl.GetHashCode()
-            ^ ContentDisposition.GetHashCode()
-            ^ ContentEncoding.GetHashCode()
-            ^ ContentLanguage.GetHashCode()
-            ^ ContentHash.GetHashCode()
-            ^ ContentType.GetHashCode()
-            ;
-
-        /// <summary>
-        /// Check if two PathHttpHeaders instances are equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(PathHttpHeaders left, PathHttpHeaders right) => left.Equals(right);
-
-        /// <summary>
-        /// Check if two PathHttpHeaders instances are not equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(PathHttpHeaders left, PathHttpHeaders right) => !(left == right);
-
-        /// <summary>
-        /// Check if two PathHttpHeaders instances are equal.
-        /// </summary>
-        /// <param name="other">The instance to compare to.</param>
-        public bool Equals(PathHttpHeaders other)
-            => CacheControl == other.CacheControl
-            && ContentDisposition == other.ContentDisposition
-            && ContentEncoding == other.ContentEncoding
-            && ContentLanguage == other.ContentLanguage
-            && ContentHash == other.ContentHash
-            && ContentType == other.ContentType
-            ;
+        /// <returns>Hash code for the <see cref="PathHttpHeaders"/>.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => base.GetHashCode();
     }
 }
