@@ -1,19 +1,19 @@
 {
   "Entries": [
     {
-      "RequestUri": "/luis/api/v2.0/apps/customprebuiltdomains",
-      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy9jdXN0b21wcmVidWlsdGRvbWFpbnM=",
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/customprebuiltdomains",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzL2N1c3RvbXByZWJ1aWx0ZG9tYWlucw==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"domainName\": \"Calendar\",\r\n  \"culture\": \"en-us\"\r\n}",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          "62b834e0069943d9b035f32abd230359"
+          "120f721e60454544a884022b1bc988a5"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27617.04",
+          "FxVersion/4.6.27817.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.8.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -30,16 +30,16 @@
           "no-cache"
         ],
         "Location": [
-          "https://westus.api.cognitive.microsoft.com/luis/api/v2.0/apps/customprebuiltdomains/e49fddaf-aa1f-4a29-ad2f-47bee94d69b0"
+          "https://westus.api.cognitive.microsoft.com/luis/api/v3.0-preview/apps/customprebuiltdomains/43933e78-a4ad-4aee-a9d3-9707ee95ec23"
         ],
         "Apim-Request-Id": [
-          "d2e06f6d-3586-4108-934f-a68b9a985474"
+          "4c4156cc-eee3-467b-9775-8d4f48819858"
         ],
         "Request-Id": [
-          "d2e06f6d-3586-4108-934f-a68b9a985474"
+          "4c4156cc-eee3-467b-9775-8d4f48819858"
         ],
         "Operation-Location": [
-          "https://westus.api.cognitive.microsoft.com/luis/api/v2.0/apps/customprebuiltdomains/e49fddaf-aa1f-4a29-ad2f-47bee94d69b0"
+          "https://westus.api.cognitive.microsoft.com/luis/api/v3.0-preview/apps/customprebuiltdomains/43933e78-a4ad-4aee-a9d3-9707ee95ec23"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -54,7 +54,7 @@
           "SAMEORIGIN"
         ],
         "Date": [
-          "Sun, 25 Aug 2019 19:16:30 GMT"
+          "Tue, 29 Oct 2019 13:16:50 GMT"
         ],
         "Content-Length": [
           "38"
@@ -63,23 +63,23 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "\"e49fddaf-aa1f-4a29-ad2f-47bee94d69b0\"",
+      "ResponseBody": "\"43933e78-a4ad-4aee-a9d3-9707ee95ec23\"",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/luis/api/v2.0/apps/e49fddaf-aa1f-4a29-ad2f-47bee94d69b0?force=false",
-      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy9lNDlmZGRhZi1hYTFmLTRhMjktYWQyZi00N2JlZTk0ZDY5YjA/Zm9yY2U9ZmFsc2U=",
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/43933e78-a4ad-4aee-a9d3-9707ee95ec23?force=false",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzQzOTMzZTc4LWE0YWQtNGFlZS1hOWQzLTk3MDdlZTk1ZWMyMz9mb3JjZT1mYWxzZQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          "62b834e0069943d9b035f32abd230359"
+          "120f721e60454544a884022b1bc988a5"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27617.04",
+          "FxVersion/4.6.27817.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.8.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -90,10 +90,10 @@
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "c4841908-777f-4768-81a4-660bba1e5869"
+          "501603f7-8471-4751-ac8d-9a199bad3179"
         ],
         "Request-Id": [
-          "c4841908-777f-4768-81a4-660bba1e5869"
+          "501603f7-8471-4751-ac8d-9a199bad3179"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -108,7 +108,7 @@
           "SAMEORIGIN"
         ],
         "Date": [
-          "Sun, 25 Aug 2019 19:16:33 GMT"
+          "Tue, 29 Oct 2019 13:16:51 GMT"
         ],
         "Content-Length": [
           "51"

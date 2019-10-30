@@ -1,19 +1,19 @@
 {
   "Entries": [
     {
-      "RequestUri": "/luis/api/v2.0/apps/3327b33c-35df-40d0-a661-c9ade29da239/publish",
-      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy8zMzI3YjMzYy0zNWRmLTQwZDAtYTY2MS1jOWFkZTI5ZGEyMzkvcHVibGlzaA==",
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/6c859d36-47a0-4dd9-a2ab-7817e211646b/publish",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzZjODU5ZDM2LTQ3YTAtNGRkOS1hMmFiLTc4MTdlMjExNjQ2Yi9wdWJsaXNo",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"versionId\": \"0.1\",\r\n  \"isStaging\": false\r\n}",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          "62b834e0069943d9b035f32abd230359"
+          "120f721e60454544a884022b1bc988a5"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27617.04",
+          "FxVersion/4.6.27817.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.8.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -30,10 +30,10 @@
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "3471da88-b92b-41c6-8c4a-5cd29fcfe59c"
+          "4291c9e9-d76e-46fa-b887-ed4c68ff1b8b"
         ],
         "Request-Id": [
-          "3471da88-b92b-41c6-8c4a-5cd29fcfe59c"
+          "4291c9e9-d76e-46fa-b887-ed4c68ff1b8b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -48,7 +48,7 @@
           "SAMEORIGIN"
         ],
         "Date": [
-          "Sun, 25 Aug 2019 19:16:38 GMT"
+          "Tue, 29 Oct 2019 13:17:02 GMT"
         ],
         "Content-Length": [
           "310"
@@ -57,7 +57,7 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"versionId\": \"0.1\",\r\n  \"directVersionPublish\": false,\r\n  \"endpointUrl\": \"https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/3327b33c-35df-40d0-a661-c9ade29da239\",\r\n  \"isStaging\": false,\r\n  \"assignedEndpointKey\": null,\r\n  \"region\": \"westus\",\r\n  \"endpointRegion\": \"westus\",\r\n  \"publishedDateTime\": \"2019-08-25T19:16:38Z\",\r\n  \"failedRegions\": \"\"\r\n}",
+      "ResponseBody": "{\r\n  \"versionId\": \"0.1\",\r\n  \"directVersionPublish\": false,\r\n  \"endpointUrl\": \"https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/6c859d36-47a0-4dd9-a2ab-7817e211646b\",\r\n  \"isStaging\": false,\r\n  \"assignedEndpointKey\": null,\r\n  \"region\": \"westus\",\r\n  \"endpointRegion\": \"westus\",\r\n  \"publishedDateTime\": \"2019-10-29T13:17:03Z\",\r\n  \"failedRegions\": \"\"\r\n}",
       "StatusCode": 201
     }
   ],

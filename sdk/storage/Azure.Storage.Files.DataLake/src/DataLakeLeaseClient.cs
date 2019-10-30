@@ -59,7 +59,7 @@ namespace Azure.Storage.Files.DataLake
         /// An optional lease ID.  If no lease ID is provided, a random lease
         /// ID will be created.
         /// </param>
-        public DataLakeLeaseClient(PathClient client, string leaseId = null)
+        public DataLakeLeaseClient(DataLakePathClient client, string leaseId = null)
         {
             _blobLeaseClient = new Blobs.Specialized.BlobLeaseClient(client.BlobClient, leaseId);
         }
@@ -68,14 +68,14 @@ namespace Azure.Storage.Files.DataLake
         /// Initializes a new instance of the <see cref="DataLakeLeaseClient"/>  class.
         /// </summary>
         /// <param name="client">
-        /// A <see cref="FileSystemClient"/> representing the file system
+        /// A <see cref="DataLakeFileSystemClient"/> representing the file system
         /// being leased.
         /// </param>
         /// <param name="leaseId">
         /// An optional lease ID.  If no lease ID is provided, a random lease
         /// ID will be created.
         /// </param>
-        public DataLakeLeaseClient(FileSystemClient client, string leaseId = null)
+        public DataLakeLeaseClient(DataLakeFileSystemClient client, string leaseId = null)
         {
             _blobLeaseClient = new Blobs.Specialized.BlobLeaseClient(client.ContainerClient, leaseId);
         }

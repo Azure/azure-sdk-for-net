@@ -21,6 +21,11 @@ namespace Azure.Identity
     /// </list>
     /// Consult the documentation of these credential types for more information on how they attempt authentication.
     /// </summary>
+    /// <remarks>
+    /// Note that credentials requiring user interaction, such as the <see cref="InteractiveBrowserCredential"/>, are not included by default. Callers must explicitly enable this when
+    /// constructing the <see cref="DefaultAzureCredential"/> either by setting the includeInteractiveCredentials parameter to true, or the setting the
+    /// <see cref="DefaultAzureCredentialOptions.ExcludeInteractiveBrowserCredential"/> property to false when passing <see cref="DefaultAzureCredentialOptions"/>.
+    /// </remarks>
     public class DefaultAzureCredential : TokenCredential
     {
         private const string DefaultExceptionMessage = "The DefaultAzureCredential failed to retrieve a token from the included credentials.";
@@ -42,7 +47,7 @@ namespace Azure.Identity
         /// <summary>
         /// Creates an instance of the <see cref="DefaultAzureCredential"/> class.
         /// </summary>
-        /// <param name="options"></param>
+        /// <param name="options">Options that configure the management of the requests sent to Azure Active Directory services, and determine which credentials are included in the <see cref="DefaultAzureCredential"/> authentication flow.</param>
         public DefaultAzureCredential(DefaultAzureCredentialOptions options)
             : this(new DefaultAzureCredentialFactory(CredentialPipeline.GetInstance(options)), options)
         {
@@ -59,6 +64,9 @@ namespace Azure.Identity
         /// Sequentially calls <see cref="TokenCredential.GetToken"/> on all the included credentials in the order <see cref="EnvironmentCredential"/>, <see cref="ManagedIdentityCredential"/>, <see cref="SharedTokenCacheCredential"/>,
         /// and <see cref="InteractiveBrowserCredential"/> returning the first successfully obtained <see cref="AccessToken"/>. This method is called by Azure SDK clients. It isn't intended for use in application code.
         /// </summary>
+        /// <remarks>
+        /// Note that credentials requiring user interaction, such as the <see cref="InteractiveBrowserCredential"/>, are not included by default.
+        /// </remarks>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The first <see cref="AccessToken"/> returned by the specified sources. Any credential which raises a <see cref="CredentialUnavailableException"/> will be skipped.</returns>
@@ -71,6 +79,9 @@ namespace Azure.Identity
         /// Sequentially calls <see cref="TokenCredential.GetToken"/> on all the included credentials in the order <see cref="EnvironmentCredential"/>, <see cref="ManagedIdentityCredential"/>, <see cref="SharedTokenCacheCredential"/>,
         /// and <see cref="InteractiveBrowserCredential"/> returning the first successfully obtained <see cref="AccessToken"/>. This method is called by Azure SDK clients. It isn't intended for use in application code.
         /// </summary>
+        /// <remarks>
+        /// Note that credentials requiring user interaction, such as the <see cref="InteractiveBrowserCredential"/>, are not included by default.
+        /// </remarks>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The first <see cref="AccessToken"/> returned by the specified sources. Any credential which raises a <see cref="CredentialUnavailableException"/> will be skipped.</returns>

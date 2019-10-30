@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Processor;
@@ -18,17 +17,17 @@ namespace Azure.Messaging.EventHubs.Tests
     internal class EventProcessorManager
     {
         /// <summary>
-        ///   The connection string to use for connecting to the Event Hubs namespace.
-        /// </summary>
-        ///
-        private string ConnectionString { get; }
-
-        /// <summary>
         ///   The name of the consumer group the event processors are associated with.  Events will be
         ///   read only in the context of this group.
         /// </summary>
         ///
         private string ConsumerGroup { get; }
+
+        /// <summary>
+        ///   The <see cref="EventHubConnection" /> to use for communication with the Event Hubs service.
+        /// </summary>
+        ///
+        private EventHubConnection Connection { get; }
 
         /// <summary>
         ///   The partition manager shared by all event processors in this hub.
@@ -46,7 +45,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   The event processors managed by this hub.
         /// </summary>
         ///
-        private List<ShortWaitTimeMock> EventProcessors { get; }
+        private List<EventProcessorClient> EventProcessors { get; }
 
         /// <summary>
         ///   A callback action to be called on <see cref="EventProcessorClient.InitializeProcessingForPartitionAsync" />.
@@ -76,7 +75,6 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   Initializes a new instance of the <see cref="EventProcessorManager"/> class.
         /// </summary>
         ///
-        /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub name and the shared key properties are contained in this connection string.</param>
         /// <param name="consumerGroup">The name of the consumer group the event processors are associated with.  Events are read in the context of this group.</param>
         /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.</param>
         /// <param name="options">The set of options to use for the event processors.</param>
@@ -85,8 +83,8 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <param name="onProcessEvent">A callback action to be called on <see cref="EventProcessorClient.ProcessEventAsync" />.</param>
         /// <param name="onProcessException">A callback action to be called on <see cref="EventProcessorClient.ProcessExceptionAsync" />.</param>
         ///
-        public EventProcessorManager(string connectionString,
-                                     string consumerGroup,
+        public EventProcessorManager(string consumerGroup,
+                                     EventHubConnection connection,
                                      PartitionManager partitionManager = null,
                                      EventProcessorClientOptions options = null,
                                      Action<InitializePartitionProcessingContext> onInitialize = null,
@@ -94,8 +92,8 @@ namespace Azure.Messaging.EventHubs.Tests
                                      Action<PartitionEvent> onProcessEvent = null,
                                      Action<ProcessorErrorContext> onProcessException = null)
         {
-            ConnectionString = connectionString;
             ConsumerGroup = consumerGroup;
+            Connection = connection;
             InnerPartitionManager = partitionManager ?? new InMemoryPartitionManager();
 
             // In case it has not been specified, set the maximum receive wait time to 2 seconds because the default
@@ -113,7 +111,7 @@ namespace Azure.Messaging.EventHubs.Tests
             OnProcessEvent = onProcessEvent;
             OnProcessException = onProcessException;
 
-            EventProcessors = new List<ShortWaitTimeMock>();
+            EventProcessors = new List<EventProcessorClient>();
         }
 
         /// <summary>
@@ -128,9 +126,9 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 var eventProcessor = new ShortWaitTimeMock
                     (
-                        ConnectionString,
                         ConsumerGroup,
                         InnerPartitionManager,
+                        Connection,
                         Options
                     );
 
@@ -205,24 +203,6 @@ namespace Azure.Messaging.EventHubs.Tests
             var consecutiveStabilizedStatus = 0;
             List<PartitionOwnership> previousActiveOwnership = null;
 
-            string fullyQualifiedNamespace;
-            string eventHubName;
-
-            // Retrieve the fully qualified namespace and event hub name from one of the event processors
-            // we have.
-
-            if (EventProcessors.Any())
-            {
-                var client = EventProcessors.First().InnerClient;
-
-                fullyQualifiedNamespace = client.FullyQualifiedNamespace;
-                eventHubName = client.EventHubName;
-            }
-            else
-            {
-                return;
-            }
-
             CancellationToken timeoutToken = (new CancellationTokenSource(TimeSpan.FromMinutes(1))).Token;
 
             while (!stabilizedStatusAchieved)
@@ -230,9 +210,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 // Remember to filter expired ownership.
 
                 var activeOwnership = (await InnerPartitionManager
-                    .ListOwnershipAsync(fullyQualifiedNamespace, eventHubName, ConsumerGroup)
+                    .ListOwnershipAsync(Connection.FullyQualifiedNamespace, Connection.EventHubName, ConsumerGroup)
                     .ConfigureAwait(false))
-                    .Where(ownership => DateTimeOffset.UtcNow.Subtract(ownership.LastModifiedTime.Value) < ShortWaitTimeMock.s_shortOwnershipExpiration)
+                    .Where(ownership => DateTimeOffset.UtcNow.Subtract(ownership.LastModifiedTime.Value) < ShortWaitTimeMock.ShortOwnershipExpiration)
                     .ToList();
 
                 // Increment stabilized status count if current partition distribution matches the previous one.  Reset it
@@ -253,7 +233,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     // Wait a load balance update cycle before the next verification.  Give up if the whole process takes more than 1 minute.
 
-                    await Task.Delay(ShortWaitTimeMock.s_shortLoadBalanceUpdate, timeoutToken);
+                    await Task.Delay(ShortWaitTimeMock.ShortLoadBalanceUpdate, timeoutToken);
                 }
                 else
                 {
@@ -275,7 +255,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <returns><c>true</c>, if there are no owner changes between distributions; otherwise, <c>false</c>.</returns>
         ///
         /// <remarks>
-        ///   Filtering expired ownership is assumed to be responsability of the caller.
+        ///   Filtering expired ownership is assumed to be responsibility of the caller.
         /// </remarks>
         ///
         private bool AreOwnershipDistributionsTheSame(IEnumerable<PartitionOwnership> first,
@@ -327,52 +307,43 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Allows the load balance update and ownership expiration time spans to be overriden
+        ///   Allows the load balance update and ownership expiration time spans to be overridden
         ///   for testing purposes.
         /// </summary>
         ///
         private class ShortWaitTimeMock : EventProcessorClient
         {
             /// <summary>A value used to override event processors' load balance update time span.</summary>
-            public static readonly TimeSpan s_shortLoadBalanceUpdate = TimeSpan.FromSeconds(1);
+            public static readonly TimeSpan ShortLoadBalanceUpdate = TimeSpan.FromSeconds(1);
 
             /// <summary>A value used to override event processors' ownership expiration time span.</summary>
-            public static readonly TimeSpan s_shortOwnershipExpiration = TimeSpan.FromSeconds(3);
-
-            /// <summary>
-            ///   Allows for the Event Hub client used by the event processor to be exposed for testing purposes.
-            /// </summary>
-            ///
-            public EventHubClient InnerClient =>
-                typeof(EventProcessorClient)
-                    .GetProperty(nameof(InnerClient), BindingFlags.Instance | BindingFlags.NonPublic)
-                    .GetValue(this) as EventHubClient;
+            public static readonly TimeSpan ShortOwnershipExpiration = TimeSpan.FromSeconds(3);
 
             /// <summary>
             ///   The minimum amount of time to be elapsed between two load balancing verifications.
             /// </summary>
             ///
-            protected override TimeSpan LoadBalanceUpdate => s_shortLoadBalanceUpdate;
+            protected override TimeSpan LoadBalanceUpdate => ShortLoadBalanceUpdate;
 
             /// <summary>
             ///   The minimum amount of time for an ownership to be considered expired without further updates.
             /// </summary>
             ///
-            protected override TimeSpan OwnershipExpiration => s_shortOwnershipExpiration;
+            protected override TimeSpan OwnershipExpiration => ShortOwnershipExpiration;
 
             /// <summary>
             ///   Initializes a new instance of the <see cref="ShortWaitTimeMock"/> class.
             /// </summary>
             ///
-            /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub name and the shared key properties are contained in this connection string.</param>
             /// <param name="consumerGroup">The name of the consumer group this event processor is associated with.  Events are read in the context of this group.</param>
             /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.</param>
+            /// <param name="connection">The client used to interact with the Azure Event Hubs service.</param>
             /// <param name="options">The set of options to use for this event processor.</param>
             ///
-            public ShortWaitTimeMock(string connectionString,
-                                     string consumerGroup,
+            public ShortWaitTimeMock(string consumerGroup,
                                      PartitionManager partitionManager,
-                                     EventProcessorClientOptions options) : base(connectionString, consumerGroup, partitionManager, options)
+                                     EventHubConnection connection,
+                                     EventProcessorClientOptions options) : base(consumerGroup, partitionManager, connection, options)
             {
             }
         }

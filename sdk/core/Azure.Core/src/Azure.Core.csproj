@@ -6,7 +6,8 @@
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-      GA release of Azure.Core package.
+- Updating versioning and packaging for general availability.
+- Make types and namespace names consistent.
       ]]>
     </PackageReleaseNotes>
     <Nullable>enable</Nullable>

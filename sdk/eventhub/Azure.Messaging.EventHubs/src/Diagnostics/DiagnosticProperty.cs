@@ -54,7 +54,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///   The activity name associated with Event Hub producers.
         /// </summary>
         ///
-        public static string ProducerActivityName { get; } = $"{ BaseActivityName }.{ nameof(EventHubProducer) }.Send";
+        public static string ProducerActivityName { get; } = $"{ BaseActivityName }.{ nameof(EventHubProducerClient) }.Send";
 
         /// <summary>
         ///   The activity name associated with EventProcessor processing a list of events.

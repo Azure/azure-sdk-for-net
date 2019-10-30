@@ -605,44 +605,29 @@ directive:
     $.properties.Code = { "type": "string" };
 ```
 
-### ShareItemProperties
+
+### ShareProperties properties renaming
 ``` yaml
 directive:
 - from: swagger-document
-  where: $.definitions.ShareItem
+  where: $.definitions.ShareProperties
   transform: >
-    const def = $.properties.Properties;
-    if (!def["$ref"].endsWith("ShareItemProperties")) {
-        const path = def["$ref"].replace(/[#].*$/, "#/definitions/ShareItemProperties");
-        $.properties.Properties = { "$ref": path };
-    }
+    $.properties.QuotaInGB = $.properties.Quota;
+    $.properties.QuotaInGB.xml = { "name": "Quota"};
+    delete $.properties.Quota;
+    $.properties.Etag["x-ms-client-name"] = "ETag";
+    delete $.required;
 ```
 
-### ShareItemProperties
+### Move Metadata from ShareItem to ShareProperties
 ``` yaml
 directive:
 - from: swagger-document
   where: $.definitions
   transform: >
-    if (!$.ShareItemProperties) {
-        $.ShareItemProperties = $.ShareProperties;
-        delete $.ShareProperties;
-        delete $.ShareItemProperties.required;
-        $.ShareItemProperties.xml = { "name": "Properties" };
-    }
+    $.ShareProperties.properties.Metadata = {"$ref": "#/definitions/Metadata"};
+    delete $.ShareItem.properties.Metadata;
 ```
-
-### ShareItemProperties properties renaming
-``` yaml
-directive:
-- from: swagger-document
-  where: $.definitions.ShareItemProperties
-  transform: >
-    $.properties.QuotaInGB = $.properties.Quota;
-    $.properties.QuotaInGB.xml = { "name": "Quota"};
-    delete $.properties.Quota;
-```
-
 
 ### FilePermission
 ``` yaml

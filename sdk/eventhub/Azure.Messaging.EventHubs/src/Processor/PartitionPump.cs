@@ -19,6 +19,9 @@ namespace Azure.Messaging.EventHubs.Processor
     ///
     internal class PartitionPump
     {
+        // TODO: Remove this when moving to the consumer's iterator.
+        private const int MaximumMessageCount = 25;
+
         /// <summary>The <see cref="EventHubRetryPolicy" /> used to verify whether an exception is retriable or not.</summary>
         private static readonly BasicRetryPolicy RetryPolicy = new BasicRetryPolicy(new RetryOptions());
 
@@ -38,10 +41,11 @@ namespace Azure.Messaging.EventHubs.Processor
         private EventProcessorClient OwnerEventProcessor { get; }
 
         /// <summary>
-        ///   The client used to interact with the Azure Event Hubs service.
+        ///   The active connection to the Azure Event Hubs service, enabling client communications for metadata
+        ///   about the associated Event Hub and access to a transport-aware producer.
         /// </summary>
         ///
-        private EventHubClient InnerClient { get; }
+        private EventHubConnection Connection { get; }
 
         /// <summary>
         ///   The name of the consumer group this partition pump is associated with.  Events will be
@@ -49,6 +53,12 @@ namespace Azure.Messaging.EventHubs.Processor
         /// </summary>
         ///
         private string ConsumerGroup { get; }
+
+        /// <summary>
+        ///   The default position where the reading of events should begin in the case where there is no checkpoint available.
+        /// </summary>
+        ///
+        private EventPosition DefaultEventPosition { get; }
 
         /// <summary>
         ///   The context of the Event Hub partition this partition pump is associated with.
@@ -78,7 +88,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   The consumer used to receive events from the Azure Event Hubs service.
         /// </summary>
         ///
-        private EventHubConsumer InnerConsumer { get; set; }
+        private EventHubConsumerClient InnerConsumer { get; set; }
 
         /// <summary>
         ///   The running task responsible for receiving events from the Azure Event Hubs service.
@@ -98,21 +108,21 @@ namespace Azure.Messaging.EventHubs.Processor
         /// </summary>
         ///
         /// <param name="eventProcessor">The <see cref="EventProcessorClient" /> that owns this instance.</param>
-        /// <param name="eventHubClient">The client used to interact with the Azure Event Hubs service.</param>
+        /// <param name="connection">The <see cref="EventHubConnection" /> connection to use for communication with the Event Hubs service.</param>
         /// <param name="consumerGroup">The name of the consumer group this partition pump is associated with.  Events are read in the context of this group.</param>
         /// <param name="partitionContext">The context of the Event Hub partition this partition pump is associated with.  Events will be read only from this partition.</param>
         /// <param name="startingPosition">The position within the partition where the pump should begin reading events.</param>
         /// <param name="options">The set of options to use for this partition pump.</param>
         ///
         internal PartitionPump(EventProcessorClient eventProcessor,
-                               EventHubClient eventHubClient,
+                               EventHubConnection connection,
                                string consumerGroup,
                                PartitionContext partitionContext,
                                EventPosition startingPosition,
                                EventProcessorClientOptions options)
         {
             OwnerEventProcessor = eventProcessor;
-            InnerClient = eventHubClient;
+            Connection = connection;
             ConsumerGroup = consumerGroup;
             Context = partitionContext;
             StartingPosition = startingPosition;
@@ -153,7 +163,7 @@ namespace Azure.Messaging.EventHubs.Processor
                             startingPosition = startingPosition ?? initializationContext.DefaultStartingPosition;
                         }
 
-                        InnerConsumer = InnerClient.CreateConsumer(ConsumerGroup, Context.PartitionId, startingPosition ?? EventPosition.Earliest);
+                        InnerConsumer = new EventHubConsumerClient(ConsumerGroup, Context.PartitionId, startingPosition ?? EventPosition.Earliest, Connection);
 
                         // Before closing, the running task will set the close reason in case of failure.  When something
                         // unexpected happens and it's not set, the default value (Unknown) is kept.
@@ -252,7 +262,7 @@ namespace Azure.Messaging.EventHubs.Processor
             {
                 try
                 {
-                    receivedEvents = (await InnerConsumer.ReceiveAsync(Options.MaximumMessageCount, Options.MaximumReceiveWaitTime, cancellationToken).ConfigureAwait(false)).ToList();
+                    receivedEvents = (await InnerConsumer.ReceiveAsync(MaximumMessageCount, Options.MaximumReceiveWaitTime, cancellationToken).ConfigureAwait(false)).ToList();
 
                     using DiagnosticScope diagnosticScope = EventDataInstrumentation.ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName);
                     diagnosticScope.AddAttribute("kind", "server");
