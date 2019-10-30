@@ -163,7 +163,7 @@ Delete an existing Configuration Setting by calling Delete.  This snippet assume
 ```c#
 string connectionString = <connection_string>;
 var client = new ConfigurationClient(connectionString);
-ConfigurationSetting setting = client.DeleteConfigurationSetting("some_key");
+client.DeleteConfigurationSetting("some_key");
 ```
 
 ## Troubleshooting
