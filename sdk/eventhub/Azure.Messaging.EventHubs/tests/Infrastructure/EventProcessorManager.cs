@@ -40,7 +40,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   The set of options to use for the event processors.
         /// </summary>
         ///
-        private EventProcessorOptions Options { get; }
+        private EventProcessorClientOptions Options { get; }
 
         /// <summary>
         ///   The event processors managed by this hub.
@@ -88,7 +88,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public EventProcessorManager(string connectionString,
                                      string consumerGroup,
                                      PartitionManager partitionManager = null,
-                                     EventProcessorOptions options = null,
+                                     EventProcessorClientOptions options = null,
                                      Action<InitializePartitionProcessingContext> onInitialize = null,
                                      Action<PartitionProcessingStoppedContext> onClose = null,
                                      Action<PartitionEvent> onProcessEvent = null,
@@ -101,7 +101,7 @@ namespace Azure.Messaging.EventHubs.Tests
             // In case it has not been specified, set the maximum receive wait time to 2 seconds because the default
             // value (1 minute) would take too much time.
 
-            Options = options?.Clone() ?? new EventProcessorOptions();
+            Options = options?.Clone() ?? new EventProcessorClientOptions();
 
             if (Options.MaximumReceiveWaitTime == null)
             {
@@ -372,7 +372,7 @@ namespace Azure.Messaging.EventHubs.Tests
             public ShortWaitTimeMock(string connectionString,
                                      string consumerGroup,
                                      PartitionManager partitionManager,
-                                     EventProcessorOptions options) : base(connectionString, consumerGroup, partitionManager, options)
+                                     EventProcessorClientOptions options) : base(connectionString, consumerGroup, partitionManager, options)
             {
             }
         }

@@ -66,7 +66,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   The set of options to use for this partition pump.
         /// </summary>
         ///
-        private EventProcessorOptions Options { get; }
+        private EventProcessorClientOptions Options { get; }
 
         /// <summary>
         ///   A <see cref="CancellationTokenSource"/> instance to signal the request to cancel the current running task.
@@ -109,7 +109,7 @@ namespace Azure.Messaging.EventHubs.Processor
                                string consumerGroup,
                                PartitionContext partitionContext,
                                EventPosition startingPosition,
-                               EventProcessorOptions options)
+                               EventProcessorClientOptions options)
         {
             OwnerEventProcessor = eventProcessor;
             InnerClient = eventHubClient;

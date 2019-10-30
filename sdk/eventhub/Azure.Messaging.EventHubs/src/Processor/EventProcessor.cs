@@ -113,7 +113,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   The set of options to use for this event processor.
         /// </summary>
         ///
-        private EventProcessorOptions Options { get; }
+        private EventProcessorClientOptions Options { get; }
 
         /// <summary>
         ///   A <see cref="CancellationTokenSource"/> instance to signal the request to cancel the current running task.
@@ -202,7 +202,7 @@ namespace Azure.Messaging.EventHubs.Processor
         public EventProcessor(string connectionString,
                               string consumerGroup,
                               PartitionManager partitionManager,
-                              EventProcessorOptions options = default) : this(connectionString, null, consumerGroup, partitionManager, options)
+                              EventProcessorClientOptions options = default) : this(connectionString, null, consumerGroup, partitionManager, options)
         {
         }
 
@@ -226,7 +226,7 @@ namespace Azure.Messaging.EventHubs.Processor
                               string eventHubName,
                               string consumerGroup,
                               PartitionManager partitionManager,
-                              EventProcessorOptions options = default)
+                              EventProcessorClientOptions options = default)
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
@@ -236,7 +236,7 @@ namespace Azure.Messaging.EventHubs.Processor
             EventHubName = eventHubName;
             ConsumerGroup = consumerGroup;
             Manager = partitionManager;
-            Options = options?.Clone() ?? new EventProcessorOptions();
+            Options = options?.Clone() ?? new EventProcessorClientOptions();
 
             Identifier = Guid.NewGuid().ToString();
             PartitionPumps = new ConcurrentDictionary<string, PartitionPump>();
@@ -258,7 +258,7 @@ namespace Azure.Messaging.EventHubs.Processor
                               TokenCredential credential,
                               string consumerGroup,
                               PartitionManager partitionManager,
-                              EventProcessorOptions options = default)
+                              EventProcessorClientOptions options = default)
         {
             Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
@@ -271,7 +271,7 @@ namespace Azure.Messaging.EventHubs.Processor
             Credential = credential;
             ConsumerGroup = consumerGroup;
             Manager = partitionManager;
-            Options = options?.Clone() ?? new EventProcessorOptions();
+            Options = options?.Clone() ?? new EventProcessorClientOptions();
 
             Identifier = Guid.NewGuid().ToString();
             PartitionPumps = new ConcurrentDictionary<string, PartitionPump>();

@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
-    ///   The suite of tests for the <see cref="EventProcessorOptions" />
+    ///   The suite of tests for the <see cref="EventProcessorClientOptions" />
     ///   class.
     /// </summary>
     ///
@@ -16,20 +16,20 @@ namespace Azure.Messaging.EventHubs.Tests
     public class EventProcessorOptionsTests
     {
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessorOptions.Clone" />
+        ///   Verifies functionality of the <see cref="EventProcessorClientOptions.Clone" />
         ///   method.
         /// </summary>
         ///
         [Test]
         public void CloneProducesACopy()
         {
-            var options = new EventProcessorOptions
+            var options = new EventProcessorClientOptions
             {
                 MaximumMessageCount = 43,
                 MaximumReceiveWaitTime = TimeSpan.FromMinutes(65)
             };
 
-            EventProcessorOptions clone = options.Clone();
+            EventProcessorClientOptions clone = options.Clone();
 
             Assert.That(clone, Is.Not.Null, "The clone should not be null.");
             Assert.That(clone, Is.Not.SameAs(options), "The clone should be a different instance.");
@@ -38,7 +38,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///  Verifies that setting the <see cref="EventProcessorOptions.MaximumMessageCount" /> is
+        ///  Verifies that setting the <see cref="EventProcessorClientOptions.MaximumMessageCount" /> is
         ///  validated.
         /// </summary>
         ///
@@ -48,12 +48,12 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(0)]
         public void MaximumMessageCountIsValidated(int maximumMessageCount)
         {
-            var options = new EventProcessorOptions();
+            var options = new EventProcessorClientOptions();
             Assert.That(() => options.MaximumMessageCount = maximumMessageCount, Throws.InstanceOf<ArgumentOutOfRangeException>());
         }
 
         /// <summary>
-        ///  Verifies that setting the <see cref="EventProcessorOptions.MaximumReceiveWaitTime" /> is
+        ///  Verifies that setting the <see cref="EventProcessorClientOptions.MaximumReceiveWaitTime" /> is
         ///  validated.
         /// </summary>
         ///
@@ -64,19 +64,19 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(-10000)]
         public void MaximumReceiveWaitTimeIsValidated(int timeSpanDelta)
         {
-            var options = new EventProcessorOptions();
+            var options = new EventProcessorClientOptions();
             Assert.That(() => options.MaximumReceiveWaitTime = TimeSpan.FromMilliseconds(timeSpanDelta), Throws.InstanceOf<ArgumentOutOfRangeException>());
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessorOptions.MaximumReceiveWaitTime" />
+        ///   Verifies functionality of the <see cref="EventProcessorClientOptions.MaximumReceiveWaitTime" />
         ///   method.
         /// </summary>
         ///
         [Test]
         public void MaximumReceiveWaitTimeAllowsNull()
         {
-            var options = new EventProcessorOptions();
+            var options = new EventProcessorClientOptions();
             Assert.That(() => options.MaximumReceiveWaitTime = null, Throws.Nothing);
         }
     }

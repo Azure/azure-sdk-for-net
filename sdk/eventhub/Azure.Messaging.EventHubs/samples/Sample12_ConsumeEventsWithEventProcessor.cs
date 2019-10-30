@@ -58,7 +58,7 @@ namespace Azure.Messaging.EventHubs.Samples
                 // It's also possible to specify custom options upon event processor creation.  We don't want to wait more than
                 // 1 second for every set of events.
 
-                EventProcessorOptions eventProcessorOptions = new EventProcessorOptions
+                EventProcessorClientOptions eventProcessorOptions = new EventProcessorClientOptions
                 {
                     MaximumReceiveWaitTime = TimeSpan.FromSeconds(1)
                 };

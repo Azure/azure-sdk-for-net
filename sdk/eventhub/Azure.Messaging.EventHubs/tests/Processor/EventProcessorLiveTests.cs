@@ -822,7 +822,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             connectionString,
                             EventHubConsumer.DefaultConsumerGroupName,
-                            options: new EventProcessorOptions { MaximumReceiveWaitTime = TimeSpan.FromSeconds(maximumWaitTimeInSecs) },
+                            options: new EventProcessorClientOptions { MaximumReceiveWaitTime = TimeSpan.FromSeconds(maximumWaitTimeInSecs) },
                             onInitialize: initializationContext =>
                                 timestamps.TryAdd(initializationContext.Context.PartitionId, new List<DateTimeOffset> { DateTimeOffset.UtcNow }),
                             onProcessEvent: partitionEvent =>

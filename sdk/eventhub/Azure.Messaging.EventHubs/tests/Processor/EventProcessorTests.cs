@@ -53,7 +53,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         public static IEnumerable<object[]> ConstructorClonesOptionsCases()
         {
-            var options = new EventProcessorOptions
+            var options = new EventProcessorClientOptions
             {
                 MaximumMessageCount = 25,
                 MaximumReceiveWaitTime = TimeSpan.FromMilliseconds(427)
@@ -136,8 +136,8 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ConstructorCreatesDefaultOptions(ReadableOptionsMock eventProcessor,
                                                      string constructorDescription)
         {
-            var defaultOptions = new EventProcessorOptions();
-            EventProcessorOptions options = eventProcessor.Options;
+            var defaultOptions = new EventProcessorClientOptions();
+            EventProcessorClientOptions options = eventProcessor.Options;
 
             Assert.That(options, Is.Not.Null, $"The { constructorDescription } constructor should have set default options.");
             Assert.That(options, Is.Not.SameAs(defaultOptions), $"The { constructorDescription } constructor should not have the same options instance.");
@@ -153,7 +153,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         [TestCaseSource(nameof(ConstructorClonesOptionsCases))]
         public void ConstructorClonesOptions(ReadableOptionsMock eventProcessor,
-                                             EventProcessorOptions constructorOptions,
+                                             EventProcessorClientOptions constructorOptions,
                                              string constructorDescription)
         {
             var options = eventProcessor.Options;
@@ -275,15 +275,15 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         public class ReadableOptionsMock : EventProcessor
         {
-            public EventProcessorOptions Options =>
+            public EventProcessorClientOptions Options =>
                 typeof(EventProcessor)
                     .GetProperty(nameof(Options), BindingFlags.Instance | BindingFlags.NonPublic)
-                    .GetValue(this) as EventProcessorOptions;
+                    .GetValue(this) as EventProcessorClientOptions;
 
             public ReadableOptionsMock(string connectionString,
                                        string consumerGroup,
                                        PartitionManager partitionManager,
-                                       EventProcessorOptions options = default) : base(connectionString, consumerGroup, partitionManager, options)
+                                       EventProcessorClientOptions options = default) : base(connectionString, consumerGroup, partitionManager, options)
             {
             }
 
@@ -291,7 +291,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                        string eventHubName,
                                        string consumerGroup,
                                        PartitionManager partitionManager,
-                                       EventProcessorOptions options = default) : base(connectionString, eventHubName, consumerGroup, partitionManager, options)
+                                       EventProcessorClientOptions options = default) : base(connectionString, eventHubName, consumerGroup, partitionManager, options)
             {
             }
 
@@ -300,7 +300,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                        TokenCredential credential,
                                        string consumerGroup,
                                        PartitionManager partitionManager,
-                                       EventProcessorOptions options = default) : base(fullyQualifiedNamespace, eventHubName, credential, consumerGroup, partitionManager, options)
+                                       EventProcessorClientOptions options = default) : base(fullyQualifiedNamespace, eventHubName, credential, consumerGroup, partitionManager, options)
             {
             }
         }
