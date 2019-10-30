@@ -2,7 +2,7 @@
 
 Intended as a companion to the `Azure.Messaging.EventHubs` client library, the Azure Event Hubs Checkpoint Store for Azure Storage Blobs enables using an Azure Storage account as the durable persistence mechanism for an `EventProcessor`.  The constructs in this library plug into the `EventProcessor` allowing it to preserve its state, in the form of checkpoints, as Azure storage blobs.
 
-[Source code](.) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Messaging.EventHubs.CheckpointStore.Blob/) | [API reference documentation](https://azure.github.io/azure-sdk-for-net/api/Azure.Messaging.EventHubs.CheckpointStore.Blob.html) | [Product documentation](https://docs.microsoft.com/en-us/azure/event-hubs/)
+[Source code](.) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Messaging.EventHubs.CheckpointStore.Blob/) | [API reference documentation](https://azure.github.io/azure-sdk-for-net/eventhub.html) | [Product documentation](https://docs.microsoft.com/en-us/azure/event-hubs/)
 
 ## Getting started
 
