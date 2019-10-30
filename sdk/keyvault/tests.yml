@@ -25,13 +25,16 @@ jobs:
         versionSpec: '3.x'
         architecture: x64
 
-    - script: |
+    - pwsh: |
+        Write-Host "Upgrading pip"
         python -m pip install --upgrade pip
+
+        Write-Host "Installing azure-cli"
         pip install azure-cli
         az --version
       displayName: Update azure-cli
 
-    - script: az login --service-principal -u "$(net-keyvault-azure-client-id)" --password "$(net-keyvault-azure-client-secret)" --tenant "$(aad-azure-sdk-test-tenant-id)"
+    - pwsh: az login --service-principal -u "$(net-keyvault-azure-client-id)" --password "$(net-keyvault-azure-client-secret)" --tenant "$(aad-azure-sdk-test-tenant-id)"
       displayName: Log into azure-cli
 
     - pwsh: |
@@ -47,17 +50,16 @@ jobs:
         Write-Host "##vso[task.setvariable variable=AZURE_KEYVAULT_URL]https://$name.vault.azure.net"
       displayName: Generate resource name
 
-    - script: |
-        echo "Creating resource group $(net-keyvault-azure-keyvault-name)rg"
+    - pwsh: |
+        Write-Host "Creating resource group: $(net-keyvault-azure-keyvault-name)rg"
         az group create --name "$(net-keyvault-azure-keyvault-name)rg" --location westus --tags service-directory=keyvault test-resource=true
+        az group wait --name "$(net-keyvault-azure-keyvault-name)rg"
 
-        echo "Creating key vault $(net-keyvault-azure-keyvault-name)"
+        Write-Host "Creating key vault: $(net-keyvault-azure-keyvault-name)"
         az keyvault create --name "$(net-keyvault-azure-keyvault-name)" --resource-group "$(net-keyvault-azure-keyvault-name)rg" --location westus --enable-soft-delete --sku premium
-
-        echo "Done"
       displayName: Create Key Vault
 
-    - script: >
+    - pwsh: >
         az keyvault set-policy --name "$(net-keyvault-azure-keyvault-name)" --resource-group "$(net-keyvault-azure-keyvault-name)rg" --spn "$(net-keyvault-azure-client-id)"
         --certificate-permissions backup create delete deleteissuers get getissuers import list listissuers managecontacts manageissuers purge recover restore setissuers update
         --key-permissions backup create decrypt delete encrypt get import list purge recover restore sign unwrapKey update verify wrapKey
@@ -65,6 +67,6 @@ jobs:
       displayName: Set Key Vault permissions
 
     PostSteps:
-    - script: |
+    - pwsh: |
         az group delete --name "$(net-keyvault-azure-keyvault-name)rg" --yes
       displayName: Delete Key Vault
