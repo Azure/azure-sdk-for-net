@@ -16,23 +16,26 @@ namespace Azure.Storage.Files.DataLake
             new FileSystemItem()
             {
                 Name = containerItem.Name,
-                Properties = new FileSystemProperties()
-                {
-                    LastModified = containerItem.Properties.LastModified,
-                    LeaseStatus = containerItem.Properties.LeaseStatus.HasValue
-                        ? (Models.LeaseStatus)containerItem.Properties.LeaseStatus : default,
-                    LeaseState = containerItem.Properties.LeaseState.HasValue
-                        ? (Models.LeaseState)containerItem.Properties.LeaseState : default,
-                    LeaseDuration = containerItem.Properties.LeaseDuration.HasValue
-                        ? (Models.LeaseDurationType)containerItem.Properties.LeaseDuration : default,
-                    PublicAccess = containerItem.Properties.PublicAccess.HasValue
-                        ? (Models.PublicAccessType)containerItem.Properties.PublicAccess : default,
-                    HasImmutabilityPolicy = containerItem.Properties.HasImmutabilityPolicy,
-                    HasLegalHold = containerItem.Properties.HasLegalHold,
-                    ETag = containerItem.Properties.ETag
-                },
-                Metadata = containerItem.Metadata
+                Properties = containerItem.Properties.ToFileSystemProperties()
             };
+
+        internal static FileSystemProperties ToFileSystemProperties(this BlobContainerProperties containerProperties) =>
+                new FileSystemProperties()
+                {
+                    LastModified = containerProperties.LastModified,
+                    LeaseStatus = containerProperties.LeaseStatus.HasValue
+                        ? (Models.LeaseStatus)containerProperties.LeaseStatus : default,
+                    LeaseState = containerProperties.LeaseState.HasValue
+                        ? (Models.LeaseState)containerProperties.LeaseState : default,
+                    LeaseDuration = containerProperties.LeaseDuration.HasValue
+                        ? (Models.LeaseDurationType)containerProperties.LeaseDuration : default,
+                    PublicAccess = containerProperties.PublicAccess.HasValue
+                        ? (Models.PublicAccessType)containerProperties.PublicAccess : default,
+                    HasImmutabilityPolicy = containerProperties.HasImmutabilityPolicy,
+                    HasLegalHold = containerProperties.HasLegalHold,
+                    ETag = containerProperties.ETag,
+                    Metadata = containerProperties.Metadata
+                };
 
         internal static FileDownloadDetails ToFileDownloadDetails(this BlobDownloadDetails blobDownloadProperties) =>
             new FileDownloadDetails()
@@ -118,8 +121,8 @@ namespace Azure.Storage.Files.DataLake
             {
                 ContentType = pathHttpHeaders.ContentType,
                 ContentHash = pathHttpHeaders.ContentHash,
-                ContentEncoding = new string[] { pathHttpHeaders.ContentEncoding },
-                ContentLanguage = new string[] { pathHttpHeaders.ContentLanguage },
+                ContentEncoding = pathHttpHeaders.ContentEncoding,
+                ContentLanguage = pathHttpHeaders.ContentLanguage,
                 ContentDisposition = pathHttpHeaders.ContentDisposition,
                 CacheControl = pathHttpHeaders.CacheControl
             };

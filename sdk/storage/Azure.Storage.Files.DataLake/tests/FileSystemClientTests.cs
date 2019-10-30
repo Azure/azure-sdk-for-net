@@ -134,7 +134,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await fileSystem.CreateAsync(metadata: metadata);
 
             // Assert
-            Response<FileSystemItem> response = await fileSystem.GetPropertiesAsync();
+            Response<FileSystemProperties> response = await fileSystem.GetPropertiesAsync();
             AssertMetadataEquality(metadata, response.Value.Metadata);
 
             // Cleanup
@@ -152,8 +152,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             await fileSystem.CreateAsync(publicAccessType: Models.PublicAccessType.Blob);
 
             // Assert
-            Response<FileSystemItem> response = await fileSystem.GetPropertiesAsync();
-            Assert.AreEqual(Models.PublicAccessType.Blob, response.Value.Properties.PublicAccess);
+            Response<FileSystemProperties> response = await fileSystem.GetPropertiesAsync();
+            Assert.AreEqual(Models.PublicAccessType.Blob, response.Value.PublicAccess);
 
             // Cleanup
             await fileSystem.DeleteAsync();
@@ -356,10 +356,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem, publicAccessType: Models.PublicAccessType.Container))
             {
                 // Act
-                Response<FileSystemItem> response = await fileSystem.GetPropertiesAsync();
+                Response<FileSystemProperties> response = await fileSystem.GetPropertiesAsync();
 
                 // Assert
-                Assert.AreEqual(Models.PublicAccessType.Container, response.Value.Properties.PublicAccess);
+                Assert.AreEqual(Models.PublicAccessType.Container, response.Value.PublicAccess);
             }
         }
 
@@ -388,7 +388,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await fileSystem.SetMetadataAsync(metadata);
 
                 // Assert
-                Response<FileSystemItem> response = await fileSystem.GetPropertiesAsync();
+                Response<FileSystemProperties> response = await fileSystem.GetPropertiesAsync();
                 AssertMetadataEquality(metadata, response.Value.Metadata);
             }
         }
@@ -505,10 +505,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 // Assert
                 Response<PathProperties> response = await file.GetPropertiesAsync();
                 Assert.AreEqual(ContentType, response.Value.ContentType);
-                Assert.AreEqual(1, response.Value.ContentEncoding.Count());
-                Assert.AreEqual(ContentEncoding, response.Value.ContentEncoding.First());
-                Assert.AreEqual(1, response.Value.ContentLanguage.Count());
-                Assert.AreEqual(ContentLanguage, response.Value.ContentLanguage.First());
+                Assert.AreEqual(ContentEncoding, response.Value.ContentEncoding);
+                Assert.AreEqual(ContentLanguage, response.Value.ContentLanguage);
                 Assert.AreEqual(ContentDisposition, response.Value.ContentDisposition);
                 Assert.AreEqual(CacheControl, response.Value.CacheControl);
             }
@@ -640,10 +638,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 // Assert
                 Response<PathProperties> response = await directory.GetPropertiesAsync();
                 Assert.AreEqual(ContentType, response.Value.ContentType);
-                Assert.AreEqual(1, response.Value.ContentEncoding.Count());
-                Assert.AreEqual(ContentEncoding, response.Value.ContentEncoding.First());
-                Assert.AreEqual(1, response.Value.ContentLanguage.Count());
-                Assert.AreEqual(ContentLanguage, response.Value.ContentLanguage.First());
+                Assert.AreEqual(ContentEncoding, response.Value.ContentEncoding);
+                Assert.AreEqual(ContentLanguage, response.Value.ContentLanguage);
                 Assert.AreEqual(ContentDisposition, response.Value.ContentDisposition);
                 Assert.AreEqual(CacheControl, response.Value.CacheControl);
             }
@@ -932,10 +928,10 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Response<ReleasedObjectInfo> releaseResponse = await InstrumentClient(fileSystem.GetDataLakeLeaseClient(leaseResponse.Value.LeaseId)).ReleaseAsync();
 
                 // Assert
-                Response<FileSystemItem> response = await fileSystem.GetPropertiesAsync();
+                Response<FileSystemProperties> response = await fileSystem.GetPropertiesAsync();
 
-                Assert.AreEqual(LeaseStatus.Unlocked, response.Value.Properties.LeaseStatus);
-                Assert.AreEqual(LeaseState.Available, response.Value.Properties.LeaseState);
+                Assert.AreEqual(LeaseStatus.Unlocked, response.Value.LeaseStatus);
+                Assert.AreEqual(LeaseState.Available, response.Value.LeaseState);
             }
         }
 
@@ -1137,9 +1133,9 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Response<DataLakeLease> breakResponse = await InstrumentClient(fileSystem.GetDataLakeLeaseClient()).BreakAsync(breakPeriod);
 
                 // Assert
-                Response<FileSystemItem> response = await fileSystem.GetPropertiesAsync();
-                Assert.AreEqual(LeaseStatus.Unlocked, response.Value.Properties.LeaseStatus);
-                Assert.AreEqual(LeaseState.Broken, response.Value.Properties.LeaseState);
+                Response<FileSystemProperties> response = await fileSystem.GetPropertiesAsync();
+                Assert.AreEqual(LeaseStatus.Unlocked, response.Value.LeaseStatus);
+                Assert.AreEqual(LeaseState.Broken, response.Value.LeaseState);
             }
         }
 

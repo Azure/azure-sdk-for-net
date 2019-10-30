@@ -102,13 +102,11 @@ namespace Azure.Storage.Files.DataLake.Models
         /// </summary>
         public static FileSystemItem FileSystemItem(
             string name,
-            FileSystemProperties properties,
-            IDictionary<string, string> metadata)
+            FileSystemProperties properties)
             => new FileSystemItem()
             {
                 Name = name,
-                Properties = properties,
-                Metadata = metadata
+                Properties = properties
             };
         #endregion FileSystemItem
 
@@ -284,9 +282,9 @@ namespace Azure.Storage.Files.DataLake.Models
             string contentType,
             ETag eTag,
             byte[] contentHash,
-            IEnumerable<string> contentEncoding,
+            string contentEncoding,
             string contentDisposition,
-            IEnumerable<string> contentLanguage,
+            string contentLanguage,
             string cacheControl,
             string acceptRanges,
             bool isServerEncrypted,

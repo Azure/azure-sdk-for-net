@@ -80,10 +80,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 // Assert
                 Response<PathProperties> response = await directory.GetPropertiesAsync();
                 Assert.AreEqual(ContentType, response.Value.ContentType);
-                Assert.AreEqual(1, response.Value.ContentEncoding.Count());
-                Assert.AreEqual(ContentEncoding, response.Value.ContentEncoding.First());
-                Assert.AreEqual(1, response.Value.ContentLanguage.Count());
-                Assert.AreEqual(ContentLanguage, response.Value.ContentLanguage.First());
+                Assert.AreEqual(ContentEncoding, response.Value.ContentEncoding);
+                Assert.AreEqual(ContentLanguage, response.Value.ContentLanguage);
                 Assert.AreEqual(ContentDisposition, response.Value.ContentDisposition);
                 Assert.AreEqual(CacheControl, response.Value.CacheControl);
             }
@@ -947,10 +945,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Response<PathProperties> response = await directory.GetPropertiesAsync();
                 Assert.AreEqual(constants.ContentType, response.Value.ContentType);
                 TestHelper.AssertSequenceEqual(constants.ContentMD5, response.Value.ContentHash);
-                Assert.AreEqual(1, response.Value.ContentEncoding.Count());
-                Assert.AreEqual(constants.ContentEncoding, response.Value.ContentEncoding.First());
-                Assert.AreEqual(1, response.Value.ContentLanguage.Count());
-                Assert.AreEqual(constants.ContentLanguage, response.Value.ContentLanguage.First());
+                Assert.AreEqual(constants.ContentEncoding, response.Value.ContentEncoding);
+                Assert.AreEqual(constants.ContentLanguage, response.Value.ContentLanguage);
                 Assert.AreEqual(constants.ContentDisposition, response.Value.ContentDisposition);
                 Assert.AreEqual(constants.CacheControl, response.Value.CacheControl);
             }
@@ -1174,10 +1170,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 // Assert
                 Response<PathProperties> response = await file.GetPropertiesAsync();
                 Assert.AreEqual(ContentType, response.Value.ContentType);
-                Assert.AreEqual(1, response.Value.ContentEncoding.Count());
-                Assert.AreEqual(ContentEncoding, response.Value.ContentEncoding.First());
-                Assert.AreEqual(1, response.Value.ContentLanguage.Count());
-                Assert.AreEqual(ContentLanguage, response.Value.ContentLanguage.First());
+                Assert.AreEqual(ContentEncoding, response.Value.ContentEncoding);
+                Assert.AreEqual(ContentLanguage, response.Value.ContentLanguage);
                 Assert.AreEqual(ContentDisposition, response.Value.ContentDisposition);
                 Assert.AreEqual(CacheControl, response.Value.CacheControl);
             }
@@ -1317,10 +1311,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 // Assert
                 Response<PathProperties> response = await subDirectory.GetPropertiesAsync();
                 Assert.AreEqual(ContentType, response.Value.ContentType);
-                Assert.AreEqual(1, response.Value.ContentEncoding.Count());
-                Assert.AreEqual(ContentEncoding, response.Value.ContentEncoding.First());
-                Assert.AreEqual(1, response.Value.ContentLanguage.Count());
-                Assert.AreEqual(ContentLanguage, response.Value.ContentLanguage.First());
+                Assert.AreEqual(ContentEncoding, response.Value.ContentEncoding);
+                Assert.AreEqual(ContentLanguage, response.Value.ContentLanguage);
                 Assert.AreEqual(ContentDisposition, response.Value.ContentDisposition);
                 Assert.AreEqual(CacheControl, response.Value.CacheControl);
             }

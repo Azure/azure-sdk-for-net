@@ -341,7 +341,7 @@ namespace Azure.Storage.Queues
                 try
                 {
                     IEnumerable<ListQueuesIncludeType> includeTypes = traits.AsIncludeTypes();
-                    return await QueueRestClient.Service.ListQueuesSegmentAsync(
+                    Response<QueuesSegment> response = await QueueRestClient.Service.ListQueuesSegmentAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
@@ -352,6 +352,15 @@ namespace Azure.Storage.Queues
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
+                    if ((traits & QueueTraits.Metadata) != QueueTraits.Metadata)
+                    {
+                        IEnumerable<QueueItem> queueItems = response.Value.QueueItems;
+                        foreach (QueueItem queueItem in queueItems)
+                        {
+                            queueItem.Metadata = null;
+                        }
+                    }
+                    return response;
                 }
                 catch (Exception ex)
                 {

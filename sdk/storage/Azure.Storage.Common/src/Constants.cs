@@ -23,14 +23,33 @@ namespace Azure.Storage
         /// </summary>
         public const string DefaultSasVersion = "2019-02-02";
 
+        /// <summary>
+        /// The default size of staged blocks when uploading small blobs.
+        /// </summary>
         public const int DefaultBufferSize = 4 * Constants.MB;
-        public const int DefaultMaxTotalBufferAllowed = 100 * Constants.MB;
+
+        /// <summary>
+        /// The size of staged blocks when uploading large blobs.
+        /// </summary>
+        public const int LargeBufferSize = 8 * Constants.MB;
+
+        /// <summary>
+        /// The threshold where we switch from staging <see cref="DefaultBufferSize"/>
+        /// buffers to staging <see cref="LargeBufferSize"/> buffers.
+        /// </summary>
+        public const int LargeUploadThreshold = 100 * Constants.MB;
 
         /// <summary>
         /// Different .NET implementations have different default sizes for <see cref="System.IO.Stream.CopyTo(System.IO.Stream)"/>
         /// and it's overloads. This is the default for .NET Core to be applied everywhere for test consistency.
         /// </summary>
         public const int DefaultStreamCopyBufferSize = 81920;
+
+        /// <summary>
+        /// The size of the buffer to use when copying streams during a
+        /// download operation.
+        /// </summary>
+        public const int DefaultDownloadCopyBufferSize = 16384;
 
         public const string CloseAllHandles = "*";
         public const string Wildcard = "*";
@@ -149,7 +168,7 @@ namespace Azure.Storage
 
             internal static class Block
             {
-                public const int DefaultConcurrentTransfersCount = 4; // TODO What should the value really be?  Can we get rid of it with a different dispatch algorithm? (probably yes)
+                public const int DefaultConcurrentTransfersCount = 5;
                 public const int MaxUploadBytes = 256 * Constants.MB; // 256MB
                 public const int MaxDownloadBytes = 256 * Constants.MB; // 256MB
                 public const int MaxStageBytes = 100 * Constants.MB; // 100MB

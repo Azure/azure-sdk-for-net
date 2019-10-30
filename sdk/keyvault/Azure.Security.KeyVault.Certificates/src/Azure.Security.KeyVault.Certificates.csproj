@@ -7,13 +7,9 @@
     <PackageTags>Microsoft Azure Key Vault Certificates</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-      Refactored several classes based on feedback, including:
-      * CertificateBase is now CertificateProperties.
-      * Certificate contains a Properties property of type CertificateProperties.
-      * IssuerBase is now IssuerProperties.
-      * Issuer contains a Properties property of type IssuerProperties.
+      - Updated to work with the 1.0.0 release versions of Azure.Core and Azure.Identity.
 
-      See https://github.com/Azure/azure-sdk-for-net/tree/Azure.Security.KeyVault.Certificates_4.0.0-preview.5/sdk/keyvault/Azure.Security.KeyVault.Certificates/ChangeLog.md for more details.
+      See https://github.com/Azure/azure-sdk-for-net/tree/Azure.Security.KeyVault.Certificates_4.0.0-preview.6/sdk/keyvault/Azure.Security.KeyVault.Certificates/ChangeLog.md for more detailed changes.
       ]]>
     </PackageReleaseNotes>
 

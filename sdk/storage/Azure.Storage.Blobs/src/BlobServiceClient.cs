@@ -398,7 +398,7 @@ namespace Azure.Storage.Blobs
                     $"{nameof(traits)}: {traits}");
                 try
                 {
-                    return await BlobRestClient.Service.ListBlobContainersSegmentAsync(
+                    Response<BlobContainersSegment> response = await BlobRestClient.Service.ListBlobContainersSegmentAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
@@ -409,6 +409,15 @@ namespace Azure.Storage.Blobs
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
+                    if ((traits & BlobContainerTraits.Metadata) != BlobContainerTraits.Metadata)
+                    {
+                        IEnumerable<BlobContainerItem> containerItems = response.Value.BlobContainerItems;
+                        foreach (BlobContainerItem containerItem in containerItems)
+                        {
+                            containerItem.Properties.Metadata = null;
+                        }
+                    }
+                    return response;
                 }
                 catch (Exception ex)
                 {
