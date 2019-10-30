@@ -11,7 +11,7 @@ namespace Microsoft.Azure.EventHubs.Amqp
     {
         static readonly TimeSpan SendTokenTimeout = TimeSpan.FromMinutes(1);
         static readonly TimeSpan TokenRefreshBuffer = TimeSpan.FromSeconds(10);
-        static readonly TimeSpan MaxValidityInterval = (TimeSpan.FromMilliseconds(UInt32.MaxValue - 1);
+        static readonly TimeSpan MaxValidityInterval = TimeSpan.FromMilliseconds(UInt32.MaxValue - 1);
 
         readonly Timer validityTimer;
         readonly AmqpEventHubClient eventHubClient;
