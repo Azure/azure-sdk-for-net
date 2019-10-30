@@ -27,7 +27,7 @@ namespace Azure.Messaging.EventHubs.Samples
         ///   A short description of the sample.
         /// </summary>
         ///
-        public string Description { get; } = "An introduction to consuming events, using a simple Event Hub consumer.";
+        public string Description { get; } = "An introduction to consuming events, using a simple Event Hub consumer client.";
 
         /// <summary>
         ///   Runs the sample using the specified Event Hubs connection information.
