@@ -135,10 +135,12 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await fileSystem.SetMetadataAsync(metadata);
 
                 // Act
-                FileSystemItem first = await service.GetFileSystemsAsync(FileSystemTraits.Metadata).FirstAsync();
+                IList<FileSystemItem> items = await service.GetFileSystemsAsync(FileSystemTraits.Metadata).ToListAsync();
 
                 // Assert
-                Assert.IsNotNull(first.Metadata);
+                AssertMetadataEquality(
+                    metadata,
+                    items.Where(i => i.Name == fileSystem.Name).FirstOrDefault().Properties.Metadata);
             }
         }
 
@@ -167,7 +169,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             try
             {
                 DataLakeFileSystemClient fileSystem = InstrumentClient((await service.CreateFileSystemAsync(name)).Value);
-                Response<FileSystemItem> properties = await fileSystem.GetPropertiesAsync();
+                Response<FileSystemProperties> properties = await fileSystem.GetPropertiesAsync();
                 Assert.IsNotNull(properties.Value);
             }
             finally

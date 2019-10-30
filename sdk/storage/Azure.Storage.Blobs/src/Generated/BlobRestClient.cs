@@ -10096,6 +10096,7 @@ namespace Azure.Storage.Blobs
             /// <param name="body">Initial data</param>
             /// <param name="contentLength">The length of the request.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="transactionalContentHash">Specify the transactional md5 for the body, to be validated by the service.</param>
             /// <param name="blobContentType">Optional. Sets the blob's content type. If specified, this property is stored with the blob and returned with a read request.</param>
             /// <param name="blobContentEncoding">Optional. Sets the blob's content encoding. If specified, this property is stored with the blob and returned with a read request.</param>
             /// <param name="blobContentLanguage">Optional. Set the blob's content language. If specified, this property is stored with the blob and returned with a read request.</param>
@@ -10125,6 +10126,7 @@ namespace Azure.Storage.Blobs
                 System.IO.Stream body,
                 long contentLength,
                 int? timeout = default,
+                byte[] transactionalContentHash = default,
                 string blobContentType = default,
                 string blobContentEncoding = default,
                 string blobContentLanguage = default,
@@ -10157,6 +10159,7 @@ namespace Azure.Storage.Blobs
                         body,
                         contentLength,
                         timeout,
+                        transactionalContentHash,
                         blobContentType,
                         blobContentEncoding,
                         blobContentLanguage,
@@ -10210,6 +10213,7 @@ namespace Azure.Storage.Blobs
             /// <param name="body">Initial data</param>
             /// <param name="contentLength">The length of the request.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="transactionalContentHash">Specify the transactional md5 for the body, to be validated by the service.</param>
             /// <param name="blobContentType">Optional. Sets the blob's content type. If specified, this property is stored with the blob and returned with a read request.</param>
             /// <param name="blobContentEncoding">Optional. Sets the blob's content encoding. If specified, this property is stored with the blob and returned with a read request.</param>
             /// <param name="blobContentLanguage">Optional. Set the blob's content language. If specified, this property is stored with the blob and returned with a read request.</param>
@@ -10234,6 +10238,7 @@ namespace Azure.Storage.Blobs
                 System.IO.Stream body,
                 long contentLength,
                 int? timeout = default,
+                byte[] transactionalContentHash = default,
                 string blobContentType = default,
                 string blobContentEncoding = default,
                 string blobContentLanguage = default,
@@ -10275,6 +10280,7 @@ namespace Azure.Storage.Blobs
                 _request.Headers.SetValue("x-ms-blob-type", "BlockBlob");
                 _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
+                if (transactionalContentHash != null) { _request.Headers.SetValue("Content-MD5", System.Convert.ToBase64String(transactionalContentHash)); }
                 if (blobContentType != null) { _request.Headers.SetValue("x-ms-blob-content-type", blobContentType); }
                 if (blobContentEncoding != null) { _request.Headers.SetValue("x-ms-blob-content-encoding", blobContentEncoding); }
                 if (blobContentLanguage != null) { _request.Headers.SetValue("x-ms-blob-content-language", blobContentLanguage); }
@@ -13317,11 +13323,6 @@ namespace Azure.Storage.Blobs.Models
         public Azure.Storage.Blobs.Models.BlobContainerProperties Properties { get; internal set; }
 
         /// <summary>
-        /// Metadata
-        /// </summary>
-        public System.Collections.Generic.IDictionary<string, string> Metadata { get; internal set; }
-
-        /// <summary>
         /// Creates a new BlobContainerItem instance
         /// </summary>
         internal BlobContainerItem()
@@ -13338,7 +13339,6 @@ namespace Azure.Storage.Blobs.Models
             if (!skipInitialization)
             {
                 Properties = new Azure.Storage.Blobs.Models.BlobContainerProperties();
-                Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
             }
         }
 
@@ -13362,15 +13362,6 @@ namespace Azure.Storage.Blobs.Models
             {
                 _value.Properties = Azure.Storage.Blobs.Models.BlobContainerProperties.FromXml(_child);
             }
-            _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-            _child = element.Element(System.Xml.Linq.XName.Get("Metadata", ""));
-            if (_child != null)
-            {
-                foreach (System.Xml.Linq.XElement _pair in _child.Elements())
-                {
-                    _value.Metadata[_pair.Name.LocalName] = _pair.Value;
-                }
-            }
             CustomizeFromXml(element, _value);
             return _value;
         }
@@ -13388,14 +13379,12 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public static BlobContainerItem BlobContainerItem(
             string name,
-            Azure.Storage.Blobs.Models.BlobContainerProperties properties,
-            System.Collections.Generic.IDictionary<string, string> metadata = default)
+            Azure.Storage.Blobs.Models.BlobContainerProperties properties)
         {
             return new BlobContainerItem()
             {
                 Name = name,
                 Properties = properties,
-                Metadata = metadata,
             };
         }
     }
@@ -13451,10 +13440,29 @@ namespace Azure.Storage.Blobs.Models
         public Azure.ETag ETag { get; internal set; }
 
         /// <summary>
-        /// Prevent direct instantiation of BlobContainerProperties instances.
-        /// You can use BlobsModelFactory.BlobContainerProperties instead.
+        /// Metadata
         /// </summary>
-        internal BlobContainerProperties() { }
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get; internal set; }
+
+        /// <summary>
+        /// Creates a new BlobContainerProperties instance
+        /// </summary>
+        internal BlobContainerProperties()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new BlobContainerProperties instance
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal BlobContainerProperties(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+            }
+        }
 
         /// <summary>
         /// Deserializes XML into a new BlobContainerProperties instance.
@@ -13465,7 +13473,7 @@ namespace Azure.Storage.Blobs.Models
         {
             System.Diagnostics.Debug.Assert(element != null);
             System.Xml.Linq.XElement _child;
-            Azure.Storage.Blobs.Models.BlobContainerProperties _value = new Azure.Storage.Blobs.Models.BlobContainerProperties();
+            Azure.Storage.Blobs.Models.BlobContainerProperties _value = new Azure.Storage.Blobs.Models.BlobContainerProperties(true);
             _child = element.Element(System.Xml.Linq.XName.Get("Last-Modified", ""));
             if (_child != null)
             {
@@ -13506,6 +13514,15 @@ namespace Azure.Storage.Blobs.Models
             {
                 _value.ETag = new Azure.ETag(_child.Value);
             }
+            _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+            _child = element.Element(System.Xml.Linq.XName.Get("Metadata", ""));
+            if (_child != null)
+            {
+                foreach (System.Xml.Linq.XElement _pair in _child.Elements())
+                {
+                    _value.Metadata[_pair.Name.LocalName] = _pair.Value;
+                }
+            }
             CustomizeFromXml(element, _value);
             return _value;
         }
@@ -13529,7 +13546,8 @@ namespace Azure.Storage.Blobs.Models
             Azure.Storage.Blobs.Models.LeaseDurationType? leaseDuration = default,
             Azure.Storage.Blobs.Models.PublicAccessType? publicAccess = default,
             bool? hasImmutabilityPolicy = default,
-            bool? hasLegalHold = default)
+            bool? hasLegalHold = default,
+            System.Collections.Generic.IDictionary<string, string> metadata = default)
         {
             return new BlobContainerProperties()
             {
@@ -13541,6 +13559,7 @@ namespace Azure.Storage.Blobs.Models
                 PublicAccess = publicAccess,
                 HasImmutabilityPolicy = hasImmutabilityPolicy,
                 HasLegalHold = hasLegalHold,
+                Metadata = metadata,
             };
         }
     }
@@ -14844,11 +14863,6 @@ namespace Azure.Storage.Blobs.Models
     public partial class BlobItemProperties
     {
         /// <summary>
-        /// Creation-Time
-        /// </summary>
-        public System.DateTimeOffset? CreationTime { get; internal set; }
-
-        /// <summary>
         /// Last-Modified
         /// </summary>
         public System.DateTimeOffset? LastModified { get; internal set; }
@@ -14936,11 +14950,6 @@ namespace Azure.Storage.Blobs.Models
         public string CopyProgress { get; internal set; }
 
         /// <summary>
-        /// CopyCompletionTime
-        /// </summary>
-        public System.DateTimeOffset? CopyCompletionTime { get; internal set; }
-
-        /// <summary>
         /// CopyStatusDescription
         /// </summary>
         public string CopyStatusDescription { get; internal set; }
@@ -14959,11 +14968,6 @@ namespace Azure.Storage.Blobs.Models
         /// DestinationSnapshot
         /// </summary>
         public string DestinationSnapshot { get; internal set; }
-
-        /// <summary>
-        /// DeletedTime
-        /// </summary>
-        public System.DateTimeOffset? DeletedTime { get; internal set; }
 
         /// <summary>
         /// RemainingRetentionDays
@@ -14991,14 +14995,29 @@ namespace Azure.Storage.Blobs.Models
         public string CustomerProvidedKeySha256 { get; internal set; }
 
         /// <summary>
-        /// AccessTierChangeTime
-        /// </summary>
-        public System.DateTimeOffset? AccessTierChangedOn { get; internal set; }
-
-        /// <summary>
         /// ETag
         /// </summary>
         public Azure.ETag? ETag { get; internal set; }
+
+        /// <summary>
+        /// CreatedOn
+        /// </summary>
+        public System.DateTimeOffset? CreatedOn { get; internal set; }
+
+        /// <summary>
+        /// CopyCompletedOn
+        /// </summary>
+        public System.DateTimeOffset? CopyCompletedOn { get; internal set; }
+
+        /// <summary>
+        /// DeletedOn
+        /// </summary>
+        public System.DateTimeOffset? DeletedOn { get; internal set; }
+
+        /// <summary>
+        /// AccessTierChangedOn
+        /// </summary>
+        public System.DateTimeOffset? AccessTierChangedOn { get; internal set; }
 
         /// <summary>
         /// Prevent direct instantiation of BlobItemProperties instances.
@@ -15016,11 +15035,6 @@ namespace Azure.Storage.Blobs.Models
             System.Diagnostics.Debug.Assert(element != null);
             System.Xml.Linq.XElement _child;
             Azure.Storage.Blobs.Models.BlobItemProperties _value = new Azure.Storage.Blobs.Models.BlobItemProperties();
-            _child = element.Element(System.Xml.Linq.XName.Get("Creation-Time", ""));
-            if (_child != null)
-            {
-                _value.CreationTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
             _child = element.Element(System.Xml.Linq.XName.Get("Last-Modified", ""));
             if (_child != null)
             {
@@ -15106,11 +15120,6 @@ namespace Azure.Storage.Blobs.Models
             {
                 _value.CopyProgress = _child.Value;
             }
-            _child = element.Element(System.Xml.Linq.XName.Get("CopyCompletionTime", ""));
-            if (_child != null)
-            {
-                _value.CopyCompletionTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
             _child = element.Element(System.Xml.Linq.XName.Get("CopyStatusDescription", ""));
             if (_child != null)
             {
@@ -15130,11 +15139,6 @@ namespace Azure.Storage.Blobs.Models
             if (_child != null)
             {
                 _value.DestinationSnapshot = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("DeletedTime", ""));
-            if (_child != null)
-            {
-                _value.DeletedTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("RemainingRetentionDays", ""));
             if (_child != null)
@@ -15161,15 +15165,30 @@ namespace Azure.Storage.Blobs.Models
             {
                 _value.CustomerProvidedKeySha256 = _child.Value;
             }
-            _child = element.Element(System.Xml.Linq.XName.Get("AccessTierChangeTime", ""));
-            if (_child != null)
-            {
-                _value.AccessTierChangedOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
             _child = element.Element(System.Xml.Linq.XName.Get("Etag", ""));
             if (_child != null)
             {
                 _value.ETag = new Azure.ETag(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Creation-Time", ""));
+            if (_child != null)
+            {
+                _value.CreatedOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("CopyCompletionTime", ""));
+            if (_child != null)
+            {
+                _value.CopyCompletedOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("DeletedTime", ""));
+            if (_child != null)
+            {
+                _value.DeletedOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("AccessTierChangeTime", ""));
+            if (_child != null)
+            {
+                _value.AccessTierChangedOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
             }
             CustomizeFromXml(element, _value);
             return _value;
@@ -15188,8 +15207,7 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public static BlobItemProperties BlobItemProperties(
             bool accessTierInferred,
-            Azure.Storage.Blobs.Models.CopyStatus? copyStatus = default,
-            long? contentLength = default,
+            System.Uri copySource = default,
             string contentType = default,
             string contentEncoding = default,
             string contentLanguage = default,
@@ -15202,28 +15220,28 @@ namespace Azure.Storage.Blobs.Models
             Azure.Storage.Blobs.Models.LeaseState? leaseState = default,
             Azure.Storage.Blobs.Models.LeaseDurationType? leaseDuration = default,
             string copyId = default,
-            System.DateTimeOffset? lastModified = default,
-            System.Uri copySource = default,
+            Azure.Storage.Blobs.Models.CopyStatus? copyStatus = default,
+            long? contentLength = default,
             string copyProgress = default,
-            System.DateTimeOffset? copyCompletionTime = default,
             string copyStatusDescription = default,
             bool? serverEncrypted = default,
             bool? incrementalCopy = default,
             string destinationSnapshot = default,
-            System.DateTimeOffset? deletedTime = default,
             int? remainingRetentionDays = default,
             Azure.Storage.Blobs.Models.AccessTier? accessTier = default,
-            System.DateTimeOffset? creationTime = default,
+            System.DateTimeOffset? lastModified = default,
             Azure.Storage.Blobs.Models.ArchiveStatus? archiveStatus = default,
             string customerProvidedKeySha256 = default,
-            System.DateTimeOffset? accessTierChangeTime = default,
-            Azure.ETag? eTag = default)
+            Azure.ETag? eTag = default,
+            System.DateTimeOffset? createdOn = default,
+            System.DateTimeOffset? copyCompletedOn = default,
+            System.DateTimeOffset? deletedOn = default,
+            System.DateTimeOffset? accessTierChangedOn = default)
         {
             return new BlobItemProperties()
             {
                 AccessTierInferred = accessTierInferred,
-                CopyStatus = copyStatus,
-                ContentLength = contentLength,
+                CopySource = copySource,
                 ContentType = contentType,
                 ContentEncoding = contentEncoding,
                 ContentLanguage = contentLanguage,
@@ -15236,22 +15254,23 @@ namespace Azure.Storage.Blobs.Models
                 LeaseState = leaseState,
                 LeaseDuration = leaseDuration,
                 CopyId = copyId,
-                LastModified = lastModified,
-                CopySource = copySource,
+                CopyStatus = copyStatus,
+                ContentLength = contentLength,
                 CopyProgress = copyProgress,
-                CopyCompletionTime = copyCompletionTime,
                 CopyStatusDescription = copyStatusDescription,
                 ServerEncrypted = serverEncrypted,
                 IncrementalCopy = incrementalCopy,
                 DestinationSnapshot = destinationSnapshot,
-                DeletedTime = deletedTime,
                 RemainingRetentionDays = remainingRetentionDays,
                 AccessTier = accessTier,
-                CreationTime = creationTime,
+                LastModified = lastModified,
                 ArchiveStatus = archiveStatus,
                 CustomerProvidedKeySha256 = customerProvidedKeySha256,
-                AccessTierChangedOn = accessTierChangeTime,
                 ETag = eTag,
+                CreatedOn = createdOn,
+                CopyCompletedOn = copyCompletedOn,
+                DeletedOn = deletedOn,
+                AccessTierChangedOn = accessTierChangedOn,
             };
         }
     }
@@ -15690,14 +15709,14 @@ namespace Azure.Storage.Blobs.Models
             bool isServerEncrypted,
             string copyStatusDescription,
             string encryptionKeySha256,
-            System.DateTimeOffset copyCompletionTime,
+            System.DateTimeOffset copyCompletedOn,
             string accessTier,
             Azure.Storage.Blobs.Models.BlobType blobType,
             bool accessTierInferred,
             System.Collections.Generic.IDictionary<string, string> metadata,
             string archiveStatus,
-            System.DateTimeOffset creationTime,
-            System.DateTimeOffset accessTierChangeTime,
+            System.DateTimeOffset createdOn,
+            System.DateTimeOffset accessTierChangedOn,
             string contentType)
         {
             return new BlobProperties()
@@ -15725,14 +15744,14 @@ namespace Azure.Storage.Blobs.Models
                 IsServerEncrypted = isServerEncrypted,
                 CopyStatusDescription = copyStatusDescription,
                 EncryptionKeySha256 = encryptionKeySha256,
-                CopyCompletedOn = copyCompletionTime,
+                CopyCompletedOn = copyCompletedOn,
                 AccessTier = accessTier,
                 BlobType = blobType,
                 AccessTierInferred = accessTierInferred,
                 Metadata = metadata,
                 ArchiveStatus = archiveStatus,
-                CreatedOn = creationTime,
-                AccessTierChangedOn = accessTierChangeTime,
+                CreatedOn = createdOn,
+                AccessTierChangedOn = accessTierChangedOn,
                 ContentType = contentType,
             };
         }

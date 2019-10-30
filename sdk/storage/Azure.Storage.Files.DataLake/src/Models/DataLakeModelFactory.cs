@@ -102,13 +102,11 @@ namespace Azure.Storage.Files.DataLake.Models
         /// </summary>
         public static FileSystemItem FileSystemItem(
             string name,
-            FileSystemProperties properties,
-            IDictionary<string, string> metadata)
+            FileSystemProperties properties)
             => new FileSystemItem()
             {
                 Name = name,
-                Properties = properties,
-                Metadata = metadata
+                Properties = properties
             };
         #endregion FileSystemItem
 

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core.Testing;
 using Azure.Storage.Files.Models;
 using Azure.Storage.Files.Tests;
 using Azure.Storage.Test;
@@ -141,6 +142,33 @@ namespace Azure.Storage.Files.Test
             Assert.AreNotEqual(0, shares.Count);
             Assert.AreEqual(shares.Count, shares.Select(c => c.Name).Distinct().Count());
             Assert.IsTrue(shares.Any(c => share.Uri == service.GetShareClient(c.Name).Uri));
+            Assert.IsTrue(shares.All(c => c.Properties.Metadata == null));
+        }
+
+        [Test]
+        public async Task ListSharesSegmentAsync_Metadata()
+        {
+            // Arrange
+            FileServiceClient service = GetServiceClient_SharedKey();
+            IDictionary<string, string> metadata = BuildMetadata();
+
+            // Ensure at least one share
+            await using DisposingShare test = await GetTestShareAsync(service, metadata: metadata);
+            ShareClient share = test.Share;
+
+            var shares = new List<ShareItem>();
+            await foreach (Page<ShareItem> page in service.GetSharesAsync(ShareTraits.Metadata).AsPages())
+            {
+                shares.AddRange(page.Values);
+            }
+
+            // Assert
+            Assert.AreNotEqual(0, shares.Count);
+            Assert.AreEqual(shares.Count, shares.Select(c => c.Name).Distinct().Count());
+            Assert.IsTrue(shares.Any(c => share.Uri == service.GetShareClient(c.Name).Uri));
+            AssertMetadataEquality(
+                metadata,
+                shares.Where(s => s.Name == test.Share.Name).FirstOrDefault().Properties.Metadata);
         }
 
         [Test]
