@@ -45,8 +45,8 @@ stages:
       safeName: AzureStorageBlobsBatch
     - name: Azure.Storage.Common
       safeName: AzureStorageCommon
-    - name: Azure.Storage.Files
-      safeName: AzureStorageFiles
+    - name: Azure.Storage.Files.Shares
+      safeName: AzureStorageFilesShares
     - name: Azure.Storage.Files.DataLake
       safeName: AzureStorageFilesDataLake
     - name: Azure.Storage.Queues
