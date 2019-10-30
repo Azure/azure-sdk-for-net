@@ -10,7 +10,6 @@ resources:
 jobs:
 - template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
   parameters:
-    MaxParallel: 1
     ServiceDirectory: keyvault
     EnvVars:
       AZURE_TENANT_ID: $(aad-azure-sdk-test-tenant-id)
@@ -36,7 +35,11 @@ jobs:
       displayName: Log into azure-cli
 
     - pwsh: |
+        # Generate a name that should be <= 24 characters.
         $name = 'adpnet{0}-{1}-{2}' -f $(Build.BuildId), @{Linux='lnx'; MacOS='mac'; Windows='win'}['$(OSName)'], @{net461='net461'; 'netcoreapp2.1'='core21'}['$(TestTargetFramework)']
+        Write-Host "Generated name: $name"
+
+        # Create name and URL variables for subsequent steps.
         Write-Host "##vso[task.setvariable variable=net-keyvault-azure-keyvault-name]$name"
         Write-Host "##vso[task.setvariable variable=net-keyvault-azure-keyvault-url]https://$name.vault.azure.net"
 
@@ -45,11 +48,16 @@ jobs:
       displayName: Generate resource name
 
     - script: |
+        echo "Creating resource group $(net-keyvault-azure-keyvault-name)rg"
         az group create --name "$(net-keyvault-azure-keyvault-name)rg" --location westus --tags service-directory=keyvault test-resource=true
+
+        echo "Creating key vault $(net-keyvault-azure-keyvault-name)"
         az keyvault create --name "$(net-keyvault-azure-keyvault-name)" --resource-group "$(net-keyvault-azure-keyvault-name)rg" --location westus --enable-soft-delete --sku premium
+
+        echo "Done"
       displayName: Create Key Vault
 
-    - script: >-
+    - script: >
         az keyvault set-policy --name "$(net-keyvault-azure-keyvault-name)" --resource-group "$(net-keyvault-azure-keyvault-name)rg" --spn "$(net-keyvault-azure-client-id)"
         --certificate-permissions backup create delete deleteissuers get getissuers import list listissuers managecontacts manageissuers purge recover restore setissuers update
         --key-permissions backup create decrypt delete encrypt get import list purge recover restore sign unwrapKey update verify wrapKey
