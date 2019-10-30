@@ -38,7 +38,7 @@ param
 
   [Parameter(Mandatory=$true, ParameterSetName="Execute")]
   [ValidateNotNullOrEmpty()]
-  [string] $EventHubsName,
+  [string] $EventHubsNamespaceName,
 
   [Parameter(Mandatory=$true, ParameterSetName="Execute")]
   [ValidateNotNullOrEmpty()]
@@ -76,12 +76,11 @@ function DisplayHelp
   Write-Host "`n"
   Write-Host "Event Hubs With Azure Identity Test Environment Setup"
   Write-Host ""
-  Write-Host "$($indent)This script handles creation and configuration of needed resources within an Azure subscription"
-  Write-Host "$($indent)for use with the Event Hubs client library Live test suite regarding authentication with Azure Active Directory"
-  Write-Host "$($indent)and the Azure.Identity SDK."
+  Write-Host "$($indent)This script handles creation and configuration of a service principal within an Azure subscription"
+  Write-Host "$($indent)for use with the Event Hubs client library Live test suite."
   Write-Host ""
-  Write-Host "$($indent)Upon completion, the script will output a set of environment variables with sensitive information which"
-  Write-Host "$($indent)are used for testing.  When running Live tests, please be sure to have these environment variables available,"
+  Write-Host "$($indent)Upon completion, the script will output a set of environment variables with the username and the secret"
+  Write-Host "$($indent)that are used for testing.  When running Live tests, please be sure to have these environment variables available,"
   Write-Host "$($indent)either within Visual Studio or command line environment."
   Write-Host ""
   Write-Host "$($indent)NOTE: Some of these values, such as the client secret, are difficult to recover; please copy them and keep in a"
@@ -102,7 +101,7 @@ function DisplayHelp
   Write-Host ""
   Write-Host ""
     
-  Write-Host "$($indent)-EventHubsName`t`tThe name of the Event Hubs that will be used for testings."
+  Write-Host "$($indent)-EventHubsNamespaceName`t`tThe name of the Event Hubs Namespace that will be used for testings."
   Write-Host ""
 
   Write-Host "$($indent)-ServicePrincipalName`tThe name to use for the service principal that will"
@@ -200,13 +199,13 @@ try
 
     try 
     {
-        New-AzRoleAssignment -ApplicationId "$($principal.ApplicationId)" -RoleDefinitionName "Azure Event Hubs Data Owner" -ResourceName "$($EventHubsName)" -ResourceType "Microsoft.EventHub/namespaces" -ResourceGroupName "$($ResourceGroupName)" | Out-Null
+        New-AzRoleAssignment -ApplicationId "$($principal.ApplicationId)" -RoleDefinitionName "Azure Event Hubs Data Owner" -ResourceName "$($EventHubsNamespaceName)" -ResourceType "Microsoft.EventHub/namespaces" -ResourceGroupName "$($ResourceGroupName)" | Out-Null
     }
     catch 
     {
         Write-Host "`t...Still waiting for identity propagation (this will take a moment)"
         Start-Sleep 60
-        New-AzRoleAssignment -ApplicationId "$($principal.ApplicationId)" -RoleDefinitionName "Azure Event Hubs Data Owner" -ResourceName "$($EventHubsName)" -ResourceType "Microsoft.EventHub/namespaces" -ResourceGroupName "$($ResourceGroupName)" | Out-Null
+        New-AzRoleAssignment -ApplicationId "$($principal.ApplicationId)" -RoleDefinitionName "Azure Event Hubs Data Owner" -ResourceName "$($EventHubsNamespaceName)" -ResourceType "Microsoft.EventHub/namespaces" -ResourceGroupName "$($ResourceGroupName)" | Out-Null
     }    
 
     # Write the environment variables.
