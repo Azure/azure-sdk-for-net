@@ -101,7 +101,7 @@ namespace Microsoft.Azure.EventHubs.Amqp
             interval += TokenRefreshBuffer;   // Avoid getting a token that expires right away
             interval = interval < AmqpClientConstants.ClientMinimumTokenRefreshInterval ? AmqpClientConstants.ClientMinimumTokenRefreshInterval : interval;
 
-            // Thows ArgumentOutOfRangeExceptionwhen dueTime parameter is greater than 4294967294.
+            // Thows ArgumentOutOfRangeException when dueTime parameter is greater than 4294967294.
             interval = interval <= MaxValidityInterval ? interval : MaxValidityInterval;
 
             this.validityTimer.Change(interval, Timeout.InfiniteTimeSpan);
