@@ -45,6 +45,67 @@ namespace Azure.Messaging.EventHubs.Processor
         private Func<ProcessorErrorContext, Task> _processExceptionAsync;
 
         /// <summary>
+        ///   The handler to be called just before event processing starts for a given partition.
+        /// </summary>
+        ///
+        public Func<InitializePartitionProcessingContext, Task> InitializeProcessingForPartitionAsync
+        {
+            internal get => _initializeProcessingForPartitionAsync;
+            set => EnsureNotRunningAndInvoke(() => _initializeProcessingForPartitionAsync = value);
+        }
+
+        /// <summary>
+        ///   The handler to be called once event processing stops for a given partition.
+        /// </summary>
+        ///
+        public Func<PartitionProcessingStoppedContext, Task> ProcessingForPartitionStoppedAsync
+        {
+            internal get => _processingForPartitionStoppedAsync;
+            set => EnsureNotRunningAndInvoke(() => _processingForPartitionStoppedAsync = value);
+        }
+
+        /// <summary>
+        ///   Responsible for processing events received from the Event Hubs service.  Implementation is mandatory.
+        /// </summary>
+        ///
+        public Func<PartitionEvent, Task> ProcessEventAsync
+        {
+            internal get => _processEventAsync;
+            set => EnsureNotRunningAndInvoke(() => _processEventAsync = value);
+        }
+
+        /// <summary>
+        ///   Responsible for processing unexpected exceptions thrown while this <see cref="EventProcessorClient" /> is running.
+        ///   Implementation is mandatory.
+        /// </summary>
+        ///
+        public Func<ProcessorErrorContext, Task> ProcessExceptionAsync
+        {
+            internal get => _processExceptionAsync;
+            set => EnsureNotRunningAndInvoke(() => _processExceptionAsync = value);
+        }
+
+        /// <summary>
+        ///   The fully qualified Event Hubs namespace.  This is likely to be similar to
+        ///   <c>{yournamespace}.servicebus.windows.net</c>.
+        /// </summary>
+        ///
+        private string FullyQualifiedNamespace { get; }
+
+        /// <summary>
+        ///   The name of the Event Hub that the event processor is connected to, specific
+        ///   to the Event Hubs namespace that contains it.
+        /// </summary>
+        ///
+        private string EventHubName { get; }
+
+        /// <summary>
+        ///   A unique name used to identify this event processor.
+        /// </summary>
+        ///
+        public virtual string Identifier { get; }
+
+        /// <summary>
         ///   The minimum amount of time to be elapsed between two load balancing verifications.
         /// </summary>
         ///
@@ -57,44 +118,10 @@ namespace Azure.Messaging.EventHubs.Processor
         protected virtual TimeSpan OwnershipExpiration => TimeSpan.FromSeconds(30);
 
         /// <summary>
-        ///   A unique name used to identify this event processor.
-        /// </summary>
-        ///
-        public virtual string Identifier { get; }
-
-        /// <summary>
         ///   The client used to interact with the Azure Event Hubs service.
         /// </summary>
         ///
         private EventHubClient InnerClient { get; set; }
-
-        /// <summary>
-        ///   The connection string to use for connecting to the Event Hubs namespace.
-        /// </summary>
-        ///
-        private string ConnectionString { get; }
-
-        /// <summary>
-        ///   The name of the Event Hub that the event processor is connected to, specific
-        ///   to the Event Hubs namespace that contains it.
-        /// </summary>
-        ///
-        private string EventHubName { get; }
-
-        /// <summary>
-        ///   The fully qualified Event Hubs namespace.  This is likely to be similar to
-        ///   <c>{yournamespace}.servicebus.windows.net</c>.
-        /// </summary>
-        ///
-        private string FullyQualifiedNamespace { get; }
-
-        /// <summary>
-        ///   The Azure managed identity credential to use for authorization.  Access controls
-        ///   may be specified by the Event Hubs namespace or the requested Event Hub, depending
-        ///   on Azure configuration.
-        /// </summary>
-        ///
-        private TokenCredential Credential { get; }
 
         /// <summary>
         ///   The name of the consumer group this event processor is associated with.  Events will be
@@ -138,48 +165,21 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   instances, as well as managing partition pumps and ownership.
         /// </summary>
         ///
-        private Task RunningTask { get; set; }
+        private Task ActiveLoadBalancingTask { get; set; }
 
         /// <summary>
-        ///   The handler to be called just before event processing starts for a given partition.
+        ///   The connection string to use for connecting to the Event Hubs namespace.
         /// </summary>
         ///
-        public Func<InitializePartitionProcessingContext, Task> InitializeProcessingForPartitionAsync
-        {
-            internal get => _initializeProcessingForPartitionAsync;
-            set => EnsureNotRunningAndInvoke(() => _initializeProcessingForPartitionAsync = value);
-        }
+        private string ConnectionString { get; }
 
         /// <summary>
-        ///   The handler to be called once event processing stops for a given partition.
+        ///   The Azure managed identity credential to use for authorization.  Access controls
+        ///   may be specified by the Event Hubs namespace or the requested Event Hub, depending
+        ///   on Azure configuration.
         /// </summary>
         ///
-        public Func<PartitionProcessingStoppedContext, Task> ProcessingForPartitionStoppedAsync
-        {
-            internal get => _processingForPartitionStoppedAsync;
-            set => EnsureNotRunningAndInvoke(() => _processingForPartitionStoppedAsync = value);
-        }
-
-        /// <summary>
-        ///   Responsible for processing events received from the Event Hubs service.  Implementation is mandatory.
-        /// </summary>
-        ///
-        public Func<PartitionEvent, Task> ProcessEventAsync
-        {
-            internal get => _processEventAsync;
-            set => EnsureNotRunningAndInvoke(() => _processEventAsync = value);
-        }
-
-        /// <summary>
-        ///   Responsible for processing unexpected exceptions thrown while this <see cref="EventProcessorClient" /> is running.
-        ///   Implementation is mandatory.
-        /// </summary>
-        ///
-        public Func<ProcessorErrorContext, Task> ProcessExceptionAsync
-        {
-            internal get => _processExceptionAsync;
-            set => EnsureNotRunningAndInvoke(() => _processExceptionAsync = value);
-        }
+        private TokenCredential Credential { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventProcessorClient"/> class.
@@ -295,7 +295,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         public virtual async Task StartAsync()
         {
-            if (RunningTask == null)
+            if (ActiveLoadBalancingTask == null)
             {
                 await RunningTaskSemaphore.WaitAsync().ConfigureAwait(false);
 
@@ -303,7 +303,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 {
                     lock (StartProcessorGuard)
                     {
-                        if (RunningTask == null)
+                        if (ActiveLoadBalancingTask == null)
                         {
                             if (_processEventAsync == null)
                             {
@@ -334,7 +334,7 @@ namespace Azure.Messaging.EventHubs.Processor
                             // Start the main running task.  It is resposible for managing the partition pumps and for partition
                             // load balancing among multiple event processor instances.
 
-                            RunningTask = RunAsync(RunningTaskTokenSource.Token);
+                            ActiveLoadBalancingTask = RunAsync(RunningTaskTokenSource.Token);
                         }
                     }
                 }
@@ -353,13 +353,13 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         public virtual async Task StopAsync()
         {
-            if (RunningTask != null)
+            if (ActiveLoadBalancingTask != null)
             {
                 await RunningTaskSemaphore.WaitAsync().ConfigureAwait(false);
 
                 try
                 {
-                    if (RunningTask != null)
+                    if (ActiveLoadBalancingTask != null)
                     {
                         // Cancel the current running task.
 
@@ -371,7 +371,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                         try
                         {
-                            await RunningTask.ConfigureAwait(false);
+                            await ActiveLoadBalancingTask.ConfigureAwait(false);
                         }
                         catch (TaskCanceledException)
                         {
@@ -403,7 +403,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 }
                 finally
                 {
-                    RunningTask = null;
+                    ActiveLoadBalancingTask = null;
                     RunningTaskSemaphore.Release();
                 }
             }
@@ -757,11 +757,11 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         private void EnsureNotRunningAndInvoke(Action action)
         {
-            if (RunningTask == null)
+            if (ActiveLoadBalancingTask == null)
             {
                 lock (StartProcessorGuard)
                 {
-                    if (RunningTask == null)
+                    if (ActiveLoadBalancingTask == null)
                     {
                         action?.Invoke();
                     }
