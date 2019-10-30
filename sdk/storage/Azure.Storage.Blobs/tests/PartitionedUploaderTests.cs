@@ -25,7 +25,7 @@ namespace Azure.Storage.Blobs.Tests
 
         // Use constants to verify that we flow them everywhere
         private static readonly CancellationToken s_cancellationToken = new CancellationTokenSource().Token;
-        private static readonly BlobHttpHeaders s_blobHttpHeaders = new BlobHttpHeaders() { CacheControl = "Please do", ContentEncoding = new string[] { "Yes" }};
+        private static readonly BlobHttpHeaders s_blobHttpHeaders = new BlobHttpHeaders() { CacheControl = "Please do", ContentEncoding = "Yes" };
         private static readonly Dictionary<string, string> s_metadata = new Dictionary<string, string>() { { "Key", "Value" } };
         private static readonly BlobRequestConditions s_conditions = new BlobRequestConditions() { LeaseId = "MyImportantLease" };
         private static readonly AccessTier s_accessTier = AccessTier.Cool;
