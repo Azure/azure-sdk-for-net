@@ -28,7 +28,7 @@ namespace Azure.Messaging.EventHubs.Samples
         ///   A short description of the sample.
         /// </summary>
         ///
-        public string Description { get; } = "An example of consuming events from all Event Hub partitions at once, using the Event Processor.";
+        public string Description { get; } = "An example of consuming events from all Event Hub partitions at once, using the Event Processor client.";
 
         /// <summary>
         ///   Runs the sample using the specified Event Hubs connection information.
@@ -129,10 +129,14 @@ namespace Azure.Messaging.EventHubs.Samples
 
                 eventProcessor.ProcessExceptionAsync = (ProcessorErrorContext errorContext) =>
                 {
-                    // Any exception which occurs within the event processor itself will be passed to this delegate so that they may be
-                    // handled.  Note that this does not include exceptions which occur in the event processing handler or the other delegate properties.
-                    // It is considered responsibility of the developer writing the handler code to ensure that proper exception handling practices are
-                    // followed.
+                    // Any exception which occurs as a result of the event processor itself will be passed to
+                    // this delegate so it may be handled.  The processor will continue to process events if
+                    // it is able to unless this handler explicitly requests that it stop doing so.
+                    //
+                    // It is important to note that this does not include exceptions during event processing; those
+                    // are considered responsibility of the developer implementing the event processing handler.  It
+                    // is, therefore, highly encouraged that best practices for exception handling practices are
+                    // followed with that delegate.
                     //
                     // This piece of code is not supposed to be reached by this sample.  If the following message has been printed
                     // to the Console, then something unexpected has happened.

@@ -3,14 +3,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Testing;
 using Azure.Storage.Files.DataLake.Models;
+using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using NUnit.Framework;
-using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using TestConstants = Azure.Storage.Test.Constants;
 
 namespace Azure.Storage.Files.DataLake.Tests
@@ -20,6 +19,80 @@ namespace Azure.Storage.Files.DataLake.Tests
         public DirectoryClientTests(bool async)
             : base(async, null /* RecordedTestMode.Record /* to re-record */)
         {
+        }
+
+        [Test]
+        public async Task Ctor_Uri()
+        {
+            string fileSystemName = GetNewFileSystemName();
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem, fileSystemName: fileSystemName))
+            {
+                // Arrange
+                string directoryName = GetNewDirectoryName();
+                await fileSystem.CreateDirectoryAsync(directoryName);
+
+                SasQueryParameters sasQueryParameters = GetNewAccountSasCredentials();
+                Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{directoryName}?{sasQueryParameters}");
+                DataLakeDirectoryClient directoryClient = InstrumentClient(new DataLakeDirectoryClient(uri, GetOptions()));
+
+                // Act
+                await directoryClient.GetPropertiesAsync();
+
+                // Assert
+                Assert.AreEqual(directoryName, directoryClient.Name);
+                Assert.AreEqual(fileSystemName, directoryClient.FileSystemName);
+                Assert.AreEqual(uri, directoryClient.Uri);
+            }
+        }
+
+        [Test]
+        public async Task Ctor_SharedKey()
+        {
+            string fileSystemName = GetNewFileSystemName();
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem, fileSystemName: fileSystemName))
+            {
+                // Arrange
+                string directoryName = GetNewDirectoryName();
+                await fileSystem.CreateDirectoryAsync(directoryName);
+
+                StorageSharedKeyCredential sharedKey = new StorageSharedKeyCredential(
+                    TestConfigHierarchicalNamespace.AccountName,
+                    TestConfigHierarchicalNamespace.AccountKey);
+                Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{directoryName}");
+                DataLakeDirectoryClient directoryClient = InstrumentClient(new DataLakeDirectoryClient(uri, sharedKey, GetOptions()));
+
+                // Act
+                await directoryClient.GetPropertiesAsync();
+
+                // Assert
+                Assert.AreEqual(directoryName, directoryClient.Name);
+                Assert.AreEqual(fileSystemName, directoryClient.FileSystemName);
+                Assert.AreEqual(uri, directoryClient.Uri);
+            }
+        }
+
+        [Test]
+        public async Task Ctor_TokenCredential()
+        {
+            string fileSystemName = GetNewFileSystemName();
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem, fileSystemName: fileSystemName))
+            {
+                // Arrange
+                string directoryName = GetNewDirectoryName();
+                await fileSystem.CreateDirectoryAsync(directoryName);
+
+                TokenCredential tokenCredential = GetOAuthCredential(TestConfigHierarchicalNamespace);
+                Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{directoryName}").ToHttps();
+                DataLakeDirectoryClient directoryClient = InstrumentClient(new DataLakeDirectoryClient(uri, tokenCredential, GetOptions()));
+
+                // Act
+                await directoryClient.GetPropertiesAsync();
+
+                // Assert
+                Assert.AreEqual(directoryName, directoryClient.Name);
+                Assert.AreEqual(fileSystemName, directoryClient.FileSystemName);
+                Assert.AreEqual(uri, directoryClient.Uri);
+            }
         }
 
         [Test]

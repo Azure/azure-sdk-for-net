@@ -6,8 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Testing;
 using Azure.Storage.Files.DataLake.Models;
+using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using NUnit.Framework;
 
@@ -18,6 +20,53 @@ namespace Azure.Storage.Files.DataLake.Tests
         public ServiceClientTests(bool async)
             : base(async, null /* RecordedTestMode.Record /* to re-record */)
         {
+        }
+
+        [Test]
+        public async Task Ctor_Uri()
+        {
+            // Arrange
+            SasQueryParameters sasQueryParameters = GetNewAccountSasCredentials();
+            Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}?{sasQueryParameters}");
+            DataLakeServiceClient serviceClient = InstrumentClient(new DataLakeServiceClient(uri, GetOptions()));
+
+            // Act
+            await serviceClient.GetFileSystemsAsync().ToListAsync();
+
+            // Assert
+            Assert.AreEqual(uri, serviceClient.Uri);
+        }
+
+        [Test]
+        public async Task Ctor_SharedKey()
+        {
+            // Arrange
+            StorageSharedKeyCredential sharedKey = new StorageSharedKeyCredential(
+                TestConfigHierarchicalNamespace.AccountName,
+                TestConfigHierarchicalNamespace.AccountKey);
+            Uri uri = new Uri(TestConfigHierarchicalNamespace.BlobServiceEndpoint);
+            DataLakeServiceClient serviceClient = InstrumentClient(new DataLakeServiceClient(uri, sharedKey, GetOptions()));
+
+            // Act
+            await serviceClient.GetFileSystemsAsync().ToListAsync();
+
+            // Assert
+            Assert.AreEqual(uri, serviceClient.Uri);
+        }
+
+        [Test]
+        public async Task Ctor_TokenCredential()
+        {
+            // Arrange
+            TokenCredential tokenCredential = GetOAuthCredential(TestConfigHierarchicalNamespace);
+            Uri uri = new Uri(TestConfigHierarchicalNamespace.BlobServiceEndpoint).ToHttps();
+            DataLakeServiceClient serviceClient = InstrumentClient(new DataLakeServiceClient(uri, tokenCredential, GetOptions()));
+
+            // Act
+            await serviceClient.GetFileSystemsAsync().ToListAsync();
+
+            // Assert
+            Assert.AreEqual(uri, serviceClient.Uri);
         }
 
         [Test]

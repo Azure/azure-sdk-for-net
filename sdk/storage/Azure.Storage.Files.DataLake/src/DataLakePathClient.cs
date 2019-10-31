@@ -251,10 +251,11 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         internal DataLakePathClient(Uri pathUri, HttpPipelinePolicy authentication, DataLakeClientOptions options)
         {
+            options ??= new DataLakeClientOptions();
             _uri = pathUri;
             _blobUri = GetBlobUri(pathUri);
             _dfsUri = GetDfsUri(pathUri);
-            _pipeline = (options ?? new DataLakeClientOptions()).Build(authentication);
+            _pipeline = options.Build(authentication);
             _clientDiagnostics = new ClientDiagnostics(options);
             _blockBlobClient = new BlockBlobClient(_blobUri, _pipeline, _clientDiagnostics, null);
 

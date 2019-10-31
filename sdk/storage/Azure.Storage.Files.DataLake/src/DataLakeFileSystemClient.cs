@@ -127,13 +127,42 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="Uri"/> referencing the share that includes the
         /// name of the account and the name of the file system.
         /// </param>
+        public DataLakeFileSystemClient(Uri fileSystemUri)
+            : this(fileSystemUri, (HttpPipelinePolicy)null, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeFileSystemClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="fileSystemUri">
+        /// A <see cref="Uri"/> referencing the share that includes the
+        /// name of the account and the name of the file system.
+        /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public DataLakeFileSystemClient(Uri fileSystemUri, DataLakeClientOptions options = default)
+        public DataLakeFileSystemClient(Uri fileSystemUri, DataLakeClientOptions options)
             : this(fileSystemUri, (HttpPipelinePolicy)null, options)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeFileSystemClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="fileSystemUri">
+        /// A <see cref="Uri"/> referencing the share that includes the
+        /// name of the account and the name of the file system.
+        /// </param>
+        /// <param name="credential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        public DataLakeFileSystemClient(Uri fileSystemUri, StorageSharedKeyCredential credential)
+            : this(fileSystemUri, credential.AsPolicy(), null)
         {
         }
 
@@ -153,8 +182,24 @@ namespace Azure.Storage.Files.DataLake
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public DataLakeFileSystemClient(Uri fileSystemUri, StorageSharedKeyCredential credential, DataLakeClientOptions options = default)
+        public DataLakeFileSystemClient(Uri fileSystemUri, StorageSharedKeyCredential credential, DataLakeClientOptions options)
             : this(fileSystemUri, credential.AsPolicy(), options)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeFileSystemClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="fileSystemUri">
+        /// A <see cref="Uri"/> referencing the file system that includes the
+        /// name of the account and the name of the file system.
+        /// </param>
+        /// <param name="credential">
+        /// The token credential used to sign requests.
+        /// </param>
+        public DataLakeFileSystemClient(Uri fileSystemUri, TokenCredential credential)
+            : this(fileSystemUri, credential.AsPolicy(), null)
         {
         }
 
@@ -174,7 +219,7 @@ namespace Azure.Storage.Files.DataLake
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public DataLakeFileSystemClient(Uri fileSystemUri, TokenCredential credential, DataLakeClientOptions options = default)
+        public DataLakeFileSystemClient(Uri fileSystemUri, TokenCredential credential, DataLakeClientOptions options)
             : this(fileSystemUri, credential.AsPolicy(), options)
         {
         }
@@ -197,6 +242,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         internal DataLakeFileSystemClient(Uri fileSystemUri, HttpPipelinePolicy authentication, DataLakeClientOptions options)
         {
+            options ??= new DataLakeClientOptions();
             _uri = fileSystemUri;
             _blobUri = GetBlobUri(fileSystemUri);
             _dfsUri = GetDfsUri(fileSystemUri);
@@ -216,7 +262,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        ///         /// <param name="clientDiagnostics"></param>
+       /// <param name="clientDiagnostics"></param>
         internal DataLakeFileSystemClient(Uri fileSystemUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
         {
             _uri = fileSystemUri;

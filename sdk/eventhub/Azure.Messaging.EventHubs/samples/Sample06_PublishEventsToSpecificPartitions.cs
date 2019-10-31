@@ -42,7 +42,7 @@ namespace Azure.Messaging.EventHubs.Samples
             // It will be available again in the near future when the associated
             // changes have been completed.  We apologize for the inconvenience.
 
-            await Task.Delay(500);
+            await Task.Delay(15);
             Console.WriteLine("Temporarily disabled due to pending work.");
         }
     }
