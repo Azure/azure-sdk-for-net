@@ -56,7 +56,7 @@ Import-Module Az.Resources
 # == Function Definitions ==
 # ==========================
 
-. .\functions\functions.ps1
+. .\functions\azure-principal-functions.ps1
 
 function DisplayHelp
 {
