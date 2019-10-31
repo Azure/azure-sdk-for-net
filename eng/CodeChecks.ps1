@@ -37,7 +37,7 @@ try {
 
     Write-Host "Force .NET Welcome experience"
     Invoke-Block {
-        & dotnet --info
+        & dotnet msbuild -version
     }
 
     Get-ChildItem "$repoRoot/Azure.*.sln" -Recurse `
