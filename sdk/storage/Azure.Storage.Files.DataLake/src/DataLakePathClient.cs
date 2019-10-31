@@ -1299,7 +1299,7 @@ namespace Azure.Storage.Files.DataLake
         #region Set Permissions
         /// <summary>
         /// The <see cref="SetPermissions"/> operation sets the
-        /// Access Control on a path
+        /// file permissions on a path.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
         /// </summary>
@@ -1346,7 +1346,7 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// The <see cref="SetPermissionsAsync"/> operation sets the
-        /// Access Control on a path
+        /// file permissions on a path.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
         /// </summary>
@@ -1393,7 +1393,7 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// The <see cref="SetPermissionsInternal"/> operation sets the
-        /// Access Control on a path
+        /// file permissions on a path.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
         /// </summary>
