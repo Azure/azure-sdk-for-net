@@ -35,6 +35,11 @@ try {
 
     Write-Host "Checking that solutions are up to date"
 
+    Write-Host "Force .NET Welcome experience"
+    Invoke-Block {
+        & dotnet --info
+    }
+
     Get-ChildItem "$repoRoot/Azure.*.sln" -Recurse `
         | % {
             Write-Host "  Checking $(Split-Path -Leaf $_)"
