@@ -1,5 +1,10 @@
 Release History
 ===============
+12.0.0 (2019-11)
+--------------------------
+- Renamed a number of operations and models to better align with other client
+  libraries and the .NET Framework Design Guidelines
+- Parallel upload/download performance improvements
 
 12.0.0-preview.4 (2019-10)
 --------------------------
