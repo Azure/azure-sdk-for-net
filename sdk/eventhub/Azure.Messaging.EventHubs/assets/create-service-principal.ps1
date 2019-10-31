@@ -73,7 +73,7 @@ function DisplayHelp
   Write-Host "$($indent)This script handles creation of a service principal and assigns the role"
   Write-Host "$($indent)'Azure Event Hubs Data Owner' to the resource group name passed as input."
   Write-Host ""
-  Write-Host "$($indent)Upon completion, the script will output the principal's sensitive information. "
+  Write-Host "$($indent)Upon completion, the script will output the principal's sensitive information."
   Write-Host ""
   Write-Host "$($indent)NOTE: Some of these values, such as the client secret, are difficult to recover; please copy them and keep in a"
   Write-Host "$($indent)safe place."
@@ -84,15 +84,13 @@ function DisplayHelp
   Write-Host "$($indent)-Help`t`t`tDisplays this message."
   Write-Host ""
 
-  Write-Host "$($indent)-SubscriptionName`t`tRequired.  The name of the Azure subscription to be used for"
-  Write-Host "$($indent)`t`t`t`trunning the Live tests."
+  Write-Host "$($indent)-SubscriptionName`t`tRequired.  The name of the Azure subscription used."
   Write-Host ""
 
-  Write-Host "$($indent)-ResourceGroupName`t`tRequired.  The name of the Azure Resource Group that will contain the resources"
-  Write-Host "$($indent)`t`t`t`tused for the tests."
+  Write-Host "$($indent)-ResourceGroupName`t`tRequired.  The name of the Azure Resource Group that contains the resources."
   Write-Host ""
 
-  Write-Host "$($indent)-ServicePrincipalName`tRequired.  The name to use for the service principal that will be created"
+  Write-Host "$($indent)-ServicePrincipalName`tRequired.  The name to use for the service principal that will be created."
   Write-Host ""
 }
 
