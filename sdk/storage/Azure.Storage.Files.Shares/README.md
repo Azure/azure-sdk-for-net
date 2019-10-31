@@ -18,7 +18,7 @@ being used.
 Install the Azure Storage File Shares client library for .NET with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Storage.Files.Shares
+dotnet add package Azure.Storage.Files.Shares --version 12.0.0-preview.5
 ```
 
 ### Prerequisites
