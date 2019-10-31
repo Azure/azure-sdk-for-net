@@ -55,22 +55,16 @@ namespace Azure.Messaging.EventHubs.Processor
         private string ConsumerGroup { get; }
 
         /// <summary>
-        ///   The default position where the reading of events should begin in the case where there is no checkpoint available.
+        ///   The position within the partition where the pump should begin reading events.
         /// </summary>
         ///
-        private EventPosition DefaultEventPosition { get; }
+        private EventPosition StartingPosition { get; }
 
         /// <summary>
         ///   The context of the Event Hub partition this partition pump is associated with.
         /// </summary>
         ///
         private PartitionContext Context { get; }
-
-        /// <summary>
-        ///   The position within the partition where the pump should begin reading events.
-        /// </summary>
-        ///
-        private EventPosition StartingPosition { get; }
 
         /// <summary>
         ///   The set of options to use for this partition pump.
@@ -278,7 +272,7 @@ namespace Azure.Messaging.EventHubs.Processor
                         }
                     }
 
-                    // Small workaround to make sure we call ProcessEvents with EventData = null when no events have been received.
+                    // Small workaround to make sure we call ProcessEvent with EventData = null when no events have been received.
                     // The code is expected to get simpler when we start using the async enumerator internally to receive events.
 
                     if (receivedEvents.Count == 0)
@@ -295,11 +289,11 @@ namespace Azure.Messaging.EventHubs.Processor
                             var partitionEvent = new PartitionEvent(Context, eventData);
                             await OwnerEventProcessor.ProcessEventAsync(partitionEvent).ConfigureAwait(false);
                         }
-                        catch (Exception partitionProcessorException)
+                        catch (Exception eventProcessingException)
                         {
-                            diagnosticScope.Failed(partitionProcessorException);
-                            unrecoverableException = partitionProcessorException;
-                            CloseReason = CloseReason.ProcessEventsException;
+                            diagnosticScope.Failed(eventProcessingException);
+                            unrecoverableException = eventProcessingException;
+                            CloseReason = CloseReason.ProcessEventException;
 
                             break;
                         }
@@ -321,8 +315,8 @@ namespace Azure.Messaging.EventHubs.Processor
 
             if (unrecoverableException != null)
             {
-                // In case an exception is encountered while the exception is being processed, don't catch it
-                // and let the calling method (StopAsync) handle it.
+                // In case an exception is thrown by ProcessExceptionAsync, don't catch it and
+                // let the calling method (StopAsync) handle it.
 
                 var errorContext = new ProcessorErrorContext(Context.PartitionId, unrecoverableException);
                 await OwnerEventProcessor.ProcessExceptionAsync(errorContext).ConfigureAwait(false);

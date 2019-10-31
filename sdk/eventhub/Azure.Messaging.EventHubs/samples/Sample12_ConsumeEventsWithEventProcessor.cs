@@ -71,13 +71,8 @@ namespace Azure.Messaging.EventHubs.Samples
                 int totalEventsCount = 0;
                 int partitionsBeingProcessedCount = 0;
 
-                // TODO: explain callbacks setup once the public API is finished for the next preview.
-
                 eventProcessor.InitializeProcessingForPartitionAsync = (InitializePartitionProcessingContext initializationContext) =>
                 {
-                    // TODO: Set the default initial position to "Latest" here.
-
-
                     // This is the last piece of code guaranteed to run before event processing, so all initialization
                     // must be done by the moment this method returns.
 
@@ -119,7 +114,7 @@ namespace Azure.Messaging.EventHubs.Samples
                     if (partitionEvent.Data != null)
                     {
                         Interlocked.Increment(ref totalEventsCount);
-                        Console.WriteLine($"\tPartition '{ partitionEvent.Context.PartitionId }': 1 event received.");
+                        Console.WriteLine($"\tPartition '{ partitionEvent.Context.PartitionId }': event received.");
                     }
 
                     // This method is asynchronous, which means it's expected to return a Task.
@@ -186,6 +181,7 @@ namespace Azure.Messaging.EventHubs.Samples
                     int amountOfSets = 10;
                     int expectedAmountOfEvents = amountOfSets * eventsToPublish.Length;
 
+                    Console.WriteLine();
                     Console.WriteLine("Sending events to the Event Hub.");
                     Console.WriteLine();
 

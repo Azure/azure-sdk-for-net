@@ -22,6 +22,6 @@ namespace Azure.Messaging.EventHubs.Processor
         EventHubException,
 
         /// <summary>A non-retriable exception was thrown by the provided event processing handler.</summary>
-        ProcessEventsException
+        ProcessEventException
     }
 }
