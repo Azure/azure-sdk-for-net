@@ -33,8 +33,9 @@ namespace Azure.Storage.Files.DataLake.Models
         public string Acl { get; internal set; }
 
         /// <summary>
-        /// Constructor.
+        /// Prevent direct instantiation of PathAccessControl instances.
+        /// You can use DataLakeModelFactory.PathAccessControl instead.
         /// </summary>
-        public PathAccessControl() { }
+        internal PathAccessControl() { }
     }
 }
