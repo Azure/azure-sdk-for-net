@@ -88,7 +88,7 @@ namespace Azure.Messaging.EventHubs.Samples
                 Console.WriteLine("The event batch has been published.");
             }
 
-            // At this point, our client has passed its "using" scope and have safely been disposed of.  We
+            // At this point, our client has passed its "using" scope and has safely been disposed of.  We
             // have no further obligations.
 
             Console.WriteLine();
