@@ -7,8 +7,8 @@
     Azure Active Directory and sets the roles needed to access Event Hubs resources.
 
   .DESCRIPTION
-    This script handles creation of a service principal and assigns the role 
-    "Azure Event Hubs Data Owner" to the resource group name passed as input.
+    This script handles the creation of a service principal and assigns the role 
+    "Azure Event Hubs Data Owner" to the resource group whose name is passed in.
     
     Upon completion, the script will output the principal information.
  
