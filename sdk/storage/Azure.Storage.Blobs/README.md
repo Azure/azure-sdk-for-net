@@ -82,8 +82,8 @@ BlobClient blob = container.GetBlobClient(blobName);
 blob.Upload(filePath);
 ```
 
-
 ### Downloading a blob
+
 ```C# Snippet:SampleSnippetsBlob_Download
 // Get a temporary path on disk where we can download the file
 string downloadPath = "hello.jpg";
@@ -91,6 +91,7 @@ string downloadPath = "hello.jpg";
 // Download the public blob at https://aka.ms/bloburl
 new BlobClient(new Uri("https://aka.ms/bloburl")).DownloadTo(downloadPath);
 ```
+
 ### Enumerating blobs
 
 ```C# Snippet:SampleSnippetsBlob_List

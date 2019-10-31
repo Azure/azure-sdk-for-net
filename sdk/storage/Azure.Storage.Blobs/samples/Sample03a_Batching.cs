@@ -175,7 +175,6 @@ namespace Azure.Storage.Blobs.Samples
             {
                 batch.DeleteBlobs(new Uri[] { valid.Uri, invalid.Uri });
             }
-
             catch (AggregateException)
             {
                 // An aggregate exception is thrown for all the individual failures

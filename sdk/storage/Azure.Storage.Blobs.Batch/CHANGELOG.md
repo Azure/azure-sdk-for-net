@@ -1,5 +1,6 @@
 Release History
 ===============
+
 12.0.0 (2019-11)
 --------------------------
 Azure.Storage.Blobs.Batching assembly and package are renamed to Azure.Storage.Blobs.Batch
