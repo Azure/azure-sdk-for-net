@@ -34,24 +34,24 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyClient"/> class for the specified vault.
         /// </summary>
-        /// <param name="vaultEndpoint">A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal.</param>
+        /// <param name="vaultUri">A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal.</param>
         /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, such as DefaultAzureCredential.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="vaultEndpoint"/> or <paramref name="credential"/> is null.</exception>
-        public KeyClient(Uri vaultEndpoint, TokenCredential credential)
-            : this(vaultEndpoint, credential, null)
+        /// <exception cref="ArgumentNullException"><paramref name="vaultUri"/> or <paramref name="credential"/> is null.</exception>
+        public KeyClient(Uri vaultUri, TokenCredential credential)
+            : this(vaultUri, credential, null)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyClient"/> class for the specified vault.
         /// </summary>
-        /// <param name="vaultEndpoint">A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal.</param>
+        /// <param name="vaultUri">A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal.</param>
         /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, such as DefaultAzureCredential.</param>
         /// <param name="options"><see cref="KeyClientOptions"/> that allow to configure the management of the request sent to Key Vault.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="vaultEndpoint"/> or <paramref name="credential"/> is null.</exception>
-        public KeyClient(Uri vaultEndpoint, TokenCredential credential, KeyClientOptions options)
+        /// <exception cref="ArgumentNullException"><paramref name="vaultUri"/> or <paramref name="credential"/> is null.</exception>
+        public KeyClient(Uri vaultUri, TokenCredential credential, KeyClientOptions options)
         {
-            Argument.AssertNotNull(vaultEndpoint, nameof(vaultEndpoint));
+            Argument.AssertNotNull(vaultUri, nameof(vaultUri));
             Argument.AssertNotNull(credential, nameof(credential));
 
             options ??= new KeyClientOptions();
@@ -61,13 +61,13 @@ namespace Azure.Security.KeyVault.Keys
                     new ChallengeBasedAuthenticationPolicy(credential));
 
             _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = new KeyVaultPipeline(vaultEndpoint, apiVersion, pipeline, _clientDiagnostics);
+            _pipeline = new KeyVaultPipeline(vaultUri, apiVersion, pipeline, _clientDiagnostics);
         }
 
         /// <summary>
         /// Gets the <see cref="Uri"/> of the vault used to create this instance of the <see cref="KeyClient"/>.
         /// </summary>
-        public Uri VaultEndpoint => _pipeline.VaultEndpoint;
+        public virtual Uri VaultUri => _pipeline.VaultUri;
 
         /// <summary>
         /// Creates and stores a new key in Key Vault. The create key operation can be used to create any key type in Azure Key Vault.
@@ -390,7 +390,7 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// List keys in the specified vault.
+        /// Lists the properties of all keys in the specified vault. You can use the returned <see cref="KeyProperties.Name"/> in subsequent calls to <see cref="GetKey"/>.
         /// </summary>
         /// <remarks>
         /// Retrieves a list of the keys in the Key Vault that contains the public part of a stored key.
@@ -409,7 +409,7 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// List keys in the specified vault.
+        /// Lists the properties of all keys in the specified vault. You can use the returned <see cref="KeyProperties.Name"/> in subsequent calls to <see cref="GetKeyAsync"/>.
         /// </summary>
         /// <remarks>
         /// Retrieves a list of the keys in the Key Vault that contains the public part of a stored key.
@@ -427,7 +427,7 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// Retrieves a list of individual key versions with the same key name.
+        /// Lists the properties of all versions of the specified key. You can use the returned <see cref="KeyProperties.Name"/> and <see cref="KeyProperties.Version"/> in subsequent calls to <see cref="GetKey"/>.
         /// </summary>
         /// <remarks>
         /// The full key identifier, attributes, and tags are provided in the response.
@@ -448,7 +448,7 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// Retrieves a list of individual key versions with the same key name.
+        /// Lists the properties of all versions of the specified key. You can use the returned <see cref="KeyProperties.Name"/> and <see cref="KeyProperties.Version"/> in subsequent calls to <see cref="GetKeyAsync"/>.
         /// </summary>
         /// <remarks>
         /// The full key identifier, attributes, and tags are provided in the response.

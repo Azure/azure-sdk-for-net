@@ -60,17 +60,17 @@ namespace Azure.Security.KeyVault.Keys
         private readonly IList<KeyOperation> _keyOps;
 
         /// <summary>
-        /// The identifier of the key. This is not limited to a <see cref="Uri"/>.
+        /// Gets the identifier of the key. This is not limited to a <see cref="Uri"/>.
         /// </summary>
         public string Id { get; internal set; }
 
         /// <summary>
-        /// Gets or sets the <see cref="KeyType"/> for this <see cref="JsonWebKey"/>.
+        /// Gets the <see cref="KeyType"/> for this <see cref="JsonWebKey"/>.
         /// </summary>
         public KeyType KeyType { get; internal set; }
 
         /// <summary>
-        /// Gets supported key operations.
+        /// Gets a list of <see cref="KeyOperation"/> values supported by this key.
         /// </summary>
         public IReadOnlyCollection<KeyOperation> KeyOps { get; }
 
@@ -85,10 +85,13 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// Creates an instance of <see cref="JsonWebKey"/> using type <see cref="KeyType.Oct"/>.
+        /// Initializes a new instance of the <see cref="JsonWebKey"/> class using type <see cref="KeyType.Oct"/>.
         /// </summary>
         /// <param name="aesProvider">An <see cref="Aes"/> provider.</param>
-        /// <param name="keyOps">Optional list of supported <see cref="KeyOperation"/> values.</param>
+        /// <param name="keyOps">
+        /// Optional list of supported <see cref="KeyOperation"/> values. If null, the default for the key type is used, including:
+        /// <see cref="KeyOperation.Encrypt"/>, <see cref="KeyOperation.Decrypt"/>, <see cref="KeyOperation.WrapKey"/>, and <see cref="KeyOperation.UnwrapKey"/>.
+        /// </param>
         /// <exception cref="ArgumentNullException"><paramref name="aesProvider"/> is null.</exception>
         public JsonWebKey(Aes aesProvider, IEnumerable<KeyOperation> keyOps = default)
         {
@@ -102,11 +105,14 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// Creates an instance of <see cref="JsonWebKey"/> using type <see cref="KeyType.Ec"/>.
+        /// Initializes a new instance of the <see cref="JsonWebKey"/> class using type <see cref="KeyType.Ec"/>.
         /// </summary>
         /// <param name="ecdsa">An <see cref="ECDsa"/> provider.</param>
-        /// <param name="includePrivateParameters">Whether to include private parameters.</param>
-        /// <param name="keyOps">Optional list of supported <see cref="KeyOperation"/> values.</param>
+        /// <param name="includePrivateParameters">Whether to include the private key.</param>
+        /// <param name="keyOps">
+        /// Optional list of supported <see cref="KeyOperation"/> values. If null, the default for the key type is used, including:
+        /// <see cref="KeyOperation.Sign"/>, and <see cref="KeyOperation.Decrypt"/> if <paramref name="includePrivateParameters"/> is true.
+        /// </param>
         /// <exception cref="ArgumentNullException"><paramref name="ecdsa"/> is null.</exception>
         /// <exception cref="InvalidOperationException">The elliptic curve name is invalid.</exception>
         public JsonWebKey(ECDsa ecdsa, bool includePrivateParameters = default, IEnumerable<KeyOperation> keyOps = default)
@@ -120,11 +126,15 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// Creates an instance of <see cref="JsonWebKey"/> using type <see cref="KeyType.Rsa"/>.
+        /// Initializes a new instance of the <see cref="JsonWebKey"/> class using type <see cref="KeyType.Rsa"/>.
         /// </summary>
         /// <param name="rsaProvider">An <see cref="RSA"/> provider.</param>
-        /// <param name="includePrivateParameters">Whether to include private parameters.</param>
-        /// <param name="keyOps">Optional list of supported <see cref="KeyOperation"/> values.</param>
+        /// <param name="includePrivateParameters">Whether to include the private key.</param>
+        /// <param name="keyOps">
+        /// Optional list of supported <see cref="KeyOperation"/> values. If null, the default for the key type is used, including:
+        /// <see cref="KeyOperation.Encrypt"/>, <see cref="KeyOperation.Verify"/>, and <see cref="KeyOperation.WrapKey"/>;
+        /// and <see cref="KeyOperation.Decrypt"/>, <see cref="KeyOperation.Sign"/>, and <see cref="KeyOperation.UnwrapKey"/> if <paramref name="includePrivateParameters"/> is true.
+        /// </param>
         /// <exception cref="ArgumentNullException"><paramref name="rsaProvider"/> is null.</exception>
         public JsonWebKey(RSA rsaProvider, bool includePrivateParameters = default, IEnumerable<KeyOperation> keyOps = default)
         {
@@ -150,12 +160,12 @@ namespace Azure.Security.KeyVault.Keys
         #region RSA Public Key Parameters
 
         /// <summary>
-        /// RSA modulus, in Base64.
+        /// Gets the RSA modulus.
         /// </summary>
         public byte[] N { get; internal set; }
 
         /// <summary>
-        /// RSA public exponent, in Base64.
+        /// Gets RSA public exponent.
         /// </summary>
         public byte[] E { get; internal set; }
 
@@ -164,27 +174,27 @@ namespace Azure.Security.KeyVault.Keys
         #region RSA Private Key Parameters
 
         /// <summary>
-        /// RSA Private Key Parameter
+        /// Gets the RSA private key parameter.
         /// </summary>
         public byte[] DP { get; internal set; }
 
         /// <summary>
-        /// RSA Private Key Parameter
+        /// Gets the RSA private key parameter.
         /// </summary>
         public byte[] DQ { get; internal set; }
 
         /// <summary>
-        /// RSA Private Key Parameter
+        /// Gets the RSA private key parameter.
         /// </summary>
         public byte[] QI { get; internal set; }
 
         /// <summary>
-        /// RSA secret prime
+        /// Gets the RSA secret prime.
         /// </summary>
         public byte[] P { get; internal set; }
 
         /// <summary>
-        /// RSA secret prime, with p &lt; q
+        /// Gets the RSA secret prime.
         /// </summary>
         public byte[] Q { get; internal set; }
 
@@ -193,17 +203,17 @@ namespace Azure.Security.KeyVault.Keys
         #region EC Public Key Parameters
 
         /// <summary>
-        /// The curve for Elliptic Curve Cryptography (ECC) algorithms.
+        /// Gets the name of the elliptical curve.
         /// </summary>
         public KeyCurveName? CurveName { get; internal set; }
 
         /// <summary>
-        /// X coordinate for the Elliptic Curve point.
+        /// Gets the X coordinate of the elliptic curve point.
         /// </summary>
         public byte[] X { get; internal set; }
 
         /// <summary>
-        /// Y coordinate for the Elliptic Curve point.
+        /// Gets the Y coordinate for the elliptic curve point.
         /// </summary>
         public byte[] Y { get; internal set; }
 
@@ -212,7 +222,7 @@ namespace Azure.Security.KeyVault.Keys
         #region EC and RSA Private Key Parameters
 
         /// <summary>
-        /// RSA private exponent or ECC private key.
+        /// Gets the RSA private exponent or EC private key.
         /// </summary>
         public byte[] D { get; internal set; }
 
@@ -221,14 +231,14 @@ namespace Azure.Security.KeyVault.Keys
         #region Symmetric Key Parameters
 
         /// <summary>
-        /// Symmetric key
+        /// Gets the symmetric key.
         /// </summary>
         public byte[] K { get; internal set; }
 
         #endregion
 
         /// <summary>
-        /// HSM Token, used with "Bring Your Own Key".
+        /// Gets the HSM token used with "Bring Your Own Key".
         /// </summary>
         public byte[] T { get; internal set; }
 
@@ -313,7 +323,7 @@ namespace Azure.Security.KeyVault.Keys
             // Key parameter length requirements defined by 2.2.2.9.1 RSA Private Key BLOB specification: https://docs.microsoft.com/openspecs/windows_protocols/ms-wcce/5cf2e6b9-3195-4f85-bc18-05b50e6d4e11
             var rsaParameters = new RSAParameters
             {
-                Exponent = ForceBufferLength(nameof(E), E, 4),
+                Exponent = E,
                 Modulus = TrimBuffer(N),
             };
 

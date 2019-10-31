@@ -275,7 +275,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var endpoint = new Uri("amqp://test.service.gov");
             var eventHub = "myHub";
             var partitionId = "0";
-            var options = new EventHubConsumerOptions();
+            var options = new EventHubConsumerClientOptions();
             var position = EventPosition.Latest;
             var credential = Mock.Of<TokenCredential>();
             var transport = TransportType.AmqpTcp;
@@ -298,7 +298,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var endpoint = new Uri("amqp://test.service.gov");
             var eventHub = "myHub";
             var consumerGroup = "$Default";
-            var options = new EventHubConsumerOptions();
+            var options = new EventHubConsumerClientOptions();
             var position = EventPosition.Latest;
             var credential = Mock.Of<TokenCredential>();
             var transport = TransportType.AmqpTcp;
@@ -320,7 +320,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var eventHub = "myHub";
             var consumerGroup = "$Default";
             var partitionId = "0";
-            var options = new EventHubConsumerOptions();
+            var options = new EventHubConsumerClientOptions();
             var credential = Mock.Of<TokenCredential>();
             var transport = TransportType.AmqpTcp;
             var identifier = "customIdentIFIER";
@@ -362,7 +362,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var eventHub = "myHub";
             var consumerGroup = "group";
             var partitionId = "0";
-            var options = new EventHubConsumerOptions();
+            var options = new EventHubConsumerClientOptions();
             var position = EventPosition.Latest;
             var credential = Mock.Of<TokenCredential>();
             var transport = TransportType.AmqpTcp;
@@ -388,7 +388,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var eventHub = "myHub";
             var consumerGroup = "group";
             var partitionId = "0";
-            var options = new EventHubConsumerOptions();
+            var options = new EventHubConsumerClientOptions();
             var position = EventPosition.Latest;
             var credential = Mock.Of<TokenCredential>();
             var transport = TransportType.AmqpTcp;
@@ -412,7 +412,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var eventHub = "myHub";
             var consumerGroup = "group";
             var partitionId = "0";
-            var options = new EventHubConsumerOptions();
+            var options = new EventHubConsumerClientOptions();
             var position = EventPosition.Latest;
             var credential = Mock.Of<TokenCredential>();
             var transport = TransportType.AmqpTcp;
@@ -445,7 +445,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     ItExpr.Is<AmqpConnection>(value => value == mockConnection),
                     ItExpr.Is<Uri>(value => value.AbsoluteUri.StartsWith(endpoint.AbsoluteUri)),
                     ItExpr.Is<EventPosition>(value => value == position),
-                    ItExpr.Is<EventHubConsumerOptions>(value => value == options),
+                    ItExpr.Is<EventHubConsumerClientOptions>(value => value == options),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.Is<CancellationToken>(value => value == cancellationSource.Token))
                 .Returns(Task.FromResult(mockLink))
@@ -485,7 +485,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockConnection = new AmqpConnection(new MockTransport(), CreateMockAmqpSettings(), new AmqpConnectionSettings());
             var mockSession = new AmqpSession(mockConnection, new AmqpSessionSettings(), Mock.Of<ILinkFactory>());
 
-            var options = new EventHubConsumerOptions
+            var options = new EventHubConsumerClientOptions
             {
                 Identifier = "testIdentifier123",
                 OwnerLevel = 459,
@@ -567,7 +567,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockConnection = new AmqpConnection(new MockTransport(), CreateMockAmqpSettings(), new AmqpConnectionSettings());
             var mockSession = new AmqpSession(mockConnection, new AmqpSessionSettings(), Mock.Of<ILinkFactory>());
 
-            var options = new EventHubConsumerOptions
+            var options = new EventHubConsumerClientOptions
             {
                 Identifier = producerIdentifier,
                 OwnerLevel = 459,
@@ -635,7 +635,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockConnection = new AmqpConnection(new MockTransport(), CreateMockAmqpSettings(), new AmqpConnectionSettings());
             var mockSession = new AmqpSession(mockConnection, new AmqpSessionSettings(), Mock.Of<ILinkFactory>());
 
-            var options = new EventHubConsumerOptions
+            var options = new EventHubConsumerClientOptions
             {
                 Identifier = "testIdentifier123",
                 OwnerLevel = null,
@@ -703,7 +703,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockConnection = new AmqpConnection(new MockTransport(), CreateMockAmqpSettings(), new AmqpConnectionSettings());
             var mockSession = new AmqpSession(mockConnection, new AmqpSessionSettings(), Mock.Of<ILinkFactory>());
 
-            var options = new EventHubConsumerOptions
+            var options = new EventHubConsumerClientOptions
             {
                 Identifier = "testIdentifier123",
                 OwnerLevel = 9987,
@@ -763,7 +763,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var eventHub = "myHub";
             var consumerGroup = "group";
             var partitionId = "0";
-            var options = new EventHubConsumerOptions();
+            var options = new EventHubConsumerClientOptions();
             var position = EventPosition.Latest;
             var credential = Mock.Of<TokenCredential>();
             var transport = TransportType.AmqpTcp;
@@ -837,7 +837,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var eventHub = "myHub";
             var consumerGroup = "group";
             var partitionId = "0";
-            var options = new EventHubConsumerOptions();
+            var options = new EventHubConsumerClientOptions();
             var position = EventPosition.Latest;
             var credential = Mock.Of<TokenCredential>();
             var transport = TransportType.AmqpTcp;
@@ -937,7 +937,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var eventHub = "myHub";
             var consumerGroup = "group";
             var partitionId = "0";
-            var options = new EventHubConsumerOptions();
+            var options = new EventHubConsumerClientOptions();
             var position = EventPosition.Latest;
             var credential = Mock.Of<TokenCredential>();
             var transport = TransportType.AmqpTcp;
@@ -1594,7 +1594,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var eventHub = "myHub";
             var consumerGroup = "group";
             var partitionId = "0";
-            var options = new EventHubConsumerOptions();
+            var options = new EventHubConsumerClientOptions();
             var position = EventPosition.Latest;
             var credential = Mock.Of<TokenCredential>();
             var transport = TransportType.AmqpTcp;
@@ -1668,7 +1668,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var eventHub = "myHub";
             var consumerGroup = "group";
             var partitionId = "0";
-            var options = new EventHubConsumerOptions();
+            var options = new EventHubConsumerClientOptions();
             var position = EventPosition.Latest;
             var credential = Mock.Of<TokenCredential>();
             var transport = TransportType.AmqpTcp;

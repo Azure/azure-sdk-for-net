@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Search.Common
     using System.Linq;
 
     /// <summary>
-    /// Defines extension methods for IEnumerable that are used in the implementation of the Azure Search
+    /// Defines extension methods for IEnumerable that are used in the implementation of the Azure Cognitive Search
     /// .NET SDK.
     /// </summary>
     public static class EnumerableExtensions

@@ -112,7 +112,6 @@
     <DelaySign>false</DelaySign>
     <PublicSign>false</PublicSign>
     <ImportDefaultReferences>false</ImportDefaultReferences>
-    <UseProjectReferenceToAzureCore>true</UseProjectReferenceToAzureCore>
     <LangVersion>preview</LangVersion>
     <DocumentationFile>$(IntermediateOutputPath)$(TargetFramework)\$(MSBuildProjectName).xml</DocumentationFile>
   </PropertyGroup>
@@ -125,6 +124,4 @@
     <!-- Disable doc comments for test projects -->
     <DocumentationFile></DocumentationFile>
   </PropertyGroup>
-
-  <Import Project="Versioning.props" />
 </Project>

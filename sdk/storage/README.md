@@ -4,13 +4,13 @@ Azure Storage is a Microsoft-managed service providing cloud storage that is hig
 
 - [Azure.Storage.Blobs][blobs] is Microsoft's object storage solution for the cloud. Blob storage is optimized for storing massive amounts of unstructured data that does not adhere to a particular data model or definition, such as text or binary data.
 
-- [Azure.Storage.Blobs.Batching][blobs_batching] allows you to batch multiple Azure Blob Storage operations in a single request.
+- [Azure.Storage.Blobs.Batch][blobs_batch] allows you to batch multiple Azure Blob Storage operations in a single request.
 
 - [Azure.Storage.Blobs.Cryptography][blobs_cryptography] supports client-side encryption for Azure Storage block blobs.
 
 - [Azure.Storage.Queues][queues] is a service for storing large numbers of messages.  A queue message can be up to 64 KB in size and a queue may contain millions of messages, up to the total capacity limit of a storage account.
 
-- [Azure.Storage.Files][files] offers fully managed file shares in the cloud that are accessible via the industry standard Server Message Block (SMB) protocol.  Azure file shares can be mounted concurrently by cloud or on-premises deployments of Windows, Linux, and macOS.
+- [Azure.Storage.Files.Shares][files] offers fully managed file shares in the cloud that are accessible via the industry standard Server Message Block (SMB) protocol.  Azure file shares can be mounted concurrently by cloud or on-premises deployments of Windows, Linux, and macOS.
 
 - [Azure.Storage.Common][common] provides infrastructure shared by the other Azure Storage client libraries like shared key authentication and exceptions.
 
@@ -35,10 +35,10 @@ additional questions or comments.
 
 <!-- LINKS -->
 [blobs]: ./Azure.Storage.Blobs/README.md
-[blobs_batching]: ./Azure.Storage.Blobs.Batching/README.md
+[blobs_batch]: ./Azure.Storage.Blobs.Batch/README.md
 [blobs_cryptography]: ./Azure.Storage.Blobs.Cryptography/README.md
 [queues]: ./Azure.Storage.Queues/README.md
-[files]: ./Azure.Storage.Files/README.md
+[files]: ./Azure.Storage.Files.Shares/README.md
 [common]: ./Azure.Storage.Common/README.md
 [management]: ./Microsoft.Azure.Management.Storage/
 [storage_contrib]: ./CONTRIBUTING.md

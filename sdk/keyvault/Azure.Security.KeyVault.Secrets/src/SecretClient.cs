@@ -32,11 +32,11 @@ namespace Azure.Security.KeyVault.Secrets
         /// <summary>
         /// Initializes a new instance of the <see cref="SecretClient"/> class for the specified vault.
         /// </summary>
-        /// <param name="vaultEndpoint">A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal.</param>
+        /// <param name="vaultUri">A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal.</param>
         /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, such as DefaultAzureCredential.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="vaultEndpoint"/> or <paramref name="credential"/> is null.</exception>
-        public SecretClient(Uri vaultEndpoint, TokenCredential credential)
-            : this(vaultEndpoint, credential, null)
+        /// <exception cref="ArgumentNullException"><paramref name="vaultUri"/> or <paramref name="credential"/> is null.</exception>
+        public SecretClient(Uri vaultUri, TokenCredential credential)
+            : this(vaultUri, credential, null)
         {
 
         }
@@ -44,13 +44,13 @@ namespace Azure.Security.KeyVault.Secrets
         /// <summary>
         /// Initializes a new instance of the <see cref="SecretClient"/> class for the specified vault.
         /// </summary>
-        /// <param name="vaultEndpoint">A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal.</param>
+        /// <param name="vaultUri">A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal.</param>
         /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, such as DefaultAzureCredential.</param>
         /// <param name="options"><see cref="SecretClientOptions"/> that allow to configure the management of the request sent to Key Vault.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="vaultEndpoint"/> or <paramref name="credential"/> is null.</exception>
-        public SecretClient(Uri vaultEndpoint, TokenCredential credential, SecretClientOptions options)
+        /// <exception cref="ArgumentNullException"><paramref name="vaultUri"/> or <paramref name="credential"/> is null.</exception>
+        public SecretClient(Uri vaultUri, TokenCredential credential, SecretClientOptions options)
         {
-            Argument.AssertNotNull(vaultEndpoint, nameof(vaultEndpoint));
+            Argument.AssertNotNull(vaultUri, nameof(vaultUri));
             Argument.AssertNotNull(credential, nameof(credential));
 
             options ??= new SecretClientOptions();
@@ -59,13 +59,13 @@ namespace Azure.Security.KeyVault.Secrets
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options,
                     new ChallengeBasedAuthenticationPolicy(credential));
 
-            _pipeline = new KeyVaultPipeline(vaultEndpoint, apiVersion, pipeline, new ClientDiagnostics(options));
+            _pipeline = new KeyVaultPipeline(vaultUri, apiVersion, pipeline, new ClientDiagnostics(options));
         }
 
         /// <summary>
         /// Gets the <see cref="Uri"/> of the vault used to create this instance of the <see cref="SecretClient"/>.
         /// </summary>
-        public Uri VaultEndpoint => _pipeline.VaultEndpoint;
+        public virtual Uri VaultUri => _pipeline.VaultUri;
 
         /// <summary>
         /// Get a specified secret from a given key vault.
@@ -77,6 +77,9 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="name">The name of the secret.</param>
         /// <param name="version">The version of the secret.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<KeyVaultSecret>> GetSecretAsync(string name, string version = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -106,6 +109,9 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="name">The name of the secret.</param>
         /// <param name="version">The version of the secret.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<KeyVaultSecret> GetSecret(string name, string version = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -126,7 +132,7 @@ namespace Azure.Security.KeyVault.Secrets
         }
 
         /// <summary>
-        /// List all versions of the specified secret.
+        /// Lists the properties of all versions of the specified secret. You can use the returned <see cref="SecretProperties.Name"/> and <see cref="SecretProperties.Version"/> in subsequent calls to <see cref="GetSecretAsync"/>.
         /// </summary>
         /// <remarks>
         /// The full secret identifier and attributes are provided in the response. No
@@ -135,17 +141,20 @@ namespace Azure.Security.KeyVault.Secrets
         /// </remarks>
         /// <param name="name">The name of the secret.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual AsyncPageable<SecretProperties> GetPropertiesOfSecretVersionsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            Uri firstPageUri = new Uri(VaultEndpoint, $"{SecretsPath}{name}/versions?api-version={_pipeline.ApiVersion}");
+            Uri firstPageUri = new Uri(VaultUri, $"{SecretsPath}{name}/versions?api-version={_pipeline.ApiVersion}");
 
             return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new SecretProperties(), "Azure.Security.KeyVault.Secrets.SecretClient.GetPropertiesOfSecretVersions", cancellationToken));
         }
 
         /// <summary>
-        /// List all versions of the specified secret.
+        /// Lists the properties of all versions of the specified secret. You can use the returned <see cref="SecretProperties.Name"/> and <see cref="SecretProperties.Version"/> in subsequent calls to <see cref="GetSecret"/>.
         /// </summary>
         /// <remarks>
         /// The full secret identifier and attributes are provided in the response. No
@@ -154,17 +163,20 @@ namespace Azure.Security.KeyVault.Secrets
         /// </remarks>
         /// <param name="name">The name of the secret.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Pageable<SecretProperties> GetPropertiesOfSecretVersions(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            Uri firstPageUri = new Uri(VaultEndpoint, $"{SecretsPath}{name}/versions?api-version={_pipeline.ApiVersion}");
+            Uri firstPageUri = new Uri(VaultUri, $"{SecretsPath}{name}/versions?api-version={_pipeline.ApiVersion}");
 
             return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new SecretProperties(), "Azure.Security.KeyVault.Secrets.SecretClient.GetPropertiesOfSecretVersions", cancellationToken));
         }
 
         /// <summary>
-        /// List secrets in a specified key vault.
+        /// Lists the properties of all secrets in the specified vault. You can use the returned <see cref="SecretProperties.Name"/> in subsequent calls to <see cref="GetSecretAsync"/>.
         /// </summary>
         /// <remarks>
         /// The Get Secrets operation is applicable to the entire vault. However, only
@@ -173,15 +185,16 @@ namespace Azure.Security.KeyVault.Secrets
         /// requires the secrets/list permission.
         /// </remarks>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual AsyncPageable<SecretProperties> GetPropertiesOfSecretsAsync(CancellationToken cancellationToken = default)
         {
-            Uri firstPageUri = new Uri(VaultEndpoint, SecretsPath + $"?api-version={_pipeline.ApiVersion}");
+            Uri firstPageUri = new Uri(VaultUri, SecretsPath + $"?api-version={_pipeline.ApiVersion}");
 
             return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new SecretProperties(), "Azure.Security.KeyVault.Secrets.SecretClient.GetPropertiesOfSecrets", cancellationToken));
         }
 
         /// <summary>
-        /// List secrets in a specified key vault.
+        /// Lists the properties of all secrets in the specified vault. You can use the returned <see cref="SecretProperties.Name"/> in subsequent calls to <see cref="GetSecret"/>.
         /// </summary>
         /// <remarks>
         /// The Get Secrets operation is applicable to the entire vault. However, only
@@ -190,9 +203,10 @@ namespace Azure.Security.KeyVault.Secrets
         /// requires the secrets/list permission.
         /// </remarks>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Pageable<SecretProperties> GetPropertiesOfSecrets(CancellationToken cancellationToken = default)
         {
-            Uri firstPageUri = new Uri(VaultEndpoint, SecretsPath + $"?api-version={_pipeline.ApiVersion}");
+            Uri firstPageUri = new Uri(VaultUri, SecretsPath + $"?api-version={_pipeline.ApiVersion}");
 
             return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new SecretProperties(), "Azure.Security.KeyVault.Secrets.SecretClient.GetPropertiesOfSecrets", cancellationToken));
         }
@@ -208,6 +222,8 @@ namespace Azure.Security.KeyVault.Secrets
         /// </remarks>
         /// <param name="properties">The secret object with updated properties.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="properties"/> or <see cref="SecretProperties.Version"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<SecretProperties>> UpdateSecretPropertiesAsync(SecretProperties properties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(properties, nameof(properties));
@@ -239,6 +255,8 @@ namespace Azure.Security.KeyVault.Secrets
         /// </remarks>
         /// <param name="properties">The secret object with updated properties.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="properties"/> or <see cref="SecretProperties.Version"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<SecretProperties> UpdateSecretProperties(SecretProperties properties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(properties, nameof(properties));
@@ -269,6 +287,8 @@ namespace Azure.Security.KeyVault.Secrets
         /// </remarks>
         /// <param name="secret">The Secret object containing information about the secret and its properties. The properties secret.Name and secret.Value must be non null.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="secret"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<KeyVaultSecret>> SetSecretAsync(KeyVaultSecret secret, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(secret, nameof(secret));
@@ -298,6 +318,8 @@ namespace Azure.Security.KeyVault.Secrets
         /// </remarks>
         /// <param name="secret">The Secret object containing information about the secret and its properties. The properties secret.Name and secret.Value must be non null.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="secret"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<KeyVaultSecret> SetSecret(KeyVaultSecret secret, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(secret, nameof(secret));
@@ -328,6 +350,9 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="name">The name of the secret. It must not be null.</param>
         /// <param name="value">The value of the secret. It must not be null.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<KeyVaultSecret>> SetSecretAsync(string name, string value, CancellationToken cancellationToken = default)
         {
             return await SetSecretAsync(new KeyVaultSecret(name, value), cancellationToken).ConfigureAwait(false);
@@ -344,6 +369,9 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="name">The name of the secret.</param>
         /// <param name="value">The value of the secret.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<KeyVaultSecret> SetSecret(string name, string value, CancellationToken cancellationToken = default)
         {
             return SetSecret(new KeyVaultSecret(name, value), cancellationToken);
@@ -360,6 +388,9 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="name">The name of the secret.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="DeleteSecretOperation"/> to wait on this long-running operation.</returns>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<DeleteSecretOperation> StartDeleteSecretAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -391,6 +422,9 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="name">The name of the secret.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="DeleteSecretOperation"/> to wait on this long-running operation.</returns>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual DeleteSecretOperation StartDeleteSecret(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -420,6 +454,9 @@ namespace Azure.Security.KeyVault.Secrets
         /// </remarks>
         /// <param name="name">The name of the secret.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<DeletedSecret>> GetDeletedSecretAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -448,6 +485,9 @@ namespace Azure.Security.KeyVault.Secrets
         /// </remarks>
         /// <param name="name">The name of the secret.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<DeletedSecret> GetDeletedSecret(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -476,9 +516,10 @@ namespace Azure.Security.KeyVault.Secrets
         /// secrets/list permission.
         /// </remarks>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual AsyncPageable<DeletedSecret> GetDeletedSecretsAsync(CancellationToken cancellationToken = default)
         {
-            Uri firstPageUri = new Uri(VaultEndpoint, DeletedSecretsPath + $"?api-version={_pipeline.ApiVersion}");
+            Uri firstPageUri = new Uri(VaultUri, DeletedSecretsPath + $"?api-version={_pipeline.ApiVersion}");
 
             return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new DeletedSecret(), "Azure.Security.KeyVault.Secrets.SecretClient.GetDeletedSecrets", cancellationToken));
         }
@@ -492,9 +533,10 @@ namespace Azure.Security.KeyVault.Secrets
         /// secrets/list permission.
         /// </remarks>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Pageable<DeletedSecret> GetDeletedSecrets(CancellationToken cancellationToken = default)
         {
-            Uri firstPageUri = new Uri(VaultEndpoint, DeletedSecretsPath + $"?api-version={_pipeline.ApiVersion}");
+            Uri firstPageUri = new Uri(VaultUri, DeletedSecretsPath + $"?api-version={_pipeline.ApiVersion}");
 
             return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new DeletedSecret(), "Azure.Security.KeyVault.Secrets.SecretClient.GetDeletedSecrets", cancellationToken));
         }
@@ -510,6 +552,9 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="name">The name of the secret.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecoverDeletedSecretOperation"/> to wait on this long-running operation.</returns>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<RecoverDeletedSecretOperation> StartRecoverDeletedSecretAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -541,6 +586,9 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="name">The name of the secret.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecoverDeletedSecretOperation"/> to wait on this long-running operation.</returns>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual RecoverDeletedSecretOperation StartRecoverDeletedSecret(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -572,6 +620,9 @@ namespace Azure.Security.KeyVault.Secrets
         /// </remarks>
         /// <param name="name">The name of the secret.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response> PurgeDeletedSecretAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -602,6 +653,9 @@ namespace Azure.Security.KeyVault.Secrets
         /// </remarks>
         /// <param name="name">The name of the secret.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response PurgeDeletedSecret(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -631,6 +685,9 @@ namespace Azure.Security.KeyVault.Secrets
         /// </remarks>
         /// <param name="name">The name of the secret.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<byte[]>> BackupSecretAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -662,6 +719,9 @@ namespace Azure.Security.KeyVault.Secrets
         /// </remarks>
         /// <param name="name">The name of the secret.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<byte[]> BackupSecret(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -692,6 +752,8 @@ namespace Azure.Security.KeyVault.Secrets
         /// </remarks>
         /// <param name="backup">The backup blob associated with a secret.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="backup"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<SecretProperties>> RestoreSecretBackupAsync(byte[] backup, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(backup, nameof(backup));
@@ -719,6 +781,8 @@ namespace Azure.Security.KeyVault.Secrets
         /// </remarks>
         /// <param name="backup">The backup blob associated with a secret.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="backup"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<SecretProperties> RestoreSecretBackup(byte[] backup, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(backup, nameof(backup));

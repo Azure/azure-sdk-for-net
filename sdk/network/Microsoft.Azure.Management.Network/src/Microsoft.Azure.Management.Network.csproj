@@ -26,6 +26,11 @@
             - Added property "EnableProxyProtocol" to PrivateLinkService
             - Added property "LinkIdentifier" to PrivateEndpointConnection
             - Added support for "GeoMatch" in WebApplicationFirewall's MatchCondition's operator
+		<Version>19.17.1-preview</Version>
+		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>
+		<PackageReleaseNotes>
+		<![CDATA[
+            - Bugfix in PrivateLinkServiceConnectionState: property "ActionRequired" renamed to "ActionsRequired"
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

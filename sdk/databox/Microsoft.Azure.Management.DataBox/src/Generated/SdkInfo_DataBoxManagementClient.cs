@@ -19,19 +19,19 @@ namespace Microsoft.Azure.Management.DataBox
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("DataBox", "Jobs", "2018-01-01"),
-                new Tuple<string, string, string>("DataBox", "Operations", "2018-01-01"),
-                new Tuple<string, string, string>("DataBox", "Service", "2018-01-01"),
+                new Tuple<string, string, string>("DataBox", "Jobs", "2019-09-01"),
+                new Tuple<string, string, string>("DataBox", "Operations", "2019-09-01"),
+                new Tuple<string, string, string>("DataBox", "Service", "2019-09-01"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "latest";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/databox/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=E:\\work\\git\\azure-sdk-for-net\\src\\SDKs";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/databox/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --tag=package-2019-09 --csharp-sdks-folder=D:\\god\\azure_sdk_net\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "be799c37e1df63769895f0ae6fc51d65c69aba27";
+      public static readonly String GithubCommidId = "59998f796f05580bc1d43ba39f0170204113fa91";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

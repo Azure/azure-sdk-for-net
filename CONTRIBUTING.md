@@ -233,3 +233,11 @@ Much of the management plane SDK code is generated from metadata specs about the
 - File an issue describing the problem,
 - Refer to the the [AutoRest project](https://github.com/azure/autorest) to view and modify the generator, or
 - Add additional methods, properties, and overloads to the SDK by adding classes in the 'Customizations' folder of a project
+
+## Versioning
+
+For more information on how we version see [Versioning](doc/dev/Versioning.md)
+
+## Breaking Changes
+
+For information about breaking changes see [Breaking Change Rules](https://github.com/dotnet/corefx/blob/master/Documentation/coding-guidelines/breaking-change-rules.md)

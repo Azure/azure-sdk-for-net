@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.Files;
-using Azure.Storage.Files.Models;
+using Azure.Storage.Files.Shares;
+using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Test;
 using NUnit.Framework;
 
-namespace Azure.Storage.Common.Test
+namespace Azure.Storage.Test
 {
     [TestFixture]
     public class UtilityTests
@@ -53,7 +53,7 @@ namespace Azure.Storage.Common.Test
                     catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.LeaseIdMissing)
                     {
                         // Break any lingering leases
-                        await blobs.GetBlobContainerClient(container.Name).GetLeaseClient().BreakAsync();
+                        await blobs.GetBlobContainerClient(container.Name).GetBlobLeaseClient().BreakAsync();
                     }
                     catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerBeingDeleted)
                     {
@@ -76,14 +76,14 @@ namespace Azure.Storage.Common.Test
                 }
 
                 // Files
-                var files = new FileServiceClient(config.ConnectionString);
+                var files = new ShareServiceClient(config.ConnectionString);
                 await foreach (ShareItem share in files.GetSharesAsync())
                 {
                     try
                     {
                         await files.DeleteShareAsync(share.Name);
                     }
-                    catch (RequestFailedException ex) when (ex.ErrorCode == FileErrorCode.ShareBeingDeleted)
+                    catch (RequestFailedException ex) when (ex.ErrorCode == ShareErrorCode.ShareBeingDeleted)
                     {
                         // Ignore anything already being deleted
                     }

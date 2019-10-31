@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Globalization;
 using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs
@@ -29,5 +30,8 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentException("Cannot use client-provided key without HTTPS.");
             }
         }
+
+        public static ArgumentException ParsingFullHttpRangeFailed(string range)
+            => new ArgumentException("Could not obtain the total length from HTTP range " + range);
     }
 }

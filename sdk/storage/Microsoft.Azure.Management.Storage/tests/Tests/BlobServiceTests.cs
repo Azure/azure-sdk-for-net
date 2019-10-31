@@ -209,7 +209,7 @@ namespace Storage.Tests
                     }
 
                     //List container with next link
-                    containerList = storageMgmtClient.BlobContainers.List(rgName, accountName, null, "2");
+                    containerList = storageMgmtClient.BlobContainers.List(rgName, accountName, "2");
                     Assert.NotNull(containerList.NextPageLink);
                     Assert.Equal(2, containerList.Count());
                     containerList = storageMgmtClient.BlobContainers.ListNext(containerList.NextPageLink);

@@ -7,7 +7,7 @@ using System.Text.Json;
 namespace Azure.Security.KeyVault.Keys
 {
     /// <summary>
-    /// Represents a KeyVault key that has been deleted, allowing it to be recovered, if needed.
+    /// Represents a Key Vault key that has been deleted, allowing it to be recovered, if needed.
     /// </summary>
     public class DeletedKey : KeyVaultKey
     {
@@ -26,7 +26,7 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// The identifier of the deleted key. This is used to recover the key.
+        /// Gets a <see cref="Uri"/> of the deleted key that can be used to recover it.
         /// </summary>
         public Uri RecoveryId
         {
@@ -35,12 +35,12 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// The time when the key was deleted, in UTC.
+        /// Gets a <see cref="DateTimeOffset"/> of when the key was deleted.
         /// </summary>
         public DateTimeOffset? DeletedOn { get; internal set; }
 
         /// <summary>
-        /// The time when the key is scheduled to be purged, in UTC
+        /// Gets a <see cref="DateTimeOffset"/> for when the deleted key will be purged.
         /// </summary>
         public DateTimeOffset? ScheduledPurgeDate { get; internal set; }
 

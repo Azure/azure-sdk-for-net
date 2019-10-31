@@ -463,6 +463,22 @@ directive:
         $.BlobItemProperties.required = ["AccessTierInferred"];
         const path = $.BlobItem.properties.Properties.$ref.replace(/[#].*$/, "#/definitions/BlobItemProperties");
         $.BlobItem.properties.Properties = { "$ref": path };
+
+        $.BlobItemProperties.properties.CreatedOn = $.BlobItemProperties.properties["Creation-Time"];
+        $.BlobItemProperties.properties.CreatedOn.xml = {"name": "Creation-Time"};
+        delete $.BlobItemProperties.properties["Creation-Time"];
+
+        $.BlobItemProperties.properties.CopyCompletedOn = $.BlobItemProperties.properties.CopyCompletionTime;
+        $.BlobItemProperties.properties.CopyCompletedOn.xml = {"name": "CopyCompletionTime"};
+        delete $.BlobItemProperties.properties.CopyCompletionTime;
+
+        $.BlobItemProperties.properties.DeletedOn = $.BlobItemProperties.properties.DeletedTime;
+        $.BlobItemProperties.properties.DeletedOn.xml = {"name": "DeletedTime"};
+        delete $.BlobItemProperties.properties.DeletedTime;
+
+        $.BlobItemProperties.properties.AccessTierChangedOn = $.BlobItemProperties.properties.AccessTierChangeTime;
+        $.BlobItemProperties.properties.AccessTierChangedOn.xml = {"name": "AccessTierChangeTime"};
+        delete $.BlobItemProperties.properties.AccessTierChangeTime;
     }
 - from: swagger-document
   where: $["x-ms-paths"]["/{containerName}/{blob}"]
@@ -497,12 +513,9 @@ directive:
     $.head.responses["200"].headers["x-ms-lease-state"]["x-ms-enum"].name = "LeaseState";
     $.head.responses["200"].headers["x-ms-lease-status"]["x-ms-enum"].name = "LeaseStatus";
     $.head.responses["200"].headers["Content-MD5"]["x-ms-client-name"] = "ContentHash";
-    $.head.responses["200"].headers["Content-Encoding"].type = "array";
-    $.head.responses["200"].headers["Content-Encoding"].collectionFormat = "csv";
-    $.head.responses["200"].headers["Content-Encoding"].items = { "type": "string" };
-    $.head.responses["200"].headers["Content-Language"].type = "array";
-    $.head.responses["200"].headers["Content-Language"].collectionFormat = "csv";
-    $.head.responses["200"].headers["Content-Language"].items = { "type": "string" };
+    $.head.responses["200"].headers["x-ms-copy-completion-time"]["x-ms-client-name"] = "CopyCompletedOn";
+    $.head.responses["200"].headers["x-ms-creation-time"]["x-ms-client-name"] = "CreatedOn";
+    $.head.responses["200"].headers["x-ms-access-tier-change-time"]["x-ms-client-name"] = "AccessTierChangedOn";
     $.head.responses["304"] = {
         "description": "The condition specified using HTTP conditional header(s) is not met.",
         "x-az-response-name": "ConditionNotMetError",
@@ -564,6 +577,9 @@ directive:
             const path = def["$ref"].replace(/[#].*$/, "#/definitions/BlobGeoReplication");
             $.BlobServiceStatistics.properties.GeoReplication = {"$ref": path};
         }
+        $.BlobGeoReplication.properties.LastSyncedOn = $.BlobGeoReplication.properties.LastSyncTime;
+        delete $.BlobGeoReplication.properties.LastSyncTime;
+        $.BlobGeoReplication.properties.LastSyncedOn.xml = { "name": "LastSyncTime" };
     }
 ```
 
@@ -576,18 +592,6 @@ directive:
     $.put.operationId = "Blob_SetHttpHeaders";
     $.put.responses["200"]["x-az-response-name"] = "SetHttpHeadersOperation";
     $.put.responses["200"]["x-az-public"] = false;
-- from: swagger-document
-  where: $.parameters.BlobContentEncoding
-  transform: >
-    $.type = "array";
-    $.collectionFormat = "csv";
-    $.items = { "type": "string" };
-- from: swagger-document
-  where: $.parameters.BlobContentLanguage
-  transform: >
-    $.type = "array";
-    $.collectionFormat = "csv";
-    $.items = { "type": "string" };
 ```
 
 ### RehydratePriority
@@ -1018,6 +1022,16 @@ directive:
     $.properties.ETag = $.properties.Etag;
     $.properties.ETag.xml = { "name":  "Etag" };
     delete $.properties.Etag;
+```
+
+### Move Metadata from BlobContainerItem to BlobContainerProperties
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.BlobContainerProperties.properties.Metadata = $.BlobContainerItem.properties.Metadata;
+    delete $.BlobContainerItem.properties.Metadata;
 ```
 
 ### UserDelegationKey properties

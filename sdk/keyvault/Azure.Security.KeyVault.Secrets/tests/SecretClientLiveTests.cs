@@ -95,7 +95,7 @@ namespace Azure.Security.KeyVault.Test
                 Assert.AreEqual("value2", setResult.Properties.Tags["tag2"]);
                 Assert.AreEqual(secretName, setResult.Name);
                 Assert.AreEqual("CrudWithExtendedPropsValue1", setResult.Value);
-                Assert.AreEqual(VaultEndpoint, setResult.Properties.VaultEndpoint);
+                Assert.AreEqual(VaultUri, setResult.Properties.VaultUri);
                 Assert.AreEqual("Recoverable+Purgeable", setResult.Properties.RecoveryLevel);
                 Assert.That(setResult.Properties.CreatedOn, createdUpdatedConstraint);
                 Assert.That(setResult.Properties.UpdatedOn, createdUpdatedConstraint);
@@ -149,6 +149,61 @@ namespace Azure.Security.KeyVault.Test
             SecretProperties updateResult = await Client.UpdateSecretPropertiesAsync(secret.Properties);
 
             AssertSecretPropertiesEqual(secret.Properties, updateResult);
+        }
+
+        [Test]
+        public async Task UpdateTags()
+        {
+            string secretName = Recording.GenerateId();
+
+            KeyVaultSecret secret = new KeyVaultSecret(secretName, "test")
+            {
+                Properties =
+                {
+                    Tags =
+                    {
+                        ["A"] = "1",
+                        ["B"] = "2",
+                    },
+                },
+            };
+
+            secret = await Client.SetSecretAsync(secret);
+            RegisterForCleanup(secret.Name);
+
+            IDictionary<string, string> expectedTags = new Dictionary<string, string>
+            {
+                ["A"] = "1",
+                ["B"] = "2",
+            };
+
+            AssertAreEqual(expectedTags, secret.Properties.Tags);
+
+            secret.Properties.Tags["B"] = "3";
+            secret.Properties.Tags["C"] = "4";
+
+            SecretProperties updateResult = await Client.UpdateSecretPropertiesAsync(secret.Properties);
+
+            expectedTags = new Dictionary<string, string>
+            {
+                ["A"] = "1",
+                ["B"] = "3",
+                ["C"] = "4",
+            };
+
+            AssertAreEqual(expectedTags, updateResult.Tags);
+
+            updateResult.Tags.Clear();
+            updateResult.Tags["D"] = "5";
+
+            updateResult = await Client.UpdateSecretPropertiesAsync(updateResult);
+
+            expectedTags = new Dictionary<string, string>
+            {
+                ["D"] = "5",
+            };
+
+            AssertAreEqual(expectedTags, updateResult.Tags);
         }
 
         [Test]

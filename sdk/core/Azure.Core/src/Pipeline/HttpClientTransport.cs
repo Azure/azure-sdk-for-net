@@ -14,30 +14,46 @@ using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline
 {
+    /// <summary>
+    /// An <see cref="HttpPipelineTransport"/> implementation that uses <see cref="HttpClient"/> as the transport.
+    /// </summary>
     public class HttpClientTransport : HttpPipelineTransport
     {
         private readonly HttpClient _client;
 
+        /// <summary>
+        /// Creates a new <see cref="HttpClientTransport"/> instance using default configuration.
+        /// </summary>
         public HttpClientTransport() : this(CreateDefaultClient())
         {
         }
 
+        /// <summary>
+        /// Creates a new instance of <see cref="HttpClientTransport"/> using the provided client instance.
+        /// </summary>
+        /// <param name="client">The instance of <see cref="HttpClient"/> to use.</param>
         public HttpClientTransport(HttpClient client)
         {
             _client = client ?? throw new ArgumentNullException(nameof(client));
         }
 
+        /// <summary>
+        /// A shared instance of <see cref="HttpClientTransport"/> with default parameters.
+        /// </summary>
         public static readonly HttpClientTransport Shared = new HttpClientTransport();
 
+        /// <inheritdoc />
         public sealed override Request CreateRequest()
             => new PipelineRequest();
 
+        /// <inheritdoc />
         public override void Process(HttpMessage message)
         {
             // Intentionally blocking here
             ProcessAsync(message).GetAwaiter().GetResult();
         }
 
+        /// <inheritdoc />
         public sealed override async ValueTask ProcessAsync(HttpMessage message)
         {
             using (HttpRequestMessage httpRequest = BuildRequestMessage(message))

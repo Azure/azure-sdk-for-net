@@ -4,49 +4,61 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using Azure.Core;
 
 namespace Azure.Data.AppConfiguration
 {
     /// <summary>
-    /// Set of options for selecting <see cref="ConfigurationSetting"/> from the configuration store.
+    /// <para><see cref="SettingSelector"/> is a set of options that allows selecting
+    /// a filtered set of <see cref="ConfigurationSetting"/> entities from the
+    /// configuration store, and optionally allows indicating which fields of
+    /// each setting to retreive.</para>
+    /// <para>Literals or filters may be specified for keys and labels.</para>
+    /// <para>For more information, <see href="https://github.com/Azure/AppConfiguration/blob/master/docs/REST/kv.md#filtering"/>.</para>
     /// </summary>
     public class SettingSelector
     {
         /// <summary>
-        /// Wildcard that symbolizes any value when used in filters.
+        /// A wildcard that matches any key or any label when passed as a filter
+        /// to Keys or Labels.
         /// </summary>
         public static readonly string Any = "*";
+
         /// <summary>
-        /// Keys that will be used to filter.
+        /// Keys or key filters that will be used to select a set of <see cref="ConfigurationSetting"/> entities.
         /// </summary>
         /// <remarks>See the documentation for this client library for details on the format of filter expressions.</remarks>
         public IList<string> Keys { get; }
+
         /// <summary>
-        /// Labels that will be used to filter.
+        /// Labels or label filters that will be used to select a set of <see cref="ConfigurationSetting"/> entities.
         /// </summary>
         /// <remarks>See the documentation for this client library for details on the format of filter expressions.</remarks>
         public IList<string> Labels { get; }
+
         /// <summary>
-        /// Allows requesting a specific set of fields.
+        /// The fields of the <see cref="ConfigurationSetting"/> to retrieve for each setting in the retrieved group.
         /// </summary>
         public SettingFields Fields { get; set; } = SettingFields.All;
+
         /// <summary>
-        /// If set, then key values will be retrieved exactly as they existed at the provided time.
+        /// Indicates the point in time in the revision history of the selected <see cref="ConfigurationSetting"/> entities to retrieve.
+        /// If set, all properties of the <see cref="ConfigurationSetting"/> entities in the returned group will be exactly what they
+        /// were at this time.
         /// </summary>
         public DateTimeOffset? AsOf { get; set; }
 
         /// <summary>
-        /// Creates a SettingSelector with Any wildcards for both Key and Label properties
+        /// Creates a <see cref="SettingSelector"/> that will retrieve all <see cref="ConfigurationSetting"/> entities in the
+        /// configuration store by setting both Key and Label filters to Any.
         /// </summary>
         public SettingSelector() : this(Any, Any) { }
 
         /// <summary>
-        /// Creates a SettingSelector
+        /// Creates a <see cref="SettingSelector"/> that will retrieve <see cref="ConfigurationSetting"/> entities that match
+        /// the passed-in keys and labels.
         /// </summary>
-        /// <param name="key">The primary identifier of a configuration setting.</param>
-        /// <param name="label">The value used to group configuration settings.</param>
+        /// <param name="key">A key or key filter indicating which <see cref="ConfigurationSetting"/> entities to select.</param>
+        /// <param name="label">A label or label filter indicating which <see cref="ConfigurationSetting"/> entities to select</param>
         public SettingSelector(string key, string label = default)
         {
             Keys = new List<string>

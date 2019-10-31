@@ -36,7 +36,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that an <see cref="EventHubClient" /> is being created.
+        ///   Indicates that an <see cref="EventHubConnection" /> is being created.
         /// </summary>
         ///
         /// <param name="eventHubsNamespace">The Event Hubs namespace associated with the client.</param>
@@ -53,7 +53,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that an <see cref="EventHubClient" /> was created.
+        ///   Indicates that an <see cref="EventHubConnection" /> was created.
         /// </summary>
         ///
         /// <param name="eventHubsNamespace">The Event Hubs namespace associated with the client.</param>
@@ -190,8 +190,8 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that a client is closing, which may correspond to an <see cref="EventHubClient" />,
-        ///   <see cref="EventHubProducer" />, or <see cref="EventHubConsumer" />.
+        ///   Indicates that a client is closing, which may correspond to an <see cref="EventHubConnection" />,
+        ///   <see cref="EventHubProducerClient" />, or <see cref="EventHubConsumerClient" />.
         /// </summary>
         ///
         /// <param name="clientType">The type of client being closed.</param>
@@ -210,8 +210,8 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that a client has been closed, which may correspond to an <see cref="EventHubClient" />,
-        ///   <see cref="EventHubProducer" />, or <see cref="EventHubConsumer" />.
+        ///   Indicates that a client has been closed, which may correspond to an <see cref="EventHubConnection" />,
+        ///   <see cref="EventHubProducerClient" />, or <see cref="EventHubConsumerClient" />.
         /// </summary>
         ///
         /// <param name="clientType">The type of client being closed.</param>
@@ -230,7 +230,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that an exception was encountered while closing an <see cref="EventHubClient" />.
+        ///   Indicates that an exception was encountered while closing an <see cref="EventHubConnection" />.
         /// </summary>
         ///
         /// <param name="clientType">The type of client being closed.</param>

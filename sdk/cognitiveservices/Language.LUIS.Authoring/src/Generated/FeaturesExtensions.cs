@@ -22,37 +22,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
     public static partial class FeaturesExtensions
     {
             /// <summary>
-            /// [DEPRECATED NOTICE: This operation will soon be removed] Gets all the
-            /// pattern features.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='appId'>
-            /// The application ID.
-            /// </param>
-            /// <param name='versionId'>
-            /// The version ID.
-            /// </param>
-            /// <param name='skip'>
-            /// The number of entries to skip. Default value is 0.
-            /// </param>
-            /// <param name='take'>
-            /// The number of entries to return. Maximum page size is 500. Default is 100.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
-            public static async Task<IList<PatternFeatureInfo>> ListApplicationVersionPatternFeaturesAsync(this IFeatures operations, System.Guid appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListApplicationVersionPatternFeaturesWithHttpMessagesAsync(appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Creates a new phraselist feature in a version of the application.
             /// </summary>
             /// <param name='operations'>
@@ -217,6 +186,66 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             public static async Task<OperationStatus> DeletePhraseListAsync(this IFeatures operations, System.Guid appId, string versionId, int phraselistId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.DeletePhraseListWithHttpMessagesAsync(appId, versionId, phraselistId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Adds a new feature relation to be used by the intent in a version of the
+            /// application.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='appId'>
+            /// The application ID.
+            /// </param>
+            /// <param name='versionId'>
+            /// The version ID.
+            /// </param>
+            /// <param name='intentId'>
+            /// The intent classifier ID.
+            /// </param>
+            /// <param name='featureRelationCreateObject'>
+            /// A Feature relation information object.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<OperationStatus> AddIntentFeatureAsync(this IFeatures operations, System.Guid appId, string versionId, System.Guid intentId, ModelFeatureInformation featureRelationCreateObject, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.AddIntentFeatureWithHttpMessagesAsync(appId, versionId, intentId, featureRelationCreateObject, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Adds a new feature relation to be used by the entity in a version of the
+            /// application.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='appId'>
+            /// The application ID.
+            /// </param>
+            /// <param name='versionId'>
+            /// The version ID.
+            /// </param>
+            /// <param name='entityId'>
+            /// The entity extractor ID.
+            /// </param>
+            /// <param name='featureRelationCreateObject'>
+            /// A Feature relation information object.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<OperationStatus> AddEntityFeatureAsync(this IFeatures operations, System.Guid appId, string versionId, System.Guid entityId, ModelFeatureInformation featureRelationCreateObject, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.AddEntityFeatureWithHttpMessagesAsync(appId, versionId, entityId, featureRelationCreateObject, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

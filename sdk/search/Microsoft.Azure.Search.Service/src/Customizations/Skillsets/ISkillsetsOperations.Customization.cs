@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Search
     public partial interface ISkillsetsOperations
     {
         /// <summary>
-        /// Creates a new Azure Search skillset or updates a skillset if
+        /// Creates a new skillset or updates a skillset if
         /// it already exists.
         /// </summary>
         /// <param name='skillset'>
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Search
         Task<AzureOperationResponse<Skillset>> CreateOrUpdateWithHttpMessagesAsync(Skillset skillset, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Determines whether or not the given skillset exists in the Azure Search service.
+        /// Determines whether or not the given skillset exists in the search service.
         /// </summary>
         /// <param name="skillsetName">
         /// The name of the skillset.

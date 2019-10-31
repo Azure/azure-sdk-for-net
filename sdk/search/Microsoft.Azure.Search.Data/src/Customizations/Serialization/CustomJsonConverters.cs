@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Search.Serialization.Internal
     /// Search .NET SDK. For test purposes only.
     /// </summary>
     /// <remarks>
-    /// This class is part of the internal implementation of the Azure Search .NET SDK. It is not
+    /// This class is part of the internal implementation of the Azure Cognitive Search .NET SDK. It is not
     /// intended to be used directly by application code.
     /// </remarks>
     public static class CustomJsonConverters
