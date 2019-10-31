@@ -118,7 +118,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             EventHubConsumerClient.DefaultConsumerGroupName,
                             connection,
-                            onClose: stopContext =>
+                            onStop: stopContext =>
                             {
                                 closeCalls.AddOrUpdate(stopContext.Context.PartitionId, 1, (partitionId, value) => value + 1);
                                 closeReasons[stopContext.Context.PartitionId] = stopContext.Reason;
@@ -392,7 +392,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             EventHubConsumerClient.DefaultConsumerGroupName,
                             connection,
-                            onClose: stopContext =>
+                            onStop: stopContext =>
                                 Interlocked.Increment(ref closeCallsCount)
                         );
 
@@ -909,7 +909,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             connection,
                             onInitialize: initializationContext =>
                                 ownedPartitionsCount.AddOrUpdate(initializationContext.Context.OwnerIdentifier, 1, (ownerId, value) => value + 1),
-                            onClose: stopContext =>
+                            onStop: stopContext =>
                                 ownedPartitionsCount.AddOrUpdate(stopContext.Context.OwnerIdentifier, 0, (ownerId, value) => value - 1)
                         );
 
@@ -973,7 +973,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             connection,
                             onInitialize: initializationContext =>
                                 ownedPartitionsCount.AddOrUpdate(initializationContext.Context.OwnerIdentifier, 1, (ownerId, value) => value + 1),
-                            onClose: stopContext =>
+                            onStop: stopContext =>
                                 ownedPartitionsCount.AddOrUpdate(stopContext.Context.OwnerIdentifier, 0, (ownerId, value) => value - 1)
                         );
 
