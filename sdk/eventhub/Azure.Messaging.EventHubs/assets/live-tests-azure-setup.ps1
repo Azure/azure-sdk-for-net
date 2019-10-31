@@ -80,7 +80,7 @@ function DisplayHelp
   Write-Host "$($indent)for use with the Event Hubs client library Live test suite."
   Write-Host ""
   Write-Host "$($indent)Upon completion, the script will output a set of environment variables with sensitive information which"
-  Write-Host "$($indent)is used for testing.  When running Live tests, please be sure to have these environment variables available,"
+  Write-Host "$($indent)are used for testing.  When running Live tests, please be sure to have these environment variables available,"
   Write-Host "$($indent)either within Visual Studio or command line environment."
   Write-Host ""
   Write-Host "$($indent)NOTE: Some of these values, such as the client secret, are difficult to recover; please copy them and keep in a"
