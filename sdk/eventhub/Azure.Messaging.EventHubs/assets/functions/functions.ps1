@@ -1,6 +1,7 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License.
 
+using namespace Microsoft.Azure.Commands.ActiveDirectory
 
 function SelectRandomCharacters
 {    
@@ -80,4 +81,65 @@ function TearDownResources
             Write-Error $_.Exception.Message
         }
     }
+}
+
+function CreateServicePrincipal
+{
+    <#
+      .SYNOPSIS
+        Creates a service principal on Azure Active Directory
+        
+      .DESCRIPTION
+        Creates a service principal on Azure Active Directory
+        with the specified name and credentials.
+
+        The principal will be granted the specified role on 
+        the specified resource group.
+    #>
+
+    param
+    (
+      [Parameter(Mandatory=$true)]
+      [string] $servicePrincipalName,
+
+      [Parameter(Mandatory=$true)]
+      [PSADPasswordCredential] $credentials,
+
+      [Parameter(Mandatory=$true)]
+      [string] $resourceGroupName,
+
+      [Parameter(Mandatory=$true)]
+      [string] $role
+    )
+
+    Write-Host "`t...Creating new service principal"
+    Start-Sleep 1
+
+    $principal = (New-AzADServicePrincipal -DisplayName "$($servicePrincipalName)" -PasswordCredential $credentials)
+
+    if ($principal -eq $null)
+    {
+      return $null
+    }
+    
+    Write-Host "`t...Assigning permissions (this will take a moment)"
+    Start-Sleep 60
+
+    # The propagation of the identity is non-deterministic.  Attempt to retry once after waiting for another minute if
+    # the initial attempt fails.
+
+    try 
+    {
+        New-AzRoleAssignment -ApplicationId "$($principal.ApplicationId)" -RoleDefinitionName "$($role)" -ResourceGroupName "$($resourceGroupName)" | Out-Null
+    }
+    catch 
+    {
+        Write-Host "`t...Still waiting for identity propagation (this will take a moment)"
+        Start-Sleep 60
+        New-AzRoleAssignment -ApplicationId "$($principal.ApplicationId)" -RoleDefinitionName "$($role)" -ResourceGroupName "$($resourceGroupName)" | Out-Null
+        
+        return $null
+    }    
+
+    return $principal
 }
