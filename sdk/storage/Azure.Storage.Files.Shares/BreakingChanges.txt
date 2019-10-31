@@ -6,7 +6,7 @@ Breaking Changes
 - Renamed Azure.Storage.Files to Azure.Storage.Files.Shares to better align
   with the newly released Azure.Storage.Files.DataLake and provide a consistent
   set of APIs for working with files on Azure
-- Renamed a a number of operations and models to better align with other client
+- Renamed a number of operations and models to better align with other client
   libraries and the .NET Framework Design Guidelines
 
 12.0.0-preview.4 (2019-10)
