@@ -7,12 +7,12 @@
     library test suite.
 
   .DESCRIPTION
-    This script handles creation and configuration of needed resources within an Azure subscription
+    This script handles the creation and configuration of needed resources within an Azure subscription
     for use with the Event Hubs client library's Live test suite.  
     
     Upon completion, the script will output a set of environment variables with sensitive information which
-    are used for testing.  When running Live tests, please be sure to have these environment variables available,
-    either within Visual Studio or command line environment.
+    is used for testing.  When running Live tests, please be sure to have these environment variables available,
+    either within Visual Studio or command-line environment.
  
     For more detailed help, please use the -Help switch. 
 #>
@@ -56,7 +56,7 @@ Import-Module Az.Resources
 # == Function Definitions ==
 # ==========================
 
-. .\functions\live-tests-functions.ps1
+. .\functions\functions.ps1
 
 function DisplayHelp
 {
@@ -76,11 +76,11 @@ function DisplayHelp
   Write-Host "`n"
   Write-Host "Event Hubs Live Test Environment Setup"
   Write-Host ""
-  Write-Host "$($indent)This script handles creation and configuration of needed resources within an Azure subscription"
+  Write-Host "$($indent)This script handles the creation and configuration of needed resources within an Azure subscription"
   Write-Host "$($indent)for use with the Event Hubs client library Live test suite."
   Write-Host ""
   Write-Host "$($indent)Upon completion, the script will output a set of environment variables with sensitive information which"
-  Write-Host "$($indent)are used for testing.  When running Live tests, please be sure to have these environment variables available,"
+  Write-Host "$($indent)is used for testing.  When running Live tests, please be sure to have these environment variables available,"
   Write-Host "$($indent)either within Visual Studio or command line environment."
   Write-Host ""
   Write-Host "$($indent)NOTE: Some of these values, such as the client secret, are difficult to recover; please copy them and keep in a"
@@ -96,17 +96,17 @@ function DisplayHelp
   Write-Host "$($indent)`t`t`t`trunning the Live tests."
   Write-Host ""
     
-  Write-Host "$($indent)-ResourceGroupName`t`tThe name of the Azure Resource Group that will contain the resources"
+  Write-Host "$($indent)-ResourceGroupName`t`tRequired.  The name of the Azure Resource Group that will contain the resources"
   Write-Host "$($indent)`t`t`t`tused for the tests.  This will be created if it does not exist."
   Write-Host ""
 
-  Write-Host "$($indent)-ServicePrincipalName`tThe name to use for the service principal that will"
+  Write-Host "$($indent)-ServicePrincipalName`tRequired.  The name to use for the service principal that will"
   Write-Host "$($indent)`t`t`t`tbe created to manage the Event Hub instances dynamically for the tests.  This"
   Write-Host "$($indent)`t`t`t`tprincipal must not already exist."
   Write-Host ""
 
   Write-Host "$($indent)-AzureRegion`t`tThe Azure region that resources should be created in.  This value should be"
-  Write-Host "$($indent)the name of the region, in lowercase, with no spaces.  For example: southcentralus"
+  Write-Host "$($indent)`t`t`t`tthe name of the region, in lowercase, with no spaces.  For example: southcentralus"
   Write-Host ""
   Write-Host "$($indent)`t`t`t`tDefault: South Central US (southcentralus)"
   Write-Host ""  
@@ -193,35 +193,17 @@ try
 {
     # Create the service principal and grant contributor access for management in the resource group.
 
-    Write-Host "`t...Creating new service principal"
     Start-Sleep 1
 
-    $credentials = New-Object Microsoft.Azure.Commands.ActiveDirectory.PSADPasswordCredential -Property @{StartDate=Get-Date; EndDate=Get-Date -Year 2099; Password="$(GenerateRandomPassword)"}            
-    $principal = (New-AzADServicePrincipal -DisplayName "$($ServicePrincipalName)" -PasswordCredential $credentials)
+    $credentials = New-Object Microsoft.Azure.Commands.ActiveDirectory.PSADPasswordCredential -Property @{StartDate=Get-Date; EndDate=Get-Date -Year 2099; Password="$(GenerateRandomPassword)"}                 
+
+    $principal = (CreateServicePrincipal -Role "Contributor" -ServicePrincipalName "$($ServicePrincipalName)" -Credentials $Credentials -ResourceGroupName "$($ResourceGroupName)")
 
     if ($principal -eq $null)
     {
         Write-Error "Unable to create the service principal: $($ServicePrincipalName)"
-        TearDownResources $createResourceGroup
         exit -1
-    }
-    
-    Write-Host "`t...Assigning permissions (this will take a moment)"
-    Start-Sleep 60
-
-    # The propagation of the identity is non-deterministic.  Attempt to retry once after waiting for another minute if
-    # the initial attempt fails.
-
-    try 
-    {
-        New-AzRoleAssignment -ApplicationId "$($principal.ApplicationId)" -RoleDefinitionName "Contributor" -ResourceGroupName "$($ResourceGroupName)" | Out-Null
-    }
-    catch 
-    {
-        Write-Host "`t...Still waiting for identity propagation (this will take a moment)"
-        Start-Sleep 60
-        New-AzRoleAssignment -ApplicationId "$($principal.ApplicationId)" -RoleDefinitionName "Contributor" -ResourceGroupName "$($ResourceGroupName)" | Out-Null
-    }    
+    }   
 
     # Write the environment variables.
 
