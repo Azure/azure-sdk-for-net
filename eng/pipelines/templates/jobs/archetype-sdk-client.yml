@@ -79,6 +79,10 @@ jobs:
         inputs:
           ignoreDirectories: "sdk/storage/Azure.Storage.Common/swagger/Generator"
         condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
+      - task: PowerShell@2
+        displayName: "Verify generated code"
+        inputs:
+          filePath: "eng/CodeChecks.ps1"
       - task: PublishPipelineArtifact@1
         condition: succeeded()
         displayName: "Publish Report Artifacts"
