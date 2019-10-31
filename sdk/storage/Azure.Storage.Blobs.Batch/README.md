@@ -47,7 +47,7 @@ Batching supports two types of subrequests: SetBlobAccessTier for block blobs an
 ```C# Snippet:SampleSnippetsBatch_DeleteBatch
 // Get a connection string to our Azure Storage account.
 string connectionString = "<connection_string>";
-string containerName = ConnectionString;
+string containerName = "sample-container";
 
 // Get a reference to a container named "sample-container" and then create it
 BlobServiceClient service = new BlobServiceClient(connectionString);
@@ -154,7 +154,7 @@ try
     batch.DeleteBlobs(new Uri[] { valid.Uri, invalid.Uri });
 }
 
-catch (AggregateException ex)
+catch (AggregateException)
 {
     // An aggregate exception is thrown for all the individual failures
     // Check ex.InnerExceptions for RequestFailedException instances

@@ -32,7 +32,7 @@ namespace Azure.Storage.Blobs.Samples
 
             // Get a connection string to our Azure Storage account.
             //@@ string connectionString = "<connection_string>";
-            //@@ string containerName = ConnectionString;
+            //@@ string containerName = "sample-container";
 
             // Get a reference to a container named "sample-container" and then create it
             BlobServiceClient service = new BlobServiceClient(connectionString);
@@ -176,18 +176,12 @@ namespace Azure.Storage.Blobs.Samples
                 batch.DeleteBlobs(new Uri[] { valid.Uri, invalid.Uri });
             }
 
-            //@@ catch (AggregateException ex)
-            //@@ {
+            catch (AggregateException)
+            {
                 // An aggregate exception is thrown for all the individual failures
                 // Check ex.InnerExceptions for RequestFailedException instances
-            //@@ }
-            #endregion
-
-            catch (AggregateException ex) {
-                Assert.AreEqual(1, ex.InnerExceptions.Count);
-                RequestFailedException failure = ex.InnerException as RequestFailedException;
-                Assert.IsTrue(BlobErrorCode.BlobNotFound == failure.ErrorCode);
             }
+            #endregion
         }
     }
 }

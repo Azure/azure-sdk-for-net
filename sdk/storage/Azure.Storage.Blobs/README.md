@@ -89,11 +89,7 @@ blob.Upload(filePath);
 string downloadPath = "hello.jpg";
 
 // Download the public blob at https://aka.ms/bloburl
-BlobDownloadInfo download = new BlobClient(new Uri("https://aka.ms/bloburl")).Download();
-using (FileStream file = File.OpenWrite(downloadPath))
-{
-    download.Content.CopyTo(file);
-}
+new BlobClient(new Uri("https://aka.ms/bloburl")).DownloadTo(downloadPath);
 ```
 ### Enumerating blobs
 
@@ -127,11 +123,7 @@ We fully support both synchronous and asynchronous APIs.
 string downloadPath = "hello.jpg";
 
 // Download the public blob at https://aka.ms/bloburl
-BlobDownloadInfo download = await new BlobClient(new Uri("https://aka.ms/bloburl")).DownloadAsync();
-using (FileStream file = File.OpenWrite(downloadPath))
-{
-    await download.Content.CopyToAsync(file);
-}
+await new BlobClient(new Uri("https://aka.ms/bloburl")).DownloadToAsync(downloadPath);
 ```
 
 ### Authenticating with Azure.Identity
@@ -167,7 +159,8 @@ try
     container.Delete();
 }
 catch (RequestFailedException ex)
-    when (ex.ErrorCode == BlobErrorCode.ContainerBeingDeleted || ex.ErrorCode == BlobErrorCode.ContainerNotFound)
+    when (ex.ErrorCode == BlobErrorCode.ContainerBeingDeleted ||
+          ex.ErrorCode == BlobErrorCode.ContainerNotFound)
 
 {
     // Ignore any errors if the container being deleted or if it has already been deleted

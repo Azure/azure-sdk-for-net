@@ -116,11 +116,7 @@ namespace Azure.Storage.Blobs.Samples
             //@@ string downloadPath = "hello.jpg";
 
             // Download the public blob at https://aka.ms/bloburl
-            BlobDownloadInfo download = new BlobClient(new Uri("https://aka.ms/bloburl")).Download();
-            using (FileStream file = File.OpenWrite(downloadPath))
-            {
-                download.Content.CopyTo(file);
-            }
+            new BlobClient(new Uri("https://aka.ms/bloburl")).DownloadTo(downloadPath);
             #endregion
 
             Assert.IsTrue(File.ReadAllBytes(downloadPath).Length > 0);
@@ -197,7 +193,8 @@ namespace Azure.Storage.Blobs.Samples
                 container.Delete();
             }
             catch (RequestFailedException ex)
-                when (ex.ErrorCode == BlobErrorCode.ContainerBeingDeleted || ex.ErrorCode == BlobErrorCode.ContainerNotFound)
+                when (ex.ErrorCode == BlobErrorCode.ContainerBeingDeleted ||
+                      ex.ErrorCode == BlobErrorCode.ContainerNotFound)
 
             {
                 // Ignore any errors if the container being deleted or if it has already been deleted
@@ -212,7 +209,6 @@ namespace Azure.Storage.Blobs.Samples
         /// <summary>
         /// Authenticate with <see cref="DefaultAzureCredential"/>.
         /// </summary>
-        [Test]
         public void Authenticate()
         {
             #region Snippet:SampleSnippetsBlob_Auth
