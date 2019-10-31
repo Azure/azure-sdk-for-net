@@ -181,38 +181,5 @@ namespace DataFactory.Tests.UnitTests
             JObject restoredObj = JObject.Parse(restoredJson);
             Assert.True(JToken.DeepEquals(originalObj, restoredObj), string.Format(CultureInfo.InvariantCulture, "Failed at case: {0}.", triggeredPipelineName));
         }
-		
-		[Fact]
-        public void ExecuteWebActivityOnIR_SDKSample()
-        {
-            string triggeredPipelineName = "MyBasicWebPipelineActivity";
-            WebActivity activity = new WebActivity
-            {
-                Name = triggeredPipelineName,
-                Description = "Execute web activity with basic authentication on IR",
-                Url = "http://www.bing.com",
-                Method = "Get",
-                Authentication = new WebActivityAuthentication
-                {
-                    Username = "test",
-                    Password = new SecureString("fake"),
-                    Type = "Basic"
-                }
-				ConnectVia = new IntegrationRuntimeReference
-                {
-                    ReferenceName = "myIntegrationRuntime"
-                }
-            };
-
-            var handler = new RecordedDelegatingHandler();
-            var client = this.CreateWorkflowClient(handler);
-            var json = SafeJsonConvert.SerializeObject(activity, client.SerializationSettings);
-            Assert.Contains(activity.Authentication.Type, json);
-            JObject originalObj = JObject.Parse(json);
-            Activity restored = SafeJsonConvert.DeserializeObject<Activity>(json, client.DeserializationSettings);
-            var restoredJson = SafeJsonConvert.SerializeObject(restored, client.SerializationSettings);
-            JObject restoredObj = JObject.Parse(restoredJson);
-            Assert.True(JToken.DeepEquals(originalObj, restoredObj), string.Format(CultureInfo.InvariantCulture, "Failed at case: {0}.", triggeredPipelineName));
-        }
     }
 }

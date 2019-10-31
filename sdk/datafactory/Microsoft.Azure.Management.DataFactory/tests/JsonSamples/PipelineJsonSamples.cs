@@ -1849,6 +1849,47 @@ namespace DataFactory.Tests.JsonSamples
 }
 ";
 
+ [JsonSample]
+        public const string WebActivityWithIR = @"
+{
+  ""name"": ""MyWebPipelineWithIR"",
+  ""properties"": {
+    ""activities"": [
+      {
+        ""name"": ""MyWebActivityIR"",
+        ""type"": ""WebActivity"",
+        ""typeProperties"": 
+            {	
+                ""method"": ""get"",
+                ""url"": ""http://www.bing.com"",
+                ""headers"": 
+                    { 
+                        ""Content-Type"": ""application/json"",
+                        ""activityName"": ""activityName""
+                    },
+                ""datasets"":[                
+                    {
+                        ""referenceName"": ""MyDataset"", 
+                        ""type"": ""DatasetReference""
+                    }
+                ],
+                ""linkedServices"":[         
+                    {
+                        ""referenceName"": ""MyStagingBlob"", 
+                        ""type"": ""LinkedServiceReference"" 
+                    }
+                ],
+				""connectVia"": {
+					referenceName : ""TestIR"",
+					type : ""IntegrationRuntimeReference""
+				}
+            }
+      }
+    ]
+  }
+}
+";
+
         [JsonSample]
         public const string IfPipeline = @"
 {
