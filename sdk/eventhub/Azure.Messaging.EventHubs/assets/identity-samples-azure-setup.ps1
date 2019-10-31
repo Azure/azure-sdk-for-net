@@ -150,7 +150,7 @@ try
 
     $credentials = New-Object Microsoft.Azure.Commands.ActiveDirectory.PSADPasswordCredential -Property @{StartDate=Get-Date; EndDate=Get-Date -Year 2099; Password="$(GenerateRandomPassword)"}                 
 
-    $principal = (CreateServicePrincipal -ServicePrincipalName "$($ServicePrincipalName)" -Credentials $Credentials -ResourceGroupName "$($ResourceGroupName)" -Role "Azure Event Hubs Data Owner")
+    $principal = (CreateServicePrincipal -ServicePrincipalName "$($ServicePrincipalName)" -Credentials $credentials -ResourceGroupName "$($ResourceGroupName)" -Role "Azure Event Hubs Data Owner")
 
     if ($principal -eq $null)
     {
