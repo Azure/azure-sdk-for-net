@@ -1,5 +1,34 @@
 Breaking Changes
 ================
+12.0.0 (2019-11)
+--------------------------
+- Make ContentLanguage and ContentEncoding properties strings everywhere as opposed to being arrays or IEnumerable<string> in some places.
+- Update BlobContainerClient.GetProperties to return Response<BlobContainerProperties> instead of Response<BlobContainerItem>.
+- Move Metadata from BlobContainerItem to BlobContainerProperties.
+- Make Metadata property null instead of empty dictionary if Metadata not requested in GetBlobs/GetContainers.
+- Rename LeaseClient to LeaseBlobClient.
+- Rename Block to BlobBlock.
+- Rename the parallel download overloads to DownloadTo.
+- Remove default constructors for BlobItem, BlobContainerItem, BlockList, and BlobServiceStatistics.
+- Rename Metrics.IncludeAPIs to Metrics.IncludeApis.
+- Rename SignedIdentifier to BlobSignedIdentifier.
+- Rename RetentionPolicy to BlobRetentionPolicy.
+- Rename AccessPolicy to BlobAccessPolicy.
+- Move ContentType from BlobDownloadProperties to BlobDownloadInfo.
+- Rename BlobDownloadProperties to BlobDownloadDetails.
+- Change return type of BlobClient.StartCopyFromUri to be CopyFromUriOperation.
+- Rename all instances of Expiry to ExpiresOn, and Starts to StartsOn
+- Update the service version specified in BlobClientOptions to be The 2019-02-02. If anything else is specified in the constructor call, a version not supported exception is thrown.
+- Remove the "Blob" suffix from BlobType enum values.
+- Update SkuName enum values acronyms to be PascalCase rather than all CAPS.
+- Rename DeleteSnapshotsOption.Include to DeleteSnapshotsOption.IncludeSnapshots
+- Rename DeleteSnapshotsOption.Only to DeleteSnapshotsOption.OnlySnapshots
+- Rename parameters blobAccessConditions and httpAccessConditions to accessConditions.
+- Rename parameters blobHttpHeaders to httpHeaders.
+- Remove WithCustomerProvidedKey constructors in favor of adding the CustomerProvidedKey as optional parameter to other existing constructors
+- Rename Tid/SignedTid to TenantId/SignedTenantId
+- Update BlobAccountSasPermissions/BlobContainerSasPermissions/BlobSasPermissions/SnapshotSasPermissions to be Flags Enums rather than structs
+- Update BlobSasBuilder to have SetPermissions methods with overloads for the various Permissions enums. Make the string Permissions property read only
 
 12.0.0-preview.4 (2019-10)
 --------------------------

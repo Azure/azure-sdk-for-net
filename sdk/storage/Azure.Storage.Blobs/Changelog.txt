@@ -1,5 +1,10 @@
 Release History
 ===============
+12.0.0 (2019-11)
+--------------------------
+- Renaming of various properties and methods, as well 
+  as other miscellaneous API shape changes (see BreakingChanges.txt)
+- Parallel upload/download performance improvements
 
 12.0.0-preview.4 (2019-10)
 --------------------------
