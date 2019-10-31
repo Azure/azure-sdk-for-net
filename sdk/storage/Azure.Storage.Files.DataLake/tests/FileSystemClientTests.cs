@@ -5,8 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Testing;
 using Azure.Storage.Files.DataLake.Models;
+using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using NUnit.Framework;
 
@@ -17,6 +19,85 @@ namespace Azure.Storage.Files.DataLake.Tests
         public FileSystemClientTests(bool async)
             : base(async, null /* RecordedTestMode.Record /* to re-record */)
         {
+        }
+
+        [Test]
+        public async Task Ctor_Uri()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_SharedKey();
+            string fileSystemName = GetNewFileSystemName();
+            await service.CreateFileSystemAsync(fileSystemName);
+
+            try
+            {
+                SasQueryParameters sasQueryParameters = GetNewAccountSasCredentials();
+                Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}?{sasQueryParameters}");
+                DataLakeFileSystemClient fileSystemClient = InstrumentClient(new DataLakeFileSystemClient(uri, GetOptions()));
+
+                // Act
+                await fileSystemClient.GetPropertiesAsync();
+
+                // Assert
+                Assert.AreEqual(fileSystemName, fileSystemClient.Name);
+                Assert.AreEqual(uri, fileSystemClient.Uri);
+            }
+            finally
+            {
+                await service.DeleteFileSystemAsync(fileSystemName);
+            }
+        }
+
+        [Test]
+        public async Task Ctor_SharedKey()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_SharedKey();
+            string fileSystemName = GetNewFileSystemName();
+            await service.CreateFileSystemAsync(fileSystemName);
+
+            try
+            {
+                StorageSharedKeyCredential sharedKey = new StorageSharedKeyCredential(
+                    TestConfigHierarchicalNamespace.AccountName,
+                    TestConfigHierarchicalNamespace.AccountKey);
+                Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}");
+                DataLakeFileSystemClient fileSystemClient = InstrumentClient(new DataLakeFileSystemClient(uri, sharedKey, GetOptions()));
+
+                // Act
+                await fileSystemClient.GetPropertiesAsync();
+
+                // Assert
+                Assert.AreEqual(fileSystemName, fileSystemClient.Name);
+                Assert.AreEqual(uri, fileSystemClient.Uri);
+            }
+            finally
+            {
+                await service.DeleteFileSystemAsync(fileSystemName);
+            }
+        }
+
+        [Test]
+        public async Task Ctor_TokenCredential()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_SharedKey();
+            string fileSystemName = GetNewFileSystemName();
+            await service.CreateFileSystemAsync(fileSystemName);
+
+            try
+            {
+                TokenCredential tokenCredential = GetOAuthCredential(TestConfigHierarchicalNamespace);
+                Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}").ToHttps();
+                DataLakeFileSystemClient fileSystemClient = InstrumentClient(new DataLakeFileSystemClient(uri, tokenCredential, GetOptions()));
+
+                // Act
+                await fileSystemClient.GetPropertiesAsync();
+            }
+            finally
+            {
+                await service.DeleteFileSystemAsync(fileSystemName);
+            }
         }
 
         [Test]
