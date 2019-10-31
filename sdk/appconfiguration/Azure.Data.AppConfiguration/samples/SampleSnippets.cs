@@ -21,7 +21,7 @@ namespace Azure.Data.AppConfiguration.Samples
 
             #region Snippet:CreateConfigurationClient
             //@@ string connectionString = "<connection_string>";
-            ConfigurationClient client = new ConfigurationClient(connectionString);
+            var client = new ConfigurationClient(connectionString);
             #endregion Snippet:CreateConfigurationClient
         }
 
@@ -32,8 +32,8 @@ namespace Azure.Data.AppConfiguration.Samples
 
             #region Snippet:CreateConfigurationSetting
             //@@ string connectionString = "<connection_string>";
-            ConfigurationClient client = new ConfigurationClient(connectionString);
-            ConfigurationSetting settingToCreate = new ConfigurationSetting("some_key", "some_value");
+            var client = new ConfigurationClient(connectionString);
+            var settingToCreate = new ConfigurationSetting("some_key", "some_value");
             ConfigurationSetting setting = client.SetConfigurationSetting(settingToCreate);
             #endregion Snippet:CreateConfigurationSetting
         }
@@ -44,13 +44,13 @@ namespace Azure.Data.AppConfiguration.Samples
             var connectionString = Environment.GetEnvironmentVariable("APPCONFIGURATION_CONNECTION_STRING");
 
             // Make sure a setting exists.
-            ConfigurationClient setupClient = new ConfigurationClient(connectionString);
+            var setupClient = new ConfigurationClient(connectionString);
             setupClient.SetConfigurationSetting("some_key", "some_value");
 
 
             #region Snippet:GetConfigurationSetting
             //@@ string connectionString = "<connection_string>";
-            ConfigurationClient client = new ConfigurationClient(connectionString);
+            var client = new ConfigurationClient(connectionString);
             ConfigurationSetting setting = client.GetConfigurationSetting("some_key");
             #endregion Snippet:GetConfigurationSetting
         }
@@ -62,7 +62,7 @@ namespace Azure.Data.AppConfiguration.Samples
 
             #region Snippet:UpdateConfigurationSetting
             //@@ string connectionString = "<connection_string>";
-            ConfigurationClient client = new ConfigurationClient(connectionString);
+            var client = new ConfigurationClient(connectionString);
             ConfigurationSetting setting = client.SetConfigurationSetting("some_key", "new_value");
             #endregion Snippet:UpdateConfigurationSetting
         }
@@ -74,7 +74,7 @@ namespace Azure.Data.AppConfiguration.Samples
 
             #region Snippet:DeleteConfigurationSetting
             //@@ string connectionString = "<connection_string>";
-            ConfigurationClient client = new ConfigurationClient(connectionString);
+            var client = new ConfigurationClient(connectionString);
             client.DeleteConfigurationSetting("some_key");
             #endregion Snippet:DeleteConfigurationSetting
         }
@@ -88,7 +88,7 @@ namespace Azure.Data.AppConfiguration.Samples
             {
                 #region Snippet:ThrowNotFoundError
                 //@@ string connectionString = "<connection_string>";
-                ConfigurationClient client = new ConfigurationClient(connectionString);
+                var client = new ConfigurationClient(connectionString);
                 ConfigurationSetting setting = client.GetConfigurationSetting("nonexistent_key");
                 #endregion Snippet:ThrowNotFoundError
             }

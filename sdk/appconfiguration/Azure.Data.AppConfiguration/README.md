@@ -51,7 +51,7 @@ Once you have the value of the connection string, you can create the Configurati
 
 ```C# Snippet:CreateConfigurationClient
 string connectionString = "<connection_string>";
-ConfigurationClient client = new ConfigurationClient(connectionString);
+var client = new ConfigurationClient(connectionString);
 ```
 
 ## Key concepts
@@ -131,8 +131,8 @@ Create a Configuration Setting to be stored in the Configuration Store. There ar
 
 ```C# Snippet:CreateConfigurationSetting
 string connectionString = "<connection_string>";
-ConfigurationClient client = new ConfigurationClient(connectionString);
-ConfigurationSetting settingToCreate = new ConfigurationSetting("some_key", "some_value");
+var client = new ConfigurationClient(connectionString);
+var settingToCreate = new ConfigurationSetting("some_key", "some_value");
 ConfigurationSetting setting = client.SetConfigurationSetting(settingToCreate);
 ```
 
@@ -142,7 +142,7 @@ Retrieve a previously stored Configuration Setting by calling GetConfigurationSe
 
 ```C# Snippet:GetConfigurationSetting
 string connectionString = "<connection_string>";
-ConfigurationClient client = new ConfigurationClient(connectionString);
+var client = new ConfigurationClient(connectionString);
 ConfigurationSetting setting = client.GetConfigurationSetting("some_key");
 ```
 
@@ -152,7 +152,7 @@ Update an existing Configuration Setting by calling SetConfigurationSetting.  Th
 
 ```C# Snippet:UpdateConfigurationSetting
 string connectionString = "<connection_string>";
-ConfigurationClient client = new ConfigurationClient(connectionString);
+var client = new ConfigurationClient(connectionString);
 ConfigurationSetting setting = client.SetConfigurationSetting("some_key", "new_value");
 ```
 
@@ -162,7 +162,7 @@ Delete an existing Configuration Setting by calling DeleteConfigurationSetting. 
 
 ```C# Snippet:DeleteConfigurationSetting
 string connectionString = "<connection_string>";
-ConfigurationClient client = new ConfigurationClient(connectionString);
+var client = new ConfigurationClient(connectionString);
 client.DeleteConfigurationSetting("some_key");
 ```
 
@@ -174,7 +174,7 @@ For example, if you try to retrieve a Configuration Setting that doesn't exist i
 
 ```C# Snippet:ThrowNotFoundError
 string connectionString = "<connection_string>";
-ConfigurationClient client = new ConfigurationClient(connectionString);
+var client = new ConfigurationClient(connectionString);
 ConfigurationSetting setting = client.GetConfigurationSetting("nonexistent_key");
 ```
 
