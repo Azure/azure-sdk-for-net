@@ -19,12 +19,18 @@ namespace Azure.Storage.Files.Shares.Samples
         /// <summary>
         /// Create a share and upload a file.
         /// </summary>
-        [Test]
-        public void Upload()
+        /// <param name="connectionString">
+        /// A connection string to your Azure Storage account.
+        /// </param>
+        /// <param name="shareName">
+        /// The name of the share to create and upload to.
+        /// </param>
+        /// <param name="localFilePath">
+        /// Path of the file to upload.
+        /// </param>
+        public static void Upload(string connectionString, string shareName, string localFilePath)
         {
-            // Create a temporary Lorem Ipsum file on disk that we can upload
-            string path = CreateTempFile(SampleFileContent);
-
+            #region Snippet:Azure_Storage_Files_Shares_Samples_Sample01a_HelloWorld_Upload
             // Get a connection string to our Azure Storage account.  You can
             // obtain your connection string from the Azure Portal (click
             // Access Keys under Settings in the Portal Storage account blade)
@@ -34,189 +40,131 @@ namespace Azure.Storage.Files.Shares.Samples
             //
             // And you can provide the connection string to your application
             // using an environment variable.
-            string connectionString = ConnectionString;
+            //@@ string connectionString = "<connection_string>";
 
-            // Get a reference to a share named "sample-share" and then create it
-            ShareClient share = new ShareClient(connectionString, Randomize("sample-share"));
+            // Name of the share, directory, and file we'll create
+            //@@ string shareName = "sample-share";
+            string dirName = "sample-dir";
+            string fileName = "sample-file";
+
+            // Path to the local file to upload
+            //@@ string localFilePath = @"<path_to_local_file>";
+
+            // Get a reference to a share and then create it
+            ShareClient share = new ShareClient(connectionString, shareName);
             share.Create();
-            try
+
+            // Get a reference to a directory and create it
+            ShareDirectoryClient directory = share.GetDirectoryClient(dirName);
+            directory.Create();
+
+            // Get a reference to a file and upload it
+            ShareFileClient file = directory.GetFileClient(fileName);
+            using (FileStream stream = File.OpenRead(localFilePath))
             {
-                // Get a reference to a directory named "sample-dir" and then create it
-                ShareDirectoryClient directory = share.GetDirectoryClient(Randomize("sample-dir"));
-                directory.Create();
-
-                // Get a reference to a file named "sample-file" in directory "sample-dir"
-                ShareFileClient file = directory.GetFileClient(Randomize("sample-file"));
-
-                // Upload the file
-                using (FileStream stream = File.OpenRead(path))
-                {
-                    file.Create(stream.Length);
-                    file.UploadRange(
-                        ShareFileRangeWriteType.Update,
-                        new HttpRange(0, stream.Length),
-                        stream);
-                }
-
-                // Verify the file exists
-                ShareFileProperties properties = file.GetProperties();
-                Assert.AreEqual(SampleFileContent.Length, properties.ContentLength);
+                file.Create(stream.Length);
+                file.UploadRange(
+                    ShareFileRangeWriteType.Update,
+                    new HttpRange(0, stream.Length),
+                    stream);
             }
-            finally
-            {
-                // Clean up after the test when we're finished
-                share.Delete();
-            }
+            #endregion Snippet:Azure_Storage_Files_Shares_Samples_Sample01a_HelloWorld_Upload
         }
 
         /// <summary>
         /// Download a file.
         /// </summary>
-        [Test]
-        public void Download()
+        /// <param name="connectionString">
+        /// A connection string to your Azure Storage account.
+        /// </param>
+        /// <param name="shareName">
+        /// The name of the share to download from.
+        /// </param>
+        /// <param name="localFilePath">
+        /// Path to download the local file.
+        /// </param>
+        public static void Download(string connectionString, string shareName, string localFilePath)
         {
-            // Create a temporary Lorem Ipsum file on disk that we can upload
-            string originalPath = CreateTempFile(SampleFileContent);
+            #region Snippet:Azure_Storage_Files_Shares_Samples_Sample01a_HelloWorld_Download
+            //@@ string connectionString = "<connection_string>";
 
-            // Get a temporary path on disk where we can download the file
-            string downloadPath = CreateTempPath();
+            // Name of the share, directory, and file we'll download from
+            //@@ string shareName = "sample-share";
+            string dirName = "sample-dir";
+            string fileName = "sample-file";
 
-            // Get a connection string to our Azure Storage account.
-            string connectionString = ConnectionString;
+            // Path to the save the downloaded file
+            //@@ string localFilePath = @"<path_to_local_file>";
 
-            // Get a reference to a share named "sample-share" and then create it
-            ShareClient share = new ShareClient(connectionString, Randomize("sample-share"));
-            share.Create();
-            try
+            // Get a reference to the file
+            ShareClient share = new ShareClient(connectionString, shareName);
+            ShareDirectoryClient directory = share.GetDirectoryClient(dirName);
+            ShareFileClient file = directory.GetFileClient(fileName);
+
+            // Download the file
+            ShareFileDownloadInfo download = file.Download();
+            using (FileStream stream = File.OpenWrite(localFilePath))
             {
-                // Get a reference to a directory named "sample-dir" and then create it
-                ShareDirectoryClient directory = share.GetDirectoryClient(Randomize("sample-dir"));
-                directory.Create();
-
-                // Get a reference to a file named "sample-file" in directory "sample-dir"
-                ShareFileClient file = directory.GetFileClient(Randomize("sample-file"));
-
-                // Upload the file
-                using (FileStream stream = File.OpenRead(originalPath))
-                {
-                    file.Create(stream.Length);
-                    file.UploadRange(
-                        ShareFileRangeWriteType.Update,
-                        new HttpRange(0, stream.Length),
-                        stream);
-                }
-
-                // Download the file
-                ShareFileDownloadInfo download = file.Download();
-                using (FileStream stream = File.OpenWrite(downloadPath))
-                {
-                    download.Content.CopyTo(stream);
-                }
-
-                // Verify the contents
-                Assert.AreEqual(SampleFileContent, File.ReadAllText(downloadPath));
+                download.Content.CopyTo(stream);
             }
-            finally
-            {
-                // Clean up after the test when we're finished
-                share.Delete();
-            }
+            #endregion Snippet:Azure_Storage_Files_Shares_Samples_Sample01a_HelloWorld_Download
         }
 
         /// <summary>
         /// Traverse the files and directories in a share.
         /// </summary>
-        [Test]
-        public void Traverse()
+        /// <param name="connectionString">
+        /// A connection string to your Azure Storage account.
+        /// </param>
+        /// <param name="shareName">
+        /// The name of the share to traverse.
+        /// </param>
+        public static void Traverse(string connectionString, string shareName)
         {
-            // Create a temporary Lorem Ipsum file on disk that we can upload
-            string originalPath = CreateTempFile(SampleFileContent);
+            #region Snippet:Azure_Storage_Files_Shares_Samples_Sample01a_HelloWorld_Traverse
+            // Connect to the share
+            //@@ string connectionString = "<connection_string>";
+            //@@ string shareName = "sample-share";
+            ShareClient share = new ShareClient(connectionString, shareName);
 
-            // Get a connection string to our Azure Storage account.
-            string connectionString = ConnectionString;
-
-            // Get a reference to a share named "sample-share" and then create it
-            ShareClient share = new ShareClient(connectionString, Randomize("sample-share"));
-            share.Create();
-            try
+            // Track the remaining directories to walk, starting from the root
+            var remaining = new Queue<ShareDirectoryClient>();
+            remaining.Enqueue(share.GetRootDirectoryClient());
+            while (remaining.Count > 0)
             {
-                // Create a bunch of directories
-                ShareDirectoryClient first = share.CreateDirectory("first");
-                first.CreateSubdirectory("a");
-                first.CreateSubdirectory("b");
-                ShareDirectoryClient second = share.CreateDirectory("second");
-                second.CreateSubdirectory("c");
-                second.CreateSubdirectory("d");
-                share.CreateDirectory("third");
-                ShareDirectoryClient fourth = share.CreateDirectory("fourth");
-                ShareDirectoryClient deepest = fourth.CreateSubdirectory("e");
-
-                // Upload a file named "file"
-                ShareFileClient file = deepest.GetFileClient("file");
-                using (FileStream stream = File.OpenRead(originalPath))
+                // Get all of the next directory's files and subdirectories
+                ShareDirectoryClient dir = remaining.Dequeue();
+                foreach (ShareFileItem item in dir.GetFilesAndDirectories())
                 {
-                    file.Create(stream.Length);
-                    file.UploadRange(
-                        ShareFileRangeWriteType.Update,
-                        new HttpRange(0, stream.Length),
-                        stream);
-                }
+                    // Print the name of the item
+                    Console.WriteLine(item.Name);
 
-                // Keep track of all the names we encounter
-                List<string> names = new List<string>();
-
-                // Track the remaining directories to walk, starting from the root
-                Queue<ShareDirectoryClient> remaining = new Queue<ShareDirectoryClient>();
-                remaining.Enqueue(share.GetRootDirectoryClient());
-                while (remaining.Count > 0)
-                {
-                    // Get all of the next directory's files and subdirectories
-                    ShareDirectoryClient dir = remaining.Dequeue();
-                    foreach (ShareFileItem item in dir.GetFilesAndDirectories())
+                    // Keep walking down directories
+                    if (item.IsDirectory)
                     {
-                        // Track the name of the item
-                        names.Add(item.Name);
-
-                        // Keep walking down directories
-                        if (item.IsDirectory)
-                        {
-                            remaining.Enqueue(dir.GetSubdirectoryClient(item.Name));
-                        }
+                        remaining.Enqueue(dir.GetSubdirectoryClient(item.Name));
                     }
                 }
-
-                // Verify we've seen everything
-                Assert.AreEqual(10, names.Count);
-                Assert.Contains("first", names);
-                Assert.Contains("second", names);
-                Assert.Contains("third", names);
-                Assert.Contains("fourth", names);
-                Assert.Contains("a", names);
-                Assert.Contains("b", names);
-                Assert.Contains("c", names);
-                Assert.Contains("d", names);
-                Assert.Contains("e", names);
-                Assert.Contains("file", names);
             }
-            finally
-            {
-                // Clean up after the test when we're finished
-                share.Delete();
-            }
+            #endregion Snippet:Azure_Storage_Files_Shares_Samples_Sample01a_HelloWorld_Traverse
         }
 
         /// <summary>
         /// Trigger a recoverable error.
         /// </summary>
-        [Test]
-        public void Errors()
+        /// <param name="connectionString">
+        /// A connection string to your Azure Storage account.
+        /// </param>
+        /// <param name="shareName">
+        /// The name of an existing share
+        /// </param>
+        public static void Errors(string connectionString, string shareName)
         {
-            // Get a connection string to our Azure Storage account.
-            string connectionString = ConnectionString;
-
-            // Get a reference to a share named "sample-share" and then create it
-            ShareClient share = new ShareClient(connectionString, Randomize("sample-share"));
-            share.Create();
+            #region Snippet:Azure_Storage_Files_Shares_Samples_Sample01a_HelloWorld_Errors
+            // Connect to the existing share
+            //@@ string connectionString = "<connection_string>";
+            //@@ string shareName = "sample-share";
+            ShareClient share = new ShareClient(connectionString, shareName);
 
             try
             {
@@ -228,13 +176,7 @@ namespace Azure.Storage.Files.Shares.Samples
             {
                 // Ignore any errors if the share already exists
             }
-            catch (RequestFailedException ex)
-            {
-                Assert.Fail($"Unexpected error: {ex}");
-            }
-
-            // Clean up after the test when we're finished
-            share.Delete();
+            #endregion Snippet:Azure_Storage_Files_Shares_Samples_Sample01a_HelloWorld_Errors
         }
     }
 }
