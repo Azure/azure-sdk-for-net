@@ -11,7 +11,7 @@
     for use with the Event Hubs client library's Live test suite.  
     
     Upon completion, the script will output a set of environment variables with sensitive information which
-    is used for testing.  When running Live tests, please be sure to have these environment variables available,
+    are used for testing.  When running Live tests, please be sure to have these environment variables available,
     either within Visual Studio or command-line environment.
  
     For more detailed help, please use the -Help switch. 
