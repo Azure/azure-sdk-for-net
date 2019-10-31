@@ -62,24 +62,21 @@ function TearDownResources
     param
     (
         [Parameter(Mandatory=$true)]
-        [bool] $cleanResourceGroup
+        [string] $resourceGroupName
     )
     
     Write-Host("Cleaning up resources that were created:")
     
-    if ($cleanResourceGroup)
+    try 
     {
-        try 
-        {
-            Write-Host "`t...Removing resource group `"$($ResourceGroupName)`""
-            Remove-AzResourceGroup -Name "$($ResourceGroupName)" -Force | Out-Null
-        }
-        catch 
-        {
-            Write-Error "The resource group: $($ResourceGroupName) could not be removed.  You will need to delete this manually."
-            Write-Error ""            
-            Write-Error $_.Exception.Message
-        }
+        Write-Host "`t...Removing resource group `"$($resourceGroupName)`""
+        Remove-AzResourceGroup -Name "$($resourceGroupName)" -Force | Out-Null
+    }
+    catch 
+    {
+        Write-Error "The resource group: $($resourceGroupName) could not be removed.  You will need to delete this manually."
+        Write-Error ""            
+        Write-Error $_.Exception.Message
     }
 }
 
@@ -103,43 +100,53 @@ function CreateServicePrincipal
       [string] $servicePrincipalName,
 
       [Parameter(Mandatory=$true)]
-      [PSADPasswordCredential] $credentials,
-
-      [Parameter(Mandatory=$true)]
-      [string] $resourceGroupName,
-
-      [Parameter(Mandatory=$true)]
-      [string] $role
+      [PSADPasswordCredential] $credentials
     )
 
     Write-Host "`t...Creating new service principal"
     Start-Sleep 1
 
-    $principal = (New-AzADServicePrincipal -DisplayName "$($servicePrincipalName)" -PasswordCredential $credentials)
+    $principal = (New-AzADServicePrincipal -DisplayName "$($servicePrincipalName)" -PasswordCredential $credentials -ErrorAction SilentlyContinue)
 
     if ($principal -eq $null)
     {
       return $null
     }
-    
-    Write-Host "`t...Assigning permissions (this will take a moment)"
-    Start-Sleep 60
-
-    # The propagation of the identity is non-deterministic.  Attempt to retry once after waiting for another minute if
-    # the initial attempt fails.
-
-    try 
-    {
-        New-AzRoleAssignment -ApplicationId "$($principal.ApplicationId)" -RoleDefinitionName "$($role)" -ResourceGroupName "$($resourceGroupName)" | Out-Null
-    }
-    catch 
-    {
-        Write-Host "`t...Still waiting for identity propagation (this will take a moment)"
-        Start-Sleep 60
-        New-AzRoleAssignment -ApplicationId "$($principal.ApplicationId)" -RoleDefinitionName "$($role)" -ResourceGroupName "$($resourceGroupName)" | Out-Null
-        
-        return $null
-    }    
 
     return $principal
+}
+
+function IsValidEventHubRegion
+{
+  <#
+    .SYNOPSIS
+      Checks if a region provides Azure Event Hubs
+      
+    .DESCRIPTION
+      Lists all the regions that provide Azure Event Hubs
+      and looks for the one passed in as a parameter. It returns 
+      true if found or false otherwise. It outputs an error message listing 
+      all the available regions if the one chosen could not be found.
+  #>
+
+  param
+  (
+    [Parameter(Mandatory=$true)]
+    [string] $azureRegion
+  )
+  
+  # Verify the location is valid for an Event Hubs namespace.
+
+  $validLocations = @{}
+  
+  Get-AzLocation | where { $_.Providers.Contains("Microsoft.EventHub")} | ForEach { $validLocations[$_.Location] = $_.Location }
+
+  $isValidLocation = $validLocations.Contains($azureRegion)
+
+  if (!$isValidLocation)
+  {
+    Write-Error "The Azure region must be one of: `n$($validLocations.Keys -join ", ")`n`n" 
+  }
+
+  return $isValidLocation
 }

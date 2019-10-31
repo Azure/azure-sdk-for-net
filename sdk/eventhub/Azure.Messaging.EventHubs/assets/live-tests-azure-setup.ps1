@@ -43,7 +43,7 @@ param
 
   [Parameter(Mandatory=$true, ParameterSetName="Execute")]
   [AllowNull()]  
-  $AzureRegion = $null
+  [string] $AzureRegion = $null
 )
 
 # =====================
@@ -122,11 +122,6 @@ if ($Help)
   exit 0
 }
 
-if ([String]::IsNullOrEmpty($AzureRegion))
-{
-    $AzureRegion = "southcentralus"
-}
-
 # Disallow principal names with a space.
 
 if ($ServicePrincipalName.Contains(" "))
@@ -135,14 +130,15 @@ if ($ServicePrincipalName.Contains(" "))
     exit -1
 }
 
-# Verify the location is valid for an Event Hubs namespace.
-
-$validLocations = @{}
-Get-AzLocation | where { $_.Providers.Contains("Microsoft.EventHub")} | ForEach { $validLocations[$_.Location] = $_.Location }
-
-if (!$validLocations.Contains($AzureRegion))
+if ([String]::IsNullOrEmpty($AzureRegion))
 {
-    Write-Error "The Azure region must be one of: `n$($validLocations.Keys -join ", ")`n`n" 
+    $AzureRegion = "southcentralus"
+}
+
+$isValidLocation = (IsValidEventHubRegion -AzureRegion "$($AzureRegion)")
+
+if (!$isValidLocation)
+{
     exit -1
 }
 
@@ -197,13 +193,32 @@ try
 
     $credentials = New-Object Microsoft.Azure.Commands.ActiveDirectory.PSADPasswordCredential -Property @{StartDate=Get-Date; EndDate=Get-Date -Year 2099; Password="$(GenerateRandomPassword)"}                 
 
-    $principal = (CreateServicePrincipal -Role "Contributor" -ServicePrincipalName "$($ServicePrincipalName)" -Credentials $Credentials -ResourceGroupName "$($ResourceGroupName)")
+    $principal = (CreateServicePrincipal -ServicePrincipalName "$($ServicePrincipalName)" -Credentials $Credentials)
 
     if ($principal -eq $null)
     {
         Write-Error "Unable to create the service principal: $($ServicePrincipalName)"
         exit -1
     }   
+    
+    Write-Host "`t...Assigning permissions (this will take a moment)"
+    Start-Sleep 60
+
+    # The propagation of the identity is non-deterministic.  Attempt to retry once after waiting for another minute if
+    # the initial attempt fails.
+
+    try 
+    {
+        New-AzRoleAssignment -ApplicationId "$($principal.ApplicationId)" -RoleDefinitionName "Azure Event Hubs Data Owner" -ResourceGroupName "$($resourceGroupName)" | Out-Null
+    }
+    catch 
+    {
+        Write-Host "`t...Still waiting for identity propagation (this will take a moment)"
+        Start-Sleep 60
+        New-AzRoleAssignment -ApplicationId "$($principal.ApplicationId)" -RoleDefinitionName "Azure Event Hubs Data Owner" -ResourceGroupName "$($resourceGroupName)" | Out-Null
+        
+        exit -1
+    }    
 
     # Write the environment variables.
 
@@ -224,6 +239,6 @@ try
 catch 
 {
     Write-Error $_.Exception.Message
-    TearDownResources $createResourceGroup
+    (TearDownResources -ResourceGroupName $ResourceGroupName)
     exit -1
 }
