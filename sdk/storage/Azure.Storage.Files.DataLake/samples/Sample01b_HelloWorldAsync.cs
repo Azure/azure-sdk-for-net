@@ -24,10 +24,10 @@ namespace Azure.Storage.Files.DataLake.Samples
         public async Task AppendAsync()
         {
             // Create three temporary Lorem Ipsum files on disk that we can upload
-            int oneThirdPosition = SampleFileContent.Length / 3;
-            string sampleFileContentPart1 = CreateTempFile(SampleFileContent.Substring(0, oneThirdPosition));
-            string sampleFileContentPart2 = CreateTempFile(SampleFileContent.Substring(oneThirdPosition, oneThirdPosition + 1));
-            string sampleFileContentPart3 = CreateTempFile(SampleFileContent.Substring((oneThirdPosition * 2 + 1), oneThirdPosition + 1));
+            int contentLength = 10;
+            string sampleFileContentPart1 = CreateTempFile(SampleFileContent.Substring(0, contentLength));
+            string sampleFileContentPart2 = CreateTempFile(SampleFileContent.Substring(contentLength, contentLength));
+            string sampleFileContentPart3 = CreateTempFile(SampleFileContent.Substring(contentLength * 2, contentLength));
 
             // Make StorageSharedKeyCredential to pass to the serviceClient
             string storageAccountName = StorageAccountName;
@@ -50,17 +50,20 @@ namespace Azure.Storage.Files.DataLake.Samples
                 // Open the file and upload its data
                 await file.CreateAsync();
 
-                await file.AppendAsync(File.OpenRead(sampleFileContentPart1), 0);
-                await file.AppendAsync(File.OpenRead(sampleFileContentPart2), oneThirdPosition);
-                await file.AppendAsync(File.OpenRead(sampleFileContentPart3), oneThirdPosition * 2 + 1);
-                await file.FlushAsync(SampleFileContent.Length);
-
-                // Verify we uploaded one file with some content
+                // Verify we uploaded one file
                 AsyncPageable<PathItem> response = filesystem.ListPathsAsync();
                 IList<PathItem> paths = await response.ToListAsync();
                 Assert.AreEqual(1, paths.Count);
+
+                //Append data to the DataLake File
+                await file.AppendAsync(File.OpenRead(sampleFileContentPart1), 0);
+                await file.AppendAsync(File.OpenRead(sampleFileContentPart2), contentLength);
+                await file.AppendAsync(File.OpenRead(sampleFileContentPart3), contentLength * 2);
+                await file.FlushAsync(contentLength * 3);
+
+                // Verify the contents of the file
                 PathProperties properties = await file.GetPropertiesAsync();
-                Assert.AreEqual(SampleFileContent.Length, properties.ContentLength);
+                Assert.AreEqual(contentLength * 3, properties.ContentLength);
             }
             finally
             {
@@ -95,7 +98,7 @@ namespace Azure.Storage.Files.DataLake.Samples
             await filesystem.CreateAsync();
             try
             {
-                // Get a reference to a file named "sample-file" in a filesystem named "sample-filesystem"
+                // Get a reference to a file named "sample-file" in a filesystem
                 DataLakeFileClient file = filesystem.GetFileClient(Randomize("sample-file"));
 
                 // First upload something the DataLake file so we have something to download
@@ -318,14 +321,14 @@ namespace Azure.Storage.Files.DataLake.Samples
                 DataLakeFileClient fileClient = filesystem.GetFileClient("sample-file");
                 await fileClient.CreateAsync();
 
-                // Make Access Control List and Set Access Control List
+                // Set the Permissions of the file
                 await fileClient.SetPermissionsAsync(permissions: "0777");
 
                 // Get Access Control List
-                PathAccessControl accessControlreturn = await fileClient.GetAccessControlAsync();
+                PathAccessControl accessControlResult = await fileClient.GetAccessControlAsync();
 
                 //Check Access Control permissions
-                Assert.AreEqual("rwxrwxrwx", accessControlreturn.Permissions);
+                Assert.AreEqual("rwxrwxrwx", accessControlResult.Permissions);
             }
             finally
             {
@@ -378,7 +381,7 @@ namespace Azure.Storage.Files.DataLake.Samples
         /// Rename a DataLake file and a DatLake directories in a DataLake Filesystem.
         /// </summary>
         [Test]
-        public async Task Rename()
+        public async Task RenameAsync()
         {
             // Make StorageSharedKeyCredential to pass to the serviceClient
             string storageAccountName = StorageAccountName;
@@ -410,6 +413,10 @@ namespace Azure.Storage.Files.DataLake.Samples
 
                 // Rename the sample file
                 await fileClient.RenameAsync("sample-file2");
+
+                // Get file with new path/name and verify by making a service call (e.g. GetProperties)
+                DataLakeFileClient renamedFileClient = await fileClient.RenameAsync("sample-file2");
+                PathProperties pathProperties = await renamedFileClient.GetPropertiesAsync();
 
                 // Delete the sample directory using the new path/name
                 await filesystem.DeleteFileAsync("sample-file2");

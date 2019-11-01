@@ -25,10 +25,10 @@ namespace Azure.Storage.Files.DataLake.Samples
         public void Append()
         {
             // Create three temporary Lorem Ipsum files on disk that we can upload
-            int oneThirdPosition = SampleFileContent.Length / 3;
-            string sampleFileContentPart1 = CreateTempFile(SampleFileContent.Substring(0, oneThirdPosition));
-            string sampleFileContentPart2 = CreateTempFile(SampleFileContent.Substring(oneThirdPosition, oneThirdPosition + 1));
-            string sampleFileContentPart3 = CreateTempFile(SampleFileContent.Substring((oneThirdPosition * 2 + 1), oneThirdPosition + 1));
+            int contentLength = 10;
+            string sampleFileContentPart1 = CreateTempFile(SampleFileContent.Substring(0, contentLength));
+            string sampleFileContentPart2 = CreateTempFile(SampleFileContent.Substring(contentLength, contentLength));
+            string sampleFileContentPart3 = CreateTempFile(SampleFileContent.Substring(contentLength * 2, contentLength));
 
             // Make StorageSharedKeyCredential to pass to the serviceClient
             string storageAccountName = StorageAccountName;
@@ -45,21 +45,24 @@ namespace Azure.Storage.Files.DataLake.Samples
             filesystem.Create();
             try
             {
-                // Get a reference to a file named "sample-file" in a filesystem named "sample-filesystem"
+                // Get a reference to a file named "sample-file" in a filesystem
                 DataLakeFileClient file = filesystem.GetFileClient(Randomize("sample-file"));
 
                 // Open the file and upload its data
                 file.Create();
 
-                file.Append(File.OpenRead(sampleFileContentPart1), 0);
-                file.Append(File.OpenRead(sampleFileContentPart2), oneThirdPosition);
-                file.Append(File.OpenRead(sampleFileContentPart3), oneThirdPosition * 2 + 1);
-                file.Flush(SampleFileContent.Length);
-
-                // Verify we uploaded one file with some content
+                // Verify we uploaded one file
                 Assert.AreEqual(1, filesystem.ListPaths().Count());
+
+                //Append data to the DataLake File
+                file.Append(File.OpenRead(sampleFileContentPart1), 0);
+                file.Append(File.OpenRead(sampleFileContentPart2), contentLength);
+                file.Append(File.OpenRead(sampleFileContentPart3), contentLength * 2);
+                file.Flush(contentLength*3);
+
+                // Verify the contents of the file
                 PathProperties properties = file.GetProperties();
-                Assert.AreEqual(SampleFileContent.Length, properties.ContentLength);
+                Assert.AreEqual(contentLength * 3, properties.ContentLength);
 
                 // Cleanup
                 file.Delete();
@@ -97,7 +100,7 @@ namespace Azure.Storage.Files.DataLake.Samples
             filesystem.Create();
             try
             {
-                // Get a reference to a file named "sample-file" in a filesystem named "sample-filesystem"
+                // Get a reference to a file named "sample-file" in a filesystem
                 DataLakeFileClient file = filesystem.GetFileClient(Randomize("sample-file"));
 
                 // First upload something the DataLake file so we have something to download
@@ -320,14 +323,14 @@ namespace Azure.Storage.Files.DataLake.Samples
                 DataLakeFileClient fileClient = filesystem.GetFileClient("sample-file");
                 fileClient.Create();
 
-                // Make Access Control List and Set Access Control List
+                // Set the Permissions of the file
                 fileClient.SetPermissions(permissions: "0777");
 
                 // Get Access Control List
-                PathAccessControl accessControlreturn = fileClient.GetAccessControl();
+                PathAccessControl accessControlResult= fileClient.GetAccessControl();
 
                 //Check Access Control permissions
-                Assert.AreEqual("rwxrwxrwx", accessControlreturn.Permissions);
+                Assert.AreEqual("rwxrwxrwx", accessControlResult.Permissions);
             }
             finally
             {
@@ -411,8 +414,9 @@ namespace Azure.Storage.Files.DataLake.Samples
                 DataLakeFileClient fileClient = filesystem.GetFileClient("sample-file");
                 fileClient.Create();
 
-                // Rename the sample file
-                fileClient.Rename("sample-file2");
+                // Rename file with new path/name and verify by making a service call (e.g. GetProperties)
+                DataLakeFileClient renamedFileClient = fileClient.Rename("sample-file2");
+                PathProperties pathProperties = renamedFileClient.GetProperties();
 
                 // Delete the sample directory using the new path/name
                 filesystem.DeleteFile("sample-file2");
