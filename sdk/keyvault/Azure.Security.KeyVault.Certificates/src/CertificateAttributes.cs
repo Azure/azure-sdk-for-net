@@ -19,13 +19,13 @@ namespace Azure.Security.KeyVault.Certificates
 
         public DateTimeOffset? NotBefore { get; set; }
 
-        public DateTimeOffset? Expires { get; set; }
+        public DateTimeOffset? ExpiresOn { get; set; }
 
-        public DateTimeOffset? Created { get; private set; }
+        public DateTimeOffset? CreatedOn { get; internal set; }
 
-        public DateTimeOffset? Updated { get; private set; }
+        public DateTimeOffset? UpdatedOn { get; internal set; }
 
-        public string RecoveryLevel { get; private set; }
+        public string RecoveryLevel { get; internal set; }
 
         internal void ReadProperties(JsonElement json)
         {
@@ -42,15 +42,15 @@ namespace Azure.Security.KeyVault.Certificates
                         break;
 
                     case ExpiresPropertyName:
-                        Expires = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                        ExpiresOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                         break;
 
                     case CreatedPropertyName:
-                        Created = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                        CreatedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                         break;
 
                     case UpdatedPropertyName:
-                        Updated = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                        UpdatedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                         break;
 
                     case RecoveryLevelPropertyName:

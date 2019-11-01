@@ -33,17 +33,17 @@ namespace Azure.Security.KeyVault.Certificates
         private static readonly JsonEncodedText s_organizationIdPropertyNameBytes = JsonEncodedText.Encode(OrganizationIdPropertyName);
         private static readonly JsonEncodedText s_adminDetailsPropertyNameBytes = JsonEncodedText.Encode(AdminDetailsPropertyName);
 
-        private List<AdministratorDetails> _administrators;
+        private List<AdministratorContact> _administrators;
 
-        internal CertificateIssuer()
+        internal CertificateIssuer(IssuerProperties properties = null)
         {
-            Properties = new IssuerProperties();
+            Properties = properties ?? new IssuerProperties();
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CertificateContact"/> class with the given <paramref name="name"/>.
         /// </summary>
-        /// <param name="name">The name of the issuer</param>
+        /// <param name="name">The name of the issuer, including values from <see cref="WellKnownIssuerNames"/>.</param>
         public CertificateIssuer(string name)
         {
             Properties = new IssuerProperties(name);
@@ -58,16 +58,6 @@ namespace Azure.Security.KeyVault.Certificates
         /// The name of the certificate issuer
         /// </summary>
         public string Name => Properties.Name;
-
-        /// <summary>
-        /// Well known issuer name for self signed certificates
-        /// </summary>
-        public static string Self => "self";
-
-        /// <summary>
-        /// Well known issuer name for certificates signed by the user with a private certificate authority
-        /// </summary>
-        public static string Unknown => "unknown";
 
         /// <summary>
         /// The account identifier or username used to authenticate to the certificate issuer
@@ -87,20 +77,20 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// A list of contacts who administrate the certificate issuer account
         /// </summary>
-        public IList<AdministratorDetails> Administrators => LazyInitializer.EnsureInitialized(ref _administrators);
+        public IList<AdministratorContact> Administrators => LazyInitializer.EnsureInitialized(ref _administrators);
 
         /// <summary>
         /// The time the issuer was created in UTC
         /// </summary>
-        public DateTimeOffset? Created { get; private set; }
+        public DateTimeOffset? CreatedOn { get; internal set; }
 
         /// <summary>
         /// The last modified time of the issuer in UTC
         /// </summary>
-        public DateTimeOffset? Updated { get; private set; }
+        public DateTimeOffset? UpdatedOn { get; internal set; }
 
         /// <summary>
-        /// Specifies whether the issuer can currently be used to issue certificates
+        /// Gets or sets a value indicating whether the issuer can currently be used to issue certificates. If null, the server default will be used.
         /// </summary>
         public bool? Enabled { get; set; }
 
@@ -161,7 +151,7 @@ namespace Azure.Security.KeyVault.Certificates
                     case AdminDetailsPropertyName:
                         foreach (JsonElement elem in prop.Value.EnumerateArray())
                         {
-                            var admin = new AdministratorDetails();
+                            var admin = new AdministratorContact();
                             admin.ReadProperties(elem);
                             Administrators.Add(admin);
                         }
@@ -182,11 +172,11 @@ namespace Azure.Security.KeyVault.Certificates
                         break;
 
                     case CreatedPropertyName:
-                        Created = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                        CreatedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                         break;
 
                     case UpdatedPropertyName:
-                        Updated = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                        UpdatedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                         break;
                 }
             }
@@ -248,7 +238,7 @@ namespace Azure.Security.KeyVault.Certificates
             {
                 json.WriteStartArray(s_adminDetailsPropertyNameBytes);
 
-                foreach (AdministratorDetails admin in _administrators)
+                foreach (AdministratorContact admin in _administrators)
                 {
                     json.WriteStartObject();
 

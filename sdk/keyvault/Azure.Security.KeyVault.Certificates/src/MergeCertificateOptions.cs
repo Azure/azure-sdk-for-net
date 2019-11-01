@@ -12,7 +12,7 @@ namespace Azure.Security.KeyVault.Certificates
     /// <summary>
     /// Options for certificates to be merged into Azure Key Vault.
     /// </summary>
-    public class CertificateMergeOptions : IJsonSerializable
+    public class MergeCertificateOptions : IJsonSerializable
     {
         private static readonly JsonEncodedText s_attributesPropertyNameBytes = JsonEncodedText.Encode("attributes");
         private static readonly JsonEncodedText s_enabledPropertyNameBytes = JsonEncodedText.Encode("enabled");
@@ -28,7 +28,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="x509certificates">The certificate or certificate chain to merge.</param>
         /// <exception cref="ArgumentException"><paramref name="name"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="x509certificates"/> is null.</exception>
-        public CertificateMergeOptions(string name, IEnumerable<byte[]> x509certificates)
+        public MergeCertificateOptions(string name, IEnumerable<byte[]> x509certificates)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(x509certificates, nameof(x509certificates));
@@ -48,7 +48,7 @@ namespace Azure.Security.KeyVault.Certificates
         public IEnumerable<byte[]> X509Certificates { get; }
 
         /// <summary>
-        /// Gets or sets whether the merged certificate should be enabled.
+        /// Gets or sets a value indicating whether the merged certificate should be enabled. If null, the server default will be used.
         /// </summary>
         public bool? Enabled { get; set; }
 

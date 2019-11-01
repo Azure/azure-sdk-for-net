@@ -31,7 +31,6 @@ namespace Azure.Security.KeyVault.Certificates
         /// </summary>
         protected CertificateClient()
         {
-
         }
 
         /// <summary>
@@ -43,7 +42,6 @@ namespace Azure.Security.KeyVault.Certificates
         public CertificateClient(Uri vaultUri, TokenCredential credential)
             : this(vaultUri, credential, null)
         {
-
         }
 
         /// <summary>
@@ -76,26 +74,26 @@ namespace Azure.Security.KeyVault.Certificates
         /// <remarks>
         /// If no certificate with the specified name exists it will be created, otherwise a new version of the existing certificate will be created. This operation requires the certificates/create permission.
         /// </remarks>
-        /// <param name="name">The name of the certificate to create</param>
+        /// <param name="certificateName">The name of the certificate to create</param>
         /// <param name="policy">The <see cref="CertificatePolicy"/> which governs the proprerties and lifecycle of the created certificate</param>
-        /// <param name="enabled">Specifies whether the certificate should be created in an enabled state</param>
+        /// <param name="enabled">Specifies whether the certificate should be created in an enabled state. If null, the server default will be used.</param>
         /// <param name="tags">Tags to be applied to the created certificate</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="CertificateOperation"/> which contians details on the create operation, and can be used to retrieve updated status</returns>
-        public virtual CertificateOperation StartCreateCertificate(string name, CertificatePolicy policy, bool? enabled = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
+        public virtual CertificateOperation StartCreateCertificate(string certificateName, CertificatePolicy policy, bool? enabled = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
             Argument.AssertNotNull(policy, nameof(policy));
 
             var parameters = new CertificateCreateParameters(policy, enabled, tags);
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.StartCreateCertificate");
-            scope.AddAttribute("certificate", name);
+            scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
             try
             {
-                Response<CertificateOperationProperties> response = _pipeline.SendRequest(RequestMethod.Post, parameters, () => new CertificateOperationProperties(), cancellationToken, CertificatesPath, name, "/create");
+                Response<CertificateOperationProperties> response = _pipeline.SendRequest(RequestMethod.Post, parameters, () => new CertificateOperationProperties(), cancellationToken, CertificatesPath, certificateName, "/create");
 
                 return new CertificateOperation(response, this);
             }
@@ -112,26 +110,26 @@ namespace Azure.Security.KeyVault.Certificates
         /// <remarks>
         /// If no certificate with the specified name exists it will be created, otherwise a new version of the existing certificate will be created. This operation requires the certificates/create permission.
         /// </remarks>
-        /// <param name="name">The name of the certificate to create</param>
+        /// <param name="certificateName">The name of the certificate to create</param>
         /// <param name="policy">The <see cref="CertificatePolicy"/> which governs the proprerties and lifecycle of the created certificate</param>
-        /// <param name="enabled">Specifies whether the certificate should be created in an enabled state</param>
+        /// <param name="enabled">Specifies whether the certificate should be created in an enabled state. If null, the server default will be used.</param>
         /// <param name="tags">Tags to be applied to the created certificate</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="CertificateOperation"/> which contians details on the create operation, and can be used to retrieve updated status</returns>
-        public virtual async Task<CertificateOperation> StartCreateCertificateAsync(string name, CertificatePolicy policy, bool? enabled = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
+        public virtual async Task<CertificateOperation> StartCreateCertificateAsync(string certificateName, CertificatePolicy policy, bool? enabled = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
             Argument.AssertNotNull(policy, nameof(policy));
 
             var parameters = new CertificateCreateParameters(policy, enabled, tags);
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.StartCreateCertificate");
-            scope.AddAttribute("certificate", name);
+            scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
             try
             {
-                Response<CertificateOperationProperties> response = await _pipeline.SendRequestAsync(RequestMethod.Post, parameters, () => new CertificateOperationProperties(), cancellationToken, CertificatesPath, name, "/create").ConfigureAwait(false);
+                Response<CertificateOperationProperties> response = await _pipeline.SendRequestAsync(RequestMethod.Post, parameters, () => new CertificateOperationProperties(), cancellationToken, CertificatesPath, certificateName, "/create").ConfigureAwait(false);
 
                 return new CertificateOperation(response, this);
             }
@@ -145,20 +143,20 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Returns the latest version of the <see cref="KeyVaultCertificate"/> along with it's <see cref="CertificatePolicy"/>. This operation requires the certificates/get permission.
         /// </summary>
-        /// <param name="name">The name of the <see cref="KeyVaultCertificate"/> to retrieve</param>
+        /// <param name="certificateName">The name of the <see cref="KeyVaultCertificate"/> to retrieve</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A response containing the certificate and policy as a <see cref="KeyVaultCertificateWithPolicy"/> instance</returns>
-        public virtual Response<KeyVaultCertificateWithPolicy> GetCertificate(string name, CancellationToken cancellationToken = default)
+        public virtual Response<KeyVaultCertificateWithPolicy> GetCertificate(string certificateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.GetCertificate");
-            scope.AddAttribute("certificate", name);
+            scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Get, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, name);
+                return _pipeline.SendRequest(RequestMethod.Get, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, certificateName);
             }
             catch (Exception e)
             {
@@ -170,20 +168,20 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Returns the latest version of the <see cref="KeyVaultCertificate"/> along with it's <see cref="CertificatePolicy"/>. This operation requires the certificates/get permission.
         /// </summary>
-        /// <param name="name">The name of the <see cref="KeyVaultCertificate"/> to retrieve</param>
+        /// <param name="certificateName">The name of the <see cref="KeyVaultCertificate"/> to retrieve</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A response containing the certificate and policy as a <see cref="KeyVaultCertificateWithPolicy"/> instance</returns>
-        public virtual async Task<Response<KeyVaultCertificateWithPolicy>> GetCertificateAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KeyVaultCertificateWithPolicy>> GetCertificateAsync(string certificateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.GetCertificate");
-            scope.AddAttribute("certificate", name);
+            scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Get, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, name).ConfigureAwait(false);
+                return await _pipeline.SendRequestAsync(RequestMethod.Get, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, certificateName).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -195,21 +193,21 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Gets a specific version of the <see cref="KeyVaultCertificate"/>. This operation requires the certificates/get permission.
         /// </summary>
-        /// <param name="name">The name of the <see cref="KeyVaultCertificate"/> to retrieve</param>
+        /// <param name="certificateName">The name of the <see cref="KeyVaultCertificate"/> to retrieve</param>
         /// <param name="version">Ther version of the <see cref="KeyVaultCertificate"/> to retrieve</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The requested <see cref="KeyVaultCertificate"/></returns>
-        public virtual Response<KeyVaultCertificate> GetCertificateVersion(string name, string version, CancellationToken cancellationToken = default)
+        public virtual Response<KeyVaultCertificate> GetCertificateVersion(string certificateName, string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.GetCertificateVersion");
-            scope.AddAttribute("certificate", name);
+            scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Get, () => new KeyVaultCertificate(), cancellationToken, CertificatesPath, name, "/", version);
+                return _pipeline.SendRequest(RequestMethod.Get, () => new KeyVaultCertificate(), cancellationToken, CertificatesPath, certificateName, "/", version);
             }
             catch (Exception e)
             {
@@ -221,22 +219,22 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Gets a specific version of the <see cref="KeyVaultCertificate"/>. This operation requires the certificates/get permission.
         /// </summary>
-        /// <param name="name">The name of the <see cref="KeyVaultCertificate"/> to retrieve</param>
+        /// <param name="certificateName">The name of the <see cref="KeyVaultCertificate"/> to retrieve</param>
         /// <param name="version">Ther version of the <see cref="KeyVaultCertificate"/> to retrieve</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The requested <see cref="KeyVaultCertificate"/></returns>
-        public virtual async Task<Response<KeyVaultCertificate>> GetCertificateVersionAsync(string name, string version, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KeyVaultCertificate>> GetCertificateVersionAsync(string certificateName, string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.GetCertificateVersion");
-            scope.AddAttribute("certificate", name);
+            scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Get, () => new KeyVaultCertificate(), cancellationToken, CertificatesPath, name, "/", version).ConfigureAwait(false);
+                return await _pipeline.SendRequestAsync(RequestMethod.Get, () => new KeyVaultCertificate(), cancellationToken, CertificatesPath, certificateName, "/", version).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -303,20 +301,20 @@ namespace Azure.Security.KeyVault.Certificates
         /// Deletes all versions of the specified <see cref="KeyVaultCertificate"/>. If the vault is soft delete enabled, the <see cref="KeyVaultCertificate"/> will be marked for perminent deletion
         /// and can be recovered with <see cref="RecoverDeletedCertificate"/>, or purged with <see cref="PurgeDeletedCertificate"/>. This operation requires the certificates/delete permission.
         /// </summary>
-        /// <param name="name">The name of the <see cref="KeyVaultCertificate"/> to delete</param>
+        /// <param name="certificateName">The name of the <see cref="KeyVaultCertificate"/> to delete</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The details of the <see cref="DeletedCertificate"/></returns>
-        public virtual Response<DeletedCertificate> DeleteCertificate(string name, CancellationToken cancellationToken = default)
+        public virtual Response<DeletedCertificate> DeleteCertificate(string certificateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.DeleteCertificate");
-            scope.AddAttribute("certificate", name);
+            scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Delete, () => new DeletedCertificate(), cancellationToken, CertificatesPath, name);
+                return _pipeline.SendRequest(RequestMethod.Delete, () => new DeletedCertificate(), cancellationToken, CertificatesPath, certificateName);
             }
             catch (Exception e)
             {
@@ -329,20 +327,20 @@ namespace Azure.Security.KeyVault.Certificates
         /// Deletes all versions of the specified <see cref="KeyVaultCertificate"/>. If the vault is soft delete enabled, the <see cref="KeyVaultCertificate"/> will be marked for perminent deletion
         /// and can be recovered with <see cref="RecoverDeletedCertificate"/>, or purged with <see cref="PurgeDeletedCertificate"/>. This operation requires the certificates/delete permission.
         /// </summary>
-        /// <param name="name">The name of the <see cref="KeyVaultCertificate"/> to delete</param>
+        /// <param name="certificateName">The name of the <see cref="KeyVaultCertificate"/> to delete</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The details of the <see cref="DeletedCertificate"/></returns>
-        public virtual async Task<Response<DeletedCertificate>> DeleteCertificateAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeletedCertificate>> DeleteCertificateAsync(string certificateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.DeleteCertificate");
-            scope.AddAttribute("certificate", name);
+            scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Delete, () => new DeletedCertificate(), cancellationToken, CertificatesPath, name).ConfigureAwait(false);
+                return await _pipeline.SendRequestAsync(RequestMethod.Delete, () => new DeletedCertificate(), cancellationToken, CertificatesPath, certificateName).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -355,20 +353,20 @@ namespace Azure.Security.KeyVault.Certificates
         /// Retrieves information about the specified deleted <see cref="KeyVaultCertificate"/>. This operation is only applicable in vaults enabled for soft-delete, and
         /// requires the certificates/get permission.
         /// </summary>
-        /// <param name="name">The name of the <see cref="DeletedCertificate"/></param>
+        /// <param name="certificateName">The name of the <see cref="DeletedCertificate"/></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The details of the <see cref="DeletedCertificate"/></returns>
-        public virtual Response<DeletedCertificate> GetDeletedCertificate(string name, CancellationToken cancellationToken = default)
+        public virtual Response<DeletedCertificate> GetDeletedCertificate(string certificateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.GetDeletedCertificate");
-            scope.AddAttribute("certificate", name);
+            scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Get, () => new DeletedCertificate(), cancellationToken, DeletedCertificatesPath, name);
+                return _pipeline.SendRequest(RequestMethod.Get, () => new DeletedCertificate(), cancellationToken, DeletedCertificatesPath, certificateName);
             }
             catch (Exception e)
             {
@@ -381,20 +379,20 @@ namespace Azure.Security.KeyVault.Certificates
         /// Retrieves information about the specified deleted <see cref="KeyVaultCertificate"/>. This operation is only applicable in vaults enabled for soft-delete, and
         /// requires the certificates/get permission.
         /// </summary>
-        /// <param name="name">The name of the <see cref="DeletedCertificate"/></param>
+        /// <param name="certificateName">The name of the <see cref="DeletedCertificate"/></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The details of the <see cref="DeletedCertificate"/></returns>
-        public virtual async Task<Response<DeletedCertificate>> GetDeletedCertificateAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeletedCertificate>> GetDeletedCertificateAsync(string certificateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.GetDeletedCertificate");
-            scope.AddAttribute("certificate", name);
+            scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Get, () => new DeletedCertificate(), cancellationToken, DeletedCertificatesPath, name).ConfigureAwait(false);
+                return await _pipeline.SendRequestAsync(RequestMethod.Get, () => new DeletedCertificate(), cancellationToken, DeletedCertificatesPath, certificateName).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -407,20 +405,20 @@ namespace Azure.Security.KeyVault.Certificates
         /// Recovers the <see cref="DeletedCertificate"/> to its pre-deleted state. This operation is only applicable in vaults enabled for soft-delete, and
         /// requires the certificates/recover permission.
         /// </summary>
-        /// <param name="name">The name of the <see cref="DeletedCertificate"/></param>
+        /// <param name="certificateName">The name of the <see cref="DeletedCertificate"/></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The recovered certificate and policy</returns>
-        public virtual Response<KeyVaultCertificateWithPolicy> RecoverDeletedCertificate(string name, CancellationToken cancellationToken = default)
+        public virtual Response<KeyVaultCertificateWithPolicy> RecoverDeletedCertificate(string certificateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.RecoverDeletedCertificate");
-            scope.AddAttribute("certificate", name);
+            scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Post, () => new KeyVaultCertificateWithPolicy(), cancellationToken, DeletedCertificatesPath, name, "/recover");
+                return _pipeline.SendRequest(RequestMethod.Post, () => new KeyVaultCertificateWithPolicy(), cancellationToken, DeletedCertificatesPath, certificateName, "/recover");
             }
             catch (Exception e)
             {
@@ -433,20 +431,20 @@ namespace Azure.Security.KeyVault.Certificates
         /// Recovers the <see cref="DeletedCertificate"/> to its pre-deleted state. This operation is only applicable in vaults enabled for soft-delete, and
         /// requires the certificates/recover permission.
         /// </summary>
-        /// <param name="name">The name of the <see cref="DeletedCertificate"/></param>
+        /// <param name="certificateName">The name of the <see cref="DeletedCertificate"/></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The recovered certificate and policy</returns>
-        public virtual async Task<Response<KeyVaultCertificateWithPolicy>> RecoverDeletedCertificateAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KeyVaultCertificateWithPolicy>> RecoverDeletedCertificateAsync(string certificateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.RecoverDeletedCertificate");
-            scope.AddAttribute("certificate", name);
+            scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Post, () => new KeyVaultCertificateWithPolicy(), cancellationToken, DeletedCertificatesPath, name, "/recover").ConfigureAwait(false);
+                return await _pipeline.SendRequestAsync(RequestMethod.Post, () => new KeyVaultCertificateWithPolicy(), cancellationToken, DeletedCertificatesPath, certificateName, "/recover").ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -459,20 +457,20 @@ namespace Azure.Security.KeyVault.Certificates
         /// Permanently and irreversibly deletes the specified deleted certificate, without the possibility of recovery. This operation is only applicable in vaults enabled for soft-delete, and
         /// requires the certificates/purge permission. The operation is not available if the DeletedCertificate.RecoveryLevel of the DeletedCertificate does not specify 'Purgeable'.
         /// </summary>
-        /// <param name="name">The name of the <see cref="DeletedCertificate"/> to perminantly delete</param>
+        /// <param name="certificateName">The name of the <see cref="DeletedCertificate"/> to perminantly delete</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The http response from the service</returns>
-        public virtual Response PurgeDeletedCertificate(string name, CancellationToken cancellationToken = default)
+        public virtual Response PurgeDeletedCertificate(string certificateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.PurgeDeletedCertificate");
-            scope.AddAttribute("certificate", name);
+            scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Delete, cancellationToken, DeletedCertificatesPath, name);
+                return _pipeline.SendRequest(RequestMethod.Delete, cancellationToken, DeletedCertificatesPath, certificateName);
             }
             catch (Exception e)
             {
@@ -485,19 +483,19 @@ namespace Azure.Security.KeyVault.Certificates
         /// Permanently and irreversibly deletes the specified deleted certificate, without the possibility of recovery. This operation is only applicable in vaults enabled for soft-delete, and
         /// requires the certificates/purge permission. The operation is not available if the DeletedCertificate.RecoveryLevel of the DeletedCertificate does not specify 'Purgeable'.
         /// </summary>
-        /// <param name="name">The name of the <see cref="DeletedCertificate"/> to perminantly delete</param>
+        /// <param name="certificateName">The name of the <see cref="DeletedCertificate"/> to perminantly delete</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response> PurgeDeletedCertificateAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> PurgeDeletedCertificateAsync(string certificateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.PurgeDeletedCertificate");
-            scope.AddAttribute("certificate", name);
+            scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Delete, cancellationToken, DeletedCertificatesPath, name).ConfigureAwait(false);
+                return await _pipeline.SendRequestAsync(RequestMethod.Delete, cancellationToken, DeletedCertificatesPath, certificateName).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -510,20 +508,20 @@ namespace Azure.Security.KeyVault.Certificates
         /// Creates a backup of the certificate, including all versions, which can be used to restore the certificate to the state at the time of the backup in the case the certificate is deleted, or to
         /// restore the certificate to a different vault in the same region as the original value. This operation requires the certificate/backup permission.
         /// </summary>
-        /// <param name="name">The name of the <see cref="KeyVaultCertificate"/> to backup</param>
+        /// <param name="certificateName">The name of the <see cref="KeyVaultCertificate"/> to backup</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The certificate backup</returns>
-        public virtual Response<byte[]> BackupCertificate(string name, CancellationToken cancellationToken = default)
+        public virtual Response<byte[]> BackupCertificate(string certificateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.BackupCertificate");
-            scope.AddAttribute("certificate", name);
+            scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
             try
             {
-                Response<CertificateBackup> backup = _pipeline.SendRequest(RequestMethod.Post, () => new CertificateBackup(), cancellationToken, CertificatesPath, name, "/backup");
+                Response<CertificateBackup> backup = _pipeline.SendRequest(RequestMethod.Post, () => new CertificateBackup(), cancellationToken, CertificatesPath, certificateName, "/backup");
 
                 return Response.FromValue(backup.Value.Value, backup.GetRawResponse());
             }
@@ -538,20 +536,20 @@ namespace Azure.Security.KeyVault.Certificates
         /// Creates a backup of the certificate, including all versions, which can be used to restore the certificate to the state at the time of the backup in the case the certificate is deleted, or to
         /// restore the certificate to a different vault in the same region as the original value. This operation requires the certificate/backup permission.
         /// </summary>
-        /// <param name="name">The name of the <see cref="KeyVaultCertificate"/> to backup</param>
+        /// <param name="certificateName">The name of the <see cref="KeyVaultCertificate"/> to backup</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The certificate backup</returns>
-        public virtual async Task<Response<byte[]>> BackupCertificateAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<byte[]>> BackupCertificateAsync(string certificateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.BackupCertificate");
-            scope.AddAttribute("certificate", name);
+            scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
             try
             {
-                Response<CertificateBackup> backup = await _pipeline.SendRequestAsync(RequestMethod.Post, () => new CertificateBackup(), cancellationToken, CertificatesPath, name, "/backup").ConfigureAwait(false);
+                Response<CertificateBackup> backup = await _pipeline.SendRequestAsync(RequestMethod.Post, () => new CertificateBackup(), cancellationToken, CertificatesPath, certificateName, "/backup").ConfigureAwait(false);
 
                 return Response.FromValue(backup.Value.Value, backup.GetRawResponse());
             }
@@ -564,7 +562,7 @@ namespace Azure.Security.KeyVault.Certificates
 
         /// <summary>
         /// Restores a <see cref="KeyVaultCertificate"/>, including all versions, from a backup created from the <see cref="BackupCertificate"/> or <see cref="BackupCertificateAsync"/>. The backup must be restored
-        /// to a vault in the same region as its original vault.  This operation requires the certificate/restore permission.
+        /// to a vault in the same region as its original vault. This operation requires the certificate/restore permission.
         /// </summary>
         /// <param name="backup">The backup of the <see cref="KeyVaultCertificate"/> to restore</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -589,7 +587,7 @@ namespace Azure.Security.KeyVault.Certificates
 
         /// <summary>
         /// Restores a <see cref="KeyVaultCertificate"/>, including all versions, from a backup created from the <see cref="BackupCertificate"/> or <see cref="BackupCertificateAsync"/>. The backup must be restored
-        /// to a vault in the same region as its original vault.  This operation requires the certificate/restore permission.
+        /// to a vault in the same region as its original vault. This operation requires the certificate/restore permission.
         /// </summary>
         /// <param name="backup">The backup of the <see cref="KeyVaultCertificate"/> to restore</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -614,12 +612,12 @@ namespace Azure.Security.KeyVault.Certificates
 
         /// <summary>
         /// Imports a pre-existing certificate to the key vault. The specified certificate must be in PFX or PEM format, and must contain the private key as well as the x509 certificates. This operation requires the
-        /// certifcates/import permission
+        /// certifcates/import permission.
         /// </summary>
         /// <param name="certificateImportOptions">The details of the certificate to import to the key vault</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The imported certificate and policy</returns>
-        public virtual Response<KeyVaultCertificateWithPolicy> ImportCertificate(CertificateImportOptions certificateImportOptions, CancellationToken cancellationToken = default)
+        public virtual Response<KeyVaultCertificateWithPolicy> ImportCertificate(ImportCertificateOptions certificateImportOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(certificateImportOptions, nameof(certificateImportOptions));
             Argument.AssertNotNullOrEmpty(certificateImportOptions.Name, nameof(certificateImportOptions.Name));
@@ -641,12 +639,12 @@ namespace Azure.Security.KeyVault.Certificates
 
         /// <summary>
         /// Imports a pre-existing certificate to the key vault. The specified certificate must be in PFX or PEM format, and must contain the private key as well as the x509 certificates. This operation requires the
-        /// certifcates/import permission
+        /// certifcates/import permission.
         /// </summary>
         /// <param name="certificateImportOptions">The details of the certificate to import to the key vault</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The imported certificate and policy</returns>
-        public virtual async Task<Response<KeyVaultCertificateWithPolicy>> ImportCertificateAsync(CertificateImportOptions certificateImportOptions, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KeyVaultCertificateWithPolicy>> ImportCertificateAsync(ImportCertificateOptions certificateImportOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(certificateImportOptions, nameof(certificateImportOptions));
             Argument.AssertNotNullOrEmpty(certificateImportOptions.Name, nameof(certificateImportOptions.Name));
@@ -667,93 +665,87 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Enumerates the certificates in the vault, returning select properties of the certificate, sensative feilds of the certificate will not be returned.  This operation requires the certificates/list permission.
+        /// Lists the properties of all certificates in the specified vault. You can use the returned <see cref="CertificateProperties.Name"/> in subsequent calls to <see cref="GetCertificate(string, CancellationToken)"/>.
+        /// This operation requires the certificates/list permission.
         /// </summary>
         /// <param name="includePending">Specifies whether to include certificates in a pending state as well</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An enumerable collection of certificate metadata</returns>
-        public virtual Pageable<CertificateProperties> GetCertificates(bool? includePending = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<CertificateProperties> GetPropertiesOfCertificates(bool includePending = default, CancellationToken cancellationToken = default)
         {
-            Uri firstPageUri = includePending.HasValue ?
-                _pipeline.CreateFirstPageUri(CertificatesPath, ("includePending", includePending.Value.ToString(CultureInfo.InvariantCulture).ToLowerInvariant())) :
-                _pipeline.CreateFirstPageUri(CertificatesPath);
+            Uri firstPageUri = _pipeline.CreateFirstPageUri(CertificatesPath, ("includePending", includePending.ToString(CultureInfo.InvariantCulture).ToLowerInvariant()));
 
-            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new CertificateProperties(), "Azure.Security.KeyVault.Keys.KeyClient.GetCertificates", cancellationToken));
+            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new CertificateProperties(), "Azure.Security.KeyVault.Keys.KeyClient.GetPropertiesOfCertificates", cancellationToken));
         }
 
         /// <summary>
-        /// Enumerates the certificates in the vault, returning select properties of the certificate, sensative feilds of the certificate will not be returned.  This operation requires the certificates/list permission.
+        /// Lists the properties of all certificates in the specified vault. You can use the returned <see cref="CertificateProperties.Name"/> in subsequent calls to <see cref="GetCertificateAsync(string, CancellationToken)"/>.
+        /// This operation requires the certificates/list permission.
         /// </summary>
         /// <param name="includePending">Specifies whether to include certificates in a pending state as well</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An enumerable collection of certificate metadata</returns>
-        public virtual AsyncPageable<CertificateProperties> GetCertificatesAsync(bool? includePending = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CertificateProperties> GetPropertiesOfCertificatesAsync(bool includePending = default, CancellationToken cancellationToken = default)
         {
-            Uri firstPageUri = includePending.HasValue ?
-                _pipeline.CreateFirstPageUri(CertificatesPath, ("includePending", includePending.Value.ToString(CultureInfo.InvariantCulture).ToLowerInvariant())) :
-                _pipeline.CreateFirstPageUri(CertificatesPath);
+            Uri firstPageUri = _pipeline.CreateFirstPageUri(CertificatesPath, ("includePending", includePending.ToString(CultureInfo.InvariantCulture).ToLowerInvariant()));
 
-            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new CertificateProperties(), "Azure.Security.KeyVaultCertificates.CertificateClient.GetCertificates", cancellationToken));
+            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new CertificateProperties(), "Azure.Security.KeyVaultCertificates.CertificateClient.GetPropertiesOfCertificates", cancellationToken));
         }
 
         /// <summary>
-        /// Enumerates the versions of a specific certificate in the vault, returning select properties of the certificate versions, sensative feilds of the certificate will not be returned.  This operation requires
-        /// the certificates/list permission.
+        /// Lists the properties of all versions of the specified certificate in the specified vault. You can use the returned <see cref="CertificateProperties.Name"/> in subsequent calls to <see cref="GetCertificateVersion(string, string, CancellationToken)"/>.
+        /// This operation requires the certificates/list permission.
         /// </summary>
-        /// <param name="name">The name of the certificate to retrieve the versions of</param>
+        /// <param name="certificateName">The name of the certificate to retrieve the versions of</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An enumerable collection of the certificate's versions</returns>
-        public virtual IEnumerable<CertificateProperties> GetCertificateVersions(string name, CancellationToken cancellationToken = default)
+        public virtual Pageable<CertificateProperties> GetPropertiesOfCertificateVersions(string certificateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            Uri firstPageUri = _pipeline.CreateFirstPageUri($"{CertificatesPath}{name}/versions");
+            Uri firstPageUri = _pipeline.CreateFirstPageUri($"{CertificatesPath}{certificateName}/versions");
 
-            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new CertificateProperties(), "Azure.Security.KeyVaultCertificates.CertificateClient.GetCertificateVersions", cancellationToken));
+            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new CertificateProperties(), "Azure.Security.KeyVaultCertificates.CertificateClient.GetPropertiesOfCertificateVersions", cancellationToken));
         }
 
         /// <summary>
-        /// Enumerates the versions of a specific certificate in the vault, returning select properties of the certificate versions, sensative feilds of the certificate will not be returned.  This operation requires
-        /// the certificates/list permission.
+        /// Lists the properties of all versions of the specified certificate in the specified vault. You can use the returned <see cref="CertificateProperties.Name"/> in subsequent calls to <see cref="GetCertificateVersionAsync(string, string, CancellationToken)"/>.
+        /// This operation requires the certificates/list permission.
         /// </summary>
-        /// <param name="name">The name of the certificate to retrieve the versions of</param>
+        /// <param name="certificateName">The name of the certificate to retrieve the versions of</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An enumerable collection of the certificate's versions</returns>
-        public virtual AsyncPageable<CertificateProperties> GetCertificateVersionsAsync(string name, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CertificateProperties> GetPropertiesOfCertificateVersionsAsync(string certificateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            Uri firstPageUri = _pipeline.CreateFirstPageUri($"{CertificatesPath}{name}/versions");
+            Uri firstPageUri = _pipeline.CreateFirstPageUri($"{CertificatesPath}{certificateName}/versions");
 
-            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new CertificateProperties(), "Azure.Security.KeyVaultCertificates.CertificateClient.GetCertificateVersions", cancellationToken));
+            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new CertificateProperties(), "Azure.Security.KeyVaultCertificates.CertificateClient.GetPropertiesOfCertificateVersions", cancellationToken));
         }
 
         /// <summary>
-        /// Enumerates the deleted certificates in the vault.  This operation is only available on soft-delete enabled vaults, and requires the certificates/list/get permissions.
+        /// Enumerates the deleted certificates in the vault. This operation is only available on soft-delete enabled vaults, and requires the certificates/list/get permissions.
         /// </summary>
         /// <param name="includePending">Specifies whether to include certificates in a delete pending state as well</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An enumerable collection of deleted certificates</returns>
-        public virtual Pageable<DeletedCertificate> GetDeletedCertificates(bool? includePending = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<DeletedCertificate> GetDeletedCertificates(bool includePending = default, CancellationToken cancellationToken = default)
         {
-            Uri firstPageUri = includePending.HasValue ?
-                _pipeline.CreateFirstPageUri(DeletedCertificatesPath, ("includePending", includePending.Value.ToString(CultureInfo.InvariantCulture).ToLowerInvariant())) :
-                _pipeline.CreateFirstPageUri(DeletedCertificatesPath);
+            Uri firstPageUri = _pipeline.CreateFirstPageUri(DeletedCertificatesPath, ("includePending", includePending.ToString(CultureInfo.InvariantCulture).ToLowerInvariant()));
 
             return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new DeletedCertificate(), "Azure.Security.KeyVaultCertificates.CertificateClient.GetDeletedCertificates", cancellationToken));
         }
 
         /// <summary>
-        /// Enumerates the deleted certificates in the vault.  This operation is only available on soft-delete enabled vaults, and requires the certificates/list/get permissions.
+        /// Enumerates the deleted certificates in the vault. This operation is only available on soft-delete enabled vaults, and requires the certificates/list/get permissions.
         /// </summary>
         /// <param name="includePending">Specifies whether to include certificates in a delete pending state as well</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An enumerable collection of deleted certificates</returns>
-        public virtual AsyncPageable<DeletedCertificate> GetDeletedCertificatesAsync(bool? includePending = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DeletedCertificate> GetDeletedCertificatesAsync(bool includePending = default, CancellationToken cancellationToken = default)
         {
-            Uri firstPageUri = includePending.HasValue ?
-                _pipeline.CreateFirstPageUri(DeletedCertificatesPath, ("includePending", includePending.Value.ToString(CultureInfo.InvariantCulture).ToLowerInvariant())) :
-                _pipeline.CreateFirstPageUri(DeletedCertificatesPath);
+            Uri firstPageUri = _pipeline.CreateFirstPageUri(DeletedCertificatesPath, ("includePending", includePending.ToString(CultureInfo.InvariantCulture).ToLowerInvariant()));
 
             return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new DeletedCertificate(), "Azure.Security.KeyVaultCertificates.CertificateClient.GetDeletedCertificates", cancellationToken));
         }
@@ -923,20 +915,20 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Retrieves the specified certificate <see cref="CertificateIssuer"/> from the vault. This operation requires the certificates/getissuers permission.
         /// </summary>
-        /// <param name="name">The name of the <see cref="CertificateIssuer"/> to retreive</param>
+        /// <param name="issuerName">The name of the <see cref="CertificateIssuer"/> to retreive</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The retrieved certificate issuer</returns>
-        public virtual Response<CertificateIssuer> GetIssuer(string name, CancellationToken cancellationToken = default)
+        public virtual Response<CertificateIssuer> GetIssuer(string issuerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(issuerName, nameof(issuerName));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.GetIssuer");
-            scope.AddAttribute("issuer", name);
+            scope.AddAttribute("issuer", issuerName);
             scope.Start();
 
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Get, () => new CertificateIssuer(), cancellationToken, IssuersPath, name);
+                return _pipeline.SendRequest(RequestMethod.Get, () => new CertificateIssuer(), cancellationToken, IssuersPath, issuerName);
             }
             catch (Exception e)
             {
@@ -948,20 +940,20 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Retrieves the specified certificate <see cref="CertificateIssuer"/> from the vault. This operation requires the certificates/getissuers permission.
         /// </summary>
-        /// <param name="name">The name of the <see cref="CertificateIssuer"/> to retreive</param>
+        /// <param name="issuerName">The name of the <see cref="CertificateIssuer"/> to retreive</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The retrieved certificate issuer</returns>
-        public virtual async Task<Response<CertificateIssuer>> GetIssuerAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CertificateIssuer>> GetIssuerAsync(string issuerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(issuerName, nameof(issuerName));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.GetIssuer");
-            scope.AddAttribute("issuer", name);
+            scope.AddAttribute("issuer", issuerName);
             scope.Start();
 
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Get, () => new CertificateIssuer(), cancellationToken, IssuersPath, name).ConfigureAwait(false);
+                return await _pipeline.SendRequestAsync(RequestMethod.Get, () => new CertificateIssuer(), cancellationToken, IssuersPath, issuerName).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1025,20 +1017,20 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Deletes the specified certificate <see cref="CertificateIssuer"/> from the vault. This operation requires the certificates/deleteissuers permission.
         /// </summary>
-        /// <param name="name">The name of the <see cref="CertificateIssuer"/> to delete</param>
+        /// <param name="issuerName">The name of the <see cref="CertificateIssuer"/> to delete</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The deleted certificate issuer</returns>
-        public virtual Response<CertificateIssuer> DeleteIssuer(string name, CancellationToken cancellationToken = default)
+        public virtual Response<CertificateIssuer> DeleteIssuer(string issuerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(issuerName, nameof(issuerName));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.DeleteIssuer");
-            scope.AddAttribute("issuer", name);
+            scope.AddAttribute("issuer", issuerName);
             scope.Start();
 
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Delete, () => new CertificateIssuer(), cancellationToken, IssuersPath, name);
+                return _pipeline.SendRequest(RequestMethod.Delete, () => new CertificateIssuer(), cancellationToken, IssuersPath, issuerName);
             }
             catch (Exception e)
             {
@@ -1050,20 +1042,20 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Deletes the specified certificate <see cref="CertificateIssuer"/> from the vault. This operation requires the certificates/deleteissuers permission.
         /// </summary>
-        /// <param name="name">The name of the <see cref="CertificateIssuer"/> to delete</param>
+        /// <param name="issuerName">The name of the <see cref="CertificateIssuer"/> to delete</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The deleted certificate issuer</returns>
-        public virtual async Task<Response<CertificateIssuer>> DeleteIssuerAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CertificateIssuer>> DeleteIssuerAsync(string issuerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(issuerName, nameof(issuerName));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.DeleteIssuer");
-            scope.AddAttribute("issuer", name);
+            scope.AddAttribute("issuer", issuerName);
             scope.Start();
 
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Delete, () => new CertificateIssuer(), cancellationToken, IssuersPath, name).ConfigureAwait(false);
+                return await _pipeline.SendRequestAsync(RequestMethod.Delete, () => new CertificateIssuer(), cancellationToken, IssuersPath, issuerName).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1073,27 +1065,29 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Enumerates the certificate issuers in the vault, returning select properties of the <see cref="CertificateIssuer"/>, sensative feilds of the <see cref="CertificateIssuer"/> will not be returned.  This operation requires the certificates/getissuers permission.
+        /// Lists the properties of all issuers in the specified vault. You can use the returned <see cref="CertificateProperties.Name"/> in subsequent calls to <see cref="GetIssuer(string, CancellationToken)"/>.
+        /// This operation requires the certificates/getissuers permission.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An enumerable collection of certificate issuers metadata</returns>
-        public virtual Pageable<IssuerProperties> GetIssuers(CancellationToken cancellationToken = default)
+        public virtual Pageable<IssuerProperties> GetPropertiesOfIssuers(CancellationToken cancellationToken = default)
         {
             Uri firstPageUri = _pipeline.CreateFirstPageUri(IssuersPath);
 
-            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new IssuerProperties(), "Azure.Security.KeyVaultCertificates.CertificateClient.GetIssuers", cancellationToken));
+            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new IssuerProperties(), "Azure.Security.KeyVaultCertificates.CertificateClient.GetPropertiesOfIssuers", cancellationToken));
         }
 
         /// <summary>
-        /// Enumerates the certificate issuers in the vault, returning select properties of the <see cref="CertificateIssuer"/>, sensative feilds of the <see cref="CertificateIssuer"/> will not be returned. This operation requires the certificates/getissuers permission.
+        /// Lists the properties of all issuers in the specified vault. You can use the returned <see cref="CertificateProperties.Name"/> in subsequent calls to <see cref="GetIssuer(string, CancellationToken)"/>.
+        /// This operation requires the certificates/getissuers permission.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An enumerable collection of certificate issuers metadata</returns>
-        public virtual AsyncPageable<IssuerProperties> GetIssuersAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<IssuerProperties> GetPropertiesOfIssuersAsync(CancellationToken cancellationToken = default)
         {
             Uri firstPageUri = _pipeline.CreateFirstPageUri(IssuersPath);
 
-            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new IssuerProperties(), "Azure.Security.KeyVaultCertificates.CertificateClient.GetIssuers", cancellationToken));
+            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new IssuerProperties(), "Azure.Security.KeyVaultCertificates.CertificateClient.GetPropertiesOfIssuers", cancellationToken));
         }
 
         //
@@ -1101,7 +1095,7 @@ namespace Azure.Security.KeyVault.Certificates
         //
 
         /// <summary>
-        /// Gets a pending <see cref="CertificateOperation"/> from the key vault.  This operation requires the certificates/get permission.
+        /// Gets a pending <see cref="CertificateOperation"/> from the key vault. This operation requires the certificates/get permission.
         /// </summary>
         /// <param name="certificateName">The name of the <see cref="KeyVaultCertificate"/> to retrieve the current pending operation of</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -1128,7 +1122,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Gets a pending <see cref="CertificateOperation"/> from the key vault.  This operation requires the certificates/get permission.
+        /// Gets a pending <see cref="CertificateOperation"/> from the key vault. This operation requires the certificates/get permission.
         /// </summary>
         /// <param name="certificateName">The name of the <see cref="KeyVaultCertificate"/> to retrieve the current pending operation of</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -1155,7 +1149,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Cancels a pending <see cref="CertificateOperation"/> in the key vault.  This operation requires the certificates/update permission.
+        /// Cancels a pending <see cref="CertificateOperation"/> in the key vault. This operation requires the certificates/update permission.
         /// </summary>
         /// <param name="certificateName">The name of the <see cref="KeyVaultCertificate"/> to cancel the current pending operation of</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -1184,7 +1178,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Cancels a pending <see cref="CertificateOperation"/> in the key vault.  This operation requires the certificates/update permission.
+        /// Cancels a pending <see cref="CertificateOperation"/> in the key vault. This operation requires the certificates/update permission.
         /// </summary>
         /// <param name="certificateName">The name of the <see cref="KeyVaultCertificate"/> to cancel the current pending operation of</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -1213,7 +1207,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Deletes a pending <see cref="CertificateOperation"/> in the key vault.  This operation requires the certificates/delete permission.
+        /// Deletes a pending <see cref="CertificateOperation"/> in the key vault. This operation requires the certificates/delete permission.
         /// </summary>
         /// <param name="certificateName">The name of the <see cref="KeyVaultCertificate"/> to delete the current pending operation of</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -1240,7 +1234,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Deletes a pending <see cref="CertificateOperation"/> in the key vault.  This operation requires the certificates/delete permission.
+        /// Deletes a pending <see cref="CertificateOperation"/> in the key vault. This operation requires the certificates/delete permission.
         /// </summary>
         /// <param name="certificateName">The name of the <see cref="KeyVaultCertificate"/> to delete the current pending operation of</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -1420,7 +1414,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="certificateMergeOptions">The details of the certificate or certificate chain to merge into the key vault.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The merged certificate.</returns>
-        public virtual Response<KeyVaultCertificateWithPolicy> MergeCertificate(CertificateMergeOptions certificateMergeOptions, CancellationToken cancellationToken = default)
+        public virtual Response<KeyVaultCertificateWithPolicy> MergeCertificate(MergeCertificateOptions certificateMergeOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(certificateMergeOptions, nameof(certificateMergeOptions));
 
@@ -1447,7 +1441,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="certificateMergeOptions">The details of the certificate or certificate chain to merge into the key vault.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The merged certificate.</returns>
-        public virtual async Task<Response<KeyVaultCertificateWithPolicy>> MergeCertificateAsync(CertificateMergeOptions certificateMergeOptions, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KeyVaultCertificateWithPolicy>> MergeCertificateAsync(MergeCertificateOptions certificateMergeOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(certificateMergeOptions, nameof(certificateMergeOptions));
 
@@ -1468,17 +1462,17 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
 
-        internal virtual Response<CertificateOperationProperties> GetPendingCertificate(string name, CancellationToken cancellationToken = default)
+        internal virtual Response<CertificateOperationProperties> GetPendingCertificate(string certificateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.GetPendingCertificate");
-            scope.AddAttribute("certificate", name);
+            scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Get, () => new CertificateOperationProperties(), cancellationToken, CertificatesPath, name, "/pending");
+                return _pipeline.SendRequest(RequestMethod.Get, () => new CertificateOperationProperties(), cancellationToken, CertificatesPath, certificateName, "/pending");
             }
             catch (Exception e)
             {
@@ -1487,17 +1481,17 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
 
-        internal virtual async Task<Response<CertificateOperationProperties>> GetPendingCertificateAsync(string name, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<CertificateOperationProperties>> GetPendingCertificateAsync(string certificateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.GetPendingCertificate");
-            scope.AddAttribute("certificate", name);
+            scope.AddAttribute("certificate", certificateName);
             scope.Start();
 
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Get, () => new CertificateOperationProperties(), cancellationToken, CertificatesPath, name, "/pending").ConfigureAwait(false);
+                return await _pipeline.SendRequestAsync(RequestMethod.Get, () => new CertificateOperationProperties(), cancellationToken, CertificatesPath, certificateName, "/pending").ConfigureAwait(false);
             }
             catch (Exception e)
             {

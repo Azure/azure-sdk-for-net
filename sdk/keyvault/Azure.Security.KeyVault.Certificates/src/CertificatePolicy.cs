@@ -66,7 +66,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// Initializes a new instance of the <see cref="CertificatePolicy"/> class.
         /// </summary>
         /// <param name="subject">The subject name of the certificate, such as "CN=contoso.com".</param>
-        /// <param name="issuerName">The name of an issuer for the certificate, including "Self" for self-signed certificates, "Unknown" for certificate requests, or other well-known names supported by Azure Key Vault.</param>
+        /// <param name="issuerName">The name of an issuer for the certificate, including values from <see cref="WellKnownIssuerNames"/>.</param>
         /// <exception cref="ArgumentException"><paramref name="subject"/> or <paramref name="issuerName"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="subject"/> or <paramref name="issuerName"/> is null.</exception>
         public CertificatePolicy(string subject, string issuerName)
@@ -82,7 +82,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// Initializes a new instance of the <see cref="CertificatePolicy"/> class.
         /// </summary>
         /// <param name="subjectAlternativeNames">The subject alternative names (SANs) of the certificate</param>
-        /// <param name="issuerName">The name of an issuer for the certificate, including "Self" for self-signed certificates, "Unknown" for certificate requests, or other well-known names supported by Azure Key Vault.</param>
+        /// <param name="issuerName">The name of an issuer for the certificate, including values from <see cref="WellKnownIssuerNames"/>.</param>
         /// <exception cref="ArgumentException"><paramref name="issuerName"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="subjectAlternativeNames"/> or <paramref name="issuerName"/> is null.</exception>
         public CertificatePolicy(SubjectAlternativeNames subjectAlternativeNames, string issuerName)
@@ -132,17 +132,17 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// The subject name of a certificate
         /// </summary>
-        public string Subject { get; set; }
+        public string Subject { get; internal set; }
 
         /// <summary>
         /// The subject alternative names (SANs) of a certificate
         /// </summary>
-        public SubjectAlternativeNames SubjectAlternativeNames { get; set; }
+        public SubjectAlternativeNames SubjectAlternativeNames { get; internal set; }
 
         /// <summary>
         /// The name of an issuer for a certificate
         /// </summary>
-        public string IssuerName { get; set; }
+        public string IssuerName { get; internal set; }
 
         /// <summary>
         /// Content type of the certificate when downloaded from getSecret.
@@ -165,19 +165,19 @@ namespace Azure.Security.KeyVault.Certificates
         public int? ValidityInMonths { get; set; }
 
         /// <summary>
-        /// Specifies if the certificate is currently enabled.
+        /// Gets or sets a value indicating whether the certificate is currently enabled. If null, the server default will be used.
         /// </summary>
         public bool? Enabled { get; set; }
 
         /// <summary>
         /// The last updated time in UTC.
         /// </summary>
-        public DateTimeOffset? Updated { get; private set; }
+        public DateTimeOffset? UpdatedOn { get; internal set; }
 
         /// <summary>
         /// The creation time in UTC.
         /// </summary>
-        public DateTimeOffset? Created { get; private set; }
+        public DateTimeOffset? CreatedOn { get; internal set; }
 
         /// <summary>
         /// The allowed usages for the key of the certificate
@@ -503,11 +503,11 @@ namespace Azure.Security.KeyVault.Certificates
                         break;
 
                     case CreatedPropertyName:
-                        Created = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                        CreatedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                         break;
 
                     case UpdatedPropertyName:
-                        Updated = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                        UpdatedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                         break;
                 }
             }

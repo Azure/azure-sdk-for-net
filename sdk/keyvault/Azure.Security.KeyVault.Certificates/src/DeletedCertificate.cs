@@ -17,24 +17,28 @@ namespace Azure.Security.KeyVault.Certificates
 
         private string _recoveryId;
 
-        internal DeletedCertificate()
+        internal DeletedCertificate(CertificateProperties properties = null) : base(properties)
         {
         }
 
         /// <summary>
         /// Id identifying the deleted certificate
         /// </summary>
-        public Uri RecoveryId => new Uri(_recoveryId);
+        public Uri RecoveryId
+        {
+            get => new Uri(_recoveryId);
+            internal set => _recoveryId = value?.ToString();
+        }
 
         /// <summary>
         /// The time the certificate was deleted in UTC
         /// </summary>
-        public DateTimeOffset? DeletedOn { get; private set; }
+        public DateTimeOffset? DeletedOn { get; internal set; }
 
         /// <summary>
         /// The time the certificate is scheduled to be permanently deleted in UTC
         /// </summary>
-        public DateTimeOffset? ScheduledPurgeDate { get; private set; }
+        public DateTimeOffset? ScheduledPurgeDate { get; internal set; }
 
         internal override void ReadProperty(JsonProperty prop)
         {

@@ -47,7 +47,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             // Let's get the created certificate along with it's policy from the Key Vault.
             KeyVaultCertificateWithPolicy certificate = client.GetCertificate(certName);
 
-            Debug.WriteLine($"Certificate was returned with name {certificate.Name} which expires {certificate.Properties.Expires}");
+            Debug.WriteLine($"Certificate was returned with name {certificate.Name} which expires {certificate.Properties.ExpiresOn}");
 
             // We find that the certificate has been compromised and we want to disable it so applications will no longer be able
             // to access the compromised version of the certificate.

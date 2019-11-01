@@ -8,33 +8,30 @@ namespace Azure.Security.KeyVault.Certificates
     /// <summary>
     /// An error encountered during the processing of a <see cref="CertificateOperation"/>
     /// </summary>
-    public class CertificateError : IJsonDeserializable
+    public class CertificateOperationError : IJsonDeserializable
     {
         private const string CodePropertyName = "code";
         private const string MessagePropertyName = "message";
         private const string InnerErrorPropertyName = "innererror";
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CertificateError"/> class.
-        /// </summary>
-        public CertificateError()
+        internal CertificateOperationError()
         {
         }
 
         /// <summary>
         /// The error code of the specified error
         /// </summary>
-        public string Code { get; private set; }
+        public string Code { get; internal set; }
 
         /// <summary>
         /// A message containing details of the encountered error
         /// </summary>
-        public string Message { get; private set; }
+        public string Message { get; internal set; }
 
         /// <summary>
         /// An underlying error, if exists, for the current error
         /// </summary>
-        public CertificateError InnerError { get; private set; }
+        public CertificateOperationError InnerError { get; internal set; }
 
         void IJsonDeserializable.ReadProperties(JsonElement json)
         {
@@ -51,7 +48,7 @@ namespace Azure.Security.KeyVault.Certificates
                         break;
 
                     case InnerErrorPropertyName:
-                        InnerError = new CertificateError();
+                        InnerError = new CertificateOperationError();
                         ((IJsonDeserializable)InnerError).ReadProperties(prop.Value);
                         break;
                 }

@@ -46,7 +46,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             await certOp2.WaitForCompletionAsync();
 
             // Let's list the certificates which exist in the vault along with their thumbprints
-            await foreach (CertificateProperties cert in client.GetCertificatesAsync())
+            await foreach (CertificateProperties cert in client.GetPropertiesOfCertificatesAsync())
             {
                 Debug.WriteLine($"Certificate is returned with name {cert.Name} and thumbprint {BitConverter.ToString(cert.X509Thumbprint)}");
             }
@@ -57,7 +57,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             await newCertOp.WaitForCompletionAsync();
 
             // Let's print all the versions of this certificate
-            await foreach (CertificateProperties cert in client.GetCertificateVersionsAsync(certName1))
+            await foreach (CertificateProperties cert in client.GetPropertiesOfCertificateVersionsAsync(certName1))
             {
                 Debug.WriteLine($"Certificate {cert.Name} with name {cert.Version}");
             }

@@ -38,7 +38,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 AccountId = "accountId",
                 Administrators =
                 {
-                    new AdministratorDetails
+                    new AdministratorContact
                     {
                         Email = "email@domain.tld",
                     },

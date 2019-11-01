@@ -19,8 +19,9 @@ namespace Azure.Security.KeyVault.Certificates
         private string _keyId;
         private string _secretId;
 
-        internal KeyVaultCertificate()
+        internal KeyVaultCertificate(CertificateProperties properties = null)
         {
+            Properties = properties ?? new CertificateProperties();
         }
 
         /// <summary>
@@ -36,27 +37,35 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// The Id of the Key Vault Key backing the certifcate.
         /// </summary>
-        public Uri KeyId => new Uri(_keyId);
+        public Uri KeyId
+        {
+            get => new Uri(_keyId);
+            internal set => _keyId = value?.ToString();
+        }
 
         /// <summary>
         /// The Id of the Key Vault Secret which contains the PEM of PFX formatted content of the certficate and it's private key.
         /// </summary>
-        public Uri SecretId => new Uri(_secretId);
+        public Uri SecretId
+        {
+            get => new Uri(_secretId);
+            internal set => _secretId = value?.ToString();
+        }
 
         /// <summary>
         /// The content type of the key vault Secret corresponding to the certificate.
         /// </summary>
-        public CertificateContentType ContentType { get; private set; }
+        public CertificateContentType ContentType { get; internal set; }
 
         /// <summary>
         /// Additional properties of the <see cref="KeyVaultCertificate"/>.
         /// </summary>
-        public CertificateProperties Properties { get; } = new CertificateProperties();
+        public CertificateProperties Properties { get; }
 
         /// <summary>
         /// The CER formatted public X509 certificate
         /// </summary>
-        public byte[] Cer { get; private set; }
+        public byte[] Cer { get; internal set; }
 
         internal virtual void ReadProperty(JsonProperty prop)
         {

@@ -59,6 +59,7 @@ namespace Azure.Core.Testing
 
         private RecordSession _previousSession;
 
+        private static readonly Random s_random = new Random();
         private Random _random;
 
         public Random Random
@@ -70,7 +71,7 @@ namespace Azure.Core.Testing
                     switch (Mode)
                     {
                         case RecordedTestMode.Live:
-                            _random = new Random();
+                            _random = s_random;
                             break;
                         case RecordedTestMode.Record:
                             // Try get the seed from existing session
@@ -79,8 +80,7 @@ namespace Azure.Core.Testing
                                   int.TryParse(seedString, out int seed)
                                 ))
                             {
-                                _random = new Random();
-                                seed = _random.Next();
+                                seed = s_random.Next();
                             }
                             _session.Variables[RandomSeedVariableKey] = seed.ToString();
                             _random = new Random(seed);

@@ -19,7 +19,10 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         {
             string certName = Recording.GenerateId();
 
-            await Client.StartCreateCertificateAsync(certName, DefaultPolicy);
+            CertificatePolicy certificatePolicy = DefaultPolicy;
+            certificatePolicy.IssuerName = WellKnownIssuerNames.Unknown;
+
+            await Client.StartCreateCertificateAsync(certName, certificatePolicy);
 
             RegisterForCleanup(certName);
 
@@ -33,11 +36,20 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         {
             string certName = Recording.GenerateId();
 
-            CertificateOperation operation = await Client.StartCreateCertificateAsync(certName, DefaultPolicy);
+            CertificatePolicy certificatePolicy = DefaultPolicy;
+
+            CertificateOperation operation = await Client.StartCreateCertificateAsync(certName, certificatePolicy);
 
             RegisterForCleanup(certName);
 
-            await Client.CancelCertificateOperationAsync(certName);
+            try
+            {
+                await Client.CancelCertificateOperationAsync(certName);
+            }
+            catch (RequestFailedException ex) when (ex.Status == 403)
+            {
+                Assert.Inconclusive("The create operation completed before it could be canceled.");
+            }
 
             Assert.ThrowsAsync<OperationCanceledException>(() => WaitForCompletion(operation));
         }
@@ -47,7 +59,10 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         {
             string certName = Recording.GenerateId();
 
-            CertificateOperation operation = await Client.StartCreateCertificateAsync(certName, DefaultPolicy);
+            CertificatePolicy certificatePolicy = DefaultPolicy;
+            certificatePolicy.IssuerName = WellKnownIssuerNames.Unknown;
+
+            CertificateOperation operation = await Client.StartCreateCertificateAsync(certName, certificatePolicy);
 
             RegisterForCleanup(certName);
 
@@ -61,7 +76,10 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         {
             string certName = Recording.GenerateId();
 
-            await Client.StartCreateCertificateAsync(certName, DefaultPolicy);
+            CertificatePolicy certificatePolicy = DefaultPolicy;
+            certificatePolicy.IssuerName = WellKnownIssuerNames.Unknown;
+
+            await Client.StartCreateCertificateAsync(certName, certificatePolicy);
 
             RegisterForCleanup(certName);
 
@@ -186,7 +204,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
         private static CertificatePolicy DefaultPolicy => new CertificatePolicy
         {
-            IssuerName = "Self",
+            IssuerName = WellKnownIssuerNames.Self,
             Subject = "CN=default",
             KeyType = CertificateKeyType.Rsa,
             Exportable = true,
