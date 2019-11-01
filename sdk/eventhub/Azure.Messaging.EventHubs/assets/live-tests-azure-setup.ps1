@@ -7,12 +7,12 @@
     library test suite.
 
   .DESCRIPTION
-    This script handles the creation and configuration of needed resources within an Azure subscription
+    This script handles creation and configuration of needed resources within an Azure subscription
     for use with the Event Hubs client library's Live test suite.  
     
     Upon completion, the script will output a set of environment variables with sensitive information which
     are used for testing.  When running Live tests, please be sure to have these environment variables available,
-    either within Visual Studio or command-line environment.
+    either within Visual Studio or command line environment.
  
     For more detailed help, please use the -Help switch. 
 #>
@@ -76,7 +76,7 @@ function DisplayHelp
   Write-Host "`n"
   Write-Host "Event Hubs Live Test Environment Setup"
   Write-Host ""
-  Write-Host "$($indent)This script handles the creation and configuration of needed resources within an Azure subscription"
+  Write-Host "$($indent)This script handles creation and configuration of needed resources within an Azure subscription"
   Write-Host "$($indent)for use with the Event Hubs client library Live test suite."
   Write-Host ""
   Write-Host "$($indent)Upon completion, the script will output a set of environment variables with sensitive information which"
