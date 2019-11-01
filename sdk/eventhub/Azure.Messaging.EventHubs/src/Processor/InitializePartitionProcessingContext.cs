@@ -39,5 +39,13 @@ namespace Azure.Messaging.EventHubs.Processor
 
             Context = partitionContext;
         }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="InitializePartitionProcessingContext"/> class.
+        /// </summary>
+        ///
+        protected InitializePartitionProcessingContext()
+        {
+        }
     }
 }

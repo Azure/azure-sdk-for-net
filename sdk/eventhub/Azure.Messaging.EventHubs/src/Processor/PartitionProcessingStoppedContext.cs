@@ -38,5 +38,13 @@ namespace Azure.Messaging.EventHubs.Processor
             Context = partitionContext;
             Reason = reason;
         }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="PartitionProcessingStoppedContext"/> class.
+        /// </summary>
+        ///
+        protected PartitionProcessingStoppedContext()
+        {
+        }
     }
 }

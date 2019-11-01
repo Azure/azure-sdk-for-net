@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// TODO: remove Processor dependency.
-
 using Azure.Core;
 using Azure.Messaging.EventHubs.Processor;
 
@@ -41,6 +39,14 @@ namespace Azure.Messaging.EventHubs
 
             Context = partitionContext;
             Data = eventData;
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="PartitionEvent"/> class.
+        /// </summary>
+        ///
+        protected PartitionEvent()
+        {
         }
     }
 }
