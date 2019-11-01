@@ -209,13 +209,13 @@ try
 
     try 
     {
-        New-AzRoleAssignment -ApplicationId "$($principal.ApplicationId)" -RoleDefinitionName "Azure Event Hubs Data Owner" -ResourceGroupName "$($resourceGroupName)" | Out-Null
+        New-AzRoleAssignment -ApplicationId "$($principal.ApplicationId)" -RoleDefinitionName "Contributor" -ResourceGroupName "$($resourceGroupName)" | Out-Null
     }
     catch 
     {
         Write-Host "`t...Still waiting for identity propagation (this will take a moment)"
         Start-Sleep 60
-        New-AzRoleAssignment -ApplicationId "$($principal.ApplicationId)" -RoleDefinitionName "Azure Event Hubs Data Owner" -ResourceGroupName "$($resourceGroupName)" | Out-Null
+        New-AzRoleAssignment -ApplicationId "$($principal.ApplicationId)" -RoleDefinitionName "Contributor" -ResourceGroupName "$($resourceGroupName)" | Out-Null
         
         exit -1
     }    
