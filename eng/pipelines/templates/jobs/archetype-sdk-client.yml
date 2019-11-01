@@ -83,9 +83,6 @@ jobs:
         inputs:
           versionSpec: '12.x'
         displayName: 'Install NodeJS'
-      - script: |
-          npm install -g autorest@beta
-        displayName: "Install autorest"
       - task: PowerShell@2
         displayName: "Verify generated code"
         env:
