@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Messaging.EventHubs.Core;
-using Azure.Messaging.EventHubs.Diagnostics;
 using Azure.Messaging.EventHubs.Metadata;
 
 namespace Azure.Messaging.EventHubs

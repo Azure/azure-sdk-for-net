@@ -4,7 +4,7 @@
 using System.Diagnostics;
 using Azure.Core.Pipeline;
 
-namespace Azure.Messaging.EventHubs.Diagnostics
+namespace Azure.Messaging.EventHubs
 {
     /// <summary>
     ///   Enables diagnostics instrumentation to be applied to <see cref="EventData" />

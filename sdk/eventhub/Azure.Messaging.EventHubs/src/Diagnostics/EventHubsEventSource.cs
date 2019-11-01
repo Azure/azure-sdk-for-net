@@ -4,7 +4,7 @@
 using System;
 using System.Diagnostics.Tracing;
 
-namespace Azure.Messaging.EventHubs.Diagnostics
+namespace Azure.Messaging.EventHubs
 {
     /// <summary>
     ///   Serves as an ETW event source for logging of information about
