@@ -3,12 +3,50 @@ AutoRest installed successfully.
 Commencing code generation
 Generating CSharp code
 Executing AutoRest command
-cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/datafactory/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --tag=package-2018-06 --csharp-sdks-folder=C:\Users\zhenqxu\Source\Repos\azure-sdk-for-net\sdk
-2019-10-21 10:53:53 UTC
-Azure-rest-api-specs repository information
-GitHub fork: Azure
-Branch:      master
-Commit:      3e8d1784d5a765406505f22cb51935376062da3f
-AutoRest information
-Requested version: latest
-Bootstrapper version:    autorest@2.0.4283
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/datafactory/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --tag=package-2018-06 --csharp-sdks-folder=C:\Users\xichen\Desktop\SSIS\azure-sdk-for-net
+Error: Unable to start AutoRest Core from C:\Users\xichen\.autorest\@microsoft.azure_autorest-core@2.0.4405\node_modules\@microsoft.azure\autorest-core
+Error: Unable to start AutoRest Core from C:\Users\xichen\.autorest\@microsoft.azure_autorest-core@2.0.4405\node_modules\@microsoft.azure\autorest-core
+    at main (C:\Users\xichen\AppData\Roaming\npm\node_modules\autorest\dist\app.js:232:19)
+    at <anonymous>
+
+C:\Users\xichen\.autorest\@microsoft.azure_autorest-core@2.0.4405\node_modules\@microsoft.azure\autorest-core\dist\app.js:33
+    autorest_core_1.Shutdown();
+    ^
+ReferenceError: autorest_core_1 is not defined
+    at process.on (C:\Users\xichen\.autorest\@microsoft.azure_autorest-core@2.0.4405\node_modules\@microsoft.azure\autorest-core\dist\app.js:33:5)
+    at emitOne (events.js:121:20)
+    at process.emit (events.js:211:7)
+    at process.emit (/node_modules/source-map-support/source-map-support.js:439:21)
+fs.js:612
+  return binding.close(fd);
+                 ^
+
+Error: EBADF: bad file descriptor, close
+    at Object.fs.closeSync (fs.js:612:18)
+    at StaticVolumeFile.shutdown (C:\Users\xichen\AppData\Roaming\npm\node_modules\autorest\dist\static-loader.js:352:10)
+    at StaticFilesystem.shutdown (C:\Users\xichen\AppData\Roaming\npm\node_modules\autorest\dist\static-loader.js:406:17)
+    at process.exit.n [as exit] (C:\Users\xichen\AppData\Roaming\npm\node_modules\autorest\dist\static-loader.js:169:11)
+    at printErrorAndExit (/node_modules/source-map-support/source-map-support.js:423:11)
+    at process.emit (/node_modules/source-map-support/source-map-support.js:435:16)
+    at process._fatalException (bootstrap_node.js:391:26)
+
+System.Management.Automation.RuntimeException: Cannot convert value to type System.String. ---> System.Management.Automation.PSInvalidCastException: Cannot convert value to type System.String. ---> System.InvalidOperationException: Process has exited, so the requested information is not available.
+   at System.Diagnostics.Process.EnsureState(State state)
+   at System.Diagnostics.Process.get_ProcessName()
+   at System.Diagnostics.Process.ToString()
+   at System.Management.Automation.PSObject.ToString(ExecutionContext context, Object obj, String separator, String format, IFormatProvider formatProvider, Boolean recurse, Boolean unravelEnumeratorOnRecurse)
+   --- End of inner exception stack trace ---
+   at System.Management.Automation.PSObject.ToStringParser(ExecutionContext context, Object obj)
+   at System.Management.Automation.Interpreter.DynamicInstruction`3.Run(InterpretedFrame frame)
+   at System.Management.Automation.Interpreter.EnterTryCatchFinallyInstruction.Run(InterpretedFrame frame)
+   --- End of inner exception stack trace ---
+   at System.Management.Automation.ExceptionHandlingOps.CheckActionPreference(FunctionContext funcContext, Exception exception)
+   at System.Management.Automation.Interpreter.ActionCallInstruction`2.Run(InterpretedFrame frame)
+   at System.Management.Automation.Interpreter.EnterTryCatchFinallyInstruction.Run(InterpretedFrame frame)
+   at System.Management.Automation.Interpreter.EnterTryCatchFinallyInstruction.Run(InterpretedFrame frame)
+   at System.Management.Automation.Interpreter.Interpreter.Run(InterpretedFrame frame)
+   at System.Management.Automation.Interpreter.LightLambda.RunVoid1[T0](T0 arg0)
+   at System.Management.Automation.PSScriptCmdlet.RunClause(Action`1 clause, Object dollarUnderbar, Object inputToProcess)
+   at System.Management.Automation.PSScriptCmdlet.DoEndProcessing()
+   at System.Management.Automation.CommandProcessorBase.Complete()
+AutoRest code generation for https://github.com/Azure/azure-rest-api-specs/blob/master/specification/datafactory/resource-manager/readme.md failed. Please try again

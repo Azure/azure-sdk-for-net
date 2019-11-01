@@ -5,6 +5,7 @@
 - Added Serve-to-Server authentication type for Dynamics 365, Dynamics CRM and Common Data Service for Apps connector
 - Changed Username from required to optional in Dynamics 365, Dynamics CRM and Common Data Service for Apps connector
 - Added Compression codec proprty to Orc dataset
+- Added embedded package properties for ssis activity
 
 ## Version 4.3.0
 ###  Feature Additions
