@@ -3,10 +3,11 @@
 
 using Azure.Core;
 
-namespace Azure.Messaging.EventHubs.Processor
+namespace Azure.Messaging.EventHubs
 {
     /// <summary>
-    ///   TODO.
+    ///   Contains information about a partition, like its identifier and information about its last
+    ///   enqueued event.
     /// </summary>
     ///
     public class PartitionContext

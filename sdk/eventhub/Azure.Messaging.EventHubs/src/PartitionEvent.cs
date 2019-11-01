@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Azure.Messaging.EventHubs.Processor;
 
 namespace Azure.Messaging.EventHubs
 {
@@ -39,14 +38,6 @@ namespace Azure.Messaging.EventHubs
 
             Context = partitionContext;
             Data = eventData;
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="PartitionEvent"/> class.
-        /// </summary>
-        ///
-        protected PartitionEvent()
-        {
         }
     }
 }

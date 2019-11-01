@@ -37,14 +37,6 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventProcessorEvent"/> class.
-        /// </summary>
-        ///
-        protected EventProcessorEvent()
-        {
-        }
-
-        /// <summary>
         ///   Updates the checkpoint using the given information for the associated partition and consumer group in the chosen storage service.
         /// </summary>
         ///
