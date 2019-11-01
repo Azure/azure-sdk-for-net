@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "AutoRest extension to generate C# for Azure Track 2 client libraries",
   "main": "dist/index.js",
+  "private": true,
   "typings": "dist/index.d.ts",
   "scripts": {
     "start": "node ./dist/index.js",
