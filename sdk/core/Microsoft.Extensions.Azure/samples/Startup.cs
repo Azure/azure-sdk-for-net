@@ -26,6 +26,7 @@ namespace Microsoft.Extensions.Azure.Samples
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        #region Snippet:ConfigureServices
         public void ConfigureServices(IServiceCollection services)
         {
             // Registering policy to use in ConfigureDefaults later
@@ -55,6 +56,7 @@ namespace Microsoft.Extensions.Azure.Samples
                         .WithVersion(BlobClientOptions.ServiceVersion.V2019_02_02);
             });
         }
+        #endregion
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, SecretClient secretClient, BlobServiceClient blobServiceClient)
