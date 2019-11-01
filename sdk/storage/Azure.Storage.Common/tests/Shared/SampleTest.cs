@@ -89,7 +89,7 @@ namespace Azure.Storage
         /// <summary>
         /// Get a namespace endpoint to use from our test settings.
         /// </summary>
-        public Uri StorageAccountNamespaceUri => new Uri(TestConfigurations.DefaultTargetHierarchicalNamespaceTenant.BlobServiceEndpoint);
+        public Uri NamespaceBlobUri => new Uri(TestConfigurations.DefaultTargetHierarchicalNamespaceTenant.BlobServiceEndpoint);
 
         /// <summary>
         /// Get a random name so we won't have any conflicts when creating

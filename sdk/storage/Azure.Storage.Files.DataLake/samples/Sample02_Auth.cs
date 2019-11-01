@@ -151,7 +151,7 @@ namespace Azure.Storage.Files.DataLake.Samples
             DataLakeServiceClient service = new DataLakeServiceClient(sasUri.Uri);
 
             // Make a service request to verify we've succesfully authenticated
-            await service.GetFileSystemsAsync().ToListAsync();
+            await service.GetFileSystemsAsync().FirstAsync();
 
             // Try to create a new container (which is beyond our
             // delegated permission)
