@@ -99,7 +99,7 @@ namespace Microsoft.Extensions.Azure
         }
 
         /// <summary>
-        /// Sets the service version to use for this client registration. Latest by default.
+        /// Sets the service version to use for this client registration.
         /// </summary>
         /// <typeparam name="TClient">The type of the client.</typeparam>
         /// <typeparam name="TOptions">The options type the client uses.</typeparam>

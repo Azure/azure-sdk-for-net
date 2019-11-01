@@ -121,7 +121,7 @@ namespace Microsoft.Extensions.Azure
         /// <summary>
         /// Sets the credential to use by default for all clients.
         /// </summary>
-        /// <param name="tokenCredentialFactory">The credential to use.</param>
+        /// <param name="tokenCredentialFactory">The credential factory to use.</param>
         /// <returns>This instance.</returns>
         public AzureClientFactoryBuilder UseCredential(Func<IServiceProvider, TokenCredential> tokenCredentialFactory)
         {
