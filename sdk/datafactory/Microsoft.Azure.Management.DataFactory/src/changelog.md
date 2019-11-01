@@ -1,9 +1,7 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
 ## Current version
-##
-
-## Version 4.3.1
+## Version 4.4.0
 ###  Feature Additions
 - Added new optional property "connectVia" in Web activity
 
