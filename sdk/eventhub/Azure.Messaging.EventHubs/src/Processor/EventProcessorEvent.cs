@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
 using Azure.Core;
 
@@ -11,29 +12,44 @@ namespace Azure.Messaging.EventHubs.Processor
     ///   provides a means to create event processing checkpoints.
     /// </summary>
     ///
-    public class EventProcessorEvent : PartitionEvent
+    public class EventProcessorEvent
     {
         /// <summary>
-        ///   The <see cref="EventProcessorClient" /> this instance is related to.
+        ///   The context of the Event Hub partition this instance is associated with.
         /// </summary>
         ///
-        private EventProcessorClient Processor { get; }
+        public PartitionContext Context { get; }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventProcessorEvent"/> class.
+        ///   The received event to be processed.  Expected to be <c>null</c> if the receive call has timed out.
         /// </summary>
         ///
-        /// <param name="processor">The <see cref="EventProcessorClient" /> this instance is related to.</param>
+        public EventData Data { get; }
+
+        /// <summary>
+        ///   The function to call on checkpoint update.
+        /// </summary>
+        ///
+        private Func<EventData, PartitionContext, Task> OnUpdateCheckpoint { get; }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="EventProcessorEvent"/> structure.
+        /// </summary>
+        ///
         /// <param name="partitionContext">The context of the Event Hub partition this instance is associated with.</param>
         /// <param name="eventData">The received event to be processed.  Expected to be <c>null</c> if the receive call has timed out.</param>
+        /// <param name="onUpdateCheckpoint">The function to call on checkpoint update.</param>
         ///
-        protected internal EventProcessorEvent(EventProcessorClient processor,
-                                               PartitionContext partitionContext,
-                                               EventData eventData) : base(partitionContext, eventData)
+        public EventProcessorEvent(PartitionContext partitionContext,
+                                   EventData eventData,
+                                   Func<EventData, PartitionContext, Task> onUpdateCheckpoint)
         {
-            Argument.AssertNotNull(processor, nameof(processor));
+            Argument.AssertNotNull(partitionContext, nameof(partitionContext));
+            Argument.AssertNotNull(onUpdateCheckpoint, nameof(onUpdateCheckpoint));
 
-            Processor = processor;
+            Context = partitionContext;
+            Data = eventData;
+            OnUpdateCheckpoint = onUpdateCheckpoint;
         }
 
         /// <summary>
@@ -48,7 +64,7 @@ namespace Azure.Messaging.EventHubs.Processor
         {
             // Verification is done by the Event Processor Client.
 
-            return Processor.UpdateCheckpointAsync(eventData, Context);
+            return OnUpdateCheckpoint(eventData, Context);
         }
     }
 }

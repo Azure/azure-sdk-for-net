@@ -41,13 +41,5 @@ namespace Azure.Messaging.EventHubs.Processor
             PartitionId = partitionId;
             ProcessorException = exception;
         }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ProcessorErrorContext"/> class.
-        /// </summary>
-        ///
-        protected ProcessorErrorContext()
-        {
-        }
     }
 }

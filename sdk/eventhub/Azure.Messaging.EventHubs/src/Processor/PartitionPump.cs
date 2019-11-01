@@ -286,14 +286,14 @@ namespace Azure.Messaging.EventHubs.Processor
                     {
                         try
                         {
-                            var processorEvent = new EventProcessorEvent(OwnerEventProcessor, Context, eventData);
+                            var processorEvent = new EventProcessorEvent(Context, eventData, OwnerEventProcessor.UpdateCheckpointAsync);
                             await OwnerEventProcessor.ProcessEventAsync(processorEvent).ConfigureAwait(false);
                         }
                         catch (Exception eventProcessingException)
                         {
                             diagnosticScope.Failed(eventProcessingException);
                             unrecoverableException = eventProcessingException;
-                            CloseReason = CloseReason.ProcessEventException;
+                            CloseReason = CloseReason.Exception;
 
                             break;
                         }
@@ -306,7 +306,7 @@ namespace Azure.Messaging.EventHubs.Processor
                     if (RetryPolicy.CalculateRetryDelay(eventHubException, 1) == null)
                     {
                         unrecoverableException = eventHubException;
-                        CloseReason = CloseReason.EventHubException;
+                        CloseReason = CloseReason.Exception;
 
                         break;
                     }

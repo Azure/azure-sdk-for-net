@@ -45,7 +45,7 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <summary>Responsible for processing events received from the Event Hubs service.</summary>
         private Func<EventProcessorEvent, Task> _processEventAsync;
 
-        /// <summary>Responsible for processing unexpected exceptions thrown while this <see cref="EventProcessorClient" /> is running.</summary>
+        /// <summary>Responsible for processing unhandled exceptions thrown while this <see cref="EventProcessorClient" /> is running.</summary>
         private Func<ProcessorErrorContext, Task> _processExceptionAsync;
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
-        ///   Responsible for processing unexpected exceptions thrown while this <see cref="EventProcessorClient" /> is running.
+        ///   Responsible for processing unhandled exceptions thrown while this <see cref="EventProcessorClient" /> is running.
         ///   Implementation is mandatory.
         /// </summary>
         ///
