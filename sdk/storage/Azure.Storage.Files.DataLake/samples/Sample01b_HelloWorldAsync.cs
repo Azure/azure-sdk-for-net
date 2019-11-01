@@ -47,15 +47,15 @@ namespace Azure.Storage.Files.DataLake.Samples
                 // Get a reference to a file named "sample-file" in a filesystem
                 DataLakeFileClient file = filesystem.GetFileClient(Randomize("sample-file"));
 
-                // Open the file and upload its data
+                // Create the file
                 await file.CreateAsync();
 
-                // Verify we uploaded one file
+                // Verify we created one file
                 AsyncPageable<PathItem> response = filesystem.ListPathsAsync();
                 IList<PathItem> paths = await response.ToListAsync();
                 Assert.AreEqual(1, paths.Count);
 
-                //Append data to the DataLake File
+                // Append data to the DataLake File
                 await file.AppendAsync(File.OpenRead(sampleFileContentPart1), 0);
                 await file.AppendAsync(File.OpenRead(sampleFileContentPart2), contentLength);
                 await file.AppendAsync(File.OpenRead(sampleFileContentPart3), contentLength * 2);
@@ -304,7 +304,7 @@ namespace Azure.Storage.Files.DataLake.Samples
                 // Get Access Control List
                 PathAccessControl accessControlResponse = await fileClient.GetAccessControlAsync();
 
-                //Check Access Control permissions
+                // Check Access Control permissions
                 Assert.AreEqual("rwxrwxrwx", accessControlResponse.Permissions);
             }
             finally
@@ -338,13 +338,13 @@ namespace Azure.Storage.Files.DataLake.Samples
                 DataLakeFileClient fileClient = filesystem.GetFileClient(Randomize("sample-file"));
                 await fileClient.CreateAsync();
 
-                // Make Access Control List and Set Access Control List
+                // Set Access Control List
                 await fileClient.SetAccessControlAsync("user::rwx,group::r--,mask::rwx,other::---");
 
                 // Get Access Control List
                 PathAccessControl accessControlResponse = await fileClient.GetAccessControlAsync();
 
-                //Check accessControl permissions
+                // Check Access Control permissions
                 Assert.AreEqual("user::rwx,group::r--,mask::rwx,other::---", accessControlResponse.Acl);
             }
             finally
