@@ -5,9 +5,10 @@
 ### Breaking changes
 
 - `Certificate` and `CertificateWithPolicy` have been renamed to `KeyVaultCertificate` and `KeyVaultCertificateWithPolicy` to avoid ambiquity with other libraries and to yield better search results.
+- `AdministratorDetails` has been renamed to `AdministratorContact`.
 - `Action` has been renamed to `CertificatePolicyAction` to avoid ambiquity with other libraries.
 - `Contact` has been renamed to `CertificateContact` to avoid ambiquity with other libraries.
-- `Error` has been renamed to `CertificateError` to avoid ambiquity with other libraries.
+- `Error` has been renamed to `CertificateOperationError` to avoid ambiquity with other libraries.
 - `Issuer` has been renamed to `CertificateIssuer` to avoid ambiquity with other libraries.
 - `CertificateClientOptions.Default` has been removed. Use `CertificatePolicy.Default` instead.
 - Starting a certificate creation operation with `CertificateClient` now requires a `CertificatePolicy`.
