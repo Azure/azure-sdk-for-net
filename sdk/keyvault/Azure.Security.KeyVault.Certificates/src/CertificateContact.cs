@@ -6,9 +6,9 @@ using System.Text.Json;
 namespace Azure.Security.KeyVault.Certificates
 {
     /// <summary>
-    /// A contact for certificate management issues for a key vault
+    /// A contact for certificate management issues for a key vault.
     /// </summary>
-    public class Contact : IJsonDeserializable, IJsonSerializable
+    public class CertificateContact : IJsonDeserializable, IJsonSerializable
     {
         private const string NamePropertyName = "name";
         private const string EmailPropertyName = "email";
@@ -17,6 +17,13 @@ namespace Azure.Security.KeyVault.Certificates
         private static readonly JsonEncodedText s_namePropertyNameBytes = JsonEncodedText.Encode(NamePropertyName);
         private static readonly JsonEncodedText s_emailPropertyNameBytes = JsonEncodedText.Encode(EmailPropertyName);
         private static readonly JsonEncodedText s_phonePropertyNameBytes = JsonEncodedText.Encode(PhonePropertyName);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CertificateContact"/> class.
+        /// </summary>
+        public CertificateContact()
+        {
+        }
 
         /// <summary>
         /// Email address of the contact
