@@ -11,7 +11,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Messaging.EventHubs.Core;
+using Azure.Messaging.EventHubs.Diagnostics;
 
 namespace Azure.Messaging.EventHubs.Processor
 {
@@ -380,6 +382,53 @@ namespace Azure.Messaging.EventHubs.Processor
         protected EventProcessorClient()
         {
             OwnsConnection = false;
+        }
+
+        /// <summary>
+        ///   Updates the checkpoint using the given information for the associated partition and consumer group in the chosen storage service.
+        /// </summary>
+        ///
+        /// <param name="eventData">The event containing the information to be stored in the checkpoint.</param>
+        /// <param name="context">The context of the partition the checkpoint is associated with.</param>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        ///
+        /// <remarks>
+        ///   This method will override EventProcessorBase's UpdateCheckpointAsync when it's implemented.
+        /// </remarks>
+        ///
+        protected internal virtual async Task UpdateCheckpointAsync(EventData eventData,
+                                                                    PartitionContext context)
+        {
+            Argument.AssertNotNull(eventData, nameof(eventData));
+            Argument.AssertNotNull(eventData.Offset, nameof(eventData.Offset));
+            Argument.AssertNotNull(eventData.SequenceNumber, nameof(eventData.SequenceNumber));
+
+            // Parameter validation is done by Checkpoint constructor.
+
+            var checkpoint = new Checkpoint
+            (
+                FullyQualifiedNamespace,
+                EventHubName,
+                ConsumerGroup,
+                Identifier,
+                context.PartitionId,
+                eventData.Offset.Value,
+                eventData.SequenceNumber.Value
+            );
+
+            using DiagnosticScope scope =
+                EventDataInstrumentation.ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorCheckpointActivityName);
+            scope.Start();
+
+            try
+            {
+                await Manager.UpdateCheckpointAsync(checkpoint).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+            }
         }
 
         /// <summary>
@@ -785,8 +834,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
             // Create and start the new partition pump and add it to the dictionary.
 
-            var partitionContext = new PartitionContext(Connection.FullyQualifiedNamespace, Connection.EventHubName, ConsumerGroup, partitionId, Identifier, Manager);
-            var defaultEventPosition = EventPosition.Earliest;
+            var partitionContext = new PartitionContext(partitionId);
 
             try
             {

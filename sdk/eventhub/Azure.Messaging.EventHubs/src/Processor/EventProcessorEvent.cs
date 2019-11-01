@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Threading.Tasks;
 using Azure.Core;
 
 namespace Azure.Messaging.EventHubs.Processor
@@ -16,7 +17,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   The <see cref="EventProcessorClient" /> this instance is related to.
         /// </summary>
         ///
-        public EventProcessorClient Processor { get; }
+        private EventProcessorClient Processor { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventProcessorEvent"/> class.
@@ -41,6 +42,21 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         protected EventProcessorEvent()
         {
+        }
+
+        /// <summary>
+        ///   Updates the checkpoint using the given information for the associated partition and consumer group in the chosen storage service.
+        /// </summary>
+        ///
+        /// <param name="eventData">The event containing the information to be stored in the checkpoint.</param>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        ///
+        public Task UpdateCheckpointAsync(EventData eventData)
+        {
+            // Verification is done by the Event Processor Client.
+
+            return Processor.UpdateCheckpointAsync(eventData, Context);
         }
     }
 }

@@ -63,7 +63,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   A callback action to be called on <see cref="EventProcessorClient.ProcessEventAsync" />.
         /// </summary>
         ///
-        private Action<PartitionEvent> OnProcessEvent { get; }
+        private Action<EventProcessorEvent> OnProcessEvent { get; }
 
         /// <summary>
         ///   A callback action to be called on <see cref="EventProcessorClient.ProcessExceptionAsync" />.
@@ -90,7 +90,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                      EventProcessorClientOptions options = null,
                                      Action<InitializePartitionProcessingContext> onInitialize = null,
                                      Action<PartitionProcessingStoppedContext> onStop = null,
-                                     Action<PartitionEvent> onProcessEvent = null,
+                                     Action<EventProcessorEvent> onProcessEvent = null,
                                      Action<ProcessorErrorContext> onProcessException = null)
         {
             ConsumerGroup = consumerGroup;
