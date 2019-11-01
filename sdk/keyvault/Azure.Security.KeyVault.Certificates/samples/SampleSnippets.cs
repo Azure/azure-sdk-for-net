@@ -33,10 +33,10 @@ namespace Azure.Security.KeyVault.Certificates.Samples
 
             #region Snippet:CreateCertificate
             // Create a certificate. This starts a long running operation to create and sign the certificate.
-            CertificateOperation operation = await client.StartCreateCertificateAsync("MyCertificate");
+            CertificateOperation operation = await client.StartCreateCertificateAsync("MyCertificate", CertificatePolicy.Default);
 
             // You can await the completion of the create certificate operation.
-            CertificateWithPolicy certificate = await operation.WaitForCompletionAsync();
+            KeyVaultCertificateWithPolicy certificate = await operation.WaitForCompletionAsync();
             #endregion
 
             this.client = client;
@@ -46,18 +46,18 @@ namespace Azure.Security.KeyVault.Certificates.Samples
         public async Task RetrieveCertificateAsync()
         {
             #region Snippet:RetrieveCertificate
-            CertificateWithPolicy certificateWithPolicy = await client.GetCertificateAsync("MyCertificate");
+            KeyVaultCertificateWithPolicy certificateWithPolicy = await client.GetCertificateAsync("MyCertificate");
             #endregion
 
             #region Snippet:GetCertificate
-            Certificate certificate = await client.GetCertificateVersionAsync(certificateWithPolicy.Name, certificateWithPolicy.Properties.Version);
+            KeyVaultCertificate certificate = await client.GetCertificateVersionAsync(certificateWithPolicy.Name, certificateWithPolicy.Properties.Version);
             #endregion
         }
 
         [Test]
         public async Task UpdateCertificateAsync()
         {
-            CertificateWithPolicy certificate = await client.GetCertificateAsync("MyCertificate");
+            KeyVaultCertificateWithPolicy certificate = await client.GetCertificateAsync("MyCertificate");
 
             #region Snippet:UpdateCertificate
             CertificateProperties certificateProperties = new CertificateProperties(certificate.Id)
@@ -68,7 +68,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
                 }
             };
 
-            Certificate updated = await client.UpdateCertificatePropertiesAsync(certificateProperties);
+            KeyVaultCertificate updated = await client.UpdateCertificatePropertiesAsync(certificateProperties);
             #endregion
         }
 
@@ -76,7 +76,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
         public async Task ListCertificatesAsync()
         {
             #region Snippet:ListCertificates
-            AsyncPageable<CertificateProperties> allCertificates = client.GetCertificatesAsync();
+            AsyncPageable<CertificateProperties> allCertificates = client.GetPropertiesOfCertificatesAsync();
 
             await foreach (CertificateProperties certificateProperties in allCertificates)
             {
@@ -91,7 +91,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             #region Snippet:CertificateNotFound
             try
             {
-                CertificateWithPolicy certificateWithPolicy = await client.GetCertificateAsync("SomeCertificate");
+                KeyVaultCertificateWithPolicy certificateWithPolicy = await client.GetCertificateAsync("SomeCertificate");
             }
             catch (RequestFailedException ex)
             {

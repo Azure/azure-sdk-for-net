@@ -1,12 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core.Testing;
 using Azure.Identity;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Azure.Security.KeyVault.Certificates.Tests
 {
@@ -49,7 +50,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             foreach (string certName in _toCleanup)
             {
-                cleanupTasks.Add(WaitForDeletedCertificate(certName).ContinueWith(t => Client.PurgeDeletedCertificateAsync(certName)));
+                cleanupTasks.Add(CleanupCertificate(certName));
             }
 
             await Task.WhenAll(cleanupTasks);
@@ -57,29 +58,49 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
         protected async Task CleanupCertificate(string name)
         {
-            await Client.DeleteCertificateAsync(name);
+            try
+            {
+                await Client.DeleteCertificateAsync(name);
 
-            await WaitForDeletedCertificate(name);
+                await WaitForDeletedCertificate(name);
+            }
+            catch (RequestFailedException ex) when (ex.Status == 404)
+            {
+            }
 
-            await Client.PurgeDeletedCertificateAsync(name);
+            try
+            {
+                await Client.PurgeDeletedCertificateAsync(name);
+            }
+            catch (RequestFailedException ex) when (ex.Status == 404)
+            {
+            }
         }
 
-        protected async Task<CertificateWithPolicy> WaitForCompletion(CertificateOperation operation)
+        protected async Task<KeyVaultCertificateWithPolicy> WaitForCompletion(CertificateOperation operation)
         {
+            CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(1));
             TimeSpan pollingInterval = TimeSpan.FromSeconds((Mode == RecordedTestMode.Playback) ? 0 : 1);
 
-            if (IsAsync)
+            try
             {
-                await operation.WaitForCompletionAsync();
-            }
-            else
-            {
-                while (!operation.HasValue)
+                if (IsAsync)
                 {
-                    operation.UpdateStatus();
-
-                    await Task.Delay(pollingInterval);
+                    await operation.WaitForCompletionAsync(cts.Token);
                 }
+                else
+                {
+                    while (!operation.HasValue)
+                    {
+                        operation.UpdateStatus(cts.Token);
+
+                        await Task.Delay(pollingInterval, cts.Token);
+                    }
+                }
+            }
+            catch (TaskCanceledException)
+            {
+                Assert.Inconclusive("Timed out while waiting for operation {0}", operation.Id);
             }
 
             return operation.Value;

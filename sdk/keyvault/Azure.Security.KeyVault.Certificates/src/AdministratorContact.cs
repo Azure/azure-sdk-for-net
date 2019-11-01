@@ -6,10 +6,17 @@ using System.Text.Json;
 namespace Azure.Security.KeyVault.Certificates
 {
     /// <summary>
-    /// Details of an administrator of a certificate <see cref="Issuer"/>
+    /// Details of an administrator of a certificate <see cref="CertificateIssuer"/>
     /// </summary>
-    public class AdministratorDetails
+    public class AdministratorContact
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AdministratorContact"/> class.
+        /// </summary>
+        public AdministratorContact()
+        {
+        }
+
         /// <summary>
         /// The email address of the administrator
         /// </summary>

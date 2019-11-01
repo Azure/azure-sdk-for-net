@@ -8,14 +8,18 @@ namespace Azure.Security.KeyVault.Certificates
     /// <summary>
     /// A certificate along with its current policy
     /// </summary>
-    public class CertificateWithPolicy : Certificate
+    public class KeyVaultCertificateWithPolicy : KeyVaultCertificate
     {
         private const string PolicyPropertyName = "policy";
+
+        internal KeyVaultCertificateWithPolicy(CertificateProperties properties = null) : base(properties)
+        {
+        }
 
         /// <summary>
         /// The current policy for the certificate
         /// </summary>
-        public CertificatePolicy Policy { get; private set; }
+        public CertificatePolicy Policy { get; internal set; }
 
         internal override void ReadProperty(JsonProperty prop)
         {

@@ -102,11 +102,11 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             Assert.NotNull(policy.LifetimeActions);
             Assert.AreEqual(1, policy.LifetimeActions.Count);
             Assert.AreEqual(80, policy.LifetimeActions[0].LifetimePercentage);
-            Assert.AreEqual(Action.EmailContacts, policy.LifetimeActions[0].Action);
+            Assert.AreEqual(CertificatePolicyAction.EmailContacts, policy.LifetimeActions[0].Action);
             Assert.AreEqual("Unknown", policy.IssuerName);
             Assert.IsTrue(policy.Enabled);
-            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1482188947), policy.Created);
-            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1482188947), policy.Updated);
+            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1482188947), policy.CreatedOn);
+            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1482188947), policy.UpdatedOn);
 
             using (JsonStream json = new JsonStream())
             {
@@ -129,8 +129,6 @@ namespace Azure.Security.KeyVault.Certificates.Tests
   },
   ""x509_props"": {
     ""subject"": ""CN=KeyVaultTest"",
-    ""key_usage"": [],
-    ""ekus"": [],
     ""validity_months"": 297
   },
   ""issuer"": {
