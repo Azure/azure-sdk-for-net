@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <!-- Please do not move/edit code below this line -->
   <Import Project="$(RepoEngPath)/mgmt/AzSdk.reference.props" />
   <!-- Please do not move/edit code below this line -->
