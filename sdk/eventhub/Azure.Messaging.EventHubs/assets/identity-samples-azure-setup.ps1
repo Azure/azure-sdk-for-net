@@ -9,10 +9,10 @@
     It creates an Azure Event Hub Namespace and an Azure Event Hub using the specified names.
 
   .DESCRIPTION
-    This script handles the creation of a service principal and assigns the role 
+    This script handles creation of a service principal and assigns the role 
     "Azure Event Hubs Data Owner" to the resource group whose name is passed in.
 
-    The script attempts the creation of an Azure Event Hubs Namespace and an Azure Event Hub
+    The script attempts creation of an Azure Event Hubs Namespace and an Azure Event Hub
     using the names passed in as arguments.
     
     Upon completion, the script will output the principal information.
@@ -90,7 +90,7 @@ function DisplayHelp
   Write-Host "$($indent)This script handles creation of a service principal and assigns the role"
   Write-Host "$($indent)'Azure Event Hubs Data Owner' to the resource group name passed as input."
   Write-Host ""
-  Write-Host "$($indent)The script attempts the creation of an Azure Event Hubs Namespace and an Azure Event Hub"
+  Write-Host "$($indent)The script attempts creation of an Azure Event Hubs Namespace and an Azure Event Hub"
   Write-Host "$($indent)using the names passed in as arguments."
   Write-Host ""
   Write-Host "$($indent)Upon completion, the script will output the principal's sensitive information."
