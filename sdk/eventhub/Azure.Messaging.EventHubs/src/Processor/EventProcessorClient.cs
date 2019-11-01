@@ -41,7 +41,7 @@ namespace Azure.Messaging.EventHubs.Processor
         private Func<PartitionProcessingStoppedContext, Task> _processingForPartitionStoppedAsync;
 
         /// <summary>Responsible for processing events received from the Event Hubs service.</summary>
-        private Func<PartitionEvent, Task> _processEventAsync;
+        private Func<EventProcessorEvent, Task> _processEventAsync;
 
         /// <summary>Responsible for processing unexpected exceptions thrown while this <see cref="EventProcessorClient" /> is running.</summary>
         private Func<ProcessorErrorContext, Task> _processExceptionAsync;
@@ -70,7 +70,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Responsible for processing events received from the Event Hubs service.  Implementation is mandatory.
         /// </summary>
         ///
-        public Func<PartitionEvent, Task> ProcessEventAsync
+        public Func<EventProcessorEvent, Task> ProcessEventAsync
         {
             internal get => _processEventAsync;
             set => EnsureNotRunningAndInvoke(() => _processEventAsync = value);

@@ -151,9 +151,9 @@ namespace Azure.Messaging.EventHubs.Tests
                     };
                 }
 
-                eventProcessor.ProcessEventAsync = partitionEvent =>
+                eventProcessor.ProcessEventAsync = processorEvent =>
                 {
-                    OnProcessEvent?.Invoke(partitionEvent);
+                    OnProcessEvent?.Invoke(processorEvent);
                     return Task.CompletedTask;
                 };
 

@@ -103,7 +103,7 @@ namespace Azure.Messaging.EventHubs.Samples
                     return Task.CompletedTask;
                 };
 
-                eventProcessor.ProcessEventAsync = (PartitionEvent partitionEvent) =>
+                eventProcessor.ProcessEventAsync = (EventProcessorEvent processorEvent) =>
                 {
                     // Here the user can specify what to do with the event received from the event processor.  We are counting how
                     // many events were received across all partitions so we can check whether all sent events were received.
@@ -111,10 +111,10 @@ namespace Azure.Messaging.EventHubs.Samples
                     // It's important to notice that this method is called even when no event is received after the maximum wait time, which
                     // can be specified by the user in the event processor options.  In this case, the received event is null.
 
-                    if (partitionEvent.Data != null)
+                    if (processorEvent.Data != null)
                     {
                         Interlocked.Increment(ref totalEventsCount);
-                        Console.WriteLine($"\tPartition '{ partitionEvent.Context.PartitionId }': event received.");
+                        Console.WriteLine($"\tPartition '{ processorEvent.Context.PartitionId }': event received.");
                     }
 
                     // This method is asynchronous, which means it's expected to return a Task.

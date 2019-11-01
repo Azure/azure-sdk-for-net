@@ -286,8 +286,8 @@ namespace Azure.Messaging.EventHubs.Processor
                     {
                         try
                         {
-                            var partitionEvent = new PartitionEvent(Context, eventData);
-                            await OwnerEventProcessor.ProcessEventAsync(partitionEvent).ConfigureAwait(false);
+                            var processorEvent = new EventProcessorEvent(OwnerEventProcessor, Context, eventData);
+                            await OwnerEventProcessor.ProcessEventAsync(processorEvent).ConfigureAwait(false);
                         }
                         catch (Exception eventProcessingException)
                         {

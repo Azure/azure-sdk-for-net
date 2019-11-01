@@ -183,17 +183,17 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             EventHubConsumerClient.DefaultConsumerGroupName,
                             connection,
-                            onProcessEvent: partitionEvent =>
+                            onProcessEvent: processorEvent =>
                             {
-                                if (partitionEvent.Data != null)
+                                if (processorEvent.Data != null)
                                 {
                                     allReceivedEvents.AddOrUpdate
                                     (
-                                        partitionEvent.Context.PartitionId,
-                                        partitionId => new List<EventData>() { partitionEvent.Data },
+                                        processorEvent.Context.PartitionId,
+                                        partitionId => new List<EventData>() { processorEvent.Data },
                                         (partitionId, list) =>
                                         {
-                                            list.Add(partitionEvent.Data);
+                                            list.Add(processorEvent.Data);
                                             return list;
                                         }
                                     );
@@ -285,8 +285,8 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             EventHubConsumerClient.DefaultConsumerGroupName,
                             connection,
-                            onProcessEvent: partitionEvent =>
-                                receivedEvents.Add(partitionEvent.Data)
+                            onProcessEvent: processorEvent =>
+                                receivedEvents.Add(processorEvent.Data)
                         );
 
                     eventProcessorManager.AddEventProcessors(1);
@@ -450,9 +450,9 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             EventHubConsumerClient.DefaultConsumerGroupName,
                             connection,
-                            onProcessEvent: partitionEvent =>
+                            onProcessEvent: processorEvent =>
                             {
-                                if (partitionEvent.Data != null)
+                                if (processorEvent.Data != null)
                                 {
                                     Interlocked.Increment(ref receivedEventsCount);
                                 }
@@ -581,9 +581,9 @@ namespace Azure.Messaging.EventHubs.Tests
                             EventHubConsumerClient.DefaultConsumerGroupName,
                             connection,
                             partitionManager,
-                            onProcessEvent: partitionEvent =>
+                            onProcessEvent: processorEvent =>
                             {
-                                if (partitionEvent.Data != null)
+                                if (processorEvent.Data != null)
                                 {
                                     Interlocked.Increment(ref receivedEventsCount);
                                 }
@@ -672,11 +672,11 @@ namespace Azure.Messaging.EventHubs.Tests
                             EventHubConsumerClient.DefaultConsumerGroupName,
                             connection,
                             partitionManager,
-                            onProcessEvent: partitionEvent =>
+                            onProcessEvent: processorEvent =>
                             {
-                                if (partitionEvent.Data != null)
+                                if (processorEvent.Data != null)
                                 {
-                                    partitionEvent.Context.UpdateCheckpointAsync(partitionEvent.Data);
+                                    processorEvent.Context.UpdateCheckpointAsync(processorEvent.Data);
                                 }
                             }
                         );
@@ -767,9 +767,9 @@ namespace Azure.Messaging.EventHubs.Tests
                             connection,
                             onInitialize: initializationContext =>
                                 initializationContext.DefaultStartingPosition = EventPosition.FromEnqueuedTime(enqueuedTime),
-                            onProcessEvent: partitionEvent =>
+                            onProcessEvent: processorEvent =>
                             {
-                                if (partitionEvent.Data != null)
+                                if (processorEvent.Data != null)
                                 {
                                     Interlocked.Increment(ref receivedEventsCount);
                                 }
@@ -826,12 +826,12 @@ namespace Azure.Messaging.EventHubs.Tests
                             options: new EventProcessorClientOptions { MaximumReceiveWaitTime = TimeSpan.FromSeconds(maximumWaitTimeInSecs) },
                             onInitialize: initializationContext =>
                                 timestamps.TryAdd(initializationContext.Context.PartitionId, new List<DateTimeOffset> { DateTimeOffset.UtcNow }),
-                            onProcessEvent: partitionEvent =>
+                            onProcessEvent: processorEvent =>
                                 timestamps.AddOrUpdate
                                     (
                                         // The key already exists, so the 'addValue' factory will never be called.
 
-                                        partitionEvent.Context.PartitionId,
+                                        processorEvent.Context.PartitionId,
                                         partitionId => null,
                                         (partitionId, list) =>
                                         {
