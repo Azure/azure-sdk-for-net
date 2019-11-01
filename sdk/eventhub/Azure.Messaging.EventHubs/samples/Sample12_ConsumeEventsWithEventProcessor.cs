@@ -71,6 +71,8 @@ namespace Azure.Messaging.EventHubs.Samples
                 int totalEventsCount = 0;
                 int partitionsBeingProcessedCount = 0;
 
+                // TODO: explain callbacks setup once the public API is finished for the next preview.
+
                 eventProcessor.InitializeProcessingForPartitionAsync = (InitializePartitionProcessingContext initializationContext) =>
                 {
                     // This is the last piece of code guaranteed to run before event processing, so all initialization
