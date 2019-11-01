@@ -390,7 +390,7 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// List keys in the specified vault.
+        /// Lists the properties of all keys in the specified vault. You can use the returned <see cref="KeyProperties.Name"/> in subsequent calls to <see cref="GetKey"/>.
         /// </summary>
         /// <remarks>
         /// Retrieves a list of the keys in the Key Vault that contains the public part of a stored key.
@@ -409,7 +409,7 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// List keys in the specified vault.
+        /// Lists the properties of all keys in the specified vault. You can use the returned <see cref="KeyProperties.Name"/> in subsequent calls to <see cref="GetKeyAsync"/>.
         /// </summary>
         /// <remarks>
         /// Retrieves a list of the keys in the Key Vault that contains the public part of a stored key.
@@ -427,7 +427,7 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// Retrieves a list of individual key versions with the same key name.
+        /// Lists the properties of all versions of the specified key. You can use the returned <see cref="KeyProperties.Name"/> and <see cref="KeyProperties.Version"/> in subsequent calls to <see cref="GetKey"/>.
         /// </summary>
         /// <remarks>
         /// The full key identifier, attributes, and tags are provided in the response.
@@ -448,7 +448,7 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// Retrieves a list of individual key versions with the same key name.
+        /// Lists the properties of all versions of the specified key. You can use the returned <see cref="KeyProperties.Name"/> and <see cref="KeyProperties.Version"/> in subsequent calls to <see cref="GetKeyAsync"/>.
         /// </summary>
         /// <remarks>
         /// The full key identifier, attributes, and tags are provided in the response.

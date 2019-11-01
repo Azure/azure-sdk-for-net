@@ -35,7 +35,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// <param name="endPos">The index within the utterance where the
         /// extracted entity ends.</param>
         /// <param name="entity">The entity name.</param>
-        /// <param name="role">The role of the entity within the
+        /// <param name="role">The role the entity plays in the
         /// utterance.</param>
         public JSONEntity(int startPos, int endPos, string entity, string role = default(string))
         {
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         public string Entity { get; set; }
 
         /// <summary>
-        /// Gets or sets the role of the entity within the utterance.
+        /// Gets or sets the role the entity plays in the utterance.
         /// </summary>
         [JsonProperty(PropertyName = "role")]
         public string Role { get; set; }

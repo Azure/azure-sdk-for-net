@@ -64,7 +64,7 @@
                     Name = "WeatherInPlace"
                 });
 
-                await client.Model.AddEntityAsync(appId, "0.1", new ModelCreateObject
+                await client.Model.AddEntityAsync(appId, "0.1", new EntityModelCreateObject
                 {
                     Name = "Place"
                 });
@@ -111,7 +111,7 @@
                     Name = "WeatherInPlace"
                 });
 
-                await client.Model.AddEntityAsync(appId, "0.1", new ModelCreateObject
+                await client.Model.AddEntityAsync(appId, "0.1", new EntityModelCreateObject
                 {
                     Name = "Place"
                 });
@@ -176,7 +176,7 @@
                     Name = "WeatherInPlace"
                 });
 
-                await client.Model.AddEntityAsync(appId, "0.1", new ModelCreateObject
+                await client.Model.AddEntityAsync(appId, "0.1", new EntityModelCreateObject
                 {
                     Name = "Place"
                 });

@@ -412,7 +412,7 @@ namespace Azure.Storage.Blobs.Test
                     metadata: default,
                     conditions: default,
                     progressHandler: default,
-                    singleBlockThreshold: singleBlockThreshold,
+                    singleUploadThreshold: singleBlockThreshold,
                     transferOptions: transferOptions,
                     async: true);
             }
@@ -462,7 +462,7 @@ namespace Azure.Storage.Blobs.Test
                         metadata: default,
                         conditions: default,
                         progressHandler: default,
-                        singleBlockThreshold: singleBlockThreshold,
+                        singleUploadThreshold: singleBlockThreshold,
                         transferOptions: transferOptions,
                         async: true);
                 }
@@ -699,5 +699,95 @@ namespace Azure.Storage.Blobs.Test
             }
         }
         #endregion Upload
+
+        [Test]
+        [Explicit]
+        [Ignore("The latest test runner isn't handling the [Explicit] attribute properly")]
+        public async Task Perf_SmallBlobs()
+        {
+            // Turn off logging and diagnostics
+            TestDiagnostics = false;
+            BlobClientOptions options = new BlobClientOptions();
+            options.Diagnostics.IsDistributedTracingEnabled = false;
+            options.Diagnostics.IsLoggingEnabled = false;
+
+            BlobServiceClient service = new BlobServiceClient(
+                new Uri(TestConfigDefault.BlobServiceEndpoint),
+                GetNewSharedKeyCredentials(),
+                options);
+
+            await using DisposingContainer test = await GetTestContainerAsync(service);
+
+            var data = GetRandomBuffer(Constants.KB);
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            } // Add breakpoint here to start collecting traces
+
+            for (int trial = 0; trial < 1000; trial++)
+            {
+                BlobClient b = test.Container.GetBlobClient(blob.Name);
+                using BlobDownloadInfo download = await b.DownloadAsync();
+            }
+        } // Add breakpoint here to stop collecting traces
+
+        [Test]
+        [Explicit] // This runs for a full minute and uploads a ton of data.  Don't want this on every run.
+        [Ignore("The latest test runner isn't handling the [Explicit] attribute properly")]
+        public async Task Upload_Stress()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            try
+            {
+                // Create a CancellationToken that times out after 60s
+                CancellationTokenSource source = new CancellationTokenSource(TimeSpan.FromSeconds(60));
+                CancellationToken token = source.Token;
+
+                // Keep uploading a GB
+                var data = GetRandomBuffer(Constants.GB);
+                for (;;)
+                {
+                    BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+                    using var stream = new MemoryStream(data);
+                    await blob.UploadAsync(
+                        stream,
+                        transferOptions: new StorageTransferOptions { MaximumConcurrency = 8 },
+                        cancellationToken: token);
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                return; // Succeeded
+            }
+        }
+
+        [Test]
+        [LiveOnly] // Don't want a 100MB recording
+        public async Task ChecksForCancelation()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Upload a GB
+            var data = GetRandomBuffer(100 * Constants.MB);
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            using var stream = new MemoryStream(data);
+            await blob.UploadAsync(stream);
+
+            // Create a CancellationToken that times out after .1s
+            CancellationTokenSource source = new CancellationTokenSource(TimeSpan.FromSeconds(.1));
+            CancellationToken token = source.Token;
+
+            // Verifying downloading will cancel
+            try
+            {
+                using BlobDownloadInfo result = await blob.DownloadAsync(cancellationToken: token);
+            }
+            catch (OperationCanceledException)
+            {
+                return; // Succeeded
+            }
+            Assert.Fail("Not canceled!");
+        }
     }
 }

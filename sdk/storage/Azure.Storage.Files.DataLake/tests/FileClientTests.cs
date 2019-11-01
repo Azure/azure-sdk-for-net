@@ -7,8 +7,10 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Testing;
 using Azure.Storage.Files.DataLake.Models;
+using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using NUnit.Framework;
 using TestConstants = Azure.Storage.Test.Constants;
@@ -22,6 +24,80 @@ namespace Azure.Storage.Files.DataLake.Tests
         public FileClientTests(bool async)
             : base(async, null /* RecordedTestMode.Record /* to re-record */)
         {
+        }
+
+        [Test]
+        public async Task Ctor_Uri()
+        {
+            string fileSystemName = GetNewFileSystemName();
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem, fileSystemName: fileSystemName))
+            {
+                // Arrange
+                string fileName = GetNewFileName();
+                await fileSystem.CreateFileAsync(fileName);
+
+                SasQueryParameters sasQueryParameters = GetNewAccountSasCredentials();
+                Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{fileName}?{sasQueryParameters}");
+                DataLakeFileClient fileClient = InstrumentClient(new DataLakeFileClient(uri, GetOptions()));
+
+                // Act
+                await fileClient.GetPropertiesAsync();
+
+                // Assert
+                Assert.AreEqual(fileName, fileClient.Name);
+                Assert.AreEqual(fileSystemName, fileClient.FileSystemName);
+                Assert.AreEqual(uri, fileClient.Uri);
+            }
+        }
+
+        [Test]
+        public async Task Ctor_SharedKey()
+        {
+            string fileSystemName = GetNewFileSystemName();
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem, fileSystemName: fileSystemName))
+            {
+                // Arrange
+                string fileName = GetNewFileName();
+                await fileSystem.CreateFileAsync(fileName);
+
+                StorageSharedKeyCredential sharedKey = new StorageSharedKeyCredential(
+                    TestConfigHierarchicalNamespace.AccountName,
+                    TestConfigHierarchicalNamespace.AccountKey);
+                Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{fileName}");
+                DataLakeFileClient fileClient = InstrumentClient(new DataLakeFileClient(uri, sharedKey, GetOptions()));
+
+                // Act
+                await fileClient.GetPropertiesAsync();
+
+                // Assert
+                Assert.AreEqual(fileName, fileClient.Name);
+                Assert.AreEqual(fileSystemName, fileClient.FileSystemName);
+                Assert.AreEqual(uri, fileClient.Uri);
+            }
+        }
+
+        [Test]
+        public async Task Ctor_TokenCredential()
+        {
+            string fileSystemName = GetNewFileSystemName();
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem, fileSystemName: fileSystemName))
+            {
+                // Arrange
+                string fileName = GetNewFileName();
+                await fileSystem.CreateFileAsync(fileName);
+
+                TokenCredential tokenCredential = GetOAuthCredential(TestConfigHierarchicalNamespace);
+                Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{fileName}").ToHttps();
+                DataLakeFileClient fileClient = InstrumentClient(new DataLakeFileClient(uri, tokenCredential, GetOptions()));
+
+                // Act
+                await fileClient.GetPropertiesAsync();
+
+                // Assert
+                Assert.AreEqual(fileName, fileClient.Name);
+                Assert.AreEqual(fileSystemName, fileClient.FileSystemName);
+                Assert.AreEqual(uri, fileClient.Uri);
+            }
         }
 
         [Test]
@@ -76,10 +152,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 // Assert
                 Response<PathProperties> response = await file.GetPropertiesAsync();
                 Assert.AreEqual(ContentType, response.Value.ContentType);
-                Assert.AreEqual(1, response.Value.ContentEncoding.Count());
-                Assert.AreEqual(ContentEncoding, response.Value.ContentEncoding.First());
-                Assert.AreEqual(1, response.Value.ContentLanguage.Count());
-                Assert.AreEqual(ContentLanguage, response.Value.ContentLanguage.First());
+                Assert.AreEqual(ContentEncoding, response.Value.ContentEncoding);
+                Assert.AreEqual(ContentLanguage, response.Value.ContentLanguage);
                 Assert.AreEqual(ContentDisposition, response.Value.ContentDisposition);
                 Assert.AreEqual(CacheControl, response.Value.CacheControl);
             }
@@ -658,14 +732,8 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             using (GetNewFile(out DataLakeFileClient fileClient))
             {
-                // Arrange
-                PathAccessControl accessControl = new PathAccessControl()
-                {
-                    Permissions = "0777"
-                };
-
                 // Act
-                Response<PathInfo> response = await fileClient.SetAccessControlAsync(accessControl);
+                Response<PathInfo> response = await fileClient.SetAccessControlAsync(acl: AccessControl);
 
                 // Assert
                 AssertValidStoragePathInfo(response);
@@ -677,19 +745,13 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             using (GetNewFile(out DataLakeFileClient fileClient))
             {
-                // Arrange
-                PathAccessControl accessControl = new PathAccessControl()
-                {
-                    Permissions = "asdf"
-                };
-
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                    fileClient.SetAccessControlAsync(accessControl),
+                    fileClient.SetAccessControlAsync(acl: "asdf"),
                     e =>
                     {
-                        Assert.AreEqual("InvalidPermission", e.ErrorCode);
-                        Assert.AreEqual("The permission value is invalid.", e.Message.Split('\n')[0]);
+                        Assert.AreEqual("InvaldAccessControlList", e.ErrorCode);
+                        Assert.AreEqual("The access control list value is invalid.", e.Message.Split('\n')[0]);
                     });
             }
         }
@@ -713,10 +775,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
                     // Act
                     Response<PathInfo> response = await file.SetAccessControlAsync(
-                        accessControl: new PathAccessControl()
-                        {
-                            Permissions = "0777"
-                        },
+                        acl: AccessControl,
                         conditions: conditions);
 
                     // Assert
@@ -742,10 +801,88 @@ namespace Azure.Storage.Files.DataLake.Tests
                     // Act
                     await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         file.SetAccessControlAsync(
-                            accessControl: new PathAccessControl()
-                            {
-                                Permissions = "0777"
-                            },
+                            acl: AccessControl,
+                            conditions: conditions),
+                        e => { });
+                }
+            }
+        }
+
+        [Test]
+        public async Task SetPermissionsAsync()
+        {
+            using (GetNewFile(out DataLakeFileClient fileClient))
+            {
+                // Act
+                Response<PathInfo> response = await fileClient.SetPermissionsAsync(permissions: "0777");
+
+                // Assert
+                AssertValidStoragePathInfo(response);
+            }
+        }
+
+        [Test]
+        public async Task SetPermissionsAsync_Error()
+        {
+            using (GetNewFile(out DataLakeFileClient fileClient))
+            {
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    fileClient.SetPermissionsAsync(permissions: "asdf"),
+                    e =>
+                    {
+                        Assert.AreEqual("InvalidPermission", e.ErrorCode);
+                        Assert.AreEqual("The permission value is invalid.", e.Message.Split('\n')[0]);
+                    });
+            }
+        }
+
+        [Test]
+        public async Task SetPermissionAsync_Conditions()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            foreach (AccessConditionParameters parameters in Conditions_Data)
+            {
+                using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
+                {
+                    // Arrange
+                    DataLakeFileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
+
+                    parameters.Match = await SetupPathMatchCondition(file, parameters.Match);
+                    parameters.LeaseId = await SetupPathLeaseCondition(file, parameters.LeaseId, garbageLeaseId);
+                    DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(
+                        parameters: parameters,
+                        lease: true);
+
+                    // Act
+                    Response<PathInfo> response = await file.SetPermissionsAsync(
+                        permissions: "0777",
+                        conditions: conditions);
+
+                    // Assert
+                    Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                }
+            }
+        }
+
+        [Test]
+        public async Task SetPermissionsAsync_ConditionsFail()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            foreach (AccessConditionParameters parameters in GetConditionsFail_Data(garbageLeaseId))
+            {
+                using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
+                {
+                    // Arrange
+                    DataLakeFileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
+
+                    parameters.NoneMatch = await SetupPathMatchCondition(file, parameters.NoneMatch);
+                    DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(parameters);
+
+                    // Act
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                        file.SetPermissionsAsync(
+                            permissions: "0777",
                             conditions: conditions),
                         e => { });
                 }
@@ -990,10 +1127,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Response<PathProperties> response = await file.GetPropertiesAsync();
                 Assert.AreEqual(constants.ContentType, response.Value.ContentType);
                 TestHelper.AssertSequenceEqual(constants.ContentMD5, response.Value.ContentHash);
-                Assert.AreEqual(1, response.Value.ContentEncoding.Count());
-                Assert.AreEqual(constants.ContentEncoding, response.Value.ContentEncoding.First());
-                Assert.AreEqual(1, response.Value.ContentLanguage.Count());
-                Assert.AreEqual(constants.ContentLanguage, response.Value.ContentLanguage.First());
+                Assert.AreEqual(constants.ContentEncoding, response.Value.ContentEncoding);
+                Assert.AreEqual(constants.ContentLanguage, response.Value.ContentLanguage);
                 Assert.AreEqual(constants.ContentDisposition, response.Value.ContentDisposition);
                 Assert.AreEqual(constants.CacheControl, response.Value.CacheControl);
             }
@@ -1362,10 +1497,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 // Assert
                 Response<PathProperties> response = await file.GetPropertiesAsync();
                 Assert.AreEqual(ContentType, response.Value.ContentType);
-                Assert.AreEqual(1, response.Value.ContentEncoding.Count());
-                Assert.AreEqual(ContentEncoding, response.Value.ContentEncoding.First());
-                Assert.AreEqual(1, response.Value.ContentLanguage.Count());
-                Assert.AreEqual(ContentLanguage, response.Value.ContentLanguage.First());
+                Assert.AreEqual(ContentEncoding, response.Value.ContentEncoding);
+                Assert.AreEqual(ContentLanguage, response.Value.ContentLanguage);
                 Assert.AreEqual(ContentDisposition, response.Value.ContentDisposition);
                 Assert.AreEqual(CacheControl, response.Value.CacheControl);
                 TestHelper.AssertSequenceEqual(contentHash, response.Value.ContentHash);

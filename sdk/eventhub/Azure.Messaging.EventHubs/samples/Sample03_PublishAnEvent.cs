@@ -9,7 +9,7 @@ using Azure.Messaging.EventHubs.Samples.Infrastructure;
 namespace Azure.Messaging.EventHubs.Samples
 {
     /// <summary>
-    ///   An introduction to publishing events, using a simple <see cref="EventHubProducer" />.
+    ///   An introduction to publishing events, using a simple <see cref="EventHubProducerClient" />.
     /// </summary>
     ///
     public class Sample03_PublishAnEvent : IEventHubsSample
@@ -24,7 +24,7 @@ namespace Azure.Messaging.EventHubs.Samples
         ///   A short description of the sample.
         /// </summary>
         ///
-        public string Description { get; } = "An introduction to publishing events, using a simple Event Hub producer.";
+        public string Description { get; } = "An introduction to publishing events, using a simple Event Hub producer client.";
 
         /// <summary>
         ///   Runs the sample using the specified Event Hubs connection information.
@@ -36,18 +36,14 @@ namespace Azure.Messaging.EventHubs.Samples
         public async Task RunAsync(string connectionString,
                                    string eventHubName)
         {
-            // To create an Event Hub producer, a client is needed.  We will start by creating a client with
-            // the default set of options.
-            //
-            // Using our client, we will then create a producer.  Like the client, our Event Hub producer also manages resources
-            // and should be explicitly closed or disposed, but it is not necessary to do both.  In our case, we will take
-            // advantage of the new asynchronous dispose to ensure that we clean up our client and producer when we are
+            // To publish events, we will need to create a producer client.  Like any client, our Event Hub producer manages resources
+            // and should be explicitly closed or disposed, but it is not necessary to do both.  In this example, we will take
+            // advantage of the new asynchronous dispose to ensure that we clean up our producer client when we are
             // done or when an exception is encountered.
 
-            await using (var client = new EventHubClient(connectionString, eventHubName))
-            await using (EventHubProducer producer = client.CreateProducer())
+            await using (var producerClient = new EventHubProducerClient(connectionString, eventHubName))
             {
-                // By default, an Event Hub producer is not associated with any specific partition.  When publishing events,
+                // An Event Hub producer is not associated with any specific partition.  When publishing events,
                 // it will allow the Event Hubs service to route the event to an available partition.
                 //
                 // Allowing automatic routing of partitions is recommended when:
@@ -68,12 +64,12 @@ namespace Azure.Messaging.EventHubs.Samples
                 // event data will be published to one of the Event Hub partitions, though there may be a (very) slight
                 // delay until it is available to be consumed.
 
-                await producer.SendAsync(eventData);
+                await producerClient.SendAsync(eventData);
 
                 Console.WriteLine("The event has been published.");
             }
 
-            // At this point, our client and producer have passed their "using" scope and have safely been disposed of.  We
+            // At this point, our client has passed its "using" scope and have safely been disposed of.  We
             // have no further obligations.
 
             Console.WriteLine();

@@ -27,6 +27,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public readonly string ContentEncoding = "encoding";
         public readonly string ContentLanguage = "language";
         public readonly string ContentType = "type";
+        public readonly string AccessControl = "user::rwx,group::r--,other::---,mask::rwx";
 
         public DataLakeTestBase(bool async) : this(async, null) { }
 
@@ -219,7 +220,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 Protocol = SasProtocol.None,
                 Services = AccountSasServices.Blobs,
-                ResourceTypes = AccountSasResourceTypes.Container | AccountSasResourceTypes.Object,
+                ResourceTypes = AccountSasResourceTypes.All,
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
                 IPRange = new SasIPRange(IPAddress.None, IPAddress.None)
@@ -231,7 +232,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 AccountSasPermissions.Write |
                 AccountSasPermissions.Delete |
                 AccountSasPermissions.List);
-            return builder.ToSasQueryParameters(sharedKeyCredentials);
+            return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
         }
 
         public DataLakeSasQueryParameters GetNewDataLakeServiceSasCredentialsFileSystem(string fileSystemName, StorageSharedKeyCredential sharedKeyCredentials = default)

@@ -18,24 +18,15 @@
 
     <!-- Disable warning for missing xml doc comments until we can add all the missing ones -->
     <NoWarn>$(NoWarn);1591</NoWarn>
-    <UseProjectReferenceToAzureIdentity>true</UseProjectReferenceToAzureIdentity>
-  </PropertyGroup>
+ </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Identity" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
     <PackageReference Include="Microsoft.Extensions.Options" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" />
-  </ItemGroup>
-
-  <!-- Include Azure.Identity reference based on the way we reference Azure.Core -->
-  <ItemGroup Condition="'$(UseProjectReferenceToAzureIdentity)'=='true'">
-    <ProjectReference Include="..\..\..\identity\Azure.Identity\src\Azure.Identity.csproj" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(UseProjectReferenceToAzureIdentity)'!='true'">
-    <PackageReference Include="Azure.Identity" />
   </ItemGroup>
 
   <Import Project="..\..\Azure.Core\src\Azure.Core.props" />

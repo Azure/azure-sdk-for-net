@@ -87,7 +87,7 @@ additional questions or comments.
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Files.DataLake/src
 [package]: https://www.nuget.org/packages/Azure.Storage.Files.DataLake/
-[docs]: https://azure.github.io/azure-sdk-for-net/api/Azure.Storage.Files.DataLake.html
+[docs]: https://azure.github.io/azure-sdk-for-net/storage.html
 [rest_docs]: https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/filesystem
 [product_docs]: https://docs.microsoft.com/en-us/azure/storage/blobs/?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
 [nuget]: https://www.nuget.org/

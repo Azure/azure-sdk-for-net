@@ -3,17 +3,15 @@
   <PropertyGroup>
     <Description>This is the Microsoft Azure Key Vault Keys client library</Description>
     <AssemblyTitle>Microsoft Azure.Security.KeyVault.Keys client library</AssemblyTitle>
-    <Version>4.0.0-preview.6</Version>
+    <Version>4.0.0</Version>
     <PackageTags>Microsoft Azure Key Vault Keys</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-      Refactored several classes based on feedback, including:
-      * KeyBase is now KeyProperties.
-      * Key contains a Properties property of type KeyProperties.
-      * Enumeration members have been renamed to reflect general naming guidelines consistent with .NET.
-      * Enumerations have been changed to structures to allow additions by the server to support new algorithms.
+      - `Key` has been renamed to `KeyVaultKey` to avoid ambiguity with other libraries and to yield better search results.
+      - `KeyClient.GetKeys` and `KeyClient.GetKeyVersions` have been renamed to `KeyClient.GetPropertiesOfKeys` and `KeyClient.GetPropertiesOfKeyVersions` respectively.
+      - `KeyClient.DeleteKey` has been renamed to `KeyClient.StartDeleteKey` and now returns a `DeleteKeyOperation` to track this long-running operation.
 
-      See https://github.com/Azure/azure-sdk-for-net/tree/Azure.Security.KeyVault.Certificates_4.0.0-preview.5/sdk/keyvault/Azure.Security.KeyVault.Keys/ChangeLog.md for more details.
+      See https://github.com/Azure/azure-sdk-for-net/tree/Azure.Security.KeyVault.Keys_4.0.0/sdk/keyvault/Azure.Security.KeyVault.Keys/ChangeLog.md for more detailed changes.
       ]]>
     </PackageReleaseNotes>
 

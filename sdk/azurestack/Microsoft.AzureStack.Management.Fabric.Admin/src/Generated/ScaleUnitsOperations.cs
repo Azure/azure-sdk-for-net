@@ -63,7 +63,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <param name='scaleUnit'>
         /// Name of the scale units.
         /// </param>
-        /// <param name='nodeList'>
+        /// <param name='scaleUnitNodeParameters'>
         /// A list of input data that allows for adding a set of scale unit nodes.
         /// </param>
         /// <param name='customHeaders'>
@@ -72,10 +72,10 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> ScaleOutWithHttpMessagesAsync(string resourceGroupName, string location, string scaleUnit, ScaleOutScaleUnitParametersList nodeList, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> ScaleOutWithHttpMessagesAsync(string resourceGroupName, string location, string scaleUnit, ScaleOutScaleUnitParametersList scaleUnitNodeParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse _response = await BeginScaleOutWithHttpMessagesAsync(resourceGroupName, location, scaleUnit, nodeList, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse _response = await BeginScaleOutWithHttpMessagesAsync(resourceGroupName, location, scaleUnit, scaleUnitNodeParameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -528,7 +528,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <param name='scaleUnit'>
         /// Name of the scale units.
         /// </param>
-        /// <param name='nodeList'>
+        /// <param name='scaleUnitNodeParameters'>
         /// A list of input data that allows for adding a set of scale unit nodes.
         /// </param>
         /// <param name='customHeaders'>
@@ -549,7 +549,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginScaleOutWithHttpMessagesAsync(string resourceGroupName, string location, string scaleUnit, ScaleOutScaleUnitParametersList nodeList, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginScaleOutWithHttpMessagesAsync(string resourceGroupName, string location, string scaleUnit, ScaleOutScaleUnitParametersList scaleUnitNodeParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -567,9 +567,9 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "scaleUnit");
             }
-            if (nodeList == null)
+            if (scaleUnitNodeParameters == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "nodeList");
+                throw new ValidationException(ValidationRules.CannotBeNull, "scaleUnitNodeParameters");
             }
             string apiVersion = "2016-05-01";
             // Tracing
@@ -582,7 +582,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("location", location);
                 tracingParameters.Add("scaleUnit", scaleUnit);
-                tracingParameters.Add("nodeList", nodeList);
+                tracingParameters.Add("scaleUnitNodeParameters", scaleUnitNodeParameters);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginScaleOut", tracingParameters);
@@ -637,9 +637,9 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
 
             // Serialize Request
             string _requestContent = null;
-            if(nodeList != null)
+            if(scaleUnitNodeParameters != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(nodeList, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(scaleUnitNodeParameters, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }

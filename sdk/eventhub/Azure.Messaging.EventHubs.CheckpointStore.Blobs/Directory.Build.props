@@ -6,7 +6,7 @@
     Because the common SDK build properties need this value in order to recognize the desired
     target frameworks and related, this needs to be set before the common properties import.
   -->
-  <PropertyGroup Condition="$(MSBuildProjectName.EndsWith('.Samples'))">
+  <PropertyGroup Condition="$(MSBuildProjectName.Contains('.Samples'))">
     <IsTestProject>true</IsTestProject>
     <IsTestSupportProject>true</IsTestSupportProject>
   </PropertyGroup>
@@ -28,6 +28,6 @@
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
 
     <!-- If there was no override specified, set the type of reference to use for client libraries from the Azure SDK repository -->
-    <UseProjectReferenceToAzureClients Condition="'$(UseProjectReferenceToAzureClients)' == ''">$(UseProjectReferenceToAzureCore)</UseProjectReferenceToAzureClients>
+    <UseProjectReferenceToAzureClients Condition="'$(UseProjectReferenceToAzureClients)' == ''">false</UseProjectReferenceToAzureClients>
   </PropertyGroup>
 </Project>

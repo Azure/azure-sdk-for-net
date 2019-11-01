@@ -1016,7 +1016,7 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(testSetting.Key);
+                await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
             }
         }
 
@@ -1045,7 +1045,7 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(testSetting.Key);
+                await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
             }
         }
 
@@ -1073,7 +1073,7 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(testSetting.Key);
+                await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
             }
         }
 
@@ -1185,8 +1185,8 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(abcSetting.Key);
-                await service.DeleteConfigurationSettingAsync(xyzSetting.Key);
+                await service.DeleteConfigurationSettingAsync(abcSetting.Key, abcSetting.Label);
+                await service.DeleteConfigurationSettingAsync(xyzSetting.Key, xyzSetting.Label);
             }
         }
 

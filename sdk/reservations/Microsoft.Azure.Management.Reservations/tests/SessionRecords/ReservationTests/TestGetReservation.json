@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.Capacity/reservationOrders/bb1ee7ab-4e31-4124-8aa0-a17d0f3bead7/reservations/d9904914-5fa0-4780-95d8-50e3984159a7?api-version=2019-04-01",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzZXJ2YXRpb25PcmRlcnMvYmIxZWU3YWItNGUzMS00MTI0LThhYTAtYTE3ZDBmM2JlYWQ3L3Jlc2VydmF0aW9ucy9kOTkwNDkxNC01ZmEwLTQ3ODAtOTVkOC01MGUzOTg0MTU5YTc/YXBpLXZlcnNpb249MjAxOS0wNC0wMQ==",
+      "RequestUri": "/providers/Microsoft.Capacity/reservationOrders/17d3bc3e-e724-4991-a3e6-21a25f7e6d3c/reservations/e74e266a-9751-465a-b137-86a414840d1a?api-version=2019-04-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzZXJ2YXRpb25PcmRlcnMvMTdkM2JjM2UtZTcyNC00OTkxLWEzZTYtMjFhMjVmN2U2ZDNjL3Jlc2VydmF0aW9ucy9lNzRlMjY2YS05NzUxLTQ2NWEtYjEzNy04NmE0MTQ4NDBkMWE/YXBpLXZlcnNpb249MjAxOS0wNC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "6f7666c3-c0b4-4ae8-832f-754e928a5218"
+          "ecf3e259-2075-4330-a50e-020c7fc98b17"
         ],
         "accept-language": [
           "en-US"
@@ -24,7 +24,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 01 Oct 2019 23:44:31 GMT"
+          "Mon, 28 Oct 2019 04:04:17 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -39,22 +39,22 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "westus:5d0c3c1e-c813-4e6e-aded-bf54e46b241b"
+          "westus:2e2b4ec6-e410-43ca-b2db-a945f6ccf864"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "x-ms-correlation-request-id": [
-          "49402dc7-af39-4035-a23f-0d85a8013bf0"
+          "8c1803e5-b167-41b6-b034-f4546ce166f2"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20191001T234431Z:49402dc7-af39-4035-a23f-0d85a8013bf0"
+          "WESTUS:20191028T040417Z:8c1803e5-b167-41b6-b034-f4546ce166f2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "Content-Length": [
-          "996"
+          "987"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -63,7 +63,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard_D1\"\r\n  },\r\n  \"id\": \"/providers/microsoft.capacity/reservationOrders/bb1ee7ab-4e31-4124-8aa0-a17d0f3bead7/reservations/d9904914-5fa0-4780-95d8-50e3984159a7\",\r\n  \"type\": \"Microsoft.Capacity/reservationOrders/reservations\",\r\n  \"name\": \"bb1ee7ab-4e31-4124-8aa0-a17d0f3bead7/d9904914-5fa0-4780-95d8-50e3984159a7\",\r\n  \"etag\": 9,\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"appliedScopes\": [\r\n      \"/subscriptions/d3ae48e5-dbb2-4618-afd4-fb1b8559cb80\"\r\n    ],\r\n    \"appliedScopeType\": \"Single\",\r\n    \"quantity\": 3,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"expiryDate\": \"2020-10-01\",\r\n    \"displayName\": \"TestPurchaseBillingPlanReservation\",\r\n    \"effectiveDateTime\": \"2019-10-01T23:43:19.627865Z\",\r\n    \"lastUpdatedDateTime\": \"2019-10-01T23:43:19.627865Z\",\r\n    \"reservedResourceType\": \"VirtualMachines\",\r\n    \"instanceFlexibility\": \"On\",\r\n    \"skuDescription\": \"Reserved VM Instance, Standard_D1, US West, 1 Year\",\r\n    \"capabilities\": \"ApiReturnEnabled, ApiExchangeEnabled\",\r\n    \"renew\": false,\r\n    \"term\": \"P1Y\",\r\n    \"billingScopeId\": \"/subscriptions/d3ae48e5-dbb2-4618-afd4-fb1b8559cb80\",\r\n    \"billingPlan\": \"Monthly\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard_D1\"\r\n  },\r\n  \"id\": \"/providers/microsoft.capacity/reservationOrders/17d3bc3e-e724-4991-a3e6-21a25f7e6d3c/reservations/e74e266a-9751-465a-b137-86a414840d1a\",\r\n  \"type\": \"Microsoft.Capacity/reservationOrders/reservations\",\r\n  \"name\": \"17d3bc3e-e724-4991-a3e6-21a25f7e6d3c/e74e266a-9751-465a-b137-86a414840d1a\",\r\n  \"etag\": 9,\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"appliedScopes\": [\r\n      \"/subscriptions/d3ae48e5-dbb2-4618-afd4-fb1b8559cb80\"\r\n    ],\r\n    \"appliedScopeType\": \"Single\",\r\n    \"quantity\": 3,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"expiryDate\": \"2020-10-28\",\r\n    \"displayName\": \"TestPurchaseReservation\",\r\n    \"effectiveDateTime\": \"2019-10-28T04:03:29.7190841Z\",\r\n    \"lastUpdatedDateTime\": \"2019-10-28T04:03:29.7190841Z\",\r\n    \"reservedResourceType\": \"VirtualMachines\",\r\n    \"instanceFlexibility\": \"On\",\r\n    \"skuDescription\": \"Reserved VM Instance, Standard_D1, US West, 1 Year\",\r\n    \"capabilities\": \"ApiReturnEnabled, ApiExchangeEnabled\",\r\n    \"renew\": false,\r\n    \"term\": \"P1Y\",\r\n    \"billingScopeId\": \"/subscriptions/d3ae48e5-dbb2-4618-afd4-fb1b8559cb80\",\r\n    \"billingPlan\": \"Upfront\"\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],

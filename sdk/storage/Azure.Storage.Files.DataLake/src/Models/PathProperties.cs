@@ -116,7 +116,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// This header returns the value that was specified for the Content-Encoding request header
         /// </summary>
-        public IEnumerable<string> ContentEncoding { get; internal set; }
+        public string ContentEncoding { get; internal set; }
 
         /// <summary>
         /// This header returns the value that was specified for the 'x-ms-blob-content-disposition' header.
@@ -129,7 +129,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// This header returns the value that was specified for the Content-Language request header.
         /// </summary>
-        public IEnumerable<string> ContentLanguage { get; internal set; }
+        public string ContentLanguage { get; internal set; }
 
         /// <summary>
         /// This header is returned if it was previously specified for the path.

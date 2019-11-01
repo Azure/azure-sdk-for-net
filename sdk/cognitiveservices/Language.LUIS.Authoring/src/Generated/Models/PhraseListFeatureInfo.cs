@@ -32,6 +32,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// <param name="id">A six-digit ID used for Features.</param>
         /// <param name="name">The name of the Feature.</param>
         /// <param name="isActive">Indicates if the feature is enabled.</param>
+        /// <param name="enabledForAllModels">Indicates if the feature is
+        /// enabled for all models in the application.</param>
         /// <param name="phrases">A list of comma-separated values.</param>
         /// <param name="isExchangeable">An exchangeable phrase list feature
         /// are serves as single feature to the LUIS underlying training
@@ -46,8 +48,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// add to LUIS existing vocabulary features. Think of a
         /// non-exchangeable as set of different words. Default value is
         /// true.</param>
-        public PhraseListFeatureInfo(int? id = default(int?), string name = default(string), bool? isActive = default(bool?), string phrases = default(string), bool? isExchangeable = default(bool?))
-            : base(id, name, isActive)
+        public PhraseListFeatureInfo(int? id = default(int?), string name = default(string), bool? isActive = default(bool?), bool? enabledForAllModels = default(bool?), string phrases = default(string), bool? isExchangeable = default(bool?))
+            : base(id, name, isActive, enabledForAllModels)
         {
             Phrases = phrases;
             IsExchangeable = isExchangeable;
