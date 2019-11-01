@@ -3,7 +3,7 @@
 
 using Azure.Messaging.EventHubs.Processor;
 
-namespace Azure.Messaging.EventHubs
+namespace Azure.Messaging.EventHubs.Diagnostics
 {
     /// <summary>
     ///   The set of well-known properties associated with Event Hubs diagnostics.
