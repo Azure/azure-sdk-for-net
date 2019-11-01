@@ -12,7 +12,7 @@ namespace Azure.Messaging.EventHubs.Processor
     ///   provides a means to create event processing checkpoints.
     /// </summary>
     ///
-    public class EventProcessorEvent
+    public struct EventProcessorEvent
     {
         /// <summary>
         ///   The context of the Event Hub partition this instance is associated with.

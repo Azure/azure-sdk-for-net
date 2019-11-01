@@ -73,7 +73,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
                 // TODO: explain callbacks setup once the public API is finished for the next preview.
 
-                eventProcessor.InitializeProcessingForPartitionAsync = (InitializePartitionProcessingContext initializationContext) =>
+                eventProcessor.InitializeProcessingForPartitionAsync = (initializationContext) =>
                 {
                     // This is the last piece of code guaranteed to run before event processing, so all initialization
                     // must be done by the moment this method returns.
@@ -91,7 +91,7 @@ namespace Azure.Messaging.EventHubs.Samples
                     return Task.CompletedTask;
                 };
 
-                eventProcessor.ProcessingForPartitionStoppedAsync = (PartitionProcessingStoppedContext stopContext) =>
+                eventProcessor.ProcessingForPartitionStoppedAsync = (stopContext) =>
                 {
                     // The code to be run just before stopping processing events for a partition.  This is the right place to dispose
                     // of objects that will no longer be used.
@@ -105,7 +105,7 @@ namespace Azure.Messaging.EventHubs.Samples
                     return Task.CompletedTask;
                 };
 
-                eventProcessor.ProcessEventAsync = (EventProcessorEvent processorEvent) =>
+                eventProcessor.ProcessEventAsync = (processorEvent) =>
                 {
                     // Here the user can specify what to do with the event received from the event processor.  We are counting how
                     // many events were received across all partitions so we can check whether all sent events were received.
@@ -124,7 +124,7 @@ namespace Azure.Messaging.EventHubs.Samples
                     return Task.CompletedTask;
                 };
 
-                eventProcessor.ProcessExceptionAsync = (ProcessorErrorContext errorContext) =>
+                eventProcessor.ProcessExceptionAsync = (errorContext) =>
                 {
                     // Any exception which occurs as a result of the event processor itself will be passed to
                     // this delegate so it may be handled.  The processor will continue to process events if

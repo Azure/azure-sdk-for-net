@@ -5,7 +5,7 @@ using System;
 using System.ComponentModel;
 using Azure.Core;
 
-namespace Azure.Messaging.EventHubs.Processor
+namespace Azure.Messaging.EventHubs
 {
     /// <summary>
     ///   The baseline set of options that can be specified when creating an <see cref="EventProcessorClient" />

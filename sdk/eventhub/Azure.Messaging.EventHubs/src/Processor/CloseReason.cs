@@ -12,7 +12,7 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <summary>An unknown circumstance forced the processing to stop.</summary>
         Unknown,
 
-        /// <summary>A close request was fired by the user.</summary>
+        /// <summary>A request was made to stop processing.</summary>
         Shutdown,
 
         /// <summary>The ownership of the associated partition was lost.</summary>
