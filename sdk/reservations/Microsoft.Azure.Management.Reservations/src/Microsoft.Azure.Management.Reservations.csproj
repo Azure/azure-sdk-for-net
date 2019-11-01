@@ -7,10 +7,10 @@
 		<PackageId>Microsoft.Azure.Management.Reservations</PackageId>
 		<Description>Microsoft.Azure.Management.Reservations Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Reservations</AssemblyName>
-		<Version>1.12.0-preview</Version>
+		<Version>1.13.0-preview</Version>
     <PackageTags>Reservations;</PackageTags>
 		<PackageReleaseNotes>
-			Release Billing Plan for Reservations.
+			Update billing plan sdk
 		</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
