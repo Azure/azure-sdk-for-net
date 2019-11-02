@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Data.TextAnalytics
+namespace Azure.AI.TextAnalytics
 {
     internal static class ClientOptionsExtensions
     {

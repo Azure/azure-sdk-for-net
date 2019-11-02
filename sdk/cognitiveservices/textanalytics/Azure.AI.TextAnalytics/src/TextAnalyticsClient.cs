@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 // TODO: Update analyzers and rename to Azure.AI.TextAnalytics.
-namespace Azure.Data.TextAnalytics
+namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// The client to use for interacting with the Azure Configuration Store.

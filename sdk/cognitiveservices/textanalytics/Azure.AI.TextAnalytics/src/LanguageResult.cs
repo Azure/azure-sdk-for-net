@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Azure.Data.TextAnalytics
+namespace Azure.AI.TextAnalytics
 {
     // TODO: make serializable
     /// <summary>

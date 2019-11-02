@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,24 +9,22 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.TextAnalytics;
-using Azure.Core;
 
 // TODO: Update analyzers and rename to Azure.AI.TextAnalytics.
-namespace Azure.Data.TextAnalytics
+namespace Azure.AI.TextAnalytics
 {
     public partial class TextAnalyticsClient
     {
-        private const string AcceptDateTimeFormat = "R";
-        private const string AcceptDatetimeHeader = "Accept-Datetime";
-        private const string KvRoute = "/kv/";
-        private const string RevisionsRoute = "/revisions/";
-        private const string LocksRoute = "/locks/";
-        private const string KeyQueryFilter = "key";
-        private const string LabelQueryFilter = "label";
-        private const string FieldsQueryFilter = "$select";
+        //private const string AcceptDateTimeFormat = "R";
+        //private const string AcceptDatetimeHeader = "Accept-Datetime";
+        //private const string KvRoute = "/kv/";
+        //private const string RevisionsRoute = "/revisions/";
+        //private const string LocksRoute = "/locks/";
+        //private const string KeyQueryFilter = "key";
+        //private const string LabelQueryFilter = "label";
+        //private const string FieldsQueryFilter = "$select";
 
-        private static readonly char[] s_reservedCharacters = new char[] { ',', '\\' };
+        //private static readonly char[] s_reservedCharacters = new char[] { ',', '\\' };
 
         private static readonly HttpHeader s_mediaTypeKeyValueApplicationHeader = new HttpHeader(
             HttpHeader.Names.Accept,
@@ -41,11 +40,6 @@ namespace Azure.Data.TextAnalytics
         private static Response<LanguageResult> CreateLanguageResponse(Response response)
         {
             return Response.FromValue(TextAnalyticsServiceSerializer.DeserializeLanguageResponse(response.ContentStream), response);
-        }
-
-        private static Response<ConfigurationSetting> CreateResourceModifiedResponse(Response response)
-        {
-            return new NoBodyResponse<ConfigurationSetting>(response);
         }
 
         private static void ParseConnectionString(string connectionString, out Uri uri, out string credential, out byte[] secret)
@@ -89,102 +83,111 @@ namespace Azure.Data.TextAnalytics
             };
         }
 
-        private void BuildUriForKvRoute(RequestUriBuilder builder, ConfigurationSetting keyValue)
-            => BuildUriForKvRoute(builder, keyValue.Key, keyValue.Label); // TODO (pri 2) : does this need to filter ETag?
+        #region Commented out from AppConfig
 
-        private void BuildUriForKvRoute(RequestUriBuilder builder, string key, string label)
-        {
-            builder.Reset(_baseUri);
-            builder.AppendPath(KvRoute, escape: false);
-            builder.AppendPath(key);
+        //private static Response<ConfigurationSetting> CreateResourceModifiedResponse(Response response)
+        //{
+        //    return new NoBodyResponse<ConfigurationSetting>(response);
+        //}
 
-            if (label != null)
-            {
-                builder.AppendQuery(LabelQueryFilter, label);
-            }
-        }
+        //private void BuildUriForKvRoute(RequestUriBuilder builder, ConfigurationSetting keyValue)
+        //    => BuildUriForKvRoute(builder, keyValue.Key, keyValue.Label); // TODO (pri 2) : does this need to filter ETag?
 
-        private void BuildUriForLocksRoute(RequestUriBuilder builder, string key, string label)
-        {
-            builder.Reset(_baseUri);
-            builder.AppendPath(LocksRoute, escape: false);
-            builder.AppendPath(key);
+        //private void BuildUriForKvRoute(RequestUriBuilder builder, string key, string label)
+        //{
+        //    builder.Reset(_baseUri);
+        //    builder.AppendPath(KvRoute, escape: false);
+        //    builder.AppendPath(key);
 
-            if (label != null)
-            {
-                builder.AppendQuery(LabelQueryFilter, label);
-            }
-        }
+        //    if (label != null)
+        //    {
+        //        builder.AppendQuery(LabelQueryFilter, label);
+        //    }
+        //}
 
-        private static string EscapeReservedCharacters(string input)
-        {
-            string resp = string.Empty;
-            for (int i = 0; i < input.Length; i++)
-            {
-                if (s_reservedCharacters.Contains(input[i]))
-                {
-                    resp += $"\\{input[i]}";
-                }
-                else
-                {
-                    resp += input[i];
-                }
-            }
-            return resp;
-        }
+        //private void BuildUriForLocksRoute(RequestUriBuilder builder, string key, string label)
+        //{
+        //    builder.Reset(_baseUri);
+        //    builder.AppendPath(LocksRoute, escape: false);
+        //    builder.AppendPath(key);
 
-        internal static void BuildBatchQuery(RequestUriBuilder builder, SettingSelector selector, string pageLink)
-        {
-            if (selector.Keys.Count > 0)
-            {
-                var keysCopy = new List<string>();
-                foreach (var key in selector.Keys)
-                {
-                    if (key.IndexOfAny(s_reservedCharacters) != -1)
-                    {
-                        keysCopy.Add(EscapeReservedCharacters(key));
-                    }
-                    else
-                    {
-                        keysCopy.Add(key);
-                    }
-                }
-                var keys = string.Join(",", keysCopy);
-                builder.AppendQuery(KeyQueryFilter, keys);
-            }
+        //    if (label != null)
+        //    {
+        //        builder.AppendQuery(LabelQueryFilter, label);
+        //    }
+        //}
 
-            if (selector.Labels.Count > 0)
-            {
-                var labelsCopy = selector.Labels.Select(label => string.IsNullOrEmpty(label) ? "\0" : EscapeReservedCharacters(label));
-                var labels = string.Join(",", labelsCopy);
-                builder.AppendQuery(LabelQueryFilter, labels);
-            }
+        //private static string EscapeReservedCharacters(string input)
+        //{
+        //    string resp = string.Empty;
+        //    for (int i = 0; i < input.Length; i++)
+        //    {
+        //        if (s_reservedCharacters.Contains(input[i]))
+        //        {
+        //            resp += $"\\{input[i]}";
+        //        }
+        //        else
+        //        {
+        //            resp += input[i];
+        //        }
+        //    }
+        //    return resp;
+        //}
 
-            if (selector.Fields != SettingFields.All)
-            {
-                var filter = selector.Fields.ToString().ToLowerInvariant().Replace("isreadonly", "locked");
-                builder.AppendQuery(FieldsQueryFilter, filter);
-            }
+        //internal static void BuildBatchQuery(RequestUriBuilder builder, SettingSelector selector, string pageLink)
+        //{
+        //    if (selector.Keys.Count > 0)
+        //    {
+        //        var keysCopy = new List<string>();
+        //        foreach (var key in selector.Keys)
+        //        {
+        //            if (key.IndexOfAny(s_reservedCharacters) != -1)
+        //            {
+        //                keysCopy.Add(EscapeReservedCharacters(key));
+        //            }
+        //            else
+        //            {
+        //                keysCopy.Add(key);
+        //            }
+        //        }
+        //        var keys = string.Join(",", keysCopy);
+        //        builder.AppendQuery(KeyQueryFilter, keys);
+        //    }
 
-            if (!string.IsNullOrEmpty(pageLink))
-            {
-                builder.AppendQuery("after", pageLink, escapeValue: false);
-            }
-        }
+        //    if (selector.Labels.Count > 0)
+        //    {
+        //        var labelsCopy = selector.Labels.Select(label => string.IsNullOrEmpty(label) ? "\0" : EscapeReservedCharacters(label));
+        //        var labels = string.Join(",", labelsCopy);
+        //        builder.AppendQuery(LabelQueryFilter, labels);
+        //    }
 
-        private void BuildUriForGetBatch(RequestUriBuilder builder, SettingSelector selector, string pageLink)
-        {
-            builder.Reset(_baseUri);
-            builder.AppendPath(KvRoute, escape: false);
-            BuildBatchQuery(builder, selector, pageLink);
-        }
+        //    if (selector.Fields != SettingFields.All)
+        //    {
+        //        var filter = selector.Fields.ToString().ToLowerInvariant().Replace("isreadonly", "locked");
+        //        builder.AppendQuery(FieldsQueryFilter, filter);
+        //    }
 
-        private void BuildUriForRevisions(RequestUriBuilder builder, SettingSelector selector, string pageLink)
-        {
-            builder.Reset(_baseUri);
-            builder.AppendPath(RevisionsRoute, escape: false);
-            BuildBatchQuery(builder, selector, pageLink);
-        }
+        //    if (!string.IsNullOrEmpty(pageLink))
+        //    {
+        //        builder.AppendQuery("after", pageLink, escapeValue: false);
+        //    }
+        //}
+
+        //private void BuildUriForGetBatch(RequestUriBuilder builder, SettingSelector selector, string pageLink)
+        //{
+        //    builder.Reset(_baseUri);
+        //    builder.AppendPath(KvRoute, escape: false);
+        //    BuildBatchQuery(builder, selector, pageLink);
+        //}
+
+        //private void BuildUriForRevisions(RequestUriBuilder builder, SettingSelector selector, string pageLink)
+        //{
+        //    builder.Reset(_baseUri);
+        //    builder.AppendPath(RevisionsRoute, escape: false);
+        //    BuildBatchQuery(builder, selector, pageLink);
+        //}
+
+        #endregion
 
         #region nobody wants to see these
         /// <summary>

@@ -8,7 +8,6 @@ using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Data.TextAnalytics;
 
 namespace Azure.AI.TextAnalytics
 {
@@ -49,7 +48,6 @@ namespace Azure.AI.TextAnalytics
         {
             throw new NotImplementedException();
         }
-
 
         internal static LanguageResult DeserializeLanguageResponse(Stream contentStream)
         {

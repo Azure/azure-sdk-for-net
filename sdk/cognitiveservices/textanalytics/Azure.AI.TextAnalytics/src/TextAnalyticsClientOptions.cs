@@ -5,7 +5,7 @@ using Azure.Core;
 using System;
 
 // TODO: Update analyzers and rename to Azure.AI.TextAnalytics.
-namespace Azure.Data.TextAnalytics
+namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// Options that allow to configure the management of the request sent to the service.
