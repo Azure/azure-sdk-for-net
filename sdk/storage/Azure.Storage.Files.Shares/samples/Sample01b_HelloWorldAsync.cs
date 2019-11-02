@@ -20,12 +20,17 @@ namespace Azure.Storage.Files.Samples
         /// <summary>
         /// Create a share and upload a file.
         /// </summary>
-        [Test]
-        public async Task UploadAsync()
+        /// <param name="connectionString">
+        /// A connection string to your Azure Storage account.
+        /// </param>
+        /// <param name="shareName">
+        /// The name of the share to create and upload to.
+        /// </param>
+        /// <param name="localFilePath">
+        /// Path of the file to upload.
+        /// </param>
+        public static async Task UploadAsync(string connectionString, string shareName, string localFilePath)
         {
-            // Create a temporary Lorem Ipsum file on disk that we can upload
-            string path = CreateTempFile(SampleFileContent);
-
             // Get a connection string to our Azure Storage account.  You can
             // obtain your connection string from the Azure Portal (click
             // Access Keys under Settings in the Portal Storage account blade)
@@ -35,191 +40,116 @@ namespace Azure.Storage.Files.Samples
             //
             // And you can provide the connection string to your application
             // using an environment variable.
-            string connectionString = ConnectionString;
 
-            // Get a reference to a share named "sample-share" and then create it
-            ShareClient share = new ShareClient(connectionString, Randomize("sample-share"));
+            // Name of the directory and file we'll create
+            string dirName = "sample-dir";
+            string fileName = "sample-file";
+
+            // Get a reference to a share and then create it
+            ShareClient share = new ShareClient(connectionString, shareName);
             await share.CreateAsync();
-            try
+
+            // Get a reference to a directory and create it
+            ShareDirectoryClient directory = share.GetDirectoryClient(dirName);
+            await directory.CreateAsync();
+
+            // Get a reference to a file and upload it
+            ShareFileClient file = directory.GetFileClient(fileName);
+            using (FileStream stream = File.OpenRead(localFilePath))
             {
-                // Get a reference to a directory named "sample-dir" and then create it
-                ShareDirectoryClient directory = share.GetDirectoryClient(Randomize("sample-dir"));
-                await directory.CreateAsync();
-
-                // Get a reference to a file named "sample-file" in directory "sample-dir"
-                ShareFileClient file = directory.GetFileClient(Randomize("sample-file"));
-
-                // Upload the file
-                using (FileStream stream = File.OpenRead(path))
-                {
-                    await file.CreateAsync(stream.Length);
-                    await file.UploadRangeAsync(
-                        ShareFileRangeWriteType.Update,
-                        new HttpRange(0, stream.Length),
-                        stream);
-                }
-
-                // Verify the file exists
-                ShareFileProperties properties = await file.GetPropertiesAsync();
-                Assert.AreEqual(SampleFileContent.Length, properties.ContentLength);
-            }
-            finally
-            {
-                // Clean up after the test when we're finished
-                await share.DeleteAsync();
+                await file.CreateAsync(stream.Length);
+                await file.UploadRangeAsync(
+                    ShareFileRangeWriteType.Update,
+                    new HttpRange(0, stream.Length),
+                    stream);
             }
         }
 
         /// <summary>
         /// Download a file.
         /// </summary>
-        /// <returns></returns>
-        [Test]
-        public async Task DownloadAsync()
+        /// <param name="connectionString">
+        /// A connection string to your Azure Storage account.
+        /// </param>
+        /// <param name="shareName">
+        /// The name of the share to download from.
+        /// </param>
+        /// <param name="localFilePath">
+        /// Path to download the local file.
+        /// </param>
+        public static async Task DownloadAsync(string connectionString, string shareName, string localFilePath)
         {
-            // Create a temporary Lorem Ipsum file on disk that we can upload
-            string originalPath = CreateTempFile(SampleFileContent);
+            #region Snippet:Azure_Storage_Files_Shares_Samples_Sample01b_HelloWorldAsync_DownloadAsync
+            //@@ string connectionString = "<connection_string>";
 
-            // Get a temporary path on disk where we can download the file
-            string downloadPath = CreateTempPath();
+            // Name of the share, directory, and file we'll download from
+            //@@ string shareName = "sample-share";
+            string dirName = "sample-dir";
+            string fileName = "sample-file";
 
-            // Get a connection string to our Azure Storage account.
-            string connectionString = ConnectionString;
+            // Path to the save the downloaded file
+            //@@ string localFilePath = @"<path_to_local_file>";
 
-            // Get a reference to a share named "sample-share" and then create it
-            ShareClient share = new ShareClient(connectionString, Randomize("sample-share"));
-            await share.CreateAsync();
-            try
+            // Get a reference to the file
+            ShareClient share = new ShareClient(connectionString, shareName);
+            ShareDirectoryClient directory = share.GetDirectoryClient(dirName);
+            ShareFileClient file = directory.GetFileClient(fileName);
+
+            // Download the file
+            ShareFileDownloadInfo download = await file.DownloadAsync();
+            using (FileStream stream = File.OpenWrite(localFilePath))
             {
-                // Get a reference to a directory named "sample-dir" and then create it
-                ShareDirectoryClient directory = share.GetDirectoryClient(Randomize("sample-dir"));
-                await directory.CreateAsync();
-
-                // Get a reference to a file named "sample-file" in directory "sample-dir"
-                ShareFileClient file = directory.GetFileClient(Randomize("sample-file"));
-
-                // Upload the file
-                using (FileStream stream = File.OpenRead(originalPath))
-                {
-                    await file.CreateAsync(stream.Length);
-                    await file.UploadRangeAsync(
-                        ShareFileRangeWriteType.Update,
-                        new HttpRange(0, stream.Length),
-                        stream);
-                }
-
-                // Download the file
-                ShareFileDownloadInfo download = await file.DownloadAsync();
-                using (FileStream stream = File.OpenWrite(downloadPath))
-                {
-                    await download.Content.CopyToAsync(stream);
-                }
-
-                // Verify the contents
-                Assert.AreEqual(SampleFileContent, File.ReadAllText(downloadPath));
+                await download.Content.CopyToAsync(stream);
             }
-            finally
-            {
-                // Clean up after the test when we're finished
-                await share.DeleteAsync();
-            }
+            #endregion Snippet:Azure_Storage_Files_Shares_Samples_Sample01b_HelloWorldAsync_DownloadAsync
         }
 
         /// <summary>
         /// Traverse the files and directories in a share.
         /// </summary>
-        [Test]
-        public async Task TraverseAsync()
+        /// <param name="connectionString">
+        /// A connection string to your Azure Storage account.
+        /// </param>
+        /// <param name="shareName">
+        /// The name of the share to traverse.
+        /// </param>
+        public static async Task TraverseAsync(string connectionString, string shareName)
         {
-            // Create a temporary Lorem Ipsum file on disk that we can upload
-            string originalPath = CreateTempFile(SampleFileContent);
+            ShareClient share = new ShareClient(connectionString, shareName);
 
-            // Get a connection string to our Azure Storage account.
-            string connectionString = ConnectionString;
-
-            // Get a reference to a share named "sample-share" and then create it
-            ShareClient share = new ShareClient(connectionString, Randomize("sample-share"));
-            await share.CreateAsync();
-            try
+            // Track the remaining directories to walk, starting from the root
+            var remaining = new Queue<ShareDirectoryClient>();
+            remaining.Enqueue(share.GetRootDirectoryClient());
+            while (remaining.Count > 0)
             {
-                // Create a bunch of directories
-                ShareDirectoryClient first = await share.CreateDirectoryAsync("first");
-                await first.CreateSubdirectoryAsync("a");
-                await first.CreateSubdirectoryAsync("b");
-                ShareDirectoryClient second = await share.CreateDirectoryAsync("second");
-                await second.CreateSubdirectoryAsync("c");
-                await second.CreateSubdirectoryAsync("d");
-                await share.CreateDirectoryAsync("third");
-                ShareDirectoryClient fourth = await share.CreateDirectoryAsync("fourth");
-                ShareDirectoryClient deepest = await fourth.CreateSubdirectoryAsync("e");
-
-                // Upload a file named "file"
-                ShareFileClient file = deepest.GetFileClient("file");
-                using (FileStream stream = File.OpenRead(originalPath))
+                // Get all of the next directory's files and subdirectories
+                ShareDirectoryClient dir = remaining.Dequeue();
+                await foreach (ShareFileItem item in dir.GetFilesAndDirectoriesAsync())
                 {
-                    await file.CreateAsync(stream.Length);
-                    await file.UploadRangeAsync(
-                        ShareFileRangeWriteType.Update,
-                        new HttpRange(0, stream.Length),
-                        stream);
-                }
+                    // Print the name of the item
+                    Console.WriteLine(item.Name);
 
-                // Keep track of all the names we encounter
-                List<string> names = new List<string>();
-
-                // Track the remaining directories to walk, starting from the root
-                Queue<ShareDirectoryClient> remaining = new Queue<ShareDirectoryClient>();
-                remaining.Enqueue(share.GetRootDirectoryClient());
-                while (remaining.Count > 0)
-                {
-                    // Get all of the next directory's files and subdirectories
-                    ShareDirectoryClient dir = remaining.Dequeue();
-                    await foreach (ShareFileItem item in dir.GetFilesAndDirectoriesAsync())
+                    // Keep walking down directories
+                    if (item.IsDirectory)
                     {
-                        // Track the name of the item
-                        names.Add(item.Name);
-
-                        // Keep walking down directories
-                        if (item.IsDirectory)
-                        {
-                            remaining.Enqueue(dir.GetSubdirectoryClient(item.Name));
-                        }
+                        remaining.Enqueue(dir.GetSubdirectoryClient(item.Name));
                     }
                 }
-
-                // Verify we've seen everything
-                Assert.AreEqual(10, names.Count);
-                Assert.Contains("first", names);
-                Assert.Contains("second", names);
-                Assert.Contains("third", names);
-                Assert.Contains("fourth", names);
-                Assert.Contains("a", names);
-                Assert.Contains("b", names);
-                Assert.Contains("c", names);
-                Assert.Contains("d", names);
-                Assert.Contains("e", names);
-                Assert.Contains("file", names);
-            }
-            finally
-            {
-                // Clean up after the test when we're finished
-                await share.DeleteAsync();
             }
         }
 
         /// <summary>
         /// Trigger a recoverable error.
         /// </summary>
-        [Test]
-        public async Task ErrorsAsync()
+        /// <param name="connectionString">
+        /// A connection string to your Azure Storage account.
+        /// </param>
+        /// <param name="shareName">
+        /// The name of an existing share
+        /// </param>
+        public static async Task ErrorsAsync(string connectionString, string shareName)
         {
-            // Get a connection string to our Azure Storage account.
-            string connectionString = ConnectionString;
-
-            // Get a reference to a share named "sample-share" and then create it
-            ShareClient share = new ShareClient(connectionString, Randomize("sample-share"));
-            await share.CreateAsync();
-
+            ShareClient share = new ShareClient(connectionString, shareName);
             try
             {
                 // Try to create the share again
@@ -230,13 +160,6 @@ namespace Azure.Storage.Files.Samples
             {
                 // Ignore any errors if the share already exists
             }
-            catch (RequestFailedException ex)
-            {
-                Assert.Fail($"Unexpected error: {ex}");
-            }
-
-            // Clean up after the test when we're finished
-            await share.DeleteAsync();
         }
     }
 }

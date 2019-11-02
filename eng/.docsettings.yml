@@ -59,6 +59,7 @@ known_presence_issues:
 known_content_issues:
   - ['README.md','Root readme']
   - ['doc/README.md','Doc readme']
+  - ['sdk/core/Microsoft.Extensions.Azure/README.md','#5499']
   - ['sdk/keyvault/Microsoft.Azure.KeyVault/README.md','#5499']
   - ['sdk/servicebus/Microsoft.Azure.ServiceBus/README.md','#5499']
   - ['sdk/eventhub/Microsoft.Azure.EventHubs/README.md','#5499']

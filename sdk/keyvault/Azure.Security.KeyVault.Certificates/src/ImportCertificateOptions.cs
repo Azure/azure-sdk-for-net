@@ -12,7 +12,7 @@ namespace Azure.Security.KeyVault.Certificates
     /// <summary>
     /// Options for a certificate to be imported into Azure Key Vault.
     /// </summary>
-    public class CertificateImportOptions : IJsonSerializable
+    public class ImportCertificateOptions : IJsonSerializable
     {
         private static readonly JsonEncodedText s_valuePropertyNameBytes = JsonEncodedText.Encode("value");
         private static readonly JsonEncodedText s_policyPropertyNameBytes = JsonEncodedText.Encode("policy");
@@ -24,20 +24,22 @@ namespace Azure.Security.KeyVault.Certificates
         private Dictionary<string, string> _tags;
 
         /// <summary>
-        /// Creates a certificate import used to import a certificate into Azure Key Vault.
+        /// Initializes a new instance of the <see cref="ImportCertificateOptions"/> class.
         /// </summary>
         /// <param name="name">A name for the imported certificate.</param>
         /// <param name="value">The PFX or PEM formatted value of the certificate containing both the x509 certificates and the private key.</param>
         /// <param name="policy">The policy which governs the lifecycle of the imported certificate and it's properties when it is rotated.</param>
-        public CertificateImportOptions(string name, byte[] value, CertificatePolicy policy)
+        /// <exception cref="ArgumentException"><paramref name="name"/> is empty.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/>, <paramref name="policy"/>, or <paramref name="value"/> is null.</exception>
+        public ImportCertificateOptions(string name, byte[] value, CertificatePolicy policy)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(value, nameof(value));
             Argument.AssertNotNull(policy, nameof(policy));
 
             Name = name;
-            Value = value ?? throw new ArgumentNullException(nameof(value));
-            Policy = policy ?? throw new ArgumentNullException(nameof(policy));
+            Value = value;
+            Policy = policy;
         }
 
         /// <summary>
@@ -48,12 +50,12 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// The PFX or PEM formatted value of the certificate containing both the x509 certificates and the private key.
         /// </summary>
-        public byte[] Value { get; set; }
+        public byte[] Value { get; }
 
         /// <summary>
         /// The policy which governs the lifecycle of the imported certificate and it's properties when it is rotated.
         /// </summary>
-        public CertificatePolicy Policy { get; set; }
+        public CertificatePolicy Policy { get; }
 
         /// <summary>
         /// The password protecting the certificate specified in the Value.
@@ -61,7 +63,7 @@ namespace Azure.Security.KeyVault.Certificates
         public string Password { get; set; }
 
         /// <summary>
-        /// Gets or sets whether the merged certificate should be enabled.
+        /// Gets or sets a value indicating whether the merged certificate should be enabled. If null, the server default will be used.
         /// </summary>
         public bool? Enabled { get; set; }
 
@@ -101,7 +103,7 @@ namespace Azure.Security.KeyVault.Certificates
                 json.WriteEndObject();
             }
 
-            if (_tags != null && _tags.Count > 0)
+            if (!_tags.IsNullOrEmpty())
             {
                 json.WriteStartObject(s_tagsPropertyNameBytes);
 

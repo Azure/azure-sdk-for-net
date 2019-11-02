@@ -194,7 +194,7 @@ namespace Azure.Security.KeyVault.Secrets
                 json.WriteEndObject();
             }
 
-            if (_tags != null && _tags.Count > 0)
+            if (!_tags.IsNullOrEmpty())
             {
                 json.WriteStartObject(s_tagsPropertyNameBytes);
 
