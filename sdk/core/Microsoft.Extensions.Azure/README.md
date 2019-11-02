@@ -1,4 +1,4 @@
-# Azure .+ client library for .NET
+# Azure client library integration for ASP.NET Core
 
 Microsoft.Extensions.Azure.Core provides shared primitives to integrate Azure clients with ASP.NET Core [dependency injection][dependency_injection] and [configuration][configuration] systems.
 
