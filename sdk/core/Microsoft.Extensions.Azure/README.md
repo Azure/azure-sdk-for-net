@@ -1,10 +1,12 @@
-# Azure client integration for ASP.NET Core
+# Azure .+ client library for .NET
 
 Microsoft.Extensions.Azure.Core provides shared primitives to integrate Azure clients with ASP.NET Core [dependency injection][dependency_injection] and [configuration][configuration] systems.
 
 [Source code][source_root] | [Package (NuGet)][package]
 
-## Installing
+## Getting started
+
+### Install the package
 
 Install the ASP.NET Core integration library using [NuGet][nuget]:
 
@@ -12,7 +14,7 @@ Install the ASP.NET Core integration library using [NuGet][nuget]:
 dotnet add package Microsoft.Extensions.Azure
 ```
 
-## Usage Scenarios and Samples
+### Register clients
 
 Make a call to `AddAzureClients` in your app's `ConfigureServices` method. You can use the provided builder to register client instances with your dependency injection container.
 
@@ -55,16 +57,52 @@ public void ConfigureServices(IServiceCollection services)
 }
 ```
 
+### Inject clients
+
 To use the client request the client type from any place that supports Dependency Injection (constructors, Configure calls, `@inject` razor definitions etc.)
 
 ```C# Snippet:Inject
 public void Configure(IApplicationBuilder app, SecretClient secretClient, IAzureClientFactory<BlobServiceClient> blobClientFactory)
 ```
 
+### Create named instances
+
 If client is registered as a named client inject `IAzureClientFactory<T>` and call `CreateClient` passing the name:
 
 ```C# Snippet:ResolveNamed
 BlobServiceClient blobServiceClient = blobClientFactory.CreateClient("NamedBlobClient");
+```
+
+Configuration file used in the sample above:
+
+``` json
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Debug"
+    }
+  },
+  "AllowedHosts": "*",
+  "Default": {
+    "ClientId": "<client_id>",
+    "ClientSecret": "<client_secret>",
+    "TenantId": "<tenant_id>",
+
+    "TelemetryPolicy": {
+      "ApplicationId": "AppId"
+    }
+  },
+  "KeyVault": {
+    "VaultUri": "<vault_uri>"
+  },
+  "Storage": {
+    "serviceUri": "<service_uri>",
+    "credential": {
+      "accountName": "<account_name>",
+      "accountKey": "<account_key>"
+    }
+  }
+}
 ```
 
 <!-- LINKS -->
