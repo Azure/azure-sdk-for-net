@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Search
     public static partial class SearchServiceClientExtensions
     {
             /// <summary>
-            /// Gets service level statistics for an Azure Search service.
+            /// Gets service level statistics for a search service.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Search
             }
 
             /// <summary>
-            /// Gets service level statistics for an Azure Search service.
+            /// Gets service level statistics for a search service.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

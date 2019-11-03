@@ -1,0 +1,33 @@
+﻿<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--
+    Identify samples as a test support project to keep the target framework synchronized, since both are
+    based on a version of netcoreapp.
+
+    Because the common SDK build properties need this value in order to recognize the desired
+    target frameworks and related, this needs to be set before the common properties import.
+  -->
+  <PropertyGroup Condition="$(MSBuildProjectName.Contains('.Samples'))">
+    <IsTestProject>true</IsTestProject>
+    <IsTestSupportProject>true</IsTestSupportProject>
+  </PropertyGroup>
+
+  <!-- Import the common SDK build properties. -->
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
+
+  <!-- Set any needed overrides to the decisions made within the common SDK build properties. -->
+  <PropertyGroup>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+
+    <!-- Do not inherit implicit dependencies from the engineering system during build or packaging -->
+    <ImportDefaultReferences>false</ImportDefaultReferences>
+
+    <!-- Disable the custom analyzer; it is currently in development and based against draft standards. -->
+    <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
+
+    <!-- If there was no override specified, set the type of reference to use for client libraries from the Azure SDK repository -->
+    <UseProjectReferenceToAzureClients Condition="'$(UseProjectReferenceToAzureClients)' == ''">false</UseProjectReferenceToAzureClients>
+  </PropertyGroup>
+</Project>

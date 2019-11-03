@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Azure Event Hubs is a highly scalable publish-subscribe service that can ingest millions of events per second and stream them to multiple consumers.  This library extends its Event Processor with durable storage for checkpoint information using Azure Blob storage.  For more information about Event Hubs, see https://azure.microsoft.com/en-us/services/event-hubs/</Description>
+    <Version>1.0.0-preview.3</Version>
+    <PackageTags>Azure;Event Hubs;EventHubs;.NET;Event Processor;EventProcessor</PackageTags>
+    <PackageReleaseNotes>https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs.CheckpointStore.Blob/CHANGELOG.md</PackageReleaseNotes>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <EnableFxCopAnalyzers>false</EnableFxCopAnalyzers>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+
+   <ItemGroup>
+    <Compile Update="Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Amqp" />
+    <PackageReference Include="System.Diagnostics.DiagnosticSource" />
+    <PackageReference Include="System.Reflection.TypeExtensions" />
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
+    <PackageReference Include="System.Threading.Channels" />
+    <PackageReference Include="System.Threading.Tasks.Extensions" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(IsTargetingNetStandard)' == 'true'">
+    <PackageReference Include="System.Runtime.Serialization.Primitives" />
+  </ItemGroup>
+
+  <!-- Import the references to the Azure client libraries -->
+  <Import Project="$(MSBuildThisFileDirectory)..\Azure.Client.Library.References.props" />
+</Project>

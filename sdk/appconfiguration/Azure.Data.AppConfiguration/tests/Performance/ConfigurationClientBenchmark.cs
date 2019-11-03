@@ -45,7 +45,7 @@ namespace Azure.Data.AppConfiguration.Performance
         [Benchmark]
         public async Task GetAsync()
         {
-            await s_configurationClient.GetAsync("key");
+            await s_configurationClient.GetConfigurationSettingAsync("key");
         }
 
 

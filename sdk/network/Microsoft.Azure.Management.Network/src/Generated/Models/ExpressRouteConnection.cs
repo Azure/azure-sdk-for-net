@@ -43,13 +43,16 @@ namespace Microsoft.Azure.Management.Network.Models
         /// connection.</param>
         /// <param name="routingWeight">The routing weight associated to the
         /// connection.</param>
-        public ExpressRouteConnection(ExpressRouteCircuitPeeringId expressRouteCircuitPeering, string name, string id = default(string), string provisioningState = default(string), string authorizationKey = default(string), int? routingWeight = default(int?))
+        /// <param name="enableInternetSecurity">Enable internet
+        /// security.</param>
+        public ExpressRouteConnection(ExpressRouteCircuitPeeringId expressRouteCircuitPeering, string name, string id = default(string), string provisioningState = default(string), string authorizationKey = default(string), int? routingWeight = default(int?), bool? enableInternetSecurity = default(bool?))
             : base(id)
         {
             ProvisioningState = provisioningState;
             ExpressRouteCircuitPeering = expressRouteCircuitPeering;
             AuthorizationKey = authorizationKey;
             RoutingWeight = routingWeight;
+            EnableInternetSecurity = enableInternetSecurity;
             Name = name;
             CustomInit();
         }
@@ -60,12 +63,12 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the provisioning state of the express route connection
+        /// Gets the provisioning state of the express route connection
         /// resource. Possible values include: 'Succeeded', 'Updating',
         /// 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets the ExpressRoute circuit peering.
@@ -84,6 +87,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.routingWeight")]
         public int? RoutingWeight { get; set; }
+
+        /// <summary>
+        /// Gets or sets enable internet security.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableInternetSecurity")]
+        public bool? EnableInternetSecurity { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the resource.

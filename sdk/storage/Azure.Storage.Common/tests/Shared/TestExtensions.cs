@@ -10,7 +10,7 @@ namespace Azure.Storage
     /// <summary>
     /// Extension methods to make tests easier to author.
     /// </summary>
-    public static class TestExtensions
+    public static partial class TestExtensions
     {
         /// <summary>
         /// Convert an IAsyncEnumerable into a List to make test verification

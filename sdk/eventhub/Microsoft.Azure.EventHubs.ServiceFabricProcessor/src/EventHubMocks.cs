@@ -166,7 +166,7 @@ namespace Microsoft.Azure.EventHubs.ServiceFabricProcessor
                         if (events != null)
                         {
                             EventProcessorEventSource.Current.Message("MOCK Sending messages to handler");
-                            await capturedHandler.ProcessEventsAsync(events);
+                            await capturedHandler.ProcessEventsAsync(events).ConfigureAwait(false);
                         }
                         else if (this.invokeWhenNoEvents)
                         {

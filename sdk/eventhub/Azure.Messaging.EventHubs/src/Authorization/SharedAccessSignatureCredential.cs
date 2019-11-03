@@ -40,12 +40,12 @@ namespace Azure.Messaging.EventHubs.Authorization
         ///   use in authorization against an Event Hub.
         /// </summary>
         ///
-        /// <param name="request">The details of the authentication request.</param>
+        /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">The token used to request cancellation of the operation.</param>
         ///
         /// <returns>The token representing the shared access signature for this credential.</returns>
         ///
-        public override AccessToken GetToken(TokenRequest request,
+        public override AccessToken GetToken(TokenRequestContext requestContext,
                                              CancellationToken cancellationToken) => new AccessToken(SharedAccessSignature.Value, SharedAccessSignature.SignatureExpiration);
 
         /// <summary>
@@ -53,12 +53,12 @@ namespace Azure.Messaging.EventHubs.Authorization
         ///   use in authorization against an Event Hub.
         /// </summary>
         ///
-        /// <param name="request">The details of the authentication request.</param>
+        /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">The token used to request cancellation of the operation.</param>
         ///
         /// <returns>The token representing the shared access signature for this credential.</returns>
         ///
-        public override Task<AccessToken> GetTokenAsync(TokenRequest request,
-                                                        CancellationToken cancellationToken) => Task.FromResult(new AccessToken(SharedAccessSignature.Value, SharedAccessSignature.SignatureExpiration));
+        public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext,
+                                                        CancellationToken cancellationToken) => new ValueTask<AccessToken>(new AccessToken(SharedAccessSignature.Value, SharedAccessSignature.SignatureExpiration));
     }
 }

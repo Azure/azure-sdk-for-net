@@ -45,7 +45,12 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// Azure storage file format.
         /// </summary>
         [EnumMember(Value = "AzureFile")]
-        AzureFile
+        AzureFile,
+        /// <summary>
+        /// Azure Compute Disk.
+        /// </summary>
+        [EnumMember(Value = "ManagedDisk")]
+        ManagedDisk
     }
     internal static class ShareDestinationFormatTypeEnumExtension
     {
@@ -68,6 +73,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
                     return "PageBlob";
                 case ShareDestinationFormatType.AzureFile:
                     return "AzureFile";
+                case ShareDestinationFormatType.ManagedDisk:
+                    return "ManagedDisk";
             }
             return null;
         }
@@ -86,6 +93,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
                     return ShareDestinationFormatType.PageBlob;
                 case "AzureFile":
                     return ShareDestinationFormatType.AzureFile;
+                case "ManagedDisk":
+                    return ShareDestinationFormatType.ManagedDisk;
             }
             return null;
         }

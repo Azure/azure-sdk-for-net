@@ -7,10 +7,10 @@
 		<PackageId>Microsoft.Azure.Management.Reservations</PackageId>
 		<Description>Microsoft.Azure.Management.Reservations Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Reservations</AssemblyName>
-		<Version>1.11.0-preview</Version>
+		<Version>1.13.0-preview</Version>
     <PackageTags>Reservations;</PackageTags>
 		<PackageReleaseNotes>
-			Enhancing Patch API for RI renewal.
+			Update billing plan sdk
 		</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

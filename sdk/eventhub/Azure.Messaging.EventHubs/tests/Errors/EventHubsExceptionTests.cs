@@ -54,6 +54,7 @@ namespace Azure.Messaging.EventHubs.Tests
             yield return new object[] { new EventHubsResourceNotFoundException("resource", "message"), false };
             yield return new object[] { new QuotaExceededException("resource", "message"), false };
             yield return new object[] { new ConsumerDisconnectedException("resource", "message"), false };
+            yield return new object[] { new EventHubsClientClosedException("resource", "message"), false };
         }
 
         /// <summary>

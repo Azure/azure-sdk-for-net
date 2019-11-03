@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Search.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents an Azure Search indexer.
+    /// Represents an indexer.
     /// <see
     /// href="https://docs.microsoft.com/rest/api/searchservice/Indexer-operations"
     /// />
@@ -41,8 +41,8 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="targetIndexName">The name of the index to which this
         /// indexer writes data.</param>
         /// <param name="description">The description of the indexer.</param>
-        /// <param name="skillsetName">The name of the cognitive skillset
-        /// executing with this indexer.</param>
+        /// <param name="skillsetName">The name of the skillset executing with
+        /// this indexer.</param>
         /// <param name="schedule">The schedule for this indexer.</param>
         /// <param name="parameters">Parameters for indexer execution.</param>
         /// <param name="fieldMappings">Defines mappings between fields in the
@@ -93,8 +93,7 @@ namespace Microsoft.Azure.Search.Models
         public string DataSourceName { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the cognitive skillset executing with this
-        /// indexer.
+        /// Gets or sets the name of the skillset executing with this indexer.
         /// </summary>
         [JsonProperty(PropertyName = "skillsetName")]
         public string SkillsetName { get; set; }

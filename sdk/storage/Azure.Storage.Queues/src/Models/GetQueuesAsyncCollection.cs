@@ -10,14 +10,17 @@ namespace Azure.Storage.Queues.Models
     internal class GetQueuesAsyncCollection : StorageCollectionEnumerator<QueueItem>
     {
         private readonly QueueServiceClient _client;
-        private readonly GetQueuesOptions? _options;
+        private readonly QueueTraits _traits;
+        private readonly string _prefix;
 
         public GetQueuesAsyncCollection(
             QueueServiceClient client,
-            GetQueuesOptions? options)
+            QueueTraits traits,
+            string prefix)
         {
             _client = client;
-            _options = options;
+            _traits = traits;
+            _prefix = prefix;
         }
 
         public override async ValueTask<Page<QueueItem>> GetNextPageAsync(
@@ -28,7 +31,8 @@ namespace Azure.Storage.Queues.Models
         {
             Task<Response<QueuesSegment>> task = _client.GetQueuesInternal(
                 continuationToken,
-                _options,
+                _traits,
+                _prefix,
                 pageSizeHint,
                 isAsync,
                 cancellationToken);
@@ -36,7 +40,7 @@ namespace Azure.Storage.Queues.Models
                 await task.ConfigureAwait(false) :
                 task.EnsureCompleted();
 
-            return new Page<QueueItem>(
+            return Page<QueueItem>.FromValues(
                 response.Value.QueueItems.ToArray(),
                 response.Value.NextMarker,
                 response.GetRawResponse());

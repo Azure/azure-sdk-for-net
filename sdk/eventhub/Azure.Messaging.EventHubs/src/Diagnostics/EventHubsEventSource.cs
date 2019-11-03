@@ -36,7 +36,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that an <see cref="EventHubClient" /> is being created.
+        ///   Indicates that an <see cref="EventHubConnection" /> is being created.
         /// </summary>
         ///
         /// <param name="eventHubsNamespace">The Event Hubs namespace associated with the client.</param>
@@ -53,7 +53,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that an <see cref="EventHubClient" /> was created.
+        ///   Indicates that an <see cref="EventHubConnection" /> was created.
         /// </summary>
         ///
         /// <param name="eventHubsNamespace">The Event Hubs namespace associated with the client.</param>
@@ -133,15 +133,17 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// </summary>
         ///
         /// <param name="eventHubName">The name of the Event Hub being received from.</param>
+        /// <param name="consumerGroup">The consumer group associated with the receive operation.</param>
         /// <param name="partitionId">The identifier of the partition events are being received from.</param>
         ///
-        [Event(6, Level = EventLevel.Informational, Message = "Receiving events for Event Hub: {0} (Partition Id: '{1}').")]
+        [Event(6, Level = EventLevel.Informational, Message = "Receiving events for Event Hub: {0} (Consumer Group: '{1}', Partition Id: '{2}').")]
         public void EventReceiveStart(string eventHubName,
+                                      string consumerGroup,
                                       string partitionId)
         {
             if (IsEnabled())
             {
-                WriteEvent(6, eventHubName ?? string.Empty, partitionId ?? string.Empty);
+                WriteEvent(6, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty);
             }
         }
 
@@ -151,16 +153,18 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///
         /// <param name="eventHubName">The name of the Event Hub being received from.</param>
         /// <param name="partitionId">The identifier of the partition events are being received from.</param>
+        /// <param name="consumerGroup">The consumer group associated with the receive operation.</param>
         /// <param name="eventCount">The number of events that were received in the batch.</param>
         ///
-        [Event(7, Level = EventLevel.Informational, Message = "Completed receiving events for Event Hub: {0} (Partition Id: '{1}', Event Count: '{2}').")]
+        [Event(7, Level = EventLevel.Informational, Message = "Completed receiving events for Event Hub: {0} (Consumer Group: '{1}', Partition Id: '{2}').  Event Count: '{3}'")]
         public void EventReceiveComplete(string eventHubName,
+                                         string consumerGroup,
                                          string partitionId,
                                          int eventCount)
         {
             if (IsEnabled())
             {
-                WriteEvent(7, eventHubName ?? string.Empty, partitionId ?? string.Empty, eventCount);
+                WriteEvent(7, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty, eventCount);
             }
         }
 
@@ -170,22 +174,24 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///
         /// <param name="eventHubName">The name of the Event Hub being received from.</param>
         /// <param name="partitionId">The identifier of the partition events are being received from.</param>
+        /// <param name="consumerGroup">The consumer group associated with the receive operation.</param>
         /// <param name="errorMessage">The message for the exception that occurred.</param>
         ///
-        [Event(8, Level = EventLevel.Error, Message = "An exception occurred while receiving events for Event Hub: {0} (Partition Id: '{1}'). Error Message: '{2}'")]
+        [Event(8, Level = EventLevel.Error, Message = "An exception occurred while receiving events for Event Hub: {0} (Consumer Group: '{1}', Partition Id: '{2}'). Error Message: '{3}'")]
         public void EventReceiveError(string eventHubName,
+                                      string consumerGroup,
                                       string partitionId,
                                       string errorMessage)
         {
             if (IsEnabled())
             {
-                WriteEvent(8, eventHubName ?? string.Empty, partitionId ?? string.Empty, errorMessage ?? string.Empty);
+                WriteEvent(8, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty, errorMessage ?? string.Empty);
             }
         }
 
         /// <summary>
-        ///   Indicates that a client is closing, which may correspond to an <see cref="EventHubClient" />,
-        ///   <see cref="EventHubProducer" />, or <see cref="EventHubConsumer" />.
+        ///   Indicates that a client is closing, which may correspond to an <see cref="EventHubConnection" />,
+        ///   <see cref="EventHubProducerClient" />, or <see cref="EventHubConsumerClient" />.
         /// </summary>
         ///
         /// <param name="clientType">The type of client being closed.</param>
@@ -204,8 +210,8 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that a client has been closed, which may correspond to an <see cref="EventHubClient" />,
-        ///   <see cref="EventHubProducer" />, or <see cref="EventHubConsumer" />.
+        ///   Indicates that a client has been closed, which may correspond to an <see cref="EventHubConnection" />,
+        ///   <see cref="EventHubProducerClient" />, or <see cref="EventHubConsumerClient" />.
         /// </summary>
         ///
         /// <param name="clientType">The type of client being closed.</param>
@@ -224,7 +230,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that an exception was encountered while closing an <see cref="EventHubClient" />.
+        ///   Indicates that an exception was encountered while closing an <see cref="EventHubConnection" />.
         /// </summary>
         ///
         /// <param name="clientType">The type of client being closed.</param>

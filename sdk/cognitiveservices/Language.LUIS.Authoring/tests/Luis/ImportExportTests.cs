@@ -74,5 +74,21 @@
                 Assert.NotNull(testApp);
             });
         }
+
+        [Fact]
+        public void ImportAppWithEnabledForAllModels()
+        {
+            var appJson = File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "SessionRecords/ImportAppWithEnabledForAllModels.json"));
+            var app = JsonConvert.DeserializeObject<LuisApp>(appJson);
+
+            UseClientFor(async client =>
+            {
+                var testAppId = await client.Apps.ImportAsync(app, "Test Import LUIS App With Enabled For All Models");
+                var testApp = await client.Apps.GetAsync(testAppId);
+                await client.Apps.DeleteAsync(testAppId);
+
+                Assert.NotNull(testApp);
+            });
+        }
     }
 }

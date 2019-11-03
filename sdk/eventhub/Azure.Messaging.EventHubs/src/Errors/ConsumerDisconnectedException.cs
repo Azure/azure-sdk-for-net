@@ -6,8 +6,8 @@ using System;
 namespace Azure.Messaging.EventHubs.Errors
 {
     /// <summary>
-    ///   An exception which occurs when an <see cref="EventHubConsumer" /> is forcefully disconnected
-    ///   from an Event Hub instance.  This typically occurs when another consumer with higher <see cref="EventHubConsumer.OwnerLevel" />
+    ///   An exception which occurs when an <see cref="EventHubConsumerClient" /> is forcefully disconnected
+    ///   from an Event Hub instance.  This typically occurs when another consumer with higher <see cref="EventHubConsumerClient.OwnerLevel" />
     ///   asserts ownership over the partition and consumer group.
     /// </summary>
     ///

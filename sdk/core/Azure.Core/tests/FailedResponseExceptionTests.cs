@@ -3,7 +3,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Core.Http;
 using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 using NUnit.Framework;
@@ -73,5 +72,26 @@ namespace Azure.Core.Tests
             RequestFailedException exception = await response.CreateRequestFailedExceptionAsync();
             Assert.AreEqual(formattedResponse, exception.Message);
         }
+
+        [Test]
+        public async Task IncludesErrorCodeInMessageIfAvailable()
+        {
+            var formattedResponse =
+                "Service request failed." + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                "ErrorCode: CUSTOM CODE" + s_nl +
+                s_nl +
+                "Headers:" + s_nl +
+                "Custom-Header: Value" + s_nl +
+                "x-ms-requestId: 123" + s_nl;
+
+            var response = new MockResponse(210, "Reason");
+            response.AddHeader(new HttpHeader("Custom-Header", "Value"));
+            response.AddHeader(new HttpHeader("x-ms-requestId", "123"));
+
+            RequestFailedException exception = await response.CreateRequestFailedExceptionAsync(null, errorCode: "CUSTOM CODE");
+            Assert.AreEqual(formattedResponse, exception.Message);
+        }
+
     }
 }

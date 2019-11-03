@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Pipeline;
 using System;
+using Azure.Core;
 
 namespace Azure.Security.KeyVault.Certificates
 {
@@ -50,12 +50,9 @@ namespace Azure.Security.KeyVault.Certificates
         public CertificateClientOptions(ServiceVersion version = ServiceVersion.V7_0)
         {
             Version = version;
-        }
 
-        /// <summary>
-        /// The default <see cref="CertificatePolicy"/> to be used when creating certificates with the client
-        /// </summary>
-        public CertificatePolicy DefaultPolicy { get; set; }
+            this.ConfigureLogging();
+        }
 
         internal string GetVersionString()
         {

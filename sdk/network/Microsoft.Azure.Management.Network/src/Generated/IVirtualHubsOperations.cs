@@ -198,34 +198,6 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse<VirtualHub>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string virtualHubName, VirtualHub virtualHubParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates VirtualHub tags.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name of the VirtualHub.
-        /// </param>
-        /// <param name='virtualHubName'>
-        /// The name of the VirtualHub.
-        /// </param>
-        /// <param name='virtualHubParameters'>
-        /// Parameters supplied to update VirtualHub tags.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<VirtualHub>> BeginUpdateTagsWithHttpMessagesAsync(string resourceGroupName, string virtualHubName, TagsObject virtualHubParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Deletes a VirtualHub.
         /// </summary>
         /// <param name='resourceGroupName'>

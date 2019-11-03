@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Security.KeyVault.Certificates
 {
     /// <summary>
-    /// <see cref="CertificateProperties"/> contains identity and other basic properties of a <see cref="Certificate"/>.
+    /// <see cref="CertificateProperties"/> contains identity and other basic properties of a <see cref="KeyVaultCertificate"/>.
     /// </summary>
     public class CertificateProperties : IJsonDeserializable
     {
@@ -56,27 +56,27 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// The Id of the certificate.
         /// </summary>
-        public Uri Id { get; private set; }
+        public Uri Id { get; internal set; }
 
         /// <summary>
         /// The name of the certificate.
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; internal set; }
 
         /// <summary>
         /// The Uri of the vault in which the certificate is stored.
         /// </summary>
-        public Uri VaultUri { get; private set; }
+        public Uri VaultUri { get; internal set; }
 
         /// <summary>
         /// The version of the certificate.
         /// </summary>
-        public string Version { get; private set; }
+        public string Version { get; internal set; }
 
         /// <summary>
         /// The digital thumbprint of the certificate which can be used to uniquely identify it.
         /// </summary>
-        public byte[] X509Thumbprint { get; private set; }
+        public byte[] X509Thumbprint { get; internal set; }
 
         /// <summary>
         /// The tags applied to the certificate.
@@ -84,29 +84,29 @@ namespace Azure.Security.KeyVault.Certificates
         public IDictionary<string, string> Tags => LazyInitializer.EnsureInitialized(ref _tags);
 
         /// <summary>
-        /// Specifies if the certificate is currently enabled.
+        /// Gets or sets a value indicating whether the certificate is currently enabled. If null, the server default will be used.
         /// </summary>
         public bool? Enabled { get => _attributes.Enabled; set => _attributes.Enabled = value; }
 
         /// <summary>
         /// Gets or sets not before date in UTC.
         /// </summary>
-        public DateTimeOffset? NotBefore => _attributes.NotBefore;
+        public DateTimeOffset? NotBefore { get => _attributes.NotBefore; internal set => _attributes.NotBefore = value; }
 
         /// <summary>
         /// Gets or sets expiry date in UTC.
         /// </summary>
-        public DateTimeOffset? Expires => _attributes.Expires;
+        public DateTimeOffset? ExpiresOn { get => _attributes.ExpiresOn; internal set => _attributes.ExpiresOn = value; }
 
         /// <summary>
         /// Gets creation time in UTC.
         /// </summary>
-        public DateTimeOffset? Created => _attributes.Created;
+        public DateTimeOffset? CreatedOn { get => _attributes.CreatedOn; internal set => _attributes.CreatedOn = value; }
 
         /// <summary>
         /// Gets last updated time in UTC.
         /// </summary>
-        public DateTimeOffset? Updated => _attributes.Updated;
+        public DateTimeOffset? UpdatedOn { get => _attributes.UpdatedOn; internal set => _attributes.UpdatedOn = value; }
 
         /// <summary>
         /// Gets reflects the deletion recovery level currently in effect for
@@ -117,7 +117,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// 'Recoverable+Purgeable', 'Recoverable',
         /// 'Recoverable+ProtectedSubscription'
         /// </summary>
-        public string RecoveryLevel => _attributes.RecoveryLevel;
+        public string RecoveryLevel { get => _attributes.RecoveryLevel; internal set => _attributes.RecoveryLevel = value; }
 
         internal bool HasTags => _tags != null;
 

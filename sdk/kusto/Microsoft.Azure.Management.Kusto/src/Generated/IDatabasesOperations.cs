@@ -32,8 +32,8 @@ namespace Microsoft.Azure.Management.Kusto
         /// <param name='clusterName'>
         /// The name of the Kusto cluster.
         /// </param>
-        /// <param name='databaseName'>
-        /// The name of the database.
+        /// <param name='resourceName'>
+        /// The name of the resource.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Kusto
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<CheckNameResult>> CheckNameAvailabilityWithHttpMessagesAsync(string resourceGroupName, string clusterName, DatabaseCheckNameRequest databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CheckNameResult>> CheckNameAvailabilityWithHttpMessagesAsync(string resourceGroupName, string clusterName, CheckNameRequest resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Returns the list of databases of the given Kusto cluster.
         /// </summary>
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.Management.Kusto
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Database>> UpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, DatabaseUpdate parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Database>> UpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, Database parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes the database with the given name.
         /// </summary>
@@ -343,7 +343,7 @@ namespace Microsoft.Azure.Management.Kusto
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Database>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, DatabaseUpdate parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Database>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, Database parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes the database with the given name.
         /// </summary>

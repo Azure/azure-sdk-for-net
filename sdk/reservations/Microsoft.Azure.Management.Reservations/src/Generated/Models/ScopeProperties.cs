@@ -11,6 +11,7 @@
 namespace Microsoft.Azure.Management.Reservations.Models
 {
     using Newtonsoft.Json;
+    using System.Collections.Generic;
     using System.Linq;
 
     public partial class ScopeProperties
@@ -28,7 +29,10 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// </summary>
         public ScopeProperties(string scope = default(string), bool? valid = default(bool?))
         {
-            Scope = scope;
+            Scope = new List<string>
+            {
+                scope
+            };
             Valid = valid;
             CustomInit();
         }
@@ -40,8 +44,8 @@ namespace Microsoft.Azure.Management.Reservations.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "scope")]
-        public string Scope { get; set; }
+        [JsonProperty(PropertyName = "scopes")]
+        public List<string> Scope { get; set; }
 
         /// <summary>
         /// </summary>

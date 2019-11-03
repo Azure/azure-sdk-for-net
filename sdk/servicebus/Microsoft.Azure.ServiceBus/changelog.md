@@ -1,6 +1,17 @@
+# 4.1.1
+## Bug fixes
+- Ignore OperationCanceledException while closing Message Pump. [PR 8449](https://github.com/Azure/azure-sdk-for-net/pull/8449)
+
 # 4.1.0
+## Improvements
+- Support for creation of `SqlFilter` for subscriptions with parameter of type `TimeSpan`. [PR 7325](https://github.com/Azure/azure-sdk-for-net/pull/7325)
+
 ## Bug fixes
 - Fix bug from RBAC which points to the incorrect audience [PR 7303](https://github.com/Azure/azure-sdk-for-net/pull/7303)
+- Ensure creation of `AMQP-link` (i.e, any client) to a non-existing subscription throws `MessagingEntityNotFoundException` instead of `ServiceBusCommunicationException` [PR 7942](https://github.com/Azure/azure-sdk-for-net/pull/7942)
+- Avoid reporting `OperationCanceledException` in message pump (invoked via `RegisterMessageHandler`) when the pump is being closed. [PR 7935](https://github.com/Azure/azure-sdk-for-net/pull/7935)
+- Avoid potential dead-locks. [PR 8059](https://github.com/Azure/azure-sdk-for-net/pull/8059)
+- Adding default idle timeout for the underlying `AmqpConnection` object. [PR 7944](https://github.com/Azure/azure-sdk-for-net/pull/7944)
 
 # 4.0.0
 ## Breaking Changes

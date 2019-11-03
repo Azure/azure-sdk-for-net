@@ -23,5 +23,23 @@ namespace Azure
         }
 
         public override Response GetRawResponse() => _response;
+
+        public override string ToString()
+        {
+            return $"Status: {GetRawResponse().Status}, Service returned no content";
+        }
+
+#pragma warning disable CA1064 // Exceptions should be public
+        private class ResponseBodyNotFoundException : Exception
+#pragma warning restore CA1064 // Exceptions should be public
+        {
+            public int Status { get; }
+
+            public ResponseBodyNotFoundException(int status, string message)
+                : base(message)
+            {
+                Status = status;
+            }
+        }
     }
 }

@@ -12,84 +12,136 @@ namespace Azure.Identity
 {
     /// <summary>
     /// A <see cref="TokenCredential"/> implementation which launches the system default browser to interactively authenticate a user, and obtain an access token.
-    /// The browser will only be launched to authenticate the user once, then will silently aquire access tokens through the users refresh token as long as it's valid.
+    /// The browser will only be launched to authenticate the user once, then will silently acquire access tokens through the users refresh token as long as it's valid.
     /// </summary>
-    public class InteractiveBrowserCredential : TokenCredential
+    public class InteractiveBrowserCredential : TokenCredential, IExtendedTokenCredential
     {
-        private readonly IPublicClientApplication _pubApp = null;
+        private readonly MsalPublicClient _client;
+        private readonly CredentialPipeline _pipeline;
         private IAccount _account = null;
-        private readonly IdentityClientOptions _options;
-        private readonly string _clientId;
 
         /// <summary>
-        /// Creates a new InteractiveBrowserCredential which will authenticate users with the specified application.
+        /// Creates a new InteractiveBrowserCredential with the specified options, which will authenticate users.
         /// </summary>
-        /// <param name="clientId">The client id of the application to which the users will authenticate.</param>
-        /// TODO: need to link to info on how the application has to be created to authenticate users, for multiple applications
-        public InteractiveBrowserCredential(string clientId)
-            : this(clientId, null)
+        public InteractiveBrowserCredential()
+            : this(null, Constants.DeveloperSignOnClientId, CredentialPipeline.GetInstance(null))
         {
 
         }
 
         /// <summary>
-        /// Creates a new InteractiveBrowserCredential with the specifeid options, which will authenticate users with the specified application.
+        /// Creates a new InteractiveBrowserCredential with the specified options, which will authenticate users with the specified application.
         /// </summary>
+        /// <param name="clientId">The client id of the application to which the users will authenticate</param>
+        public InteractiveBrowserCredential(string clientId)
+            : this(null, clientId, CredentialPipeline.GetInstance(null))
+        {
+
+        }
+
+        /// <summary>
+        /// Creates a new InteractiveBrowserCredential with the specified options, which will authenticate users with the specified application.
+        /// </summary>
+        /// <param name="tenantId">The tenant id of the application and the users to authenticate. Can be null in the case of multi-tenant applications.</param>
         /// <param name="clientId">The client id of the application to which the users will authenticate</param>
         /// TODO: need to link to info on how the application has to be created to authenticate users, for multiple applications
         /// <param name="options">The client options for the newly created DeviceCodeCredential</param>
-        public InteractiveBrowserCredential(string clientId, IdentityClientOptions options)
+        public InteractiveBrowserCredential(string tenantId, string clientId, TokenCredentialOptions options = default)
+            : this(tenantId, clientId, CredentialPipeline.GetInstance(options))
         {
-            _clientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
+        }
 
-            _options = options ??= new IdentityClientOptions();
+        internal InteractiveBrowserCredential(string tenantId, string clientId, CredentialPipeline pipeline)
+        {
+            if (clientId is null) throw new ArgumentNullException(nameof(clientId));
 
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(_options);
+            _pipeline = pipeline;
 
-            _pubApp = PublicClientApplicationBuilder.Create(_clientId).WithHttpClientFactory(new HttpPipelineClientFactory(pipeline)).WithRedirectUri("http://localhost").Build();
+            _client = _pipeline.CreateMsalPublicClient(clientId, tenantId, "http://localhost");
+        }
+
+        internal InteractiveBrowserCredential(CredentialPipeline pipeline, MsalPublicClient client)
+        {
+            _pipeline = pipeline;
+
+            _client = client;
         }
 
         /// <summary>
-        /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated, otherwise the default browser is launched to authenticate the user.
+        /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated, otherwise the default browser is launched to authenticate the user. This method is called by Azure SDK clients. It isn't intended for use in application code.
         /// </summary>
-        /// <param name="request">The details of the authentication request.</param>
+        /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
-        public override AccessToken GetToken(TokenRequest request, CancellationToken cancellationToken = default)
+        public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return GetTokenAsync(request, cancellationToken).GetAwaiter().GetResult();
+            return GetTokenImplAsync(requestContext, cancellationToken).GetAwaiter().GetResult().GetTokenOrThrow();
         }
 
         /// <summary>
-        /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated, otherwise the default browser is launched to authenticate the user.
+        /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated, otherwise the default browser is launched to authenticate the user. This method is called by Azure SDK clients. It isn't intended for use in application code.
         /// </summary>
-        /// <param name="request">The details of the authentication request.</param>
+        /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
-        public override async Task<AccessToken> GetTokenAsync(TokenRequest request, CancellationToken cancellationToken = default)
+        public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            if (_account != null)
+            return (await GetTokenImplAsync(requestContext, cancellationToken).ConfigureAwait(false)).GetTokenOrThrow();
+        }
+
+        ExtendedAccessToken IExtendedTokenCredential.GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        {
+            return GetTokenImplAsync(requestContext, cancellationToken).GetAwaiter().GetResult();
+        }
+
+        async ValueTask<ExtendedAccessToken> IExtendedTokenCredential.GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        {
+            return await GetTokenImplAsync(requestContext, cancellationToken).ConfigureAwait(false);
+        }
+
+        private async ValueTask<ExtendedAccessToken> GetTokenImplAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        {
+            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("Azure.Identity.InteractiveBrowserCredential.GetToken", requestContext);
+
+            try
             {
-                try
+                if (_account != null)
                 {
-                    AuthenticationResult result = await _pubApp.AcquireTokenSilent(request.Scopes, _account).ExecuteAsync(cancellationToken).ConfigureAwait(false);
+                    try
+                    {
+                        AuthenticationResult result = await _client.AcquireTokenSilentAsync(requestContext.Scopes, _account, cancellationToken).ConfigureAwait(false);
 
-                    return new AccessToken(result.AccessToken, result.ExpiresOn);
+                        return new ExtendedAccessToken(scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn)));
+                    }
+                    catch (MsalUiRequiredException)
+                    {
+                        AccessToken token = await GetTokenViaBrowserLoginAsync(requestContext.Scopes, cancellationToken).ConfigureAwait(false);
+
+                        return new ExtendedAccessToken(scope.Succeeded(token));
+                    }
                 }
-                catch (MsalUiRequiredException)
+                else
                 {
-                    return await GetTokenViaBrowserLoginAsync(request.Scopes, cancellationToken).ConfigureAwait(false);
+                    AccessToken token = await GetTokenViaBrowserLoginAsync(requestContext.Scopes, cancellationToken).ConfigureAwait(false);
+
+                    return new ExtendedAccessToken(scope.Succeeded(token));
                 }
             }
-            else
+            catch (OperationCanceledException e)
             {
-                return await GetTokenViaBrowserLoginAsync(request.Scopes, cancellationToken).ConfigureAwait(false);
+                scope.Failed(e);
+
+                throw;
+            }
+            catch (Exception e)
+            {
+                return new ExtendedAccessToken(scope.Failed(e));
             }
         }
 
         private async Task<AccessToken> GetTokenViaBrowserLoginAsync(string[] scopes, CancellationToken cancellationToken)
         {
-            AuthenticationResult result = await _pubApp.AcquireTokenInteractive(scopes).WithPrompt(Prompt.SelectAccount).ExecuteAsync(cancellationToken).ConfigureAwait(false);
+            AuthenticationResult result = await _client.AcquireTokenInteractiveAsync(scopes, Prompt.SelectAccount, cancellationToken).ConfigureAwait(false);
 
             _account = result.Account;
 

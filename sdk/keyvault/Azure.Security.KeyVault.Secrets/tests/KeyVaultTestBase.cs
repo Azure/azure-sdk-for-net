@@ -47,13 +47,14 @@ namespace Azure.Security.KeyVault.Test
         [TearDown]
         public async Task Cleanup()
         {
+            // TODO: Change to OneTimeTearDown at end of TestFixture and await the LRO for deleting a secret.
             try
             {
                 foreach ((string Name, bool Delete) cleanupItem in _secretsToCleanup)
                 {
                     if (cleanupItem.Delete)
                     {
-                        await Client.DeleteSecretAsync(cleanupItem.Name);
+                        await Client.StartDeleteSecretAsync(cleanupItem.Name);
                     }
                 }
 
@@ -83,7 +84,7 @@ namespace Azure.Security.KeyVault.Test
             _secretsToCleanup.Enqueue((name, delete));
         }
 
-        protected void AssertSecretsEqual(Secret exp, Secret act)
+        protected void AssertSecretsEqual(KeyVaultSecret exp, KeyVaultSecret act)
         {
             Assert.AreEqual(exp.Value, act.Value);
             AssertSecretPropertiesEqual(exp.Properties, act.Properties);
@@ -101,8 +102,33 @@ namespace Azure.Security.KeyVault.Test
             Assert.AreEqual(exp.Managed, act.Managed);
 
             Assert.AreEqual(exp.Enabled, act.Enabled);
-            Assert.AreEqual(exp.Expires, act.Expires);
+            Assert.AreEqual(exp.ExpiresOn, act.ExpiresOn);
             Assert.AreEqual(exp.NotBefore, act.NotBefore);
+        }
+
+        protected static void AssertAreEqual<T>(IReadOnlyCollection<T> exp, IReadOnlyCollection<T> act)
+        {
+            if (exp is null && act is null)
+                return;
+
+            CollectionAssert.AreEqual(exp, act);
+        }
+
+        protected static void AssertAreEqual<TKey, TValue>(IDictionary<TKey, TValue> exp, IDictionary<TKey, TValue> act)
+        {
+            if (exp == null && act == null)
+                return;
+
+            if (exp?.Count != act?.Count)
+                Assert.Fail("Actual count {0} does not match expected count {1}", act?.Count, exp?.Count);
+
+            foreach (KeyValuePair<TKey, TValue> pair in exp)
+            {
+                if (!act.TryGetValue(pair.Key, out TValue value))
+                    Assert.Fail("Actual dictionary does not contain expected key '{0}'", pair.Key);
+
+                Assert.AreEqual(pair.Value, value);
+            }
         }
 
         protected Task WaitForDeletedSecret(string name)

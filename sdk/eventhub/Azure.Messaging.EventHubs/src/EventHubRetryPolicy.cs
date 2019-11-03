@@ -11,9 +11,9 @@ namespace Azure.Messaging.EventHubs
     /// </summary>
     ///
     /// <remarks>
-    ///   It is recommended that consumers not implement custom retry policies but instead
-    ///   configure the default policy by specifying the desired set of retry options when
-    ///   creating an <see cref="EventHubClient" />.
+    ///   It is recommended that developers without advanced needs not implement custom retry
+    ///   policies but instead configure the default policy by specifying the desired set of
+    ///   retry options when creating one of the Event Hubs clients.
     /// </remarks>
     ///
     /// <seealso cref="RetryOptions"/>

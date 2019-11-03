@@ -8,7 +8,7 @@ using System.Security.Cryptography;
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     /// <summary>
-    /// Describes the key wrap algorithm
+    /// An algorithm used for key wrap and unwrap.
     /// </summary>
     public readonly struct KeyWrapAlgorithm : IEquatable<KeyWrapAlgorithm>
     {
@@ -31,50 +31,50 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         }
 
         /// <summary>
-        /// RSA-OAEP
+        /// Gets an RSA-OAEP <see cref="KeyWrapAlgorithm"/>.
         /// </summary>
-        public static readonly KeyWrapAlgorithm RsaOaep = new KeyWrapAlgorithm(RsaOaepValue);
+        public static KeyWrapAlgorithm RsaOaep { get; } = new KeyWrapAlgorithm(RsaOaepValue);
 
         /// <summary>
-        /// RSA1_5
+        /// Gets an RSA1_5 <see cref="KeyWrapAlgorithm"/>.
         /// </summary>
-        public static readonly KeyWrapAlgorithm Rsa15 = new KeyWrapAlgorithm(Rsa15Value);
+        public static KeyWrapAlgorithm Rsa15 { get; } = new KeyWrapAlgorithm(Rsa15Value);
 
         /// <summary>
-        /// RSA-OAEP-256
+        /// Gets an RSA-OAEP-256 <see cref="KeyWrapAlgorithm"/>.
         /// </summary>
-        public static readonly KeyWrapAlgorithm RsaOaep256 = new KeyWrapAlgorithm(RsaOaep256Value);
+        public static KeyWrapAlgorithm RsaOaep256 { get; } = new KeyWrapAlgorithm(RsaOaep256Value);
 
         /// <summary>
-        /// AES 128 Key Wrap
+        /// Gets an AES 128 Key Wrap <see cref="KeyWrapAlgorithm"/>.
         /// </summary>
-        public static readonly KeyWrapAlgorithm A128KW = new KeyWrapAlgorithm(A128KWValue);
+        public static KeyWrapAlgorithm A128KW { get; } = new KeyWrapAlgorithm(A128KWValue);
 
         /// <summary>
-        /// AES 192 Key Wrap
+        /// Gets an AES 192 Key Wrap <see cref="KeyWrapAlgorithm"/>.
         /// </summary>
-        public static readonly KeyWrapAlgorithm A192KW = new KeyWrapAlgorithm(A192KWValue);
+        public static KeyWrapAlgorithm A192KW { get; } = new KeyWrapAlgorithm(A192KWValue);
 
         /// <summary>
-        /// AES 256 Key Wrap
+        /// Gets an AES 256 Key Wrap <see cref="KeyWrapAlgorithm"/>.
         /// </summary>
-        public static readonly KeyWrapAlgorithm A256KW = new KeyWrapAlgorithm(A256KWValue);
+        public static KeyWrapAlgorithm A256KW { get; } = new KeyWrapAlgorithm(A256KWValue);
 
         /// <summary>
         /// Determines if two <see cref="KeyWrapAlgorithm"/> values are the same.
         /// </summary>
-        /// <param name="a">The first <see cref="KeyWrapAlgorithm"/> to compare.</param>
-        /// <param name="b">The second <see cref="KeyWrapAlgorithm"/> to compare.</param>
-        /// <returns>True if <paramref name="a"/> and <paramref name="b"/> are the same; otherwise, false.</returns>
-        public static bool operator ==(KeyWrapAlgorithm a, KeyWrapAlgorithm b) => a.Equals(b);
+        /// <param name="left">The first <see cref="KeyWrapAlgorithm"/> to compare.</param>
+        /// <param name="right">The second <see cref="KeyWrapAlgorithm"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are the same; otherwise, false.</returns>
+        public static bool operator ==(KeyWrapAlgorithm left, KeyWrapAlgorithm right) => left.Equals(right);
 
         /// <summary>
         /// Determines if two <see cref="KeyWrapAlgorithm"/> values are different.
         /// </summary>
-        /// <param name="a">The first <see cref="KeyWrapAlgorithm"/> to compare.</param>
-        /// <param name="b">The second <see cref="KeyWrapAlgorithm"/> to compare.</param>
-        /// <returns>True if <paramref name="a"/> and <paramref name="b"/> are different; otherwise, false.</returns>
-        public static bool operator !=(KeyWrapAlgorithm a, KeyWrapAlgorithm b) => !a.Equals(b);
+        /// <param name="left">The first <see cref="KeyWrapAlgorithm"/> to compare.</param>
+        /// <param name="right">The second <see cref="KeyWrapAlgorithm"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are different; otherwise, false.</returns>
+        public static bool operator !=(KeyWrapAlgorithm left, KeyWrapAlgorithm right) => !left.Equals(right);
 
         /// <summary>
         /// Converts a string to a <see cref="KeyWrapAlgorithm"/>.

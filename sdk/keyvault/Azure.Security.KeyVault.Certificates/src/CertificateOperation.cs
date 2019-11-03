@@ -4,23 +4,27 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 
 namespace Azure.Security.KeyVault.Certificates
 {
     /// <summary>
     /// A long running poller operation which can be used to track the status of a pending key vault certificate operation.
     /// </summary>
-    public class CertificateOperation : Operation<CertificateWithPolicy>
+    public class CertificateOperation : Operation<KeyVaultCertificateWithPolicy>
     {
-        private bool _hasValue = false;
-        private bool _completed = false;
+        private bool _completed;
         private readonly CertificateClient _client;
 
+        private Response _response;
+
+        private KeyVaultCertificateWithPolicy _value;
+
         internal CertificateOperation(Response<CertificateOperationProperties> properties, CertificateClient client)
-            : base(properties.Value.Id.ToString())
         {
             Properties = properties;
 
+            Id = properties.Value.Id.ToString();
             _client = client;
         }
 
@@ -37,7 +41,24 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Specifies whether the Value property can be safely accessed
         /// </summary>
-        public override bool HasValue => _hasValue;
+        public override bool HasValue => _value != null;
+
+        /// <inheritdoc />
+        public override string Id { get; }
+
+        /// <inheritdoc />
+        public override KeyVaultCertificateWithPolicy Value => _value;
+
+        /// <inheritdoc />
+        public override Response GetRawResponse() => _response;
+
+        /// <inheritdoc />
+        public override ValueTask<Response<KeyVaultCertificateWithPolicy>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+            this.DefaultWaitForCompletionAsync(cancellationToken);
+
+        /// <inheritdoc />
+        public override ValueTask<Response<KeyVaultCertificateWithPolicy>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
+            this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
         /// <summary>
         /// Updates the status of the certificate operation
@@ -50,22 +71,20 @@ namespace Azure.Security.KeyVault.Certificates
             {
                 Response<CertificateOperationProperties> pollResponse = _client.GetPendingCertificate(Properties.Name, cancellationToken);
 
-                SetRawResponse(pollResponse.GetRawResponse());
+                _response = pollResponse.GetRawResponse();
 
                 Properties = pollResponse;
             }
 
             if (Properties.Status == "completed")
             {
-                Response<CertificateWithPolicy> getResponse = _client.GetCertificateWithPolicy(Properties.Name, cancellationToken);
+                Response<KeyVaultCertificateWithPolicy> getResponse = _client.GetCertificate(Properties.Name, cancellationToken);
 
-                SetRawResponse(getResponse.GetRawResponse());
+                _response = getResponse.GetRawResponse();
 
-                Value = getResponse.Value;
+                _value = getResponse.Value;
 
                 _completed = true;
-
-                _hasValue = true;
             }
             else if (Properties.Status == "cancelled")
             {
@@ -94,22 +113,20 @@ namespace Azure.Security.KeyVault.Certificates
             {
                 Response<CertificateOperationProperties> pollResponse = await _client.GetPendingCertificateAsync(Properties.Name, cancellationToken).ConfigureAwait(false);
 
-                SetRawResponse(pollResponse.GetRawResponse());
+                _response = pollResponse.GetRawResponse();
 
                 Properties = pollResponse;
             }
 
             if (Properties.Status == "completed")
             {
-                Response<CertificateWithPolicy> getResponse = await _client.GetCertificateWithPolicyAsync(Properties.Name, cancellationToken).ConfigureAwait(false);
+                Response<KeyVaultCertificateWithPolicy> getResponse = await _client.GetCertificateAsync(Properties.Name, cancellationToken).ConfigureAwait(false);
 
-                SetRawResponse(getResponse.GetRawResponse());
+                _response = getResponse.GetRawResponse();
 
-                Value = getResponse.Value;
+                _value = getResponse.Value;
 
                 _completed = true;
-
-                _hasValue = true;
             }
             else if (Properties.Status == "cancelled")
             {

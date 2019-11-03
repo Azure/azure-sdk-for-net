@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Storage.Common;
 
 namespace Azure.Storage
 {
@@ -31,9 +30,6 @@ namespace Azure.Storage
 
             // We'll use the standard RetryPolicy with a few more retries
             options.Retry.MaxRetries = Constants.MaxReliabilityRetries;
-
-            // Disable logging until we fully support redaction
-            options.Diagnostics.IsLoggingEnabled = false;
         }
 
         /// <summary>

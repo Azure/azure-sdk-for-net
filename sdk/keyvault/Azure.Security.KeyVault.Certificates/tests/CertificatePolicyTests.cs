@@ -3,12 +3,42 @@
 
 using System;
 using System.Text.Json;
+using Azure.Security.KeyVault.Tests;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Certificates.Tests
 {
     public class CertificatePolicyTests
     {
+        [Test]
+        public void CertificatePolicyWithSubjectValidation()
+        {
+            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => new CertificatePolicy((string)null, null));
+            Assert.AreEqual("subject", ex.ParamName);
+
+            ex = Assert.Throws<ArgumentException>(() => new CertificatePolicy(string.Empty, null));
+            Assert.AreEqual("subject", ex.ParamName);
+
+            ex = Assert.Throws<ArgumentNullException>(() => new CertificatePolicy("CN=contoso.com", null));
+            Assert.AreEqual("issuerName", ex.ParamName);
+
+            ex = Assert.Throws<ArgumentException>(() => new CertificatePolicy("CN=contoso.com", string.Empty));
+            Assert.AreEqual("issuerName", ex.ParamName);
+        }
+
+        [Test]
+        public void CertificatePolicyWithSubjectAlternativeNamesValidation()
+        {
+            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => new CertificatePolicy((SubjectAlternativeNames)null, null));
+            Assert.AreEqual("subjectAlternativeNames", ex.ParamName);
+
+            ex = Assert.Throws<ArgumentNullException>(() => new CertificatePolicy("CN=contoso.com", null));
+            Assert.AreEqual("issuerName", ex.ParamName);
+
+            ex = Assert.Throws<ArgumentException>(() => new CertificatePolicy("CN=contoso.com", string.Empty));
+            Assert.AreEqual("issuerName", ex.ParamName);
+        }
+
         [Test]
         public void DeserializesSerializesRoundtrip()
         {
@@ -72,11 +102,11 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             Assert.NotNull(policy.LifetimeActions);
             Assert.AreEqual(1, policy.LifetimeActions.Count);
             Assert.AreEqual(80, policy.LifetimeActions[0].LifetimePercentage);
-            Assert.AreEqual(Action.EmailContacts, policy.LifetimeActions[0].Action);
+            Assert.AreEqual(CertificatePolicyAction.EmailContacts, policy.LifetimeActions[0].Action);
             Assert.AreEqual("Unknown", policy.IssuerName);
             Assert.IsTrue(policy.Enabled);
-            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1482188947), policy.Created);
-            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1482188947), policy.Updated);
+            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1482188947), policy.CreatedOn);
+            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1482188947), policy.UpdatedOn);
 
             using (JsonStream json = new JsonStream())
             {
@@ -99,8 +129,6 @@ namespace Azure.Security.KeyVault.Certificates.Tests
   },
   ""x509_props"": {
     ""subject"": ""CN=KeyVaultTest"",
-    ""key_usage"": [],
-    ""ekus"": [],
     ""validity_months"": 297
   },
   ""issuer"": {

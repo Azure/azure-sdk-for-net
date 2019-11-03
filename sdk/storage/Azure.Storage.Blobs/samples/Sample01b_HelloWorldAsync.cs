@@ -111,15 +111,17 @@ namespace Azure.Storage.Blobs.Samples
         [Test]
         public async Task DownloadImageAsync()
         {
-            // Get a temporary path on disk where we can download the file
             string downloadPath = CreateTempPath();
+            #region Snippet:SampleSnippetsBlob_Async
+            // Get a temporary path on disk where we can download the file
+            //@@ string downloadPath = "hello.jpg";
 
             // Download the public blob at https://aka.ms/bloburl
-            BlobDownloadInfo download = await new BlobClient(new Uri("https://aka.ms/bloburl")).DownloadAsync();
-            using (FileStream file = File.OpenWrite(downloadPath))
-            {
-                await download.Content.CopyToAsync(file);
-            }
+            await new BlobClient(new Uri("https://aka.ms/bloburl")).DownloadToAsync(downloadPath);
+            #endregion
+
+            Assert.IsTrue(File.ReadAllBytes(downloadPath).Length > 0);
+            File.Delete("hello.jpg");
         }
 
         /// <summary>
@@ -178,12 +180,12 @@ namespace Azure.Storage.Blobs.Samples
                 // Try to create the container again
                 await container.CreateAsync();
             }
-            catch (StorageRequestFailedException ex)
+            catch (RequestFailedException ex)
                 when (ex.ErrorCode == BlobErrorCode.ContainerAlreadyExists)
             {
                 // Ignore any errors if the container already exists
             }
-            catch (StorageRequestFailedException ex)
+            catch (RequestFailedException ex)
             {
                 Assert.Fail($"Unexpected error: {ex}");
             }

@@ -4,14 +4,18 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Security.KeyVault.Certificates
 {
     /// <summary>
-    /// A policy which governs the lifecycle a properties of a certificate managed by Azure Key Vault
+    /// A policy which governs the lifecycle a properties of a certificate managed by Azure Key Vault.
     /// </summary>
     public class CertificatePolicy : IJsonSerializable, IJsonDeserializable
     {
+        private const string DefaultSubject = "CN=DefaultPolicy";
+        private const string DefaultIssuerName = "Self";
+
         private const string KeyTypePropertyName = "kty";
         private const string ReuseKeyPropertyName = "reuse_key";
         private const string ExportablePropertyName = "exportable";
@@ -59,6 +63,48 @@ namespace Azure.Security.KeyVault.Certificates
         private static readonly JsonEncodedText s_enabledPropertyNameBytes = JsonEncodedText.Encode(EnabledPropertyName);
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="CertificatePolicy"/> class.
+        /// </summary>
+        /// <param name="subject">The subject name of the certificate, such as "CN=contoso.com".</param>
+        /// <param name="issuerName">The name of an issuer for the certificate, including values from <see cref="WellKnownIssuerNames"/>.</param>
+        /// <exception cref="ArgumentException"><paramref name="subject"/> or <paramref name="issuerName"/> is empty.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="subject"/> or <paramref name="issuerName"/> is null.</exception>
+        public CertificatePolicy(string subject, string issuerName)
+        {
+            Argument.AssertNotNullOrEmpty(subject, nameof(subject));
+            Argument.AssertNotNullOrEmpty(issuerName, nameof(issuerName));
+
+            Subject = Subject;
+            IssuerName = issuerName;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CertificatePolicy"/> class.
+        /// </summary>
+        /// <param name="subjectAlternativeNames">The subject alternative names (SANs) of the certificate</param>
+        /// <param name="issuerName">The name of an issuer for the certificate, including values from <see cref="WellKnownIssuerNames"/>.</param>
+        /// <exception cref="ArgumentException"><paramref name="issuerName"/> is empty.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="subjectAlternativeNames"/> or <paramref name="issuerName"/> is null.</exception>
+        public CertificatePolicy(SubjectAlternativeNames subjectAlternativeNames, string issuerName)
+        {
+            Argument.AssertNotNull(subjectAlternativeNames, nameof(subjectAlternativeNames));
+            Argument.AssertNotNullOrEmpty(issuerName, nameof(issuerName));
+
+            SubjectAlternativeNames = subjectAlternativeNames;
+            IssuerName = issuerName;
+        }
+
+        internal CertificatePolicy()
+        {
+        }
+
+        /// <summary>
+        /// Gets a new <see cref="CertificatePolicy"/> suitable for self-signed certificate requests.
+        /// You should change the <see cref="Subject"/> before passing this policy to create a certificate.
+        /// </summary>
+        public static CertificatePolicy Default => new CertificatePolicy(DefaultSubject, DefaultIssuerName);
+
+        /// <summary>
         /// The type of backing key to be generated when issuing new certificates
         /// </summary>
         public CertificateKeyType? KeyType { get; set; }
@@ -86,17 +132,17 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// The subject name of a certificate
         /// </summary>
-        public string Subject { get; set; }
+        public string Subject { get; internal set; }
 
         /// <summary>
-        /// The subject alternative names (SAN) of a certificate
+        /// The subject alternative names (SANs) of a certificate
         /// </summary>
-        public SubjectAlternativeNames SubjectAlternativeNames { get; set; }
+        public SubjectAlternativeNames SubjectAlternativeNames { get; internal set; }
 
         /// <summary>
         /// The name of an issuer for a certificate
         /// </summary>
-        public string IssuerName { get; set; }
+        public string IssuerName { get; internal set; }
 
         /// <summary>
         /// Content type of the certificate when downloaded from getSecret.
@@ -119,34 +165,34 @@ namespace Azure.Security.KeyVault.Certificates
         public int? ValidityInMonths { get; set; }
 
         /// <summary>
-        /// Specifies if the certificate is currently enabled.
+        /// Gets or sets a value indicating whether the certificate is currently enabled. If null, the server default will be used.
         /// </summary>
         public bool? Enabled { get; set; }
 
         /// <summary>
         /// The last updated time in UTC.
         /// </summary>
-        public DateTimeOffset? Updated { get; private set; }
+        public DateTimeOffset? UpdatedOn { get; internal set; }
 
         /// <summary>
         /// The creation time in UTC.
         /// </summary>
-        public DateTimeOffset? Created { get; private set; }
+        public DateTimeOffset? CreatedOn { get; internal set; }
 
         /// <summary>
         /// The allowed usages for the key of the certificate
         /// </summary>
-        public IList<CertificateKeyUsage> KeyUsage { get; set; }
+        public IList<CertificateKeyUsage> KeyUsage { get; } = new List<CertificateKeyUsage>();
 
         /// <summary>
         /// The allowed enhanced key usages (EKUs) of the certificate
         /// </summary>
-        public IList<string> EnhancedKeyUsage { get; set; }
+        public IList<string> EnhancedKeyUsage { get; } = new List<string>();
 
         /// <summary>
         /// Actions to be executed at specified points in the certificates lifetime
         /// </summary>
-        public IList<LifetimeAction> LifetimeActions { get; set; }
+        public IList<LifetimeAction> LifetimeActions { get; } = new List<LifetimeAction>();
 
         void IJsonDeserializable.ReadProperties(JsonElement json)
         {
@@ -175,7 +221,6 @@ namespace Azure.Security.KeyVault.Certificates
                         break;
 
                     case LifetimeActionsPropertyName:
-                        LifetimeActions = new List<LifetimeAction>();
                         foreach (JsonElement actionElem in prop.Value.EnumerateArray())
                         {
                             LifetimeActions.Add(LifetimeAction.FromJsonObject(actionElem));
@@ -209,7 +254,7 @@ namespace Azure.Security.KeyVault.Certificates
             }
 
             // X509 Props
-            if (Subject != null || SubjectAlternativeNames != null || KeyUsage != null || EnhancedKeyUsage != null || ValidityInMonths.HasValue)
+            if (Subject != null || SubjectAlternativeNames != null || !KeyUsage.IsNullOrEmpty() || !EnhancedKeyUsage.IsNullOrEmpty() || ValidityInMonths.HasValue)
             {
                 json.WriteStartObject(s_x509PropsPropertyNameBytes);
 
@@ -237,7 +282,7 @@ namespace Azure.Security.KeyVault.Certificates
                 json.WriteEndObject();
             }
 
-            if (LifetimeActions != null)
+            if (!LifetimeActions.IsNullOrEmpty())
             {
                 json.WriteStartArray(s_lifetimeActionsPropertyNameBytes);
 
@@ -346,7 +391,6 @@ namespace Azure.Security.KeyVault.Certificates
                         break;
 
                     case KeyUsagePropertyName:
-                        KeyUsage = new List<CertificateKeyUsage>();
                         foreach (JsonElement usageElem in prop.Value.EnumerateArray())
                         {
                             KeyUsage.Add(usageElem.GetString());
@@ -354,7 +398,6 @@ namespace Azure.Security.KeyVault.Certificates
                         break;
 
                     case EkusPropertyName:
-                        EnhancedKeyUsage = new List<string>();
                         foreach (JsonElement usageElem in prop.Value.EnumerateArray())
                         {
                             EnhancedKeyUsage.Add(usageElem.GetString());
@@ -384,7 +427,7 @@ namespace Azure.Security.KeyVault.Certificates
                 json.WriteEndObject();
             }
 
-            if (KeyUsage != null)
+            if (!KeyUsage.IsNullOrEmpty())
             {
                 json.WriteStartArray(s_keyUsagePropertyNameBytes);
                 foreach (CertificateKeyUsage usage in KeyUsage)
@@ -394,7 +437,7 @@ namespace Azure.Security.KeyVault.Certificates
                 json.WriteEndArray();
             }
 
-            if (EnhancedKeyUsage != null)
+            if (!EnhancedKeyUsage.IsNullOrEmpty())
             {
                 json.WriteStartArray(s_ekusPropertyNameBytes);
                 foreach (var usage in EnhancedKeyUsage)
@@ -460,11 +503,11 @@ namespace Azure.Security.KeyVault.Certificates
                         break;
 
                     case CreatedPropertyName:
-                        Created = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                        CreatedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                         break;
 
                     case UpdatedPropertyName:
-                        Updated = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                        UpdatedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                         break;
                 }
             }

@@ -9,7 +9,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Http;
 
 namespace Azure.Data.AppConfiguration
 {
@@ -23,7 +22,6 @@ namespace Azure.Data.AppConfiguration
         private const string KeyQueryFilter = "key";
         private const string LabelQueryFilter = "label";
         private const string FieldsQueryFilter = "$select";
-        private const string ETag = "ETag";
 
         private static readonly char[] s_reservedCharacters = new char[] { ',', '\\' };
 
@@ -35,12 +33,12 @@ namespace Azure.Data.AppConfiguration
         private static async Task<Response<ConfigurationSetting>> CreateResponseAsync(Response response, CancellationToken cancellation)
         {
             ConfigurationSetting result = await ConfigurationServiceSerializer.DeserializeSettingAsync(response.ContentStream, cancellation).ConfigureAwait(false);
-            return Response.FromValue(response, result);
+            return Response.FromValue(result, response);
         }
 
         private static Response<ConfigurationSetting> CreateResponse(Response response)
         {
-            return Response.FromValue(response, ConfigurationServiceSerializer.DeserializeSetting(response.ContentStream));
+            return Response.FromValue(ConfigurationServiceSerializer.DeserializeSetting(response.ContentStream), response);
         }
 
         private static Response<ConfigurationSetting> CreateResourceModifiedResponse(Response response)
@@ -95,7 +93,7 @@ namespace Azure.Data.AppConfiguration
         private void BuildUriForKvRoute(RequestUriBuilder builder, string key, string label)
         {
             builder.Reset(_baseUri);
-            builder.AppendPath(KvRoute);
+            builder.AppendPath(KvRoute, escape: false);
             builder.AppendPath(key);
 
             if (label != null)
@@ -107,7 +105,7 @@ namespace Azure.Data.AppConfiguration
         private void BuildUriForLocksRoute(RequestUriBuilder builder, string key, string label)
         {
             builder.Reset(_baseUri);
-            builder.AppendPath(LocksRoute);
+            builder.AppendPath(LocksRoute, escape: false);
             builder.AppendPath(key);
 
             if (label != null)
@@ -155,53 +153,35 @@ namespace Azure.Data.AppConfiguration
 
             if (selector.Labels.Count > 0)
             {
-                var labelsCopy = new List<string>();
-                foreach (var label in selector.Labels)
-                {
-                    if (string.IsNullOrEmpty(label))
-                    {
-                        labelsCopy.Add("\0");
-                    }
-                    else
-                    {
-                        labelsCopy.Add(EscapeReservedCharacters(label));
-                    }
-                }
+                var labelsCopy = selector.Labels.Select(label => string.IsNullOrEmpty(label) ? "\0" : EscapeReservedCharacters(label));
                 var labels = string.Join(",", labelsCopy);
                 builder.AppendQuery(LabelQueryFilter, labels);
             }
 
             if (selector.Fields != SettingFields.All)
             {
-                var filter = selector.Fields.ToString().ToLowerInvariant();
+                var filter = selector.Fields.ToString().ToLowerInvariant().Replace("isreadonly", "locked");
                 builder.AppendQuery(FieldsQueryFilter, filter);
             }
 
             if (!string.IsNullOrEmpty(pageLink))
             {
-                builder.AppendQuery("after", pageLink);
+                builder.AppendQuery("after", pageLink, escapeValue: false);
             }
         }
 
         private void BuildUriForGetBatch(RequestUriBuilder builder, SettingSelector selector, string pageLink)
         {
             builder.Reset(_baseUri);
-            builder.AppendPath(KvRoute);
+            builder.AppendPath(KvRoute, escape: false);
             BuildBatchQuery(builder, selector, pageLink);
         }
 
         private void BuildUriForRevisions(RequestUriBuilder builder, SettingSelector selector, string pageLink)
         {
             builder.Reset(_baseUri);
-            builder.AppendPath(RevisionsRoute);
+            builder.AppendPath(RevisionsRoute, escape: false);
             BuildBatchQuery(builder, selector, pageLink);
-        }
-
-        private static ReadOnlyMemory<byte> Serialize(ConfigurationSetting setting)
-        {
-            var writer = new ArrayBufferWriter<byte>();
-            ConfigurationServiceSerializer.Serialize(setting, writer);
-            return writer.WrittenMemory;
         }
 
         #region nobody wants to see these

@@ -34,16 +34,19 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// Initializes a new instance of the
         /// AzureWorkloadPointInTimeRestoreRequest class.
         /// </summary>
-        /// <param name="recoveryType">OLR/ALR, RestoreDisks is invalid option.
-        /// Possible values include: 'Invalid', 'OriginalLocation',
-        /// 'AlternateLocation', 'RestoreDisks'</param>
+        /// <param name="recoveryType">Type of this recovery. Possible values
+        /// include: 'Invalid', 'OriginalLocation', 'AlternateLocation',
+        /// 'RestoreDisks', 'Offline'</param>
         /// <param name="sourceResourceId">Fully qualified ARM ID of the VM on
         /// which workload that was running is being recovered.</param>
         /// <param name="propertyBag">Workload specific property bag.</param>
         /// <param name="targetInfo">Details of target database</param>
+        /// <param name="recoveryMode">Defines whether the current recovery
+        /// mode is file restore or database restore. Possible values include:
+        /// 'Invalid', 'FileRecovery', 'WorkloadRecovery'</param>
         /// <param name="pointInTime">PointInTime value</param>
-        public AzureWorkloadPointInTimeRestoreRequest(string recoveryType = default(string), string sourceResourceId = default(string), IDictionary<string, string> propertyBag = default(IDictionary<string, string>), TargetRestoreInfo targetInfo = default(TargetRestoreInfo), System.DateTime? pointInTime = default(System.DateTime?))
-            : base(recoveryType, sourceResourceId, propertyBag, targetInfo)
+        public AzureWorkloadPointInTimeRestoreRequest(string recoveryType = default(string), string sourceResourceId = default(string), IDictionary<string, string> propertyBag = default(IDictionary<string, string>), TargetRestoreInfo targetInfo = default(TargetRestoreInfo), string recoveryMode = default(string), System.DateTime? pointInTime = default(System.DateTime?))
+            : base(recoveryType, sourceResourceId, propertyBag, targetInfo, recoveryMode)
         {
             PointInTime = pointInTime;
             CustomInit();

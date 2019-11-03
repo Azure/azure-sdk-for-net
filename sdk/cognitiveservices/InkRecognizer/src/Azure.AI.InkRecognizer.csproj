@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--<PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>7.1</LangVersion>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+  </PropertyGroup>-->
+
+  <PropertyGroup>
+    <Description>This is the Microsoft Ink Recognization Service client library</Description>
+    <AssemblyTitle>Microsoft Azure Cognitive Services Ink Recognization Client Library</AssemblyTitle>
+    <Version>1.0.0-preview.1</Version>    
+    <!--<PackageTags>InkRecognizer\azure-ai-inkrecognizer;InkRecognizer;azure-ai-inkrecognizer;</PackageTags>-->
+
+    <!--<PackageTags>InkRecognizer;InkRecognizer;azure-ai-inkrecognizer;</PackageTags>-->
+    <PackageReleaseNotes>
+      <![CDATA[
+      ]]>
+    </PackageReleaseNotes>
+
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <NoWarn>$(NoWarn);3021</NoWarn>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile></DocumentationFile>
+    </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="StrokeStore.cs" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <!--<PackageReference Include="Azure.Core" Version="1.0.0-preview.6" />-->
+    <!--<PackageReference Include="System.Text.Json" Version="4.6.0-preview6.19303.8" />-->
+    <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="Azure.Core" />
+  </ItemGroup>
+</Project>

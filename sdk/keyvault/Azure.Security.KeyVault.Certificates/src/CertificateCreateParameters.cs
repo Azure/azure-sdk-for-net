@@ -25,11 +25,11 @@ namespace Azure.Security.KeyVault.Certificates
             Tags = tags;
         }
 
-        public CertificatePolicy Policy { get; set; }
+        public CertificatePolicy Policy { get; }
 
-        public bool? Enabled { get; set; }
+        public bool? Enabled { get; }
 
-        public IDictionary<string, string> Tags { get; set; }
+        public IDictionary<string, string> Tags { get; }
 
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {
@@ -51,7 +51,7 @@ namespace Azure.Security.KeyVault.Certificates
                 json.WriteEndObject();
             }
 
-            if (Tags != null)
+            if (!Tags.IsNullOrEmpty())
             {
                 json.WriteStartObject(s_tagsPropertyNameBytes);
 

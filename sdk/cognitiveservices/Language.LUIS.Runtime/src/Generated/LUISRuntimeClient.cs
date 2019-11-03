@@ -180,7 +180,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime
         private void Initialize()
         {
             Prediction = new PredictionOperations(this);
-            BaseUri = "{Endpoint}/luis/v3.0-preview";
+            BaseUri = "{Endpoint}/luis/prediction/v3.0";
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,

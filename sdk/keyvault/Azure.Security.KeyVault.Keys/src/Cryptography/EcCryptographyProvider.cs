@@ -4,65 +4,69 @@
 using System;
 using System.Security.Cryptography;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure.Core;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
-    internal class EcCryptographyProvider : ICryptographyProvider
+    internal class EcCryptographyProvider : LocalCryptographyProvider
     {
         private readonly KeyCurveName _curve;
-        private readonly JsonWebKey _jwk;
+        private readonly JsonWebKey _keyMaterial;
 
-        internal EcCryptographyProvider(JsonWebKey jwk)
+        internal EcCryptographyProvider(KeyVaultKey key) : base(key)
         {
-            Argument.AssertNotNull(jwk, nameof(jwk));
+            // Unset the KeyMaterial since we want to conditionally set it if supported.
+            KeyMaterial = null;
 
             // Only set the JWK if we support the algorithm locally.
-            if (jwk.CurveName.HasValue)
+            JsonWebKey keyMaterial = key.Key;
+            if (keyMaterial != null && keyMaterial.CurveName.HasValue)
             {
-                _curve = jwk.CurveName.Value;
+                // Save the key material to use for operational support validation.
+                _keyMaterial = keyMaterial;
+
+                _curve = keyMaterial.CurveName.Value;
                 if (_curve.IsSupported)
                 {
-                    // TODO: Log that we don't support the algorithm locally.
-                    _jwk = jwk;
+                    KeyMaterial = keyMaterial;
                 }
             }
         }
 
-        public bool ShouldRemote => _jwk.Id != null;
-
-        public bool SupportsOperation(KeyOperation operation)
+        public override bool SupportsOperation(KeyOperation operation)
         {
-            if (_jwk != null)
+            if (_keyMaterial != null)
             {
                 if (operation == KeyOperation.Sign || operation == KeyOperation.Verify)
                 {
-                    return _jwk.SupportsOperation(operation);
+                    return _keyMaterial.SupportsOperation(operation);
                 }
             }
 
             return false;
         }
 
-        public SignResult Sign(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken)
+        public override SignResult Sign(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(digest, nameof(digest));
 
+            ThrowIfTimeInvalid();
+
             // The JWK is not supported by this client. Send to the server.
-            if (_jwk is null)
+            if (KeyMaterial is null)
             {
+                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(Sign), _curve);
                 return null;
             }
 
             // A private key is required to sign. Send to the server.
-            if (_jwk.Id != null && !_jwk.HasPrivateKey)
+            if (MustRemote)
             {
-                // TODO: Log that we need a private key.
+                KeysEventSource.Singleton.PrivateKeyRequired(nameof(Sign));
                 return null;
             }
 
-            ref readonly KeyCurveName algorithmCurve = ref algorithm.GetEcKeyCurveName();
+            KeyCurveName algorithmCurve = algorithm.GetEcKeyCurveName();
             if (_curve.KeySize != algorithmCurve.KeySize)
             {
                 throw new ArgumentException($"Signature algorithm {algorithm} key size {algorithmCurve.KeySize} does not match underlying key size {_curve.KeySize}");
@@ -73,7 +77,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 throw new ArgumentException($"Signature algorithm {algorithm} key curve name does not correspond to underlying key curve name {_curve}");
             }
 
-            using ECDsa ecdsa = _jwk.ToECDsa(true, false);
+            using ECDsa ecdsa = KeyMaterial.ToECDsa(true, false);
             if (ecdsa is null)
             {
                 return null;
@@ -83,30 +87,25 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             return new SignResult
             {
                 Algorithm = algorithm,
-                KeyId = _jwk.Id,
+                KeyId = KeyMaterial.Id,
                 Signature = signature,
             };
         }
 
-        public Task<SignResult> SignAsync(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken)
-        {
-            SignResult result = Sign(algorithm, digest, cancellationToken);
-            return Task.FromResult(result);
-        }
-
-        public VerifyResult Verify(SignatureAlgorithm algorithm, byte[] digest, byte[] signature, CancellationToken cancellationToken)
+        public override VerifyResult Verify(SignatureAlgorithm algorithm, byte[] digest, byte[] signature, CancellationToken cancellationToken)
         {
             // The JWK is not supported by this client. Send to the server.
             Argument.AssertNotNull(digest, nameof(digest));
             Argument.AssertNotNull(signature, nameof(signature));
 
             // The JWK is not supported by this client. Send to the server.
-            if (_jwk is null)
+            if (KeyMaterial is null)
             {
+                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(Verify), _curve);
                 return null;
             }
 
-            ref readonly KeyCurveName algorithmCurve = ref algorithm.GetEcKeyCurveName();
+            KeyCurveName algorithmCurve = algorithm.GetEcKeyCurveName();
             if (_curve.KeySize != algorithmCurve.KeySize)
             {
                 throw new ArgumentException($"Signature algorithm {algorithm} key size {algorithmCurve.KeySize} does not match underlying key size {_curve.KeySize}");
@@ -117,7 +116,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 throw new ArgumentException($"Signature algorithm {algorithm} key curve name does not correspond to underlying key curve name {_curve}");
             }
 
-            using ECDsa ecdsa = _jwk.ToECDsa(false, false);
+            using ECDsa ecdsa = KeyMaterial.ToECDsa(false, false);
             if (ecdsa is null)
             {
                 return null;
@@ -128,56 +127,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             {
                 Algorithm = algorithm,
                 IsValid = isValid,
-                KeyId = _jwk.Id,
+                KeyId = KeyMaterial.Id,
             };
         }
-
-        public Task<VerifyResult> VerifyAsync(SignatureAlgorithm algorithm, byte[] digest, byte[] signature, CancellationToken cancellationToken)
-        {
-            VerifyResult result = Verify(algorithm, digest, signature, cancellationToken);
-            return Task.FromResult(result);
-        }
-
-#region Unsupported operations
-        DecryptResult ICryptographyProvider.Decrypt(EncryptionAlgorithm algorithm, byte[] ciphertext, byte[] iv, byte[] authenticationData, byte[] authenticationTag, CancellationToken cancellationToken)
-        {
-            throw new NotSupportedException();
-        }
-
-        Task<DecryptResult> ICryptographyProvider.DecryptAsync(EncryptionAlgorithm algorithm, byte[] ciphertext, byte[] iv, byte[] authenticationData, byte[] authenticationTag, CancellationToken cancellationToken)
-        {
-            throw new NotSupportedException();
-        }
-
-        EncryptResult ICryptographyProvider.Encrypt(EncryptionAlgorithm algorithm, byte[] plaintext, byte[] iv, byte[] authenticationData, CancellationToken cancellationToken)
-        {
-            throw new NotSupportedException();
-        }
-
-        Task<EncryptResult> ICryptographyProvider.EncryptAsync(EncryptionAlgorithm algorithm, byte[] plaintext, byte[] iv, byte[] authenticationData, CancellationToken cancellationToken)
-        {
-            throw new NotSupportedException();
-        }
-
-        UnwrapResult ICryptographyProvider.UnwrapKey(KeyWrapAlgorithm algorithm, byte[] encryptedKey, CancellationToken cancellationToken)
-        {
-            throw new NotSupportedException();
-        }
-
-        Task<UnwrapResult> ICryptographyProvider.UnwrapKeyAsync(KeyWrapAlgorithm algorithm, byte[] encryptedKey, CancellationToken cancellationToken)
-        {
-            throw new NotSupportedException();
-        }
-
-        WrapResult ICryptographyProvider.WrapKey(KeyWrapAlgorithm algorithm, byte[] key, CancellationToken cancellationToken)
-        {
-            throw new NotSupportedException();
-        }
-
-        Task<WrapResult> ICryptographyProvider.WrapKeyAsync(KeyWrapAlgorithm algorithm, byte[] key, CancellationToken cancellationToken)
-        {
-            throw new NotSupportedException();
-        }
-#endregion
     }
 }

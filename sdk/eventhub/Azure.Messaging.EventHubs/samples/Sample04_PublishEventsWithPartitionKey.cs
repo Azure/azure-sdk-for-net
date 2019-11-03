@@ -36,14 +36,13 @@ namespace Azure.Messaging.EventHubs.Samples
         public async Task RunAsync(string connectionString,
                                    string eventHubName)
         {
-            // We will start by creating a client and a producer, each using their default set of options.
+            // We will start by creating a producer client using its default set of options.
 
-            await using (var client = new EventHubClient(connectionString, eventHubName))
-            await using (EventHubProducer producer = client.CreateProducer())
+            await using (var producerClient = new EventHubProducerClient(connectionString, eventHubName))
             {
-                // When an Event Hub producer is not associated with any specific partition, it may be desirable to request that
-                // the Event Hubs service keep different events or batches of events together on the same partition.  This can be
-                // accomplished by setting a partition key when publishing the events.
+                // When publishing events with a producer client it may be desirable to request that the Event Hubs service keep
+                // different events or batches of events together on the same partition.  This can be accomplished by setting a
+                // partition key when publishing the events.
                 //
                 // The partition key is NOT the identifier of a specific partition.  Rather, it is an arbitrary piece of string data
                 // that Event Hubs uses as the basis to compute a hash value.  Event Hubs will associate the hash value with a specific
@@ -68,12 +67,12 @@ namespace Azure.Messaging.EventHubs.Samples
                     PartitionKey = "Any Value Will Do..."
                 };
 
-                await producer.SendAsync(eventBatch, sendOptions);
+                await producerClient.SendAsync(eventBatch, sendOptions);
 
                 Console.WriteLine("The event batch has been published.");
             }
 
-            // At this point, our client and producer have passed their "using" scope and have safely been disposed of.  We
+            // At this point, our client has passed its "using" scope and have safely been disposed of.  We
             // have no further obligations.
 
             Console.WriteLine();

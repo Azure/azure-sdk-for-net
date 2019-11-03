@@ -850,13 +850,13 @@ function getOperationParameters(project: IProject, info: IServiceInfo, path: tem
             external: true,
             namespace: 'Azure.Core.Pipeline',
             properties: { },
-            xml: { }
+            xml: { },
         },
         trace: false
     });
 
     return parameters;
-    
+
     // Replace any existing parameters or add them to the end of the list
     function addOrReplaceParameter(param: IParameter): void {
         const existing = parameters.findIndex(p => p.name === param.name && p.location === param.location);

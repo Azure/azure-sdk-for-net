@@ -34,7 +34,7 @@ namespace Azure.Storage.Blobs.Models
         public CustomerProvidedKey(string key)
         {
             EncryptionKey = key;
-            EncryptionAlgorithm = EncryptionAlgorithmType.AES256;
+            EncryptionAlgorithm = EncryptionAlgorithmType.Aes256;
             using var sha256 = SHA256.Create();
             var encodedHash = sha256.ComputeHash(Convert.FromBase64String(key));
             EncryptionKeyHash = Convert.ToBase64String(encodedHash);

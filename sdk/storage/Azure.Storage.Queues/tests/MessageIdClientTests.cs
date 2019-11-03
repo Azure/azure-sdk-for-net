@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -22,160 +22,146 @@ namespace Azure.Storage.Queues.Test
         public async Task DeleteAsync()
         {
             // Arrange
-            using (GetNewQueue(out QueueClient queue))
-            {
-                Models.EnqueuedMessage enqueuedMessage = (await queue.EnqueueMessageAsync(string.Empty)).Value;
+            await using DisposingQueue test = await GetTestQueueAsync();
+            Models.SendReceipt enqueuedMessage = (await test.Queue.SendMessageAsync(string.Empty)).Value;
 
-                // Act
-                Response result = await queue.DeleteMessageAsync(enqueuedMessage.MessageId, enqueuedMessage.PopReceipt);
+            // Act
+            Response result = await test.Queue.DeleteMessageAsync(enqueuedMessage.MessageId, enqueuedMessage.PopReceipt);
 
-                // Assert
-                Assert.IsNotNull(result.Headers.RequestId);
-            }
+            // Assert
+            Assert.IsNotNull(result.Headers.RequestId);
         }
 
         [Test]
         public async Task DeleteAsync_Error()
         {
             // Arrange
-            using (GetNewQueue(out QueueClient queue))
-            {
-                // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    queue.DeleteMessageAsync(GetNewMessageId(), GetNewString()),
-                    actualException => Assert.AreEqual("MessageNotFound", actualException.ErrorCode));
-            }
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                test.Queue.DeleteMessageAsync(GetNewMessageId(), GetNewString()),
+                actualException => Assert.AreEqual("MessageNotFound", actualException.ErrorCode));
         }
 
         [Test]
         public async Task DeleteAsync_DeletePeek()
         {
             // Arrange
-            using (GetNewQueue(out QueueClient queue))
-            {
-                Models.EnqueuedMessage enqueuedMessage = (await queue.EnqueueMessageAsync(string.Empty)).Value;
+            await using DisposingQueue test = await GetTestQueueAsync();
+            Models.SendReceipt enqueuedMessage = (await test.Queue.SendMessageAsync(string.Empty)).Value;
 
-                // Act
-                Response result = await queue.DeleteMessageAsync(enqueuedMessage.MessageId, enqueuedMessage.PopReceipt);
+            // Act
+            Response result = await test.Queue.DeleteMessageAsync(enqueuedMessage.MessageId, enqueuedMessage.PopReceipt);
 
-                // Assert
-                await queue.PeekMessagesAsync();
-                Assert.IsNotNull(result.Headers.RequestId);
-            }
+            // Assert
+            await test.Queue.PeekMessagesAsync();
+            Assert.IsNotNull(result.Headers.RequestId);
         }
 
         [Test]
         public async Task UpdateAsync_Update()
         {
             // Arrange
-            using (GetNewQueue(out QueueClient queue))
-            {
-                var message0 = "foo";
-                var message1 = "bar";
+            await using DisposingQueue test = await GetTestQueueAsync();
 
-                Models.EnqueuedMessage enqueuedMessage = (await queue.EnqueueMessageAsync(message0)).Value;
+            var message0 = "foo";
+            var message1 = "bar";
+            Models.SendReceipt enqueuedMessage = (await test.Queue.SendMessageAsync(message0)).Value;
 
-                // Act
-                Response<Models.UpdatedMessage> result = await queue.UpdateMessageAsync(
-                    message1,
-                    enqueuedMessage.MessageId,
-                    enqueuedMessage.PopReceipt,
-                    new TimeSpan(100));
+            // Act
+            Response<Models.UpdateReceipt> result = await test.Queue.UpdateMessageAsync(
+                enqueuedMessage.MessageId,
+                enqueuedMessage.PopReceipt,
+                message1,
+                new TimeSpan(100));
 
-                // Assert
-                Assert.IsNotNull(result.GetRawResponse().Headers.RequestId);
-            }
+            // Assert
+            Assert.IsNotNull(result.GetRawResponse().Headers.RequestId);
         }
 
         [Test]
         public async Task UpdateAsync_Min()
         {
             // Arrange
-            using (GetNewQueue(out QueueClient queue))
-            {
-                var message0 = "foo";
-                var message1 = "bar";
+            await using DisposingQueue test = await GetTestQueueAsync();
 
-                Models.EnqueuedMessage enqueuedMessage = (await queue.EnqueueMessageAsync(message0)).Value;
+            var message0 = "foo";
+            var message1 = "bar";
+            Models.SendReceipt enqueuedMessage = (await test.Queue.SendMessageAsync(message0)).Value;
 
-                // Act
-                Response<Models.UpdatedMessage> result = await queue.UpdateMessageAsync(
-                    message1,
-                    enqueuedMessage.MessageId,
-                    enqueuedMessage.PopReceipt);
+            // Act
+            Response<Models.UpdateReceipt> result = await test.Queue.UpdateMessageAsync(
+                enqueuedMessage.MessageId,
+                enqueuedMessage.PopReceipt,
+                message1);
 
-                // Assert
-                Assert.IsNotNull(result.GetRawResponse().Headers.RequestId);
-            }
+            // Assert
+            Assert.IsNotNull(result.GetRawResponse().Headers.RequestId);
         }
 
         [Test]
         public async Task UpdateAsync_UpdateDequeuedMessage()
         {
-            using (GetNewQueue(out QueueClient queue))
-            {
-                var message0 = "foo";
-                var message1 = "bar";
+            await using DisposingQueue test = await GetTestQueueAsync();
 
-                await queue.EnqueueMessageAsync(message0);
-                Models.DequeuedMessage message = (await queue.DequeueMessagesAsync(1)).Value.First();
+            var message0 = "foo";
+            var message1 = "bar";
 
-                Response<Models.UpdatedMessage> update = await queue.UpdateMessageAsync(
-                    message1,
-                    message.MessageId,
-                    message.PopReceipt);
+            await test.Queue.SendMessageAsync(message0);
+            Models.QueueMessage message = (await test.Queue.ReceiveMessagesAsync(1)).Value.First();
 
-                Assert.AreNotEqual(update.Value.PopReceipt, message.PopReceipt);
-                Assert.AreNotEqual(update.Value.TimeNextVisible, message.TimeNextVisible);
+            Response<Models.UpdateReceipt> update = await test.Queue.UpdateMessageAsync(
+                message.MessageId,
+                message.PopReceipt,
+                message1);
 
-                Models.DequeuedMessage newMessage = message.Update(update);
-                Assert.AreEqual(message.MessageId, newMessage.MessageId);
-                Assert.AreEqual(message.MessageText, newMessage.MessageText);
-                Assert.AreEqual(message.InsertionTime, newMessage.InsertionTime);
-                Assert.AreEqual(message.ExpirationTime, newMessage.ExpirationTime);
-                Assert.AreEqual(message.DequeueCount, newMessage.DequeueCount);
-                Assert.AreNotEqual(message.PopReceipt, newMessage.PopReceipt);
-                Assert.AreNotEqual(message.TimeNextVisible, newMessage.TimeNextVisible);
-                Assert.AreEqual(update.Value.PopReceipt, newMessage.PopReceipt);
-                Assert.AreEqual(update.Value.TimeNextVisible, newMessage.TimeNextVisible);
-            }
+            Assert.AreNotEqual(update.Value.PopReceipt, message.PopReceipt);
+            Assert.AreNotEqual(update.Value.NextVisibleOn, message.NextVisibleOn);
+
+            Models.QueueMessage newMessage = message.Update(update);
+            Assert.AreEqual(message.MessageId, newMessage.MessageId);
+            Assert.AreEqual(message.MessageText, newMessage.MessageText);
+            Assert.AreEqual(message.InsertedOn, newMessage.InsertedOn);
+            Assert.AreEqual(message.ExpiresOn, newMessage.ExpiresOn);
+            Assert.AreEqual(message.DequeueCount, newMessage.DequeueCount);
+            Assert.AreNotEqual(message.PopReceipt, newMessage.PopReceipt);
+            Assert.AreNotEqual(message.NextVisibleOn, newMessage.NextVisibleOn);
+            Assert.AreEqual(update.Value.PopReceipt, newMessage.PopReceipt);
+            Assert.AreEqual(update.Value.NextVisibleOn, newMessage.NextVisibleOn);
         }
 
         [Test]
         public async Task UpdateAsync_UpdatePeek()
         {
             // Arrange
-            using (GetNewQueue(out QueueClient queue))
-            {
-                var message0 = "foo";
-                var message1 = "bar";
+            await using DisposingQueue test = await GetTestQueueAsync();
 
-                Models.EnqueuedMessage enqueuedMessage = (await queue.EnqueueMessageAsync(message0)).Value;
+            var message0 = "foo";
+            var message1 = "bar";
+            Models.SendReceipt enqueuedMessage = (await test.Queue.SendMessageAsync(message0)).Value;
 
-                // Act
-                await queue.UpdateMessageAsync(message1, enqueuedMessage.MessageId, enqueuedMessage.PopReceipt);
+            // Act
+            await test.Queue.UpdateMessageAsync(enqueuedMessage.MessageId, enqueuedMessage.PopReceipt, message1);
 
-                // Assert
-                Response<Models.PeekedMessage[]> peekedMessages = await queue.PeekMessagesAsync(1);
-                Models.PeekedMessage peekedMessage = peekedMessages.Value.First();
+            // Assert
+            Response<Models.PeekedMessage[]> peekedMessages = await test.Queue.PeekMessagesAsync(1);
+            Models.PeekedMessage peekedMessage = peekedMessages.Value.First();
 
-                Assert.AreEqual(1, peekedMessages.Value.Count());
-                Assert.AreEqual(message1, peekedMessage.MessageText);
-            }
+            Assert.AreEqual(1, peekedMessages.Value.Count());
+            Assert.AreEqual(message1, peekedMessage.MessageText);
         }
 
         [Test]
         public async Task UpdateAsync_Error()
         {
             // Arrange
-            using (GetNewQueue(out QueueClient queue))
-            {
-                // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    queue.UpdateMessageAsync(string.Empty, GetNewMessageId(), GetNewString()),
-                    actualException => Assert.AreEqual("MessageNotFound", actualException.ErrorCode));
+            await using DisposingQueue test = await GetTestQueueAsync();
 
-            }
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                test.Queue.UpdateMessageAsync(GetNewMessageId(), GetNewString(), string.Empty),
+                actualException => Assert.AreEqual("MessageNotFound", actualException.ErrorCode));
         }
     }
 }

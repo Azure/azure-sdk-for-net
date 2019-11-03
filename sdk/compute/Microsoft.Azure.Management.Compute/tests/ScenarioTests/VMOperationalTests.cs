@@ -217,6 +217,47 @@ namespace Compute.Tests
             }
         }
 
+        [Fact]
+        public void TestVMOperations_Reapply()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                EnsureClientsInitialized(context);
+
+                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+
+                // Create resource group
+                string rg1Name = TestUtilities.GenerateName(TestPrefix) + 1;
+                string asName = TestUtilities.GenerateName("as");
+                string storageAccountName = TestUtilities.GenerateName(TestPrefix);
+                VirtualMachine inputVM1;
+
+                bool passed = false;
+                try
+                {
+                    // Create Storage Account, so that both the VMs can share it
+                    var storageAccountOutput = CreateStorageAccount(rg1Name, storageAccountName);
+
+                    VirtualMachine vm1 = CreateVM(rg1Name, asName, storageAccountOutput, imageRef,
+                        out inputVM1);
+
+                    var reapplyperationResponse = m_CrpClient.VirtualMachines.BeginReapplyWithHttpMessagesAsync(rg1Name, vm1.Name);
+                    var lroResponse = m_CrpClient.VirtualMachines.ReapplyWithHttpMessagesAsync(rg1Name,
+                        vm1.Name).GetAwaiter().GetResult();
+
+                    passed = true;
+                }
+                finally
+                {
+                    // Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
+                    // of the test to cover deletion. CSM does persistent retrying over all RG resources.
+                    var deleteRg1Response = m_ResourcesClient.ResourceGroups.BeginDeleteWithHttpMessagesAsync(rg1Name);
+                }
+
+                Assert.True(passed);
+            }
+        }
+
         /// <summary>
         /// Covers following Operations:
         /// Create RG

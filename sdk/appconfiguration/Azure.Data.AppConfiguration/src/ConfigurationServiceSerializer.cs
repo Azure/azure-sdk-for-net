@@ -8,80 +8,132 @@ using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Http;
 
 namespace Azure.Data.AppConfiguration
 {
     internal static class ConfigurationServiceSerializer
     {
-        public static void Serialize(ConfigurationSetting setting, IBufferWriter<byte> writer)
+        public static void WriteSetting(Utf8JsonWriter writer, ConfigurationSetting setting)
         {
-            var json = new Utf8JsonWriter(writer);
+            writer.WriteStartObject();
+            writer.WriteString("key", setting.Key);
+            writer.WriteString("label", setting.Label);
+
+            if (setting.IsReadOnly != default)
+            {
+                writer.WriteBoolean("locked", setting.IsReadOnly.Value);
+            }
+
+            if (setting.LastModified != default)
+            {
+                writer.WriteString("last_modified", setting.LastModified.Value.ToString(CultureInfo.InvariantCulture));
+            }
+
+            WriteRequestBody(writer, setting);
+            writer.WriteEndObject();
+        }
+
+        public static ReadOnlyMemory<byte> SerializeRequestBody(ConfigurationSetting setting)
+        {
+            var writer = new Core.ArrayBufferWriter<byte>();
+            using var json = new Utf8JsonWriter(writer);
             json.WriteStartObject();
-            json.WriteString("value", setting.Value);
-            json.WriteString("content_type", setting.ContentType);
-            if (setting.Tags != null)
-            {
-                json.WriteStartObject("tags");
-                foreach (System.Collections.Generic.KeyValuePair<string, string> tag in setting.Tags)
-                {
-                    json.WriteString(tag.Key, tag.Value);
-                }
-                json.WriteEndObject();
-            }
-            if (setting.ETag != default)
-            {
-                json.WriteString("etag", setting.ETag.ToString());
-            }
+            WriteRequestBody(json, setting);
             json.WriteEndObject();
             json.Flush();
+            return writer.WrittenMemory;
+        }
+
+        private static void WriteRequestBody(Utf8JsonWriter writer, ConfigurationSetting setting)
+        {
+            writer.WriteString("value", setting.Value);
+            writer.WriteString("content_type", setting.ContentType);
+            if (setting.Tags != null)
+            {
+                writer.WriteStartObject("tags");
+                foreach (System.Collections.Generic.KeyValuePair<string, string> tag in setting.Tags)
+                {
+                    writer.WriteString(tag.Key, tag.Value);
+                }
+
+                writer.WriteEndObject();
+            }
+
+            if (setting.ETag != default)
+            {
+                writer.WriteString("etag", setting.ETag.ToString());
+            }
+        }
+
+        public static ConfigurationSetting ReadSetting(ref Utf8JsonReader reader)
+        {
+            using JsonDocument json = JsonDocument.ParseValue(ref reader);
+            JsonElement root = json.RootElement;
+            return ReadSetting(root);
         }
 
         private static ConfigurationSetting ReadSetting(JsonElement root)
         {
             // TODO (pri 2): make the deserializer version resilient
             var setting = new ConfigurationSetting();
-            if (root.TryGetProperty("key", out JsonElement keyValue))
-                setting.Key = keyValue.GetString();
-            if (root.TryGetProperty("value", out JsonElement value))
-                setting.Value = value.GetString();
-            if (root.TryGetProperty("label", out JsonElement labelValue))
-                setting.Label = labelValue.GetString();
-            if (root.TryGetProperty("content_type", out JsonElement contentValue))
-                setting.ContentType = contentValue.GetString();
-            if (root.TryGetProperty("etag", out JsonElement eTagValue))
-                setting.ETag = new ETag(eTagValue.GetString());
-            if (root.TryGetProperty("last_modified", out JsonElement lastModified))
+            foreach (JsonProperty property in root.EnumerateObject())
             {
-                if (lastModified.ValueKind == JsonValueKind.Null)
+                ReadPropertyValue(setting, property);
+            }
+            return setting;
+        }
+
+        private static void ReadPropertyValue(ConfigurationSetting setting, JsonProperty property)
+        {
+            if (property.NameEquals("content_type"))
+            {
+                setting.ContentType = property.Value.GetString();
+            }
+            else if (property.NameEquals("etag"))
+            {
+                setting.ETag = new ETag(property.Value.GetString());
+            }
+            else if (property.NameEquals("key"))
+            {
+                setting.Key = property.Value.GetString();
+            }
+            else if (property.NameEquals("label"))
+            {
+                setting.Label = property.Value.GetString();
+            }
+            else if (property.NameEquals("last_modified"))
+            {
+                if (property.Value.ValueKind == JsonValueKind.Null)
                 {
                     setting.LastModified = null;
                 }
                 else
                 {
-                    setting.LastModified = DateTimeOffset.Parse(lastModified.GetString(), CultureInfo.InvariantCulture);
+                    setting.LastModified = DateTimeOffset.Parse(property.Value.GetString(), CultureInfo.InvariantCulture);
                 }
             }
-            if (root.TryGetProperty("locked", out JsonElement readOnlyValue))
+            else if (property.NameEquals("locked"))
             {
-                if (readOnlyValue.ValueKind == JsonValueKind.Null)
+                if (property.Value.ValueKind == JsonValueKind.Null)
                 {
-                    setting.ReadOnly = null;
+                    setting.IsReadOnly = null;
                 }
                 else
                 {
-                    setting.ReadOnly = readOnlyValue.GetBoolean();
+                    setting.IsReadOnly = property.Value.GetBoolean();
                 }
             }
-            if (root.TryGetProperty("tags", out JsonElement tagsValue))
+            else if (property.NameEquals("tags"))
             {
-                foreach (JsonProperty element in tagsValue.EnumerateObject())
+                foreach (JsonProperty element in property.Value.EnumerateObject())
                 {
                     setting.Tags.Add(element.Name, element.Value.GetString());
                 }
             }
-
-            return setting;
+            else if (property.NameEquals("value"))
+            {
+                setting.Value = property.Value.GetString();
+            }
         }
 
         public static async Task<ConfigurationSetting> DeserializeSettingAsync(Stream content, CancellationToken cancellation)
@@ -95,11 +147,9 @@ namespace Azure.Data.AppConfiguration
 
         public static ConfigurationSetting DeserializeSetting(Stream content)
         {
-            using (JsonDocument json = JsonDocument.Parse(content, default))
-            {
-                JsonElement root = json.RootElement;
-                return ReadSetting(root);
-            }
+            using JsonDocument json = JsonDocument.Parse(content, default);
+            JsonElement root = json.RootElement;
+            return ReadSetting(root);
         }
 
         public static async Task<SettingBatch> ParseBatchAsync(Response response, CancellationToken cancellation)

@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse<ServiceEndpointPolicy>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceEndpointPolicyName, ServiceEndpointPolicy parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates service Endpoint Policies.
+        /// Updates tags of a service endpoint policy.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ServiceEndpointPolicy>> UpdateWithHttpMessagesAsync(string resourceGroupName, string serviceEndpointPolicyName, TagsObject parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ServiceEndpointPolicy>> UpdateTagsWithHttpMessagesAsync(string resourceGroupName, string serviceEndpointPolicyName, TagsObject parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets all the service endpoint policies in a subscription.
         /// </summary>
@@ -223,34 +223,6 @@ namespace Microsoft.Azure.Management.Network
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<ServiceEndpointPolicy>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceEndpointPolicyName, ServiceEndpointPolicy parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Updates service Endpoint Policies.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='serviceEndpointPolicyName'>
-        /// The name of the service endpoint policy.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to update service endpoint policy tags.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<ServiceEndpointPolicy>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceEndpointPolicyName, TagsObject parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets all the service endpoint policies in a subscription.
         /// </summary>
