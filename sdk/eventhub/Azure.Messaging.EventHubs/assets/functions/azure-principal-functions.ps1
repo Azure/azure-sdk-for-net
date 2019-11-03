@@ -89,9 +89,6 @@ function CreateServicePrincipal
       .DESCRIPTION
         Creates a service principal on Azure Active Directory
         with the specified name and credentials.
-
-        The principal will be granted the specified role on 
-        the specified resource group.
     #>
 
     param
