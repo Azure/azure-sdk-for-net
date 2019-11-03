@@ -1,4 +1,7 @@
-﻿namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
 {
     using System.Collections.Generic;
     using Microsoft.Azure.Management.Resources.Models;
@@ -14,11 +17,6 @@
         private static readonly string DefaultKind = Kind.StorageV2;
 
         /// <summary>
-        /// Storage management client.
-        /// </summary>
-        public StorageManagementClient storageManagementClient;
-
-        /// <summary>
         /// Target resource group.
         /// </summary>
         private readonly ResourceGroup resourceGroup;
@@ -30,9 +28,14 @@
         /// <param name="resourceGroup">Object representing a resource group.</param>
         public StorageAccountsHelper(StorageManagementClient client, ResourceGroup resourceGroup)
         {
-            this.storageManagementClient = client;
+            this.StorageManagementClient = client;
             this.resourceGroup = resourceGroup;
         }
+
+        /// <summary>
+        /// Gets or Sets the Storage cache management client.
+        /// </summary>
+        public StorageManagementClient StorageManagementClient { get; set; }
 
         /// <summary>
         /// Creates storage account.
@@ -54,7 +57,7 @@
                 Sku = new Sku() { Name = sku },
                 Kind = kind,
             };
-            StorageAccount storageAccount = this.storageManagementClient.StorageAccounts.Create(this.resourceGroup.Name, storageAccountName, storageAccountCreateParameters);
+            StorageAccount storageAccount = this.StorageManagementClient.StorageAccounts.Create(this.resourceGroup.Name, storageAccountName, storageAccountCreateParameters);
             return storageAccount;
         }
 
@@ -66,7 +69,7 @@
         /// <returns>Blob container.</returns>
         public BlobContainer CreateBlobContainer(string storageAccountName, string containerName)
         {
-            BlobContainer blobContainer = this.storageManagementClient.BlobContainers.Create(this.resourceGroup.Name, storageAccountName, containerName, publicAccess: PublicAccess.Blob);
+            BlobContainer blobContainer = this.StorageManagementClient.BlobContainers.Create(this.resourceGroup.Name, storageAccountName, containerName, publicAccess: PublicAccess.Blob);
             return blobContainer;
         }
     }
