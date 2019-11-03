@@ -174,13 +174,13 @@ namespace Azure.AI.TextAnalytics
         /// <param name="countryHint"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Pageable<List<DetectedLanguage>> DetectLanguages(List<string> inputs, string countryHint = "en", CancellationToken cancellationToken = default)
+        public virtual Pageable<DetectedLanguage> DetectLanguages(List<string> inputs, string countryHint = "en", CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
             return PageResponseEnumerator.CreateEnumerable(nextLink => GetDetectedLanguagesPage(inputs, countryHint, cancellationToken));
         }
 
-        private Page<List<DetectedLanguage>> GetDetectedLanguagesPage(List<string> inputs, string countryHint, CancellationToken cancellationToken = default)
+        private Page<DetectedLanguage> GetDetectedLanguagesPage(List<string> inputs, string countryHint, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.GetDetectedLanguagesPage");
             scope.Start();
@@ -193,8 +193,8 @@ namespace Azure.AI.TextAnalytics
                 switch (response.Status)
                 {
                     case 200:
-                        ResultBatch<List<DetectedLanguage>> resultBatch = TextAnalyticsServiceSerializer.ParseDetectedLanguageBatch(response);
-                        return Page<List<DetectedLanguage>>.FromValues(resultBatch.Values, resultBatch.NextBatchLink, response);
+                        ResultBatch<DetectedLanguage> resultBatch = TextAnalyticsServiceSerializer.ParseDetectedLanguageBatchSimple(response);
+                        return Page<DetectedLanguage>.FromValues(resultBatch.Values, resultBatch.NextBatchLink, response);
                     default:
                         throw response.CreateRequestFailedException();
                 }
@@ -224,6 +224,66 @@ namespace Azure.AI.TextAnalytics
 
             return request;
         }
+
+        //// Note: for simple case, we can take a list of strings as inputs.
+        //// We should provide an overload that lets you take a list of LanguageInputs, to handling country hint and id, if needed.
+        //// TODO: revisit whether the return type is too complex for a simple overload.  Should it be included in a kitchen sink method instead?
+        ///// <summary>
+        ///// </summary>
+        ///// <param name="inputs"></param>
+        ///// <param name="countryHint"></param>
+        ///// <param name="cancellationToken"></param>
+        ///// <returns></returns>
+        //public virtual Pageable<List<DetectedLanguage>> DetectLanguages(List<string> inputs, string countryHint = "en", CancellationToken cancellationToken = default)
+        //{
+        //    Argument.AssertNotNull(inputs, nameof(inputs));
+        //    return PageResponseEnumerator.CreateEnumerable(nextLink => GetDetectedLanguagesPage(inputs, countryHint, cancellationToken));
+        //}
+
+        //private Page<List<DetectedLanguage>> GetDetectedLanguagesPage(List<string> inputs, string countryHint, CancellationToken cancellationToken = default)
+        //{
+        //    using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.GetDetectedLanguagesPage");
+        //    scope.Start();
+
+        //    try
+        //    {
+        //        using Request request = CreateDetectedLanguageBatchRequest(inputs, countryHint);
+        //        Response response = _pipeline.SendRequest(request, cancellationToken);
+
+        //        switch (response.Status)
+        //        {
+        //            case 200:
+        //                ResultBatch<List<DetectedLanguage>> resultBatch = TextAnalyticsServiceSerializer.ParseDetectedLanguageBatch(response);
+        //                return Page<List<DetectedLanguage>>.FromValues(resultBatch.Values, resultBatch.NextBatchLink, response);
+        //            default:
+        //                throw response.CreateRequestFailedException();
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        scope.Failed(e);
+        //        throw;
+        //    }
+        //}
+
+        //private Request CreateDetectedLanguageBatchRequest(List<string> inputs, string countryHint)
+        //{
+        //    Argument.AssertNotNull(inputs, nameof(inputs));
+
+        //    Request request = _pipeline.CreateRequest();
+
+        //    ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeLanguageInputs(inputs, countryHint);
+
+        //    request.Method = RequestMethod.Post;
+        //    BuildUriForLanguagesRoute(request.Uri);
+
+        //    request.Headers.Add(HttpHeader.Common.JsonContentType);
+        //    request.Content = RequestContent.Create(content);
+
+        //    request.Headers.Add("Ocp-Apim-Subscription-Key", _subscriptionKey);
+
+        //    return request;
+        //}
 
         #endregion
     }

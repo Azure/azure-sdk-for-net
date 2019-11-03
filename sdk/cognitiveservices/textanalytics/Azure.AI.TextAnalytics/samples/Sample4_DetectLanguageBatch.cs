@@ -1,14 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core.Testing;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Azure.AI.TextAnalytics;
-using Azure.Core.Testing;
-using NUnit.Framework;
 
-namespace Azure.Data.AppConfiguration.Samples
+namespace Azure.AI.TextAnalytics.Samples
 {
     [LiveOnly]
     public partial class ConfigurationSamples
@@ -30,13 +29,17 @@ namespace Azure.Data.AppConfiguration.Samples
                 ":) :( :D"
             };
 
-            Debug.WriteLine($"Detecting language for input batch:");
-            // TODO: pretty print batch.
-            var perInputLanguages = client.DetectLanguages(inputs);
-
-            foreach (var languages in perInputLanguages)
+            Debug.WriteLine($"Detecting language for inputs:");
+            foreach (var input in inputs)
             {
-                Debug.WriteLine($"Detected language {languages[0].Name} with confidence {languages[0].Score}.");
+                Debug.WriteLine($"    {input}");
+            }
+            var languages = client.DetectLanguages(inputs);
+
+            Debug.WriteLine($"Detected languages are:");
+            foreach (var language in languages)
+            {
+                Debug.WriteLine($"    {language.Name}, with confidence {language.Score}.");
             }
         }
     }

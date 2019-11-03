@@ -8,6 +8,7 @@ using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Azure.AI.TextAnalytics
 {
@@ -100,6 +101,52 @@ namespace Azure.AI.TextAnalytics
             }
 
             return result;
+        }
+
+        // This is a "simple" version that only gets the first in the list of returned languages.
+        internal static ResultBatch<DetectedLanguage> ParseDetectedLanguageBatchSimple(Response response)
+        {
+            // In this method, we get back a language result, and ignore some properties of it to create a collection of DetectedLanguage
+            // TODO: we plan to return the full result in a more advanced scenario
+            Stream content = response.ContentStream;
+            using (JsonDocument json = JsonDocument.Parse(content))
+            {
+                JsonElement documentsArray = json.RootElement.GetProperty("documents");
+                int length = documentsArray.GetArrayLength();
+                DetectedLanguage[] values = new DetectedLanguage[length];
+
+                int i = 0;
+                foreach (JsonElement documentElement in documentsArray.EnumerateArray())
+                {
+                    var detectedLanguages = new List<DetectedLanguage>();
+                    if (documentElement.TryGetProperty("detectedLanguages", out JsonElement detectedLanguagesValue))
+                    {
+                        foreach (JsonElement languageElement in detectedLanguagesValue.EnumerateArray())
+                        {
+                            var language = new DetectedLanguage();
+                            if (languageElement.TryGetProperty("name", out JsonElement name))
+                                language.Name = name.GetString();
+                            if (languageElement.TryGetProperty("iso6391Name", out JsonElement iso6391Name))
+                                language.Iso6391Name = iso6391Name.ToString();
+                            if (languageElement.TryGetProperty("score", out JsonElement scoreValue))
+                                if (scoreValue.TryGetDouble(out double score))
+                                    language.Score = score;
+
+                            // TODO: we're passing back a default struct here to indicate an error occured.
+                            // Work through clarifying this.
+                            detectedLanguages.Add(language.Name != null ? language : default);
+                        }
+                    }
+
+                    // TODO: If needed, sort by score to get the value with the highest confidence.
+                    values[i++] = detectedLanguages.FirstOrDefault();
+                }
+
+                // The service doesn't currently support paging in the languages endpoint, but we expose
+                // it in the SDK this way to allow the service to add this in the future without introducing
+                // breaking changes to the API's SDK.  In the meantime, NextBatchLink in ResultBatch is null.
+                return new ResultBatch<DetectedLanguage>(values, null);
+            }
         }
 
         internal static ResultBatch<List<DetectedLanguage>> ParseDetectedLanguageBatch(Response response)

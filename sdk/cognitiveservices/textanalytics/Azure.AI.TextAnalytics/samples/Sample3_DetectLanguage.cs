@@ -1,13 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Diagnostics;
-using Azure.AI.TextAnalytics;
 using Azure.Core.Testing;
 using NUnit.Framework;
+using System;
+using System.Diagnostics;
 
-namespace Azure.Data.AppConfiguration.Samples
+namespace Azure.AI.TextAnalytics.Samples
 {
     [LiveOnly]
     public partial class ConfigurationSamples
