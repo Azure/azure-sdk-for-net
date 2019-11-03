@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Azure.AI.TextAnalytics;
 using Azure.Core.Testing;
@@ -13,7 +14,7 @@ namespace Azure.Data.AppConfiguration.Samples
     public partial class ConfigurationSamples
     {
         [Test]
-        public void DetectLanguage()
+        public void DetectLanguageBatch()
         {
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
             string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
@@ -21,22 +22,22 @@ namespace Azure.Data.AppConfiguration.Samples
             // Instantiate a client that will be used to call the service.
             var client = new TextAnalyticsClient(endpoint, subscriptionKey);
 
+            var inputs = new List<string>
+            {
+                "Hello world",
+                "Bonjour tout le monde",
+                "Hola mundo",
+                ":) :( :D"
+            };
 
-            string spanishInput = "Este documento está en español.";
+            Debug.WriteLine($"Detecting language for input batch:");
+            // TODO: pretty print batch.
+            var perInputLanguages = client.DetectLanguages(inputs);
 
-            Debug.WriteLine($"Detecting language for input: \"{spanishInput}\"");
-
-            DetectedLanguage language = client.DetectLanguage(spanishInput);
-
-            Debug.WriteLine($"Detected language {language.Name} with confidence {language.Score}.");
-
-
-            string unknownLanguageInput = ":) :( :D";
-
-            Debug.WriteLine($"Detecting language for input: \"{unknownLanguageInput}\"");
-            language = client.DetectLanguage(unknownLanguageInput);
-
-            Debug.WriteLine($"Detected language {language.Name} with confidence {language.Score}.");
+            foreach (var languages in perInputLanguages)
+            {
+                Debug.WriteLine($"Detected language {languages[0].Name} with confidence {languages[0].Score}.");
+            }
         }
     }
 }
