@@ -1,10 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
@@ -12,39 +8,21 @@ namespace Azure.AI.TextAnalytics
     public struct DetectedLanguage
     {
         /// <summary>
-        /// Initializes a new instance of DetectedLanguage.
-        /// </summary>
-        /// <param name="name">Long name of a detected language (e.g. English,
-        /// French).</param>
-        /// <param name="iso6391Name">A two letter representation of the
-        /// detected language according to the ISO 639-1 standard (e.g. en,
-        /// fr).</param>
-        /// <param name="score">A confidence score between 0 and 1. Scores
-        /// close to 1 indicate 100% certainty that the identified language is
-        /// true.</param>
-        public DetectedLanguage(string name = default, string iso6391Name = default, double? score = default)
-        {
-            Name = name;
-            Iso6391Name = iso6391Name;
-            Score = score;
-        }
-
-        /// <summary>
         /// Gets or sets long name of a detected language (e.g. English,
         /// French).
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; internal set; }
 
         /// <summary>
         /// Gets or sets a two letter representation of the detected language
         /// according to the ISO 639-1 standard (e.g. en, fr).
         /// </summary>
-        public string Iso6391Name { get; set; }
+        public string Iso6391Name { get; internal set; }
 
         /// <summary>
         /// Gets or sets a confidence score between 0 and 1. Scores close to 1
         /// indicate 100% certainty that the identified language is true.
         /// </summary>
-        public double? Score { get; set; }
+        public double? Score { get; internal set; }
     }
 }

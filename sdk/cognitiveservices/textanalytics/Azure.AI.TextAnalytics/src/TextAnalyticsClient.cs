@@ -59,10 +59,9 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="inputText"></param>
         /// <param name="countryHint"></param>
-        /// <param name="showStats"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response<LanguageResult>> DetectLanguageAsync(string inputText, string countryHint = "en", bool showStats = false, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LanguageResult>> DetectLanguageAsync(string inputText, string countryHint = "en", CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
 
@@ -72,7 +71,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateDetectLanguageRequest(inputText, countryHint, showStats);
+                using Request request = CreateDetectLanguageRequest(inputText, countryHint, showStats: false);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
@@ -94,10 +93,9 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="inputText"></param>
         /// <param name="countryHint"></param>
-        /// <param name="showStats"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response<LanguageResult> DetectLanguage(string inputText, string countryHint = "en", bool showStats = false, CancellationToken cancellationToken = default)
+        public virtual Response<LanguageResult> DetectLanguage(string inputText, string countryHint = "en", CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
 
@@ -107,7 +105,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateDetectLanguageRequest(inputText, countryHint, showStats);
+                using Request request = CreateDetectLanguageRequest(inputText, countryHint, showStats: false);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 switch (response.Status)

@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 namespace Azure.AI.TextAnalytics
 {
-    // TODO: make serializable
     /// <summary>
     /// </summary>
     public sealed class LanguageResult
