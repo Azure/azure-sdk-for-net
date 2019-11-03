@@ -9,15 +9,8 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// </summary>
-    public class RequestStatistics
+    public struct RequestStatistics
     {
-        /// <summary>
-        /// Initializes a new instance of the RequestStatistics class.
-        /// </summary>
-        internal RequestStatistics()
-        {
-        }
-
         /// <summary>
         /// Initializes a new instance of the RequestStatistics class.
         /// </summary>
@@ -31,7 +24,7 @@ namespace Azure.AI.TextAnalytics
         /// documents.</param>
         /// <param name="transactionsCount">Number of transactions for the
         /// request.</param>
-        public RequestStatistics(int? documentsCount = default(int?), int? validDocumentsCount = default(int?), int? erroneousDocumentsCount = default(int?), long? transactionsCount = default(long?))
+        public RequestStatistics(int? documentsCount = default, int? validDocumentsCount = default, int? erroneousDocumentsCount = default, long? transactionsCount = default)
         {
             DocumentsCount = documentsCount;
             ValidDocumentsCount = validDocumentsCount;

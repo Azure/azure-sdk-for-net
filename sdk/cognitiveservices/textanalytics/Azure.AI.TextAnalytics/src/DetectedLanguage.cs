@@ -9,17 +9,10 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// </summary>
-    public partial class DetectedLanguage
+    public struct DetectedLanguage
     {
         /// <summary>
-        /// Initializes a new instance of the DetectedLanguage class.
-        /// </summary>
-        internal DetectedLanguage()
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the DetectedLanguage class.
+        /// Initializes a new instance of DetectedLanguage.
         /// </summary>
         /// <param name="name">Long name of a detected language (e.g. English,
         /// French).</param>
@@ -29,7 +22,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="score">A confidence score between 0 and 1. Scores
         /// close to 1 indicate 100% certainty that the identified language is
         /// true.</param>
-        public DetectedLanguage(string name = default(string), string iso6391Name = default(string), double? score = default(double?))
+        public DetectedLanguage(string name = default, string iso6391Name = default, double? score = default)
         {
             Name = name;
             Iso6391Name = iso6391Name;
