@@ -33,7 +33,21 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Utilities
         /// </summary>
         public const string DefaultCacheSku = "Standard_2G";
 
-        // public static readonly string ResourceGroupName = "asc0903x092420i";
-        // public static readonly string CacheName = "sdk_Standard_4G_6144";
+        /// <summary>
+        /// Default PrincipalId for Storage Cache Resource Provider.
+        /// </summary>
+        public const string StorageCacheResourceProviderPrincipalId = "831d4223-7a3c-4121-a445-1e423591e57b";
+
+        // If you want to use existing cache then uncomment below parameters and substitue proper values.
+
+        /// <summary>
+        /// Resouce group name.
+        /// </summary>
+        //public static readonly string ResourceGroupName = "asc0903x092420i";
+
+        /// <summary>
+        /// Cache name.
+        /// </summary>
+        //public static readonly string CacheName = "sdk_Standard_4G_6144";
     }
 }

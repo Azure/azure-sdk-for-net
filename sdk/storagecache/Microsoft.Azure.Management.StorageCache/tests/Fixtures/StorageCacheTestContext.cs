@@ -86,8 +86,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
         public ResourceGroup GetOrCreateResourceGroup(string resourceGroupName, string location)
         {
             ResourceManagementClient resourceClient = this.GetClient<ResourceManagementClient>();
-            ResourceGroup resourceGroup = null;
-            resourceGroup = GetResourceGroupIfExists(resourceGroupName);
+            ResourceGroup resourceGroup = this.GetResourceGroupIfExists(resourceGroupName);
 
             if (resourceGroup == null)
             {
@@ -260,7 +259,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
             var newRoleAssignment = new RoleAssignmentCreateParameters()
             {
                 RoleDefinitionId = roleDefinition.Id,
-                PrincipalId = "831d4223-7a3c-4121-a445-1e423591e57b",
+                PrincipalId = Constants.StorageCacheResourceProviderPrincipalId,
 
                 // The principal ID assigned to the role.
                 // This maps to the ID inside the Active Directory.
