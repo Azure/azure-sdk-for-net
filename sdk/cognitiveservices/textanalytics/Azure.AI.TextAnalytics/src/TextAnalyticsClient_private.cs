@@ -36,6 +36,11 @@ namespace Azure.AI.TextAnalytics
             return Response.FromValue(TextAnalyticsServiceSerializer.DeserializeLanguageResponse(response.ContentStream), response);
         }
 
+        private static Response<DetectedLanguage> CreateDetectedLanguageResponseSimple(Response response, DetectedLanguage detectedLanguage)
+        {
+            return Response.FromValue(detectedLanguage, response);
+        }
+
         private void BuildUriForLanguagesRoute(RequestUriBuilder builder)
         {
             builder.Reset(_baseUri);

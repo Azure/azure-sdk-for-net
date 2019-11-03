@@ -7,7 +7,7 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// </summary>
-    public sealed class LanguageResult
+    internal sealed class LanguageResult
     {
         internal LanguageResult()
         {

@@ -4,6 +4,7 @@
 using Azure.Core;
 using Azure.Core.Pipeline;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -61,7 +62,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="countryHint"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response<LanguageResult>> DetectLanguageAsync(string inputText, string countryHint = "en", CancellationToken cancellationToken = default)
+        public virtual async Task<DetectedLanguage> DetectLanguageAsync(string inputText, string countryHint = "en", CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
 
@@ -77,7 +78,12 @@ namespace Azure.AI.TextAnalytics
                 switch (response.Status)
                 {
                     case 200:
-                        return await CreateLanguageResponseAsync(response, cancellationToken).ConfigureAwait(false);
+                        LanguageResult result = await CreateLanguageResponseAsync(response, cancellationToken).ConfigureAwait(false);
+                        if (result.ErrorMessage != null)
+                        {
+                            throw response.CreateRequestFailedException(result.ErrorMessage);
+                        }
+                        return CreateDetectedLanguageResponseSimple(response, result.DetectedLanguages[0]);
                     default:
                         throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
                 }
@@ -95,7 +101,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="countryHint"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response<LanguageResult> DetectLanguage(string inputText, string countryHint = "en", CancellationToken cancellationToken = default)
+        public virtual Response<DetectedLanguage> DetectLanguage(string inputText, string countryHint = "en", CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
 
@@ -111,7 +117,12 @@ namespace Azure.AI.TextAnalytics
                 switch (response.Status)
                 {
                     case 200:
-                        return CreateLanguageResponse(response);
+                        LanguageResult result =  CreateLanguageResponse(response);
+                        if (result.ErrorMessage != null)
+                        {
+                            throw response.CreateRequestFailedException(result.ErrorMessage);
+                        }
+                        return CreateDetectedLanguageResponseSimple(response, result.DetectedLanguages[0]);
                     default:
                         throw response.CreateRequestFailedException();
                 }

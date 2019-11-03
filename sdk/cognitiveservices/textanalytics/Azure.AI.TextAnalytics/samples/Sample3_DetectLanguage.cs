@@ -20,9 +20,9 @@ namespace Azure.Data.AppConfiguration.Samples
             // Instantiate a client that will be used to call the service.
             var client = new TextAnalyticsClient(endpoint, subscriptionKey);
 
-            LanguageResult result = client.DetectLanguage("Este documento está en español.");
+            DetectedLanguage result = client.DetectLanguage("Este documento está en español.");
 
-            Console.WriteLine($"Language: {result.DetectedLanguages[0].Name}");
+            Console.WriteLine($"Detected language {result.Name} with confidence {result.Score}.");
         }
     }
 }
