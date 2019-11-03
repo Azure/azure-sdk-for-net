@@ -209,6 +209,8 @@ try
 
     try 
     {
+        # The "Contributor" role is needed to manage the resource group resources and ultimately for the tests to create an Event Hub namespace and configure it.
+
         New-AzRoleAssignment -ApplicationId "$($principal.ApplicationId)" -RoleDefinitionName "Contributor" -ResourceGroupName "$($resourceGroupName)" | Out-Null
     }
     catch 
@@ -216,6 +218,22 @@ try
         Write-Host "`t...Still waiting for identity propagation (this will take a moment)"
         Start-Sleep 60
         New-AzRoleAssignment -ApplicationId "$($principal.ApplicationId)" -RoleDefinitionName "Contributor" -ResourceGroupName "$($resourceGroupName)" | Out-Null
+        
+        exit -1
+    }    
+
+    try 
+    {
+        # The "Azure Event Hubs Data Owner" role is needed to run the Azure Identity samples. These samples do not use a "Shared Access Signatures" as a means of authentication
+        # and authorization and rely on role-based access control to authorize users, for example, to send events to one of the hubs.
+
+        New-AzRoleAssignment -ApplicationId "$($principal.ApplicationId)" -RoleDefinitionName "Azure Event Hubs Data Owner" -ResourceGroupName "$($resourceGroupName)" | Out-Null
+    }
+    catch 
+    {
+        Write-Host "`t...Still waiting for identity propagation (this will take a moment)"
+        Start-Sleep 60
+        New-AzRoleAssignment -ApplicationId "$($principal.ApplicationId)" -RoleDefinitionName "Azure Event Hubs Data Owner" -ResourceGroupName "$($resourceGroupName)" | Out-Null
         
         exit -1
     }    
