@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics;
 using Azure.AI.TextAnalytics;
 using Azure.Core.Testing;
 using NUnit.Framework;
@@ -20,9 +21,21 @@ namespace Azure.Data.AppConfiguration.Samples
             // Instantiate a client that will be used to call the service.
             var client = new TextAnalyticsClient(endpoint, subscriptionKey);
 
-            DetectedLanguage result = client.DetectLanguage("Este documento está en español.");
 
-            Console.WriteLine($"Detected language {result.Name} with confidence {result.Score}.");
+            string spanishInput = "Este documento está en español.";
+
+            Debug.WriteLine($"Detecting language for input: \"{spanishInput}\"");
+            DetectedLanguage result = client.DetectLanguage(spanishInput);
+
+            Debug.WriteLine($"Detected language {result.Name} with confidence {result.Score}.");
+
+
+            string unknownLanguageInput = ":) :( :D";
+
+            Debug.WriteLine($"Detecting language for input: \"{unknownLanguageInput}\"");
+            result = client.DetectLanguage(unknownLanguageInput);
+
+            Debug.WriteLine($"Detected language {result.Name} with confidence {result.Score}.");
         }
     }
 }
