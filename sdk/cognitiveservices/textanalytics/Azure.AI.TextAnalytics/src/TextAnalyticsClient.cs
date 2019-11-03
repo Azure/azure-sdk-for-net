@@ -83,12 +83,13 @@ namespace Azure.AI.TextAnalytics
                 switch (response.Status)
                 {
                     case 200:
-                        LanguageResult result = await CreateLanguageResponseAsync(response, cancellationToken).ConfigureAwait(false);
-                        if (result.ErrorMessage != null)
+                        TextAnalyticsResult<DetectedLanguage> result = await CreateLanguageResponseAsync(response, cancellationToken).ConfigureAwait(false);
+                        if (result.Errors.Count > 0)
                         {
-                            throw response.CreateRequestFailedException(result.ErrorMessage);
+                            // only one input, so we can ignore the id and grab the first error message.
+                            throw await response.CreateRequestFailedExceptionAsync(result.Errors[0].Message).ConfigureAwait(false);
                         }
-                        return CreateDetectedLanguageResponseSimple(response, result.DetectedLanguages[0]);
+                        return CreateDetectedLanguageResponseSimple(response, result.DocumentResults[0].Predictions[0]);
                     default:
                         throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
                 }
@@ -122,12 +123,13 @@ namespace Azure.AI.TextAnalytics
                 switch (response.Status)
                 {
                     case 200:
-                        LanguageResult result = CreateLanguageResponse(response);
-                        if (result.ErrorMessage != null)
+                        TextAnalyticsResult<DetectedLanguage> result = CreateDetectLanguageResponse(response);
+                        if (result.Errors.Count > 0)
                         {
-                            throw response.CreateRequestFailedException(result.ErrorMessage);
+                            // only one input, so we can ignore the id and grab the first error message.
+                            throw response.CreateRequestFailedException(result.Errors[0].Message);
                         }
-                        return CreateDetectedLanguageResponseSimple(response, result.DetectedLanguages[0]);
+                        return CreateDetectedLanguageResponseSimple(response, result.DocumentResults[0].Predictions[0]);
                     default:
                         throw response.CreateRequestFailedException();
                 }
@@ -150,7 +152,7 @@ namespace Azure.AI.TextAnalytics
 
             request.Method = RequestMethod.Post;
 
-            BuildUriForLanguagesRoute(request.Uri);
+            BuildUriForLanguagesRoute(request.Uri, showStats, modelVersion: default);
 
             request.Headers.Add(HttpHeader.Common.JsonContentType);
             request.Content = RequestContent.Create(content);
@@ -163,6 +165,18 @@ namespace Azure.AI.TextAnalytics
             }
 
             return request;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="inputs"></param>
+        /// <param name="countryHint"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual AsyncPageable<DetectedLanguage> DetectLanguagesAsync(List<string> inputs, string countryHint = "en", CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(inputs, nameof(inputs));
+            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => GetDetectedLanguagesPageAsync(inputs, countryHint, cancellationToken));
         }
 
         // Note: for simple case, we can take a list of strings as inputs.
@@ -180,6 +194,34 @@ namespace Azure.AI.TextAnalytics
             return PageResponseEnumerator.CreateEnumerable(nextLink => GetDetectedLanguagesPage(inputs, countryHint, cancellationToken));
         }
 
+        private async Task<Page<DetectedLanguage>> GetDetectedLanguagesPageAsync(List<string> inputs, string countryHint, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.GetDetectedLanguagesPage");
+            scope.Start();
+
+            try
+            {
+                using Request request = CreateDetectedLanguageBatchRequestSimple(inputs, countryHint);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+
+                switch (response.Status)
+                {
+                    case 200:
+                        ResultBatch<DetectedLanguage> resultBatch = await TextAnalyticsServiceSerializer.ParseDetectedLanguageBatchSimpleAsync(response, cancellationToken).ConfigureAwait(false);
+                        return Page<DetectedLanguage>.FromValues(resultBatch.Values, resultBatch.NextBatchLink, response);
+
+                    // TODO: what is exception handling story for case where some values come back with an error and some don't?
+                    default:
+                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         private Page<DetectedLanguage> GetDetectedLanguagesPage(List<string> inputs, string countryHint, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.GetDetectedLanguagesPage");
@@ -187,7 +229,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateDetectedLanguageBatchRequest(inputs, countryHint);
+                using Request request = CreateDetectedLanguageBatchRequestSimple(inputs, countryHint);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 switch (response.Status)
@@ -195,6 +237,8 @@ namespace Azure.AI.TextAnalytics
                     case 200:
                         ResultBatch<DetectedLanguage> resultBatch = TextAnalyticsServiceSerializer.ParseDetectedLanguageBatchSimple(response);
                         return Page<DetectedLanguage>.FromValues(resultBatch.Values, resultBatch.NextBatchLink, response);
+
+                    // TODO: what is exception handling story for case where some values come back with an error and some don't?
                     default:
                         throw response.CreateRequestFailedException();
                 }
@@ -206,7 +250,8 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        private Request CreateDetectedLanguageBatchRequest(List<string> inputs, string countryHint)
+        // TODO: can we fold this into advanced version?
+        private Request CreateDetectedLanguageBatchRequestSimple(List<string> inputs, string countryHint)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
@@ -215,7 +260,7 @@ namespace Azure.AI.TextAnalytics
             ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeLanguageInputs(inputs, countryHint);
 
             request.Method = RequestMethod.Post;
-            BuildUriForLanguagesRoute(request.Uri);
+            BuildUriForLanguagesRoute(request.Uri, showStats: default, modelVersion: default);
 
             request.Headers.Add(HttpHeader.Common.JsonContentType);
             request.Content = RequestContent.Create(content);
@@ -225,46 +270,63 @@ namespace Azure.AI.TextAnalytics
             return request;
         }
 
-        //// Note: for simple case, we can take a list of strings as inputs.
-        //// We should provide an overload that lets you take a list of LanguageInputs, to handling country hint and id, if needed.
-        //// TODO: revisit whether the return type is too complex for a simple overload.  Should it be included in a kitchen sink method instead?
-        ///// <summary>
-        ///// </summary>
-        ///// <param name="inputs"></param>
-        ///// <param name="countryHint"></param>
-        ///// <param name="cancellationToken"></param>
-        ///// <returns></returns>
-        //public virtual Pageable<List<DetectedLanguage>> DetectLanguages(List<string> inputs, string countryHint = "en", CancellationToken cancellationToken = default)
-        //{
-        //    Argument.AssertNotNull(inputs, nameof(inputs));
-        //    return PageResponseEnumerator.CreateEnumerable(nextLink => GetDetectedLanguagesPage(inputs, countryHint, cancellationToken));
-        //}
+        /// <summary>
+        /// </summary>
+        /// <param name="inputs"></param>
+        /// <param name="showStats"></param>
+        /// <param name="modelVersion"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Pageable<List<LanguageResult>> DetectLanguages(List<DetectLangageInput> inputs, bool showStats = false, string modelVersion = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(inputs, nameof(inputs));
+            return PageResponseEnumerator.CreateEnumerable(nextLink => GetDetectedLanguagesPage(inputs, showStats, modelVersion, cancellationToken));
+        }
 
-        //private Page<List<DetectedLanguage>> GetDetectedLanguagesPage(List<string> inputs, string countryHint, CancellationToken cancellationToken = default)
-        //{
-        //    using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.GetDetectedLanguagesPage");
-        //    scope.Start();
+        private Page<List<LanguageResult>> GetDetectedLanguagesPage(List<DetectLangageInput> inputs, bool showStats, string modelVersion, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.GetDetectedLanguagesPage");
+            scope.Start();
 
-        //    try
-        //    {
-        //        using Request request = CreateDetectedLanguageBatchRequest(inputs, countryHint);
-        //        Response response = _pipeline.SendRequest(request, cancellationToken);
+            try
+            {
+                using Request request = CreateDetectedLanguageBatchRequest(inputs, showStats, modelVersion);
+                Response response = _pipeline.SendRequest(request, cancellationToken);
 
-        //        switch (response.Status)
-        //        {
-        //            case 200:
-        //                ResultBatch<List<DetectedLanguage>> resultBatch = TextAnalyticsServiceSerializer.ParseDetectedLanguageBatch(response);
-        //                return Page<List<DetectedLanguage>>.FromValues(resultBatch.Values, resultBatch.NextBatchLink, response);
-        //            default:
-        //                throw response.CreateRequestFailedException();
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        scope.Failed(e);
-        //        throw;
-        //    }
-        //}
+                switch (response.Status)
+                {
+                    case 200:
+                        ResultBatch<DetectedLanguage> resultBatch = TextAnalyticsServiceSerializer.DeserializeDetectLanguageResponse(response.ContentStream);
+                        return Page<List<LanguageResult>>.FromValues(resultBatch.Values, null, response);
+                    default:
+                        throw response.CreateRequestFailedException();
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private Request CreateDetectedLanguageBatchRequest(List<DetectLangageInput> inputs, bool showStats, string modelVersion)
+        {
+            Argument.AssertNotNull(inputs, nameof(inputs));
+
+            Request request = _pipeline.CreateRequest();
+
+            ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeLanguageInputs(inputs);
+
+            request.Method = RequestMethod.Post;
+            BuildUriForLanguagesRoute(request.Uri, showStats, modelVersion);
+
+            request.Headers.Add(HttpHeader.Common.JsonContentType);
+            request.Content = RequestContent.Create(content);
+
+            request.Headers.Add("Ocp-Apim-Subscription-Key", _subscriptionKey);
+
+            return request;
+        }
 
         //private Request CreateDetectedLanguageBatchRequest(List<string> inputs, string countryHint)
         //{

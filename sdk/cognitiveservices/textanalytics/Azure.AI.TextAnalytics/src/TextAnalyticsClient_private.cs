@@ -2,11 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,24 +12,18 @@ namespace Azure.AI.TextAnalytics
     {
         private const string TextAnalyticsRoute = "/text/analytics/";
         private const string LanguagesRoute = "/languages";
+        private const string ShowStats = "showStats";
+        private const string ModelVersion = "model-version";
 
-        //private const string AcceptDateTimeFormat = "R";
-        //private const string AcceptDatetimeHeader = "Accept-Datetime";
-        //private const string RevisionsRoute = "/revisions/";
-        //private const string LocksRoute = "/locks/";
-        //private const string KeyQueryFilter = "key";
-        //private const string LabelQueryFilter = "label";
-        //private const string FieldsQueryFilter = "$select";
-
-        private static async Task<Response<LanguageResult>> CreateLanguageResponseAsync(Response response, CancellationToken cancellation)
+        private static async Task<TextAnalyticsResult<DetectedLanguage>> CreateLanguageResponseAsync(Response response, CancellationToken cancellation)
         {
-            LanguageResult result = await TextAnalyticsServiceSerializer.DeserializeLanguageResponseAsync(response.ContentStream, cancellation).ConfigureAwait(false);
+            TextAnalyticsResult<DetectedLanguage> result = await TextAnalyticsServiceSerializer.DeserializeDetectLanguageResponseAsync(response.ContentStream, cancellation).ConfigureAwait(false);
             return Response.FromValue(result, response);
         }
 
-        private static Response<LanguageResult> CreateLanguageResponse(Response response)
+        private static Response<TextAnalyticsResult<DetectedLanguage>> CreateDetectLanguageResponse(Response response)
         {
-            return Response.FromValue(TextAnalyticsServiceSerializer.DeserializeLanguageResponse(response.ContentStream), response);
+            return Response.FromValue(TextAnalyticsServiceSerializer.DeserializeDetectLanguageResponse(response.ContentStream), response);
         }
 
         private static Response<DetectedLanguage> CreateDetectedLanguageResponseSimple(Response response, DetectedLanguage detectedLanguage)
@@ -41,14 +31,22 @@ namespace Azure.AI.TextAnalytics
             return Response.FromValue(detectedLanguage, response);
         }
 
-        private void BuildUriForLanguagesRoute(RequestUriBuilder builder)
+        private void BuildUriForLanguagesRoute(RequestUriBuilder builder, bool showStats, string modelVersion)
         {
             builder.Reset(_baseUri);
             builder.AppendPath(TextAnalyticsRoute, escape: false);
             builder.AppendPath(_apiVersion, escape:false);
             builder.AppendPath(LanguagesRoute, escape: false);
 
-            // TODO: handle stats and model-version
+            if (showStats)
+            {
+                builder.AppendQuery(ShowStats, "true");
+            }
+
+            if (!string.IsNullOrEmpty(modelVersion))
+            {
+                builder.AppendQuery(ModelVersion, modelVersion);
+            }
         }
 
         #region nobody wants to see these
