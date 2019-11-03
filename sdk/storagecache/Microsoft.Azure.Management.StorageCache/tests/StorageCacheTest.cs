@@ -142,8 +142,16 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
                 this.fixture.CacheHelper.StoragecacheManagementClient = client;
                 if (HttpMockServer.Mode == HttpRecorderMode.Record)
                 {
-                    this.fixture.CacheHelper.WaitForCacheState(this.fixture.CacheHelper.GetCacheHealthState, this.fixture.Cache.Name, "Flushing", timeout: 120, polling_delay: 5).GetAwaiter().GetResult();
-                    this.fixture.CacheHelper.WaitForCacheState(this.fixture.CacheHelper.GetCacheHealthState, this.fixture.Cache.Name, "Healthy", polling_delay:5).GetAwaiter().GetResult();
+                    this.fixture.CacheHelper.WaitForCacheState(
+                        this.fixture.CacheHelper.GetCacheHealthState,
+                        this.fixture.Cache.Name,
+                        "Flushing",
+                        timeout: 120, polling_delay: 5).GetAwaiter().GetResult();
+                    this.fixture.CacheHelper.WaitForCacheState(
+                        this.fixture.CacheHelper.GetCacheHealthState,
+                        this.fixture.Cache.Name,
+                        "Healthy",
+                        polling_delay: 5).GetAwaiter().GetResult();
                 }
             }
         }
@@ -202,7 +210,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
             {
                 var client = context.GetClient<StorageCacheManagementClient>();
                 client.ApiVersion = Constants.DefaultAPIVersion;
-                client.SubscriptionId = Guid.NewGuid().ToString();
+                client.SubscriptionId = "4525f627-2e14-411c-96b9-7df2be6eeb93";
                 this.fixture.CacheHelper.StoragecacheManagementClient = client;
                 CloudErrorException ex = Assert.Throws<CloudErrorException>(
                     () =>
