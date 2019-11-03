@@ -9,7 +9,7 @@ using System.Diagnostics;
 namespace Azure.AI.TextAnalytics.Samples
 {
     [LiveOnly]
-    public partial class ConfigurationSamples
+    public partial class TextAnalyticsSamples
     {
         [Test]
         public void DetectLanguage()
@@ -27,7 +27,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
             DetectedLanguage language = client.DetectLanguage(spanishInput);
 
-            Debug.WriteLine($"Detected language {language.Name} with confidence {language.Score}.");
+            Debug.WriteLine($"Detected language {language.Name} with confidence {language.Score:0.00}.");
 
 
             string unknownLanguageInput = ":) :( :D";
@@ -35,7 +35,7 @@ namespace Azure.AI.TextAnalytics.Samples
             Debug.WriteLine($"Detecting language for input: \"{unknownLanguageInput}\"");
             language = client.DetectLanguage(unknownLanguageInput);
 
-            Debug.WriteLine($"Detected language {language.Name} with confidence {language.Score}.");
+            Debug.WriteLine($"Detected language {language.Name} with confidence {language.Score:0.00}.");
         }
     }
 }

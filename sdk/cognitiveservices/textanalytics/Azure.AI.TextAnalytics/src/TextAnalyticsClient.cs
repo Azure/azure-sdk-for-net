@@ -83,7 +83,7 @@ namespace Azure.AI.TextAnalytics
                 switch (response.Status)
                 {
                     case 200:
-                        TextAnalyticsResult<DetectedLanguage> result = await CreateLanguageResponseAsync(response, cancellationToken).ConfigureAwait(false);
+                        TextAnalyticsResultPage<DetectedLanguage> result = await CreateLanguageResponseAsync(response, cancellationToken).ConfigureAwait(false);
                         if (result.Errors.Count > 0)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
@@ -123,7 +123,7 @@ namespace Azure.AI.TextAnalytics
                 switch (response.Status)
                 {
                     case 200:
-                        TextAnalyticsResult<DetectedLanguage> result = CreateDetectLanguageResponse(response);
+                        TextAnalyticsResultPage<DetectedLanguage> result = CreateDetectLanguageResponse(response);
                         if (result.Errors.Count > 0)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
@@ -207,6 +207,7 @@ namespace Azure.AI.TextAnalytics
                 switch (response.Status)
                 {
                     case 200:
+                        // TODO: we should probably rip out the simple stuff now.  Look into that.
                         ResultBatch<DetectedLanguage> resultBatch = await TextAnalyticsServiceSerializer.ParseDetectedLanguageBatchSimpleAsync(response, cancellationToken).ConfigureAwait(false);
                         return Page<DetectedLanguage>.FromValues(resultBatch.Values, resultBatch.NextBatchLink, response);
 
@@ -277,13 +278,13 @@ namespace Azure.AI.TextAnalytics
         /// <param name="modelVersion"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Pageable<List<LanguageResult>> DetectLanguages(List<DetectLangageInput> inputs, bool showStats = false, string modelVersion = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<DocumentResult<DetectedLanguage>> DetectLanguages(List<DocumentInput> inputs, bool showStats = false, string modelVersion = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
             return PageResponseEnumerator.CreateEnumerable(nextLink => GetDetectedLanguagesPage(inputs, showStats, modelVersion, cancellationToken));
         }
 
-        private Page<List<LanguageResult>> GetDetectedLanguagesPage(List<DetectLangageInput> inputs, bool showStats, string modelVersion, CancellationToken cancellationToken = default)
+        private TextAnalyticsResultPage<DetectedLanguage> GetDetectedLanguagesPage(List<DocumentInput> inputs, bool showStats, string modelVersion, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.GetDetectedLanguagesPage");
             scope.Start();
@@ -296,8 +297,7 @@ namespace Azure.AI.TextAnalytics
                 switch (response.Status)
                 {
                     case 200:
-                        ResultBatch<DetectedLanguage> resultBatch = TextAnalyticsServiceSerializer.DeserializeDetectLanguageResponse(response.ContentStream);
-                        return Page<List<LanguageResult>>.FromValues(resultBatch.Values, null, response);
+                        return TextAnalyticsServiceSerializer.DeserializeDetectLanguageResponse(response);
                     default:
                         throw response.CreateRequestFailedException();
                 }
@@ -309,7 +309,7 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        private Request CreateDetectedLanguageBatchRequest(List<DetectLangageInput> inputs, bool showStats, string modelVersion)
+        private Request CreateDetectedLanguageBatchRequest(List<DocumentInput> inputs, bool showStats, string modelVersion)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
@@ -327,25 +327,6 @@ namespace Azure.AI.TextAnalytics
 
             return request;
         }
-
-        //private Request CreateDetectedLanguageBatchRequest(List<string> inputs, string countryHint)
-        //{
-        //    Argument.AssertNotNull(inputs, nameof(inputs));
-
-        //    Request request = _pipeline.CreateRequest();
-
-        //    ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeLanguageInputs(inputs, countryHint);
-
-        //    request.Method = RequestMethod.Post;
-        //    BuildUriForLanguagesRoute(request.Uri);
-
-        //    request.Headers.Add(HttpHeader.Common.JsonContentType);
-        //    request.Content = RequestContent.Create(content);
-
-        //    request.Headers.Add("Ocp-Apim-Subscription-Key", _subscriptionKey);
-
-        //    return request;
-        //}
 
         #endregion
     }

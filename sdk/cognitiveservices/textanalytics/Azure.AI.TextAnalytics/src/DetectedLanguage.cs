@@ -23,6 +23,6 @@ namespace Azure.AI.TextAnalytics
         /// Gets or sets a confidence score between 0 and 1. Scores close to 1
         /// indicate 100% certainty that the identified language is true.
         /// </summary>
-        public double? Score { get; internal set; }
+        public double Score { get; internal set; }
     }
 }

@@ -15,15 +15,15 @@ namespace Azure.AI.TextAnalytics
         private const string ShowStats = "showStats";
         private const string ModelVersion = "model-version";
 
-        private static async Task<TextAnalyticsResult<DetectedLanguage>> CreateLanguageResponseAsync(Response response, CancellationToken cancellation)
+        private static async Task<TextAnalyticsResultPage<DetectedLanguage>> CreateLanguageResponseAsync(Response response, CancellationToken cancellation)
         {
-            TextAnalyticsResult<DetectedLanguage> result = await TextAnalyticsServiceSerializer.DeserializeDetectLanguageResponseAsync(response.ContentStream, cancellation).ConfigureAwait(false);
+            TextAnalyticsResultPage<DetectedLanguage> result = await TextAnalyticsServiceSerializer.DeserializeDetectLanguageResponseAsync(response, cancellation).ConfigureAwait(false);
             return Response.FromValue(result, response);
         }
 
-        private static Response<TextAnalyticsResult<DetectedLanguage>> CreateDetectLanguageResponse(Response response)
+        private static Response<TextAnalyticsResultPage<DetectedLanguage>> CreateDetectLanguageResponse(Response response)
         {
-            return Response.FromValue(TextAnalyticsServiceSerializer.DeserializeDetectLanguageResponse(response.ContentStream), response);
+            return Response.FromValue(TextAnalyticsServiceSerializer.DeserializeDetectLanguageResponse(response), response);
         }
 
         private static Response<DetectedLanguage> CreateDetectedLanguageResponseSimple(Response response, DetectedLanguage detectedLanguage)

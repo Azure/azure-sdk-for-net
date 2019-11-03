@@ -52,7 +52,7 @@ namespace Azure.AI.TextAnalytics
             return writer.WrittenMemory;
         }
 
-        public static ReadOnlyMemory<byte> SerializeLanguageInputs(List<DetectLangageInput> inputs)
+        public static ReadOnlyMemory<byte> SerializeLanguageInputs(List<DocumentInput> inputs)
         {
             var writer = new ArrayBufferWriter<byte>();
             var json = new Utf8JsonWriter(writer);
@@ -61,7 +61,7 @@ namespace Azure.AI.TextAnalytics
             foreach (var input in inputs)
             {
                 json.WriteStartObject();
-                json.WriteString("countryHint", input.CountryHint);
+                json.WriteString("countryHint", input.Hint);
                 json.WriteString("id", input.Id);
                 json.WriteString("text", input.Text);
                 json.WriteEndObject();
@@ -72,28 +72,29 @@ namespace Azure.AI.TextAnalytics
             return writer.WrittenMemory;
         }
 
-        public static async Task<TextAnalyticsResult<DetectedLanguage>> DeserializeDetectLanguageResponseAsync(Stream content, CancellationToken cancellation)
+        // TODO: Decouple serializer from response.
+        public static async Task<TextAnalyticsResultPage<DetectedLanguage>> DeserializeDetectLanguageResponseAsync(Response response, CancellationToken cancellation)
         {
-            using (JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false))
+            using (JsonDocument json = await JsonDocument.ParseAsync(response.ContentStream, cancellationToken: cancellation).ConfigureAwait(false))
             {
                 JsonElement root = json.RootElement;
-                return ReadDetectLanguageResult(root);
+                return ReadDetectLanguageResult(root, response);
             }
         }
 
-        public static TextAnalyticsResult<DetectedLanguage> DeserializeDetectLanguageResponse(Stream content)
+        public static TextAnalyticsResultPage<DetectedLanguage> DeserializeDetectLanguageResponse(Response response)
         {
-            using (JsonDocument json = JsonDocument.Parse(content, default))
+            using (JsonDocument json = JsonDocument.Parse(response.ContentStream, default))
             {
                 JsonElement root = json.RootElement;
-                return ReadDetectLanguageResult(root);
+                return ReadDetectLanguageResult(root, response);
             }
         }
 
-        private static TextAnalyticsResult<DetectedLanguage> ReadDetectLanguageResult(JsonElement root)
+        private static TextAnalyticsResultPage<DetectedLanguage> ReadDetectLanguageResult(JsonElement root, Response response)
         {
             // TODO (pri 2): make the deserializer version resilient
-            var result = new TextAnalyticsResult<DetectedLanguage>();
+            var result = new TextAnalyticsResultPage<DetectedLanguage>(response);
             if (root.TryGetProperty("documents", out JsonElement documentsValue))
             {
                 foreach (JsonElement documentElement in documentsValue.EnumerateArray())
@@ -132,6 +133,8 @@ namespace Azure.AI.TextAnalytics
 
                         documentResult.Statistics = statistics;
                     }
+
+                    result.DocumentResults.Add(documentResult);
                 }
             }
 
@@ -165,13 +168,15 @@ namespace Azure.AI.TextAnalytics
                 RequestStatistics statistics = new RequestStatistics();
 
                 if (statisticsElement.TryGetProperty("documentsCount", out JsonElement documentCountValue))
-                    statistics.DocumentsCount = documentCountValue.GetInt32();
+                    statistics.DocumentCount = documentCountValue.GetInt32();
                 if (statisticsElement.TryGetProperty("validDocumentsCount", out JsonElement validDocumentCountValue))
                     statistics.ValidDocumentCount = validDocumentCountValue.GetInt32();
                 if (statisticsElement.TryGetProperty("erroneousDocumentsCount", out JsonElement erroneousDocumentCountValue))
                     statistics.ErroneousDocumentCount = erroneousDocumentCountValue.GetInt32();
                 if (statisticsElement.TryGetProperty("transactionsCount", out JsonElement transactionCountValue))
-                    statistics.DocumentsCount = transactionCountValue.GetInt32();
+                    statistics.DocumentCount = transactionCountValue.GetInt32();
+
+                result.Statistics = statistics;
             }
 
             return result;
@@ -238,52 +243,5 @@ namespace Azure.AI.TextAnalytics
             // breaking changes to the API's SDK.  In the meantime, NextBatchLink in ResultBatch is null.
             return new ResultBatch<DetectedLanguage>(values, null);
         }
-
-        //public static ResultBatch<List<DetectedLanguage>> ParseLanguageResultBatch(Response response)
-        //{
-        //    Stream content = response.ContentStream;
-        //    using (JsonDocument json = JsonDocument.Parse(content))
-        //    {
-
-        //        //JsonElement documentsArray = json.RootElement.GetProperty("documents");
-        //        //int length = documentsArray.GetArrayLength();
-        //        //List<LanguageResult>[] values = new List<LanguageResult>[length];
-
-        //        //int i = 0;
-        //        //foreach (JsonElement documentElement in documentsArray.EnumerateArray())
-        //        //{
-        //        //    LanguageResult result = new LanguageResult();
-        //        //    if (documentElement.TryGetProperty("id", out JsonElement idValue))
-        //        //        result.Id = idValue;
-
-        //        //    if (documentElement.TryGetProperty("detectedLanguages", out JsonElement detectedLanguagesValue))
-        //        //    {
-        //        //        foreach (JsonElement languageElement in detectedLanguagesValue.EnumerateArray())
-        //        //        {
-        //        //            var language = new DetectedLanguage();
-        //        //            if (languageElement.TryGetProperty("name", out JsonElement name))
-        //        //                language.Name = name.GetString();
-        //        //            if (languageElement.TryGetProperty("iso6391Name", out JsonElement iso6391Name))
-        //        //                language.Iso6391Name = iso6391Name.ToString();
-        //        //            if (languageElement.TryGetProperty("score", out JsonElement scoreValue))
-        //        //                if (scoreValue.TryGetDouble(out double score))
-        //        //                    language.Score = score;
-
-        //        //            // TODO: we're passing back a default struct here to indicate an error occured.
-        //        //            // Work through clarifying this.
-        //        //            langu.Add(language.Name != null ? language : default);
-        //        //        }
-        //        //    }
-
-        //        //}
-
-        //        //values[i++] = detectedLanguages;
-
-        //        //// The service doesn't currently support paging in the languages endpoint, but we expose
-        //        //// it in the SDK this way to allow the service to add this in the future without introducing
-        //        //// breaking changes to the API's SDK.  In the meantime, NextBatchLink in ResultBatch is null.
-        //        //return new ResultBatch<List<LanguageResult>>(values, null);
-        //    }
-        //}
     }
 }

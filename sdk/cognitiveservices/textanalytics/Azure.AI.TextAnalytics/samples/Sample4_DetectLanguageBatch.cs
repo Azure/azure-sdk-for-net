@@ -10,7 +10,7 @@ using System.Diagnostics;
 namespace Azure.AI.TextAnalytics.Samples
 {
     [LiveOnly]
-    public partial class ConfigurationSamples
+    public partial class TextAnalyticsSamples
     {
         [Test]
         public void DetectLanguageBatch()
@@ -39,7 +39,7 @@ namespace Azure.AI.TextAnalytics.Samples
             Debug.WriteLine($"Detected languages are:");
             foreach (var language in languages)
             {
-                Debug.WriteLine($"    {language.Name}, with confidence {language.Score}.");
+                Debug.WriteLine($"    {language.Name}, with confidence {language.Score:0.00}.");
             }
         }
     }

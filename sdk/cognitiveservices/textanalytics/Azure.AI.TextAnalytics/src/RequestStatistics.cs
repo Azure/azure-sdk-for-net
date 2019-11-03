@@ -10,7 +10,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Gets or sets number of documents submitted in the request.
         /// </summary>
-        public int DocumentsCount { get; internal set; }
+        public int DocumentCount { get; internal set; }
 
         /// <summary>
         /// Gets or sets number of valid documents. This excludes empty,
