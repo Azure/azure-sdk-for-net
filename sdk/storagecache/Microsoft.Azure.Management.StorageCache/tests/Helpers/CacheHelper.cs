@@ -5,6 +5,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Azure.Management.Network;
@@ -193,7 +194,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
             StorageTarget storageTarget;
             try
             {
-               storageTarget = this.StoragecacheManagementClient.StorageTargets.Get(this.resourceGroup.Name, cacheName, storageTargetName);
+                storageTarget = this.StoragecacheManagementClient.StorageTargets.Get(this.resourceGroup.Name, cacheName, storageTargetName);
             }
             catch (CloudException ex)
             {
@@ -224,11 +225,8 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
         public void DeleteStorageTarget(string cacheName, string storageTargetName, ITestOutputHelper testOutputHelper = null)
         {
             this.StoragecacheManagementClient.StorageTargets.Delete(this.resourceGroup.Name, cacheName, storageTargetName);
-            if (HttpMockServer.Mode == HttpRecorderMode.Record)
-            {
-                this.WaitForStoragteTargetState(cacheName, storageTargetName, "Deleting", testOutputHelper).GetAwaiter().GetResult();
-                this.WaitForStoragteTargetState(cacheName, storageTargetName, "Succeeded", testOutputHelper).GetAwaiter().GetResult();
-            }
+            this.WaitForStoragteTargetState(cacheName, storageTargetName, "Deleting", testOutputHelper).GetAwaiter().GetResult();
+            this.WaitForStoragteTargetState(cacheName, storageTargetName, "Succeeded", testOutputHelper).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -281,22 +279,33 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
         /// <param name="storageTargetName">Storage target name.</param>
         /// <param name="storageTargetParameters">Object representing a Storage target parameters.</param>
         /// <param name="testOutputHelper">Object representing a ITestOutputHelper.</param>
-        /// <param name="wait">Wait for storage target to deploy.</param>
+        /// <param name="waitForStorageTarget">Wait for storage target to deploy.</param>
+        /// <param name="maxRequestTries">Max retries.</param>
+        /// <param name="delayBetweenTries">Delay between each retries in seconds.</param>
         /// <returns>CLFS storage target.</returns>
         public StorageTarget CreateStorageTarget(
             string cacheName,
             string storageTargetName,
             StorageTarget storageTargetParameters,
             ITestOutputHelper testOutputHelper = null,
-            bool wait = true)
+            bool waitForStorageTarget = true,
+            int maxRequestTries = 25,
+            int delayBetweenTries = 90)
         {
             StorageTarget storageTarget;
-            storageTarget = this.StoragecacheManagementClient.StorageTargets.CreateOrUpdate(
+            storageTarget = this.Retry(
+                () =>
+            this.StoragecacheManagementClient.StorageTargets.CreateOrUpdate(
                 this.resourceGroup.Name,
                 cacheName,
                 storageTargetName,
-                storageTargetParameters);
-            if (wait && HttpMockServer.Mode == HttpRecorderMode.Record)
+                storageTargetParameters),
+                maxRequestTries,
+                delayBetweenTries,
+                "hasn't sufficient permissions",
+                testOutputHelper);
+
+            if (waitForStorageTarget)
             {
                 this.WaitForStoragteTargetState(cacheName, storageTargetName, "Succeeded", testOutputHelper).GetAwaiter().GetResult();
             }
@@ -314,7 +323,13 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
         /// <param name="polling_delay">Delay between cache polling.</param>
         /// <param name="timeout">Timeout for cache polling.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        public async Task WaitForStoragteTargetState(string cacheName, string storageTargetName, string state, ITestOutputHelper testOutputHelper, int polling_delay = 60, int timeout = 900)
+        public async Task WaitForStoragteTargetState(
+            string cacheName,
+            string storageTargetName,
+            string state,
+            ITestOutputHelper testOutputHelper = null,
+            int polling_delay = 60,
+            int timeout = 900)
         {
             var waitTask = Task.Run(async () =>
             {
@@ -332,7 +347,10 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
                         throw new Exception($"Storage target {storageTargetName} failed to deploy.");
                     }
 
-                    await Task.Delay(new TimeSpan(0, 0, polling_delay));
+                    if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    {
+                        await Task.Delay(new TimeSpan(0, 0, polling_delay));
+                    }
                 }
             });
 
@@ -351,7 +369,12 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
         /// <param name="timeout">Timeout for polling.</param>
         /// <param name="polling_delay">Delay between polling.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        public async Task WaitForCacheState(Func<string, string> operation, string name, string state, int timeout = 1200, int polling_delay = 120)
+        public async Task WaitForCacheState(
+            Func<string, string> operation,
+            string name,
+            string state,
+            int timeout = 1800,
+            int polling_delay = 120)
         {
             var waitTask = Task.Run(async () =>
             {
@@ -382,6 +405,112 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
             if (waitTask != await Task.WhenAny(waitTask, Task.Delay(new TimeSpan(0, 0, timeout))))
             {
                 throw new TimeoutException();
+            }
+        }
+
+        /// <summary>
+        /// Retry on CloudErrorException with particular message.
+        /// </summary>
+        /// <typeparam name="TRet">Method return type.</typeparam>
+        /// <param name="action">Method to execute.</param>
+        /// <param name="maxRequestTries">Max retries.</param>
+        /// <param name="delayBetweenTries">Delay between each retries in seconds.</param>
+        /// <param name="exceptionMessage">Exception message to verify.</param>
+        /// <param name="testOutputHelper">testOutputHelper.</param>
+        /// <returns>Whatever action parameter returns.</returns>
+        public TRet Retry<TRet>(
+            Func<TRet> action,
+            int maxRequestTries,
+            int delayBetweenTries,
+            string exceptionMessage,
+            ITestOutputHelper testOutputHelper = null)
+        {
+            var remainingTries = maxRequestTries;
+            var exceptions = new List<Exception>();
+
+            do
+            {
+                --remainingTries;
+                try
+                {
+                    return action();
+                }
+                catch (CloudErrorException e)
+                {
+                    if (e.Body.Error.Message.Contains(exceptionMessage))
+                    {
+                        if (remainingTries > 0)
+                        {
+                            if (testOutputHelper != null)
+                            {
+                                testOutputHelper.WriteLine(e.Body.Error.Message);
+                                testOutputHelper.WriteLine($"Sleeping for {delayBetweenTries} time before retrying.");
+                            }
+
+                            TestUtilities.Wait(new TimeSpan(0, 0, delayBetweenTries));
+                        }
+
+                        exceptions.Add(e);
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            }
+            while (remainingTries > 0);
+            throw this.AggregatedExceptions(exceptions);
+        }
+
+        /// <summary>
+        /// An exception handler which returns an unique or aggregated exception.
+        /// </summary>
+        /// <param name="exceptions">List of an exceptions.</param>
+        /// <returns>an aggregate or unique exception.</returns>
+        private Exception AggregatedExceptions(List<Exception> exceptions)
+        {
+            var uniqueExceptions = exceptions.Distinct(new ExceptionEqualityComparer());
+
+            // If all the requests failed with the same exception,
+            // just return one exception to represent them all.
+            if (uniqueExceptions.Count() == 1)
+            {
+                return uniqueExceptions.First();
+            }
+
+            // If all the requests failed but for different reasons, return an AggregateException
+            // with all the root-cause exceptions.
+            return new AggregateException("There is a problem with the service.", uniqueExceptions);
+        }
+
+        /// <summary>
+        /// Used to aggregate exceptions that occur on request retries.
+        /// </summary>
+        private class ExceptionEqualityComparer : IEqualityComparer<Exception>
+        {
+            public bool Equals(Exception e1, Exception e2)
+            {
+                if (e2 == null && e1 == null)
+                {
+                    return true;
+                }
+                else if (e1 == null | e2 == null)
+                {
+                    return false;
+                }
+                else if (e1.GetType().Name.Equals(e2.GetType().Name) && e1.Message.Equals(e2.Message))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            public int GetHashCode(Exception e)
+            {
+                return (e.GetType().Name + e.Message).GetHashCode();
             }
         }
     }
