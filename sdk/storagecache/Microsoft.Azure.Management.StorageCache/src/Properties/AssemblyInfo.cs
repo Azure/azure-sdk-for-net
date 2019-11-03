@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Microsoft.Azure.Management.StorageCache.Properties")]
+[assembly: AssemblyTitle("Microsoft Azure StorageCache Management Library ")]
 [assembly: AssemblyDescription("Provides management functionality for Microsoft Azure Storagecache Resources.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
