@@ -8,7 +8,7 @@ namespace Azure.AI.TextAnalytics
     /// <summary>
     /// Configuration Setting model factory that enables mocking for the App Configuration client library
     /// </summary>
-    public static class ConfigurationModelFactory
+    public static class TextAnalyticsModelFactory
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigurationSetting"/> for mocking purposes.

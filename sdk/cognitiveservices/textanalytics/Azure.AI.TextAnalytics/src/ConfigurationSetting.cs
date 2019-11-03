@@ -11,7 +11,7 @@ namespace Azure.AI.TextAnalytics
     /// <summary>
     /// A setting, defined by a unique combination of a key and label.
     /// </summary>
-    [JsonConverter(typeof(ConfigurationSettingJsonConverter))]
+    //[JsonConverter(typeof(ConfigurationSettingJsonConverter))]
     public sealed class ConfigurationSetting
     {
         private IDictionary<string, string> _tags;

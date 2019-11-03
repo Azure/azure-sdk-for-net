@@ -4,7 +4,6 @@
 using Azure.Core;
 using System;
 
-// TODO: Update analyzers and rename to Azure.AI.TextAnalytics.
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
@@ -15,7 +14,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// The latest service version supported by this client library.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V3_0;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V3_0_preview_1;
 
         /// <summary>
         /// The versions of the Text Analytics service supported by this client library.
@@ -24,9 +23,9 @@ namespace Azure.AI.TextAnalytics
         {
 #pragma warning disable CA1707 // Identifiers should not contain underscores
             /// <summary>
-            /// Version 3.0
+            /// Version 3.0-preview.1
             /// </summary>
-            V3_0 = 0
+            V3_0_preview_1 = 0
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -54,8 +53,8 @@ namespace Azure.AI.TextAnalytics
         {
             switch (Version)
             {
-                case ServiceVersion.V3_0:
-                    return "3.0";
+                case ServiceVersion.V3_0_preview_1:
+                    return "v3.0-preview.1";
 
                 default:
                     throw new ArgumentException(Version.ToString());

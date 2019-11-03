@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\..\..\core
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Data.AppConfiguration.Performance", "tests\Performance\Azure.Data.AppConfiguration.Performance.csproj", "{2F3CC223-2357-4D24-BCE7-92835C62A201}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Data.AppConfiguration.Samples.Tests", "samples\Azure.Data.AppConfiguration.Samples.Tests.csproj", "{4C4126CB-6EC1-4DFB-9A1F-C52C440BC5CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.TextAnalytics.Samples.Tests", "samples\Azure.AI.TextAnalytics.Samples.Tests.csproj", "{4C4126CB-6EC1-4DFB-9A1F-C52C440BC5CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -7,7 +7,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-// TODO: Update analyzers and rename to Azure.AI.TextAnalytics.
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
@@ -18,6 +17,8 @@ namespace Azure.AI.TextAnalytics
         private readonly Uri _baseUri;
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly string _subscriptionKey;
+        private readonly string _apiVersion;
 
         /// <summary>
         /// Protected constructor to allow mocking.
@@ -26,34 +27,31 @@ namespace Azure.AI.TextAnalytics
         {
         }
 
-        // TODO: How are we doing auth?
+        // TODO: How are we doing AAD auth?
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TextAnalyticsClient"/> class.
         /// </summary>
-        /// <param name="connectionString">Connection string with authentication option and related parameters.</param>
-        public TextAnalyticsClient(string connectionString)
-            : this(connectionString, new TextAnalyticsClientOptions())
+        /// <param name="endpoint"></param>
+        /// <param name="subscriptionKey"></param>
+        public TextAnalyticsClient(string endpoint, string subscriptionKey)
+            : this(endpoint, subscriptionKey, new TextAnalyticsClientOptions())
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TextAnalyticsClient"/> class.
         /// </summary>
-        /// <param name="connectionString">Connection string with authentication option and related parameters.</param>
-        /// <param name="options">Options that allow configuration of requests sent to the configuration store.</param>
-        public TextAnalyticsClient(string connectionString, TextAnalyticsClientOptions options)
+        /// <param name="endpoint"></param>
+        /// <param name="subscriptionKey"></param>
+        /// <param name="options"></param>
+        public TextAnalyticsClient(string endpoint, string subscriptionKey, TextAnalyticsClientOptions options)
         {
-            if (connectionString == null)
-                throw new ArgumentNullException(nameof(connectionString));
-            if (options == null)
-                throw new ArgumentNullException(nameof(options));
+            Argument.AssertNotNullOrEmpty(endpoint, nameof(endpoint));
+            Argument.AssertNotNullOrEmpty(subscriptionKey, nameof(endpoint));
 
-            ParseConnectionString(connectionString, out _baseUri, out var credential, out var secret);
-
-            // TODO: What policies will we need?
+            _baseUri = new Uri(endpoint);
+            _subscriptionKey = subscriptionKey;
+            _apiVersion = options.GetVersionString();
             _pipeline = HttpPipelineBuilder.Build(options);
-
             _clientDiagnostics = new ClientDiagnostics(options);
         }
 
@@ -140,16 +138,21 @@ namespace Azure.AI.TextAnalytics
 
             Request request = _pipeline.CreateRequest();
 
-            // TODO, figure out how the REST call works
-            //ReadOnlyMemory<byte> content = ConfigurationServiceSerializer.SerializeRequestBody(setting);
+            ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeLanguageInput(inputText, countryHint);
 
-            request.Method = RequestMethod.Put;
+            request.Method = RequestMethod.Post;
 
-            //BuildUriForKvRoute(request.Uri, setting);
+            BuildUriForLanguagesRoute(request.Uri);
 
-            request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
             request.Headers.Add(HttpHeader.Common.JsonContentType);
-            //request.Content = RequestContent.Create(content);
+            request.Content = RequestContent.Create(content);
+
+            request.Headers.Add("Ocp-Apim-Subscription-Key", _subscriptionKey);
+
+            if (showStats)
+            {
+                // TODO: do something with showStats
+            }
 
             return request;
         }

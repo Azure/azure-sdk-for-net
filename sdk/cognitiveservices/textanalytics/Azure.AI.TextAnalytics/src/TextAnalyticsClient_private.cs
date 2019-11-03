@@ -10,30 +10,24 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-// TODO: Update analyzers and rename to Azure.AI.TextAnalytics.
 namespace Azure.AI.TextAnalytics
 {
     public partial class TextAnalyticsClient
     {
+        private const string TextAnalyticsRoute = "/text/analytics/";
+        private const string LanguagesRoute = "/languages";
+
         //private const string AcceptDateTimeFormat = "R";
         //private const string AcceptDatetimeHeader = "Accept-Datetime";
-        //private const string KvRoute = "/kv/";
         //private const string RevisionsRoute = "/revisions/";
         //private const string LocksRoute = "/locks/";
         //private const string KeyQueryFilter = "key";
         //private const string LabelQueryFilter = "label";
         //private const string FieldsQueryFilter = "$select";
 
-        //private static readonly char[] s_reservedCharacters = new char[] { ',', '\\' };
-
-        private static readonly HttpHeader s_mediaTypeKeyValueApplicationHeader = new HttpHeader(
-            HttpHeader.Names.Accept,
-            "application/vnd.microsoft.appconfig.kv+json"
-        );
-
         private static async Task<Response<LanguageResult>> CreateLanguageResponseAsync(Response response, CancellationToken cancellation)
         {
-            LanguageResult result = await TextAnalyticsServiceSerializer.DeserializeLanguageResponse(response.ContentStream, cancellation).ConfigureAwait(false);
+            LanguageResult result = await TextAnalyticsServiceSerializer.DeserializeLanguageResponseAsync(response.ContentStream, cancellation).ConfigureAwait(false);
             return Response.FromValue(result, response);
         }
 
@@ -42,45 +36,14 @@ namespace Azure.AI.TextAnalytics
             return Response.FromValue(TextAnalyticsServiceSerializer.DeserializeLanguageResponse(response.ContentStream), response);
         }
 
-        private static void ParseConnectionString(string connectionString, out Uri uri, out string credential, out byte[] secret)
+        private void BuildUriForLanguagesRoute(RequestUriBuilder builder)
         {
-            Debug.Assert(connectionString != null); // callers check this
+            builder.Reset(_baseUri);
+            builder.AppendPath(TextAnalyticsRoute, escape: false);
+            builder.AppendPath(_apiVersion, escape:false);
+            builder.AppendPath(LanguagesRoute, escape: false);
 
-            uri = default;
-            credential = default;
-            secret = default;
-
-            // Parse connection string
-            string[] args = connectionString.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-            if (args.Length < 3)
-            {
-                throw new ArgumentException("invalid connection string segment count", nameof(connectionString));
-            }
-
-            const string endpointString = "Endpoint=";
-            const string idString = "Id=";
-            const string secretString = "Secret=";
-
-            // TODO (pri 2): this allows elements in the connection string to be in varied order. Should we disallow it?
-            // TODO (pri 2): this parser will succeed even if one of the elements is missing (e.g. if cs == "a;b;c". We should fix that.
-            foreach (var arg in args)
-            {
-                var segment = arg.Trim();
-                if (segment.StartsWith(endpointString, StringComparison.OrdinalIgnoreCase))
-                {
-                    uri = new Uri(segment.Substring(segment.IndexOf('=') + 1));
-                }
-                else if (segment.StartsWith(idString, StringComparison.OrdinalIgnoreCase))
-                {
-                    credential = segment.Substring(segment.IndexOf('=') + 1);
-                }
-                else if (segment.StartsWith(secretString, StringComparison.OrdinalIgnoreCase))
-                {
-                    var secretBase64 = segment.Substring(segment.IndexOf('=') + 1);
-                    // TODO (pri 2): this might throw an obscure exception. Should we throw a consisten exception when the parser fails?
-                    secret = Convert.FromBase64String(secretBase64);
-                }
-            };
+            // TODO: handle stats and model-version
         }
 
         #region Commented out from AppConfig

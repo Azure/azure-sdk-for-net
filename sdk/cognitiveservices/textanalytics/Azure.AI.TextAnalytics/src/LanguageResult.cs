@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -11,24 +14,13 @@ namespace Azure.AI.TextAnalytics
     {
         internal LanguageResult()
         {
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="detectedLanguages"></param>
-        /// <param name="errorMessage"></param>
-        /// <param name="statistics"></param>
-        public LanguageResult(IList<DetectedLanguage> detectedLanguages = default(IList<DetectedLanguage>), string errorMessage = default(string), RequestStatistics statistics = default(RequestStatistics))
-        {
-            DetectedLanguages = detectedLanguages;
-            ErrorMessage = errorMessage;
-            Statistics = statistics;
+            DetectedLanguages = new List<DetectedLanguage>();
         }
 
         /// <summary>
         /// Gets or sets a list of extracted languages.
         /// </summary>
-        public IList<DetectedLanguage> DetectedLanguages { get; set; }
+        public List<DetectedLanguage> DetectedLanguages { get; private set; }
 
         /// <summary>
         /// Gets error or warning for the request.
