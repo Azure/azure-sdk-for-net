@@ -54,11 +54,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
                 this.Context = new StorageCacheTestContext(this);
                 try
                 {
-                    // TODO - Remove QP handler before pushing to remote azure-sdk-net branch and instead use recorded handler.
-                    QueryParameterDelegatingHandler handler = new QueryParameterDelegatingHandler { IsPassThrough = true, UseMockCache = true };
-                    StorageCacheManagementClient storagecacheMgmtClient = this.Context.GetClient<StorageCacheManagementClient>(handler);
-
-                    // StorageCacheManagementClient storagecacheMgmtClient = this.Context.GetClient<StorageCacheManagementClient>();
+                    StorageCacheManagementClient storagecacheMgmtClient = this.Context.GetClient<StorageCacheManagementClient>();
                     storagecacheMgmtClient.ApiVersion = Constants.DefaultAPIVersion;
 
                     if (string.IsNullOrEmpty(StorageCacheTestEnvironmentUtilities.ResourceGroupName) &&
