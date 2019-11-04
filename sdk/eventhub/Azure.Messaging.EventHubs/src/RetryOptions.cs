@@ -109,7 +109,7 @@ namespace Azure.Messaging.EventHubs
         ///   options provided.
         /// </remarks>
         ///
-        public EventHubRetryPolicy CustomRetryPolicy { get; set; }
+        public EventHubsRetryPolicy CustomRetryPolicy { get; set; }
 
         /// <summary>
         ///   Creates a new copy of the current <see cref="RetryOptions" />, cloning its attributes into a new instance.
@@ -132,8 +132,8 @@ namespace Azure.Messaging.EventHubs
         ///   Converts the options into a retry policy for use.
         /// </summary>
         ///
-        /// <returns>The <see cref="EventHubRetryPolicy" /> represented by the options.</returns>
-        internal EventHubRetryPolicy ToRetryPolicy() =>
+        /// <returns>The <see cref="EventHubsRetryPolicy" /> represented by the options.</returns>
+        internal EventHubsRetryPolicy ToRetryPolicy() =>
             CustomRetryPolicy ?? new BasicRetryPolicy(this);
     }
 }

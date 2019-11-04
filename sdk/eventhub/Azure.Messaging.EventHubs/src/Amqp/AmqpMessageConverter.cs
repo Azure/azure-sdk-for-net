@@ -231,11 +231,11 @@ namespace Azure.Messaging.EventHubs.Amqp
             return new PartitionProperties(
                 (string)responseData[AmqpManagement.ResponseMap.Name],
                 (string)responseData[AmqpManagement.ResponseMap.PartitionIdentifier],
+                (bool)responseData[AmqpManagement.ResponseMap.PartitionRuntimeInfoPartitionIsEmpty],
                 (long)responseData[AmqpManagement.ResponseMap.PartitionBeginSequenceNumber],
                 (long)responseData[AmqpManagement.ResponseMap.PartitionLastEnqueuedSequenceNumber],
                 long.Parse((string)responseData[AmqpManagement.ResponseMap.PartitionLastEnqueuedOffset]),
-                new DateTimeOffset((DateTime)responseData[AmqpManagement.ResponseMap.PartitionLastEnqueuedTimeUtc], TimeSpan.Zero),
-                (bool)responseData[AmqpManagement.ResponseMap.PartitionRuntimeInfoPartitionIsEmpty]);
+                new DateTimeOffset((DateTime)responseData[AmqpManagement.ResponseMap.PartitionLastEnqueuedTimeUtc], TimeSpan.Zero));
         }
 
         /// <summary>

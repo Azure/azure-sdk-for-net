@@ -135,7 +135,7 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.Cancel();
 
             var client = new AmqpClient("my.eventhub.com", "somePath", Mock.Of<TokenCredential>(), new EventHubConnectionOptions());
-            Assert.That(async () => await client.GetPropertiesAsync(Mock.Of<EventHubRetryPolicy>(), cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
+            Assert.That(async () => await client.GetPropertiesAsync(Mock.Of<EventHubsRetryPolicy>(), cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var client = new AmqpClient("my.eventhub.com", "somePath", Mock.Of<TokenCredential>(), new EventHubConnectionOptions());
             await client.CloseAsync(cancellationSource.Token);
 
-            Assert.That(async () => await client.GetPropertiesAsync(Mock.Of<EventHubRetryPolicy>(), cancellationSource.Token), Throws.InstanceOf<EventHubsClientClosedException>());
+            Assert.That(async () => await client.GetPropertiesAsync(Mock.Of<EventHubsRetryPolicy>(), cancellationSource.Token), Throws.InstanceOf<EventHubsClientClosedException>());
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Azure.Messaging.EventHubs.Tests
             // place immediately following the conversion and result in a well-known exception.
 
             var client = new InjectableMockClient("my.eventhub.com", eventHubName, mockCredential.Object, new EventHubConnectionOptions(), null, mockConverter.Object);
-            Assert.That(async () => await client.GetPropertiesAsync(Mock.Of<EventHubRetryPolicy>(), cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
+            Assert.That(async () => await client.GetPropertiesAsync(Mock.Of<EventHubsRetryPolicy>(), cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
 
             mockCredential.VerifyAll();
             mockConverter.VerifyAll();
@@ -255,7 +255,7 @@ namespace Azure.Messaging.EventHubs.Tests
             ExactTypeConstraint typeConstraint = partition is null ? Throws.ArgumentNullException : Throws.ArgumentException;
 
             var client = new AmqpClient("my.eventhub.com", "somePath", Mock.Of<TokenCredential>(), new EventHubConnectionOptions());
-            Assert.That(async () => await client.GetPartitionPropertiesAsync(partition, Mock.Of<EventHubRetryPolicy>(), CancellationToken.None), typeConstraint);
+            Assert.That(async () => await client.GetPartitionPropertiesAsync(partition, Mock.Of<EventHubsRetryPolicy>(), CancellationToken.None), typeConstraint);
         }
 
         /// <summary>
@@ -282,7 +282,7 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.Cancel();
 
             var client = new AmqpClient("my.eventhub.com", "somePath", Mock.Of<TokenCredential>(), new EventHubConnectionOptions());
-            Assert.That(async () => await client.GetPartitionPropertiesAsync("Fred", Mock.Of<EventHubRetryPolicy>(), cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
+            Assert.That(async () => await client.GetPartitionPropertiesAsync("Fred", Mock.Of<EventHubsRetryPolicy>(), cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
         }
 
         /// <summary>
@@ -298,7 +298,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var client = new AmqpClient("my.eventhub.com", "somePath", Mock.Of<TokenCredential>(), new EventHubConnectionOptions());
             await client.CloseAsync(cancellationSource.Token);
 
-            Assert.That(async () => await client.GetPartitionPropertiesAsync("Fred", Mock.Of<EventHubRetryPolicy>(), cancellationSource.Token), Throws.InstanceOf<EventHubsClientClosedException>());
+            Assert.That(async () => await client.GetPartitionPropertiesAsync("Fred", Mock.Of<EventHubsRetryPolicy>(), cancellationSource.Token), Throws.InstanceOf<EventHubsClientClosedException>());
         }
 
         /// <summary>
@@ -333,7 +333,7 @@ namespace Azure.Messaging.EventHubs.Tests
             // place immediately following the conversion and result in a well-known exception.
 
             var client = new InjectableMockClient("my.eventhub.com", eventHubName, mockCredential.Object, new EventHubConnectionOptions(), null, mockConverter.Object);
-            Assert.That(async () => await client.GetPartitionPropertiesAsync(partitionId, Mock.Of<EventHubRetryPolicy>(), cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
+            Assert.That(async () => await client.GetPartitionPropertiesAsync(partitionId, Mock.Of<EventHubsRetryPolicy>(), cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
 
             mockCredential.VerifyAll();
             mockConverter.VerifyAll();

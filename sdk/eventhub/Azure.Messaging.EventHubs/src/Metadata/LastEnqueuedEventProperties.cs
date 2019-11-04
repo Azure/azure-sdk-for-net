@@ -9,7 +9,7 @@ namespace Azure.Messaging.EventHubs.Metadata
     ///   A set of information about the enqueued state of a partition, as observed by the consumer.
     /// </summary>
     ///
-    public class LastEnqueuedEventProperties
+    public struct LastEnqueuedEventProperties
     {
         /// <summary>
         ///   The name of the Event Hub where the partitions reside, specific to the
@@ -59,12 +59,12 @@ namespace Azure.Messaging.EventHubs.Metadata
         /// <param name="lastEnqueuedTime">The date and time, in UTC, that the last event was enqueued in the partition.</param>
         /// <param name="lastReceivedTime">The date and time, in UTC, that the information was last received.</param>
         ///
-        protected internal LastEnqueuedEventProperties(string eventHubName,
-                                                       string partitionId,
-                                                       long? lastSequenceNumber,
-                                                       long? lastOffset,
-                                                       DateTimeOffset? lastEnqueuedTime,
-                                                       DateTimeOffset? lastReceivedTime)
+        public LastEnqueuedEventProperties(string eventHubName,
+                                           string partitionId,
+                                           long? lastSequenceNumber,
+                                           long? lastOffset,
+                                           DateTimeOffset? lastEnqueuedTime,
+                                           DateTimeOffset? lastReceivedTime)
         {
             EventHubName = eventHubName;
             PartitionId = partitionId;

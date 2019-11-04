@@ -6,8 +6,8 @@ using Azure.Core;
 namespace Azure.Messaging.EventHubs
 {
     /// <summary>
-    ///   Contains information about a partition, like its identifier and information about its last
-    ///   enqueued event.
+    ///   Represents an Event Hub partition and its relative state, as scoped to an associated
+    ///   operation performed against it.
     /// </summary>
     ///
     public class PartitionContext

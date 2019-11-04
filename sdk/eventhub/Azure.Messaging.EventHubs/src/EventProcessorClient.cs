@@ -104,10 +104,17 @@ namespace Azure.Messaging.EventHubs
         public string EventHubName => Connection.EventHubName;
 
         /// <summary>
+        ///   The name of the consumer group this event processor is associated with.  Events will be
+        ///   read only in the context of this group.
+        /// </summary>
+        ///
+        public string ConsumerGroup { get; }
+
+        /// <summary>
         ///   A unique name used to identify this event processor.
         /// </summary>
         ///
-        public virtual string Identifier { get; }
+        public string Identifier { get; }
 
         /// <summary>
         ///   The minimum amount of time to be elapsed between two load balancing verifications.
@@ -127,13 +134,6 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         private EventHubConnection Connection { get; }
-
-        /// <summary>
-        ///   The name of the consumer group this event processor is associated with.  Events will be
-        ///   read only in the context of this group.
-        /// </summary>
-        ///
-        private string ConsumerGroup { get; }
 
         /// <summary>
         ///   Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.
@@ -169,7 +169,7 @@ namespace Azure.Messaging.EventHubs
         ///   processor.
         /// </summary>
         ///
-        private EventHubRetryPolicy RetryPolicy { get; }
+        private EventHubsRetryPolicy RetryPolicy { get; }
 
         /// <summary>
         ///   A <see cref="CancellationTokenSource"/> instance to signal the request to cancel the current running task.
@@ -350,14 +350,13 @@ namespace Azure.Messaging.EventHubs
         /// <param name="processorOptions">The set of options to use for this processor.</param>
         ///
         /// <remarks>
-        ///   This constructor is intended only to support internal functional testing; it should not be used for production scenarios nor
-        ///   external mocking.
+        ///   This constructor is intended only to support functional testing and mocking; it should not be used for production scenarios.
         /// </remarks>
         ///
-        internal EventProcessorClient(string consumerGroup,
-                                      PartitionManager partitionManager,
-                                      EventHubConnection connection,
-                                      EventProcessorClientOptions processorOptions)
+        protected internal EventProcessorClient(string consumerGroup,
+                                                PartitionManager partitionManager,
+                                                EventHubConnection connection,
+                                                EventProcessorClientOptions processorOptions)
         {
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
             Argument.AssertNotNull(partitionManager, nameof(partitionManager));
