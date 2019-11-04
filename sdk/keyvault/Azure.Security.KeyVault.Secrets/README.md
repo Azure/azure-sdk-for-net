@@ -99,7 +99,7 @@ The Azure.Security.KeyVault.Secrets package supports synchronous and asynchronou
 
 The following section provides several code snippets using the [above created](#create-secretclient) `client`, covering some of the most common Azure Key Vault secret service related tasks:
 
-### Async examples
+### Sync examples
 * [Create a secret](#create-a-secret)
 * [Retrieve a secret](#retrieve-a-secret)
 * [Update an existing secret](#update-an-existing-secret)
@@ -107,15 +107,16 @@ The following section provides several code snippets using the [above created](#
 * [Delete and purge a secret](#delete-and-purge-a-secret)
 * [List Secrets](#list-secrets)
 
-### Sync examples
-* [Create a secret synchronously](#create-a-secret-synchronously)
-* [Delete a secret synchronously](#delete-a-secret-synchronously)
+### Async examples
+* [Create a secret asynchronously](#create-a-secret-asynchronously)
+* [List secrets asynchronously](#list-secrets-asynchronously)
+* [Delete a secret asynchronously](#delete-a-secret-asynchronously)
 
 ### Create a secret
-`SetSecretAsync` creates a `KeyVaultSecret` to be stored in the Azure Key Vault. If a secret with the same name already exists, then a new version of the secret is created.
+`SetSecret` creates a `KeyVaultSecret` to be stored in the Azure Key Vault. If a secret with the same name already exists, then a new version of the secret is created.
 
 ```C# Snippet:CreateSecret
-KeyVaultSecret secret = await client.SetSecretAsync("secret-name", "secret-value");
+KeyVaultSecret secret = client.SetSecret("secret-name", "secret-value");
 
 Console.WriteLine(secret.Name);
 Console.WriteLine(secret.Value);
@@ -124,20 +125,20 @@ Console.WriteLine(secret.Properties.Enabled);
 ```
 
 ### Retrieve a secret
-`GetSecretAsync` retrieves a secret previously stored in the Key Vault.
+`GetSecret` retrieves a secret previously stored in the Key Vault.
 
 ```C# Snippet:RetrieveSecret
-KeyVaultSecret secret = await client.GetSecretAsync("secret-name");
+KeyVaultSecret secret = client.GetSecret("secret-name");
 
 Console.WriteLine(secret.Name);
 Console.WriteLine(secret.Value);
 ```
 
 ### Update an existing secret
-`UpdateSecretPropertiesAsync` updates a secret previously stored in the Key Vault. Only the attributes of the secret are updated. To update the value, call `SecretClient.SetSecretAsync` on a secret with the same name.
+`UpdateSecretProperties` updates a secret previously stored in the Key Vault. Only the attributes of the secret are updated. To update the value, call `SecretClient.SetSecret` on a secret with the same name.
 
 ```C# Snippet:UpdateSecret
-KeyVaultSecret secret = await client.GetSecretAsync("secret-name");
+KeyVaultSecret secret = client.GetSecret("secret-name");
 
 // Clients may specify the content type of a secret to assist in interpreting the secret data when it's retrieved.
 secret.Properties.ContentType = "text/plain";
@@ -145,7 +146,7 @@ secret.Properties.ContentType = "text/plain";
 // You can specify additional application-specific metadata in the form of tags.
 secret.Properties.Tags["foo"] = "updated tag";
 
-SecretProperties updatedSecretProperties = await client.UpdateSecretPropertiesAsync(secret.Properties);
+SecretProperties updatedSecretProperties = client.UpdateSecretProperties(secret.Properties);
 
 Console.WriteLine(updatedSecretProperties.Name);
 Console.WriteLine(updatedSecretProperties.Version);
@@ -153,12 +154,12 @@ Console.WriteLine(updatedSecretProperties.ContentType);
 ```
 
 ### Delete a secret
-`StartDeleteSecretAsync` starts a long-running operation to delete a secret previously stored in the Key Vault.
+`StartDeleteSecret` starts a long-running operation to delete a secret previously stored in the Key Vault.
 You can retrieve the secret immediately without waiting for the operation to complete.
 When [soft-delete][soft_delete] is not enabled for the Key Vault, this operation permanently deletes the secret.
 
 ```C# Snippet:DeleteSecret
-DeleteSecretOperation operation = await client.StartDeleteSecretAsync("secret-name");
+DeleteSecretOperation operation = client.StartDeleteSecret("secret-name");
 
 DeletedSecret secret = operation.Value;
 Console.WriteLine(secret.Name);
@@ -167,46 +168,9 @@ Console.WriteLine(secret.Value);
 
 ### Delete and purge a secret
 You will need to wait for the long-running operation to complete before trying to purge or recover the secret.
+You can do this by calling `UpdateStatus` in a loop as shown below:
 
 ```C# Snippet:DeleteAndPurgeSecret
-DeleteSecretOperation operation = await client.StartDeleteSecretAsync("secret-name");
-
-// You only need to wait for completion if you want to purge or recover the secret.
-await operation.WaitForCompletionAsync();
-
-DeletedSecret secret = operation.Value;
-await client.PurgeDeletedSecretAsync(secret.Name);
-```
-
-### List secrets
-This example lists all the secrets in the specified Key Vault. The value is not returned when listing all secrets. You will need to call `SecretClient.GetSecretAsync` to retrieve the value.
-
-```C# Snippet:ListSecrets
-AsyncPageable<SecretProperties> allSecrets = client.GetPropertiesOfSecretsAsync();
-
-await foreach (SecretProperties secretProperties in allSecrets)
-{
-    Console.WriteLine(secretProperties.Name);
-}
-```
-
-### Create a secret synchronously
-Synchronous APIs are identical to their asynchronous counterparts, but without the typical "Async" suffix for asynchronous methods.
-
-This example creates a secret in the Key Vault with the specified optional arguments.
-
-```C# Snippet:CreateSecretSync
-KeyVaultSecret secret = client.SetSecret("secret-name", "secret-value");
-
-Console.WriteLine(secret.Name);
-Console.WriteLine(secret.Value);
-```
-
-### Delete a secret synchronously
-When deleting a secret synchronously before you purge it, you need to call `UpdateStatus` on the returned operation periodically.
-You could do this in a loop as shown in the example, or periodically within other operations in your program.
-
-```C# Snippet:DeleteSecretSync
 DeleteSecretOperation operation = client.StartDeleteSecret("secret-name");
 
 // You only need to wait for completion if you want to purge or recover the secret.
@@ -221,6 +185,56 @@ DeletedSecret secret = operation.Value;
 client.PurgeDeletedSecret(secret.Name);
 ```
 
+### List secrets
+This example lists all the secrets in the specified Key Vault. The value is not returned when listing all secrets. You will need to call `SecretClient.GetSecret` to retrieve the value.
+
+```C# Snippet:ListSecrets
+Pageable<SecretProperties> allSecrets = client.GetPropertiesOfSecrets();
+
+foreach (SecretProperties secretProperties in allSecrets)
+{
+    Console.WriteLine(secretProperties.Name);
+}
+```
+
+### Create a secret asynchronously
+The asynchronous APIs are identical to their synchronous counterparts, but return with the typical "Async" suffix for asynchronous methods and return a `Task`.
+
+This example creates a secret in the Key Vault with the specified optional arguments.
+
+```C# Snippet:CreateSecretAsync
+KeyVaultSecret secret = await client.SetSecretAsync("secret-name", "secret-value");
+
+Console.WriteLine(secret.Name);
+Console.WriteLine(secret.Value);
+```
+
+### List secrets asynchronously
+Listing secrets does not rely on awaiting the `GetPropertiesOfSecretsAsync` method, but returns an `AsyncPageable<SecretProperties>` that you can use with the `await foreach` statement:
+
+```C# Snippet:ListSecretsAsync
+AsyncPageable<SecretProperties> allSecrets = client.GetPropertiesOfSecretsAsync();
+
+await foreach (SecretProperties secretProperties in allSecrets)
+{
+    Console.WriteLine(secretProperties.Name);
+}
+```
+
+### Delete a secret asynchronously
+When deleting a secret asynchronously before you purge it, you can await the `WaitForCompletionAsync` method on the operation.
+By default, this loops indefinitely but you can cancel it by passing a `CancellationToken`.
+
+```C# Snippet:DeleteAndPurgeSecretAsync
+DeleteSecretOperation operation = await client.StartDeleteSecretAsync("secret-name");
+
+// You only need to wait for completion if you want to purge or recover the secret.
+await operation.WaitForCompletionAsync();
+
+DeletedSecret secret = operation.Value;
+await client.PurgeDeletedSecretAsync(secret.Name);
+```
+
 ## Troubleshooting
 
 ### General
@@ -231,7 +245,7 @@ For example, if you try to retrieve a secret that doesn't exist in your Key Vaul
 ```C# Snippet:SecretNotFound
 try
 {
-    KeyVaultSecret secret = await client.GetSecretAsync("some_secret");
+    KeyVaultSecret secret = client.GetSecret("some_secret");
 }
 catch (RequestFailedException ex)
 {

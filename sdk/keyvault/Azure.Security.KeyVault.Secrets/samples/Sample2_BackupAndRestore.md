@@ -1,0 +1,50 @@
+# Back up and restore a secret
+
+This sample demonstrates how to back up and restore a secret from Azure Key Vault.
+To get started, you'll need a URI to an Azure Key Vault. See the [README](../README.md) for links and instructions.
+
+## Creating a SecretClient
+
+To create a new `SecretClient` to create, get, update, or delete secrets, you need the endpoint to a Key Vault and credentials.
+You can use the `DefaultAzureCredential` to try a number of common authentication methods optimized for both running as a service and development.
+
+In the sample below, you can set `keyVaultUrl` based on an environment variable, configuration setting, or any way that works for your application.
+
+```C# Snippet:SecretsBackupAndRestoreSecretClient
+var client = new SecretClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
+```
+
+## Creating a secret
+
+Let's next create a secret holding a storage account password valid for 1 year.
+If the secret already exists in the Key Vault, a new version of the secret is created.
+
+```C# Snippet:SecretsBackupAndRestoreCreateSecret
+string secretName = $"StorageAccountPassword{Guid.NewGuid()}";
+
+var secret = new KeyVaultSecret(secretName, "f4G34fMh8v");
+secret.Properties.ExpiresOn = DateTimeOffset.Now.AddYears(1);
+
+KeyVaultSecret storedSecret = client.SetSecret(secret);
+```
+
+## Backing up a secret
+
+Backups are good to have in case secrets get accidentally deleted. For long term storage, it is ideal to write the backup to a file.
+
+```C# Snippet:SecretsBackupAndRestoreBackupSecret
+string backupPath = Path.GetTempFileName();
+byte[] secretBackup = client.BackupSecret(secretName);
+
+File.WriteAllBytes(backupPath, secretBackup);
+```
+
+## Restoring a secret
+
+If the secret is deleted for any reason, you can restore it from the backup back into Key Vault.
+
+```C# Snippet:SecretsBackupAndRestoreRestoreSecret
+byte[] secretBackupToRestore = File.ReadAllBytes(backupPath);
+
+SecretProperties restoreSecret = client.RestoreSecretBackup(secretBackupToRestore);
+```
