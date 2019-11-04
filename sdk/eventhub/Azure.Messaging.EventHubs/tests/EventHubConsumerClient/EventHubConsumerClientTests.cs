@@ -157,7 +157,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConnectionStringConstructorSetsTheRetryPolicy()
         {
-            var expected = Mock.Of<EventHubRetryPolicy>();
+            var expected = Mock.Of<EventHubsRetryPolicy>();
             var options = new EventHubConsumerClientOptions { RetryOptions = new RetryOptions { CustomRetryPolicy = expected } };
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "0", EventPosition.Earliest, connectionString, options);
@@ -172,7 +172,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ExpandedConstructorSetsTheRetryPolicy()
         {
-            var expected = Mock.Of<EventHubRetryPolicy>();
+            var expected = Mock.Of<EventHubsRetryPolicy>();
             var options = new EventHubConsumerClientOptions { RetryOptions = new RetryOptions { CustomRetryPolicy = expected } };
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "0", EventPosition.Earliest, "namespace", "hub", Mock.Of<TokenCredential>(), options);
 
@@ -186,7 +186,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConnectionConstructorSetsTheRetryPolicy()
         {
-            var expected = Mock.Of<EventHubRetryPolicy>();
+            var expected = Mock.Of<EventHubsRetryPolicy>();
             var options = new EventHubConsumerClientOptions { RetryOptions = new RetryOptions { CustomRetryPolicy = expected } };
             var mockConnection = new MockConnection();
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "0", EventPosition.Earliest, mockConnection, options);
@@ -475,7 +475,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task GetEventHubPropertiesAsyncUsesTheRetryPolicy()
         {
             var mockConnection = new MockConnection();
-            var retryPolicy = Mock.Of<EventHubRetryPolicy>();
+            var retryPolicy = Mock.Of<EventHubsRetryPolicy>();
             var options = new EventHubConsumerClientOptions { RetryOptions = new RetryOptions { CustomRetryPolicy = retryPolicy } };
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "0", EventPosition.Earliest, mockConnection, options);
 
@@ -492,7 +492,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task GetPartitionIdsUsesTheRetryPolicy()
         {
             var mockConnection = new MockConnection();
-            var retryPolicy = Mock.Of<EventHubRetryPolicy>();
+            var retryPolicy = Mock.Of<EventHubsRetryPolicy>();
             var options = new EventHubConsumerClientOptions { RetryOptions = new RetryOptions { CustomRetryPolicy = retryPolicy } };
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "0", EventPosition.Earliest, mockConnection, options);
 
@@ -509,7 +509,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task GetPartitionPropertiesUsesTheRetryPolicy()
         {
             var mockConnection = new MockConnection();
-            var retryPolicy = Mock.Of<EventHubRetryPolicy>();
+            var retryPolicy = Mock.Of<EventHubsRetryPolicy>();
             var options = new EventHubConsumerClientOptions { RetryOptions = new RetryOptions { CustomRetryPolicy = retryPolicy } };
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "0", EventPosition.Earliest, mockConnection, options);
 
@@ -1419,7 +1419,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 throw exception;
             };
 
-            var mockRetryPolicy = new Mock<EventHubRetryPolicy>();
+            var mockRetryPolicy = new Mock<EventHubsRetryPolicy>();
             var options = new EventHubConsumerClientOptions { RetryOptions = new RetryOptions { CustomRetryPolicy = mockRetryPolicy.Object } };
             var transportConsumer = new ReceiveCallbackTransportConsumerMock(receiveCallback);
             var mockConnection = new MockConnection(transportConsumer);
@@ -1465,7 +1465,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 throw exception;
             };
 
-            var mockRetryPolicy = new Mock<EventHubRetryPolicy>();
+            var mockRetryPolicy = new Mock<EventHubsRetryPolicy>();
             var options = new EventHubConsumerClientOptions { RetryOptions = new RetryOptions { CustomRetryPolicy = mockRetryPolicy.Object } };
             var transportConsumer = new ReceiveCallbackTransportConsumerMock(receiveCallback);
             var mockConnection = new MockConnection(transportConsumer);
@@ -1606,8 +1606,8 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   Retrieves the RetryPolicy for the consumer using its private accessor.
         /// </summary>
         ///
-        private static EventHubRetryPolicy GetRetryPolicy(EventHubConsumerClient consumer) =>
-            (EventHubRetryPolicy)
+        private static EventHubsRetryPolicy GetRetryPolicy(EventHubConsumerClient consumer) =>
+            (EventHubsRetryPolicy)
                 typeof(EventHubConsumerClient)
                     .GetProperty("RetryPolicy", BindingFlags.Instance | BindingFlags.NonPublic)
                     .GetValue(consumer);
@@ -1779,17 +1779,15 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         private class MockConnection : EventHubConnection
         {
-            public EventHubRetryPolicy GetPropertiesInvokedWith = null;
-            public EventHubRetryPolicy GetPartitionIdsInvokedWith = null;
-            public EventHubRetryPolicy GetPartitionPropertiesInvokedWith = null;
+            public EventHubsRetryPolicy GetPropertiesInvokedWith = null;
+            public EventHubsRetryPolicy GetPartitionIdsInvokedWith = null;
+            public EventHubsRetryPolicy GetPartitionPropertiesInvokedWith = null;
             public TransportConsumer TransportConsumer = Mock.Of<TransportConsumer>();
             public bool WasClosed = false;
 
             public MockConnection(string namespaceName = "fakeNamespace",
                                   string eventHubName = "fakeEventHub") : base(namespaceName, eventHubName, Mock.Of<TokenCredential>())
             {
-                FullyQualifiedNamespace = namespaceName;
-                EventHubName = eventHubName;
             }
 
             public MockConnection(TransportConsumer transportConsumer,
@@ -1803,14 +1801,14 @@ namespace Azure.Messaging.EventHubs.Tests
             {
             }
 
-            internal override Task<EventHubProperties> GetPropertiesAsync(EventHubRetryPolicy retryPolicy,
+            internal override Task<EventHubProperties> GetPropertiesAsync(EventHubsRetryPolicy retryPolicy,
                                                                         CancellationToken cancellationToken = default)
             {
                 GetPropertiesInvokedWith = retryPolicy;
                 return Task.FromResult(new EventHubProperties(EventHubName, DateTimeOffset.Parse("2015-10-27T00:00:00Z"), new string[] { "0", "1" }));
             }
 
-            internal async override Task<string[]> GetPartitionIdsAsync(EventHubRetryPolicy retryPolicy,
+            internal async override Task<string[]> GetPartitionIdsAsync(EventHubsRetryPolicy retryPolicy,
                                                                         CancellationToken cancellationToken = default)
             {
                 GetPartitionIdsInvokedWith = retryPolicy;
@@ -1818,7 +1816,7 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             internal override Task<PartitionProperties> GetPartitionPropertiesAsync(string partitionId,
-                                                                                    EventHubRetryPolicy retryPolicy,
+                                                                                    EventHubsRetryPolicy retryPolicy,
                                                                                     CancellationToken cancellationToken = default)
             {
                 GetPartitionPropertiesInvokedWith = retryPolicy;

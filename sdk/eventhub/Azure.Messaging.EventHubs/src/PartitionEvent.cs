@@ -13,14 +13,20 @@ namespace Azure.Messaging.EventHubs
     public struct PartitionEvent
     {
         /// <summary>
-        ///   The context of the Event Hub partition this instance is associated with.
+        ///   The Event Hub partition that the <see cref="PartitionEvent.Data" /> is associated with.
         /// </summary>
         ///
         public PartitionContext Context { get; }
 
         /// <summary>
-        ///   The received event to be processed.  Expected to be <c>null</c> if the receive call has timed out.
+        ///   An event that was read from the associated <see cref="PartitionEvent.Context" />.
         /// </summary>
+        ///
+        /// <value>
+        ///   The <see cref="EventData" /> read from the Event Hub partition, if data was available.
+        ///   If a maximum wait time was specified when reading events and no event was available in that
+        ///   time period, <c>null</c>.
+        /// </value>
         ///
         public EventData Data { get; }
 
@@ -28,8 +34,8 @@ namespace Azure.Messaging.EventHubs
         ///   Initializes a new instance of the <see cref="PartitionEvent"/> structure.
         /// </summary>
         ///
-        /// <param name="partitionContext">The context of the Event Hub partition this instance is associated with.</param>
-        /// <param name="eventData">The received event to be processed.  Expected to be <c>null</c> if the receive call has timed out.</param>
+        /// <param name="partitionContext">The Event Hub partition that the <paramref name="eventData" /> is associated with.</param>
+        /// <param name="eventData">The event that was read, if events were available; otherwise, <c>null</c>.</param>
         ///
         public PartitionEvent(PartitionContext partitionContext,
                               EventData eventData)

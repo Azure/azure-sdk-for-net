@@ -33,7 +33,7 @@ namespace Azure.Messaging.EventHubs.Tests
         private const int ReceiveRetryLimit = 10;
 
         /// <summary>The default retry policy to use for test operations.</summary>
-        private static readonly EventHubRetryPolicy DefaultRetryPolicy = new RetryOptions().ToRetryPolicy();
+        private static readonly EventHubsRetryPolicy DefaultRetryPolicy = new RetryOptions().ToRetryPolicy();
 
         /// <summary>
         ///   Verifies that the <see cref="EventProcessorClient" /> is able to

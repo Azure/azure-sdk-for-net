@@ -43,7 +43,7 @@ namespace Azure.Messaging.EventHubs.Core
         ///
         /// <returns>The set of information for the Event Hub that this client is associated with.</returns>
         ///
-        public abstract Task<EventHubProperties> GetPropertiesAsync(EventHubRetryPolicy retryPolicy,
+        public abstract Task<EventHubProperties> GetPropertiesAsync(EventHubsRetryPolicy retryPolicy,
                                                                     CancellationToken cancellationToken);
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Azure.Messaging.EventHubs.Core
         /// <returns>The set of information for the requested partition under the Event Hub this client is associated with.</returns>
         ///
         public abstract Task<PartitionProperties> GetPartitionPropertiesAsync(string partitionId,
-                                                                              EventHubRetryPolicy retryPolicy,
+                                                                              EventHubsRetryPolicy retryPolicy,
                                                                               CancellationToken cancellationToken);
 
         /// <summary>

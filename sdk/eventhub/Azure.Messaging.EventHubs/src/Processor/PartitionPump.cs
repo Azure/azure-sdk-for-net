@@ -22,7 +22,7 @@ namespace Azure.Messaging.EventHubs.Processor
         // TODO: Remove this when moving to the consumer's iterator.
         private const int MaximumMessageCount = 25;
 
-        /// <summary>The <see cref="EventHubRetryPolicy" /> used to verify whether an exception is retriable or not.</summary>
+        /// <summary>The <see cref="EventHubsRetryPolicy" /> used to verify whether an exception is retriable or not.</summary>
         private static readonly BasicRetryPolicy RetryPolicy = new BasicRetryPolicy(new RetryOptions());
 
         /// <summary>The primitive for synchronizing access during start and close operations.</summary>

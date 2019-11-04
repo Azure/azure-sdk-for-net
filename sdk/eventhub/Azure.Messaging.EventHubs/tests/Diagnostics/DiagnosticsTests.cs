@@ -332,7 +332,6 @@ namespace Azure.Messaging.EventHubs.Tests
                                   string eventHubName) : base(MockConnectionString, eventHubName)
             {
                 _serviceEndpoint = serviceEndpoint;
-                EventHubName = eventHubName;
             }
 
             internal override TransportClient CreateTransportClient(string fullyQualifiedNamespace,

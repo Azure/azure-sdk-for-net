@@ -326,7 +326,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         private class TestConnectionWithTransport : EventHubConnection
         {
-            public EventHubRetryPolicy RetryPolicy { get; set; } = new BasicRetryPolicy(new RetryOptions());
+            public EventHubsRetryPolicy RetryPolicy { get; set; } = new BasicRetryPolicy(new RetryOptions());
 
             public TestConnectionWithTransport(string connectionString,
                                                EventHubConnectionOptions connectionOptions = default) : base(connectionString, connectionOptions)

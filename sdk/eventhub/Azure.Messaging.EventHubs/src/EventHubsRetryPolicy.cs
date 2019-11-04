@@ -18,7 +18,7 @@ namespace Azure.Messaging.EventHubs
     ///
     /// <seealso cref="RetryOptions"/>
     ///
-    public abstract class EventHubRetryPolicy
+    public abstract class EventHubsRetryPolicy
     {
         /// <summary>
         ///   Calculates the amount of time to allow the current attempt for an operation to
