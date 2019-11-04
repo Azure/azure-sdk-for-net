@@ -11,9 +11,11 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Messaging.EventHubs.Core;
+using Azure.Core.Pipeline;
+using Azure.Messaging.EventHubs.Diagnostics;
+using Azure.Messaging.EventHubs.Processor;
 
-namespace Azure.Messaging.EventHubs.Processor
+namespace Azure.Messaging.EventHubs
 {
     /// <summary>
     ///   Consumes events for the configured Event Hub and consumer group across all partitions, making them available for processing
@@ -35,22 +37,22 @@ namespace Azure.Messaging.EventHubs.Processor
         private readonly object StartProcessorGuard = new object();
 
         /// <summary>The handler to be called just before event processing starts for a given partition.</summary>
-        private Func<PartitionContext, Task> _initializeProcessingForPartitionAsync;
+        private Func<InitializePartitionProcessingContext, Task> _initializeProcessingForPartitionAsync;
 
         /// <summary>The handler to be called once event processing stops for a given partition.</summary>
-        private Func<PartitionContext, PartitionProcessorCloseReason, Task> _processingForPartitionStoppedAsync;
+        private Func<PartitionProcessingStoppedContext, Task> _processingForPartitionStoppedAsync;
 
-        /// <summary>Responsible for processing sets of events received from the Event Hubs service.</summary>
-        private Func<PartitionContext, IEnumerable<EventData>, Task> _processEventsAsync;
+        /// <summary>Responsible for processing events received from the Event Hubs service.</summary>
+        private Func<EventProcessorEvent, Task> _processEventAsync;
 
-        /// <summary>Responsible for processing unexpected exceptions thrown while this <see cref="EventProcessorClient" /> is running.</summary>
-        private Func<PartitionContext, Exception, Task> _processExceptionAsync;
+        /// <summary>Responsible for processing unhandled exceptions thrown while this <see cref="EventProcessorClient" /> is running.</summary>
+        private Func<ProcessorErrorContext, Task> _processExceptionAsync;
 
         /// <summary>
         ///   The handler to be called just before event processing starts for a given partition.
         /// </summary>
         ///
-        public Func<PartitionContext, Task> InitializeProcessingForPartitionAsync
+        public Func<InitializePartitionProcessingContext, Task> InitializeProcessingForPartitionAsync
         {
             internal get => _initializeProcessingForPartitionAsync;
             set => EnsureNotRunningAndInvoke(() => _initializeProcessingForPartitionAsync = value);
@@ -60,28 +62,28 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   The handler to be called once event processing stops for a given partition.
         /// </summary>
         ///
-        public Func<PartitionContext, PartitionProcessorCloseReason, Task> ProcessingForPartitionStoppedAsync
+        public Func<PartitionProcessingStoppedContext, Task> ProcessingForPartitionStoppedAsync
         {
             internal get => _processingForPartitionStoppedAsync;
             set => EnsureNotRunningAndInvoke(() => _processingForPartitionStoppedAsync = value);
         }
 
         /// <summary>
-        ///   Responsible for processing sets of events received from the Event Hubs service.  Implementation is mandatory.
+        ///   Responsible for processing events received from the Event Hubs service.  Implementation is mandatory.
         /// </summary>
         ///
-        public Func<PartitionContext, IEnumerable<EventData>, Task> ProcessEventsAsync
+        public Func<EventProcessorEvent, Task> ProcessEventAsync
         {
-            internal get => _processEventsAsync;
-            set => EnsureNotRunningAndInvoke(() => _processEventsAsync = value);
+            internal get => _processEventAsync;
+            set => EnsureNotRunningAndInvoke(() => _processEventAsync = value);
         }
 
         /// <summary>
-        ///   Responsible for processing unexpected exceptions thrown while this <see cref="EventProcessorClient" /> is running.
+        ///   Responsible for processing unhandled exceptions thrown while this <see cref="EventProcessorClient" /> is running.
         ///   Implementation is mandatory.
         /// </summary>
         ///
-        public Func<PartitionContext, Exception, Task> ProcessExceptionAsync
+        public Func<ProcessorErrorContext, Task> ProcessExceptionAsync
         {
             internal get => _processExceptionAsync;
             set => EnsureNotRunningAndInvoke(() => _processExceptionAsync = value);
@@ -383,12 +385,59 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
+        ///   Updates the checkpoint using the given information for the associated partition and consumer group in the chosen storage service.
+        /// </summary>
+        ///
+        /// <param name="eventData">The event containing the information to be stored in the checkpoint.</param>
+        /// <param name="context">The context of the partition the checkpoint is associated with.</param>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        ///
+        /// <remarks>
+        ///   This method will override EventProcessorBase's UpdateCheckpointAsync when it's implemented.
+        /// </remarks>
+        ///
+        protected internal virtual async Task UpdateCheckpointAsync(EventData eventData,
+                                                                    PartitionContext context)
+        {
+            Argument.AssertNotNull(eventData, nameof(eventData));
+            Argument.AssertNotNull(eventData.Offset, nameof(eventData.Offset));
+            Argument.AssertNotNull(eventData.SequenceNumber, nameof(eventData.SequenceNumber));
+
+            // Parameter validation is done by Checkpoint constructor.
+
+            var checkpoint = new Checkpoint
+            (
+                FullyQualifiedNamespace,
+                EventHubName,
+                ConsumerGroup,
+                Identifier,
+                context.PartitionId,
+                eventData.Offset.Value,
+                eventData.SequenceNumber.Value
+            );
+
+            using DiagnosticScope scope =
+                EventDataInstrumentation.ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorCheckpointActivityName);
+            scope.Start();
+
+            try
+            {
+                await Manager.UpdateCheckpointAsync(checkpoint).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+            }
+        }
+
+        /// <summary>
         ///   Starts the event processor.  In case it's already running, nothing happens.
         /// </summary>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="ProcessEventsAsync" /> or <see cref="ProcessExceptionAsync" /> set.</exception>
+        /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="ProcessEventAsync" /> or <see cref="ProcessExceptionAsync" /> set.</exception>
         ///
         public virtual async Task StartAsync()
         {
@@ -404,9 +453,9 @@ namespace Azure.Messaging.EventHubs.Processor
                     {
                         if (ActiveLoadBalancingTask == null)
                         {
-                            if (_processEventsAsync == null)
+                            if (_processEventAsync == null)
                             {
-                                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotStartEventProcessorWithoutHandler, nameof(ProcessEventsAsync)));
+                                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotStartEventProcessorWithoutHandler, nameof(ProcessEventAsync)));
                             }
 
                             if (_processExceptionAsync == null)
@@ -482,7 +531,7 @@ namespace Azure.Messaging.EventHubs.Processor
                         InstanceOwnership = null;
 
                         await Task.WhenAll(PartitionPumps.Keys
-                            .Select(partitionId => RemovePartitionPumpIfItExistsAsync(partitionId, PartitionProcessorCloseReason.Shutdown)))
+                            .Select(partitionId => RemovePartitionPumpIfItExistsAsync(partitionId, CloseReason.Shutdown)))
                             .ConfigureAwait(false);
                     }
                 }
@@ -609,7 +658,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 await Task.WhenAll(PartitionPumps.Keys
                     .Except(InstanceOwnership.Keys)
-                    .Select(partitionId => RemovePartitionPumpIfItExistsAsync(partitionId, PartitionProcessorCloseReason.OwnershipLost)))
+                    .Select(partitionId => RemovePartitionPumpIfItExistsAsync(partitionId, CloseReason.OwnershipLost)))
                     .ConfigureAwait(false);
 
                 // Now that we are left with pumps that should be running, check their status.  If any has stopped, it means an
@@ -785,21 +834,18 @@ namespace Azure.Messaging.EventHubs.Processor
 
             // Create and start the new partition pump and add it to the dictionary.
 
-            var partitionContext = new PartitionContext(Connection.FullyQualifiedNamespace, Connection.EventHubName, ConsumerGroup, partitionId, Identifier, Manager);
-            var defaultEventPosition = EventPosition.Earliest;
+            var partitionContext = new PartitionContext(partitionId);
 
             try
             {
-                EventProcessorClientOptions options = Options.Clone();
-
-                // Overwrite the initial event position in case a checkpoint exists.
+                EventPosition startingPosition = default;
 
                 if (initialSequenceNumber.HasValue)
                 {
-                   defaultEventPosition = EventPosition.FromSequenceNumber(initialSequenceNumber.Value);
+                    startingPosition = EventPosition.FromSequenceNumber(initialSequenceNumber.Value, false);
                 }
 
-                var partitionPump = new PartitionPump(this, Connection, ConsumerGroup, partitionContext, defaultEventPosition, options);
+                var partitionPump = new PartitionPump(this, Connection, ConsumerGroup, partitionContext, startingPosition, Options);
 
                 await partitionPump.StartAsync().ConfigureAwait(false);
 
@@ -818,12 +864,12 @@ namespace Azure.Messaging.EventHubs.Processor
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the Event Hub partition the partition pump is associated with.</param>
-        /// <param name="reason">The reason why the partition processor is being closed.</param>
+        /// <param name="reason">The reason why the processing for the specified partition is being stopped.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         private async Task RemovePartitionPumpIfItExistsAsync(string partitionId,
-                                                              PartitionProcessorCloseReason? reason = null)
+                                                              CloseReason? reason = null)
         {
             if (PartitionPumps.TryRemove(partitionId, out PartitionPump pump))
             {
