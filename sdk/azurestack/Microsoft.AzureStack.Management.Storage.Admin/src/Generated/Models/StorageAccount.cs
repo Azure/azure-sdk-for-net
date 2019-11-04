@@ -85,6 +85,7 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
             TenantViewId = tenantViewId;
             AccountType = accountType;
             ProvisioningState = provisioningState;
+            Kind = kind;
             PrimaryEndpoints = primaryEndpoints;
             CreationTime = creationTime;
             PrimaryLocation = primaryLocation;
@@ -97,10 +98,9 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
             AccountStatus = accountStatus;
             AccountId = accountId;
             Encryption = encryption;
+            SupportsHttpsTrafficOnly = supportsHttpsTrafficOnly;
             AccessTier = accessTier;
             HealthState = healthState;
-            SupportsHttpsTrafficOnly = supportsHttpsTrafficOnly;
-            Kind = kind;
             Tags = tags;
             CustomInit();
         }
