@@ -41,6 +41,34 @@ namespace Sql.Tests
         }
 
         [Fact]
+        public void FailoverReadableSecondaryDatabase()
+        {
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
+            {
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+                Server server = context.CreateServer(resourceGroup);
+
+                // Create database
+                string dbName = SqlManagementTestUtilities.GenerateName();
+                var dbInput = new Database()
+                {
+                    Location = server.Location,
+                    Sku = new Microsoft.Azure.Management.Sql.Models.Sku(ServiceObjectiveName.P1)
+                };
+                var db = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, dbInput);
+                Assert.NotNull(db);
+
+                // Failover database
+                sqlClient.Databases.Failover(
+                    resourceGroup.Name,
+                    server.Name,
+                    dbName,
+                    "ReadableSecondary");
+            }
+        }
+
+        [Fact]
         public void FailoverElasticPool()
         {
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
