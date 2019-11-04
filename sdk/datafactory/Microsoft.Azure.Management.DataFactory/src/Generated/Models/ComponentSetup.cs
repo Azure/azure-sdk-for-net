@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// component.</param>
         /// <param name="licenseKey">The license key to activate the
         /// component.</param>
-        public ComponentSetup(string componentName, SecretBase licenseKey)
+        public ComponentSetup(string componentName, SecretBase licenseKey = default(SecretBase))
         {
             ComponentName = componentName;
             LicenseKey = licenseKey;
@@ -71,10 +71,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (ComponentName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ComponentName");
-            }
-            if (LicenseKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "LicenseKey");
             }
         }
     }

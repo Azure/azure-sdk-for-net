@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication.</param>
         /// <param name="resource">Resource for which Azure Auth token will be
         /// requested when using MSI Authentication.</param>
-        public WebActivityAuthentication(string type, SecureString pfx = default(SecureString), string username = default(string), SecureString password = default(SecureString), string resource = default(string))
+        public WebActivityAuthentication(string type, SecretBase pfx = default(SecretBase), string username = default(string), SecretBase password = default(SecretBase), string resource = default(string))
         {
             Type = type;
             Pfx = pfx;
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets base64-encoded contents of a PFX file.
         /// </summary>
         [JsonProperty(PropertyName = "pfx")]
-        public SecureString Pfx { get; set; }
+        public SecretBase Pfx { get; set; }
 
         /// <summary>
         /// Gets or sets web activity authentication user name for basic
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets password for the PFX file or basic authentication.
         /// </summary>
         [JsonProperty(PropertyName = "password")]
-        public SecureString Password { get; set; }
+        public SecretBase Password { get; set; }
 
         /// <summary>
         /// Gets or sets resource for which Azure Auth token will be requested
@@ -98,14 +98,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (Type == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Type");
-            }
-            if (Pfx != null)
-            {
-                Pfx.Validate();
-            }
-            if (Password != null)
-            {
-                Password.Validate();
             }
         }
     }
