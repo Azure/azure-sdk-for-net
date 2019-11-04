@@ -1081,7 +1081,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(parameters);
 
                     // Act
-                    Assert.CatchAsync<Exception>(
+                    await TestHelper.CatchAsync<Exception>(
                         async () =>
                         {
                             var _ = (await file.GetPropertiesAsync(
@@ -1792,7 +1792,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(parameters);
 
                     // Act
-                    Assert.CatchAsync<Exception>(
+                    await TestHelper.CatchAsync<Exception>(
                         async () =>
                         {
                             var _ = (await file.ReadAsync(
