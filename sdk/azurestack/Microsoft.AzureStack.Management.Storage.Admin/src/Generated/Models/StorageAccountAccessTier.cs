@@ -12,11 +12,12 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
 {
 
     /// <summary>
-    /// Defines values for StorageAccountState.
+    /// Access tier for storage account.
     /// </summary>
-    public static class StorageAccountState
+    public static class StorageAccountAccessTier
     {
-        public const string Creating = "Creating";
-        public const string Succeeded = "Succeeded";
+        public const string Hot = "Hot";
+        public const string Cool = "Cool";
     }
+
 }

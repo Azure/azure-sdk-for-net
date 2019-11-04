@@ -10,17 +10,13 @@
 
 namespace Microsoft.AzureStack.Management.Storage.Admin.Models
 {
-
     /// <summary>
-    /// Defines values for WacAccountPermissions.
+    /// The kind of storage account.
     /// </summary>
-    public static class WacAccountPermissions
+    public static class StorageAccountKind
     {
-        public const string Empty = "Empty";
-        public const string None = "None";
-        public const string Read = "Read";
-        public const string Delete = "Delete";
-        public const string Write = "Write";
-        public const string Full = "Full";
+        public const string Storage = "Storage";
+        public const string StorageV2 = "StorageV2";
+        public const string BlobStorage = "BlobStorage";
     }
 }
