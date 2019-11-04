@@ -27,6 +27,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public readonly string ContentEncoding = "encoding";
         public readonly string ContentLanguage = "language";
         public readonly string ContentType = "type";
+        public readonly string AccessControl = "user::rwx,group::r--,other::---,mask::rwx";
 
         public DataLakeTestBase(bool async) : this(async, null) { }
 

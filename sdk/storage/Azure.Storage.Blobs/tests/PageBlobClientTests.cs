@@ -477,7 +477,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8354")]
         public async Task UploadPagesAsync_WithUnreliableConnection()
         {
             const int blobSize = 1 * Constants.MB;
@@ -825,7 +824,7 @@ namespace Azure.Storage.Blobs.Test
                     lease: true);
 
                 // Act
-                Assert.CatchAsync<Exception>(
+                await TestHelper.CatchAsync<Exception>(
                     async () =>
                     {
                         var _ = (await blob.GetPageRangesAsync(
@@ -979,7 +978,7 @@ namespace Azure.Storage.Blobs.Test
                     lease: true);
 
                 // Act
-                Assert.CatchAsync<Exception>(
+                await TestHelper.CatchAsync<Exception>(
                     async () =>
                     {
                         var _ = (await blob.GetPageRangesDiffAsync(
@@ -1564,7 +1563,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8353")]
         public async Task UploadPagesFromUriAsync_CPK()
         {
             await using DisposingContainer test = await GetTestContainerAsync();

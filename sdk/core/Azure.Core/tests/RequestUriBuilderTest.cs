@@ -278,6 +278,9 @@ namespace Azure.Core.Tests
         [TestCase("?a", "?a")]
         [TestCase("?a=b", "?a=b")]
         [TestCase("?a=b&", "?a=b&")]
+        [TestCase("?d=b&", "?d=*&")]
+        [TestCase("?d=a", "?d=*")]
+
         [TestCase("?a=b&d", "?a=b&d")]
         [TestCase("?a=b&d=1&", "?a=b&d=*&")]
         [TestCase("?a=b&d=1&a1", "?a=b&d=*&a1")]
@@ -297,6 +300,18 @@ namespace Azure.Core.Tests
                 "A",
                 "a1",
                 "a-2"
+            }, "*"));
+        }
+
+        [Test]
+        public void QueryIsSanitizedAppendQuery()
+        {
+            var uriBuilder = new RequestUriBuilder();
+            uriBuilder.Reset(new Uri("http://localhost/"));
+            uriBuilder.AppendQuery("a", "b");
+
+            Assert.AreEqual("http://localhost/?a=*", uriBuilder.ToString(new string[]
+            {
             }, "*"));
         }
     }
