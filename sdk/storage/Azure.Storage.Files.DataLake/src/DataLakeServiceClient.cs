@@ -287,11 +287,11 @@ namespace Azure.Storage.Files.DataLake
         /// key that can be used to delegate Active Directory authorization to
         /// shared access signatures created with <see cref="Sas.DataLakeSasBuilder"/>.
         /// </summary>
-        /// <param name="start">
+        /// <param name="startsOn">
         /// Start time for the key's validity, with null indicating an
         /// immediate start.  The time should be specified in UTC.
         /// </param>
-        /// <param name="expiry">
+        /// <param name="expiresOn">
         /// Expiration of the key's validity.  The time should be specified
         /// in UTC.
         /// </param>
@@ -309,13 +309,13 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         [ForwardsClientCalls]
         public virtual Response<UserDelegationKey> GetUserDelegationKey(
-            DateTimeOffset? start,
-            DateTimeOffset expiry,
+            DateTimeOffset? startsOn,
+            DateTimeOffset expiresOn,
             CancellationToken cancellationToken = default)
         {
             Response<Blobs.Models.UserDelegationKey> response = _blobServiceClient.GetUserDelegationKey(
-                start,
-                expiry,
+                startsOn,
+                expiresOn,
                 cancellationToken);
 
             return Response.FromValue(
@@ -328,11 +328,11 @@ namespace Azure.Storage.Files.DataLake
         /// key that can be used to delegate Active Directory authorization to
         /// shared access signatures created with <see cref="Sas.DataLakeSasBuilder"/>.
         /// </summary>
-        /// <param name="start">
+        /// <param name="startsOn">
         /// Start time for the key's validity, with null indicating an
         /// immediate start.  The time should be specified in UTC.
         /// </param>
-        /// <param name="expiry">
+        /// <param name="expiresOn">
         /// Expiration of the key's validity.  The time should be specified
         /// in UTC.
         /// </param>
@@ -350,13 +350,13 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<UserDelegationKey>> GetUserDelegationKeyAsync(
-            DateTimeOffset? start,
-            DateTimeOffset expiry,
+            DateTimeOffset? startsOn,
+            DateTimeOffset expiresOn,
             CancellationToken cancellationToken = default)
         {
             Response<Blobs.Models.UserDelegationKey> response = await _blobServiceClient.GetUserDelegationKeyAsync(
-                start,
-                expiry,
+                startsOn,
+                expiresOn,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -448,11 +448,11 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <param name="publicAccessType">
         /// Optionally specifies whether data in the file system may be accessed
-        /// publicly and the level of access. <see cref="PublicAccessType.Container"/>
+        /// publicly and the level of access. <see cref="PublicAccessType.FileSystem"/>
         /// specifies full public read access for file system and blob data.
         /// Clients can enumerate blobs within the file system via anonymous
         /// request, but cannot enumerate file systems within the storage
-        /// account.  <see cref="PublicAccessType.Blob"/> specifies public
+        /// account.  <see cref="PublicAccessType.Path"/> specifies public
         /// read access for blobs.  Blob data within this file system can be
         /// read via anonymous request, but file system data is not available.
         /// Clients cannot enumerate blobs within the file system via anonymous
@@ -498,11 +498,11 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <param name="publicAccessType">
         /// Optionally specifies whether data in the file system may be accessed
-        /// publicly and the level of access. <see cref="PublicAccessType.Container"/>
+        /// publicly and the level of access. <see cref="PublicAccessType.FileSystem"/>
         /// specifies full public read access for file system and blob data.
         /// Clients can enumerate blobs within the file system via anonymous
         /// request, but cannot enumerate file systems within the storage
-        /// account.  <see cref="PublicAccessType.Blob"/> specifies public
+        /// account.  <see cref="PublicAccessType.Path"/> specifies public
         /// read access for blobs.  Blob data within this file system can be
         /// read via anonymous request, but file system data is not available.
         /// Clients cannot enumerate blobs within the file system via anonymous

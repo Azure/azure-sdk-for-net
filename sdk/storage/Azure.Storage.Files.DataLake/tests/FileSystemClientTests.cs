@@ -230,11 +230,11 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
 
             // Act
-            await fileSystem.CreateAsync(publicAccessType: Models.PublicAccessType.Blob);
+            await fileSystem.CreateAsync(publicAccessType: Models.PublicAccessType.Path);
 
             // Assert
             Response<FileSystemProperties> response = await fileSystem.GetPropertiesAsync();
-            Assert.AreEqual(Models.PublicAccessType.Blob, response.Value.PublicAccess);
+            Assert.AreEqual(Models.PublicAccessType.Path, response.Value.PublicAccess);
 
             // Cleanup
             await fileSystem.DeleteAsync();
@@ -376,7 +376,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await SetUpFileSystemForListing(fileSystem);
 
                 // Act
-                AsyncPageable<PathItem> response = fileSystem.ListPathsAsync(upn: true);
+                AsyncPageable<PathItem> response = fileSystem.ListPathsAsync(userPrincipalName: true);
                 IList<PathItem> paths = await response.ToListAsync();
 
                 // Assert
@@ -434,13 +434,13 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task GetPropertiesAsync()
         {
-            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem, publicAccessType: Models.PublicAccessType.Container))
+            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem, publicAccessType: Models.PublicAccessType.FileSystem))
             {
                 // Act
                 Response<FileSystemProperties> response = await fileSystem.GetPropertiesAsync();
 
                 // Assert
-                Assert.AreEqual(Models.PublicAccessType.Container, response.Value.PublicAccess);
+                Assert.AreEqual(Models.PublicAccessType.FileSystem, response.Value.PublicAccess);
             }
         }
 

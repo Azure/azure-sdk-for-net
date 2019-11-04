@@ -99,7 +99,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             if (publicAccessType == Models.PublicAccessType.None)
             {
-                publicAccessType = premium ? Models.PublicAccessType.None : Models.PublicAccessType.Container;
+                publicAccessType = premium ? Models.PublicAccessType.None : Models.PublicAccessType.FileSystem;
             }
 
             return new DisposingFileSystem(
