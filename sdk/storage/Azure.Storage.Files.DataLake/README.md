@@ -35,16 +35,17 @@ az storage account create --name MyStorageAccount --resource-group MyResourceGro
 ## Key concepts
 
 This preview package for .NET includes ADLS Gen2 specific API support made available in Blob SDK. This includes:
-1. New directory level operations (Create, Rename/Move, Delete) for both hierarchical namespace enabled (HNS) storage accounts and HNS disabled storage accounts. For HNS enabled accounts, the rename/move operations are atomic.
+1. New directory level operations (Create, Rename/Move, Delete) for hierarchical namespace enabled (HNS) storage accounts. For HNS enabled accounts, the rename/move operations are atomic.
 2. Permission related operations (Get/Set ACLs) for hierarchical namespace enabled (HNS) accounts. 
 
-HNS enabled accounts in ADLS Gen2 can also now leverage all of the operations available in Blob SDK. Support for File level semantics for ADLS Gen2 is planned to be made available in Blob SDK in a later release. In the meantime, please find below mapping for ADLS Gen2 terminology to Blob terminology
+HNS enabled accounts in ADLS Gen2 can also now leverage most of the operations available in Blob SDK. Support for File level semantics for ADLS Gen2 is planned to be made available in Blob SDK in a later release. In the meantime, please find below mapping for ADLS Gen2 terminology to Blob terminology.
 
-|ADLS Gen2 	 | Blob       |
-| ---------- | ---------- |
-|Filesystem	 | Container  | 
-|Folder	   	 | Directory  |
-|File		 | Blob       |
+|ADLS Gen2 	                | Blob       |
+| --------------------------| ---------- |
+|Filesystem                 | Container  | 
+|Path (File or Directory)   | Blob       |
+
+Note: This SDK does not support hierarchical namespace (HNS) disabled storage accounts.
 
 ## Examples
 
