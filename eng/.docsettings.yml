@@ -7,6 +7,7 @@ omitted_paths:
   - sdk/*mgmt*/*
   - sdk/*/*.Management.*/*
   - samples/*
+  - common/SmokeTests/*
 language: net
 root_check_enabled: True
 required_readme_sections:
