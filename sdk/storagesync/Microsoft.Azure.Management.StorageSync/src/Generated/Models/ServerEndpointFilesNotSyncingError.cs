@@ -10,31 +10,34 @@
 
 namespace Microsoft.Azure.Management.StorageSync.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Files not syncing error object
     /// </summary>
-    public partial class FilesNotSyncingError
+    public partial class ServerEndpointFilesNotSyncingError
     {
         /// <summary>
-        /// Initializes a new instance of the FilesNotSyncingError class.
+        /// Initializes a new instance of the
+        /// ServerEndpointFilesNotSyncingError class.
         /// </summary>
-        public FilesNotSyncingError()
+        public ServerEndpointFilesNotSyncingError()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the FilesNotSyncingError class.
+        /// Initializes a new instance of the
+        /// ServerEndpointFilesNotSyncingError class.
         /// </summary>
         /// <param name="errorCode">Error code (HResult)</param>
         /// <param name="persistentCount">Count of persistent files not syncing
         /// with the specified error code</param>
         /// <param name="transientCount">Count of transient files not syncing
         /// with the specified error code</param>
-        public FilesNotSyncingError(int? errorCode = default(int?), long? persistentCount = default(long?), long? transientCount = default(long?))
+        public ServerEndpointFilesNotSyncingError(int? errorCode = default(int?), long? persistentCount = default(long?), long? transientCount = default(long?))
         {
             ErrorCode = errorCode;
             PersistentCount = persistentCount;
@@ -67,5 +70,22 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         [JsonProperty(PropertyName = "transientCount")]
         public long? TransientCount { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (PersistentCount < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "PersistentCount", 0);
+            }
+            if (TransientCount < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "TransientCount", 0);
+            }
+        }
     }
 }
