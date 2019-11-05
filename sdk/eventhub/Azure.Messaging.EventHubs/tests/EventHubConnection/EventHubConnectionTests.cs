@@ -41,7 +41,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Provides the invalid test cases for the constructor tests.
+        ///   Provides test cases for the constructor tests.
         /// </summary>
         ///
         public static IEnumerable<object[]> ConstructorCreatesDefaultOptionsCases()
@@ -54,7 +54,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Provides the invalid test cases for the constructor tests.
+        ///   Provides test cases for the constructor tests.
         /// </summary>
         ///
         public static IEnumerable<object[]> ConstructorClonesOptionsCases()
@@ -581,12 +581,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockClient
                 .Setup(client => client.GetPropertiesAsync(
-                    It.IsAny<EventHubRetryPolicy>(),
+                    It.IsAny<EventHubsRetryPolicy>(),
                     It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(properties))
                 .Verifiable("GetPropertiesAcync should have been delegated to.");
 
-            var actual = await mockClient.Object.GetPartitionIdsAsync(Mock.Of<EventHubRetryPolicy>(), CancellationToken.None);
+            var actual = await mockClient.Object.GetPartitionIdsAsync(Mock.Of<EventHubsRetryPolicy>(), CancellationToken.None);
 
             Assert.That(actual, Is.Not.Null);
             Assert.That(actual, Is.EqualTo(partitionIds));
@@ -605,7 +605,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var transportClient = new ObservableTransportClientMock();
             var client = new InjectableTransportClientMock(transportClient, "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake");
 
-            await client.GetPropertiesAsync(Mock.Of<EventHubRetryPolicy>(), CancellationToken.None);
+            await client.GetPropertiesAsync(Mock.Of<EventHubsRetryPolicy>(), CancellationToken.None);
 
             Assert.That(transportClient.WasGetPropertiesCalled, Is.True);
         }
@@ -622,7 +622,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var client = new InjectableTransportClientMock(transportClient, "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake");
             var expectedId = "BB33";
 
-            await client.GetPartitionPropertiesAsync(expectedId, Mock.Of<EventHubRetryPolicy>());
+            await client.GetPartitionPropertiesAsync(expectedId, Mock.Of<EventHubsRetryPolicy>());
 
             Assert.That(transportClient.GetPartitionPropertiesCalledForId, Is.EqualTo(expectedId));
         }
@@ -900,7 +900,7 @@ namespace Azure.Messaging.EventHubs.Tests
             public bool WasGetPropertiesCalled;
             public bool WasCloseCalled;
 
-            public override Task<EventHubProperties> GetPropertiesAsync(EventHubRetryPolicy retryPolicy,
+            public override Task<EventHubProperties> GetPropertiesAsync(EventHubsRetryPolicy retryPolicy,
                                                                         CancellationToken cancellationToken = default)
             {
                 WasGetPropertiesCalled = true;
@@ -908,7 +908,7 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             public override Task<PartitionProperties> GetPartitionPropertiesAsync(string partitionId,
-                                                                                  EventHubRetryPolicy retryPolicy,
+                                                                                  EventHubsRetryPolicy retryPolicy,
                                                                                   CancellationToken cancellationToken = default)
             {
                 GetPartitionPropertiesCalledForId = partitionId;

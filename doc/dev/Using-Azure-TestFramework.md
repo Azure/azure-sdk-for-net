@@ -1,4 +1,6 @@
-# Using Microsoft.Rest.ClientRuntime.Azure.TestFramework #
+# Using Microsoft.Rest.ClientRuntime.Azure.TestFramework
+
+> `Microsoft.Rest.ClientRuntime.Azure.TestFramework` has been deprecated. Please follow the [guide](./Track2TestFramework.md) to use the new one.
 
 1. Getting Started
 2. Accquring TestFramework
@@ -110,9 +112,9 @@ Ensure that the `HttpRecorderMode` in the `TEST_CSM_ORGID_AUTHENTICATION` enviro
 	* RawGraphToken
 	* HttpRecorderMode={Record | Playback}
 	* AADAuthEndpoint
-	* OptimizeRecordedFile={true | false:default}  
+	* OptimizeRecordedFile={true | false:default}
 	true: will trim recorded files when long running operations are detected.
-	
+
 	* GraphTokenAudienceUri
 	* BaseUri
 	* AADAuthUri

@@ -31,7 +31,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 Delay = TimeSpan.FromSeconds(1),
                 MaximumDelay = TimeSpan.FromSeconds(2),
                 TryTimeout = TimeSpan.FromSeconds(3),
-                CustomRetryPolicy = Mock.Of<EventHubRetryPolicy>()
+                CustomRetryPolicy = Mock.Of<EventHubsRetryPolicy>()
             };
 
             RetryOptions clone = options.Clone();
@@ -158,7 +158,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 Delay = TimeSpan.FromSeconds(1),
                 MaximumDelay = TimeSpan.FromSeconds(2),
                 TryTimeout = TimeSpan.FromSeconds(3),
-                CustomRetryPolicy = Mock.Of<EventHubRetryPolicy>()
+                CustomRetryPolicy = Mock.Of<EventHubsRetryPolicy>()
             };
 
             var policy = options.ToRetryPolicy();

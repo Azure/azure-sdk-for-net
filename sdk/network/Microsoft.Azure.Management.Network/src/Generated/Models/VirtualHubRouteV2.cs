@@ -31,9 +31,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the VirtualHubRouteV2 class.
         /// </summary>
-        /// <param name="destinationType">The type of destinations</param>
+        /// <param name="destinationType">The type of destinations.</param>
         /// <param name="destinations">List of all destinations.</param>
-        /// <param name="nextHopType">The type of next hops</param>
+        /// <param name="nextHopType">The type of next hops.</param>
         /// <param name="nextHops">NextHops ip address.</param>
         public VirtualHubRouteV2(string destinationType = default(string), IList<string> destinations = default(IList<string>), string nextHopType = default(string), IList<string> nextHops = default(IList<string>))
         {
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the type of destinations
+        /// Gets or sets the type of destinations.
         /// </summary>
         [JsonProperty(PropertyName = "destinationType")]
         public string DestinationType { get; set; }
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<string> Destinations { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of next hops
+        /// Gets or sets the type of next hops.
         /// </summary>
         [JsonProperty(PropertyName = "nextHopType")]
         public string NextHopType { get; set; }

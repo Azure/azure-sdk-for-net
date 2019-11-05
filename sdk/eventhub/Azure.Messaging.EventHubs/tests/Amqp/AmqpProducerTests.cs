@@ -44,7 +44,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ConstructorRequiresTheEventHubName(string eventHub)
         {
-            Assert.That(() => new AmqpProducer(eventHub, null, Mock.Of<AmqpConnectionScope>(), Mock.Of<AmqpMessageConverter>(), Mock.Of<EventHubRetryPolicy>()), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new AmqpProducer(eventHub, null, Mock.Of<AmqpConnectionScope>(), Mock.Of<AmqpMessageConverter>(), Mock.Of<EventHubsRetryPolicy>()), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorRequiresTheConnectionScope()
         {
-            Assert.That(() => new AmqpProducer("theMostAwesomeHubEvar", "0", null, Mock.Of<AmqpMessageConverter>(), Mock.Of<EventHubRetryPolicy>()), Throws.ArgumentNullException);
+            Assert.That(() => new AmqpProducer("theMostAwesomeHubEvar", "0", null, Mock.Of<AmqpMessageConverter>(), Mock.Of<EventHubsRetryPolicy>()), Throws.ArgumentNullException);
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task CloseMarksTheProducerAsClosed()
         {
-            var producer = new AmqpProducer("aHub", "0", Mock.Of<AmqpConnectionScope>(), Mock.Of<AmqpMessageConverter>(), Mock.Of<EventHubRetryPolicy>());
+            var producer = new AmqpProducer("aHub", "0", Mock.Of<AmqpConnectionScope>(), Mock.Of<AmqpMessageConverter>(), Mock.Of<EventHubsRetryPolicy>());
             Assert.That(producer.Closed, Is.False, "The producer should not be closed on creation");
 
             await producer.CloseAsync(CancellationToken.None);
@@ -90,7 +90,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void CloseRespectsTheCancellationToken()
         {
-            var producer = new AmqpProducer("aHub", null, Mock.Of<AmqpConnectionScope>(), Mock.Of<AmqpMessageConverter>(), Mock.Of<EventHubRetryPolicy>());
+            var producer = new AmqpProducer("aHub", null, Mock.Of<AmqpConnectionScope>(), Mock.Of<AmqpMessageConverter>(), Mock.Of<EventHubsRetryPolicy>());
             using var cancellationSource = new CancellationTokenSource();
 
             cancellationSource.Cancel();
@@ -106,7 +106,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void CreateBatchAsyncValidatesTheOptions()
         {
-            var producer = new AmqpProducer("aHub", null, Mock.Of<AmqpConnectionScope>(), Mock.Of<AmqpMessageConverter>(), Mock.Of<EventHubRetryPolicy>());
+            var producer = new AmqpProducer("aHub", null, Mock.Of<AmqpConnectionScope>(), Mock.Of<AmqpMessageConverter>(), Mock.Of<EventHubsRetryPolicy>());
             Assert.That(async () => await producer.CreateBatchAsync(null, CancellationToken.None), Throws.ArgumentNullException);
         }
 
@@ -271,7 +271,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void SendEnumerableValidatesTheEvents()
         {
-            var producer = new AmqpProducer("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), Mock.Of<EventHubRetryPolicy>());
+            var producer = new AmqpProducer("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), Mock.Of<EventHubsRetryPolicy>());
             Assert.That(async () => await producer.SendAsync(null, new SendOptions(), CancellationToken.None), Throws.ArgumentNullException);
         }
 
@@ -283,7 +283,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task SendEnumerableEnsuresNotClosed()
         {
-            var producer = new AmqpProducer("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), Mock.Of<EventHubRetryPolicy>());
+            var producer = new AmqpProducer("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), Mock.Of<EventHubsRetryPolicy>());
             await producer.CloseAsync(CancellationToken.None);
 
             Assert.That(async () => await producer.SendAsync(Enumerable.Empty<EventData>(), new SendOptions(), CancellationToken.None), Throws.InstanceOf<EventHubsClientClosedException>());
@@ -333,7 +333,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var messageFactory = default(Func<AmqpMessage>);
             var events = new[] { new EventData(new byte[] { 0x15 }) };
 
-            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), Mock.Of<EventHubRetryPolicy>())
+            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), Mock.Of<EventHubsRetryPolicy>())
             {
                 CallBase = true
             };
@@ -367,7 +367,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using CancellationTokenSource cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            var producer = new AmqpProducer("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), Mock.Of<EventHubRetryPolicy>());
+            var producer = new AmqpProducer("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), Mock.Of<EventHubsRetryPolicy>());
             Assert.That(async () => await producer.SendAsync(new[] { new EventData(new byte[] { 0x15 }) }, new SendOptions(), cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
         }
 
@@ -416,7 +416,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void SendBatchValidatesTheBatch()
         {
-            var producer = new AmqpProducer("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), Mock.Of<EventHubRetryPolicy>());
+            var producer = new AmqpProducer("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), Mock.Of<EventHubsRetryPolicy>());
             Assert.That(async () => await producer.SendAsync(null, CancellationToken.None), Throws.ArgumentNullException);
         }
 
