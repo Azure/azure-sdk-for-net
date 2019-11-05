@@ -70,8 +70,8 @@ DeleteSecretOperation operation = client.StartDeleteSecret(secretName);
 
 ## Purging a deleted secret
 
-If the Key Vault is soft-delete enabled, then for permanent deletion, deleted secret needs to be purged.
-Before it can be purged, you need to wait until the secret is fully deleted.
+If the Key Vault is soft delete-enabled and you want to permanently delete the secret before its `ScheduledPurgeDate`,
+the deleted secret needs to be purged. Before it can be purged, you need to wait until the secret is fully deleted.
 
 ```C# Snippet:SecretsSample1PurgeSecret
 while (!operation.HasCompleted)
@@ -94,3 +94,10 @@ await operation.WaitForCompletionAsync();
 
 await client.PurgeDeletedSecretAsync(secretName);
 ```
+
+## Source
+
+To see the full example source, see:
+
+* [Synchronous Sample1_HelloWorld.cs](../tests/samples/Sample1_HelloWorld.cs)
+* [Asynchronous Sample1_HelloWorld.cs](../tests/samples/Sample1_HelloWorldAsync.cs)

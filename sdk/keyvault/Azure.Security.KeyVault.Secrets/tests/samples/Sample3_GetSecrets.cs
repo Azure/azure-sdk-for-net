@@ -13,7 +13,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
 {
     /// <summary>
     /// Sample demonstrates how to list secrets and versions of a given secret,
-    /// and list deleted secrets in a soft-delete enabled key vault
+    /// and list deleted secrets in a soft delete-enabled key vault
     /// using the synchronous methods of the SecretClient.
     /// </summary>
     [LiveOnly]

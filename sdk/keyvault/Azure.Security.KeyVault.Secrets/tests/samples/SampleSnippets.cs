@@ -176,6 +176,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             DeleteSecretOperation operation = client.StartDeleteSecret("secret-name");
 
             // You only need to wait for completion if you want to purge or recover the secret.
+            // You should call `UpdateStatus` in another thread or after doing additional work like pumping messages.
             while (!operation.HasCompleted)
             {
                 Thread.Sleep(2000);

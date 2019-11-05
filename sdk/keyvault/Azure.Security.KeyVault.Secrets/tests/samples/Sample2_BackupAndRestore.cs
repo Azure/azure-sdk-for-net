@@ -58,7 +58,8 @@ namespace Azure.Security.KeyVault.Secrets.Samples
                 operation.UpdateStatus();
             }
 
-            // If the Key Vault is soft-delete enabled, then for permanent deletion, deleted secret needs to be purged.
+            // If the Key Vault is soft delete-enabled and you want to permanently delete the secret before its `ScheduledPurgeDate`,
+            // the deleted secret needs to be purged.
             client.PurgeDeletedSecret(secretName);
 
             #region Snippet:SecretsSample2RestoreSecret

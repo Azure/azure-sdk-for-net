@@ -48,3 +48,10 @@ byte[] secretBackupToRestore = File.ReadAllBytes(backupPath);
 
 SecretProperties restoreSecret = client.RestoreSecretBackup(secretBackupToRestore);
 ```
+
+## Source
+
+To see the full example source, see:
+
+* [Synchronous Sample2_BackupAndRestore.cs](../tests/samples/Sample2_BackupAndRestore.cs)
+* [Asynchronous Sample2_BackupAndRestore.cs](../tests/samples/Sample2_BackupAndRestoreAsync.cs)

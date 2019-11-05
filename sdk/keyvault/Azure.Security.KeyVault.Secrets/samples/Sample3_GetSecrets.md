@@ -108,3 +108,10 @@ foreach (DeletedSecret secret in secretsDeleted)
     Debug.WriteLine($"Deleted secret's recovery Id {secret.RecoveryId}");
 }
 ```
+
+## Source
+
+To see the full example source, see:
+
+* [Synchronous Sample3_GetSecrets.cs](../tests/samples/Sample3_GetSecrets.cs)
+* [Asynchronous Sample3_GetSecrets.cs](../tests/samples/Sample3_GetSecretsAsync.cs)
