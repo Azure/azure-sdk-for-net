@@ -54,7 +54,7 @@ namespace Azure.Messaging.EventHubs
         ///
         public Func<InitializePartitionProcessingContext, Task> InitializeProcessingForPartitionAsync
         {
-            internal get => _initializeProcessingForPartitionAsync;
+            protected get => _initializeProcessingForPartitionAsync;
             set => EnsureNotRunningAndInvoke(() => _initializeProcessingForPartitionAsync = value);
         }
 
@@ -64,7 +64,7 @@ namespace Azure.Messaging.EventHubs
         ///
         public Func<PartitionProcessingStoppedContext, Task> ProcessingForPartitionStoppedAsync
         {
-            internal get => _processingForPartitionStoppedAsync;
+            protected get => _processingForPartitionStoppedAsync;
             set => EnsureNotRunningAndInvoke(() => _processingForPartitionStoppedAsync = value);
         }
 
@@ -74,7 +74,7 @@ namespace Azure.Messaging.EventHubs
         ///
         public Func<EventProcessorEvent, Task> ProcessEventAsync
         {
-            internal get => _processEventAsync;
+            protected get => _processEventAsync;
             set => EnsureNotRunningAndInvoke(() => _processEventAsync = value);
         }
 
@@ -85,7 +85,7 @@ namespace Azure.Messaging.EventHubs
         ///
         public Func<ProcessorErrorContext, Task> ProcessExceptionAsync
         {
-            internal get => _processExceptionAsync;
+            protected get => _processExceptionAsync;
             set => EnsureNotRunningAndInvoke(() => _processExceptionAsync = value);
         }
 
@@ -533,11 +533,15 @@ namespace Azure.Messaging.EventHubs
                         await Task.WhenAll(PartitionPumps.Keys
                             .Select(partitionId => RemovePartitionPumpIfItExistsAsync(partitionId, CloseReason.Shutdown)))
                             .ConfigureAwait(false);
+
+                        // We need to wait until all pumps have stopped before making the Active Load Balancing Task null.  If we did it sooner,
+                        // we would have a race condition where the user could update the processing handlers while some pumps are still running.
+
+                        ActiveLoadBalancingTask = null;
                     }
                 }
                 finally
                 {
-                    ActiveLoadBalancingTask = null;
                     RunningTaskSemaphore.Release();
                 }
             }
@@ -666,16 +670,14 @@ namespace Azure.Messaging.EventHubs
                 // should exist, create it.  This might happen when pump creation has failed in a previous cycle.
 
                 await Task.WhenAll(InstanceOwnership
-                    .Where(kvp =>
+                    .Select(async kvp =>
                         {
-                            if (PartitionPumps.TryGetValue(kvp.Key, out PartitionPump pump))
+                            if (PartitionPumps.TryGetValue(kvp.Key, out PartitionPump pump) && !pump.IsRunning)
                             {
-                                return !pump.IsRunning;
+                                await RemovePartitionPumpIfItExistsAsync(kvp.Key, CloseReason.Exception).ConfigureAwait(false);
+                                await AddPartitionPumpAsync(kvp.Key, kvp.Value.SequenceNumber).ConfigureAwait(false);
                             }
-
-                            return true;
-                        })
-                    .Select(kvp => AddOrOverwritePartitionPumpAsync(kvp.Key, kvp.Value.SequenceNumber)))
+                        }))
                     .ConfigureAwait(false);
 
                 // Find an ownership to claim and try to claim it.  The method will return null if this instance was not eligible to
@@ -687,7 +689,7 @@ namespace Azure.Messaging.EventHubs
                 {
                     InstanceOwnership[claimedOwnership.PartitionId] = claimedOwnership;
 
-                    await AddOrOverwritePartitionPumpAsync(claimedOwnership.PartitionId, claimedOwnership.SequenceNumber).ConfigureAwait(false);
+                    await AddPartitionPumpAsync(claimedOwnership.PartitionId, claimedOwnership.SequenceNumber).ConfigureAwait(false);
                 }
 
                 // Wait the remaining time, if any, to start the next cycle.  The total time of a cycle defaults to 10 seconds,
@@ -814,8 +816,8 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Creates and starts a new partition pump associated with the specified partition.  Partition pumps that are overwritten by the creation
-        ///   of a new one are properly stopped.
+        ///   Creates and starts a new partition pump associated with the specified partition.  A partition pump might be overwritten by the creation
+        ///   of the new one and, for this reason, it needs to be stopped prior to this method call.
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the Event Hub partition the partition pump will be associated with.  Events will be read only from this partition.</param>
@@ -823,17 +825,9 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        private async Task AddOrOverwritePartitionPumpAsync(string partitionId,
-                                                            long? initialSequenceNumber)
+        private async Task AddPartitionPumpAsync(string partitionId,
+                                                 long? initialSequenceNumber)
         {
-            // Remove and stop the existing partition pump if it exists.  We are not specifying any close reason because partition
-            // pumps only are overwritten in case of failure.  In these cases, the close reason is delegated to the pump as it may
-            // have more information about what caused the failure.
-
-            await RemovePartitionPumpIfItExistsAsync(partitionId).ConfigureAwait(false);
-
-            // Create and start the new partition pump and add it to the dictionary.
-
             var partitionContext = new PartitionContext(partitionId);
 
             try
@@ -845,7 +839,15 @@ namespace Azure.Messaging.EventHubs
                     startingPosition = EventPosition.FromSequenceNumber(initialSequenceNumber.Value, false);
                 }
 
-                var partitionPump = new PartitionPump(this, Connection, ConsumerGroup, partitionContext, startingPosition, Options);
+                if (InitializeProcessingForPartitionAsync != null)
+                {
+                    var initializationContext = new InitializePartitionProcessingContext(partitionContext);
+                    await InitializeProcessingForPartitionAsync(initializationContext).ConfigureAwait(false);
+
+                    startingPosition = startingPosition ?? initializationContext.DefaultStartingPosition;
+                }
+
+                var partitionPump = new PartitionPump(Connection, ConsumerGroup, partitionContext, startingPosition ?? EventPosition.Earliest, ProcessEventAsync, UpdateCheckpointAsync, Options);
 
                 await partitionPump.StartAsync().ConfigureAwait(false);
 
@@ -869,17 +871,32 @@ namespace Azure.Messaging.EventHubs
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         private async Task RemovePartitionPumpIfItExistsAsync(string partitionId,
-                                                              CloseReason? reason = null)
+                                                              CloseReason reason)
         {
             if (PartitionPumps.TryRemove(partitionId, out PartitionPump pump))
             {
                 try
                 {
-                    await pump.StopAsync(reason).ConfigureAwait(false);
+                    await pump.StopAsync().ConfigureAwait(false);
                 }
                 catch (Exception)
                 {
                     // TODO: delegate the exception handling to an Exception Callback.
+                }
+
+                if (ProcessingForPartitionStoppedAsync != null)
+                {
+                    try
+                    {
+                        var partitionContext = new PartitionContext(partitionId);
+                        var stopContext = new PartitionProcessingStoppedContext(partitionContext, reason);
+
+                        await ProcessingForPartitionStoppedAsync(stopContext);
+                    }
+                    catch (Exception)
+                    {
+                        // TODO: delegate the exception handling to an Exception Callback.
+                    }
                 }
             }
         }
