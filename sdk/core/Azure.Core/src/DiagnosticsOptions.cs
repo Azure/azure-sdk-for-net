@@ -19,6 +19,7 @@ namespace Azure.Core
         internal DiagnosticsOptions()
         {
             IsTelemetryEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TELEMETRY_DISABLED")) ?? true;
+            IsDistributedTracingEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TRACING_DISABLED")) ?? true;
             ApplicationId = DefaultApplicationId;
             LoggedHeaderNames = new List<string>()
             {

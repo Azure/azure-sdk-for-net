@@ -57,6 +57,26 @@ namespace Azure.Core.Tests
         }
 
         [NonParallelizable]
+        [Theory]
+        [TestCase("true")]
+        [TestCase("TRUE")]
+        [TestCase("1")]
+        public void CanDisableDistributedTracingWithEnvironmentVariable(string value)
+        {
+            try
+            {
+                Environment.SetEnvironmentVariable("AZURE_TRACING_DISABLED", value);
+
+                var testOptions = new TestOptions();
+                Assert.False(testOptions.Diagnostics.IsDistributedTracingEnabled);
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("AZURE_TRACING_DISABLED", null);
+            }
+        }
+
+        [NonParallelizable]
         [Test]
         public void UsesDefaultApplicationId()
         {
