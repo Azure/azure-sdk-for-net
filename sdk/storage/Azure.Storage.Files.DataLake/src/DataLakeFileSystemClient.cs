@@ -878,13 +878,11 @@ namespace Azure.Storage.Files.DataLake
                     Dictionary<string, List<Dictionary<string, string>>> pathDictionary
                         = JsonSerializer.Deserialize<Dictionary<string, List<Dictionary<string, string>>>>(jsonString);
 
-                    pathDictionary.TryGetValue("paths", out List<Dictionary<string, string>> paths);
-
                     return Response.FromValue(
                         new PathSegment()
                         {
                             Continuation = response.Value.Continuation,
-                            Paths = paths.Select(path => path.ToPathItem())
+                            Paths = pathDictionary["paths"].Select(path => path.ToPathItem())
                         },
                         response.GetRawResponse());
                     ;
