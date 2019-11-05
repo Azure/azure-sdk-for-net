@@ -19,7 +19,158 @@ namespace Azure.Storage.Files.DataLake.Samples
     public class Sample01a_HelloWorld : SampleTest
     {
         /// <summary>
+        /// Create a DataLake File using a DataLake Filesystem.
+        /// </summary>
+        [Test]
+        public void CreateFileClient_Filesystem()
+        {
+            // Make StorageSharedKeyCredential to pass to the serviceClient
+            string storageAccountName = StorageAccountName;
+            string storageAccountKey = StorageAccountKey;
+            Uri serviceUri = StorageAccountBlobUri;
+
+            #region Snippet:SampleSnippetDataLakeServiceClient_Create
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(storageAccountName, storageAccountKey);
+
+            // Create DataLakeServiceClient using StorageSharedKeyCredentials
+            DataLakeServiceClient serviceClient = new DataLakeServiceClient(serviceUri, sharedKeyCredential);
+            #endregion Snippet:SampleSnippetDataLakeServiceClient_Create
+
+            #region Snippet:SampleSnippetDataLakeFileClient_Create
+            // Create a DataLake Filesystem
+            DataLakeFileSystemClient filesystem = serviceClient.GetFileSystemClient(Randomize("sample-filesystem"));
+            filesystem.Create();
+
+            // Create a DataLake file using a DataLake Filesystem
+            DataLakeFileClient file = filesystem.GetFileClient(Randomize("sample-file"));
+            file.Create();
+            #endregion Snippet:SampleSnippetDataLakeFileClient_Create
+
+            // Verify we created one file
+            Assert.AreEqual(1, filesystem.ListPaths().Count());
+
+            // Cleanup
+            filesystem.Delete();
+        }
+
+        /// <summary>
+        /// Create a DataLake File using a DataLake Directory.
+        /// </summary>
+        [Test]
+        public void CreateFileClient_Directory()
+        {
+            // Make StorageSharedKeyCredential to pass to the serviceClient
+            string storageAccountName = StorageAccountName;
+            string storageAccountKey = StorageAccountKey;
+            Uri serviceUri = StorageAccountBlobUri;
+
+            #region Snippet:SampleSnippetDataLakeFileSystemClient_Create
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(storageAccountName, storageAccountKey);
+
+            // Create DataLakeServiceClient using StorageSharedKeyCredentials
+            DataLakeServiceClient serviceClient = new DataLakeServiceClient(serviceUri, sharedKeyCredential);
+
+            // Create a DataLake Filesystem
+            DataLakeFileSystemClient filesystem = serviceClient.GetFileSystemClient(Randomize("sample-filesystem"));
+            filesystem.Create();
+            #endregion Snippet:SampleSnippetDataLakeFileSystemClient_Create
+            #region Snippet:SampleSnippetDataLakeFileClient_Create_Directory
+            //Create a DataLake Directory
+            DataLakeDirectoryClient directory = filesystem.CreateDirectory(Randomize("sample-directory"));
+            directory.Create();
+
+            // Create a DataLake File using a DataLake Directory
+            DataLakeFileClient file = directory.GetFileClient(Randomize("sample-file"));
+            file.Create();
+            #endregion Snippet:SampleSnippetDataLakeFileClient_Create_Directory
+
+            // Verify we created one file
+            Assert.AreEqual(1, filesystem.ListPaths().Count());
+
+            // Cleanup
+            filesystem.Delete();
+        }
+
+        /// <summary>
+        /// Create a DataLake Directory.
+        /// </summary>
+        [Test]
+        public void CreateDirectoryClient()
+        {
+            // Make StorageSharedKeyCredential to pass to the serviceClient
+            string storageAccountName = StorageAccountName;
+            string storageAccountKey = StorageAccountKey;
+            Uri serviceUri = StorageAccountBlobUri;
+
+            #region Snippet:SampleSnippetDataLakeDirectoryClient_Create
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(storageAccountName, storageAccountKey);
+
+            // Create DataLakeServiceClient using StorageSharedKeyCredentials
+            DataLakeServiceClient serviceClient = new DataLakeServiceClient(serviceUri, sharedKeyCredential);
+
+            // Get a reference to a filesystem named "sample-filesystem-append" and then create it
+            DataLakeFileSystemClient filesystem = serviceClient.GetFileSystemClient(Randomize("sample-filesystem-append"));
+            filesystem.Create();
+
+            // Create
+            DataLakeDirectoryClient directory = filesystem.GetDirectoryClient(Randomize("sample-file"));
+            directory.Create();
+            #endregion Snippet:SampleSnippetDataLakeDirectoryClient_Create
+
+            // Verify we created one directory
+            Assert.AreEqual(1, filesystem.ListPaths().Count());
+
+            // Cleanup
+            filesystem.Delete();
+        }
+
+        /// <summary>
         /// Upload a file to a DataLake File.
+        /// </summary>
+        [Test]
+        public void Append_Simple()
+        {
+            // Create Sample File to read content from
+            string sampleFilePath = CreateTempFile(SampleFileContent);
+
+            // Make StorageSharedKeyCredential to pass to the serviceClient
+            string storageAccountName = StorageAccountName;
+            string storageAccountKey = StorageAccountKey;
+            Uri serviceUri = StorageAccountBlobUri;
+
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(storageAccountName, storageAccountKey);
+
+            // Create DataLakeServiceClient using StorageSharedKeyCredentials
+            DataLakeServiceClient serviceClient = new DataLakeServiceClient(serviceUri, sharedKeyCredential);
+
+            // Get a reference to a filesystem named "sample-filesystem-append" and then create it
+            DataLakeFileSystemClient filesystem = serviceClient.GetFileSystemClient(Randomize("sample-filesystem-append"));
+            filesystem.Create();
+            try
+            {
+                #region Snippet:SampleSnippetDataLakeFileClient_Append
+                // Create a file
+                DataLakeFileClient file = filesystem.GetFileClient(Randomize("sample-file"));
+                file.Create();
+
+                // Append data to the DataLake File
+                file.Append(File.OpenRead(sampleFilePath), 0);
+                file.Flush(SampleFileContent.Length);
+                #endregion Snippet:SampleSnippetDataLakeFileClient_Append
+
+                // Verify the contents of the file
+                PathProperties properties = file.GetProperties();
+                Assert.AreEqual(SampleFileContent.Length, properties.ContentLength);
+            }
+            finally
+            {
+                // Clean up after the test when we're finished
+                filesystem.Delete();
+            }
+        }
+
+        /// <summary>
+        /// Upload file by appending each part to a DataLake File.
         /// </summary>
         [Test]
         public void Append()
@@ -37,7 +188,7 @@ namespace Azure.Storage.Files.DataLake.Samples
 
             StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(storageAccountName, storageAccountKey);
 
-            // Get a reference to a FileSystemClient
+            // Create DataLakeServiceClient using StorageSharedKeyCredentials
             DataLakeServiceClient serviceClient = new DataLakeServiceClient(serviceUri, sharedKeyCredential);
 
             // Get a reference to a filesystem named "sample-filesystem-append" and then create it
@@ -106,7 +257,9 @@ namespace Azure.Storage.Files.DataLake.Samples
                 file.Flush(SampleFileContent.Length);
 
                 // Download the DataLake file's contents and save it to a file
+                #region Snippet:SampleSnippetDataLakeFileClient_Read
                 Response<FileDownloadInfo> fileContents = file.Read();
+                #endregion Snippet:SampleSnippetDataLakeFileClient_Read
                 using (FileStream stream = File.OpenWrite(downloadPath))
                 {
                     fileContents.Value.Content.CopyTo(stream);
@@ -149,10 +302,12 @@ namespace Azure.Storage.Files.DataLake.Samples
 
                 // List all the directories
                 List<string> names = new List<string>();
+                #region Snippet:SampleSnippetDataLakeFileClient_List
                 foreach (PathItem pathItem in filesystem.ListPaths())
                 {
                     names.Add(pathItem.Name);
                 }
+                #endregion Snippet:SampleSnippetDataLakeFileClient_List
                 Assert.AreEqual(3, names.Count);
                 Assert.Contains("sample-directory1", names);
                 Assert.Contains("sample-directory2", names);
@@ -293,12 +448,14 @@ namespace Azure.Storage.Files.DataLake.Samples
             filesystem.Create();
             try
             {
+                #region Snippet:SampleSnippetDataLakeFileClient_SetPermissions
                 // Create a DataLake file so we can set the Access Controls on the files
                 DataLakeFileClient fileClient = filesystem.GetFileClient(Randomize("sample-file"));
                 fileClient.Create();
 
                 // Set the Permissions of the file
                 fileClient.SetPermissions(permissions: "rwxrwxrwx");
+                #endregion Snippet:SampleSnippetDataLakeFileClient_SetPermissions
 
                 // Get Access Control List
                 PathAccessControl accessControlResponse = fileClient.GetAccessControl();
@@ -333,15 +490,18 @@ namespace Azure.Storage.Files.DataLake.Samples
             filesystem.Create();
             try
             {
+                #region Snippet:SampleSnippetDataLakeFileClient_SetAcls
                 // Create a DataLake file so we can set the Access Controls on the files
                 DataLakeFileClient fileClient = filesystem.GetFileClient(Randomize("sample-file"));
                 fileClient.Create();
 
                 // Set Access Control List
                 fileClient.SetAccessControl("user::rwx,group::r--,mask::rwx,other::---");
-
+                #endregion Snippet:SampleSnippetDataLakeFileClient_SetAcls
+                #region Snippet:SampleSnippetDataLakeFileClient_GetAcls
                 // Get Access Control List
                 PathAccessControl accessControlResponse = fileClient.GetAccessControl();
+                #endregion Snippet:SampleSnippetDataLakeFileClient_GetAcls
 
                 // Check Access Control permissions
                 Assert.AreEqual("user::rwx,group::r--,mask::rwx,other::---", accessControlResponse.Acl);
@@ -354,7 +514,7 @@ namespace Azure.Storage.Files.DataLake.Samples
         }
 
         /// <summary>
-        /// Rename a DataLake file and a DatLake directories in a DataLake Filesystem.
+        /// Rename a DataLake file and a DataLake directory in a DataLake Filesystem.
         /// </summary>
         [Test]
         public void Rename()
@@ -378,7 +538,9 @@ namespace Azure.Storage.Files.DataLake.Samples
                 directoryClient.Create();
 
                 // Rename directory with new path/name and verify by making a service call (e.g. GetProperties)
+                #region Snippet:SampleSnippetDataLakeFileClient_RenameDirectory
                 DataLakeDirectoryClient renamedDirectoryClient = directoryClient.Rename("sample-directory2");
+                #endregion Snippet:SampleSnippetDataLakeFileClient_RenameDirectory
                 PathProperties directoryPathProperties = renamedDirectoryClient.GetProperties();
 
                 // Delete the sample directory using the new path/name
@@ -389,11 +551,58 @@ namespace Azure.Storage.Files.DataLake.Samples
                 fileClient.Create();
 
                 // Rename file with new path/name and verify by making a service call (e.g. GetProperties)
+                #region Snippet:SampleSnippetDataLakeFileClient_RenameFile
                 DataLakeFileClient renamedFileClient = fileClient.Rename("sample-file2");
+                #endregion Snippet:SampleSnippetDataLakeFileClient_RenameFile
                 PathProperties filePathProperties = renamedFileClient.GetProperties();
 
                 // Delete the sample directory using the new path/name
                 filesystem.DeleteFile("sample-file2");
+            }
+            finally
+            {
+                // Clean up after the test when we're finished
+                filesystem.Delete();
+            }
+        }
+
+        /// <summary>
+        /// Get Properties on a DataLake File and a Directory
+        /// </summary>
+        [Test]
+        public void GetProperties()
+        {
+            // Make StorageSharedKeyCredential to pass to the serviceClient
+            string storageAccountName = StorageAccountName;
+            string storageAccountKey = StorageAccountKey;
+            Uri serviceUri = StorageAccountBlobUri;
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(storageAccountName, storageAccountKey);
+
+            // Create DataLakeServiceClient using StorageSharedKeyCredentials
+            DataLakeServiceClient serviceClient = new DataLakeServiceClient(serviceUri, sharedKeyCredential);
+
+            // Get a reference to a filesystem named "sample-filesystem-rename" and then create it
+            DataLakeFileSystemClient filesystem = serviceClient.GetFileSystemClient(Randomize("sample-filesystem"));
+            filesystem.Create();
+            try
+            {
+                // Create a DataLake Directory to rename it later
+                DataLakeDirectoryClient directoryClient = filesystem.GetDirectoryClient(Randomize("sample-directory"));
+                directoryClient.Create();
+
+                #region Snippet:SampleSnippetDataLakeDirectoryClient_GetProperties
+                // Get Properties on a Directory
+                PathProperties directoryPathProperties = directoryClient.GetProperties();
+                #endregion Snippet:SampleSnippetDataLakeDirectoryClient_GetProperties
+
+                // Create a DataLake file
+                DataLakeFileClient fileClient = filesystem.GetFileClient(Randomize("sample-file"));
+                fileClient.Create();
+
+                #region Snippet:SampleSnippetDataLakeFileClient_GetProperties
+                // Get Properties on a File
+                PathProperties filePathProperties = fileClient.GetProperties();
+                #endregion Snippet:SampleSnippetDataLakeFileClient_GetProperties
             }
             finally
             {
