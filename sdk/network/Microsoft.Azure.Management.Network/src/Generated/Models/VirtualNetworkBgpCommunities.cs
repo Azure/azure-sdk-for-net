@@ -34,9 +34,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// class.
         /// </summary>
         /// <param name="virtualNetworkCommunity">The BGP community associated
-        /// with the virtual network</param>
+        /// with the virtual network.</param>
         /// <param name="regionalCommunity">The BGP community associated with
-        /// the region of the virtual network</param>
+        /// the region of the virtual network.</param>
         public VirtualNetworkBgpCommunities(string virtualNetworkCommunity, string regionalCommunity = default(string))
         {
             VirtualNetworkCommunity = virtualNetworkCommunity;
@@ -50,14 +50,14 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the BGP community associated with the virtual network
+        /// Gets or sets the BGP community associated with the virtual network.
         /// </summary>
         [JsonProperty(PropertyName = "virtualNetworkCommunity")]
         public string VirtualNetworkCommunity { get; set; }
 
         /// <summary>
         /// Gets the BGP community associated with the region of the virtual
-        /// network
+        /// network.
         /// </summary>
         [JsonProperty(PropertyName = "regionalCommunity")]
         public string RegionalCommunity { get; private set; }

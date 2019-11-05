@@ -7,24 +7,11 @@
 		<PackageId>Microsoft.Azure.Management.Network</PackageId>
 		<Description>Provides management capabilities for Network services.</Description>
 		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-		<Version>19.17.0-preview</Version>
+		<Version>19.17.1-preview</Version>
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>
 		<PackageReleaseNotes>
 		<![CDATA[
-            - Removed unsupported PATCH operations from FirewallPolicy, RouteFilterRule, VirtualRouter and VirtualRouterPeering
-            - Fixed incorrectly generated PATCH operations in multiple resources
-            - Fixed incorrect property names of VpnServerConfiguration
-            - Changed accessibility of properties that should be read-only in multiple resources
-            - Changed minimum allowed value of VirtualRouter's "VirtualRouterAsn" from 1 to 0
-            - Added operations for VirtualHubRouteTableV2 and IpGroups
-            - Added operations "GetPrivateEndpointConnection" and "ListPrivateEndpointConnections" in PrivateLinkServices
-            - Added properties "TranslatedFqdn" and "DestinationFqdns" to AzureFirewall
-            - Added property "FirewallPolicy" to ApplicationGateway's HttpListener and PathRule
-            - Added property "Hostnames" to ApplicationGateway's HttpListener
-            - Added property "AdditionalProperties" to AzureFirewall
-            - Added property "EnableProxyProtocol" to PrivateLinkService
-            - Added property "LinkIdentifier" to PrivateEndpointConnection
-            - Added support for "GeoMatch" in WebApplicationFirewall's MatchCondition's operator
+            - Bugfix in PrivateLinkServiceConnectionState: property "ActionRequired" renamed to "ActionsRequired"
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
