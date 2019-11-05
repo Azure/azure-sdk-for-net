@@ -49,7 +49,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
             };
 
-            IEnumerable<Page<DocumentResult<DetectedLanguage>>> resultsPages = client.DetectLanguages(inputs, showStats: true).AsPages();
+            var resultsPages = client.DetectLanguages(inputs, showStats: true).AsPages();
 
             int i = 0;
             foreach (var resultsPage in resultsPages)

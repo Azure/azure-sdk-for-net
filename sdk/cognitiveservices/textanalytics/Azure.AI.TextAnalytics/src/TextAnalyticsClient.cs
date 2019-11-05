@@ -58,7 +58,6 @@ namespace Azure.AI.TextAnalytics
 
         #region Detect Language
 
-
         // Note that this is a simple overload that takes a single input and returns a single detected language.
         // More advanced overloads are available that return the full list of detected languages.
         /// <summary>
@@ -67,7 +66,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="countryHint"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<DetectedLanguage> DetectLanguageAsync(string inputText, string countryHint = "en", CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DetectedLanguage>> DetectLanguageAsync(string inputText, string countryHint = "en", CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
 
@@ -278,10 +277,57 @@ namespace Azure.AI.TextAnalytics
         /// <param name="modelVersion"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
+        public virtual AsyncPageable<DocumentResult<DetectedLanguage>> DetectLanguagesAsync(List<DocumentInput> inputs, bool showStats = false, string modelVersion = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(inputs, nameof(inputs));
+            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => GetDetectedLanguagesPageAsync(inputs, showStats, modelVersion, cancellationToken));
+        }
+
+        //private Task<Page<DocumentResult<DetectedLanguage>>> MyFunc(string nextLink, List<DocumentInput> inputs, bool showStats = false, string modelVersion = default, CancellationToken cancellationToken = default)
+        //{
+        //    return GetDetectedLanguagesPageAsync(inputs, showStats, modelVersion, cancellationToken);
+        //}
+
+        //return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => (Task<Page<DocumentResult<DetectedLanguage>>>)GetDetectedLanguagesPageAsync(inputs, showStats, modelVersion, cancellationToken));
+        //Func<string, Task<Page<DocumentResult<DetectedLanguage>>>> func = MyFunc;
+        //return PageResponseEnumerator.CreateAsyncEnumerable(func);
+
+        /// <summary>
+        /// </summary>
+        /// <param name="inputs"></param>
+        /// <param name="showStats"></param>
+        /// <param name="modelVersion"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public virtual Pageable<DocumentResult<DetectedLanguage>> DetectLanguages(List<DocumentInput> inputs, bool showStats = false, string modelVersion = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
             return PageResponseEnumerator.CreateEnumerable(nextLink => GetDetectedLanguagesPage(inputs, showStats, modelVersion, cancellationToken));
+        }
+
+        private async Task<Page<DocumentResult<DetectedLanguage>>> GetDetectedLanguagesPageAsync(List<DocumentInput> inputs, bool showStats, string modelVersion, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.GetDetectedLanguagesPage");
+            scope.Start();
+
+            try
+            {
+                using Request request = CreateDetectedLanguageBatchRequest(inputs, showStats, modelVersion);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
+
+                switch (response.Status)
+                {
+                    case 200:
+                        return await TextAnalyticsServiceSerializer.DeserializeDetectLanguageResponseAsync(response, cancellationToken).ConfigureAwait(false);
+                    default:
+                        throw await response.CreateRequestFailedExceptionAsync();
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         private TextAnalyticsResultPage<DetectedLanguage> GetDetectedLanguagesPage(List<DocumentInput> inputs, bool showStats, string modelVersion, CancellationToken cancellationToken = default)

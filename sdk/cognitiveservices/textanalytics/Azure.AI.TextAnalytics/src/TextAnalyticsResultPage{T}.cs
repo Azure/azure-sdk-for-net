@@ -58,7 +58,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// </summary>
         /// <param name="page"></param>
-        public static explicit operator TextAnalyticsResultPage<T>(Page<DetectedLanguage> page)
+        public static explicit operator TextAnalyticsResultPage<T>(Page<T> page)
         {
             return page as TextAnalyticsResultPage<T>;
         }
