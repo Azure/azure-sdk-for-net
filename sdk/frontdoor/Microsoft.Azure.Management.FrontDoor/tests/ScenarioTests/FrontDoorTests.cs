@@ -330,6 +330,8 @@ namespace FrontDoor.Tests.ScenarioTests
             Assert.Equal(policy.CustomRules.Rules.Count, parameters.CustomRules.Rules.Count);
             Assert.Equal(policy.ManagedRules.ManagedRuleSets.Count, parameters.ManagedRules.ManagedRuleSets.Count);
             Assert.Equal(policy.ManagedRules.ManagedRuleSets[0].Exclusions.Count, parameters.ManagedRules.ManagedRuleSets[0].Exclusions.Count);
+            Assert.Equal(policy.ManagedRules.ManagedRuleSets[0].RuleGroupOverrides[0].Exclusions.Count, parameters.ManagedRules.ManagedRuleSets[0].RuleGroupOverrides[0].Exclusions.Count);
+            Assert.Equal(policy.ManagedRules.ManagedRuleSets[0].RuleGroupOverrides[0].Rules[0].Exclusions.Count, parameters.ManagedRules.ManagedRuleSets[0].RuleGroupOverrides[0].Rules[0].Exclusions.Count);
         }
 
         private static void VerifyFrontDoor(FrontDoorModel frontDoor, FrontDoorModel parameters)
