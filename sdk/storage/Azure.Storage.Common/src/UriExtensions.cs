@@ -59,5 +59,54 @@ namespace Azure.Storage
             }
             return parameters;
         }
+
+        /// <summary>
+        /// Get the account name from the domain portion of a Uri.
+        /// </summary>
+        /// <param name="uri">The Uri.</param>
+        /// <param name="serviceSubDomains">Required. The service subdomains used to validate that the
+        /// domain is in the expected format. This should be "blob" for blobs, "file" for files,
+        /// "queue" for queues, "blob" and "dfs" for datalake.</param>
+        /// <returns>Account name</returns>
+        public static string GetAccountNameFromDomain(this Uri uri, params string[] serviceSubDomains)
+        {
+            var accountEndIndex = uri.Host.IndexOf(".", StringComparison.InvariantCulture);
+            if (accountEndIndex >= 0)
+            {
+                var serviceStartIndex = accountEndIndex + 1;
+                var serviceEndIndex = uri.Host.IndexOf(".", serviceStartIndex, StringComparison.InvariantCulture);
+                if (serviceEndIndex > serviceStartIndex)
+                {
+                    var service = uri.Host.Substring(serviceStartIndex, serviceEndIndex - serviceStartIndex);
+                    foreach (string subDomain in serviceSubDomains)
+                    {
+                        if (service == subDomain)
+                        {
+                            return uri.Host.Substring(0, accountEndIndex);
+                        }
+                    }
+                }
+            }
+            return string.Empty;
+        }
+
+        /// <summary>
+        /// If path starts with a slash, remove it
+        /// </summary>
+        /// <param name="uri">The Uri.</param>
+        /// <returns>Sanitized Uri.</returns>
+        public static string GetSanitizedPath(this Uri uri) =>
+            (uri.AbsolutePath[0] == '/')
+            ? uri.AbsolutePath.Substring(1)
+            : uri.AbsolutePath;
+
+        // TODO See remarks at https://docs.microsoft.com/en-us/dotnet/api/system.net.ipaddress.tryparse?view=netframework-4.7.2
+        /// <summary>
+        /// Check to see if Uri is using IP Endpoint style.
+        /// </summary>
+        /// <param name="uri">The Uri.</param>
+        /// <returns>True if using IP Endpoint style.</returns>
+        public static bool IsHostIPEndPointStyle(this Uri uri) =>
+           !string.IsNullOrEmpty(uri.Host) && IPAddress.TryParse(uri.Host, out _);
     }
 }
