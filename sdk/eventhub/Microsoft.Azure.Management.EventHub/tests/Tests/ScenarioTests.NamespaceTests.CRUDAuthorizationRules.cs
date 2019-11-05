@@ -145,13 +145,13 @@ namespace EventHub.Tests.ScenarioTests
                 Assert.NotNull(listKeysResponse.PrimaryConnectionString);
                 Assert.NotNull(listKeysResponse.SecondaryConnectionString);
 
-                //Renerate connectionstring to  the namespace for a Authorization rule created
+                // Regenerate connectionstring to  the namespace for a Authorization rule created
                 var NewKeysResponse_primary = EventHubManagementClient.Namespaces.RegenerateKeys(resourceGroup, namespaceName, authorizationRuleName, new RegenerateAccessKeyParameters(KeyType.PrimaryKey));
                 Assert.NotNull(NewKeysResponse_primary);
                 Assert.NotEqual(NewKeysResponse_primary.PrimaryConnectionString, listKeysResponse.PrimaryConnectionString);
                 Assert.Equal(NewKeysResponse_primary.SecondaryConnectionString, listKeysResponse.SecondaryConnectionString);
 
-                //Renerate connectionstring to  the namespace for a Authorization rule created
+                // Regenerate connectionstring to  the namespace for a Authorization rule created
                 var NewKeysResponse_secondary = EventHubManagementClient.Namespaces.RegenerateKeys(resourceGroup, namespaceName, authorizationRuleName, new RegenerateAccessKeyParameters(KeyType.SecondaryKey));
                 Assert.NotNull(NewKeysResponse_secondary);
                 Assert.NotEqual(NewKeysResponse_secondary.PrimaryConnectionString, listKeysResponse.PrimaryConnectionString);
