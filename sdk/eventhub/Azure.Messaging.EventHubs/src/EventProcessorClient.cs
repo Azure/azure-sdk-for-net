@@ -531,7 +531,7 @@ namespace Azure.Messaging.EventHubs
                         InstanceOwnership = null;
 
                         await Task.WhenAll(PartitionPumps.Keys
-                            .Select(partitionId => RemovePartitionPumpIfItExistsAsync(partitionId, CloseReason.Shutdown)))
+                            .Select(partitionId => RemovePartitionPumpIfItExistsAsync(partitionId, ProcessingStoppedReason.Shutdown)))
                             .ConfigureAwait(false);
 
                         // We need to wait until all pumps have stopped before making the Active Load Balancing Task null.  If we did it sooner,
@@ -662,7 +662,7 @@ namespace Azure.Messaging.EventHubs
 
                 await Task.WhenAll(PartitionPumps.Keys
                     .Except(InstanceOwnership.Keys)
-                    .Select(partitionId => RemovePartitionPumpIfItExistsAsync(partitionId, CloseReason.OwnershipLost)))
+                    .Select(partitionId => RemovePartitionPumpIfItExistsAsync(partitionId, ProcessingStoppedReason.OwnershipLost)))
                     .ConfigureAwait(false);
 
                 // Now that we are left with pumps that should be running, check their status.  If any has stopped, it means an
@@ -674,7 +674,7 @@ namespace Azure.Messaging.EventHubs
                         {
                             if (PartitionPumps.TryGetValue(kvp.Key, out PartitionPump pump) && !pump.IsRunning)
                             {
-                                await RemovePartitionPumpIfItExistsAsync(kvp.Key, CloseReason.Exception).ConfigureAwait(false);
+                                await RemovePartitionPumpIfItExistsAsync(kvp.Key, ProcessingStoppedReason.Exception).ConfigureAwait(false);
                                 await AddPartitionPumpAsync(kvp.Key, kvp.Value.SequenceNumber).ConfigureAwait(false);
                             }
                         }))
@@ -871,7 +871,7 @@ namespace Azure.Messaging.EventHubs
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         private async Task RemovePartitionPumpIfItExistsAsync(string partitionId,
-                                                              CloseReason reason)
+                                                              ProcessingStoppedReason reason)
         {
             if (PartitionPumps.TryRemove(partitionId, out PartitionPump pump))
             {
