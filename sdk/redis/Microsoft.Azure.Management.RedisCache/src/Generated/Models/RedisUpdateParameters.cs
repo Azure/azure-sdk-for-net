@@ -44,14 +44,18 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// settings</param>
         /// <param name="shardCount">The number of shards to be created on a
         /// Premium Cluster Cache.</param>
+        /// <param name="minimumTlsVersion">Optional: requires clients to use a
+        /// specified TLS version (or higher) to connect (e,g, '1.0', '1.1',
+        /// '1.2'). Possible values include: '1.0', '1.1', '1.2'</param>
         /// <param name="sku">The SKU of the Redis cache to deploy.</param>
         /// <param name="tags">Resource tags.</param>
-        public RedisUpdateParameters(IDictionary<string, string> redisConfiguration = default(IDictionary<string, string>), bool? enableNonSslPort = default(bool?), IDictionary<string, string> tenantSettings = default(IDictionary<string, string>), int? shardCount = default(int?), Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public RedisUpdateParameters(IDictionary<string, string> redisConfiguration = default(IDictionary<string, string>), bool? enableNonSslPort = default(bool?), IDictionary<string, string> tenantSettings = default(IDictionary<string, string>), int? shardCount = default(int?), string minimumTlsVersion = default(string), Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             RedisConfiguration = redisConfiguration;
             EnableNonSslPort = enableNonSslPort;
             TenantSettings = tenantSettings;
             ShardCount = shardCount;
+            MinimumTlsVersion = minimumTlsVersion;
             Sku = sku;
             Tags = tags;
             CustomInit();
@@ -89,6 +93,14 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.shardCount")]
         public int? ShardCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets optional: requires clients to use a specified TLS
+        /// version (or higher) to connect (e,g, '1.0', '1.1', '1.2'). Possible
+        /// values include: '1.0', '1.1', '1.2'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.minimumTlsVersion")]
+        public string MinimumTlsVersion { get; set; }
 
         /// <summary>
         /// Gets or sets the SKU of the Redis cache to deploy.
