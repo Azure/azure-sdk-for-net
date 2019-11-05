@@ -14,8 +14,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     using System.Linq;
 
     /// <summary>
-    /// SQL specific recovery point, specifically encapsulates full/diff
-    /// recovery point along with extended info
+    /// SQL specific recoverypoint, specifically encapsulates full/diff
+    /// recoverypoint along with extended info
     /// </summary>
     public partial class AzureWorkloadSQLRecoveryPoint : AzureWorkloadRecoveryPoint
     {

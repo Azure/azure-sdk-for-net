@@ -12,8 +12,8 @@ The main shared concepts of Azure.Core (and so Azure SDK libraries using Azure.C
 
 - Configuring service clients, e.g. configuring retries, logging.
 - Accessing HTTP response details.
-- Calling long running operations (LROs).
-- Paging and asynchronous streams (```IAsyncEnumerable<T>```) 
+- Calling long-running operations (LROs).
+- Paging and asynchronous streams (```AsyncPageable<T>```) 
 - Exceptions for reporting errors from service requests in a consistent fashion.
 - Abstractions for representing Azure SDK credentials.
 
@@ -40,24 +40,26 @@ These options are passed as a parameter that extends ```ClientOptions``` class e
 Various service specific options are usually added to its subclasses, but a set of SDK-wide options are 
 available directly on ```ClientOptions```.
 
-```csharp
-public void ConfigureServiceClient()
+```C# Snippet:ConfigurationHelloWorld
+SecretClientOptions options = new SecretClientOptions()
 {
-    // BlobConnectionOptions inherits/extends ClientOptions
-    ClientOptions options = new BlobConnectionOptions();     
-    
-    // configure retries
-    options.RetryPolicy.MaxRetries = 5; // default is 3
-    options.RetryPolicy.Mode = RetryMode.Exponential; // default is fixed retry policy
-    options.RetryPolicy.Delay = TimeSpan.FromSeconds(1); // default is 0.8s
+    Retry =
+    {
+        Delay = TimeSpan.FromSeconds(2),
+        MaxRetries = 10,
+        Mode = RetryMode.Fixed
+    },
+    Diagnostics =
+    {
+        IsLoggingContentEnabled = true,
+        ApplicationId = "myApplicationId"
+    }
+};
 
-    // finally create BlobContainerClient, but many Azure SDK clients will work similarly
-    var client = new BlobContainerClient(connectionString, "container", options);
-
-    // if you don't specify the options, default options will be used, e.g.
-    var clientWithDefaultOptions = new BlobContainerClient(connectionString, "container");
-}
+SecretClient client = new SecretClient(new Uri("http://example.com"), new DefaultAzureCredential(), options);
 ```
+
+More on client configuration in [client configuration samples](samples/Configuration.md)
 
 ### Accessing HTTP Response Details Using ```Response<T>```
 _Service clients_ have methods that can be used to call Azure services. 
@@ -66,77 +68,128 @@ _Service methods_ return a shared Azure.Core type ```Response<T>``` (in rare cas
 This type provides access to both the deserialized result of the service call, 
 and to the details of the HTTP response returned from the server.
 
-```csharp
-public async Task UsingResponseOfT()
+```C# Snippet:ResponseTHelloWorld
+// create a client
+var client = new SecretClient(new Uri("http://example.com"), new DefaultAzureCredential());
+
+// call a service method, which returns Response<T>
+Response<KeyVaultSecret> response = await client.GetSecretAsync("SecretName");
+
+// Response<T> has two main accessors.
+// Value property for accessing the deserialized result of the call
+KeyVaultSecret secret = response.Value;
+
+// .. and GetRawResponse method for accessing all the details of the HTTP response
+Response http = response.GetRawResponse();
+
+// for example, you can access HTTP status
+int status = http.Status;
+
+// or the headers
+foreach (HttpHeader header in http.Headers)
 {
-    // create a client
-    var client = new BlobContainerClient(connectionString, "container");
-
-    // call a service method, which returns Response<T>
-    Response<ContainerItem> response = await client.GetPropertiesAsync();
-
-    // Response<T> has two main accessors. 
-    // Value property for accessing the deserialized result of the call
-    ContainerItem container = response.Value;
-
-    // .. and GetRawResponse method for accessing all the details of the HTTP response
-    Response http = response.GetRawResponse();
-
-    // for example, you can access HTTP status
-    int status = http.Status;
-
-    // or the headers
-    foreach(HttpHeader header = http.Headers) {
-        Console.WriteLine($"{header.Name} {header.Value}");
-    }
-
-    // or the stream of the response content
-    Stream content = http.ContentStream;
-
-    // but, if you are not interested in all HTTP details, 
-    // and just want the result of the service call,
-    // Response<T> provides a cast to get you directly to the result
-    ContainerItem result = await client.GetPropertiesAsync();
+    Console.WriteLine($"{header.Name} {header.Value}");
 }
 ```
 
+More on response types in [response samples](samples/Response.md)
+
+### Setting up console logging
+
+To create an Azure SDK log listener that outputs messages to console use `AzureEventSourceListener.CreateConsoleLogger` method.
+
+```C# Snippet:ConsoleLogging
+// Setup a listener to monitor logged events.
+using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
+```
+
+More on logging in [configuration samples](samples/Configuration.md)
+
+### Reporting Errors ```RequestFailedException```
+
+```C# Snippet:RequestFailedException
+try
+{
+    KeyVaultSecret properties = client.GetSecret("NonexistentSecret");
+}
+// handle exception with status code 404
+catch (RequestFailedException e) when (e.Status == 404)
+{
+    // handle not found error
+    Console.WriteLine("ErrorCode " + e.ErrorCode);
+}
+```
+
+More on handling responses in [response samples](samples/Response.md)
+
+### Consuming Service Methods Returning ```AsyncPageable<T>```
+
+If a service call returns multiple values in pages it would return `Pageable<T>/AsyncPageable<T>` as a result.
+You can iterate over `AsyncPageable` directly or in pages.
+
+```C# Snippet:AsyncPageable
+// call a service method, which returns AsyncPageable<T>
+AsyncPageable<SecretProperties> response = client.GetPropertiesOfSecretsAsync();
+
+await foreach (SecretProperties secretProperties in response)
+{
+    Console.WriteLine(secretProperties.Name);
+}
+```
+
+More on paged responses in [response samples](samples/Response.md)
+
+### Consuming Long-Running Operations Using ```Operation<T>```
+
+Some operations take long time to complete and require polling for their status. Methods starting long-running operations return `*Operation<T>` types.
+
+The `WaitForCompletionAsync` method is an easy way to wait for operation completion and get the resulting value.
+
+```C# Snippet:OperationCompletion
+// create a client
+SecretClient client = new SecretClient(new Uri("http://example.com"), new DefaultAzureCredential());
+
+// Start the operation
+DeleteSecretOperation operation = client.StartDeleteSecret("SecretName");
+
+Response<DeletedSecret> response = await operation.WaitForCompletionAsync();
+DeletedSecret value = response.Value;
+
+Console.WriteLine(value.Name);
+Console.WriteLine(value.ScheduledPurgeDate);
+```
+
+More on long-running operations in [long-running operation samples](samples/LongRunningOperations.md)
+
 ### Mocking
-One of the most important cross-cutting features of our new client libraries using Azure.Core is that they are designed for mocking. 
+One of the most important cross-cutting features of our new client libraries using Azure.Core is that they are designed for mocking.
 Mocking is enabled by:
 
 - providing a protected parameterless constructor on client types.
 - making service methods virtual.
-- providing APIs for constructing model types returned from virtual service methods. To find these factory methods look for types with the _ModelFactory_ suffix, e.g. `ConfigurationModelFactory`.
+- providing APIs for constructing model types returned from virtual service methods. To find these factory methods look for types with the _ModelFactory_ suffix, e.g. `SecretModelFactory`.
 
 For example, the ConfigurationClient.Get method can be mocked (with [Moq](https://github.com/moq/moq4)) as follows:
 
-```c#
+```C# Snippet:ClientMock
 // Create a mock response
 var mockResponse = new Mock<Response>();
 
-// Create a client mock
-var mock = new Mock<ConfigurationClient>();
-
-// Setup client method
-mock.Setup(c => 
-    c.Get("Key", It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<CancellationToken>()))
-    .Returns(new Response<ConfigurationSetting>(mockResponse.Object, 
-         // factory for the model type
-         ConfigurationModelFactory.ConfigurationSetting("Key", "Value")
-    )
+// Create a mock value
+var mockValue = SecretModelFactory.KeyVaultSecret(
+    SecretModelFactory.SecretProperties(new Uri("http://example.com"))
 );
 
+// Create a client mock
+var mock = new Mock<SecretClient>();
+
+// Setup client method
+mock.Setup(c => c.GetSecret("Name", null, default))
+    .Returns(Response.FromValue(mockValue, mockResponse.Object));
+
 // Use the client mock
-ConfigurationClient client = mock.Object;
-ConfigurationSetting setting = client.Get("Key");
-Assert.AreEqual("Value", setting.Value);
+SecretClient client = mock.Object;
+KeyVaultSecret secret = client.GetSecret("Name");
 ```
 
-### Reporting Errors ```RequestFailedException```
-Coming soon ...
-
-### Consuming Service Methods Returning ```IAsyncEnumerable<T>```
-Coming soon ...
-
-### Consuming Long Running Operations Using ```Operation<T>```
-Comming soon ...
+More on mocking in [mocking samples](samples/Mocking.md)

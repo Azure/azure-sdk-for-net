@@ -1,0 +1,13 @@
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Project references -->
+  <ItemGroup Condition="'$(UseProjectReferenceToAzureClients)'=='true'">
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\Azure.Messaging.EventHubs\src\Azure.Messaging.EventHubs.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\storage\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
+  </ItemGroup>
+
+  <!-- Package references -->
+  <ItemGroup Condition="'$(UseProjectReferenceToAzureClients)'!='true'">
+    <PackageReference Include="Azure.Messaging.EventHubs" />
+    <PackageReference Include="Azure.Storage.Blobs" />
+  </ItemGroup>
+</Project>

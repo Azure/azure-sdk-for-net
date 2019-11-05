@@ -1,54 +1,54 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/settings?api-version=2017-08-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDg3YmI0ODUtYjViMC00NzFlLTljMGQtMTA3MTc2MTJmODY5L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VjdXJpdHkvc2V0dGluZ3M/YXBpLXZlcnNpb249MjAxNy0wOC0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/81de6a21-8799-4bb5-a28c-cbc292f8e023/providers/Microsoft.Security/settings?api-version=2019-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODFkZTZhMjEtODc5OS00YmI1LWEyOGMtY2JjMjkyZjhlMDIzL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VjdXJpdHkvc2V0dGluZ3M/YXBpLXZlcnNpb249MjAxOS0wMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4420c7ae-4901-4a83-9830-ba970bf6965c"
+          "eebd6e12-3b4a-4fbb-bc81-1dfcefccd538"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26814.03",
+          "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.Security.SecurityCenterClient/0.10.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
+        "Date": [
+          "Wed, 04 Sep 2019 12:01:40 GMT"
+        ],
         "Pragma": [
           "no-cache"
         ],
-        "x-ms-request-id": [
-          "e811800e-1b28-4201-85fc-b7afad805b05"
-        ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "df2d4775-9b7a-4961-a243-40b3f480e3fd"
         ],
         "x-ms-ratelimit-remaining-subscription-resource-requests": [
           "749"
         ],
         "x-ms-correlation-request-id": [
-          "1d14086a-f422-4fa5-bacc-cba06f0eda18"
+          "dd97767c-cad7-45cf-86ed-f9cf2b4c3add"
         ],
         "x-ms-routing-request-id": [
-          "WESTEUROPE:20181121T124705Z:1d14086a-f422-4fa5-bacc-cba06f0eda18"
+          "UKSOUTH2:20190904T120141Z:dd97767c-cad7-45cf-86ed-f9cf2b4c3add"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
-        ],
-        "Date": [
-          "Wed, 21 Nov 2018 12:47:05 GMT"
         ],
         "Content-Length": [
           "439"
@@ -60,12 +60,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/settings/MCAS\",\r\n      \"name\": \"MCAS\",\r\n      \"type\": \"Microsoft.Security/settings\",\r\n      \"kind\": \"DataExportSettings\",\r\n      \"properties\": {\r\n        \"enabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/settings/WDATP\",\r\n      \"name\": \"WDATP\",\r\n      \"type\": \"Microsoft.Security/settings\",\r\n      \"kind\": \"DataExportSettings\",\r\n      \"properties\": {\r\n        \"enabled\": true\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/81de6a21-8799-4bb5-a28c-cbc292f8e023/providers/Microsoft.Security/settings/MCAS\",\r\n      \"name\": \"MCAS\",\r\n      \"type\": \"Microsoft.Security/settings\",\r\n      \"kind\": \"DataExportSettings\",\r\n      \"properties\": {\r\n        \"enabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/81de6a21-8799-4bb5-a28c-cbc292f8e023/providers/Microsoft.Security/settings/WDATP\",\r\n      \"name\": \"WDATP\",\r\n      \"type\": \"Microsoft.Security/settings\",\r\n      \"kind\": \"DataExportSettings\",\r\n      \"properties\": {\r\n        \"enabled\": true\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "487bb485-b5b0-471e-9c0d-10717612f869"
+    "SubscriptionId": "81de6a21-8799-4bb5-a28c-cbc292f8e023"
   }
 }

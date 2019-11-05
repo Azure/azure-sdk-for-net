@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Search.Models
     using System.Linq;
 
     /// <summary>
-    /// Response containing search results from an Azure Search index.
+    /// Response containing search results from an index.
     /// </summary>
     public partial class DocumentSearchResult<T>
     {
@@ -35,8 +35,8 @@ namespace Microsoft.Azure.Search.Models
         /// operation, or null if the count was not requested. If present, the
         /// count may be greater than the number of results in this response.
         /// This can happen if you use the $top or $skip parameters, or if
-        /// Azure Search can't return all the requested documents in a single
-        /// Search response.</param>
+        /// Azure Cognitive Search can't return all the requested documents in
+        /// a single Search response.</param>
         /// <param name="coverage">A value indicating the percentage of the
         /// index that was included in the query, or null if minimumCoverage
         /// was not specified in the request.</param>
@@ -45,18 +45,18 @@ namespace Microsoft.Azure.Search.Models
         /// field; null if the query did not include any facet
         /// expressions.</param>
         /// <param name="nextPageParameters">Continuation JSON payload returned
-        /// when Azure Search can't return all the requested results in a
-        /// single Search response. You can use this JSON along with
+        /// when Azure Cognitive Search can't return all the requested results
+        /// in a single Search response. You can use this JSON along with
         /// @odata.nextLink to formulate another POST Search request to get the
         /// next part of the search response.</param>
         /// <param name="results">The sequence of results returned by the
         /// query.</param>
-        /// <param name="nextLink">Continuation URL returned when Azure Search
-        /// can't return all the requested results in a single Search response.
-        /// You can use this URL to formulate another GET or POST Search
-        /// request to get the next part of the search response. Make sure to
-        /// use the same verb (GET or POST) as the request that produced this
-        /// response.</param>
+        /// <param name="nextLink">Continuation URL returned when Azure
+        /// Cognitive Search can't return all the requested results in a single
+        /// Search response. You can use this URL to formulate another GET or
+        /// POST Search request to get the next part of the search response.
+        /// Make sure to use the same verb (GET or POST) as the request that
+        /// produced this response.</param>
         internal DocumentSearchResult(long? count = default(long?), double? coverage = default(double?), IDictionary<string, IList<FacetResult>> facets = default(IDictionary<string, IList<FacetResult>>), SearchRequest nextPageParameters = default(SearchRequest), IList<SearchResult<T>> results = default(IList<SearchResult<T>>), string nextLink = default(string))
         {
             Count = count;
@@ -77,9 +77,9 @@ namespace Microsoft.Azure.Search.Models
         /// Gets the total count of results found by the search operation, or
         /// null if the count was not requested. If present, the count may be
         /// greater than the number of results in this response. This can
-        /// happen if you use the $top or $skip parameters, or if Azure Search
-        /// can't return all the requested documents in a single Search
-        /// response.
+        /// happen if you use the $top or $skip parameters, or if Azure
+        /// Cognitive Search can't return all the requested documents in a
+        /// single Search response.
         /// </summary>
         [JsonProperty(PropertyName = "@odata.count")]
         public long? Count { get; private set; }
@@ -101,10 +101,11 @@ namespace Microsoft.Azure.Search.Models
         public IDictionary<string, IList<FacetResult>> Facets { get; private set; }
 
         /// <summary>
-        /// Gets continuation JSON payload returned when Azure Search can't
-        /// return all the requested results in a single Search response. You
-        /// can use this JSON along with @odata.nextLink to formulate another
-        /// POST Search request to get the next part of the search response.
+        /// Gets continuation JSON payload returned when Azure Cognitive Search
+        /// can't return all the requested results in a single Search response.
+        /// You can use this JSON along with @odata.nextLink to formulate
+        /// another POST Search request to get the next part of the search
+        /// response.
         /// </summary>
         [JsonProperty(PropertyName = "@search.nextPageParameters")]
         internal SearchRequest NextPageParameters { get; private set; }
@@ -116,11 +117,11 @@ namespace Microsoft.Azure.Search.Models
         public IList<SearchResult<T>> Results { get; private set; }
 
         /// <summary>
-        /// Gets continuation URL returned when Azure Search can't return all
-        /// the requested results in a single Search response. You can use this
-        /// URL to formulate another GET or POST Search request to get the next
-        /// part of the search response. Make sure to use the same verb (GET or
-        /// POST) as the request that produced this response.
+        /// Gets continuation URL returned when Azure Cognitive Search can't
+        /// return all the requested results in a single Search response. You
+        /// can use this URL to formulate another GET or POST Search request to
+        /// get the next part of the search response. Make sure to use the same
+        /// verb (GET or POST) as the request that produced this response.
         /// </summary>
         [JsonProperty(PropertyName = "@odata.nextLink")]
         internal string NextLink { get; private set; }

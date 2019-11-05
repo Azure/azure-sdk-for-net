@@ -62,7 +62,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
                 {
                     // We want to call the one last time the original URI that will give you the required resource
                     CurrentPollingState.PollingUrlToUse = GetValidAbsoluteUri(CurrentPollingState.FinalGETUrlToUser, throwForInvalidUri: true);
-                    await CurrentPollingState.UpdateResourceFromPollingUri(CustomHeaders, CancelToken);
+                    await CurrentPollingState.UpdateResourceFromPollingUri(CustomHeaders, CancelToken).ConfigureAwait(false);
                 }
             }
 #if DEBUG

@@ -386,7 +386,7 @@
             });
         }
 
-        [Fact (Skip = "Problem from API")]
+        [Fact]
         public void ListAvailableCustomPrebuiltDomainsForCulture()
         {
             UseClientFor(async client =>

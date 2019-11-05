@@ -2,7 +2,7 @@
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure Application Insights Data Library"</AssemblyTitle>
     <Description>Provides Microsoft Azure Application Insights data plane query operations operations.</Description>
-    <VersionPrefix>0.9.0</VersionPrefix>
+    <Version>0.9.0-preview.2</Version>
     <PackageTags>ApplicationInsights;</PackageTags>
     <PackageReleaseNotes>This is a preview release of the Application Insights Data SDK.</PackageReleaseNotes>
   </PropertyGroup>

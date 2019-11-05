@@ -5,7 +5,7 @@
     <AzureApiTag>HDInsightJobManagementClient_2018-11-01-preview;</AzureApiTag>
     <PackageTags>$(PackageTags);$(CommonTags);$(AzureApiTag);</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <VersionPrefix>3.0.0</VersionPrefix>
+    <Version>3.0.0-preview.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

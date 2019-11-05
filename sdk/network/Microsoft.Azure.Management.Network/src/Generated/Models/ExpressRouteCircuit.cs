@@ -110,18 +110,18 @@ namespace Microsoft.Azure.Management.Network.Models
         public bool? AllowClassicOperations { get; set; }
 
         /// <summary>
-        /// Gets or sets the CircuitProvisioningState state of the resource.
+        /// Gets the CircuitProvisioningState state of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.circuitProvisioningState")]
-        public string CircuitProvisioningState { get; set; }
+        public string CircuitProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets or sets the ServiceProviderProvisioningState state of the
-        /// resource. Possible values include: 'NotProvisioned',
-        /// 'Provisioning', 'Provisioned', 'Deprovisioning'
+        /// Gets the ServiceProviderProvisioningState state of the resource.
+        /// Possible values include: 'NotProvisioned', 'Provisioning',
+        /// 'Provisioned', 'Deprovisioning'
         /// </summary>
         [JsonProperty(PropertyName = "properties.serviceProviderProvisioningState")]
-        public string ServiceProviderProvisioningState { get; set; }
+        public string ServiceProviderProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets the list of authorizations.
@@ -136,10 +136,10 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<ExpressRouteCircuitPeering> Peerings { get; set; }
 
         /// <summary>
-        /// Gets or sets the ServiceKey.
+        /// Gets the ServiceKey.
         /// </summary>
         [JsonProperty(PropertyName = "properties.serviceKey")]
-        public string ServiceKey { get; set; }
+        public string ServiceKey { get; private set; }
 
         /// <summary>
         /// Gets or sets the ServiceProviderNotes.
@@ -175,12 +175,12 @@ namespace Microsoft.Azure.Management.Network.Models
         public int? Stag { get; private set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the express route circuit
-        /// resource. Possible values include: 'Succeeded', 'Updating',
-        /// 'Deleting', 'Failed'
+        /// Gets the provisioning state of the express route circuit resource.
+        /// Possible values include: 'Succeeded', 'Updating', 'Deleting',
+        /// 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets the GatewayManager Etag.
@@ -189,10 +189,10 @@ namespace Microsoft.Azure.Management.Network.Models
         public string GatewayManagerEtag { get; set; }
 
         /// <summary>
-        /// Gets or sets flag denoting Global reach status.
+        /// Gets flag denoting Global reach status.
         /// </summary>
         [JsonProperty(PropertyName = "properties.globalReachEnabled")]
-        public bool? GlobalReachEnabled { get; set; }
+        public bool? GlobalReachEnabled { get; private set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource

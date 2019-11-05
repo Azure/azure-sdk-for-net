@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,6 +16,10 @@ namespace Azure.Identity
     /// </summary>
     public class ChainedTokenCredential : TokenCredential
     {
+        private const string AggregateAllUnavailableErrorMessage = "The ChainedTokenCredential failed to retrieve a token from the included credentials.";
+
+        private const string AggregateCredentialFailedErrorMessage = "The ChainedTokenCredential failed due to an unhandled exception: ";
+
         private readonly TokenCredential[] _sources;
 
         /// <summary>
@@ -23,10 +28,7 @@ namespace Azure.Identity
         /// <param name="sources">The ordered chain of <see cref="TokenCredential"/> implementations to tried when calling <see cref="GetToken"/> or <see cref="GetTokenAsync"/></param>
         public ChainedTokenCredential(params TokenCredential[] sources)
         {
-            if (sources == null)
-            {
-                throw new ArgumentNullException(nameof(sources));
-            }
+            if (sources is null) throw new ArgumentNullException(nameof(sources));
 
             if (sources.Length == 0)
             {
@@ -39,45 +41,71 @@ namespace Azure.Identity
                 {
                     throw new ArgumentException("sources must not contain null", nameof(sources));
                 }
-            }
 
+            }
             _sources = sources;
         }
 
         /// <summary>
-        /// Sequencially calls <see cref="TokenCredential.GetToken"/> on all the specified sources, returning the first non default <see cref="AccessToken"/>.
+        /// Sequentially calls <see cref="TokenCredential.GetToken"/> on all the specified sources, returning the first successfully obtained <see cref="AccessToken"/>. This method is called by Azure SDK clients. It isn't intended for use in application code.
         /// </summary>
-        /// <param name="request">The details of the authentication request.</param>
+        /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The first non default <see cref="AccessToken"/> returned by the specified sources.  If all credentials in the chain return default a default <see cref="AccessToken"/> is returned.</returns>
-        public override AccessToken GetToken(TokenRequest request, CancellationToken cancellationToken = default)
+        /// <returns>The first <see cref="AccessToken"/> returned by the specified sources. Any credential which raises a <see cref="CredentialUnavailableException"/> will be skipped.</returns>
+        public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            AccessToken token = new AccessToken();
+            List<Exception> exceptions = new List<Exception>();
 
-            for (int i = 0; i < _sources.Length && token.Token == null; i++)
+            for (int i = 0; i < _sources.Length; i++)
             {
-                token = _sources[i].GetToken(request, cancellationToken);
+                try
+                {
+                    return _sources[i].GetToken(requestContext, cancellationToken);
+                }
+                catch (CredentialUnavailableException e)
+                {
+                    exceptions.Add(e);
+                }
+                catch (Exception e) when (!(e is OperationCanceledException))
+                {
+                    exceptions.Add(e);
+
+                    throw AuthenticationFailedException.CreateAggregateException(AggregateCredentialFailedErrorMessage + e.Message, new ReadOnlyMemory<object>(_sources, 0, i + 1), exceptions);
+                }
             }
 
-            return token;
+            throw AuthenticationFailedException.CreateAggregateException(AggregateAllUnavailableErrorMessage, _sources, exceptions);
         }
 
         /// <summary>
-        /// Sequencially calls <see cref="TokenCredential.GetTokenAsync"/> on all the specified sources, returning the first non default <see cref="AccessToken"/>.
+        /// Sequentially calls <see cref="TokenCredential.GetToken"/> on all the specified sources, returning the first successfully obtained <see cref="AccessToken"/>. This method is called by Azure SDK clients. It isn't intended for use in application code.
         /// </summary>
-        /// <param name="request">The details of the authentication request.</param>
+        /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The first non default <see cref="AccessToken"/> returned by the specified sources.  If all credentials in the chain return default a default <see cref="AccessToken"/> is returned.</returns>
-        public override async Task<AccessToken> GetTokenAsync(TokenRequest request, CancellationToken cancellationToken = default)
+        /// <returns>The first <see cref="AccessToken"/> returned by the specified sources. Any credential which raises a <see cref="CredentialUnavailableException"/> will be skipped.</returns>
+        public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            AccessToken token = new AccessToken();
+            List<Exception> exceptions = new List<Exception>();
 
-            for (int i = 0; i < _sources.Length && token.Token == null; i++)
+            for (int i = 0; i < _sources.Length; i++)
             {
-                token = await _sources[i].GetTokenAsync(request, cancellationToken).ConfigureAwait(false);
+                try
+                {
+                    return await _sources[i].GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false);
+                }
+                catch (CredentialUnavailableException e)
+                {
+                    exceptions.Add(e);
+                }
+                catch (Exception e) when (!(e is OperationCanceledException))
+                {
+                    exceptions.Add(e);
+
+                    throw AuthenticationFailedException.CreateAggregateException(AggregateCredentialFailedErrorMessage + e.Message, new ReadOnlyMemory<object>(_sources, 0, i + 1), exceptions);
+                }
             }
 
-            return token;
+            throw AuthenticationFailedException.CreateAggregateException(AggregateAllUnavailableErrorMessage, _sources, exceptions);
         }
     }
 }

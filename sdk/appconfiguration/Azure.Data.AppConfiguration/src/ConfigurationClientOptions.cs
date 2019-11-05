@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Data.AppConfiguration
@@ -13,24 +15,26 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// The latest service version supported by this client library.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.Default;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V1_0;
 
         /// <summary>
-        /// The versions of App Config Service supported by this client library.
+        /// The versions of the App Configuration service supported by this client library.
         /// </summary>
         public enum ServiceVersion
         {
+#pragma warning disable CA1707 // Identifiers should not contain underscores
             /// <summary>
-            /// Uses the latest service version
+            /// Version 1.0.
             /// </summary>
-            Default = 0
+            V1_0 = 0
+#pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
         /// <summary>
         /// Gets the <see cref="ServiceVersion"/> of the service API used when
         /// making requests.
         /// </summary>
-        public ServiceVersion Version { get; }
+        internal ServiceVersion Version { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigurationClientOptions"/>
@@ -40,9 +44,22 @@ namespace Azure.Data.AppConfiguration
         /// The <see cref="ServiceVersion"/> of the service API used when
         /// making requests.
         /// </param>
-        public ConfigurationClientOptions(ServiceVersion version = ServiceVersion.Default)
+        public ConfigurationClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version;
+            this.ConfigureLogging();
+        }
+
+        internal string GetVersionString()
+        {
+            switch (Version)
+            {
+                case ServiceVersion.V1_0:
+                    return "1.0";
+
+                default:
+                    throw new ArgumentException(Version.ToString());
+            }
         }
     }
 }

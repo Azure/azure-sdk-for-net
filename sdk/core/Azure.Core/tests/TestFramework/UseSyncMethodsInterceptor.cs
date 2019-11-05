@@ -5,10 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Net.Http;
 using System.Reflection;
 using System.Runtime.ExceptionServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Castle.DynamicProxy;
 
@@ -73,69 +71,103 @@ namespace Azure.Core.Testing
             }
 
             Type returnType = methodInfo.ReturnType;
-            bool returnsIEnumerable = returnType.IsGenericType && returnType.GetGenericTypeDefinition() == typeof(IEnumerable<>);
+            bool returnsSyncCollection = returnType.IsGenericType && returnType.GetGenericTypeDefinition() == typeof(Pageable<>);
 
             try
             {
                 object result = methodInfo.Invoke(invocation.InvocationTarget, invocation.Arguments);
 
                 // Map IEnumerable to IAsyncEnumerable
-                if (returnsIEnumerable)
+                if (returnsSyncCollection)
                 {
-                    Type[] modelType = returnType.GenericTypeArguments.Single().GenericTypeArguments;
-                    Type wrapperType = typeof(AsyncEnumerableWrapper<>).MakeGenericType(modelType);
+                    Type[] modelType = returnType.GenericTypeArguments;
+                    Type wrapperType = typeof(SyncPageableWrapper<>).MakeGenericType(modelType);
 
                     invocation.ReturnValue = Activator.CreateInstance(wrapperType, new[] { result });
                 }
                 else
                 {
-                    invocation.ReturnValue = _taskFromResultMethod.MakeGenericMethod(returnType).Invoke(null, new[] { result });
+                    SetAsyncResult(invocation, returnType, result);
                 }
             }
             catch (TargetInvocationException exception)
             {
-                if (returnsIEnumerable)
+                if (returnsSyncCollection)
                 {
                     ExceptionDispatchInfo.Capture(exception.InnerException).Throw();
                 }
                 else
                 {
-                    invocation.ReturnValue = _taskFromExceptionMethod.MakeGenericMethod(methodInfo.ReturnType).Invoke(null, new[] { exception.InnerException });
+                    SetAsyncException(invocation, returnType, exception.InnerException);
                 }
             }
         }
 
-        private static MethodInfo GetMethod(IInvocation invocation, string nonAsyncMethodName, Type[] types)
+        private void SetAsyncResult(IInvocation invocation, Type returnType, object result)
         {
-            return invocation.TargetType.GetMethod(nonAsyncMethodName, BindingFlags.Public | BindingFlags.Instance, null, types, null);
+            Type methodReturnType = invocation.Method.ReturnType;
+            if (methodReturnType.IsGenericType)
+            {
+                if (methodReturnType.GetGenericTypeDefinition() == typeof(Task<>))
+                {
+                    invocation.ReturnValue = _taskFromResultMethod.MakeGenericMethod(returnType).Invoke(null, new[] { result });
+                    return;
+                }
+                if (methodReturnType.GetGenericTypeDefinition() == typeof(ValueTask<>))
+                {
+                    invocation.ReturnValue = Activator.CreateInstance(typeof(ValueTask<>).MakeGenericType(returnType), result);
+                    return;
+                }
+            }
+
+            throw new NotSupportedException();
         }
 
-        private class AsyncEnumerableWrapper<T> : AsyncCollection<T>
+        private void SetAsyncException(IInvocation invocation, Type returnType, Exception result)
         {
-            private readonly IEnumerable<Response<T>> _enumerable;
+            Type methodReturnType = invocation.Method.ReturnType;
+            if (methodReturnType.IsGenericType)
+            {
+                if (methodReturnType.GetGenericTypeDefinition() == typeof(Task<>))
+                {
+                    invocation.ReturnValue = _taskFromExceptionMethod.MakeGenericMethod(returnType).Invoke(null, new[] { result });
+                    return;
+                }
 
-            public AsyncEnumerableWrapper(IEnumerable<Response<T>> enumerable)
+                if (methodReturnType.GetGenericTypeDefinition() == typeof(ValueTask<>))
+                {
+                    var task = _taskFromExceptionMethod.MakeGenericMethod(returnType).Invoke(null, new[] { result });
+                    invocation.ReturnValue = Activator.CreateInstance(typeof(ValueTask<>).MakeGenericType(returnType), task);
+                    return;
+                }
+            }
+
+            throw new NotSupportedException();
+        }
+
+        private static MethodInfo GetMethod(IInvocation invocation, string nonAsyncMethodName, Type[] types) =>
+            IsInternal(invocation.Method)
+                ? invocation.TargetType.GetMethod(nonAsyncMethodName, BindingFlags.NonPublic | BindingFlags.Instance, null, types, null)
+                : invocation.TargetType.GetMethod(nonAsyncMethodName, BindingFlags.Public | BindingFlags.Instance, null, types, null);
+
+        private static bool IsInternal(MethodBase method) => method.IsAssembly || method.IsFamilyAndAssembly && !method.IsFamilyOrAssembly;
+
+        private class SyncPageableWrapper<T> : AsyncPageable<T>
+        {
+            private readonly Pageable<T> _enumerable;
+
+            public SyncPageableWrapper(Pageable<T> enumerable)
             {
                 _enumerable = enumerable;
             }
 
 #pragma warning disable 1998
-            public override async IAsyncEnumerable<Page<T>> ByPage(string continuationToken = default, int? pageSizeHint = default)
+            public override async IAsyncEnumerable<Page<T>> AsPages(string continuationToken = default, int? pageSizeHint = default)
 #pragma warning restore 1998
             {
-                if (continuationToken != null)
+                foreach (Page<T> page in _enumerable.AsPages())
                 {
-                    throw new InvalidOperationException("Calling ByPage with a continuationToken is not supported in the sync mode");
-                }
-
-                if (pageSizeHint != null)
-                {
-                    throw new InvalidOperationException("Calling ByPage with a pageSizeHint is not supported in the sync mode");
-                }
-
-                foreach (Response<T> response in _enumerable)
-                {
-                    yield return new Page<T>(new[] { response.Value }, null, response.GetRawResponse());
+                    yield return page;
                 }
             }
         }

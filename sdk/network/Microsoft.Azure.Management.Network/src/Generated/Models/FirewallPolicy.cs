@@ -80,12 +80,12 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<SubResource> RuleGroups { get; private set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the firewall policy
-        /// resource. Possible values include: 'Succeeded', 'Updating',
-        /// 'Deleting', 'Failed'
+        /// Gets the provisioning state of the firewall policy resource.
+        /// Possible values include: 'Succeeded', 'Updating', 'Deleting',
+        /// 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets the parent firewall policy from which rules are

@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Globalization;
@@ -8,7 +7,7 @@ using System.Linq;
 using Azure.Storage.Test;
 using NUnit.Framework;
 
-namespace Azure.Storage.Common.Test
+namespace Azure.Storage.Test
 {
     [TestFixture]
     public class StorageConnectionStringTests
@@ -19,8 +18,8 @@ namespace Azure.Storage.Common.Test
         {
             var accountName = TestConfigurations.DefaultTargetTenant.AccountName;
             _ = TestConfigurations.DefaultTargetTenant.AccountKey;
-            var emptyKeyValueAsString = String.Empty;
-            var emptyKeyConnectionString = String.Format(CultureInfo.InvariantCulture, "DefaultEndpointsProtocol=https;AccountName={0};AccountKey=", accountName);
+            var emptyKeyValueAsString = string.Empty;
+            var emptyKeyConnectionString = string.Format(CultureInfo.InvariantCulture, "DefaultEndpointsProtocol=https;AccountName={0};AccountKey=", accountName);
 
             var credentials1 = new StorageSharedKeyCredential(accountName, emptyKeyValueAsString);
 
@@ -38,7 +37,7 @@ namespace Azure.Storage.Common.Test
             Assert.AreEqual(accountName, ((StorageSharedKeyCredential)account2.Credentials).AccountName);
             Assert.AreEqual(emptyKeyValueAsString, ((StorageSharedKeyCredential)account2.Credentials).ExportBase64EncodedKey());
 
-            var isValidAccount3 = StorageConnectionString.TryParse(emptyKeyConnectionString, out var account3);
+            var isValidAccount3 = StorageConnectionString.TryParse(emptyKeyConnectionString, out StorageConnectionString account3);
             Assert.IsTrue(isValidAccount3);
             Assert.IsNotNull(account3);
             Assert.AreEqual(emptyKeyConnectionString, account3.ToString(true));
@@ -75,7 +74,7 @@ namespace Azure.Storage.Common.Test
             {
                 Assert.AreEqual(a.GetType(), b.GetType());
 
-                // make sure 
+                // make sure
                 if (a.Credentials != StorageConnectionString.DevelopmentStorageAccount.Credentials &&
                     b.Credentials != StorageConnectionString.DevelopmentStorageAccount.Credentials)
                 {
@@ -96,7 +95,7 @@ namespace Azure.Storage.Common.Test
         [Description("DevStore account")]
         public void DevelopmentStorageAccount()
         {
-            var devstoreAccount = StorageConnectionString.DevelopmentStorageAccount;
+            StorageConnectionString devstoreAccount = StorageConnectionString.DevelopmentStorageAccount;
             Assert.AreEqual(new Uri("http://127.0.0.1:10000/devstoreaccount1"), devstoreAccount.BlobEndpoint);
             Assert.AreEqual(new Uri("http://127.0.0.1:10001/devstoreaccount1"), devstoreAccount.QueueEndpoint);
             Assert.AreEqual(new Uri("http://127.0.0.1:10002/devstoreaccount1"), devstoreAccount.TableEndpoint);
@@ -112,7 +111,7 @@ namespace Azure.Storage.Common.Test
             var devstoreAccountToStringWithSecrets = devstoreAccount.ToString(true);
             var testAccount = StorageConnectionString.Parse(devstoreAccountToStringWithSecrets);
 
-            this.AccountsAreEqual(testAccount, devstoreAccount);
+            AccountsAreEqual(testAccount, devstoreAccount);
             if (!StorageConnectionString.TryParse(devstoreAccountToStringWithSecrets, out _))
             {
                 Assert.Fail("Expected TryParse success.");
@@ -126,26 +125,26 @@ namespace Azure.Storage.Common.Test
             var cred = new StorageSharedKeyCredential(TestConfigurations.DefaultTargetTenant.AccountName, TestConfigurations.DefaultTargetTenant.AccountKey);
             var conn = new StorageConnectionString(cred, false);
             Assert.AreEqual(conn.BlobEndpoint,
-                new Uri(String.Format("http://{0}.blob.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
+                new Uri(string.Format("http://{0}.blob.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
             Assert.AreEqual(conn.QueueEndpoint,
-                new Uri(String.Format("http://{0}.queue.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
+                new Uri(string.Format("http://{0}.queue.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
             Assert.AreEqual(conn.TableEndpoint,
-                new Uri(String.Format("http://{0}.table.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
+                new Uri(string.Format("http://{0}.table.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
             Assert.AreEqual(conn.FileEndpoint,
-                new Uri(String.Format("http://{0}.file.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
+                new Uri(string.Format("http://{0}.file.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
             Assert.AreEqual(conn.BlobStorageUri.SecondaryUri,
-                new Uri(String.Format("http://{0}-secondary.blob.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
+                new Uri(string.Format("http://{0}-secondary.blob.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
             Assert.AreEqual(conn.QueueStorageUri.SecondaryUri,
-                new Uri(String.Format("http://{0}-secondary.queue.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
+                new Uri(string.Format("http://{0}-secondary.queue.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
             Assert.AreEqual(conn.TableStorageUri.SecondaryUri,
-                new Uri(String.Format("http://{0}-secondary.table.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
+                new Uri(string.Format("http://{0}-secondary.table.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
             Assert.AreEqual(conn.FileStorageUri.SecondaryUri,
-                new Uri(String.Format("http://{0}-secondary.file.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
+                new Uri(string.Format("http://{0}-secondary.file.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
             _ = conn.ToString();
             var storageConnectionStringToStringWithSecrets = conn.ToString(true);
             var testAccount = StorageConnectionString.Parse(storageConnectionStringToStringWithSecrets);
 
-            this.AccountsAreEqual(testAccount, conn);
+            AccountsAreEqual(testAccount, conn);
         }
 
         [Test]
@@ -155,26 +154,26 @@ namespace Azure.Storage.Common.Test
             var cred = new StorageSharedKeyCredential(TestConfigurations.DefaultTargetTenant.AccountName, TestConfigurations.DefaultTargetTenant.AccountKey);
             var conn = new StorageConnectionString(cred, true);
             Assert.AreEqual(conn.BlobEndpoint,
-                new Uri(String.Format("https://{0}.blob.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
+                new Uri(string.Format("https://{0}.blob.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
             Assert.AreEqual(conn.QueueEndpoint,
-                new Uri(String.Format("https://{0}.queue.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
+                new Uri(string.Format("https://{0}.queue.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
             Assert.AreEqual(conn.TableEndpoint,
-                new Uri(String.Format("https://{0}.table.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
+                new Uri(string.Format("https://{0}.table.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
             Assert.AreEqual(conn.FileEndpoint,
-                new Uri(String.Format("https://{0}.file.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
+                new Uri(string.Format("https://{0}.file.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
             Assert.AreEqual(conn.BlobStorageUri.SecondaryUri,
-                new Uri(String.Format("https://{0}-secondary.blob.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
+                new Uri(string.Format("https://{0}-secondary.blob.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
             Assert.AreEqual(conn.QueueStorageUri.SecondaryUri,
-                new Uri(String.Format("https://{0}-secondary.queue.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
+                new Uri(string.Format("https://{0}-secondary.queue.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
             Assert.AreEqual(conn.TableStorageUri.SecondaryUri,
-                new Uri(String.Format("https://{0}-secondary.table.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
+                new Uri(string.Format("https://{0}-secondary.table.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
             Assert.AreEqual(conn.FileStorageUri.SecondaryUri,
-                new Uri(String.Format("https://{0}-secondary.file.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
+                new Uri(string.Format("https://{0}-secondary.file.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
 
             var storageConnectionStringToStringWithSecrets = conn.ToString(true);
             var testAccount = StorageConnectionString.Parse(storageConnectionStringToStringWithSecrets);
 
-            this.AccountsAreEqual(testAccount, conn);
+            AccountsAreEqual(testAccount, conn);
         }
 
         [Test]
@@ -184,33 +183,33 @@ namespace Azure.Storage.Common.Test
             const string TestEndpointSuffix = "fake.endpoint.suffix";
 
             var conn = StorageConnectionString.Parse(
-                String.Format(
+                string.Format(
                     "DefaultEndpointsProtocol=http;AccountName={0};AccountKey={1};EndpointSuffix={2};",
                     TestConfigurations.DefaultTargetTenant.AccountName,
                     TestConfigurations.DefaultTargetTenant.AccountKey,
                     TestEndpointSuffix));
 
             Assert.AreEqual(conn.BlobEndpoint,
-                new Uri(String.Format("http://{0}.blob.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
+                new Uri(string.Format("http://{0}.blob.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
             Assert.AreEqual(conn.QueueEndpoint,
-                new Uri(String.Format("http://{0}.queue.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
+                new Uri(string.Format("http://{0}.queue.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
             Assert.AreEqual(conn.TableEndpoint,
-                new Uri(String.Format("http://{0}.table.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
+                new Uri(string.Format("http://{0}.table.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
             Assert.AreEqual(conn.FileEndpoint,
-                new Uri(String.Format("http://{0}.file.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
+                new Uri(string.Format("http://{0}.file.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
             Assert.AreEqual(conn.BlobStorageUri.SecondaryUri,
-                new Uri(String.Format("http://{0}-secondary.blob.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
+                new Uri(string.Format("http://{0}-secondary.blob.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
             Assert.AreEqual(conn.QueueStorageUri.SecondaryUri,
-                new Uri(String.Format("http://{0}-secondary.queue.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
+                new Uri(string.Format("http://{0}-secondary.queue.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
             Assert.AreEqual(conn.TableStorageUri.SecondaryUri,
-                new Uri(String.Format("http://{0}-secondary.table.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
+                new Uri(string.Format("http://{0}-secondary.table.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
             Assert.AreEqual(conn.FileStorageUri.SecondaryUri,
-               new Uri(String.Format("http://{0}-secondary.file.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
+               new Uri(string.Format("http://{0}-secondary.file.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
 
             var storageConnectionStringToStringWithSecrets = conn.ToString(true);
             var testAccount = StorageConnectionString.Parse(storageConnectionStringToStringWithSecrets);
 
-            this.AccountsAreEqual(testAccount, conn);
+            AccountsAreEqual(testAccount, conn);
         }
 
         [Test]
@@ -220,33 +219,33 @@ namespace Azure.Storage.Common.Test
             const string TestEndpointSuffix = "fake.endpoint.suffix";
 
             var conn = StorageConnectionString.Parse(
-                String.Format(
+                string.Format(
                     "DefaultEndpointsProtocol=https;AccountName={0};AccountKey={1};EndpointSuffix={2};",
                     TestConfigurations.DefaultTargetTenant.AccountName,
                     TestConfigurations.DefaultTargetTenant.AccountKey,
                     TestEndpointSuffix));
 
             Assert.AreEqual(conn.BlobEndpoint,
-                new Uri(String.Format("https://{0}.blob.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
+                new Uri(string.Format("https://{0}.blob.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
             Assert.AreEqual(conn.QueueEndpoint,
-                new Uri(String.Format("https://{0}.queue.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
+                new Uri(string.Format("https://{0}.queue.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
             Assert.AreEqual(conn.TableEndpoint,
-                new Uri(String.Format("https://{0}.table.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
+                new Uri(string.Format("https://{0}.table.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
             Assert.AreEqual(conn.FileEndpoint,
-                new Uri(String.Format("https://{0}.file.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
+                new Uri(string.Format("https://{0}.file.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
             Assert.AreEqual(conn.BlobStorageUri.SecondaryUri,
-                new Uri(String.Format("https://{0}-secondary.blob.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
+                new Uri(string.Format("https://{0}-secondary.blob.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
             Assert.AreEqual(conn.QueueStorageUri.SecondaryUri,
-                new Uri(String.Format("https://{0}-secondary.queue.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
+                new Uri(string.Format("https://{0}-secondary.queue.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
             Assert.AreEqual(conn.TableStorageUri.SecondaryUri,
-                new Uri(String.Format("https://{0}-secondary.table.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
+                new Uri(string.Format("https://{0}-secondary.table.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
             Assert.AreEqual(conn.FileStorageUri.SecondaryUri,
-                new Uri(String.Format("https://{0}-secondary.file.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
+                new Uri(string.Format("https://{0}-secondary.file.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
 
             var storageConnectionStringToStringWithSecrets = conn.ToString(true);
             var testAccount = StorageConnectionString.Parse(storageConnectionStringToStringWithSecrets);
 
-            this.AccountsAreEqual(testAccount, conn);
+            AccountsAreEqual(testAccount, conn);
         }
 
         [Test]
@@ -258,7 +257,7 @@ namespace Azure.Storage.Common.Test
 
             var testAccount =
                 StorageConnectionString.Parse(
-                    global::System.String.Format(
+                    string.Format(
                         "DefaultEndpointsProtocol=http;AccountName={0};AccountKey={1};EndpointSuffix={2};BlobEndpoint={3}",
                         TestConfigurations.DefaultTargetTenant.AccountName,
                         TestConfigurations.DefaultTargetTenant.AccountKey,
@@ -268,7 +267,7 @@ namespace Azure.Storage.Common.Test
             var conn = StorageConnectionString.Parse(testAccount.ToString(true));
 
             // make sure it round trips
-            this.AccountsAreEqual(testAccount, conn);
+            AccountsAreEqual(testAccount, conn);
         }
 
         [Test]
@@ -296,115 +295,115 @@ namespace Azure.Storage.Common.Test
             // account key
 
             var accountString1 =
-                String.Format(
+                string.Format(
                     "DefaultEndpointsProtocol=http;AccountName={0};AccountKey={1};EndpointSuffix={2};",
                     accountKeyParams);
 
             var accountString2 =
-                String.Format(
+                string.Format(
                     "DefaultEndpointsProtocol=https;AccountName={0};AccountKey={1};",
                     accountKeyParams);
 
             var accountString3 =
-                String.Format(
+                string.Format(
                     "DefaultEndpointsProtocol=https;AccountName={0};AccountKey={1};QueueEndpoint={3}",
                     accountKeyParams);
 
             var accountString4 =
-                String.Format(
+                string.Format(
                     "DefaultEndpointsProtocol=https;AccountName={0};AccountKey={1};EndpointSuffix={2};QueueEndpoint={3}",
                     accountKeyParams);
 
-            this.ValidateRoundTrip(accountString1);
-            this.ValidateRoundTrip(accountString2);
-            this.ValidateRoundTrip(accountString3);
-            this.ValidateRoundTrip(accountString4);
+            ValidateRoundTrip(accountString1);
+            ValidateRoundTrip(accountString2);
+            ValidateRoundTrip(accountString3);
+            ValidateRoundTrip(accountString4);
 
             var accountString5 =
-                String.Format(
+                string.Format(
                     "AccountName={0};AccountKey={1};EndpointSuffix={2};",
                     accountKeyParams);
 
             var accountString6 =
-                String.Format(
+                string.Format(
                     "AccountName={0};AccountKey={1};",
                     accountKeyParams);
 
             var accountString7 =
-                String.Format(
+                string.Format(
                     "AccountName={0};AccountKey={1};QueueEndpoint={3}",
                     accountKeyParams);
 
             var accountString8 =
-                String.Format(
+                string.Format(
                     "AccountName={0};AccountKey={1};EndpointSuffix={2};QueueEndpoint={3}",
                     accountKeyParams);
 
-            this.ValidateRoundTrip(accountString5);
-            this.ValidateRoundTrip(accountString6);
-            this.ValidateRoundTrip(accountString7);
-            this.ValidateRoundTrip(accountString8);
+            ValidateRoundTrip(accountString5);
+            ValidateRoundTrip(accountString6);
+            ValidateRoundTrip(accountString7);
+            ValidateRoundTrip(accountString8);
 
             // shared access
 
             var accountString9 =
-                String.Format(
+                string.Format(
                     "DefaultEndpointsProtocol=http;AccountName={0};SharedAccessSignature={1};EndpointSuffix={2};",
                     accountSasParams);
 
             var accountString10 =
-                String.Format(
+                string.Format(
                     "DefaultEndpointsProtocol=https;AccountName={0};SharedAccessSignature={1};",
                     accountSasParams);
 
             var accountString11 =
-                String.Format(
+                string.Format(
                     "DefaultEndpointsProtocol=https;AccountName={0};SharedAccessSignature={1};QueueEndpoint={3}",
                     accountSasParams);
 
             var accountString12 =
-                String.Format(
+                string.Format(
                     "DefaultEndpointsProtocol=https;AccountName={0};SharedAccessSignature={1};EndpointSuffix={2};QueueEndpoint={3}",
                     accountSasParams);
 
-            this.ValidateRoundTrip(accountString9);
-            this.ValidateRoundTrip(accountString10);
-            this.ValidateRoundTrip(accountString11);
-            this.ValidateRoundTrip(accountString12);
+            ValidateRoundTrip(accountString9);
+            ValidateRoundTrip(accountString10);
+            ValidateRoundTrip(accountString11);
+            ValidateRoundTrip(accountString12);
 
             var accountString13 =
-                String.Format(
+                string.Format(
                     "AccountName={0};SharedAccessSignature={1};EndpointSuffix={2};",
                     accountSasParams);
 
             var accountString14 =
-                String.Format(
+                string.Format(
                     "AccountName={0};SharedAccessSignature={1};",
                     accountSasParams);
 
             var accountString15 =
-                String.Format(
+                string.Format(
                     "AccountName={0};SharedAccessSignature={1};QueueEndpoint={3}",
                     accountSasParams);
 
             var accountString16 =
-                String.Format(
+                string.Format(
                     "AccountName={0};SharedAccessSignature={1};EndpointSuffix={2};QueueEndpoint={3}",
                     accountSasParams);
 
-            this.ValidateRoundTrip(accountString13);
-            this.ValidateRoundTrip(accountString14);
-            this.ValidateRoundTrip(accountString15);
-            this.ValidateRoundTrip(accountString16);
+            ValidateRoundTrip(accountString13);
+            ValidateRoundTrip(accountString14);
+            ValidateRoundTrip(accountString15);
+            ValidateRoundTrip(accountString16);
 
             // shared access no account name
 
             var accountString17 =
-                String.Format(
+                string.Format(
                     "SharedAccessSignature={1};QueueEndpoint={3}",
                     accountSasParams);
 
-            this.ValidateRoundTrip(accountString17);
+            ValidateRoundTrip(accountString17);
         }
 
         [Test]
@@ -442,20 +441,20 @@ namespace Azure.Storage.Common.Test
                 // account key
 
                 var accountStringKeyPrimary =
-                    String.Format(
+                    string.Format(
                         "DefaultEndpointsProtocol=https;AccountName={0};AccountKey={1};EndpointSuffix={2};" + endpointCombination[0],
                         accountKeyParams
                         );
 
                 var accountStringKeySecondary =
-                    String.Format(
+                    string.Format(
                         "DefaultEndpointsProtocol=https;AccountName={0};AccountKey={1};EndpointSuffix={2};" + endpointCombination[1],
                         accountKeyParams
                         );
 
 
                 var accountStringKeyPrimarySecondary =
-                    String.Format(
+                    string.Format(
                         "DefaultEndpointsProtocol=https;AccountName={0};AccountKey={1};EndpointSuffix={2};" + endpointCombination[2],
                         accountKeyParams
                         );
@@ -473,20 +472,20 @@ namespace Azure.Storage.Common.Test
                 // account key, no default protocol
 
                 var accountStringKeyNoDefaultProtocolPrimary =
-                    String.Format(
+                    string.Format(
                         "AccountName={0};AccountKey={1};EndpointSuffix={2};" + endpointCombination[0],
                         accountKeyParams
                         );
 
                 var accountStringKeyNoDefaultProtocolSecondary =
-                    String.Format(
+                    string.Format(
                         "AccountName={0};AccountKey={1};EndpointSuffix={2};" + endpointCombination[1],
                         accountKeyParams
                         );
 
 
                 var accountStringKeyNoDefaultProtocolPrimarySecondary =
-                    String.Format(
+                    string.Format(
                         "AccountName={0};AccountKey={1};EndpointSuffix={2};" + endpointCombination[2],
                         accountKeyParams
                         );
@@ -504,19 +503,19 @@ namespace Azure.Storage.Common.Test
                 // SAS
 
                 var accountStringSasPrimary =
-                    String.Format(
+                    string.Format(
                         "DefaultEndpointsProtocol=https;AccountName={0};SharedAccessSignature={1};EndpointSuffix={2};" + endpointCombination[0],
                         accountSasParams
                         );
 
                 var accountStringSasSecondary =
-                    String.Format(
+                    string.Format(
                         "DefaultEndpointsProtocol=https;AccountName={0};SharedAccessSignature={1};EndpointSuffix={2};" + endpointCombination[1],
                         accountSasParams
                         );
 
                 var accountStringSasPrimarySecondary =
-                    String.Format(
+                    string.Format(
                         "DefaultEndpointsProtocol=https;AccountName={0};SharedAccessSignature={1};EndpointSuffix={2};" + endpointCombination[2],
                         accountSasParams
                         );
@@ -533,19 +532,19 @@ namespace Azure.Storage.Common.Test
                 // SAS, no default protocol
 
                 var accountStringSasNoDefaultProtocolPrimary =
-                    String.Format(
+                    string.Format(
                         "AccountName={0};SharedAccessSignature={1};EndpointSuffix={2};" + endpointCombination[0],
                         accountSasParams
                         );
 
                 var accountStringSasNoDefaultProtocolSecondary =
-                    String.Format(
+                    string.Format(
                         "AccountName={0};SharedAccessSignature={1};EndpointSuffix={2};" + endpointCombination[1],
                         accountSasParams
                         );
 
                 var accountStringSasNoDefaultProtocolPrimarySecondary =
-                    String.Format(
+                    string.Format(
                         "AccountName={0};SharedAccessSignature={1};EndpointSuffix={2};" + endpointCombination[2],
                         accountSasParams
                         );
@@ -562,25 +561,25 @@ namespace Azure.Storage.Common.Test
                 // SAS without AccountName
 
                 var accountStringSasNoNameNoEndpoint =
-                    String.Format(
+                    string.Format(
                         "SharedAccessSignature={1}",
                         accountSasParams
                         );
 
                 var accountStringSasNoNamePrimary =
-                    String.Format(
+                    string.Format(
                         "SharedAccessSignature={1};" + endpointCombination[0],
                         accountSasParams
                         );
 
                 var accountStringSasNoNameSecondary =
-                    String.Format(
+                    string.Format(
                         "SharedAccessSignature={1};" + endpointCombination[1],
                         accountSasParams
                         );
 
                 var accountStringSasNoNamePrimarySecondary =
-                    String.Format(
+                    string.Format(
                         "SharedAccessSignature={1};" + endpointCombination[2],
                         accountSasParams
                         );
@@ -610,7 +609,7 @@ namespace Azure.Storage.Common.Test
             var reparsed = StorageConnectionString.Parse(reserialized);
 
             // make sure it round trips
-            this.AccountsAreEqual(parsed, reparsed);
+            AccountsAreEqual(parsed, reparsed);
         }
 
         [Test]
@@ -619,7 +618,7 @@ namespace Azure.Storage.Common.Test
         {
             // TryParse should not throw exception when passing in null or empty string
             Assert.IsFalse(StorageConnectionString.TryParse(null, out _));
-            Assert.IsFalse(StorageConnectionString.TryParse(String.Empty, out _));
+            Assert.IsFalse(StorageConnectionString.TryParse(string.Empty, out _));
         }
 
         [Test]
@@ -639,7 +638,7 @@ namespace Azure.Storage.Common.Test
         public void DefaultEndpointOverride()
         {
 
-            Assert.IsTrue(StorageConnectionString.TryParse("DefaultEndpointsProtocol=http;BlobEndpoint=http://customdomain.com/;AccountName=asdf;AccountKey=123=", out var account));
+            Assert.IsTrue(StorageConnectionString.TryParse("DefaultEndpointsProtocol=http;BlobEndpoint=http://customdomain.com/;AccountName=asdf;AccountKey=123=", out StorageConnectionString account));
             Assert.AreEqual(new Uri("http://customdomain.com/"), account.BlobEndpoint);
             Assert.IsNull(account.BlobStorageUri.SecondaryUri);
         }
@@ -648,7 +647,7 @@ namespace Azure.Storage.Common.Test
         [Description("Use DevStore with a proxy")]
         public void DevStoreProxyUri()
         {
-            Assert.IsTrue(StorageConnectionString.TryParse("UseDevelopmentStorage=true;DevelopmentStorageProxyUri=http://ipv4.fiddler", out var devstoreAccount));
+            Assert.IsTrue(StorageConnectionString.TryParse("UseDevelopmentStorage=true;DevelopmentStorageProxyUri=http://ipv4.fiddler", out StorageConnectionString devstoreAccount));
             Assert.AreEqual(new Uri("http://ipv4.fiddler:10000/devstoreaccount1"), devstoreAccount.BlobEndpoint);
             Assert.AreEqual(new Uri("http://ipv4.fiddler:10001/devstoreaccount1"), devstoreAccount.QueueEndpoint);
             Assert.AreEqual(new Uri("http://ipv4.fiddler:10002/devstoreaccount1"), devstoreAccount.TableEndpoint);
@@ -699,7 +698,7 @@ namespace Azure.Storage.Common.Test
 
             var account = new StorageConnectionString(null, new Uri("http://blobs/"), null, null, null);
 
-            this.AccountsAreEqual(account, StorageConnectionString.Parse(account.ToString(true)));
+            AccountsAreEqual(account, StorageConnectionString.Parse(account.ToString(true)));
         }
 
         [Test]

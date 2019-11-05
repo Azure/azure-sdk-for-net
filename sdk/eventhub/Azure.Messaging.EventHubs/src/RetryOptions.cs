@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core;
 using Azure.Messaging.EventHubs.Core;
 
 namespace Azure.Messaging.EventHubs
@@ -16,7 +17,7 @@ namespace Azure.Messaging.EventHubs
         /// <summary>The maximum number of retry attempts before considering the associated operation to have failed.</summary>
         private int _maximumRetries = 3;
 
-        /// <summary>The delay or backoff factor to apply between retry attempts.</summary>
+        /// <summary>The delay or back-off factor to apply between retry attempts.</summary>
         private TimeSpan _delay = TimeSpan.FromSeconds(0.8);
 
         /// <summary>The maximum delay to allow between retry attempts.</summary>
@@ -42,7 +43,7 @@ namespace Azure.Messaging.EventHubs
 
             set
             {
-                Guard.ArgumentInRange(nameof(MaximumRetries), value, 0, 100);
+                Argument.AssertInRange(value, 0, 100, nameof(MaximumRetries));
                 _maximumRetries = value;
             }
         }
@@ -58,7 +59,7 @@ namespace Azure.Messaging.EventHubs
 
             set
             {
-                Guard.ArgumentInRange(nameof(Delay), value, TimeSpan.FromMilliseconds(1), TimeSpan.FromMinutes(5));
+                Argument.AssertInRange(value, TimeSpan.FromMilliseconds(1), TimeSpan.FromMinutes(5), nameof(Delay));
                 _delay = value;
             }
         }
@@ -73,13 +74,13 @@ namespace Azure.Messaging.EventHubs
 
             set
             {
-                Guard.ArgumentNotNegative(nameof(MaximumDelay), value);
+                Argument.AssertNotNegative(value, nameof(MaximumDelay));
                 _maximumDelay = value;
             }
         }
 
         /// <summary>
-        ///   The maximum duration to wait for completion of a single attempt, whether the intial
+        ///   The maximum duration to wait for completion of a single attempt, whether the initial
         ///   attempt or a retry.
         /// </summary>
         ///
@@ -94,10 +95,21 @@ namespace Azure.Messaging.EventHubs
                     throw new ArgumentException(Resources.TimeoutMustBePositive, nameof(TryTimeout));
                 }
 
-                Guard.ArgumentInRange(nameof(TryTimeout), value, TimeSpan.Zero, TimeSpan.FromHours(1));
+                Argument.AssertInRange(value, TimeSpan.Zero, TimeSpan.FromHours(1), nameof(TryTimeout));
                 _tryTimeOut = value;
             }
         }
+
+        /// <summary>
+        ///   A custom retry policy to be used in place of the individual option values.
+        /// </summary>
+        ///
+        /// <remarks>
+        ///   When populated, this custom policy will take precedence over the individual retry
+        ///   options provided.
+        /// </remarks>
+        ///
+        public EventHubRetryPolicy CustomRetryPolicy { get; set; }
 
         /// <summary>
         ///   Creates a new copy of the current <see cref="RetryOptions" />, cloning its attributes into a new instance.
@@ -108,11 +120,20 @@ namespace Azure.Messaging.EventHubs
         internal RetryOptions Clone() =>
             new RetryOptions
             {
-                Mode = this.Mode,
-                _maximumRetries = this._maximumRetries,
-                _delay = this._delay,
-                _maximumDelay = this._maximumDelay,
-                _tryTimeOut = this._tryTimeOut
+                Mode = Mode,
+                CustomRetryPolicy = CustomRetryPolicy,
+                _maximumRetries = _maximumRetries,
+                _delay = _delay,
+                _maximumDelay = _maximumDelay,
+                _tryTimeOut = _tryTimeOut
             };
+
+        /// <summary>
+        ///   Converts the options into a retry policy for use.
+        /// </summary>
+        ///
+        /// <returns>The <see cref="EventHubRetryPolicy" /> represented by the options.</returns>
+        internal EventHubRetryPolicy ToRetryPolicy() =>
+            CustomRetryPolicy ?? new BasicRetryPolicy(this);
     }
 }

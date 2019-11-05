@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Storage.Test
@@ -18,7 +18,7 @@ namespace Azure.Storage.Test
         /// </summary>
         /// <param name="response">The response.</param>
         /// <returns>Whether it should be retried.</returns>
-        public override bool IsRetriableResponse(HttpPipelineMessage message)
+        public override bool IsRetriableResponse(HttpMessage message)
         {
             // Retry select Storage Error Codes
             if (message.Response.Status >= 400 &&

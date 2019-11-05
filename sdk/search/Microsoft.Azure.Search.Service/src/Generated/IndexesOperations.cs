@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Search
         public SearchServiceClient Client { get; private set; }
 
         /// <summary>
-        /// Creates a new Azure Search index.
+        /// Creates a new search index.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Index" />
         /// </summary>
         /// <param name='index'>
@@ -270,7 +270,7 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Lists all indexes available for an Azure Search service.
+        /// Lists all indexes available for a search service.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/List-Indexes" />
         /// </summary>
         /// <param name='select'>
@@ -481,7 +481,7 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Creates a new Azure Search index or updates an index if it already exists.
+        /// Creates a new search index or updates an index if it already exists.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Update-Index" />
         /// </summary>
         /// <param name='indexName'>
@@ -780,7 +780,7 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Deletes an Azure Search index and all the documents it contains.
+        /// Deletes a search index and all the documents it contains.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Delete-Index" />
         /// </summary>
         /// <param name='indexName'>
@@ -1000,7 +1000,7 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Retrieves an index definition from Azure Search.
+        /// Retrieves an index definition.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Get-Index" />
         /// </summary>
         /// <param name='indexName'>

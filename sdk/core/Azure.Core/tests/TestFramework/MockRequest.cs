@@ -4,8 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core.Http;
-using Azure.Core.Pipeline;
 
 namespace Azure.Core.Testing
 {
@@ -18,7 +16,9 @@ namespace Azure.Core.Testing
 
         private readonly Dictionary<string, List<string>> _headers = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
 
-        public override HttpPipelineRequestContent Content
+        public bool IsDisposed { get; private set; }
+
+        public override RequestContent Content
         {
             get { return base.Content; }
             set
@@ -103,10 +103,11 @@ namespace Azure.Core.Testing
 
         public override string ClientRequestId { get; set; }
 
-        public override string ToString() => $"{Method} {UriBuilder}";
+        public override string ToString() => $"{Method} {Uri}";
 
         public override void Dispose()
         {
+            IsDisposed = true;
         }
     }
 }

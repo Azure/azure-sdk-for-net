@@ -8,8 +8,9 @@
 # Prerequisites:
 
 - Install VS 2019 (Community or higher) and make sure you have the latest updates (https://www.visualstudio.com/).
+  - Need at least .NET Framework 4.6.1 and 4.7 development tools
 - Install the **.NET Core cross-platform development** workloads in VisualStudio
-- Install **.NET Core 3 preview 7** or higher for your specific platform. (https://dotnet.microsoft.com/download/dotnet-core/3.0)
+- Install **.NET Core 3.0.100 SDK ** or higher for your specific platform. (https://dotnet.microsoft.com/download/dotnet-core/3.0)
 - Install the latest version of git (https://git-scm.com/downloads)
 
 ## GENERAL THINGS TO KNOW:
@@ -232,3 +233,11 @@ Much of the management plane SDK code is generated from metadata specs about the
 - File an issue describing the problem,
 - Refer to the the [AutoRest project](https://github.com/azure/autorest) to view and modify the generator, or
 - Add additional methods, properties, and overloads to the SDK by adding classes in the 'Customizations' folder of a project
+
+## Versioning
+
+For more information on how we version see [Versioning](doc/dev/Versioning.md)
+
+## Breaking Changes
+
+For information about breaking changes see [Breaking Change Rules](https://github.com/dotnet/corefx/blob/master/Documentation/coding-guidelines/breaking-change-rules.md)

@@ -1,31 +1,34 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     /// <summary>
-    /// Represents information about a sign operation
+    /// Represents information about a sign operation.
     /// </summary>
     public class SignResult : IJsonDeserializable
     {
         private const string KeyIdPropertyName = "kid";
         private const string SignaturePropertyName = "value";
 
-        /// <summary>
-        /// The <see cref="KeyBase.Id"/> of the <see cref="Key"/> used to sign. This must be stored alongside the <see cref="Signature"/> as the same key must be used to verify it.
-        /// </summary>
-        public string KeyId { get; private set; }
+        internal SignResult()
+        {
+        }
 
         /// <summary>
-        /// The signature
+        /// Gets the <see cref="KeyProperties.Id"/> of the <see cref="KeyVaultKey"/> used to sign. This must be stored alongside the <see cref="Signature"/> as the same key must be used to verify it.
         /// </summary>
-        public byte[] Signature { get; private set; }
+        public string KeyId { get; internal set; }
 
         /// <summary>
-        /// The algorithm used to sign. This must be stored alongside the <see cref="Signature"/> as the same algorithm must be used to verify it.
+        /// Gets the signature.
+        /// </summary>
+        public byte[] Signature { get; internal set; }
+
+        /// <summary>
+        /// Gets the algorithm used to sign. This must be stored alongside the <see cref="Signature"/> as the same algorithm must be used to verify it.
         /// </summary>
         public SignatureAlgorithm Algorithm { get; internal set; }
 

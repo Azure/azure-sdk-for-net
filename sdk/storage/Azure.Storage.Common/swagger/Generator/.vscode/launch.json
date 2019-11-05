@@ -63,7 +63,7 @@
             "preLaunchTask": "tsc: build - tsconfig.json",
             "runtimeExecutable": "autorest",
             "runtimeArgs": [
-                "${workspaceFolder}/../../../Azure.Storage.Files/swagger/readme.md",
+                "${workspaceFolder}/../../../Azure.Storage.Files.Shares/swagger/readme.md",
                 "--verbose",
                 "--use=${workspaceFolder}"
             ],
@@ -77,8 +77,8 @@
             "program": "${workspaceFolder}/dist/index.js",
             "args": [
                 "--debug",
-                "${workspaceFolder}/../../../Azure.Storage.Files/swagger/file.json",
-                "${workspaceFolder}/../../../Azure.Storage.Files/src/Generated"
+                "${workspaceFolder}/../../../Azure.Storage.Files.Shares/swagger/file.json",
+                "${workspaceFolder}/../../../Azure.Storage.Files.Shares/src/Generated"
             ],
             "internalConsoleOptions": "openOnSessionStart"
         }

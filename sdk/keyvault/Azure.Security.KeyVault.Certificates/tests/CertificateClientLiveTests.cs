@@ -1,6 +1,8 @@
-﻿using NUnit.Framework;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using NUnit.Framework;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -13,32 +15,14 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         }
 
         [Test]
-        public async Task VerifyCertificateCreateDefaultPolicy()
-        {
-            string certName = Recording.GenerateId();
-
-            CertificateOperation operation = await Client.StartCreateCertificateAsync(certName);
-
-            RegisterForCleanup(certName);
-
-            CertificateWithPolicy certificate = await WaitForCompletion(operation);
-
-            Assert.NotNull(certificate);
-
-            Assert.AreEqual(certificate.Name, certName);
-        }
-
-
-        [Test]
         public async Task VerifyGetCertificateOperation()
         {
             string certName = Recording.GenerateId();
 
-            CertificatePolicy certificatePolicy = Client.CreateDefaultPolicy();
+            CertificatePolicy certificatePolicy = DefaultPolicy;
+            certificatePolicy.IssuerName = WellKnownIssuerNames.Unknown;
 
-            certificatePolicy.IssuerName = "UNKNOWN";
-
-            await Client.StartCreateCertificateAsync(certName);
+            await Client.StartCreateCertificateAsync(certName, certificatePolicy);
 
             RegisterForCleanup(certName);
 
@@ -52,15 +36,20 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         {
             string certName = Recording.GenerateId();
 
-            CertificatePolicy certificatePolicy = Client.CreateDefaultPolicy();
+            CertificatePolicy certificatePolicy = DefaultPolicy;
 
-            certificatePolicy.IssuerName = "UNKNOWN";
-
-            CertificateOperation operation = await Client.StartCreateCertificateAsync(certName);
+            CertificateOperation operation = await Client.StartCreateCertificateAsync(certName, certificatePolicy);
 
             RegisterForCleanup(certName);
 
-            await Client.CancelCertificateOperationAsync(certName);
+            try
+            {
+                await Client.CancelCertificateOperationAsync(certName);
+            }
+            catch (RequestFailedException ex) when (ex.Status == 403)
+            {
+                Assert.Inconclusive("The create operation completed before it could be canceled.");
+            }
 
             Assert.ThrowsAsync<OperationCanceledException>(() => WaitForCompletion(operation));
         }
@@ -70,11 +59,10 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         {
             string certName = Recording.GenerateId();
 
-            CertificatePolicy certificatePolicy = Client.CreateDefaultPolicy();
+            CertificatePolicy certificatePolicy = DefaultPolicy;
+            certificatePolicy.IssuerName = WellKnownIssuerNames.Unknown;
 
-            certificatePolicy.IssuerName = "UNKNOWN";
-
-            CertificateOperation operation = await Client.StartCreateCertificateAsync(certName);
+            CertificateOperation operation = await Client.StartCreateCertificateAsync(certName, certificatePolicy);
 
             RegisterForCleanup(certName);
 
@@ -88,23 +76,22 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         {
             string certName = Recording.GenerateId();
 
-            CertificatePolicy certificatePolicy = Client.CreateDefaultPolicy();
+            CertificatePolicy certificatePolicy = DefaultPolicy;
+            certificatePolicy.IssuerName = WellKnownIssuerNames.Unknown;
 
-            certificatePolicy.IssuerName = "UNKNOWN";
-
-            await Client.StartCreateCertificateAsync(certName);
+            await Client.StartCreateCertificateAsync(certName, certificatePolicy);
 
             RegisterForCleanup(certName);
 
-            CertificateWithPolicy certificateWithPolicy = await Client.GetCertificateWithPolicyAsync(certName);
+            KeyVaultCertificateWithPolicy certificateWithPolicy = await Client.GetCertificateAsync(certName);
 
             Assert.NotNull(certificateWithPolicy);
 
             Assert.AreEqual(certificateWithPolicy.Name, certName);
 
-            Assert.NotNull(certificateWithPolicy.Version);
+            Assert.NotNull(certificateWithPolicy.Properties.Version);
 
-            Certificate certificate = await Client.GetCertificateAsync(certName, certificateWithPolicy.Version);
+            KeyVaultCertificate certificate = await Client.GetCertificateVersionAsync(certName, certificateWithPolicy.Properties.Version);
 
             Assert.NotNull(certificate);
 
@@ -116,21 +103,21 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         {
             string certName = Recording.GenerateId();
 
-            CertificateOperation operation = await Client.StartCreateCertificateAsync(certName);
+            CertificateOperation operation = await Client.StartCreateCertificateAsync(certName, DefaultPolicy);
 
             RegisterForCleanup(certName);
 
             await WaitForCompletion(operation);
 
-            CertificateWithPolicy certificateWithPolicy = await Client.GetCertificateWithPolicyAsync(certName);
+            KeyVaultCertificateWithPolicy certificateWithPolicy = await Client.GetCertificateAsync(certName);
 
             Assert.NotNull(certificateWithPolicy);
 
             Assert.AreEqual(certificateWithPolicy.Name, certName);
 
-            Assert.NotNull(certificateWithPolicy.Version);
+            Assert.NotNull(certificateWithPolicy.Properties.Version);
 
-            Certificate certificate = await Client.GetCertificateAsync(certName, certificateWithPolicy.Version);
+            KeyVaultCertificate certificate = await Client.GetCertificateVersionAsync(certName, certificateWithPolicy.Properties.Version);
 
             Assert.NotNull(certificate);
 
@@ -143,23 +130,27 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         {
             string certName = Recording.GenerateId();
 
-            CertificateOperation operation = await Client.StartCreateCertificateAsync(certName);
+            CertificateOperation operation = await Client.StartCreateCertificateAsync(certName, DefaultPolicy);
 
             RegisterForCleanup(certName);
 
-            CertificateWithPolicy original = await WaitForCompletion(operation);
+            KeyVaultCertificateWithPolicy original = await WaitForCompletion(operation);
+            CertificateProperties originalProperties = original.Properties;
+            Assert.IsTrue(originalProperties.Enabled);
+            Assert.IsEmpty(originalProperties.Tags);
 
             IDictionary<string, string> expTags = new Dictionary<string, string>() { { "key1", "value1" } };
+            originalProperties.Tags.Add("key1", "value1");
 
-            Certificate updated = await Client.UpdateCertificateAsync(certName, original.Version, tags: expTags);
+            KeyVaultCertificate updated = await Client.UpdateCertificatePropertiesAsync(originalProperties);
+            Assert.IsTrue(updated.Properties.Enabled);
+            CollectionAssert.AreEqual(expTags, updated.Properties.Tags);
 
-            Assert.IsNull(original.Tags);
-
-            CollectionAssert.AreEqual(expTags, updated.Tags);
-
-            updated = await Client.UpdateCertificateAsync(certName, original.Version, enabled: false);
-
-            Assert.IsFalse(updated.Enabled);
+            originalProperties.Enabled = false;
+            originalProperties.Tags.Clear();
+            updated = await Client.UpdateCertificatePropertiesAsync(originalProperties);
+            Assert.IsFalse(updated.Properties.Enabled);
+            CollectionAssert.AreEqual(expTags, updated.Properties.Tags);
         }
 
         [Test]
@@ -167,9 +158,9 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         {
             string certName = Recording.GenerateId();
 
-            CertificateOperation operation = await Client.StartCreateCertificateAsync(certName);
+            CertificateOperation operation = await Client.StartCreateCertificateAsync(certName, DefaultPolicy);
 
-            CertificateWithPolicy original = await WaitForCompletion(operation);
+            KeyVaultCertificateWithPolicy original = await WaitForCompletion(operation);
 
             Assert.NotNull(original);
 
@@ -181,7 +172,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             await WaitForDeletedCertificate(certName);
 
-            CertificateWithPolicy recovered = await Client.RecoverDeletedCertificateAsync(certName);
+            _ = await Client.RecoverDeletedCertificateAsync(certName);
 
             Assert.NotNull(original);
 
@@ -210,5 +201,25 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         // GetUpdatePolicy
         // IssuerCrud
         // ContactsCrud
+
+        private static CertificatePolicy DefaultPolicy => new CertificatePolicy
+        {
+            IssuerName = WellKnownIssuerNames.Self,
+            Subject = "CN=default",
+            KeyType = CertificateKeyType.Rsa,
+            Exportable = true,
+            ReuseKey = false,
+            KeyUsage =
+            {
+                CertificateKeyUsage.CrlSign,
+                CertificateKeyUsage.DataEncipherment,
+                CertificateKeyUsage.DigitalSignature,
+                CertificateKeyUsage.KeyEncipherment,
+                CertificateKeyUsage.KeyAgreement,
+                CertificateKeyUsage.KeyCertSign,
+            },
+            CertificateTransparency = false,
+            ContentType = CertificateContentType.Pkcs12
+        };
     }
 }

@@ -31,13 +31,13 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <summary>
         /// Initializes a new instance of the MigrationEligibilityInfo class.
         /// </summary>
-        /// <param name="isEligibileForMigration">Whether object is eligible
-        /// for migration or not.</param>
+        /// <param name="isEligibleForMigration">Whether object is eligible for
+        /// migration or not.</param>
         /// <param name="validationMessages">Information about eligibility
         /// failure for the server object.</param>
-        public MigrationEligibilityInfo(bool? isEligibileForMigration = default(bool?), IList<string> validationMessages = default(IList<string>))
+        public MigrationEligibilityInfo(bool? isEligibleForMigration = default(bool?), IList<string> validationMessages = default(IList<string>))
         {
-            IsEligibileForMigration = isEligibileForMigration;
+            IsEligibleForMigration = isEligibleForMigration;
             ValidationMessages = validationMessages;
             CustomInit();
         }
@@ -50,8 +50,8 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <summary>
         /// Gets whether object is eligible for migration or not.
         /// </summary>
-        [JsonProperty(PropertyName = "isEligibileForMigration")]
-        public bool? IsEligibileForMigration { get; private set; }
+        [JsonProperty(PropertyName = "isEligibleForMigration")]
+        public bool? IsEligibleForMigration { get; private set; }
 
         /// <summary>
         /// Gets information about eligibility failure for the server object.

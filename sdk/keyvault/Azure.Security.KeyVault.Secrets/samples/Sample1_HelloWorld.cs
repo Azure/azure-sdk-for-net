@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using Azure.Core.Testing;
 using Azure.Identity;
@@ -32,59 +31,53 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             // already exists in the key vault, then a new version of the secret is created.
             string secretName = $"BankAccountPassword-{Guid.NewGuid()}";
 
-            var secret = new Secret(secretName, "f4G34fMh8v")
+            var secret = new KeyVaultSecret(secretName, "f4G34fMh8v")
             {
-                Expires = DateTimeOffset.Now.AddYears(1)
+                Properties =
+                {
+                    ExpiresOn = DateTimeOffset.Now.AddYears(1)
+                }
             };
 
-            client.Set(secret);
+            client.SetSecret(secret);
 
             // Let's Get the bank secret from the key vault.
-            Secret bankSecret = client.Get(secretName);
+            KeyVaultSecret bankSecret = client.GetSecret(secretName);
             Debug.WriteLine($"Secret is returned with name {bankSecret.Name} and value {bankSecret.Value}");
 
             // After one year, the bank account is still active, we need to update the expiry time of the secret.
             // The update method can be used to update the expiry attribute of the secret. It cannot be used to update
             // the value of the secret.
-            bankSecret.Expires = bankSecret.Expires.Value.AddYears(1);
-            SecretBase updatedSecret = client.Update(bankSecret);
-            Debug.WriteLine($"Secret's updated expiry time is {updatedSecret.Expires}");
+            bankSecret.Properties.ExpiresOn = bankSecret.Properties.ExpiresOn.Value.AddYears(1);
+            SecretProperties updatedSecret = client.UpdateSecretProperties(bankSecret.Properties);
+            Debug.WriteLine($"Secret's updated expiry time is {updatedSecret.ExpiresOn}");
 
             // Bank forced a password update for security purposes. Let's change the value of the secret in the key vault.
             // To achieve this, we need to create a new version of the secret in the key vault. The update operation cannot
             // change the value of the secret.
-            var secretNewValue = new Secret(secretName, "bhjd4DDgsa");
-            secretNewValue.Expires = DateTimeOffset.Now.AddYears(1);
+            var secretNewValue = new KeyVaultSecret(secretName, "bhjd4DDgsa")
+            {
+                Properties =
+                {
+                    ExpiresOn = DateTimeOffset.Now.AddYears(1)
+                }
+            };
 
-            client.Set(secretNewValue);
+            client.SetSecret(secretNewValue);
 
             // The bank account was closed. You need to delete its credentials from the key vault.
-            client.Delete(secretName);
+            DeleteSecretOperation operation = client.StartDeleteSecret(secretName);
 
-            // To ensure secret is deleted on server side.
-            Assert.IsTrue(WaitForDeletedSecret(client, secretName));
+            // To ensure the secret is deleted on server before we try to purge it.
+            while (!operation.HasCompleted)
+            {
+                Thread.Sleep(2000);
+
+                operation.UpdateStatus();
+            }
 
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted secret needs to be purged.
-            client.PurgeDeleted(secretName);
-
-        }
-
-        private bool WaitForDeletedSecret(SecretClient client, string secretName)
-        {
-            int maxIterations = 20;
-            for (int i = 0; i < maxIterations; i++)
-            {
-                try
-                {
-                    client.GetDeleted(secretName);
-                    return true;
-                }
-                catch
-                {
-                    Thread.Sleep(5000);
-                }
-            }
-            return false;
+            client.PurgeDeletedSecret(secretName);
         }
     }
 }

@@ -74,18 +74,17 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<RouteFilterRule> Rules { get; set; }
 
         /// <summary>
-        /// Gets or sets a collection of references to express route circuit
-        /// peerings.
+        /// Gets a collection of references to express route circuit peerings.
         /// </summary>
         [JsonProperty(PropertyName = "properties.peerings")]
-        public IList<ExpressRouteCircuitPeering> Peerings { get; set; }
+        public IList<ExpressRouteCircuitPeering> Peerings { get; private set; }
 
         /// <summary>
-        /// Gets or sets a collection of references to express route circuit
-        /// ipv6 peerings.
+        /// Gets a collection of references to express route circuit ipv6
+        /// peerings.
         /// </summary>
         [JsonProperty(PropertyName = "properties.ipv6Peerings")]
-        public IList<ExpressRouteCircuitPeering> Ipv6Peerings { get; set; }
+        public IList<ExpressRouteCircuitPeering> Ipv6Peerings { get; private set; }
 
         /// <summary>
         /// Gets the provisioning state of the route filter resource. Possible

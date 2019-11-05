@@ -23,8 +23,9 @@ namespace Azure.Core.Tests
                 new RetryPolicy(RetryMode.Exponential, TimeSpan.Zero, TimeSpan.Zero, 5)
             }, responseClassifier: new CustomResponseClassifier());
 
-            Http.Request request = pipeline.CreateRequest();
-            request.SetRequestLine(RequestMethod.Get, new Uri("https://contoso.a.io"));
+            Request request = pipeline.CreateRequest();
+            request.Method = RequestMethod.Get;
+            request.Uri.Reset(new Uri("https://contoso.a.io"));
             Response response = await pipeline.SendRequestAsync(request, CancellationToken.None);
 
             Assert.AreEqual(1, response.Status);
@@ -33,7 +34,7 @@ namespace Azure.Core.Tests
         [Test]
         public void TryGetPropertyReturnsFalseIfNotExist()
         {
-            HttpPipelineMessage message = new HttpPipelineMessage(new MockRequest(), new ResponseClassifier(), CancellationToken.None);
+            HttpMessage message = new HttpMessage(new MockRequest(), new ResponseClassifier());
 
             Assert.False(message.TryGetProperty("someName", out _));
         }
@@ -41,7 +42,7 @@ namespace Azure.Core.Tests
         [Test]
         public void TryGetPropertyReturnsValueIfSet()
         {
-            HttpPipelineMessage message = new HttpPipelineMessage(new MockRequest(), new ResponseClassifier(), CancellationToken.None);
+            HttpMessage message = new HttpMessage(new MockRequest(), new ResponseClassifier());
             message.SetProperty("someName", "value");
 
             Assert.True(message.TryGetProperty("someName", out object value));
@@ -51,7 +52,7 @@ namespace Azure.Core.Tests
         [Test]
         public void TryGetPropertyIsCaseSensitive()
         {
-            HttpPipelineMessage message = new HttpPipelineMessage(new MockRequest(), new ResponseClassifier(), CancellationToken.None);
+            HttpMessage message = new HttpMessage(new MockRequest(), new ResponseClassifier());
             message.SetProperty("someName", "value");
 
 
@@ -60,7 +61,7 @@ namespace Azure.Core.Tests
 
         private class CustomResponseClassifier : ResponseClassifier
         {
-            public override bool IsRetriableResponse(HttpPipelineMessage message)
+            public override bool IsRetriableResponse(HttpMessage message)
             {
                 return message.Response.Status == 500;
             }
@@ -70,7 +71,7 @@ namespace Azure.Core.Tests
                 return false;
             }
 
-            public override bool IsErrorResponse(HttpPipelineMessage message)
+            public override bool IsErrorResponse(HttpMessage message)
             {
                 return IsRetriableResponse(message);
             }

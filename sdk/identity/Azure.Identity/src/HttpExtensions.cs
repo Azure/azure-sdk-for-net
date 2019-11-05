@@ -1,11 +1,14 @@
-﻿using Azure.Core.Pipeline;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Azure.Core.Pipeline;
 using Azure;
 using System;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Net;
-using Azure.Core.Http;
+using Azure.Core;
 
 namespace Azure.Identity
 {
@@ -17,7 +20,7 @@ namespace Azure.Identity
 
             pipelineRequest.Method = RequestMethod.Parse(request.Method.Method);
 
-            pipelineRequest.UriBuilder.Uri = request.RequestUri;
+            pipelineRequest.Uri.Reset(request.RequestUri);
 
             pipelineRequest.Content = await request.Content.ToPipelineRequestContentAsync().ConfigureAwait(false);
 
@@ -68,11 +71,11 @@ namespace Azure.Identity
             return responseMessage;
         }
 
-        public static async Task<HttpPipelineRequestContent> ToPipelineRequestContentAsync(this HttpContent content)
+        public static async Task<RequestContent> ToPipelineRequestContentAsync(this HttpContent content)
         {
             if (content != null)
             {
-                return HttpPipelineRequestContent.Create(await content.ReadAsStreamAsync().ConfigureAwait(false));
+                return RequestContent.Create(await content.ReadAsStreamAsync().ConfigureAwait(false));
             }
 
             return null;

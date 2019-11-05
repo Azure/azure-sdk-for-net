@@ -49,7 +49,7 @@ namespace Microsoft.Rest.Azure.Authentication.Internal
         /// Authenticate using the credentials stored for the given client id
         /// </summary>
         /// <param name="clientId">The Application ID for this service principal</param>
-        /// <param name="audience">The intended audicne for authentication</param>
+        /// <param name="audience">The intended audience for authentication</param>
         /// <param name="context">The AD AuthenticationContext to use</param>
         /// <returns></returns>
         public async Task<AuthenticationResult> AuthenticateAsync(string clientId, string audience, AuthenticationContext context)
@@ -57,7 +57,7 @@ namespace Microsoft.Rest.Azure.Authentication.Internal
             if (_credentials.ContainsKey(clientId))
             {
                 var creds = _credentials[clientId];
-                return await context.AcquireTokenAsync(audience, creds);
+                return await context.AcquireTokenAsync(audience, creds).ConfigureAwait(false);
             }
 
             throw new AuthenticationException("Matching credentials for client id '{0}' could not be found.");

@@ -1,7 +1,32 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
-## Current version
+## Version 4.4.0
 ###  Feature Additions
+- Added Serve-to-Server authentication type for Dynamics 365, Dynamics CRM and Common Data Service for Apps connector
+- Changed Username from required to optional in Dynamics 365, Dynamics CRM and Common Data Service for Apps connector
+- Added Compression codec proprty to Orc dataset
+- Added embedded package properties for ssis activity
+- Added AKV support for webhook activity
+- Added new optional property "connectVia" in Web activity
+
+## Version 4.3.0
+###  Feature Additions
+- Added Switch activity
+- Added AzureMLExecutePipeline activity
+- Added AzureMLService linked service type
+- Added support for Expressions for Arguments property on HDInsightPig activity
+
+## Version 4.2.0
+###  Feature Additions
+* Added support for Data Flow:
+    - Added data flow object model and CRUD APIs
+    - Added data flow debug session APIs
+    - Added support for execute data flow activity type
+    - Added support for data flow properties in managed integration runtime
+- Added property queryTimeout to tabular sources
+- Added support for Cosmos DB SQL API dataset and copy source/sink
+- Add dedicated linkedservice/dataset/source for Azure File Storage;
+- Add dedicated linkedservice/dataset/source for GoogleCloudStorage;
 
 ## Version 4.1.3
 ###  Feature Additions

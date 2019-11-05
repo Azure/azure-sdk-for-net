@@ -1,8 +1,12 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Globalization;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Messaging.EventHubs.Errors;
 
 namespace Azure.Messaging.EventHubs.Core
@@ -45,7 +49,7 @@ namespace Azure.Messaging.EventHubs.Core
         ///
         public BasicRetryPolicy(RetryOptions retryOptions)
         {
-            Guard.ArgumentNotNull(nameof(retryOptions), retryOptions);
+            Argument.AssertNotNull(retryOptions, nameof(retryOptions));
             Options = retryOptions;
         }
 
@@ -82,21 +86,13 @@ namespace Azure.Messaging.EventHubs.Core
             }
 
             var baseJitterSeconds = (Options.Delay.TotalSeconds * JitterFactor);
-            TimeSpan retryDelay;
 
-            switch (Options.Mode)
+            TimeSpan retryDelay = Options.Mode switch
             {
-                case RetryMode.Fixed:
-                    retryDelay = CalculateFixedDelay(Options.Delay.TotalSeconds, baseJitterSeconds, RandomNumberGenerator.Value);
-                    break;
-
-                case RetryMode.Exponential:
-                    retryDelay = CalculateExponentialDelay(attemptCount, Options.Delay.TotalSeconds, baseJitterSeconds, RandomNumberGenerator.Value);
-                    break;
-
-                default:
-                    throw new NotSupportedException(String.Format(CultureInfo.CurrentCulture, Resources.UnknownRetryMode, Options.Mode.ToString()));
-            }
+                RetryMode.Fixed => CalculateFixedDelay(Options.Delay.TotalSeconds, baseJitterSeconds, RandomNumberGenerator.Value),
+                RetryMode.Exponential => CalculateExponentialDelay(attemptCount, Options.Delay.TotalSeconds, baseJitterSeconds, RandomNumberGenerator.Value),
+                _ => throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, Resources.UnknownRetryMode, Options.Mode.ToString())),
+            };
 
             // Adjust the delay, if needed, to keep within the maximum
             // duration.
@@ -119,7 +115,7 @@ namespace Azure.Messaging.EventHubs.Core
         ///
         private static bool ShouldRetryException(Exception exception)
         {
-            if (exception is TaskCanceledException)
+            if ((exception is TaskCanceledException) || (exception is OperationCanceledException))
             {
                 exception = exception?.InnerException;
             }
@@ -146,11 +142,11 @@ namespace Azure.Messaging.EventHubs.Core
         }
 
         /// <summary>
-        ///   Calculates the delay for an exponential backoff.
+        ///   Calculates the delay for an exponential back-off.
         /// </summary>
         ///
         /// <param name="attemptCount">The number of total attempts that have been made, including the initial attempt before any retries.</param>
-        /// <param name="baseDelaySeconds">The delay to use as a basis for the exponential backoff, in seconds.</param>
+        /// <param name="baseDelaySeconds">The delay to use as a basis for the exponential back-off, in seconds.</param>
         /// <param name="baseJitterSeconds">The delay to use as the basis for a random jitter value, in seconds.</param>
         /// <param name="random">The random number generator to use for the calculation.</param>
         ///
@@ -163,10 +159,10 @@ namespace Azure.Messaging.EventHubs.Core
             TimeSpan.FromSeconds((Math.Pow(2, attemptCount) * baseDelaySeconds) + (random.NextDouble() * baseJitterSeconds));
 
         /// <summary>
-        ///   Calculates the delay for a fixed backoff.
+        ///   Calculates the delay for a fixed back-off.
         /// </summary>
         ///
-        /// <param name="baseDelaySeconds">The delay to use as a basis for the fixed backoff, in seconds.</param>
+        /// <param name="baseDelaySeconds">The delay to use as a basis for the fixed back-off, in seconds.</param>
         /// <param name="baseJitterSeconds">The delay to use as the basis for a random jitter value, in seconds.</param>
         /// <param name="random">The random number generator to use for the calculation.</param>
         ///

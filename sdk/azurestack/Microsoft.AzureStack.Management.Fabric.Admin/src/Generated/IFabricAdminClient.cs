@@ -48,11 +48,6 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Client API Version.
-        /// </summary>
-        string ApiVersion { get; }
-
-        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
@@ -70,6 +65,16 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// </summary>
         bool? GenerateClientRequestId { get; set; }
 
+
+        /// <summary>
+        /// Gets the IApplicationOperationResultsOperations.
+        /// </summary>
+        IApplicationOperationResultsOperations ApplicationOperationResults { get; }
+
+        /// <summary>
+        /// Gets the IComputeOperationResultsOperations.
+        /// </summary>
+        IComputeOperationResultsOperations ComputeOperationResults { get; }
 
         /// <summary>
         /// Gets the IFabricOperations.
@@ -117,21 +122,6 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         ILogicalNetworksOperations LogicalNetworks { get; }
 
         /// <summary>
-        /// Gets the IStoragePoolsOperations.
-        /// </summary>
-        IStoragePoolsOperations StoragePools { get; }
-
-        /// <summary>
-        /// Gets the IStorageSystemsOperations.
-        /// </summary>
-        IStorageSystemsOperations StorageSystems { get; }
-
-        /// <summary>
-        /// Gets the IVolumesOperations.
-        /// </summary>
-        IVolumesOperations Volumes { get; }
-
-        /// <summary>
         /// Gets the ILogicalSubnetsOperations.
         /// </summary>
         ILogicalSubnetsOperations LogicalSubnets { get; }
@@ -140,6 +130,11 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// Gets the IMacAddressPoolsOperations.
         /// </summary>
         IMacAddressPoolsOperations MacAddressPools { get; }
+
+        /// <summary>
+        /// Gets the INetworkOperationResultsOperations.
+        /// </summary>
+        INetworkOperationResultsOperations NetworkOperationResults { get; }
 
         /// <summary>
         /// Gets the IScaleUnitsOperations.
@@ -155,6 +150,26 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// Gets the ISlbMuxInstancesOperations.
         /// </summary>
         ISlbMuxInstancesOperations SlbMuxInstances { get; }
+
+        /// <summary>
+        /// Gets the IStorageOperationResultsOperations.
+        /// </summary>
+        IStorageOperationResultsOperations StorageOperationResults { get; }
+
+        /// <summary>
+        /// Gets the IStorageSubSystemsOperations.
+        /// </summary>
+        IStorageSubSystemsOperations StorageSubSystems { get; }
+
+        /// <summary>
+        /// Gets the IDrivesOperations.
+        /// </summary>
+        IDrivesOperations Drives { get; }
+
+        /// <summary>
+        /// Gets the IVolumesOperations.
+        /// </summary>
+        IVolumesOperations Volumes { get; }
 
     }
 }

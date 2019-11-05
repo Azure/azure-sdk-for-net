@@ -39,8 +39,8 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// <param name="dataSetName">DataSet name</param>
         /// <param name="dataSetType">Type of dataSet. Possible values include:
         /// 'Blob', 'Container', 'BlobFolder', 'AdlsGen2FileSystem',
-        /// 'AdlsGen2Folder', 'AdlsGen2File', 'AdlsGen1Folder',
-        /// 'AdlsGen1File'</param>
+        /// 'AdlsGen2Folder', 'AdlsGen2File', 'AdlsGen1Folder', 'AdlsGen1File',
+        /// 'SqlDBTable', 'SqlDWTable'</param>
         public ConsumerSourceDataSet(string id = default(string), string name = default(string), string type = default(string), string dataSetId = default(string), string dataSetName = default(string), string dataSetType = default(string))
             : base(id, name, type)
         {
@@ -70,7 +70,8 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// <summary>
         /// Gets type of dataSet. Possible values include: 'Blob', 'Container',
         /// 'BlobFolder', 'AdlsGen2FileSystem', 'AdlsGen2Folder',
-        /// 'AdlsGen2File', 'AdlsGen1Folder', 'AdlsGen1File'
+        /// 'AdlsGen2File', 'AdlsGen1Folder', 'AdlsGen1File', 'SqlDBTable',
+        /// 'SqlDWTable'
         /// </summary>
         [JsonProperty(PropertyName = "properties.dataSetType")]
         public string DataSetType { get; private set; }

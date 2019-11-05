@@ -12,7 +12,7 @@ namespace Azure.Messaging.EventHubs.Processor
     /// </summary>
     ///
     /// <remarks>
-    ///   An instance of a concrete subclass is provided by the user in the <see cref="EventProcessor{T}" />
+    ///   An instance of a concrete subclass is provided by the user in the <see cref="EventProcessorClient" />
     ///   constructor.
     /// </remarks>
     ///
@@ -22,12 +22,14 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Retrieves a complete ownership list from the chosen storage service.
         /// </summary>
         ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the ownership are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the ownership are associated with.</param>
         ///
         /// <returns>An enumerable containing all the existing ownership for the associated Event Hub and consumer group.</returns>
         ///
-        public abstract Task<IEnumerable<PartitionOwnership>> ListOwnershipAsync(string eventHubName,
+        public abstract Task<IEnumerable<PartitionOwnership>> ListOwnershipAsync(string fullyQualifiedNamespace,
+                                                                                 string eventHubName,
                                                                                  string consumerGroup);
 
         /// <summary>

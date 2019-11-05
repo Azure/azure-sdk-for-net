@@ -3,7 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Core.Tests;
 using Castle.DynamicProxy;
@@ -17,26 +19,44 @@ namespace Azure.Core.Testing
             var methodName = invocation.Method.Name;
             if (methodName.EndsWith("Async"))
             {
-                var expectedEventPrefix = invocation.Method.DeclaringType.FullName + "." + methodName.Substring(0, methodName.Length - 5);
+                Type declaringType = invocation.Method.DeclaringType;
+                var ns = declaringType.Namespace;
+                var expectedEventPrefix = declaringType.FullName + "." + methodName.Substring(0, methodName.Length - 5);
                 var expectedEvents = new List<string>
                 {
                     expectedEventPrefix + ".Start"
                 };
 
-                using TestDiagnosticListener diagnosticListener = new TestDiagnosticListener("Azure.Clients");
+                using TestDiagnosticListener diagnosticListener = new TestDiagnosticListener(s => s.Name.StartsWith("Azure."));
                 invocation.Proceed();
 
                 bool strict = !invocation.Method.GetCustomAttributes(true).Any(a => a.GetType().FullName == "Azure.Core.ForwardsClientCallsAttribute");
-                if (invocation.Method.ReturnType.Name.Contains("AsyncCollection") ||
+                if (invocation.Method.ReturnType.Name.Contains("Pageable") ||
                     invocation.Method.ReturnType.Name.Contains("IAsyncEnumerable"))
                 {
                     return;
                 }
 
-                var result = (Task)invocation.ReturnValue;
                 try
                 {
-                    result.GetAwaiter().GetResult();
+                    object returnValue = invocation.ReturnValue;
+                    if (returnValue is Task t)
+                    {
+                        t.GetAwaiter().GetResult();
+                    }
+                    else
+                    {
+                        // Await ValueTask
+                        Type returnType = returnValue.GetType();
+                        MethodInfo getAwaiterMethod = returnType.GetMethod("GetAwaiter", BindingFlags.Instance | BindingFlags.Public);
+                        MethodInfo getResultMethod = getAwaiterMethod.ReturnType.GetMethod("GetResult", BindingFlags.Instance | BindingFlags.Public);
+
+                        getResultMethod.Invoke(
+                            getAwaiterMethod.Invoke(returnValue, Array.Empty<object>()),
+                            Array.Empty<object>());
+
+                    }
+
                     expectedEvents.Add(expectedEventPrefix + ".Stop");
                 }
                 catch (Exception ex)
@@ -55,9 +75,16 @@ namespace Azure.Core.Testing
                     {
                         foreach (var expectedEvent in expectedEvents)
                         {
-                            if (!diagnosticListener.Events.Any(e => e.Key == expectedEvent))
+                            (string Key, object Value, DiagnosticListener Listener) e = diagnosticListener.Events.FirstOrDefault(e => e.Key == expectedEvent);
+
+                            if (e == default)
                             {
                                 throw new InvalidOperationException($"Expected diagnostic event not fired {expectedEvent} {Environment.NewLine}    fired events {string.Join(", ", diagnosticListener.Events)} {Environment.NewLine}    You may have forgotten to set your operationId to {expectedEvent} in {methodName} or applied the Azure.Core.ForwardsClientCallsAttribute to {methodName}.");
+                            }
+
+                            if (!ns.StartsWith(e.Listener.Name))
+                            {
+                                throw new InvalidOperationException($"{e.Key} event was written into wrong DiagnosticSource {e.Listener.Name}, expected: {ns}");
                             }
                         }
                     }

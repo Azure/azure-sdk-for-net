@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ComponentModel;
-using Azure.Messaging.EventHubs.Core;
+using Azure.Core;
 
 namespace Azure.Messaging.EventHubs
 {
@@ -25,7 +25,7 @@ namespace Azure.Messaging.EventHubs
         ///   the maximum size allowed by the active transport will be used.
         /// </value>
         ///
-        public long? MaximumizeInBytes
+        public long? MaximumSizeInBytes
         {
             get => _maximumSizeInBytes;
 
@@ -33,7 +33,7 @@ namespace Azure.Messaging.EventHubs
             {
                 if (value.HasValue)
                 {
-                    Guard.ArgumentAtLeast(nameof(MaximumizeInBytes), value.Value, EventHubProducer.MinimumBatchSizeLimit);
+                    Argument.AssertAtLeast(value.Value, EventHubProducerClient.MinimumBatchSizeLimit, nameof(MaximumSizeInBytes));
                 }
 
                 _maximumSizeInBytes = value;
@@ -49,8 +49,8 @@ namespace Azure.Messaging.EventHubs
         internal BatchOptions Clone() =>
             new BatchOptions
             {
-                PartitionKey = this.PartitionKey,
-                _maximumSizeInBytes = this.MaximumizeInBytes
+                PartitionKey = PartitionKey,
+                _maximumSizeInBytes = MaximumSizeInBytes
             };
 
         /// <summary>

@@ -5,14 +5,19 @@
 
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.Kusto</PackageId>
-    <Version>1.0.0</Version>
+    <Version>3.0.0</Version>
     <AssemblyName>Microsoft.Azure.Management.Kusto</AssemblyName>
     <PackageTags>management;kusto</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        Provides management capabilities for Kusto (Azure Data Explorer) entities.
+        The C# client provides management capabilities for Azure Data Explorer (Kusto) entities. The following capabilities are included with this release:
+        - Add Managed Service Identity to cluster.
+        - Add Key Vault properties to cluster.
+        - Add Attached Database Configuration resource for database sharing management on the consumer side.
+        - Add cluster operations for follower (shared) database management on the provider side. 
+        - Add two database types: 'ReadWriteDatabase' and 'ReadOnlyFollowingDatabase'.
       ]]>
-</PackageReleaseNotes>
+  </PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>

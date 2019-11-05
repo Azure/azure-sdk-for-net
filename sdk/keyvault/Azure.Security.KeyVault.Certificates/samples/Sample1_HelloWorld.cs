@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using Azure.Core.Testing;
 using Azure.Identity;
@@ -23,7 +22,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             // Environment variable with the Key Vault endpoint.
             string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
 
-            // Instantiate a certificate client that will be used to call the service. Notice that the client is using 
+            // Instantiate a certificate client that will be used to call the service. Notice that the client is using
             // default Azure credentials. To make default credentials work, ensure that environment variables 'AZURE_CLIENT_ID',
             // 'AZURE_CLIENT_KEY' and 'AZURE_TENANT_ID' are set with the service principal credentials.
             var client = new CertificateClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
@@ -32,29 +31,32 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             // already exists in the Key Vault, then a new version of the key is created.
             string certName = $"defaultCert-{Guid.NewGuid()}";
 
-            CertificateOperation certOp = client.StartCreateCertificate(certName);
+            CertificateOperation certOp = client.StartCreateCertificate(certName, CertificatePolicy.Default);
 
-            // Next let's wait on the certificate operation to complete. Note that certificate creation can last an indeterministic 
-            // amount of time, so applications should only wait on the operation to complete in the case the issuance time is well 
+            // Next let's wait on the certificate operation to complete. Note that certificate creation can last an indeterministic
+            // amount of time, so applications should only wait on the operation to complete in the case the issuance time is well
             // known and within the scope of the application lifetime. In this case we are creating a self-signed certificate which
             // should be issued in a relatively short amount of time.
             while (!certOp.HasCompleted)
             {
                 certOp.UpdateStatus();
 
-                Thread.Sleep(certOp.PollingInterval);
+                Thread.Sleep(TimeSpan.FromSeconds(1));
             }
 
             // Let's get the created certificate along with it's policy from the Key Vault.
-            CertificateWithPolicy certificate = client.GetCertificateWithPolicy(certName);
+            KeyVaultCertificateWithPolicy certificate = client.GetCertificate(certName);
 
-            Debug.WriteLine($"Certificate was returned with name {certificate.Name} which expires {certificate.Expires}");
+            Debug.WriteLine($"Certificate was returned with name {certificate.Name} which expires {certificate.Properties.ExpiresOn}");
 
             // We find that the certificate has been compromised and we want to disable it so applications will no longer be able
             // to access the compromised version of the certificate.
-            Certificate updatedCert = client.UpdateCertificate(certName, certificate.Version, enabled: false);
+            CertificateProperties certificateProperties = certificate.Properties;
+            certificateProperties.Enabled = false;
 
-            Debug.WriteLine($"Certificate enabled set to '{updatedCert.Enabled}'");
+            KeyVaultCertificate updatedCert = client.UpdateCertificateProperties(certificateProperties);
+
+            Debug.WriteLine($"Certificate enabled set to '{updatedCert.Properties.Enabled}'");
 
             // We need to create a new version of the certificate that applications can use to replace the compromised certificate.
             // Creating a certificate with the same name and policy as the compromised certificate will create another version of the
@@ -65,7 +67,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             {
                 newCertOp.UpdateStatus();
 
-                Thread.Sleep(newCertOp.PollingInterval);
+                Thread.Sleep(TimeSpan.FromSeconds(1));
             }
 
             // The certificate is no longer needed, need to delete it from the Key Vault.
@@ -90,7 +92,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
                 }
                 catch
                 {
-                    Thread.Sleep(5000);
+                    Thread.Sleep(2000);
                 }
             }
             return false;

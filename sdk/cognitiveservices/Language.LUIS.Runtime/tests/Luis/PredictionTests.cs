@@ -21,7 +21,7 @@
                 var requestOptions = new PredictionRequestOptions
                 {
                     DatetimeReference = DateTime.Parse("2019-01-01"),
-                    OverridePredictions = true
+                    PreferExternalEntities = true
                 };
 
                 var externalResolution = JObject.FromObject(new { text = "post", external = true });
@@ -32,7 +32,8 @@
                         EntityName = "simple",
                         StartIndex = 26,
                         EntityLength = 4,
-                        Resolution = externalResolution
+                        Resolution = externalResolution,
+                        Score = 0.86
                     }
                 };
 
@@ -70,7 +71,6 @@
 
                 var prediction = result.Prediction;
                 Assert.Equal(utterance, result.Query);
-                Assert.Equal(utterance, prediction.NormalizedQuery);
                 Assert.Equal("intent", prediction.TopIntent);
                 Assert.Equal(2, prediction.Intents.Count);
                 Assert.Equal(4, prediction.Entities.Count);
@@ -91,7 +91,6 @@
 
                 // dispatch
                 var child = topIntent.ChildApp;
-                Assert.Equal(utterance, child.NormalizedQuery);
                 Assert.Equal("None", child.TopIntent);
                 Assert.Equal(1, child.Intents.Count);
                 Assert.Equal(2, child.Entities.Count);
@@ -117,7 +116,7 @@
                 var requestOptions = new PredictionRequestOptions
                 {
                     DatetimeReference = DateTime.Parse("2019-01-01"),
-                    OverridePredictions = true
+                    PreferExternalEntities = true
                 };
 
                 var externalResolution = JObject.FromObject(new { text = "post", external = true });
@@ -128,6 +127,7 @@
                         EntityName = "simple",
                         StartIndex = 26,
                         EntityLength = 4,
+                        Score = 0.9,
                         Resolution = externalResolution
                     }
                 };
@@ -166,7 +166,6 @@
 
                 var prediction = result.Prediction;
                 Assert.Equal(utterance, result.Query);
-                Assert.Equal(utterance, prediction.NormalizedQuery);
                 Assert.Equal("intent", prediction.TopIntent);
                 Assert.Equal(2, prediction.Intents.Count);
                 Assert.Equal(4, prediction.Entities.Count);
@@ -187,7 +186,6 @@
 
                 // dispatch
                 var child = topIntent.ChildApp;
-                Assert.Equal(utterance, child.NormalizedQuery);
                 Assert.Equal("None", child.TopIntent);
                 Assert.Equal(1, child.Intents.Count);
                 Assert.Equal(2, child.Entities.Count);
