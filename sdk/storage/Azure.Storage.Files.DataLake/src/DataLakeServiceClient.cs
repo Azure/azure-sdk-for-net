@@ -240,8 +240,13 @@ namespace Azure.Storage.Files.DataLake
             _pipeline = options.Build(authentication);
             _uri = serviceUri;
             _blobUri = GetBlobUri(serviceUri);
-            _blobServiceClient = new BlobServiceClient(_blobUri, authentication, options);
             _clientDiagnostics = clientDiagnostics ?? new ClientDiagnostics(options);
+            _blobServiceClient = new BlobServiceClient(
+                serviceUri: _blobUri,
+                authentication: authentication,
+                pipeline: _pipeline,
+                clientDiagnostics: _clientDiagnostics,
+                customerProvidedKey: null);
         }
         #endregion ctors
 
