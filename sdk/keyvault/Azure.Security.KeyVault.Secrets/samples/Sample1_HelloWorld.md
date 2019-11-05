@@ -10,7 +10,7 @@ You can use the `DefaultAzureCredential` to try a number of common authenticatio
 
 In the sample below, you can set `keyVaultUrl` based on an environment variable, configuration setting, or any way that works for your application.
 
-```C# Snippet:SecretsHelloWorldSecretClient
+```C# Snippet:SecretsSample1SecretClient
 var client = new SecretClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
 ```
 
@@ -19,7 +19,7 @@ var client = new SecretClient(new Uri(keyVaultUrl), new DefaultAzureCredential()
 Let's next create a secret holding a bank account credential valid for 1 year.
 If the secret already exists in the Key Vault, a new version of the secret is created.
 
-```C# Snippet:SecretsHelloWorldCreateSecret
+```C# Snippet:SecretsSample1CreateSecret
 string secretName = $"BankAccountPassword-{Guid.NewGuid()}";
 
 var secret = new KeyVaultSecret(secretName, "f4G34fMh8v");
@@ -32,7 +32,7 @@ client.SetSecret(secret);
 
 Now let's get the bank secret from the Key Vault.
 
-```C# Snippet:SecretsHelloWorldGetSecret
+```C# Snippet:SecretsSample1GetSecret
 KeyVaultSecret bankSecret = client.GetSecret(secretName);
 Debug.WriteLine($"Secret is returned with name {bankSecret.Name} and value {bankSecret.Value}");
 ```
@@ -42,7 +42,7 @@ Debug.WriteLine($"Secret is returned with name {bankSecret.Name} and value {bank
 After one year if the bank account is still active, we need to update the expiration time of the secret.
 The update method can be used to update the expiration attribute of the secret. It cannot be used to update the value of the secret.
 
-```C# Snippet:SecretsHelloWorldUpdateSecretProperties
+```C# Snippet:SecretsSample1UpdateSecretProperties
 bankSecret.Properties.ExpiresOn = bankSecret.Properties.ExpiresOn.Value.AddYears(1);
 SecretProperties updatedSecret = client.UpdateSecretProperties(bankSecret.Properties);
 Debug.WriteLine($"Secret's updated expiry time is {updatedSecret.ExpiresOn}");
@@ -53,7 +53,7 @@ Debug.WriteLine($"Secret's updated expiry time is {updatedSecret.ExpiresOn}");
 Assume the bank forced a password update for security purposes. Let's change the value of the secret in the Key Vault.
 To achieve this, we need to create a new version of the secret in the Key Vault. The update operation cannot change the value of the secret.
 
-```C# Snippet:SecretsHelloWorldUpdateSecret
+```C# Snippet:SecretsSample1UpdateSecret
 var secretNewValue = new KeyVaultSecret(secretName, "bhjd4DDgsa");
 secretNewValue.Properties.ExpiresOn = DateTimeOffset.Now.AddYears(1);
 
@@ -64,7 +64,7 @@ client.SetSecret(secretNewValue);
 
 The bank account was closed. You need to delete its credentials from the Key Vault.
 
-```C# Snippet:SecretsHelloWorldDeleteSecret
+```C# Snippet:SecretsSample1DeleteSecret
 DeleteSecretOperation operation = client.StartDeleteSecret(secretName);
 ```
 
@@ -73,7 +73,7 @@ DeleteSecretOperation operation = client.StartDeleteSecret(secretName);
 If the Key Vault is soft-delete enabled, then for permanent deletion, deleted secret needs to be purged.
 Before it can be purged, you need to wait until the secret is fully deleted.
 
-```C# Snippet:SecretsHelloWorldPurgeSecret
+```C# Snippet:SecretsSample1PurgeSecret
 while (!operation.HasCompleted)
 {
     Thread.Sleep(2000);
@@ -89,7 +89,7 @@ client.PurgeDeletedSecret(secretName);
 When writing asynchronous code, you can instead await `WaitForCompletionAsync` to wait indefinitely.
 You can optionally pass in a `CancellationToken` to cancel waiting after a certain period or time or any other trigger you require.
 
-```C# Snippet:SecretsHelloWorldPurgeSecretAsync
+```C# Snippet:SecretsSample1PurgeSecretAsync
 await operation.WaitForCompletionAsync();
 
 await client.PurgeDeletedSecretAsync(secretName);

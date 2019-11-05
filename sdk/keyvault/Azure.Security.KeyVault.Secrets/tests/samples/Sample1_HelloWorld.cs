@@ -26,11 +26,11 @@ namespace Azure.Security.KeyVault.Secrets.Samples
 
         private void HelloWorldSync(string keyVaultUrl)
         {
-            #region Snippet:SecretsHelloWorldSecretClient
+            #region Snippet:SecretsSample1SecretClient
             var client = new SecretClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
             #endregion
 
-            #region Snippet:SecretsHelloWorldCreateSecret
+            #region Snippet:SecretsSample1CreateSecret
             string secretName = $"BankAccountPassword-{Guid.NewGuid()}";
 
             var secret = new KeyVaultSecret(secretName, "f4G34fMh8v");
@@ -39,29 +39,29 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             client.SetSecret(secret);
             #endregion
 
-            #region Snippet:SecretsHelloWorldGetSecret
+            #region Snippet:SecretsSample1GetSecret
             KeyVaultSecret bankSecret = client.GetSecret(secretName);
             Debug.WriteLine($"Secret is returned with name {bankSecret.Name} and value {bankSecret.Value}");
             #endregion
 
-            #region Snippet:SecretsHelloWorldUpdateSecretProperties
+            #region Snippet:SecretsSample1UpdateSecretProperties
             bankSecret.Properties.ExpiresOn = bankSecret.Properties.ExpiresOn.Value.AddYears(1);
             SecretProperties updatedSecret = client.UpdateSecretProperties(bankSecret.Properties);
             Debug.WriteLine($"Secret's updated expiry time is {updatedSecret.ExpiresOn}");
             #endregion
 
-            #region Snippet:SecretsHelloWorldUpdateSecret
+            #region Snippet:SecretsSample1UpdateSecret
             var secretNewValue = new KeyVaultSecret(secretName, "bhjd4DDgsa");
             secretNewValue.Properties.ExpiresOn = DateTimeOffset.Now.AddYears(1);
 
             client.SetSecret(secretNewValue);
             #endregion
 
-            #region Snippet:SecretsHelloWorldDeleteSecret
+            #region Snippet:SecretsSample1DeleteSecret
             DeleteSecretOperation operation = client.StartDeleteSecret(secretName);
             #endregion
 
-            #region Snippet:SecretsHelloWorldPurgeSecret
+            #region Snippet:SecretsSample1PurgeSecret
             while (!operation.HasCompleted)
             {
                 Thread.Sleep(2000);

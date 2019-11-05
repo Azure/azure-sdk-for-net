@@ -29,11 +29,11 @@ namespace Azure.Security.KeyVault.Secrets.Samples
 
         private void GetSecretsSync(string keyVaultUrl)
         {
-            #region Snippet:SecretsGetSecretsSecretClient
+            #region Snippet:SecretsSample3SecretClient
             var client = new SecretClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
             #endregion
 
-            #region Snippet:SecretsGetSecretsCreateSecret
+            #region Snippet:SecretsSample3CreateSecret
             string bankSecretName = $"BankAccountPassword-{Guid.NewGuid()}";
             string storageSecretName = $"StorageAccountPassword{Guid.NewGuid()}";
 
@@ -47,7 +47,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             client.SetSecret(storageSecret);
             #endregion
 
-            #region Snippet:SecretsGetSecretsListSecrets
+            #region Snippet:SecretsSample3ListSecrets
             Dictionary<string, string> secretValues = new Dictionary<string, string>();
 
             IEnumerable<SecretProperties> secrets = client.GetPropertiesOfSecrets();
@@ -64,7 +64,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             }
             #endregion
 
-            #region Snippet:SecretsGetSecretsListSecretVersions
+            #region Snippet:SecretsSample3ListSecretVersions
             string newBankSecretPassword = "sskdjfsdasdjsd";
 
             IEnumerable<SecretProperties> secretVersions = client.GetPropertiesOfSecretVersions(bankSecretName);
@@ -80,7 +80,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             client.SetSecret(bankSecretName, newBankSecretPassword);
             #endregion
 
-            #region Snippet:SecretsGetSecretsDeleteSecrets
+            #region Snippet:SecretsSample3DeleteSecrets
             DeleteSecretOperation bankSecretOperation = client.StartDeleteSecret(bankSecretName);
             DeleteSecretOperation storageSecretOperation = client.StartDeleteSecret(storageSecretName);
 
@@ -93,7 +93,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             }
             #endregion
 
-            #region Snippet:SecretsGetSecretsListDeletedSecrets
+            #region Snippet:SecretsSample3ListDeletedSecrets
             IEnumerable<DeletedSecret> secretsDeleted = client.GetDeletedSecrets();
             foreach (DeletedSecret secret in secretsDeleted)
             {

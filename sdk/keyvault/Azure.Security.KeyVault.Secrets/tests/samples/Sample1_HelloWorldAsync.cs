@@ -49,7 +49,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
 
             DeleteSecretOperation operation = await client.StartDeleteSecretAsync(secretName);
 
-            #region Snippet:SecretsHelloWorldPurgeSecretAsync
+            #region Snippet:SecretsSample1PurgeSecretAsync
             await operation.WaitForCompletionAsync();
 
             await client.PurgeDeletedSecretAsync(secretName);

@@ -27,11 +27,11 @@ namespace Azure.Security.KeyVault.Secrets.Samples
 
         private void BackupAndRestoreSync(string keyVaultUrl)
         {
-            #region Snippet:SecretsBackupAndRestoreSecretClient
+            #region Snippet:SecretsSample2SecretClient
             var client = new SecretClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
             #endregion
 
-            #region Snippet:SecretsBackupAndRestoreCreateSecret
+            #region Snippet:SecretsSample2CreateSecret
             string secretName = $"StorageAccountPassword{Guid.NewGuid()}";
 
             var secret = new KeyVaultSecret(secretName, "f4G34fMh8v");
@@ -40,7 +40,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             KeyVaultSecret storedSecret = client.SetSecret(secret);
             #endregion
 
-            #region Snippet:SecretsBackupAndRestoreBackupSecret
+            #region Snippet:SecretsSample2BackupSecret
             string backupPath = Path.GetTempFileName();
             byte[] secretBackup = client.BackupSecret(secretName);
 
@@ -61,7 +61,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             // If the Key Vault is soft-delete enabled, then for permanent deletion, deleted secret needs to be purged.
             client.PurgeDeletedSecret(secretName);
 
-            #region Snippet:SecretsBackupAndRestoreRestoreSecret
+            #region Snippet:SecretsSample2RestoreSecret
             byte[] secretBackupToRestore = File.ReadAllBytes(backupPath);
 
             SecretProperties restoreSecret = client.RestoreSecretBackup(secretBackupToRestore);

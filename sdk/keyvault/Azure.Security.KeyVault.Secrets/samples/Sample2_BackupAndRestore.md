@@ -10,7 +10,7 @@ You can use the `DefaultAzureCredential` to try a number of common authenticatio
 
 In the sample below, you can set `keyVaultUrl` based on an environment variable, configuration setting, or any way that works for your application.
 
-```C# Snippet:SecretsBackupAndRestoreSecretClient
+```C# Snippet:SecretsSample2SecretClient
 var client = new SecretClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
 ```
 
@@ -19,7 +19,7 @@ var client = new SecretClient(new Uri(keyVaultUrl), new DefaultAzureCredential()
 Let's next create a secret holding a storage account password valid for 1 year.
 If the secret already exists in the Key Vault, a new version of the secret is created.
 
-```C# Snippet:SecretsBackupAndRestoreCreateSecret
+```C# Snippet:SecretsSample2CreateSecret
 string secretName = $"StorageAccountPassword{Guid.NewGuid()}";
 
 var secret = new KeyVaultSecret(secretName, "f4G34fMh8v");
@@ -32,7 +32,7 @@ KeyVaultSecret storedSecret = client.SetSecret(secret);
 
 Backups are good to have in case secrets get accidentally deleted. For long term storage, it is ideal to write the backup to a file.
 
-```C# Snippet:SecretsBackupAndRestoreBackupSecret
+```C# Snippet:SecretsSample2BackupSecret
 string backupPath = Path.GetTempFileName();
 byte[] secretBackup = client.BackupSecret(secretName);
 
@@ -43,7 +43,7 @@ File.WriteAllBytes(backupPath, secretBackup);
 
 If the secret is deleted for any reason, you can restore it from the backup back into Key Vault.
 
-```C# Snippet:SecretsBackupAndRestoreRestoreSecret
+```C# Snippet:SecretsSample2RestoreSecret
 byte[] secretBackupToRestore = File.ReadAllBytes(backupPath);
 
 SecretProperties restoreSecret = client.RestoreSecretBackup(secretBackupToRestore);

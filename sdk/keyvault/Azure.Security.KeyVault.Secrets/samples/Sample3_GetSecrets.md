@@ -10,7 +10,7 @@ You can use the `DefaultAzureCredential` to try a number of common authenticatio
 
 In the sample below, you can set `keyVaultUrl` based on an environment variable, configuration setting, or any way that works for your application.
 
-```C# Snippet:SecretsGetSecretsSecretClient
+```C# Snippet:SecretsSample3SecretClient
 var client = new SecretClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
 ```
 
@@ -19,7 +19,7 @@ var client = new SecretClient(new Uri(keyVaultUrl), new DefaultAzureCredential()
 Let's next create secrets holding a bank account credential and storage account password valid for 1 year.
 If the secret already exists in the Key Vault, a new version of the secret is created.
 
-```C# Snippet:SecretsGetSecretsCreateSecret
+```C# Snippet:SecretsSample3CreateSecret
 string bankSecretName = $"BankAccountPassword-{Guid.NewGuid()}";
 string storageSecretName = $"StorageAccountPassword{Guid.NewGuid()}";
 
@@ -39,7 +39,7 @@ We need to check if any of the secrets are sharing the same values. Let's list t
 List operations don't return the secrets with values. Instead, they return the name and other information aboutt the secret.
 So, for each returned secret name we must call `GetSecret` to get the secret with its secret value.
 
-```C# Snippet:SecretsGetSecretsListSecrets
+```C# Snippet:SecretsSample3ListSecrets
 Dictionary<string, string> secretValues = new Dictionary<string, string>();
 
 IEnumerable<SecretProperties> secrets = client.GetPropertiesOfSecrets();
@@ -62,7 +62,7 @@ The bank account password was updated, so you want to update the secret in Key V
 Calling `SetSecret` on an existing secret creates a new version of the secret in the Key Vault with the new value.
 You need to check that all previous values are different from the new value.
 
-```C# Snippet:SecretsGetSecretsListSecretVersions
+```C# Snippet:SecretsSample3ListSecretVersions
 string newBankSecretPassword = "sskdjfsdasdjsd";
 
 IEnumerable<SecretProperties> secretVersions = client.GetPropertiesOfSecretVersions(bankSecretName);
@@ -84,7 +84,7 @@ The bank account was closed. You need to delete the credential from the Key Vaul
 You also want to delete information about your storage account.
 To list deleted secrets, we also need to wait until they are fully deleted.
 
-```C# Snippet:SecretsGetSecretsDeleteSecrets
+```C# Snippet:SecretsSample3DeleteSecrets
 DeleteSecretOperation bankSecretOperation = client.StartDeleteSecret(bankSecretName);
 DeleteSecretOperation storageSecretOperation = client.StartDeleteSecret(storageSecretName);
 
@@ -101,7 +101,7 @@ while (!bankSecretOperation.HasCompleted || !storageSecretOperation.HasCompleted
 
 You can now list all the deleted and non-purged secrets, assuming Key Vault is soft delete-enabled.
 
-```C# Snippet:SecretsGetSecretsListDeletedSecrets
+```C# Snippet:SecretsSample3ListDeletedSecrets
 IEnumerable<DeletedSecret> secretsDeleted = client.GetDeletedSecrets();
 foreach (DeletedSecret secret in secretsDeleted)
 {
