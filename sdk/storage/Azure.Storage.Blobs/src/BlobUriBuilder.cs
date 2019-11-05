@@ -170,7 +170,7 @@ namespace Azure.Storage.Blobs
             // Find the account, container, & blob names (if any)
             if (!string.IsNullOrEmpty(uri.AbsolutePath))
             {
-                var path = uri.GetSanitizedPath();
+                var path = uri.GetPath();
 
                 var startIndex = 0;
 

@@ -92,7 +92,7 @@ namespace Azure.Storage
         /// </summary>
         /// <param name="uri">The Uri.</param>
         /// <returns>Sanitized Uri.</returns>
-        public static string GetSanitizedPath(this Uri uri) =>
+        public static string GetPath(this Uri uri) =>
             (uri.AbsolutePath[0] == '/') ?
                 uri.AbsolutePath.Substring(1) :
                 uri.AbsolutePath;
