@@ -283,15 +283,6 @@ namespace Azure.AI.TextAnalytics
             return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => GetDetectedLanguagesPageAsync(inputs, showStats, modelVersion, cancellationToken));
         }
 
-        //private Task<Page<DocumentResult<DetectedLanguage>>> MyFunc(string nextLink, List<DocumentInput> inputs, bool showStats = false, string modelVersion = default, CancellationToken cancellationToken = default)
-        //{
-        //    return GetDetectedLanguagesPageAsync(inputs, showStats, modelVersion, cancellationToken);
-        //}
-
-        //return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => (Task<Page<DocumentResult<DetectedLanguage>>>)GetDetectedLanguagesPageAsync(inputs, showStats, modelVersion, cancellationToken));
-        //Func<string, Task<Page<DocumentResult<DetectedLanguage>>>> func = MyFunc;
-        //return PageResponseEnumerator.CreateAsyncEnumerable(func);
-
         /// <summary>
         /// </summary>
         /// <param name="inputs"></param>
