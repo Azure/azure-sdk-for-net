@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <summary>
         /// The principal used to acquire token. This will be of type "User" for local development scenarios, and "App" when client credentials flow is used. 
         /// </summary>
-        public Principal PrincipalUsed => _principalUsed;
+        public virtual Principal PrincipalUsed => _principalUsed;
 
         /// <summary>
         /// Creates an instance of the AzureServiceTokenProvider class.

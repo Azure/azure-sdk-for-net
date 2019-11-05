@@ -304,5 +304,14 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv,null);
             Environment.SetEnvironmentVariable(Constants.MsiAppServiceSecretEnv, null);
         }
+
+        /// <summary>
+        /// Ensure that all public methods are marked virtual to maintain mockability
+        /// </summary>
+        [Fact]
+        public void RemainMockable()
+        {
+            MockUtil.AssertPublicMethodsAreVirtual<AzureServiceTokenProvider>();
+        }
     }
 }
