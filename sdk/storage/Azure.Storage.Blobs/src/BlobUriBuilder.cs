@@ -29,7 +29,7 @@ namespace Azure.Storage.Blobs
         /// Whether the Uri is an IP Uri as determined by
         /// <see cref="UriExtensions.IsHostIPEndPointStyle"/>.
         /// </summary>
-        private readonly bool _isIpStyleUri;
+        private readonly bool _isIPStyleUri;
 
         /// <summary>
         /// Gets or sets the scheme name of the URI.
@@ -176,7 +176,7 @@ namespace Azure.Storage.Blobs
 
                 if (uri.IsHostIPEndPointStyle())
                 {
-                    _isIpStyleUri = true;
+                    _isIPStyleUri = true;
                     var accountEndIndex = path.IndexOf("/", StringComparison.InvariantCulture);
 
                     // Slash not found; path has account name & no container name
@@ -193,7 +193,7 @@ namespace Azure.Storage.Blobs
                 }
                 else
                 {
-                    AccountName = uri.GetAccountNameFromDomain(Constants.Blob.UriSubDomain);
+                    AccountName = uri.GetAccountNameFromDomain(Constants.Blob.UriSubDomain) ?? string.Empty;
                 }
 
                 // Find the next slash (if it exists)
@@ -279,7 +279,7 @@ namespace Azure.Storage.Blobs
             var path = new StringBuilder("");
             // only append the account name to the path for Ip style Uri.
             // regular style Uri will already have account name in domain
-            if (_isIpStyleUri && !string.IsNullOrWhiteSpace(AccountName))
+            if (_isIPStyleUri && !string.IsNullOrWhiteSpace(AccountName))
             {
                 path.Append("/").Append(AccountName);
             }

@@ -30,7 +30,7 @@ namespace Azure.Storage.Files.Shares
         /// Whether the Uri is an IP Uri as determined by
         /// <see cref="UriExtensions.IsHostIPEndPointStyle"/>.
         /// </summary>
-        private readonly bool _isIpStyleUri;
+        private readonly bool _isIPStyleUri;
 
         /// <summary>
         /// Gets or sets the scheme name of the URI.
@@ -174,7 +174,7 @@ namespace Azure.Storage.Files.Shares
 
                 if (uri.IsHostIPEndPointStyle())
                 {
-                    _isIpStyleUri = true;
+                    _isIPStyleUri = true;
                     var accountEndIndex = path.IndexOf("/", StringComparison.InvariantCulture);
 
                     // Slash not found; path has account name & no share name
@@ -191,7 +191,7 @@ namespace Azure.Storage.Files.Shares
                 }
                 else
                 {
-                    AccountName = uri.GetAccountNameFromDomain(Constants.File.UriSubDomain);
+                    AccountName = uri.GetAccountNameFromDomain(Constants.File.UriSubDomain) ?? string.Empty;
                 }
 
                 // Find the next slash (if it exists)
@@ -271,7 +271,7 @@ namespace Azure.Storage.Files.Shares
             var path = new StringBuilder("");
             // only append the account name to the path for Ip style Uri.
             // regular style Uri will already have account name in domain
-            if (_isIpStyleUri && !string.IsNullOrWhiteSpace(AccountName))
+            if (_isIPStyleUri && !string.IsNullOrWhiteSpace(AccountName))
             {
                 path.Append("/").Append(AccountName);
             }
