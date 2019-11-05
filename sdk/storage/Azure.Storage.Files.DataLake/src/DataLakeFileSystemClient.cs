@@ -361,11 +361,11 @@ namespace Azure.Storage.Files.DataLake
         /// </summary>
         /// <param name="publicAccessType">
         /// Optionally specifies whether data in the container may be accessed
-        /// publicly and the level of access. <see cref="Models.PublicAccessType.Container"/>
+        /// publicly and the level of access. <see cref="Models.PublicAccessType.FileSystem"/>
         /// specifies full public read access for container and blob data.
         /// Clients can enumerate blobs within the container via anonymous
         /// request, but cannot enumerate containers within the storage
-        /// account.  <see cref="Models.PublicAccessType.Blob"/> specifies public
+        /// account.  <see cref="Models.PublicAccessType.Path"/> specifies public
         /// read access for blobs.  Blob data within this container can be
         /// read via anonymous request, but file system data is not available.
         /// Clients cannot enumerate blobs within the file system via anonymous
@@ -416,11 +416,11 @@ namespace Azure.Storage.Files.DataLake
         /// </summary>
         /// <param name="publicAccessType">
         /// Optionally specifies whether data in the file system may be accessed
-        /// publicly and the level of access. <see cref="Models.PublicAccessType.Container"/>
+        /// publicly and the level of access. <see cref="Models.PublicAccessType.FileSystem"/>
         /// specifies full public read access for file system and blob data.
         /// Clients can enumerate blobs within the file system via anonymous
         /// request, but cannot enumerate file system within the storage
-        /// account.  <see cref="Models.PublicAccessType.Blob"/> specifies public
+        /// account.  <see cref="Models.PublicAccessType.Path"/> specifies public
         /// read access for blobs.  Blob data within this file system can be
         /// read via anonymous request, but file system data is not available.
         /// Clients cannot enumerate blobs within the file system via anonymous
@@ -711,7 +711,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="recursive">
         /// If "true", all paths are listed; otherwise, only paths at the root of the filesystem are listed.
         /// </param>
-        /// <param name="upn">
+        /// <param name="userPrincipalName">
         /// Optional. Valid only when Hierarchical Namespace is enabled for the account. If
         /// "true", the user identity values returned in the owner and group fields of each list
         /// entry will be transformed from Azure Active Directory Object IDs to User Principal
@@ -734,13 +734,13 @@ namespace Azure.Storage.Files.DataLake
         public virtual Pageable<PathItem> ListPaths(
             string path = default,
             bool recursive = default,
-            bool upn = default,
+            bool userPrincipalName = default,
             CancellationToken cancellationToken = default) =>
             new GetPathsAsyncCollection(
                 this,
                 path,
                 recursive,
-                upn).ToSyncCollection(cancellationToken);
+                userPrincipalName).ToSyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="ListPathsAsync"/> operation returns an async
@@ -756,7 +756,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="recursive">
         /// If "true", all paths are listed; otherwise, only paths at the root of the filesystem are listed.
         /// </param>
-        /// <param name="upn">
+        /// <param name="userPrincipalName">
         /// Optional. Valid only when Hierarchical Namespace is enabled for the account. If
         /// "true", the user identity values returned in the owner and group fields of each list
         /// entry will be transformed from Azure Active Directory Object IDs to User Principal
@@ -779,12 +779,12 @@ namespace Azure.Storage.Files.DataLake
         public virtual AsyncPageable<PathItem> ListPathsAsync(
             string path = default,
             bool recursive = default,
-            bool upn = default,
+            bool userPrincipalName = default,
             CancellationToken cancellationToken = default) =>
             new GetPathsAsyncCollection(this,
                 path,
                 recursive,
-                upn).ToAsyncCollection(cancellationToken);
+                userPrincipalName).ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="ListPathsInternal"/> operation returns a
@@ -804,7 +804,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="recursive">
         /// If "true", all paths are listed; otherwise, only paths at the root of the filesystem are listed.
         /// </param>
-        /// <param name="upn">
+        /// <param name="userPrincipalName">
         /// Optional. Valid only when Hierarchical Namespace is enabled for the account. If
         /// "true", the user identity values returned in the owner and group fields of each list
         /// entry will be transformed from Azure Active Directory Object IDs to User Principal
@@ -840,7 +840,7 @@ namespace Azure.Storage.Files.DataLake
         internal async Task<Response<PathSegment>> ListPathsInternal(
             string path,
             bool recursive,
-            bool upn,
+            bool userPrincipalName,
             string continuation,
             int? maxResults,
             bool async,
@@ -849,7 +849,7 @@ namespace Azure.Storage.Files.DataLake
             using (Pipeline.BeginLoggingScope(nameof(DataLakeFileSystemClient)))
             {
                 Pipeline.LogMethodEnter(
-                    nameof(BlobContainerClient),
+                    nameof(DataLakeFileSystemClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(continuation)}: {continuation}\n" +
@@ -863,7 +863,7 @@ namespace Azure.Storage.Files.DataLake
                         continuation: continuation,
                         recursive: recursive,
                         maxResults: maxResults,
-                        upn: upn,
+                        upn: userPrincipalName,
                         path: path,
                         async: async,
                         cancellationToken: cancellationToken)

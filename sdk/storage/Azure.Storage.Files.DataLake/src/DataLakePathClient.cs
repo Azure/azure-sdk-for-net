@@ -726,7 +726,7 @@ namespace Azure.Storage.Files.DataLake
             using (Pipeline.BeginLoggingScope(nameof(DataLakePathClient)))
             {
                 Pipeline.LogMethodEnter(
-                    nameof(BlobBaseClient),
+                    nameof(DataLakePathClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(recursive)}: {recursive}\n" +
@@ -946,7 +946,7 @@ namespace Azure.Storage.Files.DataLake
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/getproperties" />.
         /// </summary>
-        /// <param name="upn">
+        /// <param name="userPrincipalName">
         /// Optional.Valid only when Hierarchical Namespace is enabled for the account.If "true",
         /// the user identity values returned in the x-ms-owner, x-ms-group, and x-ms-acl response
         /// headers will be transformed from Azure Active Directory Object IDs to User Principal Names.
@@ -972,11 +972,11 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         [ForwardsClientCalls]
         public virtual Response<PathAccessControl> GetAccessControl(
-            bool? upn = default,
+            bool? userPrincipalName = default,
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             GetAccessControlInternal(
-                upn,
+                userPrincipalName,
                 conditions,
                 false, // async
                 cancellationToken)
@@ -988,7 +988,7 @@ namespace Azure.Storage.Files.DataLake
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/getproperties" />.
         /// </summary>
-        /// <param name="upn">
+        /// <param name="userPrincipalName">
         /// Optional.Valid only when Hierarchical Namespace is enabled for the account.If "true",
         /// the user identity values returned in the x-ms-owner, x-ms-group, and x-ms-acl response
         /// headers will be transformed from Azure Active Directory Object IDs to User Principal Names.
@@ -1014,11 +1014,11 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<PathAccessControl>> GetAccessControlAsync(
-            bool? upn = default,
+            bool? userPrincipalName = default,
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await GetAccessControlInternal(
-                upn,
+                userPrincipalName,
                 conditions,
                 true, // async
                 cancellationToken)
@@ -1030,7 +1030,7 @@ namespace Azure.Storage.Files.DataLake
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/getproperties" />.
         /// </summary>
-        /// <param name="upn">
+        /// <param name="userPrincipalName">
         /// Optional.Valid only when Hierarchical Namespace is enabled for the account.If "true",
         /// the user identity values returned in the x-ms-owner, x-ms-group, and x-ms-acl response
         /// headers will be transformed from Azure Active Directory Object IDs to User Principal Names.
@@ -1058,7 +1058,7 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<PathAccessControl>> GetAccessControlInternal(
-            bool? upn,
+            bool? userPrincipalName,
             DataLakeRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
@@ -1076,7 +1076,7 @@ namespace Azure.Storage.Files.DataLake
                         pipeline: Pipeline,
                         resourceUri: _dfsUri,
                         action: PathGetPropertiesAction.GetAccessControl,
-                        upn: upn,
+                        upn: userPrincipalName,
                         leaseId: conditions?.LeaseId,
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
