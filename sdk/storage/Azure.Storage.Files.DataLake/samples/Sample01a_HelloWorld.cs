@@ -75,7 +75,7 @@ namespace Azure.Storage.Files.DataLake.Samples
             filesystem.Create();
             #endregion Snippet:SampleSnippetDataLakeFileSystemClient_Create
             #region Snippet:SampleSnippetDataLakeFileClient_Create_Directory
-            //Create a DataLake Directory
+            // Create a DataLake Directory
             DataLakeDirectoryClient directory = filesystem.CreateDirectory(Randomize("sample-directory"));
             directory.Create();
 

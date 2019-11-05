@@ -7,7 +7,7 @@ and analysts to store data of any size, shape, and speed, and do all types of pr
 across platforms and languages. It removes the complexities of ingesting and storing all of your data
 while making it faster to get up and running with batch, streaming, and interactive analytics.
 
-[Source code][source] | [{Package (NuGet)][package] | [API reference documentation][docs] | [REST API documentation][rest_docs] | [Product documentation][product_docs]
+[Source code][source] | [Package (NuGet)][package] | [API reference documentation][docs] | [REST API documentation][rest_docs] | [Product documentation][product_docs]
 
 ## Getting started
 
@@ -54,8 +54,8 @@ In the past, cloud-based analytics had to compromise in areas of performance, ma
 
 Data Lake Storage Gen2 offers two types of resources:
 
-- The _filesystem used via 'DataLakeFileSystemClient'
-- The _path used via 'DataLakeFileClient' or 'DataLakeDirectoryClient'
+- The _filesystem_ used via 'DataLakeFileSystemClient'
+- The _path_ used via 'DataLakeFileClient' or 'DataLakeDirectoryClient'
 
 |ADLS Gen2 	                | Blob       |
 | --------------------------| ---------- |
@@ -106,7 +106,7 @@ directory.Create();
 
 Create DataLakeFileClient from a DataLakeDirectoryClient
 ```C# Snippet:SampleSnippetDataLakeFileClient_Create_Directory
-//Create a DataLake Directory
+// Create a DataLake Directory
 DataLakeDirectoryClient directory = filesystem.CreateDirectory(Randomize("sample-directory"));
 directory.Create();
 
@@ -201,7 +201,7 @@ PathProperties directoryPathProperties = directoryClient.GetProperties();
 
 All File DataLake service operations will throw a
 [RequestFailedException][RequestFailedException] on failure with
-helpful [`ErrorCodes`][error_codes].  Many of these errors are recoverable.
+helpful [`ErrorCode`s][error_codes].  Many of these errors are recoverable.
 
 ## Next steps
 
