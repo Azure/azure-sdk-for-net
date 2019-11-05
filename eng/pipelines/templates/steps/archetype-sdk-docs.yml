@@ -125,7 +125,7 @@ steps:
           # Copy over generated yml and other assets
           Write-Host "Copy over generated yml and other assets"
           Copy-Item "$($SafeName)/dll-yaml-output/*"-Destination "$($SafeName)/docfx-output/docfx_project/api" -Recurse
-          Copy-Item "$(Build.SourcesDirectory)/eng/docgeneration/assets/perpackagedocs/docfx.json" -Destination "$($SafeName)/docfx-output/docfx_project" -Recurse -Force
+          Copy-Item "$(Build.SourcesDirectory)/eng/docgeneration/assets/docfx.json" -Destination "$($SafeName)/docfx-output/docfx_project" -Recurse -Force
           New-Item -Path "$($SafeName)/docfx-output/docfx_project" -Name templates -ItemType directory
           Copy-Item "$(Build.SourcesDirectory)/eng/docgeneration/templates/**" -Destination "$(Build.BinariesDirectory)/$($SafeName)/docfx-output/docfx_project/templates" -Recurse -Force
 
