@@ -41,6 +41,5 @@ stages:
     Artifacts:
     - name: Azure.Messaging.EventHubs
       safeName: AzureMessagingEventHubs
-    - name: Azure.Messaging.EventHubs.CheckpointStore.Blob
-      safeName: AzureMessagingEventHubsCheckpointStoreBlob
-      
+    - name: Azure.Messaging.EventHubs.CheckpointStore.Blobs
+      safeName: AzureMessagingEventHubsCheckpointStoreBlobs
