@@ -1,6 +1,7 @@
 # Azure Storage Files Data Lake client library for .NET
 
 > Server Version: 2019-02-02
+
 Azure Data Lake includes all the capabilities required to make it easy for developers, data scientists, 
 and analysts to store data of any size, shape, and speed, and do all types of processing and analytics 
 across platforms and languages. It removes the complexities of ingesting and storing all of your data
@@ -15,7 +16,7 @@ while making it faster to get up and running with batch, streaming, and interact
 Install the Azure Storage Files Data Lake client library for .NET with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Storage.Files.DataLake --version 12.0.0-preview.4
+dotnet add package Azure.Storage.Files.DataLake --version 12.0.0-preview.5
 ```
 
 ### Prerequisites
@@ -33,11 +34,168 @@ az storage account create --name MyStorageAccount --resource-group MyResourceGro
 
 ## Key concepts
 
-TODO: Add Key Concepts
+DataLake Storage Gen2 was designed to:
+- Service multiple petabytes of information while sustaining hundreds of gigabits of throughput
+- Allow you to easily manage massive amounts of data
+
+Key Features of DataLake Storage Gen2 include:
+- Hadoop compatible access
+- A superset of POSIX permissions
+- Cost effective in terms of low-cost storage capacity and transactions
+- Optimized driver for big data analytics
+
+A fundamental part of Data Lake Storage Gen2 is the addition of a hierarchical namespace to Blob storage. The hierarchical namespace organizes objects/files into a hierarchy of directories for efficient data access.
+
+In the past, cloud-based analytics had to compromise in areas of performance, management, and security. Data Lake Storage Gen2 addresses each of these aspects in the following ways:
+- Performance is optimized because you do not need to copy or transform data as a prerequisite for analysis. The hierarchical namespace greatly improves the performance of directory management operations, which improves overall job performance.
+- Management is easier because you can organize and manipulate files through directories and subdirectories.
+- Security is enforceable because you can define POSIX permissions on directories or individual files.
+- Cost effectiveness is made possible as Data Lake Storage Gen2 is built on top of the low-cost Azure Blob storage. The additional features further lower the total cost of ownership for running big data analytics on Azure.
+
+Data Lake Storage Gen2 offers two types of resources:
+
+- The _filesystem_ used via 'DataLakeFileSystemClient'
+- The _path_ used via 'DataLakeFileClient' or 'DataLakeDirectoryClient'
+
+|ADLS Gen2 	                | Blob       |
+| --------------------------| ---------- |
+|Filesystem                 | Container  | 
+|Path (File or Directory)   | Blob       |
+
+Note: This client library does not support hierarchical namespace (HNS) disabled storage accounts.
 
 ## Examples
 
-TODO: Add Examples
+### Create a DataLakeServiceClient
+```C# Snippet:SampleSnippetDataLakeServiceClient_Create
+StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(storageAccountName, storageAccountKey);
+
+// Create DataLakeServiceClient using StorageSharedKeyCredentials
+DataLakeServiceClient serviceClient = new DataLakeServiceClient(serviceUri, sharedKeyCredential);
+```
+
+### Create a DataLakeFileSystemClient
+```C# Snippet:SampleSnippetDataLakeFileSystemClient_Create
+StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(storageAccountName, storageAccountKey);
+
+// Create DataLakeServiceClient using StorageSharedKeyCredentials
+DataLakeServiceClient serviceClient = new DataLakeServiceClient(serviceUri, sharedKeyCredential);
+
+// Create a DataLake Filesystem
+DataLakeFileSystemClient filesystem = serviceClient.GetFileSystemClient(Randomize("sample-filesystem"));
+filesystem.Create();
+```
+
+### Create a DataLakeDirectoryClient
+```C# Snippet:SampleSnippetDataLakeDirectoryClient_Create
+StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(storageAccountName, storageAccountKey);
+
+// Create DataLakeServiceClient using StorageSharedKeyCredentials
+DataLakeServiceClient serviceClient = new DataLakeServiceClient(serviceUri, sharedKeyCredential);
+
+// Get a reference to a filesystem named "sample-filesystem-append" and then create it
+DataLakeFileSystemClient filesystem = serviceClient.GetFileSystemClient(Randomize("sample-filesystem-append"));
+filesystem.Create();
+
+// Create
+DataLakeDirectoryClient directory = filesystem.GetDirectoryClient(Randomize("sample-file"));
+directory.Create();
+```
+
+### Create a DataLakeFileClient
+
+Create DataLakeFileClient from a DataLakeDirectoryClient
+```C# Snippet:SampleSnippetDataLakeFileClient_Create_Directory
+// Create a DataLake Directory
+DataLakeDirectoryClient directory = filesystem.CreateDirectory(Randomize("sample-directory"));
+directory.Create();
+
+// Create a DataLake File using a DataLake Directory
+DataLakeFileClient file = directory.GetFileClient(Randomize("sample-file"));
+file.Create();
+```
+
+Create DataLakeFileClient from a DataLakeFileSystemClient
+```C# Snippet:SampleSnippetDataLakeFileClient_Create
+// Create a DataLake Filesystem
+DataLakeFileSystemClient filesystem = serviceClient.GetFileSystemClient(Randomize("sample-filesystem"));
+filesystem.Create();
+
+// Create a DataLake file using a DataLake Filesystem
+DataLakeFileClient file = filesystem.GetFileClient(Randomize("sample-file"));
+file.Create();
+```
+
+### Appending Data to a DataLake File
+```C# Snippet:SampleSnippetDataLakeFileClient_Append
+// Create a file
+DataLakeFileClient file = filesystem.GetFileClient(Randomize("sample-file"));
+file.Create();
+
+// Append data to the DataLake File
+file.Append(File.OpenRead(sampleFilePath), 0);
+file.Flush(SampleFileContent.Length);
+```
+
+### Reading Data from a DataLake File
+```C# Snippet:SampleSnippetDataLakeFileClient_Read
+Response<FileDownloadInfo> fileContents = file.Read();
+```
+
+### Listing/Traversing through a DataLake Filesystem
+```C# Snippet:SampleSnippetDataLakeFileClient_List
+foreach (PathItem pathItem in filesystem.ListPaths())
+{
+    names.Add(pathItem.Name);
+}
+```
+
+### Set Permissions on a DataLake File
+```C# Snippet:SampleSnippetDataLakeFileClient_SetPermissions
+// Create a DataLake file so we can set the Access Controls on the files
+DataLakeFileClient fileClient = filesystem.GetFileClient(Randomize("sample-file"));
+fileClient.Create();
+
+// Set the Permissions of the file
+fileClient.SetPermissions(permissions: "rwxrwxrwx");
+```
+
+### Set Access Controls (ACLs) on a DataLake File
+```C# Snippet:SampleSnippetDataLakeFileClient_SetAcls
+// Create a DataLake file so we can set the Access Controls on the files
+DataLakeFileClient fileClient = filesystem.GetFileClient(Randomize("sample-file"));
+fileClient.Create();
+
+// Set Access Control List
+fileClient.SetAccessControl("user::rwx,group::r--,mask::rwx,other::---");
+```
+
+### Get Access Controls (ACLs) on a DataLake File
+```C# Snippet:SampleSnippetDataLakeFileClient_GetAcls
+// Get Access Control List
+PathAccessControl accessControlResponse = fileClient.GetAccessControl();
+```
+
+### Rename a DataLake File
+```C# Snippet:SampleSnippetDataLakeFileClient_RenameFile
+DataLakeFileClient renamedFileClient = fileClient.Rename("sample-file2");
+```
+
+### Rename a DataLake Directory
+```C# Snippet:SampleSnippetDataLakeFileClient_RenameDirectory
+DataLakeDirectoryClient renamedDirectoryClient = directoryClient.Rename("sample-directory2");
+```
+
+### Get Properties on a DataLake File
+```C# Snippet:SampleSnippetDataLakeFileClient_GetProperties
+// Get Properties on a File
+PathProperties filePathProperties = fileClient.GetProperties();
+```
+### Get Properties on a DataLake Directory
+```C# Snippet:SampleSnippetDataLakeDirectoryClient_GetProperties
+// Get Properties on a Directory
+PathProperties directoryPathProperties = directoryClient.GetProperties();
+```
 
 ## Troubleshooting
 
@@ -45,27 +203,12 @@ All File DataLake service operations will throw a
 [RequestFailedException][RequestFailedException] on failure with
 helpful [`ErrorCode`s][error_codes].  Many of these errors are recoverable.
 
-TODO: Update sample
-
-```c#
-string connectionString = "<connection_string>";
-// Try to create a container named "sample-container" and avoid any potential race
-// conditions that might arise by checking if the container exists before creating
-BlobContainerClient container = new BlobContainerClient(connectionString, "sample-container");
-try
-{
-    container.Create();
-}
-catch (RequestFailedException ex)
-    when (ex.ErrorCode == BlobErrorCode.ContainerAlreadyExists)
-{
-    // Ignore any errors if the container already exists
-}
-```
-
 ## Next steps
 
-TODO: Link Samples
+Get started with our [DataLake samples][samples]:
+
+1. [Hello World](samples/Sample01a_HelloWorld.cs): Append, Read, and List DataLake Files (or [asynchronously](samples/Sample01b_HelloWorldAsync.cs))
+2. [Auth](samples/Sample02_Auth.cs): Authenticate with public access, shared keys, shared access signatures, and Azure Active Directory.
 
 ## Contributing
 
@@ -82,7 +225,7 @@ For more information see the [Code of Conduct FAQ][coc_faq]
 or contact [opencode@microsoft.com][coc_contact] with any
 additional questions or comments.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Blobs.Cryptography%2FREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Files.DataLake%2FREADME.png)
 
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Files.DataLake/src
@@ -105,3 +248,4 @@ additional questions or comments.
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [coc_contact]: mailto:opencode@microsoft.com
+[samples]: samples
