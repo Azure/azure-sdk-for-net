@@ -42,12 +42,6 @@ stages:
     - name: Microsoft.Azure.CognitiveServices.AnomalyDetector
       safeName: MicrosoftAzureCognitiveServicesAnomalyDetector
       directoryName: AnomalyDetector
-    - name: Microsoft.Azure.CognitiveServices.FormRecognizer
-      safeName: MicrosoftAzureCognitiveServicesFormRecognizer
-      directoryName: FormRecognizer
-    - name: Microsoft.Azure.CognitiveServices.InkRecognizer
-      safeName: MicrosoftAzureCognitiveServicesInkRecognizer
-      directoryName: InkRecognizer
     - name: Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
       safeName: MicrosoftAzureCognitiveServicesKnowledgeQnAMaker
       directoryName: Knowledge.QnAMaker

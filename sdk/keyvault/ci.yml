@@ -45,25 +45,3 @@ stages:
       safeName: AzureSecurityKeyVaultKeys
     - name: Azure.Security.KeyVault.Secrets
       safeName: AzureSecurityKeyVaultSecrets
-    - name: Microsoft.Azure.KeyVault
-      safeName: MicrosoftAzureKeyVault
-    - name: Microsoft.Azure.KeyVault.Core
-      safeName: MicrosoftAzureKeyVaultCore
-      options:
-        skipTagRepository: true
-        skipPublishPackage: true
-    - name: Microsoft.Azure.KeyVault.Cryptography
-      safeName: MicrosoftAzureKeyVaultCryptography
-      options:
-        skipTagRepository: true
-        skipPublishPackage: true
-    - name: Microsoft.Azure.KeyVault.Extensions
-      safeName: MicrosoftAzureKeyVaultExtensions
-      options:
-        skipTagRepository: true
-        skipPublishPackage: true
-    - name: Microsoft.Azure.KeyVault.WebKey
-      safeName: MicrosoftAzureKeyVaultWebKey
-      options:
-        skipTagRepository: true
-        skipPublishPackage: true
