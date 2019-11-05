@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/47f4bc68-6fe4-43a2-be8b-dfd0e290efa2/resourcegroups/FrontDoorResourceGroup3059?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDdmNGJjNjgtNmZlNC00M2EyLWJlOGItZGZkMGUyOTBlZmEyL3Jlc291cmNlZ3JvdXBzL0Zyb250RG9vclJlc291cmNlR3JvdXAzMDU5P2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestUri": "/subscriptions/47f4bc68-6fe4-43a2-be8b-dfd0e290efa2/resourcegroups/FrontDoorResourceGroup4281?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDdmNGJjNjgtNmZlNC00M2EyLWJlOGItZGZkMGUyOTBlZmEyL3Jlc291cmNlZ3JvdXBzL0Zyb250RG9vclJlc291cmNlR3JvdXA0MjgxP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"westus\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "8d0e7f36-c737-4375-b935-24d0c9b23b0e"
+          "6b27d423-1cf7-45de-ad96-f5f1bb1f8ee7"
         ],
         "accept-language": [
           "en-US"
@@ -15,7 +15,7 @@
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18960.",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ],
         "Content-Type": [
@@ -30,7 +30,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 22 Aug 2019 20:19:45 GMT"
+          "Mon, 04 Nov 2019 21:25:38 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -39,13 +39,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "5a74e80d-d744-4fd1-8644-cd3070099a74"
+          "15e52168-7ac5-4207-bfff-17a1494c73ac"
         ],
         "x-ms-correlation-request-id": [
-          "5a74e80d-d744-4fd1-8644-cd3070099a74"
+          "15e52168-7ac5-4207-bfff-17a1494c73ac"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190822T201946Z:5a74e80d-d744-4fd1-8644-cd3070099a74"
+          "WESTCENTRALUS:20191104T212538Z:15e52168-7ac5-4207-bfff-17a1494c73ac"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -63,17 +63,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/47f4bc68-6fe4-43a2-be8b-dfd0e290efa2/resourceGroups/FrontDoorResourceGroup3059\",\r\n  \"name\": \"FrontDoorResourceGroup3059\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/47f4bc68-6fe4-43a2-be8b-dfd0e290efa2/resourceGroups/FrontDoorResourceGroup4281\",\r\n  \"name\": \"FrontDoorResourceGroup4281\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/47f4bc68-6fe4-43a2-be8b-dfd0e290efa2/resourceGroups/FrontDoorResourceGroup3059/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/policy8734?api-version=2019-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDdmNGJjNjgtNmZlNC00M2EyLWJlOGItZGZkMGUyOTBlZmEyL3Jlc291cmNlR3JvdXBzL0Zyb250RG9vclJlc291cmNlR3JvdXAzMDU5L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9Gcm9udERvb3JXZWJBcHBsaWNhdGlvbkZpcmV3YWxsUG9saWNpZXMvcG9saWN5ODczND9hcGktdmVyc2lvbj0yMDE5LTAzLTAx",
+      "RequestUri": "/subscriptions/47f4bc68-6fe4-43a2-be8b-dfd0e290efa2/resourceGroups/FrontDoorResourceGroup4281/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/policy1168?api-version=2019-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDdmNGJjNjgtNmZlNC00M2EyLWJlOGItZGZkMGUyOTBlZmEyL3Jlc291cmNlR3JvdXBzL0Zyb250RG9vclJlc291cmNlR3JvdXA0MjgxL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9Gcm9udERvb3JXZWJBcHBsaWNhdGlvbkZpcmV3YWxsUG9saWNpZXMvcG9saWN5MTE2OD9hcGktdmVyc2lvbj0yMDE5LTEwLTAx",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"policySettings\": {\r\n      \"enabledState\": \"Enabled\",\r\n      \"mode\": \"Prevention\",\r\n      \"redirectUrl\": \"http://www.bing.com\",\r\n      \"customBlockResponseStatusCode\": 403,\r\n      \"customBlockResponseBody\": \"PGh0bWw+SGVsbG88L2h0bWw+\"\r\n    },\r\n    \"customRules\": {\r\n      \"rules\": [\r\n        {\r\n          \"name\": \"rule1\",\r\n          \"priority\": 1,\r\n          \"enabledState\": \"Enabled\",\r\n          \"ruleType\": \"RateLimitRule\",\r\n          \"rateLimitThreshold\": 1000,\r\n          \"matchConditions\": [\r\n            {\r\n              \"matchVariable\": \"RemoteAddr\",\r\n              \"operator\": \"IPMatch\",\r\n              \"matchValue\": [\r\n                \"192.168.1.0/24\",\r\n                \"10.0.0.0/24\"\r\n              ]\r\n            }\r\n          ],\r\n          \"action\": \"Block\"\r\n        }\r\n      ]\r\n    },\r\n    \"managedRules\": {\r\n      \"managedRuleSets\": [\r\n        {\r\n          \"ruleSetType\": \"DefaultRuleSet\",\r\n          \"ruleSetVersion\": \"1.0\",\r\n          \"ruleGroupOverrides\": [\r\n            {\r\n              \"ruleGroupName\": \"SQLI\",\r\n              \"rules\": [\r\n                {\r\n                  \"ruleId\": \"942100\",\r\n                  \"enabledState\": \"Disabled\",\r\n                  \"action\": \"Redirect\"\r\n                }\r\n              ]\r\n            }\r\n          ]\r\n        }\r\n      ]\r\n    }\r\n  },\r\n  \"location\": \"global\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"policySettings\": {\r\n      \"enabledState\": \"Enabled\",\r\n      \"mode\": \"Prevention\",\r\n      \"redirectUrl\": \"http://www.bing.com\",\r\n      \"customBlockResponseStatusCode\": 403,\r\n      \"customBlockResponseBody\": \"PGh0bWw+SGVsbG88L2h0bWw+\"\r\n    },\r\n    \"customRules\": {\r\n      \"rules\": [\r\n        {\r\n          \"name\": \"rule1\",\r\n          \"priority\": 1,\r\n          \"enabledState\": \"Enabled\",\r\n          \"ruleType\": \"RateLimitRule\",\r\n          \"rateLimitThreshold\": 1000,\r\n          \"matchConditions\": [\r\n            {\r\n              \"matchVariable\": \"RemoteAddr\",\r\n              \"operator\": \"IPMatch\",\r\n              \"matchValue\": [\r\n                \"192.168.1.0/24\",\r\n                \"10.0.0.0/24\"\r\n              ]\r\n            }\r\n          ],\r\n          \"action\": \"Block\"\r\n        }\r\n      ]\r\n    },\r\n    \"managedRules\": {\r\n      \"managedRuleSets\": [\r\n        {\r\n          \"ruleSetType\": \"DefaultRuleSet\",\r\n          \"ruleSetVersion\": \"1.0\",\r\n          \"exclusions\": [\r\n            {\r\n              \"matchVariable\": \"RequestBodyPostArgNames\",\r\n              \"selectorMatchOperator\": \"Contains\",\r\n              \"selector\": \"query\"\r\n            }\r\n          ],\r\n          \"ruleGroupOverrides\": [\r\n            {\r\n              \"ruleGroupName\": \"SQLI\",\r\n              \"exclusions\": [\r\n                {\r\n                  \"matchVariable\": \"RequestHeaderNames\",\r\n                  \"selectorMatchOperator\": \"Equals\",\r\n                  \"selector\": \"User-Agent\"\r\n                }\r\n              ],\r\n              \"rules\": [\r\n                {\r\n                  \"ruleId\": \"942100\",\r\n                  \"enabledState\": \"Disabled\",\r\n                  \"action\": \"Redirect\",\r\n                  \"exclusions\": [\r\n                    {\r\n                      \"matchVariable\": \"QueryStringArgNames\",\r\n                      \"selectorMatchOperator\": \"Equals\",\r\n                      \"selector\": \"search\"\r\n                    }\r\n                  ]\r\n                }\r\n              ]\r\n            }\r\n          ]\r\n        }\r\n      ]\r\n    }\r\n  },\r\n  \"location\": \"global\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "5a8640b9-79f7-4344-8842-eb4771af54e5"
+          "8655f863-77eb-4fc1-8336-d7c6a444aea5"
         ],
         "accept-language": [
           "en-US"
@@ -81,14 +81,14 @@
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18960.",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
           "Microsoft.Azure.Management.FrontDoor.FrontDoorManagementClient/1.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "1411"
+          "2139"
         ]
       },
       "ResponseHeaders": {
@@ -96,7 +96,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 22 Aug 2019 20:19:50 GMT"
+          "Mon, 04 Nov 2019 21:25:41 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -105,10 +105,10 @@
           "Microsoft-IIS/8.5"
         ],
         "x-ms-request-id": [
-          "e3575f4a-cff0-4813-a5b4-536e5f945492"
+          "56676392-6d3c-4bed-ada6-0c5291cad062"
         ],
         "x-ms-client-request-id": [
-          "5a8640b9-79f7-4344-8842-eb4771af54e5"
+          "8655f863-77eb-4fc1-8336-d7c6a444aea5"
         ],
         "OData-Version": [
           "4.0"
@@ -126,16 +126,16 @@
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "a08edccf-bc8a-4eef-90bf-e5b083233de6"
+          "efe895d4-130c-46fd-b5da-237ffa99ac6e"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190822T201950Z:a08edccf-bc8a-4eef-90bf-e5b083233de6"
+          "WESTCENTRALUS:20191104T212541Z:efe895d4-130c-46fd-b5da-237ffa99ac6e"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Content-Length": [
-          "1608"
+          "2156"
         ],
         "Content-Type": [
           "application/json; odata.metadata=minimal"
@@ -144,17 +144,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"policy8734\",\r\n  \"id\": \"/subscriptions/47f4bc68-6fe4-43a2-be8b-dfd0e290efa2/resourcegroups/FrontDoorResourceGroup3059/providers/Microsoft.Network/frontdoorwebapplicationfirewallpolicies/policy8734\",\r\n  \"type\": \"Microsoft.Network/frontdoorwebapplicationfirewallpolicies\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"location\": \"Global\",\r\n  \"properties\": {\r\n    \"resourceState\": \"Enabled\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"policySettings\": {\r\n      \"enabledState\": \"Enabled\",\r\n      \"mode\": \"Prevention\",\r\n      \"redirectUrl\": \"http://www.bing.com\",\r\n      \"customBlockResponseStatusCode\": 403,\r\n      \"customBlockResponseBody\": \"PGh0bWw+SGVsbG88L2h0bWw+\"\r\n    },\r\n    \"customRules\": {\r\n      \"rules\": [\r\n        {\r\n          \"name\": \"rule1\",\r\n          \"enabledState\": \"Enabled\",\r\n          \"priority\": 1,\r\n          \"ruleType\": \"RateLimitRule\",\r\n          \"rateLimitDurationInMinutes\": null,\r\n          \"rateLimitThreshold\": 1000,\r\n          \"matchConditions\": [\r\n            {\r\n              \"matchVariable\": \"RemoteAddr\",\r\n              \"selector\": null,\r\n              \"operator\": \"IPMatch\",\r\n              \"negateCondition\": false,\r\n              \"matchValue\": [\r\n                \"192.168.1.0/24\",\r\n                \"10.0.0.0/24\"\r\n              ],\r\n              \"transforms\": []\r\n            }\r\n          ],\r\n          \"action\": \"Block\"\r\n        }\r\n      ]\r\n    },\r\n    \"managedRules\": {\r\n      \"managedRuleSets\": [\r\n        {\r\n          \"ruleSetType\": \"DefaultRuleSet\",\r\n          \"ruleSetVersion\": \"1.0\",\r\n          \"ruleGroupOverrides\": [\r\n            {\r\n              \"ruleGroupName\": \"SQLI\",\r\n              \"rules\": [\r\n                {\r\n                  \"ruleId\": \"942100\",\r\n                  \"enabledState\": \"Disabled\",\r\n                  \"action\": \"Redirect\"\r\n                }\r\n              ]\r\n            }\r\n          ]\r\n        }\r\n      ]\r\n    },\r\n    \"frontendEndpointLinks\": []\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"policy1168\",\r\n  \"id\": \"/subscriptions/47f4bc68-6fe4-43a2-be8b-dfd0e290efa2/resourcegroups/FrontDoorResourceGroup4281/providers/Microsoft.Network/frontdoorwebapplicationfirewallpolicies/policy1168\",\r\n  \"type\": \"Microsoft.Network/frontdoorwebapplicationfirewallpolicies\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"location\": \"Global\",\r\n  \"properties\": {\r\n    \"resourceState\": \"Enabled\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"policySettings\": {\r\n      \"enabledState\": \"Enabled\",\r\n      \"mode\": \"Prevention\",\r\n      \"redirectUrl\": \"http://www.bing.com\",\r\n      \"customBlockResponseStatusCode\": 403,\r\n      \"customBlockResponseBody\": \"PGh0bWw+SGVsbG88L2h0bWw+\"\r\n    },\r\n    \"customRules\": {\r\n      \"rules\": [\r\n        {\r\n          \"name\": \"rule1\",\r\n          \"enabledState\": \"Enabled\",\r\n          \"priority\": 1,\r\n          \"ruleType\": \"RateLimitRule\",\r\n          \"rateLimitDurationInMinutes\": null,\r\n          \"rateLimitThreshold\": 1000,\r\n          \"matchConditions\": [\r\n            {\r\n              \"matchVariable\": \"RemoteAddr\",\r\n              \"selector\": null,\r\n              \"operator\": \"IPMatch\",\r\n              \"negateCondition\": false,\r\n              \"matchValue\": [\r\n                \"192.168.1.0/24\",\r\n                \"10.0.0.0/24\"\r\n              ],\r\n              \"transforms\": []\r\n            }\r\n          ],\r\n          \"action\": \"Block\"\r\n        }\r\n      ]\r\n    },\r\n    \"managedRules\": {\r\n      \"managedRuleSets\": [\r\n        {\r\n          \"ruleSetType\": \"DefaultRuleSet\",\r\n          \"ruleSetVersion\": \"1.0\",\r\n          \"ruleGroupOverrides\": [\r\n            {\r\n              \"ruleGroupName\": \"SQLI\",\r\n              \"rules\": [\r\n                {\r\n                  \"ruleId\": \"942100\",\r\n                  \"enabledState\": \"Disabled\",\r\n                  \"action\": \"Redirect\",\r\n                  \"exclusions\": [\r\n                    {\r\n                      \"matchVariable\": \"QueryStringArgNames\",\r\n                      \"selectorMatchOperator\": \"Equals\",\r\n                      \"selector\": \"search\"\r\n                    }\r\n                  ]\r\n                }\r\n              ],\r\n              \"exclusions\": [\r\n                {\r\n                  \"matchVariable\": \"RequestHeaderNames\",\r\n                  \"selectorMatchOperator\": \"Equals\",\r\n                  \"selector\": \"User-Agent\"\r\n                }\r\n              ]\r\n            }\r\n          ],\r\n          \"exclusions\": [\r\n            {\r\n              \"matchVariable\": \"RequestBodyPostArgNames\",\r\n              \"selectorMatchOperator\": \"Contains\",\r\n              \"selector\": \"query\"\r\n            }\r\n          ]\r\n        }\r\n      ]\r\n    },\r\n    \"frontendEndpointLinks\": []\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/47f4bc68-6fe4-43a2-be8b-dfd0e290efa2/resourceGroups/FrontDoorResourceGroup3059/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/policy8734?api-version=2019-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDdmNGJjNjgtNmZlNC00M2EyLWJlOGItZGZkMGUyOTBlZmEyL3Jlc291cmNlR3JvdXBzL0Zyb250RG9vclJlc291cmNlR3JvdXAzMDU5L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9Gcm9udERvb3JXZWJBcHBsaWNhdGlvbkZpcmV3YWxsUG9saWNpZXMvcG9saWN5ODczND9hcGktdmVyc2lvbj0yMDE5LTAzLTAx",
+      "RequestUri": "/subscriptions/47f4bc68-6fe4-43a2-be8b-dfd0e290efa2/resourceGroups/FrontDoorResourceGroup4281/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/policy1168?api-version=2019-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDdmNGJjNjgtNmZlNC00M2EyLWJlOGItZGZkMGUyOTBlZmEyL3Jlc291cmNlR3JvdXBzL0Zyb250RG9vclJlc291cmNlR3JvdXA0MjgxL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9Gcm9udERvb3JXZWJBcHBsaWNhdGlvbkZpcmV3YWxsUG9saWNpZXMvcG9saWN5MTE2OD9hcGktdmVyc2lvbj0yMDE5LTEwLTAx",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"policySettings\": {\r\n      \"enabledState\": \"Enabled\",\r\n      \"mode\": \"Prevention\",\r\n      \"redirectUrl\": \"http://www.bing.com\",\r\n      \"customBlockResponseStatusCode\": 403,\r\n      \"customBlockResponseBody\": \"PGh0bWw+SGVsbG88L2h0bWw+\"\r\n    },\r\n    \"customRules\": {\r\n      \"rules\": [\r\n        {\r\n          \"name\": \"rule1\",\r\n          \"priority\": 1,\r\n          \"enabledState\": \"Enabled\",\r\n          \"ruleType\": \"RateLimitRule\",\r\n          \"rateLimitThreshold\": 1000,\r\n          \"matchConditions\": [\r\n            {\r\n              \"matchVariable\": \"RemoteAddr\",\r\n              \"operator\": \"IPMatch\",\r\n              \"negateCondition\": false,\r\n              \"matchValue\": [\r\n                \"192.168.1.0/24\",\r\n                \"10.0.0.0/24\"\r\n              ],\r\n              \"transforms\": []\r\n            }\r\n          ],\r\n          \"action\": \"Block\"\r\n        },\r\n        {\r\n          \"name\": \"rule2\",\r\n          \"priority\": 2,\r\n          \"ruleType\": \"MatchRule\",\r\n          \"matchConditions\": [\r\n            {\r\n              \"matchVariable\": \"RemoteAddr\",\r\n              \"operator\": \"GeoMatch\",\r\n              \"matchValue\": [\r\n                \"US\"\r\n              ]\r\n            }\r\n          ],\r\n          \"action\": \"Allow\"\r\n        }\r\n      ]\r\n    },\r\n    \"managedRules\": {\r\n      \"managedRuleSets\": [\r\n        {\r\n          \"ruleSetType\": \"DefaultRuleSet\",\r\n          \"ruleSetVersion\": \"1.0\",\r\n          \"ruleGroupOverrides\": [\r\n            {\r\n              \"ruleGroupName\": \"SQLI\",\r\n              \"rules\": [\r\n                {\r\n                  \"ruleId\": \"942100\",\r\n                  \"enabledState\": \"Disabled\",\r\n                  \"action\": \"Redirect\"\r\n                }\r\n              ]\r\n            }\r\n          ]\r\n        }\r\n      ]\r\n    }\r\n  },\r\n  \"location\": \"Global\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"policySettings\": {\r\n      \"enabledState\": \"Enabled\",\r\n      \"mode\": \"Prevention\",\r\n      \"redirectUrl\": \"http://www.bing.com\",\r\n      \"customBlockResponseStatusCode\": 403,\r\n      \"customBlockResponseBody\": \"PGh0bWw+SGVsbG88L2h0bWw+\"\r\n    },\r\n    \"customRules\": {\r\n      \"rules\": [\r\n        {\r\n          \"name\": \"rule1\",\r\n          \"priority\": 1,\r\n          \"enabledState\": \"Enabled\",\r\n          \"ruleType\": \"RateLimitRule\",\r\n          \"rateLimitThreshold\": 1000,\r\n          \"matchConditions\": [\r\n            {\r\n              \"matchVariable\": \"RemoteAddr\",\r\n              \"operator\": \"IPMatch\",\r\n              \"negateCondition\": false,\r\n              \"matchValue\": [\r\n                \"192.168.1.0/24\",\r\n                \"10.0.0.0/24\"\r\n              ],\r\n              \"transforms\": []\r\n            }\r\n          ],\r\n          \"action\": \"Block\"\r\n        },\r\n        {\r\n          \"name\": \"rule2\",\r\n          \"priority\": 2,\r\n          \"ruleType\": \"MatchRule\",\r\n          \"matchConditions\": [\r\n            {\r\n              \"matchVariable\": \"RemoteAddr\",\r\n              \"operator\": \"GeoMatch\",\r\n              \"matchValue\": [\r\n                \"US\"\r\n              ]\r\n            }\r\n          ],\r\n          \"action\": \"Allow\"\r\n        }\r\n      ]\r\n    },\r\n    \"managedRules\": {\r\n      \"managedRuleSets\": [\r\n        {\r\n          \"ruleSetType\": \"DefaultRuleSet\",\r\n          \"ruleSetVersion\": \"1.0\",\r\n          \"exclusions\": [\r\n            {\r\n              \"matchVariable\": \"RequestBodyPostArgNames\",\r\n              \"selectorMatchOperator\": \"Contains\",\r\n              \"selector\": \"query\"\r\n            }\r\n          ],\r\n          \"ruleGroupOverrides\": [\r\n            {\r\n              \"ruleGroupName\": \"SQLI\",\r\n              \"exclusions\": [\r\n                {\r\n                  \"matchVariable\": \"RequestHeaderNames\",\r\n                  \"selectorMatchOperator\": \"Equals\",\r\n                  \"selector\": \"User-Agent\"\r\n                }\r\n              ],\r\n              \"rules\": [\r\n                {\r\n                  \"ruleId\": \"942100\",\r\n                  \"enabledState\": \"Disabled\",\r\n                  \"action\": \"Redirect\",\r\n                  \"exclusions\": [\r\n                    {\r\n                      \"matchVariable\": \"QueryStringArgNames\",\r\n                      \"selectorMatchOperator\": \"Equals\",\r\n                      \"selector\": \"search\"\r\n                    }\r\n                  ]\r\n                }\r\n              ]\r\n            }\r\n          ]\r\n        }\r\n      ]\r\n    }\r\n  },\r\n  \"location\": \"Global\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "caeae5e0-a565-4e08-a4ba-874af284b261"
+          "eabcbf99-90a3-47f6-8d2b-0262774cfc0f"
         ],
         "accept-language": [
           "en-US"
@@ -162,14 +162,14 @@
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18960.",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
           "Microsoft.Azure.Management.FrontDoor.FrontDoorManagementClient/1.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "1858"
+          "2586"
         ]
       },
       "ResponseHeaders": {
@@ -177,7 +177,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 22 Aug 2019 20:19:51 GMT"
+          "Mon, 04 Nov 2019 21:25:42 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -186,10 +186,10 @@
           "Microsoft-IIS/8.5"
         ],
         "x-ms-request-id": [
-          "5226af70-c4a4-4349-864f-99fc315142a1"
+          "893dbfd4-021f-43c7-8cc6-3435a036573b"
         ],
         "x-ms-client-request-id": [
-          "caeae5e0-a565-4e08-a4ba-874af284b261"
+          "eabcbf99-90a3-47f6-8d2b-0262774cfc0f"
         ],
         "OData-Version": [
           "4.0"
@@ -207,16 +207,16 @@
           "1198"
         ],
         "x-ms-correlation-request-id": [
-          "725f1a06-da4f-44f0-818a-e9c240219bed"
+          "c200ccec-8563-4520-a3e0-586c995ac26b"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190822T201951Z:725f1a06-da4f-44f0-818a-e9c240219bed"
+          "WESTCENTRALUS:20191104T212542Z:c200ccec-8563-4520-a3e0-586c995ac26b"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Content-Length": [
-          "2053"
+          "2601"
         ],
         "Content-Type": [
           "application/json; odata.metadata=minimal"
@@ -225,17 +225,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"policy8734\",\r\n  \"id\": \"/subscriptions/47f4bc68-6fe4-43a2-be8b-dfd0e290efa2/resourcegroups/FrontDoorResourceGroup3059/providers/Microsoft.Network/frontdoorwebapplicationfirewallpolicies/policy8734\",\r\n  \"type\": \"Microsoft.Network/frontdoorwebapplicationfirewallpolicies\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"location\": \"Global\",\r\n  \"properties\": {\r\n    \"resourceState\": \"Enabled\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"policySettings\": {\r\n      \"enabledState\": \"Enabled\",\r\n      \"mode\": \"Prevention\",\r\n      \"redirectUrl\": \"http://www.bing.com\",\r\n      \"customBlockResponseStatusCode\": 403,\r\n      \"customBlockResponseBody\": \"PGh0bWw+SGVsbG88L2h0bWw+\"\r\n    },\r\n    \"customRules\": {\r\n      \"rules\": [\r\n        {\r\n          \"name\": \"rule1\",\r\n          \"enabledState\": \"Enabled\",\r\n          \"priority\": 1,\r\n          \"ruleType\": \"RateLimitRule\",\r\n          \"rateLimitDurationInMinutes\": null,\r\n          \"rateLimitThreshold\": 1000,\r\n          \"matchConditions\": [\r\n            {\r\n              \"matchVariable\": \"RemoteAddr\",\r\n              \"selector\": null,\r\n              \"operator\": \"IPMatch\",\r\n              \"negateCondition\": false,\r\n              \"matchValue\": [\r\n                \"192.168.1.0/24\",\r\n                \"10.0.0.0/24\"\r\n              ],\r\n              \"transforms\": []\r\n            }\r\n          ],\r\n          \"action\": \"Block\"\r\n        },\r\n        {\r\n          \"name\": \"rule2\",\r\n          \"enabledState\": null,\r\n          \"priority\": 2,\r\n          \"ruleType\": \"MatchRule\",\r\n          \"rateLimitDurationInMinutes\": null,\r\n          \"rateLimitThreshold\": null,\r\n          \"matchConditions\": [\r\n            {\r\n              \"matchVariable\": \"RemoteAddr\",\r\n              \"selector\": null,\r\n              \"operator\": \"GeoMatch\",\r\n              \"negateCondition\": false,\r\n              \"matchValue\": [\r\n                \"US\"\r\n              ],\r\n              \"transforms\": []\r\n            }\r\n          ],\r\n          \"action\": \"Allow\"\r\n        }\r\n      ]\r\n    },\r\n    \"managedRules\": {\r\n      \"managedRuleSets\": [\r\n        {\r\n          \"ruleSetType\": \"DefaultRuleSet\",\r\n          \"ruleSetVersion\": \"1.0\",\r\n          \"ruleGroupOverrides\": [\r\n            {\r\n              \"ruleGroupName\": \"SQLI\",\r\n              \"rules\": [\r\n                {\r\n                  \"ruleId\": \"942100\",\r\n                  \"enabledState\": \"Disabled\",\r\n                  \"action\": \"Redirect\"\r\n                }\r\n              ]\r\n            }\r\n          ]\r\n        }\r\n      ]\r\n    },\r\n    \"frontendEndpointLinks\": []\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"policy1168\",\r\n  \"id\": \"/subscriptions/47f4bc68-6fe4-43a2-be8b-dfd0e290efa2/resourcegroups/FrontDoorResourceGroup4281/providers/Microsoft.Network/frontdoorwebapplicationfirewallpolicies/policy1168\",\r\n  \"type\": \"Microsoft.Network/frontdoorwebapplicationfirewallpolicies\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"location\": \"Global\",\r\n  \"properties\": {\r\n    \"resourceState\": \"Enabled\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"policySettings\": {\r\n      \"enabledState\": \"Enabled\",\r\n      \"mode\": \"Prevention\",\r\n      \"redirectUrl\": \"http://www.bing.com\",\r\n      \"customBlockResponseStatusCode\": 403,\r\n      \"customBlockResponseBody\": \"PGh0bWw+SGVsbG88L2h0bWw+\"\r\n    },\r\n    \"customRules\": {\r\n      \"rules\": [\r\n        {\r\n          \"name\": \"rule1\",\r\n          \"enabledState\": \"Enabled\",\r\n          \"priority\": 1,\r\n          \"ruleType\": \"RateLimitRule\",\r\n          \"rateLimitDurationInMinutes\": null,\r\n          \"rateLimitThreshold\": 1000,\r\n          \"matchConditions\": [\r\n            {\r\n              \"matchVariable\": \"RemoteAddr\",\r\n              \"selector\": null,\r\n              \"operator\": \"IPMatch\",\r\n              \"negateCondition\": false,\r\n              \"matchValue\": [\r\n                \"192.168.1.0/24\",\r\n                \"10.0.0.0/24\"\r\n              ],\r\n              \"transforms\": []\r\n            }\r\n          ],\r\n          \"action\": \"Block\"\r\n        },\r\n        {\r\n          \"name\": \"rule2\",\r\n          \"enabledState\": null,\r\n          \"priority\": 2,\r\n          \"ruleType\": \"MatchRule\",\r\n          \"rateLimitDurationInMinutes\": null,\r\n          \"rateLimitThreshold\": null,\r\n          \"matchConditions\": [\r\n            {\r\n              \"matchVariable\": \"RemoteAddr\",\r\n              \"selector\": null,\r\n              \"operator\": \"GeoMatch\",\r\n              \"negateCondition\": false,\r\n              \"matchValue\": [\r\n                \"US\"\r\n              ],\r\n              \"transforms\": []\r\n            }\r\n          ],\r\n          \"action\": \"Allow\"\r\n        }\r\n      ]\r\n    },\r\n    \"managedRules\": {\r\n      \"managedRuleSets\": [\r\n        {\r\n          \"ruleSetType\": \"DefaultRuleSet\",\r\n          \"ruleSetVersion\": \"1.0\",\r\n          \"ruleGroupOverrides\": [\r\n            {\r\n              \"ruleGroupName\": \"SQLI\",\r\n              \"rules\": [\r\n                {\r\n                  \"ruleId\": \"942100\",\r\n                  \"enabledState\": \"Disabled\",\r\n                  \"action\": \"Redirect\",\r\n                  \"exclusions\": [\r\n                    {\r\n                      \"matchVariable\": \"QueryStringArgNames\",\r\n                      \"selectorMatchOperator\": \"Equals\",\r\n                      \"selector\": \"search\"\r\n                    }\r\n                  ]\r\n                }\r\n              ],\r\n              \"exclusions\": [\r\n                {\r\n                  \"matchVariable\": \"RequestHeaderNames\",\r\n                  \"selectorMatchOperator\": \"Equals\",\r\n                  \"selector\": \"User-Agent\"\r\n                }\r\n              ]\r\n            }\r\n          ],\r\n          \"exclusions\": [\r\n            {\r\n              \"matchVariable\": \"RequestBodyPostArgNames\",\r\n              \"selectorMatchOperator\": \"Contains\",\r\n              \"selector\": \"query\"\r\n            }\r\n          ]\r\n        }\r\n      ]\r\n    },\r\n    \"frontendEndpointLinks\": []\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/47f4bc68-6fe4-43a2-be8b-dfd0e290efa2/resourceGroups/FrontDoorResourceGroup3059/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/policy8734?api-version=2019-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDdmNGJjNjgtNmZlNC00M2EyLWJlOGItZGZkMGUyOTBlZmEyL3Jlc291cmNlR3JvdXBzL0Zyb250RG9vclJlc291cmNlR3JvdXAzMDU5L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9Gcm9udERvb3JXZWJBcHBsaWNhdGlvbkZpcmV3YWxsUG9saWNpZXMvcG9saWN5ODczND9hcGktdmVyc2lvbj0yMDE5LTAzLTAx",
+      "RequestUri": "/subscriptions/47f4bc68-6fe4-43a2-be8b-dfd0e290efa2/resourceGroups/FrontDoorResourceGroup4281/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/policy1168?api-version=2019-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDdmNGJjNjgtNmZlNC00M2EyLWJlOGItZGZkMGUyOTBlZmEyL3Jlc291cmNlR3JvdXBzL0Zyb250RG9vclJlc291cmNlR3JvdXA0MjgxL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9Gcm9udERvb3JXZWJBcHBsaWNhdGlvbkZpcmV3YWxsUG9saWNpZXMvcG9saWN5MTE2OD9hcGktdmVyc2lvbj0yMDE5LTEwLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "eb34a8d2-99b8-4d28-9293-6754fee0846c"
+          "6d764473-1201-4dea-9a59-74782d8a9050"
         ],
         "accept-language": [
           "en-US"
@@ -243,7 +243,7 @@
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18960.",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
           "Microsoft.Azure.Management.FrontDoor.FrontDoorManagementClient/1.0.0.0"
         ]
       },
@@ -252,7 +252,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 22 Aug 2019 20:19:50 GMT"
+          "Mon, 04 Nov 2019 21:25:41 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -261,10 +261,10 @@
           "Microsoft-IIS/8.5"
         ],
         "x-ms-request-id": [
-          "44b0e0c1-c61d-46ba-b7c7-d6f0b3386272"
+          "d299e96a-51af-4a83-b025-8b7f578266f5"
         ],
         "x-ms-client-request-id": [
-          "eb34a8d2-99b8-4d28-9293-6754fee0846c"
+          "6d764473-1201-4dea-9a59-74782d8a9050"
         ],
         "OData-Version": [
           "4.0"
@@ -282,16 +282,16 @@
           "11999"
         ],
         "x-ms-correlation-request-id": [
-          "e43f7f2c-5140-49b5-b240-f09d170690bb"
+          "33d830b2-1944-473d-9eda-507d4b412dce"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190822T201950Z:e43f7f2c-5140-49b5-b240-f09d170690bb"
+          "WESTCENTRALUS:20191104T212541Z:33d830b2-1944-473d-9eda-507d4b412dce"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Content-Length": [
-          "1608"
+          "2156"
         ],
         "Content-Type": [
           "application/json; odata.metadata=minimal; odata.streaming=true"
@@ -300,17 +300,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"policy8734\",\r\n  \"id\": \"/subscriptions/47f4bc68-6fe4-43a2-be8b-dfd0e290efa2/resourcegroups/FrontDoorResourceGroup3059/providers/Microsoft.Network/frontdoorwebapplicationfirewallpolicies/policy8734\",\r\n  \"type\": \"Microsoft.Network/frontdoorwebapplicationfirewallpolicies\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"location\": \"Global\",\r\n  \"properties\": {\r\n    \"resourceState\": \"Enabled\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"policySettings\": {\r\n      \"enabledState\": \"Enabled\",\r\n      \"mode\": \"Prevention\",\r\n      \"redirectUrl\": \"http://www.bing.com\",\r\n      \"customBlockResponseStatusCode\": 403,\r\n      \"customBlockResponseBody\": \"PGh0bWw+SGVsbG88L2h0bWw+\"\r\n    },\r\n    \"customRules\": {\r\n      \"rules\": [\r\n        {\r\n          \"name\": \"rule1\",\r\n          \"enabledState\": \"Enabled\",\r\n          \"priority\": 1,\r\n          \"ruleType\": \"RateLimitRule\",\r\n          \"rateLimitDurationInMinutes\": null,\r\n          \"rateLimitThreshold\": 1000,\r\n          \"matchConditions\": [\r\n            {\r\n              \"matchVariable\": \"RemoteAddr\",\r\n              \"selector\": null,\r\n              \"operator\": \"IPMatch\",\r\n              \"negateCondition\": false,\r\n              \"matchValue\": [\r\n                \"192.168.1.0/24\",\r\n                \"10.0.0.0/24\"\r\n              ],\r\n              \"transforms\": []\r\n            }\r\n          ],\r\n          \"action\": \"Block\"\r\n        }\r\n      ]\r\n    },\r\n    \"managedRules\": {\r\n      \"managedRuleSets\": [\r\n        {\r\n          \"ruleSetType\": \"DefaultRuleSet\",\r\n          \"ruleSetVersion\": \"1.0\",\r\n          \"ruleGroupOverrides\": [\r\n            {\r\n              \"ruleGroupName\": \"SQLI\",\r\n              \"rules\": [\r\n                {\r\n                  \"ruleId\": \"942100\",\r\n                  \"enabledState\": \"Disabled\",\r\n                  \"action\": \"Redirect\"\r\n                }\r\n              ]\r\n            }\r\n          ]\r\n        }\r\n      ]\r\n    },\r\n    \"frontendEndpointLinks\": []\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"policy1168\",\r\n  \"id\": \"/subscriptions/47f4bc68-6fe4-43a2-be8b-dfd0e290efa2/resourcegroups/FrontDoorResourceGroup4281/providers/Microsoft.Network/frontdoorwebapplicationfirewallpolicies/policy1168\",\r\n  \"type\": \"Microsoft.Network/frontdoorwebapplicationfirewallpolicies\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"location\": \"Global\",\r\n  \"properties\": {\r\n    \"resourceState\": \"Enabled\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"policySettings\": {\r\n      \"enabledState\": \"Enabled\",\r\n      \"mode\": \"Prevention\",\r\n      \"redirectUrl\": \"http://www.bing.com\",\r\n      \"customBlockResponseStatusCode\": 403,\r\n      \"customBlockResponseBody\": \"PGh0bWw+SGVsbG88L2h0bWw+\"\r\n    },\r\n    \"customRules\": {\r\n      \"rules\": [\r\n        {\r\n          \"name\": \"rule1\",\r\n          \"enabledState\": \"Enabled\",\r\n          \"priority\": 1,\r\n          \"ruleType\": \"RateLimitRule\",\r\n          \"rateLimitDurationInMinutes\": null,\r\n          \"rateLimitThreshold\": 1000,\r\n          \"matchConditions\": [\r\n            {\r\n              \"matchVariable\": \"RemoteAddr\",\r\n              \"selector\": null,\r\n              \"operator\": \"IPMatch\",\r\n              \"negateCondition\": false,\r\n              \"matchValue\": [\r\n                \"192.168.1.0/24\",\r\n                \"10.0.0.0/24\"\r\n              ],\r\n              \"transforms\": []\r\n            }\r\n          ],\r\n          \"action\": \"Block\"\r\n        }\r\n      ]\r\n    },\r\n    \"managedRules\": {\r\n      \"managedRuleSets\": [\r\n        {\r\n          \"ruleSetType\": \"DefaultRuleSet\",\r\n          \"ruleSetVersion\": \"1.0\",\r\n          \"ruleGroupOverrides\": [\r\n            {\r\n              \"ruleGroupName\": \"SQLI\",\r\n              \"rules\": [\r\n                {\r\n                  \"ruleId\": \"942100\",\r\n                  \"enabledState\": \"Disabled\",\r\n                  \"action\": \"Redirect\",\r\n                  \"exclusions\": [\r\n                    {\r\n                      \"matchVariable\": \"QueryStringArgNames\",\r\n                      \"selectorMatchOperator\": \"Equals\",\r\n                      \"selector\": \"search\"\r\n                    }\r\n                  ]\r\n                }\r\n              ],\r\n              \"exclusions\": [\r\n                {\r\n                  \"matchVariable\": \"RequestHeaderNames\",\r\n                  \"selectorMatchOperator\": \"Equals\",\r\n                  \"selector\": \"User-Agent\"\r\n                }\r\n              ]\r\n            }\r\n          ],\r\n          \"exclusions\": [\r\n            {\r\n              \"matchVariable\": \"RequestBodyPostArgNames\",\r\n              \"selectorMatchOperator\": \"Contains\",\r\n              \"selector\": \"query\"\r\n            }\r\n          ]\r\n        }\r\n      ]\r\n    },\r\n    \"frontendEndpointLinks\": []\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/47f4bc68-6fe4-43a2-be8b-dfd0e290efa2/resourceGroups/FrontDoorResourceGroup3059/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/policy8734?api-version=2019-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDdmNGJjNjgtNmZlNC00M2EyLWJlOGItZGZkMGUyOTBlZmEyL3Jlc291cmNlR3JvdXBzL0Zyb250RG9vclJlc291cmNlR3JvdXAzMDU5L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9Gcm9udERvb3JXZWJBcHBsaWNhdGlvbkZpcmV3YWxsUG9saWNpZXMvcG9saWN5ODczND9hcGktdmVyc2lvbj0yMDE5LTAzLTAx",
+      "RequestUri": "/subscriptions/47f4bc68-6fe4-43a2-be8b-dfd0e290efa2/resourceGroups/FrontDoorResourceGroup4281/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/policy1168?api-version=2019-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDdmNGJjNjgtNmZlNC00M2EyLWJlOGItZGZkMGUyOTBlZmEyL3Jlc291cmNlR3JvdXBzL0Zyb250RG9vclJlc291cmNlR3JvdXA0MjgxL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9Gcm9udERvb3JXZWJBcHBsaWNhdGlvbkZpcmV3YWxsUG9saWNpZXMvcG9saWN5MTE2OD9hcGktdmVyc2lvbj0yMDE5LTEwLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9e970234-9e51-43c8-881f-843419acaef7"
+          "ee3a1a06-cad9-4e93-84b1-5cd423f003a5"
         ],
         "accept-language": [
           "en-US"
@@ -318,7 +318,7 @@
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18960.",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
           "Microsoft.Azure.Management.FrontDoor.FrontDoorManagementClient/1.0.0.0"
         ]
       },
@@ -327,7 +327,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 22 Aug 2019 20:19:52 GMT"
+          "Mon, 04 Nov 2019 21:25:43 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -336,13 +336,13 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "ef89f63b-945c-4dfc-8b2f-a20cb2433249"
+          "f2d30ba6-2da1-4e2e-9c66-90090f300d14"
         ],
         "x-ms-correlation-request-id": [
-          "ef89f63b-945c-4dfc-8b2f-a20cb2433249"
+          "f2d30ba6-2da1-4e2e-9c66-90090f300d14"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190822T201952Z:ef89f63b-945c-4dfc-8b2f-a20cb2433249"
+          "WESTCENTRALUS:20191104T212544Z:f2d30ba6-2da1-4e2e-9c66-90090f300d14"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -360,17 +360,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.Network/frontdoorWebApplicationFirewallPolicies/policy8734' under resource group 'FrontDoorResourceGroup3059' was not found.\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.Network/frontdoorWebApplicationFirewallPolicies/policy1168' under resource group 'FrontDoorResourceGroup4281' was not found.\"\r\n  }\r\n}",
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/47f4bc68-6fe4-43a2-be8b-dfd0e290efa2/resourceGroups/FrontDoorResourceGroup3059/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/policy8734?api-version=2019-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDdmNGJjNjgtNmZlNC00M2EyLWJlOGItZGZkMGUyOTBlZmEyL3Jlc291cmNlR3JvdXBzL0Zyb250RG9vclJlc291cmNlR3JvdXAzMDU5L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9Gcm9udERvb3JXZWJBcHBsaWNhdGlvbkZpcmV3YWxsUG9saWNpZXMvcG9saWN5ODczND9hcGktdmVyc2lvbj0yMDE5LTAzLTAx",
+      "RequestUri": "/subscriptions/47f4bc68-6fe4-43a2-be8b-dfd0e290efa2/resourceGroups/FrontDoorResourceGroup4281/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/policy1168?api-version=2019-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDdmNGJjNjgtNmZlNC00M2EyLWJlOGItZGZkMGUyOTBlZmEyL3Jlc291cmNlR3JvdXBzL0Zyb250RG9vclJlc291cmNlR3JvdXA0MjgxL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9Gcm9udERvb3JXZWJBcHBsaWNhdGlvbkZpcmV3YWxsUG9saWNpZXMvcG9saWN5MTE2OD9hcGktdmVyc2lvbj0yMDE5LTEwLTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "68cf37fe-25f8-4f27-a846-8f6802088caa"
+          "065bc90f-bf76-43d5-86d0-6372e799c313"
         ],
         "accept-language": [
           "en-US"
@@ -378,7 +378,7 @@
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18960.",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
           "Microsoft.Azure.Management.FrontDoor.FrontDoorManagementClient/1.0.0.0"
         ]
       },
@@ -387,7 +387,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 22 Aug 2019 20:19:52 GMT"
+          "Mon, 04 Nov 2019 21:25:43 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -396,10 +396,10 @@
           "Microsoft-IIS/8.5"
         ],
         "x-ms-request-id": [
-          "2cedcab9-5372-470d-8dd9-252016213c00"
+          "53e29c57-8fd2-408e-91c5-c28f9b17bada"
         ],
         "x-ms-client-request-id": [
-          "68cf37fe-25f8-4f27-a846-8f6802088caa"
+          "065bc90f-bf76-43d5-86d0-6372e799c313"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -414,10 +414,10 @@
           "14999"
         ],
         "x-ms-correlation-request-id": [
-          "af4bf325-3330-4c2b-8a6e-a9471b1f373d"
+          "ebd9546c-cc66-409f-8aa3-7f7d8c357597"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190822T201952Z:af4bf325-3330-4c2b-8a6e-a9471b1f373d"
+          "WESTCENTRALUS:20191104T212544Z:ebd9546c-cc66-409f-8aa3-7f7d8c357597"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -430,13 +430,13 @@
       "StatusCode": 204
     },
     {
-      "RequestUri": "/subscriptions/47f4bc68-6fe4-43a2-be8b-dfd0e290efa2/resourcegroups/FrontDoorResourceGroup3059?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDdmNGJjNjgtNmZlNC00M2EyLWJlOGItZGZkMGUyOTBlZmEyL3Jlc291cmNlZ3JvdXBzL0Zyb250RG9vclJlc291cmNlR3JvdXAzMDU5P2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestUri": "/subscriptions/47f4bc68-6fe4-43a2-be8b-dfd0e290efa2/resourcegroups/FrontDoorResourceGroup4281?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDdmNGJjNjgtNmZlNC00M2EyLWJlOGItZGZkMGUyOTBlZmEyL3Jlc291cmNlZ3JvdXBzL0Zyb250RG9vclJlc291cmNlR3JvdXA0MjgxP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1c148f6e-fcc2-4c09-aa1b-7e8299085cfa"
+          "e52db125-4e5b-4706-b8fd-d0f23f72180b"
         ],
         "accept-language": [
           "en-US"
@@ -444,7 +444,7 @@
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18960.",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
@@ -453,13 +453,13 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 22 Aug 2019 20:19:53 GMT"
+          "Mon, 04 Nov 2019 21:25:44 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/47f4bc68-6fe4-43a2-be8b-dfd0e290efa2/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1GUk9OVERPT1JSRVNPVVJDRUdST1VQMzA1OS1XRVNUVVMiLCJqb2JMb2NhdGlvbiI6Indlc3R1cyJ9?api-version=2015-11-01"
+          "https://management.azure.com/subscriptions/47f4bc68-6fe4-43a2-be8b-dfd0e290efa2/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1GUk9OVERPT1JSRVNPVVJDRUdST1VQNDI4MS1XRVNUVVMiLCJqb2JMb2NhdGlvbiI6Indlc3R1cyJ9?api-version=2015-11-01"
         ],
         "Retry-After": [
           "15"
@@ -468,13 +468,13 @@
           "14999"
         ],
         "x-ms-request-id": [
-          "44c53bac-f803-4875-8b48-04fea18029a9"
+          "d62fd846-fe5d-428d-8149-ba3b39b346dd"
         ],
         "x-ms-correlation-request-id": [
-          "44c53bac-f803-4875-8b48-04fea18029a9"
+          "d62fd846-fe5d-428d-8149-ba3b39b346dd"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190822T201953Z:44c53bac-f803-4875-8b48-04fea18029a9"
+          "WESTCENTRALUS:20191104T212545Z:d62fd846-fe5d-428d-8149-ba3b39b346dd"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -493,15 +493,15 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/47f4bc68-6fe4-43a2-be8b-dfd0e290efa2/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1GUk9OVERPT1JSRVNPVVJDRUdST1VQMzA1OS1XRVNUVVMiLCJqb2JMb2NhdGlvbiI6Indlc3R1cyJ9?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDdmNGJjNjgtNmZlNC00M2EyLWJlOGItZGZkMGUyOTBlZmEyL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFHVWs5T1ZFUlBUMUpTUlZOUFZWSkRSVWRTVDFWUU16QTFPUzFYUlZOVVZWTWlMQ0pxYjJKTWIyTmhkR2x2YmlJNkluZGxjM1IxY3lKOT9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
+      "RequestUri": "/subscriptions/47f4bc68-6fe4-43a2-be8b-dfd0e290efa2/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1GUk9OVERPT1JSRVNPVVJDRUdST1VQNDI4MS1XRVNUVVMiLCJqb2JMb2NhdGlvbiI6Indlc3R1cyJ9?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDdmNGJjNjgtNmZlNC00M2EyLWJlOGItZGZkMGUyOTBlZmEyL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFHVWs5T1ZFUlBUMUpTUlZOUFZWSkRSVWRTVDFWUU5ESTRNUzFYUlZOVVZWTWlMQ0pxYjJKTWIyTmhkR2x2YmlJNkluZGxjM1IxY3lKOT9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18960.",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
@@ -510,13 +510,13 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 22 Aug 2019 20:20:08 GMT"
+          "Mon, 04 Nov 2019 21:25:59 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/47f4bc68-6fe4-43a2-be8b-dfd0e290efa2/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1GUk9OVERPT1JSRVNPVVJDRUdST1VQMzA1OS1XRVNUVVMiLCJqb2JMb2NhdGlvbiI6Indlc3R1cyJ9?api-version=2015-11-01"
+          "https://management.azure.com/subscriptions/47f4bc68-6fe4-43a2-be8b-dfd0e290efa2/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1GUk9OVERPT1JSRVNPVVJDRUdST1VQNDI4MS1XRVNUVVMiLCJqb2JMb2NhdGlvbiI6Indlc3R1cyJ9?api-version=2015-11-01"
         ],
         "Retry-After": [
           "15"
@@ -525,13 +525,13 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "3c20b08c-8935-4802-a59b-f78df323ebca"
+          "987bc466-8717-4140-b9ce-fc07888967fb"
         ],
         "x-ms-correlation-request-id": [
-          "3c20b08c-8935-4802-a59b-f78df323ebca"
+          "987bc466-8717-4140-b9ce-fc07888967fb"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190822T202008Z:3c20b08c-8935-4802-a59b-f78df323ebca"
+          "WESTCENTRALUS:20191104T212600Z:987bc466-8717-4140-b9ce-fc07888967fb"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -550,15 +550,15 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/47f4bc68-6fe4-43a2-be8b-dfd0e290efa2/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1GUk9OVERPT1JSRVNPVVJDRUdST1VQMzA1OS1XRVNUVVMiLCJqb2JMb2NhdGlvbiI6Indlc3R1cyJ9?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDdmNGJjNjgtNmZlNC00M2EyLWJlOGItZGZkMGUyOTBlZmEyL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFHVWs5T1ZFUlBUMUpTUlZOUFZWSkRSVWRTVDFWUU16QTFPUzFYUlZOVVZWTWlMQ0pxYjJKTWIyTmhkR2x2YmlJNkluZGxjM1IxY3lKOT9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
+      "RequestUri": "/subscriptions/47f4bc68-6fe4-43a2-be8b-dfd0e290efa2/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1GUk9OVERPT1JSRVNPVVJDRUdST1VQNDI4MS1XRVNUVVMiLCJqb2JMb2NhdGlvbiI6Indlc3R1cyJ9?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDdmNGJjNjgtNmZlNC00M2EyLWJlOGItZGZkMGUyOTBlZmEyL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFHVWs5T1ZFUlBUMUpTUlZOUFZWSkRSVWRTVDFWUU5ESTRNUzFYUlZOVVZWTWlMQ0pxYjJKTWIyTmhkR2x2YmlJNkluZGxjM1IxY3lKOT9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18960.",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
@@ -567,13 +567,13 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 22 Aug 2019 20:20:22 GMT"
+          "Mon, 04 Nov 2019 21:26:14 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/47f4bc68-6fe4-43a2-be8b-dfd0e290efa2/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1GUk9OVERPT1JSRVNPVVJDRUdST1VQMzA1OS1XRVNUVVMiLCJqb2JMb2NhdGlvbiI6Indlc3R1cyJ9?api-version=2015-11-01"
+          "https://management.azure.com/subscriptions/47f4bc68-6fe4-43a2-be8b-dfd0e290efa2/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1GUk9OVERPT1JSRVNPVVJDRUdST1VQNDI4MS1XRVNUVVMiLCJqb2JMb2NhdGlvbiI6Indlc3R1cyJ9?api-version=2015-11-01"
         ],
         "Retry-After": [
           "15"
@@ -582,13 +582,13 @@
           "11998"
         ],
         "x-ms-request-id": [
-          "7e846173-792c-4b44-9173-df638ad421ee"
+          "7b0085f0-b5c8-4d7e-9fa9-2661ebc414d8"
         ],
         "x-ms-correlation-request-id": [
-          "7e846173-792c-4b44-9173-df638ad421ee"
+          "7b0085f0-b5c8-4d7e-9fa9-2661ebc414d8"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190822T202023Z:7e846173-792c-4b44-9173-df638ad421ee"
+          "WESTCENTRALUS:20191104T212615Z:7b0085f0-b5c8-4d7e-9fa9-2661ebc414d8"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -607,15 +607,15 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/47f4bc68-6fe4-43a2-be8b-dfd0e290efa2/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1GUk9OVERPT1JSRVNPVVJDRUdST1VQMzA1OS1XRVNUVVMiLCJqb2JMb2NhdGlvbiI6Indlc3R1cyJ9?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDdmNGJjNjgtNmZlNC00M2EyLWJlOGItZGZkMGUyOTBlZmEyL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFHVWs5T1ZFUlBUMUpTUlZOUFZWSkRSVWRTVDFWUU16QTFPUzFYUlZOVVZWTWlMQ0pxYjJKTWIyTmhkR2x2YmlJNkluZGxjM1IxY3lKOT9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
+      "RequestUri": "/subscriptions/47f4bc68-6fe4-43a2-be8b-dfd0e290efa2/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1GUk9OVERPT1JSRVNPVVJDRUdST1VQNDI4MS1XRVNUVVMiLCJqb2JMb2NhdGlvbiI6Indlc3R1cyJ9?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDdmNGJjNjgtNmZlNC00M2EyLWJlOGItZGZkMGUyOTBlZmEyL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFHVWs5T1ZFUlBUMUpTUlZOUFZWSkRSVWRTVDFWUU5ESTRNUzFYUlZOVVZWTWlMQ0pxYjJKTWIyTmhkR2x2YmlJNkluZGxjM1IxY3lKOT9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18960.",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
@@ -624,22 +624,136 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 22 Aug 2019 20:20:38 GMT"
+          "Mon, 04 Nov 2019 21:26:30 GMT"
         ],
         "Pragma": [
           "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/47f4bc68-6fe4-43a2-be8b-dfd0e290efa2/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1GUk9OVERPT1JSRVNPVVJDRUdST1VQNDI4MS1XRVNUVVMiLCJqb2JMb2NhdGlvbiI6Indlc3R1cyJ9?api-version=2015-11-01"
+        ],
+        "Retry-After": [
+          "15"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11997"
         ],
         "x-ms-request-id": [
-          "77ad2400-1813-44d9-a129-f20495c25f40"
+          "e112988a-8d73-4578-920a-f29c13155d6e"
         ],
         "x-ms-correlation-request-id": [
-          "77ad2400-1813-44d9-a129-f20495c25f40"
+          "e112988a-8d73-4578-920a-f29c13155d6e"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190822T202038Z:77ad2400-1813-44d9-a129-f20495c25f40"
+          "WESTCENTRALUS:20191104T212630Z:e112988a-8d73-4578-920a-f29c13155d6e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/47f4bc68-6fe4-43a2-be8b-dfd0e290efa2/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1GUk9OVERPT1JSRVNPVVJDRUdST1VQNDI4MS1XRVNUVVMiLCJqb2JMb2NhdGlvbiI6Indlc3R1cyJ9?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDdmNGJjNjgtNmZlNC00M2EyLWJlOGItZGZkMGUyOTBlZmEyL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFHVWs5T1ZFUlBUMUpTUlZOUFZWSkRSVWRTVDFWUU5ESTRNUzFYUlZOVVZWTWlMQ0pxYjJKTWIyTmhkR2x2YmlJNkluZGxjM1IxY3lKOT9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 04 Nov 2019 21:26:45 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/47f4bc68-6fe4-43a2-be8b-dfd0e290efa2/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1GUk9OVERPT1JSRVNPVVJDRUdST1VQNDI4MS1XRVNUVVMiLCJqb2JMb2NhdGlvbiI6Indlc3R1cyJ9?api-version=2015-11-01"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11996"
+        ],
+        "x-ms-request-id": [
+          "f1873b93-4a32-4f42-b20d-8ee56ae27d3b"
+        ],
+        "x-ms-correlation-request-id": [
+          "f1873b93-4a32-4f42-b20d-8ee56ae27d3b"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20191104T212645Z:f1873b93-4a32-4f42-b20d-8ee56ae27d3b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/47f4bc68-6fe4-43a2-be8b-dfd0e290efa2/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1GUk9OVERPT1JSRVNPVVJDRUdST1VQNDI4MS1XRVNUVVMiLCJqb2JMb2NhdGlvbiI6Indlc3R1cyJ9?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDdmNGJjNjgtNmZlNC00M2EyLWJlOGItZGZkMGUyOTBlZmEyL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFHVWs5T1ZFUlBUMUpTUlZOUFZWSkRSVWRTVDFWUU5ESTRNUzFYUlZOVVZWTWlMQ0pxYjJKTWIyTmhkR2x2YmlJNkluZGxjM1IxY3lKOT9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 04 Nov 2019 21:27:00 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11995"
+        ],
+        "x-ms-request-id": [
+          "c1905b7a-0e3f-4671-9524-0c0c63bc92a2"
+        ],
+        "x-ms-correlation-request-id": [
+          "c1905b7a-0e3f-4671-9524-0c0c63bc92a2"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20191104T212700Z:c1905b7a-0e3f-4671-9524-0c0c63bc92a2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -658,15 +772,15 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/47f4bc68-6fe4-43a2-be8b-dfd0e290efa2/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1GUk9OVERPT1JSRVNPVVJDRUdST1VQMzA1OS1XRVNUVVMiLCJqb2JMb2NhdGlvbiI6Indlc3R1cyJ9?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDdmNGJjNjgtNmZlNC00M2EyLWJlOGItZGZkMGUyOTBlZmEyL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFHVWs5T1ZFUlBUMUpTUlZOUFZWSkRSVWRTVDFWUU16QTFPUzFYUlZOVVZWTWlMQ0pxYjJKTWIyTmhkR2x2YmlJNkluZGxjM1IxY3lKOT9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
+      "RequestUri": "/subscriptions/47f4bc68-6fe4-43a2-be8b-dfd0e290efa2/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1GUk9OVERPT1JSRVNPVVJDRUdST1VQNDI4MS1XRVNUVVMiLCJqb2JMb2NhdGlvbiI6Indlc3R1cyJ9?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDdmNGJjNjgtNmZlNC00M2EyLWJlOGItZGZkMGUyOTBlZmEyL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFHVWs5T1ZFUlBUMUpTUlZOUFZWSkRSVWRTVDFWUU5ESTRNUzFYUlZOVVZWTWlMQ0pxYjJKTWIyTmhkR2x2YmlJNkluZGxjM1IxY3lKOT9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18960.",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
@@ -675,22 +789,22 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 22 Aug 2019 20:20:38 GMT"
+          "Mon, 04 Nov 2019 21:27:00 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11996"
+          "11994"
         ],
         "x-ms-request-id": [
-          "4fc08562-4a1e-44eb-804a-42031c6d6cf4"
+          "f9f63da9-bbc9-41aa-b65c-a2b46cfa7039"
         ],
         "x-ms-correlation-request-id": [
-          "4fc08562-4a1e-44eb-804a-42031c6d6cf4"
+          "f9f63da9-bbc9-41aa-b65c-a2b46cfa7039"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190822T202038Z:4fc08562-4a1e-44eb-804a-42031c6d6cf4"
+          "WESTCENTRALUS:20191104T212700Z:f9f63da9-bbc9-41aa-b65c-a2b46cfa7039"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -711,10 +825,10 @@
   ],
   "Names": {
     "CreateResourceGroup": [
-      "FrontDoorResourceGroup3059"
+      "FrontDoorResourceGroup4281"
     ],
     "WAFCRUDTest": [
-      "policy8734"
+      "policy1168"
     ]
   },
   "Variables": {

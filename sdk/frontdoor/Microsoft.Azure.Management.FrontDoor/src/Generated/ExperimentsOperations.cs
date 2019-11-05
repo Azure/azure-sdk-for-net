@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.FrontDoor
     using System.Threading.Tasks;
 
     /// <summary>
-    /// HealthProbeSettingsOperations operations.
+    /// ExperimentsOperations operations.
     /// </summary>
-    internal partial class HealthProbeSettingsOperations : IServiceOperations<FrontDoorManagementClient>, IHealthProbeSettingsOperations
+    internal partial class ExperimentsOperations : IServiceOperations<FrontDoorManagementClient>, IExperimentsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the HealthProbeSettingsOperations class.
+        /// Initializes a new instance of the ExperimentsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal HealthProbeSettingsOperations(FrontDoorManagementClient client)
+        internal ExperimentsOperations(FrontDoorManagementClient client)
         {
             if (client == null)
             {
@@ -51,13 +51,13 @@ namespace Microsoft.Azure.Management.FrontDoor
         public FrontDoorManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists all of the HealthProbeSettings within a Front Door.
+        /// Gets a list of Experiments
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
         /// </param>
-        /// <param name='frontDoorName'>
-        /// Name of the Front Door which is globally unique.
+        /// <param name='profileName'>
+        /// The Profile identifier associated with the Tenant and Partner
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<HealthProbeSettingsModel>>> ListByFrontDoorWithHttpMessagesAsync(string resourceGroupName, string frontDoorName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<Experiment>>> ListByProfileWithHttpMessagesAsync(string resourceGroupName, string profileName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -105,26 +105,18 @@ namespace Microsoft.Azure.Management.FrontDoor
                     throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$");
                 }
             }
-            if (frontDoorName == null)
+            if (profileName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "frontDoorName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "profileName");
             }
-            if (frontDoorName != null)
+            if (profileName != null)
             {
-                if (frontDoorName.Length > 64)
+                if (!System.Text.RegularExpressions.Regex.IsMatch(profileName, "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$"))
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "frontDoorName", 64);
-                }
-                if (frontDoorName.Length < 5)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "frontDoorName", 5);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(frontDoorName, "^[a-zA-Z0-9]+([-a-zA-Z0-9]?[a-zA-Z0-9])*$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "frontDoorName", "^[a-zA-Z0-9]+([-a-zA-Z0-9]?[a-zA-Z0-9])*$");
+                    throw new ValidationException(ValidationRules.Pattern, "profileName", "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$");
                 }
             }
-            string apiVersion = "2019-05-01";
+            string apiVersion = "2019-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -132,18 +124,18 @@ namespace Microsoft.Azure.Management.FrontDoor
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("frontDoorName", frontDoorName);
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("profileName", profileName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListByFrontDoor", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByProfile", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}/healthProbeSettings").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{frontDoorName}", System.Uri.EscapeDataString(frontDoorName));
+            _url = _url.Replace("{profileName}", System.Uri.EscapeDataString(profileName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -237,7 +229,7 @@ namespace Microsoft.Azure.Management.FrontDoor
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<HealthProbeSettingsModel>>();
+            var _result = new AzureOperationResponse<IPage<Experiment>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -250,7 +242,7 @@ namespace Microsoft.Azure.Management.FrontDoor
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<HealthProbeSettingsModel>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Experiment>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -270,17 +262,16 @@ namespace Microsoft.Azure.Management.FrontDoor
         }
 
         /// <summary>
-        /// Gets a HealthProbeSettings with the specified Rule name within the
-        /// specified Front Door.
+        /// Gets an Experiment by ExperimentName
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
         /// </param>
-        /// <param name='frontDoorName'>
-        /// Name of the Front Door which is globally unique.
+        /// <param name='profileName'>
+        /// The Profile identifier associated with the Tenant and Partner
         /// </param>
-        /// <param name='healthProbeSettingsName'>
-        /// Name of the health probe settings which is unique within the Front Door.
+        /// <param name='experimentName'>
+        /// The Experiment identifier associated with the Experiment
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -303,7 +294,7 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<HealthProbeSettingsModel>> GetWithHttpMessagesAsync(string resourceGroupName, string frontDoorName, string healthProbeSettingsName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Experiment>> GetWithHttpMessagesAsync(string resourceGroupName, string profileName, string experimentName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -328,45 +319,29 @@ namespace Microsoft.Azure.Management.FrontDoor
                     throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$");
                 }
             }
-            if (frontDoorName == null)
+            if (profileName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "frontDoorName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "profileName");
             }
-            if (frontDoorName != null)
+            if (profileName != null)
             {
-                if (frontDoorName.Length > 64)
+                if (!System.Text.RegularExpressions.Regex.IsMatch(profileName, "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$"))
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "frontDoorName", 64);
-                }
-                if (frontDoorName.Length < 5)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "frontDoorName", 5);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(frontDoorName, "^[a-zA-Z0-9]+([-a-zA-Z0-9]?[a-zA-Z0-9])*$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "frontDoorName", "^[a-zA-Z0-9]+([-a-zA-Z0-9]?[a-zA-Z0-9])*$");
+                    throw new ValidationException(ValidationRules.Pattern, "profileName", "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$");
                 }
             }
-            if (healthProbeSettingsName == null)
+            if (experimentName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "healthProbeSettingsName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "experimentName");
             }
-            if (healthProbeSettingsName != null)
+            if (experimentName != null)
             {
-                if (healthProbeSettingsName.Length > 90)
+                if (!System.Text.RegularExpressions.Regex.IsMatch(experimentName, "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$"))
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "healthProbeSettingsName", 90);
-                }
-                if (healthProbeSettingsName.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "healthProbeSettingsName", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(healthProbeSettingsName, "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "healthProbeSettingsName", "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$");
+                    throw new ValidationException(ValidationRules.Pattern, "experimentName", "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$");
                 }
             }
-            string apiVersion = "2019-05-01";
+            string apiVersion = "2019-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -374,20 +349,20 @@ namespace Microsoft.Azure.Management.FrontDoor
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("frontDoorName", frontDoorName);
-                tracingParameters.Add("healthProbeSettingsName", healthProbeSettingsName);
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("profileName", profileName);
+                tracingParameters.Add("experimentName", experimentName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}/healthProbeSettings/{healthProbeSettingsName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{frontDoorName}", System.Uri.EscapeDataString(frontDoorName));
-            _url = _url.Replace("{healthProbeSettingsName}", System.Uri.EscapeDataString(healthProbeSettingsName));
+            _url = _url.Replace("{profileName}", System.Uri.EscapeDataString(profileName));
+            _url = _url.Replace("{experimentName}", System.Uri.EscapeDataString(experimentName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -481,7 +456,7 @@ namespace Microsoft.Azure.Management.FrontDoor
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<HealthProbeSettingsModel>();
+            var _result = new AzureOperationResponse<Experiment>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -494,7 +469,7 @@ namespace Microsoft.Azure.Management.FrontDoor
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<HealthProbeSettingsModel>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Experiment>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -514,20 +489,19 @@ namespace Microsoft.Azure.Management.FrontDoor
         }
 
         /// <summary>
-        /// Creates a new HealthProbeSettings with the specified Rule name within the
-        /// specified Front Door.
+        /// Creates or updates an Experiment
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
         /// </param>
-        /// <param name='frontDoorName'>
-        /// Name of the Front Door which is globally unique.
+        /// <param name='profileName'>
+        /// The Profile identifier associated with the Tenant and Partner
         /// </param>
-        /// <param name='healthProbeSettingsName'>
-        /// Name of the health probe settings which is unique within the Front Door.
+        /// <param name='experimentName'>
+        /// The Experiment identifier associated with the Experiment
         /// </param>
-        /// <param name='healthProbeSettingsParameters'>
-        /// HealthProbeSettings properties needed to create a new Front Door.
+        /// <param name='parameters'>
+        /// The Experiment resource
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -535,24 +509,30 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<HealthProbeSettingsModel>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string frontDoorName, string healthProbeSettingsName, HealthProbeSettingsModel healthProbeSettingsParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Experiment>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, string experimentName, Experiment parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<HealthProbeSettingsModel> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, frontDoorName, healthProbeSettingsName, healthProbeSettingsParameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<Experiment> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, profileName, experimentName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Deletes an existing HealthProbeSettings with the specified parameters.
+        /// Updates an Experiment by Experiment id
         /// </summary>
+        /// <remarks>
+        /// Updates an Experiment
+        /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
         /// </param>
-        /// <param name='frontDoorName'>
-        /// Name of the Front Door which is globally unique.
+        /// <param name='profileName'>
+        /// The Profile identifier associated with the Tenant and Partner
         /// </param>
-        /// <param name='healthProbeSettingsName'>
-        /// Name of the health probe settings which is unique within the Front Door.
+        /// <param name='experimentName'>
+        /// The Experiment identifier associated with the Experiment
+        /// </param>
+        /// <param name='parameters'>
+        /// The Experiment Update Model
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -560,28 +540,52 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string frontDoorName, string healthProbeSettingsName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Experiment>> UpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, string experimentName, ExperimentUpdateModel parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            // Send request
-            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, frontDoorName, healthProbeSettingsName, customHeaders, cancellationToken).ConfigureAwait(false);
-            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
+            // Send Request
+            AzureOperationResponse<Experiment> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, profileName, experimentName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Creates a new HealthProbeSettings with the specified Rule name within the
-        /// specified Front Door.
+        /// Deletes an Experiment
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
         /// </param>
-        /// <param name='frontDoorName'>
-        /// Name of the Front Door which is globally unique.
+        /// <param name='profileName'>
+        /// The Profile identifier associated with the Tenant and Partner
         /// </param>
-        /// <param name='healthProbeSettingsName'>
-        /// Name of the health probe settings which is unique within the Front Door.
+        /// <param name='experimentName'>
+        /// The Experiment identifier associated with the Experiment
         /// </param>
-        /// <param name='healthProbeSettingsParameters'>
-        /// HealthProbeSettings properties needed to create a new Front Door.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string profileName, string experimentName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send request
+            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, profileName, experimentName, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Creates or updates an Experiment
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the Resource group within the Azure subscription.
+        /// </param>
+        /// <param name='profileName'>
+        /// The Profile identifier associated with the Tenant and Partner
+        /// </param>
+        /// <param name='experimentName'>
+        /// The Experiment identifier associated with the Experiment
+        /// </param>
+        /// <param name='parameters'>
+        /// The Experiment resource
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -604,7 +608,7 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<HealthProbeSettingsModel>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string frontDoorName, string healthProbeSettingsName, HealthProbeSettingsModel healthProbeSettingsParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Experiment>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, string experimentName, Experiment parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -629,49 +633,33 @@ namespace Microsoft.Azure.Management.FrontDoor
                     throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$");
                 }
             }
-            if (frontDoorName == null)
+            if (profileName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "frontDoorName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "profileName");
             }
-            if (frontDoorName != null)
+            if (profileName != null)
             {
-                if (frontDoorName.Length > 64)
+                if (!System.Text.RegularExpressions.Regex.IsMatch(profileName, "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$"))
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "frontDoorName", 64);
-                }
-                if (frontDoorName.Length < 5)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "frontDoorName", 5);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(frontDoorName, "^[a-zA-Z0-9]+([-a-zA-Z0-9]?[a-zA-Z0-9])*$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "frontDoorName", "^[a-zA-Z0-9]+([-a-zA-Z0-9]?[a-zA-Z0-9])*$");
+                    throw new ValidationException(ValidationRules.Pattern, "profileName", "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$");
                 }
             }
-            if (healthProbeSettingsName == null)
+            if (experimentName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "healthProbeSettingsName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "experimentName");
             }
-            if (healthProbeSettingsName != null)
+            if (experimentName != null)
             {
-                if (healthProbeSettingsName.Length > 90)
+                if (!System.Text.RegularExpressions.Regex.IsMatch(experimentName, "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$"))
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "healthProbeSettingsName", 90);
-                }
-                if (healthProbeSettingsName.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "healthProbeSettingsName", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(healthProbeSettingsName, "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "healthProbeSettingsName", "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$");
+                    throw new ValidationException(ValidationRules.Pattern, "experimentName", "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$");
                 }
             }
-            if (healthProbeSettingsParameters == null)
+            if (parameters == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "healthProbeSettingsParameters");
+                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            string apiVersion = "2019-05-01";
+            string apiVersion = "2019-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -679,21 +667,21 @@ namespace Microsoft.Azure.Management.FrontDoor
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("frontDoorName", frontDoorName);
-                tracingParameters.Add("healthProbeSettingsName", healthProbeSettingsName);
-                tracingParameters.Add("healthProbeSettingsParameters", healthProbeSettingsParameters);
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("profileName", profileName);
+                tracingParameters.Add("experimentName", experimentName);
+                tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginCreateOrUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}/healthProbeSettings/{healthProbeSettingsName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{frontDoorName}", System.Uri.EscapeDataString(frontDoorName));
-            _url = _url.Replace("{healthProbeSettingsName}", System.Uri.EscapeDataString(healthProbeSettingsName));
+            _url = _url.Replace("{profileName}", System.Uri.EscapeDataString(profileName));
+            _url = _url.Replace("{experimentName}", System.Uri.EscapeDataString(experimentName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -737,9 +725,9 @@ namespace Microsoft.Azure.Management.FrontDoor
 
             // Serialize Request
             string _requestContent = null;
-            if(healthProbeSettingsParameters != null)
+            if(parameters != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(healthProbeSettingsParameters, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -793,7 +781,7 @@ namespace Microsoft.Azure.Management.FrontDoor
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<HealthProbeSettingsModel>();
+            var _result = new AzureOperationResponse<Experiment>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -806,7 +794,7 @@ namespace Microsoft.Azure.Management.FrontDoor
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<HealthProbeSettingsModel>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Experiment>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -824,7 +812,7 @@ namespace Microsoft.Azure.Management.FrontDoor
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<HealthProbeSettingsModel>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Experiment>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -842,7 +830,7 @@ namespace Microsoft.Azure.Management.FrontDoor
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<HealthProbeSettingsModel>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Experiment>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -862,16 +850,22 @@ namespace Microsoft.Azure.Management.FrontDoor
         }
 
         /// <summary>
-        /// Deletes an existing HealthProbeSettings with the specified parameters.
+        /// Updates an Experiment by Experiment id
         /// </summary>
+        /// <remarks>
+        /// Updates an Experiment
+        /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
         /// </param>
-        /// <param name='frontDoorName'>
-        /// Name of the Front Door which is globally unique.
+        /// <param name='profileName'>
+        /// The Profile identifier associated with the Tenant and Partner
         /// </param>
-        /// <param name='healthProbeSettingsName'>
-        /// Name of the health probe settings which is unique within the Front Door.
+        /// <param name='experimentName'>
+        /// The Experiment identifier associated with the Experiment
+        /// </param>
+        /// <param name='parameters'>
+        /// The Experiment Update Model
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -882,6 +876,9 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
@@ -891,7 +888,7 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string frontDoorName, string healthProbeSettingsName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Experiment>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, string experimentName, ExperimentUpdateModel parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -916,45 +913,33 @@ namespace Microsoft.Azure.Management.FrontDoor
                     throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$");
                 }
             }
-            if (frontDoorName == null)
+            if (profileName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "frontDoorName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "profileName");
             }
-            if (frontDoorName != null)
+            if (profileName != null)
             {
-                if (frontDoorName.Length > 64)
+                if (!System.Text.RegularExpressions.Regex.IsMatch(profileName, "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$"))
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "frontDoorName", 64);
-                }
-                if (frontDoorName.Length < 5)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "frontDoorName", 5);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(frontDoorName, "^[a-zA-Z0-9]+([-a-zA-Z0-9]?[a-zA-Z0-9])*$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "frontDoorName", "^[a-zA-Z0-9]+([-a-zA-Z0-9]?[a-zA-Z0-9])*$");
+                    throw new ValidationException(ValidationRules.Pattern, "profileName", "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$");
                 }
             }
-            if (healthProbeSettingsName == null)
+            if (experimentName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "healthProbeSettingsName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "experimentName");
             }
-            if (healthProbeSettingsName != null)
+            if (experimentName != null)
             {
-                if (healthProbeSettingsName.Length > 90)
+                if (!System.Text.RegularExpressions.Regex.IsMatch(experimentName, "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$"))
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "healthProbeSettingsName", 90);
-                }
-                if (healthProbeSettingsName.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "healthProbeSettingsName", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(healthProbeSettingsName, "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "healthProbeSettingsName", "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$");
+                    throw new ValidationException(ValidationRules.Pattern, "experimentName", "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$");
                 }
             }
-            string apiVersion = "2019-05-01";
+            if (parameters == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
+            }
+            string apiVersion = "2019-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -962,20 +947,269 @@ namespace Microsoft.Azure.Management.FrontDoor
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("frontDoorName", frontDoorName);
-                tracingParameters.Add("healthProbeSettingsName", healthProbeSettingsName);
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("profileName", profileName);
+                tracingParameters.Add("experimentName", experimentName);
+                tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginUpdate", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}").ToString();
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{profileName}", System.Uri.EscapeDataString(profileName));
+            _url = _url.Replace("{experimentName}", System.Uri.EscapeDataString(experimentName));
+            List<string> _queryParameters = new List<string>();
+            if (apiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("PATCH");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            if(parameters != null)
+            {
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200 && (int)_statusCode != 202)
+            {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<Experiment>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Experiment>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 202)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Experiment>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Deletes an Experiment
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the Resource group within the Azure subscription.
+        /// </param>
+        /// <param name='profileName'>
+        /// The Profile identifier associated with the Tenant and Partner
+        /// </param>
+        /// <param name='experimentName'>
+        /// The Experiment identifier associated with the Experiment
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string profileName, string experimentName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 80)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 80);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$");
+                }
+            }
+            if (profileName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "profileName");
+            }
+            if (profileName != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(profileName, "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "profileName", "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$");
+                }
+            }
+            if (experimentName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "experimentName");
+            }
+            if (experimentName != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(experimentName, "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "experimentName", "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$");
+                }
+            }
+            string apiVersion = "2019-11-01";
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("profileName", profileName);
+                tracingParameters.Add("experimentName", experimentName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginDelete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}/healthProbeSettings/{healthProbeSettingsName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{frontDoorName}", System.Uri.EscapeDataString(frontDoorName));
-            _url = _url.Replace("{healthProbeSettingsName}", System.Uri.EscapeDataString(healthProbeSettingsName));
+            _url = _url.Replace("{profileName}", System.Uri.EscapeDataString(profileName));
+            _url = _url.Replace("{experimentName}", System.Uri.EscapeDataString(experimentName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -1039,7 +1273,7 @@ namespace Microsoft.Azure.Management.FrontDoor
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 202 && (int)_statusCode != 204)
+            if ((int)_statusCode != 200 && (int)_statusCode != 202 && (int)_statusCode != 204)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -1084,7 +1318,7 @@ namespace Microsoft.Azure.Management.FrontDoor
         }
 
         /// <summary>
-        /// Lists all of the HealthProbeSettings within a Front Door.
+        /// Gets a list of Experiments
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1110,7 +1344,7 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<HealthProbeSettingsModel>>> ListByFrontDoorNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<Experiment>>> ListByProfileNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -1125,7 +1359,7 @@ namespace Microsoft.Azure.Management.FrontDoor
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListByFrontDoorNext", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByProfileNext", tracingParameters);
             }
             // Construct URL
             string _url = "{nextLink}";
@@ -1219,7 +1453,7 @@ namespace Microsoft.Azure.Management.FrontDoor
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<HealthProbeSettingsModel>>();
+            var _result = new AzureOperationResponse<IPage<Experiment>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1232,7 +1466,7 @@ namespace Microsoft.Azure.Management.FrontDoor
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<HealthProbeSettingsModel>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Experiment>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
