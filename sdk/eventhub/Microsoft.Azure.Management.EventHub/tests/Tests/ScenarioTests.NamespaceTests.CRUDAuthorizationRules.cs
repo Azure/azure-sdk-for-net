@@ -139,19 +139,19 @@ namespace EventHub.Tests.ScenarioTests
                     Assert.Contains(getNamespaceAuthorizationRuleResponse.Rights, r => r.Equals(right));
                 }
 
-                // Get the connectionString to the namespace for a Authorization rule created
+                // Get the connection string to the namespace for a Authorization rule created
                 var listKeysResponse = EventHubManagementClient.Namespaces.ListKeys(resourceGroup, namespaceName, authorizationRuleName);
                 Assert.NotNull(listKeysResponse);
                 Assert.NotNull(listKeysResponse.PrimaryConnectionString);
                 Assert.NotNull(listKeysResponse.SecondaryConnectionString);
 
-                //Renerate connectionstring to  the namespace for a Authorization rule created
+                // Regenerate connection string to the namespace for a Authorization rule created
                 var NewKeysResponse_primary = EventHubManagementClient.Namespaces.RegenerateKeys(resourceGroup, namespaceName, authorizationRuleName, new RegenerateAccessKeyParameters(KeyType.PrimaryKey));
                 Assert.NotNull(NewKeysResponse_primary);
                 Assert.NotEqual(NewKeysResponse_primary.PrimaryConnectionString, listKeysResponse.PrimaryConnectionString);
                 Assert.Equal(NewKeysResponse_primary.SecondaryConnectionString, listKeysResponse.SecondaryConnectionString);
 
-                //Renerate connectionstring to  the namespace for a Authorization rule created
+                // Regenerate connection string to the namespace for a Authorization rule created
                 var NewKeysResponse_secondary = EventHubManagementClient.Namespaces.RegenerateKeys(resourceGroup, namespaceName, authorizationRuleName, new RegenerateAccessKeyParameters(KeyType.SecondaryKey));
                 Assert.NotNull(NewKeysResponse_secondary);
                 Assert.NotEqual(NewKeysResponse_secondary.PrimaryConnectionString, listKeysResponse.PrimaryConnectionString);
@@ -162,7 +162,7 @@ namespace EventHub.Tests.ScenarioTests
 
                 TestUtilities.Wait(TimeSpan.FromSeconds(5));
 
-                //Delete namespace
+                // Delete namespace
                 EventHubManagementClient.Namespaces.Delete(resourceGroup, namespaceName);
 
             }
