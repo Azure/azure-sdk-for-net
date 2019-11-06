@@ -16,7 +16,7 @@
           "FxVersion/4.6.28008.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.AzureStack.Management.Storage.Admin.StorageAdminClient/1.9.1.0"
+          "Microsoft.AzureStack.Management.Storage.Admin.StorageAdminClient/2.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -82,7 +82,7 @@
           "FxVersion/4.6.28008.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.AzureStack.Management.Storage.Admin.StorageAdminClient/1.9.1.0"
+          "Microsoft.AzureStack.Management.Storage.Admin.StorageAdminClient/2.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -148,7 +148,7 @@
           "FxVersion/4.6.28008.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.AzureStack.Management.Storage.Admin.StorageAdminClient/1.9.1.0"
+          "Microsoft.AzureStack.Management.Storage.Admin.StorageAdminClient/2.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -214,7 +214,7 @@
           "FxVersion/4.6.28008.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.AzureStack.Management.Storage.Admin.StorageAdminClient/1.9.1.0"
+          "Microsoft.AzureStack.Management.Storage.Admin.StorageAdminClient/2.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -280,7 +280,7 @@
           "FxVersion/4.6.28008.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.AzureStack.Management.Storage.Admin.StorageAdminClient/1.9.1.0"
+          "Microsoft.AzureStack.Management.Storage.Admin.StorageAdminClient/2.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -346,7 +346,7 @@
           "FxVersion/4.6.28008.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.AzureStack.Management.Storage.Admin.StorageAdminClient/1.9.1.0"
+          "Microsoft.AzureStack.Management.Storage.Admin.StorageAdminClient/2.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -412,7 +412,7 @@
           "FxVersion/4.6.28008.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.AzureStack.Management.Storage.Admin.StorageAdminClient/1.9.1.0"
+          "Microsoft.AzureStack.Management.Storage.Admin.StorageAdminClient/2.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -478,7 +478,7 @@
           "FxVersion/4.6.28008.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.AzureStack.Management.Storage.Admin.StorageAdminClient/1.9.1.0"
+          "Microsoft.AzureStack.Management.Storage.Admin.StorageAdminClient/2.0.0.0"
         ]
       },
       "ResponseHeaders": {
