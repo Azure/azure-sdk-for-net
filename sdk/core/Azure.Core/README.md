@@ -27,7 +27,7 @@ you can find the NuGet package [here](https://www.nuget.org/packages/Azure.Core)
 
 ## Usage Scenarios and Samples
 
-**❗ NOTE:** Samples in this file apply only to packages that follow [Azure SDK Design Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html). Names of such packages usually start with `Azure`. 
+**NOTE:** Samples in this file apply only to packages that follow [Azure SDK Design Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html). Names of such packages usually start with `Azure`. 
 
 ### Configuring Service Clients Using ```ClientOptions```
 Azure SDK client libraries typically expose one or more _service client_ types that 
