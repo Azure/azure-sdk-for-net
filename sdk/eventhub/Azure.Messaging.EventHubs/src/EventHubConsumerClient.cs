@@ -399,7 +399,7 @@ namespace Azure.Messaging.EventHubs
         ///   When information about the partition's last enqueued event is being tracked, each event received from the Event Hubs
         ///   service will carry metadata about the partition that it otherwise would not. This results in a small amount of
         ///   additional network bandwidth consumption that is generally a favorable trade-off when considered
-        ///   against periodically making requests for partition properties using the Event Hub client.
+        ///   against periodically making requests for partition properties using an Event Hub client.
         /// </remarks>
         ///
         /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="EventHubConsumerClientOptions.TrackLastEnqueuedEventInformation" /> set.</exception>
@@ -675,7 +675,7 @@ namespace Azure.Messaging.EventHubs
             try
             {
                 transportConsumer = Connection.CreateTransportConsumer(ConsumerGroup, partitionId, startingPosition, Options);
-                publishingTask = StartBackgroundChannelPublishingAsync(transportConsumer, channel, new PartitionContext(partitionId), publishingCancellationSource.Token);
+                publishingTask = StartBackgroundChannelPublishingAsync(transportConsumer, channel, new PartitionContext(EventHubName, partitionId, transportConsumer), publishingCancellationSource.Token);
             }
             catch (Exception ex)
             {

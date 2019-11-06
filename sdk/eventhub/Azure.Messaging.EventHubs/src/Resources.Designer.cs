@@ -121,13 +121,13 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to {0} has already been disposed and cannot perform the requested operation..
+        ///   Looks up a localized string similar to {0} has already been closed and cannot perform the requested operation..
         /// </summary>
-        internal static string DisposedInstanceCannotPerformOperation
+        internal static string ClosedInstanceCannotPerformOperation
         {
             get
             {
-                return ResourceManager.GetString("DisposedInstanceCannotPerformOperation", resourceCulture);
+                return ResourceManager.GetString("ClosedInstanceCannotPerformOperation", resourceCulture);
             }
         }
 
@@ -469,6 +469,17 @@ namespace Azure.Messaging.EventHubs
             get
             {
                 return ResourceManager.GetString("TrackLastEnqueuedEventInformationNotSet", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The Event Hub client responsible for this information.
+        /// </summary>
+        internal static string ClientNeededForThisInformation
+        {
+            get
+            {
+                return ResourceManager.GetString("ClientNeededForThisInformation", resourceCulture);
             }
         }
     }
