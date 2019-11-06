@@ -8,12 +8,6 @@ To get started with a library, see the README.md file located in the library's p
 For tutorials, samples, quick starts, and other documentation, go to [Azure for .NET Developers](https://docs.microsoft.com/en-us/dotnet/azure/).
 
 ## Packages available
-Each service might have a number of libraries available from each of the following categories discussed below:
-
-* [Client - July 2019 Preview](#Client-July-2019-Preview)
-* [Client - Stable](#Client-Stable)
-* [Management](#Management)
-
 
 ### Client: November 2019 GA and Preview Releases
 New wave of packages that we are currently releasing in **preview** and several libraries are releasing in GA.
