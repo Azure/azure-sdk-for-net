@@ -87,6 +87,17 @@ namespace Azure.Storage.Files.DataLake
             Diagnostics.LoggedHeaderNames.Add("x-ms-owner");
             Diagnostics.LoggedHeaderNames.Add("x-ms-group");
             Diagnostics.LoggedHeaderNames.Add("x-ms-acl");
+            Diagnostics.LoggedHeaderNames.Add("continuation");
+            Diagnostics.LoggedHeaderNames.Add("maxResults");
+            Diagnostics.LoggedHeaderNames.Add("mode");
+            Diagnostics.LoggedHeaderNames.Add("recursive");
+            Diagnostics.LoggedHeaderNames.Add("action");
+            Diagnostics.LoggedHeaderNames.Add("upn");
+            Diagnostics.LoggedHeaderNames.Add("resource");
+            Diagnostics.LoggedHeaderNames.Add("directory");
+            Diagnostics.LoggedHeaderNames.Add("position");
+            Diagnostics.LoggedHeaderNames.Add("retainUncommittedData");
+            Diagnostics.LoggedHeaderNames.Add("close");
 
             Diagnostics.LoggedHeaderNames.Add("Access-Control-Allow-Origin");
             Diagnostics.LoggedHeaderNames.Add("x-ms-date");
