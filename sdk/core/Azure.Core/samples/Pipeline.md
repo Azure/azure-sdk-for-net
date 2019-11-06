@@ -1,6 +1,6 @@
 # Azure.Core pipeline samples
 
-**❗ NOTE:** Samples in this file apply only to `Azure.*` packages. 
+**❗ NOTE:** Samples in this file only apply to `Azure.*` packages. 
 
 Before request is sent to the service it travels through the pipeline which consists of a set of policies that get to modify the request before it's being sent and observe the response after it's received and a transport that is responsible for sending request and receiving the response.
 

@@ -1,6 +1,6 @@
 # Azure.Core Response samples
 
-**❗ NOTE:** Samples in this file apply only to `Azure.*` packages. 
+**❗ NOTE:** Samples in this file only apply to `Azure.*` packages. 
 
 Most client methods return one of the following types:
  - `Response` -  an HTTP response

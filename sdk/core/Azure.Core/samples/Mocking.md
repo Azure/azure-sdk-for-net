@@ -1,6 +1,6 @@
 # Azure.Core mocking samples
 
-**❗ NOTE:** Samples in this file apply only to `Azure.*` packages. 
+**❗ NOTE:** Samples in this file only apply to `Azure.*` packages. 
 
 ## Creating a mock of the client using Moq
 
