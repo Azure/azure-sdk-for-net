@@ -15,10 +15,8 @@ namespace Azure.Messaging.EventHubs.Authorization
     ///
     internal class EventHubTokenCredential : TokenCredential
     {
-        /// <summary>
-        ///   The default scope used for token authentication with EventHubs.
-        /// </summary>
-        private const string EventHubsScope = "https://eventhubs.azure.net/.default";
+        /// <summary>The default scope used for token authentication with EventHubs.</summary>
+        private const string DefaultScope = "https://eventhubs.azure.net/.default";
 
         /// <summary>
         ///   The Event Hubs resource to which the token is intended to serve as authorization.
@@ -98,6 +96,6 @@ namespace Azure.Messaging.EventHubs.Authorization
         ///
         /// <returns>The token representing the shared access signature for this credential.</returns>
         ///
-        public ValueTask<AccessToken> GetTokenUsingDefaultScopeAsync(CancellationToken cancellationToken) => GetTokenAsync(new TokenRequestContext(new string[] { EventHubsScope }), cancellationToken);
+        public ValueTask<AccessToken> GetTokenUsingDefaultScopeAsync(CancellationToken cancellationToken) => GetTokenAsync(new TokenRequestContext(new string[] { DefaultScope }), cancellationToken);
     }
 }
