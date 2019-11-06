@@ -187,6 +187,14 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
+
+        [Test]
+        public void BlobUriBuilder_RegularUrl_CNAME()
+        {
+            var blobUriBuilder = new BlobUriBuilder(new Uri("http://www.contoso.com"));
+            Assert.AreEqual(string.Empty, blobUriBuilder.AccountName);
+        }
+
         [Test]
         public void BlobUriBuilder_RegularUrl_MalformedSubdomain()
         {

@@ -366,6 +366,13 @@ namespace Azure.Storage.Queues.Test
         }
 
         [Test]
+        public void QueueUriBuilder_RegularUrl_CNAME()
+        {
+            var queueUriBUilder = new QueueUriBuilder(new Uri("http://www.contoso.com"));
+            Assert.AreEqual(string.Empty, queueUriBUilder.AccountName);
+        }
+
+        [Test]
         public void QueueUriBuilder_MalformedSubdomain()
         {
             // core and queue swapped

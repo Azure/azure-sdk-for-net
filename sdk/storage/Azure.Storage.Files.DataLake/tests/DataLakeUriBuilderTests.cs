@@ -82,7 +82,14 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
-        public void FileUriBuilder_MalformedSubdomain()
+        public void DataLakeUriBuilder_RegularUrl_CNAME()
+        {
+            var dataLakeUriBuilder = new DataLakeUriBuilder(new Uri("http://www.contoso.com"));
+            Assert.AreEqual(string.Empty, dataLakeUriBuilder.AccountName);
+        }
+
+        [Test]
+        public void DataLakeUriBuilder_MalformedSubdomain()
         {
             // core and file swapped
             var datalakeUriBuilder1 = new DataLakeUriBuilder(new Uri("https://account.core.blob.windows.net/share/dir"));

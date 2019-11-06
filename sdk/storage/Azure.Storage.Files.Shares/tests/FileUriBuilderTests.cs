@@ -181,6 +181,13 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        public void FileUriBuilder_RegularUrl_CNAME()
+        {
+            var shareUriBuilder = new ShareUriBuilder(new Uri("http://www.contoso.com"));
+            Assert.AreEqual(string.Empty, shareUriBuilder.AccountName);
+        }
+
+        [Test]
         public void FileUriBuilder_MalformedSubdomain()
         {
             // core and file swapped
