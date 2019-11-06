@@ -193,8 +193,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                     umask: umask);
 
                 // Assert
-                Response<PathAccessControl> response = await file.GetAccessControlAsync();
-                Assert.AreEqual("rwx-w----", response.Value.Permissions);
+                Response<PathAccessControl> response = await file.GetAccessControlListAsync();
+                Assert.AreEqual(PathPermissions.ParseSymbolic("rwx-w----"), response.Value.Permissions);
             }
         }
 
@@ -479,13 +479,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             using (GetNewFile(out DataLakeFileClient fileClient))
             {
                 // Act
-                PathAccessControl accessControl = await fileClient.GetAccessControlAsync();
+                PathAccessControl accessControl = await fileClient.GetAccessControlListAsync();
 
                 // Assert
                 Assert.IsNotNull(accessControl.Owner);
                 Assert.IsNotNull(accessControl.Group);
                 Assert.IsNotNull(accessControl.Permissions);
-                Assert.IsNotNull(accessControl.Acl);
+                Assert.IsNotNull(accessControl.AccessControlList);
             }
         }
 
@@ -506,13 +506,13 @@ namespace Azure.Storage.Files.DataLake.Tests
                     .GetFileClient(fileName);
 
                 // Act
-                PathAccessControl accessControl = await oauthFile.GetAccessControlAsync();
+                PathAccessControl accessControl = await oauthFile.GetAccessControlListAsync();
 
                 // Assert
                 Assert.IsNotNull(accessControl.Owner);
                 Assert.IsNotNull(accessControl.Group);
                 Assert.IsNotNull(accessControl.Permissions);
-                Assert.IsNotNull(accessControl.Acl);
+                Assert.IsNotNull(accessControl.AccessControlList);
             }
         }
 
@@ -535,13 +535,13 @@ namespace Azure.Storage.Files.DataLake.Tests
                     .GetFileClient(fileName));
 
                 // Act
-                PathAccessControl accessControl = await sasFile.GetAccessControlAsync();
+                PathAccessControl accessControl = await sasFile.GetAccessControlListAsync();
 
                 // Assert
                 Assert.IsNotNull(accessControl.Owner);
                 Assert.IsNotNull(accessControl.Group);
                 Assert.IsNotNull(accessControl.Permissions);
-                Assert.IsNotNull(accessControl.Acl);
+                Assert.IsNotNull(accessControl.AccessControlList);
             }
         }
 
@@ -570,13 +570,13 @@ namespace Azure.Storage.Files.DataLake.Tests
                     .GetFileClient(fileName));
 
                 // Act
-                PathAccessControl accessControl = await identitySasFile.GetAccessControlAsync();
+                PathAccessControl accessControl = await identitySasFile.GetAccessControlListAsync();
 
                 // Assert
                 Assert.IsNotNull(accessControl.Owner);
                 Assert.IsNotNull(accessControl.Group);
                 Assert.IsNotNull(accessControl.Permissions);
-                Assert.IsNotNull(accessControl.Acl);
+                Assert.IsNotNull(accessControl.AccessControlList);
             }
         }
 
@@ -600,13 +600,13 @@ namespace Azure.Storage.Files.DataLake.Tests
                     .GetFileClient(fileName));
 
                 // Act
-                PathAccessControl accessControl = await sasFile.GetAccessControlAsync();
+                PathAccessControl accessControl = await sasFile.GetAccessControlListAsync();
 
                 // Assert
                 Assert.IsNotNull(accessControl.Owner);
                 Assert.IsNotNull(accessControl.Group);
                 Assert.IsNotNull(accessControl.Permissions);
-                Assert.IsNotNull(accessControl.Acl);
+                Assert.IsNotNull(accessControl.AccessControlList);
             }
         }
 
@@ -636,13 +636,13 @@ namespace Azure.Storage.Files.DataLake.Tests
                     .GetFileClient(fileName));
 
                 // Act
-                PathAccessControl accessControl = await identitySasFile.GetAccessControlAsync();
+                PathAccessControl accessControl = await identitySasFile.GetAccessControlListAsync();
 
                 // Assert
                 Assert.IsNotNull(accessControl.Owner);
                 Assert.IsNotNull(accessControl.Group);
                 Assert.IsNotNull(accessControl.Permissions);
-                Assert.IsNotNull(accessControl.Acl);
+                Assert.IsNotNull(accessControl.AccessControlList);
             }
         }
 
@@ -656,7 +656,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                    file.GetAccessControlAsync(),
+                    file.GetAccessControlListAsync(),
                     e => Assert.AreEqual("404", e.ErrorCode));
             }
         }
@@ -679,7 +679,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                         lease: true);
 
                     // Act
-                    await file.GetAccessControlAsync(conditions: conditions);
+                    await file.GetAccessControlListAsync(conditions: conditions);
                 }
             }
         }
@@ -701,7 +701,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
                     // Act
                     await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                        file.GetAccessControlAsync(conditions: conditions),
+                        file.GetAccessControlListAsync(conditions: conditions),
                         e => { });
                 }
             }
@@ -722,7 +722,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                    file.GetAccessControlAsync(conditions: conditions),
+                    file.GetAccessControlListAsync(conditions: conditions),
                     e => Assert.AreEqual("404", e.ErrorCode));
             }
         }
@@ -733,26 +733,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             using (GetNewFile(out DataLakeFileClient fileClient))
             {
                 // Act
-                Response<PathInfo> response = await fileClient.SetAccessControlAsync(acl: AccessControl);
+                Response<PathInfo> response = await fileClient.SetAccessControlListAsync(AccessControlList);
 
                 // Assert
                 AssertValidStoragePathInfo(response);
-            }
-        }
-
-        [Test]
-        public async Task SetAccessControlAsync_Error()
-        {
-            using (GetNewFile(out DataLakeFileClient fileClient))
-            {
-                // Act
-                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                    fileClient.SetAccessControlAsync(acl: "asdf"),
-                    e =>
-                    {
-                        Assert.AreEqual("InvaldAccessControlList", e.ErrorCode);
-                        Assert.AreEqual("The access control list value is invalid.", e.Message.Split('\n')[0]);
-                    });
             }
         }
 
@@ -774,8 +758,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                         lease: true);
 
                     // Act
-                    Response<PathInfo> response = await file.SetAccessControlAsync(
-                        acl: AccessControl,
+                    Response<PathInfo> response = await file.SetAccessControlListAsync(
+                        accessControlList: AccessControlList,
                         conditions: conditions);
 
                     // Assert
@@ -800,8 +784,8 @@ namespace Azure.Storage.Files.DataLake.Tests
 
                     // Act
                     await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                        file.SetAccessControlAsync(
-                            acl: AccessControl,
+                        file.SetAccessControlListAsync(
+                            accessControlList: AccessControlList,
                             conditions: conditions),
                         e => { });
                 }
@@ -814,26 +798,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             using (GetNewFile(out DataLakeFileClient fileClient))
             {
                 // Act
-                Response<PathInfo> response = await fileClient.SetPermissionsAsync(permissions: "0777");
+                Response<PathInfo> response = await fileClient.SetPermissionsAsync(permissions: PathPermissions);
 
                 // Assert
                 AssertValidStoragePathInfo(response);
-            }
-        }
-
-        [Test]
-        public async Task SetPermissionsAsync_Error()
-        {
-            using (GetNewFile(out DataLakeFileClient fileClient))
-            {
-                // Act
-                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                    fileClient.SetPermissionsAsync(permissions: "asdf"),
-                    e =>
-                    {
-                        Assert.AreEqual("InvalidPermission", e.ErrorCode);
-                        Assert.AreEqual("The permission value is invalid.", e.Message.Split('\n')[0]);
-                    });
             }
         }
 
@@ -856,7 +824,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
                     // Act
                     Response<PathInfo> response = await file.SetPermissionsAsync(
-                        permissions: "0777",
+                        permissions: PathPermissions,
                         conditions: conditions);
 
                     // Assert
@@ -882,7 +850,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     // Act
                     await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         file.SetPermissionsAsync(
-                            permissions: "0777",
+                            permissions: PathPermissions,
                             conditions: conditions),
                         e => { });
                 }

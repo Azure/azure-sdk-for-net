@@ -454,14 +454,15 @@ namespace Azure.Storage.Files.DataLake.Samples
                 fileClient.Create();
 
                 // Set the Permissions of the file
-                fileClient.SetPermissions(permissions: "rwxrwxrwx");
+                PathPermissions pathPermissions = PathPermissions.ParseSymbolic("rwxrwxrwx");
+                fileClient.SetPermissions(permissions: pathPermissions);
                 #endregion Snippet:SampleSnippetDataLakeFileClient_SetPermissions
 
                 // Get Access Control List
-                PathAccessControl accessControlResponse = fileClient.GetAccessControl();
+                PathAccessControl accessControlResponse = fileClient.GetAccessControlList();
 
                 // Check Access Control permissions
-                Assert.AreEqual("rwxrwxrwx", accessControlResponse.Permissions);
+                Assert.AreEqual(pathPermissions, accessControlResponse.Permissions);
             }
             finally
             {
@@ -496,15 +497,17 @@ namespace Azure.Storage.Files.DataLake.Samples
                 fileClient.Create();
 
                 // Set Access Control List
-                fileClient.SetAccessControl("user::rwx,group::r--,mask::rwx,other::---");
+                IList<PathAccessControlEntry> accessControlList
+                    = PathAccessControlEntry.ParseList("user::rwx,group::r--,mask::rwx,other::---");
+                fileClient.SetAccessControlList(accessControlList);
                 #endregion Snippet:SampleSnippetDataLakeFileClient_SetAcls
                 #region Snippet:SampleSnippetDataLakeFileClient_GetAcls
                 // Get Access Control List
-                PathAccessControl accessControlResponse = fileClient.GetAccessControl();
+                PathAccessControl accessControlResponse = fileClient.GetAccessControlList();
                 #endregion Snippet:SampleSnippetDataLakeFileClient_GetAcls
 
                 // Check Access Control permissions
-                Assert.AreEqual("user::rwx,group::r--,mask::rwx,other::---", accessControlResponse.Acl);
+                Assert.AreEqual("user::rwx,group::r--,mask::rwx,other::---", accessControlResponse.AccessControlList);
             }
             finally
             {
