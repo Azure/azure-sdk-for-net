@@ -1,5 +1,7 @@
 # Azure.Core mocking samples
 
+**❗ NOTE:** Samples in this file apply only to `Azure.*` packages. 
+
 ## Creating a mock of the client using Moq
 
 You can use a combination of model factory and `Mock` class to create a mock of a client:

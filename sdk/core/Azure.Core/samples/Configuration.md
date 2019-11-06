@@ -1,5 +1,7 @@
 # Azure client configuration samples
 
+**NOTE:** Samples in this file apply only to `Azure.*` packages. 
+
 ## Configuring retry options
 
 To modify the retry options use the `Retry` property of client options class.

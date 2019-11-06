@@ -1,5 +1,7 @@
 # Azure.Core long-running operation samples
 
+**❗ NOTE:** Samples in this file apply only to `Azure.*` packages. 
+
 Some operations take long time to complete and require polling for their status. Methods starting long-running operations return `*Operation<T>` types.
 
 ## Awaiting completion of the operation
