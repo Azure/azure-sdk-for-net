@@ -22,5 +22,6 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public const string Succeeded = "Succeeded";
         public const string Failed = "Failed";
         public const string Canceled = "Canceled";
+        public const string Expiring = "Expiring";
     }
 }
