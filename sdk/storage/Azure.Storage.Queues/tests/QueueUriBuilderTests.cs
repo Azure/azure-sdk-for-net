@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core.Testing;
 using Azure.Storage.Queues.Tests;
 using Azure.Storage.Sas;
 using NUnit.Framework;
@@ -362,6 +363,34 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual("", queueUriBuilder.Query);
 
             Assert.AreEqual(originalUri, newUri);
+        }
+
+        [Test]
+        public void QueueUriBuilder_RegularUrl_CNAME()
+        {
+            var queueUriBUilder = new QueueUriBuilder(new Uri("http://www.contoso.com"));
+            Assert.AreEqual(string.Empty, queueUriBUilder.AccountName);
+        }
+
+        [Test]
+        public void QueueUriBuilder_MalformedSubdomain()
+        {
+            // core and queue swapped
+            var queueUriBuilder1 = new QueueUriBuilder(new Uri("https://account.core.queue.windows.net/queue"));
+
+            // account and queue swapped
+            var queueUriBuilder2 = new QueueUriBuilder(new Uri("https://queue.account.core.windows.net/queue"));
+
+            // wrong service
+            var queueUriBuilder3 = new QueueUriBuilder(new Uri("https://account.blob.core.windows.net/queue"));
+
+            // empty service
+            var queueUriBuilder4 = new QueueUriBuilder(new Uri("https://account./queue"));
+
+            Assert.AreEqual(string.Empty, queueUriBuilder1.AccountName);
+            Assert.AreEqual(string.Empty, queueUriBuilder2.AccountName);
+            Assert.AreEqual(string.Empty, queueUriBuilder3.AccountName);
+            Assert.AreEqual(string.Empty, queueUriBuilder4.AccountName);
         }
     }
 }
