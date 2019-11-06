@@ -3,19 +3,15 @@
 
 <#
   .SYNOPSIS
-    Performs the tasks needed to setup a service principal to perform authentication against 
-    Azure Active Directory and sets the roles needed to access Event Hubs resources.
-
-    It creates an Azure Event Hub Namespace and an Azure Event Hub using the specified names.
+    This script handles creation of the principal and the resources needed to run identity samples.
 
   .DESCRIPTION
-    This script handles creation of a service principal and assigns the role 
-    "Azure Event Hubs Data Owner" to the resource group whose name is passed in.
-
-    The script attempts creation of an Azure Event Hubs Namespace and an Azure Event Hub
-    using the names passed in as arguments.
+    It tries to retrieve an Azure Event Hubs Namespace, an Azure Event Hub and a service principal
+    using the names passed in as arguments. It attempts the creation of a resource when not found.
     
-    Upon completion, the script will output the principal information.
+    It assigns the 'Azure Event Hubs Data Owner' role to the created namespace.
+
+    Upon completion, the script will output the principal's sensitive information.
  
     For more detailed help, please use the -Help switch. 
 #>
@@ -85,13 +81,14 @@ function DisplayHelp
   $indent = "    "
 
   Write-Host "`n"
-  Write-Host "Creation of an Azure Active Directory Service Principal"
+  Write-Host "Creation of the Resources to Run Identity Samples"
   Write-Host ""
-  Write-Host "$($indent)This script handles creation of a service principal and assigns the role"
-  Write-Host "$($indent)'Azure Event Hubs Data Owner' to the resource group name passed as input."
+  Write-Host "$($indent)This script handles creation of the principal and the resources needed to run identity samples."
   Write-Host ""
-  Write-Host "$($indent)The script attempts creation of an Azure Event Hubs Namespace and an Azure Event Hub"
-  Write-Host "$($indent)using the names passed in as arguments."
+  Write-Host "$($indent)It tries to retrieve an Azure Event Hubs Namespace, an Azure Event Hub and a service principal"
+  Write-Host "$($indent)using the names passed in as arguments. It attempts the creation of a resource when not found."
+  Write-Host ""
+  Write-Host "$($indent)It assigns the 'Azure Event Hubs Data Owner' role to the created namespace."
   Write-Host ""
   Write-Host "$($indent)Upon completion, the script will output the principal's sensitive information."
   Write-Host ""
