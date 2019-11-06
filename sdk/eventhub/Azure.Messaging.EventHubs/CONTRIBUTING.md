@@ -66,7 +66,7 @@ In order to run the samples interactively, you'll need an Event Hubs namespace a
 
 ### Azure Identity Samples
 
-In order to run [Azure.Identity](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity) samples interactively, you'll need to have a service principal set up on the Azure Active Directory mapped to your subscription. The service principal will need to have the role ```Azure Event Hubs Data Owner``` associated with your Event Hubs namespace. 
+In order to run [Azure.Identity](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity) samples interactively, you'll need to have a service principal set up on the Azure Active Directory mapped to your subscription. The service principal will need to have the role `Azure Event Hubs Data Owner` associated with your Event Hubs namespace. 
 
 A [PowerShell script](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/assets/identity-tests-azure-setup.ps1) can be used to create the service principal.
 
