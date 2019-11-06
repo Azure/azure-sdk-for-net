@@ -176,6 +176,7 @@ Set-AzContext -SubscriptionId "$($subscription.Id)" -Scope "Process" | Out-Null
 
 Write-Host "`t...Requesting resource group"
 
+$createResourceGroup = $false
 $resourceGroup = (Get-AzResourceGroup -ResourceGroupName "$($ResourceGroupName)" -ErrorAction SilentlyContinue)
 
 if ($resourceGroup -eq $null)
