@@ -782,9 +782,13 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='databaseName'>
             /// The name of the database to failover.
             /// </param>
-            public static void Failover(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName)
+            /// <param name='replicaType'>
+            /// The type of replica to be failed over. Possible values include: 'Primary',
+            /// 'ReadableSecondary'
+            /// </param>
+            public static void Failover(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string replicaType = default(string))
             {
-                operations.FailoverAsync(resourceGroupName, serverName, databaseName).GetAwaiter().GetResult();
+                operations.FailoverAsync(resourceGroupName, serverName, databaseName, replicaType).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -803,12 +807,16 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='databaseName'>
             /// The name of the database to failover.
             /// </param>
+            /// <param name='replicaType'>
+            /// The type of replica to be failed over. Possible values include: 'Primary',
+            /// 'ReadableSecondary'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task FailoverAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task FailoverAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string replicaType = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.FailoverWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.FailoverWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, replicaType, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -1279,9 +1287,13 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='databaseName'>
             /// The name of the database to failover.
             /// </param>
-            public static void BeginFailover(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName)
+            /// <param name='replicaType'>
+            /// The type of replica to be failed over. Possible values include: 'Primary',
+            /// 'ReadableSecondary'
+            /// </param>
+            public static void BeginFailover(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string replicaType = default(string))
             {
-                operations.BeginFailoverAsync(resourceGroupName, serverName, databaseName).GetAwaiter().GetResult();
+                operations.BeginFailoverAsync(resourceGroupName, serverName, databaseName, replicaType).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1300,12 +1312,16 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='databaseName'>
             /// The name of the database to failover.
             /// </param>
+            /// <param name='replicaType'>
+            /// The type of replica to be failed over. Possible values include: 'Primary',
+            /// 'ReadableSecondary'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginFailoverAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginFailoverAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string replicaType = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginFailoverWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BeginFailoverWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, replicaType, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
