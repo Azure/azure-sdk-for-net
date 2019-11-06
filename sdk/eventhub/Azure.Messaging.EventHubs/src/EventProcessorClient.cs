@@ -54,7 +54,7 @@ namespace Azure.Messaging.EventHubs
         ///
         public Func<InitializePartitionProcessingContext, Task> InitializeProcessingForPartitionAsync
         {
-            protected get => _initializeProcessingForPartitionAsync;
+            get => _initializeProcessingForPartitionAsync;
             set => EnsureNotRunningAndInvoke(() => _initializeProcessingForPartitionAsync = value);
         }
 
@@ -64,7 +64,7 @@ namespace Azure.Messaging.EventHubs
         ///
         public Func<PartitionProcessingStoppedContext, Task> ProcessingForPartitionStoppedAsync
         {
-            protected get => _processingForPartitionStoppedAsync;
+            get => _processingForPartitionStoppedAsync;
             set => EnsureNotRunningAndInvoke(() => _processingForPartitionStoppedAsync = value);
         }
 
@@ -74,7 +74,7 @@ namespace Azure.Messaging.EventHubs
         ///
         public Func<EventProcessorEvent, Task> ProcessEventAsync
         {
-            protected get => _processEventAsync;
+            get => _processEventAsync;
             set => EnsureNotRunningAndInvoke(() => _processEventAsync = value);
         }
 
@@ -85,7 +85,7 @@ namespace Azure.Messaging.EventHubs
         ///
         public Func<ProcessorErrorContext, Task> ProcessExceptionAsync
         {
-            protected get => _processExceptionAsync;
+            get => _processExceptionAsync;
             set => EnsureNotRunningAndInvoke(() => _processExceptionAsync = value);
         }
 
