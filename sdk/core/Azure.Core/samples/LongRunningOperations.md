@@ -1,6 +1,6 @@
 # Azure.Core long-running operation samples
 
-**❗ NOTE:** Samples in this file only apply to `Azure.*` packages. 
+**❗ NOTE:** Samples in this file apply only to packages that follow [Azure SDK Design Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html). Names of such packages usually start with `Azure.`. 
 
 Some operations take long time to complete and require polling for their status. Methods starting long-running operations return `*Operation<T>` types.
 
