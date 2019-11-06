@@ -104,7 +104,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         public AmqpClient(string host,
                           string eventHubName,
-                          TokenCredential credential,
+                          EventHubTokenCredential credential,
                           EventHubConnectionOptions clientOptions) : this(host, eventHubName, credential, clientOptions, null, null)
         {
         }
@@ -131,7 +131,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         protected AmqpClient(string host,
                              string eventHubName,
-                             TokenCredential credential,
+                             EventHubTokenCredential credential,
                              EventHubConnectionOptions clientOptions,
                              AmqpConnectionScope connectionScope,
                              AmqpMessageConverter messageConverter)
@@ -153,7 +153,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                 }.Uri;
 
                 EventHubName = eventHubName;
-                Credential = new EventHubTokenCredential(credential, ServiceEndpoint.ToString());
+                Credential = credential;
                 MessageConverter = messageConverter ?? new AmqpMessageConverter();
                 ConnectionScope = connectionScope ?? new AmqpConnectionScope(ServiceEndpoint, eventHubName, credential, clientOptions.TransportType, clientOptions.Proxy);
                 ManagementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(timeout => ConnectionScope.OpenManagementLinkAsync(timeout, CancellationToken.None), link => link.SafeClose());

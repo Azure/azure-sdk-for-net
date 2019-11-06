@@ -161,7 +161,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         public AmqpConnectionScope(Uri serviceEndpoint,
                                    string eventHubName,
-                                   TokenCredential credential,
+                                   EventHubTokenCredential credential,
                                    TransportType transport,
                                    IWebProxy proxy,
                                    string identifier = default)
