@@ -5,7 +5,7 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// </summary>
-    public struct RequestStatistics
+    public struct DocumentBatchStatistics
     {
         /// <summary>
         /// Gets or sets number of documents submitted in the request.

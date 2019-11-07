@@ -49,35 +49,31 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
             };
 
-            var resultsPages = client.DetectLanguages(inputs, showStats: true).AsPages();
+            DocumentResultCollection<DetectedLanguage> results = client.DetectLanguages(inputs, showStats: true);
 
             int i = 0;
-            foreach (var resultsPage in resultsPages)
+            Debug.WriteLine($"Results of Azure Text Analytics \"Detect Language\" Model, version: \"{results.ModelVersion}\"");
+            Debug.WriteLine("");
+
+            foreach (var result in results)
             {
-                TextAnalyticsResultPage<DetectedLanguage> page = (TextAnalyticsResultPage<DetectedLanguage>)resultsPage;
+                var document = inputs[i++];
 
-                Debug.WriteLine($"Results of Azure Text Analytics \"Detect Language\" Model, version: \"{page.ModelVersion}\"");
-                Debug.WriteLine("");
+                Debug.WriteLine($"On document (Id={document.Id}, Hint=\"{document.Hint}\", Text=\"{document.Text}\"):");
+                Debug.WriteLine($"    Detected language {result[0].Name} with confidence {result[0].Score:0.00}.");
 
-                foreach (var result in page.DocumentResults)
-                {
-                    var document = inputs[i++];
-                    Debug.WriteLine($"On document (Id={document.Id}, Hint=\"{document.Hint}\", Text=\"{document.Text}\"):");
-                    Debug.WriteLine($"    Detected language {result.Predictions[0].Name} with confidence {result.Predictions[0].Score:0.00}.");
-
-                    Debug.WriteLine($"    Document statistics:");
-                    Debug.WriteLine($"        Character count: {result.Statistics.CharacterCount}");
-                    Debug.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
-                    Debug.WriteLine("");
-                }
-
-                Debug.WriteLine($"Batch operation statistics:");
-                Debug.WriteLine($"    Document count: {page.Statistics.DocumentCount}");
-                Debug.WriteLine($"    Valid document count: {page.Statistics.ValidDocumentCount}");
-                Debug.WriteLine($"    Erroroneous document count:{page.Statistics.ErroneousDocumentCount}");
-                Debug.WriteLine($"    Transaction count:{page.Statistics.TransactionCount}");
+                Debug.WriteLine($"    Document statistics:");
+                Debug.WriteLine($"        Character count: {result.Statistics.CharacterCount}");
+                Debug.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
                 Debug.WriteLine("");
             }
+
+            Debug.WriteLine($"Batch operation statistics:");
+            Debug.WriteLine($"    Document count: {results.Statistics.DocumentCount}");
+            Debug.WriteLine($"    Valid document count: {results.Statistics.ValidDocumentCount}");
+            Debug.WriteLine($"    Erroroneous document count:{results.Statistics.ErroneousDocumentCount}");
+            Debug.WriteLine($"    Transaction count:{results.Statistics.TransactionCount}");
+            Debug.WriteLine("");
         }
     }
 }

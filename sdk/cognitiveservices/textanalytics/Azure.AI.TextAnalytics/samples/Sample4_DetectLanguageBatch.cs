@@ -34,7 +34,7 @@ namespace Azure.AI.TextAnalytics.Samples
             {
                 Debug.WriteLine($"    {input}");
             }
-            var languages = client.DetectLanguages(inputs);
+            var languages = client.DetectLanguages(inputs).Value;
 
             Debug.WriteLine($"Detected languages are:");
             foreach (var language in languages)

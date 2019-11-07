@@ -28,7 +28,28 @@ namespace Azure.AI.TextAnalytics
         {
         }
 
-        // TODO: How are we doing AAD auth?
+        /// <summary>
+        /// </summary>
+        /// <param name="endpoint"></param>
+        /// <param name="credential"></param>
+        public TextAnalyticsClient(Uri endpoint, TokenCredential credential)
+            : this(endpoint, credential, new TextAnalyticsClientOptions())
+        {
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="endpoint"></param>
+        /// <param name="credential"></param>
+        /// <param name="options"></param>
+        public TextAnalyticsClient(Uri endpoint, TokenCredential credential, TextAnalyticsClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            Argument.AssertNotNull(options, nameof(options));
+
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// </summary>
@@ -83,13 +104,13 @@ namespace Azure.AI.TextAnalytics
                 switch (response.Status)
                 {
                     case 200:
-                        TextAnalyticsResultPage<DetectedLanguage> result = await CreateLanguageResponseAsync(response, cancellationToken).ConfigureAwait(false);
+                        DocumentResultCollection<DetectedLanguage> result = await CreateDetectLanguageResponseAsync(response, cancellationToken).ConfigureAwait(false);
                         if (result.Errors.Count > 0)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
                             throw await response.CreateRequestFailedExceptionAsync(result.Errors[0].Message).ConfigureAwait(false);
                         }
-                        return CreateDetectedLanguageResponseSimple(response, result.DocumentResults[0].Predictions[0]);
+                        return CreateDetectedLanguageResponseSimple(response, result[0][0]);
                     default:
                         throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
                 }
@@ -123,13 +144,13 @@ namespace Azure.AI.TextAnalytics
                 switch (response.Status)
                 {
                     case 200:
-                        TextAnalyticsResultPage<DetectedLanguage> result = CreateDetectLanguageResponse(response);
+                        DocumentResultCollection<DetectedLanguage> result = CreateDetectLanguageResponse(response);
                         if (result.Errors.Count > 0)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
                             throw response.CreateRequestFailedException(result.Errors[0].Message);
                         }
-                        return CreateDetectedLanguageResponseSimple(response, result.DocumentResults[0].Predictions[0]);
+                        return CreateDetectedLanguageResponseSimple(response, result[0][0]);
                     default:
                         throw response.CreateRequestFailedException();
                 }
@@ -173,13 +194,34 @@ namespace Azure.AI.TextAnalytics
         /// <param name="countryHint"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual AsyncPageable<DetectedLanguage> DetectLanguagesAsync(List<string> inputs, string countryHint = "en", CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IEnumerable<DetectedLanguage>>> DetectLanguagesAsync(IEnumerable<string> inputs, string countryHint = "en", CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
-            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => GetDetectedLanguagesPageAsync(inputs, countryHint, cancellationToken));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.GetDetectedLanguagesPage");
+            scope.Start();
+
+            try
+            {
+                using Request request = CreateDetectedLanguageBatchRequest(inputs, countryHint);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
+
+                switch (response.Status)
+                {
+                    case 200:
+                        return await CreateDetectLanguageResponseSimpleAsync(response, cancellationToken).ConfigureAwait(false);
+                    default:
+                        throw await response.CreateRequestFailedExceptionAsync();
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        // Note: for simple case, we can take a list of strings as inputs.
+        // Note: for simple case, proposal is to take a list of strings as inputs.
         // We should provide an overload that lets you take a list of LanguageInputs, to handling country hint and id, if needed.
         // TODO: revisit whether the return type is too complex for a simple overload.  Should it be included in a kitchen sink method instead?
         /// <summary>
@@ -188,61 +230,23 @@ namespace Azure.AI.TextAnalytics
         /// <param name="countryHint"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Pageable<DetectedLanguage> DetectLanguages(List<string> inputs, string countryHint = "en", CancellationToken cancellationToken = default)
+        public virtual Response<IEnumerable<DetectedLanguage>> DetectLanguages(IEnumerable<string> inputs, string countryHint = "en", CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
-            return PageResponseEnumerator.CreateEnumerable(nextLink => GetDetectedLanguagesPage(inputs, countryHint, cancellationToken));
-        }
-
-        private async Task<Page<DetectedLanguage>> GetDetectedLanguagesPageAsync(List<string> inputs, string countryHint, CancellationToken cancellationToken = default)
-        {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.GetDetectedLanguagesPage");
             scope.Start();
 
             try
             {
-                using Request request = CreateDetectedLanguageBatchRequestSimple(inputs, countryHint);
-                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
-
-                switch (response.Status)
-                {
-                    case 200:
-                        // TODO: we should probably rip out the simple stuff now.  Look into that.
-                        ResultBatch<DetectedLanguage> resultBatch = await TextAnalyticsServiceSerializer.ParseDetectedLanguageBatchSimpleAsync(response, cancellationToken).ConfigureAwait(false);
-                        return Page<DetectedLanguage>.FromValues(resultBatch.Values, resultBatch.NextBatchLink, response);
-
-                    // TODO: what is exception handling story for case where some values come back with an error and some don't?
-                    default:
-                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        private Page<DetectedLanguage> GetDetectedLanguagesPage(List<string> inputs, string countryHint, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.GetDetectedLanguagesPage");
-            scope.Start();
-
-            try
-            {
-                using Request request = CreateDetectedLanguageBatchRequestSimple(inputs, countryHint);
+                using Request request = CreateDetectedLanguageBatchRequest(inputs, countryHint);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
-                switch (response.Status)
+                return response.Status switch
                 {
-                    case 200:
-                        ResultBatch<DetectedLanguage> resultBatch = TextAnalyticsServiceSerializer.ParseDetectedLanguageBatchSimple(response);
-                        return Page<DetectedLanguage>.FromValues(resultBatch.Values, resultBatch.NextBatchLink, response);
-
-                    // TODO: what is exception handling story for case where some values come back with an error and some don't?
-                    default:
-                        throw response.CreateRequestFailedException();
-                }
+                    // TODO: for this, we'll need to stitch back together the errors, as ids have been stripped.
+                    200 => CreateDetectLanguageResponseSimple(response),
+                    _ => throw response.CreateRequestFailedException(),
+                };
             }
             catch (Exception e)
             {
@@ -251,8 +255,71 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        // TODO: can we fold this into advanced version?
-        private Request CreateDetectedLanguageBatchRequestSimple(List<string> inputs, string countryHint)
+        /// <summary>
+        /// </summary>
+        /// <param name="inputs"></param>
+        /// <param name="showStats"></param>
+        /// <param name="modelVersion"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response<DocumentResultCollection<DetectedLanguage>>> DetectLanguagesAsync(IEnumerable<DocumentInput> inputs, bool showStats = false, string modelVersion = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(inputs, nameof(inputs));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.GetDetectedLanguagesPage");
+            scope.Start();
+
+            try
+            {
+                using Request request = CreateDetectedLanguageBatchRequest(inputs, showStats, modelVersion);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
+
+                return response.Status switch
+                {
+                    200 => await CreateDetectLanguageResponseAsync(response, cancellationToken).ConfigureAwait(false),
+                    _ => throw await response.CreateRequestFailedExceptionAsync(),
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="inputs"></param>
+        /// <param name="showStats"></param>
+        /// <param name="modelVersion"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response<DocumentResultCollection<DetectedLanguage>> DetectLanguages(IEnumerable<DocumentInput> inputs, bool showStats = false, string modelVersion = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(inputs, nameof(inputs));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.GetDetectedLanguagesPage");
+            scope.Start();
+
+            try
+            {
+                using Request request = CreateDetectedLanguageBatchRequest(inputs, showStats, modelVersion);
+                Response response = _pipeline.SendRequest(request, cancellationToken);
+
+                return response.Status switch
+                {
+                    200 => CreateDetectLanguageResponse(response),
+                    _ => throw response.CreateRequestFailedException(),
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private Request CreateDetectedLanguageBatchRequest(IEnumerable<string> inputs, string countryHint)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
@@ -271,83 +338,7 @@ namespace Azure.AI.TextAnalytics
             return request;
         }
 
-        /// <summary>
-        /// </summary>
-        /// <param name="inputs"></param>
-        /// <param name="showStats"></param>
-        /// <param name="modelVersion"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public virtual AsyncPageable<DocumentResult<DetectedLanguage>> DetectLanguagesAsync(List<DocumentInput> inputs, bool showStats = false, string modelVersion = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(inputs, nameof(inputs));
-            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => GetDetectedLanguagesPageAsync(inputs, showStats, modelVersion, cancellationToken));
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="inputs"></param>
-        /// <param name="showStats"></param>
-        /// <param name="modelVersion"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public virtual Pageable<DocumentResult<DetectedLanguage>> DetectLanguages(List<DocumentInput> inputs, bool showStats = false, string modelVersion = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(inputs, nameof(inputs));
-            return PageResponseEnumerator.CreateEnumerable(nextLink => GetDetectedLanguagesPage(inputs, showStats, modelVersion, cancellationToken));
-        }
-
-        private async Task<Page<DocumentResult<DetectedLanguage>>> GetDetectedLanguagesPageAsync(List<DocumentInput> inputs, bool showStats, string modelVersion, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.GetDetectedLanguagesPage");
-            scope.Start();
-
-            try
-            {
-                using Request request = CreateDetectedLanguageBatchRequest(inputs, showStats, modelVersion);
-                Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
-
-                switch (response.Status)
-                {
-                    case 200:
-                        return await TextAnalyticsServiceSerializer.DeserializeDetectLanguageResponseAsync(response, cancellationToken).ConfigureAwait(false);
-                    default:
-                        throw await response.CreateRequestFailedExceptionAsync();
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        private TextAnalyticsResultPage<DetectedLanguage> GetDetectedLanguagesPage(List<DocumentInput> inputs, bool showStats, string modelVersion, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.GetDetectedLanguagesPage");
-            scope.Start();
-
-            try
-            {
-                using Request request = CreateDetectedLanguageBatchRequest(inputs, showStats, modelVersion);
-                Response response = _pipeline.SendRequest(request, cancellationToken);
-
-                switch (response.Status)
-                {
-                    case 200:
-                        return TextAnalyticsServiceSerializer.DeserializeDetectLanguageResponse(response);
-                    default:
-                        throw response.CreateRequestFailedException();
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        private Request CreateDetectedLanguageBatchRequest(List<DocumentInput> inputs, bool showStats, string modelVersion)
+        private Request CreateDetectedLanguageBatchRequest(IEnumerable<DocumentInput> inputs, bool showStats, string modelVersion)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,15 +16,26 @@ namespace Azure.AI.TextAnalytics
         private const string ShowStats = "showStats";
         private const string ModelVersion = "model-version";
 
-        private static async Task<TextAnalyticsResultPage<DetectedLanguage>> CreateLanguageResponseAsync(Response response, CancellationToken cancellation)
+        private static async Task<Response<DocumentResultCollection<DetectedLanguage>>> CreateDetectLanguageResponseAsync(Response response, CancellationToken cancellation)
         {
-            TextAnalyticsResultPage<DetectedLanguage> result = await TextAnalyticsServiceSerializer.DeserializeDetectLanguageResponseAsync(response, cancellation).ConfigureAwait(false);
+            DocumentResultCollection<DetectedLanguage> result = await TextAnalyticsServiceSerializer.DeserializeDetectLanguageResponseAsync(response.ContentStream, cancellation).ConfigureAwait(false);
             return Response.FromValue(result, response);
         }
 
-        private static Response<TextAnalyticsResultPage<DetectedLanguage>> CreateDetectLanguageResponse(Response response)
+        private static Response<DocumentResultCollection<DetectedLanguage>> CreateDetectLanguageResponse(Response response)
         {
-            return Response.FromValue(TextAnalyticsServiceSerializer.DeserializeDetectLanguageResponse(response), response);
+            return Response.FromValue(TextAnalyticsServiceSerializer.DeserializeDetectLanguageResponse(response.ContentStream), response);
+        }
+
+        private static async Task<Response<IEnumerable<DetectedLanguage>>> CreateDetectLanguageResponseSimpleAsync(Response response, CancellationToken cancellation)
+        {
+            IEnumerable<DetectedLanguage> result = await TextAnalyticsServiceSerializer.DeserializeDetectedLanguageBatchSimpleAsync(response.ContentStream, cancellation).ConfigureAwait(false);
+            return Response.FromValue(result, response);
+        }
+
+        private static Response<IEnumerable<DetectedLanguage>> CreateDetectLanguageResponseSimple(Response response)
+        {
+            return Response.FromValue(TextAnalyticsServiceSerializer.DeserializeDetectedLanguageBatchSimple(response.ContentStream), response);
         }
 
         private static Response<DetectedLanguage> CreateDetectedLanguageResponseSimple(Response response, DetectedLanguage detectedLanguage)
