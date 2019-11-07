@@ -529,129 +529,6 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubConsumerClient.ReadLastEnqueuedEventInformation" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public void ReadLastEnqueuedEventInformationRespectsTheTrackingEnabledFlag(bool trackingEnabled)
-        {
-            var consumerOptions = new EventHubConsumerClientOptions { TrackLastEnqueuedEventInformation = trackingEnabled };
-            var mockConnection = new MockConnection();
-            var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "2", EventPosition.FromOffset(12), mockConnection, consumerOptions);
-
-            if (trackingEnabled)
-            {
-                var metrics = consumer.ReadLastEnqueuedEventInformation();
-                Assert.That(metrics.EventHubName, Is.Not.Null.And.Not.Empty, "The Event Hub name should be present.");
-                Assert.That(metrics.PartitionId, Is.Not.Null.And.Not.Empty, "The partition id should be present.");
-            }
-            else
-            {
-                Assert.That(() => consumer.ReadLastEnqueuedEventInformation(), Throws.TypeOf<InvalidOperationException>(), "Last enqueued event information cannot be read if tracking is not enabled.");
-            }
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubConsumerClient.ReadLastEnqueuedEventInformation" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        public void ReadLastEnqueuedEventInformationPopulatesFromTheLastReceivedEvent()
-        {
-            var lastEvent = new EventData
-            (
-                eventBody: Array.Empty<byte>(),
-                lastPartitionSequenceNumber: 12345,
-                lastPartitionOffset: 89101,
-                lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T00:00:00Z"),
-                lastPartitionInformationRetrievalTime: DateTimeOffset.Parse("2012-03-04T08:49:00Z")
-            );
-
-            var eventHub = "someHub";
-            var partition = "PART";
-            var consumerOptions = new EventHubConsumerClientOptions { TrackLastEnqueuedEventInformation = true };
-            var transportMock = new ObservableTransportConsumerMock { LastReceivedEvent = lastEvent };
-            var mockConnection = new MockConnection(() => transportMock, "namespace", eventHub);
-            var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, partition, EventPosition.FromOffset(12), mockConnection, consumerOptions);
-            var metrics = consumer.ReadLastEnqueuedEventInformation();
-
-            Assert.That(metrics.EventHubName, Is.EqualTo(eventHub), "The Event Hub name should match.");
-            Assert.That(metrics.PartitionId, Is.EqualTo(partition), "The partition id should match.");
-            Assert.That(metrics.LastEnqueuedSequenceNumber, Is.EqualTo(lastEvent.LastPartitionSequenceNumber), "The sequence number should match.");
-            Assert.That(metrics.LastEnqueuedOffset, Is.EqualTo(lastEvent.LastPartitionOffset), "The offset should match.");
-            Assert.That(metrics.LastEnqueuedTime, Is.EqualTo(lastEvent.LastPartitionEnqueuedTime), "The enqueue time should match.");
-            Assert.That(metrics.InformationReceived, Is.EqualTo(lastEvent.LastPartitionInformationRetrievalTime), "The retrieval time should match.");
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubConsumerClient.CloseAsync" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        [TestCase(-32767)]
-        [TestCase(-1)]
-        [TestCase(0)]
-        public void ReceiveAsyncValidatesTheMaximumCount(int maximumMessageCount)
-        {
-            var transportConsumer = new ObservableTransportConsumerMock();
-            var mockConnection = new MockConnection(() => transportConsumer);
-            var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "0", EventPosition.FromOffset(12), mockConnection);
-            var expectedWaitTime = TimeSpan.FromDays(1);
-
-            using var cancellation = new CancellationTokenSource();
-            Assert.That(async () => await consumer.ReceiveAsync(maximumMessageCount, expectedWaitTime, cancellation.Token), Throws.InstanceOf<ArgumentException>());
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubConsumerClient.CloseAsync" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        [TestCase(-1)]
-        [TestCase(-100)]
-        [TestCase(-1000)]
-        [TestCase(-10000)]
-        public void ReceiveAsyncValidatesTheMaximumWaitTime(int timeSpanDelta)
-        {
-            var transportConsumer = new ObservableTransportConsumerMock();
-            var mockConnection = new MockConnection(() => transportConsumer);
-            var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "0", EventPosition.FromOffset(12), mockConnection);
-            var expectedWaitTime = TimeSpan.FromMilliseconds(timeSpanDelta);
-
-            using var cancellation = new CancellationTokenSource();
-            Assert.That(async () => await consumer.ReceiveAsync(32, expectedWaitTime, cancellation.Token), Throws.InstanceOf<ArgumentException>());
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubConsumerClient.CloseAsync" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        public async Task ReceiveAsyncInvokesTheTransportConsumer()
-        {
-            var options = new EventHubConsumerClientOptions { DefaultMaximumReceiveWaitTime = TimeSpan.FromMilliseconds(8) };
-            var transportConsumer = new ObservableTransportConsumerMock();
-            var mockConnection = new MockConnection(() => transportConsumer);
-            var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "0", EventPosition.FromOffset(12), mockConnection, options);
-            var expectedMessageCount = 45;
-
-            using var cancellation = new CancellationTokenSource();
-            await consumer.ReceiveAsync(expectedMessageCount, null, cancellation.Token);
-
-            (var actualMessageCount, TimeSpan? actualWaitTime) = transportConsumer.ReceiveCalledWith;
-
-            Assert.That(actualMessageCount, Is.EqualTo(expectedMessageCount), "The message counts should match.");
-            Assert.That(actualWaitTime, Is.EqualTo(options.DefaultMaximumReceiveWaitTime), "The wait time should match.");
-        }
-
-        /// <summary>
         ///   Verifies functionality of the <see cref="EventHubConsumerClient.CloseAsync" />
         ///   method.
         /// </summary>
@@ -729,6 +606,50 @@ namespace Azure.Messaging.EventHubs.Tests
                 Assert.That(enumerator, Is.Not.Null, "The enumerable should be able to produce an enumerator.");
                 Assert.That(enumerator, Is.InstanceOf<IAsyncEnumerator<PartitionEvent>>(), "The enumerator should be of the correct type.");
             }
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubConsumerClient.ReadEventsFromPartitionAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void ReadEventsFromPartitionAsyncThrowsIfConsumerClosedBeforeRead()
+        {
+            var events = new List<EventData>
+            {
+               new EventData(Encoding.UTF8.GetBytes("One")),
+               new EventData(Encoding.UTF8.GetBytes("Two")),
+               new EventData(Encoding.UTF8.GetBytes("Three")),
+               new EventData(Encoding.UTF8.GetBytes("Four")),
+               new EventData(Encoding.UTF8.GetBytes("Five"))
+            };
+
+            var transportConsumer = new PublishingTransportConsumerMock(events);
+            var mockConnection = new MockConnection(() => transportConsumer);
+            var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "0", EventPosition.FromOffset(12), mockConnection);
+            var receivedEvents = 0;
+
+            using var cancellation = new CancellationTokenSource();
+            cancellation.CancelAfter(250);
+
+            Assert.That(async () =>
+            {
+                await consumer.CloseAsync(cancellation.Token);
+
+                await foreach (PartitionEvent partitionEvent in consumer.ReadEventsFromPartitionAsync("0", EventPosition.FromOffset(12), cancellation.Token))
+                {
+                    if (partitionEvent.Data == null)
+                    {
+                        break;
+                    }
+
+                    ++receivedEvents;
+                }
+            }, Throws.InstanceOf<EventHubsClientClosedException>(), "The iterator should have indicated the consumer was closed.");
+
+            Assert.That(cancellation.IsCancellationRequested, Is.False, "The cancellation should not have been requested.");
+            Assert.That(receivedEvents, Is.EqualTo(0), "There should have been no events received.");
         }
 
         /// <summary>
@@ -1447,38 +1368,6 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
             Assert.That(receiveCalls, Is.EqualTo(1), "The retry policy should have been respected.");
             Assert.That(receivedEvents, Is.EqualTo(0), "No events should have been received.");
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubConsumerClient.CloseAsync" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        public async Task CloseAsyncClosesTheTransportProducer()
-        {
-            var transportConsumer = new ObservableTransportConsumerMock();
-            var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "0", EventPosition.Earliest, new MockConnection(() => transportConsumer));
-
-            await consumer.CloseAsync();
-
-            Assert.That(transportConsumer.WasCloseCalled, Is.True);
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubConsumerClient.Close" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        public void CloseClosesTheTransportProducer()
-        {
-            var transportConsumer = new ObservableTransportConsumerMock();
-            var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "0", EventPosition.Earliest, new MockConnection(() => transportConsumer));
-
-            consumer.Close();
-
-            Assert.That(transportConsumer.WasCloseCalled, Is.True);
         }
 
         /// <summary>

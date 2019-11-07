@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,13 +14,13 @@ namespace Azure.Messaging.EventHubs.Samples
     ///   An example of consuming events from all Event Hub partitions at once, using the Event Processor.
     /// </summary>
     ///
-    public class Sample12_ConsumeEventsWithEventProcessor : IEventHubsSample
+    public class Sample11_ConsumeEventsWithEventProcessor : IEventHubsSample
     {
         /// <summary>
         ///   The name of the sample.
         /// </summary>
         ///
-        public string Name { get; } = nameof(Sample12_ConsumeEventsWithEventProcessor);
+        public string Name { get; } = nameof(Sample11_ConsumeEventsWithEventProcessor);
 
         /// <summary>
         ///   A short description of the sample.
