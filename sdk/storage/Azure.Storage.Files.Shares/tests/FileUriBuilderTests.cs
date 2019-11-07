@@ -46,6 +46,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Assert
             Assert.AreEqual("https", fileUriBuilder.Scheme);
             Assert.AreEqual("account.file.core.windows.net", fileUriBuilder.Host);
+            Assert.AreEqual("account", fileUriBuilder.AccountName);
             Assert.AreEqual(443, fileUriBuilder.Port);
             Assert.AreEqual("", fileUriBuilder.ShareName);
             Assert.AreEqual("", fileUriBuilder.DirectoryOrFilePath);
@@ -59,7 +60,7 @@ namespace Azure.Storage.Files.Shares.Test
         public void FileUriBuilder_ShareTest()
         {
             // Arrange
-            var uriString = "https://account.core.file.windows.net/share?restype=share";
+            var uriString = "https://account.file.core.windows.net/share?restype=share";
             var originalUri = new UriBuilder(uriString);
 
             // Act
@@ -68,7 +69,8 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Assert
             Assert.AreEqual("https", fileUriBuilder.Scheme);
-            Assert.AreEqual("account.core.file.windows.net", fileUriBuilder.Host);
+            Assert.AreEqual("account.file.core.windows.net", fileUriBuilder.Host);
+            Assert.AreEqual("account", fileUriBuilder.AccountName);
             Assert.AreEqual(443, fileUriBuilder.Port);
             Assert.AreEqual("share", fileUriBuilder.ShareName);
             Assert.AreEqual("", fileUriBuilder.DirectoryOrFilePath);
@@ -93,6 +95,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Assert
             Assert.AreEqual("https", fileUriBuilder.Scheme);
             Assert.AreEqual("account.file.core.windows.net", fileUriBuilder.Host);
+            Assert.AreEqual("account", fileUriBuilder.AccountName);
             Assert.AreEqual(443, fileUriBuilder.Port);
             Assert.AreEqual("share", fileUriBuilder.ShareName);
             Assert.AreEqual("path", fileUriBuilder.DirectoryOrFilePath);
@@ -130,6 +133,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Assert
             Assert.AreEqual("https", fileUriBuilder.Scheme);
             Assert.AreEqual("account.file.core.windows.net", fileUriBuilder.Host);
+            Assert.AreEqual("account", fileUriBuilder.AccountName);
             Assert.AreEqual(443, fileUriBuilder.Port);
             Assert.AreEqual("share", fileUriBuilder.ShareName);
             Assert.AreEqual("", fileUriBuilder.DirectoryOrFilePath);
@@ -153,6 +157,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Assert
             Assert.AreEqual("https", fileUriBuilder.Scheme);
             Assert.AreEqual("account.file.core.windows.net", fileUriBuilder.Host);
+            Assert.AreEqual("account", fileUriBuilder.AccountName);
             Assert.AreEqual(443, fileUriBuilder.Port);
             Assert.AreEqual("share", fileUriBuilder.ShareName);
             Assert.AreEqual("", fileUriBuilder.DirectoryOrFilePath);
@@ -173,6 +178,35 @@ namespace Azure.Storage.Files.Shares.Test
             Assert.AreEqual("comp=list", fileUriBuilder.Query);
 
             Assert.AreEqual(originalUri, newUri);
+        }
+
+        [Test]
+        public void FileUriBuilder_RegularUrl_CNAME()
+        {
+            var shareUriBuilder = new ShareUriBuilder(new Uri("http://www.contoso.com"));
+            Assert.AreEqual(string.Empty, shareUriBuilder.AccountName);
+        }
+
+        [Test]
+        public void FileUriBuilder_MalformedSubdomain()
+        {
+            // core and file swapped
+            var shareUriBuilder1 = new ShareUriBuilder(new Uri("https://account.core.file.windows.net/share/dir"));
+
+            // account and file swapped
+            var shareUriBuilder2 = new ShareUriBuilder(new Uri("https://file.account.core.windows.net/share/dir"));
+
+            // wrong service
+            var shareUriBuilder3 = new ShareUriBuilder(new Uri("https://account.blob.core.windows.net/share/dir"));
+
+            // empty service
+            var shareUriBuilder4 = new ShareUriBuilder(new Uri("https://account./share/dir"));
+
+            Assert.AreEqual(string.Empty, shareUriBuilder1.AccountName);
+            Assert.AreEqual(string.Empty, shareUriBuilder2.AccountName);
+            Assert.AreEqual(string.Empty, shareUriBuilder3.AccountName);
+            Assert.AreEqual(string.Empty, shareUriBuilder4.AccountName);
+
         }
     }
 }

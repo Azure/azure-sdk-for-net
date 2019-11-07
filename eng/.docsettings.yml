@@ -26,7 +26,7 @@ known_presence_issues:
   - ['sdk/operationalinsights/Microsoft.Azure.OperationalInsights','#5499']
   - ['sdk/hdinsight/Microsoft.Azure.HDInsight.Job','#5499']
   - ['sdk/alertsmanagement/Microsoft.Azure.Management.AlertsManagement','#5499']
-  - ['sdk/applicationinsights/Microsoft.Azure.ApplicationInsights','#5499']
+  - ['sdk/applicationinsights/Microsoft.Azure.ApplicationInsights.Query','#5499']
   - ['sdk/containerregistry/Microsoft.Azure.ContainerRegistry','#5499']
   - ['sdk/cognitiveservices/Language.LUIS.Runtime','#5499']
   - ['sdk/cognitiveservices/Search.BingEntitySearch','#5499']

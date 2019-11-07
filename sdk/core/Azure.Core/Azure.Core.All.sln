@@ -45,8 +45,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Key
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Secrets", "..\..\keyvault\Azure.Security.KeyVault.Secrets\src\Azure.Security.KeyVault.Secrets.csproj", "{E65C48A9-963C-441B-BF3A-1A57B4AA01AC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Secrets.Samples", "..\..\keyvault\Azure.Security.KeyVault.Secrets\samples\Azure.Security.KeyVault.Secrets.Samples.csproj", "{370E5A97-ABA2-4442-AC39-7EFE07EEA144}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Secrets.Tests", "..\..\keyvault\Azure.Security.KeyVault.Secrets\tests\Azure.Security.KeyVault.Secrets.Tests.csproj", "{A1A9A9D6-7177-4BB6-8B25-9E309377DBF5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs", "..\..\storage\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj", "{3131C71B-EB15-47E3-BB6D-32399D420292}"
@@ -359,18 +357,6 @@ Global
 		{E65C48A9-963C-441B-BF3A-1A57B4AA01AC}.Release|x64.Build.0 = Release|Any CPU
 		{E65C48A9-963C-441B-BF3A-1A57B4AA01AC}.Release|x86.ActiveCfg = Release|Any CPU
 		{E65C48A9-963C-441B-BF3A-1A57B4AA01AC}.Release|x86.Build.0 = Release|Any CPU
-		{370E5A97-ABA2-4442-AC39-7EFE07EEA144}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{370E5A97-ABA2-4442-AC39-7EFE07EEA144}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{370E5A97-ABA2-4442-AC39-7EFE07EEA144}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{370E5A97-ABA2-4442-AC39-7EFE07EEA144}.Debug|x64.Build.0 = Debug|Any CPU
-		{370E5A97-ABA2-4442-AC39-7EFE07EEA144}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{370E5A97-ABA2-4442-AC39-7EFE07EEA144}.Debug|x86.Build.0 = Debug|Any CPU
-		{370E5A97-ABA2-4442-AC39-7EFE07EEA144}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{370E5A97-ABA2-4442-AC39-7EFE07EEA144}.Release|Any CPU.Build.0 = Release|Any CPU
-		{370E5A97-ABA2-4442-AC39-7EFE07EEA144}.Release|x64.ActiveCfg = Release|Any CPU
-		{370E5A97-ABA2-4442-AC39-7EFE07EEA144}.Release|x64.Build.0 = Release|Any CPU
-		{370E5A97-ABA2-4442-AC39-7EFE07EEA144}.Release|x86.ActiveCfg = Release|Any CPU
-		{370E5A97-ABA2-4442-AC39-7EFE07EEA144}.Release|x86.Build.0 = Release|Any CPU
 		{A1A9A9D6-7177-4BB6-8B25-9E309377DBF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A1A9A9D6-7177-4BB6-8B25-9E309377DBF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1A9A9D6-7177-4BB6-8B25-9E309377DBF5}.Debug|x64.ActiveCfg = Debug|Any CPU

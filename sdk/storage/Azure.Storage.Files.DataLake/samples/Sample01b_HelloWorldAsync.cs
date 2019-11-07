@@ -18,7 +18,154 @@ namespace Azure.Storage.Files.DataLake.Samples
     public class Sample01b_HelloWorldAsync : SampleTest
     {
         /// <summary>
+        /// Create a DataLake File using a DataLakeSystem
+        /// </summary>
+        [Test]
+        public async Task CreateFileClientAsync_Filesystem()
+        {
+            // Make StorageSharedKeyCredential to pass to the serviceClient
+            string storageAccountName = StorageAccountName;
+            string storageAccountKey = StorageAccountKey;
+            Uri serviceUri = StorageAccountBlobUri;
+
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(storageAccountName, storageAccountKey);
+
+            // Create DataLakeServiceClient using StorageSharedKeyCredentials
+            DataLakeServiceClient serviceClient = new DataLakeServiceClient(serviceUri, sharedKeyCredential);
+
+            // Get a reference to a filesystem named "sample-filesystem-append" and then create it
+            DataLakeFileSystemClient filesystem = serviceClient.GetFileSystemClient(Randomize("sample-filesystem-append"));
+            filesystem.Create();
+
+            // Create
+            DataLakeFileClient file = filesystem.GetFileClient(Randomize("sample-file"));
+            await file.CreateAsync();
+
+            // Verify we created one file
+            AsyncPageable<PathItem> response = filesystem.ListPathsAsync();
+            IList<PathItem> paths = await response.ToListAsync();
+            Assert.AreEqual(1, paths.Count);
+
+            // Cleanup
+            await filesystem.DeleteAsync();
+        }
+
+        /// <summary>
+        /// Create a DataLake File using a DataLake Directory.
+        /// </summary>
+        [Test]
+        public async Task CreateFileClientAsync_Directory()
+        {
+            // Make StorageSharedKeyCredential to pass to the serviceClient
+            string storageAccountName = StorageAccountName;
+            string storageAccountKey = StorageAccountKey;
+            Uri serviceUri = StorageAccountBlobUri;
+
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(storageAccountName, storageAccountKey);
+
+            // Create DataLakeServiceClient using StorageSharedKeyCredentials
+            DataLakeServiceClient serviceClient = new DataLakeServiceClient(serviceUri, sharedKeyCredential);
+
+            // Create a DataLake Filesystem
+            DataLakeFileSystemClient filesystem = serviceClient.GetFileSystemClient(Randomize("sample-filesystem"));
+            await filesystem.CreateAsync();
+
+            //Create a DataLake Directory
+            DataLakeDirectoryClient directory = filesystem.CreateDirectory(Randomize("sample-directory"));
+            await directory.CreateAsync();
+
+            // Create a DataLake File using a DataLake Directory
+            DataLakeFileClient file = directory.GetFileClient(Randomize("sample-file"));
+            await file.CreateAsync();
+
+            // Verify we created one file
+            AsyncPageable<PathItem> response = filesystem.ListPathsAsync();
+            IList<PathItem> paths = await response.ToListAsync();
+            Assert.AreEqual(1, paths.Count);
+
+            // Cleanup
+            await filesystem.DeleteAsync();
+        }
+
+
+        /// <summary>
+        /// Create a DataLake Directory.
+        /// </summary>
+        [Test]
+        public async Task CreateDirectoryClientAsync()
+        {
+            // Make StorageSharedKeyCredential to pass to the serviceClient
+            string storageAccountName = StorageAccountName;
+            string storageAccountKey = StorageAccountKey;
+            Uri serviceUri = StorageAccountBlobUri;
+
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(storageAccountName, storageAccountKey);
+
+            // Create DataLakeServiceClient using StorageSharedKeyCredentials
+            DataLakeServiceClient serviceClient = new DataLakeServiceClient(serviceUri, sharedKeyCredential);
+
+            // Get a reference to a filesystem named "sample-filesystem-append" and then create it
+            DataLakeFileSystemClient filesystem = serviceClient.GetFileSystemClient(Randomize("sample-filesystem-append"));
+            filesystem.Create();
+
+            // Create
+            DataLakeDirectoryClient directory = filesystem.GetDirectoryClient(Randomize("sample-file"));
+            await directory.CreateAsync();
+
+            // Verify we created one directory
+            AsyncPageable<PathItem> response = filesystem.ListPathsAsync();
+            IList<PathItem> paths = await response.ToListAsync();
+            Assert.AreEqual(1, paths.Count);
+
+            // Cleanup
+            await filesystem.DeleteAsync();
+        }
+
+        /// <summary>
         /// Upload a file to a DataLake File.
+        /// </summary>
+        [Test]
+        public async Task AppendAsync_Simple()
+        {
+            // Create Sample File to read content from
+            string sampleFilePath = CreateTempFile(SampleFileContent);
+
+            // Make StorageSharedKeyCredential to pass to the serviceClient
+            string storageAccountName = StorageAccountName;
+            string storageAccountKey = StorageAccountKey;
+            Uri serviceUri = StorageAccountBlobUri;
+
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(storageAccountName, storageAccountKey);
+
+            // Create DataLakeServiceClient using StorageSharedKeyCredentials
+            DataLakeServiceClient serviceClient = new DataLakeServiceClient(serviceUri, sharedKeyCredential);
+
+            // Get a reference to a filesystem named "sample-filesystem-append" and then create it
+            DataLakeFileSystemClient filesystem = serviceClient.GetFileSystemClient(Randomize("sample-filesystem-append"));
+            await filesystem.CreateAsync();
+            try
+            {
+                // Create a file
+                DataLakeFileClient file = filesystem.GetFileClient(Randomize("sample-file"));
+                await file.CreateAsync();
+
+                // Append data to the DataLake File
+                await file.AppendAsync(File.OpenRead(sampleFilePath), 0);
+                await file.FlushAsync(SampleFileContent.Length);
+
+                // Verify the contents of the file
+                PathProperties properties = await file.GetPropertiesAsync();
+                Assert.AreEqual(SampleFileContent.Length, properties.ContentLength);
+            }
+            finally
+            {
+                // Clean up after the test when we're finished
+                await filesystem.DeleteAsync();
+            }
+        }
+
+        /// <summary>
+        /// Upload file by appending each part to a DataLake File.
         /// </summary>
         [Test]
         public async Task AppendAsync()
@@ -261,7 +408,7 @@ namespace Azure.Storage.Files.DataLake.Samples
                 await filesystem.CreateAsync();
             }
             catch (RequestFailedException ex)
-                when (ex.ErrorCode == Constants.DataLake.AlreadyExists)
+                when (ex.ErrorCode == "ContainerAlreadyExists")
             {
                 // Ignore any errors if the filesystem already exists
             }
@@ -395,6 +542,47 @@ namespace Azure.Storage.Files.DataLake.Samples
 
                 // Delete the sample directory using the new path/name
                 await filesystem.DeleteFileAsync("sample-file2");
+            }
+            finally
+            {
+                // Clean up after the test when we're finished
+                await filesystem.DeleteAsync();
+            }
+        }
+
+        /// <summary>
+        /// Get Properties on a DataLake File and a Directory
+        /// </summary>
+        [Test]
+        public async Task GetPropertiesAsync()
+        {
+            // Make StorageSharedKeyCredential to pass to the serviceClient
+            string storageAccountName = StorageAccountName;
+            string storageAccountKey = StorageAccountKey;
+            Uri serviceUri = StorageAccountBlobUri;
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(storageAccountName, storageAccountKey);
+
+            // Create DataLakeServiceClient using StorageSharedKeyCredentials
+            DataLakeServiceClient serviceClient = new DataLakeServiceClient(serviceUri, sharedKeyCredential);
+
+            // Get a reference to a filesystem named "sample-filesystem-rename" and then create it
+            DataLakeFileSystemClient filesystem = serviceClient.GetFileSystemClient(Randomize("sample-filesystem"));
+            await filesystem.CreateAsync();
+            try
+            {
+                // Create a DataLake Directory to rename it later
+                DataLakeDirectoryClient directoryClient = filesystem.GetDirectoryClient(Randomize("sample-directory"));
+                await directoryClient.CreateAsync();
+
+                // Get Properties on a Directory
+                PathProperties directoryPathProperties = await directoryClient.GetPropertiesAsync();
+
+                // Create a DataLake file
+                DataLakeFileClient fileClient = filesystem.GetFileClient(Randomize("sample-file"));
+                await fileClient.CreateAsync();
+
+                // Get Properties on a File
+                PathProperties filePathProperties = await fileClient.GetPropertiesAsync();
             }
             finally
             {

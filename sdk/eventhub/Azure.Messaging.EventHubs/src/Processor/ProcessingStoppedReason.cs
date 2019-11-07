@@ -7,7 +7,7 @@ namespace Azure.Messaging.EventHubs.Processor
     ///   The reason for stopping event processing for a given partition.
     /// </summary>
     ///
-    public enum CloseReason
+    public enum ProcessingStoppedReason
     {
         /// <summary>An unknown circumstance forced the processing to stop.</summary>
         Unknown,

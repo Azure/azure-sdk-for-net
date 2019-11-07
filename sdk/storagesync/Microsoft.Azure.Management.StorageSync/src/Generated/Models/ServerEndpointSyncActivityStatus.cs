@@ -10,24 +10,27 @@
 
 namespace Microsoft.Azure.Management.StorageSync.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Sync Session status object.
     /// </summary>
-    public partial class SyncActivityStatus
+    public partial class ServerEndpointSyncActivityStatus
     {
         /// <summary>
-        /// Initializes a new instance of the SyncActivityStatus class.
+        /// Initializes a new instance of the ServerEndpointSyncActivityStatus
+        /// class.
         /// </summary>
-        public SyncActivityStatus()
+        public ServerEndpointSyncActivityStatus()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SyncActivityStatus class.
+        /// Initializes a new instance of the ServerEndpointSyncActivityStatus
+        /// class.
         /// </summary>
         /// <param name="timestamp">Timestamp when properties were
         /// updated</param>
@@ -37,7 +40,7 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// available)</param>
         /// <param name="appliedBytes">Applied bytes</param>
         /// <param name="totalBytes">Total bytes (if available)</param>
-        public SyncActivityStatus(System.DateTime? timestamp = default(System.DateTime?), long? perItemErrorCount = default(long?), long? appliedItemCount = default(long?), long? totalItemCount = default(long?), long? appliedBytes = default(long?), long? totalBytes = default(long?))
+        public ServerEndpointSyncActivityStatus(System.DateTime? timestamp = default(System.DateTime?), long? perItemErrorCount = default(long?), long? appliedItemCount = default(long?), long? totalItemCount = default(long?), long? appliedBytes = default(long?), long? totalBytes = default(long?))
         {
             Timestamp = timestamp;
             PerItemErrorCount = perItemErrorCount;
@@ -89,5 +92,34 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         [JsonProperty(PropertyName = "totalBytes")]
         public long? TotalBytes { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (PerItemErrorCount < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "PerItemErrorCount", 0);
+            }
+            if (AppliedItemCount < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "AppliedItemCount", 0);
+            }
+            if (TotalItemCount < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "TotalItemCount", 0);
+            }
+            if (AppliedBytes < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "AppliedBytes", 0);
+            }
+            if (TotalBytes < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "TotalBytes", 0);
+            }
+        }
     }
 }
