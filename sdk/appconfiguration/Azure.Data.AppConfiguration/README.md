@@ -218,7 +218,7 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 
 This project has adopted the Microsoft Open Source Code of Conduct. For more information see the Code of Conduct FAQ or contact opencode@microsoft.com with any additional questions or comments.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fappconfiguration%2FAzure.ApplicationModel.Configuration%2FREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fappconfiguration%2FAzure.Data.AppConfiguration%2FREADME.png)
 
 <!-- LINKS -->
 [azconfig_docs]: https://docs.microsoft.com/azure/azure-app-configuration/
