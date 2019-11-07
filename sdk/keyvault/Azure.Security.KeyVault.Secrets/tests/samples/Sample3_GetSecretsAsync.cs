@@ -17,6 +17,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
     /// using the asynchronous methods of the SecretClient.
     /// </summary>
     [LiveOnly]
+    [NonParallelizable]
     public partial class GetSecrets
     {
         [Test]

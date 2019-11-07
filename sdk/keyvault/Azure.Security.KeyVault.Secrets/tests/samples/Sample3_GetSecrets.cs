@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Testing;
 using Azure.Identity;
 using NUnit.Framework;
 using System;
@@ -16,7 +15,6 @@ namespace Azure.Security.KeyVault.Secrets.Samples
     /// and list deleted secrets in a soft delete-enabled key vault
     /// using the synchronous methods of the SecretClient.
     /// </summary>
-    [LiveOnly]
     public partial class GetSecrets
     {
         [Test]
