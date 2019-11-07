@@ -302,9 +302,12 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='virtualMachines'>
             /// A list of virtual machines &amp; ports to open access for
             /// </param>
-            public static JitNetworkAccessRequest Initiate(this IJitNetworkAccessPoliciesOperations operations, string resourceGroupName, string jitNetworkAccessPolicyName, IList<JitNetworkAccessPolicyInitiateVirtualMachine> virtualMachines)
+            /// <param name='justification'>
+            /// The justification for making the initiate request
+            /// </param>
+            public static JitNetworkAccessRequest Initiate(this IJitNetworkAccessPoliciesOperations operations, string resourceGroupName, string jitNetworkAccessPolicyName, IList<JitNetworkAccessPolicyInitiateVirtualMachine> virtualMachines, string justification = default(string))
             {
-                return operations.InitiateAsync(resourceGroupName, jitNetworkAccessPolicyName, virtualMachines).GetAwaiter().GetResult();
+                return operations.InitiateAsync(resourceGroupName, jitNetworkAccessPolicyName, virtualMachines, justification).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -323,12 +326,15 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='virtualMachines'>
             /// A list of virtual machines &amp; ports to open access for
             /// </param>
+            /// <param name='justification'>
+            /// The justification for making the initiate request
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JitNetworkAccessRequest> InitiateAsync(this IJitNetworkAccessPoliciesOperations operations, string resourceGroupName, string jitNetworkAccessPolicyName, IList<JitNetworkAccessPolicyInitiateVirtualMachine> virtualMachines, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<JitNetworkAccessRequest> InitiateAsync(this IJitNetworkAccessPoliciesOperations operations, string resourceGroupName, string jitNetworkAccessPolicyName, IList<JitNetworkAccessPolicyInitiateVirtualMachine> virtualMachines, string justification = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.InitiateWithHttpMessagesAsync(resourceGroupName, jitNetworkAccessPolicyName, virtualMachines, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.InitiateWithHttpMessagesAsync(resourceGroupName, jitNetworkAccessPolicyName, virtualMachines, justification, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
