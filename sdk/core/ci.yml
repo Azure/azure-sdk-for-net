@@ -21,6 +21,7 @@ trigger:
   paths:
     include:
     - sdk/core/
+    - eng/
 
 pr:
   branches:
