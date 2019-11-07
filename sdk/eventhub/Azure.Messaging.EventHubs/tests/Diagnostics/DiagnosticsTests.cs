@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Tests;
+using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
 using Azure.Messaging.EventHubs.Processor;
@@ -345,7 +346,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             internal override TransportClient CreateTransportClient(string fullyQualifiedNamespace,
                                                                     string eventHubName,
-                                                                    TokenCredential credential,
+                                                                    EventHubTokenCredential credential,
                                                                     EventHubConnectionOptions options)
             {
                 var mockTransport = new Mock<TransportClient>();
