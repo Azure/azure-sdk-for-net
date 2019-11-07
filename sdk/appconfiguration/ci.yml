@@ -41,4 +41,3 @@ stages:
     Artifacts:
     - name: Azure.Data.AppConfiguration
       safeName: AzureDataAppConfiguration
-      

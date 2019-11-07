@@ -386,7 +386,7 @@ namespace Azure.Storage.Files.DataLake
                 .ConfigureAwait(false);
         #endregion Delete
 
-        #region Move
+        #region Rename
         /// <summary>
         /// The <see cref="Rename"/> operation renames a Directory.
         ///
@@ -479,7 +479,7 @@ namespace Azure.Storage.Files.DataLake
                 new DataLakeFileClient(response.Value.DfsUri, response.Value.Pipeline),
                 response.GetRawResponse());
         }
-        #endregion Move
+        #endregion Rename
 
         #region Append Data
         /// <summary>

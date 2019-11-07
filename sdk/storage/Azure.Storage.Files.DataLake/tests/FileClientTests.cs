@@ -558,8 +558,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 DataLakeFileClient file = await directoryClient.CreateFileAsync(fileName);
 
                 Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                    start: null,
-                    expiry: Recording.UtcNow.AddHours(1));
+                    startsOn: null,
+                    expiresOn: Recording.UtcNow.AddHours(1));
 
                 DataLakeFileClient identitySasFile = InstrumentClient(
                     GetServiceClient_DataLakeServiceIdentitySas_FileSystem(
@@ -623,8 +623,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 DataLakeFileClient file = await directoryClient.CreateFileAsync(fileName);
 
                 Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                    start: null,
-                    expiry: Recording.UtcNow.AddHours(1));
+                    startsOn: null,
+                    expiresOn: Recording.UtcNow.AddHours(1));
 
                 DataLakeFileClient identitySasFile = InstrumentClient(
                     GetServiceClient_DataLakeServiceIdentitySas_Path(
@@ -965,8 +965,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 DataLakeFileClient file = await directoryClient.CreateFileAsync(fileName);
 
                 Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                    start: null,
-                    expiry: Recording.UtcNow.AddHours(1));
+                    startsOn: null,
+                    expiresOn: Recording.UtcNow.AddHours(1));
 
                 DataLakeFileClient identitySasFile = InstrumentClient(
                     GetServiceClient_DataLakeServiceIdentitySas_FileSystem(
@@ -1024,8 +1024,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 DataLakeFileClient file = await directoryClient.CreateFileAsync(fileName);
 
                 Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                    start: null,
-                    expiry: Recording.UtcNow.AddHours(1));
+                    startsOn: null,
+                    expiresOn: Recording.UtcNow.AddHours(1));
 
                 DataLakeFileClient identitySasFile = InstrumentClient(
                     GetServiceClient_DataLakeServiceIdentitySas_Path(
@@ -1081,7 +1081,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(parameters);
 
                     // Act
-                    Assert.CatchAsync<Exception>(
+                    await TestHelper.CatchAsync<Exception>(
                         async () =>
                         {
                             var _ = (await file.GetPropertiesAsync(
@@ -1792,7 +1792,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(parameters);
 
                     // Act
-                    Assert.CatchAsync<Exception>(
+                    await TestHelper.CatchAsync<Exception>(
                         async () =>
                         {
                             var _ = (await file.ReadAsync(

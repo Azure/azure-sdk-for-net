@@ -54,7 +54,7 @@ namespace Azure.Storage.Files.DataLake.Samples
             try
             {
                 // Create a file that can be accessed publicly
-                await filesystem.CreateAsync(PublicAccessType.Container);
+                await filesystem.CreateAsync(PublicAccessType.FileSystem);
                 DataLakeFileClient file = filesystem.GetFileClient(Randomize("sample-file"));
                 await file.CreateAsync();
 

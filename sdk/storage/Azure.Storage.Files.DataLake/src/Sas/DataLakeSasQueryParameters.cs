@@ -29,12 +29,12 @@ namespace Azure.Storage.Files.DataLake.Sas
         /// <summary>
         /// Gets the time at which the key becomes valid.
         /// </summary>
-        public DateTimeOffset KeyStart => _keyStart;
+        public DateTimeOffset KeyStartsOn => _keyStart;
 
         /// <summary>
         /// Gets the time at which the key becomes expires.
         /// </summary>
-        public DateTimeOffset KeyExpiry => _keyExpiry;
+        public DateTimeOffset KeyExpiresOn => _keyExpiry;
 
         /// <summary>
         /// Gets the Storage service that accepts the key.
