@@ -31,7 +31,7 @@ The libraries released in the November 2019 preview:
 * [Azure.ApplicationModel.Configuration](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/appconfiguration/Azure.Data.AppConfiguration/README.md)
 * [Azure.Security.KeyVault.Certificates](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Certificates/README.md)
 * [Azure.Messaging.EventHubs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/README.md)
-* [Azure.Storage.Files](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Files/README.md)
+* [Azure.Storage.Files.Shares](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Files.Shares/README.md)
 
 > NOTE: If you need to ensure your code is ready for production use one of the stable, non-preview libraries.
 
