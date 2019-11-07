@@ -408,7 +408,7 @@ namespace Azure.Storage.Files.DataLake.Samples
                 await filesystem.CreateAsync();
             }
             catch (RequestFailedException ex)
-                when (ex.ErrorCode == Constants.DataLake.AlreadyExists)
+                when (ex.ErrorCode == "ContainerAlreadyExists")
             {
                 // Ignore any errors if the filesystem already exists
             }
