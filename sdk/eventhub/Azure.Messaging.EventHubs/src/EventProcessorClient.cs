@@ -45,8 +45,8 @@ namespace Azure.Messaging.EventHubs
         /// <summary>Responsible for processing events received from the Event Hubs service.</summary>
         private Func<EventProcessorEvent, Task> _processEventAsyncHandler;
 
-        /// <summary>Responsible for processing unhandled exceptions thrown while this <see cref="EventProcessorClient" /> is running.</summary>
-        private Func<ProcessorErrorContext, Task> _processExceptionAsync;
+        /// <summary>Responsible for processing unhandled exceptions thrown while this processor is running.</summary>
+        private Func<ProcessorErrorContext, Task> _processErrorAsyncHandler;
 
         /// <summary>
         ///   The handler to be called just before event processing starts for a given partition.
@@ -79,14 +79,14 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Responsible for processing unhandled exceptions thrown while this <see cref="EventProcessorClient" /> is running.
+        ///   Responsible for processing unhandled exceptions thrown while this processor is running.
         ///   Implementation is mandatory.
         /// </summary>
         ///
-        public Func<ProcessorErrorContext, Task> ProcessExceptionAsync
+        public Func<ProcessorErrorContext, Task> ProcessErrorAsyncHandler
         {
-            get => _processExceptionAsync;
-            set => EnsureNotRunningAndInvoke(() => _processExceptionAsync = value);
+            get => _processErrorAsyncHandler;
+            set => EnsureNotRunningAndInvoke(() => _processErrorAsyncHandler = value);
         }
 
         /// <summary>
@@ -400,6 +400,22 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   Responsible for processing unhandled exceptions thrown while this processor is running.
+        /// </summary>
+        ///
+        /// <param name="exception">TODO.</param>
+        /// <param name="context">TODO.</param>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        ///
+        protected override Task ProcessErrorAsync(Exception exception,
+                                                  PartitionContext context)
+        {
+            var errorContext = new ProcessorErrorContext(context?.PartitionId, exception);
+            return ProcessErrorAsyncHandler(errorContext);
+        }
+
+        /// <summary>
         ///   Updates the checkpoint using the given information for the associated partition and consumer group in the chosen storage service.
         /// </summary>
         ///
@@ -452,7 +468,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="ProcessEventAsyncHandler" /> or <see cref="ProcessExceptionAsync" /> set.</exception>
+        /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="ProcessEventAsyncHandler" /> or <see cref="ProcessErrorAsyncHandler" /> set.</exception>
         ///
         public virtual async Task StartAsync()
         {
@@ -473,9 +489,9 @@ namespace Azure.Messaging.EventHubs
                                 throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotStartEventProcessorWithoutHandler, nameof(ProcessEventAsyncHandler)));
                             }
 
-                            if (_processExceptionAsync == null)
+                            if (_processErrorAsyncHandler == null)
                             {
-                                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotStartEventProcessorWithoutHandler, nameof(ProcessExceptionAsync)));
+                                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotStartEventProcessorWithoutHandler, nameof(ProcessErrorAsyncHandler)));
                             }
 
                             // We expect the token source to be null, but we are playing safe.

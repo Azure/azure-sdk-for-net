@@ -66,7 +66,7 @@ namespace Azure.Messaging.EventHubs.Tests
         private Action<EventProcessorEvent> OnProcessEvent { get; }
 
         /// <summary>
-        ///   A callback action to be called on <see cref="EventProcessorClient.ProcessExceptionAsync" />.
+        ///   A callback action to be called on <see cref="EventProcessorClient.ProcessErrorAsyncHandler" />.
         /// </summary>
         ///
         private Action<ProcessorErrorContext> OnProcessException { get; }
@@ -82,7 +82,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <param name="onInitialize">A callback action to be called on <see cref="EventProcessorClient.InitializeProcessingForPartitionAsync" />.</param>
         /// <param name="onStop">A callback action to be called on <see cref="EventProcessorClient.ProcessingForPartitionStoppedAsync" />.</param>
         /// <param name="onProcessEvent">A callback action to be called on <see cref="EventProcessorClient.ProcessEventAsyncHandler" />.</param>
-        /// <param name="onProcessException">A callback action to be called on <see cref="EventProcessorClient.ProcessExceptionAsync" />.</param>
+        /// <param name="onProcessException">A callback action to be called on <see cref="EventProcessorClient.ProcessErrorAsyncHandler" />.</param>
         ///
         public EventProcessorManager(string consumerGroup,
                                      EventHubConnection connection,
@@ -157,7 +157,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     return Task.CompletedTask;
                 };
 
-                eventProcessor.ProcessExceptionAsync = errorContext =>
+                eventProcessor.ProcessErrorAsyncHandler = errorContext =>
                 {
                     OnProcessException?.Invoke(errorContext);
                     return Task.CompletedTask;

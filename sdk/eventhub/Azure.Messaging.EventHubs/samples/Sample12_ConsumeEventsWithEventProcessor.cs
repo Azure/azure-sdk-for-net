@@ -124,7 +124,7 @@ namespace Azure.Messaging.EventHubs.Samples
                     return Task.CompletedTask;
                 };
 
-                eventProcessor.ProcessExceptionAsync = (errorContext) =>
+                eventProcessor.ProcessErrorAsyncHandler = (errorContext) =>
                 {
                     // Any exception which occurs as a result of the event processor itself will be passed to
                     // this delegate so it may be handled.  The processor will continue to process events if
