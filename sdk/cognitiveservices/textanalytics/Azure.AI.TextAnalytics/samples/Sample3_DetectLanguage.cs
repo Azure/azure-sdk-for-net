@@ -18,7 +18,7 @@ namespace Azure.AI.TextAnalytics.Samples
             string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
 
             // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(endpoint, subscriptionKey);
+            var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
 
 
             string spanishInput = "Este documento está en español.";

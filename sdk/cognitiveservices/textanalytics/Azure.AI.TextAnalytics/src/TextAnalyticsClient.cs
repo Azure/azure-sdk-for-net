@@ -34,7 +34,7 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="endpoint"></param>
         /// <param name="subscriptionKey"></param>
-        public TextAnalyticsClient(string endpoint, string subscriptionKey)
+        public TextAnalyticsClient(Uri endpoint, string subscriptionKey)
             : this(endpoint, subscriptionKey, new TextAnalyticsClientOptions())
         {
         }
@@ -44,12 +44,13 @@ namespace Azure.AI.TextAnalytics
         /// <param name="endpoint"></param>
         /// <param name="subscriptionKey"></param>
         /// <param name="options"></param>
-        public TextAnalyticsClient(string endpoint, string subscriptionKey, TextAnalyticsClientOptions options)
+        public TextAnalyticsClient(Uri endpoint, string subscriptionKey, TextAnalyticsClientOptions options)
         {
-            Argument.AssertNotNullOrEmpty(endpoint, nameof(endpoint));
-            Argument.AssertNotNullOrEmpty(subscriptionKey, nameof(endpoint));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNullOrEmpty(subscriptionKey, nameof(subscriptionKey));
+            Argument.AssertNotNull(options, nameof(options));
 
-            _baseUri = new Uri(endpoint);
+            _baseUri = endpoint;
             _subscriptionKey = subscriptionKey;
             _apiVersion = options.GetVersionString();
             _pipeline = HttpPipelineBuilder.Build(options);
