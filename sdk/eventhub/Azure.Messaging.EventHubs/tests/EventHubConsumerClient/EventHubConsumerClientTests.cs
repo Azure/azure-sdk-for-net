@@ -386,9 +386,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var expectedPosition = EventPosition.FromSequenceNumber(5641);
             var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
-
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "0", expectedPosition, "namespace", "eventHub", credential.Object);
-
 
             Assert.That(consumer.StartingPosition, Is.EqualTo(expectedPosition));
         }
