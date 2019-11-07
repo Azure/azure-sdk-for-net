@@ -100,4 +100,4 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 
 Please see our [contributing guide](./../Azure.Messaging.EventHubs/CONTRIBUTING.md) for more information.
   
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Feventhub%2FAzure.Messaging.EventHubs.CheckpointStore.Blob%2FFREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Feventhub%2FAzure.Messaging.EventHubs.CheckpointStore.Blobs%2FREADME.png)

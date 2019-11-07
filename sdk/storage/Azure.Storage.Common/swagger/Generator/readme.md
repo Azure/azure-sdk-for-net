@@ -47,3 +47,6 @@ scope-azure-track2-csharp-generator/emitter:
 output-artifact: azure-track2-csharp-generator-code
 
 ```
+
+
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Common%2Fswagger%2FGenerator%2Freadme.png)
