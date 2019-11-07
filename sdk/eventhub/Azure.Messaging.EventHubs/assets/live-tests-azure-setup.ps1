@@ -63,7 +63,6 @@ Import-Module Az.Resources
 . .\functions\resource-management-functions.ps1
 . .\functions\role-assignment-functions.ps1
 
-
 # ====================
 # == Script Actions ==
 # ====================
