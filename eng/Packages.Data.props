@@ -104,7 +104,7 @@
 
   <!-- Track 2 specific versions -->
   <ItemGroup Condition="'$(IsClientLibrary)' == 'true'">
-    <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20190716.1" />
+    <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20191106.3" />
     <PackageReference Update="System.Memory" Version="4.5.3" />
     <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="1.0.0" />
     <PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.0" />
