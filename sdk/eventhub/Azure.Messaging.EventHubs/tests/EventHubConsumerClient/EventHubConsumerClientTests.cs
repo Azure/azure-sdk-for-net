@@ -12,6 +12,7 @@ using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Errors;
 using Azure.Messaging.EventHubs.Metadata;
@@ -65,8 +66,9 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ConstructorValidatesTheConsumerGroup(string consumerGroup)
         {
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
             Assert.That(() => new EventHubConsumerClient(consumerGroup, "1332", EventPosition.Earliest, "dummyConnection", new EventHubConsumerClientOptions()), Throws.InstanceOf<ArgumentException>(), "The connection string constructor should validate the consumer group.");
-            Assert.That(() => new EventHubConsumerClient(consumerGroup, "1332", EventPosition.Earliest, "dummyNamespace", "dummyEventHub", Mock.Of<TokenCredential>(), new EventHubConsumerClientOptions()), Throws.InstanceOf<ArgumentException>(), "The namespace constructor should validate the consumer group.");
+            Assert.That(() => new EventHubConsumerClient(consumerGroup, "1332", EventPosition.Earliest, "dummyNamespace", "dummyEventHub", credential.Object, new EventHubConsumerClientOptions()), Throws.InstanceOf<ArgumentException>(), "The namespace constructor should validate the consumer group.");
         }
 
         /// <summary>
@@ -78,8 +80,9 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ConstructorValidatesThePartition(string partition)
         {
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
             Assert.That(() => new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, partition, EventPosition.Earliest, "dummyConnection", new EventHubConsumerClientOptions()), Throws.InstanceOf<ArgumentException>(), "The connection string constructor should validate the partition.");
-            Assert.That(() => new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, partition, EventPosition.Earliest, "dummyNamespace", "dummyEventHub", Mock.Of<TokenCredential>(), new EventHubConsumerClientOptions()), Throws.InstanceOf<ArgumentException>(), "The namespace constructor should validate the partition.");
+            Assert.That(() => new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, partition, EventPosition.Earliest, "dummyNamespace", "dummyEventHub", credential.Object, new EventHubConsumerClientOptions()), Throws.InstanceOf<ArgumentException>(), "The namespace constructor should validate the partition.");
         }
 
         /// <summary>
@@ -89,8 +92,9 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorValidatesTheEventPosition()
         {
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
             Assert.That(() => new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "1234", null, "dummyConnection", new EventHubConsumerClientOptions()), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "1234", null, "dummyNamespace", "dummyEventHub", Mock.Of<TokenCredential>(), new EventHubConsumerClientOptions()), Throws.InstanceOf<ArgumentException>(), "The namespace constructor should validate the event position.");
+            Assert.That(() => new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "1234", null, "dummyNamespace", "dummyEventHub", credential.Object, new EventHubConsumerClientOptions()), Throws.InstanceOf<ArgumentException>(), "The namespace constructor should validate the event position.");
         }
 
         /// <summary>
@@ -115,7 +119,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ConstructorValidatesTheNamespace(string constructorArgument)
         {
-            Assert.That(() => new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "1234", EventPosition.Earliest, constructorArgument, "dummy", Mock.Of<TokenCredential>()), Throws.InstanceOf<ArgumentException>());
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            Assert.That(() => new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "1234", EventPosition.Earliest, constructorArgument, "dummy", credential.Object), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -127,7 +132,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ConstructorValidatesTheEventHub(string constructorArgument)
         {
-            Assert.That(() => new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "1234", EventPosition.Earliest, "namespace", constructorArgument, Mock.Of<TokenCredential>()), Throws.InstanceOf<ArgumentException>());
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            Assert.That(() => new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "1234", EventPosition.Earliest, "namespace", constructorArgument, credential.Object), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -173,8 +179,9 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ExpandedConstructorSetsTheRetryPolicy()
         {
             var expected = Mock.Of<EventHubsRetryPolicy>();
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
             var options = new EventHubConsumerClientOptions { RetryOptions = new RetryOptions { CustomRetryPolicy = expected } };
-            var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "0", EventPosition.Earliest, "namespace", "hub", Mock.Of<TokenCredential>(), options);
+            var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "0", EventPosition.Earliest, "namespace", "hub", credential.Object, options);
 
             Assert.That(GetRetryPolicy(consumer), Is.SameAs(expected));
         }
@@ -220,8 +227,9 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ExpandedConstructorCreatesDefaultOptions()
         {
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
             var expected = new EventHubConsumerClientOptions().RetryOptions;
-            var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "0", EventPosition.Earliest, "some-namespace", "hubName", Mock.Of<TokenCredential>());
+            var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "0", EventPosition.Earliest, "some-namespace", "hubName", credential.Object);
 
             var policy = GetRetryPolicy(consumer);
             Assert.That(policy, Is.Not.Null, "There should have been a retry policy set.");
@@ -272,7 +280,8 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ExpandedConstructorSetsThePartition()
         {
             var partition = "aPartition";
-            var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, partition, EventPosition.Earliest, "aNamespace", "underclothing", Mock.Of<TokenCredential>());
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, partition, EventPosition.Earliest, "aNamespace", "underclothing", credential.Object);
 
             Assert.That(consumer.PartitionId, Is.EqualTo(partition));
         }
@@ -327,7 +336,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 OwnerLevel = priority
             };
 
-            var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "0", EventPosition.Earliest, "namespace-name", "hub-name", Mock.Of<TokenCredential>(), options);
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "0", EventPosition.Earliest, "namespace-name", "hub-name", credential.Object, options);
             Assert.That(consumer.OwnerLevel, Is.EqualTo(priority));
         }
 
@@ -375,7 +385,9 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ExpandedConstructorSetsTheStartingPosition()
         {
             var expectedPosition = EventPosition.FromSequenceNumber(5641);
-            var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "0", expectedPosition, "namespace", "eventHub", Mock.Of<TokenCredential>());
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+
+            var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "0", expectedPosition, "namespace", "eventHub", credential.Object);
 
 
             Assert.That(consumer.StartingPosition, Is.EqualTo(expectedPosition));
@@ -417,7 +429,8 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ExpandedConstructorSetsTheConsumerGroup()
         {
             var consumerGroup = "SomeGroup";
-            var consumer = new EventHubConsumerClient(consumerGroup, "0", EventPosition.Latest, "namespace", "eventHub", Mock.Of<TokenCredential>());
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var consumer = new EventHubConsumerClient(consumerGroup, "0", EventPosition.Latest, "namespace", "eventHub", credential.Object);
 
             Assert.That(consumer.ConsumerGroup, Is.EqualTo(consumerGroup));
         }
@@ -1783,11 +1796,17 @@ namespace Azure.Messaging.EventHubs.Tests
             public EventHubsRetryPolicy GetPartitionIdsInvokedWith = null;
             public EventHubsRetryPolicy GetPartitionPropertiesInvokedWith = null;
             public TransportConsumer TransportConsumer = Mock.Of<TransportConsumer>();
+
             public bool WasClosed = false;
 
             public MockConnection(string namespaceName = "fakeNamespace",
-                                  string eventHubName = "fakeEventHub") : base(namespaceName, eventHubName, Mock.Of<TokenCredential>())
+                                  string eventHubName = "fakeEventHub") : base(namespaceName, eventHubName, CreateMockCredentials())
             {
+            }
+
+            private static EventHubTokenCredential CreateMockCredentials()
+            {
+                return new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net").Object;
             }
 
             public MockConnection(TransportConsumer transportConsumer,
@@ -1825,7 +1844,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             internal override TransportConsumer CreateTransportConsumer(string consumerGroup, string partitionId, EventPosition eventPosition, EventHubConsumerClientOptions consumerOptions) => TransportConsumer;
 
-            internal override TransportClient CreateTransportClient(string fullyQualifiedNamespace, string eventHubName, TokenCredential credential, EventHubConnectionOptions options)
+            internal override TransportClient CreateTransportClient(string fullyQualifiedNamespace, string eventHubName, EventHubTokenCredential credential, EventHubConnectionOptions options)
             {
                 var client = new Mock<TransportClient>();
 
