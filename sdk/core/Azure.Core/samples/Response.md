@@ -1,5 +1,7 @@
 # Azure.Core Response samples
 
+**NOTE:** Samples in this file apply only to packages that follow [Azure SDK Design Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html). Names of such packages usually start with `Azure`.
+
 Most client methods return one of the following types:
  - `Response` -  an HTTP response
  - `Response<T>` -  a value and HTTP response

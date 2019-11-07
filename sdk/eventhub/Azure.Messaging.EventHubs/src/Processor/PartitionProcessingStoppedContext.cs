@@ -21,7 +21,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   The reason why the processing for the associated partition is being stopped.
         /// </summary>
         ///
-        public CloseReason Reason { get; }
+        public ProcessingStoppedReason Reason { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="PartitionProcessingStoppedContext"/> class.
@@ -31,7 +31,7 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="reason">The reason why the processing for the associated partition is being stopped.</param>
         ///
         protected internal PartitionProcessingStoppedContext(PartitionContext partitionContext,
-                                                             CloseReason reason)
+                                                             ProcessingStoppedReason reason)
         {
             Argument.AssertNotNull(partitionContext, nameof(partitionContext));
 

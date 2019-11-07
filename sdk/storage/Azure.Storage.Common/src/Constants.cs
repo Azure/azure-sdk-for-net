@@ -139,6 +139,7 @@ namespace Azure.Storage
             public const string Https = "https";
             public const string Http = "http";
             public const int HttpsPort = 443;
+            public const string UriSubDomain = "blob";
 
             /// <summary>
             ///  Error code for blobs
@@ -302,6 +303,7 @@ namespace Azure.Storage
         /// </summary>
         internal static class File
         {
+            public const string UriSubDomain = "file";
             public const string FileAttributesNone = "None";
             public const string FileTimeNow = "Now";
             public const string Preserve = "Preserve";
@@ -396,13 +398,14 @@ namespace Azure.Storage
         /// </summary>
         internal static class DataLake
         {
-            /// <summary>
-            /// The blob URI suffex.
-            /// </summary>
-            public const string BlobUriSuffix = "blob";
 
             /// <summary>
-            /// The DFS URI suffex.
+            /// The blob URI suffix.
+            /// </summary>
+            public const string BlobUriSuffix = Blob.UriSubDomain;
+
+            /// <summary>
+            /// The DFS URI suffix.
             /// </summary>
             public const string DfsUriSuffix = "dfs";
 
@@ -444,6 +447,8 @@ namespace Azure.Storage
             public const int QueueMessageMaxBytes = 64 * Constants.KB;
 
             public const string MessagesUri = "messages";
+
+            public const string UriSubDomain = "queue";
 
             public const string ClearMessagesOperationName =
                 "Azure.Storage.Queues.QueueClient.ClearMessages";

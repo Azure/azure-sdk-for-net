@@ -7,6 +7,7 @@ using System.Security.Authentication;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
 using Azure.Messaging.EventHubs.Metadata;
@@ -24,9 +25,6 @@ namespace Azure.Messaging.EventHubs.Amqp
     ///
     internal class AmqpClient : TransportClient
     {
-        /// <summary>The default scope used for token authentication with the Event Hubs service.</summary>
-        private const string EventHubsScope = "https://eventhubs.azure.net/.default";
-
         /// <summary>
         ///   The buffer to apply when considering refreshing; credentials that expire less than this duration will be refreshed.
         /// </summary>
@@ -65,7 +63,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///   Gets the credential to use for authorization with the Event Hubs service.
         /// </summary>
         ///
-        private TokenCredential Credential { get; }
+        private EventHubTokenCredential Credential { get; }
 
         /// <summary>
         ///   The converter to use for translating between AMQP messages and client library
@@ -106,7 +104,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         public AmqpClient(string host,
                           string eventHubName,
-                          TokenCredential credential,
+                          EventHubTokenCredential credential,
                           EventHubConnectionOptions clientOptions) : this(host, eventHubName, credential, clientOptions, null, null)
         {
         }
@@ -133,7 +131,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         protected AmqpClient(string host,
                              string eventHubName,
-                             TokenCredential credential,
+                             EventHubTokenCredential credential,
                              EventHubConnectionOptions clientOptions,
                              AmqpConnectionScope connectionScope,
                              AmqpMessageConverter messageConverter)
@@ -485,7 +483,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             if ((string.IsNullOrEmpty(activeToken.Token)) || (activeToken.ExpiresOn <= DateTimeOffset.UtcNow.Add(CredentialRefreshBuffer)))
             {
-                activeToken = await Credential.GetTokenAsync(new TokenRequestContext(new string[] { EventHubsScope }), cancellationToken).ConfigureAwait(false);
+                activeToken = await Credential.GetTokenUsingDefaultScopeAsync(cancellationToken).ConfigureAwait(false);
 
                 if ((string.IsNullOrEmpty(activeToken.Token)))
                 {

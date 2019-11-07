@@ -110,7 +110,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 await using (var connection = new EventHubConnection(connectionString))
                 {
                     var closeCalls = new ConcurrentDictionary<string, int>();
-                    var closeReasons = new ConcurrentDictionary<string, CloseReason>();
+                    var stopReasons = new ConcurrentDictionary<string, ProcessingStoppedReason>();
 
                     // Create the event processor manager to manage our event processors.
 
@@ -121,7 +121,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             onStop: stopContext =>
                             {
                                 closeCalls.AddOrUpdate(stopContext.Context.PartitionId, 1, (partitionId, value) => value + 1);
-                                closeReasons[stopContext.Context.PartitionId] = stopContext.Reason;
+                                stopReasons[stopContext.Context.PartitionId] = stopContext.Reason;
                             }
                         );
 
@@ -152,8 +152,8 @@ namespace Azure.Messaging.EventHubs.Tests
                         Assert.That(closeCalls.TryGetValue(partitionId, out var calls), Is.True, $"{ partitionId }: CloseAsync should have been called.");
                         Assert.That(calls, Is.EqualTo(1), $"{ partitionId }: CloseAsync should have been called only once.");
 
-                        Assert.That(closeReasons.TryGetValue(partitionId, out CloseReason reason), Is.True, $"{ partitionId }: close reason should have been set.");
-                        Assert.That(reason, Is.EqualTo(CloseReason.Shutdown), $"{ partitionId }: unexpected close reason.");
+                        Assert.That(stopReasons.TryGetValue(partitionId, out ProcessingStoppedReason reason), Is.True, $"{ partitionId }: processing stopped reason should have been set.");
+                        Assert.That(reason, Is.EqualTo(ProcessingStoppedReason.Shutdown), $"{ partitionId }: unexpected processing stopped reason.");
                     }
 
                     Assert.That(closeCalls.Keys.Count, Is.EqualTo(partitionIds.Count()));
