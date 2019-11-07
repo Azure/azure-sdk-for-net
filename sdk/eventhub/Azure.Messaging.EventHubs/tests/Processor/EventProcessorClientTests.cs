@@ -208,7 +208,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 ConnectionOptions = new EventHubConnectionOptions { TransportType = TransportType.AmqpWebSockets }
             };
             var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
-
             var eventProcessor = new ReadableOptionsMock("consumerGroup", Mock.Of<PartitionManager>(), "namespace", "hub", credential.Object, options);
             EventProcessorClientOptions clonedOptions = eventProcessor.Options;
 

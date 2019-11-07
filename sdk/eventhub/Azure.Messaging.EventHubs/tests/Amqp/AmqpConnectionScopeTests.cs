@@ -36,7 +36,6 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ConstructorValidatesTheEndpoint()
         {
             var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
-
             Assert.That(() => new AmqpConnectionScope(null, "hub", credential.Object, TransportType.AmqpTcp, null), Throws.ArgumentNullException);
         }
 
@@ -48,7 +47,6 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ConstructorValidatesTheEventHubName()
         {
             var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
-
             Assert.That(() => new AmqpConnectionScope(new Uri("amqp://some.place.com"), null, credential.Object, TransportType.AmqpWebSockets, Mock.Of<IWebProxy>()), Throws.ArgumentNullException);
         }
 
@@ -71,7 +69,6 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var invalidTransport = (TransportType)(-2);
             var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
-
             Assert.That(() => new AmqpConnectionScope(new Uri("amqp://some.place.com"), "hun", credential.Object, invalidTransport, Mock.Of<IWebProxy>()), Throws.ArgumentException);
         }
 
