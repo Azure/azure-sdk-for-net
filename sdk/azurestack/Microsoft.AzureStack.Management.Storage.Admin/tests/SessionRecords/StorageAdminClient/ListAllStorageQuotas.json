@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/047e87e6-327f-4c44-8184-fb6bc35e8b38/providers/Microsoft.Storage.Admin/locations/local/quotas?api-version=2019-08-08-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDQ3ZTg3ZTYtMzI3Zi00YzQ0LTgxODQtZmI2YmMzNWU4YjM4L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvcmFnZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvcXVvdGFzP2FwaS12ZXJzaW9uPTIwMTktMDgtMDgtcHJldmlldw==",
+      "RequestUri": "/subscriptions/a5dfa2bd-66fd-488e-a3b7-d98a2eb7871f/providers/Microsoft.Storage.Admin/locations/local/quotas?api-version=2019-08-08-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTVkZmEyYmQtNjZmZC00ODhlLWEzYjctZDk4YTJlYjc4NzFmL3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvcmFnZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvcXVvdGFzP2FwaS12ZXJzaW9uPTIwMTktMDgtMDgtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "50960e13-37ea-44ce-92f3-8ef001038344"
+          "7d4ec53e-81f2-4179-b993-8927926c08c3"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27817.01",
+          "FxVersion/4.6.28008.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.AzureStack.Management.Storage.Admin.StorageAdminClient/0.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.AzureStack.Management.Storage.Admin.StorageAdminClient/2.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -27,22 +27,22 @@
           "no-cache"
         ],
         "x-ms-correlation-request-id": [
-          "d6e8e452-7348-4c3f-aec8-004ae9134c3f"
+          "66aaf139-b81c-478a-a786-fd7597da2ce6"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
         "WWW-Authenticate": [
-          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvmaowGTHe0EG60pPGSt+Vju26RNxFUycg7Pws/TFxIp4QbCR1OTmgjl1/GDEridT4jiVk42W57jhJ6QtVe11q8LRJn6vTVyIysDxdv9da0S5tgAm4/5OJvM37coARUPAaBBloh6L8197cImQH383V"
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvgKlulyoJdHiLGUVsoo0z3yOIhrj70qX5wWihMg6xyImb5L2eRTQHsnDc1tD5pioGlmFYQPdNmcL74idquHgbHVNpg92oOOzNKYGCvygYfEUFxL+cjRHGu8WOYPUh/hWBdKGxZWEYZAv7OXmPR5sS"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14763"
+          "14673"
         ],
         "x-ms-request-id": [
-          "d6e8e452-7348-4c3f-aec8-004ae9134c3f"
+          "66aaf139-b81c-478a-a786-fd7597da2ce6"
         ],
         "x-ms-routing-request-id": [
-          "LOCAL:20190917T022927Z:d6e8e452-7348-4c3f-aec8-004ae9134c3f"
+          "LOCAL:20191104T060855Z:66aaf139-b81c-478a-a786-fd7597da2ce6"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -51,7 +51,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 17 Sep 2019 02:29:26 GMT"
+          "Mon, 04 Nov 2019 06:08:55 GMT"
         ],
         "Content-Length": [
           "2848"
@@ -63,12 +63,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/047e87e6-327f-4c44-8184-fb6bc35e8b38/providers/Microsoft.Storage.Admin/locations/local/quotas/ascanstorquota391\",\r\n      \"name\": \"local/ascanstorquota391\",\r\n      \"type\": \"Microsoft.Storage.Admin/locations/quotas\",\r\n      \"location\": \"local\",\r\n      \"properties\": {\r\n        \"numberOfStorageAccounts\": 200,\r\n        \"capacityInGb\": 1000\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/047e87e6-327f-4c44-8184-fb6bc35e8b38/providers/Microsoft.Storage.Admin/locations/local/quotas/Basic\",\r\n      \"name\": \"local/Basic\",\r\n      \"type\": \"Microsoft.Storage.Admin/locations/quotas\",\r\n      \"location\": \"local\",\r\n      \"properties\": {\r\n        \"numberOfStorageAccounts\": 2,\r\n        \"capacityInGb\": 2\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/047e87e6-327f-4c44-8184-fb6bc35e8b38/providers/Microsoft.Storage.Admin/locations/local/quotas/Default Quota\",\r\n      \"name\": \"local/Default Quota\",\r\n      \"type\": \"Microsoft.Storage.Admin/locations/quotas\",\r\n      \"location\": \"local\",\r\n      \"properties\": {\r\n        \"numberOfStorageAccounts\": 20,\r\n        \"capacityInGb\": 2048\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/047e87e6-327f-4c44-8184-fb6bc35e8b38/providers/Microsoft.Storage.Admin/locations/local/quotas/EventRPBVTTenantSubscriptionQuota\",\r\n      \"name\": \"local/EventRPBVTTenantSubscriptionQuota\",\r\n      \"type\": \"Microsoft.Storage.Admin/locations/quotas\",\r\n      \"location\": \"local\",\r\n      \"properties\": {\r\n        \"numberOfStorageAccounts\": 10000,\r\n        \"capacityInGb\": 500000\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/047e87e6-327f-4c44-8184-fb6bc35e8b38/providers/Microsoft.Storage.Admin/locations/local/quotas/NewStorageQuota1\",\r\n      \"name\": \"local/NewStorageQuota1\",\r\n      \"type\": \"Microsoft.Storage.Admin/locations/quotas\",\r\n      \"location\": \"local\",\r\n      \"properties\": {\r\n        \"numberOfStorageAccounts\": 10000,\r\n        \"capacityInGb\": 200000\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/047e87e6-327f-4c44-8184-fb6bc35e8b38/providers/Microsoft.Storage.Admin/locations/local/quotas/Quota_2cccdb26-9cbd-4627-aab9-dd261d75da57\",\r\n      \"name\": \"local/Quota_2cccdb26-9cbd-4627-aab9-dd261d75da57\",\r\n      \"type\": \"Microsoft.Storage.Admin/locations/quotas\",\r\n      \"location\": \"local\",\r\n      \"properties\": {\r\n        \"numberOfStorageAccounts\": 20,\r\n        \"capacityInGb\": 500\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/047e87e6-327f-4c44-8184-fb6bc35e8b38/providers/Microsoft.Storage.Admin/locations/local/quotas/Quota_9d7a22e1-6623-41e5-85f8-88d1bd02d5c6\",\r\n      \"name\": \"local/Quota_9d7a22e1-6623-41e5-85f8-88d1bd02d5c6\",\r\n      \"type\": \"Microsoft.Storage.Admin/locations/quotas\",\r\n      \"location\": \"local\",\r\n      \"properties\": {\r\n        \"numberOfStorageAccounts\": 20,\r\n        \"capacityInGb\": 500\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/a5dfa2bd-66fd-488e-a3b7-d98a2eb7871f/providers/Microsoft.Storage.Admin/locations/local/quotas/ascanstorquota612\",\r\n      \"name\": \"local/ascanstorquota612\",\r\n      \"type\": \"Microsoft.Storage.Admin/locations/quotas\",\r\n      \"location\": \"local\",\r\n      \"properties\": {\r\n        \"numberOfStorageAccounts\": 200,\r\n        \"capacityInGb\": 1000\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a5dfa2bd-66fd-488e-a3b7-d98a2eb7871f/providers/Microsoft.Storage.Admin/locations/local/quotas/Basic\",\r\n      \"name\": \"local/Basic\",\r\n      \"type\": \"Microsoft.Storage.Admin/locations/quotas\",\r\n      \"location\": \"local\",\r\n      \"properties\": {\r\n        \"numberOfStorageAccounts\": 2,\r\n        \"capacityInGb\": 2\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a5dfa2bd-66fd-488e-a3b7-d98a2eb7871f/providers/Microsoft.Storage.Admin/locations/local/quotas/Default Quota\",\r\n      \"name\": \"local/Default Quota\",\r\n      \"type\": \"Microsoft.Storage.Admin/locations/quotas\",\r\n      \"location\": \"local\",\r\n      \"properties\": {\r\n        \"numberOfStorageAccounts\": 20,\r\n        \"capacityInGb\": 2048\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a5dfa2bd-66fd-488e-a3b7-d98a2eb7871f/providers/Microsoft.Storage.Admin/locations/local/quotas/EventRPBVTTenantSubscriptionQuota\",\r\n      \"name\": \"local/EventRPBVTTenantSubscriptionQuota\",\r\n      \"type\": \"Microsoft.Storage.Admin/locations/quotas\",\r\n      \"location\": \"local\",\r\n      \"properties\": {\r\n        \"numberOfStorageAccounts\": 10000,\r\n        \"capacityInGb\": 500000\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a5dfa2bd-66fd-488e-a3b7-d98a2eb7871f/providers/Microsoft.Storage.Admin/locations/local/quotas/NewStorageQuota1\",\r\n      \"name\": \"local/NewStorageQuota1\",\r\n      \"type\": \"Microsoft.Storage.Admin/locations/quotas\",\r\n      \"location\": \"local\",\r\n      \"properties\": {\r\n        \"numberOfStorageAccounts\": 10000,\r\n        \"capacityInGb\": 200000\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a5dfa2bd-66fd-488e-a3b7-d98a2eb7871f/providers/Microsoft.Storage.Admin/locations/local/quotas/Quota_494dc5d9-08b2-40f6-9d8c-6e30f7571cd6\",\r\n      \"name\": \"local/Quota_494dc5d9-08b2-40f6-9d8c-6e30f7571cd6\",\r\n      \"type\": \"Microsoft.Storage.Admin/locations/quotas\",\r\n      \"location\": \"local\",\r\n      \"properties\": {\r\n        \"numberOfStorageAccounts\": 20,\r\n        \"capacityInGb\": 500\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a5dfa2bd-66fd-488e-a3b7-d98a2eb7871f/providers/Microsoft.Storage.Admin/locations/local/quotas/Quota_b06535f1-2faf-4b53-8027-178c808daf3c\",\r\n      \"name\": \"local/Quota_b06535f1-2faf-4b53-8027-178c808daf3c\",\r\n      \"type\": \"Microsoft.Storage.Admin/locations/quotas\",\r\n      \"location\": \"local\",\r\n      \"properties\": {\r\n        \"numberOfStorageAccounts\": 20,\r\n        \"capacityInGb\": 500\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "047e87e6-327f-4c44-8184-fb6bc35e8b38"
+    "SubscriptionId": "a5dfa2bd-66fd-488e-a3b7-d98a2eb7871f"
   }
 }

@@ -12,16 +12,13 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
 {
 
     /// <summary>
-    /// Defines values for WacAccountStates.
+    /// Health state for storage account.
     /// </summary>
-    public static class WacAccountStates
+    public static class StorageAccountHealthState
     {
-        public const string None = "None";
-        public const string Active = "Active";
-        public const string Deleted = "Deleted";
-        public const string AboveQuota = "AboveQuota";
+        public const string Healthy = "Healthy";
         public const string Suspended = "Suspended";
-        public const string All = "All";
-        public const string GcReadyState = "GcReadyState";
+        public const string OverQuota = "OverQuota";
+        public const string SuspendedAndOverQuota = "SuspendedAndOverQuota";
     }
 }
