@@ -61,7 +61,11 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// data transfer storage account tenant ID</param>
         /// <param name="offlineDataTransferShareName">Offline data transfer
         /// share name</param>
-        public ServerEndpoint(string id = default(string), string name = default(string), string type = default(string), string serverLocalPath = default(string), string cloudTiering = default(string), int? volumeFreeSpacePercent = default(int?), int? tierFilesOlderThanDays = default(int?), string friendlyName = default(string), string serverResourceId = default(string), string provisioningState = default(string), string lastWorkflowId = default(string), string lastOperationName = default(string), ServerEndpointSyncStatus syncStatus = default(ServerEndpointSyncStatus), string offlineDataTransfer = default(string), string offlineDataTransferStorageAccountResourceId = default(string), string offlineDataTransferStorageAccountTenantId = default(string), string offlineDataTransferShareName = default(string))
+        /// <param name="cloudTieringStatus">Cloud tiering status. Only
+        /// populated if cloud tiering is enabled.</param>
+        /// <param name="recallStatus">Recall status. Only populated if cloud
+        /// tiering is enabled.</param>
+        public ServerEndpoint(string id = default(string), string name = default(string), string type = default(string), string serverLocalPath = default(string), string cloudTiering = default(string), int? volumeFreeSpacePercent = default(int?), int? tierFilesOlderThanDays = default(int?), string friendlyName = default(string), string serverResourceId = default(string), string provisioningState = default(string), string lastWorkflowId = default(string), string lastOperationName = default(string), ServerEndpointSyncStatus syncStatus = default(ServerEndpointSyncStatus), string offlineDataTransfer = default(string), string offlineDataTransferStorageAccountResourceId = default(string), string offlineDataTransferStorageAccountTenantId = default(string), string offlineDataTransferShareName = default(string), ServerEndpointCloudTieringStatus cloudTieringStatus = default(ServerEndpointCloudTieringStatus), ServerEndpointRecallStatus recallStatus = default(ServerEndpointRecallStatus))
             : base(id, name, type)
         {
             ServerLocalPath = serverLocalPath;
@@ -78,6 +82,8 @@ namespace Microsoft.Azure.Management.StorageSync.Models
             OfflineDataTransferStorageAccountResourceId = offlineDataTransferStorageAccountResourceId;
             OfflineDataTransferStorageAccountTenantId = offlineDataTransferStorageAccountTenantId;
             OfflineDataTransferShareName = offlineDataTransferShareName;
+            CloudTieringStatus = cloudTieringStatus;
+            RecallStatus = recallStatus;
             CustomInit();
         }
 
@@ -173,6 +179,19 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         public string OfflineDataTransferShareName { get; set; }
 
         /// <summary>
+        /// Gets cloud tiering status. Only populated if cloud tiering is
+        /// enabled.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.cloudTieringStatus")]
+        public ServerEndpointCloudTieringStatus CloudTieringStatus { get; private set; }
+
+        /// <summary>
+        /// Gets recall status. Only populated if cloud tiering is enabled.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.recallStatus")]
+        public ServerEndpointRecallStatus RecallStatus { get; private set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -195,6 +214,14 @@ namespace Microsoft.Azure.Management.StorageSync.Models
             if (TierFilesOlderThanDays < 0)
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "TierFilesOlderThanDays", 0);
+            }
+            if (SyncStatus != null)
+            {
+                SyncStatus.Validate();
+            }
+            if (RecallStatus != null)
+            {
+                RecallStatus.Validate();
             }
         }
     }

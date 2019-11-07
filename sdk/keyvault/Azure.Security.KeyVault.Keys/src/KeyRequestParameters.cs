@@ -127,7 +127,7 @@ namespace Azure.Security.KeyVault.Keys
 
                 json.WriteEndObject();
             }
-            if (KeyOperations != null && KeyOperations.Count > 0)
+            if (!KeyOperations.IsNullOrEmpty())
             {
                 json.WriteStartArray(s_keyOpsPropertyNameBytes);
                 foreach (KeyOperation operation in KeyOperations)
@@ -136,7 +136,7 @@ namespace Azure.Security.KeyVault.Keys
                 }
                 json.WriteEndArray();
             }
-            if (Tags != null && Tags.Count > 0)
+            if (!Tags.IsNullOrEmpty())
             {
                 json.WriteStartObject(s_tagsPropertyNameBytes);
 

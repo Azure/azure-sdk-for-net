@@ -24,7 +24,7 @@ namespace Azure.Messaging.EventHubs.Samples
         ///   A short description of the sample.
         /// </summary>
         ///
-        public string Description { get; } = "An introduction to publishing events, using a simple Event Hub producer.";
+        public string Description { get; } = "An introduction to publishing events, using a simple Event Hub producer client.";
 
         /// <summary>
         ///   Runs the sample using the specified Event Hubs connection information.
@@ -69,7 +69,7 @@ namespace Azure.Messaging.EventHubs.Samples
                 Console.WriteLine("The event has been published.");
             }
 
-            // At this point, our client has passed its "using" scope and have safely been disposed of.  We
+            // At this point, our client has passed its "using" scope and has safely been disposed of.  We
             // have no further obligations.
 
             Console.WriteLine();

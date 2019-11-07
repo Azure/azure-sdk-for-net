@@ -31,25 +31,25 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             // already exists in the Key Vault, then a new version of the key is created.
             string certName = $"defaultCert-{Guid.NewGuid()}";
 
-            CertificateOperation certOp = await client.StartCreateCertificateAsync(certName);
+            CertificateOperation certOp = await client.StartCreateCertificateAsync(certName, CertificatePolicy.Default);
 
             // Next let's wait on the certificate operation to complete. Note that certificate creation can last an indeterministic
             // amount of time, so applications should only wait on the operation to complete in the case the issuance time is well
             // known and within the scope of the application lifetime. In this case we are creating a self-signed certificate which
             // should be issued in a relatively short amount of time.
-            CertificateWithPolicy certificate = await certOp.WaitForCompletionAsync();
+            KeyVaultCertificateWithPolicy certificate = await certOp.WaitForCompletionAsync();
 
             // At some time later we could get the created certificate along with it's policy from the Key Vault.
             certificate = await client.GetCertificateAsync(certName);
 
-            Debug.WriteLine($"Certificate was returned with name {certificate.Name} which expires {certificate.Properties.Expires}");
+            Debug.WriteLine($"Certificate was returned with name {certificate.Name} which expires {certificate.Properties.ExpiresOn}");
 
             // We find that the certificate has been compromised and we want to disable it so applications will no longer be able
             // to access the compromised version of the certificate.
             CertificateProperties certificateProperties = certificate.Properties;
             certificateProperties.Enabled = false;
 
-            Certificate updatedCert = await client.UpdateCertificatePropertiesAsync(certificateProperties);
+            KeyVaultCertificate updatedCert = await client.UpdateCertificatePropertiesAsync(certificateProperties);
 
             Debug.WriteLine($"Certificate enabled set to '{updatedCert.Properties.Enabled}'");
 
@@ -58,7 +58,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             // certificate with similar properties to the original certificate
             CertificateOperation newCertOp = await client.StartCreateCertificateAsync(certificate.Name, certificate.Policy);
 
-            CertificateWithPolicy newCert = await newCertOp.WaitForCompletionAsync();
+            KeyVaultCertificateWithPolicy newCert = await newCertOp.WaitForCompletionAsync();
 
             // The certificate is no longer needed, need to delete it from the Key Vault.
             await client.DeleteCertificateAsync(certName);

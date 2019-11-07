@@ -136,4 +136,4 @@ outputs based on their kind - for example, "list the main outputs of the job"
 or "list the log files for task analysis-309".
 
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsrc%2FSDKs%2FBatch%2FSupport%2FFileConventions%2FREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fbatch%2FMicrosoft.Azure.Batch.Conventions.Files%2FREADME.png)

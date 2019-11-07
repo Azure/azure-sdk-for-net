@@ -45,9 +45,9 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin.Models
         /// <param name="timeServer">The IP address of the time server.</param>
         /// <param name="stampInformationId">The deployment id of the
         /// stamp.</param>
-        /// <param name="externalDsnIPAddress01">First external IP address of
+        /// <param name="externalDNSIPAddress01">First external IP address of
         /// the DNS server.</param>
-        /// <param name="externalDsnIPAddress02">Second external IP Address of
+        /// <param name="externalDNSIPAddress02">Second external IP Address of
         /// the DNS server.</param>
         /// <param name="exclusiveAdminOperationRunning">Value for whether an
         /// exclusive admin operation is running.</param>
@@ -61,14 +61,14 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin.Models
         /// time for the shut down action plan</param>
         /// <param name="shutDownActionPlanEndTime">Last known stamp stop time
         /// for the shut down action plan.</param>
-        public FabricLocation(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<string> pepIpAddresses = default(IList<string>), string timeServer = default(string), string stampInformationId = default(string), string externalDsnIPAddress01 = default(string), string externalDsnIPAddress02 = default(string), bool? exclusiveAdminOperationRunning = default(bool?), string exclusiveAdminOperationName = default(string), System.DateTime? startUpActionPlanStartTime = default(System.DateTime?), System.DateTime? startUpActionPlanEndTime = default(System.DateTime?), System.DateTime? shutDownActionPlanStartTime = default(System.DateTime?), System.DateTime? shutDownActionPlanEndTime = default(System.DateTime?))
+        public FabricLocation(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<string> pepIpAddresses = default(IList<string>), string timeServer = default(string), string stampInformationId = default(string), string externalDNSIPAddress01 = default(string), string externalDNSIPAddress02 = default(string), bool? exclusiveAdminOperationRunning = default(bool?), string exclusiveAdminOperationName = default(string), System.DateTime? startUpActionPlanStartTime = default(System.DateTime?), System.DateTime? startUpActionPlanEndTime = default(System.DateTime?), System.DateTime? shutDownActionPlanStartTime = default(System.DateTime?), System.DateTime? shutDownActionPlanEndTime = default(System.DateTime?))
             : base(id, name, type, location, tags)
         {
             PepIpAddresses = pepIpAddresses;
             TimeServer = timeServer;
             StampInformationId = stampInformationId;
-            ExternalDsnIPAddress01 = externalDsnIPAddress01;
-            ExternalDsnIPAddress02 = externalDsnIPAddress02;
+            ExternalDNSIPAddress01 = externalDNSIPAddress01;
+            ExternalDNSIPAddress02 = externalDNSIPAddress02;
             ExclusiveAdminOperationRunning = exclusiveAdminOperationRunning;
             ExclusiveAdminOperationName = exclusiveAdminOperationName;
             StartUpActionPlanStartTime = startUpActionPlanStartTime;
@@ -104,14 +104,14 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin.Models
         /// <summary>
         /// Gets or sets first external IP address of the DNS server.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.externalDsnIPAddress01")]
-        public string ExternalDsnIPAddress01 { get; set; }
+        [JsonProperty(PropertyName = "properties.externalDNSIPAddress01")]
+        public string ExternalDNSIPAddress01 { get; set; }
 
         /// <summary>
         /// Gets or sets second external IP Address of the DNS server.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.externalDsnIPAddress02")]
-        public string ExternalDsnIPAddress02 { get; set; }
+        [JsonProperty(PropertyName = "properties.externalDNSIPAddress02")]
+        public string ExternalDNSIPAddress02 { get; set; }
 
         /// <summary>
         /// Gets or sets value for whether an exclusive admin operation is

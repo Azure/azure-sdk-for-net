@@ -30,14 +30,14 @@ namespace Azure.Messaging.EventHubs
         ///   to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
         /// </summary>
         ///
-        public string FullyQualifiedNamespace { get; protected set; }
+        public string FullyQualifiedNamespace { get; }
 
         /// <summary>
         ///   The name of the Event Hub that the connection is associated with, specific to the
         ///   Event Hubs namespace that contains it.
         /// </summary>
         ///
-        public string EventHubName { get; protected set; }
+        public string EventHubName { get; }
 
         /// <summary>
         ///   Indicates whether or not this <see cref="EventHubConnection"/> has been closed.
@@ -82,7 +82,7 @@ namespace Azure.Messaging.EventHubs
         ///   Event Hub will result in a connection string that contains the name.
         /// </remarks>
         ///
-        public EventHubConnection(string connectionString) : this(connectionString, null, null)
+        public EventHubConnection(string connectionString) : this(connectionString, null, connectionOptions: null)
         {
         }
 
@@ -121,7 +121,7 @@ namespace Azure.Messaging.EventHubs
         /// </remarks>
         ///
         public EventHubConnection(string connectionString,
-                                  string eventHubName) : this(connectionString, eventHubName, null)
+                                  string eventHubName) : this(connectionString, eventHubName, connectionOptions: null)
         {
         }
 
@@ -165,10 +165,13 @@ namespace Azure.Messaging.EventHubs
                  connectionStringProperties.SharedAccessKey
             );
 
+            var sharedCredentials = new SharedAccessSignatureCredential(sharedAccessSignature);
+            var tokenCredentials = new EventHubTokenCredential(sharedCredentials, BuildAudienceResource(connectionOptions.TransportType, fullyQualifiedNamespace, eventHubName));
+
             FullyQualifiedNamespace = fullyQualifiedNamespace;
             EventHubName = eventHubName;
             Options = connectionOptions;
-            InnerClient = CreateTransportClient(fullyQualifiedNamespace, eventHubName, new SharedAccessSignatureCredential(sharedAccessSignature), connectionOptions);
+            InnerClient = CreateTransportClient(fullyQualifiedNamespace, eventHubName, tokenCredentials, connectionOptions);
         }
 
         /// <summary>
@@ -200,15 +203,15 @@ namespace Azure.Messaging.EventHubs
                 case EventHubSharedKeyCredential sharedKeyCredential:
                     credential = sharedKeyCredential.ConvertToSharedAccessSignatureCredential(BuildAudienceResource(connectionOptions.TransportType, fullyQualifiedNamespace, eventHubName));
                     break;
-
-                default:
-                    credential = new EventHubTokenCredential(credential, BuildAudienceResource(connectionOptions.TransportType, fullyQualifiedNamespace, eventHubName));
-                    break;
             }
 
+            var tokenCredential = new EventHubTokenCredential(credential, BuildAudienceResource(connectionOptions.TransportType, fullyQualifiedNamespace, eventHubName));
+
+            FullyQualifiedNamespace = fullyQualifiedNamespace;
             EventHubName = eventHubName;
             Options = connectionOptions;
-            InnerClient = CreateTransportClient(fullyQualifiedNamespace, eventHubName, credential, connectionOptions);
+
+            InnerClient = CreateTransportClient(fullyQualifiedNamespace, eventHubName, tokenCredential, connectionOptions);
         }
 
         /// <summary>
@@ -285,7 +288,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>The set of information for the Event Hub that this connection is associated with.</returns>
         ///
-        internal virtual Task<EventHubProperties> GetPropertiesAsync(EventHubRetryPolicy retryPolicy,
+        internal virtual Task<EventHubProperties> GetPropertiesAsync(EventHubsRetryPolicy retryPolicy,
                                                                      CancellationToken cancellationToken = default) => InnerClient.GetPropertiesAsync(retryPolicy, cancellationToken);
 
         /// <summary>
@@ -298,14 +301,14 @@ namespace Azure.Messaging.EventHubs
         /// <returns>The set of identifiers for the partitions within the Event Hub that this connection is associated with.</returns>
         ///
         /// <remarks>
-        ///   This method is synonymous with invoking <see cref="GetPropertiesAsync(EventHubRetryPolicy, CancellationToken)" /> and reading the <see cref="EventHubProperties.PartitionIds"/>
+        ///   This method is synonymous with invoking <see cref="GetPropertiesAsync(EventHubsRetryPolicy, CancellationToken)" /> and reading the <see cref="EventHubProperties.PartitionIds"/>
         ///   property that is returned. It is offered as a convenience for quick access to the set of partition identifiers for the associated Event Hub.
         ///   No new or extended information is presented.
         /// </remarks>
         ///
-        internal virtual async Task<string[]> GetPartitionIdsAsync(EventHubRetryPolicy retryPolicy,
+        internal virtual async Task<string[]> GetPartitionIdsAsync(EventHubsRetryPolicy retryPolicy,
                                                                    CancellationToken cancellationToken = default) =>
-            (await GetPropertiesAsync(retryPolicy, cancellationToken).ConfigureAwait(false))?.PartitionIds;
+            (await GetPropertiesAsync(retryPolicy, cancellationToken).ConfigureAwait(false)).PartitionIds;
 
         /// <summary>
         ///   Retrieves information about a specific partition for an Event Hub, including elements that describe the available
@@ -319,7 +322,7 @@ namespace Azure.Messaging.EventHubs
         /// <returns>The set of information for the requested partition under the Event Hub this connection is associated with.</returns>
         ///
         internal virtual Task<PartitionProperties> GetPartitionPropertiesAsync(string partitionId,
-                                                                               EventHubRetryPolicy retryPolicy,
+                                                                               EventHubsRetryPolicy retryPolicy,
                                                                                CancellationToken cancellationToken = default) => InnerClient.GetPartitionPropertiesAsync(partitionId, retryPolicy, cancellationToken);
 
         /// <summary>
@@ -392,7 +395,7 @@ namespace Azure.Messaging.EventHubs
         ///
         internal virtual TransportClient CreateTransportClient(string fullyQualifiedNamespace,
                                                                string eventHubName,
-                                                               TokenCredential credential,
+                                                               EventHubTokenCredential credential,
                                                                EventHubConnectionOptions options)
         {
             switch (options.TransportType)

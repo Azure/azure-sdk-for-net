@@ -9,13 +9,11 @@
 // </auto-generated>
 
 using Azure.AI.InkRecognizer.Models;
-//using Azure.Data.InkRecognizer.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 
-#pragma warning disable AZC0001 // https://github.com/Azure/azure-sdk-tools/issues/213
 namespace Azure.AI.InkRecognizer
 {
     internal static class InkRecognitionResponse

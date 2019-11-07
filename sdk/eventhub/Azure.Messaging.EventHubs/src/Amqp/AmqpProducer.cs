@@ -60,7 +60,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///   The policy to use for determining retry behavior for when an operation fails.
         /// </summary>
         ///
-        private EventHubRetryPolicy RetryPolicy { get; }
+        private EventHubsRetryPolicy RetryPolicy { get; }
 
         /// <summary>
         ///   The converter to use for translating between AMQP messages and client library
@@ -113,7 +113,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                             string partitionId,
                             AmqpConnectionScope connectionScope,
                             AmqpMessageConverter messageConverter,
-                            EventHubRetryPolicy retryPolicy)
+                            EventHubsRetryPolicy retryPolicy)
         {
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
             Argument.AssertNotNull(connectionScope, nameof(connectionScope));

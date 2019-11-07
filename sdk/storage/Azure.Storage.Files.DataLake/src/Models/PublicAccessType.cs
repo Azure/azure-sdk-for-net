@@ -5,7 +5,7 @@ namespace Azure.Storage.Files.DataLake.Models
 {
 
     /// <summary>
-    /// Specifies whether data in the container may be accessed publicly and the level of access
+    /// Specifies whether data in the file system may be accessed publicly and the level of access
     /// </summary>
     public enum PublicAccessType
     {
@@ -15,13 +15,13 @@ namespace Azure.Storage.Files.DataLake.Models
         None,
 
         /// <summary>
-        /// container
+        /// file system
         /// </summary>
-        Container,
+        FileSystem,
 
         /// <summary>
-        /// blob
+        /// path
         /// </summary>
-        Blob
+        Path
     }
 }

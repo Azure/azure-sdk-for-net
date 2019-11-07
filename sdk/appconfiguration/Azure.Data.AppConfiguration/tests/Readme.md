@@ -20,4 +20,4 @@ For users that have access to the `Azure SDK Developer Playground` subscription,
 6. Make sure to restart VS or the environment where the tests are running.
 
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsrc%2FSDKs%2FAzure.Data.AppConfiguration%2Fdata-plane%2FAzure.Configuration.Tests%2FReadme.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fappconfiguration%2FAzure.Data.AppConfiguration%2Ftests%2FReadme.png)

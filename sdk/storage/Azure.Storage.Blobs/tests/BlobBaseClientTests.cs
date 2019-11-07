@@ -96,7 +96,6 @@ namespace Azure.Storage.Blobs.Test
 
         #region Secondary Storage
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8356")]
         public async Task DownloadAsync_ReadFromSecondaryStorage()
         {
             await using DisposingContainer test = await GetTestContainerAsync(GetServiceClient_SecondaryAccount_ReadEnabledOnRetry(1, out TestExceptionPolicy testExceptionPolicy));
@@ -313,7 +312,7 @@ namespace Azure.Storage.Blobs.Test
                 BlobRequestConditions accessConditions = BuildAccessConditions(parameters);
 
                 // Act
-                Assert.CatchAsync<Exception>(
+                await TestHelper.CatchAsync<Exception>(
                     async () =>
                     {
                         var _ = (await blob.DownloadAsync(
@@ -438,7 +437,6 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8356")]
         [Test]
         [TestCase(512)]
         [TestCase(1 * Constants.KB)]
@@ -1483,6 +1481,7 @@ namespace Azure.Storage.Blobs.Test
             foreach (AccessConditionParameters parameters in GetAccessConditionsFail_Data(garbageLeaseId))
             {
                 await using DisposingContainer test = await GetTestContainerAsync();
+
                 // Arrange
                 BlobBaseClient blob = await GetNewBlobClient(test.Container);
 
@@ -1490,13 +1489,12 @@ namespace Azure.Storage.Blobs.Test
                 BlobRequestConditions accessConditions = BuildAccessConditions(parameters);
 
                 // Act
-                Assert.CatchAsync<Exception>(
+                await TestHelper.CatchAsync<Exception>(
                     async () =>
                     {
                         var _ = (await blob.GetPropertiesAsync(
                             conditions: accessConditions)).Value;
                     });
-
             }
         }
 

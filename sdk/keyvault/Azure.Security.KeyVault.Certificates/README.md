@@ -90,10 +90,10 @@ When creating the certificate the user can specify the policy which controls the
 
 ```C# Snippet:CreateCertificate
 // Create a certificate. This starts a long running operation to create and sign the certificate.
-CertificateOperation operation = await client.StartCreateCertificateAsync("MyCertificate");
+CertificateOperation operation = await client.StartCreateCertificateAsync("MyCertificate", CertificatePolicy.Default);
 
 // You can await the completion of the create certificate operation.
-CertificateWithPolicy certificate = await operation.WaitForCompletionAsync();
+KeyVaultCertificateWithPolicy certificate = await operation.WaitForCompletionAsync();
 ```
 
 > NOTE: Depending on the certificate issuer and validation methods, certificate creation and signing can take an indeterministic amount of time. Users should only wait on certificate operations when the operation can be reasonably completed in the scope of the application, such as with self signed certificates or issuers with well known response times.
@@ -102,13 +102,13 @@ CertificateWithPolicy certificate = await operation.WaitForCompletionAsync();
 `GetCertificateWithPolicy` retrieves the latest version of a certificate stored in the Key Vault along with its `CertificatePolicy`.
 
 ```C# Snippet:RetrieveCertificate
-CertificateWithPolicy certificateWithPolicy = await client.GetCertificateAsync("MyCertificate");
+KeyVaultCertificateWithPolicy certificateWithPolicy = await client.GetCertificateAsync("MyCertificate");
 ```
 
 `GetCertificate` retrieves a specific version of a certificate in the vault.
 
 ```C# Snippet:GetCertificate
-Certificate certificate = await client.GetCertificateVersionAsync(certificateWithPolicy.Name, certificateWithPolicy.Properties.Version);
+KeyVaultCertificate certificate = await client.GetCertificateVersionAsync(certificateWithPolicy.Name, certificateWithPolicy.Properties.Version);
 ```
 
 ### Update an existing Certificate
@@ -123,7 +123,7 @@ CertificateProperties certificateProperties = new CertificateProperties(certific
     }
 };
 
-Certificate updated = await client.UpdateCertificatePropertiesAsync(certificateProperties);
+KeyVaultCertificate updated = await client.UpdateCertificatePropertiesAsync(certificateProperties);
 ```
 
 ### Delete a Certificate
@@ -144,7 +144,7 @@ certificate. Sensitive fields of the certificate will not be returned. This oper
 requires the certificates/list permission.
   
 ```C# Snippet:ListCertificates
-AsyncPageable<CertificateProperties> allCertificates = client.GetCertificatesAsync();
+AsyncPageable<CertificateProperties> allCertificates = client.GetPropertiesOfCertificatesAsync();
 
 await foreach (CertificateProperties certificateProperties in allCertificates)
 {
@@ -162,7 +162,7 @@ For example, if you try to retrieve a Key that doesn't exist in your Key Vault, 
 ```C# Snippet:CertificateNotFound
 try
 {
-    CertificateWithPolicy certificateWithPolicy = await client.GetCertificateAsync("SomeCertificate");
+    KeyVaultCertificateWithPolicy certificateWithPolicy = await client.GetCertificateAsync("SomeCertificate");
 }
 catch (RequestFailedException ex)
 {
@@ -245,4 +245,4 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [get_cetificates_sync]: samples/Sample2_GetCertificates.cs
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fkeyvault%2FAzure.Security.KeyVault.Keys%2FFREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fkeyvault%2FAzure.Security.KeyVault.Certificates%2FREADME.png)

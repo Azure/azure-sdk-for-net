@@ -1,5 +1,9 @@
 ## Microsoft.Azure.Management.StorageSync release notes
 
+### Changes in 2019-06-01
+
+- Support for cloud tiering health and recall status for server endpoints
+
 ### Changes in 2019-03-01
 
 - Support for Invoke Change Detection command

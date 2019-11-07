@@ -3,7 +3,9 @@
     {
       "src": [
         {
-          "files": ["src/**.csproj"]
+          "files": [
+            "src/**.csproj"
+          ]
         }
       ],
       "dest": "api",
@@ -14,28 +16,48 @@
   "build": {
     "content": [
       {
-        "files": ["api/**.yml", "api/index.md"]
+        "files": [
+          "api/**.yml",
+          "api/index.md"
+        ]
       },
       {
-        "files": ["articles/**.md", "articles/**/toc.yml", "toc.yml", "*.md"]
+        "files": [
+          "articles/**.md",
+          "articles/**/toc.yml",
+          "toc.yml",
+          "*.md"
+        ]
       }
     ],
     "resource": [
       {
-        "files": ["images/**"]
+        "files": [
+          "images/**"
+        ]
       }
     ],
     "overwrite": [
       {
-        "files": ["apidoc/**.md"],
-        "exclude": ["obj/**", "_site/**"]
+        "files": [
+          "apidoc/**.md"
+        ],
+        "exclude": [
+          "obj/**",
+          "_site/**"
+        ]
       }
     ],
-    "xrefService": ["https://xref.docs.microsoft.com/query?uid={uid}"],
+    "xrefService": [
+      "https://xref.docs.microsoft.com/query?uid={uid}"
+    ],
     "dest": "_site",
     "globalMetadataFiles": [],
     "fileMetadataFiles": [],
-    "template": ["default"],
+    "template": [
+      "default",
+      "templates/matthews"
+    ],
     "postProcessors": [],
     "markdownEngineName": "markdig",
     "noLangKeyword": false,
@@ -45,6 +67,7 @@
     "globalMetadata": {
       "_appTitle": "Azure SDK for Net",
       "_appFooter": "Azure SDK for Net",
+      "_appFaviconPath": "https://c.s-microsoft.com/favicon.ico?v2",
       "_enableSearch": true,
       "_enableNewTab": true
     }
