@@ -299,15 +299,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var connectionMock = new Mock<EventHubConnection>();
             connectionMock.Setup(c => c.CreateTransportConsumer("cg", "pid", It.IsAny<EventPosition>(), It.IsAny<EventHubConsumerClientOptions>())).Returns(consumerMock.Object);
 
-            Func<EventProcessorEvent, Task> processEventAsync = processorEvent =>
+            Func<EventData, PartitionContext, Task> processEventAsync = (eventData, context) =>
             {
                 processorCalledSource.SetResult(null);
                 return Task.CompletedTask;
             };
 
-            var updateCheckpointMock = Mock.Of<Func<EventData, PartitionContext, Task>>();
-
-            var manager = new PartitionPump(connectionMock.Object, "cg", new PartitionContext("pid"), EventPosition.Earliest, processEventAsync, updateCheckpointMock, new EventProcessorClientOptions());
+            var manager = new PartitionPump(connectionMock.Object, "cg", new PartitionContext("pid"), EventPosition.Earliest, processEventAsync, new EventProcessorClientOptions());
 
             await manager.StartAsync();
             await processorCalledSource.Task;

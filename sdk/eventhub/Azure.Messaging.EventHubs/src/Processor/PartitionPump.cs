@@ -65,13 +65,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Responsible for processing events received from the Event Hubs service.
         /// </summary>
         ///
-        private Func<EventProcessorEvent, Task> ProcessEventAsync { get; }
-
-        /// <summary>
-        ///   Updates the checkpoint using the given information for the associated partition and consumer group in the chosen storage service.
-        /// </summary>
-        ///
-        private Func<EventData, PartitionContext, Task> UpdateCheckpointAsync { get; }
+        private Func<EventData, PartitionContext, Task> ProcessEventAsync { get; }
 
         /// <summary>
         ///   The set of options to use for this partition pump.
@@ -106,15 +100,13 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="partitionContext">The context of the Event Hub partition this partition pump is associated with.  Events will be read only from this partition.</param>
         /// <param name="startingPosition">The position within the partition where the pump should begin reading events.</param>
         /// <param name="processEventAsync">Responsible for processing events received from the Event Hubs service.</param>
-        /// <param name="updateCheckpointAsync">Updates the checkpoint using the given information for the associated partition and consumer group in the chosen storage service.</param>
         /// <param name="options">The set of options to use for this partition pump.</param>
         ///
         internal PartitionPump(EventHubConnection connection,
                                string consumerGroup,
                                PartitionContext partitionContext,
                                EventPosition startingPosition,
-                               Func<EventProcessorEvent, Task> processEventAsync,
-                               Func<EventData, PartitionContext, Task> updateCheckpointAsync,
+                               Func<EventData, PartitionContext, Task> processEventAsync,
                                EventProcessorClientOptions options)
         {
             Argument.AssertNotNull(connection, nameof(connection));
@@ -122,7 +114,6 @@ namespace Azure.Messaging.EventHubs.Processor
             Argument.AssertNotNull(partitionContext, nameof(partitionContext));
             Argument.AssertNotNull(startingPosition, nameof(startingPosition));
             Argument.AssertNotNull(processEventAsync, nameof(processEventAsync));
-            Argument.AssertNotNull(updateCheckpointAsync, nameof(updateCheckpointAsync));
             Argument.AssertNotNull(options, nameof(options));
 
             Connection = connection;
@@ -130,7 +121,6 @@ namespace Azure.Messaging.EventHubs.Processor
             Context = partitionContext;
             StartingPosition = startingPosition;
             ProcessEventAsync = processEventAsync;
-            UpdateCheckpointAsync = updateCheckpointAsync;
             Options = options;
         }
 
@@ -257,8 +247,7 @@ namespace Azure.Messaging.EventHubs.Processor
                     {
                         try
                         {
-                            var processorEvent = new EventProcessorEvent(Context, eventData, UpdateCheckpointAsync);
-                            await ProcessEventAsync(processorEvent).ConfigureAwait(false);
+                            await ProcessEventAsync(eventData, Context).ConfigureAwait(false);
                         }
                         catch (Exception eventProcessingException)
                         {

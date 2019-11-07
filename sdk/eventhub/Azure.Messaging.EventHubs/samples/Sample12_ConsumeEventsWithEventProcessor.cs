@@ -105,7 +105,7 @@ namespace Azure.Messaging.EventHubs.Samples
                     return Task.CompletedTask;
                 };
 
-                eventProcessor.ProcessEventAsync = (processorEvent) =>
+                eventProcessor.ProcessEventAsyncHandler = (processorEvent) =>
                 {
                     // Here the user can specify what to do with the event received from the event processor.  We are counting how
                     // many events were received across all partitions so we can check whether all sent events were received.
