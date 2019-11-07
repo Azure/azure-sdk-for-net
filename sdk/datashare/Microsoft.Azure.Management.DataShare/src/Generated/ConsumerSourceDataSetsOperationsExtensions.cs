@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.DataShare
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -88,6 +90,35 @@ namespace Microsoft.Azure.Management.DataShare
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the share account.
+            /// </param>
+            /// <param name='shareSubscriptionName'>
+            /// The name of the shareSubscription.
+            /// </param>
+            /// <param name='skipToken'>
+            /// Continuation token
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static AzureOperationResponse<IPage<ConsumerSourceDataSet>> ListByShareSubscriptionWithHttpMessages(this IConsumerSourceDataSetsOperations operations, string resourceGroupName, string accountName, string shareSubscriptionName, string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.ListByShareSubscriptionWithHttpMessagesAsync(resourceGroupName, accountName, shareSubscriptionName, skipToken, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get source dataSets of a shareSubscription.
+            /// </summary>
+            /// <remarks>
+            /// Get source dataSets of a shareSubscription
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
@@ -117,6 +148,26 @@ namespace Microsoft.Azure.Management.DataShare
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Get source dataSets of a shareSubscription.
+            /// </summary>
+            /// <remarks>
+            /// Get source dataSets of a shareSubscription
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static AzureOperationResponse<IPage<ConsumerSourceDataSet>> ListByShareSubscriptionNextWithHttpMessages(this IConsumerSourceDataSetsOperations operations, string nextPageLink, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.ListByShareSubscriptionNextWithHttpMessagesAsync(nextPageLink, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
     }

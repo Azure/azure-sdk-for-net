@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.DataShare
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -80,6 +82,35 @@ namespace Microsoft.Azure.Management.DataShare
             }
 
             /// <summary>
+            /// Get Invitation in a share.
+            /// </summary>
+            /// <remarks>
+            /// Get an invitation in a share
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the share account.
+            /// </param>
+            /// <param name='shareName'>
+            /// The name of the share.
+            /// </param>
+            /// <param name='invitationName'>
+            /// The name of the invitation.
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static AzureOperationResponse<Invitation> GetWithHttpMessages(this IInvitationsOperations operations, string resourceGroupName, string accountName, string shareName, string invitationName, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.GetWithHttpMessagesAsync(resourceGroupName, accountName, shareName, invitationName, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
             /// Sends a new invitation to a recipient to access a share.
             /// </summary>
             /// <remarks>
@@ -144,6 +175,38 @@ namespace Microsoft.Azure.Management.DataShare
             }
 
             /// <summary>
+            /// Sends a new invitation to a recipient to access a share.
+            /// </summary>
+            /// <remarks>
+            /// Create an invitation
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the share account.
+            /// </param>
+            /// <param name='shareName'>
+            /// The name of the share to send the invitation for.
+            /// </param>
+            /// <param name='invitationName'>
+            /// The name of the invitation.
+            /// </param>
+            /// <param name='invitation'>
+            /// Invitation details.
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static AzureOperationResponse<Invitation> CreateWithHttpMessages(this IInvitationsOperations operations, string resourceGroupName, string accountName, string shareName, string invitationName, Invitation invitation, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.CreateWithHttpMessagesAsync(resourceGroupName, accountName, shareName, invitationName, invitation, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
             /// Delete Invitation in a share.
             /// </summary>
             /// <remarks>
@@ -196,6 +259,35 @@ namespace Microsoft.Azure.Management.DataShare
             public static async Task DeleteAsync(this IInvitationsOperations operations, string resourceGroupName, string accountName, string shareName, string invitationName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, accountName, shareName, invitationName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Delete Invitation in a share.
+            /// </summary>
+            /// <remarks>
+            /// Delete an invitation in a share
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the share account.
+            /// </param>
+            /// <param name='shareName'>
+            /// The name of the share.
+            /// </param>
+            /// <param name='invitationName'>
+            /// The name of the invitation.
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static AzureOperationResponse DeleteWithHttpMessages(this IInvitationsOperations operations, string resourceGroupName, string accountName, string shareName, string invitationName, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.DeleteWithHttpMessagesAsync(resourceGroupName, accountName, shareName, invitationName, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -265,6 +357,35 @@ namespace Microsoft.Azure.Management.DataShare
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the share account.
+            /// </param>
+            /// <param name='shareName'>
+            /// The name of the share.
+            /// </param>
+            /// <param name='skipToken'>
+            /// The continuation token
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static AzureOperationResponse<IPage<Invitation>> ListByShareWithHttpMessages(this IInvitationsOperations operations, string resourceGroupName, string accountName, string shareName, string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.ListByShareWithHttpMessagesAsync(resourceGroupName, accountName, shareName, skipToken, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List all Invitations in a share.
+            /// </summary>
+            /// <remarks>
+            /// List invitations in a share
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
@@ -294,6 +415,26 @@ namespace Microsoft.Azure.Management.DataShare
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// List all Invitations in a share.
+            /// </summary>
+            /// <remarks>
+            /// List invitations in a share
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static AzureOperationResponse<IPage<Invitation>> ListByShareNextWithHttpMessages(this IInvitationsOperations operations, string nextPageLink, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.ListByShareNextWithHttpMessagesAsync(nextPageLink, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
     }

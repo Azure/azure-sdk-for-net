@@ -280,7 +280,7 @@ namespace Microsoft.Azure.Management.DataShare
         /// The name of the share subscription which will hold the data set sink.
         /// </param>
         /// <param name='dataSetMappingName'>
-        /// The Id of the source data set being mapped.
+        /// The name of the data set mapping to be created.
         /// </param>
         /// <param name='dataSetMapping'>
         /// Destination data set configuration details.

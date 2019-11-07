@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.DataShare
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -68,6 +70,29 @@ namespace Microsoft.Azure.Management.DataShare
             }
 
             /// <summary>
+            /// Get an account under a resource group
+            /// </summary>
+            /// <remarks>
+            /// Get an account
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the share account.
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static AzureOperationResponse<Account> GetWithHttpMessages(this IAccountsOperations operations, string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.GetWithHttpMessagesAsync(resourceGroupName, accountName, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
             /// Create an account in the given resource group
             /// </summary>
             /// <remarks>
@@ -120,6 +145,32 @@ namespace Microsoft.Azure.Management.DataShare
             }
 
             /// <summary>
+            /// Create an account in the given resource group
+            /// </summary>
+            /// <remarks>
+            /// Create an account
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the share account.
+            /// </param>
+            /// <param name='account'>
+            /// The account payload.
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static AzureOperationResponse<Account> CreateWithHttpMessages(this IAccountsOperations operations, string resourceGroupName, string accountName, Account account, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.CreateWithHttpMessagesAsync(resourceGroupName, accountName, account, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
             /// Delete an account
             /// </summary>
             /// <remarks>
@@ -163,6 +214,29 @@ namespace Microsoft.Azure.Management.DataShare
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Delete an account
+            /// </summary>
+            /// <remarks>
+            /// DeleteAccount
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the share account.
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static AzureOperationResponse<OperationResponse> DeleteWithHttpMessages(this IAccountsOperations operations, string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.DeleteWithHttpMessagesAsync(resourceGroupName, accountName, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -218,6 +292,32 @@ namespace Microsoft.Azure.Management.DataShare
             }
 
             /// <summary>
+            /// Patch a given account
+            /// </summary>
+            /// <remarks>
+            /// Patch an account
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the share account.
+            /// </param>
+            /// <param name='accountUpdateParameters'>
+            /// The account update parameters.
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static AzureOperationResponse<Account> UpdateWithHttpMessages(this IAccountsOperations operations, string resourceGroupName, string accountName, AccountUpdateParameters accountUpdateParameters, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.UpdateWithHttpMessagesAsync(resourceGroupName, accountName, accountUpdateParameters, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
             /// List Accounts in a subscription
             /// </summary>
             /// <remarks>
@@ -255,6 +355,26 @@ namespace Microsoft.Azure.Management.DataShare
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// List Accounts in a subscription
+            /// </summary>
+            /// <remarks>
+            /// List Accounts in Subscription
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='skipToken'>
+            /// Continuation token
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static AzureOperationResponse<IPage<Account>> ListBySubscriptionWithHttpMessages(this IAccountsOperations operations, string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.ListBySubscriptionWithHttpMessagesAsync(skipToken, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -301,6 +421,29 @@ namespace Microsoft.Azure.Management.DataShare
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// List Accounts in a resource group
+            /// </summary>
+            /// <remarks>
+            /// List Accounts in ResourceGroup
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='skipToken'>
+            /// Continuation token
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static AzureOperationResponse<IPage<Account>> ListByResourceGroupWithHttpMessages(this IAccountsOperations operations, string resourceGroupName, string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, skipToken, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -356,6 +499,32 @@ namespace Microsoft.Azure.Management.DataShare
             }
 
             /// <summary>
+            /// Create an account in the given resource group
+            /// </summary>
+            /// <remarks>
+            /// Create an account
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the share account.
+            /// </param>
+            /// <param name='account'>
+            /// The account payload.
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static AzureOperationResponse<Account> BeginCreateWithHttpMessages(this IAccountsOperations operations, string resourceGroupName, string accountName, Account account, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, accountName, account, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
             /// Delete an account
             /// </summary>
             /// <remarks>
@@ -402,6 +571,29 @@ namespace Microsoft.Azure.Management.DataShare
             }
 
             /// <summary>
+            /// Delete an account
+            /// </summary>
+            /// <remarks>
+            /// DeleteAccount
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the share account.
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static AzureOperationResponse<OperationResponse> BeginDeleteWithHttpMessages(this IAccountsOperations operations, string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, accountName, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
             /// List Accounts in a subscription
             /// </summary>
             /// <remarks>
@@ -442,6 +634,26 @@ namespace Microsoft.Azure.Management.DataShare
             }
 
             /// <summary>
+            /// List Accounts in a subscription
+            /// </summary>
+            /// <remarks>
+            /// List Accounts in Subscription
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static AzureOperationResponse<IPage<Account>> ListBySubscriptionNextWithHttpMessages(this IAccountsOperations operations, string nextPageLink, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.ListBySubscriptionNextWithHttpMessagesAsync(nextPageLink, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
             /// List Accounts in a resource group
             /// </summary>
             /// <remarks>
@@ -479,6 +691,26 @@ namespace Microsoft.Azure.Management.DataShare
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// List Accounts in a resource group
+            /// </summary>
+            /// <remarks>
+            /// List Accounts in ResourceGroup
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static AzureOperationResponse<IPage<Account>> ListByResourceGroupNextWithHttpMessages(this IAccountsOperations operations, string nextPageLink, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.ListByResourceGroupNextWithHttpMessagesAsync(nextPageLink, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
     }

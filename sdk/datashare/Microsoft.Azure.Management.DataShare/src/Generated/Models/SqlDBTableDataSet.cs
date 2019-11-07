@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.DataShare.Models
     using System.Linq;
 
     /// <summary>
-    /// A SQL DB table dataset.
+    /// A SQL DB table data set.
     /// </summary>
     [Newtonsoft.Json.JsonObject("SqlDBTable")]
     [Rest.Serialization.JsonTransformation]
@@ -33,20 +33,23 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// <summary>
         /// Initializes a new instance of the SqlDBTableDataSet class.
         /// </summary>
+        /// <param name="databaseName">Database name of the source data
+        /// set</param>
+        /// <param name="schemaName">Schema of the table. Default value is
+        /// dbo.</param>
+        /// <param name="sqlServerResourceId">Resource id of SQL server</param>
+        /// <param name="tableName">SQL DB table name.</param>
         /// <param name="id">The resource id of the azure resource</param>
         /// <param name="name">Name of the azure resource</param>
         /// <param name="type">Type of the azure resource</param>
-        /// <param name="databaseName">Database name of the source data
-        /// set</param>
         /// <param name="dataSetId">Unique id for identifying a data set
         /// resource</param>
-        /// <param name="sqlServerResourceId">Resource id of SQL server</param>
-        /// <param name="tableName">SQL DB table name.</param>
-        public SqlDBTableDataSet(string id = default(string), string name = default(string), string type = default(string), string databaseName = default(string), string dataSetId = default(string), string sqlServerResourceId = default(string), string tableName = default(string))
+        public SqlDBTableDataSet(string databaseName, string schemaName, string sqlServerResourceId, string tableName, string id = default(string), string name = default(string), string type = default(string), string dataSetId = default(string))
             : base(id, name, type)
         {
             DatabaseName = databaseName;
             DataSetId = dataSetId;
+            SchemaName = schemaName;
             SqlServerResourceId = sqlServerResourceId;
             TableName = tableName;
             CustomInit();
@@ -70,6 +73,12 @@ namespace Microsoft.Azure.Management.DataShare.Models
         public string DataSetId { get; private set; }
 
         /// <summary>
+        /// Gets or sets schema of the table. Default value is dbo.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.schemaName")]
+        public string SchemaName { get; set; }
+
+        /// <summary>
         /// Gets or sets resource id of SQL server
         /// </summary>
         [JsonProperty(PropertyName = "properties.sqlServerResourceId")]
@@ -81,5 +90,30 @@ namespace Microsoft.Azure.Management.DataShare.Models
         [JsonProperty(PropertyName = "properties.tableName")]
         public string TableName { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (DatabaseName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "DatabaseName");
+            }
+            if (SchemaName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "SchemaName");
+            }
+            if (SqlServerResourceId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "SqlServerResourceId");
+            }
+            if (TableName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "TableName");
+            }
+        }
     }
 }

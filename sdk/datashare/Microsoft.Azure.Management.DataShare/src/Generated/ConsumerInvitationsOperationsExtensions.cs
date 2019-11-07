@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.DataShare
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -68,6 +70,29 @@ namespace Microsoft.Azure.Management.DataShare
             }
 
             /// <summary>
+            /// Rejects the invitation identified by invitationId
+            /// </summary>
+            /// <remarks>
+            /// Reject an invitation
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// Location of the invitation
+            /// </param>
+            /// <param name='invitation'>
+            /// An invitation payload
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static AzureOperationResponse<ConsumerInvitation> RejectInvitationWithHttpMessages(this IConsumerInvitationsOperations operations, string location, ConsumerInvitation invitation, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.RejectInvitationWithHttpMessagesAsync(location, invitation, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
             /// Gets the invitation identified by invitationId
             /// </summary>
             /// <remarks>
@@ -111,6 +136,29 @@ namespace Microsoft.Azure.Management.DataShare
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Gets the invitation identified by invitationId
+            /// </summary>
+            /// <remarks>
+            /// Get an invitation
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// Location of the invitation
+            /// </param>
+            /// <param name='invitationId'>
+            /// An invitation id
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static AzureOperationResponse<ConsumerInvitation> GetWithHttpMessages(this IConsumerInvitationsOperations operations, string location, string invitationId, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.GetWithHttpMessagesAsync(location, invitationId, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -162,6 +210,26 @@ namespace Microsoft.Azure.Management.DataShare
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='skipToken'>
+            /// The continuation token
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static AzureOperationResponse<IPage<ConsumerInvitation>> ListInvitationsWithHttpMessages(this IConsumerInvitationsOperations operations, string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.ListInvitationsWithHttpMessagesAsync(skipToken, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List the invitations
+            /// </summary>
+            /// <remarks>
+            /// Lists invitations
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
@@ -191,6 +259,26 @@ namespace Microsoft.Azure.Management.DataShare
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// List the invitations
+            /// </summary>
+            /// <remarks>
+            /// Lists invitations
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static AzureOperationResponse<IPage<ConsumerInvitation>> ListInvitationsNextWithHttpMessages(this IConsumerInvitationsOperations operations, string nextPageLink, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.ListInvitationsNextWithHttpMessagesAsync(nextPageLink, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
     }
