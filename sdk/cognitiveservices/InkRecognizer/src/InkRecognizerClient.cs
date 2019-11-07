@@ -19,7 +19,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-#pragma warning disable AZC0001 // https://github.com/Azure/azure-sdk-tools/issues/213
 //[assembly: AzureSdkClientLibrary(".Net")]
 namespace Azure.AI.InkRecognizer
 {

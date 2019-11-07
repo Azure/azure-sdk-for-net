@@ -12,7 +12,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using System;
 
-#pragma warning disable AZC0001 // https://github.com/Azure/azure-sdk-tools/issues/213
 namespace Azure.AI.InkRecognizer
 {
     /// <summary>
