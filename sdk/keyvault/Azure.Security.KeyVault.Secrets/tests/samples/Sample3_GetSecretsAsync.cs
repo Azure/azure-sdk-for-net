@@ -48,6 +48,12 @@ namespace Azure.Security.KeyVault.Secrets.Samples
 
             await foreach (SecretProperties secret in client.GetPropertiesOfSecretsAsync())
             {
+                // Getting a disabled secret will fail, so skip disabled secrets.
+                if (!secret.Enabled.GetValueOrDefault())
+                {
+                    continue;
+                }
+
                 KeyVaultSecret secretWithValue = await client.GetSecretAsync(secret.Name);
 
                 if (secretValues.ContainsKey(secretWithValue.Value))

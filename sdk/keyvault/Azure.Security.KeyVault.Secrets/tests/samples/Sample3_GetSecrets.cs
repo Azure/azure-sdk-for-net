@@ -68,6 +68,12 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             IEnumerable<SecretProperties> secretVersions = client.GetPropertiesOfSecretVersions(bankSecretName);
             foreach (SecretProperties secret in secretVersions)
             {
+                // Getting a disabled secret will fail, so skip disabled secrets.
+                if (!secret.Enabled.GetValueOrDefault())
+                {
+                    continue;
+                }
+
                 KeyVaultSecret oldBankSecret = client.GetSecret(secret.Name, secret.Version);
                 if (newBankSecretPassword == oldBankSecret.Value)
                 {
