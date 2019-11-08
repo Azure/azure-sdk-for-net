@@ -73,6 +73,11 @@ if ($Help)
   exit 0
 }
 
+if ([string]::IsNullOrEmpty($azureRegion)) 
+{
+  $azureRegion = "southcentralus"
+}
+
 ValidateParameters -ServicePrincipalName $servicePrincipalName -AzureRegion $azureRegion
 $subscription = GetSubscriptionAndSetAzureContext -SubscriptionName $subscriptionName
 CreateResourceGroupIfMissing -ResourceGroupName $resourceGroupName
@@ -85,15 +90,11 @@ try
     Start-Sleep 1
 
     $credentials = GenerateRandomCredentials               
-    $principal = CreateServicePrincipalAndWait -ServicePrincipalName "$($ServicePrincipalName)" -Credentials $credentials
-    
-    Write-Host "`t...Assigning the 'Contributor' role to resource group"
+    $principal = CreateServicePrincipalAndWait -ServicePrincipalName "$($servicePrincipalName)" -Credentials $credentials
     
     AssignRole -ApplicationId "$($principal.ApplicationId)" `
                -RoleDefinitionName "Contributor" `
-               -ResourceGroupName "$($ResourceGroupName)"
-
-    Write-Host "`t...Assigning the 'Azure Event Hubs Data Owner' role to resource group"
+               -ResourceGroupName "$($resourceGroupName)"
             
     # The "Azure Event Hubs Data Owner" role is needed to test the Azure Identity samples. 
     # These samples do not use a "Shared Access Signatures" as a means of authentication
@@ -101,14 +102,14 @@ try
 
     AssignRole -ApplicationId "$($principal.ApplicationId)" `
                -RoleDefinitionName "Azure Event Hubs Data Owner" `
-               -ResourceGroupName "$($ResourceGroupName)"
+               -ResourceGroupName "$($resourceGroupName)"
 
     # Write the environment variables.
 
     Write-Host "Done."
     Write-Host ""
     Write-Host ""
-    Write-Host "EVENT_HUBS_RESOURCEGROUP=$($ResourceGroupName)"
+    Write-Host "EVENT_HUBS_RESOURCEGROUP=$($resourceGroupName)"
     Write-Host ""
     Write-Host "EVENT_HUBS_SUBSCRIPTION=$($subscription.SubscriptionId)"
     Write-Host ""
@@ -122,6 +123,6 @@ try
 catch 
 {
     Write-Error $_.Exception.Message
-    TearDownResources -ResourceGroupName $ResourceGroupName
+    TearDownResources -ResourceGroupName "$($resourceGroupName)"
     exit -1
 }
