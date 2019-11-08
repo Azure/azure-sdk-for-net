@@ -29,8 +29,8 @@ function AssignRole()
 
   try 
   {
-      # The "Contributor" role is needed to manage the resource group resources and ultimately for the tests to create an Event Hub namespace and configure it.
-
+      Write-Host "`t...Assigning role '$roleDefinitionName' to resource group"
+      
       New-AzRoleAssignment -ApplicationId "$($principal.ApplicationId)" `
                            -RoleDefinitionName "$($roleDefinitionName)" `
                            -ResourceGroupName "$($resourceGroupName)" | Out-Null
@@ -78,7 +78,7 @@ function AssignRoleToNamespace()
 
   try 
   {
-      # The "Contributor" role is needed to manage the resource group resources and ultimately for the tests to create an Event Hub namespace and configure it.
+      Write-Host "`t...Assigning role '$roleDefinitionName' to namespace"
 
       New-AzRoleAssignment -ApplicationId "$($principal.ApplicationId)" `
                            -RoleDefinitionName "$($roleDefinitionName)" `

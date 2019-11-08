@@ -61,7 +61,9 @@ function CreateServicePrincipalAndWait
   Write-Host "`t...Creating new service principal"
   Start-Sleep 1
 
-  $principal = New-AzADServicePrincipal -DisplayName "$($servicePrincipalName)" -PasswordCredential $credentials -ErrorAction SilentlyContinue
+  $principal = New-AzADServicePrincipal -DisplayName "$($servicePrincipalName)" `
+                                        -PasswordCredential $credentials `
+                                        -ErrorAction SilentlyContinue
 
   if ($principal -eq $null)
   {
@@ -129,7 +131,10 @@ function CreateResourceGroupIfMissing()
   param
   (
     [Parameter(Mandatory=$true)]
-    [string] $resourceGroupName
+    [string] $resourceGroupName,
+
+    [Parameter(Mandatory=$true)]  
+    [string] $azureRegion
   )
 
   # Create the resource group, if needed.
@@ -147,7 +152,7 @@ function CreateResourceGroupIfMissing()
   if ($createResourceGroup)
   {
       Write-Host "`t...Creating new resource group"
-      $resourceGroup = (New-AzResourceGroup -Name "$($resourceGroupName)" -Location "$($AzureRegion)")
+      $resourceGroup = (New-AzResourceGroup -Name "$($resourceGroupName)" -Location "$($azureRegion)")
   }
 
   if ($resourceGroup -eq $null)

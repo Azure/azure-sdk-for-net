@@ -6,12 +6,15 @@
     This script handles creation of the principal and the resources needed to run identity samples.
 
   .DESCRIPTION
-    It tries to retrieve an Azure Event Hubs Namespace, an Azure Event Hub and a service principal
-    using the names passed in as arguments. It attempts the creation of a resource when not found.
-    
-    It assigns the 'Azure Event Hubs Data Owner' role to the created namespace.
+    It tries to retrieve a resource group, an Azure Event Hubs Namespace and an Azure Event Hub
+    using the names passed in as arguments. It attempts the creation of the resources if not found.
 
-    Upon completion, the script will output the principal's sensitive information.
+    It always tries to create the named service principal.
+    
+    It assigns the 'Azure Event Hubs Data Owner' role to the namespace.
+
+    Upon completion, the script will output the principal's sensitive information and the parameters
+    needed to run the samples.
  
     For more detailed help, please use the -Help switch. 
 #>
@@ -80,28 +83,36 @@ if ($Help)
   exit 0
 }
 
-ValidateParameters -ServicePrincipalName $servicePrincipalName -AzureRegion $azureRegion
-GetSubscriptionAndSetAzureContext -SubscriptionName $subscriptionName | Out-Null
-CreateResourceGroupIfMissing -ResourceGroupName $resourceGroupName
+if ([string]::IsNullOrEmpty($azureRegion)) 
+{
+  $azureRegion = "southcentralus"
+}
+
+ValidateParameters -ServicePrincipalName "$($servicePrincipalName)" -AzureRegion "$($azureRegion)"
+$subscription = GetSubscriptionAndSetAzureContext -SubscriptionName "$($subscriptionName)"
+CreateResourceGroupIfMissing -ResourceGroupName "$($resourceGroupName)" -AzureRegion "$($azureRegion)"
 
 # At this point, we may have created a resource, so be safe and allow for removing any
 # resources created should the script fail.
 
 try
 {
-    CreateNamespaceIfMissing -ResourceGroupName $resourceGroupName -NamespaceName $namespaceName
+    Start-Sleep 1
+    
+    CreateNamespaceIfMissing -ResourceGroupName "$($resourceGroupName)" `
+                             -NamespaceName "$($namespaceName)" `
+                             -AzureRegion "$($azureRegion)"
 
-    CreateHubIfMissing -ResourceGroupName $resourceGroupName `
-                       -NamespaceName $namespaceName `
-                       -EventHubName $eventHubName
+    $namespaceInformation = GetNamespaceInformation -ResourceGroupName "$($resourceGroupName)" -NamespaceName "$($namespaceName)"
+
+    CreateHubIfMissing -ResourceGroupName "$($resourceGroupName)" `
+                       -NamespaceName "$($namespaceName)" `
+                       -EventHubName "$($eventHubName)"
 
     # Create the service principal and grant 'Azure Event Hubs Data Owner' access in the event hubs.
-    Start-Sleep 1
 
     $credentials = GenerateRandomCredentials           
     $principal = CreateServicePrincipalAndWait -ServicePrincipalName "$($servicePrincipalName)" -Credentials $credentials
-
-    Write-Host "`t...Assigning role 'Azure Event Hubs Data Owner' to namespace"
 
     AssignRoleToNamespace -ApplicationId "$($principal.ApplicationId)" `
                           -RoleDefinitionName "Azure Event Hubs Data Owner" `
@@ -111,7 +122,15 @@ try
     Write-Host "Done."
     Write-Host ""
     Write-Host ""
-    Write-Host "Client Id=$($principal.ApplicationId)"
+    Write-Host "Connection-String=$($namespaceInformation.PrimaryConnectionString)"
+    Write-Host ""
+    Write-Host "FullyQualifiedNamespace=$($namespaceInformation.FullyQualifiedDomainName)"
+    Write-Host ""
+    Write-Host "EventHub Name=$($EventHubName)"
+    Write-Host ""
+    Write-Host "Tenant=$($subscription.TenantId)"
+    Write-Host ""
+    Write-Host "Client=$($principal.ApplicationId)"
     Write-Host ""
     Write-Host "Secret=$($credentials.Password)"
     Write-Host ""

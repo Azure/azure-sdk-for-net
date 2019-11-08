@@ -19,7 +19,7 @@ function ValidateParameters()
     [Parameter(Mandatory=$true)]
     [string] $servicePrincipalName,
 
-    [AllowNull()]
+    [Parameter(Mandatory=$true)]
     [string] $azureRegion
   )
 
@@ -69,11 +69,6 @@ function ValidateAzureRegion()
     [AllowNull()]
     [string] $azureRegion
   )
-
-  if ([string]::IsNullOrEmpty($azureRegion)) 
-  {
-    $azureRegion = "southcentralus"
-  }
 
   IsValidEventHubRegion -AzureRegion "$($azureRegion)"
 }
