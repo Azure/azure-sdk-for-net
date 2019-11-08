@@ -33,7 +33,11 @@ pr:
   paths:
     include:
     - sdk/core/
+<<<<<<< HEAD
     - eng/
+=======
+    - sdk/eng/
+>>>>>>> Add eng to core build.
 
 stages:
 - template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
