@@ -61,31 +61,13 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             KeyVaultCertificateWithPolicy newCert = await newCertOp.WaitForCompletionAsync();
 
             // The certificate is no longer needed, need to delete it from the Key Vault.
-            await client.DeleteCertificateAsync(certName);
+            DeleteCertificateOperation operation = await client.StartDeleteCertificateAsync(certName);
 
             // To ensure key is deleted on server side.
-            Assert.IsTrue(await WaitForDeletedKeyAsync(client, certName));
+            await operation.WaitForCompletionAsync();
 
-            // If the keyvault is soft-delete enabled, then for permanent deletion, deleted key needs to be purged.
+            // If the keyvault is soft-delete enabled, then for permanent deletion, the deleted key needs to be purged.
             await client.PurgeDeletedCertificateAsync(certName);
-        }
-
-        private async Task<bool> WaitForDeletedKeyAsync(CertificateClient client, string certName)
-        {
-            int maxIterations = 20;
-            for (int i = 0; i < maxIterations; i++)
-            {
-                try
-                {
-                    await client.GetDeletedCertificateAsync(certName);
-                    return true;
-                }
-                catch
-                {
-                    await Task.Delay(5000);
-                }
-            }
-            return false;
         }
     }
 }

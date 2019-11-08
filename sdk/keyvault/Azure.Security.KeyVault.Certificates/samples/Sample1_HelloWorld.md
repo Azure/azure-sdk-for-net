@@ -74,7 +74,15 @@ while (!newCertOp.HasCompleted)
 The certificate is no longer needed, so delete it from the Key Vault.
 
 ```C# Snippet:CertificatesSample1DeleteCertificate
-client.DeleteCertificate(certName);
+DeleteCertificateOperation operation = client.StartDeleteCertificate(certName);
+
+// To ensure certificate is deleted on server side.
+while (!operation.HasCompleted)
+{
+    Thread.Sleep(2000);
+
+    operation.UpdateStatus();
+}
 ```
 
 ## Source

@@ -387,7 +387,11 @@ namespace Azure.Security.KeyVault.Secrets
         /// </remarks>
         /// <param name="name">The name of the secret.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="DeleteSecretOperation"/> to wait on this long-running operation.</returns>
+        /// <returns>
+        /// A <see cref="DeleteSecretOperation"/> to wait on this long-running operation.
+        /// If the Key Vault is soft delete-enabled, you only need to wait for the operation to complete if you need to recover or purge the secret;
+        /// otherwise, the secret is deleted automatically on the <see cref="DeletedSecret.ScheduledPurgeDate"/>.
+        /// </returns>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -421,7 +425,11 @@ namespace Azure.Security.KeyVault.Secrets
         /// </remarks>
         /// <param name="name">The name of the secret.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="DeleteSecretOperation"/> to wait on this long-running operation.</returns>
+        /// <returns>
+        /// A <see cref="DeleteSecretOperation"/> to wait on this long-running operation.
+        /// If the Key Vault is soft delete-enabled, you only need to wait for the operation to complete if you need to recover or purge the secret;
+        /// otherwise, the secret is deleted automatically on the <see cref="DeletedSecret.ScheduledPurgeDate"/>.
+        /// </returns>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>

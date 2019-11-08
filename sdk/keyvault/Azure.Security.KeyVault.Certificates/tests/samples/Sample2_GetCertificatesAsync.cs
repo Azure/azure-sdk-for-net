@@ -64,12 +64,13 @@ namespace Azure.Security.KeyVault.Certificates.Samples
 
             // The certificates are no longer needed.
             // You need to delete them from the Key Vault.
-            await client.DeleteCertificateAsync(certName1);
-            await client.DeleteCertificateAsync(certName2);
+            DeleteCertificateOperation operation1 = await client.StartDeleteCertificateAsync(certName1);
+            DeleteCertificateOperation operation2 = await client.StartDeleteCertificateAsync(certName2);
 
             // To ensure certificates are deleted on server side.
-            Assert.IsTrue(await WaitForDeletedCertificateAsync(client, certName1));
-            Assert.IsTrue(await WaitForDeletedCertificateAsync(client, certName2));
+            Task.WaitAll(
+                operation1.WaitForCompletionAsync().AsTask(),
+                operation2.WaitForCompletionAsync().AsTask());
 
             // You can list all the deleted and non-purged certificates, assuming Key Vault is soft-delete enabled.
             await foreach (DeletedCertificate deletedCert in client.GetDeletedCertificatesAsync())
@@ -78,26 +79,9 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             }
 
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted keys needs to be purged.
-            await client.PurgeDeletedCertificateAsync(certName1);
-            await client.PurgeDeletedCertificateAsync(certName2);
-        }
-
-        private async Task<bool> WaitForDeletedCertificateAsync(CertificateClient client, string certName)
-        {
-            int maxIterations = 20;
-            for (int i = 0; i < maxIterations; i++)
-            {
-                try
-                {
-                    await client.GetDeletedCertificateAsync(certName);
-                    return true;
-                }
-                catch
-                {
-                    await Task.Delay(5000);
-                }
-            }
-            return false;
+            Task.WaitAll(
+                client.PurgeDeletedCertificateAsync(certName1),
+                client.PurgeDeletedCertificateAsync(certName2));
         }
     }
 }
