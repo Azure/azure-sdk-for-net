@@ -4,7 +4,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Azure.Messaging.EventHubs
+namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
     ///   TODO.
@@ -21,6 +21,18 @@ namespace Azure.Messaging.EventHubs
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         protected virtual Task InitializeProcessingForPartitionAsync(PartitionContext context) => Task.CompletedTask;
+
+        /// <summary>
+        ///   The handler to be called once event processing stops for a given partition.
+        /// </summary>
+        ///
+        /// <param name="reason">The reason why the processing for the specified partition is being stopped.</param>
+        /// <param name="context">TODO.</param>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        ///
+        protected virtual Task ProcessingForPartitionStoppedAsync(ProcessingStoppedReason reason,
+                                                                  PartitionContext context) => Task.CompletedTask;
 
         /// <summary>
         ///   Responsible for processing events received from the Event Hubs service.

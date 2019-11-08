@@ -40,7 +40,7 @@ namespace Azure.Messaging.EventHubs
         private Func<InitializePartitionProcessingContext, Task> _initializeProcessingForPartitionAsyncHandler;
 
         /// <summary>The handler to be called once event processing stops for a given partition.</summary>
-        private Func<PartitionProcessingStoppedContext, Task> _processingForPartitionStoppedAsync;
+        private Func<PartitionProcessingStoppedContext, Task> _processingForPartitionStoppedAsyncHandler;
 
         /// <summary>Responsible for processing events received from the Event Hubs service.</summary>
         private Func<EventProcessorEvent, Task> _processEventAsyncHandler;
@@ -62,10 +62,10 @@ namespace Azure.Messaging.EventHubs
         ///   The handler to be called once event processing stops for a given partition.
         /// </summary>
         ///
-        public Func<PartitionProcessingStoppedContext, Task> ProcessingForPartitionStoppedAsync
+        public Func<PartitionProcessingStoppedContext, Task> ProcessingForPartitionStoppedAsyncHandler
         {
-            get => _processingForPartitionStoppedAsync;
-            set => EnsureNotRunningAndInvoke(() => _processingForPartitionStoppedAsync = value);
+            get => _processingForPartitionStoppedAsyncHandler;
+            set => EnsureNotRunningAndInvoke(() => _processingForPartitionStoppedAsyncHandler = value);
         }
 
         /// <summary>
@@ -428,6 +428,32 @@ namespace Azure.Messaging.EventHubs
                 // If partition pump creation fails, we'll try again on the next time this method is called.  This should happen
                 // on the next load balancing loop as long as this instance still owns the partition.
                 // TODO: delegate the exception handling to an Exception Callback.
+            }
+        }
+
+        /// <summary>
+        ///   The handler to be called once event processing stops for a given partition.
+        /// </summary>
+        ///
+        /// <param name="reason">The reason why the processing for the specified partition is being stopped.</param>
+        /// <param name="context">TODO.</param>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        ///
+        protected async override Task ProcessingForPartitionStoppedAsync(ProcessingStoppedReason reason,
+                                                                         PartitionContext context)
+        {
+            if (ProcessingForPartitionStoppedAsyncHandler != null)
+            {
+                try
+                {
+                    var stopContext = new PartitionProcessingStoppedContext(context, reason);
+                    await ProcessingForPartitionStoppedAsyncHandler(stopContext);
+                }
+                catch (Exception)
+                {
+                    // TODO: delegate the exception handling to an Exception Callback.
+                }
             }
         }
 
@@ -919,22 +945,10 @@ namespace Azure.Messaging.EventHubs
                 {
                     // TODO: delegate the exception handling to an Exception Callback.
                 }
-
-                if (ProcessingForPartitionStoppedAsync != null)
-                {
-                    try
-                    {
-                        var partitionContext = new PartitionContext(partitionId);
-                        var stopContext = new PartitionProcessingStoppedContext(partitionContext, reason);
-
-                        await ProcessingForPartitionStoppedAsync(stopContext);
-                    }
-                    catch (Exception)
-                    {
-                        // TODO: delegate the exception handling to an Exception Callback.
-                    }
-                }
             }
+
+            var context = new PartitionContext(partitionId);
+            await ProcessingForPartitionStoppedAsync(reason, context);
         }
 
         /// <summary>

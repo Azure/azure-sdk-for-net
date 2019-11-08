@@ -91,7 +91,7 @@ namespace Azure.Messaging.EventHubs.Samples
                     return Task.CompletedTask;
                 };
 
-                eventProcessor.ProcessingForPartitionStoppedAsync = (stopContext) =>
+                eventProcessor.ProcessingForPartitionStoppedAsyncHandler = (stopContext) =>
                 {
                     // The code to be run just before stopping processing events for a partition.  This is the right place to dispose
                     // of objects that will no longer be used.

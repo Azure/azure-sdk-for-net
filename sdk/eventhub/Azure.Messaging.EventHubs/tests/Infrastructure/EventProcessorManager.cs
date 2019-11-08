@@ -54,7 +54,7 @@ namespace Azure.Messaging.EventHubs.Tests
         private Action<InitializePartitionProcessingContext> OnInitialize { get; }
 
         /// <summary>
-        ///   A callback action to be called on <see cref="EventProcessorClient.ProcessingForPartitionStoppedAsync" />.
+        ///   A callback action to be called on <see cref="EventProcessorClient.ProcessingForPartitionStoppedAsyncHandler" />.
         /// </summary>
         ///
         private Action<PartitionProcessingStoppedContext> OnStop { get; }
@@ -80,7 +80,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.</param>
         /// <param name="options">The set of options to use for the event processors.</param>
         /// <param name="onInitialize">A callback action to be called on <see cref="EventProcessorClient.InitializeProcessingForPartitionAsyncHandler" />.</param>
-        /// <param name="onStop">A callback action to be called on <see cref="EventProcessorClient.ProcessingForPartitionStoppedAsync" />.</param>
+        /// <param name="onStop">A callback action to be called on <see cref="EventProcessorClient.ProcessingForPartitionStoppedAsyncHandler" />.</param>
         /// <param name="onProcessEvent">A callback action to be called on <see cref="EventProcessorClient.ProcessEventAsyncHandler" />.</param>
         /// <param name="onProcessException">A callback action to be called on <see cref="EventProcessorClient.ProcessErrorAsyncHandler" />.</param>
         ///
@@ -144,7 +144,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 if (OnStop != null)
                 {
-                    eventProcessor.ProcessingForPartitionStoppedAsync = stopContext =>
+                    eventProcessor.ProcessingForPartitionStoppedAsyncHandler = stopContext =>
                     {
                         OnStop(stopContext);
                         return Task.CompletedTask;
