@@ -110,7 +110,7 @@ Debug.WriteLine($"Verified the signature using the algorithm {ecVerifyDataResult
 To see the full example source, see:
 
 * [Synchronous Sample5_SignVerify.cs](../tests/samples/Sample5_SignVerify.cs)
-* [ASynchronous Sample5_SignVerifyAsync.cs](../tests/samples/Sample5_SignVerifyAsync.cs)
+* [Asynchronous Sample5_SignVerifyAsync.cs](../tests/samples/Sample5_SignVerifyAsync.cs)
 
 
 
