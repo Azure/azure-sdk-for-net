@@ -49,7 +49,7 @@ var rsaCryptoClient = new CryptographyClient(cloudRsaKey.Id, new DefaultAzureCre
 var ecCryptoClient = new CryptographyClient(cloudEcKey.Id, new DefaultAzureCredential());
 ```
 
-## Signing keys with the SignAsync and VerifyAsync methods
+## Signing keys with the Sign and Verify methods
 
 Next we'll sign some arbitrary data and verify the signatures using the CryptographyClient with both the EC and RSA keys we created.
 The Sign and Verify methods expect a precalculated digest, and the digest needs to be calculated using the hash algorithm which matches the
