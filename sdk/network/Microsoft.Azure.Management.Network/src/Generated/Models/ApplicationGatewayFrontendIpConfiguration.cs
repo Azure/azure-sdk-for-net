@@ -43,9 +43,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="subnet">Reference of the subnet resource.</param>
         /// <param name="publicIPAddress">Reference of the PublicIP
         /// resource.</param>
-        /// <param name="provisioningState">Provisioning state of the public IP
-        /// resource. Possible values are: 'Updating', 'Deleting', and
-        /// 'Failed'.</param>
+        /// <param name="provisioningState">The provisioning state of the
+        /// frontend IP configuration resource. Possible values include:
+        /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="name">Name of the frontend IP configuration that is
         /// unique within an Application Gateway.</param>
         /// <param name="etag">A unique read-only string that changes whenever
@@ -97,11 +97,12 @@ namespace Microsoft.Azure.Management.Network.Models
         public SubResource PublicIPAddress { get; set; }
 
         /// <summary>
-        /// Gets or sets provisioning state of the public IP resource. Possible
-        /// values are: 'Updating', 'Deleting', and 'Failed'.
+        /// Gets the provisioning state of the frontend IP configuration
+        /// resource. Possible values include: 'Succeeded', 'Updating',
+        /// 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets name of the frontend IP configuration that is unique
@@ -111,17 +112,17 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets a unique read-only string that changes whenever the
-        /// resource is updated.
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
         /// <summary>
-        /// Gets or sets type of the resource.
+        /// Gets type of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
+        public string Type { get; private set; }
 
     }
 }

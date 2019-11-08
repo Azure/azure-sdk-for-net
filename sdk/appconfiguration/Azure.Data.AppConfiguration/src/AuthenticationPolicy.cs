@@ -7,6 +7,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Data.AppConfiguration
@@ -22,14 +23,14 @@ namespace Azure.Data.AppConfiguration
             _secret = secret;
         }
 
-        public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             await ProcessAsync(message, async: true).ConfigureAwait(false);
 
             await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
         }
 
-        private async Task ProcessAsync(HttpPipelineMessage message, bool async)
+        private async ValueTask ProcessAsync(HttpMessage message, bool async)
         {
             string contentHash;
 
@@ -56,7 +57,7 @@ namespace Azure.Data.AppConfiguration
 
             using (var hmac = new HMACSHA256(_secret))
             {
-                var uri = message.Request.UriBuilder.Uri;
+                Uri uri = message.Request.Uri.ToUri();
                 var host = uri.Host;
                 var pathAndQuery = uri.PathAndQuery;
 
@@ -67,14 +68,13 @@ namespace Azure.Data.AppConfiguration
                 var signature = Convert.ToBase64String(hmac.ComputeHash(Encoding.ASCII.GetBytes(stringToSign))); // Calculate the signature
                 string signedHeaders = "date;host;x-ms-content-sha256"; // Semicolon separated header names
 
-                // TODO (pri 3): should date header writing be moved out from here?
-                message.Request.Headers.Add("Date", utcNowString);
-                message.Request.Headers.Add("x-ms-content-sha256", contentHash);
-                message.Request.Headers.Add("Authorization", $"HMAC-SHA256 Credential={_credential}, SignedHeaders={signedHeaders}, Signature={signature}");
+                message.Request.Headers.SetValue("Date", utcNowString);
+                message.Request.Headers.SetValue("x-ms-content-sha256", contentHash);
+                message.Request.Headers.SetValue("Authorization", $"HMAC-SHA256 Credential={_credential}&SignedHeaders={signedHeaders}&Signature={signature}");
             }
         }
 
-        public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             ProcessAsync(message, async: false).GetAwaiter().GetResult();
 

@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// empty and must start with /. Leave empty to use the incoming path
         /// as destination path.</param>
         /// <param name="customHostname">Host to redirect. Leave empty to use
-        /// use the incoming host as the destination host.</param>
+        /// the incoming host as the destination host.</param>
         /// <param name="customQueryString">The set of query strings to be
         /// placed in the redirect URL. Setting this value would replace any
         /// existing query string; leave empty to preserve the incoming query
@@ -100,8 +100,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public string CustomPath { get; set; }
 
         /// <summary>
-        /// Gets or sets host to redirect. Leave empty to use use the incoming
-        /// host as the destination host.
+        /// Gets or sets host to redirect. Leave empty to use the incoming host
+        /// as the destination host.
         /// </summary>
         [JsonProperty(PropertyName = "customHostname")]
         public string CustomHostname { get; set; }

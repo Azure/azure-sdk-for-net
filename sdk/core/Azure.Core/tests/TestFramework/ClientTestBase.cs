@@ -14,11 +14,11 @@ namespace Azure.Core.Testing
     [TestFixture(false)]
     public class ClientTestBase
     {
-        private static readonly ProxyGenerator _proxyGenerator = new ProxyGenerator();
+        private static readonly ProxyGenerator s_proxyGenerator = new ProxyGenerator();
 
-        private static readonly IInterceptor _useSyncInterceptor = new UseSyncMethodsInterceptor(forceSync: true);
-        private static readonly IInterceptor _avoidSyncInterceptor = new UseSyncMethodsInterceptor(forceSync: false);
-        private static readonly IInterceptor _diagnosticScopeValidatingInterceptor = new DiagnosticScopeValidatingInterceptor();
+        private static readonly IInterceptor s_useSyncInterceptor = new UseSyncMethodsInterceptor(forceSync: true);
+        private static readonly IInterceptor s_avoidSyncInterceptor = new UseSyncMethodsInterceptor(forceSync: false);
+        private static readonly IInterceptor s_diagnosticScopeValidatingInterceptor = new DiagnosticScopeValidatingInterceptor();
 
         public bool IsAsync { get; }
 
@@ -41,7 +41,7 @@ namespace Azure.Core.Testing
 
             if (ClientValidation<TClient>.Validated == false)
             {
-                foreach (var methodInfo in typeof(TClient).GetMethods(BindingFlags.Instance | BindingFlags.Public))
+                foreach (MethodInfo methodInfo in typeof(TClient).GetMethods(BindingFlags.Instance | BindingFlags.Public))
                 {
                     if (methodInfo.Name.EndsWith("Async") && !methodInfo.IsVirtual)
                     {
@@ -63,12 +63,12 @@ namespace Azure.Core.Testing
 
             if (TestDiagnostics)
             {
-                interceptors.Add(_diagnosticScopeValidatingInterceptor);
+                interceptors.Add(s_diagnosticScopeValidatingInterceptor);
             }
 
-            interceptors.Add(IsAsync ? _avoidSyncInterceptor : _useSyncInterceptor);
+            interceptors.Add(IsAsync ? s_avoidSyncInterceptor : s_useSyncInterceptor);
 
-            return _proxyGenerator.CreateClassProxyWithTarget(client, interceptors.ToArray());
+            return s_proxyGenerator.CreateClassProxyWithTarget(client, interceptors.ToArray());
         }
 
 

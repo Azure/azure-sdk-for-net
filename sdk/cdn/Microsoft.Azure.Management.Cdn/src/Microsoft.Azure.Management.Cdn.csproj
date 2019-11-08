@@ -5,11 +5,11 @@
 
 	<PropertyGroup>
 		<Description>Microsoft Azure CDN Management Library</Description>
-		<Version>4.2.2-preview</Version>
+		<Version>4.2.4-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.Cdn</AssemblyName>    
 		<PackageId>Microsoft.Azure.Management.Cdn</PackageId>
 		<PackageTags>Microsoft Azure CDN management;CDN;Cdn management;</PackageTags>
-		<PackageReleaseNotes>Added support for RulesEngine and generated the SDK using the latest version of the swagger</PackageReleaseNotes>
+		<PackageReleaseNotes>Added HttpVersion and Cookies match conditions in RulesEngine</PackageReleaseNotes>
 	</PropertyGroup>
 
 	<PropertyGroup>

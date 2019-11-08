@@ -53,10 +53,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// specified, Dataset will appear at the root level.</param>
         /// <param name="tableName">The Azure MySQL database table name. Type:
         /// string (or Expression with resultType string).</param>
-        public AzureMySqlTableDataset(LinkedServiceReference linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), object schema = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder), object tableName = default(object))
+        /// <param name="table">The name of Azure MySQL database table. Type:
+        /// string (or Expression with resultType string).</param>
+        public AzureMySqlTableDataset(LinkedServiceReference linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), object schema = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder), object tableName = default(object), object table = default(object))
             : base(linkedServiceName, additionalProperties, description, structure, schema, parameters, annotations, folder)
         {
             TableName = tableName;
+            Table = table;
             CustomInit();
         }
 
@@ -71,6 +74,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.tableName")]
         public object TableName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of Azure MySQL database table. Type: string
+        /// (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.table")]
+        public object Table { get; set; }
 
         /// <summary>
         /// Validate the object.

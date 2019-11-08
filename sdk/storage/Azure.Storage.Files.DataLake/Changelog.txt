@@ -1,0 +1,7 @@
+Release History
+===============
+
+12.0.0-preview.6 (2019-11)
+--------------------------
+This preview is the first release supporting DataLake for Azure
+Data Lake Gen 2.

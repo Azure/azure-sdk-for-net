@@ -74,29 +74,29 @@ namespace Microsoft.Azure.Management.FrontDoor
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the INetworkExperimentProfilesOperations.
+        /// </summary>
+        public virtual INetworkExperimentProfilesOperations NetworkExperimentProfiles { get; private set; }
+
+        /// <summary>
+        /// Gets the IPreconfiguredEndpointsOperations.
+        /// </summary>
+        public virtual IPreconfiguredEndpointsOperations PreconfiguredEndpoints { get; private set; }
+
+        /// <summary>
+        /// Gets the IExperimentsOperations.
+        /// </summary>
+        public virtual IExperimentsOperations Experiments { get; private set; }
+
+        /// <summary>
+        /// Gets the IReportsOperations.
+        /// </summary>
+        public virtual IReportsOperations Reports { get; private set; }
+
+        /// <summary>
         /// Gets the IFrontDoorsOperations.
         /// </summary>
         public virtual IFrontDoorsOperations FrontDoors { get; private set; }
-
-        /// <summary>
-        /// Gets the IRoutingRulesOperations.
-        /// </summary>
-        public virtual IRoutingRulesOperations RoutingRules { get; private set; }
-
-        /// <summary>
-        /// Gets the IHealthProbeSettingsOperations.
-        /// </summary>
-        public virtual IHealthProbeSettingsOperations HealthProbeSettings { get; private set; }
-
-        /// <summary>
-        /// Gets the ILoadBalancingSettingsOperations.
-        /// </summary>
-        public virtual ILoadBalancingSettingsOperations LoadBalancingSettings { get; private set; }
-
-        /// <summary>
-        /// Gets the IBackendPoolsOperations.
-        /// </summary>
-        public virtual IBackendPoolsOperations BackendPools { get; private set; }
 
         /// <summary>
         /// Gets the IFrontendEndpointsOperations.
@@ -359,11 +359,11 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// </summary>
         private void Initialize()
         {
+            NetworkExperimentProfiles = new NetworkExperimentProfilesOperations(this);
+            PreconfiguredEndpoints = new PreconfiguredEndpointsOperations(this);
+            Experiments = new ExperimentsOperations(this);
+            Reports = new ReportsOperations(this);
             FrontDoors = new FrontDoorsOperations(this);
-            RoutingRules = new RoutingRulesOperations(this);
-            HealthProbeSettings = new HealthProbeSettingsOperations(this);
-            LoadBalancingSettings = new LoadBalancingSettingsOperations(this);
-            BackendPools = new BackendPoolsOperations(this);
             FrontendEndpoints = new FrontendEndpointsOperations(this);
             Endpoints = new EndpointsOperations(this);
             Policies = new PoliciesOperations(this);

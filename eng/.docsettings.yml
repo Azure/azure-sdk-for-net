@@ -7,6 +7,7 @@ omitted_paths:
   - sdk/*mgmt*/*
   - sdk/*/*.Management.*/*
   - samples/*
+  - common/SmokeTests/*
 language: net
 root_check_enabled: True
 required_readme_sections:
@@ -25,7 +26,7 @@ known_presence_issues:
   - ['sdk/operationalinsights/Microsoft.Azure.OperationalInsights','#5499']
   - ['sdk/hdinsight/Microsoft.Azure.HDInsight.Job','#5499']
   - ['sdk/alertsmanagement/Microsoft.Azure.Management.AlertsManagement','#5499']
-  - ['sdk/applicationinsights/Microsoft.Azure.ApplicationInsights','#5499']
+  - ['sdk/applicationinsights/Microsoft.Azure.ApplicationInsights.Query','#5499']
   - ['sdk/containerregistry/Microsoft.Azure.ContainerRegistry','#5499']
   - ['sdk/cognitiveservices/Language.LUIS.Runtime','#5499']
   - ['sdk/cognitiveservices/Search.BingEntitySearch','#5499']
@@ -54,19 +55,23 @@ known_presence_issues:
   - ['sdk/batch/Microsoft.Azure.Batch.FileStaging','#5499']
   - ['sdk/graphrbac/Microsoft.Azure.Graph.RBAC','#5499']
   - ['sdk/search','#5499']
+  - ['sdk/cognitiveservices/InkRecognizer','#5499']
 
 known_content_issues:
   - ['README.md','Root readme']
+  - ['doc/README.md','Doc readme']
+  - ['sdk/core/Microsoft.Extensions.Azure/README.md','#5499']
   - ['sdk/keyvault/Microsoft.Azure.KeyVault/README.md','#5499']
   - ['sdk/servicebus/Microsoft.Azure.ServiceBus/README.md','#5499']
   - ['sdk/eventhub/Microsoft.Azure.EventHubs/README.md','#5499']
   - ['sdk/alertsmanagement/Microsoft.Azure.Management.AlertsManagement/README.md','#5499']
-  - ['sdk/appconfiguration/Azure.Data.AppConfiguration/README.md','#5499']
   - ['sdk/appconfiguration/Azure.Data.AppConfiguration/tests/Readme.md','#5499']
+  - ['sdk/appconfiguration/Azure.Data.AppConfiguration/samples/README.md','#5499']
   - ['sdk/core/Azure.Core/README.md','#5499']
   - ['sdk/storage/README.md','azure-sdk-tools/issues/42']
   - ['sdk/storage/Azure.Storage.Blobs/swagger/readme.md','azure-sdk-tools/issues/42']
-  - ['sdk/storage/Azure.Storage.Files/swagger/readme.md','azure-sdk-tools/issues/42']
+  - ['sdk/storage/Azure.Storage.Files.Shares/swagger/readme.md','azure-sdk-tools/issues/42']
+  - ['sdk/storage/Azure.Storage.Files.DataLake/swagger/readme.md','azure-sdk-tools/issues/42']
   - ['sdk/storage/Azure.Storage.Queues/swagger/readme.md','azure-sdk-tools/issues/42']
   - ['sdk/storage/Azure.Storage.Common/swagger/Generator/readme.md','azure-sdk-tools/issues/42']
   - ['sdk/cognitiveservices/Language.TextAnalytics/src/Readme.md','#5499']

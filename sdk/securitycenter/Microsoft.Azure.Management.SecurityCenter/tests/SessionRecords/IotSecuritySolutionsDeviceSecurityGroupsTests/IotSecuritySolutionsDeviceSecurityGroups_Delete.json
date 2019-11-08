@@ -1,0 +1,68 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/%2Fsubscriptions%2F075423e9-7d33-4166-8bdf-3920b04e3735%2FresourceGroups%2FResourceGroup-CUS%2Fproviders%2FMicrosoft.Devices%2FIotHubs%2FIotHub-CUS/providers/Microsoft.Security/deviceSecurityGroups/TestDeviceSecurityGroupName?api-version=2019-08-01",
+      "EncodedRequestUri": "LyUyRnN1YnNjcmlwdGlvbnMlMkYwNzU0MjNlOS03ZDMzLTQxNjYtOGJkZi0zOTIwYjA0ZTM3MzUlMkZyZXNvdXJjZUdyb3VwcyUyRlJlc291cmNlR3JvdXAtQ1VTJTJGcHJvdmlkZXJzJTJGTWljcm9zb2Z0LkRldmljZXMlMkZJb3RIdWJzJTJGSW90SHViLUNVUy9wcm92aWRlcnMvTWljcm9zb2Z0LlNlY3VyaXR5L2RldmljZVNlY3VyaXR5R3JvdXBzL1Rlc3REZXZpY2VTZWN1cml0eUdyb3VwTmFtZT9hcGktdmVyc2lvbj0yMDE5LTA4LTAx",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "e38eb118-9e25-4f85-84a0-3ef14011472a"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 15 Sep 2019 09:12:27 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14999"
+        ],
+        "x-ms-request-id": [
+          "12b3711c-9f3f-474c-93c8-a4cb7efafc66"
+        ],
+        "x-ms-correlation-request-id": [
+          "12b3711c-9f3f-474c-93c8-a4cb7efafc66"
+        ],
+        "x-ms-routing-request-id": [
+          "UKSOUTH2:20190915T091228Z:12b3711c-9f3f-474c-93c8-a4cb7efafc66"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "075423e9-7d33-4166-8bdf-3920b04e3735"
+  }
+}

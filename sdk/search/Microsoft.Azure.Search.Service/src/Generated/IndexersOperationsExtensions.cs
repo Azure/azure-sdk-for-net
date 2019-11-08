@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Search
     public static partial class IndexersOperationsExtensions
     {
             /// <summary>
-            /// Resets the change tracking state associated with an Azure Search indexer.
+            /// Resets the change tracking state associated with an indexer.
             /// <see href="https://docs.microsoft.com/rest/api/searchservice/Reset-Indexer" />
             /// </summary>
             /// <param name='operations'>
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Search
             }
 
             /// <summary>
-            /// Resets the change tracking state associated with an Azure Search indexer.
+            /// Resets the change tracking state associated with an indexer.
             /// <see href="https://docs.microsoft.com/rest/api/searchservice/Reset-Indexer" />
             /// </summary>
             /// <param name='operations'>
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Search
             }
 
             /// <summary>
-            /// Runs an Azure Search indexer on-demand.
+            /// Runs an indexer on-demand.
             /// <see href="https://docs.microsoft.com/rest/api/searchservice/Run-Indexer" />
             /// </summary>
             /// <param name='operations'>
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Search
             }
 
             /// <summary>
-            /// Runs an Azure Search indexer on-demand.
+            /// Runs an indexer on-demand.
             /// <see href="https://docs.microsoft.com/rest/api/searchservice/Run-Indexer" />
             /// </summary>
             /// <param name='operations'>
@@ -100,8 +100,7 @@ namespace Microsoft.Azure.Search
             }
 
             /// <summary>
-            /// Creates a new Azure Search indexer or updates an indexer if it already
-            /// exists.
+            /// Creates a new indexer or updates an indexer if it already exists.
             /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Indexer" />
             /// </summary>
             /// <param name='operations'>
@@ -125,8 +124,7 @@ namespace Microsoft.Azure.Search
             }
 
             /// <summary>
-            /// Creates a new Azure Search indexer or updates an indexer if it already
-            /// exists.
+            /// Creates a new indexer or updates an indexer if it already exists.
             /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Indexer" />
             /// </summary>
             /// <param name='operations'>
@@ -156,7 +154,7 @@ namespace Microsoft.Azure.Search
             }
 
             /// <summary>
-            /// Deletes an Azure Search indexer.
+            /// Deletes an indexer.
             /// <see href="https://docs.microsoft.com/rest/api/searchservice/Delete-Indexer" />
             /// </summary>
             /// <param name='operations'>
@@ -177,7 +175,7 @@ namespace Microsoft.Azure.Search
             }
 
             /// <summary>
-            /// Deletes an Azure Search indexer.
+            /// Deletes an indexer.
             /// <see href="https://docs.microsoft.com/rest/api/searchservice/Delete-Indexer" />
             /// </summary>
             /// <param name='operations'>
@@ -201,7 +199,7 @@ namespace Microsoft.Azure.Search
             }
 
             /// <summary>
-            /// Retrieves an indexer definition from Azure Search.
+            /// Retrieves an indexer definition.
             /// <see href="https://docs.microsoft.com/rest/api/searchservice/Get-Indexer" />
             /// </summary>
             /// <param name='operations'>
@@ -219,7 +217,7 @@ namespace Microsoft.Azure.Search
             }
 
             /// <summary>
-            /// Retrieves an indexer definition from Azure Search.
+            /// Retrieves an indexer definition.
             /// <see href="https://docs.microsoft.com/rest/api/searchservice/Get-Indexer" />
             /// </summary>
             /// <param name='operations'>
@@ -243,7 +241,7 @@ namespace Microsoft.Azure.Search
             }
 
             /// <summary>
-            /// Lists all indexers available for an Azure Search service.
+            /// Lists all indexers available for a search service.
             /// <see href="https://docs.microsoft.com/rest/api/searchservice/List-Indexers" />
             /// </summary>
             /// <param name='operations'>
@@ -258,7 +256,7 @@ namespace Microsoft.Azure.Search
             }
 
             /// <summary>
-            /// Lists all indexers available for an Azure Search service.
+            /// Lists all indexers available for a search service.
             /// <see href="https://docs.microsoft.com/rest/api/searchservice/List-Indexers" />
             /// </summary>
             /// <param name='operations'>
@@ -279,7 +277,7 @@ namespace Microsoft.Azure.Search
             }
 
             /// <summary>
-            /// Creates a new Azure Search indexer.
+            /// Creates a new indexer.
             /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Indexer" />
             /// </summary>
             /// <param name='operations'>
@@ -297,7 +295,7 @@ namespace Microsoft.Azure.Search
             }
 
             /// <summary>
-            /// Creates a new Azure Search indexer.
+            /// Creates a new indexer.
             /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Indexer" />
             /// </summary>
             /// <param name='operations'>

@@ -17,7 +17,7 @@ namespace LUIS.Authoring.Tests.Luis
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.AddEntityAsync(GlobalAppId, "0.1", new ModelCreateObject
+                var entityId = await client.Model.AddEntityAsync(GlobalAppId, "0.1", new EntityModelCreateObject
                 {
                     Name = "simple entity"
                 });
@@ -95,37 +95,6 @@ namespace LUIS.Authoring.Tests.Luis
         }
 
         [Fact]
-        public void AddCompositeEntityRole()
-        {
-            UseClientFor(async client =>
-            {
-                var version = "0.1";
-                var prebuiltEntitiesToAdd = new string[]
-                {
-                    "datetimeV2"
-                };
-                var prebuiltEntitiesAdded = await client.Model.AddPrebuiltAsync(GlobalAppId, version, prebuiltEntitiesToAdd);
-                var entityId = await client.Model.AddCompositeEntityAsync(GlobalAppId, "0.1", new CompositeEntityModel
-                {
-                    Name = "composite model",
-                    Children = new[] { "datetimeV2" }
-                });
-                var roleId = await client.Model.CreateCompositeEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
-                {
-                    Name = "simple role"
-                });
-                var roles = await client.Model.ListCompositeEntityRolesAsync(GlobalAppId, "0.1", entityId);
-                await client.Model.DeleteCompositeEntityAsync(GlobalAppId, "0.1", entityId);
-                foreach (var added in prebuiltEntitiesAdded)
-                {
-                    await client.Model.DeletePrebuiltAsync(GlobalAppId, version, added.Id);
-                }
-
-                Assert.Contains(roles, r => r.Name == "simple role");
-            });
-        }
-
-        [Fact]
         public void AddPatternAnyEntityRole()
         {
             UseClientFor(async client =>
@@ -143,29 +112,6 @@ namespace LUIS.Authoring.Tests.Luis
                 await client.Model.DeletePatternAnyEntityModelAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Contains(roles, r => r.Name == "simple role");
-            });
-        }
-
-        [Fact]
-        public void AddHierarchicalEntityRole()
-        {
-            UseClientFor(async client =>
-            {
-                var entityId = await client.Model.AddHierarchicalEntityAsync(GlobalAppId, "0.1", new HierarchicalEntityModel
-                {
-                    Name = "Pattern.Any model",
-                    Children = new[] { "child1" }
-                });
-                var exception = await Assert.ThrowsAsync<ErrorResponseException>(async () => await client.Model.CreateHierarchicalEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
-                {
-                    Name = "simple role"
-                }));
-                await client.Model.DeleteHierarchicalEntityAsync(GlobalAppId, "0.1", entityId);
-
-                var error = exception.Body;
-                var errorCode = "BadArgument";
-
-                Assert.Equal(errorCode, error.Code);
             });
         }
 
@@ -196,7 +142,7 @@ namespace LUIS.Authoring.Tests.Luis
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.AddEntityAsync(GlobalAppId, "0.1", new ModelCreateObject
+                var entityId = await client.Model.AddEntityAsync(GlobalAppId, "0.1", new EntityModelCreateObject
                 {
                     Name = "simple entity"
                 });
@@ -274,37 +220,6 @@ namespace LUIS.Authoring.Tests.Luis
         }
 
         [Fact]
-        public void GetCompositeEntityRole()
-        {
-            UseClientFor(async client =>
-            {
-                var version = "0.1";
-                var prebuiltEntitiesToAdd = new string[]
-                {
-                    "datetimeV2"
-                };
-                var prebuiltEntitiesAdded = await client.Model.AddPrebuiltAsync(GlobalAppId, version, prebuiltEntitiesToAdd);
-                var entityId = await client.Model.AddCompositeEntityAsync(GlobalAppId, "0.1", new CompositeEntityModel
-                {
-                    Name = "composite model",
-                    Children = new[] { "datetimeV2" }
-                });
-                var roleId = await client.Model.CreateCompositeEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
-                {
-                    Name = "simple role"
-                });
-                var role = await client.Model.GetCompositeEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId);
-                await client.Model.DeleteCompositeEntityAsync(GlobalAppId, "0.1", entityId);
-                foreach (var added in prebuiltEntitiesAdded)
-                {
-                    await client.Model.DeletePrebuiltAsync(GlobalAppId, version, added.Id);
-                }
-
-                Assert.Equal("simple role", role.Name);
-            });
-        }
-
-        [Fact]
         public void GetPatternAnyEntityRole()
         {
             UseClientFor(async client =>
@@ -352,7 +267,7 @@ namespace LUIS.Authoring.Tests.Luis
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.AddEntityAsync(GlobalAppId, "0.1", new ModelCreateObject
+                var entityId = await client.Model.AddEntityAsync(GlobalAppId, "0.1", new EntityModelCreateObject
                 {
                     Name = "simple entity"
                 });
@@ -430,37 +345,6 @@ namespace LUIS.Authoring.Tests.Luis
         }
 
         [Fact]
-        public void GetCompositeEntityRoles()
-        {
-            UseClientFor(async client =>
-            {
-                var version = "0.1";
-                var prebuiltEntitiesToAdd = new string[]
-                {
-                    "datetimeV2"
-                };
-                var prebuiltEntitiesAdded = await client.Model.AddPrebuiltAsync(GlobalAppId, version, prebuiltEntitiesToAdd);
-                var entityId = await client.Model.AddCompositeEntityAsync(GlobalAppId, "0.1", new CompositeEntityModel
-                {
-                    Name = "composite model",
-                    Children = new[] { "datetimeV2" }
-                });
-                var roleId = await client.Model.CreateCompositeEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
-                {
-                    Name = "simple role"
-                });
-                var roles = await client.Model.ListCompositeEntityRolesAsync(GlobalAppId, "0.1", entityId);
-                await client.Model.DeleteCompositeEntityAsync(GlobalAppId, "0.1", entityId);
-                foreach (var added in prebuiltEntitiesAdded)
-                {
-                    await client.Model.DeletePrebuiltAsync(GlobalAppId, version, added.Id);
-                }
-
-                Assert.Equal("simple role", Assert.Single(roles).Name);
-            });
-        }
-
-        [Fact]
         public void GetPatternAnyEntityRoles()
         {
             UseClientFor(async client =>
@@ -508,7 +392,7 @@ namespace LUIS.Authoring.Tests.Luis
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.AddEntityAsync(GlobalAppId, "0.1", new ModelCreateObject
+                var entityId = await client.Model.AddEntityAsync(GlobalAppId, "0.1", new EntityModelCreateObject
                 {
                     Name = "simple entity"
                 });
@@ -602,41 +486,6 @@ namespace LUIS.Authoring.Tests.Luis
         }
 
         [Fact]
-        public void UpdateCompositeEntityRole()
-        {
-            UseClientFor(async client =>
-            {
-                var version = "0.1";
-                var prebuiltEntitiesToAdd = new string[]
-                {
-                    "datetimeV2"
-                };
-                var prebuiltEntitiesAdded = await client.Model.AddPrebuiltAsync(GlobalAppId, version, prebuiltEntitiesToAdd);
-                var entityId = await client.Model.AddCompositeEntityAsync(GlobalAppId, "0.1", new CompositeEntityModel
-                {
-                    Name = "composite model",
-                    Children = new[] { "datetimeV2" }
-                });
-                var roleId = await client.Model.CreateCompositeEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
-                {
-                    Name = "simple role"
-                });
-                await client.Model.UpdateCompositeEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId, new EntityRoleUpdateObject
-                {
-                    Name = "simple role 2"
-                });
-                var role = await client.Model.GetCompositeEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId);
-                await client.Model.DeleteCompositeEntityAsync(GlobalAppId, "0.1", entityId);
-                foreach (var added in prebuiltEntitiesAdded)
-                {
-                    await client.Model.DeletePrebuiltAsync(GlobalAppId, version, added.Id);
-                }
-
-                Assert.Equal("simple role 2", role.Name);
-            });
-        }
-
-        [Fact]
         public void UpdatePatternAnyEntityRole()
         {
             UseClientFor(async client =>
@@ -692,7 +541,7 @@ namespace LUIS.Authoring.Tests.Luis
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.AddEntityAsync(GlobalAppId, "0.1", new ModelCreateObject
+                var entityId = await client.Model.AddEntityAsync(GlobalAppId, "0.1", new EntityModelCreateObject
                 {
                     Name = "simple entity"
                 });
@@ -768,38 +617,6 @@ namespace LUIS.Authoring.Tests.Luis
                 await client.Model.DeleteRegexEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId);
                 var roles = await client.Model.ListRegexEntityRolesAsync(GlobalAppId, "0.1", entityId);
                 await client.Model.DeleteRegexEntityModelAsync(GlobalAppId, "0.1", entityId);
-
-                Assert.Empty(roles);
-            });
-        }
-
-        [Fact]
-        public void DeleteCompositeEntityRole()
-        {
-            UseClientFor(async client =>
-            {
-                var version = "0.1";
-                var prebuiltEntitiesToAdd = new string[]
-                {
-                    "datetimeV2"
-                };
-                var prebuiltEntitiesAdded = await client.Model.AddPrebuiltAsync(GlobalAppId, version, prebuiltEntitiesToAdd);
-                var entityId = await client.Model.AddCompositeEntityAsync(GlobalAppId, "0.1", new CompositeEntityModel
-                {
-                    Name = "composite model",
-                    Children = new[] { "datetimeV2" }
-                });
-                var roleId = await client.Model.CreateCompositeEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
-                {
-                    Name = "simple role"
-                });
-                await client.Model.DeleteCompositeEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId);
-                var roles = await client.Model.ListCompositeEntityRolesAsync(GlobalAppId, "0.1", entityId);
-                await client.Model.DeleteCompositeEntityAsync(GlobalAppId, "0.1", entityId);
-                foreach (var added in prebuiltEntitiesAdded)
-                {
-                    await client.Model.DeletePrebuiltAsync(GlobalAppId, version, added.Id);
-                }
 
                 Assert.Empty(roles);
             });

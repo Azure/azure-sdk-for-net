@@ -2,7 +2,7 @@
   <PropertyGroup>
     <AssemblyTitle>Microsoft Cognitive Services AnomalyDetector SDK</AssemblyTitle>
     <AssemblyDescription>Provides access to the Microsoft Cognitive Services AnomalyDetector APIs.</AssemblyDescription>
-    <VersionPrefix>0.8.0</VersionPrefix>
+    <Version>1.0.0-preview.1</Version>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;REST HTTP client;Anomaly Detector;Anomaly Detector API;Anomaly Detector SDK;Time series;netcore451511</PackageTags>
     <PackageReleaseNotes>
     <![CDATA[

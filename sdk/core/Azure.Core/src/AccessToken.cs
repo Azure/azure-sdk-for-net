@@ -2,37 +2,47 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Azure.Core
 {
+    /// <summary>
+    /// Represents an Azure service bearer access token with expiry information.
+    /// </summary>
     public struct AccessToken
     {
+        /// <summary>
+        /// Creates a new instance of <see cref="AccessToken"/> using the provided <paramref name="accessToken"/> and <paramref name="expiresOn"/>.
+        /// </summary>
+        /// <param name="accessToken">The bearer access token value.</param>
+        /// <param name="expiresOn">The bearer access token expiry date.</param>
         public AccessToken(string accessToken, DateTimeOffset expiresOn)
         {
             Token = accessToken;
             ExpiresOn = expiresOn;
         }
 
-        public string Token { get; private set; }
+        /// <summary>
+        /// Get the access token value.
+        /// </summary>
+        public string Token { get; }
 
-        public DateTimeOffset ExpiresOn { get; private set; }
+        /// <summary>
+        /// Gets the time when the provided token expires.
+        /// </summary>
+        public DateTimeOffset ExpiresOn { get; }
 
-        public override bool Equals(object obj)
+        /// <inheritdoc />
+        public override bool Equals(object? obj)
         {
-            if (obj is AccessToken)
+            if (obj is AccessToken accessToken)
             {
-                var accessToken = (AccessToken)obj;
-
                 return accessToken.ExpiresOn == ExpiresOn && accessToken.Token == Token;
             }
 
             return false;
         }
 
+        /// <inheritdoc />
         public override int GetHashCode()
         {
             return Token.GetHashCode() ^ ExpiresOn.GetHashCode();

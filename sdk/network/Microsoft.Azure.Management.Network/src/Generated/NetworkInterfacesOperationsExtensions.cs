@@ -694,52 +694,6 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Updates a network interface tags.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='networkInterfaceName'>
-            /// The name of the network interface.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to update network interface tags.
-            /// </param>
-            public static NetworkInterface BeginUpdateTags(this INetworkInterfacesOperations operations, string resourceGroupName, string networkInterfaceName, TagsObject parameters)
-            {
-                return operations.BeginUpdateTagsAsync(resourceGroupName, networkInterfaceName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates a network interface tags.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='networkInterfaceName'>
-            /// The name of the network interface.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to update network interface tags.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<NetworkInterface> BeginUpdateTagsAsync(this INetworkInterfacesOperations operations, string resourceGroupName, string networkInterfaceName, TagsObject parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.BeginUpdateTagsWithHttpMessagesAsync(resourceGroupName, networkInterfaceName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Gets all route tables applied to a network interface.
             /// </summary>
             /// <param name='operations'>

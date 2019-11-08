@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>Provides Microsoft Azure Operational Insights data operations</Description>
     <AssemblyTitle>Microsoft Azure Operational Insights Data Library</AssemblyTitle>
-    <VersionPrefix>0.10.0</VersionPrefix>
+    <Version>1.0.0-preview.1</Version>
     <PackageTags>Microsoft Azure OperationalInsights;OperationalInsights</PackageTags>
 	  <PackageReleaseNotes>Taking dependency on 10.0.3 version of Newtonsoft nuget package.</PackageReleaseNotes>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>

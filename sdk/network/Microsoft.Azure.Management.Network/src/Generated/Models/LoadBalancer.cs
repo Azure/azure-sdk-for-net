@@ -68,9 +68,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="outboundRules">The outbound rules.</param>
         /// <param name="resourceGuid">The resource GUID property of the load
         /// balancer resource.</param>
-        /// <param name="provisioningState">Gets the provisioning state of the
-        /// PublicIP resource. Possible values are: 'Updating', 'Deleting', and
-        /// 'Failed'.</param>
+        /// <param name="provisioningState">The provisioning state of the load
+        /// balancer resource. Possible values include: 'Succeeded',
+        /// 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         public LoadBalancer(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), LoadBalancerSku sku = default(LoadBalancerSku), IList<FrontendIPConfiguration> frontendIPConfigurations = default(IList<FrontendIPConfiguration>), IList<BackendAddressPool> backendAddressPools = default(IList<BackendAddressPool>), IList<LoadBalancingRule> loadBalancingRules = default(IList<LoadBalancingRule>), IList<Probe> probes = default(IList<Probe>), IList<InboundNatRule> inboundNatRules = default(IList<InboundNatRule>), IList<InboundNatPool> inboundNatPools = default(IList<InboundNatPool>), IList<OutboundRule> outboundRules = default(IList<OutboundRule>), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
@@ -162,25 +162,24 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<OutboundRule> OutboundRules { get; set; }
 
         /// <summary>
-        /// Gets or sets the resource GUID property of the load balancer
-        /// resource.
+        /// Gets the resource GUID property of the load balancer resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceGuid")]
-        public string ResourceGuid { get; set; }
+        public string ResourceGuid { get; private set; }
 
         /// <summary>
-        /// Gets the provisioning state of the PublicIP resource. Possible
-        /// values are: 'Updating', 'Deleting', and 'Failed'.
+        /// Gets the provisioning state of the load balancer resource. Possible
+        /// values include: 'Succeeded', 'Updating', 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets or sets a unique read-only string that changes whenever the
-        /// resource is updated.
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
     }
 }

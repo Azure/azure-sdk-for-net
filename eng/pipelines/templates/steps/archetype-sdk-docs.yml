@@ -1,0 +1,151 @@
+steps:
+  - task: DotNetCoreInstaller@2
+    displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
+    inputs:
+      version: $(DotNetCoreSDKVersion)
+  - task: UsePythonVersion@0
+    displayName: 'Use Python 3.6'
+    inputs:
+      versionSpec: '3.6'
+  - template: eng/pipelines/templates/scripts/replace-relative-links.yml@azure-sdk-tools
+    parameters:
+      TargetFolder: '.'
+      RootFolder: '.'
+      BuildSHA: $(Build.SourceVersion)
+      RepoId: 'Azure/azure-sdk-for-net'
+  - pwsh: |
+      # Download and Extract or restore Packages required for Doc Generation
+      Write-Host "Download and Extract mdoc to Build.BinariesDirectory/mdoc"
+      Invoke-WebRequest -MaximumRetryCount 10 -Uri "https://github.com/mono/api-doc-tools/releases/download/mdoc-5.7.4.9/mdoc-5.7.4.9.zip" `
+      -OutFile "mdoc.zip" | Wait-Process; Expand-Archive -Path "mdoc.zip" -DestinationPath "./mdoc/"
+
+      Write-Host "Download and Extract docfx to Build.BinariesDirectory/docfx"
+      Invoke-WebRequest -MaximumRetryCount 10 -Uri "https://github.com/dotnet/docfx/releases/download/v2.43.2/docfx.zip" `
+      -OutFile "docfx.zip" | Wait-Process; Expand-Archive -Path "docfx.zip" -DestinationPath "./docfx/"
+
+      Write-Host "Restore eng/docgeneration/assets/docgen.csproj, to get ECMA2Yml and popimport"
+      dotnet restore "$(Build.SourcesDirectory)/eng/docgeneration/assets/docgen.csproj" /p:BuildBinariesDirectory=$(Build.BinariesDirectory)
+    workingDirectory: $(Build.BinariesDirectory)
+    displayName: Download and Extract Required Software
+
+  - ${{ if ne(variables['Build.DefinitionName'], 'net - client - ci')}}:
+    - ${{ each artifact in parameters.Artifacts }}:
+      - pwsh: |
+          # Create Variables for Doc Generation
+          Write-Host "Create variables for identifying package location and package safe names"
+          $PackageLocation = '${{parameters.ServiceDirectory}}/${{artifact.name}}'
+          $SafeName = '${{artifact.safeName}}'
+
+          if ('${{parameters.ServiceDirectory}}' -eq '*') {
+            $PackageLocation = 'core/${{artifact.name}}'
+          }
+
+          if ('${{parameters.ServiceDirectory}}' -eq 'cognitiveservices') {
+            $PackageLocation = 'cognitiveservices/${{artifact.directoryName}}'
+            $SafeName = '${{artifact.directoryName}}'
+          }
+
+          if ('${{parameters.LibType}}' -eq 'Management') {
+            $PackageLocation = '${{artifact.serviceDir}}/${{artifact.name}}'
+            $SafeName = '${{artifact.name}}'
+            $SafeName = $SafeName.Substring($SafeName.LastIndexOf('.Management') + 1)
+          }
+
+          # Set variable for publishpipeline step
+          echo "##vso[task.setvariable variable=artifactsafename]$($SafeName)"
+
+          Write-Host "1 - $($SafeName)"
+          Write-Host "1 - $SafeName"
+
+          # Create Various Directoies for Doc Generation
+          Write-Host "Create Directories Required for Doc Generation"
+          mkdir "$($SafeName)/dll-docs/my-api"
+          mkdir "$($SafeName)/dll-docs/dependencies/my-api"
+          mkdir "$($SafeName)/dll-xml-output"
+          mkdir "$($SafeName)/dll-yaml-output"
+          mkdir "$($SafeName)/docfx-output"
+
+          # Build Packages for Doc Generation
+          if ('${{ parameters.LibType }}' -eq '') { # Client Package
+            Write-Host "Build Packages for Doc Generation - Client"
+            dotnet build "$(Build.SourcesDirectory)/eng/service.proj" /p:ServiceDirectory=$PackageLocation /p:IncludeTests=false /p:IncludeSamples=false /p:OutputPath="$(Build.BinariesDirectory)/$($SafeName)/dll-docs/my-api" /p:TargetFramework=netstandard2.0
+
+            # Include Dependencies
+            dotnet build "$(Build.SourcesDirectory)/eng/service.proj" /p:ServiceDirectory=$PackageLocation /p:IncludeTests=false /p:IncludeSamples=false /p:OutputPath="$(Build.BinariesDirectory)/$($SafeName)/dll-docs/dependencies/my-api" /p:TargetFramework=netstandard2.0 /p:CopyLocalLockFileAssemblies=true
+          }
+
+          if ('${{ parameters.LibType }}' -eq 'Management') { # Management Package
+            Write-Host "Build Packages for Doc Generation - Management"
+            dotnet msbuild "eng/mgmt.proj" /p:scope=$PackageLocation /p:OutputPath="$(Build.BinariesDirectory)/$($SafeName)/dll-docs/my-api" -maxcpucount:1 -nodeReuse:false
+
+            # Include Dependencies
+            dotnet msbuild "eng/mgmt.proj" /p:scope=$PackageLocation /p:OutputPath="$(Build.BinariesDirectory)/$($SafeName)/dll-docs/dependencies/my-api" /p:CopyLocalLockFileAssemblies=true -maxcpucount:1 -nodeReuse:false
+          }
+
+          # Remove all unneeded artifacts from build directory
+          Write-Host " Remove all unneeded artifacts from build output directory"
+          Remove-Item –Path "$(Build.BinariesDirectory)/$($SafeName)/dll-docs/my-api/*" -Include * -Exclude ${{artifact.name}}.dll, ${{artifact.name}}.xml
+
+          # Initialize Frameworks File
+          Write-Host "Initialize Frameworks File"
+          ./mdoc/mdoc.exe fx-bootstrap "$($SafeName)/dll-docs"
+
+          # Include XML Files
+          Write-Host "Include XML Files"
+          ./PopImport/popimport.exe -f "$($SafeName)/dll-docs"
+
+          # Produce ECMAXML
+          Write-Host "Produce ECMAXML"
+          ./mdoc/mdoc.exe update -fx "$($SafeName)/dll-docs" -o "$($SafeName)/dll-xml-output" --debug -lang docid -lang vb.net -lang fsharp --delete
+
+          # Produce Generate YAML
+          Write-Host "Generate YAML"
+          ./ECMA2Yml/ECMA2Yaml.exe -s "$($SafeName)/dll-xml-output" -o "$($SafeName)/dll-yaml-output"
+
+          # Provision DocFX Directory
+          Write-Host "Provision DocFX Directory"
+          ./docfx/docfx.exe init -q -o "$($SafeName)/docfx-output/docfx_project"
+
+          # Copy Package ReadMe
+          Write-Host "Copy over Package ReadMe"
+          $PkgReadMePath = "$(Build.SourcesDirectory)/sdk/$($PackageLocation)/README.md"
+          if ([System.IO.File]::Exists($PkgReadMePath))
+          {
+            Copy-Item $PkgReadMePath -Destination "$(Build.BinariesDirectory)/$($SafeName)/docfx-output/docfx_project/api/index.md" -Force
+            Copy-Item $PkgReadMePath -Destination "$(Build.BinariesDirectory)/$($SafeName)/docfx-output/docfx_project/index.md" -Force
+          }
+          else
+          {
+            New-Item "$(Build.BinariesDirectory)/$($SafeName)/docfx-output/docfx_project/api/index.md" -Force
+            Add-Content -Path "$(Build.BinariesDirectory)/$($SafeName)/docfx-output/docfx_project/api/index.md" -Value "This Package Contains no Readme."
+            Copy-Item "$(Build.BinariesDirectory)/$($SafeName)/docfx-output/docfx_project/api/index.md" -Destination "$(Build.BinariesDirectory)/$($SafeName)/docfx-output/docfx_project/index.md"-Force
+            Write-Host "Package ReadMe was not found"
+          }
+
+          # Copy over generated yml and other assets
+          Write-Host "Copy over generated yml and other assets"
+          Copy-Item "$($SafeName)/dll-yaml-output/*"-Destination "$($SafeName)/docfx-output/docfx_project/api" -Recurse
+          Copy-Item "$(Build.SourcesDirectory)/eng/docgeneration/assets/docfx.json" -Destination "$($SafeName)/docfx-output/docfx_project" -Recurse -Force
+          New-Item -Path "$($SafeName)/docfx-output/docfx_project" -Name templates -ItemType directory
+          Copy-Item "$(Build.SourcesDirectory)/eng/docgeneration/templates/**" -Destination "$(Build.BinariesDirectory)/$($SafeName)/docfx-output/docfx_project/templates" -Recurse -Force
+
+          # Create Toc for Site Navigation
+          Write-Host "Create Toc for Site Navigation"
+          New-Item "$($SafeName)/docfx-output/docfx_project/toc.yml" -Force
+          Add-Content -Path "$($SafeName)/docfx-output/docfx_project/toc.yml" -Value "- name: ${{artifact.name}}`r`n  href: api/`r`n  homepage: api/index.md"
+
+          # Build Doc Content
+          Write-Host "Build Doc Content"
+          ./docfx/docfx.exe build "$($SafeName)/docfx-output/docfx_project/docfx.json"
+
+          # Copy over site Logo
+          Write-Host "Copy over site Logo"
+          Copy-Item "$(Build.SourcesDirectory)/eng/docgeneration/assets/logo.svg" -Destination "$(Build.BinariesDirectory)/$($SafeName)/docfx-output/docfx_project/_site" -Recurse -Force
+
+        displayName: Build DocFx Documenttion Site for ${{artifact.name}}
+        workingDirectory: $(Build.BinariesDirectory)
+      - task: PublishPipelineArtifact@0
+        condition: succeeded()
+        inputs:
+          artifactName: Docs.${{artifact.name}}
+          targetPath: $(Build.BinariesDirectory)/$(artifactsafename)/docfx-output/docfx_project/_site

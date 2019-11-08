@@ -32,11 +32,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// <param name="id">A six-digit ID used for Features.</param>
         /// <param name="name">The name of the Feature.</param>
         /// <param name="isActive">Indicates if the feature is enabled.</param>
-        public FeatureInfoObject(int? id = default(int?), string name = default(string), bool? isActive = default(bool?))
+        /// <param name="enabledForAllModels">Indicates if the feature is
+        /// enabled for all models in the application.</param>
+        public FeatureInfoObject(int? id = default(int?), string name = default(string), bool? isActive = default(bool?), bool? enabledForAllModels = default(bool?))
         {
             Id = id;
             Name = name;
             IsActive = isActive;
+            EnabledForAllModels = enabledForAllModels;
             CustomInit();
         }
 
@@ -62,6 +65,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// </summary>
         [JsonProperty(PropertyName = "isActive")]
         public bool? IsActive { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates if the feature is enabled for all models in
+        /// the application.
+        /// </summary>
+        [JsonProperty(PropertyName = "enabledForAllModels")]
+        public bool? EnabledForAllModels { get; set; }
 
     }
 }

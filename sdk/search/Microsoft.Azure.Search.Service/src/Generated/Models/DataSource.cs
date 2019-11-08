@@ -15,8 +15,8 @@ namespace Microsoft.Azure.Search.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents a datasource definition in Azure Search, which can be used
-    /// to configure an indexer.
+    /// Represents a datasource definition, which can be used to configure an
+    /// indexer.
     /// </summary>
     public partial class DataSource
     {

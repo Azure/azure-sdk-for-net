@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System.Collections.Generic;
 using System.Linq;
@@ -10,23 +9,25 @@ namespace Azure.Security.KeyVault.Certificates
 {
     internal class ContactList : IJsonDeserializable, IJsonSerializable
     {
-        private IEnumerable<Contact> _contacts;
+        private const string ContactsPropertyName = "contacts";
+
+        private static readonly JsonEncodedText s_contactsPropertyNameBytes = JsonEncodedText.Encode(ContactsPropertyName);
+
+        private IEnumerable<CertificateContact> _contacts;
 
         public ContactList()
         {
 
         }
 
-        public ContactList(IEnumerable<Contact> contacts)
+        public ContactList(IEnumerable<CertificateContact> contacts)
         {
             _contacts = contacts;
         }
 
-        public IList<Contact> ToList()
+        public IList<CertificateContact> ToList()
         {
-            IList<Contact> ret = _contacts as IList<Contact>;
-
-            if (ret == null)
+            if (!(_contacts is IList<CertificateContact> ret))
             {
                 ret = _contacts.ToList();
 
@@ -36,17 +37,15 @@ namespace Azure.Security.KeyVault.Certificates
             return ret;
         }
 
-        private const string ContactsPropertyName = "contacts";
-
         void IJsonDeserializable.ReadProperties(JsonElement json)
         {
-            var contacts = new List<Contact>();
+            var contacts = new List<CertificateContact>();
 
-            if(json.TryGetProperty(ContactsPropertyName, out JsonElement contactsElement))
+            if (json.TryGetProperty(ContactsPropertyName, out JsonElement contactsElement))
             {
-                foreach(JsonElement entry in contactsElement.EnumerateArray())
+                foreach (JsonElement entry in contactsElement.EnumerateArray())
                 {
-                    var contact = new Contact();
+                    var contact = new CertificateContact();
 
                     ((IJsonDeserializable)contact).ReadProperties(entry);
 
@@ -57,15 +56,13 @@ namespace Azure.Security.KeyVault.Certificates
             _contacts = contacts;
         }
 
-        private static readonly JsonEncodedText ContactsPropertyNameBytes = JsonEncodedText.Encode(ContactsPropertyName);
-
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {
-            if(_contacts != null)
+            if (_contacts != null)
             {
-                json.WriteStartArray(ContactsPropertyNameBytes);
+                json.WriteStartArray(s_contactsPropertyNameBytes);
 
-                foreach(var contact in _contacts)
+                foreach (CertificateContact contact in _contacts)
                 {
                     json.WriteStartObject();
 

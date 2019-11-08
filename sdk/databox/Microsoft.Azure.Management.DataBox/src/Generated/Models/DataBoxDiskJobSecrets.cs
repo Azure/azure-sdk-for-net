@@ -32,12 +32,15 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// <summary>
         /// Initializes a new instance of the DataBoxDiskJobSecrets class.
         /// </summary>
+        /// <param name="dcAccessSecurityCode">Dc Access Security Code for
+        /// Customer Managed Shipping</param>
         /// <param name="diskSecrets">Contains the list of secrets object for
         /// that device.</param>
         /// <param name="passKey">PassKey for the disk Job.</param>
         /// <param name="isPasskeyUserDefined">Whether passkey was provided by
         /// user.</param>
-        public DataBoxDiskJobSecrets(IList<DiskSecret> diskSecrets = default(IList<DiskSecret>), string passKey = default(string), bool? isPasskeyUserDefined = default(bool?))
+        public DataBoxDiskJobSecrets(DcAccessSecurityCode dcAccessSecurityCode = default(DcAccessSecurityCode), IList<DiskSecret> diskSecrets = default(IList<DiskSecret>), string passKey = default(string), bool? isPasskeyUserDefined = default(bool?))
+            : base(dcAccessSecurityCode)
         {
             DiskSecrets = diskSecrets;
             PassKey = passKey;

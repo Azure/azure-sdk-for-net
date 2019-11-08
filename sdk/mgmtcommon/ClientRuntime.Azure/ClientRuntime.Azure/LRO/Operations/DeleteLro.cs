@@ -139,7 +139,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
                         }
 
                         CurrentPollingState.PollingUrlToUse = GetValidAbsoluteUri(CurrentPollingState.FinalGETUrlToUser, throwForInvalidUri: true);
-                        await CurrentPollingState.UpdateResourceFromPollingUri(CustomHeaders, CancelToken);
+                        await CurrentPollingState.UpdateResourceFromPollingUri(CustomHeaders, CancelToken).ConfigureAwait(false);
                     }
                 }
             }

@@ -1,13 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Threading.Tasks;
 
-namespace Azure.Storage.Common
+namespace Azure.Storage
 {
-    static class ReliableOperation
+    internal static class ReliableOperation
     {
         public static T Do<T>(Func<T> operation, Action reset, Action cleanup, Func<Exception, bool> predicate, int maximumRetries)
         {
@@ -15,7 +14,7 @@ namespace Azure.Storage.Common
             {
                 try
                 {
-                    var result = operation();
+                    T result = operation();
                     return result;
                 }
                 catch (OperationCanceledException)
@@ -41,20 +40,20 @@ namespace Azure.Storage.Common
             }
         }
 
-        public static Task<T> DoAsync<T>(Func<Task<T>> operation, ReliabilityConfiguration? reliabilityConfiguration = default, int maximumRetries = Constants.MaxReliabilityRetries)
+        public static ValueTask<T> DoAsync<T>(Func<ValueTask<T>> operation, ReliabilityConfiguration? reliabilityConfiguration = default, int maximumRetries = Constants.MaxReliabilityRetries)
         {
-            reliabilityConfiguration = reliabilityConfiguration ?? ReliabilityConfiguration.Default;
+            reliabilityConfiguration ??= ReliabilityConfiguration.Default;
 
             return DoAsync(operation, reliabilityConfiguration.Value.Reset, reliabilityConfiguration.Value.Cleanup, reliabilityConfiguration.Value.ExceptionPredicate, maximumRetries);
         }
 
-        public static async Task<T> DoAsync<T>(Func<Task<T>> operation, Action reset, Action cleanup, Func<Exception, bool> predicate, int maximumRetries)
+        public static async ValueTask<T> DoAsync<T>(Func<ValueTask<T>> operation, Action reset, Action cleanup, Func<Exception, bool> predicate, int maximumRetries)
         {
             while (true)
             {
                 try
                 {
-                    var result = await operation().ConfigureAwait(false);
+                    T result = await operation().ConfigureAwait(false);
                     return result;
                 }
                 catch (OperationCanceledException)
@@ -80,13 +79,13 @@ namespace Azure.Storage.Common
             }
         }
 
-        public static async Task<T> DoSyncOrAsync<T>(bool isAsync, Func<Task<T>> operation, Action reset, Action cleanup, Func<Exception, bool> predicate, int maximumRetries)
+        public static async ValueTask<T> DoSyncOrAsync<T>(bool isAsync, Func<ValueTask<T>> operation, Action reset, Action cleanup, Func<Exception, bool> predicate, int maximumRetries)
         {
             while (true)
             {
                 try
                 {
-                    var result = isAsync ?
+                    T result = isAsync ?
                         await operation().ConfigureAwait(false) :
                         operation().EnsureCompleted();
                     return result;

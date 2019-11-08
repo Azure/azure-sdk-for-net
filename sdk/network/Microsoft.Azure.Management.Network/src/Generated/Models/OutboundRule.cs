@@ -44,9 +44,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="id">Resource ID.</param>
         /// <param name="allocatedOutboundPorts">The number of outbound ports
         /// to be used for NAT.</param>
-        /// <param name="provisioningState">Gets the provisioning state of the
-        /// PublicIP resource. Possible values are: 'Updating', 'Deleting', and
-        /// 'Failed'.</param>
+        /// <param name="provisioningState">The provisioning state of the
+        /// outbound rule resource. Possible values include: 'Succeeded',
+        /// 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="enableTcpReset">Receive bidirectional TCP Reset on TCP
         /// flow idle timeout or unexpected connection termination. This
         /// element is only used when the protocol is set to TCP.</param>
@@ -99,11 +99,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public SubResource BackendAddressPool { get; set; }
 
         /// <summary>
-        /// Gets the provisioning state of the PublicIP resource. Possible
-        /// values are: 'Updating', 'Deleting', and 'Failed'.
+        /// Gets the provisioning state of the outbound rule resource. Possible
+        /// values include: 'Succeeded', 'Updating', 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets the protocol for the outbound rule in load balancer.
@@ -135,11 +135,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets a unique read-only string that changes whenever the
-        /// resource is updated.
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
         /// <summary>
         /// Gets type of the resource.

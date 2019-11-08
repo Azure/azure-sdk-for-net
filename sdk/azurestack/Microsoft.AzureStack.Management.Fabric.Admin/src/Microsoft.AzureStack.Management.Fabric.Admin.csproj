@@ -7,13 +7,19 @@
     <PropertyGroup>
         <PackageId>Microsoft.AzureStack.Management.Fabric.Admin</PackageId>
         <Description>Provides developers with libraries for the fabric admin under AzureStack to manage fabric infrastructure.</Description>
-        <Version>1.8.0-preview</Version>
+        <Version>2.9.1-preview</Version>
         <AssemblyName>Microsoft.AzureStack.Management.Fabric.Admin</AssemblyName>
         <PackageTags>Microsoft Azure Stack;Fabric;REST HTTP client;azurestack;netcore452</PackageTags>
         <PackageReleaseNotes>
             <![CDATA[
-                Support new resource StorageSubSystem, Drive and Volume with API version 2018-10-01.
-                Please note that the features are supported by Azure Stack 1811+.
+                Breaking changes:
+                * The resources StorageSystem and StoragePool have been deprecated. They have been replaced with StorageSubSystem.
+                * Support Drive and Volume resources with API version 2019-05-01:
+                  1. The value of Id, Name, HealthStatus and OperationalStatus have been changed.
+                  2. We have supported new properties FirmwareVersion, IsIndicationEnabled, Manufacturer and StoragePool for Drive resources.
+                  3. The properties CanPool and CannotPoolReason of Drive resources have been deprecated.
+                * Bug fixing for fabriclocation model
+                Please note that the features are supported by Azure Stack 1910+.
             ]]>
         </PackageReleaseNotes>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
