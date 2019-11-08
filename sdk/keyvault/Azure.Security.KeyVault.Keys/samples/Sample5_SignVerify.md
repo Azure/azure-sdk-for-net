@@ -1,4 +1,4 @@
-# Signing and verify keys
+# Signing and verifying keys
 
 This sample demonstrates how to sign data with both a RSA key and an EC key.
 To get started, you'll need a URI to an Azure Key Vault. See the [README](../README.md) for links and instructions.
