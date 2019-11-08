@@ -55,10 +55,12 @@ namespace Azure.Security.KeyVault.Secrets.Samples
 
                 if (secretValues.ContainsKey(secretWithValue.Value))
                 {
-                    throw new InvalidOperationException($"Secret {secretWithValue.Name} shares a value with secret {secretValues[secretWithValue.Value]}");
+                    Debug.WriteLine($"Secret {secretWithValue.Name} shares a value with secret {secretValues[secretWithValue.Value]}");
                 }
-
-                secretValues.Add(secretWithValue.Value, secretWithValue.Name);
+                else
+                {
+                    secretValues.Add(secretWithValue.Value, secretWithValue.Name);
+                }
             }
             #endregion
 
@@ -77,7 +79,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
                 KeyVaultSecret oldBankSecret = client.GetSecret(secret.Name, secret.Version);
                 if (newBankSecretPassword == oldBankSecret.Value)
                 {
-                    throw new InvalidOperationException($"Secret {secret.Name} reuses a password");
+                    Debug.WriteLine($"Secret {secret.Name} reuses a password");
                 }
             }
 

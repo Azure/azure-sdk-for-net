@@ -49,10 +49,12 @@ foreach (SecretProperties secret in secrets)
 
     if (secretValues.ContainsKey(secretWithValue.Value))
     {
-        throw new InvalidOperationException($"Secret {secretWithValue.Name} shares a value with secret {secretValues[secretWithValue.Value]}");
+        Debug.WriteLine($"Secret {secretWithValue.Name} shares a value with secret {secretValues[secretWithValue.Value]}");
     }
-
-    secretValues.Add(secretWithValue.Value, secretWithValue.Name);
+    else
+    {
+        secretValues.Add(secretWithValue.Value, secretWithValue.Name);
+    }
 }
 ```
 
@@ -68,10 +70,16 @@ string newBankSecretPassword = "sskdjfsdasdjsd";
 IEnumerable<SecretProperties> secretVersions = client.GetPropertiesOfSecretVersions(bankSecretName);
 foreach (SecretProperties secret in secretVersions)
 {
+    // Getting a disabled secret will fail, so skip disabled secrets.
+    if (!secret.Enabled.GetValueOrDefault())
+    {
+        continue;
+    }
+
     KeyVaultSecret oldBankSecret = client.GetSecret(secret.Name, secret.Version);
     if (newBankSecretPassword == oldBankSecret.Value)
     {
-        throw new InvalidOperationException($"Secret {secret.Name} reuses a password");
+        Debug.WriteLine($"Secret {secret.Name} reuses a password");
     }
 }
 
