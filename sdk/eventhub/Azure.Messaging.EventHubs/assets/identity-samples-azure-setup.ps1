@@ -98,7 +98,7 @@ CreateResourceGroupIfMissing -ResourceGroupName "$($resourceGroupName)" -AzureRe
 try
 {
     Start-Sleep 1
-    
+
     CreateNamespaceIfMissing -ResourceGroupName "$($resourceGroupName)" `
                              -NamespaceName "$($namespaceName)" `
                              -AzureRegion "$($azureRegion)"

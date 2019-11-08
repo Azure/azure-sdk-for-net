@@ -70,11 +70,11 @@ function ValidateAzureRegion
     [Parameter(Mandatory=$true)]
     [string] $azureRegion
   )
-  
+
   # Verify the location is valid for an Event Hubs namespace.
 
   $validLocations = @{ }
-  
+
   Get-AzLocation | where { $_.Providers.Contains("Microsoft.EventHub") } | ForEach { $validLocations[$_.Location] = $_.Location }
 
   $isValidLocation = $validLocations.Contains($azureRegion)

@@ -6,10 +6,6 @@ function GenerateRandomCredentials()
   <#
     .SYNOPSIS
       It creates random credentials and returns them.
-      
-    .DESCRIPTION
-      It creates random credentials using PSADPasswordCredential
-      and returns them.
   #>
 
   return New-Object Microsoft.Azure.Commands.ActiveDirectory.PSADPasswordCredential -Property @{StartDate=Get-Date; EndDate=Get-Date -Year 2099; Password="$(GenerateRandomPassword)"} 
