@@ -111,7 +111,7 @@ The Azure.Security.KeyVault.Keys package supports synchronous and asynchronous A
 
 The following section provides several code snippets using the `client` [created above](#create-keyclient), covering some of the most common Azure Key Vault key service related tasks:
 
-### Async examples
+### Sync examples
 * [Create a key](#create-a-key)
 * [Retrieve a key](#retrieve-a-key)
 * [Update an existing key](#update-an-existing-key)
