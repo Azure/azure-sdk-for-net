@@ -45,6 +45,12 @@ Dictionary<string, string> secretValues = new Dictionary<string, string>();
 IEnumerable<SecretProperties> secrets = client.GetPropertiesOfSecrets();
 foreach (SecretProperties secret in secrets)
 {
+    // Getting a disabled secret will fail, so skip disabled secrets.
+    if (!secret.Enabled.GetValueOrDefault())
+    {
+        continue;
+    }
+
     KeyVaultSecret secretWithValue = client.GetSecret(secret.Name);
 
     if (secretValues.ContainsKey(secretWithValue.Value))
@@ -70,12 +76,6 @@ string newBankSecretPassword = "sskdjfsdasdjsd";
 IEnumerable<SecretProperties> secretVersions = client.GetPropertiesOfSecretVersions(bankSecretName);
 foreach (SecretProperties secret in secretVersions)
 {
-    // Getting a disabled secret will fail, so skip disabled secrets.
-    if (!secret.Enabled.GetValueOrDefault())
-    {
-        continue;
-    }
-
     KeyVaultSecret oldBankSecret = client.GetSecret(secret.Name, secret.Version);
     if (newBankSecretPassword == oldBankSecret.Value)
     {
