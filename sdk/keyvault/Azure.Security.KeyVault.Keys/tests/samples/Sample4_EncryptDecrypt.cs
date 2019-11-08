@@ -12,9 +12,8 @@ using System.Threading;
 
 namespace Azure.Security.KeyVault.Keys.Samples
 {
-
     /// <summary>
-    /// Sample demonstrates how to encrypt and decrypt a single block of plain text with an RSA key using the synchronous methods of the CryptographyClient.
+    /// This sample demonstrates how to encrypt and decrypt a single block of plain text with an RSA key using the synchronous methods of the <see cref="CryptographyClient">.
     /// </summary>
     [LiveOnly]
     public partial class Sample4_EncryptDecypt
@@ -24,12 +23,16 @@ namespace Azure.Security.KeyVault.Keys.Samples
         {
             // Environment variable with the Key Vault endpoint.
             string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
+            EncryptDecryptSync(keyVaultUrl);
+        }
 
-            // Instantiate a key client that will be used to create a key. Notice that the client is using default Azure
-            // credentials. To make default credentials work, ensure that environment variables 'AZURE_CLIENT_ID',
-            // 'AZURE_CLIENT_KEY' and 'AZURE_TENANT_ID' are set with the service principal credentials.
+        private void EncryptDecryptSync(string keyVaultUrl)
+        {
+            #region Snippet:KeysSample4KeyClient
             var keyClient = new KeyClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
+            #endregion
 
+            #region Snippet:KeysSample4CreateKey
             // Let's create a RSA key which will be used to encrypt and decrypt
             string rsaKeyName = $"CloudRsaKey-{Guid.NewGuid()}";
             var rsaKey = new CreateRsaKeyOptions(rsaKeyName, hardwareProtected: false)
@@ -39,38 +42,36 @@ namespace Azure.Security.KeyVault.Keys.Samples
 
             KeyVaultKey cloudRsaKey = keyClient.CreateRsaKey(rsaKey);
             Debug.WriteLine($"Key is returned with name {cloudRsaKey.Name} and type {cloudRsaKey.KeyType}");
+            #endregion
 
-            // Let's create the CryptographyClient which can perform cryptographic operations with the key we just created.
-            // Again we are using the default Azure credential as above.
+            #region Snippet:KeysSample4CryptographyClient
             var cryptoClient = new CryptographyClient(cloudRsaKey.Id, new DefaultAzureCredential());
+            #endregion
 
-            // Next we'll encrypt some arbitrary plain text with the key using the CryptographyClient. Note that RSA encryption
-            // algorithms have no chaining so they can only encrypt a single block of plaintext securely. For RSAOAEP this can be
-            // calculated as (keysize / 8) - 42, or in our case (2048 / 8) - 42 = 214 bytes.
+            #region Snippet:KeysSample4EncryptKey
             byte[] plaintext = Encoding.UTF8.GetBytes("A single block of plaintext");
-
-            // First encrypt the data using RSAOAEP with the created key.
             EncryptResult encryptResult = cryptoClient.Encrypt(EncryptionAlgorithm.RsaOaep, plaintext);
             Debug.WriteLine($"Encrypted data using the algorithm {encryptResult.Algorithm}, with key {encryptResult.KeyId}. The resulting encrypted data is {Convert.ToBase64String(encryptResult.Ciphertext)}");
+            #endregion
 
-            // Now decrypt the encrypted data. Note that the same algorithm must always be used for both encrypt and decrypt
+            #region Snippet:KeysSample4DecryptKey
             DecryptResult decryptResult = cryptoClient.Decrypt(EncryptionAlgorithm.RsaOaep, encryptResult.Ciphertext);
             Debug.WriteLine($"Decrypted data using the algorithm {decryptResult.Algorithm}, with key {decryptResult.KeyId}. The resulting decrypted data is {Encoding.UTF8.GetString(decryptResult.Plaintext)}");
+            #endregion
 
-            // The Cloud RSA Key is no longer needed, need to delete it from the Key Vault.
+            #region Snippet:KeysSample4DeleteKey
             DeleteKeyOperation operation = keyClient.StartDeleteKey(rsaKeyName);
 
-            // To ensure the key is deleted on server before we try to purge it.
             while (!operation.HasCompleted)
             {
                 Thread.Sleep(2000);
 
                 operation.UpdateStatus();
             }
+            #endregion
 
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted key needs to be purged.
             keyClient.PurgeDeletedKey(rsaKeyName);
-
         }
     }
 }

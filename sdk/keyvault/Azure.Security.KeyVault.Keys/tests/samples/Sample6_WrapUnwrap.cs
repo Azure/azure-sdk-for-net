@@ -14,7 +14,7 @@ using System.Threading;
 namespace Azure.Security.KeyVault.Keys.Samples
 {
     /// <summary>
-    /// Sample demonstrates how to wrap and unwrap a symmetric key with an RSA key using the synchronous methods of the CryptographyClient.
+    /// This sample demonstrates how to wrap and unwrap a symmetric key with an RSA key using the synchronous methods of the <see cref="CryptographyClient">.
     /// </summary>
     [LiveOnly]
     public partial class Sample6_WrapUnwrap
@@ -24,13 +24,16 @@ namespace Azure.Security.KeyVault.Keys.Samples
         {
             // Environment variable with the Key Vault endpoint.
             string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
+            WrapUnwrapSync(keyVaultUrl);
+        }
 
-            // Instantiate a key client that will be used to create a key. Notice that the client is using default Azure
-            // credentials. To make default credentials work, ensure that environment variables 'AZURE_CLIENT_ID',
-            // 'AZURE_CLIENT_KEY' and 'AZURE_TENANT_ID' are set with the service principal credentials.
+        private void WrapUnwrapSync(string keyVaultUrl)
+        {
+            #region Snippet:KeysSample6KeyClient
             var keyClient = new KeyClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
+            #endregion
 
-            // First create a RSA key which will be used to wrap and unwrap another key
+            #region Snippet:KeysSample6CreateKey
             string rsaKeyName = $"CloudRsaKey-{Guid.NewGuid()}";
             var rsaKey = new CreateRsaKeyOptions(rsaKeyName, hardwareProtected: false)
             {
@@ -39,37 +42,40 @@ namespace Azure.Security.KeyVault.Keys.Samples
 
             KeyVaultKey cloudRsaKey = keyClient.CreateRsaKey(rsaKey);
             Debug.WriteLine($"Key is returned with name {cloudRsaKey.Name} and type {cloudRsaKey.KeyType}");
+            #endregion
 
-            // Let's create the CryptographyClient which can perform cryptographic operations with the key we just created.
-            // Again we are using the default Azure credential as above.
+            #region Snippet:KeysSample6CryptographyClient
             var cryptoClient = new CryptographyClient(cloudRsaKey.Id, new DefaultAzureCredential());
+            #endregion
 
-            // Next we'll generate a symmetric key which we will wrap
+            #region Snippet:KeysSample6GenerateKey
             byte[] keyData = AesManaged.Create().Key;
             Debug.WriteLine($"Generated Key: {Convert.ToBase64String(keyData)}");
+            #endregion
 
-            // Wrap the key using RSAOAEP with the created key.
+            #region Snippet:KeysSample6WrapKey
             WrapResult wrapResult = cryptoClient.WrapKey(KeyWrapAlgorithm.RsaOaep, keyData);
             Debug.WriteLine($"Encrypted data using the algorithm {wrapResult.Algorithm}, with key {wrapResult.KeyId}. The resulting encrypted data is {Convert.ToBase64String(wrapResult.EncryptedKey)}");
+            #endregion
 
-            // Now unwrap the encrypted key. Note that the same algorithm must always be used for both wrap and unwrap
+            #region Snippet:KeysSample6UnwrapKey
             UnwrapResult unwrapResult = cryptoClient.UnwrapKey(KeyWrapAlgorithm.RsaOaep, wrapResult.EncryptedKey);
             Debug.WriteLine($"Decrypted data using the algorithm {unwrapResult.Algorithm}, with key {unwrapResult.KeyId}. The resulting decrypted data is {Encoding.UTF8.GetString(unwrapResult.Key)}");
+            #endregion
 
-            // The Cloud RSA Key is no longer needed, need to delete it from the Key Vault.
+            #region Snippet:KeysSample6DeleteKey
             DeleteKeyOperation operation = keyClient.StartDeleteKey(rsaKeyName);
 
-            // To ensure the key is deleted on server before we try to purge it.
             while (!operation.HasCompleted)
             {
                 Thread.Sleep(2000);
 
                 operation.UpdateStatus();
             }
+            #endregion
 
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted key needs to be purged.
             keyClient.PurgeDeletedKey(rsaKeyName);
-
         }
     }
 }

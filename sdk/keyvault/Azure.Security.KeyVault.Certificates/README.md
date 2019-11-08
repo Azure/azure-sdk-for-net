@@ -67,6 +67,12 @@ Once you've populated the **AZURE_CLIENT_ID**, **AZURE_CLIENT_SECRET** and **AZU
 // Create a new certificate client using the default credential from Azure.Identity using environment variables previously set,
 // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
 var client = new CertificateClient(vaultUri: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
+
+// Create a certificate using the certificate client.
+CertificateOperation operation = client.StartCreateCertificate("MyCertificate", CertificatePolicy.Default);
+
+// Retrieve a certificate using the certificate client.
+KeyVaultCertificateWithPolicy certificate = client.GetCertificate("MyCertificate");
 ```
 
 ## Key concepts
@@ -90,10 +96,7 @@ When creating the certificate the user can specify the policy which controls the
 
 ```C# Snippet:CreateCertificate
 // Create a certificate. This starts a long running operation to create and sign the certificate.
-CertificateOperation operation = await client.StartCreateCertificateAsync("MyCertificate", CertificatePolicy.Default);
-
-// You can await the completion of the create certificate operation.
-KeyVaultCertificateWithPolicy certificate = await operation.WaitForCompletionAsync();
+CertificateOperation operation = client.StartCreateCertificate("MyCertificate", CertificatePolicy.Default);
 ```
 
 > NOTE: Depending on the certificate issuer and validation methods, certificate creation and signing can take an indeterministic amount of time. Users should only wait on certificate operations when the operation can be reasonably completed in the scope of the application, such as with self signed certificates or issuers with well known response times.
@@ -102,13 +105,13 @@ KeyVaultCertificateWithPolicy certificate = await operation.WaitForCompletionAsy
 `GetCertificateWithPolicy` retrieves the latest version of a certificate stored in the Key Vault along with its `CertificatePolicy`.
 
 ```C# Snippet:RetrieveCertificate
-KeyVaultCertificateWithPolicy certificateWithPolicy = await client.GetCertificateAsync("MyCertificate");
+KeyVaultCertificateWithPolicy certificateWithPolicy = client.GetCertificate("MyCertificate");
 ```
 
 `GetCertificate` retrieves a specific version of a certificate in the vault.
 
 ```C# Snippet:GetCertificate
-KeyVaultCertificate certificate = await client.GetCertificateVersionAsync(certificateWithPolicy.Name, certificateWithPolicy.Properties.Version);
+KeyVaultCertificate certificate = client.GetCertificateVersion(certificateWithPolicy.Name, certificateWithPolicy.Properties.Version);
 ```
 
 ### Update an existing Certificate
@@ -123,7 +126,7 @@ CertificateProperties certificateProperties = new CertificateProperties(certific
     }
 };
 
-KeyVaultCertificate updated = await client.UpdateCertificatePropertiesAsync(certificateProperties);
+KeyVaultCertificate updated = client.UpdateCertificateProperties(certificateProperties);
 ```
 
 ### Delete a Certificate
@@ -131,11 +134,11 @@ KeyVaultCertificate updated = await client.UpdateCertificatePropertiesAsync(cert
 is not enabled for the Key Vault, this operation permanently deletes the certificate. If soft delete is enabled the certificate is marked for deletion and can be optionally purged or recovered up until its scheduled purge date.
 
 ```C# Snippet:DeleteCertificate
-DeletedCertificate deletedCert = await client.DeleteCertificateAsync("MyCertificate");
+DeletedCertificate deleteCert = client.DeleteCertificate("MyCertificate");
 
-Console.WriteLine(deletedCert.ScheduledPurgeDate);
+Console.WriteLine(deleteCert.ScheduledPurgeDate);
 
-await client.PurgeDeletedCertificateAsync("MyCertificate");
+client.PurgeDeletedCertificate(deleteCert.Name);
 ```
 
 ### List Certificates
@@ -144,9 +147,9 @@ certificate. Sensitive fields of the certificate will not be returned. This oper
 requires the certificates/list permission.
   
 ```C# Snippet:ListCertificates
-AsyncPageable<CertificateProperties> allCertificates = client.GetPropertiesOfCertificatesAsync();
+Pageable<CertificateProperties> allCertificates = client.GetPropertiesOfCertificates();
 
-await foreach (CertificateProperties certificateProperties in allCertificates)
+foreach (CertificateProperties certificateProperties in allCertificates)
 {
     Console.WriteLine(certificateProperties.Name);
 }
@@ -162,7 +165,7 @@ For example, if you try to retrieve a Key that doesn't exist in your Key Vault, 
 ```C# Snippet:CertificateNotFound
 try
 {
-    KeyVaultCertificateWithPolicy certificateWithPolicy = await client.GetCertificateAsync("SomeCertificate");
+    KeyVaultCertificateWithPolicy certificateWithPolicy = client.GetCertificate("SomeCertificate");
 }
 catch (RequestFailedException ex)
 {

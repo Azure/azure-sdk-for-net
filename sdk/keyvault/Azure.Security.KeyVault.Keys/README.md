@@ -120,9 +120,9 @@ The following section provides several code snippets using the `client` [created
 * [List keys](#list-keys)
 * [Encrypt and Decrypt](#encrypt-and-decrypt)
 
-### Sync examples
-* [Create a key synchronously](#create-a-key-synchronously)
-* [Delete a key synchronously](#delete-a-key-synchronously)
+### Async examples
+* [Create a key Asynchronously](#create-a-key-asynchronously)
+* [Delete a key Asynchronously](#delete-a-key-asynchronously)
 
 ### Create a key
 Create a key to be stored in the Azure Key Vault. If a key with the same name already exists, then a new version of the key is created.
@@ -130,110 +130,6 @@ Create a key to be stored in the Azure Key Vault. If a key with the same name al
 ```C# Snippet:CreateKey
 // Create a key. Note that you can specify the type of key
 // i.e. Elliptic curve, Hardware Elliptic Curve, RSA
-KeyVaultKey key = await client.CreateKeyAsync("key-name", KeyType.Rsa);
-
-Console.WriteLine(key.Name);
-Console.WriteLine(key.KeyType);
-
-// Create a software RSA key
-var rsaCreateKey = new CreateRsaKeyOptions("rsa-key-name", hardwareProtected: false);
-KeyVaultKey rsaKey = await client.CreateRsaKeyAsync(rsaCreateKey);
-
-Console.WriteLine(rsaKey.Name);
-Console.WriteLine(rsaKey.KeyType);
-
-// Create a hardware Elliptic Curve key
-// Because only premium key vault supports HSM backed keys , please ensure your key vault
-// SKU is premium when you set "hardwareProtected" value to true
-var echsmkey = new CreateEcKeyOptions("ec-key-name", hardwareProtected: true);
-KeyVaultKey ecKey = await client.CreateEcKeyAsync(echsmkey);
-
-Console.WriteLine(ecKey.Name);
-Console.WriteLine(ecKey.KeyType);
-```
-
-### Retrieve a key
-`GetKeyAsync` retrieves a key previously stored in the Key Vault.
-
-```C# Snippet:RetrieveKey
-KeyVaultKey key = await client.GetKeyAsync("key-name");
-
-Console.WriteLine(key.Name);
-Console.WriteLine(key.KeyType);
-```
-
-### Update an existing key
-`UpdateKeyAsync` updates a key previously stored in the Key Vault.
-
-```C# Snippet:UpdateKey
-KeyVaultKey key = await client.CreateKeyAsync("key-name", KeyType.Rsa);
-
-// You can specify additional application-specific metadata in the form of tags.
-key.Properties.Tags["foo"] = "updated tag";
-
-KeyVaultKey updatedKey = await client.UpdateKeyPropertiesAsync(key.Properties);
-
-Console.WriteLine(updatedKey.Name);
-Console.WriteLine(updatedKey.Properties.Version);
-Console.WriteLine(updatedKey.Properties.UpdatedOn);
-```
-
-### Delete a key
-`StartDeleteKeyAsync` starts a long-running operation to delete a key previously stored in the Key Vault.
-You can retrieve the key immediately without waiting for the operation to complete.
-When [soft-delete][soft_delete] is not enabled for the Key Vault, this operation permanently deletes the key.
-
-```C# Snippet:DeleteKey
-DeleteKeyOperation operation = await client.StartDeleteKeyAsync("key-name");
-
-DeletedKey key = operation.Value;
-Console.WriteLine(key.Name);
-Console.WriteLine(key.DeletedOn);
-```
-
-### Delete and purge a key
-You will need to wait for the long-running operation to complete before trying to purge or recover the key.
-
-```C# Snippet:DeleteAndPurgeKey
-DeleteKeyOperation operation = await client.StartDeleteKeyAsync("key-name");
-
-// You only need to wait for completion if you want to purge or recover the key.
-await operation.WaitForCompletionAsync();
-
-DeletedKey key = operation.Value;
-await client.PurgeDeletedKeyAsync(key.Name);
-```
-
-### List Keys
-This example lists all the keys in the specified Key Vault.
-
-```C# Snippet:ListKeys
-AsyncPageable<KeyProperties> allKeys = client.GetPropertiesOfKeysAsync();
-
-await foreach (KeyProperties keyProperties in allKeys)
-{
-    Console.WriteLine(keyProperties.Name);
-}
-```
-
-### Encrypt and Decrypt
-This example creates a `CryptographyClient` and uses it to encrypt and decrypt with a key in Key Vault.
-
-```C# Snippet:EncryptDecrypt
-byte[] plaintext = Encoding.UTF8.GetBytes("A single block of plaintext");
-
-// encrypt the data using the algorithm RSAOAEP
-EncryptResult encryptResult = await cryptoClient.EncryptAsync(EncryptionAlgorithm.RsaOaep, plaintext);
-
-// decrypt the encrypted data.
-DecryptResult decryptResult = await cryptoClient.DecryptAsync(EncryptionAlgorithm.RsaOaep, encryptResult.Ciphertext);
-```
-
-### Create a key synchronously
-Synchronous APIs are identical to their asynchronous counterparts, but without the typical "Async" suffix for asynchronous methods.
-
-```C# Snippet:CreateKeySync
-// Create a key of any type
 KeyVaultKey key = client.CreateKey("key-name", KeyType.Rsa);
 
 Console.WriteLine(key.Name);
@@ -256,11 +152,49 @@ Console.WriteLine(ecKey.Name);
 Console.WriteLine(ecKey.KeyType);
 ```
 
-### Delete a key synchronously
-When deleting a key synchronously before you purge it, you need to call `UpdateStatus` on the returned operation periodically.
-You could do this in a loop as shown in the example, or periodically within other operations in your program.
+### Retrieve a key
+`GetKeyAsync` retrieves a key previously stored in the Key Vault.
 
-```C# Snippet:DeleteKeySync
+```C# Snippet:RetrieveKey
+KeyVaultKey key = client.GetKey("key-name");
+
+Console.WriteLine(key.Name);
+Console.WriteLine(key.KeyType);
+```
+
+### Update an existing key
+`UpdateKeyAsync` updates a key previously stored in the Key Vault.
+
+```C# Snippet:UpdateKey
+KeyVaultKey key = client.CreateKey("key-name", KeyType.Rsa);
+
+// You can specify additional application-specific metadata in the form of tags.
+key.Properties.Tags["foo"] = "updated tag";
+
+KeyVaultKey updatedKey = client.UpdateKeyProperties(key.Properties);
+
+Console.WriteLine(updatedKey.Name);
+Console.WriteLine(updatedKey.Properties.Version);
+Console.WriteLine(updatedKey.Properties.UpdatedOn);
+```
+
+### Delete a key
+`StartDeleteKeyAsync` starts a long-running operation to delete a key previously stored in the Key Vault.
+You can retrieve the key immediately without waiting for the operation to complete.
+When [soft-delete][soft_delete] is not enabled for the Key Vault, this operation permanently deletes the key.
+
+```C# Snippet:DeleteKey
+DeleteKeyOperation operation = client.StartDeleteKey("key-name");
+
+DeletedKey key = operation.Value;
+Console.WriteLine(key.Name);
+Console.WriteLine(key.DeletedOn);
+```
+
+### Delete and purge a key
+You will need to wait for the long-running operation to complete before trying to purge or recover the key.
+
+```C# Snippet:DeleteAndPurgeKey
 DeleteKeyOperation operation = client.StartDeleteKey("key-name");
 
 while (!operation.HasCompleted)
@@ -269,6 +203,72 @@ while (!operation.HasCompleted)
 
     operation.UpdateStatus();
 }
+
+DeletedKey key = operation.Value;
+client.PurgeDeletedKey(key.Name);
+```
+
+### List Keys
+This example lists all the keys in the specified Key Vault.
+
+```C# Snippet:ListKeys
+Pageable<KeyProperties> allKeys = client.GetPropertiesOfKeys();
+
+foreach (KeyProperties keyProperties in allKeys)
+{
+    Console.WriteLine(keyProperties.Name);
+}
+```
+
+### Encrypt and Decrypt
+This example creates a `CryptographyClient` and uses it to encrypt and decrypt with a key in Key Vault.
+
+```C# Snippet:EncryptDecrypt
+byte[] plaintext = Encoding.UTF8.GetBytes("A single block of plaintext");
+
+// encrypt the data using the algorithm RSAOAEP
+EncryptResult encryptResult = cryptoClient.Encrypt(EncryptionAlgorithm.RsaOaep, plaintext);
+
+// decrypt the encrypted data.
+DecryptResult decryptResult = cryptoClient.Decrypt(EncryptionAlgorithm.RsaOaep, encryptResult.Ciphertext);
+```
+
+### Create a key asynchronously
+Synchronous APIs are identical to their asynchronous counterparts, but without the typical "Async" suffix for asynchronous methods.
+
+```C# Snippet:CreateKeyAsync
+// Create a key of any type
+KeyVaultKey key = await client.CreateKeyAsync("key-name", KeyType.Rsa);
+
+Console.WriteLine(key.Name);
+Console.WriteLine(key.KeyType);
+
+// Create a software RSA key
+var rsaCreateKey = new CreateRsaKeyOptions("rsa-key-name", hardwareProtected: false);
+KeyVaultKey rsaKey = await client.CreateRsaKeyAsync(rsaCreateKey);
+
+Console.WriteLine(rsaKey.Name);
+Console.WriteLine(rsaKey.KeyType);
+
+// Create a hardware Elliptic Curve key
+// Because only premium key vault supports HSM backed keys , please ensure your key vault
+// SKU is premium when you set "hardwareProtected" value to true
+var echsmkey = new CreateEcKeyOptions("ec-key-name", hardwareProtected: true);
+KeyVaultKey ecKey = await client.CreateEcKeyAsync(echsmkey);
+
+Console.WriteLine(ecKey.Name);
+Console.WriteLine(ecKey.KeyType);
+```
+
+### Delete and purge a key asynchronously
+When deleting a key asynchronously before you purge it, you need to call `UpdateStatus` on the returned operation periodically.
+You could do this in a loop as shown in the example, or periodically within other operations in your program.
+
+```C# Snippet:DeleteAndPurgeKeyAsync
+DeleteKeyOperation operation = client.StartDeleteKey("key-name");
+
+// You only need to wait for completion if you want to purge or recover the key.
+await operation.WaitForCompletionAsync();
 
 DeletedKey key = operation.Value;
 client.PurgeDeletedKey(key.Name);
@@ -284,7 +284,7 @@ For example, if you try to retrieve a key that doesn't exist in your Key Vault, 
 ```C# Snippet:KeyNotFound
 try
 {
-    KeyVaultKey key = await client.GetKeyAsync("some_key");
+    KeyVaultKey key = client.GetKey("some_key");
 }
 catch (RequestFailedException ex)
 {

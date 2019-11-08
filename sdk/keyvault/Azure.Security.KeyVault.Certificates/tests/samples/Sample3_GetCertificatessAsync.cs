@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 namespace Azure.Security.KeyVault.Certificates.Samples
 {
     /// <summary>
-    /// Sample demonstrates how to list keys and versions of a given key,
-    /// and list deleted keys in a soft-delete enabled Key Vault
-    /// using the asynchronous methods of the KeyClient.
+    /// Sample demonstrates how to list certificates and versions of a given certificates,
+    /// and list deleted certificates in a soft delete-enabled key vault
+    /// using the synchronous methods of the CertificateClient.
     /// </summary>
     [LiveOnly]
     public partial class GetCertificates

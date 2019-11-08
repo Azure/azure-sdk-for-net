@@ -65,7 +65,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             //
 
             // The SignAsync and VerifyAsync methods expect a precalculated digest, and the digest needs to be calculated using the hash algorithm which matches the
-            // singature algorithm being used. SHA256 is the hash algorithm used for both RS256 and ES256K which are the algorithms we'll be using in this sample
+            // signature algorithm being used. SHA256 is the hash algorithm used for both RS256 and ES256K which are the algorithms we'll be using in this sample
             using (HashAlgorithm hashAlgo = SHA256.Create())
             {
                 digest = hashAlgo.ComputeHash(data);
