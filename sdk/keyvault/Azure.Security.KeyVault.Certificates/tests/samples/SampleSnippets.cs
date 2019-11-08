@@ -47,6 +47,14 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             #region Snippet:CreateCertificate
             // Create a certificate. This starts a long running operation to create and sign the certificate.
             CertificateOperation operation = client.StartCreateCertificate("MyCertificate", CertificatePolicy.Default);
+
+            // You can await the completion of the create certificate operation.
+            while (!operation.HasCompleted)
+            {
+                operation.UpdateStatus();
+
+                Thread.Sleep(TimeSpan.FromSeconds(1));
+            }
             #endregion
         }
 

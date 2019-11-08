@@ -110,6 +110,14 @@ When creating the certificate the user can specify the policy which controls the
 ```C# Snippet:CreateCertificate
 // Create a certificate. This starts a long running operation to create and sign the certificate.
 CertificateOperation operation = client.StartCreateCertificate("MyCertificate", CertificatePolicy.Default);
+
+// You can await the completion of the create certificate operation.
+while (!operation.HasCompleted)
+{
+    operation.UpdateStatus();
+
+    Thread.Sleep(TimeSpan.FromSeconds(1));
+}
 ```
 
 > NOTE: Depending on the certificate issuer and validation methods, certificate creation and signing can take an indeterministic amount of time. Users should only wait on certificate operations when the operation can be reasonably completed in the scope of the application, such as with self signed certificates or issuers with well known response times.
