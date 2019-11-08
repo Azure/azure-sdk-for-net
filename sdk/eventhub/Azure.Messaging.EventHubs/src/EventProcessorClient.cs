@@ -490,6 +490,30 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   Retrieves a complete ownership list from the chosen storage service.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the ownership are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
+        /// <param name="consumerGroup">The name of the consumer group the ownership are associated with.</param>
+        ///
+        /// <returns>An enumerable containing all the existing ownership for the associated Event Hub and consumer group.</returns>
+        ///
+        public override Task<IEnumerable<PartitionOwnership>> ListOwnershipAsync(string fullyQualifiedNamespace,
+                                                                                 string eventHubName,
+                                                                                 string consumerGroup) => Manager.ListOwnershipAsync(fullyQualifiedNamespace, eventHubName, consumerGroup);
+
+        /// <summary>
+        ///   Attempts to claim ownership of partitions for processing.
+        /// </summary>
+        ///
+        /// <param name="partitionOwnership">An enumerable containing all the ownership to claim.</param>
+        ///
+        /// <returns>An enumerable containing the successfully claimed ownership instances.</returns>
+        ///
+        public override Task<IEnumerable<PartitionOwnership>> ClaimOwnershipAsync(IEnumerable<PartitionOwnership> partitionOwnership) => Manager.ClaimOwnershipAsync(partitionOwnership);
+
+        /// <summary>
         ///   Updates the checkpoint using the given information for the associated partition and consumer group in the chosen storage service.
         /// </summary>
         ///
@@ -742,8 +766,7 @@ namespace Azure.Messaging.EventHubs
                 // From the storage service provided by the user, obtain a complete list of ownership, including expired ones.  We may still need
                 // their eTags to claim orphan partitions.
 
-                var completeOwnershipList = (await Manager
-                    .ListOwnershipAsync(Connection.FullyQualifiedNamespace, Connection.EventHubName, ConsumerGroup)
+                var completeOwnershipList = (await ListOwnershipAsync(Connection.FullyQualifiedNamespace, Connection.EventHubName, ConsumerGroup)
                     .ConfigureAwait(false))
                     .ToList();
 
@@ -980,9 +1003,7 @@ namespace Azure.Messaging.EventHubs
 
             // We are expecting an enumerable with a single element if the claim attempt succeeds.
 
-            IEnumerable<PartitionOwnership> claimedOwnership = (await Manager
-                .ClaimOwnershipAsync(new List<PartitionOwnership> { newOwnership })
-                .ConfigureAwait(false));
+            IEnumerable<PartitionOwnership> claimedOwnership = await ClaimOwnershipAsync(new List<PartitionOwnership> { newOwnership }).ConfigureAwait(false);
 
             return claimedOwnership.FirstOrDefault();
         }
@@ -1013,7 +1034,7 @@ namespace Azure.Messaging.EventHubs
             // If the user issues a checkpoint update, the associated ownership will have its eTag updated as well, so we
             // will fail in claiming it here, but this instance still owns it.
 
-            return Manager.ClaimOwnershipAsync(ownershipToRenew);
+            return ClaimOwnershipAsync(ownershipToRenew);
         }
 
         /// <summary>
