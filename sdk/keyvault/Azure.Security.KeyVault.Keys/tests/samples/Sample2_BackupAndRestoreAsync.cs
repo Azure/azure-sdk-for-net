@@ -42,7 +42,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
 
             // Backups are good to have if in case keys get accidentally deleted by you.
             // For long term storage, it is ideal to write the backup to a file, disk, database, etc.
-            // For the purposes of this sample, we are storing the bakup in a temporary memory area.
+            // For the purposes of this sample, we are storing the bake up in a temporary memory area.
             byte[] byteKey = await client.BackupKeyAsync(rsaKeyName);
 
             using (var memoryStream = new MemoryStream())

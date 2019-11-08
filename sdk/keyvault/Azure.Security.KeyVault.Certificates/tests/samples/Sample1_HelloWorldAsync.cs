@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Azure.Security.KeyVault.Certificates.Samples
 {
     /// <summary>
-    /// Sample demonstrates how to set, get, update and delete a key using the asynchronous methods of the KeyClient.
+    /// Sample demonstrates how to create, get, update and delete a key using the asynchronous methods of the KeyClient.
     /// </summary>
     [LiveOnly]
     public partial class HelloWorld
@@ -27,7 +27,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             // 'AZURE_CLIENT_KEY' and 'AZURE_TENANT_ID' are set with the service principal credentials.
             var client = new CertificateClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
 
-            // Let's create a self signed certifiate using the default policy. If the certificiate
+            // Let's create a self signed certificate using the default policy. If the certificate
             // already exists in the Key Vault, then a new version of the key is created.
             string certName = $"defaultCert-{Guid.NewGuid()}";
 
