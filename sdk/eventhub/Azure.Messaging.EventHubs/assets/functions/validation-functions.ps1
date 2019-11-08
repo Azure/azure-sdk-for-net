@@ -23,8 +23,8 @@ function ValidateParameters()
     [string] $azureRegion
   )
 
-  ValidateServicePrincipal -ServicePrincipalName $servicePrincipalName
-  ValidateAzureRegion -AzureRegion $azureRegion
+  ValidateServicePrincipal -ServicePrincipalName "$($servicePrincipalName)"
+  ValidateAzureRegion -AzureRegion "$($azureRegion)"
 }
 
 function ValidateServicePrincipal() 
@@ -50,30 +50,9 @@ function ValidateServicePrincipal()
     Write-Error "The principal name may not contain spaces."
     exit -1
   }
-
-}
-function ValidateAzureRegion() 
-{
-  <#
-    .SYNOPSIS
-      It validates the azure region.
-      
-    .DESCRIPTION
-      Checks if the an azure region is in those that offer eventhubs.
-      If none is passed, it is defaulted to 'South Central US'.
-      An error is returned if the location chosen does not offer event hubs.
-  #>
-
-  param
-  (
-    [AllowNull()]
-    [string] $azureRegion
-  )
-
-  IsValidEventHubRegion -AzureRegion "$($azureRegion)"
 }
 
-function IsValidEventHubRegion 
+function ValidateAzureRegion 
 {
   <#
     .SYNOPSIS
@@ -88,7 +67,7 @@ function IsValidEventHubRegion
 
   param
   (
-    [AllowNull()]
+    [Parameter(Mandatory=$true)]
     [string] $azureRegion
   )
   

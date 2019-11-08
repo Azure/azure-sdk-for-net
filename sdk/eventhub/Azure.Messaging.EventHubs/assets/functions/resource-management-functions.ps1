@@ -103,11 +103,11 @@ function GetSubscriptionAndSetAzureContext
   Write-Host ""
   Write-Host "Working:"
   Write-Host "`t...Requesting subscription"
-  $subscription = Get-AzSubscription -SubscriptionName "$($SubscriptionName)" -ErrorAction SilentlyContinue
+  $subscription = Get-AzSubscription -SubscriptionName "$($subscriptionName)" -ErrorAction SilentlyContinue
   
   if ($subscription -eq $null)
   {
-      Write-Error "Unable to locate the requested Azure subscription: $($SubscriptionName)"
+      Write-Error "Unable to locate the requested Azure subscription: $($subscriptionName)"
       exit -1
   }
   
