@@ -93,7 +93,7 @@ SignResult ecSignDataResult = ecCryptoClient.SignData(SignatureAlgorithm.ES256K,
 Debug.WriteLine($"Signed data using the algorithm {ecSignDataResult.Algorithm}, with key {ecSignDataResult.KeyId}. The resulting signature is {Convert.ToBase64String(ecSignDataResult.Signature)}");
 ```
 
-## verifying signatures with VerifyData methods
+## Verifying signatures with VerifyData methods
 
 Verify the signatures.
 
