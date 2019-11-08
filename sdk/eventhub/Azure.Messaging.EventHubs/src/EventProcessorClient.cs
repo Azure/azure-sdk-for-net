@@ -493,9 +493,9 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>An enumerable containing all the existing ownership for the associated Event Hub and consumer group.</returns>
         ///
-        public override Task<IEnumerable<PartitionOwnership>> ListOwnershipAsync(string fullyQualifiedNamespace,
-                                                                                 string eventHubName,
-                                                                                 string consumerGroup) => Manager.ListOwnershipAsync(fullyQualifiedNamespace, eventHubName, consumerGroup);
+        protected override Task<IEnumerable<PartitionOwnership>> ListOwnershipAsync(string fullyQualifiedNamespace,
+                                                                                    string eventHubName,
+                                                                                    string consumerGroup) => Manager.ListOwnershipAsync(fullyQualifiedNamespace, eventHubName, consumerGroup);
 
         /// <summary>
         ///   Attempts to claim ownership of partitions for processing.
@@ -505,7 +505,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>An enumerable containing the successfully claimed ownership instances.</returns>
         ///
-        public override Task<IEnumerable<PartitionOwnership>> ClaimOwnershipAsync(IEnumerable<PartitionOwnership> partitionOwnership) => Manager.ClaimOwnershipAsync(partitionOwnership);
+        protected override Task<IEnumerable<PartitionOwnership>> ClaimOwnershipAsync(IEnumerable<PartitionOwnership> partitionOwnership) => Manager.ClaimOwnershipAsync(partitionOwnership);
 
         /// <summary>
         ///   Updates the checkpoint using the given information for the associated partition and consumer group in the chosen storage service.
@@ -516,8 +516,8 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        protected internal override async Task UpdateCheckpointAsync(EventData eventData,
-                                                                     PartitionContext context)
+        protected override async Task UpdateCheckpointAsync(EventData eventData,
+                                                            PartitionContext context)
         {
             Argument.AssertNotNull(eventData, nameof(eventData));
             Argument.AssertNotNull(eventData.Offset, nameof(eventData.Offset));
@@ -550,6 +550,24 @@ namespace Azure.Messaging.EventHubs
                 scope.Failed(e);
             }
         }
+
+        /// <summary>
+        ///   Creates a <see cref="PartitionOwnership" /> instance based on the provided information.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the Event Hub partition the partition ownership is associated with.</param>
+        /// <param name="offset">The offset of the last <see cref="EventData" /> checkpointed by the previous owner of the ownership.</param>
+        /// <param name="sequenceNumber">The sequence number of the last <see cref="EventData" /> checkpointed by the previous owner of the ownership.</param>
+        /// <param name="lastModifiedTime">The date and time, in UTC, that the last update was made to the ownership.</param>
+        /// <param name="eTag">The entity tag needed to update the ownership.</param>
+        ///
+        /// <returns>A <see cref="PartitionOwnership" /> instance based on the provided information.</returns>
+        ///
+        protected override PartitionOwnership CreatePartitionOwnership(string partitionId,
+                                                                       long? offset,
+                                                                       long? sequenceNumber,
+                                                                       DateTimeOffset? lastModifiedTime,
+                                                                       string eTag) => new PartitionOwnership(FullyQualifiedNamespace, EventHubName, ConsumerGroup, Identifier, partitionId, offset, sequenceNumber, lastModifiedTime, eTag);
 
         /// <summary>
         ///   Starts the event processor.  In case it's already running, nothing happens.
@@ -963,43 +981,6 @@ namespace Azure.Messaging.EventHubs
 
             var context = new PartitionContext(partitionId);
             await ProcessingForPartitionStoppedAsync(reason, context);
-        }
-
-        /// <summary>
-        ///   Tries to claim ownership of the specified partition.
-        /// </summary>
-        ///
-        /// <param name="partitionId">The identifier of the Event Hub partition the ownership is associated with.</param>
-        /// <param name="completeOwnershipEnumerable">A complete enumerable of ownership obtained from the stored service provided by the user.</param>
-        ///
-        /// <returns>The claimed ownership. <c>null</c> if the claim attempt failed.</returns>
-        ///
-        private async Task<PartitionOwnership> ClaimOwnershipAsync(string partitionId,
-                                                                   IEnumerable<PartitionOwnership> completeOwnershipEnumerable)
-        {
-            // We need the eTag from the most recent ownership of this partition, even if it's expired.  We want to keep the offset and
-            // the sequence number as well.
-
-            PartitionOwnership oldOwnership = completeOwnershipEnumerable.FirstOrDefault(ownership => ownership.PartitionId == partitionId);
-
-            var newOwnership = new PartitionOwnership
-                (
-                    Connection.FullyQualifiedNamespace,
-                    Connection.EventHubName,
-                    ConsumerGroup,
-                    Identifier,
-                    partitionId,
-                    oldOwnership?.Offset,
-                    oldOwnership?.SequenceNumber,
-                    DateTimeOffset.UtcNow,
-                    oldOwnership?.ETag
-                );
-
-            // We are expecting an enumerable with a single element if the claim attempt succeeds.
-
-            IEnumerable<PartitionOwnership> claimedOwnership = await ClaimOwnershipAsync(new List<PartitionOwnership> { newOwnership }).ConfigureAwait(false);
-
-            return claimedOwnership.FirstOrDefault();
         }
 
         /// <summary>
