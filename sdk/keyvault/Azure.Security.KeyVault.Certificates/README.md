@@ -99,8 +99,8 @@ This section contains code snippets covering common tasks:
 * [List Certificates](#list-certificates)
 
 ### Async Examples
-* [Create a certificate asynchronously](#create-a-secret-asynchronously)
-* [List certificates asynchronously](#list-secrets-asynchronously)
+* [Create a certificate asynchronously](#create-a-certificate-asynchronously)
+* [List certificates asynchronously](#list-certificates-asynchronously)
 
 ### Create a Certificate
 `StartCreateCertificate` creates a Certificate to be stored in the Azure Key Vault. If a certificate with 
