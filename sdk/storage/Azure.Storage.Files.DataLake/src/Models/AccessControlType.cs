@@ -15,21 +15,21 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// Specifies the <see cref="PathAccessControlEntry"/> applies to the owner or a named user.
         /// </summary>
-        User,
+        User = 1,
 
         /// <summary>
         /// Specifies the <see cref="PathAccessControlEntry"/> applies to the owning group or a named group.
         /// </summary>
-        Group,
+        Group = 2,
 
         /// <summary>
         /// Specifies the <see cref="PathAccessControlEntry"/> sets a mask that restricts access to named users and member of groups.
         /// </summary>
-        Mask,
+        Mask = 4,
 
         /// <summary>
         /// Specifies the <see cref="PathAccessControlEntry"/> applies to all users not found in other entries.
         /// </summary>
-        Other
+        Other = ~0
     }
 }

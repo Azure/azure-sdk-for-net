@@ -12,9 +12,14 @@ namespace Azure.Storage.Files.DataLake.Models
     public enum RolePermissions
     {
         /// <summary>
-        /// The read permission.
+        /// No permissions.
         /// </summary>
-        Read = 1,
+        None = 0,
+
+        /// <summary>
+        /// The execute permission.
+        /// </summary>
+        Execute = 1,
 
         /// <summary>
         /// The write permission.
@@ -22,13 +27,8 @@ namespace Azure.Storage.Files.DataLake.Models
         Write = 2,
 
         /// <summary>
-        /// The execute permission.
+        /// The read permission.
         /// </summary>
-        Execute = 4,
-
-        /// <summary>
-        /// All permissions.
-        /// </summary>
-        All = ~0
+        Read = 4,
     }
 }

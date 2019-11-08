@@ -16,30 +16,28 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// Parses octal char to RolePermissions.
         /// </summary>
-        public static RolePermissions ParseOctal(char octal)
+        public static RolePermissions ParseOctal(char octalRolePermission)
         {
-            RolePermissions rolePermissions = RolePermissions.All;
+            RolePermissions rolePermissions = RolePermissions.None;
 
-            int value = Convert.ToInt32(octal);
+            int value = (int)char.GetNumericValue(octalRolePermission);
 
             if (value < 0 || value > 7)
             {
-                Errors.InvalidArgument(nameof(octal));
+                throw Errors.MustBeBetweenInclusive(nameof(octalRolePermission), 0, 7);
             }
 
-            if (value / 4 > 0)
+            if ((value & 4) > 0)
             {
                 rolePermissions |= RolePermissions.Read;
             }
-            value %= 4;
 
-            if (value / 2 > 0)
+            if ((value & 2) > 0)
             {
                 rolePermissions |= RolePermissions.Write;
             }
-            value %= 2;
 
-            if (value > 0)
+            if ((value & 1) > 0)
             {
                 rolePermissions |= RolePermissions.Execute;
             }
@@ -50,63 +48,58 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// Parses symbolic permissions string to RolePermissions.
         /// </summary>
-        /// <param name="str">String to parse.</param>
+        /// <param name="symbolicRolePermissions">String to parse.</param>
         /// <param name="allowStickyBit">If sticky bit is allowed.</param>
         /// <returns><see cref="RolePermissions"/>.</returns>
-        public static RolePermissions ParseSymbolic(string str, bool allowStickyBit)
+        public static RolePermissions ParseSymbolic(string symbolicRolePermissions, bool allowStickyBit)
         {
-            RolePermissions rolePermissions = RolePermissions.All;
-            ArgumentException argumentException = Errors.InvalidArgument(nameof(str));
+            RolePermissions rolePermissions = RolePermissions.None;
+            ArgumentException argumentException = new ArgumentException("Role permission contains an invalid character");
 
-            if (str == null)
+            if (symbolicRolePermissions == null)
             {
-                Errors.ArgumentNull(nameof(str));
+                throw Errors.ArgumentNull(nameof(symbolicRolePermissions));
             }
 
-            if (str.Length < 3)
+            if (symbolicRolePermissions.Length != 3)
             {
-                throw argumentException;
+                throw new ArgumentException("Role permission must be 3 characters");
             }
 
-            if (str.Length > 3)
-            {
-                throw argumentException;
-            }
-
-            if (str[0] == 'r')
+            if (symbolicRolePermissions[0] == 'r')
             {
                 rolePermissions |= RolePermissions.Read;
             }
-            else if (str[0] != '-')
+            else if (symbolicRolePermissions[0] != '-')
             {
                 throw argumentException;
             }
 
-            if (str[1] == 'w')
+            if (symbolicRolePermissions[1] == 'w')
             {
                 rolePermissions |= RolePermissions.Write;
             }
-            else if (str[1] != '-')
+            else if (symbolicRolePermissions[1] != '-')
             {
                 throw argumentException;
             }
 
-            if (str[2] == 'x')
+            if (symbolicRolePermissions[2] == 'x')
             {
                 rolePermissions |= RolePermissions.Execute;
             }
             else if (allowStickyBit)
             {
-                if (str[2] == 't')
+                if (symbolicRolePermissions[2] == 't')
                 {
                     rolePermissions |= RolePermissions.Execute;
                 }
-                else if (str[2] != 'T' && str[2] != '-')
+                else if (symbolicRolePermissions[2] != 'T' && symbolicRolePermissions[2] != '-')
                 {
                     throw argumentException;
                 }
             }
-            else if (str[2] != '-')
+            else if (symbolicRolePermissions[2] != '-')
             {
                 throw argumentException;
             }
@@ -129,12 +122,12 @@ namespace Azure.Storage.Files.DataLake
 
             if (rolePermissions.HasFlag(RolePermissions.Read))
             {
-                result |= (1 << 2);
+                result |= 4;
             }
 
             if (rolePermissions.HasFlag(RolePermissions.Write))
             {
-                result |= (1 << 1);
+                result |= 2;
             }
 
             if (rolePermissions.HasFlag(RolePermissions.Execute))

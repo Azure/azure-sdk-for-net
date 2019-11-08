@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Globalization;
 using System.Text;
 
@@ -58,8 +59,8 @@ namespace Azure.Storage.Files.DataLake.Models
             RolePermissions owner,
             RolePermissions group,
             RolePermissions other,
-            bool stickyBit,
-            bool extendedInfoInAcl)
+            bool stickyBit = false,
+            bool extendedInfoInAcl = false)
         {
             Owner = owner;
             Group = group;
@@ -71,34 +72,38 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// Parses a string in octal format to PathPermissions.
         /// </summary>
-        /// <param name="octal">Octal string to parse.</param>
+        /// <param name="octalString">Octal string to parse.</param>
         /// <returns><see cref="PathPermissions"/>.</returns>
-        public static PathPermissions ParseOctal(string octal)
+        public static PathPermissions ParseOctal(string octalString)
         {
-            if (octal == null)
+            if (octalString == null)
             {
-                throw Errors.ArgumentNull(nameof(octal));
+                return null;
             }
 
-            if (octal.Length != 4)
+            if (octalString.Length != 4)
             {
-                throw Errors.InvalidArgument(nameof(octal));
+                throw new ArgumentException("octalString must be 4 characters");
             }
 
             var pathPermissions = new PathPermissions();
 
-            if (octal[0] == '0')
+            if (octalString[0] == '0')
             {
                 pathPermissions.StickyBit = false;
             }
-            else
+            else if (octalString[0] == '1')
             {
                 pathPermissions.StickyBit = true;
             }
+            else
+            {
+                throw new ArgumentException("First digit of octalString must be 0 or 1");
+            }
 
-            pathPermissions.Owner = RolePermissionsExtensions.ParseOctal(octal[1]);
-            pathPermissions.Group = RolePermissionsExtensions.ParseOctal(octal[2]);
-            pathPermissions.Owner = RolePermissionsExtensions.ParseOctal(octal[3]);
+            pathPermissions.Owner = RolePermissionsExtensions.ParseOctal(octalString[1]);
+            pathPermissions.Group = RolePermissionsExtensions.ParseOctal(octalString[2]);
+            pathPermissions.Other = RolePermissionsExtensions.ParseOctal(octalString[3]);
 
             return pathPermissions;
         }
@@ -106,24 +111,24 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// Parses a symbolic string to PathPermissions.
         /// </summary>
-        /// <param name="str">String to parse</param>
+        /// <param name="symbolicString">String to parse</param>
         /// <returns><see cref="PathPermissions"/></returns>
-        public static PathPermissions ParseSymbolic(string str)
+        public static PathPermissions ParseSymbolic(string symbolicString)
         {
-            if (str == null)
+            if (symbolicString == null)
             {
-                throw Errors.ArgumentNull(nameof(str));
+                return null;
             }
 
-            if (str.Length != 9 && str.Length != 10)
+            if (symbolicString.Length != 9 && symbolicString.Length != 10)
             {
-                throw Errors.InvalidArgument(nameof(str));
+                throw new ArgumentException("symbolicString must be 9 or 10 characters");
             }
 
             var pathPermissions = new PathPermissions();
 
             // Set sticky bit
-            if (str.ToLower(CultureInfo.InvariantCulture)[str.Length - 1] == 't')
+            if (symbolicString.ToLower(CultureInfo.InvariantCulture)[8] == 't')
             {
                 pathPermissions.StickyBit = true;
             }
@@ -133,15 +138,15 @@ namespace Azure.Storage.Files.DataLake.Models
             }
 
             // Set extended info in ACL
-            if (str.Length == 10)
+            if (symbolicString.Length == 10)
             {
-                if (str[9] == '+')
+                if (symbolicString[9] == '+')
                 {
                     pathPermissions.ExtendedInfoInAcl = true;
                 }
                 else
                 {
-                    throw Errors.InvalidFormat(nameof(str));
+                    throw Errors.InvalidFormat(nameof(symbolicString));
                 }
             }
             else
@@ -149,9 +154,9 @@ namespace Azure.Storage.Files.DataLake.Models
                 pathPermissions.ExtendedInfoInAcl = false;
             }
 
-            pathPermissions.Owner = RolePermissionsExtensions.ParseSymbolic(str.Substring(0, 3), allowStickyBit: false);
-            pathPermissions.Group = RolePermissionsExtensions.ParseSymbolic(str.Substring(3, 3), allowStickyBit: false);
-            pathPermissions.Other = RolePermissionsExtensions.ParseSymbolic(str.Substring(6, 3), allowStickyBit: true);
+            pathPermissions.Owner = RolePermissionsExtensions.ParseSymbolic(symbolicString.Substring(0, 3), allowStickyBit: false);
+            pathPermissions.Group = RolePermissionsExtensions.ParseSymbolic(symbolicString.Substring(3, 3), allowStickyBit: false);
+            pathPermissions.Other = RolePermissionsExtensions.ParseSymbolic(symbolicString.Substring(6, 3), allowStickyBit: true);
 
             return pathPermissions;
         }
@@ -197,6 +202,11 @@ namespace Azure.Storage.Files.DataLake.Models
                 sb.Append("t");
             }
 
+            if (ExtendedInfoInAcl)
+            {
+                sb.Append("+");
+            }
+
             return sb.ToString();
         }
 
@@ -211,7 +221,8 @@ namespace Azure.Storage.Files.DataLake.Models
                 && Owner.Equals(other.Owner)
                 && Group.Equals(other.Group)
                 && Other.Equals(other.Other)
-                && StickyBit == other.StickyBit)
+                && StickyBit == other.StickyBit
+                && ExtendedInfoInAcl == other.ExtendedInfoInAcl)
             {
                 return true;
             }

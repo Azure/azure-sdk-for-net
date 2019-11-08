@@ -194,7 +194,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     umask: umask);
 
                 // Assert
-                Response<PathAccessControl> response = await directory.GetAccessControlListAsync();
+                Response<PathAccessControl> response = await directory.GetAccessControlAsync();
                 Assert.AreEqual(PathPermissions.ParseSymbolic("rwx-w----"), response.Value.Permissions);
             }
         }
@@ -468,7 +468,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             using (GetNewDirectory(out DataLakeDirectoryClient directoryClient))
             {
                 // Act
-                PathAccessControl accessControl = await directoryClient.GetAccessControlListAsync();
+                PathAccessControl accessControl = await directoryClient.GetAccessControlAsync();
 
                 // Assert
                 Assert.IsNotNull(accessControl.Owner);
@@ -493,7 +493,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     .GetDirectoryClient(directoryName);
 
                 // Act
-                PathAccessControl accessControl = await oauthDirectory.GetAccessControlListAsync();
+                PathAccessControl accessControl = await oauthDirectory.GetAccessControlAsync();
 
                 // Assert
                 Assert.IsNotNull(accessControl.Owner);
@@ -521,7 +521,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     .GetDirectoryClient(directoryName));
 
                 // Act
-                PathAccessControl accessControl = await sasDirectory.GetAccessControlListAsync();
+                PathAccessControl accessControl = await sasDirectory.GetAccessControlAsync();
 
                 // Assert
                 Assert.IsNotNull(accessControl.Owner);
@@ -554,7 +554,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     .GetDirectoryClient(directoryName));
 
                 // Act
-                PathAccessControl accessControl = await identitySasDirectory.GetAccessControlListAsync();
+                PathAccessControl accessControl = await identitySasDirectory.GetAccessControlAsync();
 
                 // Assert
                 Assert.IsNotNull(accessControl.Owner);
@@ -582,7 +582,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     .GetDirectoryClient(directoryName));
 
                 // Act
-                PathAccessControl accessControl = await sasDirectory.GetAccessControlListAsync();
+                PathAccessControl accessControl = await sasDirectory.GetAccessControlAsync();
 
                 // Assert
                 Assert.IsNotNull(accessControl.Owner);
@@ -616,7 +616,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     .GetDirectoryClient(directoryName));
 
                 // Act
-                PathAccessControl accessControl = await identitySasDirectory.GetAccessControlListAsync();
+                PathAccessControl accessControl = await identitySasDirectory.GetAccessControlAsync();
 
                 // Assert
                 Assert.IsNotNull(accessControl.Owner);
@@ -636,7 +636,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                    directory.GetAccessControlListAsync(),
+                    directory.GetAccessControlAsync(),
                     e => Assert.AreEqual("404", e.ErrorCode));
             }
         }
@@ -659,7 +659,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                         lease: true);
 
                     // Act
-                    await directory.GetAccessControlListAsync(conditions: conditions);
+                    await directory.GetAccessControlAsync(conditions: conditions);
                 }
             }
         }
@@ -681,7 +681,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
                     // Act
                     await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                        directory.GetAccessControlListAsync(conditions: conditions),
+                        directory.GetAccessControlAsync(conditions: conditions),
                         e => { });
                 }
             }
@@ -1314,7 +1314,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     umask: umask);
 
                 // Assert
-                Response<PathAccessControl> response = await file.GetAccessControlListAsync();
+                Response<PathAccessControl> response = await file.GetAccessControlAsync();
                 Assert.AreEqual(PathPermissions.ParseSymbolic("rwx-w----"), response.Value.Permissions);
             }
         }
@@ -1457,7 +1457,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     umask: umask);
 
                 // Assert
-                Response<PathAccessControl> response = await subDirectory.GetAccessControlListAsync();
+                Response<PathAccessControl> response = await subDirectory.GetAccessControlAsync();
                 Assert.AreEqual(PathPermissions.ParseSymbolic("rwx-w----"), response.Value.Permissions);
             }
         }

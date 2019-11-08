@@ -27,6 +27,12 @@ namespace Azure.Storage
         public static ArgumentOutOfRangeException MustBeLessThanOrEqualTo(string paramName, long value)
             => new ArgumentOutOfRangeException(paramName, $"Value must be less than or equal to {value}");
 
+        public static ArgumentOutOfRangeException MustBeBetweenInclusive(
+                string paramName,
+                long value0,
+                long value1)
+            => new ArgumentOutOfRangeException(paramName, $"Value must be between {value0} and {value1} inclusive");
+
         public static ArgumentOutOfRangeException MustBeGreaterThanValueOrEqualToOtherValue(
                 string paramName,
                 long value0,

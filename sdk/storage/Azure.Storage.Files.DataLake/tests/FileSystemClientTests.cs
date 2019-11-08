@@ -626,7 +626,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     umask: umask);
 
                 // Assert
-                Response<PathAccessControl> response = await file.GetAccessControlListAsync();
+                Response<PathAccessControl> response = await file.GetAccessControlAsync();
                 Assert.AreEqual(PathPermissions.ParseSymbolic("rwx-w----"), response.Value.Permissions);
             }
         }
@@ -759,7 +759,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     umask: umask);
 
                 // Assert
-                Response<PathAccessControl> response = await directory.GetAccessControlListAsync();
+                Response<PathAccessControl> response = await directory.GetAccessControlAsync();
                 Assert.AreEqual(PathPermissions.ParseSymbolic("rwx-w----"), response.Value.Permissions);
             }
         }

@@ -30,7 +30,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// The POSIX access control list for the file or directory.  Included in the response only if Hierarchical Namespace is enabled for the account.
         /// </summary>
-        public IList<PathAccessControlEntry> AccessControlList { get; internal set; }
+        public IEnumerable<PathAccessControlEntry> AccessControlList { get; internal set; }
 
         /// <summary>
         /// Prevent direct instantiation of PathAccessControl instances.

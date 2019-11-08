@@ -459,7 +459,7 @@ namespace Azure.Storage.Files.DataLake.Samples
                 #endregion Snippet:SampleSnippetDataLakeFileClient_SetPermissions
 
                 // Get Access Control List
-                PathAccessControl accessControlResponse = fileClient.GetAccessControlList();
+                PathAccessControl accessControlResponse = fileClient.GetAccessControl();
 
                 // Check Access Control permissions
                 Assert.AreEqual(pathPermissions, accessControlResponse.Permissions);
@@ -498,12 +498,12 @@ namespace Azure.Storage.Files.DataLake.Samples
 
                 // Set Access Control List
                 IList<PathAccessControlEntry> accessControlList
-                    = PathAccessControlEntry.ParseList("user::rwx,group::r--,mask::rwx,other::---");
+                    = PathAccessControlEntry.DeserializeList("user::rwx,group::r--,mask::rwx,other::---");
                 fileClient.SetAccessControlList(accessControlList);
                 #endregion Snippet:SampleSnippetDataLakeFileClient_SetAcls
                 #region Snippet:SampleSnippetDataLakeFileClient_GetAcls
                 // Get Access Control List
-                PathAccessControl accessControlResponse = fileClient.GetAccessControlList();
+                PathAccessControl accessControlResponse = fileClient.GetAccessControl();
                 #endregion Snippet:SampleSnippetDataLakeFileClient_GetAcls
 
                 // Check Access Control permissions

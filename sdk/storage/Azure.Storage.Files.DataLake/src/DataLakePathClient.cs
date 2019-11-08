@@ -941,7 +941,7 @@ namespace Azure.Storage.Files.DataLake
 
         #region Get Access Control
         /// <summary>
-        /// The <see cref="GetAccessControlListInternal"/> operation returns the
+        /// The <see cref="GetAccessControlInternal"/> operation returns the
         /// access control data for a path.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/getproperties" />.
@@ -971,11 +971,11 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
-        public virtual Response<PathAccessControl> GetAccessControlList(
+        public virtual Response<PathAccessControl> GetAccessControl(
             bool? userPrincipalName = default,
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
-            GetAccessControlListInternal(
+            GetAccessControlInternal(
                 userPrincipalName,
                 conditions,
                 false, // async
@@ -983,7 +983,7 @@ namespace Azure.Storage.Files.DataLake
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="GetAccessControlListInternal"/> operation returns the
+        /// The <see cref="GetAccessControlInternal"/> operation returns the
         /// access control data for a path.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/getproperties" />.
@@ -1013,11 +1013,11 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PathAccessControl>> GetAccessControlListAsync(
+        public virtual async Task<Response<PathAccessControl>> GetAccessControlAsync(
             bool? userPrincipalName = default,
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
-            await GetAccessControlListInternal(
+            await GetAccessControlInternal(
                 userPrincipalName,
                 conditions,
                 true, // async
@@ -1025,7 +1025,7 @@ namespace Azure.Storage.Files.DataLake
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="GetAccessControlListInternal"/> operation returns the
+        /// The <see cref="GetAccessControlInternal"/> operation returns the
         /// access control data for a path.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/getproperties" />.
@@ -1057,7 +1057,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<PathAccessControl>> GetAccessControlListInternal(
+        private async Task<Response<PathAccessControl>> GetAccessControlInternal(
             bool? userPrincipalName,
             DataLakeRequestConditions conditions,
             bool async,
@@ -1092,7 +1092,7 @@ namespace Azure.Storage.Files.DataLake
                             Owner = response.Value.Owner,
                             Group = response.Value.Group,
                             Permissions = PathPermissions.ParseSymbolic(response.Value.Permissions),
-                            AccessControlList = PathAccessControlEntry.ParseList(response.Value.ACL)
+                            AccessControlList = PathAccessControlEntry.DeserializeList(response.Value.ACL)
                         },
                         response.GetRawResponse());
                 }
