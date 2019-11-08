@@ -6,12 +6,12 @@
     <PropertyGroup>
         <PackageId>Microsoft.Azure.Management.StorageSync</PackageId>
         <Description>Provides management capabilities for Azure Storage Sync.</Description>
-        <Version>3.1.0</Version>
+        <Version>4.0.0</Version>
         <AssemblyName>Microsoft.Azure.Management.StorageSync</AssemblyName>    
         <PackageTags>Microsoft Azure StorageSync;StorageSync;Azure File Sync;AFS;Microsoft.StorageSync;Storage Sync Service</PackageTags>
         <PackageReleaseNotes>
         <![CDATA[
-            This version supports the StorageSync API version 2019-03-01 and includes support for Invoke Change Detection command.
+            This version supports the StorageSync API version 2019-06-01 and includes support for cloud tiering health and recall status for server endpoints.
         ]]>
         </PackageReleaseNotes>
     </PropertyGroup>

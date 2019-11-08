@@ -18,7 +18,7 @@ namespace Azure.Messaging.EventHubs.Core
     ///
     /// <seealso cref="RetryOptions"/>
     ///
-    internal class BasicRetryPolicy : EventHubRetryPolicy
+    internal class BasicRetryPolicy : EventHubsRetryPolicy
     {
         /// <summary>The seed to use for initializing random number generated for a given thread-specific instance.</summary>
         private static int s_randomSeed = Environment.TickCount;

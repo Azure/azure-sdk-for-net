@@ -113,7 +113,7 @@ namespace Azure.Core
         {
             if (wasDisposed)
             {
-                throw new ObjectDisposedException(targetName, string.Format(CultureInfo.CurrentCulture, Resources.DisposedInstanceCannotPerformOperation, targetName));
+                throw new ObjectDisposedException(targetName, string.Format(CultureInfo.CurrentCulture, Resources.ClosedInstanceCannotPerformOperation, targetName));
             }
         }
 
@@ -129,7 +129,7 @@ namespace Azure.Core
         {
             if (wasClosed)
             {
-                throw new EventHubsClientClosedException(targetName, string.Format(CultureInfo.CurrentCulture, Resources.DisposedInstanceCannotPerformOperation, targetName));
+                throw new EventHubsClientClosedException(targetName, string.Format(CultureInfo.CurrentCulture, Resources.ClosedInstanceCannotPerformOperation, targetName));
             }
         }
     }

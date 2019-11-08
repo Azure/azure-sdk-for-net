@@ -274,7 +274,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Updates an IpGroups
+        /// Updates tags of an IpGroups resource.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

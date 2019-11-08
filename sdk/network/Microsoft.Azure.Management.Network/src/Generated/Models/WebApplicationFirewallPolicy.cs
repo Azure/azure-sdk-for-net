@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// class.
         /// </summary>
         /// <param name="managedRules">Describes the managedRules
-        /// structure</param>
+        /// structure.</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public string ResourceState { get; private set; }
 
         /// <summary>
-        /// Gets or sets describes the managedRules structure
+        /// Gets or sets describes the managedRules structure.
         /// </summary>
         [JsonProperty(PropertyName = "properties.managedRules")]
         public ManagedRulesDefinition ManagedRules { get; set; }

@@ -21,3 +21,6 @@ jobs:
 - template: templates/jobs/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: $(ServiceDirectory)
+    Artifacts: # Prevents Docs steps from Failing on net - client ci
+    - name: ''
+      safeName: ''

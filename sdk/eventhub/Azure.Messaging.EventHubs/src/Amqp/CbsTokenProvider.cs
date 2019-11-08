@@ -68,7 +68,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                   string appliesTo,
                                                   string[] requiredClaims)
         {
-            AccessToken token = await Credential.GetTokenAsync(new TokenRequestContext(requiredClaims), CancellationToken).ConfigureAwait(false);
+            AccessToken token = await Credential.GetTokenUsingDefaultScopeAsync(CancellationToken).ConfigureAwait(false);
             return new CbsToken(token.Token, TokenType, token.ExpiresOn.UtcDateTime);
         }
     }

@@ -2,10 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Channels;
@@ -40,22 +38,7 @@ namespace Azure.Messaging.EventHubs
         private const int BackgroundPublishReceiveBatchSize = 50;
 
         /// <summary>The maximum wait time for receiving an event batch for the background publishing operation used for subscriptions.</summary>
-        private readonly TimeSpan _backgroundPublishingWaitTime = TimeSpan.FromMilliseconds(250);
-
-        /// <summary>The set of channels for publishing events to local subscribers.</summary>
-        private readonly ConcurrentDictionary<Guid, Channel<EventData>> _activeChannels = new ConcurrentDictionary<Guid, Channel<EventData>>();
-
-        /// <summary>The primitive for synchronizing access during subscribe and unsubscribe operations.</summary>
-        private readonly SemaphoreSlim _channelSyncRoot = new SemaphoreSlim(1, 1);
-
-        /// <summary>Indicates whether events are actively being published to subscribed channels.</summary>
-        private bool _isPublishingActive = false;
-
-        /// <summary>The cancellation token to use for requesting to cancel publishing events to the subscribed channels.</summary>
-        private CancellationTokenSource _channelPublishingTokenSource;
-
-        /// <summary>The <see cref="Task"/> associated with publishing events to subscribed channels.</summary>
-        private Task _channelPublishingTask;
+        private readonly TimeSpan BackgroundPublishingWaitTime = TimeSpan.FromMilliseconds(250);
 
         /// <summary>
         ///   The fully qualified Event Hubs namespace that the consumer is associated with.  This is likely
@@ -138,7 +121,7 @@ namespace Azure.Messaging.EventHubs
         ///   The policy to use for determining retry behavior for when an operation fails.
         /// </summary>
         ///
-        private EventHubRetryPolicy RetryPolicy { get; }
+        private EventHubsRetryPolicy RetryPolicy { get; }
 
         /// <summary>
         ///   The active connection to the Azure Event Hubs service, enabling client communications for metadata
@@ -416,7 +399,7 @@ namespace Azure.Messaging.EventHubs
         ///   When information about the partition's last enqueued event is being tracked, each event received from the Event Hubs
         ///   service will carry metadata about the partition that it otherwise would not. This results in a small amount of
         ///   additional network bandwidth consumption that is generally a favorable trade-off when considered
-        ///   against periodically making requests for partition properties using the Event Hub client.
+        ///   against periodically making requests for partition properties using an Event Hub client.
         /// </remarks>
         ///
         /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="EventHubConsumerClientOptions.TrackLastEnqueuedEventInformation" /> set.</exception>
@@ -436,7 +419,7 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <param name="maximumMessageCount">The maximum number of messages to receive in this batch.</param>
-        /// <param name="maximumWaitTime">The maximum amount of time to wait to build up the requested message count for the batch; if not specified, the default wait time specified when the consumer was created will be used.</param>
+        /// <param name="maximumWaitTime">The maximum amount of time to wait to build up the requested message count for the batch; if not specified, the per-try timeout specified by the retry policy will be used.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>The batch of <see cref="EventData" /> from the Event Hub partition this consumer is associated with.  If no events are present, an empty enumerable is returned.</returns>
@@ -452,9 +435,8 @@ namespace Azure.Messaging.EventHubs
 
             return InnerConsumer.ReceiveAsync(maximumMessageCount, maximumWaitTime.Value, cancellationToken);
         }
-
         /// <summary>
-        ///   Subscribes to events for the associated partition in the form of an asynchronous enumerable that sends events as they
+        ///   Reads events from the requested partition as an asynchronous enumerable, allowing events to be iterated as they
         ///   become available on the partition, waiting as necessary should there be no events available.
         ///
         ///   This version of the enumerator may block for an indeterminate amount of time for an <c>await</c> if events are not available
@@ -463,24 +445,25 @@ namespace Azure.Messaging.EventHubs
         ///   desired.
         /// </summary>
         ///
+        /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
+        /// <param name="startingPosition">The position within the partition where the consumer should begin reading events.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>An <see cref="IAsyncEnumerable{T}"/> to be used for iterating over events in the partition.</returns>
         ///
         /// <remarks>
-        ///   Unlike calls to <see cref="ReceiveAsync"/>, each subscriber to events is presented with an independent iterator; if there are multiple
-        ///   subscribers, they will each receive their own copy of an event to process, rather than competing for them.
-        ///
-        ///   Subscriptions will still compete with <see cref="ReceiveAsync" /> calls, however.  It is recommended that consumers either subscribe to
-        ///   events or explicitly receive batches, but do not use both approaches concurrently.
+        ///   Each reader of events is presented with an independent iterator; if there are multiple readers, each receive their own copy of an event to
+        ///   process, rather than competing for them.
         /// </remarks>
         ///
-        /// <seealso cref="SubscribeToEvents(TimeSpan?, CancellationToken)"/>
+        /// <seealso cref="ReadEventsFromPartitionAsync(string, EventPosition, TimeSpan?, CancellationToken)"/>
         ///
-        public virtual IAsyncEnumerable<EventData> SubscribeToEvents(CancellationToken cancellationToken = default) => SubscribeToEvents(null, cancellationToken);
+        public virtual IAsyncEnumerable<PartitionEvent> ReadEventsFromPartitionAsync(string partitionId,
+                                                                                     EventPosition startingPosition,
+                                                                                     CancellationToken cancellationToken = default) => ReadEventsFromPartitionAsync(partitionId, startingPosition, null, cancellationToken);
 
         /// <summary>
-        ///   Subscribes to events for the associated partition in the form of an asynchronous enumerable that sends events as they
+        ///   Reads events from the requested partition as an asynchronous enumerable, allowing events to be iterated as they
         ///   become available on the partition, waiting as necessary should there be no events available.
         ///
         ///   If the <paramref name="maximumWaitTime" /> is passed, if no events were available before the wait time elapsed, an empty
@@ -488,52 +471,66 @@ namespace Azure.Messaging.EventHubs
         ///   indeterminate length of time.
         /// </summary>
         ///
+        /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
+        /// <param name="startingPosition">The position within the partition where the consumer should begin reading events.</param>
         /// <param name="maximumWaitTime">The maximum amount of time to wait to for an event to be available before emitting an empty item; if <c>null</c>, empty items will not be published.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>An <see cref="IAsyncEnumerable{T}"/> to be used for iterating over events in the partition.</returns>
         ///
         /// <remarks>
-        ///   Unlike calls to <see cref="ReceiveAsync"/>, each subscriber to events is presented with an independent iterator; if there are multiple
-        ///   subscribers, they will each receive their own copy of an event to process, rather than competing for them.
-        ///
-        ///   Subscriptions will still compete with <see cref="ReceiveAsync" /> calls, however.  It is recommended that consumers either subscribe to
-        ///   events or explicitly receive batches, but do not use both approaches concurrently.
+        ///   Each reader of events is presented with an independent iterator; if there are multiple readers, each receive their own copy of an event to
+        ///   process, rather than competing for them.
         /// </remarks>
         ///
-        /// <seealso cref="SubscribeToEvents(CancellationToken)"/>
+        /// <seealso cref="ReadEventsFromPartitionAsync(string, EventPosition, CancellationToken)"/>
         ///
-        public virtual async IAsyncEnumerable<EventData> SubscribeToEvents(TimeSpan? maximumWaitTime,
-                                                                           [EnumeratorCancellation] CancellationToken cancellationToken = default)
+        public async IAsyncEnumerable<PartitionEvent> ReadEventsFromPartitionAsync(string partitionId,
+                                                                                   EventPosition startingPosition,
+                                                                                   TimeSpan? maximumWaitTime,
+                                                                                   [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            EventHubsEventSource.Log.SubscribeToPartitionStart(EventHubName, PartitionId);
+            EventHubsEventSource.Log.ReadEventsFromPartitionStart(EventHubName, PartitionId);
 
-            (Guid Identifier, ChannelReader<EventData> ChannelReader) subscription;
+            var cancelPublishingAsync = default(Func<Task>);
+            var eventChannel = default(Channel<PartitionEvent>);
+
+            using var cancellationSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
 
             try
             {
-                var maximumQueuedEvents = Math.Min((Options.PrefetchCount / 4), (BackgroundPublishReceiveBatchSize * 2));
-                subscription = SubscribeToChannel(EventHubName, PartitionId, ConsumerGroup, maximumQueuedEvents, cancellationToken);
+                eventChannel = CreateEventChannel(Math.Min((Options.PrefetchCount / 4), (BackgroundPublishReceiveBatchSize * 2)));
+                cancelPublishingAsync = await PublishPartitionEventsToChannelAsync(partitionId, startingPosition, eventChannel, cancellationSource).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
-                EventHubsEventSource.Log.SubscribeToPartitionError(EventHubName, PartitionId, ex.Message);
+                EventHubsEventSource.Log.ReadEventsFromPartitionError(EventHubName, PartitionId, ex.Message);
+                await cancelPublishingAsync().ConfigureAwait(false);
+
+                EventHubsEventSource.Log.ReadEventsFromPartitionComplete(EventHubName, PartitionId);
                 throw;
             }
 
+            // Iterate the events from the channel.
+
             try
             {
-                await foreach (EventData item in subscription.ChannelReader.EnumerateChannel(maximumWaitTime, cancellationToken).ConfigureAwait(false))
+                await foreach (var partitionEvent in eventChannel.Reader.EnumerateChannel(maximumWaitTime, cancellationToken).ConfigureAwait(false))
                 {
-                    yield return item;
+                    yield return partitionEvent;
                 }
             }
             finally
             {
-                await UnsubscribeFromChannelAsync(subscription.Identifier).ConfigureAwait(false);
-                EventHubsEventSource.Log.SubscribeToPartitionComplete(EventHubName, PartitionId);
+                cancellationSource?.Cancel();
+                await cancelPublishingAsync().ConfigureAwait(false);
+                EventHubsEventSource.Log.ReadEventsFromPartitionComplete(EventHubName, PartitionId);
             }
+
+            // If cancellation was requested, then surface the expected exception.
+
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
         }
 
         /// <summary>
@@ -611,123 +608,105 @@ namespace Azure.Messaging.EventHubs
         public override string ToString() => base.ToString();
 
         /// <summary>
-        ///   Creates a subscription to events being published to the partition associated with
-        ///   the consumer.
+        ///   Publishes events for the requested <paramref name="partitionId"/> to the provided
+        ///   <paramref name="channel" /> in the background, using a dedicated transport consumer
+        ///   instance.
         /// </summary>
         ///
-        /// <param name="eventHubName">The name of the event hub with the subscription; used for informational purposes only.</param>
-        /// <param name="partitionId">The identifier for the partition to associate with the subscription; used for informational purposes only.</param>
-        /// <param name="consumerGroup">The name of the consumer group to associate with the subscription; used for informational purposes only.</param>
-        /// <param name="maximumQueuedEvents">The maximum number of events to queue while waiting for them to be read.</param>
-        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to signal the request to cancel the event enumeration.</param>
+        /// <param name="partitionId">The identifier of the partition from which events should be read.</param>
+        /// <param name="startingPosition">The position within the partition's event stream that reading should begin from.</param>
+        /// <param name="channel">The channel to which events should be published.</param>
+        /// <param name="publishingCancellationSource">A cancellation source which can be used for signaling publication to stop.</param>
         ///
-        /// <returns>The elements of a channel subscription, including its identifier and a reader for the subscribed channel.</returns>
+        /// <returns>A function to invoke when publishing should stop; once complete, background publishing is no longer taking place and the <paramref name="channel"/> has been marked as final.</returns>
         ///
-        private (Guid Identifier, ChannelReader<EventData> ChannelReader) SubscribeToChannel(string eventHubName,
-                                                                                             string partitionId,
-                                                                                             string consumerGroup,
-                                                                                             int maximumQueuedEvents,
-                                                                                             CancellationToken cancellationToken)
+        /// <remarks>
+        ///   This method assumes co-ownership of the <paramref name="channel" />, marking its writer as completed
+        ///   when publishing is complete or when an exception is encountered.
+        ///
+        ///   This method also assumes co-ownership of the <paramref name="publishingCancellationSource" /> and will request cancellation
+        ///   from it when publishing is complete or when an exception is encountered.
+        /// </remarks>
+        ///
+        private async Task<Func<Task>> PublishPartitionEventsToChannelAsync(string partitionId,
+                                                                            EventPosition startingPosition,
+                                                                            Channel<PartitionEvent> channel,
+                                                                            CancellationTokenSource publishingCancellationSource)
         {
-            Channel<EventData> channel = CreateEventChannel(maximumQueuedEvents);
-            var identifier = Guid.NewGuid();
+            publishingCancellationSource.Token.ThrowIfCancellationRequested<TaskCanceledException>();
+            EventHubsEventSource.Log.PublishPartitionEventsToChannelStart(EventHubName, partitionId);
 
-            if (!_activeChannels.TryAdd(identifier, channel))
+            var transportConsumer = default(TransportConsumer);
+            var publishingTask = default(Task);
+
+            // Termination must take place in multiple places due to the a catch block being
+            // disallowed with the use of "yield return".  Create a local function that encapsulates
+            // the cleanup tasks needed.
+
+            async Task performCleanup()
             {
-                throw new EventHubsException(true, eventHubName, string.Format(CultureInfo.CurrentCulture, Resources.FailedToCreateEventSubscription, eventHubName, partitionId, consumerGroup));
+                publishingCancellationSource?.Cancel();
+
+                if (publishingTask != null)
+                {
+                    try
+                    {
+                        await publishingTask.ConfigureAwait(false);
+                    }
+                    catch (TaskCanceledException)
+                    {
+                        // This is an expected scenario; no action is needed.
+                    }
+                }
+
+                if (transportConsumer != null)
+                {
+                    await transportConsumer.CloseAsync(CancellationToken.None).ConfigureAwait(false);
+                }
+
+                publishingCancellationSource?.Dispose();
+                channel.Writer.TryComplete();
+
+                EventHubsEventSource.Log.PublishPartitionEventsToChannelComplete(EventHubName, partitionId);
             }
 
-            // Ensure that publishing is taking place.  To avoid race conditions, always acquire the semaphore and then perform the check.
-
-            _channelSyncRoot.Wait(cancellationToken);
+            // Setup the publishing context and begin publishing to the channel in the background.
 
             try
             {
-                if (!_isPublishingActive)
-                {
-                    _channelPublishingTokenSource?.Cancel();
-                    _channelPublishingTask?.GetAwaiter().GetResult();
-                    _channelPublishingTokenSource?.Dispose();
-
-                    _channelPublishingTokenSource = new CancellationTokenSource();
-                    _channelPublishingTask = StartBackgroundChannelPublishingAsync(_channelPublishingTokenSource.Token);
-                    _isPublishingActive = true;
-                }
+                transportConsumer = Connection.CreateTransportConsumer(ConsumerGroup, partitionId, startingPosition, Options);
+                publishingTask = StartBackgroundChannelPublishingAsync(transportConsumer, channel, new PartitionContext(EventHubName, partitionId, transportConsumer), publishingCancellationSource.Token);
             }
-            finally
+            catch (Exception ex)
             {
-                _channelSyncRoot.Release();
+                EventHubsEventSource.Log.PublishPartitionEventsToChannelError(EventHubName, partitionId, ex.Message);
+                await performCleanup().ConfigureAwait(false);
+
+                throw;
             }
 
-            return (identifier, channel.Reader);
+            return performCleanup;
         }
 
         /// <summary>
-        ///   Unsubscribe from a channel subscription.
+        ///   Begins the background process responsible for receiving from the specified <see cref="TransportConsumer" />
+        ///   and publishing to the requested <see cref="Channel{PartitionEvent}" />.
         /// </summary>
         ///
-        /// <param name="identifier">The identifier of the subscription to unsubscribe.</param>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
-        private async Task UnsubscribeFromChannelAsync(Guid identifier)
-        {
-            if ((_activeChannels.TryRemove(identifier, out Channel<EventData> unsubscribeChannel)) && (_activeChannels.Count == 0))
-            {
-                await _channelSyncRoot.WaitAsync().ConfigureAwait(false);
-
-                try
-                {
-                    // If the channel was the last active channel and publishing is still marked as active, take
-                    // the necessary steps to stop publishing.
-
-                    if ((_isPublishingActive) && (_activeChannels.Count == 0))
-                    {
-                        _channelPublishingTokenSource?.Cancel();
-
-                        if (_channelPublishingTask != null)
-                        {
-                            try
-                            {
-                                await _channelPublishingTask.ConfigureAwait(false);
-                            }
-                            catch (TaskCanceledException)
-                            {
-                                // This is an expected scenario; no action is needed.
-                            }
-                        }
-
-                        _channelPublishingTokenSource?.Dispose();
-                        _isPublishingActive = false;
-                    }
-                }
-                finally
-                {
-                    _channelSyncRoot.Release();
-                }
-            }
-
-            // Attempt to finalize the channel, signaling that no more writes should be
-            // expected to occur.
-
-            unsubscribeChannel?.Writer.TryComplete();
-        }
-
-        /// <summary>
-        ///   Begins the background process responsible for receiving from the partition
-        ///   and publishing to all subscribed channels.
-        /// </summary>
-        ///
+        /// <param name="transportConsumer">The consumer to use for receiving events.</param>
+        /// <param name="channel">The channel to which received events should be published.</param>
+        /// <param name="partitionContext">The context that represents the partition from which events being received.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to signal the request to cancel the background publishing.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        private Task StartBackgroundChannelPublishingAsync(CancellationToken cancellationToken) =>
+        private Task StartBackgroundChannelPublishingAsync(TransportConsumer transportConsumer,
+                                                           Channel<PartitionEvent> channel,
+                                                           PartitionContext partitionContext,
+                                                           CancellationToken cancellationToken) =>
             Task.Run(async () =>
             {
                 var failedAttemptCount = 0;
-                var publishTasks = new List<Task>();
-                var publishChannels = default(ICollection<Channel<EventData>>);
                 var receivedItems = default(IEnumerable<EventData>);
                 var retryDelay = default(TimeSpan?);
                 var activeException = default(Exception);
@@ -739,20 +718,13 @@ namespace Azure.Messaging.EventHubs
                         // Receive items in batches and then write them to the subscribed channels.  The channels will naturally
                         // block if they reach their maximum queue size, so there is no need to throttle publishing.
 
-                        receivedItems = await InnerConsumer.ReceiveAsync(BackgroundPublishReceiveBatchSize, _backgroundPublishingWaitTime, cancellationToken).ConfigureAwait(false);
-                        publishChannels = _activeChannels.Values;
+                        receivedItems = await transportConsumer.ReceiveAsync(BackgroundPublishReceiveBatchSize, BackgroundPublishingWaitTime, cancellationToken).ConfigureAwait(false);
 
                         foreach (EventData item in receivedItems)
                         {
-                            foreach (Channel<EventData> channel in publishChannels)
-                            {
-                                publishTasks.Add(channel.Writer.WriteAsync(item, cancellationToken).AsTask());
-                            }
+                            await channel.Writer.WriteAsync(new PartitionEvent(partitionContext, item), cancellationToken).ConfigureAwait(false);
                         }
 
-                        await Task.WhenAll(publishTasks).ConfigureAwait(false);
-
-                        publishTasks.Clear();
                         failedAttemptCount = 0;
                     }
                     catch (TaskCanceledException ex)
@@ -777,19 +749,7 @@ namespace Azure.Messaging.EventHubs
                         || ex is StackOverflowException
                         || ex is ThreadAbortException)
                     {
-                        // These exceptions are known to be unrecoverable and there should be no attempts at further processing.
-                        // The environment is in a bad state and is likely to fail.
-                        //
-                        // Attempt to clean up, which may or may not fail due to resource constraints,
-                        // then let the exception bubble.
-
-                        _isPublishingActive = false;
-
-                        foreach (Channel<EventData> channel in _activeChannels.Values)
-                        {
-                            channel.Writer.TryComplete(ex);
-                        }
-
+                        channel.Writer.TryComplete(ex);
                         throw;
                     }
                     catch (Exception ex)
@@ -818,7 +778,7 @@ namespace Azure.Messaging.EventHubs
 
                 if (activeException != null)
                 {
-                    await AbortBackgroundChannelPublishingAsync(activeException).ConfigureAwait(false);
+                    channel.Writer.TryComplete(activeException);
                 }
 
             }, cancellationToken);
@@ -829,47 +789,14 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="capacity">The maximum amount of events that can be queued in the channel.</param>
         ///
-        /// <returns>A bounded channel, configured for 1:1 read/write usage.</returns>
+        /// <returns>A bounded channel, configured for 1:many read/write usage.</returns>
         ///
-        private Channel<EventData> CreateEventChannel(int capacity) =>
-            Channel.CreateBounded<EventData>(new BoundedChannelOptions(capacity)
+        private Channel<PartitionEvent> CreateEventChannel(int capacity) =>
+            Channel.CreateBounded<PartitionEvent>(new BoundedChannelOptions(capacity)
             {
                 FullMode = BoundedChannelFullMode.Wait,
-                SingleWriter = true,
+                SingleWriter = false,
                 SingleReader = true
             });
-
-        /// <summary>
-        ///   Aborts the background channel publishing in the case of an exception that it was
-        ///   unable to recover from.
-        /// </summary>
-        ///
-        /// <param name="exception">The exception that triggered publishing to terminate.</param>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
-        private async Task AbortBackgroundChannelPublishingAsync(Exception exception)
-        {
-            // Though state is normally managed through subscribe and unsubscribe, in the case of aborting,
-            // forcefully clear the subscription and reset publishing state.
-
-            await _channelSyncRoot.WaitAsync().ConfigureAwait(false);
-
-            try
-            {
-                foreach (Channel<EventData> channel in _activeChannels.Values)
-                {
-                    channel.Writer.TryComplete(exception);
-                }
-
-                _activeChannels.Clear();
-                _channelPublishingTokenSource.Dispose();
-                _isPublishingActive = false;
-            }
-            finally
-            {
-                _channelSyncRoot.Release();
-            }
-        }
     }
 }

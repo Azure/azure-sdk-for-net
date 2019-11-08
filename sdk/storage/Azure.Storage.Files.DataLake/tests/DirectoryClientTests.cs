@@ -543,8 +543,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 DataLakeDirectoryClient directory = await fileSystem.CreateDirectoryAsync(directoryName);
 
                 Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                    start: null,
-                    expiry: Recording.UtcNow.AddHours(1));
+                    startsOn: null,
+                    expiresOn: Recording.UtcNow.AddHours(1));
 
                 DataLakeDirectoryClient identitySasDirectory = InstrumentClient(
                     GetServiceClient_DataLakeServiceIdentitySas_FileSystem(
@@ -604,8 +604,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 DataLakeDirectoryClient directory = await fileSystem.CreateDirectoryAsync(directoryName);
 
                 Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                    start: null,
-                    expiry: Recording.UtcNow.AddHours(1));
+                    startsOn: null,
+                    expiresOn: Recording.UtcNow.AddHours(1));
 
                 DataLakeDirectoryClient identitySasDirectory = InstrumentClient(
                     GetServiceClient_DataLakeServiceIdentitySas_Path(
@@ -924,8 +924,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 DataLakeDirectoryClient directory = await fileSystem.CreateDirectoryAsync(directoryName);
 
                 Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                    start: null,
-                    expiry: Recording.UtcNow.AddHours(1));
+                    startsOn: null,
+                    expiresOn: Recording.UtcNow.AddHours(1));
 
                 DataLakeDirectoryClient identitySasDirectory = InstrumentClient(
                     GetServiceClient_DataLakeServiceIdentitySas_FileSystem(
@@ -979,8 +979,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 DataLakeDirectoryClient directory = await fileSystem.CreateDirectoryAsync(directoryName);
 
                 Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                    start: null,
-                    expiry: Recording.UtcNow.AddHours(1));
+                    startsOn: null,
+                    expiresOn: Recording.UtcNow.AddHours(1));
 
                 DataLakeDirectoryClient identitySasDirectory = InstrumentClient(
                     GetServiceClient_DataLakeServiceIdentitySas_Path(
@@ -1035,7 +1035,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(parameters);
 
                     // Act
-                    Assert.CatchAsync<Exception>(
+                    await TestHelper.CatchAsync<Exception>(
                         async () =>
                         {
                             var _ = (await directory.GetPropertiesAsync(

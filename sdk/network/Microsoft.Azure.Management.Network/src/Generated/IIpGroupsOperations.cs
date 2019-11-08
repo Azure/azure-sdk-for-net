@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse<IpGroup>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string ipGroupsName, IpGroup parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates an IpGroups
+        /// Updates tags of an IpGroups resource.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

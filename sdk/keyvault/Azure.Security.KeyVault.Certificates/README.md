@@ -245,4 +245,4 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [get_cetificates_sync]: samples/Sample2_GetCertificates.cs
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fkeyvault%2FAzure.Security.KeyVault.Keys%2FFREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fkeyvault%2FAzure.Security.KeyVault.Certificates%2FREADME.png)

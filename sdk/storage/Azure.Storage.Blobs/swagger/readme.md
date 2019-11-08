@@ -1393,3 +1393,6 @@ directive:
     delete $.properties.Permission;
     $.required = ["StartsOn", "ExpiresOn", "Permissions"];
 ```
+
+
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Blobs%2Fswagger%2Freadme.png)

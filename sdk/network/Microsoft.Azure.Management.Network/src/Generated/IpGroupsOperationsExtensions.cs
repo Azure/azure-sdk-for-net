@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Updates an IpGroups
+            /// Updates tags of an IpGroups resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Updates an IpGroups
+            /// Updates tags of an IpGroups resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

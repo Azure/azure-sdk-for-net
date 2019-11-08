@@ -80,31 +80,22 @@ namespace Azure.Messaging.EventHubs.Samples
             await using (var consumerClient = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, firstPartition, EventPosition.Latest, connectionString, eventHubName))
             await using (var producerClient = new EventHubProducerClient(connectionString, eventHubName, new EventHubProducerClientOptions { PartitionId = firstPartition }))
             {
-                // Because our consumer is reading from the latest position, it won't see events that have previously
-                // been published.  Before we can publish the events, we will need to ask the consumer to perform an operation,
-                // because it opens its connection only when it needs to.  The first receive that we ask of it will not see
-                // any events, but will allow the consumer to start watching the partition.
-                //
-                // Because the maximum wait time is specified as zero, this call will return immediately and will not
-                // have consumed any events.
-
-                await consumerClient.ReceiveAsync(1, TimeSpan.Zero);
-
-                // Now that the consumer is watching the partition, let's publish the events that we would like to
-                // receive.
-
                 EventData[] eventsToPublish = new EventData[]
                 {
                     new EventData(Encoding.UTF8.GetBytes("Hello, Event Hubs!")),
                     new EventData(Encoding.UTF8.GetBytes("Goodbye, Event Hubs!"))
                 };
 
-                await producerClient.SendAsync(eventsToPublish);
-                Console.WriteLine("The event batch has been published.");
+                List<EventData> receivedEvents = new List<EventData>();
+                Stopwatch watch = Stopwatch.StartNew();
+                bool wereEventsPublished = false;
 
-                // Because publishing and receiving events is asynchronous, the events that we published may not be immediately
-                // available for our consumer to see.  We will iterate over the available events in the partition, which should be
-                // just the events that we published.
+                // Because our consumer is reading from the latest position, it won't see events that have previously
+                // been published.  Before we can publish the events and have them observed, we will need to ask the
+                // consumer to perform an operation, because it opens its connection only when it needs to.
+                //
+                // We'll begin to iterate on the partition using a small wait time, so that control will return to our loop even when
+                // no event is available.  For the first call, we'll publish so that we can receive them.
                 //
                 // When a maximum wait time is specified, the iteration will ensure that it returns control after that time has elapsed,
                 // whether or not an event is available in the partition.  If no event was available a null value will be emitted instead.
@@ -115,24 +106,32 @@ namespace Azure.Messaging.EventHubs.Samples
                 // For this example, we will specify a maximum wait time, and won't exit the loop until we've received at least one more
                 // event than we published, which is expected to be a null value triggered by exceeding the wait time.
                 //
-                // To be sure that we do not end up in an infinite loop, we will specify a fairly long time to allow processing to complete
-                // then cancel.
+                // To be sure that we do not block forever waiting on an event that is not published, we will request cancellation after a
+                // fairly long interval.
 
                 CancellationTokenSource cancellationSource = new CancellationTokenSource();
                 cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
 
                 TimeSpan maximumWaitTime = TimeSpan.FromMilliseconds(250);
-                List<EventData> receivedEvents = new List<EventData>();
-                Stopwatch watch = Stopwatch.StartNew();
 
-                await foreach (EventData currentEvent in consumerClient.SubscribeToEvents(maximumWaitTime, cancellationSource.Token))
+                await foreach (PartitionEvent currentEvent in consumerClient.ReadEventsFromPartitionAsync(firstPartition, EventPosition.Latest, maximumWaitTime, cancellationSource.Token))
                 {
-                    receivedEvents.Add(currentEvent);
-
-                    if (receivedEvents.Count > eventsToPublish.Length)
+                    if (!wereEventsPublished)
                     {
-                        watch.Stop();
-                        break;
+                        await producerClient.SendAsync(eventsToPublish);
+                        wereEventsPublished = true;
+
+                        Console.WriteLine("The event batch has been published.");
+                    }
+                    else
+                    {
+                        receivedEvents.Add(currentEvent.Data);
+
+                        if (receivedEvents.Count > eventsToPublish.Length)
+                        {
+                            watch.Stop();
+                            break;
+                        }
                     }
                 }
 
