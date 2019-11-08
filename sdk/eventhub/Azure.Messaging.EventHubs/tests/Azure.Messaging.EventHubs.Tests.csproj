@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Identity" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="System.Net.WebSockets.Client" />
     <PackageReference Include="System.ValueTuple" />
@@ -34,7 +35,5 @@
 
   <!-- Import the Azure.Core test framework (shared source) -->
   <Import Project="..\..\..\core\Azure.Core\tests\TestFramework.props" />
-  
-  <!-- Import the references to the Azure client libraries -->
-  <Import Project="$(MSBuildThisFileDirectory)..\Azure.Client.Library.References.props" />
+
 </Project>

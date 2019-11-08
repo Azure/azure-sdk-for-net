@@ -11,7 +11,7 @@ namespace Microsoft.Extensions.Azure
 #pragma warning restore AZC0001
 {
     /// <summary>
-    /// Extension methods to <see cref="KeyClient"/> or <see cref="CryptographyClient"/> to clients builder
+    /// Extension methods to <see cref="KeyClient"/> or <see cref="CryptographyClient"/> to clients builder.
     /// </summary>
     public static class KeyClientBuilderExtensions
     {

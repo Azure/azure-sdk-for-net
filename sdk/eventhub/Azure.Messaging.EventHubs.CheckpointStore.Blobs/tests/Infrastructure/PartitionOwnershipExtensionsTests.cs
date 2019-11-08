@@ -234,7 +234,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blobs.Tests
             /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace this partition ownership is associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
             /// <param name="eventHubName">The name of the specific Event Hub this partition ownership is associated with, relative to the Event Hubs namespace that contains it.</param>
             /// <param name="consumerGroup">The name of the consumer group this partition ownership is associated with.</param>
-            /// <param name="ownerIdentifier">The identifier of the associated <see cref="EventProcessor{T}" /> instance.</param>
+            /// <param name="ownerIdentifier">The identifier of the associated <see cref="EventProcessor" /> instance.</param>
             /// <param name="partitionId">The identifier of the Event Hub partition this partition ownership is associated with.</param>
             /// <param name="offset">The offset of the last <see cref="EventData" /> received by the associated partition processor.</param>
             /// <param name="sequenceNumber">The sequence number of the last <see cref="EventData" /> received by the associated partition processor.</param>

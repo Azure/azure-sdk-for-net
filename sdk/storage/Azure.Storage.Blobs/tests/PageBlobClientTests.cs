@@ -242,8 +242,8 @@ namespace Azure.Storage.Blobs.Test
             {
                 ContentType = ContentType,
                 ContentHash = contentMD5,
-                ContentEncoding = new string[] { ContentEncoding },
-                ContentLanguage = new string[] { ContentLanguage },
+                ContentEncoding = ContentEncoding,
+                ContentLanguage = ContentLanguage,
                 ContentDisposition = ContentDisposition,
                 CacheControl = CacheControl
             };
@@ -258,10 +258,8 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobProperties> response = await blob.GetPropertiesAsync();
             Assert.AreEqual(ContentType, response.Value.ContentType);
             TestHelper.AssertSequenceEqual(contentMD5, response.Value.ContentHash);
-            Assert.AreEqual(1, response.Value.ContentEncoding.Count());
-            Assert.AreEqual(ContentEncoding, response.Value.ContentEncoding.First());
-            Assert.AreEqual(1, response.Value.ContentLanguage.Count());
-            Assert.AreEqual(ContentLanguage, response.Value.ContentLanguage.First());
+            Assert.AreEqual(ContentEncoding, response.Value.ContentEncoding);
+            Assert.AreEqual(ContentLanguage, response.Value.ContentLanguage);
             Assert.AreEqual(ContentDisposition, response.Value.ContentDisposition);
             Assert.AreEqual(CacheControl, response.Value.CacheControl);
         }
@@ -479,7 +477,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8354")]
         public async Task UploadPagesAsync_WithUnreliableConnection()
         {
             const int blobSize = 1 * Constants.MB;
@@ -827,7 +824,7 @@ namespace Azure.Storage.Blobs.Test
                     lease: true);
 
                 // Act
-                Assert.CatchAsync<Exception>(
+                await TestHelper.CatchAsync<Exception>(
                     async () =>
                     {
                         var _ = (await blob.GetPageRangesAsync(
@@ -981,7 +978,7 @@ namespace Azure.Storage.Blobs.Test
                     lease: true);
 
                 // Act
-                Assert.CatchAsync<Exception>(
+                await TestHelper.CatchAsync<Exception>(
                     async () =>
                     {
                         var _ = (await blob.GetPageRangesDiffAsync(
@@ -1566,7 +1563,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8353")]
         public async Task UploadPagesFromUriAsync_CPK()
         {
             await using DisposingContainer test = await GetTestContainerAsync();

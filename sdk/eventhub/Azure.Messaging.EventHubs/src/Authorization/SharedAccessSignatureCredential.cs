@@ -59,6 +59,6 @@ namespace Azure.Messaging.EventHubs.Authorization
         /// <returns>The token representing the shared access signature for this credential.</returns>
         ///
         public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext,
-                                                        CancellationToken cancellationToken) => new ValueTask<AccessToken>(new AccessToken(SharedAccessSignature.Value, SharedAccessSignature.SignatureExpiration));
+                                                             CancellationToken cancellationToken) => new ValueTask<AccessToken>(new AccessToken(SharedAccessSignature.Value, SharedAccessSignature.SignatureExpiration));
     }
 }

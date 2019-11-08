@@ -16,14 +16,20 @@
     <PackageReference Include="Moq" />
     <PackageReference Include="Polly" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
+    <PackageReference Include="Microsoft.Azure.Management.EventHub" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
     <PackageReference Include="Microsoft.Azure.Management.Storage" />
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" />
+    <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.Messaging.EventHubs.CheckpointStore.Blobs.csproj" />
     <ProjectReference Include="..\samples\Azure.Messaging.EventHubs.CheckpointStore.Blobs.Samples.csproj" />
-    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.EventHubs\tests\Azure.Messaging.EventHubs.Tests.csproj" />
+  </ItemGroup>
+
+  <!-- Import the shared infrastructure from the Event Hubs client tests (shared source) -->
+  <ItemGroup>
+    <Compile Include="..\..\Azure.Messaging.EventHubs\tests\Shared\*.cs" Link="SharedSource\%(Filename)%(Extension)" />
   </ItemGroup>
 </Project>

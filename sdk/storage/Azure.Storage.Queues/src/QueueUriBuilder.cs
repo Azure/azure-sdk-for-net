@@ -26,6 +26,12 @@ namespace Azure.Storage.Queues
         private Uri _uri;
 
         /// <summary>
+        /// Whether the Uri is an IP Uri as determined by
+        /// <see cref="UriExtensions.IsHostIPEndPointStyle"/>.
+        /// </summary>
+        private readonly bool _isIPStyleUri;
+
+        /// <summary>
         /// Gets or sets the scheme name of the URI.
         /// Example: "https"
         /// </summary>
@@ -146,16 +152,13 @@ namespace Azure.Storage.Queues
             // Find the account, queue, and message id (if any)
             if (!string.IsNullOrEmpty(uri.AbsolutePath))
             {
-                // If path starts with a slash, remove it
-                var path =
-                    (uri.AbsolutePath[0] == '/')
-                    ? uri.AbsolutePath.Substring(1)
-                    : uri.AbsolutePath;
+                var path = uri.GetPath();
 
                 var startIndex = 0;
 
-                if (IsHostIPEndPointStyle(uri.Host))
+                if (uri.IsHostIPEndPointStyle())
                 {
+                    _isIPStyleUri = true;
                     var accountEndIndex = path.IndexOf("/", StringComparison.InvariantCulture);
 
                     // Slash not found; path has account name & no queue name
@@ -169,6 +172,10 @@ namespace Azure.Storage.Queues
                         AccountName = path.Substring(0, accountEndIndex);
                         startIndex = accountEndIndex + 1;
                     }
+                }
+                else
+                {
+                    AccountName = uri.GetAccountNameFromDomain(Constants.Queue.UriSubDomain) ?? string.Empty;
                 }
 
                 // Find the next slash (if it exists)
@@ -247,7 +254,9 @@ namespace Azure.Storage.Queues
         {
             // Concatenate account, queue, & messageId (if they exist)
             var path = new StringBuilder("");
-            if (!string.IsNullOrWhiteSpace(AccountName))
+            // only append the account name to the path for Ip style Uri.
+            // regular style Uri will already have account name in domain
+            if (_isIPStyleUri && !string.IsNullOrWhiteSpace(AccountName))
             {
                 path.Append("/").Append(AccountName);
             }
@@ -284,9 +293,5 @@ namespace Azure.Storage.Queues
                 Query = query.Length > 0 ? "?" + query.ToString() : null
             };
         }
-
-        // TODO See remarks at https://docs.microsoft.com/en-us/dotnet/api/system.net.ipaddress.tryparse?view=netframework-4.7.2
-        private static bool IsHostIPEndPointStyle(string host)
-            => string.IsNullOrEmpty(host) ? false : IPAddress.TryParse(host, out IPAddress _);
     }
 }

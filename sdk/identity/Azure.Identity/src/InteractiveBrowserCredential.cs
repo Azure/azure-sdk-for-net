@@ -12,7 +12,7 @@ namespace Azure.Identity
 {
     /// <summary>
     /// A <see cref="TokenCredential"/> implementation which launches the system default browser to interactively authenticate a user, and obtain an access token.
-    /// The browser will only be launched to authenticate the user once, then will silently aquire access tokens through the users refresh token as long as it's valid.
+    /// The browser will only be launched to authenticate the user once, then will silently acquire access tokens through the users refresh token as long as it's valid.
     /// </summary>
     public class InteractiveBrowserCredential : TokenCredential, IExtendedTokenCredential
     {
@@ -21,7 +21,7 @@ namespace Azure.Identity
         private IAccount _account = null;
 
         /// <summary>
-        /// Creates a new InteractiveBrowserCredential with the specifeid options, which will authenticate users.
+        /// Creates a new InteractiveBrowserCredential with the specified options, which will authenticate users.
         /// </summary>
         public InteractiveBrowserCredential()
             : this(null, Constants.DeveloperSignOnClientId, CredentialPipeline.GetInstance(null))
@@ -30,7 +30,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Creates a new InteractiveBrowserCredential with the specifeid options, which will authenticate users with the specified application.
+        /// Creates a new InteractiveBrowserCredential with the specified options, which will authenticate users with the specified application.
         /// </summary>
         /// <param name="clientId">The client id of the application to which the users will authenticate</param>
         public InteractiveBrowserCredential(string clientId)
@@ -40,7 +40,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Creates a new InteractiveBrowserCredential with the specifeid options, which will authenticate users with the specified application.
+        /// Creates a new InteractiveBrowserCredential with the specified options, which will authenticate users with the specified application.
         /// </summary>
         /// <param name="tenantId">The tenant id of the application and the users to authenticate. Can be null in the case of multi-tenant applications.</param>
         /// <param name="clientId">The client id of the application to which the users will authenticate</param>
@@ -68,7 +68,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated, otherwise the default browser is launched to authenticate the user.
+        /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated, otherwise the default browser is launched to authenticate the user. This method is called by Azure SDK clients. It isn't intended for use in application code.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -79,7 +79,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated, otherwise the default browser is launched to authenticate the user.
+        /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated, otherwise the default browser is launched to authenticate the user. This method is called by Azure SDK clients. It isn't intended for use in application code.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>

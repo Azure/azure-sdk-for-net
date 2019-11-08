@@ -9,8 +9,8 @@
 // </auto-generated>
 
 using Azure.AI.InkRecognizer.Models;
+using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,7 +19,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-#pragma warning disable AZC0001 // https://github.com/Azure/azure-sdk-tools/issues/213
 //[assembly: AzureSdkClientLibrary(".Net")]
 namespace Azure.AI.InkRecognizer
 {
@@ -235,7 +234,7 @@ namespace Azure.AI.InkRecognizer
             InkPointUnit inkPointUnit,
             float unitMultiple)
         {
-            Azure.Core.Http.Request request = pipeline.CreateRequest();
+            Request request = pipeline.CreateRequest();
 
             // add content
             var inkRecognitionRequest = new InkRecognitionRequest(strokes,
@@ -244,7 +243,7 @@ namespace Azure.AI.InkRecognizer
                 inkPointUnit,
                 unitMultiple);
             var content = new MemoryStream(Encoding.UTF8.GetBytes(inkRecognitionRequest.ToJson()));
-            request.Content = HttpPipelineRequestContent.Create(content);
+            request.Content = RequestContent.Create(content);
 
             // specify HTTP request line
             request.Method = RequestMethod.Put;

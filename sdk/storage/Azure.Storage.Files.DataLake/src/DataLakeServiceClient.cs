@@ -101,13 +101,40 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="serviceUri">
         /// A <see cref="Uri"/> referencing the Data Lake service.
         /// </param>
+        public DataLakeServiceClient(Uri serviceUri)
+            : this(serviceUri, (HttpPipelinePolicy)null, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeServiceClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="serviceUri">
+        /// A <see cref="Uri"/> referencing the Data Lake service.
+        /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public DataLakeServiceClient(Uri serviceUri, DataLakeClientOptions options = default)
+        public DataLakeServiceClient(Uri serviceUri, DataLakeClientOptions options)
             : this(serviceUri, (HttpPipelinePolicy)null, options)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeServiceClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="serviceUri">
+        /// A <see cref="Uri"/> referencing the Data Lake service.
+        /// </param>
+        /// <param name="credential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        public DataLakeServiceClient(Uri serviceUri, StorageSharedKeyCredential credential)
+            : this(serviceUri, credential.AsPolicy(), null)
         {
         }
 
@@ -126,8 +153,23 @@ namespace Azure.Storage.Files.DataLake
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public DataLakeServiceClient(Uri serviceUri, StorageSharedKeyCredential credential, DataLakeClientOptions options = default)
+        public DataLakeServiceClient(Uri serviceUri, StorageSharedKeyCredential credential, DataLakeClientOptions options)
             : this(serviceUri, credential.AsPolicy(), options)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeServiceClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="serviceUri">
+        /// A <see cref="Uri"/> referencing the Data Lake service.
+        /// </param>
+        /// <param name="credential">
+        /// The token credential used to sign requests.
+        /// </param>
+        public DataLakeServiceClient(Uri serviceUri, TokenCredential credential)
+            : this(serviceUri, credential.AsPolicy(), null)
         {
         }
 
@@ -146,8 +188,8 @@ namespace Azure.Storage.Files.DataLake
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public DataLakeServiceClient(Uri serviceUri, TokenCredential credential, DataLakeClientOptions options = default)
-            : this(serviceUri, credential.AsPolicy(), options ?? new DataLakeClientOptions())
+        public DataLakeServiceClient(Uri serviceUri, TokenCredential credential, DataLakeClientOptions options)
+            : this(serviceUri, credential.AsPolicy(), options)
         {
         }
 
@@ -167,7 +209,7 @@ namespace Azure.Storage.Files.DataLake
         /// every request.
         /// </param>
         internal DataLakeServiceClient(Uri serviceUri, HttpPipelinePolicy authentication, DataLakeClientOptions options)
-            : this(serviceUri, authentication, options, new ClientDiagnostics(options))
+            : this(serviceUri, authentication, options, null)
         {
 
         }
@@ -188,14 +230,23 @@ namespace Azure.Storage.Files.DataLake
         /// every request.
         /// </param>
         /// <param name="clientDiagnostics"></param>
-        internal DataLakeServiceClient(Uri serviceUri, HttpPipelinePolicy authentication, DataLakeClientOptions options, ClientDiagnostics clientDiagnostics)
+        internal DataLakeServiceClient(
+            Uri serviceUri,
+            HttpPipelinePolicy authentication,
+            DataLakeClientOptions options,
+            ClientDiagnostics clientDiagnostics)
         {
-
-            _pipeline = (options ?? new DataLakeClientOptions()).Build(authentication);
+            options ??= new DataLakeClientOptions();
+            _pipeline = options.Build(authentication);
             _uri = serviceUri;
             _blobUri = GetBlobUri(serviceUri);
-            _blobServiceClient = new BlobServiceClient(_blobUri, authentication, options);
-            _clientDiagnostics = clientDiagnostics;
+            _clientDiagnostics = clientDiagnostics ?? new ClientDiagnostics(options);
+            _blobServiceClient = new BlobServiceClient(
+                serviceUri: _blobUri,
+                authentication: authentication,
+                pipeline: _pipeline,
+                clientDiagnostics: _clientDiagnostics,
+                customerProvidedKey: null);
         }
         #endregion ctors
 
@@ -221,19 +272,19 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// Create a new <see cref="FileSystemClient"/> object by appending
+        /// Create a new <see cref="DataLakeFileSystemClient"/> object by appending
         /// <paramref name="fileSystemName"/> to the end of <see cref="Uri"/>.
-        /// The new <see cref="FileSystemClient"/> uses the same request
-        /// policy pipeline as the <see cref="FileSystemClient"/>.
+        /// The new <see cref="DataLakeFileSystemClient"/> uses the same request
+        /// policy pipeline as the <see cref="DataLakeFileSystemClient"/>.
         /// </summary>
         /// <param name="fileSystemName">
         /// The name of the share to reference.
         /// </param>
         /// <returns>
-        /// A <see cref="FileSystemClient"/> for the desired share.
+        /// A <see cref="DataLakeFileSystemClient"/> for the desired share.
         /// </returns>
-        public virtual FileSystemClient GetFileSystemClient(string fileSystemName)
-            => new FileSystemClient(Uri.AppendToPath(fileSystemName), Pipeline, ClientDiagnostics);
+        public virtual DataLakeFileSystemClient GetFileSystemClient(string fileSystemName)
+            => new DataLakeFileSystemClient(Uri.AppendToPath(fileSystemName), Pipeline, ClientDiagnostics);
 
         #region Get User Delegation Key
         /// <summary>
@@ -241,11 +292,11 @@ namespace Azure.Storage.Files.DataLake
         /// key that can be used to delegate Active Directory authorization to
         /// shared access signatures created with <see cref="Sas.DataLakeSasBuilder"/>.
         /// </summary>
-        /// <param name="start">
+        /// <param name="startsOn">
         /// Start time for the key's validity, with null indicating an
         /// immediate start.  The time should be specified in UTC.
         /// </param>
-        /// <param name="expiry">
+        /// <param name="expiresOn">
         /// Expiration of the key's validity.  The time should be specified
         /// in UTC.
         /// </param>
@@ -263,13 +314,13 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         [ForwardsClientCalls]
         public virtual Response<UserDelegationKey> GetUserDelegationKey(
-            DateTimeOffset? start,
-            DateTimeOffset expiry,
+            DateTimeOffset? startsOn,
+            DateTimeOffset expiresOn,
             CancellationToken cancellationToken = default)
         {
             Response<Blobs.Models.UserDelegationKey> response = _blobServiceClient.GetUserDelegationKey(
-                start,
-                expiry,
+                startsOn,
+                expiresOn,
                 cancellationToken);
 
             return Response.FromValue(
@@ -282,11 +333,11 @@ namespace Azure.Storage.Files.DataLake
         /// key that can be used to delegate Active Directory authorization to
         /// shared access signatures created with <see cref="Sas.DataLakeSasBuilder"/>.
         /// </summary>
-        /// <param name="start">
+        /// <param name="startsOn">
         /// Start time for the key's validity, with null indicating an
         /// immediate start.  The time should be specified in UTC.
         /// </param>
-        /// <param name="expiry">
+        /// <param name="expiresOn">
         /// Expiration of the key's validity.  The time should be specified
         /// in UTC.
         /// </param>
@@ -304,13 +355,13 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<UserDelegationKey>> GetUserDelegationKeyAsync(
-            DateTimeOffset? start,
-            DateTimeOffset expiry,
+            DateTimeOffset? startsOn,
+            DateTimeOffset expiresOn,
             CancellationToken cancellationToken = default)
         {
             Response<Blobs.Models.UserDelegationKey> response = await _blobServiceClient.GetUserDelegationKeyAsync(
-                start,
-                expiry,
+                startsOn,
+                expiresOn,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -402,11 +453,11 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <param name="publicAccessType">
         /// Optionally specifies whether data in the file system may be accessed
-        /// publicly and the level of access. <see cref="PublicAccessType.Container"/>
+        /// publicly and the level of access. <see cref="PublicAccessType.FileSystem"/>
         /// specifies full public read access for file system and blob data.
         /// Clients can enumerate blobs within the file system via anonymous
         /// request, but cannot enumerate file systems within the storage
-        /// account.  <see cref="PublicAccessType.Blob"/> specifies public
+        /// account.  <see cref="PublicAccessType.Path"/> specifies public
         /// read access for blobs.  Blob data within this file system can be
         /// read via anonymous request, but file system data is not available.
         /// Clients cannot enumerate blobs within the file system via anonymous
@@ -429,13 +480,13 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
-        public virtual Response<FileSystemClient> CreateFileSystem(
+        public virtual Response<DataLakeFileSystemClient> CreateFileSystem(
             string fileSystemName,
             PublicAccessType publicAccessType = PublicAccessType.None,
             Metadata metadata = default,
             CancellationToken cancellationToken = default)
         {
-            FileSystemClient fileSystem = GetFileSystemClient(fileSystemName);
+            DataLakeFileSystemClient fileSystem = GetFileSystemClient(fileSystemName);
             Response<FileSystemInfo> response = fileSystem.Create(publicAccessType, metadata, cancellationToken);
             return Response.FromValue(fileSystem, response.GetRawResponse());
         }
@@ -452,11 +503,11 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <param name="publicAccessType">
         /// Optionally specifies whether data in the file system may be accessed
-        /// publicly and the level of access. <see cref="PublicAccessType.Container"/>
+        /// publicly and the level of access. <see cref="PublicAccessType.FileSystem"/>
         /// specifies full public read access for file system and blob data.
         /// Clients can enumerate blobs within the file system via anonymous
         /// request, but cannot enumerate file systems within the storage
-        /// account.  <see cref="PublicAccessType.Blob"/> specifies public
+        /// account.  <see cref="PublicAccessType.Path"/> specifies public
         /// read access for blobs.  Blob data within this file system can be
         /// read via anonymous request, but file system data is not available.
         /// Clients cannot enumerate blobs within the file system via anonymous
@@ -479,13 +530,13 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
-        public virtual async Task<Response<FileSystemClient>> CreateFileSystemAsync(
+        public virtual async Task<Response<DataLakeFileSystemClient>> CreateFileSystemAsync(
             string fileSystemName,
             PublicAccessType publicAccessType = PublicAccessType.None,
             Metadata metadata = default,
             CancellationToken cancellationToken = default)
         {
-            FileSystemClient fileSystem = GetFileSystemClient(fileSystemName);
+            DataLakeFileSystemClient fileSystem = GetFileSystemClient(fileSystemName);
             Response<FileSystemInfo> response = await fileSystem.CreateAsync(publicAccessType, metadata, cancellationToken).ConfigureAwait(false);
             return Response.FromValue(fileSystem, response.GetRawResponse());
         }
@@ -502,7 +553,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="fileSystemName">
         /// The name of the file system to delete.
         /// </param>
-        /// <param name="accessConditions">
+        /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
         /// conditions on the deletion of this file system.
         /// </param>
@@ -520,11 +571,11 @@ namespace Azure.Storage.Files.DataLake
         [ForwardsClientCalls]
         public virtual Response DeleteFileSystem(
             string fileSystemName,
-            DataLakeRequestConditions accessConditions = default,
+            DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             GetFileSystemClient(fileSystemName)
                 .Delete(
-                    accessConditions,
+                    conditions,
                     cancellationToken);
 
         /// <summary>
@@ -537,7 +588,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="fileSystemName">
         /// The name of the file system to delete.
         /// </param>
-        /// <param name="accessConditions">
+        /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
         /// conditions on the deletion of this file system.
         /// </param>
@@ -555,11 +606,11 @@ namespace Azure.Storage.Files.DataLake
         [ForwardsClientCalls]
         public virtual async Task<Response> DeleteFileSystemAsync(
             string fileSystemName,
-            DataLakeRequestConditions accessConditions = default,
+            DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await GetFileSystemClient(fileSystemName)
                 .DeleteAsync(
-                    accessConditions,
+                    conditions,
                     cancellationToken)
                     .ConfigureAwait(false);
         #endregion Delete File System

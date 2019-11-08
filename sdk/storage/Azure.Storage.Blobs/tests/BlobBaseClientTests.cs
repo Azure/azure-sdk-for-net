@@ -13,6 +13,7 @@ using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
@@ -95,7 +96,6 @@ namespace Azure.Storage.Blobs.Test
 
         #region Secondary Storage
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8356")]
         public async Task DownloadAsync_ReadFromSecondaryStorage()
         {
             await using DisposingContainer test = await GetTestContainerAsync(GetServiceClient_SecondaryAccount_ReadEnabledOnRetry(1, out TestExceptionPolicy testExceptionPolicy));
@@ -312,7 +312,7 @@ namespace Azure.Storage.Blobs.Test
                 BlobRequestConditions accessConditions = BuildAccessConditions(parameters);
 
                 // Act
-                Assert.CatchAsync<Exception>(
+                await TestHelper.CatchAsync<Exception>(
                     async () =>
                     {
                         var _ = (await blob.DownloadAsync(
@@ -419,7 +419,7 @@ namespace Azure.Storage.Blobs.Test
                 {
                     await downloadingBlob.StagedDownloadAsync(
                         file,
-                        singleBlockThreshold: singleBlockThreshold,
+                        initialTransferLength: singleBlockThreshold,
                         transferOptions: transferOptions);
                 }
 
@@ -437,7 +437,6 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8356")]
         [Test]
         [TestCase(512)]
         [TestCase(1 * Constants.KB)]
@@ -479,6 +478,70 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        [Test]
+        public async Task DownloadTo_Initial304()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Upload a blob
+            var data = GetRandomBuffer(Constants.KB);
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            // Add conditions to cause a failure and ensure we don't explode
+            Response result = await blob.DownloadToAsync(
+                Stream.Null,
+                new BlobRequestConditions
+                {
+                    IfModifiedSince = Recording.UtcNow
+                });
+            Assert.AreEqual(304, result.Status);
+        }
+
+        [Test]
+        public async Task DownloadTo_ReplacedDuringDownload()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Upload a large blob
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            using (var stream = new MemoryStream(GetRandomBuffer(10 * Constants.KB)))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            // Check the error we get when a download fails because the blob
+            // was replaced while we're downloading
+            RequestFailedException ex = Assert.CatchAsync<RequestFailedException>(
+                async () =>
+                {
+                    // Create a stream that replaces the blob as soon as it starts downloading
+                    bool replaced = false;
+                    await blob.StagedDownloadAsync(
+                        new FuncStream(
+                            Stream.Null,
+                            async () =>
+                            {
+                                if (!replaced)
+                                {
+                                    replaced = true;
+                                    using var newStream = new MemoryStream(GetRandomBuffer(Constants.KB));
+                                    await blob.UploadAsync(newStream, overwrite: true);
+                                }
+                            }),
+                        initialTransferLength: Constants.KB,
+                        transferOptions:
+                            new StorageTransferOptions
+                            {
+                                MaximumConcurrency = 1,
+                                MaximumTransferLength = Constants.KB
+                            });
+                });
+            Assert.IsTrue(ex.ErrorCode == BlobErrorCode.ConditionNotMet);
+        }
         #endregion Parallel Download
 
         [Test]
@@ -1418,6 +1481,7 @@ namespace Azure.Storage.Blobs.Test
             foreach (AccessConditionParameters parameters in GetAccessConditionsFail_Data(garbageLeaseId))
             {
                 await using DisposingContainer test = await GetTestContainerAsync();
+
                 // Arrange
                 BlobBaseClient blob = await GetNewBlobClient(test.Container);
 
@@ -1425,13 +1489,12 @@ namespace Azure.Storage.Blobs.Test
                 BlobRequestConditions accessConditions = BuildAccessConditions(parameters);
 
                 // Act
-                Assert.CatchAsync<Exception>(
+                await TestHelper.CatchAsync<Exception>(
                     async () =>
                     {
                         var _ = (await blob.GetPropertiesAsync(
                             conditions: accessConditions)).Value;
                     });
-
             }
         }
 
@@ -1461,8 +1524,8 @@ namespace Azure.Storage.Blobs.Test
             {
                 CacheControl = constants.CacheControl,
                 ContentDisposition = constants.ContentDisposition,
-                ContentEncoding = new string[] { constants.ContentEncoding },
-                ContentLanguage = new string[] { constants.ContentLanguage },
+                ContentEncoding = constants.ContentEncoding,
+                ContentLanguage = constants.ContentLanguage,
                 ContentHash = constants.ContentMD5,
                 ContentType = constants.ContentType
             });
@@ -1471,12 +1534,31 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobProperties> response = await blob.GetPropertiesAsync();
             Assert.AreEqual(constants.ContentType, response.Value.ContentType);
             TestHelper.AssertSequenceEqual(constants.ContentMD5, response.Value.ContentHash);
-            Assert.AreEqual(1, response.Value.ContentEncoding.Count());
-            Assert.AreEqual(constants.ContentEncoding, response.Value.ContentEncoding.First());
-            Assert.AreEqual(1, response.Value.ContentLanguage.Count());
-            Assert.AreEqual(constants.ContentLanguage, response.Value.ContentLanguage.First());
+            Assert.AreEqual(constants.ContentEncoding, response.Value.ContentEncoding);
+            Assert.AreEqual(constants.ContentLanguage, response.Value.ContentLanguage);
             Assert.AreEqual(constants.ContentDisposition, response.Value.ContentDisposition);
             Assert.AreEqual(constants.CacheControl, response.Value.CacheControl);
+        }
+
+        [Test]
+        public async Task SetHttpHeadersAsync_MultipleHeaders()
+        {
+            var constants = new TestConstants(this);
+            await using DisposingContainer test = await GetTestContainerAsync();
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            // Act
+            await blob.SetHttpHeadersAsync(new BlobHttpHeaders
+            {
+                ContentEncoding = "deflate, gzip",
+                ContentLanguage = "de-DE, en-CA",
+            });
+
+            // Assert
+            Response<BlobProperties> response = await blob.GetPropertiesAsync();
+            Assert.AreEqual("deflate,gzip", response.Value.ContentEncoding);
+            Assert.AreEqual("de-DE,en-CA", response.Value.ContentLanguage);
         }
 
         [Test]

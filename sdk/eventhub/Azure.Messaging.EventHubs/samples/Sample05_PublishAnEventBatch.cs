@@ -37,10 +37,9 @@ namespace Azure.Messaging.EventHubs.Samples
         public async Task RunAsync(string connectionString,
                                    string eventHubName)
         {
-            // We will start by creating a client and a producer, each using their default set of options.
+            // We will start by creating a producer client using its default options.
 
-            await using (var client = new EventHubClient(connectionString, eventHubName))
-            await using (EventHubProducer producer = client.CreateProducer())
+            await using (var producerClient = new EventHubProducerClient(connectionString, eventHubName))
             {
                 // There is a limit to the size of an event or batch of events that can be published at once.  This limit varies, and depends
                 // on the underlying transport and protocol that the Event Hub producer is using.  Because the size limit is based on the
@@ -49,7 +48,7 @@ namespace Azure.Messaging.EventHubs.Samples
                 // may experience errors when they attempt to send.
                 //
                 // In order to avoid errors, support creation of known-good batches, and allow for producers with the need to predictably
-                // control bandwidth use, the Event Hub producer allows creation of an Event Data Batch, which acts as a container for
+                // control bandwidth use, the Event Hub producer client allows creation of an Event Data Batch, which acts as a container for
                 // a batch of events.  Events can be added to the batch using a "TryAdd" pattern, allowing insight into when an event
                 // or batch would be too large without triggering an exception.
                 //
@@ -71,7 +70,7 @@ namespace Azure.Messaging.EventHubs.Samples
                 // will set a custom partition key and otherwise use the default options.
 
                 BatchOptions options = new BatchOptions { PartitionKey = "This is a custom key!" };
-                EventDataBatch batch = await producer.CreateBatchAsync(options);
+                EventDataBatch batch = await producerClient.CreateBatchAsync(options);
 
                 foreach (EventData eventData in events)
                 {
@@ -84,12 +83,12 @@ namespace Azure.Messaging.EventHubs.Samples
                 // When publishing a batch, no SendOptions may be specified.  Those options are
                 // all expressed upfront during batch creation and apply to all events in the batch.
 
-                await producer.SendAsync(batch);
+                await producerClient.SendAsync(batch);
 
                 Console.WriteLine("The event batch has been published.");
             }
 
-            // At this point, our client and producer have passed their "using" scope and have safely been disposed of.  We
+            // At this point, our client has passed its "using" scope and has safely been disposed of.  We
             // have no further obligations.
 
             Console.WriteLine();

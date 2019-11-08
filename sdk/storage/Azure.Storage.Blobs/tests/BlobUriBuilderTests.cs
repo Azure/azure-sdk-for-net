@@ -3,6 +3,7 @@
 
 using System;
 using System.Net;
+using Azure.Core.Testing;
 using Azure.Storage.Sas;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
@@ -34,7 +35,7 @@ namespace Azure.Storage.Blobs.Test
         public void BlobUriBuilder_RegularUrl_AccountTest()
         {
             // Arrange
-            var uriString = "https://account.core.blob.windows.net/?comp=list";
+            var uriString = "https://account.blob.core.windows.net/?comp=list";
             var originalUri = new UriBuilder(uriString);
 
             // Act
@@ -43,8 +44,8 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual("https", blobUriBuilder.Scheme);
-            Assert.AreEqual("account.core.blob.windows.net", blobUriBuilder.Host);
-            Assert.AreEqual("", blobUriBuilder.AccountName);
+            Assert.AreEqual("account.blob.core.windows.net", blobUriBuilder.Host);
+            Assert.AreEqual("account", blobUriBuilder.AccountName);
             Assert.AreEqual("", blobUriBuilder.BlobContainerName);
             Assert.AreEqual("", blobUriBuilder.BlobName);
             Assert.AreEqual("", blobUriBuilder.Snapshot);
@@ -58,7 +59,7 @@ namespace Azure.Storage.Blobs.Test
         public void BlobUriBuilder_RegularUrl_ContainerTest()
         {
             // Arrange
-            var uriString = "https://account.core.blob.windows.net/container";
+            var uriString = "https://account.blob.core.windows.net/container";
             var originalUri = new UriBuilder(uriString);
 
             // Act
@@ -67,8 +68,8 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual("https", blobUriBuilder.Scheme);
-            Assert.AreEqual("account.core.blob.windows.net", blobUriBuilder.Host);
-            Assert.AreEqual("", blobUriBuilder.AccountName);
+            Assert.AreEqual("account.blob.core.windows.net", blobUriBuilder.Host);
+            Assert.AreEqual("account", blobUriBuilder.AccountName);
             Assert.AreEqual("container", blobUriBuilder.BlobContainerName);
             Assert.AreEqual("", blobUriBuilder.BlobName);
             Assert.AreEqual("", blobUriBuilder.Snapshot);
@@ -82,7 +83,7 @@ namespace Azure.Storage.Blobs.Test
         public void BlobUriBuilder_RegularUrl_BlobTest()
         {
             // Arrange
-            var uriString = "https://account.core.blob.windows.net/container/blob";
+            var uriString = "https://account.blob.core.windows.net/container/blob";
             var originalUri = new UriBuilder(uriString);
 
             // Act
@@ -91,8 +92,8 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual("https", blobUriBuilder.Scheme);
-            Assert.AreEqual("account.core.blob.windows.net", blobUriBuilder.Host);
-            Assert.AreEqual("", blobUriBuilder.AccountName);
+            Assert.AreEqual("account.blob.core.windows.net", blobUriBuilder.Host);
+            Assert.AreEqual("account", blobUriBuilder.AccountName);
             Assert.AreEqual("container", blobUriBuilder.BlobContainerName);
             Assert.AreEqual("blob", blobUriBuilder.BlobName);
             Assert.AreEqual("", blobUriBuilder.Snapshot);
@@ -106,7 +107,7 @@ namespace Azure.Storage.Blobs.Test
         public void BlobUriBuilder_RegularUrl_PortTest()
         {
             // Arrange
-            var uriString = "https://account.core.blob.windows.net:8080/container";
+            var uriString = "https://account.blob.core.windows.net:8080/container";
             var originalUri = new UriBuilder(uriString);
 
             // Act
@@ -115,8 +116,8 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual("https", blobUriBuilder.Scheme);
-            Assert.AreEqual("account.core.blob.windows.net", blobUriBuilder.Host);
-            Assert.AreEqual("", blobUriBuilder.AccountName);
+            Assert.AreEqual("account.blob.core.windows.net", blobUriBuilder.Host);
+            Assert.AreEqual("account", blobUriBuilder.AccountName);
             Assert.AreEqual("container", blobUriBuilder.BlobContainerName);
             Assert.AreEqual("", blobUriBuilder.BlobName);
             Assert.AreEqual("", blobUriBuilder.Snapshot);
@@ -130,7 +131,7 @@ namespace Azure.Storage.Blobs.Test
         public void BlobUriBuilder_RegularUrl_SnapshotTest()
         {
             // Arrange
-            var uriString = "https://account.core.blob.windows.net/container/blob?snapshot=2011-03-09T01:42:34.9360000Z";
+            var uriString = "https://account.blob.core.windows.net/container/blob?snapshot=2011-03-09T01:42:34.9360000Z";
             var originalUri = new UriBuilder(uriString);
 
             // Act
@@ -139,8 +140,8 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual("https", blobUriBuilder.Scheme);
-            Assert.AreEqual("account.core.blob.windows.net", blobUriBuilder.Host);
-            Assert.AreEqual("", blobUriBuilder.AccountName);
+            Assert.AreEqual("account.blob.core.windows.net", blobUriBuilder.Host);
+            Assert.AreEqual("account", blobUriBuilder.AccountName);
             Assert.AreEqual("container", blobUriBuilder.BlobContainerName);
             Assert.AreEqual("blob", blobUriBuilder.BlobName);
             Assert.AreEqual("2011-03-09T01:42:34.9360000Z", blobUriBuilder.Snapshot);
@@ -154,7 +155,7 @@ namespace Azure.Storage.Blobs.Test
         public void BlobUriBuilder_RegularUrl_SasTest()
         {
             // Arrange
-            var uriString = "https://account.core.blob.windows.net/container/blob?sv=2015-04-05&spr=https&st=2015-04-29T22%3A18%3A26Z&se=2015-04-30T02%3A23%3A26Z&sip=168.1.5.60-168.1.5.70&sr=b&sp=rw&sig=Z%2FRHIX5Xcg0Mq2rqI3OlWTjEg2tYkboXr1P9ZUXDtkk%3D";
+            var uriString = "https://account.blob.core.windows.net/container/blob?sv=2015-04-05&spr=https&st=2015-04-29T22%3A18%3A26Z&se=2015-04-30T02%3A23%3A26Z&sip=168.1.5.60-168.1.5.70&sr=b&sp=rw&sig=Z%2FRHIX5Xcg0Mq2rqI3OlWTjEg2tYkboXr1P9ZUXDtkk%3D";
             var originalUri = new UriBuilder(uriString);
 
             // Act
@@ -163,8 +164,8 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual("https", blobUriBuilder.Scheme);
-            Assert.AreEqual("account.core.blob.windows.net", blobUriBuilder.Host);
-            Assert.AreEqual("", blobUriBuilder.AccountName);
+            Assert.AreEqual("account.blob.core.windows.net", blobUriBuilder.Host);
+            Assert.AreEqual("account", blobUriBuilder.AccountName);
             Assert.AreEqual("container", blobUriBuilder.BlobContainerName);
             Assert.AreEqual("blob", blobUriBuilder.BlobName);
             Assert.AreEqual("", blobUriBuilder.Snapshot);
@@ -184,6 +185,35 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual("", blobUriBuilder.Query);
             Assert.AreEqual(443, blobUriBuilder.Port);
             Assert.AreEqual(originalUri, newUri);
+        }
+
+
+        [Test]
+        public void BlobUriBuilder_RegularUrl_CNAME()
+        {
+            var blobUriBuilder = new BlobUriBuilder(new Uri("http://www.contoso.com"));
+            Assert.AreEqual(string.Empty, blobUriBuilder.AccountName);
+        }
+
+        [Test]
+        public void BlobUriBuilder_RegularUrl_MalformedSubdomain()
+        {
+            // core and blob swapped
+            var blobUriBuilder1 = new BlobUriBuilder(new Uri("https://account.core.blob.windows.net/container/blob"));
+
+            // account and blob swapped
+            var blobUriBuilder2 = new BlobUriBuilder(new Uri("https://blob.account.core.windows.net/container/blob"));
+
+            // wrong service
+            var blobUriBuilder3 = new BlobUriBuilder(new Uri("https://account.file.core.windows.net/container/blob"));
+
+            // empty service
+            var blobUriBuilder4 = new BlobUriBuilder(new Uri("https://account./container/blob"));
+
+            Assert.AreEqual(string.Empty, blobUriBuilder1.AccountName);
+            Assert.AreEqual(string.Empty, blobUriBuilder2.AccountName);
+            Assert.AreEqual(string.Empty, blobUriBuilder3.AccountName);
+            Assert.AreEqual(string.Empty, blobUriBuilder4.AccountName);
         }
 
         [Test]

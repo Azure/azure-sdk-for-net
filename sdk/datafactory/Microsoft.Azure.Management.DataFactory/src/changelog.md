@@ -1,7 +1,17 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
-## Current version
+## Version 4.5.0
 ###  Feature Additions
+- Added SQL DW Copy Command support in Copy Activity
+
+## Version 4.4.0
+###  Feature Additions
+- Added Serve-to-Server authentication type for Dynamics 365, Dynamics CRM and Common Data Service for Apps connector
+- Changed Username from required to optional in Dynamics 365, Dynamics CRM and Common Data Service for Apps connector
+- Added Compression codec proprty to Orc dataset
+- Added embedded package properties for ssis activity
+- Added AKV support for webhook activity
+- Added new optional property "connectVia" in Web activity
 
 ## Version 4.3.0
 ###  Feature Additions

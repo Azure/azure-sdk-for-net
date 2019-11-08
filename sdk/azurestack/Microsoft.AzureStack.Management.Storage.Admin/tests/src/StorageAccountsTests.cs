@@ -25,30 +25,24 @@ namespace Storage.Tests
 
         private void ValidateStorageAccount(StorageAccount account) {
             Assert.NotNull(account);
-            // Assert.NotNull(account.AccountId);
+            Assert.NotNull(account.AccountId);
             Assert.NotNull(account.AccountStatus);
             Assert.NotNull(account.AccountType);
-            //Assert.NotNull(account.AlternateName);
             Assert.NotNull(account.CreationTime);
-            //Assert.NotNull(account.CustomDomain);
-            //Assert.NotNull(account.DeletedTime);
             Assert.NotNull(account.Id);
             Assert.NotNull(account.Location);
             Assert.NotNull(account.Name);
-            //Assert.NotNull(account.Permissions);
             Assert.NotNull(account.PrimaryEndpoints);
             Assert.NotNull(account.PrimaryLocation);
             Assert.NotNull(account.ProvisioningState);
-            //Assert.NotNull(account.RecoveredTime);
-            //Assert.NotNull(account.RecycledTime);
-            //Assert.NotNull(account.ResourceAdminApiVersion);
             Assert.NotNull(account.StatusOfPrimary);
             Assert.NotNull(account.TenantResourceGroupName);
             Assert.NotNull(account.TenantStorageAccountName);
             Assert.NotNull(account.TenantSubscriptionId);
             Assert.NotNull(account.TenantViewId);
             Assert.NotNull(account.Type);
-            //Assert.NotNull(account.WacInternalState);
+            Assert.NotNull(account.Kind);
+            Assert.NotNull(account.HealthState);
         }
 
         [Fact]

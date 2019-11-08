@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -901,14 +900,14 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobContainerItem}"/> describing the
+        /// A <see cref="Response{BlobContainerProperties}"/> describing the
         /// container and its properties.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<BlobContainerItem> GetProperties(
+        public virtual Response<BlobContainerProperties> GetProperties(
             BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             GetPropertiesInternal(
@@ -934,14 +933,14 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobContainerItem}"/> describing the
+        /// A <see cref="Response{BlobContainerProperties}"/> describing the
         /// container and its properties.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobContainerItem>> GetPropertiesAsync(
+        public virtual async Task<Response<BlobContainerProperties>> GetPropertiesAsync(
             BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await GetPropertiesInternal(
@@ -977,7 +976,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<BlobContainerItem>> GetPropertiesInternal(
+        private async Task<Response<BlobContainerProperties>> GetPropertiesInternal(
             BlobRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
@@ -1006,18 +1005,14 @@ namespace Azure.Storage.Blobs
                     // Return an exploding Response on 304
                     if (response.IsUnavailable())
                     {
-                        return response.GetRawResponse().AsNoBodyResponse<BlobContainerItem>();
+                        return response.GetRawResponse().AsNoBodyResponse<BlobContainerProperties>();
                     }
 
-                    // Turn the flattened properties into a BlobContainerItem
-                    var uri = new BlobUriBuilder(Uri);
+                    // Turn the flattened properties into a BlobContainerProperties
                     return Response.FromValue(
-                        new BlobContainerItem(false)
-                        {
-                            Name = uri.BlobContainerName,
-                            Metadata = response.Value.Metadata,
-                            Properties = new BlobContainerProperties()
+                        new BlobContainerProperties()
                             {
+                                Metadata = response.Value.Metadata,
                                 LastModified = response.Value.LastModified,
                                 ETag = response.Value.ETag,
                                 LeaseStatus = response.Value.LeaseStatus,
@@ -1026,8 +1021,8 @@ namespace Azure.Storage.Blobs
                                 PublicAccess = response.Value.BlobPublicAccess,
                                 HasImmutabilityPolicy = response.Value.HasImmutabilityPolicy,
                                 HasLegalHold = response.Value.HasLegalHold
-                            }
-                        }, response.GetRawResponse());
+                            },
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -1663,17 +1658,26 @@ namespace Azure.Storage.Blobs
 
                 try
                 {
-                    return await BlobRestClient.Container.ListBlobsFlatSegmentAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        marker: marker,
-                        prefix: prefix,
-                        maxresults: pageSizeHint,
-                        include: BlobExtensions.AsIncludeItems(traits, states),
-                        async: async,
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    Response<BlobsFlatSegment> response = await BlobRestClient.Container.ListBlobsFlatSegmentAsync(
+                          ClientDiagnostics,
+                          Pipeline,
+                          Uri,
+                          marker: marker,
+                          prefix: prefix,
+                          maxresults: pageSizeHint,
+                          include: BlobExtensions.AsIncludeItems(traits, states),
+                          async: async,
+                          cancellationToken: cancellationToken)
+                          .ConfigureAwait(false);
+                    if ((traits & BlobTraits.Metadata) != BlobTraits.Metadata)
+                    {
+                        IEnumerable<BlobItem> blobItems = response.Value.BlobItems;
+                        foreach (BlobItem blobItem in blobItems)
+                        {
+                            blobItem.Metadata = null;
+                        }
+                    }
+                    return response;
                 }
                 catch (Exception ex)
                 {

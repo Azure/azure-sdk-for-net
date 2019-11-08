@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -18,6 +19,9 @@ namespace SnippetGenerator
         private const string _snippetPrefix = "Snippet:";
         private readonly string _directory;
         private readonly Lazy<List<Snippet>> _snippets;
+        private static readonly Regex _markdownOnlyRegex = new Regex(
+            @"(?<indent>\s*)//@@\s*(?<line>.*)",
+            RegexOptions.Compiled | RegexOptions.Singleline);
 
         private UTF8Encoding _utf8EncodingWithoutBOM;
 
@@ -116,11 +120,38 @@ namespace SnippetGenerator
             {
                 var line = lines[index];
                 line = string.IsNullOrWhiteSpace(line) ? string.Empty : line.Substring(minIndent);
+                line = RemoveMarkdownOnlyPrefix(line);
                 stringBuilder.AppendLine(line);
             }
 
             return stringBuilder.ToString();
         }
+
+        /// <summary>
+        /// There are occasions where we might want some explanatory code only
+        /// appearing in the markdown document.  Comments like
+        ///
+        ///     //@@ bool onlyInMarkDown = true;
+        ///
+        /// will have the "//@@" stripped off by this method when generating
+        /// our markdown text.
+        /// </summary>
+        /// <param name="line">The line of text.</param>
+        /// <returns>
+        /// The line of text with an optional "//@@" markdown only prefix
+        /// removed.
+        /// </returns>
+        private static string RemoveMarkdownOnlyPrefix(string line) =>
+            _markdownOnlyRegex.Replace(line, match =>
+            {
+                var indentGroup = match.Groups["indent"];
+                var lineGroup = match.Groups["line"];
+                if (indentGroup.Success && lineGroup.Success)
+                {
+                    return indentGroup.Value + lineGroup.Value;
+                }
+                return line;
+            });
 
         private List<Snippet> GetSnippetsInDirectory(string baseDirectory)
         {

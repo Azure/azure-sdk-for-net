@@ -34,11 +34,14 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// </summary>
         /// <param name="ruleGroupName">Describes the managed rule group to
         /// override.</param>
+        /// <param name="exclusions">Describes the exclusions that are applied
+        /// to all rules in the group.</param>
         /// <param name="rules">List of rules that will be disabled. If none
         /// specified, all rules in the group will be disabled.</param>
-        public ManagedRuleGroupOverride(string ruleGroupName, IList<ManagedRuleOverride> rules = default(IList<ManagedRuleOverride>))
+        public ManagedRuleGroupOverride(string ruleGroupName, IList<ManagedRuleExclusion> exclusions = default(IList<ManagedRuleExclusion>), IList<ManagedRuleOverride> rules = default(IList<ManagedRuleOverride>))
         {
             RuleGroupName = ruleGroupName;
+            Exclusions = exclusions;
             Rules = rules;
             CustomInit();
         }
@@ -53,6 +56,13 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// </summary>
         [JsonProperty(PropertyName = "ruleGroupName")]
         public string RuleGroupName { get; set; }
+
+        /// <summary>
+        /// Gets or sets describes the exclusions that are applied to all rules
+        /// in the group.
+        /// </summary>
+        [JsonProperty(PropertyName = "exclusions")]
+        public IList<ManagedRuleExclusion> Exclusions { get; set; }
 
         /// <summary>
         /// Gets or sets list of rules that will be disabled. If none
@@ -73,13 +83,23 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "RuleGroupName");
             }
-            if (Rules != null)
+            if (Exclusions != null)
             {
-                foreach (var element in Rules)
+                foreach (var element in Exclusions)
                 {
                     if (element != null)
                     {
                         element.Validate();
+                    }
+                }
+            }
+            if (Rules != null)
+            {
+                foreach (var element1 in Rules)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
                     }
                 }
             }

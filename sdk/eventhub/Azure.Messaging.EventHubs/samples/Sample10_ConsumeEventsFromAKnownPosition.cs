@@ -39,144 +39,160 @@ namespace Azure.Messaging.EventHubs.Samples
         public async Task RunAsync(string connectionString,
                                    string eventHubName)
         {
-            // We will start by creating a client using its default set of options.
+            // We will start by creating a client to inspect the Event Hub and select a partition to operate against to ensure that
+            // events are being published and read from the same partition.
 
-            await using (var client = new EventHubClient(connectionString, eventHubName))
+            string firstPartition;
+
+            await using (var inspectionClient = new EventHubProducerClient(connectionString, eventHubName))
             {
-                // With our client, we can now inspect the partitions and find the identifier of the first.
+                // With our client, we can now inspect the partitions and find the identifier
+                // of the first.
 
-                string firstPartition = (await client.GetPartitionIdsAsync()).First();
+                firstPartition = (await inspectionClient.GetPartitionIdsAsync()).First();
+            }
 
-                // In this example, we will make use of multiple consumers for the first partition in the Event Hub, using the default consumer group
-                // that is created with an Event Hub.  Our initial consumer will begin watching the partition at the very end, reading only new events
-                // that we will publish for it.
+            // In this example, we will make use of multiple clients.  Because clients are typically responsible for managing their own connection to the
+            // Event Hubs service, each will implicitly create their own connection.  In this example, we will create a connection that may be shared amongst
+            // clients in order to illustrate connection sharing.  Because we are explicitly creating the connection, we assume responsibility for managing its
+            // lifespan and ensuring that it is properly closed or disposed when we are done using it.
 
-                await using (EventHubProducer producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = firstPartition }))
+            await using (var eventHubConnection = new EventHubConnection(connectionString, eventHubName))
+            await using (var producerClient = new EventHubProducerClient(eventHubConnection, new EventHubProducerClientOptions { PartitionId = firstPartition }))
+            {
+                // Our initial consumer will begin watching the partition at the very end, reading only new events that we will publish for it. Before we can publish
+                // the events and have them observed, we will need to ask the consumer to perform an operation,
+                // because it opens its connection only when it needs to.
+                //
+                // We'll begin to iterate on the partition using a small wait time, so that control will return to our loop even when
+                // no event is available.  For the first call, we'll publish so that we can receive them.
+                //
+                // Each event that the initial consumer reads will have attributes set that describe the event's place in the
+                // partition, such as its offset, sequence number, and the date/time that it was enqueued.  These attributes can be
+                // used to create a new consumer that begins consuming at a known position.
+                //
+                // With Event Hubs, it is the responsibility of an application consuming events to keep track of those that it has processed,
+                // and to manage where in the partition the consumer begins reading events.  This is done by using the position information to track
+                // state, commonly known as "creating a checkpoint."
+                //
+                // The goal is to preserve the position of an event in some form of durable state, such as writing it to a database, so that if the
+                // consuming application crashes or is otherwise restarted, it can retrieve that checkpoint information and use it to create a consumer that
+                // begins reading at the position where it left off.
+                //
+                // It is important to note that there is potential for a consumer to process an event and be unable to preserve the checkpoint.  A well-designed
+                // consumer must be able to deal with processing the same event multiple times without it causing data corruption or otherwise creating issues.
+                // Event Hubs, like most event streaming systems, guarantees "at least once" delivery; even in cases where the consumer does not experience a restart,
+                // there is a small possibility that the service will return an event multiple times.
+                //
+                // In this example, we will publish a batch of events to be received with an initial consumer.  The third event that is consumed will be captured
+                // and another consumer will use its attributes to start reading the event that follows, consuming the same set of events that our initial consumer
+                // read, skipping over the first three.
+
+                EventData thirdEvent;
+                int eventBatchSize = 50;
+
+                await using (var initialConsumerClient = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, firstPartition, EventPosition.Latest, eventHubConnection))
                 {
-                    // Each event that the initial consumer reads will have attributes set that describe the event's place in the
-                    // partition, such as it's offset, sequence number, and the date/time that it was enqueued.  These attributes can be
-                    // used to create a new consumer that begins consuming at a known position.
-                    //
-                    // With Event Hubs, it is the responsibility of an application consuming events to keep track of those that it has processed,
-                    // and to manage where in the partition the consumer begins reading events.  This is done by using the position information to track
-                    // state, commonly known as "creating a checkpoint."
-                    //
-                    // The goal is to preserve the position of an event in some form of durable state, such as writing it to a database, so that if the
-                    // consuming application crashes or is otherwise restarted, it can retrieve that checkpoint information and use it to create a consumer that
-                    // begins reading at the position where it left off.
-                    //
-                    // It is important to note that there is potential for a consumer to process an event and be unable to preserve the checkpoint.  A well-designed
-                    // consumer must be able to deal with processing the same event multiple times without it causing data corruption or otherwise creating issues.
-                    // Event Hubs, like most event streaming systems, guarantees "at least once" delivery; even in cases where the consumer does not experience a restart,
-                    // there is a small possibility that the service will return an event multiple times.
-                    //
-                    // In this example, we will publish a batch of events to be received with an initial consumer.  The third event that is consumed will be captured
-                    // and another consumer will use it's attributes to start reading the event that follows, consuming the same set of events that our initial consumer
-                    // read, skipping over the first three.
+                    EventData[] eventBatch = new EventData[eventBatchSize];
 
-                    int eventBatchSize = 50;
-
-                    EventData thirdEvent;
-
-                    await using (EventHubConsumer initialConsumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, firstPartition, EventPosition.Latest))
+                    for (int index = 0; index < eventBatchSize; ++index)
                     {
-                        // The first receive that we ask of it will not see any events, but allows the consumer to start watching the partition.  Because
-                        // the maximum wait time is specified as zero, this call will return immediately and will not have consumed any events.
+                        eventBatch[index] = new EventData(Encoding.UTF8.GetBytes($"I am event #{ index }"));
+                    }
 
-                        await initialConsumer.ReceiveAsync(1, TimeSpan.Zero);
+                    // We will consume the events until all of the published events have been received.
 
-                        // Now that the consumer is watching the partition, let's publish a batch of events.
+                    List<EventData> receivedEvents = new List<EventData>();
+                    bool wereEventsPublished = false;
 
-                        EventData[] eventBatch = new EventData[eventBatchSize];
+                    CancellationTokenSource cancellationSource = new CancellationTokenSource();
+                    cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
 
-                        for (int index = 0; index < eventBatchSize; ++index)
+                    await foreach (PartitionEvent currentEvent in initialConsumerClient.ReadEventsFromPartitionAsync(firstPartition, EventPosition.Latest, TimeSpan.FromMilliseconds(150), cancellationSource.Token))
+                    {
+                        if (!wereEventsPublished)
                         {
-                            eventBatch[index] = new EventData(Encoding.UTF8.GetBytes($"I am event #{ index }"));
+                            await producerClient.SendAsync(eventBatch);
+                            wereEventsPublished = true;
+
+                            Console.WriteLine($"The event batch with { eventBatchSize } events has been published.");
                         }
-
-                        await producer.SendAsync(eventBatch);
-                        Console.WriteLine($"The event batch with { eventBatchSize } events has been published.");
-
-                        // We will consume the events until all of the published events have been received.
-
-                        var receivedEvents = new List<EventData>();
-
-                        CancellationTokenSource cancellationSource = new CancellationTokenSource();
-                        cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
-
-                        await foreach (EventData currentEvent in initialConsumer.SubscribeToEvents(cancellationSource.Token))
+                        else
                         {
-                            receivedEvents.Add(currentEvent);
+                            receivedEvents.Add(currentEvent.Data);
 
                             if (receivedEvents.Count >= eventBatchSize)
                             {
                                 break;
                             }
                         }
-
-                        // Print out the events that we received.
-
-                        Console.WriteLine();
-                        Console.WriteLine($"The initial consumer processed { receivedEvents.Count } events of the { eventBatchSize } that were published.  { eventBatchSize } were expected.");
-
-                        foreach (EventData eventData in receivedEvents)
-                        {
-                            // The body of our event was an encoded string; we'll recover the
-                            // message by reversing the encoding process.
-
-                            string message = Encoding.UTF8.GetString(eventData.Body.ToArray());
-                            Console.WriteLine($"\tMessage: \"{ message }\"");
-                        }
-
-                        // Remember the third event that was consumed.
-
-                        thirdEvent = receivedEvents[2];
                     }
 
-                    // At this point, our initial consumer has passed its "using" scope and has been safely disposed of.
-                    //
-                    // Create a new consumer beginning using the third event as the last sequence number processed; this new consumer will begin reading at the next available
-                    // sequence number, allowing it to read the set of published events beginning with the fourth one.
+                    // Print out the events that we received.
 
-                    await using (EventHubConsumer newConsumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, firstPartition, EventPosition.FromSequenceNumber(thirdEvent.SequenceNumber.Value)))
+                    Console.WriteLine();
+                    Console.WriteLine($"The initial consumer processed { receivedEvents.Count } events of the { eventBatchSize } that were published.  { eventBatchSize } were expected.");
+
+                    foreach (EventData eventData in receivedEvents)
                     {
-                        // We will consume the events using the new consumer until all of the published events have been received.
+                        // The body of our event was an encoded string; we'll recover the
+                        // message by reversing the encoding process.
 
-                        CancellationTokenSource cancellationSource = new CancellationTokenSource();
-                        cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+                        string message = Encoding.UTF8.GetString(eventData.Body.ToArray());
+                        Console.WriteLine($"\tMessage: \"{ message }\"");
+                    }
 
-                        int expectedCount = (eventBatchSize - 3);
-                        var receivedEvents = new List<EventData>();
+                    // Remember the third event that was consumed.
 
-                        await foreach (EventData currentEvent in newConsumer.SubscribeToEvents(cancellationSource.Token))
+                    thirdEvent = receivedEvents[2];
+                }
+
+                // At this point, our initial consumer client has passed its "using" scope and has been safely disposed of.
+                //
+                // Create a new consumer beginning using the third event as the last sequence number processed; this new consumer will begin reading at the next available
+                // sequence number, allowing it to read the set of published events beginning with the fourth one.
+                //
+                // Because our second consumer will begin watching the partition at a specific event, there is no need to ask for an initial operation to set our place; when
+                // we begin iterating, the consumer will locate the proper place in the partition to read from.
+
+                await using (var newConsumerClient = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, firstPartition, EventPosition.FromSequenceNumber(thirdEvent.SequenceNumber.Value), eventHubConnection))
+                {
+                    // We will consume the events using the new consumer until all of the published events have been received.
+
+                    CancellationTokenSource cancellationSource = new CancellationTokenSource();
+                    cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+
+                    int expectedCount = (eventBatchSize - 3);
+                    var receivedEvents = new List<EventData>();
+
+                    await foreach (PartitionEvent currentEvent in newConsumerClient.ReadEventsFromPartitionAsync(firstPartition, EventPosition.FromSequenceNumber(thirdEvent.SequenceNumber.Value), cancellationSource.Token))
+                    {
+                        receivedEvents.Add(currentEvent.Data);
+
+                        if (receivedEvents.Count >= expectedCount)
                         {
-                            receivedEvents.Add(currentEvent);
-
-                            if (receivedEvents.Count >= expectedCount)
-                            {
-                                break;
-                            }
+                            break;
                         }
+                    }
 
-                        // Print out the events that we received.
+                    // Print out the events that we received.
 
-                        Console.WriteLine();
-                        Console.WriteLine();
-                        Console.WriteLine($"The new consumer processed { receivedEvents.Count } events of the { eventBatchSize } that were published.  { expectedCount } were expected.");
+                    Console.WriteLine();
+                    Console.WriteLine();
+                    Console.WriteLine($"The new consumer processed { receivedEvents.Count } events of the { eventBatchSize } that were published.  { expectedCount } were expected.");
 
-                        foreach (EventData eventData in receivedEvents)
-                        {
-                            // The body of our event was an encoded string; we'll recover the
-                            // message by reversing the encoding process.
+                    foreach (EventData eventData in receivedEvents)
+                    {
+                        // The body of our event was an encoded string; we'll recover the
+                        // message by reversing the encoding process.
 
-                            string message = Encoding.UTF8.GetString(eventData.Body.ToArray());
-                            Console.WriteLine($"\tMessage: \"{ message }\"");
-                        }
+                        string message = Encoding.UTF8.GetString(eventData.Body.ToArray());
+                        Console.WriteLine($"\tMessage: \"{ message }\"");
                     }
                 }
             }
 
-            // At this point, our client, all consumers, and producer have passed their "using" scope and have safely been disposed of.  We
+            // At this point, our clients and connection have passed their "using" scope and have safely been disposed of.  We
             // have no further obligations.
 
             Console.WriteLine();

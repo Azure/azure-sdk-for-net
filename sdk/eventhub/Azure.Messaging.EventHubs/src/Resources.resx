@@ -198,8 +198,8 @@
   <data name="UnrecoverableException" xml:space="preserve">
     <value>An unrecoverable exception was encountered that left the environment in a bad state.</value>
   </data>
-  <data name="DisposedInstanceCannotPerformOperation" xml:space="preserve">
-    <value>{0} has already been disposed and cannot perform the requested operation.</value>
+  <data name="ClosedInstanceCannotPerformOperation" xml:space="preserve">
+    <value>{0} has already been closed and cannot perform the requested operation.</value>
   </data>
   <data name="CouldNotAcquireAccessToken" xml:space="preserve">
     <value>Unable to acquire an access token using the provided credential.</value>
@@ -221,5 +221,14 @@
   </data>
   <data name="TrackLastEnqueuedEventInformationNotSet" xml:space="preserve">
     <value>This information is only available when TrackLastEnqueuedEventInformation is set on the Event Hub consumer options.</value>
+  </data>
+  <data name="CannotStartEventProcessorWithoutHandler" xml:space="preserve">
+    <value>Cannot begin processing without {0} handler set.</value>
+  </data>
+  <data name="RunningEventProcessorCannotPerformOperation" xml:space="preserve">
+    <value>The event processor is already running and needs to be stopped in order to perform this operation.</value>
+  </data>
+  <data name="ClientNeededForThisInformation" xml:space="preserve">
+    <value>The Event Hub client responsible for this information</value>
   </data>
 </root>

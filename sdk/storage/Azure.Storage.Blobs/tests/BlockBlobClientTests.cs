@@ -238,7 +238,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8354")]
         public async Task StageBlockAsync_WithUnreliableConnection()
         {
             const int blobSize = 1 * Constants.MB;
@@ -325,7 +324,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8353")]
         public async Task StageBlockFromUriAsync_CPK()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -657,8 +655,8 @@ namespace Azure.Storage.Blobs.Test
                 {
                     CacheControl = constants.CacheControl,
                     ContentDisposition = constants.ContentDisposition,
-                    ContentEncoding = new string[] { constants.ContentEncoding },
-                    ContentLanguage = new string[] { constants.ContentLanguage },
+                    ContentEncoding = constants.ContentEncoding,
+                    ContentLanguage = constants.ContentLanguage,
                     ContentHash = constants.ContentMD5,
                     ContentType = constants.ContentType
                 });
@@ -667,10 +665,8 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobProperties> response = await blob.GetPropertiesAsync();
             Assert.AreEqual(constants.ContentType, response.Value.ContentType);
             TestHelper.AssertSequenceEqual(constants.ContentMD5, response.Value.ContentHash);
-            Assert.AreEqual(1, response.Value.ContentEncoding.Count());
-            Assert.AreEqual(constants.ContentEncoding, response.Value.ContentEncoding.First());
-            Assert.AreEqual(1, response.Value.ContentLanguage.Count());
-            Assert.AreEqual(constants.ContentLanguage, response.Value.ContentLanguage.First());
+            Assert.AreEqual(constants.ContentEncoding, response.Value.ContentEncoding);
+            Assert.AreEqual(constants.ContentLanguage, response.Value.ContentLanguage);
             Assert.AreEqual(constants.ContentDisposition, response.Value.ContentDisposition);
             Assert.AreEqual(constants.CacheControl, response.Value.CacheControl);
         }
@@ -1218,8 +1214,8 @@ namespace Azure.Storage.Blobs.Test
                     {
                         CacheControl = constants.CacheControl,
                         ContentDisposition = constants.ContentDisposition,
-                        ContentEncoding = new string[] { constants.ContentEncoding },
-                        ContentLanguage = new string[] { constants.ContentLanguage },
+                        ContentEncoding = constants.ContentEncoding,
+                        ContentLanguage = constants.ContentLanguage,
                         ContentHash = contentMD5
                     });
             }
@@ -1228,8 +1224,8 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobProperties> response = await blob.GetPropertiesAsync();
             Assert.AreEqual(constants.CacheControl, response.Value.CacheControl);
             Assert.AreEqual(constants.ContentDisposition, response.Value.ContentDisposition);
-            Assert.AreEqual(constants.ContentEncoding, response.Value.ContentEncoding.First());
-            Assert.AreEqual(constants.ContentLanguage, response.Value.ContentLanguage.First());
+            Assert.AreEqual(constants.ContentEncoding, response.Value.ContentEncoding);
+            Assert.AreEqual(constants.ContentLanguage, response.Value.ContentLanguage);
             TestHelper.AssertSequenceEqual(contentMD5, response.Value.ContentHash);
         }
 
@@ -1320,7 +1316,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8354")]
         public async Task UploadAsync_WithUnreliableConnection()
         {
             const int blobSize = 1 * Constants.MB;

@@ -50,10 +50,10 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         public string Path { get; set; }
 
         /// <summary>
-        /// Gets restore file spec isdir
+        /// Gets or sets restore file spec isdir
         /// </summary>
         [JsonProperty(PropertyName = "isdir")]
-        public bool? Isdir { get; private set; }
+        public bool? Isdir { get; set; }
 
     }
 }

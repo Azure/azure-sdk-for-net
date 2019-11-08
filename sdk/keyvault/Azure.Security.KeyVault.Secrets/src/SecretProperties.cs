@@ -60,39 +60,38 @@ namespace Azure.Security.KeyVault.Secrets
         }
 
         /// <summary>
-        /// Secret identifier.
+        /// Gets the secret identifier.
         /// </summary>
         public Uri Id { get => _identifier.Id; internal set => _identifier.Id = value; }
 
         /// <summary>
-        /// Vault base URL.
+        /// Gets the Key Vault base <see cref="Uri"/>.
         /// </summary>
         public Uri VaultUri { get => _identifier.VaultUri; internal set => _identifier.VaultUri = value; }
 
         /// <summary>
-        /// Name of the secret.
+        /// Gets the name of the secret.
         /// </summary>
         public string Name { get => _identifier.Name; internal set => _identifier.Name = value; }
 
         /// <summary>
-        /// Version of the secret.
+        /// Gets the version of the secret.
         /// </summary>
         public string Version { get => _identifier.Version; internal set => _identifier.Version = value; }
 
         /// <summary>
-        /// Content type of the secret value such as a password.
+        /// Gets or sets the content type of the secret value such as "text/plain" for a password.
         /// </summary>
         public string ContentType { get; set; }
 
         /// <summary>
-        /// Set to true if the secret's lifetime is managed by key vault. If this
-        /// is a secret backing a KV certificate, then managed will be true.
+        /// Gets a value indicating whether the secret's lifetime is managed by Key Vault.
+        /// If this secret is backing a Key Vault certificate, the value will be true.
         /// </summary>
-        public bool? Managed { get; internal set; }
+        public bool Managed { get; internal set; }
 
         /// <summary>
-        /// If this is a secret backing a KV certificate, then this field specifies
-        /// the corresponding key backing the KV certificate.
+        /// Gets the key identifier of a key backing a Key Vault certificate if this secret is backing a Key Vault certifcate.
         /// </summary>
         public Uri KeyId
         {
@@ -101,43 +100,40 @@ namespace Azure.Security.KeyVault.Secrets
         }
 
         /// <summary>
-        /// Specifies whether the secret is enabled and useable.
+        /// Gets or sets a value indicating whether the secret is enabled and useable.
         /// </summary>
         public bool? Enabled { get => _attributes.Enabled; set => _attributes.Enabled = value; }
 
         /// <summary>
-        /// Identifies the time (in UTC) before which the secret data should not be retrieved.
+        /// Gets or sets a <see cref="DateTimeOffset"/> of when the secret will be valid and can be used.
         /// </summary>
         public DateTimeOffset? NotBefore { get => _attributes.NotBefore; set => _attributes.NotBefore = value; }
 
         /// <summary>
-        /// Identifies the expiration time (in UTC) on or after which the secret data should not be retrieved.
+        /// Gets or sets a <see cref="DateTimeOffset"/> of when the secret will expire and cannot be used.
         /// </summary>
         public DateTimeOffset? ExpiresOn { get => _attributes.ExpiresOn; set => _attributes.ExpiresOn = value; }
 
         /// <summary>
-        /// Creation time in UTC.
+        /// Gets a <see cref="DateTimeOffset"/> of when the secret was created.
         /// </summary>
         public DateTimeOffset? CreatedOn { get => _attributes.CreatedOn; internal set => _attributes.CreatedOn = value; }
 
         /// <summary>
-        /// Last updated time in UTC.
+        /// Gets a <see cref="DateTimeOffset"/> of when the secret was updated.
         /// </summary>
         public DateTimeOffset? UpdatedOn { get => _attributes.UpdatedOn; internal set => _attributes.UpdatedOn = value; }
 
         /// <summary>
-        /// Reflects the deletion recovery level currently in effect for
-        /// secrets in the current vault. If it contains 'Purgeable', the
-        /// secret can be permanently deleted by a privileged user; otherwise,
-        /// only the system can purge the secret, at the end of the retention
-        /// interval. Possible values include: 'Purgeable',
-        /// 'Recoverable+Purgeable', 'Recoverable',
-        /// 'Recoverable+ProtectedSubscription'
+        /// Gets the recovery level currently in effect for secrets in the Key Vault.
+        /// If "Purgeable", the secret can be permanently deleted by an authorized user;
+        /// otherwise, only the service can purge the secret at the end of the retention interval.
         /// </summary>
+        /// <value>Possible values include "Purgeable", "Recoverable+Purgeable", "Recoverable", and "Recoverable+ProtectedSubscription".</value>
         public string RecoveryLevel { get => _attributes.RecoveryLevel; internal set => _attributes.RecoveryLevel = value; }
 
         /// <summary>
-        /// A dictionary of tags with specific metadata about the secret.
+        /// Gets a dictionary of tags with specific metadata about the secret.
         /// </summary>
         public IDictionary<string, string> Tags => LazyInitializer.EnsureInitialized(ref _tags);
 
@@ -198,7 +194,7 @@ namespace Azure.Security.KeyVault.Secrets
                 json.WriteEndObject();
             }
 
-            if (_tags != null && _tags.Count > 0)
+            if (!_tags.IsNullOrEmpty())
             {
                 json.WriteStartObject(s_tagsPropertyNameBytes);
 

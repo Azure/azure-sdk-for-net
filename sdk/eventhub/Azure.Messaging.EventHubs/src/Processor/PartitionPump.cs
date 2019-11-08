@@ -3,8 +3,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
@@ -13,16 +15,19 @@ namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
     ///   Constantly receives <see cref="EventData" /> from a single partition in the context of a given consumer
-    ///   group.  The received data is sent to a partition processor to be processed.
+    ///   group.  The received data is sent to its owner <see cref="EventProcessorClient" /> to be processed.
     /// </summary>
     ///
     internal class PartitionPump
     {
-        /// <summary>The <see cref="EventHubRetryPolicy" /> used to verify whether an exception is retriable or not.</summary>
-        private static readonly BasicRetryPolicy s_retryPolicy = new BasicRetryPolicy(new RetryOptions());
+        // TODO: Remove this when moving to the consumer's iterator.
+        private const int MaximumMessageCount = 25;
+
+        /// <summary>The <see cref="EventHubsRetryPolicy" /> used to verify whether an exception is retriable or not.</summary>
+        private static readonly BasicRetryPolicy RetryPolicy = new BasicRetryPolicy(new RetryOptions());
 
         /// <summary>The primitive for synchronizing access during start and close operations.</summary>
-        private readonly SemaphoreSlim _runningTaskSemaphore = new SemaphoreSlim(1, 1);
+        private readonly SemaphoreSlim RunningTaskSemaphore = new SemaphoreSlim(1, 1);
 
         /// <summary>
         ///   A boolean value indicating whether this partition pump is currently running or not.
@@ -31,10 +36,11 @@ namespace Azure.Messaging.EventHubs.Processor
         public bool IsRunning => RunningTask != null && !RunningTask.IsCompleted;
 
         /// <summary>
-        ///   The client used to interact with the Azure Event Hubs service.
+        ///   The active connection to the Azure Event Hubs service, enabling client communications for metadata
+        ///   about the associated Event Hub and access to a transport-aware producer.
         /// </summary>
         ///
-        private EventHubClient InnerClient { get; }
+        private EventHubConnection Connection { get; }
 
         /// <summary>
         ///   The name of the consumer group this partition pump is associated with.  Events will be
@@ -44,22 +50,34 @@ namespace Azure.Messaging.EventHubs.Processor
         private string ConsumerGroup { get; }
 
         /// <summary>
+        ///   The position within the partition where the pump should begin reading events.
+        /// </summary>
+        ///
+        private EventPosition StartingPosition { get; }
+
+        /// <summary>
         ///   The context of the Event Hub partition this partition pump is associated with.
         /// </summary>
         ///
         private PartitionContext Context { get; }
 
         /// <summary>
-        ///   Processes events and errors.
+        ///   Responsible for processing events received from the Event Hubs service.
         /// </summary>
         ///
-        private BasePartitionProcessor PartitionProcessor { get; }
+        private Func<EventProcessorEvent, Task> ProcessEventAsync { get; }
+
+        /// <summary>
+        ///   Updates the checkpoint using the given information for the associated partition and consumer group in the chosen storage service.
+        /// </summary>
+        ///
+        private Func<EventData, PartitionContext, Task> UpdateCheckpointAsync { get; }
 
         /// <summary>
         ///   The set of options to use for this partition pump.
         /// </summary>
         ///
-        private EventProcessorOptions Options { get; }
+        private EventProcessorClientOptions Options { get; }
 
         /// <summary>
         ///   A <see cref="CancellationTokenSource"/> instance to signal the request to cancel the current running task.
@@ -71,7 +89,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   The consumer used to receive events from the Azure Event Hubs service.
         /// </summary>
         ///
-        private EventHubConsumer InnerConsumer { get; set; }
+        private EventHubConsumerClient InnerConsumer { get; set; }
 
         /// <summary>
         ///   The running task responsible for receiving events from the Azure Event Hubs service.
@@ -80,32 +98,39 @@ namespace Azure.Messaging.EventHubs.Processor
         private Task RunningTask { get; set; }
 
         /// <summary>
-        ///   The reason why the associated partition processor is being closed.  This member is only used in case of failure.
-        ///   Shutdown and OwnershipLost close reasons will be specified by the event processor.
-        /// </summary>
-        ///
-        private PartitionProcessorCloseReason CloseReason { get; set; }
-
-        /// <summary>
         ///   Initializes a new instance of the <see cref="PartitionPump"/> class.
         /// </summary>
         ///
-        /// <param name="eventHubClient">The client used to interact with the Azure Event Hubs service.</param>
+        /// <param name="connection">The <see cref="EventHubConnection" /> connection to use for communication with the Event Hubs service.</param>
         /// <param name="consumerGroup">The name of the consumer group this partition pump is associated with.  Events are read in the context of this group.</param>
         /// <param name="partitionContext">The context of the Event Hub partition this partition pump is associated with.  Events will be read only from this partition.</param>
-        /// <param name="partitionProcessor">A partition processor used to process events and errors.  Its implementation must be provided by the caller.</param>
+        /// <param name="startingPosition">The position within the partition where the pump should begin reading events.</param>
+        /// <param name="processEventAsync">Responsible for processing events received from the Event Hubs service.</param>
+        /// <param name="updateCheckpointAsync">Updates the checkpoint using the given information for the associated partition and consumer group in the chosen storage service.</param>
         /// <param name="options">The set of options to use for this partition pump.</param>
         ///
-        internal PartitionPump(EventHubClient eventHubClient,
+        internal PartitionPump(EventHubConnection connection,
                                string consumerGroup,
                                PartitionContext partitionContext,
-                               BasePartitionProcessor partitionProcessor,
-                               EventProcessorOptions options)
+                               EventPosition startingPosition,
+                               Func<EventProcessorEvent, Task> processEventAsync,
+                               Func<EventData, PartitionContext, Task> updateCheckpointAsync,
+                               EventProcessorClientOptions options)
         {
-            InnerClient = eventHubClient;
+            Argument.AssertNotNull(connection, nameof(connection));
+            Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
+            Argument.AssertNotNull(partitionContext, nameof(partitionContext));
+            Argument.AssertNotNull(startingPosition, nameof(startingPosition));
+            Argument.AssertNotNull(processEventAsync, nameof(processEventAsync));
+            Argument.AssertNotNull(updateCheckpointAsync, nameof(updateCheckpointAsync));
+            Argument.AssertNotNull(options, nameof(options));
+
+            Connection = connection;
             ConsumerGroup = consumerGroup;
             Context = partitionContext;
-            PartitionProcessor = partitionProcessor;
+            StartingPosition = startingPosition;
+            ProcessEventAsync = processEventAsync;
+            UpdateCheckpointAsync = updateCheckpointAsync;
             Options = options;
         }
 
@@ -119,7 +144,7 @@ namespace Azure.Messaging.EventHubs.Processor
         {
             if (RunningTask == null)
             {
-                await _runningTaskSemaphore.WaitAsync().ConfigureAwait(false);
+                await RunningTaskSemaphore.WaitAsync().ConfigureAwait(false);
 
                 try
                 {
@@ -130,23 +155,14 @@ namespace Azure.Messaging.EventHubs.Processor
                         RunningTaskTokenSource?.Cancel();
                         RunningTaskTokenSource = new CancellationTokenSource();
 
-                        InnerConsumer = InnerClient.CreateConsumer(ConsumerGroup, Context.PartitionId, Options.InitialEventPosition);
-
-                        // In case an exception is encountered while partition processor is initializing, don't catch it
-                        // and let the event processor handle it.  The inner consumer hasn't connected to the service yet,
-                        // so there's no need to close it.
-
-                        await PartitionProcessor.InitializeAsync(Context).ConfigureAwait(false);
-
-                        // Before closing, the running task will set the close reason in case of failure.  When something
-                        // unexpected happens and it's not set, the default value (Unknown) is kept.
+                        InnerConsumer = new EventHubConsumerClient(ConsumerGroup, Context.PartitionId, StartingPosition, Connection);
 
                         RunningTask = RunAsync(RunningTaskTokenSource.Token);
                     }
                 }
                 finally
                 {
-                    _runningTaskSemaphore.Release();
+                    RunningTaskSemaphore.Release();
                 }
             }
         }
@@ -155,15 +171,13 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Stops the partition pump.  In case it isn't running, nothing happens.
         /// </summary>
         ///
-        /// <param name="reason">The reason why the associated partition processor is being closed.  In case it's <c>null</c>, the internal close reason set by this pump is used.</param>
-        ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public async Task StopAsync(PartitionProcessorCloseReason? reason)
+        public async Task StopAsync()
         {
             if (RunningTask != null)
             {
-                await _runningTaskSemaphore.WaitAsync().ConfigureAwait(false);
+                await RunningTaskSemaphore.WaitAsync().ConfigureAwait(false);
 
                 try
                 {
@@ -174,45 +188,27 @@ namespace Azure.Messaging.EventHubs.Processor
 
                         try
                         {
-                            // RunningTask is only expected to fail when the partition processor throws while processing
-                            // an error, but unforeseen scenarios might happen.
+                            // In case the pump has failed, don't catch the unhandled exception and let the caller handle it.
 
                             await RunningTask.ConfigureAwait(false);
                         }
-                        catch (Exception)
+                        finally
                         {
-                            // TODO: delegate the exception handling to an Exception Callback.
+                            RunningTask = null;
+                            await InnerConsumer.CloseAsync().ConfigureAwait(false);
                         }
-
-                        RunningTask = null;
-
-                        // It's important to close the consumer as soon as possible.  Failing to do so multiple times
-                        // would make it impossible to create more consumers for the associated partition as there's a
-                        // limit per client.
-
-                        await InnerConsumer.CloseAsync().ConfigureAwait(false);
-
-                        // In case an exception is encountered while partition processor is closing, don't catch it and
-                        // let the event processor handle it.  The pump has no way to guess when a partition was lost or
-                        // when a shutdown request was sent to the event processor, so it expects a "reason" parameter to
-                        // provide this information.  However, in case of pump failure, the external event processor does
-                        // not have enough information to figure out what failure reason to use, as this information is
-                        // only known by the pump.  In this case, we expect the processor-provided reason to be null, and
-                        // the private CloseReason is used instead.
-
-                        await PartitionProcessor.CloseAsync(Context, reason ?? CloseReason).ConfigureAwait(false);
                     }
                 }
                 finally
                 {
-                    _runningTaskSemaphore.Release();
+                    RunningTaskSemaphore.Release();
                 }
             }
         }
 
         /// <summary>
         ///   The main loop of a partition pump.  It receives events from the Azure Event Hubs service
-        ///   and delegates their processing to the inner partition processor.
+        ///   and delegates their processing to the event processor processing handlers.
         /// </summary>
         ///
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
@@ -221,7 +217,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         private async Task RunAsync(CancellationToken cancellationToken)
         {
-            IEnumerable<EventData> receivedEvents;
+            List<EventData> receivedEvents;
             Exception unrecoverableException = null;
 
             // We'll break from the loop upon encountering a non-retriable exception.  The event processor periodically
@@ -231,7 +227,7 @@ namespace Azure.Messaging.EventHubs.Processor
             {
                 try
                 {
-                    receivedEvents = await InnerConsumer.ReceiveAsync(Options.MaximumMessageCount, Options.MaximumReceiveWaitTime, cancellationToken).ConfigureAwait(false);
+                    receivedEvents = (await InnerConsumer.ReceiveAsync(MaximumMessageCount, Options.MaximumReceiveWaitTime, cancellationToken).ConfigureAwait(false)).ToList();
 
                     using DiagnosticScope diagnosticScope = EventDataInstrumentation.ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName);
                     diagnosticScope.AddAttribute("kind", "server");
@@ -247,41 +243,46 @@ namespace Azure.Messaging.EventHubs.Processor
                         }
                     }
 
+                    // Small workaround to make sure we call ProcessEvent with EventData = null when no events have been received.
+                    // The code is expected to get simpler when we start using the async enumerator internally to receive events.
+
+                    if (receivedEvents.Count == 0)
+                    {
+                        receivedEvents.Add(null);
+                    }
+
                     diagnosticScope.Start();
 
-                    try
+                    foreach (var eventData in receivedEvents)
                     {
-                        await PartitionProcessor.ProcessEventsAsync(Context, receivedEvents, cancellationToken).ConfigureAwait(false);
-                    }
-                    catch (Exception partitionProcessorException)
-                    {
-                        diagnosticScope.Failed(partitionProcessorException);
-                        unrecoverableException = partitionProcessorException;
-                        CloseReason = PartitionProcessorCloseReason.PartitionProcessorException;
+                        try
+                        {
+                            var processorEvent = new EventProcessorEvent(Context, eventData, UpdateCheckpointAsync);
+                            await ProcessEventAsync(processorEvent).ConfigureAwait(false);
+                        }
+                        catch (Exception eventProcessingException)
+                        {
+                            diagnosticScope.Failed(eventProcessingException);
+                            unrecoverableException = eventProcessingException;
 
-                        break;
+                            break;
+                        }
                     }
                 }
                 catch (Exception eventHubException)
                 {
                     // Stop running only if it's not a retriable exception.
 
-                    if (s_retryPolicy.CalculateRetryDelay(eventHubException, 1) == null)
+                    if (RetryPolicy.CalculateRetryDelay(eventHubException, 1) == null)
                     {
-                        unrecoverableException = eventHubException;
-                        CloseReason = PartitionProcessorCloseReason.EventHubException;
-
-                        break;
+                        throw eventHubException;
                     }
                 }
-            }
 
-            if (unrecoverableException != null)
-            {
-                // In case an exception is encountered while partition processor is processing the error, don't
-                // catch it and let the calling method (StopAsync) handle it.
-
-                await PartitionProcessor.ProcessErrorAsync(Context, unrecoverableException, cancellationToken).ConfigureAwait(false);
+                if (unrecoverableException != null)
+                {
+                    throw unrecoverableException;
+                }
             }
         }
     }

@@ -16,7 +16,7 @@ definition, such as text or binary data.
 Install the Azure Storage Blobs client library for .NET with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Storage.Blobs --version 12.0.0-preview.4
+dotnet add package Azure.Storage.Blobs
 ```
 
 ### Prerequisites
@@ -55,11 +55,7 @@ Learn more about options for authentication _(including Connection Strings, Shar
 
 ### Uploading a blob
 
-```c#
-using Azure.Storage;
-using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Models;
-
+```C# Snippet:SampleSnippetsBlob_Upload
 // Get a connection string to our Azure Storage account.  You can
 // obtain your connection string from the Azure Portal (click
 // Access Keys under Settings in the Portal Storage account blade)
@@ -69,45 +65,51 @@ using Azure.Storage.Blobs.Models;
 //
 // And you can provide the connection string to your application
 // using an environment variable.
+
 string connectionString = "<connection_string>";
+string containerName = "sample-container";
+string blobName = "sample-blob";
+string filePath = "sample-file";
 
 // Get a reference to a container named "sample-container" and then create it
-BlobContainerClient container = new BlobContainerClient(connectionString, "sample-container");
+BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
 container.Create();
 
 // Get a reference to a blob named "sample-file" in a container named "sample-container"
-BlobClient blob = container.GetBlobClient("sample-file");
+BlobClient blob = container.GetBlobClient(blobName);
 
-// Open a file and upload it's data
-using (FileStream file = File.OpenRead("local-file.jpg"))
-{
-    blob.Upload(file);
-}
+// Upload local file
+blob.Upload(filePath);
 ```
 
 ### Downloading a blob
 
-```c#
-// Get a reference to the public blob at https://aka.ms/bloburl
-BlobClient blob = new BlobClient(new Uri("https://aka.ms/bloburl"));
+```C# Snippet:SampleSnippetsBlob_Download
+// Get a temporary path on disk where we can download the file
+string downloadPath = "hello.jpg";
 
-// Download the blob
-Response<BlobDownloadInfo> download = blob.Download();
-using (FileStream file = File.OpenWrite("hello.jpg"))
-{
-    download.Value.Content.CopyTo(file);
-}
+// Download the public blob at https://aka.ms/bloburl
+new BlobClient(new Uri("https://aka.ms/bloburl")).DownloadTo(downloadPath);
 ```
 
 ### Enumerating blobs
 
-```c#
+```C# Snippet:SampleSnippetsBlob_List
+// Get a connection string to our Azure Storage account.
 string connectionString = "<connection_string>";
+string containerName = "sample-container";
+string filePath = "hello.jpg";
 
-// Get a reference to a container named "sample-container"
-BlobContainerClient container = new BlobContainerClient(connectionString, "sample-container");
+// Get a reference to a container named "sample-container" and then create it
+BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
+container.Create();
 
-// List all of its blobs
+// Upload a few blobs so we have something to list
+container.UploadBlob("first", File.OpenRead(filePath));
+container.UploadBlob("second", File.OpenRead(filePath));
+container.UploadBlob("third", File.OpenRead(filePath));
+
+// Print out all the blob names
 foreach (BlobItem blob in container.GetBlobs())
 {
     Console.WriteLine(blob.Name);
@@ -117,26 +119,19 @@ foreach (BlobItem blob in container.GetBlobs())
 ### Async APIs
 
 We fully support both synchronous and asynchronous APIs.
+```C# Snippet:SampleSnippetsBlob_Async
+// Get a temporary path on disk where we can download the file
+string downloadPath = "hello.jpg";
 
-```c#
-// Get a reference to the public blob at https://aka.ms/bloburl
-BlobClient blob = new BlobClient(new Uri("https://aka.ms/bloburl"));
-
-// Download the blob
-Response<BlobDownloadInfo> download = await blob.DownloadAsync();
-using (FileStream file = File.OpenWrite("hello.jpg"))
-{
-    await download.Value.Content.CopyToAsync(file);
-}
+// Download the public blob at https://aka.ms/bloburl
+await new BlobClient(new Uri("https://aka.ms/bloburl")).DownloadToAsync(downloadPath);
 ```
 
 ### Authenticating with Azure.Identity
 
 The [Azure Identity library][identity] provides easy Azure Active Directory support for authentication.
 
-```c#
-using Azure.Identity;
-
+```C# Snippet:SampleSnippetsBlob_Auth
 // Create a BlobServiceClient that will authenticate through Active Directory
 Uri accountUri = new Uri("https://MYSTORAGEACCOUNT.blob.core.windows.net/");
 BlobServiceClient client = new BlobServiceClient(accountUri, new DefaultAzureCredential());
@@ -150,20 +145,26 @@ All Blob service operations will throw a
 [RequestFailedException][RequestFailedException] on failure with
 helpful [`ErrorCode`s][error_codes].  Many of these errors are recoverable.
 
-```c#
+```C# Snippet:SampleSnippetsBlob_Troubleshooting
+// Get a connection string to our Azure Storage account.
 string connectionString = "<connection_string>";
+string containerName = "sample-container";
 
-// Try to create a container named "sample-container" and avoid any potential race
-// conditions that might arise by checking if the container exists before creating
-BlobContainerClient container = new BlobContainerClient(connectionString, "sample-container");
+// Try to delete a container named "sample-container" and avoid any potential race conditions
+// that might arise by checking if the container is already deleted or is in the process
+// of being deleted.
+BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
+
 try
 {
-    container.Create();
+    container.Delete();
 }
 catch (RequestFailedException ex)
-    when (ex.ErrorCode == BlobErrorCode.ContainerAlreadyExists)
+    when (ex.ErrorCode == BlobErrorCode.ContainerBeingDeleted ||
+          ex.ErrorCode == BlobErrorCode.ContainerNotFound)
+
 {
-    // Ignore any errors if the container already exists
+    // Ignore any errors if the container being deleted or if it has already been deleted
 }
 ```
 
@@ -194,7 +195,7 @@ additional questions or comments.
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Blobs/src
 [package]: https://www.nuget.org/packages/Azure.Storage.Blobs/
-[docs]: https://azure.github.io/azure-sdk-for-net/api/Azure.Storage.Blobs.html
+[docs]: https://azure.github.io/azure-sdk-for-net/storage.html
 [rest_docs]: https://docs.microsoft.com/en-us/rest/api/storageservices/blob-service-rest-api
 [product_docs]: https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blobs-overview
 [nuget]: https://www.nuget.org/
