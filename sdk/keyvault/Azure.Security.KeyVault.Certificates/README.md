@@ -76,18 +76,31 @@ KeyVaultCertificateWithPolicy certificate = client.GetCertificate("MyCertificate
 ```
 
 ## Key concepts
+### KeyVaultCertificate
+
+### CertificateClient
 With a `CertificateClient` you can get certificates from the vault, create new certificates and 
 new versions of existing certificates, update certificate metadata, and delete certificates. You 
 can also manage certificate issuers, contacts, and management policies of certificates. This is 
 illustrated in the examples below.
 
 ## Examples
+The Azure.Security.KeyVault.Certificates package supports synchronous and asynchronous APIs.
+
+The following section provides several code snippets using the [above created](#create-certificateclient) `client`, covering some of the most 
+common Azure Key Vault certificates service related tasks:
+
+### Sync Examples
 This section contains code snippets covering common tasks:
 * [Create a Certificate](#create-a-certificate)
 * [Retrieve a Certificate](#retrieve-a-certificate)
 * [Update an existing Certificate](#update-an-existing-certificate)
 * [Delete a Certificate](#delete-a-certificate)
 * [List Certificates](#list-certificates)
+
+### Async Examples
+* [Create a certificate asynchronously](#create-a-secret-asynchronously)
+* [List certificates asynchronously](#list-secrets-asynchronously)
 
 ### Create a Certificate
 `StartCreateCertificate` creates a Certificate to be stored in the Azure Key Vault. If a certificate with 
@@ -150,6 +163,30 @@ requires the certificates/list permission.
 Pageable<CertificateProperties> allCertificates = client.GetPropertiesOfCertificates();
 
 foreach (CertificateProperties certificateProperties in allCertificates)
+{
+    Console.WriteLine(certificateProperties.Name);
+}
+```
+
+### Create a certificate asynchronously
+The asynchronous APIs are identical to their synchronous counterparts, but return with the typical "Async" suffix for asynchronous methods and return a `Task`.
+
+```C# Snippet:CreateCertificateAsync
+// Create a certificate. This starts a long running operation to create and sign the certificate.
+CertificateOperation operation = await client.StartCreateCertificateAsync("MyCertificate", CertificatePolicy.Default);
+
+// You can  the completion of the create certificate operation.
+KeyVaultCertificateWithPolicy certificate = await operation.WaitForCompletionAsync();
+```
+
+### List certificates asynchronously
+Listing certificates does not rely on awaiting the `GetPropertiesOfSecretsAsync` method, but returns an `AsyncPageable<SecretProperties>` that 
+you can use with the `await foreach` statement:
+
+```C# Snippet:ListCertificatesAsync
+AsyncPageable<CertificateProperties> allCertificates = client.GetPropertiesOfCertificatesAsync();
+
+await foreach (CertificateProperties certificateProperties in allCertificates)
 {
     Console.WriteLine(certificateProperties.Name);
 }

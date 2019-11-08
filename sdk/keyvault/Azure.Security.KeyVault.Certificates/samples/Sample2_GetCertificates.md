@@ -1,7 +1,6 @@
 # Listing certificates, certificate versions and deleted certificates
 
-This sample demonstrates how to list certificates and versions of a given certificates, and list deleted certificates in a soft delete-enabled key vault,
-To get started, you'll need a URI to an Azure Key Vault. See the [README](../README.md) for links and instructions.
+This sample demonstrates how to list certificates and versions of a given certificates, and list deleted certificates in a soft delete-enabled key vault. To get started, you'll need a URI to an Azure Key Vault. See the [README](../README.md) for links and instructions.
 
 ## Creating a CertificateClient
 
@@ -16,7 +15,7 @@ var client = new CertificateClient(new Uri(keyVaultUrl), new DefaultAzureCredent
 
 ## Creating certificates
 
-Let's create two self-signed certificates using the default policy
+Let's create two self-signed certificates using the default policy.
 
 ```C# Snippet:CertificatesSample2CreateCertificate
 string certName1 = $"defaultCert-{Guid.NewGuid()}";
@@ -42,7 +41,7 @@ while (!certOp2.HasCompleted)
 
 ## Listing certificates
 
-Let's list the certificates which exist in the vault along with their thumbprints
+Let's list the certificates which exist in the vault along with their thumbprints.
 
 ```C# Snippet:CertificatesSample2ListCertificates
 foreach (CertificateProperties cert in client.GetPropertiesOfCertificates())
@@ -53,7 +52,7 @@ foreach (CertificateProperties cert in client.GetPropertiesOfCertificates())
 
 ## Creating a certificate with new version
 
-We need to create a new version of a certificate. Creating a certificate with the same name will create another version of the certificate
+We need to create a new version of a certificate. Creating a certificate with the same name will create another version of the certificate.
 
 ```C# Snippet:CertificatesSample2CreateCertificateWithNewVersion
 CertificateOperation newCertOp = client.StartCreateCertificate(certName1, CertificatePolicy.Default);
@@ -68,7 +67,7 @@ while (!newCertOp.HasCompleted)
 
 ## Listing certificate versions
 
-Let's print all the versions of this certificate
+Let's print all the versions of this certificate.
 
 ```C# Snippet:CertificatesSample2ListCertificateVersions
 foreach (CertificateProperties cert in client.GetPropertiesOfCertificateVersions(certName1))
@@ -104,4 +103,4 @@ foreach (DeletedCertificate deletedCert in client.GetDeletedCertificates())
 To see the full example source, see:
 
 * [Synchronous Sample2_GetCertificates.cs](../tests/samples/Sample2_GetCertificates.cs)
-* [ASynchronous Sample2_GetCertificatesAsync.cs](../tests/samples/Sample2_GetCertificatesAsync.cs)
+* [Asynchronous Sample2_GetCertificatesAsync.cs](../tests/samples/Sample2_GetCertificatesAsync.cs)
