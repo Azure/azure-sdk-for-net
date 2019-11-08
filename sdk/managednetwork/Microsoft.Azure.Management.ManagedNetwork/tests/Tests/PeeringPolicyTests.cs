@@ -37,7 +37,7 @@ namespace ManagedNetwork.Tests
                 this.resourcesClient = context.GetServiceClient<ResourceManagementClient>();
 
                 string resourceGroupName = TestUtilities.GenerateName("MNCRP_RSG");
-                string location = "West US";
+                string location = "Central US";
 
                 ResourceGroup rsg;
                 try
@@ -65,15 +65,15 @@ namespace ManagedNetwork.Tests
                         VirtualNetworks = new List<ResourceId>(){
                             new ResourceId()
                             {
-                                Id = "subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/testvnet"
+                                Id = "/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/testvnet"
                             },
                             new ResourceId()
                             {
-                                Id = "subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/testvnet2"
+                                Id = "/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/testvnet2"
                             },
                             new ResourceId()
                             {
-                                Id = "subscriptions/6bb4a28a-db84-4e8a-b1dc-fabf7bd9f0b2/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/NewTestVNet"
+                                Id = "/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/Spoke9"
                             }
                         },
                     }
@@ -89,11 +89,11 @@ namespace ManagedNetwork.Tests
                     {
                             new ResourceId()
                             {
-                                Id = "subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/testvnet2"
+                                Id = "/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/testvnet2"
                             },
                             new ResourceId()
                             {
-                                Id = "subscriptions/6bb4a28a-db84-4e8a-b1dc-fabf7bd9f0b2/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/NewTestVNet"
+                                Id = "/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/Spoke9"
                             }
                     }
                 };
@@ -105,7 +105,7 @@ namespace ManagedNetwork.Tests
                 string peeringPolicyName = TestUtilities.GenerateName("hubAndSpoke");
                 ResourceId hub = new ResourceId()
                 {
-                    Id = "subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/testvnet"
+                    Id = "/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/testvnet"
                 };
 
                 var spokes = new List<ResourceId>
