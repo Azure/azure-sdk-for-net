@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.FrontDoor
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ManagedRuleSetsOperations operations.
+    /// PreconfiguredEndpointsOperations operations.
     /// </summary>
-    internal partial class ManagedRuleSetsOperations : IServiceOperations<FrontDoorManagementClient>, IManagedRuleSetsOperations
+    internal partial class PreconfiguredEndpointsOperations : IServiceOperations<FrontDoorManagementClient>, IPreconfiguredEndpointsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the ManagedRuleSetsOperations class.
+        /// Initializes a new instance of the PreconfiguredEndpointsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal ManagedRuleSetsOperations(FrontDoorManagementClient client)
+        internal PreconfiguredEndpointsOperations(FrontDoorManagementClient client)
         {
             if (client == null)
             {
@@ -51,8 +51,14 @@ namespace Microsoft.Azure.Management.FrontDoor
         public FrontDoorManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists all available managed rule sets.
+        /// Gets a list of Preconfigured Endpoints
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the Resource group within the Azure subscription.
+        /// </param>
+        /// <param name='profileName'>
+        /// The Profile identifier associated with the Tenant and Partner
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -74,13 +80,43 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ManagedRuleSetDefinition>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PreconfiguredEndpoint>>> ListWithHttpMessagesAsync(string resourceGroupName, string profileName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-10-01";
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 80)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 80);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$");
+                }
+            }
+            if (profileName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "profileName");
+            }
+            if (profileName != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(profileName, "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "profileName", "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$");
+                }
+            }
+            string apiVersion = "2019-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -89,13 +125,17 @@ namespace Microsoft.Azure.Management.FrontDoor
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("profileName", profileName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallManagedRuleSets").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/PreconfiguredEndpoints").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{profileName}", System.Uri.EscapeDataString(profileName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -189,7 +229,7 @@ namespace Microsoft.Azure.Management.FrontDoor
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<ManagedRuleSetDefinition>>();
+            var _result = new AzureOperationResponse<IPage<PreconfiguredEndpoint>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -202,7 +242,7 @@ namespace Microsoft.Azure.Management.FrontDoor
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ManagedRuleSetDefinition>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<PreconfiguredEndpoint>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -222,7 +262,7 @@ namespace Microsoft.Azure.Management.FrontDoor
         }
 
         /// <summary>
-        /// Lists all available managed rule sets.
+        /// Gets a list of Preconfigured Endpoints
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -248,7 +288,7 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ManagedRuleSetDefinition>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PreconfiguredEndpoint>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -357,7 +397,7 @@ namespace Microsoft.Azure.Management.FrontDoor
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<ManagedRuleSetDefinition>>();
+            var _result = new AzureOperationResponse<IPage<PreconfiguredEndpoint>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -370,7 +410,7 @@ namespace Microsoft.Azure.Management.FrontDoor
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ManagedRuleSetDefinition>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<PreconfiguredEndpoint>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

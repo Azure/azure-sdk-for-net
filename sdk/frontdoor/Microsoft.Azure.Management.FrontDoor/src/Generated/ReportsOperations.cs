@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.FrontDoor
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ManagedRuleSetsOperations operations.
+    /// ReportsOperations operations.
     /// </summary>
-    internal partial class ManagedRuleSetsOperations : IServiceOperations<FrontDoorManagementClient>, IManagedRuleSetsOperations
+    internal partial class ReportsOperations : IServiceOperations<FrontDoorManagementClient>, IReportsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the ManagedRuleSetsOperations class.
+        /// Initializes a new instance of the ReportsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal ManagedRuleSetsOperations(FrontDoorManagementClient client)
+        internal ReportsOperations(FrontDoorManagementClient client)
         {
             if (client == null)
             {
@@ -51,8 +51,28 @@ namespace Microsoft.Azure.Management.FrontDoor
         public FrontDoorManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists all available managed rule sets.
+        /// Gets a Latency Scorecard for a given Experiment
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the Resource group within the Azure subscription.
+        /// </param>
+        /// <param name='profileName'>
+        /// The Profile identifier associated with the Tenant and Partner
+        /// </param>
+        /// <param name='experimentName'>
+        /// The Experiment identifier associated with the Experiment
+        /// </param>
+        /// <param name='aggregationInterval'>
+        /// The aggregation interval of the Latency Scorecard. Possible values include:
+        /// 'Daily', 'Weekly', 'Monthly'
+        /// </param>
+        /// <param name='endDateTimeUTC'>
+        /// The end DateTime of the Latency Scorecard in UTC
+        /// </param>
+        /// <param name='country'>
+        /// The country associated with the Latency Scorecard. Values are country ISO
+        /// codes as specified here- https://www.iso.org/iso-3166-country-codes.html
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -74,13 +94,58 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ManagedRuleSetDefinition>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<LatencyScorecard>> GetLatencyScorecardsWithHttpMessagesAsync(string resourceGroupName, string profileName, string experimentName, string aggregationInterval, string endDateTimeUTC = default(string), string country = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-10-01";
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 80)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 80);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$");
+                }
+            }
+            if (profileName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "profileName");
+            }
+            if (profileName != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(profileName, "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "profileName", "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$");
+                }
+            }
+            if (experimentName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "experimentName");
+            }
+            if (experimentName != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(experimentName, "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "experimentName", "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$");
+                }
+            }
+            if (aggregationInterval == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "aggregationInterval");
+            }
+            string apiVersion = "2019-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -89,17 +154,38 @@ namespace Microsoft.Azure.Management.FrontDoor
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("profileName", profileName);
+                tracingParameters.Add("experimentName", experimentName);
+                tracingParameters.Add("endDateTimeUTC", endDateTimeUTC);
+                tracingParameters.Add("country", country);
+                tracingParameters.Add("aggregationInterval", aggregationInterval);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetLatencyScorecards", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallManagedRuleSets").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}/LatencyScorecard").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{profileName}", System.Uri.EscapeDataString(profileName));
+            _url = _url.Replace("{experimentName}", System.Uri.EscapeDataString(experimentName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+            }
+            if (endDateTimeUTC != null)
+            {
+                _queryParameters.Add(string.Format("endDateTimeUTC={0}", System.Uri.EscapeDataString(endDateTimeUTC)));
+            }
+            if (country != null)
+            {
+                _queryParameters.Add(string.Format("country={0}", System.Uri.EscapeDataString(country)));
+            }
+            if (aggregationInterval != null)
+            {
+                _queryParameters.Add(string.Format("aggregationInterval={0}", System.Uri.EscapeDataString(aggregationInterval)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -189,7 +275,7 @@ namespace Microsoft.Azure.Management.FrontDoor
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<ManagedRuleSetDefinition>>();
+            var _result = new AzureOperationResponse<LatencyScorecard>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -202,7 +288,7 @@ namespace Microsoft.Azure.Management.FrontDoor
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ManagedRuleSetDefinition>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<LatencyScorecard>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -222,10 +308,37 @@ namespace Microsoft.Azure.Management.FrontDoor
         }
 
         /// <summary>
-        /// Lists all available managed rule sets.
+        /// Gets a Timeseries for a given Experiment
         /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
+        /// <param name='resourceGroupName'>
+        /// Name of the Resource group within the Azure subscription.
+        /// </param>
+        /// <param name='profileName'>
+        /// The Profile identifier associated with the Tenant and Partner
+        /// </param>
+        /// <param name='experimentName'>
+        /// The Experiment identifier associated with the Experiment
+        /// </param>
+        /// <param name='startDateTimeUTC'>
+        /// The start DateTime of the Timeseries in UTC
+        /// </param>
+        /// <param name='endDateTimeUTC'>
+        /// The end DateTime of the Timeseries in UTC
+        /// </param>
+        /// <param name='aggregationInterval'>
+        /// The aggregation interval of the Timeseries. Possible values include:
+        /// 'Hourly', 'Daily'
+        /// </param>
+        /// <param name='timeseriesType'>
+        /// The type of Timeseries. Possible values include: 'MeasurementCounts',
+        /// 'LatencyP50', 'LatencyP75', 'LatencyP95'
+        /// </param>
+        /// <param name='endpoint'>
+        /// The specific endpoint
+        /// </param>
+        /// <param name='country'>
+        /// The country associated with the Timeseries. Values are country ISO codes as
+        /// specified here- https://www.iso.org/iso-3166-country-codes.html
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -248,12 +361,62 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ManagedRuleSetDefinition>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Timeseries>> GetTimeseriesWithHttpMessagesAsync(string resourceGroupName, string profileName, string experimentName, System.DateTime startDateTimeUTC, System.DateTime endDateTimeUTC, string aggregationInterval, string timeseriesType, string endpoint = default(string), string country = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (nextPageLink == null)
+            if (Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 80)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 80);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$");
+                }
+            }
+            if (profileName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "profileName");
+            }
+            if (profileName != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(profileName, "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "profileName", "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$");
+                }
+            }
+            if (experimentName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "experimentName");
+            }
+            if (experimentName != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(experimentName, "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "experimentName", "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$");
+                }
+            }
+            if (aggregationInterval == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "aggregationInterval");
+            }
+            if (timeseriesType == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "timeseriesType");
+            }
+            string apiVersion = "2019-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -261,14 +424,49 @@ namespace Microsoft.Azure.Management.FrontDoor
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("nextPageLink", nextPageLink);
+                tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("profileName", profileName);
+                tracingParameters.Add("experimentName", experimentName);
+                tracingParameters.Add("startDateTimeUTC", startDateTimeUTC);
+                tracingParameters.Add("endDateTimeUTC", endDateTimeUTC);
+                tracingParameters.Add("aggregationInterval", aggregationInterval);
+                tracingParameters.Add("timeseriesType", timeseriesType);
+                tracingParameters.Add("endpoint", endpoint);
+                tracingParameters.Add("country", country);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListNext", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetTimeseries", tracingParameters);
             }
             // Construct URL
-            string _url = "{nextLink}";
-            _url = _url.Replace("{nextLink}", nextPageLink);
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}/Timeseries").ToString();
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{profileName}", System.Uri.EscapeDataString(profileName));
+            _url = _url.Replace("{experimentName}", System.Uri.EscapeDataString(experimentName));
             List<string> _queryParameters = new List<string>();
+            if (apiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+            }
+            _queryParameters.Add(string.Format("startDateTimeUTC={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(startDateTimeUTC, Client.SerializationSettings).Trim('"'))));
+            _queryParameters.Add(string.Format("endDateTimeUTC={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(endDateTimeUTC, Client.SerializationSettings).Trim('"'))));
+            if (aggregationInterval != null)
+            {
+                _queryParameters.Add(string.Format("aggregationInterval={0}", System.Uri.EscapeDataString(aggregationInterval)));
+            }
+            if (timeseriesType != null)
+            {
+                _queryParameters.Add(string.Format("timeseriesType={0}", System.Uri.EscapeDataString(timeseriesType)));
+            }
+            if (endpoint != null)
+            {
+                _queryParameters.Add(string.Format("endpoint={0}", System.Uri.EscapeDataString(endpoint)));
+            }
+            if (country != null)
+            {
+                _queryParameters.Add(string.Format("country={0}", System.Uri.EscapeDataString(country)));
+            }
             if (_queryParameters.Count > 0)
             {
                 _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
@@ -357,7 +555,7 @@ namespace Microsoft.Azure.Management.FrontDoor
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<ManagedRuleSetDefinition>>();
+            var _result = new AzureOperationResponse<Timeseries>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -370,7 +568,7 @@ namespace Microsoft.Azure.Management.FrontDoor
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ManagedRuleSetDefinition>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Timeseries>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
