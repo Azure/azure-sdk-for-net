@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Metadata;
 using Moq;
@@ -45,7 +46,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ConstructorValidatesTheNamespace(string constructorArgument)
         {
-            Assert.That(() => new EventHubProducerClient(constructorArgument, "dummy", Mock.Of<TokenCredential>()), Throws.InstanceOf<ArgumentException>());
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            Assert.That(() => new EventHubProducerClient(constructorArgument, "dummy", credential.Object), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -57,7 +59,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ConstructorValidatesTheEventHub(string constructorArgument)
         {
-            Assert.That(() => new EventHubProducerClient("namespace", constructorArgument, Mock.Of<TokenCredential>()), Throws.InstanceOf<ArgumentException>());
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            Assert.That(() => new EventHubProducerClient("namespace", constructorArgument, credential.Object), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -103,8 +106,9 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ExpandedConstructorSetsTheRetryPolicy()
         {
             var expected = Mock.Of<EventHubsRetryPolicy>();
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
             var options = new EventHubProducerClientOptions { RetryOptions = new RetryOptions { CustomRetryPolicy = expected } };
-            var producer = new EventHubProducerClient("namespace", "eventHub", Mock.Of<TokenCredential>(), options);
+            var producer = new EventHubProducerClient("namespace", "eventHub", credential.Object, options);
 
             Assert.That(GetRetryPolicy(producer), Is.SameAs(expected));
         }
@@ -150,8 +154,9 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ExpandedConstructorCreatesDefaultOptions()
         {
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
             var expected = new EventHubProducerClientOptions().RetryOptions;
-            var producer = new EventHubProducerClient("namespace", "eventHub", Mock.Of<TokenCredential>());
+            var producer = new EventHubProducerClient("namespace", "eventHub", credential.Object);
 
             var policy = GetRetryPolicy(producer);
             Assert.That(policy, Is.Not.Null, "There should have been a retry policy set.");
@@ -724,10 +729,11 @@ namespace Azure.Messaging.EventHubs.Tests
             public EventHubsRetryPolicy GetPartitionIdsInvokedWith = null;
             public EventHubsRetryPolicy GetPartitionPropertiesInvokedWith = null;
             public TransportProducer TransportProducer = Mock.Of<TransportProducer>();
+
             public bool WasClosed = false;
 
             public MockConnection(string namespaceName = "fakeNamespace",
-                                  string eventHubName = "fakeEventHub") : base(namespaceName, eventHubName, Mock.Of<TokenCredential>())
+                                  string eventHubName = "fakeEventHub") : base(namespaceName, eventHubName, new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net").Object)
             {
             }
 
@@ -766,13 +772,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
             internal override TransportProducer CreateTransportProducer(EventHubProducerClientOptions producerOptions = default) => TransportProducer;
 
-            internal override TransportClient CreateTransportClient(string fullyQualifiedNamespace, string eventHubName, TokenCredential credential, EventHubConnectionOptions options)
+            internal override TransportClient CreateTransportClient(string fullyQualifiedNamespace, string eventHubName, EventHubTokenCredential credential, EventHubConnectionOptions options)
             {
                 var client = new Mock<TransportClient>();
 
                 client
                     .Setup(client => client.ServiceEndpoint)
-                    .Returns(new Uri($"amgp://{ fullyQualifiedNamespace}.com/{eventHubName}"));
+                    .Returns(new Uri($"amgp://{ fullyQualifiedNamespace }.com/{ eventHubName }"));
 
                 return client.Object;
             }

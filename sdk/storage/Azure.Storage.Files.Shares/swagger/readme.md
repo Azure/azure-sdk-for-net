@@ -749,3 +749,6 @@ directive:
   transform: >
     $.put.parameters[3]["x-ms-enum"].name = "ShareFileRangeWriteType";
 ```
+
+
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Files%2Fswagger%2Freadme.png)
