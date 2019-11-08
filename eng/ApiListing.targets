@@ -1,0 +1,53 @@
+<Project>
+
+  <Target Name="GenerateApiListing">
+    <PropertyGroup>
+      <_RefSourceOutputPath>$([System.IO.Directory]::GetParent('$(MSBuildProjectDirectory)'))/ref/</_RefSourceOutputPath>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <_AllTargetFrameworks Remove="@(_AllTargetFrameworks)" />
+      <_AllTargetFrameworks Include="$(TargetFrameworks);$(TargetFramework)" />
+      <_DeduplicatedTargetFramework Include="%(_AllTargetFrameworks.Identity)" />
+    </ItemGroup>
+
+    <MSBuild Projects="$(MSBuildProjectFullPath)"
+             Targets="_GenerateApiListingInner"
+             Properties="TargetFramework=%(_DeduplicatedTargetFramework.Identity)">
+    </MSBuild>
+
+  </Target>
+
+  <Target Name="_GenerateApiListingInner" DependsOnTargets="Build" Condition="'$(GenerateAPIListing)' == 'true'">
+    <PropertyGroup>
+      <_RefSourceFileTFM>$(TargetFramework)</_RefSourceFileTFM>
+      <_RefSourceFileTFM Condition="$(TargetFramework.StartsWith('netcoreapp'))">netcoreapp</_RefSourceFileTFM>
+      <_RefProjectFileTFM>$(TargetFramework)</_RefProjectFileTFM>
+      <_RefProjectFileTFM Condition="'$(TargetFramework)' == '$(DefaultNetCoreTargetFramework)'">%24(DefaultNetCoreTargetFramework)</_RefProjectFileTFM>
+
+      <_RefSourceOutputPath>$([System.IO.Directory]::GetParent('$(MSBuildProjectDirectory)'))/api/</_RefSourceOutputPath>
+      <_RefSourceFileName>$(AssemblyName).$(_RefSourceFileTFM).cs</_RefSourceFileName>
+      <_RefSourceFileOutputPath>$(_RefSourceOutputPath)$(_RefSourceFileName)</_RefSourceFileOutputPath>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <_ReferenceDirectoriesWithDuplicates Include="@(ReferencePath->'%(RootDir)%(Directory)'->TrimEnd('\'))" />
+      <_ReferencePathDirectories Include="%(_ReferenceDirectoriesWithDuplicates.Identity)" />
+    </ItemGroup>
+
+    <PropertyGroup>
+      <_GenAPICommand Condition="'$(MSBuildRuntimeType)' == 'core'">"$(DotNetTool)" --roll-forward-on-no-candidate-fx 2 "$(_GenAPIPath)"</_GenAPICommand>
+      <_GenAPICmd>$(_GenAPICommand)</_GenAPICmd>
+      <_GenAPICmd>$(_GenAPICmd) "$(TargetPath)"</_GenAPICmd>
+      <_GenAPICmd>$(_GenAPICmd) --lib-path "@(_ReferencePathDirectories)"</_GenAPICmd>
+      <_GenAPICmd>$(_GenAPICmd) --out "$(_RefSourceFileOutputPath)"</_GenAPICmd>
+      <_GenAPICmd>$(_GenAPICmd) --exclude-api-list "$(RepoRoot)/eng/GenAPI.exclusions.txt"</_GenAPICmd>
+    </PropertyGroup>
+
+    <MakeDir Directories="$(_RefSourceOutputPath)" />
+    <Message Importance="High" Text="Generating $(_RefSourceFileOutputPath)" />
+    <Exec Command="$(_GenAPICmd)" />
+
+  </Target>
+
+</Project>

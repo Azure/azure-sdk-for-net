@@ -111,6 +111,7 @@
     <PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Logging.Abstractions" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Options" Version="2.1.0" />
+    <PackageReference Update="Microsoft.DotNet.GenAPI" Version="5.0.0-beta.19552.1" />
     <PackageReference Update="System.Threading.Channels" Version="4.6.0" />
     <PackageReference Update="System.Text.Json" Version="4.6.0" />
     <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="4.6.0" />
