@@ -15,6 +15,27 @@ namespace Azure.Messaging.EventHubs.Processor
     public abstract class EventProcessorBase
     {
         /// <summary>
+        ///   The fully qualified Event Hubs namespace that the processor is associated with.  This is likely
+        ///   to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
+        /// </summary>
+        ///
+        public abstract string FullyQualifiedNamespace { get; }
+
+        /// <summary>
+        ///   The name of the Event Hub that the processor is connected to, specific to the
+        ///   Event Hubs namespace that contains it.
+        /// </summary>
+        ///
+        public abstract string EventHubName { get; }
+
+        /// <summary>
+        ///   The name of the consumer group this event processor is associated with.  Events will be
+        ///   read only in the context of this group.
+        /// </summary>
+        ///
+        public abstract string ConsumerGroup { get; }
+
+        /// <summary>
         ///   The set of partition ownership this event processor owns.  Partition ids are used as keys. TODO: make it private.
         /// </summary>
         ///

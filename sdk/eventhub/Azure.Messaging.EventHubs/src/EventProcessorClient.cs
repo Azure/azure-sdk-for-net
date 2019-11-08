@@ -12,7 +12,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
+using Azure.Messaging.EventHubs.Metadata;
 using Azure.Messaging.EventHubs.Processor;
 
 namespace Azure.Messaging.EventHubs
@@ -94,21 +96,21 @@ namespace Azure.Messaging.EventHubs
         ///   to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
         /// </summary>
         ///
-        public string FullyQualifiedNamespace => Connection.FullyQualifiedNamespace;
+        public override string FullyQualifiedNamespace { get; }
 
         /// <summary>
         ///   The name of the Event Hub that the processor is connected to, specific to the
         ///   Event Hubs namespace that contains it.
         /// </summary>
         ///
-        public string EventHubName => Connection.EventHubName;
+        public override string EventHubName { get; }
 
         /// <summary>
         ///   The name of the consumer group this event processor is associated with.  Events will be
         ///   read only in the context of this group.
         /// </summary>
         ///
-        public string ConsumerGroup { get; }
+        public override string ConsumerGroup { get; }
 
         /// <summary>
         ///   A unique name used to identify this event processor.
@@ -288,8 +290,12 @@ namespace Azure.Messaging.EventHubs
 
             processorOptions = processorOptions?.Clone() ?? new EventProcessorClientOptions();
 
+            ConnectionStringProperties connectionStringProperties = ConnectionStringParser.Parse(connectionString);
+
             OwnsConnection = true;
             Connection = new EventHubConnection(connectionString, eventHubName, processorOptions.ConnectionOptions);
+            FullyQualifiedNamespace = connectionStringProperties.Endpoint.Host;
+            EventHubName = string.IsNullOrEmpty(eventHubName) ? connectionStringProperties.EventHubName : eventHubName;
             ConsumerGroup = consumerGroup;
             Manager = partitionManager;
             Options = processorOptions;
@@ -326,6 +332,8 @@ namespace Azure.Messaging.EventHubs
 
             OwnsConnection = true;
             Connection = new EventHubConnection(fullyQualifiedNamespace, eventHubName, credential, processorOptions.ConnectionOptions);
+            FullyQualifiedNamespace = fullyQualifiedNamespace;
+            EventHubName = eventHubName;
             ConsumerGroup = consumerGroup;
             Manager = partitionManager;
             Options = processorOptions;
@@ -360,6 +368,8 @@ namespace Azure.Messaging.EventHubs
 
             OwnsConnection = false;
             Connection = connection;
+            FullyQualifiedNamespace = Connection.FullyQualifiedNamespace;
+            EventHubName = Connection.EventHubName;
             ConsumerGroup = consumerGroup;
             Manager = partitionManager;
             Options = processorOptions;
