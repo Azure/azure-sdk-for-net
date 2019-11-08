@@ -45,8 +45,13 @@ Dictionary<string, string> secretValues = new Dictionary<string, string>();
 IEnumerable<SecretProperties> secrets = client.GetPropertiesOfSecrets();
 foreach (SecretProperties secret in secrets)
 {
-    KeyVaultSecret secretWithValue = client.GetSecret(secret.Name);
+    // Getting a disabled secret will fail, so skip disabled secrets.
+    if (!secret.Enabled.GetValueOrDefault())
+    {
+        continue;
+    }
 
+    KeyVaultSecret secretWithValue = client.GetSecret(secret.Name);
     if (secretValues.ContainsKey(secretWithValue.Value))
     {
         Debug.WriteLine($"Secret {secretWithValue.Name} shares a value with secret {secretValues[secretWithValue.Value]}");
@@ -70,7 +75,7 @@ string newBankSecretPassword = "sskdjfsdasdjsd";
 IEnumerable<SecretProperties> secretVersions = client.GetPropertiesOfSecretVersions(bankSecretName);
 foreach (SecretProperties secret in secretVersions)
 {
-    // Getting a disabled secret will fail, so skip disabled secrets.
+    // Secret versions may also be disabled if compromised and new versions generated, so skip disabled versions, too.
     if (!secret.Enabled.GetValueOrDefault())
     {
         continue;
