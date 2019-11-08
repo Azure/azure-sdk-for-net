@@ -629,6 +629,7 @@ namespace Azure.Data.AppConfiguration.Tests
         {
             ConfigurationClient service = GetClient();
             ConfigurationSetting testSetting = CreateSetting();
+            testSetting.Label = null;
 
             try
             {
@@ -636,12 +637,12 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 // Test
                 // TODO: add a test with a more granular timestamp.
-                ConfigurationSetting responseSetting = await service.GetConfigurationSettingAsync(testSetting.Key, testSetting.Label, DateTimeOffset.MaxValue, requestOptions: default);
+                ConfigurationSetting responseSetting = await service.GetConfigurationSettingAsync(testSetting.Key, DateTimeOffset.MaxValue);
                 Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, responseSetting));
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
+                await service.DeleteConfigurationSettingAsync(testSetting.Key);
             }
         }
 
