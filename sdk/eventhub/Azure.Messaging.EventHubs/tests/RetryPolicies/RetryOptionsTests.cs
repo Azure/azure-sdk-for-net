@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Messaging.EventHubs.Core;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests
@@ -28,7 +30,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 MaximumRetries = 65,
                 Delay = TimeSpan.FromSeconds(1),
                 MaximumDelay = TimeSpan.FromSeconds(2),
-                TryTimeout = TimeSpan.FromSeconds(3)
+                TryTimeout = TimeSpan.FromSeconds(3),
+                CustomRetryPolicy = Mock.Of<EventHubsRetryPolicy>()
             };
 
             RetryOptions clone = options.Clone();
@@ -39,6 +42,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(clone.Delay, Is.EqualTo(options.Delay), "The delay of the clone should match.");
             Assert.That(clone.MaximumDelay, Is.EqualTo(options.MaximumDelay), "The maximum delay of the clone should match.");
             Assert.That(clone.TryTimeout, Is.EqualTo(options.TryTimeout), "The per-try of the clone should match.");
+            Assert.That(clone.CustomRetryPolicy, Is.SameAs(options.CustomRetryPolicy), "The custom retry policy should match.");
         }
 
         /// <summary>
@@ -112,6 +116,55 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new RetryOptions();
             var invalidValue = TimeSpan.FromSeconds(seconds);
             Assert.That(() => options.TryTimeout = invalidValue, Throws.InstanceOf<ArgumentException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="RetryOptions.Clone" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void ToRetryPolicyWithoutCustomPolicyCreatesThePolicy()
+        {
+            var options = new RetryOptions
+            {
+                Mode = RetryMode.Fixed,
+                MaximumRetries = 65,
+                Delay = TimeSpan.FromSeconds(1),
+                MaximumDelay = TimeSpan.FromSeconds(2),
+                TryTimeout = TimeSpan.FromSeconds(3),
+                CustomRetryPolicy = null
+            };
+
+            var policy = options.ToRetryPolicy();
+            Assert.That(policy, Is.Not.Null, "The policy should not be null.");
+            Assert.That(policy, Is.InstanceOf<BasicRetryPolicy>(), "The options should produce a basic retry policy.");
+            Assert.That(((BasicRetryPolicy)policy).Options, Is.SameAs(options), "The options should have been used for the retry policy.");
+            Assert.That(policy, Is.Not.SameAs(options.CustomRetryPolicy), "The custom retry policy should not have been used, since it was not populated.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="RetryOptions.Clone" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void ToRetryPolicyWithCustomPolicyUsesTheCustomPolicy()
+        {
+            var options = new RetryOptions
+            {
+                Mode = RetryMode.Fixed,
+                MaximumRetries = 65,
+                Delay = TimeSpan.FromSeconds(1),
+                MaximumDelay = TimeSpan.FromSeconds(2),
+                TryTimeout = TimeSpan.FromSeconds(3),
+                CustomRetryPolicy = Mock.Of<EventHubsRetryPolicy>()
+            };
+
+            var policy = options.ToRetryPolicy();
+            Assert.That(policy, Is.Not.Null, "The policy should not be null.");
+            Assert.That(policy, Is.SameAs(options.CustomRetryPolicy), "The custom retry policy should have been used.");
+            Assert.That(policy, Is.Not.InstanceOf<BasicRetryPolicy>(), "The default policy type should not have been generated.");
         }
     }
 }

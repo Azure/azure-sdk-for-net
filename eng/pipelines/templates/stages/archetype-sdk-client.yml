@@ -8,6 +8,8 @@ stages:
     - template: ../jobs/archetype-sdk-client.yml
       parameters:
         ServiceDirectory: ${{parameters.ServiceDirectory}}
+        Artifacts: ${{parameters.Artifacts}}
+        ArtifactName: packages
 
   # The Prerelease and Release stages are conditioned on whether we are building a pull request and the branch.
   - ${{if and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['System.TeamProject'], 'internal'))}}:

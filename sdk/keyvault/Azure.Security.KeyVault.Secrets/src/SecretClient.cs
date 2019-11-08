@@ -132,7 +132,7 @@ namespace Azure.Security.KeyVault.Secrets
         }
 
         /// <summary>
-        /// List all versions of the specified secret.
+        /// Lists the properties of all versions of the specified secret. You can use the returned <see cref="SecretProperties.Name"/> and <see cref="SecretProperties.Version"/> in subsequent calls to <see cref="GetSecretAsync"/>.
         /// </summary>
         /// <remarks>
         /// The full secret identifier and attributes are provided in the response. No
@@ -154,7 +154,7 @@ namespace Azure.Security.KeyVault.Secrets
         }
 
         /// <summary>
-        /// List all versions of the specified secret.
+        /// Lists the properties of all versions of the specified secret. You can use the returned <see cref="SecretProperties.Name"/> and <see cref="SecretProperties.Version"/> in subsequent calls to <see cref="GetSecret"/>.
         /// </summary>
         /// <remarks>
         /// The full secret identifier and attributes are provided in the response. No
@@ -176,7 +176,7 @@ namespace Azure.Security.KeyVault.Secrets
         }
 
         /// <summary>
-        /// List secrets in a specified key vault.
+        /// Lists the properties of all secrets in the specified vault. You can use the returned <see cref="SecretProperties.Name"/> in subsequent calls to <see cref="GetSecretAsync"/>.
         /// </summary>
         /// <remarks>
         /// The Get Secrets operation is applicable to the entire vault. However, only
@@ -194,7 +194,7 @@ namespace Azure.Security.KeyVault.Secrets
         }
 
         /// <summary>
-        /// List secrets in a specified key vault.
+        /// Lists the properties of all secrets in the specified vault. You can use the returned <see cref="SecretProperties.Name"/> in subsequent calls to <see cref="GetSecret"/>.
         /// </summary>
         /// <remarks>
         /// The Get Secrets operation is applicable to the entire vault. However, only

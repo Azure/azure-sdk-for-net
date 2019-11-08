@@ -106,6 +106,26 @@ namespace Azure.Storage.Test
             }
         }
 
+        public static async Task<T> CatchAsync<T>(Func<Task> action)
+            where T : Exception
+        {
+            try
+            {
+                await action().ConfigureAwait(false);
+                Assert.Fail("Expected exception not found");
+            }
+            catch (T ex)
+            {
+                return ex;
+            }
+            catch (Exception other)
+            {
+                Assert.Fail($"Expected exception of type {typeof(T).Name}, not {other.ToString()}");
+            }
+
+            throw new InvalidOperationException("Won't ever get here!");
+        }
+
         public static void AssertCacheableProperty<T>(T expected, Func<T> property)
         {
             T actual = property();

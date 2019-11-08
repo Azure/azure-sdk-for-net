@@ -186,6 +186,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreNotEqual(0, items.Count());
             Assert.IsTrue(items.All(c => c.Name.StartsWith(prefix)));
             Assert.IsNotNull(items.Single(c => c.Name == containerName));
+            Assert.IsTrue(items.All(c => c.Properties.Metadata == null));
         }
 
         [Test]
@@ -200,10 +201,12 @@ namespace Azure.Storage.Blobs.Test
             await test.Container.SetMetadataAsync(metadata);
 
             // Act
-            BlobContainerItem first = await service.GetBlobContainersAsync(BlobContainerTraits.Metadata).FirstAsync();
+            IList<BlobContainerItem> containers = await service.GetBlobContainersAsync(BlobContainerTraits.Metadata).ToListAsync();
 
             // Assert
-            Assert.IsNotNull(first.Metadata);
+            AssertMetadataEquality(
+                metadata,
+                containers.Where(c => c.Name == test.Container.Name).FirstOrDefault().Properties.Metadata);
         }
 
         [Test]
@@ -392,7 +395,7 @@ namespace Azure.Storage.Blobs.Test
             try
             {
                 BlobContainerClient container = InstrumentClient((await service.CreateBlobContainerAsync(name)).Value);
-                Response<BlobContainerItem> properties = await container.GetPropertiesAsync();
+                Response<BlobContainerProperties> properties = await container.GetPropertiesAsync();
                 Assert.IsNotNull(properties.Value);
             }
             finally

@@ -464,9 +464,9 @@ directive:
         const path = $.BlobItem.properties.Properties.$ref.replace(/[#].*$/, "#/definitions/BlobItemProperties");
         $.BlobItem.properties.Properties = { "$ref": path };
 
-        $.BlobItemProperties.properties.CreatedOn = $.BlobItemProperties.properties.CreationTime;
-        $.BlobItemProperties.properties.CreatedOn.xml = {"name": "CreationTime"};
-        delete $.BlobItemProperties.properties.CreationTime;
+        $.BlobItemProperties.properties.CreatedOn = $.BlobItemProperties.properties["Creation-Time"];
+        $.BlobItemProperties.properties.CreatedOn.xml = {"name": "Creation-Time"};
+        delete $.BlobItemProperties.properties["Creation-Time"];
 
         $.BlobItemProperties.properties.CopyCompletedOn = $.BlobItemProperties.properties.CopyCompletionTime;
         $.BlobItemProperties.properties.CopyCompletedOn.xml = {"name": "CopyCompletionTime"};
@@ -513,15 +513,9 @@ directive:
     $.head.responses["200"].headers["x-ms-lease-state"]["x-ms-enum"].name = "LeaseState";
     $.head.responses["200"].headers["x-ms-lease-status"]["x-ms-enum"].name = "LeaseStatus";
     $.head.responses["200"].headers["Content-MD5"]["x-ms-client-name"] = "ContentHash";
-    $.head.responses["200"].headers["Content-Encoding"].type = "array";
-    $.head.responses["200"].headers["Content-Encoding"].collectionFormat = "csv";
-    $.head.responses["200"].headers["Content-Encoding"].items = { "type": "string" };
-    $.head.responses["200"].headers["Content-Language"].type = "array";
-    $.head.responses["200"].headers["Content-Language"].collectionFormat = "csv";
-    $.head.responses["200"].headers["Content-Language"].items = { "type": "string" };
-    $.head.responses["200"].headers["Content-MD5"]["x-ms-copy-completion-time"] = "CopyCompletedOn";
-    $.head.responses["200"].headers["Content-MD5"]["x-ms-creation-time"] = "CreatedOn";
-    $.head.responses["200"].headers["Content-MD5"]["x-ms-access-tier-change-time"] = "AccessTierChangedOn";
+    $.head.responses["200"].headers["x-ms-copy-completion-time"]["x-ms-client-name"] = "CopyCompletedOn";
+    $.head.responses["200"].headers["x-ms-creation-time"]["x-ms-client-name"] = "CreatedOn";
+    $.head.responses["200"].headers["x-ms-access-tier-change-time"]["x-ms-client-name"] = "AccessTierChangedOn";
     $.head.responses["304"] = {
         "description": "The condition specified using HTTP conditional header(s) is not met.",
         "x-az-response-name": "ConditionNotMetError",
@@ -598,18 +592,6 @@ directive:
     $.put.operationId = "Blob_SetHttpHeaders";
     $.put.responses["200"]["x-az-response-name"] = "SetHttpHeadersOperation";
     $.put.responses["200"]["x-az-public"] = false;
-- from: swagger-document
-  where: $.parameters.BlobContentEncoding
-  transform: >
-    $.type = "array";
-    $.collectionFormat = "csv";
-    $.items = { "type": "string" };
-- from: swagger-document
-  where: $.parameters.BlobContentLanguage
-  transform: >
-    $.type = "array";
-    $.collectionFormat = "csv";
-    $.items = { "type": "string" };
 ```
 
 ### RehydratePriority
@@ -1042,6 +1024,16 @@ directive:
     delete $.properties.Etag;
 ```
 
+### Move Metadata from BlobContainerItem to BlobContainerProperties
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.BlobContainerProperties.properties.Metadata = $.BlobContainerItem.properties.Metadata;
+    delete $.BlobContainerItem.properties.Metadata;
+```
+
 ### UserDelegationKey properties
 ``` yaml
 directive:
@@ -1401,3 +1393,6 @@ directive:
     delete $.properties.Permission;
     $.required = ["StartsOn", "ExpiresOn", "Permissions"];
 ```
+
+
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Blobs%2Fswagger%2Freadme.png)

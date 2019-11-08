@@ -45,7 +45,17 @@ namespace EventGrid.Tests.ScenarioTests
                 Topic topic = new Topic()
                 {
                     Location = location,
-                    Tags = originalTagsDictionary
+                    Tags = originalTagsDictionary,
+                    InputSchema = InputSchema.CustomEventSchema,
+                    InputSchemaMapping = new JsonInputSchemaMapping()
+                    {
+                        Subject = new JsonFieldWithDefault("mySubjectField"),
+                        Topic = new JsonField("myTopicField"),
+                        DataVersion = new JsonFieldWithDefault(sourceField: null, defaultValue: "2"),
+                        EventType = new JsonFieldWithDefault("MyEventTypeField"),
+                        EventTime = new JsonField("MyEventTimeField"),
+                        Id = new JsonField("MyIDFIELD")
+                    }
                 };
 
                 var createTopicResponse = this.EventGridManagementClient.Topics.CreateOrUpdateAsync(resourceGroup, topicName, topic).Result;

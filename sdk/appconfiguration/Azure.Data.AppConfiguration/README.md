@@ -49,8 +49,8 @@ Alternatively, get the connection string from the Azure Portal.
 
 Once you have the value of the connection string, you can create the ConfigurationClient:
 
-```c#
-string connectionString = <connection_string>;
+```C# Snippet:CreateConfigurationClient
+string connectionString = "<connection_string>";
 var client = new ConfigurationClient(connectionString);
 ```
 
@@ -126,44 +126,44 @@ The following sections provide several code snippets covering some of the most c
 
 Create a Configuration Setting to be stored in the Configuration Store. There are two ways to store a Configuration Setting:
 
-- Add creates a setting only if the setting does not already exist in the store.
-- Set creates a setting if it doesn't exist or overrides an existing setting.
+- AddConfigurationSetting creates a setting only if the setting does not already exist in the store.
+- SetConfigurationSetting creates a setting if it doesn't exist or overrides an existing setting.
 
-```c#
-string connectionString = <connection_string>;
+```C# Snippet:CreateConfigurationSetting
+string connectionString = "<connection_string>";
 var client = new ConfigurationClient(connectionString);
-var setting = new ConfigurationSetting("some_key", "some_value");
-client.Set(setting);
+var settingToCreate = new ConfigurationSetting("some_key", "some_value");
+ConfigurationSetting setting = client.SetConfigurationSetting(settingToCreate);
 ```
 
 ### Retrieve a Configuration Setting
 
-Retrieve a previously stored Configuration Setting by calling Get.  This snippet assumes the setting "some_key" exists in the configuration store.
+Retrieve a previously stored Configuration Setting by calling GetConfigurationSetting.  This snippet assumes the setting "some_key" exists in the configuration store.
 
-```c#
-string connectionString = <connection_string>;
+```C# Snippet:GetConfigurationSetting
+string connectionString = "<connection_string>";
 var client = new ConfigurationClient(connectionString);
-ConfigurationSetting setting = client.Get("some_key");
+ConfigurationSetting setting = client.GetConfigurationSetting("some_key");
 ```
 
 ### Update an existing Configuration Setting
 
-Update an existing Configuration Setting by calling Set.  This snippet assumes the setting "some_key" exists in the configuration store.
+Update an existing Configuration Setting by calling SetConfigurationSetting.  This snippet assumes the setting "some_key" exists in the configuration store.
 
-```c#
-string connectionString = <connection_string>;
+```C# Snippet:UpdateConfigurationSetting
+string connectionString = "<connection_string>";
 var client = new ConfigurationClient(connectionString);
-ConfigurationSetting setting = client.Set("some_key", "new_value");
+ConfigurationSetting setting = client.SetConfigurationSetting("some_key", "new_value");
 ```
 
 ### Delete a Configuration Setting
 
-Delete an existing Configuration Setting by calling Delete.  This snippet assumes the setting "some_key" exists in the configuration store.
+Delete an existing Configuration Setting by calling DeleteConfigurationSetting.  This snippet assumes the setting "some_key" exists in the configuration store.
 
-```c#
-string connectionString = <connection_string>;
+```C# Snippet:DeleteConfigurationSetting
+string connectionString = "<connection_string>";
 var client = new ConfigurationClient(connectionString);
-ConfigurationSetting setting = client.Delete("some_key");
+client.DeleteConfigurationSetting("some_key");
 ```
 
 ## Troubleshooting
@@ -172,10 +172,10 @@ When you interact with Azure App Configuration using the .NET SDK, errors return
 
 For example, if you try to retrieve a Configuration Setting that doesn't exist in your Configuration Store, a `404` error is returned, indicating `Not Found`.
 
-```c#
-string connectionString = <connection_string>;
+```C# Snippet:ThrowNotFoundError
+string connectionString = "<connection_string>";
 var client = new ConfigurationClient(connectionString);
-ConfigurationSetting setting = client.Get("nonexistent_key");
+ConfigurationSetting setting = client.GetConfigurationSetting("nonexistent_key");
 ```
 
 You will notice that additional information is logged, like the Client Request ID of the operation.
@@ -194,14 +194,20 @@ Message: Azure.RequestFailedException : StatusCode: 404, ReasonPhrase: 'Not Foun
 }
 ```
 
-## Next Steps
+## Next steps
 
 ### More sample code
 
 Several App Configuration client library samples are available to you in this GitHub repository.  These include: 
 - [Hello world](samples/Sample1_HelloWorld.cs): Create and delete a configuration setting.
 - [Hello world async with labels](samples/Sample2_HelloWorldExtended.cs): Asynchronously create, update and delete configuration settings with labels.
-- [Make a configuration setting readonly](samples/Sample3_SetClearReadOnly.cs): Make a configuration setting read only, and then return it to a writeable state.
+- [Make a configuration setting readonly](samples/Sample3_SetClearReadOnly.cs): Make a configuration setting read-only, and then return it to a read-write state.
+- [Read revision history](samples/Sample4_ReadRevisionHistory.cs): Read the revision history of a configuration setting that has been changed.
+- [Get a setting if changed](samples/Sample5_GetSettingIfChanged.cs): Save bandwidth by using a conditional request to retrieve a setting only if it is different from your local copy.
+- [Update a setting if it hasn't changed](samples/Sample6_UpdateSettingIfUnchanged.cs): Prevent lost updates by using optimistic concurrency to update a setting only if your local updates were applied to the same version as the resource in the configuration store.
+- [Create a mock client](samples/Sample7_MockClient.cs): Mock a client for testing using the [Moq library][moq].
+
+ For more details see the [samples README][samples_readme].
 
 
 ## Contributing
@@ -212,7 +218,7 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 
 This project has adopted the Microsoft Open Source Code of Conduct. For more information see the Code of Conduct FAQ or contact opencode@microsoft.com with any additional questions or comments.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fappconfiguration%2FAzure.ApplicationModel.Configuration%2FREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fappconfiguration%2FAzure.Data.AppConfiguration%2FREADME.png)
 
 <!-- LINKS -->
 [azconfig_docs]: https://docs.microsoft.com/azure/azure-app-configuration/
@@ -220,7 +226,7 @@ This project has adopted the Microsoft Open Source Code of Conduct. For more inf
 [azconfig_asof_snapshot]: https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-point-time-snapshot
 [source_root]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/appconfiguration/Azure.Data.AppConfiguration
 [source_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/appconfiguration/Azure.Data.AppConfiguration/samples
-[reference_docs]: https://azure.github.io/azure-sdk-for-net/api/Azure.Data.AppConfiguration.html
+[reference_docs]: https://azure.github.io/azure-sdk-for-net/appconfiguration.html
 [azconfig_rest]: https://github.com/Azure/AppConfiguration#rest-api-reference
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/
@@ -229,3 +235,5 @@ This project has adopted the Microsoft Open Source Code of Conduct. For more inf
 [label_concept]: https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-key-value#label-keys
 [nuget]: https://www.nuget.org/
 [package]: https://www.nuget.org/packages/Azure.ApplicationModel.Configuration/
+[samples_readme]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/README.md
+[moq]: https://github.com/Moq/moq4/

@@ -129,11 +129,11 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <remarks>
-        ///   This property is only populated for events received using an <see cref="EventHubConsumer" /> which was created when
-        ///   <see cref="EventHubConsumerOptions.TrackLastEnqueuedEventInformation" /> is enabled.
+        ///   This property is only populated for events received using an <see cref="EventHubConsumerClient" /> which was created when
+        ///   <see cref="EventHubConsumerClientOptions.TrackLastEnqueuedEventInformation" /> is enabled.
         /// </remarks>
         ///
-        protected internal long? LastPartitionSequenceNumber { get; }
+        internal long? LastPartitionSequenceNumber { get; }
 
         /// <summary>
         ///   The offset of the event that was last enqueued into the Event Hub partition from which this event was
@@ -141,11 +141,11 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <remarks>
-        ///   This property is only populated for events received using an <see cref="EventHubConsumer" /> which was created when
-        ///   <see cref="EventHubConsumerOptions.TrackLastEnqueuedEventInformation" /> is enabled.
+        ///   This property is only populated for events received using an <see cref="EventHubConsumerClient" /> which was created when
+        ///   <see cref="EventHubConsumerClientOptions.TrackLastEnqueuedEventInformation" /> is enabled.
         /// </remarks>
         ///
-        protected internal long? LastPartitionOffset { get; }
+        internal long? LastPartitionOffset { get; }
 
         /// <summary>
         ///   The date and time, in UTC, that the last event was enqueued into the Event Hub partition from
@@ -153,11 +153,11 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <remarks>
-        ///   This property is only populated for events received using an <see cref="EventHubConsumer" /> which was created when
-        ///   <see cref="EventHubConsumerOptions.TrackLastEnqueuedEventInformation" /> is enabled.
+        ///   This property is only populated for events received using an <see cref="EventHubConsumerClient" /> which was created when
+        ///   <see cref="EventHubConsumerClientOptions.TrackLastEnqueuedEventInformation" /> is enabled.
         /// </remarks>
         ///
-        protected internal DateTimeOffset? LastPartitionEnqueuedTime { get; }
+        internal DateTimeOffset? LastPartitionEnqueuedTime { get; }
 
         /// <summary>
         ///   The date and time, in UTC, that the last event information for the Event Hub partition was retrieved
@@ -165,11 +165,11 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <remarks>
-        ///   This property is only populated for events received using an <see cref="EventHubConsumer" /> which was created when
-        ///   <see cref="EventHubConsumerOptions.TrackLastEnqueuedEventInformation" /> is enabled.
+        ///   This property is only populated for events received using an <see cref="EventHubConsumerClient" /> which was created when
+        ///   <see cref="EventHubConsumerClientOptions.TrackLastEnqueuedEventInformation" /> is enabled.
         /// </remarks>
         ///
-        protected internal DateTimeOffset? LastPartitionInformationRetrievalTime { get; }
+        internal DateTimeOffset? LastPartitionInformationRetrievalTime { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventData"/> class.
@@ -177,7 +177,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="eventBody">The raw data to use as the body of the event.</param>
         ///
-        public EventData(ReadOnlyMemory<byte> eventBody) : this(eventBody, null)
+        public EventData(ReadOnlyMemory<byte> eventBody) : this(eventBody, lastPartitionSequenceNumber: null)
 
         {
         }
@@ -198,17 +198,17 @@ namespace Azure.Messaging.EventHubs
         /// <param name="lastPartitionEnqueuedTime">The date and time, in UTC, of the event that was last enqueued into the Event Hub partition.</param>
         /// <param name="lastPartitionInformationRetrievalTime">The date and time, in UTC, that the last event information for the Event Hub partition was retrieved from the serivce.</param>
         ///
-        protected internal EventData(ReadOnlyMemory<byte> eventBody,
-                                     IDictionary<string, object> properties = null,
-                                     IReadOnlyDictionary<string, object> systemProperties = null,
-                                     long? sequenceNumber = null,
-                                     long? offset = null,
-                                     DateTimeOffset? enqueuedTime = null,
-                                     string partitionKey = null,
-                                     long? lastPartitionSequenceNumber = null,
-                                     long? lastPartitionOffset = null,
-                                     DateTimeOffset? lastPartitionEnqueuedTime = null,
-                                     DateTimeOffset? lastPartitionInformationRetrievalTime = null)
+        internal EventData(ReadOnlyMemory<byte> eventBody,
+                           IDictionary<string, object> properties = null,
+                           IReadOnlyDictionary<string, object> systemProperties = null,
+                           long? sequenceNumber = null,
+                           long? offset = null,
+                           DateTimeOffset? enqueuedTime = null,
+                           string partitionKey = null,
+                           long? lastPartitionSequenceNumber = null,
+                           long? lastPartitionOffset = null,
+                           DateTimeOffset? lastPartitionEnqueuedTime = null,
+                           DateTimeOffset? lastPartitionInformationRetrievalTime = null)
         {
             Body = eventBody;
             Properties = properties ?? new Dictionary<string, object>();
@@ -221,6 +221,28 @@ namespace Azure.Messaging.EventHubs
             LastPartitionOffset = lastPartitionOffset;
             LastPartitionEnqueuedTime = lastPartitionEnqueuedTime;
             LastPartitionInformationRetrievalTime = lastPartitionInformationRetrievalTime;
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="EventData"/> class.
+        /// </summary>
+        ///
+        /// <param name="eventBody">The raw data to use as the body of the event.</param>
+        /// <param name="properties">The set of free-form event properties to send with the event.</param>
+        /// <param name="systemProperties">The set of system properties received from the Event Hubs service.</param>
+        /// <param name="sequenceNumber">The sequence number assigned to the event when it was enqueued in the associated Event Hub partition.</param>
+        /// <param name="offset">The offset of the event when it was received from the associated Event Hub partition.</param>
+        /// <param name="enqueuedTime">The date and time, in UTC, of when the event was enqueued in the Event Hub partition.</param>
+        /// <param name="partitionKey">The partition hashing key applied to the batch that the associated <see cref="EventData"/>, was sent with.</param>
+        ///
+        protected EventData(ReadOnlyMemory<byte> eventBody,
+                            IDictionary<string, object> properties = null,
+                            IReadOnlyDictionary<string, object> systemProperties = null,
+                            long? sequenceNumber = null,
+                            long? offset = null,
+                            DateTimeOffset? enqueuedTime = null,
+                            string partitionKey = null) : this(eventBody, properties, systemProperties, sequenceNumber, offset, enqueuedTime, partitionKey, lastPartitionSequenceNumber: null)
+        {
         }
 
         /// <summary>

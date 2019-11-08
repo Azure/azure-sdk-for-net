@@ -33,11 +33,11 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             // Let's create two self-signed certificates using the default policy
             string certName1 = $"defaultCert-{Guid.NewGuid()}";
 
-            CertificateOperation certOp1 = client.StartCreateCertificate(certName1);
+            CertificateOperation certOp1 = client.StartCreateCertificate(certName1, CertificatePolicy.Default);
 
             string certName2 = $"defaultCert-{Guid.NewGuid()}";
 
-            CertificateOperation certOp2 = client.StartCreateCertificate(certName1);
+            CertificateOperation certOp2 = client.StartCreateCertificate(certName1, CertificatePolicy.Default);
 
             // Next let's wait on the certificate operation to complete. Note that certificate creation can last an indeterministic
             // amount of time, so applications should only wait on the operation to complete in the case the issuance time is well
@@ -58,13 +58,13 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             }
 
             // Let's list the certificates which exist in the vault along with their thumbprints
-            foreach (CertificateProperties cert in client.GetCertificates())
+            foreach (CertificateProperties cert in client.GetPropertiesOfCertificates())
             {
                 Debug.WriteLine($"Certificate is returned with name {cert.Name} and thumbprint {BitConverter.ToString(cert.X509Thumbprint)}");
             }
 
             // We need to create a new version of a certificate. Creating a certificate with the same name will create another version of the certificate
-            CertificateOperation newCertOp = client.StartCreateCertificate(certName1);
+            CertificateOperation newCertOp = client.StartCreateCertificate(certName1, CertificatePolicy.Default);
 
             while (!newCertOp.HasCompleted)
             {
@@ -74,7 +74,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             }
 
             // Let's print all the versions of this certificate
-            foreach (CertificateProperties cert in client.GetCertificateVersions(certName1))
+            foreach (CertificateProperties cert in client.GetPropertiesOfCertificateVersions(certName1))
             {
                 Debug.WriteLine($"Certificate {cert.Name} with name {cert.Version}");
             }

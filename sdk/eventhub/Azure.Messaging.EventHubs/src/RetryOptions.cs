@@ -3,6 +3,7 @@
 
 using System;
 using Azure.Core;
+using Azure.Messaging.EventHubs.Core;
 
 namespace Azure.Messaging.EventHubs
 {
@@ -16,7 +17,7 @@ namespace Azure.Messaging.EventHubs
         /// <summary>The maximum number of retry attempts before considering the associated operation to have failed.</summary>
         private int _maximumRetries = 3;
 
-        /// <summary>The delay or backoff factor to apply between retry attempts.</summary>
+        /// <summary>The delay or back-off factor to apply between retry attempts.</summary>
         private TimeSpan _delay = TimeSpan.FromSeconds(0.8);
 
         /// <summary>The maximum delay to allow between retry attempts.</summary>
@@ -79,7 +80,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   The maximum duration to wait for completion of a single attempt, whether the intial
+        ///   The maximum duration to wait for completion of a single attempt, whether the initial
         ///   attempt or a retry.
         /// </summary>
         ///
@@ -100,6 +101,17 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   A custom retry policy to be used in place of the individual option values.
+        /// </summary>
+        ///
+        /// <remarks>
+        ///   When populated, this custom policy will take precedence over the individual retry
+        ///   options provided.
+        /// </remarks>
+        ///
+        public EventHubsRetryPolicy CustomRetryPolicy { get; set; }
+
+        /// <summary>
         ///   Creates a new copy of the current <see cref="RetryOptions" />, cloning its attributes into a new instance.
         /// </summary>
         ///
@@ -109,10 +121,19 @@ namespace Azure.Messaging.EventHubs
             new RetryOptions
             {
                 Mode = Mode,
+                CustomRetryPolicy = CustomRetryPolicy,
                 _maximumRetries = _maximumRetries,
                 _delay = _delay,
                 _maximumDelay = _maximumDelay,
                 _tryTimeOut = _tryTimeOut
             };
+
+        /// <summary>
+        ///   Converts the options into a retry policy for use.
+        /// </summary>
+        ///
+        /// <returns>The <see cref="EventHubsRetryPolicy" /> represented by the options.</returns>
+        internal EventHubsRetryPolicy ToRetryPolicy() =>
+            CustomRetryPolicy ?? new BasicRetryPolicy(this);
     }
 }

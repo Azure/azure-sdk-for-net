@@ -13,21 +13,21 @@ namespace Azure.Security.KeyVault.Certificates
 
         private static readonly JsonEncodedText s_contactsPropertyNameBytes = JsonEncodedText.Encode(ContactsPropertyName);
 
-        private IEnumerable<Contact> _contacts;
+        private IEnumerable<CertificateContact> _contacts;
 
         public ContactList()
         {
 
         }
 
-        public ContactList(IEnumerable<Contact> contacts)
+        public ContactList(IEnumerable<CertificateContact> contacts)
         {
             _contacts = contacts;
         }
 
-        public IList<Contact> ToList()
+        public IList<CertificateContact> ToList()
         {
-            if (!(_contacts is IList<Contact> ret))
+            if (!(_contacts is IList<CertificateContact> ret))
             {
                 ret = _contacts.ToList();
 
@@ -39,13 +39,13 @@ namespace Azure.Security.KeyVault.Certificates
 
         void IJsonDeserializable.ReadProperties(JsonElement json)
         {
-            var contacts = new List<Contact>();
+            var contacts = new List<CertificateContact>();
 
             if (json.TryGetProperty(ContactsPropertyName, out JsonElement contactsElement))
             {
                 foreach (JsonElement entry in contactsElement.EnumerateArray())
                 {
-                    var contact = new Contact();
+                    var contact = new CertificateContact();
 
                     ((IJsonDeserializable)contact).ReadProperties(entry);
 
@@ -62,7 +62,7 @@ namespace Azure.Security.KeyVault.Certificates
             {
                 json.WriteStartArray(s_contactsPropertyNameBytes);
 
-                foreach (Contact contact in _contacts)
+                foreach (CertificateContact contact in _contacts)
                 {
                     json.WriteStartObject();
 

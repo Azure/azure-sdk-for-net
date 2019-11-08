@@ -88,6 +88,17 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Cannot begin processing without {0} handler set..
+        /// </summary>
+        internal static string CannotStartEventProcessorWithoutHandler
+        {
+            get
+            {
+                return ResourceManager.GetString("CannotStartEventProcessorWithoutHandler", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to The &apos;identifier&apos; parameter exceeds the maximum allowed size of {0} characters..
         /// </summary>
         internal static string ConsumerIdentifierOverMaxValue
@@ -110,13 +121,13 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to {0} has already been disposed and cannot perform the requested operation..
+        ///   Looks up a localized string similar to {0} has already been closed and cannot perform the requested operation..
         /// </summary>
-        internal static string DisposedInstanceCannotPerformOperation
+        internal static string ClosedInstanceCannotPerformOperation
         {
             get
             {
-                return ResourceManager.GetString("DisposedInstanceCannotPerformOperation", resourceCulture);
+                return ResourceManager.GetString("ClosedInstanceCannotPerformOperation", resourceCulture);
             }
         }
 
@@ -271,6 +282,17 @@ namespace Azure.Messaging.EventHubs
             get
             {
                 return ResourceManager.GetString("RetryOptionsMustBeSet", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The event processor is already running and needs to be stopped in order to perform this operation..
+        /// </summary>
+        internal static string RunningEventProcessorCannotPerformOperation
+        {
+            get
+            {
+                return ResourceManager.GetString("RunningEventProcessorCannotPerformOperation", resourceCulture);
             }
         }
 
@@ -447,6 +469,17 @@ namespace Azure.Messaging.EventHubs
             get
             {
                 return ResourceManager.GetString("TrackLastEnqueuedEventInformationNotSet", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The Event Hub client responsible for this information.
+        /// </summary>
+        internal static string ClientNeededForThisInformation
+        {
+            get
+            {
+                return ResourceManager.GetString("ClientNeededForThisInformation", resourceCulture);
             }
         }
     }

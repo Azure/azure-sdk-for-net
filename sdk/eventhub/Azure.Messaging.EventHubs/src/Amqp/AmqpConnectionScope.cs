@@ -161,7 +161,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         public AmqpConnectionScope(Uri serviceEndpoint,
                                    string eventHubName,
-                                   TokenCredential credential,
+                                   EventHubTokenCredential credential,
                                    TransportType transport,
                                    IWebProxy proxy,
                                    string identifier = default)
@@ -239,7 +239,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         public virtual async Task<ReceivingAmqpLink> OpenConsumerLinkAsync(string consumerGroup,
                                                                            string partitionId,
                                                                            EventPosition eventPosition,
-                                                                           EventHubConsumerOptions consumerOptions,
+                                                                           EventHubConsumerClientOptions consumerOptions,
                                                                            TimeSpan timeout,
                                                                            CancellationToken cancellationToken)
         {
@@ -451,7 +451,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         protected virtual async Task<ReceivingAmqpLink> CreateReceivingLinkAsync(AmqpConnection connection,
                                                                                  Uri endpoint,
                                                                                  EventPosition eventPosition,
-                                                                                 EventHubConsumerOptions consumerOptions,
+                                                                                 EventHubConsumerClientOptions consumerOptions,
                                                                                  TimeSpan timeout,
                                                                                  CancellationToken cancellationToken)
         {

@@ -361,7 +361,7 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the Code of Conduct FAQ or contact opencode@microsoft.com with any additional questions or comments.
 
 <!-- LINKS -->
-[API_reference]: https://azure.github.io/azure-sdk-for-net/api/Azure.Security.KeyVault.Keys.html
+[API_reference]: https://azure.github.io/azure-sdk-for-net/keyvault.html
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity
 [azure_sub]: https://azure.microsoft.com/free/
@@ -391,4 +391,4 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [secrets_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Secrets
 [soft_delete]: https://docs.microsoft.com/en-us/azure/key-vault/key-vault-ovw-soft-delete
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fkeyvault%2FAzure.Security.KeyVault.Keys%2FFREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fkeyvault%2FAzure.Security.KeyVault.Keys%2FREADME.png)

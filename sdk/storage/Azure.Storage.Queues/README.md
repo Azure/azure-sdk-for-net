@@ -17,7 +17,7 @@ a storage account.
 Install the Azure Storage Queues client library for .NET with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Storage.Queues --version 12.0.0-preview.4
+dotnet add package Azure.Storage.Queues
 ```
 
 ### Prerequisites
@@ -42,54 +42,53 @@ Common uses of Queue storage include:
 
 ## Examples
 
-### Enqueue messages
+### Send messages
 
-```c#
-using Azure.Storage;
-using Azure.Storage.Queues;
-using Azure.Storage.Queues.Models;
-
-// Get a connection string to our Azure Storage account.  You can
-// obtain your connection string from the Azure Portal (click
-// Access Keys under Settings in the Portal Storage account blade)
-// or using the Azure CLI with:
+```C# Snippet:Azure_Storage_Queues_Samples_Sample01a_HelloWorld_SendMessage
+// We'll need a connection string to your Azure Storage account.
+// You can obtain your connection string from the Azure Portal
+// (click Access Keys under Settings in the Portal Storage account
+// blade) or using the Azure CLI with:
 //
 //     az storage account show-connection-string --name <account_name> --resource-group <resource_group>
 //
-// And you can provide the connection string to your application
-// using an environment variable.
+// You would normally provide the connection string to your
+// application using an environment variable.
 string connectionString = "<connection_string>";
 
-// Get a reference to a queue named "sample-queue" and then create it
-QueueClient queue = new QueueClient(connectionString, "sample-queue");
+// Name of the queue we'll send messages to
+string queueName = "sample-queue";
+
+// Get a reference to a queue and then create it
+QueueClient queue = new QueueClient(connectionString, queueName);
 queue.Create();
 
-// Add a message to our queue
-queue.EnqueueMessage("Hello, Azure!");
+// Send a message to our queue
+queue.SendMessage("Hello, Azure!");
 ```
 
-### Dequeue messages
+### Receive messages
 
-```c#
-// Get a connection string to our Azure Storage account.
+```C# Snippet:Azure_Storage_Queues_Samples_Sample01a_HelloWorld_ReceiveMessages
+// We'll need a connection string to your Azure Storage account.
 string connectionString = "<connection_string>";
 
-// Get a reference to a queue named "sample-queue" and then create it
-QueueClient queue = new QueueClient(connectionString, "sample-queue");
-queue.Create();
+// Name of an existing queue we'll operate on
+string queueName = "sample-queue";
 
-// Add several messages to the queue
-queue.EnqueueMessage("first");
-queue.EnqueueMessage("second");
-queue.EnqueueMessage("third");
+// Get a reference to a queue and then fill it with messages
+QueueClient queue = new QueueClient(connectionString, queueName);
+queue.SendMessage("first");
+queue.SendMessage("second");
+queue.SendMessage("third");
 
-// Get the next 10 messages from the queue
-foreach (DequeuedMessage message in queue.DequeueMessages(maxMessages: 10).Value)
+// Get the next messages from the queue
+foreach (QueueMessage message in queue.ReceiveMessages(maxMessages: 10).Value)
 {
     // "Process" the message
-    Console.WriteLine(message.MessageText)
+    Console.WriteLine($"Message: {message.MessageText}");
 
-    // Let the service know we finished with the message and
+    // Let the service know we're finished with the message and
     // it can be safely deleted.
     queue.DeleteMessage(message.MessageId, message.PopReceipt);
 }
@@ -99,25 +98,26 @@ foreach (DequeuedMessage message in queue.DequeueMessages(maxMessages: 10).Value
 
 We fully support both synchronous and asynchronous APIs.
 
-```c#
-// Get a connection string to our Azure Storage account.
+```C# Snippet:Azure_Storage_Queues_Samples_Sample01b_HelloWorld_SendMessageAsync
+// We'll need a connection string to your Azure Storage account.
 string connectionString = "<connection_string>";
 
-// Get a reference to a queue named "sample-queue" and then create it
-QueueClient queue = new QueueClient(connectionString, "sample-queue");
+// Name of the queue we'll send messages to
+string queueName = "sample-queue";
+
+// Get a reference to a queue and then create it
+QueueClient queue = new QueueClient(connectionString, queueName);
 await queue.CreateAsync();
 
-// Add a message to our queue
-await queue.EnqueueMessageAsync("Hello, Azure!");
+// Send a message to our queue
+await queue.SendMessageAsync("Hello, Azure!");
 ```
 
 ### Authenticating with Azure.Identity
 
 The [Azure Identity library][identity] provides easy Azure Active Directory support for authentication.
 
-```c#
-using Azure.Identity;
-
+```C# Snippet:Azure_Storage_Queues_Samples_Sample01a_HelloWorld_IdentityAuth
 // Create a QueueClient that will authenticate through Active Directory
 Uri accountUri = new Uri("https://MYSTORAGEACCOUNT.blob.core.windows.net/");
 QueueClient queue = new QueueClient(accountUri, new DefaultAzureCredential());
@@ -131,15 +131,17 @@ All Azure Storage Queue service operations will throw a
 [RequestFailedException][RequestFailedException] on failure with
 helpful [`ErrorCode`s][error_codes].  Many of these errors are recoverable.
 
-```c#
-// Get a connection string to our Azure Storage account
+```C# Snippet:Azure_Storage_Queues_Samples_Sample01a_HelloWorld_Errors
+// We'll need a connection string to your Azure Storage account.
 string connectionString = "<connection_string>";
 
-// Try to create a queue named "sample-queue" and avoid any potential race
-// conditions that might arise by checking if the queue exists before creating
-QueueClient queue = new QueueClient(connectionString, "sample-queue");
+// Name of an existing queue we'll operate on
+string queueName = "sample-queue";
+
 try
 {
+    // Try to create a queue that already exists
+    QueueClient queue = new QueueClient(connectionString, queueName);
     queue.Create();
 }
 catch (RequestFailedException ex)
@@ -176,7 +178,7 @@ additional questions or comments.
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Queues/src
 [package]: https://www.nuget.org/packages/Azure.Storage.Queues/
-[docs]: https://azure.github.io/azure-sdk-for-net/api/Azure.Storage.Queues.html
+[docs]: https://azure.github.io/azure-sdk-for-net/storage.html
 [rest_docs]: https://docs.microsoft.com/en-us/rest/api/storageservices/queue-service-rest-api
 [product_docs]: https://docs.microsoft.com/en-us/azure/storage/queues/storage-queues-introduction
 [nuget]: https://www.nuget.org/

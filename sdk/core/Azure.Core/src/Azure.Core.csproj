@@ -2,13 +2,12 @@
   <PropertyGroup>
     <Description>This is the implementation of the Azure Client Pipeline</Description>
     <AssemblyTitle>Microsoft Azure Client Pipeline</AssemblyTitle>
-    <Version>1.0.0-preview.10</Version>
+    <Version>1.1.0-preview.1</Version>
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-      Added console and trace logger listener.
-      Added additional content and header logging options.
-      Moved commonly used types to Azure namespace.
+- Updating versioning and packaging for general availability.
+- Make types and namespace names consistent.
       ]]>
     </PackageReleaseNotes>
     <Nullable>enable</Nullable>

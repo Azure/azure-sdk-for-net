@@ -1,19 +1,19 @@
 {
   "Entries": [
     {
-      "RequestUri": "/luis/api/v2.0/apps/cultures",
-      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy9jdWx0dXJlcw==",
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/cultures",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzL2N1bHR1cmVz",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          "62b834e0069943d9b035f32abd230359"
+          "120f721e60454544a884022b1bc988a5"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27617.04",
+          "FxVersion/4.6.27817.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.8.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -24,10 +24,10 @@
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "37a94fd5-4e6a-4668-b09c-7f38aa156087"
+          "82c72ee9-16fa-416b-a294-1d48bf0ddc6d"
         ],
         "Request-Id": [
-          "37a94fd5-4e6a-4668-b09c-7f38aa156087"
+          "82c72ee9-16fa-416b-a294-1d48bf0ddc6d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -42,16 +42,16 @@
           "SAMEORIGIN"
         ],
         "Date": [
-          "Sun, 25 Aug 2019 19:16:34 GMT"
+          "Tue, 29 Oct 2019 13:17:05 GMT"
         ],
         "Content-Length": [
-          "468"
+          "507"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"name\": \"English\",\r\n    \"code\": \"en-us\"\r\n  },\r\n  {\r\n    \"name\": \"Chinese\",\r\n    \"code\": \"zh-cn\"\r\n  },\r\n  {\r\n    \"name\": \"French\",\r\n    \"code\": \"fr-fr\"\r\n  },\r\n  {\r\n    \"name\": \"French Canadian\",\r\n    \"code\": \"fr-ca\"\r\n  },\r\n  {\r\n    \"name\": \"Spanish\",\r\n    \"code\": \"es-es\"\r\n  },\r\n  {\r\n    \"name\": \"Spanish Mexican\",\r\n    \"code\": \"es-mx\"\r\n  },\r\n  {\r\n    \"name\": \"Italian\",\r\n    \"code\": \"it-it\"\r\n  },\r\n  {\r\n    \"name\": \"German\",\r\n    \"code\": \"de-de\"\r\n  },\r\n  {\r\n    \"name\": \"Japanese\",\r\n    \"code\": \"ja-jp\"\r\n  },\r\n  {\r\n    \"name\": \"Brazilian Portuguese\",\r\n    \"code\": \"pt-br\"\r\n  },\r\n  {\r\n    \"name\": \"Korean\",\r\n    \"code\": \"ko-kr\"\r\n  },\r\n  {\r\n    \"name\": \"Dutch\",\r\n    \"code\": \"nl-nl\"\r\n  },\r\n  {\r\n    \"name\": \"Turkish\",\r\n    \"code\": \"tr-tr\"\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"name\": \"English\",\r\n    \"code\": \"en-us\"\r\n  },\r\n  {\r\n    \"name\": \"Chinese\",\r\n    \"code\": \"zh-cn\"\r\n  },\r\n  {\r\n    \"name\": \"French\",\r\n    \"code\": \"fr-fr\"\r\n  },\r\n  {\r\n    \"name\": \"French Canadian\",\r\n    \"code\": \"fr-ca\"\r\n  },\r\n  {\r\n    \"name\": \"Spanish\",\r\n    \"code\": \"es-es\"\r\n  },\r\n  {\r\n    \"name\": \"Spanish Mexican\",\r\n    \"code\": \"es-mx\"\r\n  },\r\n  {\r\n    \"name\": \"Italian\",\r\n    \"code\": \"it-it\"\r\n  },\r\n  {\r\n    \"name\": \"German\",\r\n    \"code\": \"de-de\"\r\n  },\r\n  {\r\n    \"name\": \"Japanese\",\r\n    \"code\": \"ja-jp\"\r\n  },\r\n  {\r\n    \"name\": \"Brazilian Portuguese\",\r\n    \"code\": \"pt-br\"\r\n  },\r\n  {\r\n    \"name\": \"Korean\",\r\n    \"code\": \"ko-kr\"\r\n  },\r\n  {\r\n    \"name\": \"Dutch\",\r\n    \"code\": \"nl-nl\"\r\n  },\r\n  {\r\n    \"name\": \"Turkish\",\r\n    \"code\": \"tr-tr\"\r\n  },\r\n  {\r\n    \"name\": \"Hindi Indian\",\r\n    \"code\": \"hi-in\"\r\n  }\r\n]",
       "StatusCode": 200
     }
   ],
