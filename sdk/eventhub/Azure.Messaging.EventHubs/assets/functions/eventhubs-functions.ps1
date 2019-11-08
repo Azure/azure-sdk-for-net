@@ -130,9 +130,9 @@ function GetRootManageSharedAccessKey()
       It returns the access keys connected to a namespace.
 
     .DESCRIPTION
-      It calls Get-AzEventHubKey and returns the RootManageSharedAccessKey.
+      It calls Get-AzEventHubKey and returns the PrimaryConnectionString.
   #>
-  
+
   param
   (
     [Parameter(Mandatory=$true)]
@@ -143,11 +143,11 @@ function GetRootManageSharedAccessKey()
   )
 
   Write-Host "`t...Retrieving primary connection string"
-  
+
   $keys = Get-AzEventHubKey -ResourceGroupName "$($resourceGroupName)" `
                             -NamespaceName "$($namespaceName)" `
                             -AuthorizationRuleName "RootManageSharedAccessKey"
-  
+
   return $keys.PrimaryConnectionString
 }
 

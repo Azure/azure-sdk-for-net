@@ -9,11 +9,11 @@
   .DESCRIPTION
     This script handles creation and configuration of needed resources within an Azure subscription
     for use with the Event Hubs client library's Live test suite.  
-    
+
     Upon completion, the script will output a set of environment variables with sensitive information which
     are used for testing.  When running Live tests, please be sure to have these environment variables available,
     either within Visual Studio or command line environment.
- 
+
     For more detailed help, please use the -Help switch. 
 #>
 
@@ -91,11 +91,11 @@ try
 
     $credentials = GenerateRandomCredentials               
     $principal = CreateServicePrincipalAndWait -ServicePrincipalName "$($servicePrincipalName)" -Credentials $credentials
-    
+
     AssignRole -ApplicationId "$($principal.ApplicationId)" `
                -RoleDefinitionName "Contributor" `
                -ResourceGroupName "$($resourceGroupName)"
-            
+
     # The "Azure Event Hubs Data Owner" role is needed to test the Azure Identity samples. 
     # These samples do not use a "Shared Access Signatures" as a means of authentication
     # and authorization and rely on role-based access control to authorize users, for example, to send events to one of the hubs.

@@ -6,7 +6,7 @@ function AssignRole()
   <#
     .SYNOPSIS
       It tries to assign a role to an existing principal.
-      
+
     .DESCRIPTION
       Using the principal and the resource passed as input,
       it tries to assign the specified role for the principal and the resource.
@@ -23,14 +23,14 @@ function AssignRole()
     [Parameter(Mandatory=$true)]
     [string] $resourceGroupName
   )
-  
+
   # The propagation of the identity is non-deterministic.  Attempt to retry once after waiting for another minute if
   # the initial attempt fails.
 
   try 
   {
       Write-Host "`t...Assigning role '$roleDefinitionName' to resource group"
-      
+
       New-AzRoleAssignment -ApplicationId "$($principal.ApplicationId)" `
                            -RoleDefinitionName "$($roleDefinitionName)" `
                            -ResourceGroupName "$($resourceGroupName)" | Out-Null
@@ -76,7 +76,7 @@ function AssignRoleToNamespace()
     [string] $namespaceName
   )
 
-  try 
+  try
   {
       Write-Host "`t...Assigning role '$roleDefinitionName' to namespace"
 

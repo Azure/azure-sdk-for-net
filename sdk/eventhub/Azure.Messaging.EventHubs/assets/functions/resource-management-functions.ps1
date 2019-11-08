@@ -19,9 +19,9 @@ function TearDownResources
     [Parameter(Mandatory=$true)]
     [string] $resourceGroupName
   )
-    
+
   Write-Host("Cleaning up resources that were created:")
-    
+
   try 
   {
     Write-Host "`t...Removing resource group `"$($resourceGroupName)`""
@@ -70,14 +70,13 @@ function CreateServicePrincipalAndWait
       Write-Error "Unable to create the service principal: $($ServicePrincipalName)"
       exit -1
   }
-    
+
   Write-Host "`t...Waiting for identity propagation"
 
   Start-Sleep 60
 
   return $principal
 }
-
 
 function GetSubscriptionAndSetAzureContext
 {
@@ -99,18 +98,18 @@ function GetSubscriptionAndSetAzureContext
 
   # Capture the subscription.  The cmdlet will error if there was no subscription, 
   # so no need to validate.
-  
+
   Write-Host ""
   Write-Host "Working:"
   Write-Host "`t...Requesting subscription"
   $subscription = Get-AzSubscription -SubscriptionName "$($subscriptionName)" -ErrorAction SilentlyContinue
-  
+
   if ($subscription -eq $null)
   {
       Write-Error "Unable to locate the requested Azure subscription: $($subscriptionName)"
       exit -1
   }
-  
+
   Set-AzContext -SubscriptionId "$($subscription.Id)" -Scope "Process" | Out-Null
 
   return $subscription
@@ -122,7 +121,7 @@ function CreateResourceGroupIfMissing()
     .SYNOPSIS
       It tries to retrieve the specified resource group.
       It creates if it may not be found.
-      
+
     .DESCRIPTION
       It tries to retrieve the specified resource group.
       It creates if it may not be found.
