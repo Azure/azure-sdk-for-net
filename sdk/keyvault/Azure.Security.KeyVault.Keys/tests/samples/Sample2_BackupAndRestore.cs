@@ -11,8 +11,7 @@ using System.Threading;
 namespace Azure.Security.KeyVault.Keys.Samples
 {
     /// <summary>
-    /// Sample demonstrates how to backup and restore keys in the Key Vault
-    /// using the synchronous methods of the KeyClient.
+    /// This sample demonstrates how to back up and restore a Key from Azure Key Vault using synchronous methods of <see cref="KeyClient">.
     /// </summary>
     [LiveOnly]
     public partial class BackupAndRestore
@@ -23,14 +22,16 @@ namespace Azure.Security.KeyVault.Keys.Samples
         {
             // Environment variable with the Key Vault endpoint.
             string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
+            BackupAndRestoreSync(keyVaultUrl);
+        }
 
-            // Instantiate a key client that will be used to call the service. Notice that the client is using default Azure
-            // credentials. To make default credentials work, ensure that environment variables 'AZURE_CLIENT_ID',
-            // 'AZURE_CLIENT_KEY' and 'AZURE_TENANT_ID' are set with the service principal credentials.
+        private void BackupAndRestoreSync(string keyVaultUrl)
+        {
+            #region Snippet:KeysSample2KeyClient
             var client = new KeyClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
+            #endregion
 
-            // Let's create a RSA key valid for 1 year. If the key
-            // already exists in the Key Vault, then a new version of the key is created.
+            #region Snippet:KeysSample2CreateKey
             string rsaKeyName = $"CloudRsaKey-{Guid.NewGuid()}";
             var rsaKey = new CreateRsaKeyOptions(rsaKeyName, hardwareProtected: false)
             {
@@ -39,11 +40,11 @@ namespace Azure.Security.KeyVault.Keys.Samples
             };
 
             KeyVaultKey storedKey = client.CreateRsaKey(rsaKey);
+            #endregion
 
-            // Backups are good to have if in case keys get accidentally deleted by you.
-            // For long term storage, it is ideal to write the backup to a file, disk, database, etc.
-            // For the purposes of this sample, we are storing the bakup in a temporary memory area.
+            #region Snippet:KeysSample2BackupKey
             byte[] backupKey = client.BackupKey(rsaKeyName);
+            #endregion
 
             using (var memoryStream = new MemoryStream())
             {
@@ -63,11 +64,12 @@ namespace Azure.Security.KeyVault.Keys.Samples
                 // If the keyvault is soft-delete enabled, then for permanent deletion, deleted key needs to be purged.
                 client.PurgeDeletedKey(rsaKeyName);
 
-                // After sometime, the key is required again. We can use the backup value to restore it in the Key Vault.
+                #region Snippet:KeysSample2RestoreKey
                 KeyVaultKey restoredKey = client.RestoreKeyBackup(memoryStream.ToArray());
+                #endregion
 
                 AssertKeysEqual(storedKey.Properties, restoredKey.Properties);
-            }
+            }    
         }
 
         private void AssertKeysEqual(KeyProperties exp, KeyProperties act)

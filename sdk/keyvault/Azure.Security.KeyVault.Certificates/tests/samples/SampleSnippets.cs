@@ -5,6 +5,7 @@ using Azure.Core.Testing;
 using Azure.Identity;
 using NUnit.Framework;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Security.KeyVault.Certificates.Samples
@@ -20,7 +21,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
 #pragma warning restore IDE1006 // Naming Styles
 
         [OneTimeSetUp]
-        public async Task CreateClientAsync()
+        public void CreateClient()
         {
             // Environment variable with the Key Vault endpoint.
             string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
@@ -29,35 +30,54 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             // Create a new certificate client using the default credential from Azure.Identity using environment variables previously set,
             // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
             var client = new CertificateClient(vaultUri: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
-            #endregion
 
-            #region Snippet:CreateCertificate
-            // Create a certificate. This starts a long running operation to create and sign the certificate.
-            CertificateOperation operation = await client.StartCreateCertificateAsync("MyCertificate", CertificatePolicy.Default);
+            // Create a certificate using the certificate client.
+            CertificateOperation operation = client.StartCreateCertificate("MyCertificate", CertificatePolicy.Default);
 
-            // You can await the completion of the create certificate operation.
-            KeyVaultCertificateWithPolicy certificate = await operation.WaitForCompletionAsync();
+            // Retrieve a certificate using the certificate client.
+            KeyVaultCertificateWithPolicy certificate = client.GetCertificate("MyCertificate");
             #endregion
 
             this.client = client;
         }
 
         [Test]
-        public async Task RetrieveCertificateAsync()
+        public void CreateCertificate()
         {
-            #region Snippet:RetrieveCertificate
-            KeyVaultCertificateWithPolicy certificateWithPolicy = await client.GetCertificateAsync("MyCertificate");
-            #endregion
-
-            #region Snippet:GetCertificate
-            KeyVaultCertificate certificate = await client.GetCertificateVersionAsync(certificateWithPolicy.Name, certificateWithPolicy.Properties.Version);
+            #region Snippet:CreateCertificate
+            // Create a certificate. This starts a long running operation to create and sign the certificate.
+            CertificateOperation operation = client.StartCreateCertificate("MyCertificate", CertificatePolicy.Default);
             #endregion
         }
 
         [Test]
-        public async Task UpdateCertificateAsync()
+        public async Task CreateCertificateAsync()
         {
-            KeyVaultCertificateWithPolicy certificate = await client.GetCertificateAsync("MyCertificate");
+            #region Snippet:CreateCertificateAsync
+            // Create a certificate. This starts a long running operation to create and sign the certificate.
+            CertificateOperation operation = await client.StartCreateCertificateAsync("MyCertificate", CertificatePolicy.Default);
+
+            // You can  the completion of the create certificate operation.
+            KeyVaultCertificateWithPolicy certificate = await operation.WaitForCompletionAsync();
+            #endregion
+        }
+
+        [Test]
+        public void RetrieveCertificate()
+        {
+            #region Snippet:RetrieveCertificate
+            KeyVaultCertificateWithPolicy certificateWithPolicy = client.GetCertificate("MyCertificate");
+            #endregion
+
+            #region Snippet:GetCertificate
+            KeyVaultCertificate certificate = client.GetCertificateVersion(certificateWithPolicy.Name, certificateWithPolicy.Properties.Version);
+            #endregion
+        }
+
+        [Test]
+        public void UpdateCertificate()
+        {
+            KeyVaultCertificateWithPolicy certificate = client.GetCertificate("MyCertificate");
 
             #region Snippet:UpdateCertificate
             CertificateProperties certificateProperties = new CertificateProperties(certificate.Id)
@@ -68,14 +88,27 @@ namespace Azure.Security.KeyVault.Certificates.Samples
                 }
             };
 
-            KeyVaultCertificate updated = await client.UpdateCertificatePropertiesAsync(certificateProperties);
+            KeyVaultCertificate updated = client.UpdateCertificateProperties(certificateProperties);
+            #endregion
+        }
+
+        [Test]
+        public void ListCertificates()
+        {
+            #region Snippet:ListCertificates
+            Pageable<CertificateProperties> allCertificates = client.GetPropertiesOfCertificates();
+
+            foreach (CertificateProperties certificateProperties in allCertificates)
+            {
+                Console.WriteLine(certificateProperties.Name);
+            }
             #endregion
         }
 
         [Test]
         public async Task ListCertificatesAsync()
         {
-            #region Snippet:ListCertificates
+            #region Snippet:ListCertificatesAsync
             AsyncPageable<CertificateProperties> allCertificates = client.GetPropertiesOfCertificatesAsync();
 
             await foreach (CertificateProperties certificateProperties in allCertificates)
@@ -86,12 +119,12 @@ namespace Azure.Security.KeyVault.Certificates.Samples
         }
 
         [Test]
-        public async Task NotFoundAsync()
+        public void NotFound()
         {
             #region Snippet:CertificateNotFound
             try
             {
-                KeyVaultCertificateWithPolicy certificateWithPolicy = await client.GetCertificateAsync("SomeCertificate");
+                KeyVaultCertificateWithPolicy certificateWithPolicy = client.GetCertificate("SomeCertificate");
             }
             catch (RequestFailedException ex)
             {
@@ -101,14 +134,14 @@ namespace Azure.Security.KeyVault.Certificates.Samples
         }
 
         [OneTimeTearDown]
-        public async Task DeleteCertificateAsync()
+        public void DeleteCertificate()
         {
             #region Snippet:DeleteCertificate
-            DeletedCertificate deletedCert = await client.DeleteCertificateAsync("MyCertificate");
+            DeletedCertificate deleteCert = client.DeleteCertificate("MyCertificate");
 
-            Console.WriteLine(deletedCert.ScheduledPurgeDate);
+            Console.WriteLine(deleteCert.ScheduledPurgeDate);
 
-            await client.PurgeDeletedCertificateAsync("MyCertificate");
+            client.PurgeDeletedCertificate(deleteCert.Name);
             #endregion
         }
     }

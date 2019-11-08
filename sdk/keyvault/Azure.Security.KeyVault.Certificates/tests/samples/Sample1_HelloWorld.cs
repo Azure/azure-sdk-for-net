@@ -11,7 +11,7 @@ using System.Threading;
 namespace Azure.Security.KeyVault.Certificates.Samples
 {
     /// <summary>
-    /// Sample demonstrates how to set, get, update and delete a certificate using the synchronous methods of the CertificateClient.
+    /// This sample demonstrates how to create, get, update and delete a certificate using the synchronous methods of the <see cref="CertificateClient">.
     /// </summary>
     [LiveOnly]
     public partial class HelloWorld
@@ -21,46 +21,42 @@ namespace Azure.Security.KeyVault.Certificates.Samples
         {
             // Environment variable with the Key Vault endpoint.
             string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
+            HelloWorldSync(keyVaultUrl);
+        }
 
-            // Instantiate a certificate client that will be used to call the service. Notice that the client is using
-            // default Azure credentials. To make default credentials work, ensure that environment variables 'AZURE_CLIENT_ID',
-            // 'AZURE_CLIENT_KEY' and 'AZURE_TENANT_ID' are set with the service principal credentials.
+        public void HelloWorldSync(string keyVaultUrl)
+        {
+            #region Snippet:CertificatesSample1CertificateClient
             var client = new CertificateClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
+            #endregion
 
-            // Let's create a self signed certifiate using the default policy. If the certificiate
-            // already exists in the Key Vault, then a new version of the key is created.
+            #region Snippet:CertificatesSample1CreateCertificate
             string certName = $"defaultCert-{Guid.NewGuid()}";
-
             CertificateOperation certOp = client.StartCreateCertificate(certName, CertificatePolicy.Default);
 
-            // Next let's wait on the certificate operation to complete. Note that certificate creation can last an indeterministic
-            // amount of time, so applications should only wait on the operation to complete in the case the issuance time is well
-            // known and within the scope of the application lifetime. In this case we are creating a self-signed certificate which
-            // should be issued in a relatively short amount of time.
             while (!certOp.HasCompleted)
             {
                 certOp.UpdateStatus();
 
                 Thread.Sleep(TimeSpan.FromSeconds(1));
             }
+            #endregion
 
-            // Let's get the created certificate along with it's policy from the Key Vault.
+            #region Snippet:CertificatesSample1GetCertificateWithPolicy
             KeyVaultCertificateWithPolicy certificate = client.GetCertificate(certName);
 
             Debug.WriteLine($"Certificate was returned with name {certificate.Name} which expires {certificate.Properties.ExpiresOn}");
+            #endregion
 
-            // We find that the certificate has been compromised and we want to disable it so applications will no longer be able
-            // to access the compromised version of the certificate.
+            #region Snippet:CertificatesSample1UpdateCertificate
             CertificateProperties certificateProperties = certificate.Properties;
             certificateProperties.Enabled = false;
 
             KeyVaultCertificate updatedCert = client.UpdateCertificateProperties(certificateProperties);
-
             Debug.WriteLine($"Certificate enabled set to '{updatedCert.Properties.Enabled}'");
+            #endregion
 
-            // We need to create a new version of the certificate that applications can use to replace the compromised certificate.
-            // Creating a certificate with the same name and policy as the compromised certificate will create another version of the
-            // certificate with similar properties to the original certificate
+            #region Snippet:CertificatesSample1CreateCertificateWithNewVersion
             CertificateOperation newCertOp = client.StartCreateCertificate(certificate.Name, certificate.Policy);
 
             while (!newCertOp.HasCompleted)
@@ -69,11 +65,12 @@ namespace Azure.Security.KeyVault.Certificates.Samples
 
                 Thread.Sleep(TimeSpan.FromSeconds(1));
             }
+            #endregion
 
-            // The certificate is no longer needed, need to delete it from the Key Vault.
+            #region Snippet:CertificatesSample1DeleteCertificate
             client.DeleteCertificate(certName);
+            #endregion
 
-            // To ensure certificate is deleted on server side.
             Assert.IsTrue(WaitForDeletedCertificate(client, certName));
 
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted certificate needs to be purged.
