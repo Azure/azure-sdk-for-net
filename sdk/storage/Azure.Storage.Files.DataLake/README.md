@@ -169,14 +169,14 @@ fileClient.Create();
 
 // Set Access Control List
 IList<PathAccessControlEntry> accessControlList
-    = PathAccessControlEntry.ParseList("user::rwx,group::r--,mask::rwx,other::---");
+    = PathAccessControlEntry.DeserializeList("user::rwx,group::r--,mask::rwx,other::---");
 fileClient.SetAccessControlList(accessControlList);
 ```
 
 ### Get Access Controls (ACLs) on a DataLake File
 ```C# Snippet:SampleSnippetDataLakeFileClient_GetAcls
 // Get Access Control List
-PathAccessControl accessControlResponse = fileClient.GetAccessControlList();
+PathAccessControl accessControlResponse = fileClient.GetAccessControl();
 ```
 
 ### Rename a DataLake File
