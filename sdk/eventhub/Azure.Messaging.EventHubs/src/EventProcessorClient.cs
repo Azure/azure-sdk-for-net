@@ -184,12 +184,6 @@ namespace Azure.Messaging.EventHubs
         private ConcurrentDictionary<string, PartitionPump> PartitionPumps { get; }
 
         /// <summary>
-        ///   The set of partition ownership this event processor owns.  Partition ids are used as keys.
-        /// </summary>
-        ///
-        private Dictionary<string, PartitionOwnership> InstanceOwnership { get; set; }
-
-        /// <summary>
         ///   The running task responsible for performing partition load balancing between multiple <see cref="EventProcessorClient" />
         ///   instances, as well as managing partition pumps and ownership.
         /// </summary>
@@ -1006,35 +1000,6 @@ namespace Azure.Messaging.EventHubs
             IEnumerable<PartitionOwnership> claimedOwnership = await ClaimOwnershipAsync(new List<PartitionOwnership> { newOwnership }).ConfigureAwait(false);
 
             return claimedOwnership.FirstOrDefault();
-        }
-
-        /// <summary>
-        ///   Renews this instance's ownership so they don't expire.
-        /// </summary>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
-        private Task RenewOwnershipAsync()
-        {
-            IEnumerable<PartitionOwnership> ownershipToRenew = InstanceOwnership.Values
-                .Select(ownership => new PartitionOwnership
-                (
-                    ownership.FullyQualifiedNamespace,
-                    ownership.EventHubName,
-                    ownership.ConsumerGroup,
-                    ownership.OwnerIdentifier,
-                    ownership.PartitionId,
-                    ownership.Offset,
-                    ownership.SequenceNumber,
-                    DateTimeOffset.UtcNow,
-                    ownership.ETag
-                ));
-
-            // We cannot rely on the ownership returned by ClaimOwnershipAsync to update our InstanceOwnership dictionary.
-            // If the user issues a checkpoint update, the associated ownership will have its eTag updated as well, so we
-            // will fail in claiming it here, but this instance still owns it.
-
-            return ClaimOwnershipAsync(ownershipToRenew);
         }
 
         /// <summary>

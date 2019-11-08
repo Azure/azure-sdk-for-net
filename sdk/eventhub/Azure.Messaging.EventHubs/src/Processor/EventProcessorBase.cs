@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Azure.Messaging.EventHubs.Processor
@@ -13,6 +14,12 @@ namespace Azure.Messaging.EventHubs.Processor
     ///
     public abstract class EventProcessorBase
     {
+        /// <summary>
+        ///   The set of partition ownership this event processor owns.  Partition ids are used as keys. TODO: make it private.
+        /// </summary>
+        ///
+        protected Dictionary<string, PartitionOwnership> InstanceOwnership { get; set; }
+
         /// <summary>
         ///   The function to be called just before event processing starts for a given partition.
         /// </summary>
@@ -94,5 +101,34 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         protected internal abstract Task UpdateCheckpointAsync(EventData eventData,
                                                                PartitionContext context);
+
+        /// <summary>
+        ///   Renews this instance's ownership so they don't expire. TODO: make it private.
+        /// </summary>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        ///
+        protected Task RenewOwnershipAsync()
+        {
+            IEnumerable<PartitionOwnership> ownershipToRenew = InstanceOwnership.Values
+                .Select(ownership => new PartitionOwnership
+                (
+                    ownership.FullyQualifiedNamespace,
+                    ownership.EventHubName,
+                    ownership.ConsumerGroup,
+                    ownership.OwnerIdentifier,
+                    ownership.PartitionId,
+                    ownership.Offset,
+                    ownership.SequenceNumber,
+                    DateTimeOffset.UtcNow,
+                    ownership.ETag
+                ));
+
+            // We cannot rely on the ownership returned by ClaimOwnershipAsync to update our InstanceOwnership dictionary.
+            // If the user issues a checkpoint update, the associated ownership will have its eTag updated as well, so we
+            // will fail in claiming it here, but this instance still owns it.
+
+            return ClaimOwnershipAsync(ownershipToRenew);
+        }
     }
 }
