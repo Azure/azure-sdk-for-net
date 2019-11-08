@@ -69,4 +69,4 @@ Debug.WriteLine($"Decrypted data using the algorithm {unwrapResult.Algorithm}, w
 To see the full example source, see:
 
 * [Synchronous Sample6_WrapUnwrap.cs](../tests/samples/Sample6_WrapUnwrap.cs)
-* [ASynchronous Sample6_WrapUnwrapAsync.cs](../tests/samples/Sample6_WrapUnwrapAsync.cs)
+* [Asynchronous Sample6_WrapUnwrapAsync.cs](../tests/samples/Sample6_WrapUnwrapAsync.cs)

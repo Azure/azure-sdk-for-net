@@ -38,7 +38,7 @@ KeyVaultKey cloudEcKey = keyClient.CreateEcKey(ecKey);
 Debug.WriteLine($"Key is returned with name {cloudEcKey.Name} and type {cloudEcKey.KeyType}");
 ```
 
-## Creating a CryptographyClient
+## Creating CryptographyClients
 
 Then we create the `CryptographyClient` which can perform cryptographic operations with the key we just created.
 Again we are using the default Azure credential as above. 
@@ -52,7 +52,7 @@ var ecCryptoClient = new CryptographyClient(cloudEcKey.Id, new DefaultAzureCrede
 ## Signing keys with the SignAsync and VerifyAsync methods
 
 Next we'll sign some arbitrary data and verify the signatures using the CryptographyClient with both the EC and RSA keys we created.
-The SignAsync and VerifyAsync methods expect a precalculated digest, and the digest needs to be calculated using the hash algorithm which matches the
+The Sign and Verify methods expect a precalculated digest, and the digest needs to be calculated using the hash algorithm which matches the
 signature algorithm being used. SHA256 is the hash algorithm used for both RS256 and ES256K which are the algorithms we'll be using in this sample
 
 ```C# Snippet:KeysSample5SignKey
@@ -83,9 +83,9 @@ VerifyResult ecVerifyResult = ecCryptoClient.Verify(SignatureAlgorithm.ES256K, d
 Debug.WriteLine($"Verified the signature using the algorithm {ecVerifyResult.Algorithm}, with key {ecVerifyResult.KeyId}. Signature is valid: {ecVerifyResult.IsValid}");
 ```
 
-## Signing keys with the SignDataAsync and VerifyDataAsync methods
+## Signing keys with the SignData and VerifyData methods
 
-The SignDataAsync and VerifyDataAsync methods take the raw data which is to be signed.  
+The SignData and VerifyData methods take the raw data which is to be signed.  
 The calculate the digest for the user so there is no need to compute the digest.
 
 ```C# Snippet:KeysSample5SignKeyWithSignData
@@ -96,7 +96,7 @@ SignResult ecSignDataResult = ecCryptoClient.SignData(SignatureAlgorithm.ES256K,
 Debug.WriteLine($"Signed data using the algorithm {ecSignDataResult.Algorithm}, with key {ecSignDataResult.KeyId}. The resulting signature is {Convert.ToBase64String(ecSignDataResult.Signature)}");
 ```
 
-## verifying signatures with VerifyDataAsync methods
+## verifying signatures with VerifyData methods
 
 Verify the signatures
 
