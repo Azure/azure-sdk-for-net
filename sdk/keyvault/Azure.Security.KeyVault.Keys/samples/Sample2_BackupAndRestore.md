@@ -16,7 +16,7 @@ var client = new KeyClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
 
 ## Creating a key
 
-Let's create a RSA key valid for 1 year. 
+Let's create a RSA key valid for 1 year.
 If the key already exists in the Key Vault, then a new version of the key is created.
 
 ```C# Snippet:KeysSample2CreateKey
@@ -54,4 +54,3 @@ To see the full example source, see:
 
 * [Synchronous Sample2_BackupAndRestore.cs](../tests/samples/Sample2_BackupAndRestore.cs)
 * [Asynchronous Sample2_BackupAndRestore.cs](../tests/samples/Sample2_BackupAndRestoreAsync.cs)
-

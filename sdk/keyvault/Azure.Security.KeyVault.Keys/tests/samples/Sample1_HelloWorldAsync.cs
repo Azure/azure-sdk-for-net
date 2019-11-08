@@ -65,7 +65,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
 
             #region Snippet:KeysSample1PurgeKeyAsync
             await operation.WaitForCompletionAsync();
-            
+
             await client.PurgeDeletedKeyAsync(rsaKeyName);
             #endregion
         }

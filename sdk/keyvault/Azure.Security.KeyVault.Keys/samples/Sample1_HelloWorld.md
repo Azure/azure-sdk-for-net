@@ -16,7 +16,7 @@ var client = new KeyClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
 
 ## Creating a key
 
-Let's create a RSA key valid for 1 year. 
+Let's create an RSA key valid for 1 year.
 If the key already exists in the Key Vault, then a new version of the key is created.
 
 ```C# Snippet:KeysSample1CreateKey
@@ -32,7 +32,7 @@ client.CreateRsaKey(rsaKey);
 
 ## Getting a key
 
-Let's Get the Cloud RSA Key from the Key Vault.
+Let's get the cloud RSA key from the Key Vault.
 
 ```C# Snippet:KeysSample1GetKey
 KeyVaultKey cloudRsaKey = client.GetKey(rsaKeyName);
@@ -41,7 +41,7 @@ Debug.WriteLine($"Key is returned with name {cloudRsaKey.Name} and type {cloudRs
 
 ## Updating key properties
 
-After one year, the Cloud RSA Key is still required, we need to update the expiry time of the key.
+After one year, the cloud RSA key is still required, so we need to update the expiry time of the key.
 The update method can be used to update the expiry attribute of the key.
 
 ```C# Snippet:KeysSample1UpdateKeyProperties
@@ -52,8 +52,8 @@ Debug.WriteLine($"Key's updated expiry time is {updatedKey.Properties.ExpiresOn}
 
 ## Updating a key size
 
-We need the Cloud RSA key with bigger key size, so you want to update the key in Key Vault to ensure it has the required size.
-Calling CreateRsaKey on an existing key creates a new version of the key in the Key Vault with the new specified size.
+We need the cloud RSA key with bigger key size, so you want to update the key in Key Vault to ensure it has the required size.
+Calling `CreateRsaKey` on an existing key creates a new version of the key in the Key Vault with the new specified size.
 
 ```C# Snippet:KeysSample1UpdateKey
 var newRsaKey = new CreateRsaKeyOptions(rsaKeyName, hardwareProtected: false)
@@ -67,7 +67,7 @@ client.CreateRsaKey(newRsaKey);
 
 ## Deleting a key
 
-The Cloud RSA Key is no longer needed, need to delete it from the Key Vault.
+The cloud RSA key is no longer needed, so we need to delete it from the Key Vault.
 
 ```C# Snippet:KeysSample1DeleteKey
 DeleteKeyOperation operation = client.StartDeleteKey(rsaKeyName);

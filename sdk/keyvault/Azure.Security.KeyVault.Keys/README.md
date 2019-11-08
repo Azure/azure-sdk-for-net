@@ -68,7 +68,7 @@ Use the [Azure CLI][azure_cli] snippet below to create/get client secret credent
 
 * Use the above mentioned Key Vault name to retrieve details of your Vault which also contains your Key Vault URL:
     ```PowerShell
-    az keyvault show --name <your-key-vault-name> 
+    az keyvault show --name <your-key-vault-name>
     ```
 
 #### Create KeyClient
@@ -103,7 +103,7 @@ Azure Key Vault supports multiple key types and algorithms, and enables the use 
 ### KeyClient
 A `KeyClient` providing both synchronous and asynchronous operations exists in the SDK allowing for selection of a client based on an application's use case. Once you've initialized a `KeyClient`, you can interact with the primary resource types in Key Vault.
 
-### Cryptography Client:
+### CryptographyClient
 A `CryptographyClient` providing both synchronous and asynchronous operations exists in the SDK allowing for selection of a client based on an application's use case. Once you've initialized a `CryptographyClient`, you can use it to perform cryptographic operations with keys stored in Key Vault.
 
 ## Examples
@@ -263,7 +263,7 @@ Console.WriteLine(ecKey.KeyType);
 
 ### List keys asynchronously
 
-Listing secrets does not rely on awaiting the `GetPropertiesOfKeysAsync` method, but returns an `AsyncPageable<KeyProperties>` that you can use with the `await foreach` statement:
+Listing keys does not rely on awaiting the `GetPropertiesOfKeysAsync` method, but returns an `AsyncPageable<KeyProperties>` that you can use with the `await foreach` statement:
 
 ```C# Snippet:ListKeysAsync
 AsyncPageable<KeyProperties> allKeys = client.GetPropertiesOfKeysAsync();
@@ -275,7 +275,7 @@ await foreach (KeyProperties keyProperties in allKeys)
 ```
 
 ### Delete a key asynchronously
-When deleting a key asynchronously before you purge it, you can await the `WaitForCompletionAsync` method on the operation. 
+When deleting a key asynchronously before you purge it, you can await the `WaitForCompletionAsync` method on the operation.
 By default, this loops indefinitely but you can cancel it by passing a `CancellationToken`.
 
 ```C# Snippet:DeleteAndPurgeKeyAsync
@@ -344,7 +344,7 @@ Several Key Vault key client library samples are available to you in this GitHub
 * [BackupAndRestore.cs][backup_and_restore_sync] and [BackupAndRestoreAsync.cs][backup_and_restore_async] - Contains the code snippets working with Key Vault keys, including:
   * Backup and recover a key
 
-* [GetKeys.cs][get_secrets_sync] and [GetKeysAsync.cs][get_secrets_async] - Example code for working with Key Vault keys, including:
+* [GetKeys.cs][get_keys_sync] and [GetKeysAsync.cs][get_keys_async] - Example code for working with Key Vault keys, including:
   * Create keys
   * List all keys in the Key Vault
   * Update keys in the Key Vault
@@ -383,8 +383,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [backup_and_restore_sync]:samples/Sample2_BackupAndRestore.cs
 [certificates_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Certificates
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
-[get_secrets_async]: samples/Sample3_GetKeysAsync.cs
-[get_secrets_sync]: samples/Sample3_GetKeys.cs
+[get_keys_async]: samples/Sample3_GetKeysAsync.cs
+[get_keys_sync]: samples/Sample3_GetKeys.cs
 [encrypt_decrypt_async]: samples/Sample4_EncryptDecryptAsync.cs
 [encrypt_decrypt_sync]: samples/Sample4_EncryptDecrypt.cs
 [sign_verify_async]: samples/Sample5_SignVerifyAsync.cs

@@ -16,7 +16,7 @@ var keyClient = new KeyClient(new Uri(keyVaultUrl), new DefaultAzureCredential()
 
 ## Creating keys
 
-First we'll create both a RSA key and an EC which will be used to sign and verify.
+First we'll create both an RSA key and an EC key which will be used to sign and verify.
 
 ```C# Snippet:KeysSample5CreateKey
 string rsaKeyName = $"CloudRsaKey-{Guid.NewGuid()}";
@@ -40,7 +40,7 @@ Debug.WriteLine($"Key is returned with name {cloudEcKey.Name} and type {cloudEcK
 
 ## Creating CryptographyClients
 
-Then we create the `CryptographyClient` which can perform cryptographic operations with the key we just created. Again we are using the default Azure credential as above. 
+Then we create the `CryptographyClient` which can perform cryptographic operations with the key we just created. Again we are using the default Azure credential as above.
 
 ```C# Snippet:KeysSample5CryptographyClient
 var rsaCryptoClient = new CryptographyClient(cloudRsaKey.Id, new DefaultAzureCredential());
@@ -50,8 +50,9 @@ var ecCryptoClient = new CryptographyClient(cloudEcKey.Id, new DefaultAzureCrede
 
 ## Signing keys with the Sign and Verify methods
 
-Next we'll sign some arbitrary data and verify the signatures using the CryptographyClient with both the EC and RSA keys we created.
-The Sign and Verify methods expect a precalculated digest, and the digest needs to be calculated using the hash algorithm which matches the signature algorithm being used. SHA256 is the hash algorithm used for both RS256 and ES256K which are the algorithms we'll be using in this sample.
+Next we'll sign some arbitrary data and verify the signatures using the `CryptographyClient` with both the EC and RSA keys we created.
+The `Sign` and `Verify` methods expect a precalculated digest, and the digest needs to be calculated using the hash algorithm which matches the signature algorithm being used.
+SHA256 is the hash algorithm used for both RS256 and ES256K which are the algorithms we'll be using in this sample.
 
 ```C# Snippet:KeysSample5SignKey
 byte[] data = Encoding.UTF8.GetBytes("This is some sample data which we will use to demonstrate sign and verify");
@@ -83,7 +84,7 @@ Debug.WriteLine($"Verified the signature using the algorithm {ecVerifyResult.Alg
 
 ## Signing keys with the SignData and VerifyData methods
 
-The SignData and VerifyData methods take the raw data which is to be signed. The calculate the digest for the user so there is no need to compute the digest.
+The `SignData` and `VerifyData` methods take the raw data which is to be signed. The calculate the digest for the user so there is no need to compute the digest.
 
 ```C# Snippet:KeysSample5SignKeyWithSignData
 SignResult rsaSignDataResult = rsaCryptoClient.SignData(SignatureAlgorithm.RS256, data);

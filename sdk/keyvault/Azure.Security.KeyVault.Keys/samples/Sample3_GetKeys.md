@@ -1,6 +1,6 @@
 # Listing keys, key versions, and deleted keys
 
-This sample demonstrates how to list keys and versions of a given key, and list deleted keys in a soft-delete enabled Key Vault.
+This sample demonstrates how to list keys and versions of a given key, and list deleted keys in a soft delete-enabled Key Vault.
 To get started, you'll need a URI to an Azure Key Vault. See the [README](../README.md) for links and instructions.
 
 ## Creating a KeyClient
@@ -16,7 +16,7 @@ var client = new KeyClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
 
 ## Creating keys
 
-Let's create EC and RSA keys valid for 1 year. 
+Let's create EC and RSA keys valid for 1 year.
 If the key already exists in the Key Vault, then a new version of the key is created.
 
 ```C# Snippet:KeysSample3CreateKey
@@ -53,10 +53,10 @@ foreach (KeyProperties key in keys)
 }
 ```
 
-## updating RSA key size
+## Updating RSA key size
 
-We need the Cloud RSA key with bigger key size, so you want to update the key in Key Vault to ensure it has the required size.
-Calling CreateRsaKey on an existing key creates a new version of the key in the Key Vault with the new specified size.
+We need the cloud RSA key with bigger key size, so you want to update the key in Key Vault to ensure it has the required size.
+Calling `CreateRsaKey` on an existing key creates a new version of the key in the Key Vault with the new specified size.
 
 ```C# Snippet:KeysSample3UpdateKey
 var newRsaKey = new CreateRsaKeyOptions(rsaKeyName, hardwareProtected: false)
@@ -70,7 +70,7 @@ client.CreateRsaKey(newRsaKey);
 
 ## Listing key versions
 
-You need to check all the different versions Cloud RSA key had previously.
+You need to check all the different versions cloud RSA key had previously.
 Lets print all the versions of this key.
 
 ```C# Snippet:KeysSample3ListKeyVersions
@@ -83,7 +83,7 @@ foreach (KeyProperties key in keysVersions)
 
 ## Deleting keys
 
-The Cloud RSA Key and the Cloud EC Key are no longer needed.
+The cloud RSA Key and the cloud EC keys are no longer needed.
 You need to delete them from the Key Vault.
 
 ```C# Snippet:KeysSample3DeletedKeys
@@ -101,7 +101,7 @@ while (!rsaKeyOperation.HasCompleted || !ecKeyOperation.HasCompleted)
 
 ## Listing deleted keys
 
-You can list all the deleted and non-purged keys, assuming Key Vault is soft-delete enabled.
+You can list all the deleted and non-purged keys, assuming Key Vault is soft delete-enabled.
 
 ```C# Snippet:KeysSample3ListDeletedKeys
 IEnumerable<DeletedKey> keysDeleted = client.GetDeletedKeys();

@@ -1,6 +1,7 @@
 # Listing certificates, certificate versions and deleted certificates
 
-This sample demonstrates how to list certificates and versions of a given certificates, and list deleted certificates in a soft delete-enabled key vault. To get started, you'll need a URI to an Azure Key Vault. See the [README](../README.md) for links and instructions.
+This sample demonstrates how to list certificates and versions of given certificates, and list deleted certificates in a soft delete-enabled key vault.
+To get started, you'll need a URI to an Azure Key Vault. See the [README](../README.md) for links and instructions.
 
 ## Creating a CertificateClient
 
@@ -50,7 +51,7 @@ foreach (CertificateProperties cert in client.GetPropertiesOfCertificates())
 }
 ```
 
-## Creating a certificate with new version
+## Creating a certificate with a new version
 
 We need to create a new version of a certificate. Creating a certificate with the same name will create another version of the certificate.
 
@@ -88,7 +89,7 @@ client.DeleteCertificate(certName2);
 
 ## Listing deleted certificates
 
-You can list all the deleted and non-purged certificates, assuming Key Vault is soft-delete enabled.
+You can list all the deleted and non-purged certificates, assuming Key Vault is soft delete-enabled.
 
 ```C# Snippet:CertificatesSample2ListDeletedCertificates
 foreach (DeletedCertificate deletedCert in client.GetDeletedCertificates())
@@ -96,7 +97,6 @@ foreach (DeletedCertificate deletedCert in client.GetDeletedCertificates())
     Debug.WriteLine($"Deleted certificate's recovery Id {deletedCert.RecoveryId}");
 }
 ```
-
 
 ## Source
 

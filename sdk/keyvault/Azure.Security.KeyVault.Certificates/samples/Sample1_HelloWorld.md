@@ -1,4 +1,4 @@
-# Setting, getting, updating, and deleting certificate
+# Setting, getting, updating, and deleting certificates
 
 This sample demonstrates how to set, get, update and delete a certificate.
 To get started, you'll need a URI to an Azure Key Vault. See the [README](../README.md) for links and instructions.
@@ -16,7 +16,7 @@ var client = new CertificateClient(new Uri(keyVaultUrl), new DefaultAzureCredent
 
 ## Creating a certificate
 
-Let's create a self signed certificate using the default policy. 
+Let's create a self-signed certificate using the default policy.
 If the certificate already exists in the Key Vault, then a new version of the key is created.
 
 ```C# Snippet:CertificatesSample1CreateCertificate
@@ -53,7 +53,7 @@ KeyVaultCertificate updatedCert = client.UpdateCertificateProperties(certificate
 Debug.WriteLine($"Certificate enabled set to '{updatedCert.Properties.Enabled}'");
 ```
 
-## Creating a certificate with new version
+## Creating a certificate with a new version
 
 We need to create a new version of the certificate that applications can use to replace the compromised certificate.
 Creating a certificate with the same name and policy as the compromised certificate will create another version of the certificate with similar properties to the original certificate.
@@ -71,7 +71,7 @@ while (!newCertOp.HasCompleted)
 
 ## Deleting a certificate
 
-The certificate is no longer needed, need to delete it from the Key Vault.
+The certificate is no longer needed, so delete it from the Key Vault.
 
 ```C# Snippet:CertificatesSample1DeleteCertificate
 client.DeleteCertificate(certName);

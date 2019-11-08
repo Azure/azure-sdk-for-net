@@ -57,7 +57,7 @@ Use the [Azure CLI][azure_cli] snippet below to create/get client secret credent
 
 * Use the above mentioned Key Vault name to retrieve details of your Vault which also contains your Key Vault URL:
     ```PowerShell
-    az keyvault show --name <your-key-vault-name> 
+    az keyvault show --name <your-key-vault-name>
     ```
 
 #### Create CertificateClient
@@ -77,17 +77,18 @@ KeyVaultCertificateWithPolicy certificate = client.GetCertificate("MyCertificate
 
 ## Key concepts
 ### KeyVaultCertificate
+A `KeyVaultCertificate` is the fundamental resource within Azure Key Vault. You'll use certificates to encrypt and verify encrypted or signed data.
 
 ### CertificateClient
-With a `CertificateClient` you can get certificates from the vault, create new certificates and 
-new versions of existing certificates, update certificate metadata, and delete certificates. You 
-can also manage certificate issuers, contacts, and management policies of certificates. This is 
+With a `CertificateClient` you can get certificates from the vault, create new certificates and
+new versions of existing certificates, update certificate metadata, and delete certificates. You
+can also manage certificate issuers, contacts, and management policies of certificates. This is
 illustrated in the examples below.
 
 ## Examples
 The Azure.Security.KeyVault.Certificates package supports synchronous and asynchronous APIs.
 
-The following section provides several code snippets using the [above created](#create-certificateclient) `client`, covering some of the most 
+The following section provides several code snippets using the [above created](#create-certificateclient) `client`, covering some of the most
 common Azure Key Vault certificates service related tasks:
 
 ### Sync Examples
@@ -103,7 +104,7 @@ This section contains code snippets covering common tasks:
 * [List certificates asynchronously](#list-certificates-asynchronously)
 
 ### Create a Certificate
-`StartCreateCertificate` creates a Certificate to be stored in the Azure Key Vault. If a certificate with 
+`StartCreateCertificate` creates a Certificate to be stored in the Azure Key Vault. If a certificate with
 the same name already exists, then a new version of the certificate is created.
 When creating the certificate the user can specify the policy which controls the certificate lifetime. If no policy is specified the default policy will be used. The `StartCreateCertificate` operation returns a `CertificateOperation`. The following example creates a self signed certificate with the default policy.
 
@@ -151,7 +152,7 @@ KeyVaultCertificate updated = client.UpdateCertificateProperties(certificateProp
 ```
 
 ### Delete a Certificate
-`DeleteCertificate` deletes all versions of a certificate stored in the Key Vault. When [soft-delete][soft_delete] 
+`DeleteCertificate` deletes all versions of a certificate stored in the Key Vault. When [soft-delete][soft_delete]
 is not enabled for the Key Vault, this operation permanently deletes the certificate. If soft delete is enabled the certificate is marked for deletion and can be optionally purged or recovered up until its scheduled purge date.
 
 ```C# Snippet:DeleteCertificate
@@ -188,7 +189,7 @@ KeyVaultCertificateWithPolicy certificate = await operation.WaitForCompletionAsy
 ```
 
 ### List certificates asynchronously
-Listing certificates does not rely on awaiting the `GetPropertiesOfSecretsAsync` method, but returns an `AsyncPageable<SecretProperties>` that 
+Listing certificates does not rely on awaiting the `GetPropertiesOfSecretsAsync` method, but returns an `AsyncPageable<SecretProperties>` that
 you can use with the `await foreach` statement:
 
 ```C# Snippet:ListCertificatesAsync

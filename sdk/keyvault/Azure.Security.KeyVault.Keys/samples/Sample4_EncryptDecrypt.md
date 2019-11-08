@@ -16,7 +16,7 @@ var keyClient = new KeyClient(new Uri(keyVaultUrl), new DefaultAzureCredential()
 
 ## Creating a key
 
-First we create a RSA key which will be used to encrypt and decrypt
+First we create a RSA key which will be used to encrypt and decrypt.
 
 ```C# Snippet:KeysSample4CreateKey
 // Let's create a RSA key which will be used to encrypt and decrypt
@@ -41,9 +41,8 @@ var cryptoClient = new CryptographyClient(cloudRsaKey.Id, new DefaultAzureCreden
 
 ## Encrypting a key
 
-Next we'll encrypt some arbitrary plain text with the key using the CryptographyClient. 
-Note that RSA encryption algorithms have no chaining so they can only encrypt a single block of plaintext securely. 
-For RSAOAEP this can be calculated as (keysize / 8) - 42, or in our case (2048 / 8) - 42 = 214 bytes.
+Next we'll encrypt some arbitrary plaintext with the key using the CryptographyClient.
+Note that RSA encryption algorithms have no chaining so they can only encrypt a single block of plaintext securely.
 
 ```C# Snippet:KeysSample4EncryptKey
 byte[] plaintext = Encoding.UTF8.GetBytes("A single block of plaintext");

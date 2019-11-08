@@ -16,7 +16,7 @@ var keyClient = new KeyClient(new Uri(keyVaultUrl), new DefaultAzureCredential()
 
 ## Creating a key
 
-First create a RSA key which will be used to wrap and unwrap another key
+First create an RSA key which will be used to wrap and unwrap another key
 
 ```C# Snippet:KeysSample6CreateKey
 string rsaKeyName = $"CloudRsaKey-{Guid.NewGuid()}";
@@ -28,10 +28,11 @@ var rsaKey = new CreateRsaKeyOptions(rsaKeyName, hardwareProtected: false)
 KeyVaultKey cloudRsaKey = keyClient.CreateRsaKey(rsaKey);
 Debug.WriteLine($"Key is returned with name {cloudRsaKey.Name} and type {cloudRsaKey.KeyType}");
 ```
+
 ## Creating a CryptographyClient
 
 Then we create the `CryptographyClient` which can perform cryptographic operations with the key we just created.
-Again we are using the default Azure credential as above. 
+Again we are using the default Azure credential as above.
 
 ```C# Snippet:KeysSample6CryptographyClient
 var cryptoClient = new CryptographyClient(cloudRsaKey.Id, new DefaultAzureCredential());
@@ -39,7 +40,7 @@ var cryptoClient = new CryptographyClient(cloudRsaKey.Id, new DefaultAzureCreden
 
 ## Generating a symmetric key
 
-Next we'll generate a symmetric key which we will wrap
+Next we'll generate a symmetric key which we will wrap.
 
 ```C# Snippet:KeysSample6GenerateKey
 byte[] keyData = AesManaged.Create().Key;

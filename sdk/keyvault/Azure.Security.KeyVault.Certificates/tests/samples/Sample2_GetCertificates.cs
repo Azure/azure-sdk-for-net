@@ -26,7 +26,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
             GetCertificatesSync(keyVaultUrl);
         }
-        
+
         private void GetCertificatesSync(string keyVaultUrl)
         {
             #region Snippet:CertificatesSample2CertificateClient

@@ -69,7 +69,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
                 #endregion
 
                 AssertKeysEqual(storedKey.Properties, restoredKey.Properties);
-            }    
+            }
         }
 
         private void AssertKeysEqual(KeyProperties exp, KeyProperties act)
