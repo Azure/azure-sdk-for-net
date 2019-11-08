@@ -83,8 +83,17 @@ The certificates are no longer needed.
 You need to delete them from the Key Vault.
 
 ```C# Snippet:CertificatesSample2DeleteCertificates
-client.DeleteCertificate(certName1);
-client.DeleteCertificate(certName2);
+DeleteCertificateOperation operation1 = client.StartDeleteCertificate(certName1);
+DeleteCertificateOperation operation2 = client.StartDeleteCertificate(certName2);
+
+// To ensure certificates are deleted on server side.
+while (!operation1.HasCompleted || !operation2.HasCompleted)
+{
+    Thread.Sleep(2000);
+
+    operation1.UpdateStatus();
+    operation2.UpdateStatus();
+}
 ```
 
 ## Listing deleted certificates

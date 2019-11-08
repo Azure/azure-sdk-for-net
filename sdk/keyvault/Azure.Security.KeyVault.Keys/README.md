@@ -11,7 +11,7 @@ The Azure Key Vault keys library client supports RSA keys and Elliptic Curve (EC
 Install the Azure Key Vault Keys client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-Install-Package Azure.Security.KeyVault.Keys -IncludePrerelease
+Install-Package Azure.Security.KeyVault.Keys
 ```
 
 ### Prerequisites
@@ -35,7 +35,7 @@ or other credential providers provided with the Azure SDK, you should install th
 Install-Package Azure.Identity
 ```
 
- #### Create/Get credentials
+#### Create/Get credentials
 Use the [Azure CLI][azure_cli] snippet below to create/get client secret credentials.
 
  * Create a service principal and configure its access to Azure resources:
