@@ -58,7 +58,6 @@ namespace Azure.Security.KeyVault.Secrets.Samples
                 }
 
                 KeyVaultSecret secretWithValue = client.GetSecret(secret.Name);
-
                 if (secretValues.ContainsKey(secretWithValue.Value))
                 {
                     Debug.WriteLine($"Secret {secretWithValue.Name} shares a value with secret {secretValues[secretWithValue.Value]}");
@@ -76,6 +75,12 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             IEnumerable<SecretProperties> secretVersions = client.GetPropertiesOfSecretVersions(bankSecretName);
             foreach (SecretProperties secret in secretVersions)
             {
+                // Secret versions may also be disabled if compromised and new versions generated, so skip disabled versions, too.
+                if (!secret.Enabled.GetValueOrDefault())
+                {
+                    continue;
+                }
+
                 KeyVaultSecret oldBankSecret = client.GetSecret(secret.Name, secret.Version);
                 if (newBankSecretPassword == oldBankSecret.Value)
                 {
