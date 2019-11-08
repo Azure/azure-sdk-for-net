@@ -274,7 +274,7 @@ await foreach (KeyProperties keyProperties in allKeys)
 }
 ```
 
-### Delete and purge a key asynchronously
+### Delete a key asynchronously
 When deleting a key asynchronously before you purge it, you can await the `WaitForCompletionAsync` method on the operation. 
 By default, this loops indefinitely but you can cancel it by passing a `CancellationToken`.
 
