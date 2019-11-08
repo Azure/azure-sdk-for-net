@@ -1,11 +1,11 @@
 # Creating, getting, updating, and deleting keys
 
-This sample demonstrates how to create, get, update, and delete a secret in Azure Key Vault.
+This sample demonstrates how to create, get, update, and delete a key in Azure Key Vault.
 To get started, To get started, you'll need a URI to an Azure Key Vault. See the [README](../README.md) for links and instructions.
 
 ## Creating a KeyClient
 
-To create a new `KeyClient` to create, get, update, or delete secrets, you need the endpoint to a Key Vault and credentials.
+To create a new `KeyClient` to create, get, update, or delete keys, you need the endpoint to a Key Vault and credentials.
 You can use the `DefaultAzureCredential` to try a number of common authentication methods optimized for both running as a service and development.
 
 In the sample below, you can set `keyVaultUrl` based on an environment variable, configuration setting, or any way that works for your application.

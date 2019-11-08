@@ -121,8 +121,9 @@ The following section provides several code snippets using the `client` [created
 * [Encrypt and Decrypt](#encrypt-and-decrypt)
 
 ### Async examples
-* [Create a key Asynchronously](#create-a-key-asynchronously)
-* [Delete a key Asynchronously](#delete-a-key-asynchronously)
+* [Create a key asynchronously](#create-a-key-asynchronously)
+* [List keys asynchronously](#list-keys-asynchronously)
+* [Delete a key asynchronously](#delete-a-key-asynchronously)
 
 ### Create a key
 Create a key to be stored in the Azure Key Vault. If a key with the same name already exists, then a new version of the key is created.
@@ -163,7 +164,7 @@ Console.WriteLine(key.KeyType);
 ```
 
 ### Update an existing key
-`UpdateKeyAsync` updates a key previously stored in the Key Vault.
+`UpdateKeyProperties` updates a key previously stored in the Key Vault.
 
 ```C# Snippet:UpdateKey
 KeyVaultKey key = client.CreateKey("key-name", KeyType.Rsa);
@@ -179,7 +180,7 @@ Console.WriteLine(updatedKey.Properties.UpdatedOn);
 ```
 
 ### Delete a key
-`StartDeleteKeyAsync` starts a long-running operation to delete a key previously stored in the Key Vault.
+`StartDeleteKey` starts a long-running operation to delete a key previously stored in the Key Vault.
 You can retrieve the key immediately without waiting for the operation to complete.
 When [soft-delete][soft_delete] is not enabled for the Key Vault, this operation permanently deletes the key.
 
@@ -234,7 +235,7 @@ DecryptResult decryptResult = cryptoClient.Decrypt(EncryptionAlgorithm.RsaOaep, 
 ```
 
 ### Create a key asynchronously
-Synchronous APIs are identical to their asynchronous counterparts, but without the typical "Async" suffix for asynchronous methods.
+The asynchronous APIs are identical to their synchronous counterparts, but return with the typical "Async" suffix for asynchronous methods and return a Task.
 
 ```C# Snippet:CreateKeyAsync
 // Create a key of any type
@@ -260,9 +261,22 @@ Console.WriteLine(ecKey.Name);
 Console.WriteLine(ecKey.KeyType);
 ```
 
+### List keys asynchronously
+
+Listing secrets does not rely on awaiting the `GetPropertiesOfKeysAsync` method, but returns an `AsyncPageable<KeyProperties>` that you can use with the `await foreach` statement:
+
+```C# Snippet:ListKeysAsync
+AsyncPageable<KeyProperties> allKeys = client.GetPropertiesOfKeysAsync();
+
+await foreach (KeyProperties keyProperties in allKeys)
+{
+    Console.WriteLine(keyProperties.Name);
+}
+```
+
 ### Delete and purge a key asynchronously
-When deleting a key asynchronously before you purge it, you need to call `UpdateStatus` on the returned operation periodically.
-You could do this in a loop as shown in the example, or periodically within other operations in your program.
+When deleting a key asynchronously before you purge it, you can await the `WaitForCompletionAsync` method on the operation. 
+By default, this loops indefinitely but you can cancel it by passing a `CancellationToken`.
 
 ```C# Snippet:DeleteAndPurgeKeyAsync
 DeleteKeyOperation operation = client.StartDeleteKey("key-name");
