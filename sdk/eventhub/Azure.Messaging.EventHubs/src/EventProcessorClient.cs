@@ -498,16 +498,13 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        /// <remarks>
-        ///   This method will override EventProcessorBase's UpdateCheckpointAsync when it's implemented.
-        /// </remarks>
-        ///
-        protected internal virtual async Task UpdateCheckpointAsync(EventData eventData,
-                                                                    PartitionContext context)
+        protected internal override async Task UpdateCheckpointAsync(EventData eventData,
+                                                                     PartitionContext context)
         {
             Argument.AssertNotNull(eventData, nameof(eventData));
             Argument.AssertNotNull(eventData.Offset, nameof(eventData.Offset));
             Argument.AssertNotNull(eventData.SequenceNumber, nameof(eventData.SequenceNumber));
+            Argument.AssertNotNull(context, nameof(context));
 
             // Parameter validation is done by Checkpoint constructor.
 

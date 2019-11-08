@@ -57,5 +57,17 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         protected abstract Task ProcessErrorAsync(Exception exception,
                                                   PartitionContext context);
+
+        /// <summary>
+        ///   Updates the checkpoint using the given information for the associated partition and consumer group in the chosen storage service.
+        /// </summary>
+        ///
+        /// <param name="eventData">The event containing the information to be stored in the checkpoint.</param>
+        /// <param name="context">The context of the partition the checkpoint is associated with.</param>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        ///
+        protected internal abstract Task UpdateCheckpointAsync(EventData eventData,
+                                                               PartitionContext context);
     }
 }
