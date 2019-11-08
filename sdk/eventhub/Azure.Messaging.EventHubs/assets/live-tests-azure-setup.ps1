@@ -78,9 +78,9 @@ if ([string]::IsNullOrEmpty($azureRegion))
   $azureRegion = "southcentralus"
 }
 
-ValidateParameters -ServicePrincipalName $servicePrincipalName -AzureRegion $azureRegion
-$subscription = GetSubscriptionAndSetAzureContext -SubscriptionName $subscriptionName
-CreateResourceGroupIfMissing -ResourceGroupName $resourceGroupName
+ValidateParameters -ServicePrincipalName "$($servicePrincipalName)" -AzureRegion "$($azureRegion)"
+$subscription = GetSubscriptionAndSetAzureContext -SubscriptionName "$($subscriptionName)"
+CreateResourceGroupIfMissing -ResourceGroupName "$($resourceGroupName)" -AzureRegion "$($azureRegion)"
 
 # At this point, we may have created a resource, so be safe and allow for removing any
 # resources created should the script fail.

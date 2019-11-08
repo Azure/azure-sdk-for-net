@@ -9,11 +9,7 @@ function CreateNamespaceIfMissing()
   <#
     .SYNOPSIS
       It tries to retrieve the specified namespace.
-      It creates if it may not be found.
-      
-    .DESCRIPTION
-      It tries to retrieve the specified namespace.
-      It creates if it may not be found.
+      It creates one if it may not be found.
   #>
 
   param
@@ -52,10 +48,6 @@ function CreateHubIfMissing()
     .SYNOPSIS
       It tries to retrieve the specified namespace.
       It creates if it may not be found.
-      
-    .DESCRIPTION
-      It tries to retrieve the specified namespace.
-      It creates if it may not be found.
   #>
 
   param
@@ -79,7 +71,9 @@ function CreateHubIfMissing()
       # Creates the Event Hub if does not exist
       Write-Host "`t...Creating new eventHub"
 
-      New-AzEventHub -ResourceGroupName $resourceGroupName -NamespaceName $namespaceName -EventHubName $eventHubName | Out-Null
+      New-AzEventHub -ResourceGroupName $resourceGroupName `
+                     -NamespaceName $namespaceName `
+                     -EventHubName $eventHubName | Out-Null
   } 
 }
 
@@ -156,7 +150,6 @@ function GetRootManageSharedAccessKey()
   
   return $keys.PrimaryConnectionString
 }
-
 
 function GetNamespaceInformation()
 {
