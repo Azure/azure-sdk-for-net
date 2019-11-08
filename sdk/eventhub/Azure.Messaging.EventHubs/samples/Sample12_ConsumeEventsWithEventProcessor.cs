@@ -73,7 +73,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
                 // TODO: explain callbacks setup once the public API is finished for the next preview.
 
-                eventProcessor.InitializeProcessingForPartitionAsync = (initializationContext) =>
+                eventProcessor.InitializeProcessingForPartitionAsyncHandler = (initializationContext) =>
                 {
                     // This is the last piece of code guaranteed to run before event processing, so all initialization
                     // must be done by the moment this method returns.

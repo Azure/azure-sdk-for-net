@@ -13,6 +13,16 @@ namespace Azure.Messaging.EventHubs
     public abstract class EventProcessorBase
     {
         /// <summary>
+        ///   The function to be called just before event processing starts for a given partition.
+        /// </summary>
+        ///
+        /// <param name="context">TODO.</param>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        ///
+        protected virtual Task InitializeProcessingForPartitionAsync(PartitionContext context) => Task.CompletedTask;
+
+        /// <summary>
         ///   Responsible for processing events received from the Event Hubs service.
         /// </summary>
         ///

@@ -37,7 +37,7 @@ namespace Azure.Messaging.EventHubs
         private readonly object StartProcessorGuard = new object();
 
         /// <summary>The handler to be called just before event processing starts for a given partition.</summary>
-        private Func<InitializePartitionProcessingContext, Task> _initializeProcessingForPartitionAsync;
+        private Func<InitializePartitionProcessingContext, Task> _initializeProcessingForPartitionAsyncHandler;
 
         /// <summary>The handler to be called once event processing stops for a given partition.</summary>
         private Func<PartitionProcessingStoppedContext, Task> _processingForPartitionStoppedAsync;
@@ -52,10 +52,10 @@ namespace Azure.Messaging.EventHubs
         ///   The handler to be called just before event processing starts for a given partition.
         /// </summary>
         ///
-        public Func<InitializePartitionProcessingContext, Task> InitializeProcessingForPartitionAsync
+        public Func<InitializePartitionProcessingContext, Task> InitializeProcessingForPartitionAsyncHandler
         {
-            get => _initializeProcessingForPartitionAsync;
-            set => EnsureNotRunningAndInvoke(() => _initializeProcessingForPartitionAsync = value);
+            get => _initializeProcessingForPartitionAsyncHandler;
+            set => EnsureNotRunningAndInvoke(() => _initializeProcessingForPartitionAsyncHandler = value);
         }
 
         /// <summary>
@@ -384,6 +384,54 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   The function to be called just before event processing starts for a given partition.  It creates and starts
+        ///   a new partition pump associated with the specified partition.  A partition pump might be overwritten by the
+        ///   creation of the new one and, for this reason, it needs to be stopped prior to this method call.
+        /// </summary>
+        ///
+        /// <param name="context">TODO.</param>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        ///
+        protected override async Task InitializeProcessingForPartitionAsync(PartitionContext context)
+        {
+            try
+            {
+                var startingPosition = EventPosition.Earliest;
+
+                if (InitializeProcessingForPartitionAsyncHandler != null)
+                {
+                    var initializationContext = new InitializePartitionProcessingContext(context);
+                    await InitializeProcessingForPartitionAsyncHandler(initializationContext).ConfigureAwait(false);
+
+                    startingPosition = initializationContext.DefaultStartingPosition;
+                }
+
+                var ownership = InstanceOwnership[context.PartitionId];
+
+                if (ownership.Offset.HasValue)
+                {
+                    startingPosition = EventPosition.FromOffset(ownership.Offset.Value);
+                }
+                else if (ownership.SequenceNumber.HasValue)
+                {
+                    startingPosition = EventPosition.FromSequenceNumber(ownership.SequenceNumber.Value);
+                }
+
+                var partitionPump = new PartitionPump(Connection, ConsumerGroup, context, startingPosition, ProcessEventAsync, Options);
+                await partitionPump.StartAsync().ConfigureAwait(false);
+
+                PartitionPumps[context.PartitionId] = partitionPump;
+            }
+            catch (Exception)
+            {
+                // If partition pump creation fails, we'll try again on the next time this method is called.  This should happen
+                // on the next load balancing loop as long as this instance still owns the partition.
+                // TODO: delegate the exception handling to an Exception Callback.
+            }
+        }
+
+        /// <summary>
         ///   Responsible for processing events received from the Event Hubs service.
         /// </summary>
         ///
@@ -706,7 +754,9 @@ namespace Azure.Messaging.EventHubs
                             if (PartitionPumps.TryGetValue(kvp.Key, out PartitionPump pump) && !pump.IsRunning)
                             {
                                 await RemovePartitionPumpIfItExistsAsync(kvp.Key, ProcessingStoppedReason.Exception).ConfigureAwait(false);
-                                await AddPartitionPumpAsync(kvp.Key, kvp.Value.SequenceNumber).ConfigureAwait(false);
+
+                                var context = new PartitionContext(kvp.Key);
+                                await InitializeProcessingForPartitionAsync(context).ConfigureAwait(false);
                             }
                         }))
                     .ConfigureAwait(false);
@@ -720,7 +770,8 @@ namespace Azure.Messaging.EventHubs
                 {
                     InstanceOwnership[claimedOwnership.PartitionId] = claimedOwnership;
 
-                    await AddPartitionPumpAsync(claimedOwnership.PartitionId, claimedOwnership.SequenceNumber).ConfigureAwait(false);
+                    var context = new PartitionContext(claimedOwnership.PartitionId);
+                    await InitializeProcessingForPartitionAsync(context).ConfigureAwait(false);
                 }
 
                 // Wait the remaining time, if any, to start the next cycle.  The total time of a cycle defaults to 10 seconds,
@@ -844,52 +895,6 @@ namespace Azure.Messaging.EventHubs
             // No ownership was claimed.
 
             return null;
-        }
-
-        /// <summary>
-        ///   Creates and starts a new partition pump associated with the specified partition.  A partition pump might be overwritten by the creation
-        ///   of the new one and, for this reason, it needs to be stopped prior to this method call.
-        /// </summary>
-        ///
-        /// <param name="partitionId">The identifier of the Event Hub partition the partition pump will be associated with.  Events will be read only from this partition.</param>
-        /// <param name="initialSequenceNumber">The sequence number of the event within a partition where the partition pump should begin reading events.</param>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
-        private async Task AddPartitionPumpAsync(string partitionId,
-                                                 long? initialSequenceNumber)
-        {
-            var partitionContext = new PartitionContext(partitionId);
-
-            try
-            {
-                EventPosition startingPosition = default;
-
-                if (initialSequenceNumber.HasValue)
-                {
-                    startingPosition = EventPosition.FromSequenceNumber(initialSequenceNumber.Value, false);
-                }
-
-                if (InitializeProcessingForPartitionAsync != null)
-                {
-                    var initializationContext = new InitializePartitionProcessingContext(partitionContext);
-                    await InitializeProcessingForPartitionAsync(initializationContext).ConfigureAwait(false);
-
-                    startingPosition = startingPosition ?? initializationContext.DefaultStartingPosition;
-                }
-
-                var partitionPump = new PartitionPump(Connection, ConsumerGroup, partitionContext, startingPosition ?? EventPosition.Earliest, ProcessEventAsync, Options);
-
-                await partitionPump.StartAsync().ConfigureAwait(false);
-
-                PartitionPumps[partitionId] = partitionPump;
-            }
-            catch (Exception)
-            {
-                // If partition pump creation fails, we'll try again on the next time this method is called.  This should happen
-                // on the next load balancing loop as long as this instance still owns the partition.
-                // TODO: delegate the exception handling to an Exception Callback.
-            }
         }
 
         /// <summary>
