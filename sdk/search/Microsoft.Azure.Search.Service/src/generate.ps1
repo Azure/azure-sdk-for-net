@@ -51,4 +51,7 @@ Move-Item "$generateFolder\Models\SearchRequestOptions.cs" $sharedGenerateFolder
 Remove-Item -Force "$generateFolder\Models\AnalyzerName.cs"
 Remove-Item -Force "$generateFolder\Models\DataType.cs"
 
+# For this enum type we have a customization that allows logical operations, which is not supported by x-ms-enum
+Remove-Item -Force "$generateFolder\Models\RegexFlags.cs"
+
 Write-Output "Finished cleanup."
