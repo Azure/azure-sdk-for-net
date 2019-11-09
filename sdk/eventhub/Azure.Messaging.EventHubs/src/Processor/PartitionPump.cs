@@ -186,6 +186,7 @@ namespace Azure.Messaging.EventHubs.Processor
                         {
                             RunningTask = null;
                             await InnerConsumer.CloseAsync().ConfigureAwait(false);
+                            await Connection.CloseAsync();
                         }
                     }
                 }

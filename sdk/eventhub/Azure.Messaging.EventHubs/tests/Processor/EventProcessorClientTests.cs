@@ -376,6 +376,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        [Ignore("Event Processor does not have a single connection anymore.")]
         public async Task CloseAsyncClosesTheConnectionWhenOwned()
         {
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
@@ -393,6 +394,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        [Ignore("Event Processor does not have a single connection anymore.")]
         public void CloseClosesTheConnectionWhenOwned()
         {
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";

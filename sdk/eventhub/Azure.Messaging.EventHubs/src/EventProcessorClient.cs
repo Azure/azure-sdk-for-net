@@ -131,11 +131,10 @@ namespace Azure.Messaging.EventHubs
         protected virtual TimeSpan OwnershipExpiration => TimeSpan.FromSeconds(30);
 
         /// <summary>
-        ///   The active connection to the Azure Event Hubs service, enabling client communications for metadata
-        ///   about the associated Event Hub and access to transport-aware consumers.
+        ///   TODO.
         /// </summary>
         ///
-        private EventHubConnection Connection { get; }
+        private Func<EventHubConnection> ConnectionFactory { get; }
 
         /// <summary>
         ///   Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.
@@ -293,7 +292,7 @@ namespace Azure.Messaging.EventHubs
             ConnectionStringProperties connectionStringProperties = ConnectionStringParser.Parse(connectionString);
 
             OwnsConnection = true;
-            Connection = new EventHubConnection(connectionString, eventHubName, processorOptions.ConnectionOptions);
+            ConnectionFactory = () => new EventHubConnection(connectionString, eventHubName, processorOptions.ConnectionOptions);
             FullyQualifiedNamespace = connectionStringProperties.Endpoint.Host;
             EventHubName = string.IsNullOrEmpty(eventHubName) ? connectionStringProperties.EventHubName : eventHubName;
             ConsumerGroup = consumerGroup;
@@ -331,7 +330,7 @@ namespace Azure.Messaging.EventHubs
             processorOptions = processorOptions?.Clone() ?? new EventProcessorClientOptions();
 
             OwnsConnection = true;
-            Connection = new EventHubConnection(fullyQualifiedNamespace, eventHubName, credential, processorOptions.ConnectionOptions);
+            ConnectionFactory = () => new EventHubConnection(fullyQualifiedNamespace, eventHubName, credential, processorOptions.ConnectionOptions);
             FullyQualifiedNamespace = fullyQualifiedNamespace;
             EventHubName = eventHubName;
             ConsumerGroup = consumerGroup;
@@ -367,9 +366,9 @@ namespace Azure.Messaging.EventHubs
             processorOptions = processorOptions?.Clone() ?? new EventProcessorClientOptions();
 
             OwnsConnection = false;
-            Connection = connection;
-            FullyQualifiedNamespace = Connection.FullyQualifiedNamespace;
-            EventHubName = Connection.EventHubName;
+            ConnectionFactory = () => connection;
+            FullyQualifiedNamespace = connection.FullyQualifiedNamespace;
+            EventHubName = connection.EventHubName;
             ConsumerGroup = consumerGroup;
             Manager = partitionManager;
             Options = processorOptions;
@@ -422,7 +421,7 @@ namespace Azure.Messaging.EventHubs
                     startingPosition = EventPosition.FromSequenceNumber(ownership.SequenceNumber.Value);
                 }
 
-                var partitionPump = new PartitionPump(Connection, ConsumerGroup, context, startingPosition, ProcessEventAsync, Options);
+                var partitionPump = new PartitionPump(ConnectionFactory(), ConsumerGroup, context, startingPosition, ProcessEventAsync, Options);
                 await partitionPump.StartAsync().ConfigureAwait(false);
 
                 PartitionPumps[context.PartitionId] = partitionPump;
@@ -707,17 +706,7 @@ namespace Azure.Messaging.EventHubs
         {
             Closed = true;
 
-            try
-            {
-                await StopAsync().ConfigureAwait(false);;
-            }
-            finally
-            {
-                if (OwnsConnection)
-                {
-                    await Connection.CloseAsync().ConfigureAwait(false);
-                }
-            }
+            await StopAsync().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -777,6 +766,10 @@ namespace Azure.Messaging.EventHubs
         ///
         private async Task RunAsync(CancellationToken cancellationToken)
         {
+            // We'll use this connection to retrieve an updated list of partition ids from the service.
+
+            await using var connection = ConnectionFactory();
+
             while (!cancellationToken.IsCancellationRequested)
             {
                 Stopwatch cycleDuration = Stopwatch.StartNew();
@@ -788,7 +781,7 @@ namespace Azure.Messaging.EventHubs
                 // From the storage service provided by the user, obtain a complete list of ownership, including expired ones.  We may still need
                 // their eTags to claim orphan partitions.
 
-                var completeOwnershipList = (await ListOwnershipAsync(Connection.FullyQualifiedNamespace, Connection.EventHubName, ConsumerGroup)
+                var completeOwnershipList = (await ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup)
                     .ConfigureAwait(false))
                     .ToList();
 
@@ -829,10 +822,15 @@ namespace Azure.Messaging.EventHubs
                         }))
                     .ConfigureAwait(false);
 
+                // Get a complete list of the partition ids present in the Event Hub.  This should be immutable for the time being, but
+                // it may change in the future.
+
+                var partitionIds = await connection.GetPartitionIdsAsync(RetryPolicy).ConfigureAwait(false);
+
                 // Find an ownership to claim and try to claim it.  The method will return null if this instance was not eligible to
                 // increase its ownership list, if no claimable ownership could be found or if a claim attempt failed.
 
-                PartitionOwnership claimedOwnership = await FindAndClaimOwnershipAsync(completeOwnershipList, activeOwnership).ConfigureAwait(false);
+                PartitionOwnership claimedOwnership = await FindAndClaimOwnershipAsync(partitionIds, completeOwnershipList, activeOwnership).ConfigureAwait(false);
 
                 if (claimedOwnership != null)
                 {
@@ -862,19 +860,16 @@ namespace Azure.Messaging.EventHubs
         ///   list.
         /// </summary>
         ///
+        /// <param name="partitionIds">TODO.</param>
         /// <param name="completeOwnershipEnumerable">A complete enumerable of ownership obtained from the stored service provided by the user.</param>
         /// <param name="activeOwnership">The set of ownership that are still active.</param>
         ///
         /// <returns>The claimed ownership. <c>null</c> if this instance is not eligible, if no claimable ownership was found or if the claim attempt failed.</returns>
         ///
-        private async Task<PartitionOwnership> FindAndClaimOwnershipAsync(IEnumerable<PartitionOwnership> completeOwnershipEnumerable,
+        private async Task<PartitionOwnership> FindAndClaimOwnershipAsync(string[] partitionIds,
+                                                                          IEnumerable<PartitionOwnership> completeOwnershipEnumerable,
                                                                           IEnumerable<PartitionOwnership> activeOwnership)
         {
-            // Get a complete list of the partition ids present in the Event Hub.  This should be immutable for the time being, but
-            // it may change in the future.
-
-            var partitionIds = await Connection.GetPartitionIdsAsync(RetryPolicy).ConfigureAwait(false);
-
             // Create a partition distribution dictionary from the active ownership list we have, mapping an owner's identifier to the amount of
             // partitions it owns.  When an event processor goes down and it has only expired ownership, it will not be taken into consideration
             // by others.
