@@ -2,21 +2,21 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
-using Azure.Storage.Files.DataLake.Models;
 
-namespace Azure.Storage.Files.DataLake
+namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
     /// Extension methods for RolePermissions.
     /// </summary>
-    public static class RolePermissionsExtensions
+    public static class PathAccessControlExtensions
     {
         /// <summary>
         /// Parses octal char to RolePermissions.
         /// </summary>
-        public static RolePermissions ParseOctal(char octalRolePermission)
+        public static RolePermissions ParseOctalRolePermissions(char octalRolePermission)
         {
             RolePermissions rolePermissions = RolePermissions.None;
 
@@ -24,7 +24,7 @@ namespace Azure.Storage.Files.DataLake
 
             if (value < 0 || value > 7)
             {
-                throw Errors.MustBeBetweenInclusive(nameof(octalRolePermission), 0, 7);
+                throw Errors.MustBeBetweenInclusive(nameof(octalRolePermission), 0, 7, value);
             }
 
             if ((value & 4) > 0)
@@ -51,7 +51,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="symbolicRolePermissions">String to parse.</param>
         /// <param name="allowStickyBit">If sticky bit is allowed.</param>
         /// <returns><see cref="RolePermissions"/>.</returns>
-        public static RolePermissions ParseSymbolic(string symbolicRolePermissions, bool allowStickyBit)
+        public static RolePermissions ParseSymbolicRolePermissions(string symbolicRolePermissions, bool allowStickyBit)
         {
             RolePermissions rolePermissions = RolePermissions.None;
             ArgumentException argumentException = new ArgumentException("Role permission contains an invalid character");
@@ -111,12 +111,7 @@ namespace Azure.Storage.Files.DataLake
         /// Returns the octal string representation of this RolePermissions.
         /// </summary>
         /// <returns>String.</returns>
-        public static string ToOctalString(this RolePermissions rolePermissions)
-        {
-            return rolePermissions.ToOctal().ToString(CultureInfo.InvariantCulture);
-        }
-
-        private static int ToOctal(this RolePermissions rolePermissions)
+        public static string ToOctalRolePermissions(this RolePermissions rolePermissions)
         {
             int result = 0;
 
@@ -135,14 +130,14 @@ namespace Azure.Storage.Files.DataLake
                 result |= 1;
             }
 
-            return result;
+            return result.ToString(CultureInfo.InvariantCulture);
         }
 
         /// <summary>
         /// Returns the octal string respentation of this RolePermissions.
         /// </summary>
-        /// <returns>String</returns>
-        public static string ToSymbolicString(this RolePermissions rolePermissions)
+        /// <returns>String.</returns>
+        public static string ToSymbolicRolePermissions(this RolePermissions rolePermissions)
         {
             StringBuilder stringBuilder = new StringBuilder();
 
@@ -151,6 +146,47 @@ namespace Azure.Storage.Files.DataLake
             stringBuilder.Append(rolePermissions.HasFlag(RolePermissions.Execute) ? "x" : "-");
 
             return stringBuilder.ToString();
+        }
+
+        /// <summary>
+        /// Converts the Access Control List to a <see cref="string"/>.
+        /// </summary>
+        /// <param name="accessControlList">The Access Control List to serialize</param>
+        /// <returns>string.</returns>
+        public static string SerializeAccessControlList(IList<PathAccessControlEntry> accessControlList)
+        {
+            if (accessControlList == null)
+            {
+                return null;
+            }
+
+            IList<string> serializedAcl = new List<string>();
+            foreach (PathAccessControlEntry ac in accessControlList)
+            {
+                serializedAcl.Add(ac.ToString());
+            }
+            return string.Join(",", serializedAcl);
+        }
+
+        /// <summary>
+        /// Deseralizes an access control list string  into a list of PathAccessControlEntries.
+        /// </summary>
+        /// <param name="accessControlListString">The string to parse.</param>
+        /// <returns>A List of <see cref="PathAccessControlEntry"/>.</returns>
+        public static IList<PathAccessControlEntry> DeserializeAccessControlList(string accessControlListString)
+        {
+            if (accessControlListString == null)
+            {
+                return null;
+            }
+
+            string[] strings = accessControlListString.Split(',');
+            List<PathAccessControlEntry> accessControlList = new List<PathAccessControlEntry>();
+            foreach (string entry in strings)
+            {
+                accessControlList.Add(PathAccessControlEntry.Parse(entry));
+            }
+            return accessControlList;
         }
     }
 }

@@ -157,7 +157,7 @@ DataLakeFileClient fileClient = filesystem.GetFileClient(Randomize("sample-file"
 fileClient.Create();
 
 // Set the Permissions of the file
-PathPermissions pathPermissions = PathPermissions.ParseSymbolic("rwxrwxrwx");
+PathPermissions pathPermissions = PathPermissions.ParseSymbolicPermissions("rwxrwxrwx");
 fileClient.SetPermissions(permissions: pathPermissions);
 ```
 
@@ -169,7 +169,7 @@ fileClient.Create();
 
 // Set Access Control List
 IList<PathAccessControlEntry> accessControlList
-    = PathAccessControlEntry.DeserializeList("user::rwx,group::r--,mask::rwx,other::---");
+    = PathAccessControlExtensions.DeserializeAccessControlList("user::rwx,group::r--,mask::rwx,other::---");
 fileClient.SetAccessControlList(accessControlList);
 ```
 

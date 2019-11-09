@@ -80,7 +80,7 @@ namespace Azure.Storage.Files.DataLake.Models
             stringBuilder.Append(":");
             stringBuilder.Append(EntityId ?? "");
             stringBuilder.Append(":");
-            stringBuilder.Append(Permissions.ToSymbolicString());
+            stringBuilder.Append(Permissions.ToSymbolicRolePermissions());
 
             return stringBuilder.ToString();
         }
@@ -88,29 +88,29 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// Parses the provided string into a <see cref="PathAccessControlEntry"/>
         /// </summary>
-        /// <param name="aclString">The string representation of the access control list.</param>
+        /// <param name="s">The string representation of the access control list.</param>
         /// <returns>A <see cref="PathAccessControlEntry"/>.</returns>
-        public static PathAccessControlEntry Parse(string aclString)
+        public static PathAccessControlEntry Parse(string s)
         {
-            if (aclString == null)
+            if (s == null)
             {
                 return null;
             }
 
             PathAccessControlEntry entry = new PathAccessControlEntry();
-            string[] parts = aclString.Split(':');
+            string[] parts = s.Split(':');
             int indexOffset = 0;
 
             if (parts.Length < 3 || parts.Length > 4)
             {
-                throw new ArgumentException("aclString should have 3 or 4 parts delimited by colons");
+                throw new ArgumentException($"{nameof(s)} should have 3 or 4 parts delimited by colons");
             }
 
             if (parts.Length == 4)
             {
                 if (!parts[0].Equals("default", StringComparison.OrdinalIgnoreCase))
                 {
-                    throw new ArgumentException("If aclString is 4 parts, the first must be \"default\"");
+                    throw new ArgumentException($"If {nameof(s)} is 4 parts, the first must be \"default\"");
                 }
                 entry.DefaultScope = true;
                 indexOffset = 1;
@@ -122,78 +122,8 @@ namespace Azure.Storage.Files.DataLake.Models
                 entry.EntityId = parts[1 + indexOffset];
             }
 
-            entry.Permissions = RolePermissionsExtensions.ParseSymbolic(parts[2 + indexOffset], false);
+            entry.Permissions = PathAccessControlExtensions.ParseSymbolicRolePermissions(parts[2 + indexOffset], false);
             return entry;
-        }
-
-        /// <summary>
-        /// Converts the Access Control List to a <see cref="string"/>.
-        /// </summary>
-        /// <param name="accessControlList">The Access Control List to serialize</param>
-        /// <returns>string.</returns>
-        public static string SerializeList(IList<PathAccessControlEntry> accessControlList)
-        {
-            if (accessControlList == null)
-            {
-                return null;
-            }
-
-            IList<string> serializedAcl = new List<string>();
-            foreach (PathAccessControlEntry ac in accessControlList)
-            {
-                serializedAcl.Add(ac.ToString());
-            }
-            return string.Join(",", serializedAcl);
-        }
-
-        /// <summary>
-        /// Deseralizes an access control list string  into a list of PathAccessControlEntries.
-        /// </summary>
-        /// <param name="accessControlListString">The string to parse.</param>
-        /// <returns>A List of <see cref="PathAccessControlEntry"/>.</returns>
-        public static IList<PathAccessControlEntry> DeserializeList(string accessControlListString)
-        {
-            if (accessControlListString == null)
-            {
-                return null;
-            }
-
-            string[] strings = accessControlListString.Split(',');
-            List<PathAccessControlEntry> accessControlList = new List<PathAccessControlEntry>();
-            foreach (string entry in strings)
-            {
-                accessControlList.Add(Parse(entry));
-            }
-            return accessControlList;
-        }
-
-        /// <summary>
-        /// Override Equals().
-        /// </summary>
-        /// <param name="other">Another <see cref="PathAccessControlEntry"/></param>
-        /// <returns></returns>
-        public bool Equals(PathAccessControlEntry other)
-        {
-            if (other != null
-                && DefaultScope == other.DefaultScope
-                && AccessControlType == other.AccessControlType
-                && EntityId == other.EntityId
-                && Permissions.Equals(other.Permissions))
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Override Equals
-        /// </summary>
-        /// <param name="other">An <see cref="object"/></param>
-        /// <returns></returns>
-        public override bool Equals(object other)
-        {
-            return other is PathAccessControlEntry && Equals((PathAccessControlEntry)other);
         }
 
         internal static AccessControlType ParseAccesControlType(string typeString)
@@ -219,15 +149,5 @@ namespace Azure.Storage.Files.DataLake.Models
                 throw Errors.InvalidArgument(nameof(typeString));
             }
         }
-
-        /// <summary>
-        /// Get a hash code for the PathAccessControlEntry.
-        /// </summary>
-        /// <returns>Hash code for the PathAccessControlEntry.</returns>
-        public override int GetHashCode() =>
-            DefaultScope.GetHashCode()
-            ^ AccessControlType.GetHashCode()
-            ^ EntityId.GetHashCode()
-            ^ (int)Permissions;
     }
 }

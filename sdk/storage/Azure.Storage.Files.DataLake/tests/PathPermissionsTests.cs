@@ -2,128 +2,127 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Test;
 using NUnit.Framework;
 
 namespace Azure.Storage.Files.DataLake.Tests
 {
-    public class PathPermissionsTests
+    public class PathPermissionsTests : PathAccessControlTestBase
     {
         private RolePermissions AllPermissions = RolePermissions.Read | RolePermissions.Write | RolePermissions.Execute;
 
         [Test]
-        public void ParseOctal()
+        public void ParseOctalPermissions()
         {
-            Assert.AreEqual(new PathPermissions(
+            AssertPathPermissionsEquality(new PathPermissions(
                     owner: AllPermissions,
                     group: AllPermissions,
                     other: AllPermissions),
-                PathPermissions.ParseOctal("0777"));
+                PathPermissions.ParseOctalPermissions("0777"));
 
-            Assert.AreEqual(new PathPermissions(
+            AssertPathPermissionsEquality(new PathPermissions(
                 owner: AllPermissions,
                 group: AllPermissions,
                 other: AllPermissions,
                 stickyBit: true),
-            PathPermissions.ParseOctal("1777"));
+            PathPermissions.ParseOctalPermissions("1777"));
         }
 
         [Test]
-        public void ParseOctal_invalid()
+        public void ParseOctalPermissions_invalid()
         {
             TestHelper.AssertExpectedException(
-                () => PathPermissions.ParseOctal("777"),
-                new ArgumentException("octalString must be 4 characters"));
+                () => PathPermissions.ParseOctalPermissions("777"),
+                new ArgumentException("s must be 4 characters"));
 
             TestHelper.AssertExpectedException(
-                () => PathPermissions.ParseOctal("3777"),
-                new ArgumentException("First digit of octalString must be 0 or 1"));
+                () => PathPermissions.ParseOctalPermissions("3777"),
+                new ArgumentException("First digit of s must be 0 or 1"));
         }
 
         [Test]
-        public void ParseSymbolic()
+        public void ParseSymbolicPermissions()
         {
-            Assert.AreEqual(new PathPermissions(
+
+            AssertPathPermissionsEquality(new PathPermissions(
                     owner: AllPermissions,
                     group: AllPermissions,
                     other: AllPermissions),
-                PathPermissions.ParseSymbolic("rwxrwxrwx"));
+                PathPermissions.ParseSymbolicPermissions("rwxrwxrwx"));
 
-            Assert.AreEqual(new PathPermissions(
+            AssertPathPermissionsEquality(new PathPermissions(
                     owner: AllPermissions,
                     group: AllPermissions,
                     other: AllPermissions,
                     stickyBit: true),
-                PathPermissions.ParseSymbolic("rwxrwxrwt"));
+                PathPermissions.ParseSymbolicPermissions("rwxrwxrwt"));
 
-            Assert.AreEqual(new PathPermissions(
+            AssertPathPermissionsEquality(new PathPermissions(
                     owner: AllPermissions,
                     group: AllPermissions,
                     other: AllPermissions,
                     extendedInfoInAcl: true),
-                PathPermissions.ParseSymbolic("rwxrwxrwx+"));
+                PathPermissions.ParseSymbolicPermissions("rwxrwxrwx+"));
 
-            Assert.AreEqual(new PathPermissions(
+            AssertPathPermissionsEquality(new PathPermissions(
                     owner: AllPermissions,
                     group: AllPermissions,
                     other: AllPermissions,
                     stickyBit: true,
                     extendedInfoInAcl: true),
-                PathPermissions.ParseSymbolic("rwxrwxrwt+"));
+                PathPermissions.ParseSymbolicPermissions("rwxrwxrwt+"));
         }
 
         [Test]
-        public void ParseSymbolic_invalid()
+        public void ParseSymbolicPermissions_invalid()
         {
             TestHelper.AssertExpectedException(
-                () => PathPermissions.ParseSymbolic("rwxrwxrw"),
-                new ArgumentException("symbolicString must be 9 or 10 characters"));
+                () => PathPermissions.ParseSymbolicPermissions("rwxrwxrw"),
+                new ArgumentException("s must be 9 or 10 characters"));
         }
 
         [Test]
-        public void ToOctalString()
+        public void ToOctalPermissions()
         {
             Assert.AreEqual("0777", new PathPermissions(
                 owner: AllPermissions,
                 group: AllPermissions,
-                other: AllPermissions).ToOctalString());
+                other: AllPermissions).ToOctalPermissions());
 
             Assert.AreEqual("1777", new PathPermissions(
                 owner: AllPermissions,
                 group: AllPermissions,
                 other: AllPermissions,
-                stickyBit: true).ToOctalString());
+                stickyBit: true).ToOctalPermissions());
         }
 
         [Test]
-        public void ToSymbolicString()
+        public void ToSymbolicPermissions()
         {
             Assert.AreEqual("rwxrwxrwx", new PathPermissions(
                 owner: AllPermissions,
                 group: AllPermissions,
-                other: AllPermissions).ToSymbolicString());
+                other: AllPermissions).ToSymbolicPermissions());
 
             Assert.AreEqual("rwxrwxrwt", new PathPermissions(
                 owner: AllPermissions,
                 group: AllPermissions,
                 other: AllPermissions,
-                stickyBit: true).ToSymbolicString());
+                stickyBit: true).ToSymbolicPermissions());
 
             Assert.AreEqual("rwxrwxrwx+", new PathPermissions(
                 owner: AllPermissions,
                 group: AllPermissions,
                 other: AllPermissions,
-                extendedInfoInAcl: true).ToSymbolicString());
+                extendedInfoInAcl: true).ToSymbolicPermissions());
 
             Assert.AreEqual("rwxrwxrwt+", new PathPermissions(
                 owner: AllPermissions,
                 group: AllPermissions,
                 other: AllPermissions,
                 stickyBit: true,
-                extendedInfoInAcl: true).ToSymbolicString());
+                extendedInfoInAcl: true).ToSymbolicPermissions());
         }
     }
 }

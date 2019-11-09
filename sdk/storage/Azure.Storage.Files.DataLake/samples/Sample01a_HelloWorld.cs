@@ -454,7 +454,7 @@ namespace Azure.Storage.Files.DataLake.Samples
                 fileClient.Create();
 
                 // Set the Permissions of the file
-                PathPermissions pathPermissions = PathPermissions.ParseSymbolic("rwxrwxrwx");
+                PathPermissions pathPermissions = PathPermissions.ParseSymbolicPermissions("rwxrwxrwx");
                 fileClient.SetPermissions(permissions: pathPermissions);
                 #endregion Snippet:SampleSnippetDataLakeFileClient_SetPermissions
 
@@ -498,7 +498,7 @@ namespace Azure.Storage.Files.DataLake.Samples
 
                 // Set Access Control List
                 IList<PathAccessControlEntry> accessControlList
-                    = PathAccessControlEntry.DeserializeList("user::rwx,group::r--,mask::rwx,other::---");
+                    = PathAccessControlExtensions.DeserializeAccessControlList("user::rwx,group::r--,mask::rwx,other::---");
                 fileClient.SetAccessControlList(accessControlList);
                 #endregion Snippet:SampleSnippetDataLakeFileClient_SetAcls
                 #region Snippet:SampleSnippetDataLakeFileClient_GetAcls

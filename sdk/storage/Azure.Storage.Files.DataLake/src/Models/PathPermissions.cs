@@ -72,38 +72,38 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// Parses a string in octal format to PathPermissions.
         /// </summary>
-        /// <param name="octalString">Octal string to parse.</param>
+        /// <param name="s">Octal string to parse.</param>
         /// <returns><see cref="PathPermissions"/>.</returns>
-        public static PathPermissions ParseOctal(string octalString)
+        public static PathPermissions ParseOctalPermissions(string s)
         {
-            if (octalString == null)
+            if (s == null)
             {
                 return null;
             }
 
-            if (octalString.Length != 4)
+            if (s.Length != 4)
             {
-                throw new ArgumentException("octalString must be 4 characters");
+                throw new ArgumentException($"{nameof(s)} must be 4 characters");
             }
 
             var pathPermissions = new PathPermissions();
 
-            if (octalString[0] == '0')
+            if (s[0] == '0')
             {
                 pathPermissions.StickyBit = false;
             }
-            else if (octalString[0] == '1')
+            else if (s[0] == '1')
             {
                 pathPermissions.StickyBit = true;
             }
             else
             {
-                throw new ArgumentException("First digit of octalString must be 0 or 1");
+                throw new ArgumentException($"First digit of {nameof(s)} must be 0 or 1");
             }
 
-            pathPermissions.Owner = RolePermissionsExtensions.ParseOctal(octalString[1]);
-            pathPermissions.Group = RolePermissionsExtensions.ParseOctal(octalString[2]);
-            pathPermissions.Other = RolePermissionsExtensions.ParseOctal(octalString[3]);
+            pathPermissions.Owner = PathAccessControlExtensions.ParseOctalRolePermissions(s[1]);
+            pathPermissions.Group = PathAccessControlExtensions.ParseOctalRolePermissions(s[2]);
+            pathPermissions.Other = PathAccessControlExtensions.ParseOctalRolePermissions(s[3]);
 
             return pathPermissions;
         }
@@ -111,24 +111,24 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// Parses a symbolic string to PathPermissions.
         /// </summary>
-        /// <param name="symbolicString">String to parse</param>
-        /// <returns><see cref="PathPermissions"/></returns>
-        public static PathPermissions ParseSymbolic(string symbolicString)
+        /// <param name="s">String to parse.</param>
+        /// <returns><see cref="PathPermissions"/>.</returns>
+        public static PathPermissions ParseSymbolicPermissions(string s)
         {
-            if (symbolicString == null)
+            if (s == null)
             {
                 return null;
             }
 
-            if (symbolicString.Length != 9 && symbolicString.Length != 10)
+            if (s.Length != 9 && s.Length != 10)
             {
-                throw new ArgumentException("symbolicString must be 9 or 10 characters");
+                throw new ArgumentException($"{nameof(s)} must be 9 or 10 characters");
             }
 
             var pathPermissions = new PathPermissions();
 
             // Set sticky bit
-            if (symbolicString.ToLower(CultureInfo.InvariantCulture)[8] == 't')
+            if (char.ToLower(s[8], CultureInfo.InvariantCulture) == 't')
             {
                 pathPermissions.StickyBit = true;
             }
@@ -138,15 +138,15 @@ namespace Azure.Storage.Files.DataLake.Models
             }
 
             // Set extended info in ACL
-            if (symbolicString.Length == 10)
+            if (s.Length == 10)
             {
-                if (symbolicString[9] == '+')
+                if (s[9] == '+')
                 {
                     pathPermissions.ExtendedInfoInAcl = true;
                 }
                 else
                 {
-                    throw Errors.InvalidFormat(nameof(symbolicString));
+                    throw Errors.InvalidFormat(nameof(s));
                 }
             }
             else
@@ -154,9 +154,9 @@ namespace Azure.Storage.Files.DataLake.Models
                 pathPermissions.ExtendedInfoInAcl = false;
             }
 
-            pathPermissions.Owner = RolePermissionsExtensions.ParseSymbolic(symbolicString.Substring(0, 3), allowStickyBit: false);
-            pathPermissions.Group = RolePermissionsExtensions.ParseSymbolic(symbolicString.Substring(3, 3), allowStickyBit: false);
-            pathPermissions.Other = RolePermissionsExtensions.ParseSymbolic(symbolicString.Substring(6, 3), allowStickyBit: true);
+            pathPermissions.Owner = PathAccessControlExtensions.ParseSymbolicRolePermissions(s.Substring(0, 3), allowStickyBit: false);
+            pathPermissions.Group = PathAccessControlExtensions.ParseSymbolicRolePermissions(s.Substring(3, 3), allowStickyBit: false);
+            pathPermissions.Other = PathAccessControlExtensions.ParseSymbolicRolePermissions(s.Substring(6, 3), allowStickyBit: true);
 
             return pathPermissions;
         }
@@ -165,7 +165,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// Returns the octal representation of this PathPermissions as a string.
         /// </summary>
         /// <returns>string</returns>
-        public string ToOctalString()
+        public string ToOctalPermissions()
         {
             var sb = new StringBuilder();
 
@@ -178,9 +178,9 @@ namespace Azure.Storage.Files.DataLake.Models
                 sb.Append(0);
             }
 
-            sb.Append(Owner.ToOctalString());
-            sb.Append(Group.ToOctalString());
-            sb.Append(Other.ToOctalString());
+            sb.Append(Owner.ToOctalRolePermissions());
+            sb.Append(Group.ToOctalRolePermissions());
+            sb.Append(Other.ToOctalRolePermissions());
 
             return sb.ToString();
         }
@@ -189,12 +189,12 @@ namespace Azure.Storage.Files.DataLake.Models
         /// Returns the symbolic represenation of this PathPermissions as a string.
         /// </summary>
         /// <returns>string</returns>
-        public string ToSymbolicString()
+        public string ToSymbolicPermissions()
         {
             var sb = new StringBuilder();
-            sb.Append(Owner.ToSymbolicString());
-            sb.Append(Group.ToSymbolicString());
-            sb.Append(Other.ToSymbolicString());
+            sb.Append(Owner.ToSymbolicRolePermissions());
+            sb.Append(Group.ToSymbolicRolePermissions());
+            sb.Append(Other.ToSymbolicRolePermissions());
 
             if (StickyBit)
             {
@@ -209,41 +209,5 @@ namespace Azure.Storage.Files.DataLake.Models
 
             return sb.ToString();
         }
-
-        /// <summary>
-        /// Equals.
-        /// </summary>
-        /// <param name="other"></param>
-        /// <returns></returns>
-        public bool Equals(PathPermissions other)
-        {
-            if (other != null
-                && Owner.Equals(other.Owner)
-                && Group.Equals(other.Group)
-                && Other.Equals(other.Other)
-                && StickyBit == other.StickyBit
-                && ExtendedInfoInAcl == other.ExtendedInfoInAcl)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        /// <summary>
-        /// Equals.
-        /// </summary>
-        /// <param name="other"></param>
-        /// <returns></returns>
-        public override bool Equals(object other)
-        {
-            return other is PathPermissions && Equals((PathPermissions)other);
-        }
-
-        /// <summary>
-        /// Get a hash code for the PathPermissions.
-        /// </summary>
-        /// <returns>Hash code for the PathPermissions.</returns>
-        public override int GetHashCode() =>
-            int.Parse(ToOctalString(), CultureInfo.InvariantCulture);
     }
 }

@@ -9,11 +9,8 @@ using NUnit.Framework;
 
 namespace Azure.Storage.Files.DataLake.Tests
 {
-    public class PathAccessControlEntryTests
+    public class PathAccessControlEntryTests : PathAccessControlTestBase
     {
-        private readonly string _entityId = "entityId";
-        private readonly RolePermissions _rolePermissions = RolePermissions.Read | RolePermissions.Write | RolePermissions.Execute;
-
         [Test]
         public void Constructor_Invalid()
         {
@@ -44,20 +41,20 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public void Parse()
         {
-            Assert.AreEqual(
+            AssertPathAccessControlEntryEquality(
                 new PathAccessControlEntry(
                     AccessControlType.Mask,
                     _rolePermissions),
                 PathAccessControlEntry.Parse("mask::rwx"));
 
-            Assert.AreEqual(
+            AssertPathAccessControlEntryEquality(
                 new PathAccessControlEntry(
                     AccessControlType.Mask,
                     _rolePermissions,
                     true),
                 PathAccessControlEntry.Parse("default:mask::rwx"));
 
-            Assert.AreEqual(
+            AssertPathAccessControlEntryEquality(
                 new PathAccessControlEntry(
                     AccessControlType.User,
                     _rolePermissions,
@@ -73,90 +70,15 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             TestHelper.AssertExpectedException(
                 () => PathAccessControlEntry.Parse("a:b"),
-                new ArgumentException("aclString should have 3 or 4 parts delimited by colons"));
+                new ArgumentException("s should have 3 or 4 parts delimited by colons"));
 
             TestHelper.AssertExpectedException(
                 () => PathAccessControlEntry.Parse("a:b:c:d:e"),
-                new ArgumentException("aclString should have 3 or 4 parts delimited by colons"));
+                new ArgumentException("s should have 3 or 4 parts delimited by colons"));
 
             TestHelper.AssertExpectedException(
                 () => PathAccessControlEntry.Parse("a:b:c:d"),
-                new ArgumentException("If aclString is 4 parts, the first must be \"default\""));
-        }
-
-        [Test]
-        public void SerializeList()
-        {
-            // Arrange
-            PathAccessControlEntry accessControlEntry = new PathAccessControlEntry(
-                AccessControlType.User,
-                _rolePermissions,
-                true,
-                _entityId);
-
-            // Act
-            string result = PathAccessControlEntry.SerializeList(new List<PathAccessControlEntry>()
-            {
-                accessControlEntry
-            });
-
-            // Assert
-            Assert.AreEqual("default:user:entityId:rwx", result);
-
-            // Act
-            result = PathAccessControlEntry.SerializeList(new List<PathAccessControlEntry>()
-            {
-                accessControlEntry,
-                new PathAccessControlEntry(
-                    AccessControlType.Mask,
-                    _rolePermissions,
-                    true),
-            });
-
-            // Assert
-            Assert.AreEqual("default:user:entityId:rwx,default:mask::rwx", result);
-        }
-
-        [Test]
-        public void SerializeList_Invalid()
-        {
-            Assert.AreEqual(null, PathAccessControlEntry.SerializeList(null));
-        }
-
-        [Test]
-        public void DeserializeList()
-        {
-            // Arrange
-            PathAccessControlEntry accessControlEntry = new PathAccessControlEntry(
-                AccessControlType.User,
-                _rolePermissions,
-                true,
-                _entityId);
-
-            // Act
-            IList<PathAccessControlEntry> list = PathAccessControlEntry.DeserializeList("default:user:entityId:rwx");
-
-            // Assert
-            Assert.AreEqual(1, list.Count);
-            Assert.AreEqual(accessControlEntry,list[0]);
-
-            // Act
-            list = PathAccessControlEntry.DeserializeList("default:user:entityId:rwx,default:mask::rwx");
-
-            // Assert
-            Assert.AreEqual(2, list.Count);
-            Assert.AreEqual(accessControlEntry, list[0]);
-            Assert.AreEqual(new PathAccessControlEntry(
-                    AccessControlType.Mask,
-                    _rolePermissions,
-                    true),
-                list[1]);
-        }
-
-        [Test]
-        public void DeserializeList_Invalid()
-        {
-            Assert.AreEqual(null, PathAccessControlEntry.DeserializeList(null));
+                new ArgumentException("If s is 4 parts, the first must be \"default\""));
         }
     }
 }
