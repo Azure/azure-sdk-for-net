@@ -63,15 +63,71 @@ param
 Import-Module Az.Resources
 
 # ==========================
-# == Function Definitions ==
+# == Function Imports ==
 # ==========================
 
-. .\functions\validation-functions.ps1
-. .\functions\help-functions.ps1
-. .\functions\credentials-functions.ps1
-. .\functions\eventhubs-functions.ps1
-. .\functions\resource-management-functions.ps1
-. .\functions\role-assignment-functions.ps1
+. .\functions\azure-principal-functions.ps1
+
+function DisplayHelp
+{
+  <#
+    .SYNOPSIS
+      Displays the usage help text.
+
+    .DESCRIPTION
+      Displays the help text for usage.
+
+    .OUTPUTS
+      Help text for usage to the console window.
+  #>
+
+  $indent = "    "
+
+  Write-Host "`n"
+  Write-Host "Creation of the Resources to Run Identity Samples"
+  Write-Host ""
+  Write-Host "$($indent)This script handles creation of the principal and the resources needed to run identity samples."
+  Write-Host ""
+  Write-Host "$($indent)It tries to retrieve a resource group, an Azure Event Hubs Namespace and an Azure Event Hub"
+  Write-Host "$($indent)using the names passed in as arguments. It attempts the creation of the resources if not found."
+  Write-Host ""
+  Write-Host "$($indent)It always tries to create the named service principal."
+  Write-Host ""
+  Write-Host "$($indent)It assigns the 'Azure Event Hubs Data Owner' role to the created namespace."
+  Write-Host ""
+  Write-Host "$($indent)Upon completion, the script will output the principal's sensitive information and the parameters"
+  Write-Host "$($indent)needed to invoke the samples."
+  Write-Host ""
+  Write-Host "$($indent)NOTE: Some of these values, such as the client secret, are difficult to recover; please copy them and keep in a"
+  Write-Host "$($indent)safe place."
+  Write-Host ""
+  Write-Host ""
+  Write-Host "$($indent)Available Parameters:"
+  Write-Host ""
+  Write-Host "$($indent)-Help`t`t`tDisplays this message."
+  Write-Host ""
+
+  Write-Host "$($indent)-SubscriptionName`t`tRequired.  The name of the Azure subscription used."
+  Write-Host ""
+
+  Write-Host "$($indent)-ResourceGroupName`t`tRequired.  The name of the Azure Resource Group that contains the resources."
+  Write-Host ""
+
+  Write-Host "$($indent)-NamespaceName`t`tRequired.  The name of the Azure Event Hubs Namespace."
+  Write-Host ""
+
+  Write-Host "$($indent)-EventHubName`t`tRequired.  The name of the Azure Event Hub."
+  Write-Host ""
+
+  Write-Host "$($indent)-ServicePrincipalName`tRequired.  The name to use for the service principal that will be created."
+  Write-Host ""
+
+  Write-Host "$($indent)-AzureRegion`t`tThe Azure region that resources should be created in.  This value should be"
+  Write-Host "$($indent)`t`t`t`tthe name of the region, in lowercase, with no spaces.  For example: southcentralus"
+  Write-Host ""
+  Write-Host "$($indent)`t`t`t`tDefault: South Central US (southcentralus)"
+  Write-Host ""  
+}
 
 # ====================
 # == Script Actions ==
@@ -79,7 +135,7 @@ Import-Module Az.Resources
 
 if ($Help)
 {
-  DisplayIdentityHelp $Defaults
+  DisplayHelp $Defaults
   exit 0
 }
 
@@ -128,7 +184,7 @@ try
     Write-Host "dotnet Azure.Messaging.EventHubs.Samples.dll ``"
     Write-Host "--ConnectionString ""$($namespaceInformation.PrimaryConnectionString)"" ``"
     Write-Host "--FullyQualifiedNamespace ""$($namespaceInformation.FullyQualifiedDomainName)"" ``"
-    Write-Host "--EventHub  ""$($EventHubName)"" ``"
+    Write-Host "--EventHub ""$($EventHubName)"" ``"
     Write-Host "--Tenant ""$($subscription.TenantId)"" ``"
     Write-Host "--Client ""$($principal.ApplicationId)"" ``"
     Write-Host "--Secret ""$($credentials.Password)"""
