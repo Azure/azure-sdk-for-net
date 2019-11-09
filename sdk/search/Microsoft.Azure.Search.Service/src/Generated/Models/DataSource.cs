@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         /// <param name="name">The name of the datasource.</param>
         /// <param name="type">The type of the datasource. Possible values
-        /// include: 'azuresql', 'cosmosdb', 'azureblob', 'azuretable'</param>
+        /// include: 'AzureSql', 'CosmosDb', 'AzureBlob', 'AzureTable'</param>
         /// <param name="credentials">Credentials for the datasource.</param>
         /// <param name="container">The data container for the
         /// datasource.</param>
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets the type of the datasource. Possible values include:
-        /// 'azuresql', 'cosmosdb', 'azureblob', 'azuretable'
+        /// 'AzureSql', 'CosmosDb', 'AzureBlob', 'AzureTable'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public DataSourceType Type { get; set; }

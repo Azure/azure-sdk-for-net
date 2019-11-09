@@ -11,128 +11,166 @@
 namespace Microsoft.Azure.Search.Models
 {
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for SentimentSkillLanguage.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum SentimentSkillLanguage
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(SentimentSkillLanguageConverter))]
+    public struct SentimentSkillLanguage : System.IEquatable<SentimentSkillLanguage>
     {
-        [EnumMember(Value = "da")]
-        Da,
-        [EnumMember(Value = "nl")]
-        Nl,
-        [EnumMember(Value = "en")]
-        En,
-        [EnumMember(Value = "fi")]
-        Fi,
-        [EnumMember(Value = "fr")]
-        Fr,
-        [EnumMember(Value = "de")]
-        De,
-        [EnumMember(Value = "el")]
-        El,
-        [EnumMember(Value = "it")]
-        It,
-        [EnumMember(Value = "no")]
-        No,
-        [EnumMember(Value = "pl")]
-        Pl,
-        [EnumMember(Value = "pt-PT")]
-        PtPT,
-        [EnumMember(Value = "ru")]
-        Ru,
-        [EnumMember(Value = "es")]
-        Es,
-        [EnumMember(Value = "sv")]
-        Sv,
-        [EnumMember(Value = "tr")]
-        Tr
-    }
-    internal static class SentimentSkillLanguageEnumExtension
-    {
-        internal static string ToSerializedValue(this SentimentSkillLanguage? value)
+        private SentimentSkillLanguage(string underlyingValue)
         {
-            return value == null ? null : ((SentimentSkillLanguage)value).ToSerializedValue();
+            UnderlyingValue=underlyingValue;
         }
 
-        internal static string ToSerializedValue(this SentimentSkillLanguage value)
+        /// <summary>
+        /// Danish
+        /// </summary>
+        public static readonly SentimentSkillLanguage Da = "da";
+
+        /// <summary>
+        /// Dutch
+        /// </summary>
+        public static readonly SentimentSkillLanguage Nl = "nl";
+
+        /// <summary>
+        /// English
+        /// </summary>
+        public static readonly SentimentSkillLanguage En = "en";
+
+        /// <summary>
+        /// Finnish
+        /// </summary>
+        public static readonly SentimentSkillLanguage Fi = "fi";
+
+        /// <summary>
+        /// French
+        /// </summary>
+        public static readonly SentimentSkillLanguage Fr = "fr";
+
+        /// <summary>
+        /// German
+        /// </summary>
+        public static readonly SentimentSkillLanguage De = "de";
+
+        /// <summary>
+        /// Greek
+        /// </summary>
+        public static readonly SentimentSkillLanguage El = "el";
+
+        /// <summary>
+        /// Italian
+        /// </summary>
+        public static readonly SentimentSkillLanguage It = "it";
+
+        /// <summary>
+        /// Norwegian (Bokmål)
+        /// </summary>
+        public static readonly SentimentSkillLanguage No = "no";
+
+        /// <summary>
+        /// Polish
+        /// </summary>
+        public static readonly SentimentSkillLanguage Pl = "pl";
+
+        /// <summary>
+        /// Portuguese (Portugal)
+        /// </summary>
+        public static readonly SentimentSkillLanguage PtPT = "pt-PT";
+
+        /// <summary>
+        /// Russian
+        /// </summary>
+        public static readonly SentimentSkillLanguage Ru = "ru";
+
+        /// <summary>
+        /// Spanish
+        /// </summary>
+        public static readonly SentimentSkillLanguage Es = "es";
+
+        /// <summary>
+        /// Swedish
+        /// </summary>
+        public static readonly SentimentSkillLanguage Sv = "sv";
+
+        /// <summary>
+        /// Turkish
+        /// </summary>
+        public static readonly SentimentSkillLanguage Tr = "tr";
+
+
+        /// <summary>
+        /// Underlying value of enum SentimentSkillLanguage
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for SentimentSkillLanguage
+        /// </summary>
+        public override string ToString()
         {
-            switch( value )
-            {
-                case SentimentSkillLanguage.Da:
-                    return "da";
-                case SentimentSkillLanguage.Nl:
-                    return "nl";
-                case SentimentSkillLanguage.En:
-                    return "en";
-                case SentimentSkillLanguage.Fi:
-                    return "fi";
-                case SentimentSkillLanguage.Fr:
-                    return "fr";
-                case SentimentSkillLanguage.De:
-                    return "de";
-                case SentimentSkillLanguage.El:
-                    return "el";
-                case SentimentSkillLanguage.It:
-                    return "it";
-                case SentimentSkillLanguage.No:
-                    return "no";
-                case SentimentSkillLanguage.Pl:
-                    return "pl";
-                case SentimentSkillLanguage.PtPT:
-                    return "pt-PT";
-                case SentimentSkillLanguage.Ru:
-                    return "ru";
-                case SentimentSkillLanguage.Es:
-                    return "es";
-                case SentimentSkillLanguage.Sv:
-                    return "sv";
-                case SentimentSkillLanguage.Tr:
-                    return "tr";
-            }
-            return null;
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
         }
 
-        internal static SentimentSkillLanguage? ParseSentimentSkillLanguage(this string value)
+        /// <summary>
+        /// Compares enums of type SentimentSkillLanguage
+        /// </summary>
+        public bool Equals(SentimentSkillLanguage e)
         {
-            switch( value )
-            {
-                case "da":
-                    return SentimentSkillLanguage.Da;
-                case "nl":
-                    return SentimentSkillLanguage.Nl;
-                case "en":
-                    return SentimentSkillLanguage.En;
-                case "fi":
-                    return SentimentSkillLanguage.Fi;
-                case "fr":
-                    return SentimentSkillLanguage.Fr;
-                case "de":
-                    return SentimentSkillLanguage.De;
-                case "el":
-                    return SentimentSkillLanguage.El;
-                case "it":
-                    return SentimentSkillLanguage.It;
-                case "no":
-                    return SentimentSkillLanguage.No;
-                case "pl":
-                    return SentimentSkillLanguage.Pl;
-                case "pt-PT":
-                    return SentimentSkillLanguage.PtPT;
-                case "ru":
-                    return SentimentSkillLanguage.Ru;
-                case "es":
-                    return SentimentSkillLanguage.Es;
-                case "sv":
-                    return SentimentSkillLanguage.Sv;
-                case "tr":
-                    return SentimentSkillLanguage.Tr;
-            }
-            return null;
+            return UnderlyingValue.Equals(e.UnderlyingValue);
         }
+
+        /// <summary>
+        /// Implicit operator to convert string to SentimentSkillLanguage
+        /// </summary>
+        public static implicit operator SentimentSkillLanguage(string value)
+        {
+            return new SentimentSkillLanguage(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert SentimentSkillLanguage to string
+        /// </summary>
+        public static implicit operator string(SentimentSkillLanguage e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum SentimentSkillLanguage
+        /// </summary>
+        public static bool operator == (SentimentSkillLanguage e1, SentimentSkillLanguage e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum SentimentSkillLanguage
+        /// </summary>
+        public static bool operator != (SentimentSkillLanguage e1, SentimentSkillLanguage e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for SentimentSkillLanguage
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is SentimentSkillLanguage && Equals((SentimentSkillLanguage)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode SentimentSkillLanguage
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

@@ -30,11 +30,11 @@ namespace Microsoft.Azure.Search
       }
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "latest";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/search/data-plane/Microsoft.Azure.Search.Service/readme.md --csharp --version=latest --reflect-api-versions --tag=track1-package-2019-05-preview --csharp-sdks-folder=D:\\src\\azure-sdk-for-net\\sdk";
-      public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "864e09fad28d69f624950e2b9d0c9f8fa7fb5ec8";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4407";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/arv100kri/azure-rest-api-specs/blob/arv100kri/remove-obsolete/specification/search/data-plane/Microsoft.Azure.Search.Service/readme.md --csharp --version=latest --reflect-api-versions --tag=track1-package-2019-05-preview --csharp-sdks-folder=D:\\src\\azure-sdk-for-net\\sdk";
+      public static readonly String GithubForkName = "arv100kri";
+      public static readonly String GithubBranchName = "arv100kri/remove-obsolete";
+      public static readonly String GithubCommidId = "476441a124f82f5266a53e1d29a0d273b4bf1a75";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

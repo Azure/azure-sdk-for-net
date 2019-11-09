@@ -11,134 +11,173 @@
 namespace Microsoft.Azure.Search.Models
 {
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for KeyPhraseExtractionSkillLanguage.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum KeyPhraseExtractionSkillLanguage
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(KeyPhraseExtractionSkillLanguageConverter))]
+    public struct KeyPhraseExtractionSkillLanguage : System.IEquatable<KeyPhraseExtractionSkillLanguage>
     {
-        [EnumMember(Value = "da")]
-        Da,
-        [EnumMember(Value = "nl")]
-        Nl,
-        [EnumMember(Value = "en")]
-        En,
-        [EnumMember(Value = "fi")]
-        Fi,
-        [EnumMember(Value = "fr")]
-        Fr,
-        [EnumMember(Value = "de")]
-        De,
-        [EnumMember(Value = "it")]
-        It,
-        [EnumMember(Value = "ja")]
-        Ja,
-        [EnumMember(Value = "ko")]
-        Ko,
-        [EnumMember(Value = "no")]
-        No,
-        [EnumMember(Value = "pl")]
-        Pl,
-        [EnumMember(Value = "pt-PT")]
-        PtPT,
-        [EnumMember(Value = "pt-BR")]
-        PtBR,
-        [EnumMember(Value = "ru")]
-        Ru,
-        [EnumMember(Value = "es")]
-        Es,
-        [EnumMember(Value = "sv")]
-        Sv
-    }
-    internal static class KeyPhraseExtractionSkillLanguageEnumExtension
-    {
-        internal static string ToSerializedValue(this KeyPhraseExtractionSkillLanguage? value)
+        private KeyPhraseExtractionSkillLanguage(string underlyingValue)
         {
-            return value == null ? null : ((KeyPhraseExtractionSkillLanguage)value).ToSerializedValue();
+            UnderlyingValue=underlyingValue;
         }
 
-        internal static string ToSerializedValue(this KeyPhraseExtractionSkillLanguage value)
+        /// <summary>
+        /// Danish
+        /// </summary>
+        public static readonly KeyPhraseExtractionSkillLanguage Da = "da";
+
+        /// <summary>
+        /// Dutch
+        /// </summary>
+        public static readonly KeyPhraseExtractionSkillLanguage Nl = "nl";
+
+        /// <summary>
+        /// English
+        /// </summary>
+        public static readonly KeyPhraseExtractionSkillLanguage En = "en";
+
+        /// <summary>
+        /// Finnish
+        /// </summary>
+        public static readonly KeyPhraseExtractionSkillLanguage Fi = "fi";
+
+        /// <summary>
+        /// French
+        /// </summary>
+        public static readonly KeyPhraseExtractionSkillLanguage Fr = "fr";
+
+        /// <summary>
+        /// German
+        /// </summary>
+        public static readonly KeyPhraseExtractionSkillLanguage De = "de";
+
+        /// <summary>
+        /// Italian
+        /// </summary>
+        public static readonly KeyPhraseExtractionSkillLanguage It = "it";
+
+        /// <summary>
+        /// Japanese
+        /// </summary>
+        public static readonly KeyPhraseExtractionSkillLanguage Ja = "ja";
+
+        /// <summary>
+        /// Korean
+        /// </summary>
+        public static readonly KeyPhraseExtractionSkillLanguage Ko = "ko";
+
+        /// <summary>
+        /// Norwegian (Bokmål)
+        /// </summary>
+        public static readonly KeyPhraseExtractionSkillLanguage No = "no";
+
+        /// <summary>
+        /// Polish
+        /// </summary>
+        public static readonly KeyPhraseExtractionSkillLanguage Pl = "pl";
+
+        /// <summary>
+        /// Portuguese (Portugal)
+        /// </summary>
+        public static readonly KeyPhraseExtractionSkillLanguage PtPT = "pt-PT";
+
+        /// <summary>
+        /// Portuguese (Brazil)
+        /// </summary>
+        public static readonly KeyPhraseExtractionSkillLanguage PtBR = "pt-BR";
+
+        /// <summary>
+        /// Russian
+        /// </summary>
+        public static readonly KeyPhraseExtractionSkillLanguage Ru = "ru";
+
+        /// <summary>
+        /// Spanish
+        /// </summary>
+        public static readonly KeyPhraseExtractionSkillLanguage Es = "es";
+
+        /// <summary>
+        /// Swedish
+        /// </summary>
+        public static readonly KeyPhraseExtractionSkillLanguage Sv = "sv";
+
+
+        /// <summary>
+        /// Underlying value of enum KeyPhraseExtractionSkillLanguage
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for KeyPhraseExtractionSkillLanguage
+        /// </summary>
+        public override string ToString()
         {
-            switch( value )
-            {
-                case KeyPhraseExtractionSkillLanguage.Da:
-                    return "da";
-                case KeyPhraseExtractionSkillLanguage.Nl:
-                    return "nl";
-                case KeyPhraseExtractionSkillLanguage.En:
-                    return "en";
-                case KeyPhraseExtractionSkillLanguage.Fi:
-                    return "fi";
-                case KeyPhraseExtractionSkillLanguage.Fr:
-                    return "fr";
-                case KeyPhraseExtractionSkillLanguage.De:
-                    return "de";
-                case KeyPhraseExtractionSkillLanguage.It:
-                    return "it";
-                case KeyPhraseExtractionSkillLanguage.Ja:
-                    return "ja";
-                case KeyPhraseExtractionSkillLanguage.Ko:
-                    return "ko";
-                case KeyPhraseExtractionSkillLanguage.No:
-                    return "no";
-                case KeyPhraseExtractionSkillLanguage.Pl:
-                    return "pl";
-                case KeyPhraseExtractionSkillLanguage.PtPT:
-                    return "pt-PT";
-                case KeyPhraseExtractionSkillLanguage.PtBR:
-                    return "pt-BR";
-                case KeyPhraseExtractionSkillLanguage.Ru:
-                    return "ru";
-                case KeyPhraseExtractionSkillLanguage.Es:
-                    return "es";
-                case KeyPhraseExtractionSkillLanguage.Sv:
-                    return "sv";
-            }
-            return null;
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
         }
 
-        internal static KeyPhraseExtractionSkillLanguage? ParseKeyPhraseExtractionSkillLanguage(this string value)
+        /// <summary>
+        /// Compares enums of type KeyPhraseExtractionSkillLanguage
+        /// </summary>
+        public bool Equals(KeyPhraseExtractionSkillLanguage e)
         {
-            switch( value )
-            {
-                case "da":
-                    return KeyPhraseExtractionSkillLanguage.Da;
-                case "nl":
-                    return KeyPhraseExtractionSkillLanguage.Nl;
-                case "en":
-                    return KeyPhraseExtractionSkillLanguage.En;
-                case "fi":
-                    return KeyPhraseExtractionSkillLanguage.Fi;
-                case "fr":
-                    return KeyPhraseExtractionSkillLanguage.Fr;
-                case "de":
-                    return KeyPhraseExtractionSkillLanguage.De;
-                case "it":
-                    return KeyPhraseExtractionSkillLanguage.It;
-                case "ja":
-                    return KeyPhraseExtractionSkillLanguage.Ja;
-                case "ko":
-                    return KeyPhraseExtractionSkillLanguage.Ko;
-                case "no":
-                    return KeyPhraseExtractionSkillLanguage.No;
-                case "pl":
-                    return KeyPhraseExtractionSkillLanguage.Pl;
-                case "pt-PT":
-                    return KeyPhraseExtractionSkillLanguage.PtPT;
-                case "pt-BR":
-                    return KeyPhraseExtractionSkillLanguage.PtBR;
-                case "ru":
-                    return KeyPhraseExtractionSkillLanguage.Ru;
-                case "es":
-                    return KeyPhraseExtractionSkillLanguage.Es;
-                case "sv":
-                    return KeyPhraseExtractionSkillLanguage.Sv;
-            }
-            return null;
+            return UnderlyingValue.Equals(e.UnderlyingValue);
         }
+
+        /// <summary>
+        /// Implicit operator to convert string to
+        /// KeyPhraseExtractionSkillLanguage
+        /// </summary>
+        public static implicit operator KeyPhraseExtractionSkillLanguage(string value)
+        {
+            return new KeyPhraseExtractionSkillLanguage(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert KeyPhraseExtractionSkillLanguage to
+        /// string
+        /// </summary>
+        public static implicit operator string(KeyPhraseExtractionSkillLanguage e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum KeyPhraseExtractionSkillLanguage
+        /// </summary>
+        public static bool operator == (KeyPhraseExtractionSkillLanguage e1, KeyPhraseExtractionSkillLanguage e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum KeyPhraseExtractionSkillLanguage
+        /// </summary>
+        public static bool operator != (KeyPhraseExtractionSkillLanguage e1, KeyPhraseExtractionSkillLanguage e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for KeyPhraseExtractionSkillLanguage
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is KeyPhraseExtractionSkillLanguage && Equals((KeyPhraseExtractionSkillLanguage)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode KeyPhraseExtractionSkillLanguage
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

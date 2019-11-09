@@ -13,38 +13,33 @@ namespace Microsoft.Azure.Search.Models
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Defines values for ImageAnalysisSkillLanguage.
+    /// Defines values for CharFilterName.
     /// </summary>
     /// <summary>
     /// Determine base value for a given allowed value if exists, else return
     /// the value itself
     /// </summary>
-    [JsonConverter(typeof(ImageAnalysisSkillLanguageConverter))]
-    public struct ImageAnalysisSkillLanguage : System.IEquatable<ImageAnalysisSkillLanguage>
+    [JsonConverter(typeof(CharFilterNameConverter))]
+    public struct CharFilterName : System.IEquatable<CharFilterName>
     {
-        private ImageAnalysisSkillLanguage(string underlyingValue)
+        private CharFilterName(string underlyingValue)
         {
             UnderlyingValue=underlyingValue;
         }
 
         /// <summary>
-        /// English
+        /// A character filter that attempts to strip out HTML constructs.
         /// </summary>
-        public static readonly ImageAnalysisSkillLanguage En = "en";
-
-        /// <summary>
-        /// Chinese
-        /// </summary>
-        public static readonly ImageAnalysisSkillLanguage Zh = "zh";
+        public static readonly CharFilterName HtmlStrip = "html_strip";
 
 
         /// <summary>
-        /// Underlying value of enum ImageAnalysisSkillLanguage
+        /// Underlying value of enum CharFilterName
         /// </summary>
         private readonly string UnderlyingValue;
 
         /// <summary>
-        /// Returns string representation for ImageAnalysisSkillLanguage
+        /// Returns string representation for CharFilterName
         /// </summary>
         public override string ToString()
         {
@@ -52,55 +47,55 @@ namespace Microsoft.Azure.Search.Models
         }
 
         /// <summary>
-        /// Compares enums of type ImageAnalysisSkillLanguage
+        /// Compares enums of type CharFilterName
         /// </summary>
-        public bool Equals(ImageAnalysisSkillLanguage e)
+        public bool Equals(CharFilterName e)
         {
             return UnderlyingValue.Equals(e.UnderlyingValue);
         }
 
         /// <summary>
-        /// Implicit operator to convert string to ImageAnalysisSkillLanguage
+        /// Implicit operator to convert string to CharFilterName
         /// </summary>
-        public static implicit operator ImageAnalysisSkillLanguage(string value)
+        public static implicit operator CharFilterName(string value)
         {
-            return new ImageAnalysisSkillLanguage(value);
+            return new CharFilterName(value);
         }
 
         /// <summary>
-        /// Implicit operator to convert ImageAnalysisSkillLanguage to string
+        /// Implicit operator to convert CharFilterName to string
         /// </summary>
-        public static implicit operator string(ImageAnalysisSkillLanguage e)
+        public static implicit operator string(CharFilterName e)
         {
             return e.UnderlyingValue;
         }
 
         /// <summary>
-        /// Overriding == operator for enum ImageAnalysisSkillLanguage
+        /// Overriding == operator for enum CharFilterName
         /// </summary>
-        public static bool operator == (ImageAnalysisSkillLanguage e1, ImageAnalysisSkillLanguage e2)
+        public static bool operator == (CharFilterName e1, CharFilterName e2)
         {
             return e2.Equals(e1);
         }
 
         /// <summary>
-        /// Overriding != operator for enum ImageAnalysisSkillLanguage
+        /// Overriding != operator for enum CharFilterName
         /// </summary>
-        public static bool operator != (ImageAnalysisSkillLanguage e1, ImageAnalysisSkillLanguage e2)
+        public static bool operator != (CharFilterName e1, CharFilterName e2)
         {
             return !e2.Equals(e1);
         }
 
         /// <summary>
-        /// Overrides Equals operator for ImageAnalysisSkillLanguage
+        /// Overrides Equals operator for CharFilterName
         /// </summary>
         public override bool Equals(object obj)
         {
-            return obj is ImageAnalysisSkillLanguage && Equals((ImageAnalysisSkillLanguage)obj);
+            return obj is CharFilterName && Equals((CharFilterName)obj);
         }
 
         /// <summary>
-        /// Returns for hashCode ImageAnalysisSkillLanguage
+        /// Returns for hashCode CharFilterName
         /// </summary>
         public override int GetHashCode()
         {

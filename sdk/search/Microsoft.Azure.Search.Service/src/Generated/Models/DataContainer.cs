@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Search.Models
 
     /// <summary>
     /// Represents information about the entity (such as Azure SQL table or
-    /// DocumentDb collection) that will be indexed.
+    /// CosmosDB collection) that will be indexed.
     /// </summary>
     public partial class DataContainer
     {
@@ -32,8 +32,8 @@ namespace Microsoft.Azure.Search.Models
         /// Initializes a new instance of the DataContainer class.
         /// </summary>
         /// <param name="name">The name of the table or view (for Azure SQL
-        /// data source) or collection (for DocumentDB data source) that will
-        /// be indexed.</param>
+        /// data source) or collection (for CosmosDB data source) that will be
+        /// indexed.</param>
         /// <param name="query">A query that is applied to this data container.
         /// The syntax and meaning of this parameter is datasource-specific.
         /// Not supported by Azure SQL datasources.</param>
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets the name of the table or view (for Azure SQL data
-        /// source) or collection (for DocumentDB data source) that will be
+        /// source) or collection (for CosmosDB data source) that will be
         /// indexed.
         /// </summary>
         [JsonProperty(PropertyName = "name")]

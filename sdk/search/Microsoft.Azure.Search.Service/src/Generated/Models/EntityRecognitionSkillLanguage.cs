@@ -11,68 +11,208 @@
 namespace Microsoft.Azure.Search.Models
 {
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for EntityRecognitionSkillLanguage.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum EntityRecognitionSkillLanguage
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(EntityRecognitionSkillLanguageConverter))]
+    public struct EntityRecognitionSkillLanguage : System.IEquatable<EntityRecognitionSkillLanguage>
     {
-        [EnumMember(Value = "de")]
-        De,
-        [EnumMember(Value = "en")]
-        En,
-        [EnumMember(Value = "es")]
-        Es,
-        [EnumMember(Value = "fr")]
-        Fr,
-        [EnumMember(Value = "it")]
-        It
-    }
-    internal static class EntityRecognitionSkillLanguageEnumExtension
-    {
-        internal static string ToSerializedValue(this EntityRecognitionSkillLanguage? value)
+        private EntityRecognitionSkillLanguage(string underlyingValue)
         {
-            return value == null ? null : ((EntityRecognitionSkillLanguage)value).ToSerializedValue();
+            UnderlyingValue=underlyingValue;
         }
 
-        internal static string ToSerializedValue(this EntityRecognitionSkillLanguage value)
+        /// <summary>
+        /// Arabic
+        /// </summary>
+        public static readonly EntityRecognitionSkillLanguage Ar = "ar";
+
+        /// <summary>
+        /// Czech
+        /// </summary>
+        public static readonly EntityRecognitionSkillLanguage Cs = "cs";
+
+        /// <summary>
+        /// Chinese-Simplified
+        /// </summary>
+        public static readonly EntityRecognitionSkillLanguage ZhHans = "zh-Hans";
+
+        /// <summary>
+        /// Chinese-Traditional
+        /// </summary>
+        public static readonly EntityRecognitionSkillLanguage ZhHant = "zh-Hant";
+
+        /// <summary>
+        /// Danish
+        /// </summary>
+        public static readonly EntityRecognitionSkillLanguage Da = "da";
+
+        /// <summary>
+        /// Dutch
+        /// </summary>
+        public static readonly EntityRecognitionSkillLanguage Nl = "nl";
+
+        /// <summary>
+        /// English
+        /// </summary>
+        public static readonly EntityRecognitionSkillLanguage En = "en";
+
+        /// <summary>
+        /// Finnish
+        /// </summary>
+        public static readonly EntityRecognitionSkillLanguage Fi = "fi";
+
+        /// <summary>
+        /// French
+        /// </summary>
+        public static readonly EntityRecognitionSkillLanguage Fr = "fr";
+
+        /// <summary>
+        /// German
+        /// </summary>
+        public static readonly EntityRecognitionSkillLanguage De = "de";
+
+        /// <summary>
+        /// Greek
+        /// </summary>
+        public static readonly EntityRecognitionSkillLanguage El = "el";
+
+        /// <summary>
+        /// Hungarian
+        /// </summary>
+        public static readonly EntityRecognitionSkillLanguage Hu = "hu";
+
+        /// <summary>
+        /// Italian
+        /// </summary>
+        public static readonly EntityRecognitionSkillLanguage It = "it";
+
+        /// <summary>
+        /// Japanese
+        /// </summary>
+        public static readonly EntityRecognitionSkillLanguage Ja = "ja";
+
+        /// <summary>
+        /// Korean
+        /// </summary>
+        public static readonly EntityRecognitionSkillLanguage Ko = "ko";
+
+        /// <summary>
+        /// Norwegian (Bokmål)
+        /// </summary>
+        public static readonly EntityRecognitionSkillLanguage No = "no";
+
+        /// <summary>
+        /// Polish
+        /// </summary>
+        public static readonly EntityRecognitionSkillLanguage Pl = "pl";
+
+        /// <summary>
+        /// Portuguese (Portugal)
+        /// </summary>
+        public static readonly EntityRecognitionSkillLanguage PtPT = "pt-PT";
+
+        /// <summary>
+        /// Portuguese (Brazil)
+        /// </summary>
+        public static readonly EntityRecognitionSkillLanguage PtBR = "pt-BR";
+
+        /// <summary>
+        /// Russian
+        /// </summary>
+        public static readonly EntityRecognitionSkillLanguage Ru = "ru";
+
+        /// <summary>
+        /// Spanish
+        /// </summary>
+        public static readonly EntityRecognitionSkillLanguage Es = "es";
+
+        /// <summary>
+        /// Swedish
+        /// </summary>
+        public static readonly EntityRecognitionSkillLanguage Sv = "sv";
+
+        /// <summary>
+        /// Turkish
+        /// </summary>
+        public static readonly EntityRecognitionSkillLanguage Tr = "tr";
+
+
+        /// <summary>
+        /// Underlying value of enum EntityRecognitionSkillLanguage
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for EntityRecognitionSkillLanguage
+        /// </summary>
+        public override string ToString()
         {
-            switch( value )
-            {
-                case EntityRecognitionSkillLanguage.De:
-                    return "de";
-                case EntityRecognitionSkillLanguage.En:
-                    return "en";
-                case EntityRecognitionSkillLanguage.Es:
-                    return "es";
-                case EntityRecognitionSkillLanguage.Fr:
-                    return "fr";
-                case EntityRecognitionSkillLanguage.It:
-                    return "it";
-            }
-            return null;
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
         }
 
-        internal static EntityRecognitionSkillLanguage? ParseEntityRecognitionSkillLanguage(this string value)
+        /// <summary>
+        /// Compares enums of type EntityRecognitionSkillLanguage
+        /// </summary>
+        public bool Equals(EntityRecognitionSkillLanguage e)
         {
-            switch( value )
-            {
-                case "de":
-                    return EntityRecognitionSkillLanguage.De;
-                case "en":
-                    return EntityRecognitionSkillLanguage.En;
-                case "es":
-                    return EntityRecognitionSkillLanguage.Es;
-                case "fr":
-                    return EntityRecognitionSkillLanguage.Fr;
-                case "it":
-                    return EntityRecognitionSkillLanguage.It;
-            }
-            return null;
+            return UnderlyingValue.Equals(e.UnderlyingValue);
         }
+
+        /// <summary>
+        /// Implicit operator to convert string to
+        /// EntityRecognitionSkillLanguage
+        /// </summary>
+        public static implicit operator EntityRecognitionSkillLanguage(string value)
+        {
+            return new EntityRecognitionSkillLanguage(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert EntityRecognitionSkillLanguage to
+        /// string
+        /// </summary>
+        public static implicit operator string(EntityRecognitionSkillLanguage e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum EntityRecognitionSkillLanguage
+        /// </summary>
+        public static bool operator == (EntityRecognitionSkillLanguage e1, EntityRecognitionSkillLanguage e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum EntityRecognitionSkillLanguage
+        /// </summary>
+        public static bool operator != (EntityRecognitionSkillLanguage e1, EntityRecognitionSkillLanguage e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for EntityRecognitionSkillLanguage
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is EntityRecognitionSkillLanguage && Equals((EntityRecognitionSkillLanguage)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode EntityRecognitionSkillLanguage
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

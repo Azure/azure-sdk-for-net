@@ -52,8 +52,10 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="categories">A list of entity categories that should be
         /// extracted.</param>
         /// <param name="defaultLanguageCode">A value indicating which language
-        /// code to use. Default is en. Possible values include: 'de', 'en',
-        /// 'es', 'fr', 'it'</param>
+        /// code to use. Default is en. Possible values include: 'ar', 'cs',
+        /// 'zh-Hans', 'zh-Hant', 'da', 'nl', 'en', 'fi', 'fr', 'de', 'el',
+        /// 'hu', 'it', 'ja', 'ko', 'no', 'pl', 'pt-PT', 'pt-BR', 'ru', 'es',
+        /// 'sv', 'tr'</param>
         /// <param name="includeTypelessEntities">Determines whether or not to
         /// include entities which are well known but don't conform to a
         /// pre-defined type. If this configuration is not set (default), set
@@ -86,7 +88,9 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets a value indicating which language code to use. Default
-        /// is en. Possible values include: 'de', 'en', 'es', 'fr', 'it'
+        /// is en. Possible values include: 'ar', 'cs', 'zh-Hans', 'zh-Hant',
+        /// 'da', 'nl', 'en', 'fi', 'fr', 'de', 'el', 'hu', 'it', 'ja', 'ko',
+        /// 'no', 'pl', 'pt-PT', 'pt-BR', 'ru', 'es', 'sv', 'tr'
         /// </summary>
         [JsonProperty(PropertyName = "defaultLanguageCode")]
         public EntityRecognitionSkillLanguage? DefaultLanguageCode { get; set; }
