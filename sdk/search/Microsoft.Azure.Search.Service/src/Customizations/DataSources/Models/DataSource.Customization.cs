@@ -175,48 +175,6 @@ namespace Microsoft.Azure.Search.Models
         }
 
         /// <summary>
-        /// Creates a new DataSource to connect to a DocumentDb database.
-        /// </summary>
-        /// <param name="name">The name of the datasource.</param>
-        /// <param name="documentDbConnectionString">The connection string for the DocumentDb database. It must follow this format:
-        /// "AccountName|AccountEndpoint=[your account name or endpoint];AccountKey=[your account key];Database=[your database name]"</param>
-        /// <param name="collectionName">The name of the collection from which to read documents.</param>
-        /// <param name="query">Optional. A query that is applied to the collection when reading documents.</param>
-        /// <param name="useChangeDetection">Optional. Indicates whether to use change detection when indexing. Default is true.</param>
-        /// <param name="deletionDetectionPolicy">Optional. The data deletion detection policy for the datasource.</param>
-        /// <param name="description">Optional. Description of the datasource.</param>
-        /// <returns>A new DataSource instance.</returns>
-        [Obsolete("Use CosmosDb instead.")]
-        public static DataSource DocumentDb(
-            string name,
-            string documentDbConnectionString,
-            string collectionName,
-            string query = null,
-            bool useChangeDetection = true,
-            DataDeletionDetectionPolicy deletionDetectionPolicy = null,
-            string description = null)
-        {
-            Throw.IfArgumentNullOrEmpty(name, nameof(name));
-            Throw.IfArgumentNullOrEmpty(collectionName, nameof(collectionName));
-            Throw.IfArgumentNullOrEmpty(documentDbConnectionString, nameof(documentDbConnectionString));
-
-            return new DataSource()
-            {
-                Type = DataSourceType.DocumentDb,
-                Name = name,
-                Description = description,
-                Container = new DataContainer()
-                {
-                    Name = collectionName,
-                    Query = query
-                },
-                Credentials = new DataSourceCredentials(documentDbConnectionString),
-                DataChangeDetectionPolicy = useChangeDetection ? new HighWaterMarkChangeDetectionPolicy("_ts") : null,
-                DataDeletionDetectionPolicy = deletionDetectionPolicy
-            };
-        }
-
-        /// <summary>
         /// Creates a new DataSource to connect to an Azure Blob container.
         /// </summary>
         /// <param name="name">The name of the datasource.</param>
