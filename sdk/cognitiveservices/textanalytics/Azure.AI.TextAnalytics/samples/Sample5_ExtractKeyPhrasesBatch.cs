@@ -14,7 +14,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples
     {
         [Test]
-        public void RecognizeEntitiesBatch()
+        public void ExtractKeyPhrasesBatch()
         {
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
             string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
@@ -26,21 +26,21 @@ namespace Azure.AI.TextAnalytics.Samples
             {
                 "Microsoft was founded by Bill Gates and Paul Allen.",
                 "Text Analytics is one of the Azure Cognitive Services.",
-                "A key technology in Text Analytics is Named Entity Recognition (NER).",
+                "My cat might need to see a veterinarian."
             };
 
-            var resultCollection = client.RecognizeEntities(inputs).Value;
+            var resultCollection = client.ExtractKeyPhrases(inputs).Value;
 
-            Debug.WriteLine($"Recognized entities for each input are:");
+            Debug.WriteLine($"Extracted key phrases for each input are:");
             int i = 0;
-            foreach (var entities in resultCollection)
+            foreach (var keyPhrases in resultCollection)
             {
                 Debug.WriteLine($"For input: \"{inputs[i++]}\",");
-                Debug.WriteLine($"the following {entities.Count()} entities were found: ");
+                Debug.WriteLine($"the following {keyPhrases.Count()} key phrases were found: ");
 
-                foreach (var entity in entities)
+                foreach (var keyPhrase in keyPhrases)
                 {
-                    Debug.WriteLine($"    Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType ?? "N/A"}, Score: {entity.Score:0.00}, Offset: {entity.Offset}, Length: {entity.Length}");
+                    Debug.WriteLine($"    {keyPhrase}");
                 }
             }
         }

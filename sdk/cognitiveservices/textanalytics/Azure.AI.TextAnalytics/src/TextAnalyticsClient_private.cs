@@ -13,12 +13,13 @@ namespace Azure.AI.TextAnalytics
     {
         private const string TextAnalyticsRoute = "/text/analytics/";
 
-        private const string ShowStats = "showStats";
-        private const string ModelVersion = "model-version";
-
         private const string LanguagesRoute = "/languages";
         private const string EntitiesRoute = "/entities/recognition/general";
         private const string SentimentRoute = "/sentiment";
+        private const string KeyPhrases = "/keyPhrases";
+
+        private const string ShowStats = "showStats";
+        private const string ModelVersion = "model-version";
 
         #region Detect Language
         private static async Task<Response<DocumentResultCollection<DetectedLanguage>>> CreateDetectLanguageResponseAsync(Response response, CancellationToken cancellation)
@@ -162,6 +163,54 @@ namespace Azure.AI.TextAnalytics
             }
         }
         #endregion  Analyze Sentiment
+
+        #region Extract KeyPhrases
+        private static async Task<Response<DocumentResultCollection<string>>> CreateKeyPhraseResponseAsync(Response response, CancellationToken cancellation)
+        {
+            DocumentResultCollection<string> result = await TextAnalyticsServiceSerializer.DeserializeKeyPhraseResponseAsync(response.ContentStream, cancellation).ConfigureAwait(false);
+            return Response.FromValue(result, response);
+        }
+
+        private static Response<DocumentResultCollection<string>> CreateKeyPhraseResponse(Response response)
+        {
+            return Response.FromValue(TextAnalyticsServiceSerializer.DeserializeKeyPhraseResponse(response.ContentStream), response);
+        }
+
+        private static async Task<Response<IEnumerable<IEnumerable<string>>>> CreateKeyPhraseResponseSimpleAsync(Response response, CancellationToken cancellation)
+        {
+            var result = await TextAnalyticsServiceSerializer.DeserializeKeyPhraseCollectionAsync(response.ContentStream, cancellation).ConfigureAwait(false);
+            return Response.FromValue(result, response);
+        }
+
+        private static Response<IEnumerable<IEnumerable<string>>> CreateKeyPhraseResponseSimple(Response response)
+        {
+            return Response.FromValue(TextAnalyticsServiceSerializer.DeserializeKeyPhraseCollection(response.ContentStream), response);
+        }
+
+        private static Response<IEnumerable<string>> CreateKeyPhraseResponseSimple(Response response, IEnumerable<string> keyPhrases)
+        {
+            return Response.FromValue(keyPhrases, response);
+        }
+
+        private void BuildUriForKeyPhrasesRoute(RequestUriBuilder builder, bool showStats, string modelVersion)
+        {
+            builder.Reset(_baseUri);
+            builder.AppendPath(TextAnalyticsRoute, escape: false);
+            builder.AppendPath(_apiVersion, escape: false);
+            builder.AppendPath(KeyPhrases, escape: false);
+
+            if (showStats)
+            {
+                builder.AppendQuery(ShowStats, "true");
+            }
+
+            if (!string.IsNullOrEmpty(modelVersion))
+            {
+                builder.AppendQuery(ModelVersion, modelVersion);
+            }
+        }
+        #endregion Extract KeyPhrases
+
 
         #region nobody wants to see these
         /// <summary>

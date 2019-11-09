@@ -5,6 +5,7 @@ using Azure.Core.Testing;
 using NUnit.Framework;
 using System;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
@@ -12,7 +13,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples
     {
         [Test]
-        public void DetectLanguage()
+        public void ExtractKeyPhrases()
         {
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
             string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
@@ -20,13 +21,16 @@ namespace Azure.AI.TextAnalytics.Samples
             // Instantiate a client that will be used to call the service.
             var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
 
-            string input = "Este documento está en español.";
+            string input = "My cat might need to see a veterinarian.";
 
-            Debug.WriteLine($"Detecting language for input: \"{input}\"");
+            Debug.WriteLine($"Extracting key phrases for input: \"{input}\"");
+            var keyPhrases = client.ExtractKeyPhrases(input).Value;
 
-            DetectedLanguage language = client.DetectLanguage(input);
-
-            Debug.WriteLine($"Detected language {language.Name} with confidence {language.Score:0.00}.");
+            Debug.WriteLine($"Extracted {keyPhrases.Count()} key phrases:");
+            foreach (string keyPhrase in keyPhrases)
+            {
+                Debug.WriteLine(keyPhrase);
+            }
         }
     }
 }
