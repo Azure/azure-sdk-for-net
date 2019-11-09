@@ -11,11 +11,11 @@ namespace Azure.AI.TextAnalytics
     {
         /// <summary>
         /// </summary>
-        Neutral,
+        Positive,
 
         /// <summary>
         /// </summary>
-        Positive,
+        Neutral,
 
         /// <summary>
         /// </summary>

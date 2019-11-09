@@ -26,25 +26,25 @@ namespace Azure.AI.TextAnalytics.Samples
                 new DocumentInput
                 {
                      Id = "1",
-                     Hint = "en",
+                     Language = "en",
                      Text = "That was the best day of my life!"
                 },
                 new DocumentInput
                 {
                      Id = "2",
-                     Hint = "en",
+                     Language = "en",
                      Text = "This food is very bad. Everyone who ate with us got sick."
                 },
                 new DocumentInput
                 {
                      Id = "3",
-                     Hint = "en",
+                     Language = "en",
                      Text = "I'm not sure how I feel about this product.",
                 },
                 new DocumentInput
                 {
                      Id = "4",
-                     Hint = "en",
+                     Language = "en",
                      Text = "Pike Place Market is my favorite Seattle attraction.  We had so much fun there."
                 }
             };
@@ -59,7 +59,7 @@ namespace Azure.AI.TextAnalytics.Samples
             {
                 var document = inputs[i++];
 
-                Debug.WriteLine($"On document (Id={document.Id}, Hint=\"{document.Hint}\", Text=\"{document.Text}\"):");
+                Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
 
                 Debug.WriteLine($"Document sentiment is {result.DocumentSentiment.SentimentClass.ToString()}, with scores: ");
                 Debug.WriteLine($"    Positive score: {result.DocumentSentiment.PositiveScore:0.00}.");

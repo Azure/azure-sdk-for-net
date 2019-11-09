@@ -88,7 +88,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="countryHint"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response<DetectedLanguage>> DetectLanguageAsync(string inputText, string countryHint = "en", CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DetectedLanguage>> DetectLanguageAsync(string inputText, string countryHint = "us", CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
 
@@ -128,7 +128,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="countryHint"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response<DetectedLanguage> DetectLanguage(string inputText, string countryHint = "en", CancellationToken cancellationToken = default)
+        public virtual Response<DetectedLanguage> DetectLanguage(string inputText, string countryHint = "us", CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
 
@@ -168,7 +168,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="countryHint"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response<IEnumerable<DetectedLanguage>>> DetectLanguagesAsync(IEnumerable<string> inputs, string countryHint = "en", CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IEnumerable<DetectedLanguage>>> DetectLanguagesAsync(IEnumerable<string> inputs, string countryHint = "us", CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
@@ -204,7 +204,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="countryHint"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response<IEnumerable<DetectedLanguage>> DetectLanguages(IEnumerable<string> inputs, string countryHint = "en", CancellationToken cancellationToken = default)
+        public virtual Response<IEnumerable<DetectedLanguage>> DetectLanguages(IEnumerable<string> inputs, string countryHint = "us", CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.DetectLanguages");
@@ -236,7 +236,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="modelVersion"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response<DocumentResultCollection<DetectedLanguage>>> DetectLanguagesAsync(IEnumerable<DocumentInput> inputs, bool showStats = false, string modelVersion = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DocumentResultCollection<DetectedLanguage>>> DetectLanguagesAsync(IEnumerable<DetectLanguageInput> inputs, bool showStats = false, string modelVersion = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
@@ -268,7 +268,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="modelVersion"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response<DocumentResultCollection<DetectedLanguage>> DetectLanguages(IEnumerable<DocumentInput> inputs, bool showStats = false, string modelVersion = default, CancellationToken cancellationToken = default)
+        public virtual Response<DocumentResultCollection<DetectedLanguage>> DetectLanguages(IEnumerable<DetectLanguageInput> inputs, bool showStats = false, string modelVersion = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
@@ -313,7 +313,7 @@ namespace Azure.AI.TextAnalytics
             return request;
         }
 
-        private Request CreateDetectLanguageRequest(IEnumerable<DocumentInput> inputs, bool showStats, string modelVersion)
+        private Request CreateDetectLanguageRequest(IEnumerable<DetectLanguageInput> inputs, bool showStats, string modelVersion)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 

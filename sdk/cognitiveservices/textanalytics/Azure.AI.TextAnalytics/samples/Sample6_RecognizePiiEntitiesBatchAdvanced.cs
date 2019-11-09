@@ -27,19 +27,19 @@ namespace Azure.AI.TextAnalytics.Samples
                 new DocumentInput
                 {
                      Id = "1",
-                     Hint = "en",
+                     Language = "en",
                      Text = "A developer with SSN 859-98-0987 whose phone number is 206-867-5309 is building tools with our APIs."
                 },
                 new DocumentInput
                 {
                      Id = "2",
-                     Hint = "en",
+                     Language = "en",
                      Text = "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check.",
                 },
                 new DocumentInput
                 {
                      Id = "3",
-                     Hint = "en",
+                     Language = "en",
                      Text = "Is 998.214.865-68 your Brazilian CPF number?",
                 }
             };
@@ -54,7 +54,7 @@ namespace Azure.AI.TextAnalytics.Samples
             {
                 var document = inputs[i++];
 
-                Debug.WriteLine($"On document (Id={document.Id}, Hint=\"{document.Hint}\", Text=\"{document.Text}\"):");
+                Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
                 Debug.WriteLine($"    Recognized the following {result.Count()} PII entit{(result.Count() > 1 ? "ies" : "y ")}:");
 
                 foreach (var entity in result)

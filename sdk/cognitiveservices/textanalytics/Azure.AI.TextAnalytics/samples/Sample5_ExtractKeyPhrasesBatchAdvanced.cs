@@ -28,19 +28,19 @@ namespace Azure.AI.TextAnalytics.Samples
                 new DocumentInput
                 {
                      Id = "1",
-                     Hint = "en",
+                     Language = "en",
                      Text = "Microsoft was founded by Bill Gates and Paul Allen."
                 },
                 new DocumentInput
                 {
                      Id = "2",
-                     Hint = "en",
+                     Language = "en",
                      Text = "Text Analytics is one of the Azure Cognitive Services.",
                 },
                 new DocumentInput
                 {
                      Id = "3",
-                     Hint = "en",
+                     Language = "en",
                      Text = "My cat might need to see a veterinarian.",
                 }
             };
@@ -55,7 +55,7 @@ namespace Azure.AI.TextAnalytics.Samples
             {
                 var document = inputs[i++];
 
-                Debug.WriteLine($"On document (Id={document.Id}, Hint=\"{document.Hint}\", Text=\"{document.Text}\"):");
+                Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
                 Debug.WriteLine($"    Extracted the following {result.Count()} key phrases:");
 
                 foreach (var keyPhrase in result)

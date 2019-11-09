@@ -21,30 +21,30 @@ namespace Azure.AI.TextAnalytics.Samples
             // Instantiate a client that will be used to call the service.
             var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
 
-            var inputs = new List<DocumentInput>
+            var inputs = new List<DetectLanguageInput>
             {
-                new DocumentInput
+                new DetectLanguageInput
                 {
                      Id = "1", // TODO: Id should be int?
-                     Hint = "us",
+                     CountryHint = "us",
                      Text = "Hello world"
                 },
-                new DocumentInput
+                new DetectLanguageInput
                 {
                      Id = "2",
-                     Hint = "fr",
+                     CountryHint = "fr",
                      Text = "Bonjour tout le monde",
                 },
-                new DocumentInput
+                new DetectLanguageInput
                 {
                      Id = "3",
-                     Hint = "es",
+                     CountryHint = "es",
                      Text = "Hola mundo",
                 },
-                new DocumentInput
+                new DetectLanguageInput
                 {
                      Id = "4",
-                     Hint = "us",
+                     CountryHint = "us",
                      Text = ":) :( :D"
                 }
             };
@@ -59,7 +59,7 @@ namespace Azure.AI.TextAnalytics.Samples
             {
                 var document = inputs[i++];
 
-                Debug.WriteLine($"On document (Id={document.Id}, Hint=\"{document.Hint}\", Text=\"{document.Text}\"):");
+                Debug.WriteLine($"On document (Id={document.Id}, CountryHint=\"{document.CountryHint}\", Text=\"{document.Text}\"):");
                 Debug.WriteLine($"    Detected language {result[0].Name} with confidence {result[0].Score:0.00}.");
 
                 Debug.WriteLine($"    Document statistics:");

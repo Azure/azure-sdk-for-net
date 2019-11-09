@@ -39,7 +39,7 @@ namespace Azure.AI.TextAnalytics
             return writer.WrittenMemory;
         }
 
-        public static ReadOnlyMemory<byte> SerializeDetectLanguageInputs(IEnumerable<DocumentInput> inputs)
+        public static ReadOnlyMemory<byte> SerializeDetectLanguageInputs(IEnumerable<DetectLanguageInput> inputs)
         {
             var writer = new ArrayBufferWriter<byte>();
             var json = new Utf8JsonWriter(writer);
@@ -48,7 +48,7 @@ namespace Azure.AI.TextAnalytics
             foreach (var input in inputs)
             {
                 json.WriteStartObject();
-                json.WriteString("countryHint", input.Hint);
+                json.WriteString("countryHint", input.CountryHint);
                 json.WriteString("id", input.Id);
                 json.WriteString("text", input.Text);
                 json.WriteEndObject();
@@ -89,7 +89,7 @@ namespace Azure.AI.TextAnalytics
             foreach (var input in inputs)
             {
                 json.WriteStartObject();
-                json.WriteString("language", input.Hint);
+                json.WriteString("language", input.Language);
                 json.WriteString("id", input.Id);
                 json.WriteString("text", input.Text);
                 json.WriteEndObject();
