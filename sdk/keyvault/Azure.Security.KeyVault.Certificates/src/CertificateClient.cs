@@ -13,7 +13,7 @@ namespace Azure.Security.KeyVault.Certificates
 {
     /// <summary>
     /// The CertificateClient provides synchronous and asynchronous methods to manage <see cref="KeyVaultCertificate"/>s in Azure Key Vault. The client
-    /// supports creating, retrieving, updating, deleting, purging, backing up, restoring and listing the <see cref="KeyVaultCertificate"/>, along with managing
+    /// supports creating, retrieving, updating, deleting, purging, backing up, restoring, and listing the <see cref="KeyVaultCertificate"/>, along with managing
     /// certificate <see cref="CertificateIssuer"/>s and <see cref="CertificateContact"/>s. The client also supports listing <see cref="DeletedCertificate"/> for a soft-delete
     /// enabled key vault.
     /// </summary>
@@ -141,7 +141,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Returns the latest version of the <see cref="KeyVaultCertificate"/> along with it's <see cref="CertificatePolicy"/>. This operation requires the certificates/get permission.
+        /// Returns the latest version of the <see cref="KeyVaultCertificate"/> along with its <see cref="CertificatePolicy"/>. This operation requires the certificates/get permission.
         /// </summary>
         /// <param name="certificateName">The name of the <see cref="KeyVaultCertificate"/> to retrieve</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -166,7 +166,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Returns the latest version of the <see cref="KeyVaultCertificate"/> along with it's <see cref="CertificatePolicy"/>. This operation requires the certificates/get permission.
+        /// Returns the latest version of the <see cref="KeyVaultCertificate"/> along with its <see cref="CertificatePolicy"/>. This operation requires the certificates/get permission.
         /// </summary>
         /// <param name="certificateName">The name of the <see cref="KeyVaultCertificate"/> to retrieve</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>

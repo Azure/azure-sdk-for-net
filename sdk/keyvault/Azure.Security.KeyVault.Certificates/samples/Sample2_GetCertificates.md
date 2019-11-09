@@ -1,12 +1,12 @@
-# Listing certificates, certificate versions and deleted certificates
+# Listing certificates, certificate versions, and deleted certificates
 
-This sample demonstrates how to list certificates and versions of given certificates, and list deleted certificates in a soft delete-enabled key vault.
+This sample demonstrates how to list certificates, versions of given certificates, and list deleted certificates in a soft delete-enabled key vault.
 To get started, you'll need a URI to an Azure Key Vault. See the [README](../README.md) for links and instructions.
 
 ## Creating a CertificateClient
 
 To create a new `CertificateClient` to create, get, update, or delete certificates, you need the endpoint to a Key Vault and credentials.
-You can use the `DefaultAzureCredential` to try a number of common authentication methods optimized for both running as a service and development.
+You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.
 
 In the sample below, you can set `keyVaultUrl` based on an environment variable, configuration setting, or any way that works for your application.
 
@@ -113,3 +113,5 @@ To see the full example source, see:
 
 * [Synchronous Sample2_GetCertificates.cs](../tests/samples/Sample2_GetCertificates.cs)
 * [Asynchronous Sample2_GetCertificatesAsync.cs](../tests/samples/Sample2_GetCertificatesAsync.cs)
+
+[DefaultAzureCredential]: ../../../identity/Azure.Identity/README.md

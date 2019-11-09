@@ -12,7 +12,7 @@ namespace Azure.Security.KeyVault.Keys
 {
     /// <summary>
     /// The KeyClient provides synchronous and asynchronous methods to manage <see cref="KeyVaultKey"/> in the Azure Key Vault. The client
-    /// supports creating, retrieving, updating, deleting, purging, backing up, restoring and listing the <see cref="KeyVaultKey"/>.
+    /// supports creating, retrieving, updating, deleting, purging, backing up, restoring, and listing the <see cref="KeyVaultKey"/>.
     /// The client also supports listing <see cref="DeletedKey"/> for a soft-delete enabled Azure Key Vault.
     /// </summary>
     public class KeyClient
@@ -885,7 +885,7 @@ namespace Azure.Security.KeyVault.Keys
         /// </summary>
         /// <remarks>
         /// Imports a previously backed up key into Azure Key Vault, restoring the key,
-        /// its key identifier, attributes and access control policies. The RESTORE
+        /// its key identifier, attributes, and access control policies. The RESTORE
         /// operation may be used to import a previously backed up key. Individual
         /// versions of a key cannot be restored. The key is restored in its entirety
         /// with the same key name as it had when it was backed up. If the key name is
@@ -926,7 +926,7 @@ namespace Azure.Security.KeyVault.Keys
         /// </summary>
         /// <remarks>
         /// Imports a previously backed up key into Azure Key Vault, restoring the key,
-        /// its key identifier, attributes and access control policies. The RESTORE
+        /// its key identifier, attributes, and access control policies. The RESTORE
         /// operation may be used to import a previously backed up key. Individual
         /// versions of a key cannot be restored. The key is restored in its entirety
         /// with the same key name as it had when it was backed up. If the key name is
