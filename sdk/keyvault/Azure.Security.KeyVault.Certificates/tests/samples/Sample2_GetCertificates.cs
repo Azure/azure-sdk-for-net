@@ -11,7 +11,7 @@ using System.Threading;
 namespace Azure.Security.KeyVault.Certificates.Samples
 {
     /// <summary>
-    /// Sample demonstrates how to list certificates and versions of a given certificates,
+    /// Sample demonstrates how to list certificates, versions of a given certificates,
     /// and list deleted certificates in a soft delete-enabled key vault
     /// using the synchronous methods of the CertificateClient.
     /// </summary>

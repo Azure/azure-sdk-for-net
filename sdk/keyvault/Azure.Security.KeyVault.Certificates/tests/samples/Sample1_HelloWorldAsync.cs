@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Azure.Security.KeyVault.Certificates.Samples
 {
     /// <summary>
-    /// Sample demonstrates how to create, get, update and delete a key using the asynchronous methods of the KeyClient.
+    /// Sample demonstrates how to create, get, update, and delete a key using the asynchronous methods of the KeyClient.
     /// </summary>
     [LiveOnly]
     public partial class HelloWorld
@@ -27,19 +27,19 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             // 'AZURE_CLIENT_KEY' and 'AZURE_TENANT_ID' are set with the service principal credentials.
             var client = new CertificateClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
 
-            // Let's create a self signed certificate using the default policy. If the certificate
+            // Let's create a self-signed certificate using the default policy. If the certificate
             // already exists in the Key Vault, then a new version of the key is created.
             string certName = $"defaultCert-{Guid.NewGuid()}";
 
             CertificateOperation certOp = await client.StartCreateCertificateAsync(certName, CertificatePolicy.Default);
 
-            // Next let's wait on the certificate operation to complete. Note that certificate creation can last an indeterministic
+            // Next, let's wait on the certificate operation to complete. Note that certificate creation can last an indeterministic
             // amount of time, so applications should only wait on the operation to complete in the case the issuance time is well
             // known and within the scope of the application lifetime. In this case we are creating a self-signed certificate which
             // should be issued in a relatively short amount of time.
             KeyVaultCertificateWithPolicy certificate = await certOp.WaitForCompletionAsync();
 
-            // At some time later we could get the created certificate along with it's policy from the Key Vault.
+            // At some time later we could get the created certificate along with its policy from the Key Vault.
             certificate = await client.GetCertificateAsync(certName);
 
             Debug.WriteLine($"Certificate was returned with name {certificate.Name} which expires {certificate.Properties.ExpiresOn}");

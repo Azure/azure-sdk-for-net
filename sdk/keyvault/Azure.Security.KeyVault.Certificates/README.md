@@ -28,7 +28,7 @@ az keyvault create --resource-group <your-resource-group-name> --name <your-key-
 In order to interact with the Key Vault service, you'll need to create an instance of the [CertificateClient][certificate_client_class] class. You would need a **vault url**, which you may see as "DNS Name" in the portal,
  and **client secret credentials (client id, client secret, tenant id)** to instantiate a client object.
 
-Client secret credential authentication is being used in this getting started section but you can find more ways to authenticate with [Azure identity][azure_identity]. To use the `DefaultAzureCredential` provider shown below,
+Client secret credential authentication is being used in this getting started section but you can find more ways to authenticate with [Azure identity][azure_identity]. To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below,
 or other credential providers provided with the Azure SDK, you should install the Azure.Identity package:
 
 ```PowerShell
@@ -116,7 +116,7 @@ The following section provides several code snippets using the [above created](#
 ### Create a certificate
 `StartCreateCertificate` creates a Certificate to be stored in the Azure Key Vault. If a certificate with 
 the same name already exists, then a new version of the certificate is created.
-When creating the certificate the user can specify the policy which controls the certificate lifetime. If no policy is specified the default policy will be used. The `StartCreateCertificate` operation returns a `CertificateOperation`. The following example creates a self signed certificate with the default policy.
+When creating the certificate the user can specify the policy which controls the certificate lifetime. If no policy is specified the default policy will be used. The `StartCreateCertificate` operation returns a `CertificateOperation`. The following example creates a self-signed certificate with the default policy.
 
 ```C# Snippet:CreateCertificate
 // Create a certificate. This starts a long running operation to create and sign the certificate.
@@ -134,7 +134,7 @@ while (!operation.HasCompleted)
 KeyVaultCertificateWithPolicy certificate = operation.Value;
 ```
 
-> NOTE: Depending on the certificate issuer and validation methods, certificate creation and signing can take an indeterministic amount of time. Users should only wait on certificate operations when the operation can be reasonably completed in the scope of the application, such as with self signed certificates or issuers with well known response times.
+> NOTE: Depending on the certificate issuer and validation methods, certificate creation and signing can take an indeterminate amount of time. Users should only wait on certificate operations when the operation can be reasonably completed in the scope of the application, such as with self-signed certificates or issuers with well known response times.
 
 ### Retrieve a certificate
 `GetCertificateWithPolicy` retrieves the latest version of a certificate stored in the Key Vault along with its `CertificatePolicy`.
@@ -324,5 +324,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [get_cetificates_async]: samples/Sample2_GetCertificatesAsync.cs
 [get_cetificates_sync]: samples/Sample2_GetCertificates.cs
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
+[DefaultAzureCredential]: ../../identity/Azure.Identity/README.md
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fkeyvault%2FAzure.Security.KeyVault.Certificates%2FREADME.png)

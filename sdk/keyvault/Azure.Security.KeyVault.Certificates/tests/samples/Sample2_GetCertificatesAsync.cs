@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Azure.Security.KeyVault.Certificates.Samples
 {
     /// <summary>
-    /// Sample demonstrates how to list certificates and versions of a given certificates,
+    /// Sample demonstrates how to list certificates, versions of a given certificates,
     /// and list deleted certificates in a soft delete-enabled key vault
     /// using the synchronous methods of the CertificateClient.
     /// </summary>
@@ -38,7 +38,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
 
             CertificateOperation certOp2 = await client.StartCreateCertificateAsync(certName1, CertificatePolicy.Default);
 
-            // Next let's wait on the certificate operation to complete. Note that certificate creation can last an indeterministic
+            // Next, let's wait on the certificate operation to complete. Note that certificate creation can last an indeterministic
             // amount of time, so applications should only wait on the operation to complete in the case the issuance time is well
             // known and within the scope of the application lifetime. In this case we are creating a self-signed certificate which
             // should be issued in a relatively short amount of time.

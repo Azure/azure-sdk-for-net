@@ -1,12 +1,12 @@
 # Setting, getting, updating, and deleting certificates
 
-This sample demonstrates how to set, get, update and delete a certificate.
+This sample demonstrates how to set, get, update, and delete a certificate.
 To get started, you'll need a URI to an Azure Key Vault. See the [README](../README.md) for links and instructions.
 
 ## Creating a CertificateClient
 
 To create a new `CertificateClient` to create, get, update, or delete certificates, you need the endpoint to a Key Vault and credentials.
-You can use the `DefaultAzureCredential` to try a number of common authentication methods optimized for both running as a service and development.
+You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.
 
 In the sample below, you can set `keyVaultUrl` based on an environment variable, configuration setting, or any way that works for your application.
 
@@ -33,7 +33,7 @@ while (!certOp.HasCompleted)
 
 ## Getting a certificate with policy
 
-At some time later we could get the created certificate along with it's policy from the Key Vault.
+We can now get the created certificate along with its policy from the Key Vault.
 
 ```C# Snippet:CertificatesSample1GetCertificateWithPolicy
 KeyVaultCertificateWithPolicy certificate = client.GetCertificate(certName);
@@ -56,7 +56,7 @@ Debug.WriteLine($"Certificate enabled set to '{updatedCert.Properties.Enabled}'"
 ## Creating a certificate with a new version
 
 We need to create a new version of the certificate that applications can use to replace the compromised certificate.
-Creating a certificate with the same name and policy as the compromised certificate will create another version of the certificate with similar properties to the original certificate.
+We can create a new certificate with the same name and policy as the compromised certificate will create another version of the certificate with similar properties to the original certificate.
 
 ```C# Snippet:CertificatesSample1CreateCertificateWithNewVersion
 CertificateOperation newCertOp = client.StartCreateCertificate(certificate.Name, certificate.Policy);
@@ -92,8 +92,4 @@ To see the full example source, see:
 * [Synchronous Sample1_HelloWorld.cs](../tests/samples/Sample1_HelloWorld.cs)
 * [ASynchronous Sample1_HelloWorldAsync.cs](../tests/samples/Sample1_HelloWorldAsync.cs)
 
-
-
-
-
-
+[DefaultAzureCredential]: ../../../identity/Azure.Identity/README.md
