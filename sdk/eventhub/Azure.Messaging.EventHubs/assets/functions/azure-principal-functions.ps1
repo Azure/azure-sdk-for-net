@@ -66,44 +66,6 @@ function SelectRandomCharacters
 
 #region EventHubs
 
-function CreateNamespaceIfMissing()
-{
-  <#
-    .SYNOPSIS
-      It tries to retrieve the specified namespace.
-      It creates one if it may not be found.
-  #>
-
-  param
-  (
-    [Parameter(Mandatory=$true)]
-    [string] $resourceGroupName,
-
-    [Parameter(Mandatory=$true)]
-    [string] $namespaceName,
-
-    [Parameter(Mandatory=$true)]  
-    [string] $azureRegion
-  )
-
-  # Tries to retrieve the Namespace
-  Write-Host "`t...Requesting namespace"
-
-  $nameSpace = Get-AzEventHubNamespace -ResourceGroupName "$($resourceGroupName)" `
-                                       -NamespaceName "$($namespaceName)" `
-                                       -ErrorAction SilentlyContinue
-
-  if ($nameSpace -eq $null)
-  {
-      # Creates the Namespace if does not exist
-      Write-Host "`t...Creating new namespace"
-      
-      New-AzEventHubNamespace -ResourceGroupName "$($resourceGroupName)" `
-                              -NamespaceName "$($namespaceName)" `
-                              -Location "$($azureRegion)" | Out-Null
-  }
-}
-
 function CreateHubIfMissing()
 {
   <#
@@ -245,6 +207,44 @@ function GetNamespaceInformation()
 #endregion EventHubs
 
 #region ResourceManagement
+
+function CreateNamespaceIfMissing()
+{
+  <#
+    .SYNOPSIS
+      It tries to retrieve the specified namespace.
+      It creates one if it may not be found.
+  #>
+
+  param
+  (
+    [Parameter(Mandatory=$true)]
+    [string] $resourceGroupName,
+
+    [Parameter(Mandatory=$true)]
+    [string] $namespaceName,
+
+    [Parameter(Mandatory=$true)]  
+    [string] $azureRegion
+  )
+
+  # Tries to retrieve the Namespace
+  Write-Host "`t...Requesting namespace"
+
+  $nameSpace = Get-AzEventHubNamespace -ResourceGroupName "$($resourceGroupName)" `
+                                       -NamespaceName "$($namespaceName)" `
+                                       -ErrorAction SilentlyContinue
+
+  if ($nameSpace -eq $null)
+  {
+      # Creates the Namespace if does not exist
+      Write-Host "`t...Creating new namespace"
+      
+      New-AzEventHubNamespace -ResourceGroupName "$($resourceGroupName)" `
+                              -NamespaceName "$($namespaceName)" `
+                              -Location "$($azureRegion)" | Out-Null
+  }
+}
 
 function TearDownResources 
 {
@@ -404,10 +404,6 @@ function CreateResourceGroupIfMissing()
   }
 }
 
-#endregion ResourceManagement
-
-#region RoleAssignment
-
 function AssignRole()
 {
   <#
@@ -508,7 +504,7 @@ function AssignRoleToNamespace()
   }    
 }
 
-#endregion RoleAssigment
+#endregion ResourceManagement
 
 #region Validation
 
