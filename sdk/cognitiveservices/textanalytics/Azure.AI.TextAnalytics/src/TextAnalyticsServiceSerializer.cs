@@ -14,7 +14,10 @@ namespace Azure.AI.TextAnalytics
 {
     internal static class TextAnalyticsServiceSerializer
     {
-        public static ReadOnlyMemory<byte> SerializeLanguageInput(string inputText, string countryHint)
+        // TODO (pri 2): make the deserializer version resilient
+
+        #region Detect Languages
+        public static ReadOnlyMemory<byte> SerializeDetectLanguageInput(string inputText, string countryHint)
         {
             var writer = new ArrayBufferWriter<byte>();
             var json = new Utf8JsonWriter(writer);
@@ -31,7 +34,7 @@ namespace Azure.AI.TextAnalytics
             return writer.WrittenMemory;
         }
 
-        public static ReadOnlyMemory<byte> SerializeLanguageInputs(IEnumerable<string> inputs, string countryHint)
+        public static ReadOnlyMemory<byte> SerializeDetectLanguageInputs(IEnumerable<string> inputs, string countryHint)
         {
             var writer = new ArrayBufferWriter<byte>();
             var json = new Utf8JsonWriter(writer);
@@ -52,7 +55,7 @@ namespace Azure.AI.TextAnalytics
             return writer.WrittenMemory;
         }
 
-        public static ReadOnlyMemory<byte> SerializeLanguageInputs(IEnumerable<DocumentInput> inputs)
+        public static ReadOnlyMemory<byte> SerializeDetectLanguageInputs(IEnumerable<DocumentInput> inputs)
         {
             var writer = new ArrayBufferWriter<byte>();
             var json = new Utf8JsonWriter(writer);
@@ -72,7 +75,6 @@ namespace Azure.AI.TextAnalytics
             return writer.WrittenMemory;
         }
 
-        // TODO: Decouple serializer from response.
         public static async Task<DocumentResultCollection<DetectedLanguage>> DeserializeDetectLanguageResponseAsync(Stream content, CancellationToken cancellation)
         {
             using (JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false))
@@ -93,7 +95,6 @@ namespace Azure.AI.TextAnalytics
 
         private static DocumentResultCollection<DetectedLanguage> ReadDetectLanguageResult(JsonElement root)
         {
-            // TODO (pri 2): make the deserializer version resilient
             var result = new DocumentResultCollection<DetectedLanguage>();
             if (root.TryGetProperty("documents", out JsonElement documentsValue))
             {
@@ -235,5 +236,185 @@ namespace Azure.AI.TextAnalytics
 
             return values;
         }
+        #endregion Detect Languages
+
+        #region Recognize Entities
+        public static ReadOnlyMemory<byte> SerializeDocumentInput(string inputText, string language)
+        {
+            var writer = new ArrayBufferWriter<byte>();
+            var json = new Utf8JsonWriter(writer);
+            json.WriteStartObject();
+            json.WriteStartArray("documents");
+            json.WriteStartObject();
+            json.WriteString("language", language);
+            json.WriteString("id", "1");
+            json.WriteString("text", inputText);
+            json.WriteEndObject();
+            json.WriteEndArray();
+            json.WriteEndObject();
+            json.Flush();
+            return writer.WrittenMemory;
+        }
+
+        public static ReadOnlyMemory<byte> SerializeDocumentInputs(IEnumerable<string> inputs, string language)
+        {
+            var writer = new ArrayBufferWriter<byte>();
+            var json = new Utf8JsonWriter(writer);
+            json.WriteStartObject();
+            json.WriteStartArray("documents");
+            int id = 1;
+            foreach (var input in inputs)
+            {
+                json.WriteStartObject();
+                json.WriteString("language", language);
+                json.WriteNumber("id", id++);
+                json.WriteString("text", input);
+                json.WriteEndObject();
+            }
+            json.WriteEndArray();
+            json.WriteEndObject();
+            json.Flush();
+            return writer.WrittenMemory;
+        }
+
+        public static ReadOnlyMemory<byte> SerializeDocumentInputs(IEnumerable<DocumentInput> inputs)
+        {
+            var writer = new ArrayBufferWriter<byte>();
+            var json = new Utf8JsonWriter(writer);
+            json.WriteStartObject();
+            json.WriteStartArray("documents");
+            foreach (var input in inputs)
+            {
+                json.WriteStartObject();
+                json.WriteString("language", input.Hint);
+                json.WriteString("id", input.Id);
+                json.WriteString("text", input.Text);
+                json.WriteEndObject();
+            }
+            json.WriteEndArray();
+            json.WriteEndObject();
+            json.Flush();
+            return writer.WrittenMemory;
+        }
+
+        public static async Task<DocumentResultCollection<Entity>> DeserializeRecognizeEntitiesResponseAsync(Stream content, CancellationToken cancellation)
+        {
+            using (JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false))
+            {
+                JsonElement root = json.RootElement;
+                return ReadRecognizeEntitiesResult(root);
+            }
+        }
+
+        public static DocumentResultCollection<Entity> DeserializeRecognizeEntitiesResponse(Stream content)
+        {
+            using (JsonDocument json = JsonDocument.Parse(content, default))
+            {
+                JsonElement root = json.RootElement;
+                return ReadRecognizeEntitiesResult(root);
+            }
+        }
+
+        private static DocumentResultCollection<Entity> ReadRecognizeEntitiesResult(JsonElement root)
+        {
+            var result = new DocumentResultCollection<Entity>();
+            if (root.TryGetProperty("documents", out JsonElement documentsValue))
+            {
+                foreach (JsonElement documentElement in documentsValue.EnumerateArray())
+                {
+                    var documentResult = new DocumentResult<Entity>();
+
+                    if (documentElement.TryGetProperty("id", out JsonElement idValue))
+                        documentResult.Id = idValue.ToString();
+
+                    if (documentElement.TryGetProperty("entities", out JsonElement entitiesValue))
+                    {
+                        foreach (JsonElement entityElement in entitiesValue.EnumerateArray())
+                        {
+                            var entity = new Entity();
+
+                            if (entityElement.TryGetProperty("text", out JsonElement text))
+                                entity.Text = text.GetString();
+                            if (entityElement.TryGetProperty("type", out JsonElement type))
+                                entity.Type = type.ToString();
+                            if (entityElement.TryGetProperty("subType", out JsonElement subType))
+                                entity.SubType = subType.ToString();
+                            if (entityElement.TryGetProperty("offset", out JsonElement offsetValue))
+                                if (offsetValue.TryGetInt32(out int offset))
+                                    entity.Offset = offset;
+                            if (entityElement.TryGetProperty("length", out JsonElement lengthValue))
+                                if (lengthValue.TryGetInt32(out int length))
+                                    entity.Length = length;
+                            if (entityElement.TryGetProperty("score", out JsonElement scoreValue))
+                                if (scoreValue.TryGetDouble(out double score))
+                                    entity.Score = score;
+
+                            documentResult.Add(entity);
+                        }
+                    }
+
+                    // TODO: Refactor so that this code isn't duplicated
+                    if (documentElement.TryGetProperty("statistics", out JsonElement statisticsValue))
+                    {
+                        DocumentStatistics statistics = new DocumentStatistics();
+
+                        if (statisticsValue.TryGetProperty("charactersCount", out JsonElement characterCountValue))
+                            statistics.CharacterCount = characterCountValue.GetInt32();
+                        if (statisticsValue.TryGetProperty("transactionsCount", out JsonElement transactionCountValue))
+                            statistics.TransactionCount = transactionCountValue.GetInt32();
+
+                        documentResult.Statistics = statistics;
+                    }
+
+                    result.Add(documentResult);
+                }
+            }
+
+            // TODO: Refactor so that this code isn't duplicated
+            if (root.TryGetProperty("errors", out JsonElement errorsValue))
+            {
+                foreach (JsonElement errorElement in errorsValue.EnumerateArray())
+                {
+                    DocumentError error = new DocumentError();
+
+                    if (errorElement.TryGetProperty("id", out JsonElement idValue))
+                        error.Id = idValue.ToString();
+                    if (errorElement.TryGetProperty("error", out JsonElement errorValue))
+                    {
+                        if (errorsValue.TryGetProperty("message", out JsonElement messageValue))
+                        {
+                            error.Message = messageValue.ToString();
+                        }
+                    }
+
+                    result.Errors.Add(error);
+                }
+            }
+
+            if (root.TryGetProperty("modelVersion", out JsonElement modelVersionValue))
+            {
+                result.ModelVersion = modelVersionValue.ToString();
+            }
+
+            if (root.TryGetProperty("statistics", out JsonElement statisticsElement))
+            {
+                DocumentBatchStatistics statistics = new DocumentBatchStatistics();
+
+                if (statisticsElement.TryGetProperty("documentsCount", out JsonElement documentCountValue))
+                    statistics.DocumentCount = documentCountValue.GetInt32();
+                if (statisticsElement.TryGetProperty("validDocumentsCount", out JsonElement validDocumentCountValue))
+                    statistics.ValidDocumentCount = validDocumentCountValue.GetInt32();
+                if (statisticsElement.TryGetProperty("erroneousDocumentsCount", out JsonElement erroneousDocumentCountValue))
+                    statistics.ErroneousDocumentCount = erroneousDocumentCountValue.GetInt32();
+                if (statisticsElement.TryGetProperty("transactionsCount", out JsonElement transactionCountValue))
+                    statistics.DocumentCount = transactionCountValue.GetInt32();
+
+                result.Statistics = statistics;
+            }
+
+            return result;
+        }
+
+        #endregion Recognize Entities
     }
 }
