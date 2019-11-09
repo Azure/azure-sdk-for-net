@@ -827,7 +827,7 @@ namespace Azure.Messaging.EventHubs
         private async Task AddPartitionPumpAsync(string partitionId,
                                                  long? initialSequenceNumber)
         {
-            var partitionContext = new PartitionContext(partitionId);
+            var partitionContext = new PartitionContext(EventHubName, partitionId);
 
             try
             {
@@ -887,7 +887,7 @@ namespace Azure.Messaging.EventHubs
                 {
                     try
                     {
-                        var partitionContext = new PartitionContext(partitionId);
+                        var partitionContext = new PartitionContext(EventHubName, partitionId);
                         var stopContext = new PartitionProcessingStoppedContext(partitionContext, reason);
 
                         await ProcessingForPartitionStoppedAsync(stopContext);

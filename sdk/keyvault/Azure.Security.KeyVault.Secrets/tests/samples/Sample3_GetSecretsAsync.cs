@@ -17,6 +17,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
     /// using the asynchronous methods of the SecretClient.
     /// </summary>
     [LiveOnly]
+    [NonParallelizable]
     public partial class GetSecrets
     {
         [Test]
@@ -47,24 +48,37 @@ namespace Azure.Security.KeyVault.Secrets.Samples
 
             await foreach (SecretProperties secret in client.GetPropertiesOfSecretsAsync())
             {
-                KeyVaultSecret secretWithValue = await client.GetSecretAsync(secret.Name);
-
-                if (secretValues.ContainsKey(secretWithValue.Value))
+                // Getting a disabled secret will fail, so skip disabled secrets.
+                if (!secret.Enabled.GetValueOrDefault())
                 {
-                    throw new InvalidOperationException($"Secret {secretWithValue.Name} shares a value with secret {secretValues[secretWithValue.Value]}");
+                    continue;
                 }
 
-                secretValues.Add(secretWithValue.Value, secretWithValue.Name);
+                KeyVaultSecret secretWithValue = await client.GetSecretAsync(secret.Name);
+                if (secretValues.ContainsKey(secretWithValue.Value))
+                {
+                    Debug.WriteLine($"Secret {secretWithValue.Name} shares a value with secret {secretValues[secretWithValue.Value]}");
+                }
+                else
+                {
+                    secretValues.Add(secretWithValue.Value, secretWithValue.Name);
+                }
             }
 
             string newBankSecretPassword = "sskdjfsdasdjsd";
 
             await foreach (SecretProperties secret in client.GetPropertiesOfSecretVersionsAsync(bankSecretName))
             {
+                // Secret versions may also be disabled if compromised and new versions generated, so skip disabled versions, too.
+                if (!secret.Enabled.GetValueOrDefault())
+                {
+                    continue;
+                }
+
                 KeyVaultSecret oldBankSecret = await client.GetSecretAsync(secret.Name, secret.Version);
                 if (newBankSecretPassword == oldBankSecret.Value)
                 {
-                    throw new InvalidOperationException($"Secret {secret.Name} reuses a password");
+                    Debug.WriteLine($"Secret {secret.Name} reuses a password");
                 }
             }
 

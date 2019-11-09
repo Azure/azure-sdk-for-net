@@ -60,8 +60,12 @@ namespace Azure.Messaging.EventHubs.Samples
             await using (var eventHubConnection = new EventHubConnection(connectionString, eventHubName))
             await using (var producerClient = new EventHubProducerClient(eventHubConnection, new EventHubProducerClientOptions { PartitionId = firstPartition }))
             {
-                // Our initial consumer will begin watching the partition at the very end, reading only new events
-                // that we will publish for it.
+                // Our initial consumer will begin watching the partition at the very end, reading only new events that we will publish for it. Before we can publish
+                // the events and have them observed, we will need to ask the consumer to perform an operation,
+                // because it opens its connection only when it needs to.
+                //
+                // We'll begin to iterate on the partition using a small wait time, so that control will return to our loop even when
+                // no event is available.  For the first call, we'll publish so that we can receive them.
                 //
                 // Each event that the initial consumer reads will have attributes set that describe the event's place in the
                 // partition, such as its offset, sequence number, and the date/time that it was enqueued.  These attributes can be
@@ -84,18 +88,11 @@ namespace Azure.Messaging.EventHubs.Samples
                 // and another consumer will use its attributes to start reading the event that follows, consuming the same set of events that our initial consumer
                 // read, skipping over the first three.
 
-                int eventBatchSize = 50;
                 EventData thirdEvent;
+                int eventBatchSize = 50;
 
                 await using (var initialConsumerClient = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, firstPartition, EventPosition.Latest, eventHubConnection))
                 {
-                    // The first receive that we ask of it will not see any events, but allows the consumer to start watching the partition.  Because
-                    // the maximum wait time is specified as zero, this call will return immediately and will not have consumed any events.
-
-                    await initialConsumerClient.ReceiveAsync(1, TimeSpan.Zero);
-
-                    // Now that the consumer is watching the partition, let's publish a batch of events.
-
                     EventData[] eventBatch = new EventData[eventBatchSize];
 
                     for (int index = 0; index < eventBatchSize; ++index)
@@ -103,23 +100,31 @@ namespace Azure.Messaging.EventHubs.Samples
                         eventBatch[index] = new EventData(Encoding.UTF8.GetBytes($"I am event #{ index }"));
                     }
 
-                    await producerClient.SendAsync(eventBatch);
-                    Console.WriteLine($"The event batch with { eventBatchSize } events has been published.");
-
                     // We will consume the events until all of the published events have been received.
 
-                    var receivedEvents = new List<EventData>();
+                    List<EventData> receivedEvents = new List<EventData>();
+                    bool wereEventsPublished = false;
 
                     CancellationTokenSource cancellationSource = new CancellationTokenSource();
                     cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
 
-                    await foreach (EventData currentEvent in initialConsumerClient.SubscribeToEvents(cancellationSource.Token))
+                    await foreach (PartitionEvent currentEvent in initialConsumerClient.ReadEventsFromPartitionAsync(firstPartition, EventPosition.Latest, TimeSpan.FromMilliseconds(150), cancellationSource.Token))
                     {
-                        receivedEvents.Add(currentEvent);
-
-                        if (receivedEvents.Count >= eventBatchSize)
+                        if (!wereEventsPublished)
                         {
-                            break;
+                            await producerClient.SendAsync(eventBatch);
+                            wereEventsPublished = true;
+
+                            Console.WriteLine($"The event batch with { eventBatchSize } events has been published.");
+                        }
+                        else
+                        {
+                            receivedEvents.Add(currentEvent.Data);
+
+                            if (receivedEvents.Count >= eventBatchSize)
+                            {
+                                break;
+                            }
                         }
                     }
 
@@ -146,6 +151,9 @@ namespace Azure.Messaging.EventHubs.Samples
                 //
                 // Create a new consumer beginning using the third event as the last sequence number processed; this new consumer will begin reading at the next available
                 // sequence number, allowing it to read the set of published events beginning with the fourth one.
+                //
+                // Because our second consumer will begin watching the partition at a specific event, there is no need to ask for an initial operation to set our place; when
+                // we begin iterating, the consumer will locate the proper place in the partition to read from.
 
                 await using (var newConsumerClient = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, firstPartition, EventPosition.FromSequenceNumber(thirdEvent.SequenceNumber.Value), eventHubConnection))
                 {
@@ -157,9 +165,9 @@ namespace Azure.Messaging.EventHubs.Samples
                     int expectedCount = (eventBatchSize - 3);
                     var receivedEvents = new List<EventData>();
 
-                    await foreach (EventData currentEvent in newConsumerClient.SubscribeToEvents(cancellationSource.Token))
+                    await foreach (PartitionEvent currentEvent in newConsumerClient.ReadEventsFromPartitionAsync(firstPartition, EventPosition.FromSequenceNumber(thirdEvent.SequenceNumber.Value), cancellationSource.Token))
                     {
-                        receivedEvents.Add(currentEvent);
+                        receivedEvents.Add(currentEvent.Data);
 
                         if (receivedEvents.Count >= expectedCount)
                         {

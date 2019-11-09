@@ -1175,10 +1175,10 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(90));
 
-                        await foreach (EventData receivedEvent in consumer.SubscribeToEvents(maximumWaitTime, cancellation.Token))
+                        await foreach (PartitionEvent receivedEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Earliest, maximumWaitTime, cancellation.Token))
                         {
-                            receivedEvents.Add(receivedEvent);
-                            consecutiveEmpties = (receivedEvent == null) ? consecutiveEmpties + 1 : 0;
+                            receivedEvents.Add(receivedEvent.Data);
+                            consecutiveEmpties = (receivedEvent.Data == null) ? consecutiveEmpties + 1 : 0;
 
                             // Stop iterating if there have been too many consecutive empty emits; that is
                             // a sign that the partition is empty.
@@ -1301,12 +1301,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(90));
 
-                        await foreach (EventData receivedEvent in consumer.SubscribeToEvents(maximumWaitTime, cancellation.Token))
+                        await foreach (PartitionEvent receivedEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Earliest, maximumWaitTime, cancellation.Token))
                         {
                             secondSend?.Start();
 
-                            receivedEvents.Add(receivedEvent);
-                            consecutiveEmpties = (receivedEvent == null) ? consecutiveEmpties + 1 : 0;
+                            receivedEvents.Add(receivedEvent.Data);
+                            consecutiveEmpties = (receivedEvent.Data == null) ? consecutiveEmpties + 1 : 0;
 
                             // Stop iterating if there have been too many consecutive empty emits; that is
                             // a sign that the partition is empty.
