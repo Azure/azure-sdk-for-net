@@ -20,7 +20,7 @@ namespace Azure.AI.TextAnalytics.Samples
             // Instantiate a client that will be used to call the service.
             var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
 
-            string input = "I had the best day of my life.";
+            string input = "That was the best day of my life!";
 
             Debug.WriteLine($"Analyzing sentiment for input: \"{input}\"");
             var sentiment = client.AnalyzeSentiment(input).Value;

@@ -587,45 +587,45 @@ namespace Azure.AI.TextAnalytics
 
         #region Analyze Sentiment
 
-        ///// <summary>
-        ///// </summary>
-        ///// <param name="inputText"></param>
-        ///// <param name="language"></param>
-        ///// <param name="cancellationToken"></param>
-        ///// <returns></returns>
-        //public virtual async Task<Response<Sentiment>> AnalyzeSentimentAsync(string inputText, string language = "en", CancellationToken cancellationToken = default)
-        //{
-        //    Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
+        /// <summary>
+        /// </summary>
+        /// <param name="inputText"></param>
+        /// <param name="language"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response<Sentiment>> AnalyzeSentimentAsync(string inputText, string language = "en", CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
 
-        //    using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeEntities");
-        //    scope.AddAttribute("inputText", inputText);
-        //    scope.Start();
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.AnalyzeSentiment");
+            scope.AddAttribute("inputText", inputText);
+            scope.Start();
 
-        //    try
-        //    {
-        //        using Request request = CreateRecognizeEntitiesRequest(new List<string> { inputText }, language);
-        //        Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+            try
+            {
+                using Request request = CreateAnalyzeSentimentRequest(new List<string> { inputText }, language);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
-        //        switch (response.Status)
-        //        {
-        //            case 200:
-        //                DocumentResultCollection<Entity> result = await CreateRecognizeEntitiesResponseAsync(response, cancellationToken).ConfigureAwait(false);
-        //                if (result.Errors.Count > 0)
-        //                {
-        //                    // only one input, so we can ignore the id and grab the first error message.
-        //                    throw await response.CreateRequestFailedExceptionAsync(result.Errors[0].Message).ConfigureAwait(false);
-        //                }
-        //                return CreateRecognizeEntitiesResponseSimple(response, result[0]);
-        //            default:
-        //                throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        scope.Failed(e);
-        //        throw;
-        //    }
-        //}
+                switch (response.Status)
+                {
+                    case 200:
+                        DocumentResultCollection<Sentiment> results = await CreateAnalyzeSentimentResponseAsync(response, cancellationToken).ConfigureAwait(false);
+                        if (results.Errors.Count > 0)
+                        {
+                            // only one input, so we can ignore the id and grab the first error message.
+                            throw await response.CreateRequestFailedExceptionAsync(results.Errors[0].Message).ConfigureAwait(false);
+                        }
+                        return CreateAnalyzeSentimentResponseSimple(response, (results[0] as DocumentSentimentResult).DocumentSentiment);
+                    default:
+                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
         /// <summary>
         /// </summary>
@@ -667,69 +667,67 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        ///// <summary>
-        ///// </summary>
-        ///// <param name="inputs"></param>
-        ///// <param name="language"></param>
-        ///// <param name="cancellationToken"></param>
-        ///// <returns></returns>
-        //public virtual async Task<Response<IEnumerable<Sentiment>>> AnalyzeSentimentAsync(IEnumerable<string> inputs, string language = "en", CancellationToken cancellationToken = default)
-        //{
-        //    Argument.AssertNotNull(inputs, nameof(inputs));
+        /// <summary>
+        /// </summary>
+        /// <param name="inputs"></param>
+        /// <param name="language"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response<IEnumerable<Sentiment>>> AnalyzeSentimentAsync(IEnumerable<string> inputs, string language = "en", CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(inputs, nameof(inputs));
 
-        //    using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeEntities");
-        //    scope.Start();
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.AnalyzeSentiment");
+            scope.Start();
 
-        //    try
-        //    {
-        //        using Request request = CreateRecognizeEntitiesRequest(inputs, language);
-        //        Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
+            try
+            {
+                using Request request = CreateAnalyzeSentimentRequest(inputs, language);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
 
-        //        switch (response.Status)
-        //        {
-        //            case 200:
-        //                return await CreateRecognizeEntitiesResponseSimpleAsync(response, cancellationToken).ConfigureAwait(false);
-        //            default:
-        //                throw await response.CreateRequestFailedExceptionAsync();
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        scope.Failed(e);
-        //        throw;
-        //    }
-        //}
+                return response.Status switch
+                {
+                    200 => await CreateAnalyzeSentimentResponseSimpleAsync(response, cancellationToken).ConfigureAwait(false),
+                    _ => throw await response.CreateRequestFailedExceptionAsync(),
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        ///// <summary>
-        ///// </summary>
-        ///// <param name="inputs"></param>
-        ///// <param name="language"></param>
-        ///// <param name="cancellationToken"></param>
-        ///// <returns></returns>
-        //public virtual Response<IEnumerable<Sentiment>> AnalyzeSentiment(IEnumerable<string> inputs, string language = "en", CancellationToken cancellationToken = default)
-        //{
-        //    Argument.AssertNotNull(inputs, nameof(inputs));
-        //    using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeEntities");
-        //    scope.Start();
+        /// <summary>
+        /// </summary>
+        /// <param name="inputs"></param>
+        /// <param name="language"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response<IEnumerable<Sentiment>> AnalyzeSentiment(IEnumerable<string> inputs, string language = "en", CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(inputs, nameof(inputs));
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.AnalyzeSentiment");
+            scope.Start();
 
-        //    try
-        //    {
-        //        using Request request = CreateRecognizeEntitiesRequest(inputs, language);
-        //        Response response = _pipeline.SendRequest(request, cancellationToken);
+            try
+            {
+                using Request request = CreateAnalyzeSentimentRequest(inputs, language);
+                Response response = _pipeline.SendRequest(request, cancellationToken);
 
-        //        return response.Status switch
-        //        {
-        //            // TODO: for this, we'll need to stitch back together the errors, as ids have been stripped.
-        //            200 => CreateRecognizeEntitiesResponseSimple(response),
-        //            _ => throw response.CreateRequestFailedException(),
-        //        };
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        scope.Failed(e);
-        //        throw;
-        //    }
-        //}
+                return response.Status switch
+                {
+                    // TODO: for this, we'll need to stitch back together the errors, as ids have been stripped.
+                    200 => CreateAnalyzeSentimentResponseSimple(response),
+                    _ => throw response.CreateRequestFailedException(),
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
         ///// <summary>
         ///// </summary>

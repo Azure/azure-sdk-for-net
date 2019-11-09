@@ -431,23 +431,23 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        //public static async Task<IEnumerable<IEnumerable<Entity>>> DeserializeEntityCollectionAsync(Stream content, CancellationToken cancellation)
-        //{
-        //    using (JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false))
-        //    {
-        //        JsonElement root = json.RootElement;
-        //        return ReadEntityCollection(root);
-        //    }
-        //}
+        public static async Task<IEnumerable<Sentiment>> DeserializeSentimentCollectionAsync(Stream content, CancellationToken cancellation)
+        {
+            using (JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false))
+            {
+                JsonElement root = json.RootElement;
+                return ReadSentimentCollection(root);
+            }
+        }
 
-        //public static IEnumerable<IEnumerable<Entity>> DeserializeEntityCollection(Stream content)
-        //{
-        //    using (JsonDocument json = JsonDocument.Parse(content))
-        //    {
-        //        JsonElement root = json.RootElement;
-        //        return ReadEntityCollection(root);
-        //    }
-        //}
+        public static IEnumerable<Sentiment> DeserializeSentimentCollection(Stream content)
+        {
+            using (JsonDocument json = JsonDocument.Parse(content))
+            {
+                JsonElement root = json.RootElement;
+                return ReadSentimentCollection(root);
+            }
+        }
 
         private static DocumentResultCollection<Sentiment> ReadSentimentResult(JsonElement root)
         {
@@ -468,19 +468,19 @@ namespace Azure.AI.TextAnalytics
             return result;
         }
 
-        //private static IEnumerable<IEnumerable<Entity>> ReadEntityCollection(JsonElement root)
-        //{
-        //    var result = new List<List<Entity>>();
-        //    if (root.TryGetProperty("documents", out JsonElement documentsValue))
-        //    {
-        //        foreach (JsonElement documentElement in documentsValue.EnumerateArray())
-        //        {
-        //            result.Add(ReadEntityResult(documentElement).ToList());
-        //        }
-        //    }
+        private static IEnumerable<Sentiment> ReadSentimentCollection(JsonElement root)
+        {
+            var result = new List<Sentiment>();
+            if (root.TryGetProperty("documents", out JsonElement documentsValue))
+            {
+                foreach (JsonElement documentElement in documentsValue.EnumerateArray())
+                {
+                    result.Add(ReadDocumentSentimentResult(documentElement).DocumentSentiment);
+                }
+            }
 
-        //    return result;
-        //}
+            return result;
+        }
 
         private static DocumentSentimentResult ReadDocumentSentimentResult(JsonElement documentElement)
         {

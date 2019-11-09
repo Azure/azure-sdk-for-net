@@ -118,29 +118,27 @@ namespace Azure.AI.TextAnalytics
 
 
         #region Analyze Sentiment
-        //private static async Task<Response<DocumentResultCollection<Entity>>> CreateRecognizeEntitiesResponseAsync(Response response, CancellationToken cancellation)
-        //{
-        //    DocumentResultCollection<Entity> result = await TextAnalyticsServiceSerializer.DeserializeRecognizeEntitiesResponseAsync(response.ContentStream, cancellation).ConfigureAwait(false);
-        //    return Response.FromValue(result, response);
-        //}
+        private static async Task<Response<DocumentResultCollection<Sentiment>>> CreateAnalyzeSentimentResponseAsync(Response response, CancellationToken cancellation)
+        {
+            DocumentResultCollection<Sentiment> result = await TextAnalyticsServiceSerializer.DeserializeAnalyzeSentimentResponseAsync(response.ContentStream, cancellation).ConfigureAwait(false);
+            return Response.FromValue(result, response);
+        }
 
         private static Response<DocumentResultCollection<Sentiment>> CreateAnalyzeSentimentResponse(Response response)
         {
             return Response.FromValue(TextAnalyticsServiceSerializer.DeserializeAnalyzeSentimentResponse(response.ContentStream), response);
         }
 
-        //// TODO: Create EntityCollection to codify this response?  So we have a collection of something that makes sense,
-        //// rather than a collection of collections of a thing that folks have to think about?
-        //private static async Task<Response<IEnumerable<IEnumerable<Entity>>>> CreateRecognizeEntitiesResponseSimpleAsync(Response response, CancellationToken cancellation)
-        //{
-        //    var result = await TextAnalyticsServiceSerializer.DeserializeEntityCollectionAsync(response.ContentStream, cancellation).ConfigureAwait(false);
-        //    return Response.FromValue(result, response);
-        //}
+        private static async Task<Response<IEnumerable<Sentiment>>> CreateAnalyzeSentimentResponseSimpleAsync(Response response, CancellationToken cancellation)
+        {
+            var result = await TextAnalyticsServiceSerializer.DeserializeSentimentCollectionAsync(response.ContentStream, cancellation).ConfigureAwait(false);
+            return Response.FromValue(result, response);
+        }
 
-        //private static Response<IEnumerable<IEnumerable<Entity>>> CreateRecognizeEntitiesResponseSimple(Response response)
-        //{
-        //    return Response.FromValue(TextAnalyticsServiceSerializer.DeserializeEntityCollection(response.ContentStream), response);
-        //}
+        private static Response<IEnumerable<Sentiment>> CreateAnalyzeSentimentResponseSimple(Response response)
+        {
+            return Response.FromValue(TextAnalyticsServiceSerializer.DeserializeSentimentCollection(response.ContentStream), response);
+        }
 
         private static Response<Sentiment> CreateAnalyzeSentimentResponseSimple(Response response, Sentiment sentiment)
         {
