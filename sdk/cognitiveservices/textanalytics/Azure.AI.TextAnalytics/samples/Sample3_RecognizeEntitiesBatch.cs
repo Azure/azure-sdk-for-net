@@ -22,7 +22,6 @@ namespace Azure.AI.TextAnalytics.Samples
             // Instantiate a client that will be used to call the service.
             var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
 
-
             var inputs = new List<string>
             {
                 "Microsoft was founded by Bill Gates and Paul Allen.",
@@ -39,12 +38,11 @@ namespace Azure.AI.TextAnalytics.Samples
             var resultCollection = client.RecognizeEntities(inputs).Value;
 
             Debug.WriteLine($"Recognized entities for each input are:");
-
             int i = 0;
             foreach (var entities in resultCollection)
             {
                 Debug.WriteLine($"For input: \"{inputs[i++]}\",");
-                Debug.WriteLine($"the following entities were found: ");
+                Debug.WriteLine($"the following {entities.Count()} entities were found: ");
 
                 foreach (var entity in entities)
                 {
