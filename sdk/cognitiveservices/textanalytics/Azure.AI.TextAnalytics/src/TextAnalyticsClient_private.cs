@@ -33,16 +33,15 @@ namespace Azure.AI.TextAnalytics
 
         private static async Task<Response<IEnumerable<DetectedLanguage>>> CreateDetectLanguageResponseSimpleAsync(Response response, CancellationToken cancellation)
         {
-            IEnumerable<DetectedLanguage> result = await TextAnalyticsServiceSerializer.DeserializeDetectedLanguageBatchSimpleAsync(response.ContentStream, cancellation).ConfigureAwait(false);
+            IEnumerable<DetectedLanguage> result = await TextAnalyticsServiceSerializer.DeserializeDetectedLanguageCollectionAsync(response.ContentStream, cancellation).ConfigureAwait(false);
             return Response.FromValue(result, response);
         }
 
         private static Response<IEnumerable<DetectedLanguage>> CreateDetectLanguageResponseSimple(Response response)
         {
-            return Response.FromValue(TextAnalyticsServiceSerializer.DeserializeDetectedLanguageBatchSimple(response.ContentStream), response);
+            return Response.FromValue(TextAnalyticsServiceSerializer.DeserializeDetectedLanguageCollection(response.ContentStream), response);
         }
 
-        // TODO: Add Async Variant of this
         private static Response<DetectedLanguage> CreateDetectedLanguageResponseSimple(Response response, DetectedLanguage detectedLanguage)
         {
             return Response.FromValue(detectedLanguage, response);
@@ -77,6 +76,19 @@ namespace Azure.AI.TextAnalytics
         private static Response<DocumentResultCollection<Entity>> CreateRecognizeEntitiesResponse(Response response)
         {
             return Response.FromValue(TextAnalyticsServiceSerializer.DeserializeRecognizeEntitiesResponse(response.ContentStream), response);
+        }
+
+        // TODO: Create EntityCollection to codify this response?  So we have a collection of something that makes sense,
+        // rather than a collection of collections of a thing that folks have to think about?
+        private static async Task<Response<IEnumerable<IEnumerable<Entity>>>> CreateRecognizeEntitiesResponseSimpleAsync(Response response, CancellationToken cancellation)
+        {
+            var result = await TextAnalyticsServiceSerializer.DeserializeEntityCollectionAsync(response.ContentStream, cancellation).ConfigureAwait(false);
+            return Response.FromValue(result, response);
+        }
+
+        private static Response<IEnumerable<IEnumerable<Entity>>> CreateRecognizeEntitiesResponseSimple(Response response)
+        {
+            return Response.FromValue(TextAnalyticsServiceSerializer.DeserializeEntityCollection(response.ContentStream), response);
         }
 
         private static Response<IEnumerable<Entity>> CreateRecognizeEntitiesResponseSimple(Response response, IEnumerable<Entity> entities)
