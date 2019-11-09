@@ -98,7 +98,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateDetectLanguageRequest(inputText, countryHint, showStats: false);
+                using Request request = CreateDetectLanguageRequest(new List<string> { inputText }, countryHint);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
@@ -138,7 +138,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateDetectLanguageRequest(inputText, countryHint, showStats: false);
+                using Request request = CreateDetectLanguageRequest(new List<string> { inputText }, countryHint);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 switch (response.Status)
@@ -162,32 +162,6 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        private Request CreateDetectLanguageRequest(string inputText, string countryHint, bool showStats)
-        {
-            Argument.AssertNotNull(inputText, nameof(inputText));
-            Argument.AssertNotNull(countryHint, nameof(countryHint));
-
-            Request request = _pipeline.CreateRequest();
-
-            ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDetectLanguageInput(inputText, countryHint);
-
-            request.Method = RequestMethod.Post;
-
-            BuildUriForLanguagesRoute(request.Uri, showStats, modelVersion: default);
-
-            request.Headers.Add(HttpHeader.Common.JsonContentType);
-            request.Content = RequestContent.Create(content);
-
-            request.Headers.Add("Ocp-Apim-Subscription-Key", _subscriptionKey);
-
-            if (showStats)
-            {
-                // TODO: do something with showStats
-            }
-
-            return request;
-        }
-
         /// <summary>
         /// </summary>
         /// <param name="inputs"></param>
@@ -203,7 +177,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateDetectLanguageBatchRequest(inputs, countryHint);
+                using Request request = CreateDetectLanguageRequest(inputs, countryHint);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
 
                 switch (response.Status)
@@ -238,7 +212,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateDetectLanguageBatchRequest(inputs, countryHint);
+                using Request request = CreateDetectLanguageRequest(inputs, countryHint);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 return response.Status switch
@@ -253,25 +227,6 @@ namespace Azure.AI.TextAnalytics
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private Request CreateDetectLanguageBatchRequest(IEnumerable<string> inputs, string countryHint)
-        {
-            Argument.AssertNotNull(inputs, nameof(inputs));
-
-            Request request = _pipeline.CreateRequest();
-
-            ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDetectLanguageInputs(inputs, countryHint);
-
-            request.Method = RequestMethod.Post;
-            BuildUriForLanguagesRoute(request.Uri, showStats: default, modelVersion: default);
-
-            request.Headers.Add(HttpHeader.Common.JsonContentType);
-            request.Content = RequestContent.Create(content);
-
-            request.Headers.Add("Ocp-Apim-Subscription-Key", _subscriptionKey);
-
-            return request;
         }
 
         /// <summary>
@@ -290,7 +245,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateDetectLanguageBatchRequest(inputs, showStats, modelVersion);
+                using Request request = CreateDetectLanguageRequest(inputs, showStats, modelVersion);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
 
                 return response.Status switch
@@ -322,7 +277,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateDetectLanguageBatchRequest(inputs, showStats, modelVersion);
+                using Request request = CreateDetectLanguageRequest(inputs, showStats, modelVersion);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 return response.Status switch
@@ -338,7 +293,27 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        private Request CreateDetectLanguageBatchRequest(IEnumerable<DocumentInput> inputs, bool showStats, string modelVersion)
+        private Request CreateDetectLanguageRequest(IEnumerable<string> inputs, string countryHint)
+        {
+            Argument.AssertNotNull(inputs, nameof(inputs));
+            Argument.AssertNotNull(countryHint, nameof(countryHint));
+
+            Request request = _pipeline.CreateRequest();
+
+            ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDetectLanguageInputs(inputs, countryHint);
+
+            request.Method = RequestMethod.Post;
+            BuildUriForLanguagesRoute(request.Uri, showStats: default, modelVersion: default);
+
+            request.Headers.Add(HttpHeader.Common.JsonContentType);
+            request.Content = RequestContent.Create(content);
+
+            request.Headers.Add("Ocp-Apim-Subscription-Key", _subscriptionKey);
+
+            return request;
+        }
+
+        private Request CreateDetectLanguageRequest(IEnumerable<DocumentInput> inputs, bool showStats, string modelVersion)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
@@ -359,7 +334,6 @@ namespace Azure.AI.TextAnalytics
 
         #endregion
 
-
         #region Recognize Entities
 
         /// <summary>
@@ -378,7 +352,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateRecognizeEntitiesRequest(inputText, language, showStats: false);
+                using Request request = CreateRecognizeEntitiesRequest(new List<string> { inputText }, language);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
@@ -418,7 +392,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateRecognizeEntitiesRequest(inputText, language, showStats: false);
+                using Request request = CreateRecognizeEntitiesRequest(new List<string> { inputText }, language);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 switch (response.Status)
@@ -442,32 +416,6 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        private Request CreateRecognizeEntitiesRequest(string inputText, string language, bool showStats)
-        {
-            Argument.AssertNotNull(inputText, nameof(inputText));
-            Argument.AssertNotNull(language, nameof(language));
-
-            Request request = _pipeline.CreateRequest();
-
-            ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDocumentInput(inputText, language);
-
-            request.Method = RequestMethod.Post;
-
-            BuildUriForEntitiesRoute(request.Uri, showStats, modelVersion: default);
-
-            request.Headers.Add(HttpHeader.Common.JsonContentType);
-            request.Content = RequestContent.Create(content);
-
-            request.Headers.Add("Ocp-Apim-Subscription-Key", _subscriptionKey);
-
-            if (showStats)
-            {
-                // TODO: do something with showStats
-            }
-
-            return request;
-        }
-
         /// <summary>
         /// </summary>
         /// <param name="inputs"></param>
@@ -483,7 +431,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateRecognizeEntitiesBatchRequest(inputs, language);
+                using Request request = CreateRecognizeEntitiesRequest(inputs, language);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
 
                 switch (response.Status)
@@ -515,7 +463,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateRecognizeEntitiesBatchRequest(inputs, language);
+                using Request request = CreateRecognizeEntitiesRequest(inputs, language);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 return response.Status switch
@@ -548,7 +496,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateRecognizeEntitiesBatchRequest(inputs, showStats, modelVersion);
+                using Request request = CreateRecognizeEntitiesRequest(inputs, showStats, modelVersion);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
 
                 return response.Status switch
@@ -580,7 +528,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateRecognizeEntitiesBatchRequest(inputs, showStats, modelVersion);
+                using Request request = CreateRecognizeEntitiesRequest(inputs, showStats, modelVersion);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 return response.Status switch
@@ -596,9 +544,10 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        private Request CreateRecognizeEntitiesBatchRequest(IEnumerable<string> inputs, string language)
+        private Request CreateRecognizeEntitiesRequest(IEnumerable<string> inputs, string language)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
+            Argument.AssertNotNull(language, nameof(language));
 
             Request request = _pipeline.CreateRequest();
 
@@ -615,7 +564,7 @@ namespace Azure.AI.TextAnalytics
             return request;
         }
 
-        private Request CreateRecognizeEntitiesBatchRequest(IEnumerable<DocumentInput> inputs, bool showStats, string modelVersion)
+        private Request CreateRecognizeEntitiesRequest(IEnumerable<DocumentInput> inputs, bool showStats, string modelVersion)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
@@ -625,6 +574,256 @@ namespace Azure.AI.TextAnalytics
 
             request.Method = RequestMethod.Post;
             BuildUriForEntitiesRoute(request.Uri, showStats, modelVersion);
+
+            request.Headers.Add(HttpHeader.Common.JsonContentType);
+            request.Content = RequestContent.Create(content);
+
+            request.Headers.Add("Ocp-Apim-Subscription-Key", _subscriptionKey);
+
+            return request;
+        }
+
+        #endregion
+
+        #region Analyze Sentiment
+
+        ///// <summary>
+        ///// </summary>
+        ///// <param name="inputText"></param>
+        ///// <param name="language"></param>
+        ///// <param name="cancellationToken"></param>
+        ///// <returns></returns>
+        //public virtual async Task<Response<Sentiment>> AnalyzeSentimentAsync(string inputText, string language = "en", CancellationToken cancellationToken = default)
+        //{
+        //    Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
+
+        //    using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeEntities");
+        //    scope.AddAttribute("inputText", inputText);
+        //    scope.Start();
+
+        //    try
+        //    {
+        //        using Request request = CreateRecognizeEntitiesRequest(new List<string> { inputText }, language);
+        //        Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+
+        //        switch (response.Status)
+        //        {
+        //            case 200:
+        //                DocumentResultCollection<Entity> result = await CreateRecognizeEntitiesResponseAsync(response, cancellationToken).ConfigureAwait(false);
+        //                if (result.Errors.Count > 0)
+        //                {
+        //                    // only one input, so we can ignore the id and grab the first error message.
+        //                    throw await response.CreateRequestFailedExceptionAsync(result.Errors[0].Message).ConfigureAwait(false);
+        //                }
+        //                return CreateRecognizeEntitiesResponseSimple(response, result[0]);
+        //            default:
+        //                throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        scope.Failed(e);
+        //        throw;
+        //    }
+        //}
+
+        /// <summary>
+        /// </summary>
+        /// <param name="inputText"></param>
+        /// <param name="language"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response<Sentiment> AnalyzeSentiment(string inputText, string language = "en", CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.AnalyzeSentiment");
+            scope.AddAttribute("inputText", inputText);
+            scope.Start();
+
+            try
+            {
+                using Request request = CreateAnalyzeSentimentRequest(new List<string> { inputText }, language);
+                Response response = _pipeline.SendRequest(request, cancellationToken);
+
+                switch (response.Status)
+                {
+                    case 200:
+                        DocumentResultCollection<Sentiment> results = CreateAnalyzeSentimentResponse(response);
+                        if (results.Errors.Count > 0)
+                        {
+                            // only one input, so we can ignore the id and grab the first error message.
+                            throw response.CreateRequestFailedException(results.Errors[0].Message);
+                        }
+                        return CreateAnalyzeSentimentResponseSimple(response, (results[0] as DocumentSentimentResult).DocumentSentiment);
+                    default:
+                        throw response.CreateRequestFailedException();
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        ///// <summary>
+        ///// </summary>
+        ///// <param name="inputs"></param>
+        ///// <param name="language"></param>
+        ///// <param name="cancellationToken"></param>
+        ///// <returns></returns>
+        //public virtual async Task<Response<IEnumerable<Sentiment>>> AnalyzeSentimentAsync(IEnumerable<string> inputs, string language = "en", CancellationToken cancellationToken = default)
+        //{
+        //    Argument.AssertNotNull(inputs, nameof(inputs));
+
+        //    using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeEntities");
+        //    scope.Start();
+
+        //    try
+        //    {
+        //        using Request request = CreateRecognizeEntitiesRequest(inputs, language);
+        //        Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
+
+        //        switch (response.Status)
+        //        {
+        //            case 200:
+        //                return await CreateRecognizeEntitiesResponseSimpleAsync(response, cancellationToken).ConfigureAwait(false);
+        //            default:
+        //                throw await response.CreateRequestFailedExceptionAsync();
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        scope.Failed(e);
+        //        throw;
+        //    }
+        //}
+
+        ///// <summary>
+        ///// </summary>
+        ///// <param name="inputs"></param>
+        ///// <param name="language"></param>
+        ///// <param name="cancellationToken"></param>
+        ///// <returns></returns>
+        //public virtual Response<IEnumerable<Sentiment>> AnalyzeSentiment(IEnumerable<string> inputs, string language = "en", CancellationToken cancellationToken = default)
+        //{
+        //    Argument.AssertNotNull(inputs, nameof(inputs));
+        //    using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeEntities");
+        //    scope.Start();
+
+        //    try
+        //    {
+        //        using Request request = CreateRecognizeEntitiesRequest(inputs, language);
+        //        Response response = _pipeline.SendRequest(request, cancellationToken);
+
+        //        return response.Status switch
+        //        {
+        //            // TODO: for this, we'll need to stitch back together the errors, as ids have been stripped.
+        //            200 => CreateRecognizeEntitiesResponseSimple(response),
+        //            _ => throw response.CreateRequestFailedException(),
+        //        };
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        scope.Failed(e);
+        //        throw;
+        //    }
+        //}
+
+        ///// <summary>
+        ///// </summary>
+        ///// <param name="inputs"></param>
+        ///// <param name="showStats"></param>
+        ///// <param name="modelVersion"></param>
+        ///// <param name="cancellationToken"></param>
+        ///// <returns></returns>
+        //public virtual async Task<Response<DocumentResultCollection<DocumentSentimentResult>>> AnalyzeSentimentAsync(IEnumerable<DocumentInput> inputs, bool showStats = false, string modelVersion = default, CancellationToken cancellationToken = default)
+        //{
+        //    Argument.AssertNotNull(inputs, nameof(inputs));
+
+        //    using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeEntities");
+        //    scope.Start();
+
+        //    try
+        //    {
+        //        using Request request = CreateRecognizeEntitiesRequest(inputs, showStats, modelVersion);
+        //        Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
+
+        //        return response.Status switch
+        //        {
+        //            200 => await CreateRecognizeEntitiesResponseAsync(response, cancellationToken).ConfigureAwait(false),
+        //            _ => throw await response.CreateRequestFailedExceptionAsync(),
+        //        };
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        scope.Failed(e);
+        //        throw;
+        //    }
+        //}
+
+        ///// <summary>
+        ///// </summary>
+        ///// <param name="inputs"></param>
+        ///// <param name="showStats"></param>
+        ///// <param name="modelVersion"></param>
+        ///// <param name="cancellationToken"></param>
+        ///// <returns></returns>
+        //public virtual Response<Response<DocumentResultCollection<DocumentSentimentResult>>> AnalyzeSentiment(IEnumerable<DocumentInput> inputs, bool showStats = false, string modelVersion = default, CancellationToken cancellationToken = default)
+        //{
+        //    Argument.AssertNotNull(inputs, nameof(inputs));
+
+        //    using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeEntities");
+        //    scope.Start();
+
+        //    try
+        //    {
+        //        using Request request = CreateRecognizeEntitiesRequest(inputs, showStats, modelVersion);
+        //        Response response = _pipeline.SendRequest(request, cancellationToken);
+
+        //        return response.Status switch
+        //        {
+        //            200 => CreateRecognizeEntitiesResponse(response),
+        //            _ => throw response.CreateRequestFailedException(),
+        //        };
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        scope.Failed(e);
+        //        throw;
+        //    }
+        //}
+
+        private Request CreateAnalyzeSentimentRequest(IEnumerable<string> inputs, string language)
+        {
+            Argument.AssertNotNull(inputs, nameof(inputs));
+
+            Request request = _pipeline.CreateRequest();
+
+            ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDocumentInputs(inputs, language);
+
+            request.Method = RequestMethod.Post;
+            BuildUriForSentimentRoute(request.Uri, showStats: default, modelVersion: default);
+
+            request.Headers.Add(HttpHeader.Common.JsonContentType);
+            request.Content = RequestContent.Create(content);
+
+            request.Headers.Add("Ocp-Apim-Subscription-Key", _subscriptionKey);
+
+            return request;
+        }
+
+        private Request CreateAnalyzeSentimentRequest(IEnumerable<DocumentInput> inputs, bool showStats, string modelVersion)
+        {
+            Argument.AssertNotNull(inputs, nameof(inputs));
+
+            Request request = _pipeline.CreateRequest();
+
+            ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDocumentInputs(inputs);
+
+            request.Method = RequestMethod.Post;
+            BuildUriForSentimentRoute(request.Uri, showStats, modelVersion);
 
             request.Headers.Add(HttpHeader.Common.JsonContentType);
             request.Content = RequestContent.Create(content);

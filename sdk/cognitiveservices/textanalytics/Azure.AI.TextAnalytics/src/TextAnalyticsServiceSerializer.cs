@@ -5,11 +5,10 @@ using Azure.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
-using System.Net;
 
 namespace Azure.AI.TextAnalytics
 {
@@ -18,22 +17,6 @@ namespace Azure.AI.TextAnalytics
         // TODO (pri 2): make the deserializer version resilient
 
         #region Serialize Inputs
-        public static ReadOnlyMemory<byte> SerializeDetectLanguageInput(string inputText, string countryHint)
-        {
-            var writer = new ArrayBufferWriter<byte>();
-            var json = new Utf8JsonWriter(writer);
-            json.WriteStartObject();
-            json.WriteStartArray("documents");
-            json.WriteStartObject();
-            json.WriteString("countryHint", countryHint);
-            json.WriteString("id", "1");
-            json.WriteString("text", inputText);
-            json.WriteEndObject();
-            json.WriteEndArray();
-            json.WriteEndObject();
-            json.Flush();
-            return writer.WrittenMemory;
-        }
 
         public static ReadOnlyMemory<byte> SerializeDetectLanguageInputs(IEnumerable<string> inputs, string countryHint)
         {
@@ -70,23 +53,6 @@ namespace Azure.AI.TextAnalytics
                 json.WriteString("text", input.Text);
                 json.WriteEndObject();
             }
-            json.WriteEndArray();
-            json.WriteEndObject();
-            json.Flush();
-            return writer.WrittenMemory;
-        }
-
-        public static ReadOnlyMemory<byte> SerializeDocumentInput(string inputText, string language)
-        {
-            var writer = new ArrayBufferWriter<byte>();
-            var json = new Utf8JsonWriter(writer);
-            json.WriteStartObject();
-            json.WriteStartArray("documents");
-            json.WriteStartObject();
-            json.WriteString("language", language);
-            json.WriteString("id", "1");
-            json.WriteString("text", inputText);
-            json.WriteEndObject();
             json.WriteEndArray();
             json.WriteEndObject();
             json.Flush();
@@ -137,6 +103,14 @@ namespace Azure.AI.TextAnalytics
         #endregion Serialize Inputs
 
         #region Deserialize Common
+
+        private static string ReadDocumentId(JsonElement documentElement)
+        {
+            if (documentElement.TryGetProperty("id", out JsonElement idValue))
+                return idValue.ToString();
+
+            return default;
+        }
 
         private static DocumentStatistics ReadDocumentStatistics(JsonElement documentElement)
         {
@@ -275,7 +249,7 @@ namespace Azure.AI.TextAnalytics
             {
                 foreach (JsonElement documentElement in documentsValue.EnumerateArray())
                 {
-                    DocumentResult<DetectedLanguage> results = ReadDetectedLanguageResult(documentElement);
+                    DocumentResults<DetectedLanguage> results = ReadDetectedLanguageResult(documentElement);
 
                     // TODO: If needed, sort by score to get the value with the highest confidence.
                     DetectedLanguage language = results.FirstOrDefault();
@@ -286,12 +260,12 @@ namespace Azure.AI.TextAnalytics
             return result;
         }
 
-        private static DocumentResult<DetectedLanguage> ReadDetectedLanguageResult(JsonElement documentElement)
+        private static DocumentResults<DetectedLanguage> ReadDetectedLanguageResult(JsonElement documentElement)
         {
-            var documentResult = new DocumentResult<DetectedLanguage>();
+            var documentResult = new DocumentResults<DetectedLanguage>();
 
-            if (documentElement.TryGetProperty("id", out JsonElement idValue))
-                documentResult.Id = idValue.ToString();
+            documentResult.Id = ReadDocumentId(documentElement);
+            documentResult.Statistics = ReadDocumentStatistics(documentElement);
 
             if (documentElement.TryGetProperty("detectedLanguages", out JsonElement detectedLanguagesValue))
             {
@@ -301,7 +275,6 @@ namespace Azure.AI.TextAnalytics
                 }
             }
 
-            documentResult.Statistics = ReadDocumentStatistics(documentElement);
 
             return documentResult;
         }
@@ -320,6 +293,7 @@ namespace Azure.AI.TextAnalytics
 
             return language;
         }
+
         #endregion Detect Languages
 
         #region Recognize Entities
@@ -393,12 +367,12 @@ namespace Azure.AI.TextAnalytics
             return result;
         }
 
-        private static DocumentResult<Entity> ReadEntityResult(JsonElement documentElement)
+        private static DocumentResults<Entity> ReadEntityResult(JsonElement documentElement)
         {
-            var documentResult = new DocumentResult<Entity>();
+            var documentResult = new DocumentResults<Entity>();
 
-            if (documentElement.TryGetProperty("id", out JsonElement idValue))
-                documentResult.Id = idValue.ToString();
+            documentResult.Id = ReadDocumentId(documentElement);
+            documentResult.Statistics = ReadDocumentStatistics(documentElement);
 
             if (documentElement.TryGetProperty("entities", out JsonElement entitiesValue))
             {
@@ -407,8 +381,6 @@ namespace Azure.AI.TextAnalytics
                     documentResult.Add(ReadEntity(entityElement));
                 }
             }
-
-            documentResult.Statistics = ReadDocumentStatistics(documentElement);
 
             return documentResult;
         }
@@ -438,5 +410,132 @@ namespace Azure.AI.TextAnalytics
 
 
         #endregion Recognize Entities
+
+        #region Analyze Sentiment
+
+        public static async Task<DocumentResultCollection<Sentiment>> DeserializeAnalyzeSentimentResponseAsync(Stream content, CancellationToken cancellation)
+        {
+            using (JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false))
+            {
+                JsonElement root = json.RootElement;
+                return ReadSentimentResult(root);
+            }
+        }
+
+        public static DocumentResultCollection<Sentiment> DeserializeAnalyzeSentimentResponse(Stream content)
+        {
+            using (JsonDocument json = JsonDocument.Parse(content, default))
+            {
+                JsonElement root = json.RootElement;
+                return ReadSentimentResult(root);
+            }
+        }
+
+        //public static async Task<IEnumerable<IEnumerable<Entity>>> DeserializeEntityCollectionAsync(Stream content, CancellationToken cancellation)
+        //{
+        //    using (JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false))
+        //    {
+        //        JsonElement root = json.RootElement;
+        //        return ReadEntityCollection(root);
+        //    }
+        //}
+
+        //public static IEnumerable<IEnumerable<Entity>> DeserializeEntityCollection(Stream content)
+        //{
+        //    using (JsonDocument json = JsonDocument.Parse(content))
+        //    {
+        //        JsonElement root = json.RootElement;
+        //        return ReadEntityCollection(root);
+        //    }
+        //}
+
+        private static DocumentResultCollection<Sentiment> ReadSentimentResult(JsonElement root)
+        {
+            var result = new DocumentResultCollection<Sentiment>();
+            if (root.TryGetProperty("documents", out JsonElement documentsValue))
+            {
+                foreach (JsonElement documentElement in documentsValue.EnumerateArray())
+                {
+                    result.Add(ReadDocumentSentimentResult(documentElement));
+                }
+            }
+
+            ReadDocumentErrors(root, result.Errors);
+
+            result.ModelVersion = ReadModelVersion(root);
+            result.Statistics = ReadDocumentBatchStatistics(root);
+
+            return result;
+        }
+
+        //private static IEnumerable<IEnumerable<Entity>> ReadEntityCollection(JsonElement root)
+        //{
+        //    var result = new List<List<Entity>>();
+        //    if (root.TryGetProperty("documents", out JsonElement documentsValue))
+        //    {
+        //        foreach (JsonElement documentElement in documentsValue.EnumerateArray())
+        //        {
+        //            result.Add(ReadEntityResult(documentElement).ToList());
+        //        }
+        //    }
+
+        //    return result;
+        //}
+
+        private static DocumentSentimentResult ReadDocumentSentimentResult(JsonElement documentElement)
+        {
+            var documentResult = new DocumentSentimentResult();
+
+            documentResult.Id = ReadDocumentId(documentElement);
+            documentResult.Statistics = ReadDocumentStatistics(documentElement);
+
+            documentResult.DocumentSentiment = ReadSentiment(documentElement, "documentScores");
+
+            if (documentElement.TryGetProperty("sentences", out JsonElement sentencesElement))
+            {
+                foreach (JsonElement sentenceElement in sentencesElement.EnumerateArray())
+                {
+                    documentResult.Add(ReadSentiment(sentenceElement, "sentenceScores"));
+                }
+            }
+
+            return documentResult;
+        }
+
+        private static Sentiment ReadSentiment(JsonElement documentElement, string scoresElementName)
+        {
+            var sentiment = new Sentiment();
+
+            if (documentElement.TryGetProperty("sentiment", out JsonElement sentimentValue))
+            {
+                sentiment.SentimentClass = (SentimentClass)Enum.Parse(typeof(SentimentClass), sentimentValue.ToString(), ignoreCase: true);
+            }
+
+            if (documentElement.TryGetProperty(scoresElementName, out JsonElement scoreValues))
+            {
+                if (scoreValues.TryGetProperty("positive", out JsonElement positiveValue))
+                    if (positiveValue.TryGetDouble(out double score))
+                        sentiment.PositiveScore = score;
+
+                if (scoreValues.TryGetProperty("neutral", out JsonElement neutralValue))
+                    if (neutralValue.TryGetDouble(out double score))
+                        sentiment.NeutralScore = score;
+
+                if (scoreValues.TryGetProperty("negative", out JsonElement negativeValue))
+                    if (negativeValue.TryGetDouble(out double score))
+                        sentiment.NegativeScore = score;
+            }
+
+            if (documentElement.TryGetProperty("offset", out JsonElement offsetValue))
+                if (offsetValue.TryGetInt32(out int offset))
+                    sentiment.Offset = offset;
+
+            if (documentElement.TryGetProperty("length", out JsonElement lengthValue))
+                if (lengthValue.TryGetInt32(out int length))
+                    sentiment.Length = length;
+
+            return sentiment;
+        }
+        #endregion
     }
 }

@@ -18,6 +18,7 @@ namespace Azure.AI.TextAnalytics
 
         private const string LanguagesRoute = "/languages";
         private const string EntitiesRoute = "/entities/recognition/general";
+        private const string SentimentRoute = "/sentiment";
 
         #region Detect Language
         private static async Task<Response<DocumentResultCollection<DetectedLanguage>>> CreateDetectLanguageResponseAsync(Response response, CancellationToken cancellation)
@@ -114,6 +115,56 @@ namespace Azure.AI.TextAnalytics
             }
         }
         #endregion
+
+
+        #region Analyze Sentiment
+        //private static async Task<Response<DocumentResultCollection<Entity>>> CreateRecognizeEntitiesResponseAsync(Response response, CancellationToken cancellation)
+        //{
+        //    DocumentResultCollection<Entity> result = await TextAnalyticsServiceSerializer.DeserializeRecognizeEntitiesResponseAsync(response.ContentStream, cancellation).ConfigureAwait(false);
+        //    return Response.FromValue(result, response);
+        //}
+
+        private static Response<DocumentResultCollection<Sentiment>> CreateAnalyzeSentimentResponse(Response response)
+        {
+            return Response.FromValue(TextAnalyticsServiceSerializer.DeserializeAnalyzeSentimentResponse(response.ContentStream), response);
+        }
+
+        //// TODO: Create EntityCollection to codify this response?  So we have a collection of something that makes sense,
+        //// rather than a collection of collections of a thing that folks have to think about?
+        //private static async Task<Response<IEnumerable<IEnumerable<Entity>>>> CreateRecognizeEntitiesResponseSimpleAsync(Response response, CancellationToken cancellation)
+        //{
+        //    var result = await TextAnalyticsServiceSerializer.DeserializeEntityCollectionAsync(response.ContentStream, cancellation).ConfigureAwait(false);
+        //    return Response.FromValue(result, response);
+        //}
+
+        //private static Response<IEnumerable<IEnumerable<Entity>>> CreateRecognizeEntitiesResponseSimple(Response response)
+        //{
+        //    return Response.FromValue(TextAnalyticsServiceSerializer.DeserializeEntityCollection(response.ContentStream), response);
+        //}
+
+        private static Response<Sentiment> CreateAnalyzeSentimentResponseSimple(Response response, Sentiment sentiment)
+        {
+            return Response.FromValue(sentiment, response);
+        }
+
+        private void BuildUriForSentimentRoute(RequestUriBuilder builder, bool showStats, string modelVersion)
+        {
+            builder.Reset(_baseUri);
+            builder.AppendPath(TextAnalyticsRoute, escape: false);
+            builder.AppendPath(_apiVersion, escape: false);
+            builder.AppendPath(SentimentRoute, escape: false);
+
+            if (showStats)
+            {
+                builder.AppendQuery(ShowStats, "true");
+            }
+
+            if (!string.IsNullOrEmpty(modelVersion))
+            {
+                builder.AppendQuery(ModelVersion, modelVersion);
+            }
+        }
+        #endregion  Analyze Sentiment
 
 
         #region nobody wants to see these

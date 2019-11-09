@@ -8,7 +8,7 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// </summary>
-    public class DocumentResultCollection<T> : Collection<DocumentResult<T>>
+    public class DocumentResultCollection<T> : Collection<DocumentResults<T>>
     {
         /// <summary>
         /// </summary>

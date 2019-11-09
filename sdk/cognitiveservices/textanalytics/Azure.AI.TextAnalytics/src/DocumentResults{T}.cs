@@ -8,7 +8,7 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// </summary>
-    public class DocumentResult<T> : Collection<T>
+    public class DocumentResults<T> : Collection<T>
     {
         /// <summary>
         /// Gets or sets unique, non-empty document identifier.
