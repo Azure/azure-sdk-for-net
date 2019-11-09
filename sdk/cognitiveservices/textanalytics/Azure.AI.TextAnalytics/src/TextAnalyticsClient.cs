@@ -198,12 +198,12 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.GetDetectedLanguagesPage");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.DetectLanguages");
             scope.Start();
 
             try
             {
-                using Request request = CreateDetectedLanguageBatchRequest(inputs, countryHint);
+                using Request request = CreateDetectLanguageBatchRequest(inputs, countryHint);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
 
                 switch (response.Status)
@@ -233,12 +233,12 @@ namespace Azure.AI.TextAnalytics
         public virtual Response<IEnumerable<DetectedLanguage>> DetectLanguages(IEnumerable<string> inputs, string countryHint = "en", CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.GetDetectedLanguagesPage");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.DetectLanguages");
             scope.Start();
 
             try
             {
-                using Request request = CreateDetectedLanguageBatchRequest(inputs, countryHint);
+                using Request request = CreateDetectLanguageBatchRequest(inputs, countryHint);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 return response.Status switch
@@ -255,6 +255,25 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
+        private Request CreateDetectLanguageBatchRequest(IEnumerable<string> inputs, string countryHint)
+        {
+            Argument.AssertNotNull(inputs, nameof(inputs));
+
+            Request request = _pipeline.CreateRequest();
+
+            ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeLanguageInputs(inputs, countryHint);
+
+            request.Method = RequestMethod.Post;
+            BuildUriForLanguagesRoute(request.Uri, showStats: default, modelVersion: default);
+
+            request.Headers.Add(HttpHeader.Common.JsonContentType);
+            request.Content = RequestContent.Create(content);
+
+            request.Headers.Add("Ocp-Apim-Subscription-Key", _subscriptionKey);
+
+            return request;
+        }
+
         /// <summary>
         /// </summary>
         /// <param name="inputs"></param>
@@ -266,12 +285,12 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.GetDetectedLanguagesPage");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.DetectLanguages");
             scope.Start();
 
             try
             {
-                using Request request = CreateDetectedLanguageBatchRequest(inputs, showStats, modelVersion);
+                using Request request = CreateDetectLanguageBatchRequest(inputs, showStats, modelVersion);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
 
                 return response.Status switch
@@ -298,12 +317,12 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.GetDetectedLanguagesPage");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.DetectLanguages");
             scope.Start();
 
             try
             {
-                using Request request = CreateDetectedLanguageBatchRequest(inputs, showStats, modelVersion);
+                using Request request = CreateDetectLanguageBatchRequest(inputs, showStats, modelVersion);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 return response.Status switch
@@ -319,26 +338,7 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        private Request CreateDetectedLanguageBatchRequest(IEnumerable<string> inputs, string countryHint)
-        {
-            Argument.AssertNotNull(inputs, nameof(inputs));
-
-            Request request = _pipeline.CreateRequest();
-
-            ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeLanguageInputs(inputs, countryHint);
-
-            request.Method = RequestMethod.Post;
-            BuildUriForLanguagesRoute(request.Uri, showStats: default, modelVersion: default);
-
-            request.Headers.Add(HttpHeader.Common.JsonContentType);
-            request.Content = RequestContent.Create(content);
-
-            request.Headers.Add("Ocp-Apim-Subscription-Key", _subscriptionKey);
-
-            return request;
-        }
-
-        private Request CreateDetectedLanguageBatchRequest(IEnumerable<DocumentInput> inputs, bool showStats, string modelVersion)
+        private Request CreateDetectLanguageBatchRequest(IEnumerable<DocumentInput> inputs, bool showStats, string modelVersion)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
