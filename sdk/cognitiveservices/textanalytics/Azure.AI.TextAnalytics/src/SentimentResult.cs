@@ -9,7 +9,7 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// </summary>
-    public class DocumentSentimentResult : DocumentResults<Sentiment>
+    public class SentimentResult : DocumentResult<Sentiment>
     {
         // TODO: set DocumentSentiment.Length
         /// <summary>
@@ -18,6 +18,6 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// </summary>
-        public DocumentResults<Sentiment> SentenceSentiments { get => this; }
+        public DocumentResult<Sentiment> SentenceSentiments { get => this; }
     }
 }

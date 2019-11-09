@@ -40,9 +40,9 @@ namespace Azure.AI.TextAnalytics.Samples
             Debug.WriteLine($"Predicted sentiments are:");
             foreach (var sentiment in sentiments)
             {
-                Debug.WriteLine($"Sentiment was {sentiment.SentimentClass.ToString()}, with scores: ");
+                Debug.WriteLine($"Document sentiment is {sentiment.SentimentClass.ToString()}, with scores: ");
                 Debug.WriteLine($"    Positive score: {sentiment.PositiveScore:0.00}.");
-                Debug.WriteLine($"     Neutral score: {sentiment.NeutralScore:0.00}.");
+                Debug.WriteLine($"    Neutral score: {sentiment.NeutralScore:0.00}.");
                 Debug.WriteLine($"    Negative score: {sentiment.NegativeScore:0.00}.");
             }
         }

@@ -3,16 +3,15 @@
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Net;
 
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// </summary>
-    public class DocumentResultCollection<T> : Collection<DocumentResult<T>>
+    public class SentimentResultCollection : Collection<SentimentResult>
     {
-        /// <summary>
-        /// </summary>
-        internal DocumentResultCollection()
+        internal SentimentResultCollection()
         {
         }
 

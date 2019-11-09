@@ -116,15 +116,14 @@ namespace Azure.AI.TextAnalytics
         }
         #endregion
 
-
         #region Analyze Sentiment
-        private static async Task<Response<DocumentResultCollection<Sentiment>>> CreateAnalyzeSentimentResponseAsync(Response response, CancellationToken cancellation)
+        private static async Task<Response<SentimentResultCollection>> CreateAnalyzeSentimentResponseAsync(Response response, CancellationToken cancellation)
         {
-            DocumentResultCollection<Sentiment> result = await TextAnalyticsServiceSerializer.DeserializeAnalyzeSentimentResponseAsync(response.ContentStream, cancellation).ConfigureAwait(false);
+            SentimentResultCollection result = await TextAnalyticsServiceSerializer.DeserializeAnalyzeSentimentResponseAsync(response.ContentStream, cancellation).ConfigureAwait(false);
             return Response.FromValue(result, response);
         }
 
-        private static Response<DocumentResultCollection<Sentiment>> CreateAnalyzeSentimentResponse(Response response)
+        private static Response<SentimentResultCollection> CreateAnalyzeSentimentResponse(Response response)
         {
             return Response.FromValue(TextAnalyticsServiceSerializer.DeserializeAnalyzeSentimentResponse(response.ContentStream), response);
         }
@@ -163,7 +162,6 @@ namespace Azure.AI.TextAnalytics
             }
         }
         #endregion  Analyze Sentiment
-
 
         #region nobody wants to see these
         /// <summary>

@@ -609,13 +609,13 @@ namespace Azure.AI.TextAnalytics
                 switch (response.Status)
                 {
                     case 200:
-                        DocumentResultCollection<Sentiment> results = await CreateAnalyzeSentimentResponseAsync(response, cancellationToken).ConfigureAwait(false);
+                        SentimentResultCollection results = await CreateAnalyzeSentimentResponseAsync(response, cancellationToken).ConfigureAwait(false);
                         if (results.Errors.Count > 0)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
                             throw await response.CreateRequestFailedExceptionAsync(results.Errors[0].Message).ConfigureAwait(false);
                         }
-                        return CreateAnalyzeSentimentResponseSimple(response, (results[0] as DocumentSentimentResult).DocumentSentiment);
+                        return CreateAnalyzeSentimentResponseSimple(response, (results[0] as SentimentResult).DocumentSentiment);
                     default:
                         throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
                 }
@@ -649,13 +649,13 @@ namespace Azure.AI.TextAnalytics
                 switch (response.Status)
                 {
                     case 200:
-                        DocumentResultCollection<Sentiment> results = CreateAnalyzeSentimentResponse(response);
+                        SentimentResultCollection results = CreateAnalyzeSentimentResponse(response);
                         if (results.Errors.Count > 0)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
                             throw response.CreateRequestFailedException(results.Errors[0].Message);
                         }
-                        return CreateAnalyzeSentimentResponseSimple(response, (results[0] as DocumentSentimentResult).DocumentSentiment);
+                        return CreateAnalyzeSentimentResponseSimple(response, (results[0] as SentimentResult).DocumentSentiment);
                     default:
                         throw response.CreateRequestFailedException();
                 }
@@ -729,69 +729,69 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        ///// <summary>
-        ///// </summary>
-        ///// <param name="inputs"></param>
-        ///// <param name="showStats"></param>
-        ///// <param name="modelVersion"></param>
-        ///// <param name="cancellationToken"></param>
-        ///// <returns></returns>
-        //public virtual async Task<Response<DocumentResultCollection<DocumentSentimentResult>>> AnalyzeSentimentAsync(IEnumerable<DocumentInput> inputs, bool showStats = false, string modelVersion = default, CancellationToken cancellationToken = default)
-        //{
-        //    Argument.AssertNotNull(inputs, nameof(inputs));
+        /// <summary>
+        /// </summary>
+        /// <param name="inputs"></param>
+        /// <param name="showStats"></param>
+        /// <param name="modelVersion"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response<SentimentResultCollection>> AnalyzeSentimentAsync(IEnumerable<DocumentInput> inputs, bool showStats = false, string modelVersion = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(inputs, nameof(inputs));
 
-        //    using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeEntities");
-        //    scope.Start();
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.AnalyzeSentiment");
+            scope.Start();
 
-        //    try
-        //    {
-        //        using Request request = CreateRecognizeEntitiesRequest(inputs, showStats, modelVersion);
-        //        Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
+            try
+            {
+                using Request request = CreateAnalyzeSentimentRequest(inputs, showStats, modelVersion);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
 
-        //        return response.Status switch
-        //        {
-        //            200 => await CreateRecognizeEntitiesResponseAsync(response, cancellationToken).ConfigureAwait(false),
-        //            _ => throw await response.CreateRequestFailedExceptionAsync(),
-        //        };
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        scope.Failed(e);
-        //        throw;
-        //    }
-        //}
+                return response.Status switch
+                {
+                    200 => await CreateAnalyzeSentimentResponseAsync(response, cancellationToken).ConfigureAwait(false),
+                    _ => throw await response.CreateRequestFailedExceptionAsync(),
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        ///// <summary>
-        ///// </summary>
-        ///// <param name="inputs"></param>
-        ///// <param name="showStats"></param>
-        ///// <param name="modelVersion"></param>
-        ///// <param name="cancellationToken"></param>
-        ///// <returns></returns>
-        //public virtual Response<Response<DocumentResultCollection<DocumentSentimentResult>>> AnalyzeSentiment(IEnumerable<DocumentInput> inputs, bool showStats = false, string modelVersion = default, CancellationToken cancellationToken = default)
-        //{
-        //    Argument.AssertNotNull(inputs, nameof(inputs));
+        /// <summary>
+        /// </summary>
+        /// <param name="inputs"></param>
+        /// <param name="showStats"></param>
+        /// <param name="modelVersion"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response<SentimentResultCollection> AnalyzeSentiment(IEnumerable<DocumentInput> inputs, bool showStats = false, string modelVersion = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(inputs, nameof(inputs));
 
-        //    using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeEntities");
-        //    scope.Start();
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.AnalyzeSentiment");
+            scope.Start();
 
-        //    try
-        //    {
-        //        using Request request = CreateRecognizeEntitiesRequest(inputs, showStats, modelVersion);
-        //        Response response = _pipeline.SendRequest(request, cancellationToken);
+            try
+            {
+                using Request request = CreateAnalyzeSentimentRequest(inputs, showStats, modelVersion);
+                Response response = _pipeline.SendRequest(request, cancellationToken);
 
-        //        return response.Status switch
-        //        {
-        //            200 => CreateRecognizeEntitiesResponse(response),
-        //            _ => throw response.CreateRequestFailedException(),
-        //        };
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        scope.Failed(e);
-        //        throw;
-        //    }
-        //}
+                return response.Status switch
+                {
+                    200 => CreateAnalyzeSentimentResponse(response),
+                    _ => throw response.CreateRequestFailedException(),
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
         private Request CreateAnalyzeSentimentRequest(IEnumerable<string> inputs, string language)
         {

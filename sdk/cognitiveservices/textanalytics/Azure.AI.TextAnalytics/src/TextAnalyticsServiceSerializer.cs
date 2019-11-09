@@ -249,7 +249,7 @@ namespace Azure.AI.TextAnalytics
             {
                 foreach (JsonElement documentElement in documentsValue.EnumerateArray())
                 {
-                    DocumentResults<DetectedLanguage> results = ReadDetectedLanguageResult(documentElement);
+                    DocumentResult<DetectedLanguage> results = ReadDetectedLanguageResult(documentElement);
 
                     // TODO: If needed, sort by score to get the value with the highest confidence.
                     DetectedLanguage language = results.FirstOrDefault();
@@ -260,9 +260,9 @@ namespace Azure.AI.TextAnalytics
             return result;
         }
 
-        private static DocumentResults<DetectedLanguage> ReadDetectedLanguageResult(JsonElement documentElement)
+        private static DocumentResult<DetectedLanguage> ReadDetectedLanguageResult(JsonElement documentElement)
         {
-            var documentResult = new DocumentResults<DetectedLanguage>();
+            var documentResult = new DocumentResult<DetectedLanguage>();
 
             documentResult.Id = ReadDocumentId(documentElement);
             documentResult.Statistics = ReadDocumentStatistics(documentElement);
@@ -367,9 +367,9 @@ namespace Azure.AI.TextAnalytics
             return result;
         }
 
-        private static DocumentResults<Entity> ReadEntityResult(JsonElement documentElement)
+        private static DocumentResult<Entity> ReadEntityResult(JsonElement documentElement)
         {
-            var documentResult = new DocumentResults<Entity>();
+            var documentResult = new DocumentResult<Entity>();
 
             documentResult.Id = ReadDocumentId(documentElement);
             documentResult.Statistics = ReadDocumentStatistics(documentElement);
@@ -413,7 +413,7 @@ namespace Azure.AI.TextAnalytics
 
         #region Analyze Sentiment
 
-        public static async Task<DocumentResultCollection<Sentiment>> DeserializeAnalyzeSentimentResponseAsync(Stream content, CancellationToken cancellation)
+        public static async Task<SentimentResultCollection> DeserializeAnalyzeSentimentResponseAsync(Stream content, CancellationToken cancellation)
         {
             using (JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false))
             {
@@ -422,7 +422,7 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        public static DocumentResultCollection<Sentiment> DeserializeAnalyzeSentimentResponse(Stream content)
+        public static SentimentResultCollection DeserializeAnalyzeSentimentResponse(Stream content)
         {
             using (JsonDocument json = JsonDocument.Parse(content, default))
             {
@@ -449,9 +449,9 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        private static DocumentResultCollection<Sentiment> ReadSentimentResult(JsonElement root)
+        private static SentimentResultCollection ReadSentimentResult(JsonElement root)
         {
-            var result = new DocumentResultCollection<Sentiment>();
+            var result = new SentimentResultCollection();
             if (root.TryGetProperty("documents", out JsonElement documentsValue))
             {
                 foreach (JsonElement documentElement in documentsValue.EnumerateArray())
@@ -482,9 +482,9 @@ namespace Azure.AI.TextAnalytics
             return result;
         }
 
-        private static DocumentSentimentResult ReadDocumentSentimentResult(JsonElement documentElement)
+        private static SentimentResult ReadDocumentSentimentResult(JsonElement documentElement)
         {
-            var documentResult = new DocumentSentimentResult();
+            var documentResult = new SentimentResult();
 
             documentResult.Id = ReadDocumentId(documentElement);
             documentResult.Statistics = ReadDocumentStatistics(documentElement);
