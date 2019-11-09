@@ -15,6 +15,7 @@ namespace Azure.AI.TextAnalytics
 
         private const string LanguagesRoute = "/languages";
         private const string EntitiesRoute = "/entities/recognition/general";
+        private const string PiiEntitiesRoute = "/entities/recognition/pii";
         private const string SentimentRoute = "/sentiment";
         private const string KeyPhrases = "/keyPhrases";
 
@@ -80,8 +81,6 @@ namespace Azure.AI.TextAnalytics
             return Response.FromValue(TextAnalyticsServiceSerializer.DeserializeRecognizeEntitiesResponse(response.ContentStream), response);
         }
 
-        // TODO: Create EntityCollection to codify this response?  So we have a collection of something that makes sense,
-        // rather than a collection of collections of a thing that folks have to think about?
         private static async Task<Response<IEnumerable<IEnumerable<Entity>>>> CreateRecognizeEntitiesResponseSimpleAsync(Response response, CancellationToken cancellation)
         {
             var result = await TextAnalyticsServiceSerializer.DeserializeEntityCollectionAsync(response.ContentStream, cancellation).ConfigureAwait(false);
@@ -104,6 +103,24 @@ namespace Azure.AI.TextAnalytics
             builder.AppendPath(TextAnalyticsRoute, escape: false);
             builder.AppendPath(_apiVersion, escape: false);
             builder.AppendPath(EntitiesRoute, escape: false);
+
+            if (showStats)
+            {
+                builder.AppendQuery(ShowStats, "true");
+            }
+
+            if (!string.IsNullOrEmpty(modelVersion))
+            {
+                builder.AppendQuery(ModelVersion, modelVersion);
+            }
+        }
+
+        private void BuildUriForPiiEntitiesRoute(RequestUriBuilder builder, bool showStats, string modelVersion)
+        {
+            builder.Reset(_baseUri);
+            builder.AppendPath(TextAnalyticsRoute, escape: false);
+            builder.AppendPath(_apiVersion, escape: false);
+            builder.AppendPath(PiiEntitiesRoute, escape: false);
 
             if (showStats)
             {
@@ -210,7 +227,6 @@ namespace Azure.AI.TextAnalytics
             }
         }
         #endregion Extract KeyPhrases
-
 
         #region nobody wants to see these
         /// <summary>

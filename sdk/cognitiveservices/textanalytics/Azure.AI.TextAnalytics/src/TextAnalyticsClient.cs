@@ -1084,5 +1084,256 @@ namespace Azure.AI.TextAnalytics
 
         #endregion
 
+        #region Recognize PII Entities
+
+        /// <summary>
+        /// </summary>
+        /// <param name="inputText"></param>
+        /// <param name="language"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response<IEnumerable<Entity>>> RecognizePiiEntitiesAsync(string inputText, string language = "en", CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizePiiEntities");
+            scope.AddAttribute("inputText", inputText);
+            scope.Start();
+
+            try
+            {
+                using Request request = CreateRecognizePiiEntitiesRequest(new List<string> { inputText }, language);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+
+                switch (response.Status)
+                {
+                    case 200:
+                        DocumentResultCollection<Entity> result = await CreateRecognizeEntitiesResponseAsync(response, cancellationToken).ConfigureAwait(false);
+                        if (result.Errors.Count > 0)
+                        {
+                            // only one input, so we can ignore the id and grab the first error message.
+                            throw await response.CreateRequestFailedExceptionAsync(result.Errors[0].Message).ConfigureAwait(false);
+                        }
+                        return CreateRecognizeEntitiesResponseSimple(response, result[0]);
+                    default:
+                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="inputText"></param>
+        /// <param name="language"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response<IEnumerable<Entity>> RecognizePiiEntities(string inputText, string language = "en", CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizePiiEntities");
+            scope.AddAttribute("inputText", inputText);
+            scope.Start();
+
+            try
+            {
+                using Request request = CreateRecognizePiiEntitiesRequest(new List<string> { inputText }, language);
+                Response response = _pipeline.SendRequest(request, cancellationToken);
+
+                switch (response.Status)
+                {
+                    case 200:
+                        DocumentResultCollection<Entity> result = CreateRecognizeEntitiesResponse(response);
+                        if (result.Errors.Count > 0)
+                        {
+                            // only one input, so we can ignore the id and grab the first error message.
+                            throw response.CreateRequestFailedException(result.Errors[0].Message);
+                        }
+                        return CreateRecognizeEntitiesResponseSimple(response, result[0]);
+                    default:
+                        throw response.CreateRequestFailedException();
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="inputs"></param>
+        /// <param name="language"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response<IEnumerable<IEnumerable<Entity>>>> RecognizePiiEntitiesAsync(IEnumerable<string> inputs, string language = "en", CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(inputs, nameof(inputs));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizePiiEntities");
+            scope.Start();
+
+            try
+            {
+                using Request request = CreateRecognizePiiEntitiesRequest(inputs, language);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
+
+                switch (response.Status)
+                {
+                    case 200:
+                        return await CreateRecognizeEntitiesResponseSimpleAsync(response, cancellationToken).ConfigureAwait(false);
+                    default:
+                        throw await response.CreateRequestFailedExceptionAsync();
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="inputs"></param>
+        /// <param name="language"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response<IEnumerable<IEnumerable<Entity>>> RecognizePiiEntities(IEnumerable<string> inputs, string language = "en", CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(inputs, nameof(inputs));
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizePiiEntities");
+            scope.Start();
+
+            try
+            {
+                using Request request = CreateRecognizePiiEntitiesRequest(inputs, language);
+                Response response = _pipeline.SendRequest(request, cancellationToken);
+
+                return response.Status switch
+                {
+                    // TODO: for this, we'll need to stitch back together the errors, as ids have been stripped.
+                    200 => CreateRecognizeEntitiesResponseSimple(response),
+                    _ => throw response.CreateRequestFailedException(),
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="inputs"></param>
+        /// <param name="showStats"></param>
+        /// <param name="modelVersion"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response<DocumentResultCollection<Entity>>> RecognizePiiEntitiesAsync(IEnumerable<DocumentInput> inputs, bool showStats = false, string modelVersion = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(inputs, nameof(inputs));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizePiiEntities");
+            scope.Start();
+
+            try
+            {
+                using Request request = CreateRecognizePiiEntitiesRequest(inputs, showStats, modelVersion);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
+
+                return response.Status switch
+                {
+                    200 => await CreateRecognizeEntitiesResponseAsync(response, cancellationToken).ConfigureAwait(false),
+                    _ => throw await response.CreateRequestFailedExceptionAsync(),
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="inputs"></param>
+        /// <param name="showStats"></param>
+        /// <param name="modelVersion"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response<DocumentResultCollection<Entity>> RecognizePiiEntities(IEnumerable<DocumentInput> inputs, bool showStats = false, string modelVersion = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(inputs, nameof(inputs));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizePiiEntities");
+            scope.Start();
+
+            try
+            {
+                using Request request = CreateRecognizePiiEntitiesRequest(inputs, showStats, modelVersion);
+                Response response = _pipeline.SendRequest(request, cancellationToken);
+
+                return response.Status switch
+                {
+                    200 => CreateRecognizeEntitiesResponse(response),
+                    _ => throw response.CreateRequestFailedException(),
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private Request CreateRecognizePiiEntitiesRequest(IEnumerable<string> inputs, string language)
+        {
+            Argument.AssertNotNull(inputs, nameof(inputs));
+            Argument.AssertNotNull(language, nameof(language));
+
+            Request request = _pipeline.CreateRequest();
+
+            ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDocumentInputs(inputs, language);
+
+            request.Method = RequestMethod.Post;
+            BuildUriForPiiEntitiesRoute(request.Uri, showStats: default, modelVersion: default);
+
+            request.Headers.Add(HttpHeader.Common.JsonContentType);
+            request.Content = RequestContent.Create(content);
+
+            request.Headers.Add("Ocp-Apim-Subscription-Key", _subscriptionKey);
+
+            return request;
+        }
+
+        private Request CreateRecognizePiiEntitiesRequest(IEnumerable<DocumentInput> inputs, bool showStats, string modelVersion)
+        {
+            Argument.AssertNotNull(inputs, nameof(inputs));
+
+            Request request = _pipeline.CreateRequest();
+
+            ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDocumentInputs(inputs);
+
+            request.Method = RequestMethod.Post;
+            BuildUriForPiiEntitiesRoute(request.Uri, showStats, modelVersion);
+
+            request.Headers.Add(HttpHeader.Common.JsonContentType);
+            request.Content = RequestContent.Create(content);
+
+            request.Headers.Add("Ocp-Apim-Subscription-Key", _subscriptionKey);
+
+            return request;
+        }
+
+        #endregion
+
     }
 }
