@@ -28,7 +28,7 @@ steps:
     workingDirectory: $(Build.BinariesDirectory)
     displayName: Download and Extract Required Software
 
-  - ${{ if ne(variables['Build.DefinitionName'], 'net - client - ci')}}:
+  - ${{ if and(ne(variables['Build.DefinitionName'], 'net - client - ci'), ne(variables['Build.DefinitionName'], 'net - client'))}}:
     - ${{ each artifact in parameters.Artifacts }}:
       - pwsh: |
           # Create Variables for Doc Generation
