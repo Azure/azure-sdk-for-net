@@ -88,7 +88,10 @@ function CreateHubIfMissing()
 
   Write-Host "`t...Requesting eventHub"
   
-  $eventHub = Get-AzEventHub -ResourceGroupName $resourceGroupName -NamespaceName $namespaceName -EventHubName $eventHubName -ErrorAction SilentlyContinue
+  $eventHub = Get-AzEventHub -ResourceGroupName $resourceGroupName `
+                             -NamespaceName $namespaceName `
+                             -EventHubName $eventHubName `
+                             -ErrorAction SilentlyContinue
 
   if ($eventHub -eq $null)
   {
@@ -98,7 +101,11 @@ function CreateHubIfMissing()
       New-AzEventHub -ResourceGroupName $resourceGroupName `
                      -NamespaceName $namespaceName `
                      -EventHubName $eventHubName | Out-Null
-  } 
+
+      return $true
+  }
+
+  return $false
 }
 
 function GetFullyQualifiedDomainName()
@@ -243,7 +250,11 @@ function CreateNamespaceIfMissing()
       New-AzEventHubNamespace -ResourceGroupName "$($resourceGroupName)" `
                               -NamespaceName "$($namespaceName)" `
                               -Location "$($azureRegion)" | Out-Null
+
+      return $true
   }
+
+  return $false
 }
 
 function TearDownResources 
@@ -253,17 +264,129 @@ function TearDownResources
       Cleans up any Azure resources created by the script.
       
     .DESCRIPTION
-      Responsible for cleaning up any Azure resources created 
-      by the script in case of failure.
+      Depending on the flags passed in, it will try to remove
+      in order the named Azure Event Hub, Namespace and Resource Group.
+
+      It does that calling the helper methods TearDownEventHub, TearDownNamespace
+      and TearDownResourceGroup.
   #>
     
+  param
+  (
+    [Parameter(Mandatory=$false)]
+    [string] $resourceGroupName,
+
+    [Parameter(Mandatory=$false)]
+    [string] $namespaceName,
+    
+    [Parameter(Mandatory=$false)]
+    [string] $eventHubName,
+
+    [Parameter(Mandatory=$false)]
+    [string] $isResourceGroupCreated = $false,
+
+    [Parameter(Mandatory=$false)]
+    [string] $isNamespaceCreated = $false,
+
+    [Parameter(Mandatory=$false)]
+    [string] $isEventHubCreated = $false
+  )
+
+  if($isEventHubCreated -eq $true)
+  {
+    TearDownEventHub -ResourceGroupName "$($resourceGroupName)" `
+                     -NamespaceName "$($namespaceName)" `
+                     -EventHubName "$($eventHubName)"
+  }
+
+  if($isNamespaceCreated -eq $true)
+  {
+    TearDownNamespace -ResourceGroupName "$($resourceGroupName)" `
+                      -NamespaceName "$($namespaceName)"
+  }
+
+  if ($isResourceGroupCreated -eq $true)
+  {
+    TearDownResourceGroup -ResourceGroupName "$($resourceGroupName)"
+  }
+}
+
+function TearDownEventHub()
+{
+  <#
+    .SYNOPSIS
+      Cleans up a named Azure Event Hub.
+  #>
+
+  param
+  (
+    [Parameter(Mandatory=$true)]
+    [string] $resourceGroupName,
+
+    [Parameter(Mandatory=$true)]
+    [string] $namespaceName,
+
+    [Parameter(Mandatory=$true)]
+    [string] $eventHubName
+  )
+
+  try
+  {
+    Write-Host "`t...Removing event hub `"$($eventHubName)`""
+    Remove-AzEventHub -ResourceGroupName "$($resourceGroupName)" `
+                      -Namespace "$($namespaceName)" `
+                      -Name "$($eventHubName)" | Out-Null
+  }
+  catch 
+  {
+    Write-Error "The event hub: $($eventHubName) could not be removed.  You will need to delete this manually."
+    Write-Error ""            
+    Write-Error $_.Exception.Message
+  }
+}
+
+function TearDownNamespace()
+{
+  <#
+    .SYNOPSIS
+      Cleans up a named Azure Event Hub Namespace.
+  #>
+
+  param
+  (
+    [Parameter(Mandatory=$true)]
+    [string] $resourceGroupName,
+
+    [Parameter(Mandatory=$true)]
+    [string] $namespaceName
+  )
+
+  try
+  {
+    Write-Host "`t...Removing namespace `"$($namespaceName)`""
+    Remove-AzEventHubNamespace -Name "$($namespaceName)" `
+                               -ResourceGroupName "$($resourceGroupName)" | Out-Null
+  }
+  catch 
+  {
+    Write-Error "The namespace: $($namespaceName) could not be removed.  You will need to delete this manually."
+    Write-Error ""            
+    Write-Error $_.Exception.Message
+  }
+}
+
+function TearDownResourceGroup()
+{
+  <#
+    .SYNOPSIS
+      Cleans up a named Azure Resource Group.
+  #>
+
   param
   (
     [Parameter(Mandatory=$true)]
     [string] $resourceGroupName
   )
-
-  Write-Host("Cleaning up resources that were created:")
 
   try 
   {
@@ -402,6 +525,8 @@ function CreateResourceGroupIfMissing()
       Write-Error "Unable to locate or create the resource group: $($resourceGroupName)"
       exit -1
   }
+
+  return $createResourceGroup
 }
 
 function AssignRole()

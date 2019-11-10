@@ -129,7 +129,7 @@ if ([string]::IsNullOrEmpty($azureRegion))
 
 ValidateParameters -ServicePrincipalName "$($servicePrincipalName)" -AzureRegion "$($azureRegion)"
 $subscription = GetSubscriptionAndSetAzureContext -SubscriptionName "$($subscriptionName)"
-CreateResourceGroupIfMissing -ResourceGroupName "$($resourceGroupName)" -AzureRegion "$($azureRegion)"
+$isResourceGroupCreated = CreateResourceGroupIfMissing -ResourceGroupName "$($resourceGroupName)" -AzureRegion "$($azureRegion)"
 
 # At this point, we may have created a resource, so be safe and allow for removing any
 # resources created should the script fail.
@@ -169,9 +169,10 @@ try
     Write-Host "EVENT_HUBS_SECRET=$($credentials.Password)"
     Write-Host ""
 }
-catch 
+catch
 {
     Write-Error $_.Exception.Message
-    TearDownResources -ResourceGroupName "$($resourceGroupName)"
+    TearDownResources -ResourceGroupName "$($resourceGroupName)" `
+                      -IsResourceGroupCreated $isResourceGroupCreated
     exit -1
 }
