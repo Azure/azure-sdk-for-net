@@ -537,7 +537,7 @@ namespace Azure.AI.TextAnalytics
         }
         #endregion
 
-        #region ExtractKeyPhrases
+        #region Extract Key Phrases
 
         public static async Task<DocumentResultCollection<string>> DeserializeKeyPhraseResponseAsync(Stream content, CancellationToken cancellation)
         {
@@ -626,6 +626,151 @@ namespace Azure.AI.TextAnalytics
             return documentResult;
         }
 
-        #endregion Recognize Entities
+        #endregion Extract Key Phrases
+
+        #region Entity Linking
+
+        public static async Task<DocumentResultCollection<LinkedEntity>> DeserializeLinkedEntityResponseAsync(Stream content, CancellationToken cancellation)
+        {
+            using (JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false))
+            {
+                JsonElement root = json.RootElement;
+                return ReadLinkedEntityResultCollection(root);
+            }
+        }
+
+        public static DocumentResultCollection<LinkedEntity> DeserializeLinkedEntityResponse(Stream content)
+        {
+            using (JsonDocument json = JsonDocument.Parse(content, default))
+            {
+                JsonElement root = json.RootElement;
+                return ReadLinkedEntityResultCollection(root);
+            }
+        }
+
+        public static async Task<IEnumerable<IEnumerable<LinkedEntity>>> DeserializeLinkedEntityCollectionAsync(Stream content, CancellationToken cancellation)
+        {
+            using (JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false))
+            {
+                JsonElement root = json.RootElement;
+                return ReadLinkedEntityCollection(root);
+            }
+        }
+
+        public static IEnumerable<IEnumerable<LinkedEntity>> DeserializeLinkedEntityCollection(Stream content)
+        {
+            using (JsonDocument json = JsonDocument.Parse(content))
+            {
+                JsonElement root = json.RootElement;
+                return ReadLinkedEntityCollection(root);
+            }
+        }
+
+        private static DocumentResultCollection<LinkedEntity> ReadLinkedEntityResultCollection(JsonElement root)
+        {
+            var result = new DocumentResultCollection<LinkedEntity>();
+            if (root.TryGetProperty("documents", out JsonElement documentsValue))
+            {
+                foreach (JsonElement documentElement in documentsValue.EnumerateArray())
+                {
+                    result.Add(ReadLinkedEntityResult(documentElement));
+                }
+            }
+
+            ReadDocumentErrors(root, result.Errors);
+            result.ModelVersion = ReadModelVersion(root);
+            result.Statistics = ReadDocumentBatchStatistics(root);
+
+            return result;
+        }
+
+        private static IEnumerable<IEnumerable<LinkedEntity>> ReadLinkedEntityCollection(JsonElement root)
+        {
+            var result = new List<List<LinkedEntity>>();
+            if (root.TryGetProperty("documents", out JsonElement documentsValue))
+            {
+                foreach (JsonElement documentElement in documentsValue.EnumerateArray())
+                {
+                    result.Add(ReadLinkedEntityResult(documentElement).ToList());
+                }
+            }
+
+            return result;
+        }
+
+        private static DocumentResult<LinkedEntity> ReadLinkedEntityResult(JsonElement documentElement)
+        {
+            var documentResult = new DocumentResult<LinkedEntity>
+            {
+                Id = ReadDocumentId(documentElement),
+                Statistics = ReadDocumentStatistics(documentElement)
+            };
+
+            if (documentElement.TryGetProperty("entities", out JsonElement entitiesValue))
+            {
+                foreach (JsonElement entityElement in entitiesValue.EnumerateArray())
+                {
+                    documentResult.Add(ReadLinkedEntity(entityElement));
+                }
+            }
+
+            return documentResult;
+        }
+
+        private static LinkedEntity ReadLinkedEntity(JsonElement entityElement)
+        {
+            var linkedEntity = new LinkedEntity();
+
+            if (entityElement.TryGetProperty("name", out JsonElement nameElement))
+                linkedEntity.Text = nameElement.ToString();
+            if (entityElement.TryGetProperty("id", out JsonElement idElement))
+                linkedEntity.Id = idElement.ToString();
+            if (entityElement.TryGetProperty("language", out JsonElement languageElement))
+                linkedEntity.Language = languageElement.ToString();
+            if (entityElement.TryGetProperty("dataSource", out JsonElement dataSourceValue))
+                linkedEntity.DataSource = dataSourceValue.ToString();
+            if (entityElement.TryGetProperty("url", out JsonElement urlValue))
+                linkedEntity.Url = new Uri(urlValue.ToString());
+
+            linkedEntity.Matches = ReadLinkedEntityMatches(entityElement);
+
+            return linkedEntity;
+        }
+
+        private static IEnumerable<LinkedEntityMatch> ReadLinkedEntityMatches(JsonElement entityElement)
+        {
+            if (entityElement.TryGetProperty("matches", out JsonElement matchesElement))
+            {
+                List<LinkedEntityMatch> matches = new List<LinkedEntityMatch>();
+
+                foreach (JsonElement matchElement in matchesElement.EnumerateArray())
+                {
+                    LinkedEntityMatch match = new LinkedEntityMatch();
+
+                    if (matchElement.TryGetProperty("text", out JsonElement textValue))
+                        match.Text = textValue.ToString();
+
+                    if (matchElement.TryGetProperty("score", out JsonElement scoreValue))
+                        if (scoreValue.TryGetDouble(out double score))
+                            match.Score = score;
+
+                    if (matchElement.TryGetProperty("offset", out JsonElement offsetValue))
+                        if (offsetValue.TryGetInt32(out int offset))
+                            match.Offset = offset;
+
+                    if (matchElement.TryGetProperty("length", out JsonElement lengthValue))
+                        if (lengthValue.TryGetInt32(out int length))
+                            match.Length = length;
+
+                    matches.Add(match);
+                }
+
+                return matches;
+            }
+
+            return default;
+        }
+
+        #endregion  Entity Linking
     }
 }

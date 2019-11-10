@@ -229,32 +229,30 @@ namespace Azure.AI.TextAnalytics
         }
         #endregion Extract KeyPhrases
 
-        // YOU ARE HERE: Working on adding linked entities stuff.  In progress.
-
         #region Entity Linking
-        private static async Task<Response<DocumentResultCollection<Entity>>> CreateRecognizeEntitiesResponseAsync(Response response, CancellationToken cancellation)
+        private static async Task<Response<DocumentResultCollection<LinkedEntity>>> CreateLinkedEntityResponseAsync(Response response, CancellationToken cancellation)
         {
-            DocumentResultCollection<Entity> result = await TextAnalyticsServiceSerializer.DeserializeRecognizeEntitiesResponseAsync(response.ContentStream, cancellation).ConfigureAwait(false);
+            DocumentResultCollection<LinkedEntity> result = await TextAnalyticsServiceSerializer.DeserializeLinkedEntityResponseAsync(response.ContentStream, cancellation).ConfigureAwait(false);
             return Response.FromValue(result, response);
         }
 
-        private static Response<DocumentResultCollection<Entity>> CreateRecognizeEntitiesResponse(Response response)
+        private static Response<DocumentResultCollection<LinkedEntity>> CreateLinkedEntityResponse(Response response)
         {
-            return Response.FromValue(TextAnalyticsServiceSerializer.DeserializeRecognizeEntitiesResponse(response.ContentStream), response);
+            return Response.FromValue(TextAnalyticsServiceSerializer.DeserializeLinkedEntityResponse(response.ContentStream), response);
         }
 
-        private static async Task<Response<IEnumerable<IEnumerable<Entity>>>> CreateRecognizeEntitiesResponseSimpleAsync(Response response, CancellationToken cancellation)
+        private static async Task<Response<IEnumerable<IEnumerable<LinkedEntity>>>> CreateLinkedEntityResponseSimpleAsync(Response response, CancellationToken cancellation)
         {
-            var result = await TextAnalyticsServiceSerializer.DeserializeEntityCollectionAsync(response.ContentStream, cancellation).ConfigureAwait(false);
+            var result = await TextAnalyticsServiceSerializer.DeserializeLinkedEntityCollectionAsync(response.ContentStream, cancellation).ConfigureAwait(false);
             return Response.FromValue(result, response);
         }
 
-        private static Response<IEnumerable<IEnumerable<Entity>>> CreateRecognizeEntitiesResponseSimple(Response response)
+        private static Response<IEnumerable<IEnumerable<LinkedEntity>>> CreateLinkedEntityResponseSimple(Response response)
         {
-            return Response.FromValue(TextAnalyticsServiceSerializer.DeserializeEntityCollection(response.ContentStream), response);
+            return Response.FromValue(TextAnalyticsServiceSerializer.DeserializeLinkedEntityCollection(response.ContentStream), response);
         }
 
-        private static Response<IEnumerable<Entity>> CreateRecognizeEntitiesResponseSimple(Response response, IEnumerable<Entity> entities)
+        private static Response<IEnumerable<LinkedEntity>> CreateLinkedEntityResponseSimple(Response response, IEnumerable<LinkedEntity> entities)
         {
             return Response.FromValue(entities, response);
         }
@@ -265,24 +263,6 @@ namespace Azure.AI.TextAnalytics
             builder.AppendPath(TextAnalyticsRoute, escape: false);
             builder.AppendPath(_apiVersion, escape: false);
             builder.AppendPath(EntityLinkingRoute, escape: false);
-
-            if (showStats)
-            {
-                builder.AppendQuery(ShowStats, "true");
-            }
-
-            if (!string.IsNullOrEmpty(modelVersion))
-            {
-                builder.AppendQuery(ModelVersion, modelVersion);
-            }
-        }
-
-        private void BuildUriForPiiEntitiesRoute(RequestUriBuilder builder, bool showStats, string modelVersion)
-        {
-            builder.Reset(_baseUri);
-            builder.AppendPath(TextAnalyticsRoute, escape: false);
-            builder.AppendPath(_apiVersion, escape: false);
-            builder.AppendPath(PiiEntitiesRoute, escape: false);
 
             if (showStats)
             {

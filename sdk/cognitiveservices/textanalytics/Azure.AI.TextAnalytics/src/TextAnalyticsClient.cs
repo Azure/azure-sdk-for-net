@@ -1399,7 +1399,7 @@ namespace Azure.AI.TextAnalytics
                 switch (response.Status)
                 {
                     case 200:
-                        DocumentResultCollection<Entity> result = CreateLinkedEntityResponse(response);
+                        DocumentResultCollection<LinkedEntity> result = CreateLinkedEntityResponse(response);
                         if (result.Errors.Count > 0)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
