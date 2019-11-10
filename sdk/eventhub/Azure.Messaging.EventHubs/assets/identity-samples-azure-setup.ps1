@@ -146,7 +146,7 @@ if ([string]::IsNullOrEmpty($azureRegion))
 
 ValidateParameters -ServicePrincipalName "$($servicePrincipalName)" -AzureRegion "$($azureRegion)"
 $subscription = GetSubscriptionAndSetAzureContext -SubscriptionName "$($subscriptionName)"
-CreateResourceGroupIfMissing -ResourceGroupName "$($resourceGroupName)" -AzureRegion "$($azureRegion)"
+$isResourceGroupCreated = CreateResourceGroupIfMissing -ResourceGroupName "$($resourceGroupName)" -AzureRegion "$($azureRegion)"
 
 # At this point, we may have created a resource, so be safe and allow for removing any
 # resources created should the script fail.
@@ -155,18 +155,18 @@ try
 {
     Start-Sleep 1
 
-    CreateNamespaceIfMissing -ResourceGroupName "$($resourceGroupName)" `
-                             -NamespaceName "$($namespaceName)" `
-                             -AzureRegion "$($azureRegion)"
+    $isNamespaceCreated = CreateNamespaceIfMissing -ResourceGroupName "$($resourceGroupName)" `
+                                                   -NamespaceName "$($namespaceName)" `
+                                                   -AzureRegion "$($azureRegion)"
 
     $namespaceInformation = GetNamespaceInformation -ResourceGroupName "$($resourceGroupName)" -NamespaceName "$($namespaceName)"
 
-    CreateHubIfMissing -ResourceGroupName "$($resourceGroupName)" `
-                       -NamespaceName "$($namespaceName)" `
-                       -EventHubName "$($eventHubName)"
+    $isEventHubCreated = CreateHubIfMissing -ResourceGroupName "$($resourceGroupName)" `
+                                            -NamespaceName "$($namespaceName)" `
+                                            -EventHubName "$($eventHubName)"
 
     # Create the service principal and grant 'Azure Event Hubs Data Owner' access in the event hubs.
-
+    
     $credentials = GenerateRandomCredentials           
     $principal = CreateServicePrincipalAndWait -ServicePrincipalName "$($servicePrincipalName)" -Credentials $credentials
 
@@ -193,6 +193,11 @@ try
 catch 
 {
     Write-Error $_.Exception.Message
-    TearDownResources -ResourceGroupName $resourceGroupName
+    TearDownResources -ResourceGroupName "$($resourceGroupName)" `
+                      -NamespaceName "$($namespaceName)" `
+                      -EventHubName "$($eventHubName)" `
+                      -IsResourceGroupCreated $isResourceGroupCreated `
+                      -IsNamespaceCreated $isNamespaceCreated `
+                      -IsEventHubCreated $isEventHubCreated
     exit -1
 }
