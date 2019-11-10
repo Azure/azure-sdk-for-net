@@ -18,6 +18,7 @@ namespace Azure.AI.TextAnalytics
         private const string PiiEntitiesRoute = "/entities/recognition/pii";
         private const string SentimentRoute = "/sentiment";
         private const string KeyPhrases = "/keyPhrases";
+        private const string EntityLinkingRoute = "/entities/linking";
 
         private const string ShowStats = "showStats";
         private const string ModelVersion = "model-version";
@@ -227,6 +228,74 @@ namespace Azure.AI.TextAnalytics
             }
         }
         #endregion Extract KeyPhrases
+
+        // YOU ARE HERE: Working on adding linked entities stuff.  In progress.
+
+        #region Entity Linking
+        private static async Task<Response<DocumentResultCollection<Entity>>> CreateRecognizeEntitiesResponseAsync(Response response, CancellationToken cancellation)
+        {
+            DocumentResultCollection<Entity> result = await TextAnalyticsServiceSerializer.DeserializeRecognizeEntitiesResponseAsync(response.ContentStream, cancellation).ConfigureAwait(false);
+            return Response.FromValue(result, response);
+        }
+
+        private static Response<DocumentResultCollection<Entity>> CreateRecognizeEntitiesResponse(Response response)
+        {
+            return Response.FromValue(TextAnalyticsServiceSerializer.DeserializeRecognizeEntitiesResponse(response.ContentStream), response);
+        }
+
+        private static async Task<Response<IEnumerable<IEnumerable<Entity>>>> CreateRecognizeEntitiesResponseSimpleAsync(Response response, CancellationToken cancellation)
+        {
+            var result = await TextAnalyticsServiceSerializer.DeserializeEntityCollectionAsync(response.ContentStream, cancellation).ConfigureAwait(false);
+            return Response.FromValue(result, response);
+        }
+
+        private static Response<IEnumerable<IEnumerable<Entity>>> CreateRecognizeEntitiesResponseSimple(Response response)
+        {
+            return Response.FromValue(TextAnalyticsServiceSerializer.DeserializeEntityCollection(response.ContentStream), response);
+        }
+
+        private static Response<IEnumerable<Entity>> CreateRecognizeEntitiesResponseSimple(Response response, IEnumerable<Entity> entities)
+        {
+            return Response.FromValue(entities, response);
+        }
+
+        private void BuildUriForEntityLinkingRoute(RequestUriBuilder builder, bool showStats, string modelVersion)
+        {
+            builder.Reset(_baseUri);
+            builder.AppendPath(TextAnalyticsRoute, escape: false);
+            builder.AppendPath(_apiVersion, escape: false);
+            builder.AppendPath(EntityLinkingRoute, escape: false);
+
+            if (showStats)
+            {
+                builder.AppendQuery(ShowStats, "true");
+            }
+
+            if (!string.IsNullOrEmpty(modelVersion))
+            {
+                builder.AppendQuery(ModelVersion, modelVersion);
+            }
+        }
+
+        private void BuildUriForPiiEntitiesRoute(RequestUriBuilder builder, bool showStats, string modelVersion)
+        {
+            builder.Reset(_baseUri);
+            builder.AppendPath(TextAnalyticsRoute, escape: false);
+            builder.AppendPath(_apiVersion, escape: false);
+            builder.AppendPath(PiiEntitiesRoute, escape: false);
+
+            if (showStats)
+            {
+                builder.AppendQuery(ShowStats, "true");
+            }
+
+            if (!string.IsNullOrEmpty(modelVersion))
+            {
+                builder.AppendQuery(ModelVersion, modelVersion);
+            }
+        }
+        #endregion
+
 
         #region nobody wants to see these
         /// <summary>
