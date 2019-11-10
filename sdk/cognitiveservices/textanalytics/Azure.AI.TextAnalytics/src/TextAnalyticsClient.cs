@@ -774,7 +774,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateExtractKeyPhrasesRequest(new List<string> { inputText }, language);
+                using Request request = CreateStringCollectionRequest(new List<string> { inputText }, language, KeyPhrasesRoute);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
@@ -814,7 +814,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateExtractKeyPhrasesRequest(new List<string> { inputText }, language);
+                using Request request = CreateStringCollectionRequest(new List<string> { inputText }, language, KeyPhrasesRoute);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 switch (response.Status)
@@ -853,7 +853,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateExtractKeyPhrasesRequest(inputs, language);
+                using Request request = CreateStringCollectionRequest(inputs, language, KeyPhrasesRoute);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
 
                 switch (response.Status)
@@ -885,7 +885,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateExtractKeyPhrasesRequest(inputs, language);
+                using Request request = CreateStringCollectionRequest(inputs, language, KeyPhrasesRoute);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 return response.Status switch
@@ -918,7 +918,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateExtractKeyPhrasesRequest(inputs, showStats, modelVersion);
+                using Request request = CreateDocumentInputRequest(inputs, showStats, modelVersion, KeyPhrasesRoute);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
 
                 return response.Status switch
@@ -950,7 +950,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateExtractKeyPhrasesRequest(inputs, showStats, modelVersion);
+                using Request request = CreateDocumentInputRequest(inputs, showStats, modelVersion, KeyPhrasesRoute);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 return response.Status switch
@@ -964,45 +964,6 @@ namespace Azure.AI.TextAnalytics
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private Request CreateExtractKeyPhrasesRequest(IEnumerable<string> inputs, string language)
-        {
-            Argument.AssertNotNull(inputs, nameof(inputs));
-            Argument.AssertNotNull(language, nameof(language));
-
-            Request request = _pipeline.CreateRequest();
-
-            ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDocumentInputs(inputs, language);
-
-            request.Method = RequestMethod.Post;
-            BuildUriForRoute(KeyPhrasesRoute, request.Uri, showStats: default, modelVersion: default);
-
-            request.Headers.Add(HttpHeader.Common.JsonContentType);
-            request.Content = RequestContent.Create(content);
-
-            request.Headers.Add("Ocp-Apim-Subscription-Key", _subscriptionKey);
-
-            return request;
-        }
-
-        private Request CreateExtractKeyPhrasesRequest(IEnumerable<DocumentInput> inputs, bool showStats, string modelVersion)
-        {
-            Argument.AssertNotNull(inputs, nameof(inputs));
-
-            Request request = _pipeline.CreateRequest();
-
-            ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDocumentInputs(inputs);
-
-            request.Method = RequestMethod.Post;
-            BuildUriForRoute(KeyPhrasesRoute, request.Uri, showStats, modelVersion);
-
-            request.Headers.Add(HttpHeader.Common.JsonContentType);
-            request.Content = RequestContent.Create(content);
-
-            request.Headers.Add("Ocp-Apim-Subscription-Key", _subscriptionKey);
-
-            return request;
         }
 
         #endregion
@@ -1025,7 +986,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateRecognizePiiEntitiesRequest(new List<string> { inputText }, language);
+                using Request request = CreateStringCollectionRequest(new List<string> { inputText }, language, PiiEntitiesRoute);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
@@ -1065,7 +1026,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateRecognizePiiEntitiesRequest(new List<string> { inputText }, language);
+                using Request request = CreateStringCollectionRequest(new List<string> { inputText }, language, PiiEntitiesRoute);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 switch (response.Status)
@@ -1104,7 +1065,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateRecognizePiiEntitiesRequest(inputs, language);
+                using Request request = CreateStringCollectionRequest(inputs, language, PiiEntitiesRoute);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
 
                 switch (response.Status)
@@ -1136,7 +1097,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateRecognizePiiEntitiesRequest(inputs, language);
+                using Request request = CreateStringCollectionRequest(inputs, language, PiiEntitiesRoute);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 return response.Status switch
@@ -1169,7 +1130,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateRecognizePiiEntitiesRequest(inputs, showStats, modelVersion);
+                using Request request = CreateDocumentInputRequest(inputs, showStats, modelVersion, PiiEntitiesRoute);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
 
                 return response.Status switch
@@ -1201,7 +1162,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateRecognizePiiEntitiesRequest(inputs, showStats, modelVersion);
+                using Request request = CreateDocumentInputRequest(inputs, showStats, modelVersion, PiiEntitiesRoute);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 return response.Status switch
@@ -1215,45 +1176,6 @@ namespace Azure.AI.TextAnalytics
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private Request CreateRecognizePiiEntitiesRequest(IEnumerable<string> inputs, string language)
-        {
-            Argument.AssertNotNull(inputs, nameof(inputs));
-            Argument.AssertNotNull(language, nameof(language));
-
-            Request request = _pipeline.CreateRequest();
-
-            ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDocumentInputs(inputs, language);
-
-            request.Method = RequestMethod.Post;
-            BuildUriForRoute(PiiEntitiesRoute, request.Uri, showStats: default, modelVersion: default);
-
-            request.Headers.Add(HttpHeader.Common.JsonContentType);
-            request.Content = RequestContent.Create(content);
-
-            request.Headers.Add("Ocp-Apim-Subscription-Key", _subscriptionKey);
-
-            return request;
-        }
-
-        private Request CreateRecognizePiiEntitiesRequest(IEnumerable<DocumentInput> inputs, bool showStats, string modelVersion)
-        {
-            Argument.AssertNotNull(inputs, nameof(inputs));
-
-            Request request = _pipeline.CreateRequest();
-
-            ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDocumentInputs(inputs);
-
-            request.Method = RequestMethod.Post;
-            BuildUriForRoute(PiiEntitiesRoute, request.Uri, showStats, modelVersion);
-
-            request.Headers.Add(HttpHeader.Common.JsonContentType);
-            request.Content = RequestContent.Create(content);
-
-            request.Headers.Add("Ocp-Apim-Subscription-Key", _subscriptionKey);
-
-            return request;
         }
 
         #endregion
