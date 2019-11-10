@@ -17,7 +17,7 @@ namespace Azure.AI.TextAnalytics
         private const string EntitiesRoute = "/entities/recognition/general";
         private const string PiiEntitiesRoute = "/entities/recognition/pii";
         private const string SentimentRoute = "/sentiment";
-        private const string KeyPhrases = "/keyPhrases";
+        private const string KeyPhrasesRoute = "/keyPhrases";
         private const string EntityLinkingRoute = "/entities/linking";
 
         private const string ShowStats = "showStats";
@@ -51,23 +51,6 @@ namespace Azure.AI.TextAnalytics
             return Response.FromValue(detectedLanguage, response);
         }
 
-        private void BuildUriForLanguagesRoute(RequestUriBuilder builder, bool showStats, string modelVersion)
-        {
-            builder.Reset(_baseUri);
-            builder.AppendPath(TextAnalyticsRoute, escape: false);
-            builder.AppendPath(_apiVersion, escape: false);
-            builder.AppendPath(LanguagesRoute, escape: false);
-
-            if (showStats)
-            {
-                builder.AppendQuery(ShowStats, "true");
-            }
-
-            if (!string.IsNullOrEmpty(modelVersion))
-            {
-                builder.AppendQuery(ModelVersion, modelVersion);
-            }
-        }
         #endregion
 
         #region Recognize Entities
@@ -98,41 +81,6 @@ namespace Azure.AI.TextAnalytics
             return Response.FromValue(entities, response);
         }
 
-        private void BuildUriForEntitiesRoute(RequestUriBuilder builder, bool showStats, string modelVersion)
-        {
-            builder.Reset(_baseUri);
-            builder.AppendPath(TextAnalyticsRoute, escape: false);
-            builder.AppendPath(_apiVersion, escape: false);
-            builder.AppendPath(EntitiesRoute, escape: false);
-
-            if (showStats)
-            {
-                builder.AppendQuery(ShowStats, "true");
-            }
-
-            if (!string.IsNullOrEmpty(modelVersion))
-            {
-                builder.AppendQuery(ModelVersion, modelVersion);
-            }
-        }
-
-        private void BuildUriForPiiEntitiesRoute(RequestUriBuilder builder, bool showStats, string modelVersion)
-        {
-            builder.Reset(_baseUri);
-            builder.AppendPath(TextAnalyticsRoute, escape: false);
-            builder.AppendPath(_apiVersion, escape: false);
-            builder.AppendPath(PiiEntitiesRoute, escape: false);
-
-            if (showStats)
-            {
-                builder.AppendQuery(ShowStats, "true");
-            }
-
-            if (!string.IsNullOrEmpty(modelVersion))
-            {
-                builder.AppendQuery(ModelVersion, modelVersion);
-            }
-        }
         #endregion
 
         #region Analyze Sentiment
@@ -163,23 +111,6 @@ namespace Azure.AI.TextAnalytics
             return Response.FromValue(sentiment, response);
         }
 
-        private void BuildUriForSentimentRoute(RequestUriBuilder builder, bool showStats, string modelVersion)
-        {
-            builder.Reset(_baseUri);
-            builder.AppendPath(TextAnalyticsRoute, escape: false);
-            builder.AppendPath(_apiVersion, escape: false);
-            builder.AppendPath(SentimentRoute, escape: false);
-
-            if (showStats)
-            {
-                builder.AppendQuery(ShowStats, "true");
-            }
-
-            if (!string.IsNullOrEmpty(modelVersion))
-            {
-                builder.AppendQuery(ModelVersion, modelVersion);
-            }
-        }
         #endregion  Analyze Sentiment
 
         #region Extract KeyPhrases
@@ -210,23 +141,6 @@ namespace Azure.AI.TextAnalytics
             return Response.FromValue(keyPhrases, response);
         }
 
-        private void BuildUriForKeyPhrasesRoute(RequestUriBuilder builder, bool showStats, string modelVersion)
-        {
-            builder.Reset(_baseUri);
-            builder.AppendPath(TextAnalyticsRoute, escape: false);
-            builder.AppendPath(_apiVersion, escape: false);
-            builder.AppendPath(KeyPhrases, escape: false);
-
-            if (showStats)
-            {
-                builder.AppendQuery(ShowStats, "true");
-            }
-
-            if (!string.IsNullOrEmpty(modelVersion))
-            {
-                builder.AppendQuery(ModelVersion, modelVersion);
-            }
-        }
         #endregion Extract KeyPhrases
 
         #region Entity Linking
@@ -257,12 +171,14 @@ namespace Azure.AI.TextAnalytics
             return Response.FromValue(entities, response);
         }
 
-        private void BuildUriForEntityLinkingRoute(RequestUriBuilder builder, bool showStats, string modelVersion)
+        #endregion
+
+        private void BuildUriForRoute(string route, RequestUriBuilder builder, bool showStats, string modelVersion)
         {
             builder.Reset(_baseUri);
             builder.AppendPath(TextAnalyticsRoute, escape: false);
             builder.AppendPath(_apiVersion, escape: false);
-            builder.AppendPath(EntityLinkingRoute, escape: false);
+            builder.AppendPath(route, escape: false);
 
             if (showStats)
             {
@@ -274,8 +190,6 @@ namespace Azure.AI.TextAnalytics
                 builder.AppendQuery(ModelVersion, modelVersion);
             }
         }
-        #endregion
-
 
         #region nobody wants to see these
         /// <summary>

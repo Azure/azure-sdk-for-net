@@ -303,7 +303,7 @@ namespace Azure.AI.TextAnalytics
             ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDetectLanguageInputs(inputs, countryHint);
 
             request.Method = RequestMethod.Post;
-            BuildUriForLanguagesRoute(request.Uri, showStats: default, modelVersion: default);
+            BuildUriForRoute(LanguagesRoute, request.Uri, showStats: default, modelVersion: default);
 
             request.Headers.Add(HttpHeader.Common.JsonContentType);
             request.Content = RequestContent.Create(content);
@@ -322,7 +322,7 @@ namespace Azure.AI.TextAnalytics
             ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDetectLanguageInputs(inputs);
 
             request.Method = RequestMethod.Post;
-            BuildUriForLanguagesRoute(request.Uri, showStats, modelVersion);
+            BuildUriForRoute(LanguagesRoute, request.Uri, showStats, modelVersion);
 
             request.Headers.Add(HttpHeader.Common.JsonContentType);
             request.Content = RequestContent.Create(content);
@@ -352,7 +352,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateRecognizeEntitiesRequest(new List<string> { inputText }, language);
+                using Request request = CreateStringCollectionRequest(new List<string> { inputText }, language, EntitiesRoute);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
@@ -392,7 +392,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateRecognizeEntitiesRequest(new List<string> { inputText }, language);
+                using Request request = CreateStringCollectionRequest(new List<string> { inputText }, language, EntitiesRoute);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 switch (response.Status)
@@ -431,7 +431,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateRecognizeEntitiesRequest(inputs, language);
+                using Request request = CreateStringCollectionRequest(inputs, language, EntitiesRoute);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
 
                 switch (response.Status)
@@ -463,7 +463,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateRecognizeEntitiesRequest(inputs, language);
+                using Request request = CreateStringCollectionRequest(inputs, language, EntitiesRoute);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 return response.Status switch
@@ -496,7 +496,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateRecognizeEntitiesRequest(inputs, showStats, modelVersion);
+                using Request request = CreateDocumentInputRequest(inputs, showStats, modelVersion, EntitiesRoute);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
 
                 return response.Status switch
@@ -528,7 +528,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateRecognizeEntitiesRequest(inputs, showStats, modelVersion);
+                using Request request = CreateDocumentInputRequest(inputs, showStats, modelVersion, EntitiesRoute);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 return response.Status switch
@@ -542,45 +542,6 @@ namespace Azure.AI.TextAnalytics
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private Request CreateRecognizeEntitiesRequest(IEnumerable<string> inputs, string language)
-        {
-            Argument.AssertNotNull(inputs, nameof(inputs));
-            Argument.AssertNotNull(language, nameof(language));
-
-            Request request = _pipeline.CreateRequest();
-
-            ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDocumentInputs(inputs, language);
-
-            request.Method = RequestMethod.Post;
-            BuildUriForEntitiesRoute(request.Uri, showStats: default, modelVersion: default);
-
-            request.Headers.Add(HttpHeader.Common.JsonContentType);
-            request.Content = RequestContent.Create(content);
-
-            request.Headers.Add("Ocp-Apim-Subscription-Key", _subscriptionKey);
-
-            return request;
-        }
-
-        private Request CreateRecognizeEntitiesRequest(IEnumerable<DocumentInput> inputs, bool showStats, string modelVersion)
-        {
-            Argument.AssertNotNull(inputs, nameof(inputs));
-
-            Request request = _pipeline.CreateRequest();
-
-            ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDocumentInputs(inputs);
-
-            request.Method = RequestMethod.Post;
-            BuildUriForEntitiesRoute(request.Uri, showStats, modelVersion);
-
-            request.Headers.Add(HttpHeader.Common.JsonContentType);
-            request.Content = RequestContent.Create(content);
-
-            request.Headers.Add("Ocp-Apim-Subscription-Key", _subscriptionKey);
-
-            return request;
         }
 
         #endregion
@@ -603,7 +564,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateAnalyzeSentimentRequest(new List<string> { inputText }, language);
+                using Request request = CreateStringCollectionRequest(new List<string> { inputText }, language, SentimentRoute);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
@@ -643,7 +604,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateAnalyzeSentimentRequest(new List<string> { inputText }, language);
+                using Request request = CreateStringCollectionRequest(new List<string> { inputText }, language, SentimentRoute);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 switch (response.Status)
@@ -682,7 +643,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateAnalyzeSentimentRequest(inputs, language);
+                using Request request = CreateStringCollectionRequest(inputs, language, SentimentRoute);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
 
                 return response.Status switch
@@ -712,7 +673,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateAnalyzeSentimentRequest(inputs, language);
+                using Request request = CreateStringCollectionRequest(inputs, language, SentimentRoute);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 return response.Status switch
@@ -745,7 +706,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateAnalyzeSentimentRequest(inputs, showStats, modelVersion);
+                using Request request = CreateDocumentInputRequest(inputs, showStats, modelVersion, SentimentRoute);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
 
                 return response.Status switch
@@ -777,7 +738,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateAnalyzeSentimentRequest(inputs, showStats, modelVersion);
+                using Request request = CreateDocumentInputRequest(inputs, showStats, modelVersion, SentimentRoute);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 return response.Status switch
@@ -791,44 +752,6 @@ namespace Azure.AI.TextAnalytics
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private Request CreateAnalyzeSentimentRequest(IEnumerable<string> inputs, string language)
-        {
-            Argument.AssertNotNull(inputs, nameof(inputs));
-
-            Request request = _pipeline.CreateRequest();
-
-            ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDocumentInputs(inputs, language);
-
-            request.Method = RequestMethod.Post;
-            BuildUriForSentimentRoute(request.Uri, showStats: default, modelVersion: default);
-
-            request.Headers.Add(HttpHeader.Common.JsonContentType);
-            request.Content = RequestContent.Create(content);
-
-            request.Headers.Add("Ocp-Apim-Subscription-Key", _subscriptionKey);
-
-            return request;
-        }
-
-        private Request CreateAnalyzeSentimentRequest(IEnumerable<DocumentInput> inputs, bool showStats, string modelVersion)
-        {
-            Argument.AssertNotNull(inputs, nameof(inputs));
-
-            Request request = _pipeline.CreateRequest();
-
-            ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDocumentInputs(inputs);
-
-            request.Method = RequestMethod.Post;
-            BuildUriForSentimentRoute(request.Uri, showStats, modelVersion);
-
-            request.Headers.Add(HttpHeader.Common.JsonContentType);
-            request.Content = RequestContent.Create(content);
-
-            request.Headers.Add("Ocp-Apim-Subscription-Key", _subscriptionKey);
-
-            return request;
         }
 
         #endregion
@@ -1053,7 +976,7 @@ namespace Azure.AI.TextAnalytics
             ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDocumentInputs(inputs, language);
 
             request.Method = RequestMethod.Post;
-            BuildUriForKeyPhrasesRoute(request.Uri, showStats: default, modelVersion: default);
+            BuildUriForRoute(KeyPhrasesRoute, request.Uri, showStats: default, modelVersion: default);
 
             request.Headers.Add(HttpHeader.Common.JsonContentType);
             request.Content = RequestContent.Create(content);
@@ -1072,7 +995,7 @@ namespace Azure.AI.TextAnalytics
             ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDocumentInputs(inputs);
 
             request.Method = RequestMethod.Post;
-            BuildUriForKeyPhrasesRoute(request.Uri, showStats, modelVersion);
+            BuildUriForRoute(KeyPhrasesRoute, request.Uri, showStats, modelVersion);
 
             request.Headers.Add(HttpHeader.Common.JsonContentType);
             request.Content = RequestContent.Create(content);
@@ -1304,7 +1227,7 @@ namespace Azure.AI.TextAnalytics
             ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDocumentInputs(inputs, language);
 
             request.Method = RequestMethod.Post;
-            BuildUriForPiiEntitiesRoute(request.Uri, showStats: default, modelVersion: default);
+            BuildUriForRoute(PiiEntitiesRoute, request.Uri, showStats: default, modelVersion: default);
 
             request.Headers.Add(HttpHeader.Common.JsonContentType);
             request.Content = RequestContent.Create(content);
@@ -1323,7 +1246,7 @@ namespace Azure.AI.TextAnalytics
             ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDocumentInputs(inputs);
 
             request.Method = RequestMethod.Post;
-            BuildUriForPiiEntitiesRoute(request.Uri, showStats, modelVersion);
+            BuildUriForRoute(PiiEntitiesRoute, request.Uri, showStats, modelVersion);
 
             request.Headers.Add(HttpHeader.Common.JsonContentType);
             request.Content = RequestContent.Create(content);
@@ -1353,7 +1276,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreatEntityLinkingRequest(new List<string> { inputText }, language);
+                using Request request = CreateStringCollectionRequest(new List<string> { inputText }, language, EntityLinkingRoute);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
@@ -1393,7 +1316,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreatEntityLinkingRequest(new List<string> { inputText }, language);
+                using Request request = CreateStringCollectionRequest(new List<string> { inputText }, language, EntityLinkingRoute);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 switch (response.Status)
@@ -1432,7 +1355,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreatEntityLinkingRequest(inputs, language);
+                using Request request = CreateStringCollectionRequest(inputs, language, EntityLinkingRoute);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
 
                 switch (response.Status)
@@ -1464,7 +1387,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreatEntityLinkingRequest(inputs, language);
+                using Request request = CreateStringCollectionRequest(inputs, language, EntityLinkingRoute);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 return response.Status switch
@@ -1497,7 +1420,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateEntityLinkingRequest(inputs, showStats, modelVersion);
+                using Request request = CreateDocumentInputRequest(inputs, showStats, modelVersion, EntityLinkingRoute);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
 
                 return response.Status switch
@@ -1529,7 +1452,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateEntityLinkingRequest(inputs, showStats, modelVersion);
+                using Request request = CreateDocumentInputRequest(inputs, showStats, modelVersion, EntityLinkingRoute);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 return response.Status switch
@@ -1545,7 +1468,9 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        private Request CreatEntityLinkingRequest(IEnumerable<string> inputs, string language)
+        #endregion
+
+        private Request CreateStringCollectionRequest(IEnumerable<string> inputs, string language, string route)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
             Argument.AssertNotNull(language, nameof(language));
@@ -1555,7 +1480,7 @@ namespace Azure.AI.TextAnalytics
             ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDocumentInputs(inputs, language);
 
             request.Method = RequestMethod.Post;
-            BuildUriForEntityLinkingRoute(request.Uri, showStats: default, modelVersion: default);
+            BuildUriForRoute(route, request.Uri, showStats: default, modelVersion: default);
 
             request.Headers.Add(HttpHeader.Common.JsonContentType);
             request.Content = RequestContent.Create(content);
@@ -1565,7 +1490,7 @@ namespace Azure.AI.TextAnalytics
             return request;
         }
 
-        private Request CreateEntityLinkingRequest(IEnumerable<DocumentInput> inputs, bool showStats, string modelVersion)
+        private Request CreateDocumentInputRequest(IEnumerable<DocumentInput> inputs, bool showStats, string modelVersion, string route)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
@@ -1574,7 +1499,7 @@ namespace Azure.AI.TextAnalytics
             ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDocumentInputs(inputs);
 
             request.Method = RequestMethod.Post;
-            BuildUriForEntityLinkingRoute(request.Uri, showStats, modelVersion);
+            BuildUriForRoute(route, request.Uri, showStats, modelVersion);
 
             request.Headers.Add(HttpHeader.Common.JsonContentType);
             request.Content = RequestContent.Create(content);
@@ -1583,7 +1508,5 @@ namespace Azure.AI.TextAnalytics
 
             return request;
         }
-
-        #endregion
     }
 }
