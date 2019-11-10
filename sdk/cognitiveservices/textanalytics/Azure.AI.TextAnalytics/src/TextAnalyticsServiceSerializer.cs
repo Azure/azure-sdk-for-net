@@ -722,7 +722,7 @@ namespace Azure.AI.TextAnalytics
             var linkedEntity = new LinkedEntity();
 
             if (entityElement.TryGetProperty("name", out JsonElement nameElement))
-                linkedEntity.Text = nameElement.ToString();
+                linkedEntity.Name = nameElement.ToString();
             if (entityElement.TryGetProperty("id", out JsonElement idElement))
                 linkedEntity.Id = idElement.ToString();
             if (entityElement.TryGetProperty("language", out JsonElement languageElement))

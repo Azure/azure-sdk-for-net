@@ -1417,69 +1417,69 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        ///// <summary>
-        ///// </summary>
-        ///// <param name="inputs"></param>
-        ///// <param name="language"></param>
-        ///// <param name="cancellationToken"></param>
-        ///// <returns></returns>
-        //public virtual async Task<Response<IEnumerable<IEnumerable<LinkedEntity>>>> ExtractEntityLinkingAsync(IEnumerable<string> inputs, string language = "en", CancellationToken cancellationToken = default)
-        //{
-        //    Argument.AssertNotNull(inputs, nameof(inputs));
+        /// <summary>
+        /// </summary>
+        /// <param name="inputs"></param>
+        /// <param name="language"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response<IEnumerable<IEnumerable<LinkedEntity>>>> ExtractEntityLinkingAsync(IEnumerable<string> inputs, string language = "en", CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(inputs, nameof(inputs));
 
-        //    using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeEntities");
-        //    scope.Start();
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.ExtractEntityLinking");
+            scope.Start();
 
-        //    try
-        //    {
-        //        using Request request = CreateRecognizeEntitiesRequest(inputs, language);
-        //        Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
+            try
+            {
+                using Request request = CreatEntityLinkingRequest(inputs, language);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
 
-        //        switch (response.Status)
-        //        {
-        //            case 200:
-        //                return await CreateRecognizeEntitiesResponseSimpleAsync(response, cancellationToken).ConfigureAwait(false);
-        //            default:
-        //                throw await response.CreateRequestFailedExceptionAsync();
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        scope.Failed(e);
-        //        throw;
-        //    }
-        //}
+                switch (response.Status)
+                {
+                    case 200:
+                        return await CreateLinkedEntityResponseSimpleAsync(response, cancellationToken).ConfigureAwait(false);
+                    default:
+                        throw await response.CreateRequestFailedExceptionAsync();
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        ///// <summary>
-        ///// </summary>
-        ///// <param name="inputs"></param>
-        ///// <param name="language"></param>
-        ///// <param name="cancellationToken"></param>
-        ///// <returns></returns>
-        //public virtual Response<IEnumerable<IEnumerable<LinkedEntity>>> ExtractEntityLinking(IEnumerable<string> inputs, string language = "en", CancellationToken cancellationToken = default)
-        //{
-        //    Argument.AssertNotNull(inputs, nameof(inputs));
-        //    using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeEntities");
-        //    scope.Start();
+        /// <summary>
+        /// </summary>
+        /// <param name="inputs"></param>
+        /// <param name="language"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response<IEnumerable<IEnumerable<LinkedEntity>>> ExtractEntityLinking(IEnumerable<string> inputs, string language = "en", CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(inputs, nameof(inputs));
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.ExtractEntityLinking");
+            scope.Start();
 
-        //    try
-        //    {
-        //        using Request request = CreateRecognizeEntitiesRequest(inputs, language);
-        //        Response response = _pipeline.SendRequest(request, cancellationToken);
+            try
+            {
+                using Request request = CreatEntityLinkingRequest(inputs, language);
+                Response response = _pipeline.SendRequest(request, cancellationToken);
 
-        //        return response.Status switch
-        //        {
-        //            // TODO: for this, we'll need to stitch back together the errors, as ids have been stripped.
-        //            200 => CreateRecognizeEntitiesResponseSimple(response),
-        //            _ => throw response.CreateRequestFailedException(),
-        //        };
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        scope.Failed(e);
-        //        throw;
-        //    }
-        //}
+                return response.Status switch
+                {
+                    // TODO: for this, we'll need to stitch back together the errors, as ids have been stripped.
+                    200 => CreateLinkedEntityResponseSimple(response),
+                    _ => throw response.CreateRequestFailedException(),
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
         ///// <summary>
         ///// </summary>
