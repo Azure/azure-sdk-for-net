@@ -14,8 +14,8 @@ namespace Microsoft.Azure.Search
         /// <summary>
         /// Initializes a new instance of the SearchServiceClient class.
         /// </summary>
-        /// <param name='searchServiceName'>Required. The name of the Azure Search service.</param>
-        /// <param name='credentials'>Required. The credentials used to authenticate to an Azure Search service.
+        /// <param name='searchServiceName'>Required. The name of the search service.</param>
+        /// <param name='credentials'>Required. The credentials used to authenticate to a search service.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/" />
         /// </param>
         /// <param name='rootHandler'>
@@ -37,8 +37,8 @@ namespace Microsoft.Azure.Search
         /// <summary>
         /// Initializes a new instance of the SearchServiceClient class.
         /// </summary>
-        /// <param name='searchServiceName'>Required. The name of the Azure Search service.</param>
-        /// <param name='credentials'>Required. The credentials used to authenticate to an Azure Search service.
+        /// <param name='searchServiceName'>Required. The name of the search service.</param>
+        /// <param name='credentials'>Required. The credentials used to authenticate to a search service.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/" />
         /// </param>
         public SearchServiceClient(string searchServiceName, SearchCredentials credentials)
@@ -48,10 +48,10 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Gets the credentials used to authenticate to an Azure Search service. This can be either a query API key or an admin API key.
+        /// Gets the credentials used to authenticate to a search service. This can be either a query API key or an admin API key.
         /// </summary>
         /// <remarks>
-        /// See <see href="https://docs.microsoft.com/azure/search/search-security-api-keys"/> for more information about API keys in Azure Search.
+        /// See <see href="https://docs.microsoft.com/azure/search/search-security-api-keys"/> for more information about API keys in Azure Cognitive Search.
         /// </remarks>
         public SearchCredentials SearchCredentials => (SearchCredentials)Credentials;
 

@@ -26,6 +26,7 @@ namespace DataFactory.Tests.Utils
         private const string triggerName = "exampleTrigger";
         private const string eventTriggerName = "exampleEventTrigger";
         private const string datasetName = "exampleDataset";
+        private const string dataFlowName = "exampleDataFlow";
         private const string pipelineName = "examplePipeline";
         private const string parentPipeline1Name = "parentPipeline1";
         private const string parentPipeline2Name = "parentPipeline2";
@@ -109,6 +110,12 @@ namespace DataFactory.Tests.Utils
                 CaptureDatasets_Get(); // 200
                 CaptureDatasets_ListByFactory(); // 200
 
+                // Start DataFlows operations, leaving dataset available
+                CaptureDataFlows_Create(); // 200
+                CaptureDataFlows_Update(); // 200
+                CaptureDataFlows_Get(); // 200
+                CaptureDataFlows_ListByFactory(); // 200
+
                 // All Pipelines and PipelineRuns operations, creating/running/monitoring/deleting pipeline
                 CapturePipelines_Create(); // 200
                 CapturePipelines_Update(); // 200
@@ -149,6 +156,10 @@ namespace DataFactory.Tests.Utils
                 // Finish Datasets operations, deleting dataset
                 CaptureDatasets_Delete(); // 200
                 CaptureDatasets_Delete(); // 204
+
+                // Finish DataFlows operations, deleting data flow
+                CaptureDataFlows_Delete(); // 200
+                CaptureDataFlows_Delete(); // 204
 
                 // Finish LinkedServices operations, deleting linked service
                 CaptureLinkedServices_Delete(); // 200
@@ -675,6 +686,88 @@ namespace DataFactory.Tests.Utils
         {
             interceptor.CurrentExampleName = "Datasets_Delete";
             client.Datasets.Delete(secrets.ResourceGroupName, secrets.FactoryName, datasetName);
+        }
+
+        private DataFlowResource GetDataFlowResource(string description)
+        {
+            DataFlowResource resource = new DataFlowResource
+            {
+                Properties = new MappingDataFlow
+                {
+                    Description = description,
+                    Sources = new List<DataFlowSource>() {
+                        new DataFlowSource()
+                        {
+                            Name = "source",
+                            Description = "source 1",
+                            Dataset = new DatasetReference()
+                            {
+                                ReferenceName = "dataset",
+                                Parameters = new Dictionary<string, object>
+                                {
+                                    { "JobId", new Expression("@pipeline().parameters.JobId") }
+                                }
+                            }
+                        }
+                    },
+                    Sinks = new List<DataFlowSink>() {
+                        new DataFlowSink()
+                        {
+                            Name = "sink",
+                            Description = "sink 1",
+                            Dataset = new DatasetReference()
+                            {
+                                ReferenceName = "dataset",
+                                Parameters = new Dictionary<string, object>
+                                {
+                                    { "JobId", new Expression("@pipeline().parameters.JobId") }
+                                }
+                            }
+                        }
+                    },
+                    Transformations = new List<Transformation>() {
+                        new Transformation()
+                        {
+                            Name = "transformation",
+                            Description = "transformation 1"
+                        }
+                    }
+                }
+            };
+
+            return resource;
+        }
+
+        private void CaptureDataFlows_Create()
+        {
+            interceptor.CurrentExampleName = "DataFlows_Create";
+            DataFlowResource resourceIn = GetDataFlowResource(null);
+            DataFlowResource resource = client.DataFlows.CreateOrUpdate(secrets.ResourceGroupName, secrets.FactoryName, dataFlowName, resourceIn);
+        }
+
+        private void CaptureDataFlows_Update()
+        {
+            interceptor.CurrentExampleName = "DataFlows_Update";
+            DataFlowResource resourceIn = GetDataFlowResource("Example description");
+            DataFlowResource resource = client.DataFlows.CreateOrUpdate(secrets.ResourceGroupName, secrets.FactoryName, dataFlowName, resourceIn);
+        }
+
+        private void CaptureDataFlows_Get()
+        {
+            interceptor.CurrentExampleName = "DataFlows_Get";
+            DataFlowResource resource = client.DataFlows.Get(secrets.ResourceGroupName, secrets.FactoryName, dataFlowName);
+        }
+
+        private void CaptureDataFlows_ListByFactory()
+        {
+            interceptor.CurrentExampleName = "DataFlows_ListByFactory";
+            IPage<DataFlowResource> resources = client.DataFlows.ListByFactory(secrets.ResourceGroupName, secrets.FactoryName);
+        }
+
+        private void CaptureDataFlows_Delete()
+        {
+            interceptor.CurrentExampleName = "DataFlows_Delete";
+            client.DataFlows.Delete(secrets.ResourceGroupName, secrets.FactoryName, dataFlowName);
         }
 
         private PipelineResource GetPipelineResource(string description)

@@ -21,4 +21,6 @@ jobs:
 - template: templates/jobs/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: $(ServiceDirectory)
-    VersioningProperties: /p:OfficialBuildId=$(OfficialBuildId) /p:PreRelaseVersionLabel=$(PreReleaseVersionLabel) /p:DotNetFinalVersionKind=$(DotNetFinalVersionKind)
+    Artifacts: # Prevents Docs steps from Failing on net - client ci
+    - name: ''
+      safeName: ''

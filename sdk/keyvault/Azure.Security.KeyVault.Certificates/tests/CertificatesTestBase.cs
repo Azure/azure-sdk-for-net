@@ -1,16 +1,20 @@
-﻿using Azure.Core.Testing;
-using Azure.Identity;
-using NUnit.Framework;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Testing;
+using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Certificates.Tests
 {
     public class CertificatesTestBase : RecordedTestBase
     {
         public const string AzureKeyVaultUrlEnvironmentVariable = "AZURE_KEYVAULT_URL";
-        private readonly HashSet<string> toCleanup = new HashSet<string>();
+        private readonly HashSet<string> _toCleanup = new HashSet<string>();
 
         public CertificateClient Client { get; set; }
 
@@ -44,9 +48,9 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         {
             List<Task> cleanupTasks = new List<Task>();
 
-            foreach (string certName in toCleanup)
+            foreach (string certName in _toCleanup)
             {
-                cleanupTasks.Add(WaitForDeletedCertificate(certName).ContinueWith(t => Client.PurgeDeletedCertificateAsync(certName)));
+                cleanupTasks.Add(CleanupCertificate(certName));
             }
 
             await Task.WhenAll(cleanupTasks);
@@ -54,29 +58,49 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
         protected async Task CleanupCertificate(string name)
         {
-            await Client.DeleteCertificateAsync(name);
+            try
+            {
+                await Client.StartDeleteCertificateAsync(name);
 
-            await WaitForDeletedCertificate(name);
+                await WaitForDeletedCertificate(name);
+            }
+            catch (RequestFailedException ex) when (ex.Status == 404)
+            {
+            }
 
-            await Client.PurgeDeletedCertificateAsync(name);
+            try
+            {
+                await Client.PurgeDeletedCertificateAsync(name);
+            }
+            catch (RequestFailedException ex) when (ex.Status == 404)
+            {
+            }
         }
 
-        protected async Task<CertificateWithPolicy> WaitForCompletion(CertificateOperation operation)
+        protected async Task<KeyVaultCertificateWithPolicy> WaitForCompletion(CertificateOperation operation)
         {
-            operation.PollingInterval = TimeSpan.FromSeconds((Mode == RecordedTestMode.Playback) ? 0 : 1);
+            CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(1));
+            TimeSpan pollingInterval = TimeSpan.FromSeconds((Mode == RecordedTestMode.Playback) ? 0 : 1);
 
-            if (IsAsync)
+            try
             {
-                await operation.WaitCompletionAsync();
-            }
-            else
-            {
-                while (!operation.HasValue)
+                if (IsAsync)
                 {
-                    operation.UpdateStatus();
-
-                    await Task.Delay(operation.PollingInterval);
+                    await operation.WaitForCompletionAsync(cts.Token);
                 }
+                else
+                {
+                    while (!operation.HasValue)
+                    {
+                        operation.UpdateStatus(cts.Token);
+
+                        await Task.Delay(pollingInterval, cts.Token);
+                    }
+                }
+            }
+            catch (TaskCanceledException)
+            {
+                Assert.Inconclusive("Timed out while waiting for operation {0}", operation.Id);
             }
 
             return operation.Value;
@@ -104,7 +128,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             using (Recording.DisableRecording())
             {
-                return TestRetryHelper.RetryAsync(async () => {
+                return TestRetryHelper.RetryAsync(async () =>
+                {
                     try
                     {
                         await Client.GetDeletedCertificateAsync(name);
@@ -127,15 +152,15 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             using (Recording.DisableRecording())
             {
-                return TestRetryHelper.RetryAsync(async () => await Client.GetCertificateWithPolicyAsync(name));
+                return TestRetryHelper.RetryAsync(async () => await Client.GetCertificateAsync(name));
             }
         }
 
         protected void RegisterForCleanup(string certificateName)
         {
-            lock(toCleanup)
+            lock (_toCleanup)
             {
-                toCleanup.Add(certificateName);
+                _toCleanup.Add(certificateName);
             }
         }
     }

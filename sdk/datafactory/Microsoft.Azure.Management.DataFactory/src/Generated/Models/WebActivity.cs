@@ -60,7 +60,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// endpoint.</param>
         /// <param name="linkedServices">List of linked services passed to web
         /// endpoint.</param>
-        public WebActivity(string name, string method, object url, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), object headers = default(object), object body = default(object), WebActivityAuthentication authentication = default(WebActivityAuthentication), IList<DatasetReference> datasets = default(IList<DatasetReference>), IList<LinkedServiceReference> linkedServices = default(IList<LinkedServiceReference>))
+        /// <param name="connectVia">The integration runtime reference.</param>
+        public WebActivity(string name, string method, object url, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), object headers = default(object), object body = default(object), WebActivityAuthentication authentication = default(WebActivityAuthentication), IList<DatasetReference> datasets = default(IList<DatasetReference>), IList<LinkedServiceReference> linkedServices = default(IList<LinkedServiceReference>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference))
             : base(name, additionalProperties, description, dependsOn, userProperties, linkedServiceName, policy)
         {
             Method = method;
@@ -70,6 +71,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             Authentication = authentication;
             Datasets = datasets;
             LinkedServices = linkedServices;
+            ConnectVia = connectVia;
             CustomInit();
         }
 
@@ -129,6 +131,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public IList<LinkedServiceReference> LinkedServices { get; set; }
 
         /// <summary>
+        /// Gets or sets the integration runtime reference.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.connectVia")]
+        public IntegrationRuntimeReference ConnectVia { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -168,6 +176,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
                         element1.Validate();
                     }
                 }
+            }
+            if (ConnectVia != null)
+            {
+                ConnectVia.Validate();
             }
         }
     }

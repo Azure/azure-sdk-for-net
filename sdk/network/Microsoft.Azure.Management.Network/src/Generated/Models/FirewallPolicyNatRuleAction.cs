@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// class.
         /// </summary>
         /// <param name="type">The type of action. Possible values include:
-        /// 'DNAT', 'SNAT'</param>
+        /// 'DNAT'</param>
         public FirewallPolicyNatRuleAction(string type = default(string))
         {
             Type = type;
@@ -45,8 +45,7 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the type of action. Possible values include: 'DNAT',
-        /// 'SNAT'
+        /// Gets or sets the type of action. Possible values include: 'DNAT'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }

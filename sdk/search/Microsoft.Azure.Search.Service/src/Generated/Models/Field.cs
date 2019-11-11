@@ -17,8 +17,8 @@ namespace Microsoft.Azure.Search.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents a field in an index definition in Azure Search, which
-    /// describes the name, data type, and search behavior of a field.
+    /// Represents a field in an index definition, which describes the name,
+    /// data type, and search behavior of a field.
     /// <see
     /// href="https://docs.microsoft.com/rest/api/searchservice/Create-Index"
     /// />
@@ -66,8 +66,8 @@ namespace Microsoft.Azure.Search.Models
         /// Collection(Edm.String) are searchable by default. This property
         /// must be false for simple fields of other non-string data types, and
         /// it must be null for complex fields. Note: searchable fields consume
-        /// extra space in your index since Azure Search will store an
-        /// additional tokenized version of the field value for full-text
+        /// extra space in your index since Azure Cognitive Search will store
+        /// an additional tokenized version of the field value for full-text
         /// searches. If you want to save space in your index and you don't
         /// need a field to be included in searches, set searchable to
         /// false.</param>
@@ -82,14 +82,14 @@ namespace Microsoft.Azure.Search.Models
         /// simple fields and null for complex fields.</param>
         /// <param name="sortable">A value indicating whether to enable the
         /// field to be referenced in $orderby expressions. By default Azure
-        /// Search sorts results by score, but in many experiences users will
-        /// want to sort by fields in the documents. A simple field can be
-        /// sortable only if it is single-valued (it has a single value in the
-        /// scope of the parent document). Simple collection fields cannot be
-        /// sortable, since they are multi-valued. Simple sub-fields of complex
-        /// collections are also multi-valued, and therefore cannot be
-        /// sortable. This is true whether it's an immediate parent field, or
-        /// an ancestor field, that's the complex collection. Complex fields
+        /// Cognitive Search sorts results by score, but in many experiences
+        /// users will want to sort by fields in the documents. A simple field
+        /// can be sortable only if it is single-valued (it has a single value
+        /// in the scope of the parent document). Simple collection fields
+        /// cannot be sortable, since they are multi-valued. Simple sub-fields
+        /// of complex collections are also multi-valued, and therefore cannot
+        /// be sortable. This is true whether it's an immediate parent field,
+        /// or an ancestor field, that's the complex collection. Complex fields
         /// cannot be sortable and the sortable property must be null for such
         /// fields. The default for sortable is true for single-valued simple
         /// fields, false for multi-valued simple fields, and null for complex
@@ -276,8 +276,8 @@ namespace Microsoft.Azure.Search.Models
         /// Collection(Edm.String) are searchable by default. This property
         /// must be false for simple fields of other non-string data types, and
         /// it must be null for complex fields. Note: searchable fields consume
-        /// extra space in your index since Azure Search will store an
-        /// additional tokenized version of the field value for full-text
+        /// extra space in your index since Azure Cognitive Search will store
+        /// an additional tokenized version of the field value for full-text
         /// searches. If you want to save space in your index and you don't
         /// need a field to be included in searches, set searchable to false.
         /// </summary>
@@ -300,12 +300,12 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets a value indicating whether to enable the field to be
-        /// referenced in $orderby expressions. By default Azure Search sorts
-        /// results by score, but in many experiences users will want to sort
-        /// by fields in the documents. A simple field can be sortable only if
-        /// it is single-valued (it has a single value in the scope of the
-        /// parent document). Simple collection fields cannot be sortable,
-        /// since they are multi-valued. Simple sub-fields of complex
+        /// referenced in $orderby expressions. By default Azure Cognitive
+        /// Search sorts results by score, but in many experiences users will
+        /// want to sort by fields in the documents. A simple field can be
+        /// sortable only if it is single-valued (it has a single value in the
+        /// scope of the parent document). Simple collection fields cannot be
+        /// sortable, since they are multi-valued. Simple sub-fields of complex
         /// collections are also multi-valued, and therefore cannot be
         /// sortable. This is true whether it's an immediate parent field, or
         /// an ancestor field, that's the complex collection. Complex fields

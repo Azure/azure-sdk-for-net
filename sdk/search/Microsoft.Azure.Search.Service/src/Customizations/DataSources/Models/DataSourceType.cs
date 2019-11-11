@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 namespace Microsoft.Azure.Search.Models
 {
     /// <summary>
-    /// Defines the type of an Azure Search datasource.
+    /// Defines the type of a datasource.
     /// </summary>
     [JsonConverter(typeof(ExtensibleEnumConverter<DataSourceType>))]
     public struct DataSourceType : IEquatable<DataSourceType>

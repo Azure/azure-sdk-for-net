@@ -19,6 +19,7 @@
 
 *.htm text
 *.html text
+*.md text
 
 *.js text
 *.json text

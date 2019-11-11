@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// Firewall Policy Filter Rule
+    /// Firewall Policy Filter Rule.
     /// </summary>
     public partial class FirewallPolicyFilterRule : FirewallPolicyRule
     {
@@ -31,10 +31,10 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the FirewallPolicyFilterRule class.
         /// </summary>
-        /// <param name="name">Name of the Rule</param>
+        /// <param name="name">The name of the rule.</param>
         /// <param name="priority">Priority of the Firewall Policy Rule
         /// resource.</param>
-        /// <param name="action">The action type of a Filter rule</param>
+        /// <param name="action">The action type of a Filter rule.</param>
         /// <param name="ruleConditions">Collection of rule conditions used by
         /// a rule.</param>
         public FirewallPolicyFilterRule(string name = default(string), int? priority = default(int?), FirewallPolicyFilterRuleAction action = default(FirewallPolicyFilterRuleAction), IList<FirewallPolicyRuleCondition> ruleConditions = default(IList<FirewallPolicyRuleCondition>))
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the action type of a Filter rule
+        /// Gets or sets the action type of a Filter rule.
         /// </summary>
         [JsonProperty(PropertyName = "action")]
         public FirewallPolicyFilterRuleAction Action { get; set; }

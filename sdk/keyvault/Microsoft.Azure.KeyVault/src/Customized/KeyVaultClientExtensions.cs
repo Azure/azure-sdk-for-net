@@ -603,7 +603,7 @@ namespace Microsoft.Azure.KeyVault
                 throw new ArgumentNullException(nameof( certificateCollection ));
 
             var base64EncodedCertificate = Convert.ToBase64String(certificateCollection.Export(X509ContentType.Pfx));
-            using (var _result = await operations.ImportCertificateWithHttpMessagesAsync(vaultBaseUrl, certificateName, base64EncodedCertificate, string.Empty, certificatePolicy, certificateAttributes, tags, null, cancellationToken))
+            using (var _result = await operations.ImportCertificateWithHttpMessagesAsync(vaultBaseUrl, certificateName, base64EncodedCertificate, string.Empty, certificatePolicy, certificateAttributes, tags, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }
@@ -636,7 +636,7 @@ namespace Microsoft.Azure.KeyVault
                 X5C.Add(cert.Export(X509ContentType.Cert));
             }
 
-            using (var _result = await operations.MergeCertificateWithHttpMessagesAsync(vaultBaseUrl, certificateName, X5C, certificateAttributes, tags, null, cancellationToken))
+            using (var _result = await operations.MergeCertificateWithHttpMessagesAsync(vaultBaseUrl, certificateName, X5C, certificateAttributes, tags, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }
@@ -657,7 +657,7 @@ namespace Microsoft.Azure.KeyVault
             if (string.IsNullOrWhiteSpace(certificateName))
                 throw new ArgumentNullException(nameof( certificateName ));
             
-            using (var _result = await operations.GetPendingCertificateSigningRequestWithHttpMessagesAsync(vaultBaseUrl, certificateName, null, cancellationToken))
+            using (var _result = await operations.GetPendingCertificateSigningRequestWithHttpMessagesAsync(vaultBaseUrl, certificateName, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }

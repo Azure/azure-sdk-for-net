@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using Azure.Messaging.EventHubs.Core;
 using NUnit.Framework;
 
@@ -39,7 +38,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void GetUriSchemeUDisallowsUnknownConnectionTypes()
         {
-            var invalidConnectionType = (TransportType)Int32.MinValue;
+            var invalidConnectionType = (TransportType)int.MinValue;
             Assert.That(() => invalidConnectionType.GetUriScheme(), Throws.ArgumentException);
         }
 

@@ -32,9 +32,12 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// <summary>
         /// Initializes a new instance of the DataBoxHeavyJobSecrets class.
         /// </summary>
+        /// <param name="dcAccessSecurityCode">Dc Access Security Code for
+        /// Customer Managed Shipping</param>
         /// <param name="cabinetPodSecrets">Contains the list of secret objects
         /// for a databox heavy job.</param>
-        public DataBoxHeavyJobSecrets(IList<DataBoxHeavySecret> cabinetPodSecrets = default(IList<DataBoxHeavySecret>))
+        public DataBoxHeavyJobSecrets(DcAccessSecurityCode dcAccessSecurityCode = default(DcAccessSecurityCode), IList<DataBoxHeavySecret> cabinetPodSecrets = default(IList<DataBoxHeavySecret>))
+            : base(dcAccessSecurityCode)
         {
             CabinetPodSecrets = cabinetPodSecrets;
             CustomInit();

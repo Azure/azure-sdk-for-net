@@ -7,9 +7,9 @@ using System.Text;
 
 namespace Azure.Identity.Tests.Mock
 {
-    class MockToken
+    internal class MockToken
     {
-        private StringBuilder _tokenBuilder;
+        private readonly StringBuilder _tokenBuilder;
         private string _token;
 
         public MockToken()

@@ -47,8 +47,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="availableBandwidths">The inventory of available
         /// ExpressRoutePort bandwidths.</param>
         /// <param name="provisioningState">The provisioning state of the
-        /// ExpressRoutePortLocation resource. Possible values are:
-        /// 'Succeeded', 'Updating', 'Deleting', and 'Failed'.</param>
+        /// express route port location resource. Possible values include:
+        /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
         public ExpressRoutePortsLocation(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string address = default(string), string contact = default(string), IList<ExpressRoutePortsLocationBandwidths> availableBandwidths = default(IList<ExpressRoutePortsLocationBandwidths>), string provisioningState = default(string))
             : base(id, name, type, location, tags)
         {
@@ -84,9 +84,9 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<ExpressRoutePortsLocationBandwidths> AvailableBandwidths { get; set; }
 
         /// <summary>
-        /// Gets the provisioning state of the ExpressRoutePortLocation
-        /// resource. Possible values are: 'Succeeded', 'Updating', 'Deleting',
-        /// and 'Failed'.
+        /// Gets the provisioning state of the express route port location
+        /// resource. Possible values include: 'Succeeded', 'Updating',
+        /// 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }

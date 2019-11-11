@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="domain">Domain for windows authentication.</param>
         /// <param name="userName">UseName for windows authentication.</param>
         /// <param name="password">Password for windows authentication.</param>
-        public SSISAccessCredential(object domain, object userName, SecureString password)
+        public SSISAccessCredential(object domain, object userName, SecretBase password)
         {
             Domain = domain;
             UserName = userName;
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets password for windows authentication.
         /// </summary>
         [JsonProperty(PropertyName = "password")]
-        public SecureString Password { get; set; }
+        public SecretBase Password { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -83,10 +83,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (Password == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Password");
-            }
-            if (Password != null)
-            {
-                Password.Validate();
             }
         }
     }

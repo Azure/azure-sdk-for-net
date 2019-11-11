@@ -37,12 +37,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models
         /// entity.</param>
         /// <param name="resolution">A user supplied custom resolution to
         /// return as the entity's prediction.</param>
-        public ExternalEntity(string entityName, int startIndex, int entityLength, object resolution = default(object))
+        /// <param name="score">A user supplied score to return as the entity's
+        /// prediction score.</param>
+        public ExternalEntity(string entityName, int startIndex, int entityLength, object resolution = default(object), double? score = default(double?))
         {
             EntityName = entityName;
             StartIndex = startIndex;
             EntityLength = entityLength;
             Resolution = resolution;
+            Score = score;
             CustomInit();
         }
 
@@ -75,6 +78,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models
         /// </summary>
         [JsonProperty(PropertyName = "resolution")]
         public object Resolution { get; set; }
+
+        /// <summary>
+        /// Gets or sets a user supplied score to return as the entity's
+        /// prediction score.
+        /// </summary>
+        [JsonProperty(PropertyName = "score")]
+        public double? Score { get; set; }
 
         /// <summary>
         /// Validate the object.

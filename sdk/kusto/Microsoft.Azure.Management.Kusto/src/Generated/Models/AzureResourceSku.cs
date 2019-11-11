@@ -31,7 +31,8 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// </summary>
         /// <param name="resourceType">Resource Namespace and Type.</param>
         /// <param name="sku">The SKU details.</param>
-        /// <param name="capacity">The SKU capacity.</param>
+        /// <param name="capacity">The number of instances of the
+        /// cluster.</param>
         public AzureResourceSku(string resourceType = default(string), AzureSku sku = default(AzureSku), AzureCapacity capacity = default(AzureCapacity))
         {
             ResourceType = resourceType;
@@ -58,7 +59,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
         public AzureSku Sku { get; set; }
 
         /// <summary>
-        /// Gets or sets the SKU capacity.
+        /// Gets or sets the number of instances of the cluster.
         /// </summary>
         [JsonProperty(PropertyName = "capacity")]
         public AzureCapacity Capacity { get; set; }

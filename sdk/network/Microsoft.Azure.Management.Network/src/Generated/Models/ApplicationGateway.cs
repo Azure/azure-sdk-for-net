@@ -100,11 +100,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// gateway resource.</param>
         /// <param name="autoscaleConfiguration">Autoscale
         /// Configuration.</param>
-        /// <param name="resourceGuid">Resource GUID property of the
+        /// <param name="resourceGuid">The resource GUID property of the
         /// application gateway resource.</param>
-        /// <param name="provisioningState">Provisioning state of the
-        /// application gateway resource. Possible values are: 'Updating',
-        /// 'Deleting', and 'Failed'.</param>
+        /// <param name="provisioningState">The provisioning state of the
+        /// application gateway resource. Possible values include: 'Succeeded',
+        /// 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="customErrorConfigurations">Custom error configurations
         /// of the application gateway resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
@@ -312,19 +312,19 @@ namespace Microsoft.Azure.Management.Network.Models
         public ApplicationGatewayAutoscaleConfiguration AutoscaleConfiguration { get; set; }
 
         /// <summary>
-        /// Gets or sets resource GUID property of the application gateway
+        /// Gets the resource GUID property of the application gateway
         /// resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceGuid")]
-        public string ResourceGuid { get; set; }
+        public string ResourceGuid { get; private set; }
 
         /// <summary>
-        /// Gets or sets provisioning state of the application gateway
-        /// resource. Possible values are: 'Updating', 'Deleting', and
-        /// 'Failed'.
+        /// Gets the provisioning state of the application gateway resource.
+        /// Possible values include: 'Succeeded', 'Updating', 'Deleting',
+        /// 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets custom error configurations of the application gateway
@@ -334,11 +334,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<ApplicationGatewayCustomError> CustomErrorConfigurations { get; set; }
 
         /// <summary>
-        /// Gets or sets a unique read-only string that changes whenever the
-        /// resource is updated.
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
         /// <summary>
         /// Gets or sets a list of availability zones denoting where the
@@ -379,6 +379,16 @@ namespace Microsoft.Azure.Management.Network.Models
                     if (element1 != null)
                     {
                         element1.Validate();
+                    }
+                }
+            }
+            if (RequestRoutingRules != null)
+            {
+                foreach (var element2 in RequestRoutingRules)
+                {
+                    if (element2 != null)
+                    {
+                        element2.Validate();
                     }
                 }
             }

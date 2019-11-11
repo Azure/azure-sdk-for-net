@@ -35,7 +35,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// ContainerNetworkInterfaceIpConfiguration class.
         /// </summary>
         /// <param name="provisioningState">The provisioning state of the
-        /// resource.</param>
+        /// container network interface IP configuration resource. Possible
+        /// values include: 'Succeeded', 'Updating', 'Deleting',
+        /// 'Failed'</param>
         /// <param name="name">The name of the resource. This name can be used
         /// to access the resource.</param>
         /// <param name="type">Sub Resource type.</param>
@@ -56,7 +58,9 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the provisioning state of the resource.
+        /// Gets the provisioning state of the container network interface IP
+        /// configuration resource. Possible values include: 'Succeeded',
+        /// 'Updating', 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
@@ -75,11 +79,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets or sets a unique read-only string that changes whenever the
-        /// resource is updated.
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
     }
 }

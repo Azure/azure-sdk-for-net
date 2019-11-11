@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Messaging.EventHubs.Core;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests
@@ -90,10 +92,25 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        public void IsEquivalentToDetectsCustomPolicy()
+        {
+            var first = new RetryOptions { CustomRetryPolicy = Mock.Of<EventHubsRetryPolicy>() };
+            var second = new RetryOptions { CustomRetryPolicy = new BasicRetryPolicy(new RetryOptions()) };
+
+            Assert.That(first.IsEquivalentTo(second), Is.False);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="RetryOptionsExtensions.IsEquivalentTo" /> test
+        ///   helper.
+        /// </summary>
+        ///
+        [Test]
         public void IsEquivalentToDetectsEqualOptionSets()
         {
-            var first = new RetryOptions();
-            var second = new RetryOptions();
+            var customPolicy = Mock.Of<EventHubsRetryPolicy>();
+            var first = new RetryOptions { CustomRetryPolicy = customPolicy };
+            var second = new RetryOptions { CustomRetryPolicy = customPolicy };
 
             Assert.That(first.IsEquivalentTo(second), Is.True);
         }
