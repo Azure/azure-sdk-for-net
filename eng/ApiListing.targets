@@ -24,8 +24,8 @@
 
   <Target Name="_CheckGenerateAPIListingValue" AfterTargets="Build">
     <Error
-      Condition="'$(IsShippingClientLibrary)' == 'true' AND '$(GenerateAPIListing)' != 'true' AND !$(OriginalVersion.Contains('preview'))"
-      Text="GenerateAPIListing must be set to true for non release version" />
+      Condition="'$(IsShippingClientLibrary)' == 'true' AND '$(GenerateAPIListing)' != 'true' AND '$(HasReleaseVersion)' != 'false'"
+      Text="GenerateAPIListing must be set to true for non preview version" />
   </Target>
 
 </Project>
