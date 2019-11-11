@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Search
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/arv100kri/azure-rest-api-specs/blob/arv100kri/remove-obsolete/specification/search/data-plane/Microsoft.Azure.Search.Service/readme.md --csharp --version=latest --reflect-api-versions --tag=track1-package-2019-05-preview --csharp-sdks-folder=D:\\src\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "arv100kri";
       public static readonly String GithubBranchName = "arv100kri/remove-obsolete";
-      public static readonly String GithubCommidId = "476441a124f82f5266a53e1d29a0d273b4bf1a75";
+      public static readonly String GithubCommidId = "9288ae361d81c744a823430effe92c9d119469c6";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

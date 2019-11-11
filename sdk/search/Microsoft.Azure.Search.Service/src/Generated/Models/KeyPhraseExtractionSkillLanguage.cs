@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Search.Models
         public static readonly KeyPhraseExtractionSkillLanguage Ko = "ko";
 
         /// <summary>
-        /// Norwegian (Bokmål)
+        /// Norwegian (Bokmaal)
         /// </summary>
         public static readonly KeyPhraseExtractionSkillLanguage No = "no";
 

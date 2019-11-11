@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Search.Models
         public static readonly EntityRecognitionSkillLanguage Ko = "ko";
 
         /// <summary>
-        /// Norwegian (Bokmål)
+        /// Norwegian (Bokmaal)
         /// </summary>
         public static readonly EntityRecognitionSkillLanguage No = "no";
 

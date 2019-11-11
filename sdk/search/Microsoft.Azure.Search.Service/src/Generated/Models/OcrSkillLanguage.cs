@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Search.Models
         public static readonly OcrSkillLanguage Ko = "ko";
 
         /// <summary>
-        /// Norwegian (Bokmål)
+        /// Norwegian (Bokmaal)
         /// </summary>
         public static readonly OcrSkillLanguage Nb = "nb";
 

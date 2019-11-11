@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Search.Models
         public static readonly SentimentSkillLanguage It = "it";
 
         /// <summary>
-        /// Norwegian (Bokmål)
+        /// Norwegian (Bokmaal)
         /// </summary>
         public static readonly SentimentSkillLanguage No = "no";
 

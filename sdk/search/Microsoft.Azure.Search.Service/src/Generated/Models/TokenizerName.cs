@@ -29,27 +29,33 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Grammar-based tokenizer that is suitable for processing most
-        /// European-language documents.
+        /// European-language documents. See
+        /// http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/standard/ClassicTokenizer.html
         /// </summary>
         public static readonly TokenizerName Classic = "classic";
 
         /// <summary>
         /// Tokenizes the input from an edge into n-grams of the given size(s).
+        /// See
+        /// https://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ngram/EdgeNGramTokenizer.html
         /// </summary>
         public static readonly TokenizerName EdgeNGram = "edgeNGram";
 
         /// <summary>
-        /// Emits the entire input as a single token.
+        /// Emits the entire input as a single token. See
+        /// http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/KeywordTokenizer.html
         /// </summary>
         public static readonly TokenizerName Keyword = "keyword_v2";
 
         /// <summary>
-        /// Divides text at non-letters.
+        /// Divides text at non-letters. See
+        /// http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/LetterTokenizer.html
         /// </summary>
         public static readonly TokenizerName Letter = "letter";
 
         /// <summary>
-        /// Divides text at non-letters and converts them to lower case.
+        /// Divides text at non-letters and converts them to lower case. See
+        /// http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/LowerCaseTokenizer.html
         /// </summary>
         public static readonly TokenizerName Lowercase = "lowercase";
 
@@ -65,34 +71,40 @@ namespace Microsoft.Azure.Search.Models
         public static readonly TokenizerName MicrosoftLanguageStemmingTokenizer = "microsoft_language_stemming_tokenizer";
 
         /// <summary>
-        /// Tokenizes the input into n-grams of the given size(s).
+        /// Tokenizes the input into n-grams of the given size(s). See
+        /// http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ngram/NGramTokenizer.html
         /// </summary>
         public static readonly TokenizerName NGram = "nGram";
 
         /// <summary>
-        /// Tokenizer for path-like hierarchies.
+        /// Tokenizer for path-like hierarchies. See
+        /// http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/path/PathHierarchyTokenizer.html
         /// </summary>
         public static readonly TokenizerName PathHierarchy = "path_hierarchy_v2";
 
         /// <summary>
         /// Tokenizer that uses regex pattern matching to construct distinct
-        /// tokens.
+        /// tokens. See
+        /// http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/pattern/PatternTokenizer.html
         /// </summary>
         public static readonly TokenizerName Pattern = "pattern";
 
         /// <summary>
         /// Standard Lucene analyzer; Composed of the standard tokenizer,
-        /// lowercase filter and stop filter.
+        /// lowercase filter and stop filter. See
+        /// http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/standard/StandardTokenizer.html
         /// </summary>
         public static readonly TokenizerName Standard = "standard_v2";
 
         /// <summary>
-        /// Tokenizes urls and emails as one token.
+        /// Tokenizes urls and emails as one token. See
+        /// http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/standard/UAX29URLEmailTokenizer.html
         /// </summary>
         public static readonly TokenizerName UaxUrlEmail = "uax_url_email";
 
         /// <summary>
-        /// Divides text at whitespace.
+        /// Divides text at whitespace. See
+        /// http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/WhitespaceTokenizer.html
         /// </summary>
         public static readonly TokenizerName Whitespace = "whitespace";
 

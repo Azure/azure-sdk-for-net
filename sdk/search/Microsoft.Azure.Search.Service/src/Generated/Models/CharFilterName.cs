@@ -28,7 +28,8 @@ namespace Microsoft.Azure.Search.Models
         }
 
         /// <summary>
-        /// A character filter that attempts to strip out HTML constructs.
+        /// A character filter that attempts to strip out HTML constructs. See
+        /// https://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/charfilter/HTMLStripCharFilter.html
         /// </summary>
         public static readonly CharFilterName HtmlStrip = "html_strip";
 
