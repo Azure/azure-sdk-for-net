@@ -11,7 +11,7 @@ using System.Threading;
 namespace Azure.Security.KeyVault.Certificates.Samples
 {
     /// <summary>
-    /// This sample demonstrates how to create, get, update and delete a certificate using the synchronous methods of the <see cref="CertificateClient">.
+    /// This sample demonstrates how to create, get, update, and delete a certificate using the synchronous methods of the <see cref="CertificateClient">.
     /// </summary>
     [LiveOnly]
     public partial class HelloWorld
@@ -68,31 +68,19 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             #endregion
 
             #region Snippet:CertificatesSample1DeleteCertificate
-            client.DeleteCertificate(certName);
+            DeleteCertificateOperation operation = client.StartDeleteCertificate(certName);
+
+            // To ensure certificate is deleted on server side.
+            while (!operation.HasCompleted)
+            {
+                Thread.Sleep(2000);
+
+                operation.UpdateStatus();
+            }
             #endregion
 
-            Assert.IsTrue(WaitForDeletedCertificate(client, certName));
-
-            // If the keyvault is soft-delete enabled, then for permanent deletion, deleted certificate needs to be purged.
+            // If the keyvault is soft-delete enabled, then for permanent deletion, the deleted certificate needs to be purged.
             client.PurgeDeletedCertificate(certName);
-        }
-
-        private bool WaitForDeletedCertificate(CertificateClient client, string certName)
-        {
-            int maxIterations = 20;
-            for (int i = 0; i < maxIterations; i++)
-            {
-                try
-                {
-                    client.GetDeletedCertificate(certName);
-                    return true;
-                }
-                catch
-                {
-                    Thread.Sleep(2000);
-                }
-            }
-            return false;
         }
     }
 }

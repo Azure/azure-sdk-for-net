@@ -7,44 +7,38 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Security.KeyVault.Secrets
+namespace Azure.Security.KeyVault.Certificates
 {
     /// <summary>
-    /// A long-running operation for <see cref="SecretClient.StartDeleteSecret(string, CancellationToken)"/> or <see cref="SecretClient.StartDeleteSecretAsync(string, CancellationToken)"/>.
+    /// A long-running operation for <see cref="CertificateClient.StartRecoverDeletedCertificate(string, CancellationToken)"/> or <see cref="CertificateClient.StartRecoverDeletedCertificateAsync(string, CancellationToken)"/>.
     /// </summary>
-    public class DeleteSecretOperation : Operation<DeletedSecret>
+    public class RecoverDeletedCertificateOperation : Operation<KeyVaultCertificateWithPolicy>
     {
         private static readonly TimeSpan s_defaultPollingInterval = TimeSpan.FromSeconds(2);
 
         private readonly KeyVaultPipeline _pipeline;
-        private readonly DeletedSecret _value;
+        private readonly KeyVaultCertificateWithPolicy _value;
         private Response _response;
         private bool _completed;
 
-        internal DeleteSecretOperation(KeyVaultPipeline pipeline, Response<DeletedSecret> response)
+        internal RecoverDeletedCertificateOperation(KeyVaultPipeline pipeline, Response<KeyVaultCertificateWithPolicy> response)
         {
             _pipeline = pipeline;
             _value = response.Value ?? throw new InvalidOperationException("The response does not contain a value.");
             _response = response.GetRawResponse();
-
-            // The recoveryId is only returned if soft-delete is enabled.
-            if (_value.RecoveryId is null)
-            {
-                _completed = true;
-            }
         }
 
         /// <inheritdoc/>
         public override string Id => _value.Id.ToString();
 
         /// <summary>
-        /// Gets the <see cref="DeletedSecret"/>.
-        /// You should await <see cref="WaitForCompletionAsync(CancellationToken)"/> before attempting to purge or recover a secret in this pending state.
+        /// Gets the <see cref="KeyVaultCertificate"/> of the certificate being recovered.
+        /// You should await <see cref="WaitForCompletionAsync(CancellationToken)"/> before attempting to use a certificate in this pending state.
         /// </summary>
         /// <remarks>
-        /// Azure Key Vault will return a <see cref="DeletedSecret"/> immediately but may take time to actually delete the secret if soft-delete is enabled.
+        /// Azure Key Vault will return a <see cref="KeyVaultCertificate"/> immediately but may take time to actually recover the deleted certificate if soft-delete is enabled.
         /// </remarks>
-        public override DeletedSecret Value => _value;
+        public override KeyVaultCertificateWithPolicy Value => _value;
 
         /// <inheritdoc/>
         public override bool HasCompleted => _completed;
@@ -60,13 +54,13 @@ namespace Azure.Security.KeyVault.Secrets
         {
             if (!_completed)
             {
-                using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.DeleteSecretOperation.UpdateStatus");
+                using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.RecoverDeletedCertificateOperation.UpdateStatus");
                 scope.AddAttribute("secret", _value.Name);
                 scope.Start();
 
                 try
                 {
-                    _response = _pipeline.GetResponse(RequestMethod.Get, cancellationToken, SecretClient.DeletedSecretsPath, _value.Name);
+                    _response = _pipeline.GetResponse(RequestMethod.Get, cancellationToken, CertificateClient.CertificatesPath, _value.Name, "/", _value.Properties.Version);
                     _completed = CheckCompleted(_response);
                 }
                 catch (Exception e)
@@ -84,13 +78,13 @@ namespace Azure.Security.KeyVault.Secrets
         {
             if (!_completed)
             {
-                using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.DeleteSecretOperation.UpdateStatus");
+                using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.RecoverDeletedCertificateOperation.UpdateStatus");
                 scope.AddAttribute("secret", _value.Name);
                 scope.Start();
 
                 try
                 {
-                    _response = await _pipeline.GetResponseAsync(RequestMethod.Get, cancellationToken, SecretClient.DeletedSecretsPath, _value.Name).ConfigureAwait(false);
+                    _response = await _pipeline.GetResponseAsync(RequestMethod.Get, cancellationToken, CertificateClient.CertificatesPath, _value.Name, "/", _value.Properties.Version).ConfigureAwait(false);
                     _completed = await CheckCompletedAsync(_response).ConfigureAwait(false);
                 }
                 catch (Exception e)
@@ -104,11 +98,11 @@ namespace Azure.Security.KeyVault.Secrets
         }
 
         /// <inheritdoc />
-        public override ValueTask<Response<DeletedSecret>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<KeyVaultCertificateWithPolicy>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(s_defaultPollingInterval, cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<DeletedSecret>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
+        public override ValueTask<Response<KeyVaultCertificateWithPolicy>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
         private static async ValueTask<bool> CheckCompletedAsync(Response response)
@@ -116,7 +110,7 @@ namespace Azure.Security.KeyVault.Secrets
             switch (response.Status)
             {
                 case 200:
-                case 403: // Access denied but proof the secret was deleted.
+                case 403: // Access denied but proof the certificate was recovered.
                     return true;
 
                 case 404:
@@ -131,7 +125,7 @@ namespace Azure.Security.KeyVault.Secrets
             switch (response.Status)
             {
                 case 200:
-                case 403: // Access denied but proof the secret was deleted.
+                case 403: // Access denied but proof the certificate was recovered.
                     return true;
 
                 case 404:

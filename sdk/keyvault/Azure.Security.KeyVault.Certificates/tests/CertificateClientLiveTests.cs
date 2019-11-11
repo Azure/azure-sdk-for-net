@@ -169,7 +169,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             Assert.NotNull(original);
 
-            DeletedCertificate deletedCert = await Client.DeleteCertificateAsync(certName);
+            DeleteCertificateOperation deleteOperation = await Client.StartDeleteCertificateAsync(certName);
+            DeletedCertificate deletedCert = deleteOperation.Value;
 
             Assert.IsNotNull(deletedCert);
 
@@ -177,13 +178,14 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             await WaitForDeletedCertificate(certName);
 
-            _ = await Client.RecoverDeletedCertificateAsync(certName);
+            _ = await Client.StartRecoverDeletedCertificateAsync(certName);
 
             Assert.NotNull(original);
 
             await PollForCertificate(certName);
 
-            deletedCert = await Client.DeleteCertificateAsync(certName);
+            deleteOperation = await Client.StartDeleteCertificateAsync(certName);
+            deletedCert = deleteOperation.Value;
 
             Assert.IsNotNull(deletedCert);
 

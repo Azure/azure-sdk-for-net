@@ -88,7 +88,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             #region Snippet:UpdateSecret
             KeyVaultSecret secret = client.GetSecret("secret-name");
 
-            // Clients may specify the content type of a secret to assist in interpreting the secret data when it's retrieved.
+            // Clients may specify the content type of a secret to assist in interpreting the secret data when its retrieved.
             secret.Properties.ContentType = "text/plain";
 
             // You can specify additional application-specific metadata in the form of tags.

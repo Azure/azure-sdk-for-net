@@ -60,7 +60,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         {
             try
             {
-                await Client.DeleteCertificateAsync(name);
+                await Client.StartDeleteCertificateAsync(name);
 
                 await WaitForDeletedCertificate(name);
             }
