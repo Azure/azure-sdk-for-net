@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -101,5 +102,58 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(token.Token, Is.SameAs(signature.Value), "The credential should return the signature as the token.");
         }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void GetTokenExtendsAnExpiredToken()
+        {
+            var value = "TOkEn!";
+            var signature = new SharedAccessSignature(string.Empty, "keyName", "key", value, DateTimeOffset.UtcNow.Subtract(TimeSpan.FromHours(2)));
+            var credential = new SharedAccessSignatureCredential(signature);
+
+            var expectedExpiration = DateTimeOffset.Now.Add(GetSignatureExtensionDuration());
+            Assert.That(credential.GetToken(new TokenRequestContext(), default).ExpiresOn, Is.EqualTo(expectedExpiration).Within(TimeSpan.FromMinutes(1)));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void GetTokenExtendsATokenCloseToExpiring()
+        {
+            var value = "TOkEn!";
+            var tokenExpiration = DateTimeOffset.UtcNow.Add(TimeSpan.FromSeconds(GetSignatureRefreshBuffer().TotalSeconds / 2));
+            var signature = new SharedAccessSignature(string.Empty, "keyName", "key", value, tokenExpiration);
+            var credential = new SharedAccessSignatureCredential(signature);
+
+            var expectedExpiration = DateTimeOffset.Now.Add(GetSignatureExtensionDuration());
+            Assert.That(credential.GetToken(new TokenRequestContext(), default).ExpiresOn, Is.EqualTo(expectedExpiration).Within(TimeSpan.FromMinutes(1)));
+        }
+
+        /// <summary>
+        ///   Gets the refresh buffer for the <see cref="SharedAccessSignatureCredential" /> using
+        ///   its private field.
+        /// </summary>
+        ///
+        private static TimeSpan GetSignatureRefreshBuffer() =>
+            (TimeSpan)
+                typeof(SharedAccessSignatureCredential)
+                    .GetField("SignatureRefreshBuffer", BindingFlags.Static | BindingFlags.NonPublic)
+                    .GetValue(null);
+
+        /// <summary>
+        ///   Gets the extension duration for the <see cref="SharedAccessSignatureCredential" /> using
+        ///   its private field.
+        /// </summary>
+        ///
+        private static TimeSpan GetSignatureExtensionDuration() =>
+            (TimeSpan)
+                typeof(SharedAccessSignatureCredential)
+                    .GetField("SignatureExtensionDuration", BindingFlags.Static | BindingFlags.NonPublic)
+                    .GetValue(null);
     }
 }
