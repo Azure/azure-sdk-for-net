@@ -747,7 +747,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         {
                             for (var index = 0; index < partitions; index++)
                             {
-                                consumers.Add(new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, partitionIds[index], EventPosition.Latest, connection));
+                                consumers.Add(new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection));
                                 receivers.Add(consumers[index].CreatePartitionReceiver(partitionIds[index], EventPosition.Latest));
 
                                 // Initiate an operation to force the consumer to connect and set its position at the
@@ -827,7 +827,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     {
                         for (var index = 0; index < partitions; index++)
                         {
-                            consumers.Add(new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, partitionIds[index], EventPosition.Latest, connection));
+                            consumers.Add(new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection));
                             receivers.Add(consumers[index].CreatePartitionReceiver(partitionIds[index], EventPosition.Latest));
 
                             // Initiate an operation to force the consumer to connect and set its position at the
@@ -902,7 +902,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     {
                         for (var index = 0; index < partitions; index++)
                         {
-                            consumers.Add(new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, partitionIds[index], EventPosition.Latest, connection));
+                            consumers.Add(new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection));
                             receivers.Add(consumers[index].CreatePartitionReceiver(partitionIds[index], EventPosition.Latest));
 
                             // Initiate an operation to force the consumer to connect and set its position at the
