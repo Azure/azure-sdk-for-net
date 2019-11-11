@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Data.AppConfiguration.Tests
@@ -1258,6 +1259,27 @@ namespace Azure.Data.AppConfiguration.Tests
                 {
                     await service.SetReadOnlyAsync(testSetting.Key);
                 });
+            }
+            finally
+            {
+                await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
+            }
+        }
+
+        [Test]
+        public async Task AddSettingDefaultAAD()
+        {
+            var endpoint = Recording.RequireVariableFromEnvironment("APPCONFIGURATION_ENDPOINT_STRING");
+            var credential = Recording.GetCredential(new DefaultAzureCredential());
+            var configurationClient = new ConfigurationClient(new Uri(endpoint), credential, Recording.InstrumentClientOptions(new ConfigurationClientOptions()));
+
+            ConfigurationClient service = InstrumentClient(configurationClient);
+            ConfigurationSetting testSetting = CreateSetting();
+
+            try
+            {
+                ConfigurationSetting setting = await service.AddConfigurationSettingAsync(testSetting);
+                Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting));
             }
             finally
             {

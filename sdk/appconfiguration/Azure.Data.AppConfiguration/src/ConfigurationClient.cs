@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -49,16 +50,46 @@ namespace Azure.Data.AppConfiguration
 
             ParseConnectionString(connectionString, out _baseUri, out var credential, out var secret);
 
-            _pipeline = HttpPipelineBuilder.Build(options,
-                    new HttpPipelinePolicy[] { new CustomHeadersPolicy() },
-                    new HttpPipelinePolicy[] {
-                        new ApiVersionPolicy(options.GetVersionString()),
-                        new AuthenticationPolicy(credential, secret),
-                        new SyncTokenPolicy() },
-                    new ResponseClassifier());
+            _pipeline = CreatePipeline(options, new AuthenticationPolicy(credential, secret));
 
             _clientDiagnostics = new ClientDiagnostics(options);
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConfigurationClient"/> class.
+        /// </summary>
+        /// <param name="uri">The <see cref="Uri"/> referencing the app configuration storage.</param>
+        /// <param name="credential">The token credential used to sign requests.</param>
+        public ConfigurationClient(Uri uri, TokenCredential credential)
+            : this(uri, credential, new ConfigurationClientOptions())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConfigurationClient"/> class.
+        /// </summary>
+        /// <param name="uri">The <see cref="Uri"/> referencing the app configuration storage.</param>
+        /// <param name="credential">The token credential used to sign requests.</param>
+        /// <param name="options">Options that allow configuration of requests sent to the configuration store.</param>
+        public ConfigurationClient(Uri uri, TokenCredential credential, ConfigurationClientOptions options)
+        {
+            Argument.AssertNotNull(uri, nameof(uri));
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            _baseUri = uri;
+            _pipeline = CreatePipeline(options, new BearerTokenAuthenticationPolicy(credential, GetDefaultScope(uri)));
+
+            _clientDiagnostics = new ClientDiagnostics(options);
+        }
+
+        private static HttpPipeline CreatePipeline(ConfigurationClientOptions options, HttpPipelinePolicy authenticationPolicy)
+            => HttpPipelineBuilder.Build(options,
+                new HttpPipelinePolicy[] { new CustomHeadersPolicy() },
+                new HttpPipelinePolicy[] { new ApiVersionPolicy(options.GetVersionString()), authenticationPolicy, new SyncTokenPolicy() },
+                new ResponseClassifier());
+
+        private static string GetDefaultScope(Uri uri)
+            => $"{uri.GetComponents(UriComponents.SchemeAndServer, UriFormat.SafeUnescaped)}/.default";
 
         /// <summary>
         /// Creates a <see cref="ConfigurationSetting"/> if the setting, uniquely identified by key and label, does not already exist in the configuration store.
