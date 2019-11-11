@@ -20,8 +20,6 @@ namespace Azure.Security.KeyVault.Certificates
         public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Certificates.CertificateOperation> CancelCertificateOperationAsync(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Certificates.CertificateIssuer> CreateIssuer(Azure.Security.KeyVault.Certificates.CertificateIssuer issuer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Certificates.CertificateIssuer>> CreateIssuerAsync(Azure.Security.KeyVault.Certificates.CertificateIssuer issuer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Security.KeyVault.Certificates.DeletedCertificate> DeleteCertificate(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Certificates.DeletedCertificate>> DeleteCertificateAsync(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Security.KeyVault.Certificates.CertificateOperation DeleteCertificateOperation(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Certificates.CertificateOperation> DeleteCertificateOperationAsync(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IList<Azure.Security.KeyVault.Certificates.CertificateContact>> DeleteContacts(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -56,14 +54,16 @@ namespace Azure.Security.KeyVault.Certificates
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Certificates.KeyVaultCertificateWithPolicy>> MergeCertificateAsync(Azure.Security.KeyVault.Certificates.MergeCertificateOptions certificateMergeOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response PurgeDeletedCertificate(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> PurgeDeletedCertificateAsync(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Security.KeyVault.Certificates.KeyVaultCertificateWithPolicy> RecoverDeletedCertificate(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Certificates.KeyVaultCertificateWithPolicy>> RecoverDeletedCertificateAsync(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Certificates.KeyVaultCertificateWithPolicy> RestoreCertificateBackup(byte[] backup, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Certificates.KeyVaultCertificateWithPolicy>> RestoreCertificateBackupAsync(byte[] backup, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IList<Azure.Security.KeyVault.Certificates.CertificateContact>> SetContacts(System.Collections.Generic.IEnumerable<Azure.Security.KeyVault.Certificates.CertificateContact> contacts, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IList<Azure.Security.KeyVault.Certificates.CertificateContact>>> SetContactsAsync(System.Collections.Generic.IEnumerable<Azure.Security.KeyVault.Certificates.CertificateContact> contacts, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Security.KeyVault.Certificates.CertificateOperation StartCreateCertificate(string certificateName, Azure.Security.KeyVault.Certificates.CertificatePolicy policy, bool? enabled = default(bool?), System.Collections.Generic.IDictionary<string, string> tags = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Certificates.CertificateOperation> StartCreateCertificateAsync(string certificateName, Azure.Security.KeyVault.Certificates.CertificatePolicy policy, bool? enabled = default(bool?), System.Collections.Generic.IDictionary<string, string> tags = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Security.KeyVault.Certificates.DeleteCertificateOperation StartDeleteCertificate(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Certificates.DeleteCertificateOperation> StartDeleteCertificateAsync(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Security.KeyVault.Certificates.RecoverDeletedCertificateOperation StartRecoverDeletedCertificate(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Certificates.RecoverDeletedCertificateOperation> StartRecoverDeletedCertificateAsync(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Certificates.CertificatePolicy> UpdateCertificatePolicy(string certificateName, Azure.Security.KeyVault.Certificates.CertificatePolicy policy, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Certificates.CertificatePolicy>> UpdateCertificatePolicyAsync(string certificateName, Azure.Security.KeyVault.Certificates.CertificatePolicy policy, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Certificates.KeyVaultCertificate> UpdateCertificateProperties(Azure.Security.KeyVault.Certificates.CertificateProperties properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -292,6 +292,19 @@ namespace Azure.Security.KeyVault.Certificates
         public string Version { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public byte[] X509Thumbprint { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
     }
+    public partial class DeleteCertificateOperation : Azure.Operation<Azure.Security.KeyVault.Certificates.DeletedCertificate>
+    {
+        internal DeleteCertificateOperation() { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.Security.KeyVault.Certificates.DeletedCertificate Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Security.KeyVault.Certificates.DeletedCertificate>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Security.KeyVault.Certificates.DeletedCertificate>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
+    }
     public partial class DeletedCertificate : Azure.Security.KeyVault.Certificates.KeyVaultCertificateWithPolicy
     {
         internal DeletedCertificate() { }
@@ -346,6 +359,19 @@ namespace Azure.Security.KeyVault.Certificates
         public string Name { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.Collections.Generic.IEnumerable<byte[]> X509Certificates { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+    }
+    public partial class RecoverDeletedCertificateOperation : Azure.Operation<Azure.Security.KeyVault.Certificates.KeyVaultCertificateWithPolicy>
+    {
+        internal RecoverDeletedCertificateOperation() { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.Security.KeyVault.Certificates.KeyVaultCertificateWithPolicy Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Security.KeyVault.Certificates.KeyVaultCertificateWithPolicy>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Security.KeyVault.Certificates.KeyVaultCertificateWithPolicy>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public partial class SubjectAlternativeNames : System.Collections.Generic.IEnumerable<string>, System.Collections.IEnumerable
     {

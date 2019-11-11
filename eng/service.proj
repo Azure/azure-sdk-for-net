@@ -25,13 +25,4 @@
         Text="No Projects found with patttern [..\sdk\$(ServiceDirectory)\**\*.csproj], please make sure you have passed in the correct ServiceDirectory." />
   </Target>
 
-  <Target Name="GenerateAPIListing"
-          DependsOnTargets="$(PackDependsOn)"
-          Condition=" '$(IsGraphBuild)' != 'true' ">
-    <MSBuild Projects="@(ProjectReference)"
-             Targets="GenerateAPIListing"
-             BuildInParallel="$(BuildInParallel)"
-             SkipNonexistentProjects="false"
-             SkipNonexistentTargets="true" />
-  </Target>
 </Project>
