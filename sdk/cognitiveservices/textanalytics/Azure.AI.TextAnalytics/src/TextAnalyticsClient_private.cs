@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
@@ -173,21 +174,21 @@ namespace Azure.AI.TextAnalytics
 
         #endregion
 
-        private void BuildUriForRoute(string route, RequestUriBuilder builder, bool showStats, string modelVersion)
+        private void BuildUriForRoute(string route, RequestUriBuilder builder, TextAnalyticsRequestOptions options)
         {
             builder.Reset(_baseUri);
             builder.AppendPath(TextAnalyticsRoute, escape: false);
             builder.AppendPath(_apiVersion, escape: false);
             builder.AppendPath(route, escape: false);
 
-            if (showStats)
+            if (options.ShowStats)
             {
                 builder.AppendQuery(ShowStats, "true");
             }
 
-            if (!string.IsNullOrEmpty(modelVersion))
+            if (!string.IsNullOrEmpty(options.ModelVersion))
             {
-                builder.AppendQuery(ModelVersion, modelVersion);
+                builder.AppendQuery(ModelVersion, options.ModelVersion);
             }
         }
 

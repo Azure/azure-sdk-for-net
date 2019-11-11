@@ -232,11 +232,10 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// </summary>
         /// <param name="inputs"></param>
-        /// <param name="showStats"></param>
-        /// <param name="modelVersion"></param>
+        /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response<DocumentResultCollection<DetectedLanguage>>> DetectLanguagesAsync(IEnumerable<DetectLanguageInput> inputs, bool showStats = false, string modelVersion = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DocumentResultCollection<DetectedLanguage>>> DetectLanguagesAsync(IEnumerable<DetectLanguageInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
@@ -245,7 +244,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateDetectLanguageRequest(inputs, showStats, modelVersion);
+                using Request request = CreateDetectLanguageRequest(inputs, options);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
 
                 return response.Status switch
@@ -264,11 +263,10 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// </summary>
         /// <param name="inputs"></param>
-        /// <param name="showStats"></param>
-        /// <param name="modelVersion"></param>
+        /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response<DocumentResultCollection<DetectedLanguage>> DetectLanguages(IEnumerable<DetectLanguageInput> inputs, bool showStats = false, string modelVersion = default, CancellationToken cancellationToken = default)
+        public virtual Response<DocumentResultCollection<DetectedLanguage>> DetectLanguages(IEnumerable<DetectLanguageInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
@@ -277,7 +275,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateDetectLanguageRequest(inputs, showStats, modelVersion);
+                using Request request = CreateDetectLanguageRequest(inputs, options);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 return response.Status switch
@@ -303,7 +301,7 @@ namespace Azure.AI.TextAnalytics
             ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDetectLanguageInputs(inputs, countryHint);
 
             request.Method = RequestMethod.Post;
-            BuildUriForRoute(LanguagesRoute, request.Uri, showStats: default, modelVersion: default);
+            BuildUriForRoute(LanguagesRoute, request.Uri, new TextAnalyticsRequestOptions());
 
             request.Headers.Add(HttpHeader.Common.JsonContentType);
             request.Content = RequestContent.Create(content);
@@ -313,7 +311,7 @@ namespace Azure.AI.TextAnalytics
             return request;
         }
 
-        private Request CreateDetectLanguageRequest(IEnumerable<DetectLanguageInput> inputs, bool showStats, string modelVersion)
+        private Request CreateDetectLanguageRequest(IEnumerable<DetectLanguageInput> inputs, TextAnalyticsRequestOptions options)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
@@ -322,7 +320,7 @@ namespace Azure.AI.TextAnalytics
             ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDetectLanguageInputs(inputs);
 
             request.Method = RequestMethod.Post;
-            BuildUriForRoute(LanguagesRoute, request.Uri, showStats, modelVersion);
+            BuildUriForRoute(LanguagesRoute, request.Uri, options);
 
             request.Headers.Add(HttpHeader.Common.JsonContentType);
             request.Content = RequestContent.Create(content);
@@ -483,11 +481,10 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// </summary>
         /// <param name="inputs"></param>
-        /// <param name="showStats"></param>
-        /// <param name="modelVersion"></param>
+        /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response<DocumentResultCollection<Entity>>> RecognizeEntitiesAsync(IEnumerable<DocumentInput> inputs, bool showStats = false, string modelVersion = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DocumentResultCollection<Entity>>> RecognizeEntitiesAsync(IEnumerable<DocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
@@ -496,7 +493,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateDocumentInputRequest(inputs, showStats, modelVersion, EntitiesRoute);
+                using Request request = CreateDocumentInputRequest(inputs, options, EntitiesRoute);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
 
                 return response.Status switch
@@ -515,11 +512,10 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// </summary>
         /// <param name="inputs"></param>
-        /// <param name="showStats"></param>
-        /// <param name="modelVersion"></param>
+        /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response<DocumentResultCollection<Entity>> RecognizeEntities(IEnumerable<DocumentInput> inputs, bool showStats = false, string modelVersion = default, CancellationToken cancellationToken = default)
+        public virtual Response<DocumentResultCollection<Entity>> RecognizeEntities(IEnumerable<DocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
@@ -528,7 +524,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateDocumentInputRequest(inputs, showStats, modelVersion, EntitiesRoute);
+                using Request request = CreateDocumentInputRequest(inputs, options, EntitiesRoute);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 return response.Status switch
@@ -693,11 +689,10 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// </summary>
         /// <param name="inputs"></param>
-        /// <param name="showStats"></param>
-        /// <param name="modelVersion"></param>
+        /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response<SentimentResultCollection>> AnalyzeSentimentAsync(IEnumerable<DocumentInput> inputs, bool showStats = false, string modelVersion = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SentimentResultCollection>> AnalyzeSentimentAsync(IEnumerable<DocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
@@ -706,7 +701,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateDocumentInputRequest(inputs, showStats, modelVersion, SentimentRoute);
+                using Request request = CreateDocumentInputRequest(inputs, options, SentimentRoute);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
 
                 return response.Status switch
@@ -725,11 +720,10 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// </summary>
         /// <param name="inputs"></param>
-        /// <param name="showStats"></param>
-        /// <param name="modelVersion"></param>
+        /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response<SentimentResultCollection> AnalyzeSentiment(IEnumerable<DocumentInput> inputs, bool showStats = false, string modelVersion = default, CancellationToken cancellationToken = default)
+        public virtual Response<SentimentResultCollection> AnalyzeSentiment(IEnumerable<DocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
@@ -738,7 +732,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateDocumentInputRequest(inputs, showStats, modelVersion, SentimentRoute);
+                using Request request = CreateDocumentInputRequest(inputs, options, SentimentRoute);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 return response.Status switch
@@ -905,11 +899,10 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// </summary>
         /// <param name="inputs"></param>
-        /// <param name="showStats"></param>
-        /// <param name="modelVersion"></param>
+        /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response<DocumentResultCollection<string>>> ExtractKeyPhrasesAsync(IEnumerable<DocumentInput> inputs, bool showStats = false, string modelVersion = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DocumentResultCollection<string>>> ExtractKeyPhrasesAsync(IEnumerable<DocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
@@ -918,7 +911,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateDocumentInputRequest(inputs, showStats, modelVersion, KeyPhrasesRoute);
+                using Request request = CreateDocumentInputRequest(inputs, options, KeyPhrasesRoute);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
 
                 return response.Status switch
@@ -937,11 +930,10 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// </summary>
         /// <param name="inputs"></param>
-        /// <param name="showStats"></param>
-        /// <param name="modelVersion"></param>
+        /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response<DocumentResultCollection<string>> ExtractKeyPhrases(IEnumerable<DocumentInput> inputs, bool showStats = false, string modelVersion = default, CancellationToken cancellationToken = default)
+        public virtual Response<DocumentResultCollection<string>> ExtractKeyPhrases(IEnumerable<DocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
@@ -950,7 +942,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateDocumentInputRequest(inputs, showStats, modelVersion, KeyPhrasesRoute);
+                using Request request = CreateDocumentInputRequest(inputs, options, KeyPhrasesRoute);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 return response.Status switch
@@ -1117,11 +1109,10 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// </summary>
         /// <param name="inputs"></param>
-        /// <param name="showStats"></param>
-        /// <param name="modelVersion"></param>
+        /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response<DocumentResultCollection<Entity>>> RecognizePiiEntitiesAsync(IEnumerable<DocumentInput> inputs, bool showStats = false, string modelVersion = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DocumentResultCollection<Entity>>> RecognizePiiEntitiesAsync(IEnumerable<DocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
@@ -1130,7 +1121,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateDocumentInputRequest(inputs, showStats, modelVersion, PiiEntitiesRoute);
+                using Request request = CreateDocumentInputRequest(inputs, options, PiiEntitiesRoute);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
 
                 return response.Status switch
@@ -1149,11 +1140,10 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// </summary>
         /// <param name="inputs"></param>
-        /// <param name="showStats"></param>
-        /// <param name="modelVersion"></param>
+        /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response<DocumentResultCollection<Entity>> RecognizePiiEntities(IEnumerable<DocumentInput> inputs, bool showStats = false, string modelVersion = default, CancellationToken cancellationToken = default)
+        public virtual Response<DocumentResultCollection<Entity>> RecognizePiiEntities(IEnumerable<DocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
@@ -1162,7 +1152,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateDocumentInputRequest(inputs, showStats, modelVersion, PiiEntitiesRoute);
+                using Request request = CreateDocumentInputRequest(inputs, options, PiiEntitiesRoute);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 return response.Status switch
@@ -1329,11 +1319,10 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// </summary>
         /// <param name="inputs"></param>
-        /// <param name="showStats"></param>
-        /// <param name="modelVersion"></param>
+        /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response<DocumentResultCollection<LinkedEntity>>> ExtractEntityLinkingAsync(IEnumerable<DocumentInput> inputs, bool showStats = false, string modelVersion = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DocumentResultCollection<LinkedEntity>>> ExtractEntityLinkingAsync(IEnumerable<DocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
@@ -1342,7 +1331,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateDocumentInputRequest(inputs, showStats, modelVersion, EntityLinkingRoute);
+                using Request request = CreateDocumentInputRequest(inputs, options, EntityLinkingRoute);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
 
                 return response.Status switch
@@ -1361,11 +1350,10 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// </summary>
         /// <param name="inputs"></param>
-        /// <param name="showStats"></param>
-        /// <param name="modelVersion"></param>
+        /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response<DocumentResultCollection<LinkedEntity>> ExtractEntityLinking(IEnumerable<DocumentInput> inputs, bool showStats = false, string modelVersion = default, CancellationToken cancellationToken = default)
+        public virtual Response<DocumentResultCollection<LinkedEntity>> ExtractEntityLinking(IEnumerable<DocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
@@ -1374,7 +1362,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateDocumentInputRequest(inputs, showStats, modelVersion, EntityLinkingRoute);
+                using Request request = CreateDocumentInputRequest(inputs, options, EntityLinkingRoute);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 return response.Status switch
@@ -1412,7 +1400,7 @@ namespace Azure.AI.TextAnalytics
             return request;
         }
 
-        private Request CreateDocumentInputRequest(IEnumerable<DocumentInput> inputs, bool showStats, string modelVersion, string route)
+        private Request CreateDocumentInputRequest(IEnumerable<DocumentInput> inputs, TextAnalyticsRequestOptions options, string route)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
@@ -1421,7 +1409,7 @@ namespace Azure.AI.TextAnalytics
             ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDocumentInputs(inputs);
 
             request.Method = RequestMethod.Post;
-            BuildUriForRoute(route, request.Uri, showStats, modelVersion);
+            BuildUriForRoute(route, request.Uri, options);
 
             request.Headers.Add(HttpHeader.Common.JsonContentType);
             request.Content = RequestContent.Create(content);
