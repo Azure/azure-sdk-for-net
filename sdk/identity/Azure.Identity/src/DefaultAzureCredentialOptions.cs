@@ -9,6 +9,16 @@ namespace Azure.Identity
     public class DefaultAzureCredentialOptions : TokenCredentialOptions
     {
         /// <summary>
+        /// Specifies the tenant id of the preferred authentication account, to be retrieved from the shared token cache for single sign on authentication with
+        /// development tools, in the case multiple accounts are found in the shared token.
+        /// </summary>
+        /// <remarks>
+        /// If multiple accounts are found in the shared token cache and no value is specified, or the specified value matches no accounts in
+        /// the cache the SharedTokenCacheCredential will not be used for authentication.
+        /// </remarks>
+        public string SharedTokenCacheTenantId { get; set; }
+
+        /// <summary>
         /// Specifies the preferred authentication account to be retrieved from the shared token cache for single sign on authentication with
         /// development tools. In the case multiple accounts are found in the shared token.
         /// </summary>

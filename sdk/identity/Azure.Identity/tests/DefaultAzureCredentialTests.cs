@@ -60,24 +60,28 @@ namespace Azure.Identity.Tests
         {
             string expClientId = Guid.NewGuid().ToString();
             string expUsername = Guid.NewGuid().ToString();
+            string expTenantId = Guid.NewGuid().ToString();
             string actClientId = null;
             string actUsername = null;
+            string actTenantId = null;
 
             var credFactory = new MockDefaultAzureCredentialFactory(CredentialPipeline.GetInstance(null));
 
             credFactory.OnCreateManagedIdentityCredential = (clientId, _) => actClientId = clientId;
-            credFactory.OnCreateSharedTokenCacheCredential = (username, _) => actUsername = username;
+            credFactory.OnCreateSharedTokenCacheCredential = (tenantId, username, _) => { actTenantId = tenantId; actUsername = username; };
 
             var options = new DefaultAzureCredentialOptions
             {
                 ManagedIdentityClientId = expClientId,
-                SharedTokenCacheUsername = expUsername
+                SharedTokenCacheUsername = expUsername,
+                SharedTokenCacheTenantId = expTenantId
             };
 
             var cred = new DefaultAzureCredential(credFactory, options);
 
             Assert.AreEqual(expClientId, actClientId);
             Assert.AreEqual(expUsername, actUsername);
+            Assert.AreEqual(expTenantId, actTenantId);
         }
 
 
@@ -98,8 +102,9 @@ namespace Azure.Identity.Tests
                 Assert.IsNull(clientId);
                 managedIdentityCredentialIncluded = true;
             };
-            credFactory.OnCreateSharedTokenCacheCredential = (username, _) =>
+            credFactory.OnCreateSharedTokenCacheCredential = (tenantId, username, _) =>
             {
+                Assert.IsNull(tenantId);
                 Assert.IsNull(username);
                 sharedTokenCacheCredentialIncluded = true;
             };
@@ -149,7 +154,7 @@ namespace Azure.Identity.Tests
             {
                 ((MockExtendedTokenCredential)c).TokenFactory = (context, cancel) => { return new ExtendedAccessToken(new CredentialUnavailableException("ManagedIdentityCredential Unavailable")); };
             };
-            credFactory.OnCreateSharedTokenCacheCredential = (username, c) =>
+            credFactory.OnCreateSharedTokenCacheCredential = (tenantId, username, c) =>
             {
                 ((MockExtendedTokenCredential)c).TokenFactory = (context, cancel) => { return new ExtendedAccessToken(new CredentialUnavailableException("SharedTokenCacheCredential Unavailable")); };
             };
@@ -217,7 +222,7 @@ namespace Azure.Identity.Tests
                     }
                 };
             };
-            credFactory.OnCreateSharedTokenCacheCredential = (username, c) =>
+            credFactory.OnCreateSharedTokenCacheCredential = (tenantId, username, c) =>
             {
                 ((MockExtendedTokenCredential)c).TokenFactory = (context, cancel) =>
                 {

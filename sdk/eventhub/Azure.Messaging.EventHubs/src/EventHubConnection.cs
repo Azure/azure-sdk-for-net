@@ -165,10 +165,13 @@ namespace Azure.Messaging.EventHubs
                  connectionStringProperties.SharedAccessKey
             );
 
+            var sharedCredentials = new SharedAccessSignatureCredential(sharedAccessSignature);
+            var tokenCredentials = new EventHubTokenCredential(sharedCredentials, BuildAudienceResource(connectionOptions.TransportType, fullyQualifiedNamespace, eventHubName));
+
             FullyQualifiedNamespace = fullyQualifiedNamespace;
             EventHubName = eventHubName;
             Options = connectionOptions;
-            InnerClient = CreateTransportClient(fullyQualifiedNamespace, eventHubName, new SharedAccessSignatureCredential(sharedAccessSignature), connectionOptions);
+            InnerClient = CreateTransportClient(fullyQualifiedNamespace, eventHubName, tokenCredentials, connectionOptions);
         }
 
         /// <summary>
@@ -200,16 +203,15 @@ namespace Azure.Messaging.EventHubs
                 case EventHubSharedKeyCredential sharedKeyCredential:
                     credential = sharedKeyCredential.ConvertToSharedAccessSignatureCredential(BuildAudienceResource(connectionOptions.TransportType, fullyQualifiedNamespace, eventHubName));
                     break;
-
-                default:
-                    credential = new EventHubTokenCredential(credential, BuildAudienceResource(connectionOptions.TransportType, fullyQualifiedNamespace, eventHubName));
-                    break;
             }
+
+            var tokenCredential = new EventHubTokenCredential(credential, BuildAudienceResource(connectionOptions.TransportType, fullyQualifiedNamespace, eventHubName));
 
             FullyQualifiedNamespace = fullyQualifiedNamespace;
             EventHubName = eventHubName;
             Options = connectionOptions;
-            InnerClient = CreateTransportClient(fullyQualifiedNamespace, eventHubName, credential, connectionOptions);
+
+            InnerClient = CreateTransportClient(fullyQualifiedNamespace, eventHubName, tokenCredential, connectionOptions);
         }
 
         /// <summary>
@@ -393,7 +395,7 @@ namespace Azure.Messaging.EventHubs
         ///
         internal virtual TransportClient CreateTransportClient(string fullyQualifiedNamespace,
                                                                string eventHubName,
-                                                               TokenCredential credential,
+                                                               EventHubTokenCredential credential,
                                                                EventHubConnectionOptions options)
         {
             switch (options.TransportType)

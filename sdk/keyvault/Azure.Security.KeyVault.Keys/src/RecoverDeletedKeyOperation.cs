@@ -54,7 +54,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             if (!_completed)
             {
-                using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.RecoverDeletedKeyOperation.UpdateStatus");
+                using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.RecoverDeletedKeyOperation.UpdateStatus");
                 scope.AddAttribute("secret", _value.Name);
                 scope.Start();
 
@@ -78,7 +78,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             if (!_completed)
             {
-                using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.RecoverDeletedKeyOperation.UpdateStatus");
+                using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.RecoverDeletedKeyOperation.UpdateStatus");
                 scope.AddAttribute("secret", _value.Name);
                 scope.Start();
 
@@ -105,7 +105,7 @@ namespace Azure.Security.KeyVault.Keys
         public override ValueTask<Response<KeyVaultKey>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        private static async Task<bool> CheckCompletedAsync(Response response)
+        private static async ValueTask<bool> CheckCompletedAsync(Response response)
         {
             switch (response.Status)
             {

@@ -67,7 +67,7 @@ namespace ManagedNetwork.Tests
                         VirtualNetworks = new List<ResourceId>(){
                                 new ResourceId()
                                 {
-                                    Id = "subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/testvnet"
+                                    Id = "/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/testvnet"
                                 }
                             },
                         Subnets = new List<ResourceId>(),
