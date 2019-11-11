@@ -74,7 +74,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(subject, nameof(subject));
             Argument.AssertNotNullOrEmpty(issuerName, nameof(issuerName));
 
-            Subject = Subject;
+            Subject = subject;
             IssuerName = issuerName;
         }
 
