@@ -49,7 +49,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
             };
 
-            SentimentResultCollection results = client.AnalyzeSentiment(inputs, showStats: true).Value;
+            SentimentResultCollection results = client.AnalyzeSentiment(inputs, new TextAnalyticsRequestOptions(showStats: true)).Value;
 
             int i = 0;
             Debug.WriteLine($"Results of Azure Text Analytics \"Sentiment Analysis\" Model, version: \"{results.ModelVersion}\"");

@@ -1390,7 +1390,7 @@ namespace Azure.AI.TextAnalytics
             ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDocumentInputs(inputs, language);
 
             request.Method = RequestMethod.Post;
-            BuildUriForRoute(route, request.Uri, showStats: default, modelVersion: default);
+            BuildUriForRoute(route, request.Uri, new TextAnalyticsRequestOptions());
 
             request.Headers.Add(HttpHeader.Common.JsonContentType);
             request.Content = RequestContent.Create(content);

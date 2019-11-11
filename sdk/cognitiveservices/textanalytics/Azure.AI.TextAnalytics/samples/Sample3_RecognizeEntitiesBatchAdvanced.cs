@@ -44,7 +44,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
             };
 
-            var resultCollection = client.RecognizeEntities(inputs, showStats: true).Value;
+            var resultCollection = client.RecognizeEntities(inputs, new TextAnalyticsRequestOptions(showStats: true)).Value;
 
             int i = 0;
             Debug.WriteLine($"Results of Azure Text Analytics \"Named Entity Recognition\" Model, version: \"{resultCollection.ModelVersion}\"");
