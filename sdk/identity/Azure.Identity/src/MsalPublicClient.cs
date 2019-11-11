@@ -24,7 +24,7 @@ namespace Azure.Identity
         {
             PublicClientApplicationBuilder pubAppBuilder = PublicClientApplicationBuilder.Create(clientId).WithHttpClientFactory(new HttpPipelineClientFactory(pipeline));
 
-            tenantId ??= "organizations";
+            tenantId ??= Constants.OrganizationsTenantId;
 
             pubAppBuilder = pubAppBuilder.WithTenantId(tenantId);
 
