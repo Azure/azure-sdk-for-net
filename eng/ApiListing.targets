@@ -1,6 +1,6 @@
 <Project>
 
-  <Target Name="GenerateApiListing" Condition="'$(IsMainClientLibrary)' == 'true'">
+  <Target Name="GenerateApiListing" Condition="'$(IsShippingClientLibrary)' == 'true'">
     <PropertyGroup>
       <_RefSourceOutputPath>$([System.IO.Directory]::GetParent('$(MSBuildProjectDirectory)'))/api/</_RefSourceOutputPath>
     </PropertyGroup>
