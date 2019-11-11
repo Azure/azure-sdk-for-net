@@ -187,20 +187,6 @@ namespace Microsoft.Azure.Search.Models
             return parameters;
         }
 
-        /// <summary>
-        /// Specifies that <c cref="BlobExtractionMode.StorageMetadata">BlobExtractionMode.StorageMetadata</c> blob extraction mode will be
-        /// automatically used for blobs of unsupported content types. This behavior is enabled by default.
-        /// </summary>
-        /// <remarks>
-        /// This option only applies to indexers that index Azure Blob Storage.
-        /// </remarks>
-        /// <param name="parameters">IndexingParameters to configure.</param>
-        /// <returns></returns>
-        /// <returns>The IndexingParameters instance.</returns>
-        [Obsolete("This behavior is now enabled by default, so calling this method is no longer necessary.")]
-        public static IndexingParameters DoNotFailOnUnsupportedContentType(this IndexingParameters parameters) =>
-            Configure(parameters, "failOnUnsupportedContentType", false);
-
         private static IndexingParameters Configure(IndexingParameters parameters, string key, object value)
         {
             Throw.IfArgumentNull(parameters, nameof(parameters));
