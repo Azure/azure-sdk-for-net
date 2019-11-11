@@ -529,7 +529,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     var partitionId = (await connection.GetPartitionIdsAsync(DefaultRetryPolicy)).First();
 
                     await using (var producer = new EventHubProducerClient(connectionString))
-                    await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, partitionId, EventPosition.Earliest, connection))
+                    await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection))
                     await using (var receiver = consumer.CreatePartitionReceiver(partitionId, EventPosition.Earliest))
                     {
                         // Send a few dummy events.  We are not expecting to receive these.
@@ -636,7 +636,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     var partitionId = (await connection.GetPartitionIdsAsync(DefaultRetryPolicy)).First();
 
                     await using (var producer = new EventHubProducerClient(connection))
-                    await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, partitionId, EventPosition.Earliest, connectionString))
+                    await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString))
                     await using (var receiver = consumer.CreatePartitionReceiver(partitionId, EventPosition.Earliest))
                     {
                         // Send a few events.  We are only interested in the last one of them.

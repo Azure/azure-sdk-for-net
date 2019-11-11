@@ -76,7 +76,7 @@ namespace Azure.Messaging.EventHubs.Samples
                     // This is the last piece of code guaranteed to run before event processing, so all initialization
                     // must be done by the moment this method returns.
 
-                    // We want to receive events from the latest available position so older events don't interefere with our sample.
+                    // We want to receive events from the latest available position so older events don't interfere with our sample.
 
                     initializationContext.DefaultStartingPosition = EventPosition.Latest;
 

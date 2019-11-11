@@ -155,7 +155,7 @@ namespace Azure.Messaging.EventHubs.Processor
                         RunningTaskTokenSource?.Cancel();
                         RunningTaskTokenSource = new CancellationTokenSource();
 
-                        InnerConsumer = new EventHubConsumerClient(ConsumerGroup, Context.PartitionId, StartingPosition, Connection);
+                        InnerConsumer = new EventHubConsumerClient(ConsumerGroup, Connection);
 
                         RunningTask = RunAsync(RunningTaskTokenSource.Token);
                     }
