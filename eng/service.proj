@@ -24,5 +24,4 @@
     <Error Condition="'$(Scope)' == '' and '@(ProjectReference)' == ''"
         Text="No Projects found with patttern [..\sdk\$(ServiceDirectory)\**\*.csproj], please make sure you have passed in the correct ServiceDirectory." />
   </Target>
-
 </Project>
