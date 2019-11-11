@@ -60,6 +60,11 @@ try {
         & $PSScriptRoot\Update-Snippets.ps1
     }
 
+    Write-Host "Re-generating lisgings"
+    Invoke-Block {
+        & $PSScriptRoot\Export-API.ps1
+    }
+
     Write-Host "Re-generating clients"
     Invoke-Block {
         # https://github.com/Azure/azure-sdk-for-net/issues/8584
@@ -71,7 +76,7 @@ try {
     if ($LastExitCode -ne 0) {
         $status = git status -s | Out-String
         $status = $status -replace "`n","`n    "
-        LogError "Generated code is not up to date. You may need to run eng\Update-Snippets.ps1 or sdk\storage\generate.ps1"
+        LogError "Generated code is not up to date. You may need to run eng\Update-Snippets.ps1 or sdk\storage\generate.ps1 or eng\Export-API.ps1"
     }
 }
 finally {
