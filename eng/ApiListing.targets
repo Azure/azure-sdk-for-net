@@ -1,8 +1,8 @@
 <Project>
 
-  <Target Name="GenerateApiListing">
+  <Target Name="GenerateApiListing" Condition="'$(IsMainClientLibrary)' == 'true'">
     <PropertyGroup>
-      <_RefSourceOutputPath>$([System.IO.Directory]::GetParent('$(MSBuildProjectDirectory)'))/ref/</_RefSourceOutputPath>
+      <_RefSourceOutputPath>$([System.IO.Directory]::GetParent('$(MSBuildProjectDirectory)'))/api/</_RefSourceOutputPath>
     </PropertyGroup>
 
     <ItemGroup>
@@ -10,6 +10,10 @@
       <_AllTargetFrameworks Include="$(TargetFrameworks);$(TargetFramework)" />
       <_DeduplicatedTargetFramework Include="%(_AllTargetFrameworks.Identity)" />
     </ItemGroup>
+    
+    <RemoveDir Directories="$(_RefSourceOutputPath)" />
+
+    <Error Condition="'$(GenerateAPIListing)' != 'true' AND !$(OriginalVersion.Contains('preview'))" Text="GenerateAPIListing must be set to true for non release version" />
 
     <MSBuild Projects="$(MSBuildProjectFullPath)"
              Targets="_GenerateApiListingInner"
