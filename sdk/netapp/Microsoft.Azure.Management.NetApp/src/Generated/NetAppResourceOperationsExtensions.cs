@@ -17,9 +17,9 @@ namespace Microsoft.Azure.Management.NetApp
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for AzureNetAppFilesManagementClient.
+    /// Extension methods for NetAppResourceOperations.
     /// </summary>
-    public static partial class AzureNetAppFilesManagementClientExtensions
+    public static partial class NetAppResourceOperationsExtensions
     {
             /// <summary>
             /// Check resource name availability
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='resourceGroup'>
             /// Resource group name.
             /// </param>
-            public static ResourceNameAvailability CheckNameAvailability(this IAzureNetAppFilesManagementClient operations, string location, string name, string type, string resourceGroup)
+            public static ResourceNameAvailability CheckNameAvailability(this INetAppResourceOperations operations, string location, string name, string type, string resourceGroup)
             {
                 return operations.CheckNameAvailabilityAsync(location, name, type, resourceGroup).GetAwaiter().GetResult();
             }
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ResourceNameAvailability> CheckNameAvailabilityAsync(this IAzureNetAppFilesManagementClient operations, string location, string name, string type, string resourceGroup, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ResourceNameAvailability> CheckNameAvailabilityAsync(this INetAppResourceOperations operations, string location, string name, string type, string resourceGroup, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(location, name, type, resourceGroup, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='resourceGroup'>
             /// Resource group name.
             /// </param>
-            public static ResourceNameAvailability CheckFilePathAvailability(this IAzureNetAppFilesManagementClient operations, string location, string name, string type, string resourceGroup)
+            public static ResourceNameAvailability CheckFilePathAvailability(this INetAppResourceOperations operations, string location, string name, string type, string resourceGroup)
             {
                 return operations.CheckFilePathAvailabilityAsync(location, name, type, resourceGroup).GetAwaiter().GetResult();
             }
@@ -145,7 +145,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ResourceNameAvailability> CheckFilePathAvailabilityAsync(this IAzureNetAppFilesManagementClient operations, string location, string name, string type, string resourceGroup, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ResourceNameAvailability> CheckFilePathAvailabilityAsync(this INetAppResourceOperations operations, string location, string name, string type, string resourceGroup, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CheckFilePathAvailabilityWithHttpMessagesAsync(location, name, type, resourceGroup, null, cancellationToken).ConfigureAwait(false))
                 {

@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// Describe all NetApp Accounts in a resource group
         /// </summary>
         /// <remarks>
-        /// List and describe all NetApp accounts in the resource group
+        /// List and describe all NetApp accounts in the resource group.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
