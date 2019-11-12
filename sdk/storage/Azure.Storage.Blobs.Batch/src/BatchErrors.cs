@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using Azure.Core;
+using Azure.Storage.Shared;
+using Internals = Azure.Storage.Shared;
 
 namespace Azure.Storage.Blobs.Specialized
 {
@@ -47,7 +49,7 @@ namespace Azure.Storage.Blobs.Specialized
             new InvalidOperationException($"Expected an HTTP header line, not {headerLine}");
 
         public static RequestFailedException InvalidResponse(Response response, Exception innerException) =>
-            StorageExceptionExtensions.CreateException(response, "Invalid response", innerException);
+            Internals.StorageExceptionExtensions.CreateException(response, "Invalid response", innerException);
 
     }
 }

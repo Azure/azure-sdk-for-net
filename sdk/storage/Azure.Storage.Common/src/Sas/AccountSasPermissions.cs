@@ -4,6 +4,7 @@
 using System;
 using System.Text;
 using Azure.Storage.Sas;
+using Internals = Azure.Storage.Shared.Common;
 
 namespace Azure.Storage.Sas
 {
@@ -80,35 +81,35 @@ namespace Azure.Storage
             var sb = new StringBuilder();
             if ((permissions & AccountSasPermissions.Read) == AccountSasPermissions.Read)
             {
-                sb.Append(Constants.Sas.Permissions.Read);
+                sb.Append(Internals.Constants.Sas.Permissions.Read);
             }
             if ((permissions & AccountSasPermissions.Write) == AccountSasPermissions.Write)
             {
-                sb.Append(Constants.Sas.Permissions.Write);
+                sb.Append(Internals.Constants.Sas.Permissions.Write);
             }
             if ((permissions & AccountSasPermissions.Delete) == AccountSasPermissions.Delete)
             {
-                sb.Append(Constants.Sas.Permissions.Delete);
+                sb.Append(Internals.Constants.Sas.Permissions.Delete);
             }
             if ((permissions & AccountSasPermissions.List) == AccountSasPermissions.List)
             {
-                sb.Append(Constants.Sas.Permissions.List);
+                sb.Append(Internals.Constants.Sas.Permissions.List);
             }
             if ((permissions & AccountSasPermissions.Add) == AccountSasPermissions.Add)
             {
-                sb.Append(Constants.Sas.Permissions.Add);
+                sb.Append(Internals.Constants.Sas.Permissions.Add);
             }
             if ((permissions & AccountSasPermissions.Create) == AccountSasPermissions.Create)
             {
-                sb.Append(Constants.Sas.Permissions.Create);
+                sb.Append(Internals.Constants.Sas.Permissions.Create);
             }
             if ((permissions & AccountSasPermissions.Update) == AccountSasPermissions.Update)
             {
-                sb.Append(Constants.Sas.Permissions.Update);
+                sb.Append(Internals.Constants.Sas.Permissions.Update);
             }
             if ((permissions & AccountSasPermissions.Process) == AccountSasPermissions.Process)
             {
-                sb.Append(Constants.Sas.Permissions.Process);
+                sb.Append(Internals.Constants.Sas.Permissions.Process);
             }
             return sb.ToString();
         }

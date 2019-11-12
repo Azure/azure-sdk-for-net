@@ -8,12 +8,14 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
+using Azure.Storage.Shared;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Files.Shares.Tests;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
-using TestConstants = Azure.Storage.Test.Constants;
+using Internals = Azure.Storage.Shared.Common;
+using Azure.Storage.Tests;
 
 namespace Azure.Storage.Files.Shares.Test
 {
@@ -34,7 +36,7 @@ namespace Azure.Storage.Files.Shares.Test
             var fileEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var fileSecondaryEndpoint = new Uri("http://127.0.0.1/" + accountName + "-secondary");
 
-            var connectionString = new StorageConnectionString(credentials, (default, default), (default, default), (default, default), (fileEndpoint, fileSecondaryEndpoint));
+            var connectionString = new Internals.StorageConnectionString(credentials, (default, default), (default, default), (default, default), (fileEndpoint, fileSecondaryEndpoint));
 
             var shareName = GetNewShareName();
             var filePath = GetNewFileName();
@@ -103,7 +105,7 @@ namespace Azure.Storage.Files.Shares.Test
             ShareFileClient file = InstrumentClient(directory.GetFileClient(name));
 
             // Act
-            Response<ShareFileInfo> response = await file.CreateAsync(maxSize: Constants.MB);
+            Response<ShareFileInfo> response = await file.CreateAsync(maxSize: Internals.Constants.MB);
 
             // Assert
             AssertValidStorageFileInfo(response);
@@ -126,7 +128,7 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Act
             Response<ShareFileInfo> response = await file.CreateAsync(
-                maxSize: Constants.MB,
+                maxSize: Internals.Constants.MB,
                 filePermission: filePermission);
 
             // Assert
@@ -150,7 +152,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
                 file.CreateAsync(
-                    maxSize: Constants.MB,
+                    maxSize: Internals.Constants.MB,
                     smbProperties: fileSmbProperties,
                     filePermission: filePermission),
                 e => Assert.AreEqual("filePermission and filePermissionKey cannot both be set", e.Message));
@@ -164,12 +166,12 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Arrange
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
-            var filePermission = new string('*', 9 * Constants.KB);
+            var filePermission = new string('*', 9 * Internals.Constants.KB);
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
                 file.CreateAsync(
-                    maxSize: Constants.MB,
+                    maxSize: Internals.Constants.MB,
                     filePermission: filePermission),
                 e => Assert.AreEqual(
                     "Value must be less than or equal to 8192" + Environment.NewLine
@@ -200,7 +202,7 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Act
             Response<ShareFileInfo> response = await file.CreateAsync(
-                maxSize: Constants.KB,
+                maxSize: Internals.Constants.KB,
                 smbProperties: smbProperties);
 
             // Assert
@@ -222,7 +224,7 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Act
             await file.CreateAsync(
-                maxSize: Constants.MB,
+                maxSize: Internals.Constants.MB,
                 metadata: metadata);
 
             // Assert
@@ -233,7 +235,7 @@ namespace Azure.Storage.Files.Shares.Test
         [Test]
         public async Task CreateAsync_Headers()
         {
-            var constants = new TestConstants(this);
+            var constants = new Storage.Test.Constants(this);
 
             await using DisposingDirectory test = await GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
@@ -243,7 +245,7 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Act
             await file.CreateAsync(
-                maxSize: Constants.MB,
+                maxSize: Internals.Constants.MB,
                 httpHeaders: new ShareFileHttpHeaders
                 {
                     CacheControl = constants.CacheControl,
@@ -278,7 +280,7 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                file.CreateAsync(maxSize: Constants.KB),
+                file.CreateAsync(maxSize: Internals.Constants.KB),
                 e => Assert.AreEqual("ParentNotFound", e.ErrorCode.Split('\n')[0]));
         }
 
@@ -325,7 +327,7 @@ namespace Azure.Storage.Files.Shares.Test
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
 
             // Act
-            Response<ShareFileInfo> createResponse = await file.CreateAsync(maxSize: Constants.KB);
+            Response<ShareFileInfo> createResponse = await file.CreateAsync(maxSize: Internals.Constants.KB);
             Response<ShareFileProperties> getPropertiesResponse = await file.GetPropertiesAsync();
 
             // Assert
@@ -410,7 +412,7 @@ namespace Azure.Storage.Files.Shares.Test
         [Test]
         public async Task SetHttpHeadersAsync()
         {
-            var constants = new TestConstants(this);
+            var constants = new Storage.Test.Constants(this);
 
             await using DisposingFile test = await GetTestFileAsync();
             ShareFileClient file = test.File;
@@ -448,7 +450,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Arrange
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
             var filePermission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)";
-            await file.CreateAsync(maxSize: Constants.KB);
+            await file.CreateAsync(maxSize: Internals.Constants.KB);
 
             // Act
             Response<ShareFileInfo> response = await file.SetHttpHeadersAsync(filePermission: filePermission);
@@ -480,7 +482,7 @@ namespace Azure.Storage.Files.Shares.Test
             };
 
 
-            await file.CreateAsync(maxSize: Constants.KB);
+            await file.CreateAsync(maxSize: Internals.Constants.KB);
 
             // Act
             Response<ShareFileInfo> response = await file.SetHttpHeadersAsync(smbProperties: smbProperties);
@@ -495,15 +497,15 @@ namespace Azure.Storage.Files.Shares.Test
         [Test]
         public async Task SetPropertiesAsync_FilePermissionTooLong()
         {
-            var constants = new TestConstants(this);
+            var constants = new Storage.Test.Constants(this);
 
             await using DisposingDirectory test = await GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             // Arrange
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
-            var filePermission = new string('*', 9 * Constants.KB);
-            await file.CreateAsync(maxSize: Constants.KB);
+            var filePermission = new string('*', 9 * Internals.Constants.KB);
+            await file.CreateAsync(maxSize: Internals.Constants.KB);
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
@@ -522,7 +524,7 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Arrange
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
-            await file.CreateAsync(maxSize: Constants.KB);
+            await file.CreateAsync(maxSize: Internals.Constants.KB);
 
             var filePermission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)";
             var fileSmbProperties = new FileSmbProperties()
@@ -541,7 +543,7 @@ namespace Azure.Storage.Files.Shares.Test
         [Test]
         public async Task SetPropertiesAsync_Error()
         {
-            var constants = new TestConstants(this);
+            var constants = new Storage.Test.Constants(this);
             await using DisposingDirectory test = await GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
@@ -600,12 +602,12 @@ namespace Azure.Storage.Files.Shares.Test
             await using DisposingFile testDest = await GetTestFileAsync();
             ShareFileClient dest = testSource.File;
 
-            var data = GetRandomBuffer(Constants.KB);
+            var data = GetRandomBuffer(Internals.Constants.KB);
             using (var stream = new MemoryStream(data))
             {
                 await source.UploadRangeAsync(
                     writeType: ShareFileRangeWriteType.Update,
-                    range: new HttpRange(0, Constants.KB),
+                    range: new HttpRange(0, Internals.Constants.KB),
                     content: stream);
             }
 
@@ -625,12 +627,12 @@ namespace Azure.Storage.Files.Shares.Test
             await using DisposingFile testDest = await GetTestFileAsync();
             ShareFileClient dest = testSource.File;
 
-            var data = GetRandomBuffer(Constants.KB);
+            var data = GetRandomBuffer(Internals.Constants.KB);
             using (var stream = new MemoryStream(data))
             {
                 await source.UploadRangeAsync(
                     writeType: ShareFileRangeWriteType.Update,
-                    range: new HttpRange(0, Constants.KB),
+                    range: new HttpRange(0, Internals.Constants.KB),
                     content: stream);
             }
 
@@ -668,19 +670,19 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Arrange
             ShareFileClient source = InstrumentClient(directory.GetFileClient(GetNewFileName()));
-            await source.CreateAsync(maxSize: Constants.MB);
-            var data = GetRandomBuffer(Constants.MB);
+            await source.CreateAsync(maxSize: Internals.Constants.MB);
+            var data = GetRandomBuffer(Internals.Constants.MB);
 
             using (var stream = new MemoryStream(data))
             {
                 await source.UploadRangeAsync(
                     writeType: ShareFileRangeWriteType.Update,
-                    range: new HttpRange(0, Constants.MB),
+                    range: new HttpRange(0, Internals.Constants.MB),
                     content: stream);
             }
 
             ShareFileClient dest = InstrumentClient(directory.GetFileClient(GetNewFileName()));
-            await dest.CreateAsync(maxSize: Constants.MB);
+            await dest.CreateAsync(maxSize: Internals.Constants.MB);
             Response<ShareFileCopyInfo> copyResponse = await dest.StartCopyAsync(source.Uri);
 
             // Act
@@ -706,7 +708,7 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Arrange
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
-            await file.CreateAsync(maxSize: Constants.MB);
+            await file.CreateAsync(maxSize: Internals.Constants.MB);
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
@@ -750,7 +752,7 @@ namespace Azure.Storage.Files.Shares.Test
         public async Task DownloadAsync()
         {
             // Arrange
-            var data = GetRandomBuffer(Constants.KB);
+            var data = GetRandomBuffer(Internals.Constants.KB);
 
             await using DisposingFile test = await GetTestFileAsync();
             ShareFileClient file = test.File;
@@ -759,12 +761,12 @@ namespace Azure.Storage.Files.Shares.Test
             {
                 await file.UploadRangeAsync(
                     writeType: ShareFileRangeWriteType.Update,
-                    range: new HttpRange(Constants.KB, data.LongLength),
+                    range: new HttpRange(Internals.Constants.KB, data.LongLength),
                     content: stream);
 
                 // Act
                 Response<ShareFileProperties> getPropertiesResponse = await file.GetPropertiesAsync();
-                Response<ShareFileDownloadInfo> downloadResponse = await file.DownloadAsync(range: new HttpRange(Constants.KB, data.LongLength));
+                Response<ShareFileDownloadInfo> downloadResponse = await file.DownloadAsync(range: new HttpRange(Internals.Constants.KB, data.LongLength));
 
                 // Assert
 
@@ -797,9 +799,9 @@ namespace Azure.Storage.Files.Shares.Test
         [Test]
         public async Task DownloadAsync_WithUnreliableConnection()
         {
-            var fileSize = 2 * Constants.MB;
-            var dataSize = 1 * Constants.MB;
-            var offset = 512 * Constants.KB;
+            var fileSize = 2 * Internals.Constants.MB;
+            var dataSize = 1 * Internals.Constants.MB;
+            var offset = 512 * Internals.Constants.KB;
 
             await using DisposingShare test = await GetTestShareAsync();
             ShareClient share = test.Share;
@@ -809,7 +811,7 @@ namespace Azure.Storage.Files.Shares.Test
                 new ShareDirectoryClient(
                     directory.Uri,
                     new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey),
-                    GetFaultyFileConnectionOptions(raiseAt: 256 * Constants.KB)));
+                    GetFaultyFileConnectionOptions(raiseAt: 256 * Internals.Constants.KB)));
 
             await directory.CreateAsync();
 
@@ -833,7 +835,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Assert
             Response<ShareFileDownloadInfo> downloadResponse = await fileFaulty.DownloadAsync(range: new HttpRange(offset, data.LongLength));
             var actual = new MemoryStream();
-            await downloadResponse.Value.Content.CopyToAsync(actual, 128 * Constants.KB);
+            await downloadResponse.Value.Content.CopyToAsync(actual, 128 * Internals.Constants.KB);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
         }
 
@@ -843,7 +845,7 @@ namespace Azure.Storage.Files.Shares.Test
             await using DisposingFile test = await GetTestFileAsync();
             ShareFileClient file = test.File;
 
-            Response<ShareFileRangeInfo> response = await file.GetRangeListAsync(range: new HttpRange(0, Constants.MB));
+            Response<ShareFileRangeInfo> response = await file.GetRangeListAsync(range: new HttpRange(0, Internals.Constants.MB));
 
             Assert.IsNotNull(response);
             Assert.AreNotEqual("<null>", response.Value.ETag.ToString());
@@ -862,14 +864,14 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                file.GetRangeListAsync(range: new HttpRange(0, Constants.MB)),
+                file.GetRangeListAsync(range: new HttpRange(0, Internals.Constants.MB)),
                 e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
         }
 
         [Test]
         public async Task UploadRangeAsync()
         {
-            var data = GetRandomBuffer(Constants.KB);
+            var data = GetRandomBuffer(Internals.Constants.KB);
 
             await using DisposingFile test = await GetTestFileAsync();
             ShareFileClient file = test.File;
@@ -878,7 +880,7 @@ namespace Azure.Storage.Files.Shares.Test
             {
                 Response<ShareFileUploadInfo> response = await file.UploadRangeAsync(
                     writeType: ShareFileRangeWriteType.Update,
-                    range: new HttpRange(Constants.KB, Constants.KB),
+                    range: new HttpRange(Internals.Constants.KB, Internals.Constants.KB),
                     content: stream);
 
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -893,7 +895,7 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Arrange
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
-            var data = GetRandomBuffer(Constants.KB);
+            var data = GetRandomBuffer(Internals.Constants.KB);
 
             using (var stream = new MemoryStream(data))
             {
@@ -901,7 +903,7 @@ namespace Azure.Storage.Files.Shares.Test
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 file.UploadRangeAsync(
                     writeType: ShareFileRangeWriteType.Update,
-                    range: new HttpRange(Constants.KB, Constants.KB),
+                    range: new HttpRange(Internals.Constants.KB, Internals.Constants.KB),
                     content: stream),
                 e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
             }
@@ -910,7 +912,7 @@ namespace Azure.Storage.Files.Shares.Test
         [Test]
         public async Task UploadAsync_Simple()
         {
-            const int size = 10 * Constants.KB;
+            const int size = 10 * Internals.Constants.KB;
             var data = this.GetRandomBuffer(size);
 
             await using DisposingShare test = await GetTestShareAsync();
@@ -931,26 +933,26 @@ namespace Azure.Storage.Files.Shares.Test
 
         [Test]
         [TestCase(512)]
-        [TestCase(1 * Constants.KB)]
-        [TestCase(2 * Constants.KB)]
-        [TestCase(4 * Constants.KB)]
-        [TestCase(10 * Constants.KB)]
-        [TestCase(20 * Constants.KB)]
-        [TestCase(30 * Constants.KB)]
-        [TestCase(50 * Constants.KB)]
-        [TestCase(501 * Constants.KB)]
+        [TestCase(1 * Internals.Constants.KB)]
+        [TestCase(2 * Internals.Constants.KB)]
+        [TestCase(4 * Internals.Constants.KB)]
+        [TestCase(10 * Internals.Constants.KB)]
+        [TestCase(20 * Internals.Constants.KB)]
+        [TestCase(30 * Internals.Constants.KB)]
+        [TestCase(50 * Internals.Constants.KB)]
+        [TestCase(501 * Internals.Constants.KB)]
         public async Task UploadAsync_SmallBlobs(int size) =>
             // Use a 1KB threshold so we get a lot of individual blocks
-            await UploadAndVerify(size, Constants.KB);
+            await UploadAndVerify(size, Internals.Constants.KB);
 
         [Test]
         [LiveOnly]
-        [TestCase(33 * Constants.MB)]
-        [TestCase(257 * Constants.MB)]
-        [TestCase(1 * Constants.GB)]
+        [TestCase(33 * Internals.Constants.MB)]
+        [TestCase(257 * Internals.Constants.MB)]
+        [TestCase(1 * Internals.Constants.GB)]
         public async Task UploadAsync_LargeBlobs(int size) =>
             // TODO: #6781 We don't want to add 1GB of random data in the recordings
-            await UploadAndVerify(size, Constants.MB);
+            await UploadAndVerify(size, Internals.Constants.MB);
 
         private async Task UploadAndVerify(long size, int singleRangeThreshold)
         {
@@ -981,9 +983,9 @@ namespace Azure.Storage.Files.Shares.Test
         [Test]
         public async Task UploadRangeAsync_WithUnreliableConnection()
         {
-            var fileSize = 2 * Constants.MB;
-            var dataSize = 1 * Constants.MB;
-            var offset = 512 * Constants.KB;
+            var fileSize = 2 * Internals.Constants.MB;
+            var dataSize = 1 * Internals.Constants.MB;
+            var offset = 512 * Internals.Constants.KB;
 
             await using DisposingShare test = await GetTestShareAsync();
             ShareClient share = test.Share;
@@ -1051,7 +1053,7 @@ namespace Azure.Storage.Files.Shares.Test
             await directory.CreateAsync();
 
             var fileName = this.GetNewFileName();
-            var data = this.GetRandomBuffer(Constants.KB);
+            var data = this.GetRandomBuffer(Internals.Constants.KB);
             var sourceFile = this.InstrumentClient(directory.GetFileClient(fileName));
             await sourceFile.CreateAsync(maxSize: 1024);
             using (var stream = new MemoryStream(data))

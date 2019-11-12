@@ -4,6 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
+using Azure.Storage.Shared;
+using Internals = Azure.Storage.Shared;
 
 namespace Azure.Storage.Files.Shares.Models
 {
@@ -28,8 +30,8 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 switch (element.Name.LocalName)
                 {
-                    case Constants.Xml.Code:
-                    case Constants.Xml.Message:
+                    case Internals.Constants.Xml.Code:
+                    case Internals.Constants.Xml.Message:
                         continue;
                     default:
                         error.AdditionalInformation[element.Name.LocalName] = element.Value;
@@ -44,6 +46,6 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="response">The failed response.</param>
         /// <returns>A RequestFailedException.</returns>
         public Exception CreateException(Azure.Response response)
-            => StorageExceptionExtensions.CreateException(response, Message, null, Code, AdditionalInformation);
+            => Internals.StorageExceptionExtensions.CreateException(response, Message, null, Code, AdditionalInformation);
     }
 }

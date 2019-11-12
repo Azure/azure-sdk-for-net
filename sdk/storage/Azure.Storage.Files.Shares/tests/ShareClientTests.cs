@@ -6,10 +6,12 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
+using Azure.Storage.Shared;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Files.Shares.Tests;
 using Azure.Storage.Test;
 using NUnit.Framework;
+using Internals = Azure.Storage.Shared.Common;
 
 namespace Azure.Storage.Files.Shares.Test
 {
@@ -30,7 +32,7 @@ namespace Azure.Storage.Files.Shares.Test
             var fileEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var fileSecondaryEndpoint = new Uri("http://127.0.0.1/" + accountName + "-secondary");
 
-            var connectionString = new StorageConnectionString(credentials, (default, default), (default, default), (default, default), (fileEndpoint, fileSecondaryEndpoint));
+            var connectionString = new Internals.StorageConnectionString(credentials, (default, default), (default, default), (default, default), (fileEndpoint, fileSecondaryEndpoint));
 
             var shareName = GetNewShareName();
 
@@ -414,11 +416,11 @@ namespace Azure.Storage.Files.Shares.Test
             ShareClient share = test.Share;
 
             // Act
-            await share.SetQuotaAsync(Constants.KB);
+            await share.SetQuotaAsync(Internals.Constants.KB);
 
             // Assert
             Response<ShareProperties> response = await share.GetPropertiesAsync();
-            Assert.AreEqual(Constants.KB, response.Value.QuotaInGB);
+            Assert.AreEqual(Internals.Constants.KB, response.Value.QuotaInGB);
         }
 
         [Test]
@@ -431,7 +433,7 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                share.SetQuotaAsync(Constants.KB),
+                share.SetQuotaAsync(Internals.Constants.KB),
                 e => Assert.AreEqual("ShareNotFound", e.ErrorCode.Split('\n')[0]));
         }
 

@@ -5,7 +5,9 @@ using System;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs;
+using Azure.Storage.Shared;
 using Azure.Storage.Files.DataLake.Models;
+using Internals = Azure.Storage.Shared;
 
 namespace Azure.Storage.Files.DataLake
 {
@@ -52,7 +54,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         public DataLakeClientOptions(ServiceVersion version = LatestVersion)
         {
-            Version = version == ServiceVersion.V2019_02_02 ? version : throw Errors.VersionNotSupported(nameof(version));
+            Version = version == ServiceVersion.V2019_02_02 ? version : throw Internals.Errors.VersionNotSupported(nameof(version));
             this.Initialize();
             AddHeadersAndQueryParameters();
         }

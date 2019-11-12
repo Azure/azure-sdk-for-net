@@ -2,7 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using Azure.Storage.Sas;
+using Azure.Storage.Sas.Shared;
+using SasInternals = Azure.Storage.Files.DataLake.Sas.Shared;
 
 namespace Azure.Storage.Files.DataLake.Sas
 {
@@ -16,35 +19,41 @@ namespace Azure.Storage.Files.DataLake.Sas
     /// </summary>
     public sealed class DataLakeSasQueryParameters : SasQueryParameters
     {
+        internal
+#if RELEASE
+            new
+#endif
+            UserDelegationKeyProperties _keyProperties;
+
         /// <summary>
         /// Gets the Azure Active Directory object ID in GUID format.
         /// </summary>
-        public string KeyObjectId => _keyObjectId;
+        public string KeyObjectId => _keyProperties._objectId;
 
         /// <summary>
         /// Gets the Azure Active Directory tenant ID in GUID format
         /// </summary>
-        public string KeyTenantId => _keyTenantId;
+        public string KeyTenantId => _keyProperties._tenantId;
 
         /// <summary>
         /// Gets the time at which the key becomes valid.
         /// </summary>
-        public DateTimeOffset KeyStartsOn => _keyStart;
+        public DateTimeOffset KeyStartsOn => _keyProperties._startsOn;
 
         /// <summary>
         /// Gets the time at which the key becomes expires.
         /// </summary>
-        public DateTimeOffset KeyExpiresOn => _keyExpiry;
+        public DateTimeOffset KeyExpiresOn => _keyProperties._expiresOn;
 
         /// <summary>
         /// Gets the Storage service that accepts the key.
         /// </summary>
-        public string KeyService => _keyService;
+        public string KeyService => _keyProperties._service;
 
         /// <summary>
         /// Gets the Storage service version that created the key.
         /// </summary>
-        public string KeyVersion => _keyVersion;
+        public string KeyVersion => _keyProperties._version;
 
         /// <summary>
         /// Gets empty shared access signature query parameters.
@@ -57,12 +66,9 @@ namespace Azure.Storage.Files.DataLake.Sas
         }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="DataLakeSasQueryParameters"/>
-        /// type.
-        ///
-        /// Expects decoded values.
+        /// Creates a new BlobSasQueryParameters instance.
         /// </summary>
-        internal DataLakeSasQueryParameters(
+        internal static DataLakeSasQueryParameters Create(
             string version,
             AccountSasServices? services,
             AccountSasResourceTypes? resourceTypes,
@@ -85,42 +91,59 @@ namespace Azure.Storage.Files.DataLake.Sas
             string contentEncoding = default,
             string contentLanguage = default,
             string contentType = default)
-            : base(
-                version,
-                services,
-                resourceTypes,
-                protocol,
-                startsOn,
-                expiresOn,
-                ipRange,
-                identifier,
-                resource,
-                permissions,
-                signature,
-                keyOid,
-                keyTid,
-                keyStart,
-                keyExpiry,
-                keyService,
-                keyVersion,
-                cacheControl,
-                contentDisposition,
-                contentEncoding,
-                contentLanguage,
-                contentType)
         {
+            var dataLakeParameters = new DataLakeSasQueryParameters();
+            dataLakeParameters._keyProperties._objectId = keyOid;
+            dataLakeParameters._keyProperties._tenantId = keyTid;
+            dataLakeParameters._keyProperties._startsOn = keyStart;
+            dataLakeParameters._keyProperties._expiresOn = keyExpiry;
+            dataLakeParameters._keyProperties._service = keyService;
+            dataLakeParameters._keyProperties._version = keyVersion;
+            SasQueryParameters.Create(
+            version: version ?? SasQueryParameters.DefaultSasVersion,
+            services: services,
+            resourceTypes: resourceTypes,
+            protocol: protocol,
+            startsOn: startsOn,
+            expiresOn: expiresOn,
+            ipRange: ipRange,
+            identifier: identifier,
+            resource: resource,
+            permissions: permissions,
+            signature: signature,  // Should never be null
+            keyOid: keyOid,
+            keyTid: keyTid,
+            keyStart: keyStart,
+            keyExpiry: keyExpiry,
+            keyService: keyService,
+            keyVersion: keyVersion,
+            cacheControl: cacheControl,
+            contentDisposition: contentDisposition,
+            contentEncoding: contentEncoding,
+            contentLanguage: contentLanguage,
+            contentType: contentType,
+            instance: dataLakeParameters);
+            return dataLakeParameters;
         }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="DataLakeSasQueryParameters"/>
-        /// type based on the supplied query parameters <paramref name="values"/>.
-        /// All SAS-related query parameters will be removed from
-        /// <paramref name="values"/>.
+        ///
         /// </summary>
-        /// <param name="values">URI query parameters</param>
-        internal DataLakeSasQueryParameters(UriQueryParamsCollection values)
-            : base(values, includeBlobParameters: true)
+        /// <param name="values"></param>
+        /// <returns></returns>
+        internal static DataLakeSasQueryParameters Create(
+            Dictionary<string, string> values)
         {
+            var dataLakeParameters = new DataLakeSasQueryParameters();
+            SasInternals.SasQueryParametersExtensions.ParseKeyProperties(
+                dataLakeParameters,
+                values,
+                preserve: true);
+            return
+                (DataLakeSasQueryParameters)SasQueryParameters.Create(
+                    values,
+                    includeBlobParameters: true,
+                    dataLakeParameters);
         }
 
         /// <summary>

@@ -4,6 +4,7 @@
 using System;
 using Azure.Core.Extensions;
 using Azure.Storage;
+using Azure.Storage.Shared;
 using Azure.Storage.Files.Shares;
 
 namespace Microsoft.Extensions.Azure

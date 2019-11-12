@@ -3,7 +3,11 @@
 
 using System;
 
+#if StorageSDK
+namespace Azure.Storage.Shared
+#else
 namespace Azure.Core
+#endif
 {
     /// <summary>
     /// Marks methods that call methods on other client and don't need their diagnostics verified

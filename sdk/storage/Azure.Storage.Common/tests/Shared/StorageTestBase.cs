@@ -332,7 +332,7 @@ namespace Azure.Storage.Test.Shared
             return response;
         }
 
-        internal void AssertResponseHeaders(TestConstants constants, SasQueryParameters sasQueryParameters)
+        internal void AssertResponseHeaders(Constants constants, SasQueryParameters sasQueryParameters)
         {
             Assert.AreEqual(constants.Sas.CacheControl, sasQueryParameters.CacheControl);
             Assert.AreEqual(constants.Sas.ContentDisposition, sasQueryParameters.ContentDisposition);

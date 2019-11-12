@@ -4,10 +4,12 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Storage.Shared;
+using Internals = Azure.Storage.Shared;
 
 namespace Azure.Storage.Queues.Models
 {
-    internal class GetQueuesAsyncCollection : StorageCollectionEnumerator<QueueItem>
+    internal class GetQueuesAsyncCollection : Internals.StorageCollectionEnumerator<QueueItem>
     {
         private readonly QueueServiceClient _client;
         private readonly QueueTraits _traits;

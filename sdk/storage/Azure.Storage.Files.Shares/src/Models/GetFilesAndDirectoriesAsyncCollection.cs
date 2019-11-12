@@ -5,10 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Storage.Shared;
+using Internals = Azure.Storage.Shared;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal class GetFilesAndDirectoriesAsyncCollection : StorageCollectionEnumerator<ShareFileItem>
+    internal class GetFilesAndDirectoriesAsyncCollection : Internals.StorageCollectionEnumerator<ShareFileItem>
     {
         private readonly ShareDirectoryClient _client;
         private readonly string _prefix;

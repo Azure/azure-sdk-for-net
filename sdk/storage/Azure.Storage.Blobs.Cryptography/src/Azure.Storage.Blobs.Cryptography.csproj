@@ -7,6 +7,8 @@
     <Version>12.0.0-preview.5</Version>
     <DefineConstants>BlobSDK;$(DefineConstants)</DefineConstants>
     <PackageTags>Microsoft Azure Storage Blobs Cryptography;Encrypted blob;client-side encryption;client side ecnryption;Microsoft;Azure;Blobs;Blob;Storage;StorageScalable;$(PackageCommonTags)</PackageTags>
+    <DefineConstants>BlobSDK;StorageSDK;$(DefineConstants)</DefineConstants>
+    <PackageTags>Microsoft Azure Storage Blobs Cryptography, Encrypted blob, client-side encryption, client side ecnryption, Microsoft, Azure, Blobs, Blob, Storage, StorageScalable, azureofficial</PackageTags>
     <PackageReleaseNotes>
       For release notes and more information please visit https://aka.ms/azure-sdk-preview3-net
     </PackageReleaseNotes>

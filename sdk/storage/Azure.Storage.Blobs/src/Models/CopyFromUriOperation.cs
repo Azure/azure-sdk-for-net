@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Shared;
 
 namespace Azure.Storage.Blobs.Models
 {

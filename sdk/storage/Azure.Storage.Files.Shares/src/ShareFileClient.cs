@@ -12,8 +12,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Shared;
 using Azure.Storage.Files.Shares.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
+using Internals = Azure.Storage.Shared;
 
 namespace Azure.Storage.Files.Shares
 {
@@ -48,13 +50,13 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
         /// every request.
         /// </summary>
-        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly Internals.ClientDiagnostics _clientDiagnostics;
 
         /// <summary>
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
         /// every request.
         /// </summary>
-        internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
+        internal virtual Internals.ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
 
         /// <summary>
         /// The Storage account name corresponding to the file client.
@@ -186,7 +188,7 @@ namespace Azure.Storage.Files.Shares
         public ShareFileClient(string connectionString, string shareName, string filePath, ShareClientOptions options)
         {
             options ??= new ShareClientOptions();
-            var conn = StorageConnectionString.Parse(connectionString);
+            var conn = Internals.StorageConnectionString.Parse(connectionString);
             var builder =
                 new ShareUriBuilder(conn.FileEndpoint)
                 {
@@ -195,7 +197,7 @@ namespace Azure.Storage.Files.Shares
                 };
             _uri = builder.ToUri();
             _pipeline = options.Build(conn.Credentials);
-            _clientDiagnostics = new ClientDiagnostics(options);
+            _clientDiagnostics = new Internals.ClientDiagnostics(options);
         }
 
         /// <summary>
@@ -259,7 +261,7 @@ namespace Azure.Storage.Files.Shares
             options ??= new ShareClientOptions();
             _uri = fileUri;
             _pipeline = options.Build(authentication);
-            _clientDiagnostics = new ClientDiagnostics(options);
+            _clientDiagnostics = new Internals.ClientDiagnostics(options);
         }
 
         /// <summary>
@@ -273,7 +275,7 @@ namespace Azure.Storage.Files.Shares
         /// The transport pipeline used to send every request.
         /// </param>
         /// <param name="clientDiagnostics"></param>
-        internal ShareFileClient(Uri fileUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
+        internal ShareFileClient(Uri fileUri, HttpPipeline pipeline, Internals.ClientDiagnostics clientDiagnostics)
         {
             _uri = fileUri;
             _pipeline = pipeline;
@@ -489,7 +491,7 @@ namespace Azure.Storage.Files.Shares
 
                     if (filePermission == null && smbProps.FilePermissionKey == null)
                     {
-                        filePermission = Constants.File.FilePermissionInherit;
+                        filePermission = Internals.Constants.File.FilePermissionInherit;
                     }
 
                     Response<RawStorageFileInfo> response = await FileRestClient.File.CreateAsync(
@@ -504,14 +506,14 @@ namespace Azure.Storage.Files.Shares
                         fileContentHash: httpHeaders?.ContentHash,
                         fileContentDisposition: httpHeaders?.ContentDisposition,
                         metadata: metadata,
-                        fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.FileAttributesNone,
+                        fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Internals.Constants.File.FileAttributesNone,
                         filePermission: filePermission,
-                        fileCreationTime: smbProps.FileCreationTimeToString() ?? Constants.File.FileTimeNow,
-                        fileLastWriteTime: smbProps.FileLastWriteTimeToString() ?? Constants.File.FileTimeNow,
+                        fileCreationTime: smbProps.FileCreationTimeToString() ?? Internals.Constants.File.FileTimeNow,
+                        fileLastWriteTime: smbProps.FileLastWriteTimeToString() ?? Internals.Constants.File.FileTimeNow,
                         filePermissionKey: smbProps.FilePermissionKey,
                         async: async,
                         cancellationToken: cancellationToken,
-                        operationName: Constants.File.CreateOperationName)
+                        operationName: Internals.Constants.File.CreateOperationName)
                         .ConfigureAwait(false);
 
                     return Response.FromValue(new ShareFileInfo(response.Value), response.GetRawResponse());
@@ -647,7 +649,7 @@ namespace Azure.Storage.Files.Shares
                         metadata: metadata,
                         async: async,
                         cancellationToken: cancellationToken,
-                        operationName: Constants.File.StartCopyOperationName)
+                        operationName: Internals.Constants.File.StartCopyOperationName)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -765,7 +767,7 @@ namespace Azure.Storage.Files.Shares
                         copyId: copyId,
                         async: async,
                         cancellationToken: cancellationToken,
-                        operationName: Constants.File.AbortCopyOperationName)
+                        operationName: Internals.Constants.File.AbortCopyOperationName)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -944,7 +946,7 @@ namespace Azure.Storage.Files.Shares
                                 .ConfigureAwait(false))
                                 .Item2,
                         Pipeline.ResponseClassifier,
-                        Constants.MaxReliabilityRetries);
+                        Internals.Constants.MaxReliabilityRetries);
 
                     // Wrap the FlattenedStorageFileProperties into a StorageFileDownloadInfo
                     // to make the Content easier to find
@@ -1016,7 +1018,7 @@ namespace Azure.Storage.Files.Shares
                     rangeGetContentHash: rangeGetContentHash ? (bool?)true : null,
                     async: async,
                     cancellationToken: cancellationToken,
-                    operationName: Constants.File.DownloadOperationName)
+                    operationName: Internals.Constants.File.DownloadOperationName)
                     .ConfigureAwait(false);
             Pipeline.LogTrace($"Response: {response.GetRawResponse().Status}, ContentLength: {response.Value.ContentLength}");
             return (response, stream);
@@ -1106,7 +1108,7 @@ namespace Azure.Storage.Files.Shares
                         Uri,
                         async: async,
                         cancellationToken: cancellationToken,
-                        operationName: Constants.File.DeleteOperationName)
+                        operationName: Internals.Constants.File.DeleteOperationName)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -1218,7 +1220,7 @@ namespace Azure.Storage.Files.Shares
                         Uri,
                         async: async,
                         cancellationToken: cancellationToken,
-                        operationName: Constants.File.GetPropertiesOperationName)
+                        operationName: Internals.Constants.File.GetPropertiesOperationName)
                         .ConfigureAwait(false);
 
                     // Return an exploding Response on 304
@@ -1395,7 +1397,7 @@ namespace Azure.Storage.Files.Shares
                     ShareExtensions.AssertValidFilePermissionAndKey(filePermission, smbProps.FilePermissionKey);
                     if (filePermission == null && smbProps.FilePermissionKey == null)
                     {
-                        filePermission = Constants.File.Preserve;
+                        filePermission = Internals.Constants.File.Preserve;
                     }
 
                     Response<RawStorageFileInfo> response = await FileRestClient.File.SetPropertiesAsync(
@@ -1409,13 +1411,13 @@ namespace Azure.Storage.Files.Shares
                         fileCacheControl: httpHeaders?.CacheControl,
                         fileContentHash: httpHeaders?.ContentHash,
                         fileContentDisposition: httpHeaders?.ContentDisposition,
-                        fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.Preserve,
+                        fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Internals.Constants.File.Preserve,
                         filePermission: filePermission,
-                        fileCreationTime: smbProps.FileCreationTimeToString() ?? Constants.File.Preserve,
-                        fileLastWriteTime: smbProps.FileLastWriteTimeToString() ?? Constants.File.Preserve,
+                        fileCreationTime: smbProps.FileCreationTimeToString() ?? Internals.Constants.File.Preserve,
+                        fileLastWriteTime: smbProps.FileLastWriteTimeToString() ?? Internals.Constants.File.Preserve,
                         filePermissionKey: smbProps.FilePermissionKey,
                         async: async,
-                        operationName: Constants.File.SetHttpHeadersOperationName,
+                        operationName: Internals.Constants.File.SetHttpHeadersOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
@@ -1538,7 +1540,7 @@ namespace Azure.Storage.Files.Shares
                         metadata: metadata,
                         async: async,
                         cancellationToken: cancellationToken,
-                        operationName: Constants.File.SetMetadataOperationName)
+                        operationName: Internals.Constants.File.SetMetadataOperationName)
                         .ConfigureAwait(false);
 
                     return Response.FromValue(new ShareFileInfo(response.Value), response.GetRawResponse());
@@ -1945,7 +1947,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
+        [Internals.ForwardsClientCalls]
         public virtual Response<ShareFileUploadInfo> Upload(
             Stream content,
             IProgress<long> progressHandler = default,
@@ -1953,7 +1955,7 @@ namespace Azure.Storage.Files.Shares
             UploadInternal(
                 content,
                 progressHandler,
-                Constants.File.MaxFileUpdateRange,
+                Internals.Constants.File.MaxFileUpdateRange,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -1983,7 +1985,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
+        [Internals.ForwardsClientCalls]
         public virtual async Task<Response<ShareFileUploadInfo>> UploadAsync(
             Stream content,
             IProgress<long> progressHandler = default,
@@ -1991,7 +1993,7 @@ namespace Azure.Storage.Files.Shares
             await UploadInternal(
                 content,
                 progressHandler,
-                Constants.File.MaxFileUpdateRange,
+                Internals.Constants.File.MaxFileUpdateRange,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -2036,7 +2038,7 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken)
         {
             // Try to upload the file as a single range
-            Debug.Assert(singleRangeThreshold <= Constants.File.MaxFileUpdateRange);
+            Debug.Assert(singleRangeThreshold <= Internals.Constants.File.MaxFileUpdateRange);
             try
             {
                 var length = content.Length;
@@ -2064,7 +2066,7 @@ namespace Azure.Storage.Files.Shares
             {
                 pool = (singleRangeThreshold < MemoryPool<byte>.Shared.MaxBufferSize) ?
                     MemoryPool<byte>.Shared :
-                    new StorageMemoryPool(singleRangeThreshold, 1);
+                    new Internals.StorageMemoryPool(singleRangeThreshold, 1);
                 for (; ; )
                 {
                     // Get the next chunk of content
@@ -2072,7 +2074,7 @@ namespace Azure.Storage.Files.Shares
                     IMemoryOwner<byte> buffer = pool.Rent(singleRangeThreshold);
                     if (!MemoryMarshal.TryGetArray<byte>(buffer.Memory, out ArraySegment<byte> segment))
                     {
-                        throw Errors.UnableAccessArray();
+                        throw Internals.Errors.UnableAccessArray();
                     }
                     var count = async ?
                         await content.ReadAsync(segment.Array, 0, singleRangeThreshold, cancellationToken).ConfigureAwait(false) :
@@ -2082,7 +2084,7 @@ namespace Azure.Storage.Files.Shares
                     if (count <= 0) { break; }
 
                     // Upload the chunk
-                    var partition = new StreamPartition(
+                    var partition = new Internals.StreamPartition(
                         buffer.Memory,
                         parentPosition,
                         count,
@@ -2102,7 +2104,7 @@ namespace Azure.Storage.Files.Shares
             }
             finally
             {
-                if (pool is StorageMemoryPool)
+                if (pool is Internals.StorageMemoryPool)
                 {
                     pool.Dispose();
                 }
@@ -2213,7 +2215,7 @@ namespace Azure.Storage.Files.Shares
                         range: range.ToString(),
                         async: async,
                         cancellationToken: cancellationToken,
-                        operationName: Constants.File.GetRangeListOperationName)
+                        operationName: Internals.Constants.File.GetRangeListOperationName)
                         .ConfigureAwait(false);
                     return Response.FromValue(new ShareFileRangeInfo(response.Value), response.GetRawResponse());
                 }
@@ -2389,7 +2391,7 @@ namespace Azure.Storage.Files.Shares
                 null,
                 false, // async,
                 cancellationToken,
-                Constants.File.ForceCloseHandleOperationName)
+                Internals.Constants.File.ForceCloseHandleOperationName)
                 .EnsureCompleted()
             .GetRawResponse();
 
@@ -2428,7 +2430,7 @@ namespace Azure.Storage.Files.Shares
                 null,
                 true, // async,
                 cancellationToken,
-                Constants.File.ForceCloseHandleOperationName)
+                Internals.Constants.File.ForceCloseHandleOperationName)
                 .ConfigureAwait(false)).
             GetRawResponse();
 
@@ -2527,7 +2529,7 @@ namespace Azure.Storage.Files.Shares
             do
             {
                 Response<StorageClosedHandlesSegment> response =
-                    await ForceCloseHandlesInternal(Constants.CloseAllHandles, marker, async, cancellationToken).ConfigureAwait(false);
+                    await ForceCloseHandlesInternal(Internals.Constants.CloseAllHandles, marker, async, cancellationToken).ConfigureAwait(false);
                 marker = response.Value.Marker;
                 handlesClosed += response.Value.NumberOfHandlesClosed;
 
@@ -2584,7 +2586,7 @@ namespace Azure.Storage.Files.Shares
             string marker,
             bool async,
             CancellationToken cancellationToken,
-            string operationName = Constants.File.ForceCloseAllHandlesOperationName)
+            string operationName = Internals.Constants.File.ForceCloseAllHandlesOperationName)
         {
             using (Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {

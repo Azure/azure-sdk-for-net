@@ -7,7 +7,10 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using Azure.Core;
+using Azure.Storage.Shared;
 using Azure.Storage.Sas;
+using Azure.Storage.Files.DataLake.Sas;
+using Internals = Azure.Storage.Shared;
 
 namespace Azure.Storage.Files.DataLake
 {
@@ -117,12 +120,12 @@ namespace Azure.Storage.Files.DataLake
         /// Gets or sets the Shared Access Signature query parameters, or null
         /// if not present in the <see cref="System.Uri"/>.
         /// </summary>
-        public SasQueryParameters Sas
+        public DataLakeSasQueryParameters Sas
         {
             get => _sas;
             set { ResetUri(); _sas = value; }
         }
-        private SasQueryParameters _sas;
+        private DataLakeSasQueryParameters _sas;
 
         /// <summary>
         /// Get the last directory or file name from the <see cref="DirectoryOrFilePath"/>, or null if
@@ -210,19 +213,19 @@ namespace Azure.Storage.Files.DataLake
 
             // Convert the query parameters to a case-sensitive map & trim whitespace
 
-            var paramsMap = new UriQueryParamsCollection(uri.Query);
+            var paramsMap = new Internals.UriQueryParamsCollection(uri.Query);
 
-            if (paramsMap.TryGetValue(Constants.SnapshotParameterName, out var snapshotTime))
+            if (paramsMap.TryGetValue(Internals.Constants.SnapshotParameterName, out var snapshotTime))
             {
                 Snapshot = snapshotTime;
 
                 // If we recognized the query parameter, remove it from the map
-                paramsMap.Remove(Constants.SnapshotParameterName);
+                paramsMap.Remove(Internals.Constants.SnapshotParameterName);
             }
 
-            if (paramsMap.ContainsKey(Constants.Sas.Parameters.Version))
+            if (paramsMap.ContainsKey(Internals.Constants.Sas.Parameters.Version))
             {
-                Sas = new SasQueryParameters(paramsMap);
+                Sas = DataLakeSasQueryParameters.Create(paramsMap);
             }
 
             Query = paramsMap.ToString();
@@ -343,7 +346,7 @@ namespace Azure.Storage.Files.DataLake
             {
                 if (query.Length > 0)
                 { query.Append("&"); }
-                query.Append(Constants.SnapshotParameterName).Append("=").Append(Snapshot);
+                query.Append(Internals.Constants.SnapshotParameterName).Append("=").Append(Snapshot);
             }
             var sas = Sas?.ToString();
             if (!string.IsNullOrWhiteSpace(sas))

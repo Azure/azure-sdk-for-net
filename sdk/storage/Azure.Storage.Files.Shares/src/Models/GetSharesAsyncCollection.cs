@@ -5,13 +5,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Storage.Shared;
 using Azure.Storage.Files.Shares.Models;
+using Internals = Azure.Storage.Shared;
 
 #pragma warning disable SA1402  // File may only contain a single type
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal class GetSharesAsyncCollection : StorageCollectionEnumerator<ShareItem>
+    internal class GetSharesAsyncCollection : Internals.StorageCollectionEnumerator<ShareItem>
     {
         private readonly ShareServiceClient _client;
         private readonly ShareTraits _traits;

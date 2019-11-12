@@ -7,6 +7,9 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Text;
+using Azure.Storage.Sas.Shared.Common;
+using Internals = Azure.Storage.Shared.Common;
+using SasInternals = Azure.Storage.Sas.Shared.Common;
 
 namespace Azure.Storage.Sas
 {
@@ -23,7 +26,7 @@ namespace Azure.Storage.Sas
         /// <summary>
         /// The default service version to use for Shared Access Signatures.
         /// </summary>
-        public const string DefaultSasVersion = Constants.DefaultSasVersion;
+        public const string DefaultSasVersion = Internals.Constants.DefaultSasVersion;
 
         /// <summary>
         /// FormatTimesForSASSigning converts a time.Time to a snapshotTimeFormat string suitable for a
@@ -33,57 +36,57 @@ namespace Azure.Storage.Sas
         /// <returns></returns>
         internal static string FormatTimesForSasSigning(DateTimeOffset time) =>
             // "yyyy-MM-ddTHH:mm:ssZ"
-            (time == new DateTimeOffset()) ? "" : time.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture);
+            (time == new DateTimeOffset()) ? "" : time.ToString(Internals.Constants.SasTimeFormat, CultureInfo.InvariantCulture);
 
         // All members are immutable or values so copies of this struct are thread safe.
 
         // sv
-        private readonly string _version;
+        private string _version;
 
         // ss
-        private readonly AccountSasServices? _services;
+        private AccountSasServices? _services;
 
         // srt
-        private readonly AccountSasResourceTypes? _resourceTypes;
+        private AccountSasResourceTypes? _resourceTypes;
 
         // spr
-        private readonly SasProtocol _protocol;
+        private SasProtocol _protocol;
 
         // st
-        private readonly DateTimeOffset _startTime;
+        private DateTimeOffset _startTime;
 
         // se
-        private readonly DateTimeOffset _expiryTime;
+        private DateTimeOffset _expiryTime;
 
         // sip
-        private readonly SasIPRange _ipRange;
+        private SasIPRange _ipRange;
 
         // si
-        private readonly string _identifier;
+        private string _identifier;
 
         // sr
-        private readonly string _resource;
+        private string _resource;
 
         // sp
-        private readonly string _permissions;
+        private string _permissions;
 
         // sig
-        private readonly string _signature;
+        private string _signature;
 
         // rscc
-        private readonly string _cacheControl;
+        private string _cacheControl;
 
         // rscd
-        private readonly string _contentDisposition;
+        private string _contentDisposition;
 
         // rsce
-        private readonly string _contentEncoding;
+        private string _contentEncoding;
 
         // rscl
-        private readonly string _contentLanguage;
+        private string _contentLanguage;
 
         // rsct
-        private readonly string _contentType;
+        private string _contentType;
 
         /// <summary>
         /// Gets the storage service version to use to authenticate requests
@@ -122,7 +125,6 @@ namespace Azure.Storage.Sas
         /// <see cref="DateTimeOffset.MinValue"/> means not set.
         /// </summary>
         public DateTimeOffset ExpiresOn => _expiryTime;
-
         /// <summary>
         /// Gets the optional IP address or a range of IP addresses from which
         /// to accept requests.  When specifying a range, note that the range
@@ -190,22 +192,23 @@ namespace Azure.Storage.Sas
 
         #region Blob Only Parameters
         // skoid
-        internal readonly string _keyObjectId;
+        //internal string _keyObjectId;
 
-        // sktid
-        internal readonly string _keyTenantId;
+        //// sktid
+        //internal string _keyTenantId;
 
-        // skt
-        internal readonly DateTimeOffset _keyStart;
+        //// skt
+        //internal DateTimeOffset _keyStart;
 
-        // ske
-        internal readonly DateTimeOffset _keyExpiry;
+        //// ske
+        //internal DateTimeOffset _keyExpiry;
 
-        // sks
-        internal readonly string _keyService;
+        //// sks
+        //internal string _keyService;
 
-        // skv
-        internal readonly string _keyVersion;
+        //// skv
+        //internal string _keyVersion;
+        internal UserDelegationKeyProperties _keyProperties;
         #endregion Blob Only Parameters
 
         /// <summary>
@@ -213,14 +216,17 @@ namespace Azure.Storage.Sas
         /// </summary>
         public static SasQueryParameters Empty => new SasQueryParameters();
 
-        // Prevent external instantiation
-        internal SasQueryParameters() { }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SasQueryParameters"/> class.
+        /// </summary>
+        protected SasQueryParameters() { }
 
         /// <summary>
         /// Creates a new instance of the <see cref="SasQueryParameters"/> type.
         ///
         /// Expects decoded values.
         /// </summary>
+        [Obsolete]
         internal SasQueryParameters(
             string version,
             AccountSasServices? services,
@@ -257,17 +263,25 @@ namespace Azure.Storage.Sas
             _resource = resource ?? string.Empty;
             _permissions = permissions ?? string.Empty;
             _signature = signature ?? string.Empty;  // Should never be null
-            _keyObjectId = keyOid;
-            _keyTenantId = keyTid;
-            _keyStart = keyStart;
-            _keyExpiry = keyExpiry;
-            _keyService = keyService;
-            _keyVersion = keyVersion;
+            _keyProperties._objectId = keyOid;
+            _keyProperties._tenantId = keyTid;
+            _keyProperties._startsOn = keyStart;
+            _keyProperties._expiresOn = keyExpiry;
+            _keyProperties._service = keyService;
+            _keyProperties._version = keyVersion;
             _cacheControl = cacheControl;
             _contentDisposition = contentDisposition;
             _contentEncoding = contentEncoding;
             _contentLanguage = contentLanguage;
             _contentType = contentType;
+        }
+
+        [Obsolete]
+        internal SasQueryParameters(
+            UriQueryParamsCollection values,
+            bool includeBlobParameters = false) : this((Dictionary<string,string>) values, includeBlobParameters)
+        {
+
         }
 
         /// <summary>
@@ -282,7 +296,7 @@ namespace Azure.Storage.Sas
         /// parameters.  The default value is false.
         /// </param>
         internal SasQueryParameters(
-            UriQueryParamsCollection values,
+            Dictionary<string, string> values,
             bool includeBlobParameters = false)
         {
             // make copy, otherwise we'll get an exception when we remove
@@ -293,79 +307,53 @@ namespace Azure.Storage.Sas
                 var isSasKey = true;
                 switch (kv.Key.ToUpperInvariant())
                 {
-                    case Constants.Sas.Parameters.VersionUpper:
+                    case Internals.Constants.Sas.Parameters.VersionUpper:
                         _version = kv.Value;
                         break;
-                    case Constants.Sas.Parameters.ServicesUpper:
-                        _services = SasExtensions.ParseAccountServices(kv.Value);
+                    case Internals.Constants.Sas.Parameters.ServicesUpper:
+                        _services = SasInternals.SasExtensions.ParseAccountServices(kv.Value);
                         break;
-                    case Constants.Sas.Parameters.ResourceTypesUpper:
-                        _resourceTypes = SasExtensions.ParseResourceTypes(kv.Value);
+                    case Internals.Constants.Sas.Parameters.ResourceTypesUpper:
+                        _resourceTypes = SasInternals.SasExtensions.ParseResourceTypes(kv.Value);
                         break;
-                    case Constants.Sas.Parameters.ProtocolUpper:
-                        _protocol = SasExtensions.ParseProtocol(kv.Value);
+                    case Internals.Constants.Sas.Parameters.ProtocolUpper:
+                        _protocol = SasInternals.SasExtensions.ParseProtocol(kv.Value);
                         break;
-                    case Constants.Sas.Parameters.StartTimeUpper:
-                        _startTime = DateTimeOffset.ParseExact(kv.Value, Constants.SasTimeFormat, CultureInfo.InvariantCulture);
+                    case Internals.Constants.Sas.Parameters.StartTimeUpper:
+                        _startTime = DateTimeOffset.ParseExact(kv.Value, Internals.Constants.SasTimeFormat, CultureInfo.InvariantCulture);
                         break;
-                    case Constants.Sas.Parameters.ExpiryTimeUpper:
-                        _expiryTime = DateTimeOffset.ParseExact(kv.Value, Constants.SasTimeFormat, CultureInfo.InvariantCulture);
+                    case Internals.Constants.Sas.Parameters.ExpiryTimeUpper:
+                        _expiryTime = DateTimeOffset.ParseExact(kv.Value, Internals.Constants.SasTimeFormat, CultureInfo.InvariantCulture);
                         break;
-                    case Constants.Sas.Parameters.IPRangeUpper:
+                    case Internals.Constants.Sas.Parameters.IPRangeUpper:
                         _ipRange = SasIPRange.Parse(kv.Value);
                         break;
-                    case Constants.Sas.Parameters.IdentifierUpper:
+                    case Internals.Constants.Sas.Parameters.IdentifierUpper:
                         _identifier = kv.Value;
                         break;
-                    case Constants.Sas.Parameters.ResourceUpper:
+                    case Internals.Constants.Sas.Parameters.ResourceUpper:
                         _resource = kv.Value;
                         break;
-                    case Constants.Sas.Parameters.PermissionsUpper:
+                    case Internals.Constants.Sas.Parameters.PermissionsUpper:
                         _permissions = kv.Value;
                         break;
-                    case Constants.Sas.Parameters.SignatureUpper:
+                    case Internals.Constants.Sas.Parameters.SignatureUpper:
                         _signature = kv.Value;
                         break;
-                    case Constants.Sas.Parameters.CacheControlUpper:
+                    case Internals.Constants.Sas.Parameters.CacheControlUpper:
                         _cacheControl = kv.Value;
                         break;
-                    case Constants.Sas.Parameters.ContentDispositionUpper:
+                    case Internals.Constants.Sas.Parameters.ContentDispositionUpper:
                         _contentDisposition = kv.Value;
                         break;
-                    case Constants.Sas.Parameters.ContentEncodingUpper:
+                    case Internals.Constants.Sas.Parameters.ContentEncodingUpper:
                         _contentEncoding = kv.Value;
                         break;
-                    case Constants.Sas.Parameters.ContentLanguageUpper:
+                    case Internals.Constants.Sas.Parameters.ContentLanguageUpper:
                         _contentLanguage = kv.Value;
                         break;
-                    case Constants.Sas.Parameters.ContentTypeUpper:
+                    case Internals.Constants.Sas.Parameters.ContentTypeUpper:
                         _contentType = kv.Value;
-                        break;
-
-                    // Optionally include Blob parameters
-                    case Constants.Sas.Parameters.KeyObjectIdUpper:
-                        if (includeBlobParameters) { _keyObjectId = kv.Value; }
-                        else { isSasKey = false; }
-                        break;
-                    case Constants.Sas.Parameters.KeyTenantIdUpper:
-                        if (includeBlobParameters) { _keyTenantId = kv.Value; }
-                        else { isSasKey = false; }
-                        break;
-                    case Constants.Sas.Parameters.KeyStartUpper:
-                        if (includeBlobParameters) { _keyStart = DateTimeOffset.ParseExact(kv.Value, Constants.SasTimeFormat, CultureInfo.InvariantCulture); }
-                        else { isSasKey = false; }
-                        break;
-                    case Constants.Sas.Parameters.KeyExpiryUpper:
-                        if (includeBlobParameters) { _keyExpiry = DateTimeOffset.ParseExact(kv.Value, Constants.SasTimeFormat, CultureInfo.InvariantCulture); }
-                        else { isSasKey = false; }
-                        break;
-                    case Constants.Sas.Parameters.KeyServiceUpper:
-                        if (includeBlobParameters) { _keyService = kv.Value; }
-                        else { isSasKey = false; }
-                        break;
-                    case Constants.Sas.Parameters.KeyVersionUpper:
-                        if (includeBlobParameters) { _keyVersion = kv.Value; }
-                        else { isSasKey = false; }
                         break;
 
                     // We didn't recognize the query parameter
@@ -379,6 +367,11 @@ namespace Azure.Storage.Sas
                 {
                     values.Remove(kv.Key);
                 }
+            }
+            // Optionally include Blob parameters
+            if (includeBlobParameters)
+            {
+                SasQueryParametersExtensions.ParseKeyProperties(this, values);
             }
         }
 
@@ -401,7 +394,7 @@ namespace Azure.Storage.Sas
         /// <returns>
         /// A URL encoded query string representing the SAS.
         /// </returns>
-        internal string Encode(bool includeBlobParameters = false)
+        protected string Encode(bool includeBlobParameters = false)
         {
             var sb = new StringBuilder();
 
@@ -415,119 +408,270 @@ namespace Azure.Storage.Sas
 
             if (!string.IsNullOrWhiteSpace(Version))
             {
-                AddToBuilder(Constants.Sas.Parameters.Version, Version);
+                AddToBuilder(Internals.Constants.Sas.Parameters.Version, Version);
             }
 
             if (Services != null)
             {
-                AddToBuilder(Constants.Sas.Parameters.Services, Services.Value.ToPermissionsString());
+                AddToBuilder(Internals.Constants.Sas.Parameters.Services, Services.Value.ToPermissionsString());
             }
 
             if (ResourceTypes != null)
             {
-                AddToBuilder(Constants.Sas.Parameters.ResourceTypes, ResourceTypes.Value.ToPermissionsString());
+                AddToBuilder(Internals.Constants.Sas.Parameters.ResourceTypes, ResourceTypes.Value.ToPermissionsString());
             }
 
             if (Protocol != default)
             {
-                AddToBuilder(Constants.Sas.Parameters.Protocol, Protocol.ToProtocolString());
+                AddToBuilder(Internals.Constants.Sas.Parameters.Protocol, Protocol.ToProtocolString());
             }
 
             if (StartsOn != DateTimeOffset.MinValue)
             {
-                AddToBuilder(Constants.Sas.Parameters.StartTime, WebUtility.UrlEncode(StartsOn.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
+                AddToBuilder(Internals.Constants.Sas.Parameters.StartTime, WebUtility.UrlEncode(StartsOn.ToString(Internals.Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
             }
 
             if (ExpiresOn != DateTimeOffset.MinValue)
             {
-                AddToBuilder(Constants.Sas.Parameters.ExpiryTime, WebUtility.UrlEncode(ExpiresOn.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
+                AddToBuilder(Internals.Constants.Sas.Parameters.ExpiryTime, WebUtility.UrlEncode(ExpiresOn.ToString(Internals.Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
             }
 
             var ipr = IPRange.ToString();
             if (ipr.Length > 0)
             {
-                AddToBuilder(Constants.Sas.Parameters.IPRange, ipr);
+                AddToBuilder(Internals.Constants.Sas.Parameters.IPRange, ipr);
             }
 
             if (!string.IsNullOrWhiteSpace(Identifier))
             {
-                AddToBuilder(Constants.Sas.Parameters.Identifier, Identifier);
+                AddToBuilder(Internals.Constants.Sas.Parameters.Identifier, Identifier);
             }
 
             if (!string.IsNullOrWhiteSpace(Resource))
             {
-                AddToBuilder(Constants.Sas.Parameters.Resource, Resource);
+                AddToBuilder(Internals.Constants.Sas.Parameters.Resource, Resource);
             }
 
             if (!string.IsNullOrWhiteSpace(Permissions))
             {
-                AddToBuilder(Constants.Sas.Parameters.Permissions, Permissions);
+                AddToBuilder(Internals.Constants.Sas.Parameters.Permissions, Permissions);
             }
 
             if (!string.IsNullOrWhiteSpace(CacheControl))
             {
-                AddToBuilder(Constants.Sas.Parameters.CacheControl, CacheControl);
+                AddToBuilder(Internals.Constants.Sas.Parameters.CacheControl, CacheControl);
             }
 
             if (!string.IsNullOrWhiteSpace(ContentDisposition))
             {
-                AddToBuilder(Constants.Sas.Parameters.ContentDisposition, ContentDisposition);
+                AddToBuilder(Internals.Constants.Sas.Parameters.ContentDisposition, ContentDisposition);
             }
 
             if (!string.IsNullOrWhiteSpace(ContentEncoding))
             {
-                AddToBuilder(Constants.Sas.Parameters.ContentEncoding, ContentEncoding);
+                AddToBuilder(Internals.Constants.Sas.Parameters.ContentEncoding, ContentEncoding);
             }
 
             if (!string.IsNullOrWhiteSpace(ContentLanguage))
             {
-                AddToBuilder(Constants.Sas.Parameters.ContentLanguage, ContentLanguage);
+                AddToBuilder(Internals.Constants.Sas.Parameters.ContentLanguage, ContentLanguage);
             }
 
             if (!string.IsNullOrWhiteSpace(ContentType))
             {
-                AddToBuilder(Constants.Sas.Parameters.ContentType, ContentType);
+                AddToBuilder(Internals.Constants.Sas.Parameters.ContentType, ContentType);
             }
 
             if (includeBlobParameters)
             {
-                if (!string.IsNullOrWhiteSpace(_keyObjectId))
+                if (!string.IsNullOrWhiteSpace(_keyProperties._objectId))
                 {
-                    AddToBuilder(Constants.Sas.Parameters.KeyObjectId, _keyObjectId);
+                    AddToBuilder(Internals.Constants.Sas.Parameters.KeyObjectId, _keyProperties._objectId);
                 }
 
-                if (!string.IsNullOrWhiteSpace(_keyTenantId))
+                if (!string.IsNullOrWhiteSpace(_keyProperties._tenantId))
                 {
-                    AddToBuilder(Constants.Sas.Parameters.KeyTenantId, _keyTenantId);
+                    AddToBuilder(Internals.Constants.Sas.Parameters.KeyTenantId, _keyProperties._tenantId);
                 }
 
-                if (_keyStart != DateTimeOffset.MinValue)
+                if (_keyProperties._startsOn != DateTimeOffset.MinValue)
                 {
-                    AddToBuilder(Constants.Sas.Parameters.KeyStart, WebUtility.UrlEncode(_keyStart.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
+                    AddToBuilder(Internals.Constants.Sas.Parameters.KeyStart, WebUtility.UrlEncode(_keyProperties._startsOn.ToString(Internals.Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
                 }
 
-                if (_keyExpiry != DateTimeOffset.MinValue)
+                if (_keyProperties._expiresOn != DateTimeOffset.MinValue)
                 {
-                    AddToBuilder(Constants.Sas.Parameters.KeyExpiry, WebUtility.UrlEncode(_keyExpiry.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
+                    AddToBuilder(Internals.Constants.Sas.Parameters.KeyExpiry, WebUtility.UrlEncode(_keyProperties._expiresOn.ToString(Internals.Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
                 }
 
-                if (!string.IsNullOrWhiteSpace(_keyService))
+                if (!string.IsNullOrWhiteSpace(_keyProperties._service))
                 {
-                    AddToBuilder(Constants.Sas.Parameters.KeyService, _keyService);
+                    AddToBuilder(Internals.Constants.Sas.Parameters.KeyService, _keyProperties._service);
                 }
 
-                if (!string.IsNullOrWhiteSpace(_keyVersion))
+                if (!string.IsNullOrWhiteSpace(_keyProperties._version))
                 {
-                    AddToBuilder(Constants.Sas.Parameters.KeyVersion, _keyVersion);
+                    AddToBuilder(Internals.Constants.Sas.Parameters.KeyVersion, _keyProperties._version);
                 }
             }
 
             if (!string.IsNullOrWhiteSpace(Signature))
             {
-                AddToBuilder(Constants.Sas.Parameters.Signature, WebUtility.UrlEncode(Signature));
+                AddToBuilder(Internals.Constants.Sas.Parameters.Signature, WebUtility.UrlEncode(Signature));
             }
 
             return sb.ToString();
+        }
+
+        /// <summary>
+        /// Creates a new SasQueryParameters instance.
+        /// </summary>
+        public static SasQueryParameters Create(
+            string version,
+            AccountSasServices? services,
+            AccountSasResourceTypes? resourceTypes,
+            SasProtocol protocol,
+            DateTimeOffset startsOn,
+            DateTimeOffset expiresOn,
+            SasIPRange ipRange,
+            string identifier,
+            string resource,
+            string permissions,
+            string signature,
+            string keyOid = default,
+            string keyTid = default,
+            DateTimeOffset keyStart = default,
+            DateTimeOffset keyExpiry = default,
+            string keyService = default,
+            string keyVersion = default,
+            string cacheControl = default,
+            string contentDisposition = default,
+            string contentEncoding = default,
+            string contentLanguage = default,
+            string contentType = default,
+            SasQueryParameters instance = default) =>
+                CopyToInstance(
+                    instance ?? new SasQueryParameters(),
+                    version,
+                    services,
+                    resourceTypes,
+                    protocol,
+                    startsOn,
+                    expiresOn,
+                    ipRange,
+                    identifier,
+                    resource,
+                    permissions,
+                    signature,
+                    keyOid,
+                    keyTid,
+                    keyStart,
+                    keyExpiry,
+                    keyService,
+                    keyVersion,
+                    cacheControl,
+                    contentDisposition,
+                    contentEncoding,
+                    contentLanguage,
+                    contentType);
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="values"></param>
+        /// <param name="includeBlobParameters"></param>
+        /// <param name="instance"></param>
+        /// <returns></returns>
+        public static SasQueryParameters Create(
+            Dictionary<string, string> values,
+            bool includeBlobParameters = false,
+            SasQueryParameters instance = default)
+        {
+            if (instance == default)
+            {
+                return new SasQueryParameters(values, includeBlobParameters);
+            }
+            else
+            {
+                var copy = new SasQueryParameters(values, includeBlobParameters);
+                return CopyToInstance(
+                    instance,
+                    version: copy.Version,
+                    services: copy.Services,
+                    resourceTypes: copy.ResourceTypes,
+                    protocol: copy.Protocol,
+                    startsOn: copy.StartsOn,
+                    expiresOn: copy.ExpiresOn,
+                    ipRange: copy.IPRange,
+                    identifier: copy.Identifier,
+                    resource: copy.Resource,
+                    permissions: copy.Permissions,
+                    signature: copy.Signature,
+                    keyOid: copy._keyProperties._objectId,
+                    keyTid: copy._keyProperties._tenantId,
+                    keyStart: copy._keyProperties._startsOn,
+                    keyExpiry: copy._keyProperties._expiresOn,
+                    keyService: copy._keyProperties._service,
+                    keyVersion: copy._keyProperties._version,
+                    cacheControl: copy.CacheControl,
+                    contentDisposition: copy.ContentDisposition,
+                    contentEncoding: copy.ContentEncoding,
+                    contentLanguage: copy.ContentLanguage,
+                    contentType: copy.ContentType);
+            }
+        }
+
+        /// <summary>
+        /// Creates a new SasQueryParameters instance.
+        /// </summary>
+        private static SasQueryParameters CopyToInstance(
+            SasQueryParameters instance,
+            string version,
+            AccountSasServices? services,
+            AccountSasResourceTypes? resourceTypes,
+            SasProtocol protocol,
+            DateTimeOffset startsOn,
+            DateTimeOffset expiresOn,
+            SasIPRange ipRange,
+            string identifier,
+            string resource,
+            string permissions,
+            string signature,
+            string keyOid = default,
+            string keyTid = default,
+            DateTimeOffset keyStart = default,
+            DateTimeOffset keyExpiry = default,
+            string keyService = default,
+            string keyVersion = default,
+            string cacheControl = default,
+            string contentDisposition = default,
+            string contentEncoding = default,
+            string contentLanguage = default,
+            string contentType = default)
+        {
+            instance._version = version ?? SasQueryParameters.DefaultSasVersion;
+            instance._services = services;
+            instance._resourceTypes = resourceTypes;
+            instance._protocol = protocol;
+            instance._startTime = startsOn;
+            instance._expiryTime = expiresOn;
+            instance._ipRange = ipRange;
+            instance._identifier = identifier;
+            instance._resource = resource;
+            instance._permissions = permissions;
+            instance._signature = signature;  // Should never be null
+            instance._keyProperties._objectId = keyOid;
+            instance._keyProperties._tenantId = keyTid;
+            instance._keyProperties._startsOn = keyStart;
+            instance._keyProperties._expiresOn = keyExpiry;
+            instance._keyProperties._service = keyService;
+            instance._keyProperties._version = keyVersion;
+            instance._cacheControl = cacheControl;
+            instance._contentDisposition = contentDisposition;
+            instance._contentEncoding = contentEncoding;
+            instance._contentLanguage = contentLanguage;
+            instance._contentType = contentType;
+            return instance;
         }
     }
 }

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Testing;
 using Azure.Storage.Files.DataLake.Models;
+using Azure.Storage.Files.DataLake.Sas;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using NUnit.Framework;
@@ -19,7 +20,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 {
     public class FileClientTests : PathTestBase
     {
-        private const long Size = 4 * Constants.KB;
+        private const long Size = 4 * Internals.Constants.KB;
 
         public FileClientTests(bool async)
             : base(async, null /* RecordedTestMode.Record /* to re-record */)
@@ -595,11 +596,24 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             PathAccessControl accessControl = await identitySasFile.GetAccessControlAsync();
 
-            // Assert
-            Assert.IsNotNull(accessControl.Owner);
-            Assert.IsNotNull(accessControl.Group);
-            Assert.IsNotNull(accessControl.Permissions);
-            Assert.IsNotNull(accessControl.AccessControlList);
+                // Assert
+                Assert.IsNotNull(accessControl.Owner);
+                Assert.IsNotNull(accessControl.Group);
+                Assert.IsNotNull(accessControl.Permissions);
+                Assert.IsNotNull(accessControl.AccessControlList);
+                AssertSasUserDelegationKey(identitySasFile.Uri, userDelegationKey);
+            }
+        }
+
+        private void AssertSasUserDelegationKey(Uri uri, UserDelegationKey key)
+        {
+            DataLakeSasQueryParameters sas = new DataLakeUriBuilder(uri).Sas;
+            Assert.AreEqual(key.SignedObjectId, sas.KeyObjectId);
+            Assert.AreEqual(key.SignedExpiresOn, sas.KeyExpiresOn);
+            Assert.AreEqual(key.SignedService, sas.KeyService);
+            Assert.AreEqual(key.SignedStartsOn, sas.KeyStartsOn);
+            Assert.AreEqual(key.SignedTenantId, sas.KeyTenantId);
+            Assert.AreEqual(key.SignedVersion, sas.Version);
         }
 
         [Test]
@@ -663,11 +677,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             PathAccessControl accessControl = await identitySasFile.GetAccessControlAsync();
 
-            // Assert
-            Assert.IsNotNull(accessControl.Owner);
-            Assert.IsNotNull(accessControl.Group);
-            Assert.IsNotNull(accessControl.Permissions);
-            Assert.IsNotNull(accessControl.AccessControlList);
+                // Assert
+                Assert.IsNotNull(accessControl.Owner);
+                Assert.IsNotNull(accessControl.Group);
+                Assert.IsNotNull(accessControl.Permissions);
+                Assert.IsNotNull(accessControl.AccessControlList);
+                AssertSasUserDelegationKey(identitySasFile.Uri, userDelegationKey);
+            }
         }
 
         [Test]
@@ -967,8 +983,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             Response<PathProperties> response = await identitySasFile.GetPropertiesAsync();
 
-            // Assert
-            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                // Assert
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                AssertSasUserDelegationKey(identitySasFile.Uri, userDelegationKey);
+            }
         }
 
         [Test]
@@ -1029,8 +1047,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             Response<PathProperties> response = await identitySasFile.GetPropertiesAsync();
 
-            // Assert
-            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                // Assert
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                AssertSasUserDelegationKey(identitySasFile.Uri, userDelegationKey);
+            }
         }
 
         [Test]

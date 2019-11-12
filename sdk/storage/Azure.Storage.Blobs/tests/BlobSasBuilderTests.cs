@@ -5,10 +5,13 @@ using System;
 using System.Security.Cryptography;
 using System.Text;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Shared;
 using Azure.Storage.Sas;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 using TestConstants = Azure.Storage.Test.Constants;
+using SasExtensions = Azure.Storage.Sas.Shared.SasExtensions;
+using Internals = Azure.Storage.Shared.Common;
 
 namespace Azure.Storage.Blobs.Test
 {
@@ -56,7 +59,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiresOn);
             Assert.AreEqual(constants.Sas.IPRange, sasQueryParameters.IPRange);
             Assert.AreEqual(constants.Sas.Identifier, sasQueryParameters.Identifier);
-            Assert.AreEqual(Constants.Sas.Resource.Container, sasQueryParameters.Resource);
+            Assert.AreEqual(Internals.Constants.Sas.Resource.Container, sasQueryParameters.Resource);
             Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
             Assert.AreEqual(signature, sasQueryParameters.Signature);
             AssertResponseHeaders(constants, sasQueryParameters);
@@ -90,7 +93,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(constants.Sas.KeyExpiry, sasQueryParameters.KeyExpiresOn);
             Assert.AreEqual(constants.Sas.KeyService, sasQueryParameters.KeyService);
             Assert.AreEqual(constants.Sas.KeyVersion, sasQueryParameters.KeyVersion);
-            Assert.AreEqual(Constants.Sas.Resource.Container, sasQueryParameters.Resource);
+            Assert.AreEqual(Internals.Constants.Sas.Resource.Container, sasQueryParameters.Resource);
             Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
             Assert.AreEqual(signature, sasQueryParameters.Signature);
             AssertResponseHeaders(constants, sasQueryParameters);
@@ -118,7 +121,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiresOn);
             Assert.AreEqual(constants.Sas.IPRange, sasQueryParameters.IPRange);
             Assert.AreEqual(constants.Sas.Identifier, sasQueryParameters.Identifier);
-            Assert.AreEqual(Constants.Sas.Resource.Blob, sasQueryParameters.Resource);
+            Assert.AreEqual(Internals.Constants.Sas.Resource.Blob, sasQueryParameters.Resource);
             Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
             Assert.AreEqual(signature, sasQueryParameters.Signature);
             AssertResponseHeaders(constants, sasQueryParameters);
@@ -152,7 +155,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(constants.Sas.KeyExpiry, sasQueryParameters.KeyExpiresOn);
             Assert.AreEqual(constants.Sas.KeyService, sasQueryParameters.KeyService);
             Assert.AreEqual(constants.Sas.KeyVersion, sasQueryParameters.KeyVersion);
-            Assert.AreEqual(Constants.Sas.Resource.Blob, sasQueryParameters.Resource);
+            Assert.AreEqual(Internals.Constants.Sas.Resource.Blob, sasQueryParameters.Resource);
             Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
             Assert.AreEqual(signature, sasQueryParameters.Signature);
             AssertResponseHeaders(constants, sasQueryParameters);
@@ -180,7 +183,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiresOn);
             Assert.AreEqual(constants.Sas.IPRange, sasQueryParameters.IPRange);
             Assert.AreEqual(constants.Sas.Identifier, sasQueryParameters.Identifier);
-            Assert.AreEqual(Constants.Sas.Resource.BlobSnapshot, sasQueryParameters.Resource);
+            Assert.AreEqual(Internals.Constants.Sas.Resource.BlobSnapshot, sasQueryParameters.Resource);
             Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
             Assert.AreEqual(signature, sasQueryParameters.Signature);
             AssertResponseHeaders(constants, sasQueryParameters);
@@ -214,7 +217,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(constants.Sas.KeyExpiry, sasQueryParameters.KeyExpiresOn);
             Assert.AreEqual(constants.Sas.KeyService, sasQueryParameters.KeyService);
             Assert.AreEqual(constants.Sas.KeyVersion, sasQueryParameters.KeyVersion);
-            Assert.AreEqual(Constants.Sas.Resource.BlobSnapshot, sasQueryParameters.Resource);
+            Assert.AreEqual(Internals.Constants.Sas.Resource.BlobSnapshot, sasQueryParameters.Resource);
             Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
             Assert.AreEqual(signature, sasQueryParameters.Signature);
             AssertResponseHeaders(constants, sasQueryParameters);
@@ -261,15 +264,15 @@ namespace Azure.Storage.Blobs.Test
             var canonicalName = includeBlob ? $"/blob/{constants.Sas.Account}/{containerName}/{blobName}"
                 : $"/blob/{constants.Sas.Account}/{containerName}";
 
-            var resource = Constants.Sas.Resource.Container;
+            var resource = Internals.Constants.Sas.Resource.Container;
 
             if (includeBlob && includeSnapshot)
             {
-                resource = Constants.Sas.Resource.BlobSnapshot;
+                resource = Internals.Constants.Sas.Resource.BlobSnapshot;
             }
             else if (includeBlob)
             {
-                resource = Constants.Sas.Resource.Blob;
+                resource = Internals.Constants.Sas.Resource.Blob;
             }
 
             var stringToSign = String.Join("\n",
@@ -279,7 +282,7 @@ namespace Azure.Storage.Blobs.Test
                 canonicalName,
                 constants.Sas.Identifier,
                 constants.Sas.IPRange.ToString(),
-                constants.Sas.Protocol.ToProtocolString(),
+                SasExtensions.ToProtocolString(constants.Sas.Protocol),
                 SasQueryParameters.DefaultSasVersion,
                 resource,
                 includeSnapshot ? Snapshot : null,
@@ -289,7 +292,7 @@ namespace Azure.Storage.Blobs.Test
                 constants.Sas.ContentLanguage,
                 constants.Sas.ContentType);
 
-            return constants.Sas.SharedKeyCredential.ComputeHMACSHA256(stringToSign);
+            return StorageSharedKeyCredentialExtensions.ComputeSasSignature(constants.Sas.SharedKeyCredential, stringToSign);
         }
 
         private string BuildIdentitySignature(bool includeBlob, bool includeSnapshot, string containerName, string blobName, TestConstants constants)
@@ -297,15 +300,15 @@ namespace Azure.Storage.Blobs.Test
             var canonicalName = includeBlob ? $"/blob/{constants.Sas.Account}/{containerName}/{blobName}"
                 : $"/blob/{constants.Sas.Account}/{containerName}";
 
-            var resource = Constants.Sas.Resource.Container;
+            var resource = Internals.Constants.Sas.Resource.Container;
 
             if (includeBlob && includeSnapshot)
             {
-                resource = Constants.Sas.Resource.BlobSnapshot;
+                resource = Internals.Constants.Sas.Resource.BlobSnapshot;
             }
             else if (includeBlob)
             {
-                resource = Constants.Sas.Resource.Blob;
+                resource = Internals.Constants.Sas.Resource.Blob;
             }
 
             var stringToSign = String.Join("\n",
@@ -320,7 +323,7 @@ namespace Azure.Storage.Blobs.Test
                 constants.Sas.KeyService,
                 constants.Sas.KeyVersion,
                 constants.Sas.IPRange.ToString(),
-                constants.Sas.Protocol.ToProtocolString(),
+                SasExtensions.ToProtocolString(constants.Sas.Protocol),
                 SasQueryParameters.DefaultSasVersion,
                 resource,
                 includeSnapshot ? Snapshot : null,

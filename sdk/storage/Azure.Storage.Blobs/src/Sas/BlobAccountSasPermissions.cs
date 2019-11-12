@@ -3,7 +3,9 @@
 
 using System;
 using System.Text;
+using Azure.Storage.Shared;
 using Azure.Storage.Sas;
+using Internals = Azure.Storage.Shared;
 
 namespace Azure.Storage.Sas
 {
@@ -71,27 +73,27 @@ namespace Azure.Storage.Blobs
             var sb = new StringBuilder();
             if ((permissions & BlobAccountSasPermissions.Read) == BlobAccountSasPermissions.Read)
             {
-                sb.Append(Constants.Sas.Permissions.Read);
+                sb.Append(Internals.Constants.Sas.Permissions.Read);
             }
             if ((permissions & BlobAccountSasPermissions.Add) == BlobAccountSasPermissions.Add)
             {
-                sb.Append(Constants.Sas.Permissions.Add);
+                sb.Append(Internals.Constants.Sas.Permissions.Add);
             }
             if ((permissions & BlobAccountSasPermissions.Create) == BlobAccountSasPermissions.Create)
             {
-                sb.Append(Constants.Sas.Permissions.Create);
+                sb.Append(Internals.Constants.Sas.Permissions.Create);
             }
             if ((permissions & BlobAccountSasPermissions.Write) == BlobAccountSasPermissions.Write)
             {
-                sb.Append(Constants.Sas.Permissions.Write);
+                sb.Append(Internals.Constants.Sas.Permissions.Write);
             }
             if ((permissions & BlobAccountSasPermissions.Delete) == BlobAccountSasPermissions.Delete)
             {
-                sb.Append(Constants.Sas.Permissions.Delete);
+                sb.Append(Internals.Constants.Sas.Permissions.Delete);
             }
             if ((permissions & BlobAccountSasPermissions.List) == BlobAccountSasPermissions.List)
             {
-                sb.Append(Constants.Sas.Permissions.List);
+                sb.Append(Internals.Constants.Sas.Permissions.List);
             }
             return sb.ToString();
         }

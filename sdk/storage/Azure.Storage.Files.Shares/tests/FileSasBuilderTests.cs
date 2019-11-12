@@ -2,10 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Storage.Shared;
 using Azure.Storage.Files.Shares.Tests;
 using Azure.Storage.Sas;
 using NUnit.Framework;
 using TestConstants = Azure.Storage.Test.Constants;
+using Internals = Azure.Storage.Shared.Common;
+using SasInternals = Azure.Storage.Sas.Shared;
+using Azure.Storage.Sas.Shared;
 
 namespace Azure.Storage.Files.Test
 {
@@ -40,7 +44,7 @@ namespace Azure.Storage.Files.Test
             Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiresOn);
             Assert.AreEqual(constants.Sas.IPRange, sasQueryParameters.IPRange);
             Assert.AreEqual(constants.Sas.Identifier, sasQueryParameters.Identifier);
-            Assert.AreEqual(Constants.Sas.Resource.File, sasQueryParameters.Resource);
+            Assert.AreEqual(Internals.Constants.Sas.Resource.File, sasQueryParameters.Resource);
             Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
             Assert.AreEqual(signature, sasQueryParameters.Signature);
             AssertResponseHeaders(constants, sasQueryParameters);
@@ -68,7 +72,7 @@ namespace Azure.Storage.Files.Test
             Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiresOn);
             Assert.AreEqual(constants.Sas.IPRange, sasQueryParameters.IPRange);
             Assert.AreEqual(constants.Sas.Identifier, sasQueryParameters.Identifier);
-            Assert.AreEqual(Constants.Sas.Resource.Share, sasQueryParameters.Resource);
+            Assert.AreEqual(Internals.Constants.Sas.Resource.Share, sasQueryParameters.Resource);
             Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
             Assert.AreEqual(signature, sasQueryParameters.Signature);
             AssertResponseHeaders(constants, sasQueryParameters);
@@ -130,12 +134,12 @@ namespace Azure.Storage.Files.Test
 
             var stringToSign = string.Join("\n",
                 Permissions,
-                SasQueryParameters.FormatTimesForSasSigning(constants.Sas.StartTime),
-                SasQueryParameters.FormatTimesForSasSigning(constants.Sas.ExpiryTime),
+                SasInternals.SasExtensions.FormatTimesForSasSigning(constants.Sas.StartTime),
+                SasInternals.SasExtensions.FormatTimesForSasSigning(constants.Sas.ExpiryTime),
                 canonicalName,
                 constants.Sas.Identifier,
                 constants.Sas.IPRange.ToString(),
-                constants.Sas.Protocol.ToProtocolString(),
+                SasInternals.SasExtensions.ToProtocolString(constants.Sas.Protocol),
                 includeVersion ? constants.Sas.Version : SasQueryParameters.DefaultSasVersion,
                 constants.Sas.CacheControl,
                 constants.Sas.ContentDisposition,
@@ -143,7 +147,7 @@ namespace Azure.Storage.Files.Test
                 constants.Sas.ContentLanguage,
                 constants.Sas.ContentType);
 
-            return constants.Sas.SharedKeyCredential.ComputeHMACSHA256(stringToSign);
+            return StorageSharedKeyCredentialExtensions.ComputeSasSignature(constants.Sas.SharedKeyCredential, stringToSign);
         }
     }
 }

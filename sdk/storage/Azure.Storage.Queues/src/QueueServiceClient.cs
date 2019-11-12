@@ -8,7 +8,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Shared;
 using Azure.Storage.Queues.Models;
+using Internals = Azure.Storage.Shared;
 
 namespace Azure.Storage.Queues
 {
@@ -41,13 +43,13 @@ namespace Azure.Storage.Queues
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
         /// every request.
         /// </summary>
-        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly Internals.ClientDiagnostics _clientDiagnostics;
 
         /// <summary>
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
         /// every request.
         /// </summary>
-        internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
+        internal virtual Internals.ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
         /// <summary>
         /// The Storage account name corresponding to the service client.
         /// </summary>
@@ -111,11 +113,11 @@ namespace Azure.Storage.Queues
         /// </param>
         public QueueServiceClient(string connectionString, QueueClientOptions options)
         {
-            var conn = StorageConnectionString.Parse(connectionString);
+            var conn = Internals.StorageConnectionString.Parse(connectionString);
             _uri = conn.QueueEndpoint;
             options ??= new QueueClientOptions();
             _pipeline = options.Build(conn.Credentials);
-            _clientDiagnostics = new ClientDiagnostics(options);
+            _clientDiagnostics = new Internals.ClientDiagnostics(options);
         }
 
         /// <summary>
@@ -200,7 +202,7 @@ namespace Azure.Storage.Queues
             _uri = serviceUri;
             options ??= new QueueClientOptions();
             _pipeline = options.Build(authentication);
-            _clientDiagnostics = new ClientDiagnostics(options);
+            _clientDiagnostics = new Internals.ClientDiagnostics(options);
         }
 
         /// <summary>
@@ -215,7 +217,7 @@ namespace Azure.Storage.Queues
         /// The transport pipeline used to send every request.
         /// </param>
         /// <param name="clientDiagnostics"></param>
-        internal QueueServiceClient(Uri serviceUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
+        internal QueueServiceClient(Uri serviceUri, HttpPipeline pipeline, Internals.ClientDiagnostics clientDiagnostics)
         {
             _uri = serviceUri;
             _pipeline = pipeline;
@@ -662,7 +664,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// A newly created <see cref="Response{QueueClient}"/>.
         /// </returns>
-        [ForwardsClientCalls]
+        [Internals.ForwardsClientCalls]
         public virtual Response<QueueClient> CreateQueue(
             string queueName,
             IDictionary<string, string> metadata = default,
@@ -690,7 +692,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// A newly created <see cref="Response{QueueClient}"/>.
         /// </returns>
-        [ForwardsClientCalls]
+        [Internals.ForwardsClientCalls]
         public virtual async Task<Response<QueueClient>> CreateQueueAsync(
             string queueName,
             IDictionary<string, string> metadata = default,
@@ -717,7 +719,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response"/>
         /// </returns>
-        [ForwardsClientCalls]
+        [Internals.ForwardsClientCalls]
         public virtual Response DeleteQueue(
             string queueName,
             CancellationToken cancellationToken = default) =>
@@ -737,7 +739,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response"/>
         /// </returns>
-        [ForwardsClientCalls]
+        [Internals.ForwardsClientCalls]
         public virtual async Task<Response> DeleteQueueAsync(
             string queueName,
             CancellationToken cancellationToken = default) =>

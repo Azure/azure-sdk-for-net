@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using Azure.Storage.Sas.Shared;
 
 namespace Azure.Storage.Sas
 {
@@ -15,35 +17,40 @@ namespace Azure.Storage.Sas
     /// </summary>
     public sealed class BlobSasQueryParameters : SasQueryParameters
     {
+        internal
+#if RELEASE
+            new
+#endif
+            UserDelegationKeyProperties _keyProperties;
         /// <summary>
         /// Gets the Azure Active Directory object ID in GUID format.
         /// </summary>
-        public string KeyObjectId => _keyObjectId;
+        public string KeyObjectId => _keyProperties._objectId;
 
         /// <summary>
         /// Gets the Azure Active Directory tenant ID in GUID format
         /// </summary>
-        public string KeyTenantId => _keyTenantId;
+        public string KeyTenantId => _keyProperties._tenantId;
 
         /// <summary>
         /// Gets the time at which the key becomes valid.
         /// </summary>
-        public DateTimeOffset KeyStartsOn => _keyStart;
+        public DateTimeOffset KeyStartsOn => _keyProperties._startsOn;
 
         /// <summary>
         /// Gets the time at which the key becomes expires.
         /// </summary>
-        public DateTimeOffset KeyExpiresOn => _keyExpiry;
+        public DateTimeOffset KeyExpiresOn => _keyProperties._expiresOn;
 
         /// <summary>
         /// Gets the Storage service that accepts the key.
         /// </summary>
-        public string KeyService => _keyService;
+        public string KeyService => _keyProperties._service;
 
         /// <summary>
         /// Gets the Storage service version that created the key.
         /// </summary>
-        public string KeyVersion => _keyVersion;
+        public string KeyVersion => _keyProperties._version;
 
         /// <summary>
         /// Gets empty shared access signature query parameters.
@@ -56,12 +63,9 @@ namespace Azure.Storage.Sas
         }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="BlobSasQueryParameters"/>
-        /// type.
-        ///
-        /// Expects decoded values.
+        /// Creates a new BlobSasQueryParameters instance.
         /// </summary>
-        internal BlobSasQueryParameters(
+        internal static BlobSasQueryParameters Create(
             string version,
             AccountSasServices? services,
             AccountSasResourceTypes? resourceTypes,
@@ -84,42 +88,59 @@ namespace Azure.Storage.Sas
             string contentEncoding = default,
             string contentLanguage = default,
             string contentType = default)
-            : base(
-                version,
-                services,
-                resourceTypes,
-                protocol,
-                startsOn,
-                expiresOn,
-                ipRange,
-                identifier,
-                resource,
-                permissions,
-                signature,
-                keyOid,
-                keyTid,
-                keyStart,
-                keyExpiry,
-                keyService,
-                keyVersion,
-                cacheControl,
-                contentDisposition,
-                contentEncoding,
-                contentLanguage,
-                contentType)
         {
+            var blobParameters = new BlobSasQueryParameters();
+            blobParameters._keyProperties._objectId = keyOid;
+            blobParameters._keyProperties._tenantId = keyTid;
+            blobParameters._keyProperties._startsOn = keyStart;
+            blobParameters._keyProperties._expiresOn = keyExpiry;
+            blobParameters._keyProperties._service = keyService;
+            blobParameters._keyProperties._version = keyVersion;
+            SasQueryParameters.Create(
+            version: version ?? SasQueryParameters.DefaultSasVersion,
+            services: services,
+            resourceTypes: resourceTypes,
+            protocol: protocol,
+            startsOn: startsOn,
+            expiresOn: expiresOn,
+            ipRange: ipRange,
+            identifier: identifier,
+            resource: resource,
+            permissions: permissions,
+            signature: signature,  // Should never be null
+            keyOid: keyOid,
+            keyTid: keyTid,
+            keyStart: keyStart,
+            keyExpiry: keyExpiry,
+            keyService: keyService,
+            keyVersion: keyVersion,
+            cacheControl: cacheControl,
+            contentDisposition: contentDisposition,
+            contentEncoding: contentEncoding,
+            contentLanguage: contentLanguage,
+            contentType: contentType,
+            instance: blobParameters);
+            return blobParameters;
         }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="BlobSasQueryParameters"/>
-        /// type based on the supplied query parameters <paramref name="values"/>.
-        /// All SAS-related query parameters will be removed from
-        /// <paramref name="values"/>.
+        ///
         /// </summary>
-        /// <param name="values">URI query parameters</param>
-        internal BlobSasQueryParameters(UriQueryParamsCollection values)
-            : base(values, includeBlobParameters: true)
+        /// <param name="values"></param>
+        /// <returns></returns>
+        internal static BlobSasQueryParameters Create(
+            Dictionary<string, string> values)
         {
+            var blobParameters = new BlobSasQueryParameters();
+            SasQueryParametersExtensions.ParseKeyProperties(
+                blobParameters,
+                values,
+                preserve: true);
+            return
+                (BlobSasQueryParameters)SasQueryParameters.Create(
+                    values,
+                    includeBlobParameters: true,
+                    blobParameters);
         }
 
         /// <summary>

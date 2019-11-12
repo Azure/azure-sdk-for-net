@@ -7,6 +7,9 @@
     <Version>12.0.0-preview.6</Version>
     <DefineConstants>FileSDK;$(DefineConstants)</DefineConstants>
     <PackageTags>Microsoft Azure Storage Files;Microsoft;Azure;File;Files;Data Lake;Storage;StorageScalable;$(PackageCommonTags)</PackageTags>
+    <Version>12.0.0-preview.5</Version>
+    <DefineConstants>DataLakeSDK;StorageSDK;$(DefineConstants)</DefineConstants>
+    <PackageTags>Microsoft Azure Storage Files, Microsoft, Azure, File, Files, Data Lake, Storage, StorageScalable, azureofficial</PackageTags>
     <PackageReleaseNotes>
       For release notes and more information please visit https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Files.DataLake/README.md
     </PackageReleaseNotes>
@@ -26,5 +29,18 @@
   <ItemGroup>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />
     <ProjectReference Include="..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
+  </ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Shared\SasQueryParametersExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Azure.Storage.Blobs">
+      <HintPath>..\..\..\..\artifacts\bin\Azure.Storage.Blobs\Debug\netstandard2.0\Azure.Storage.Blobs.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

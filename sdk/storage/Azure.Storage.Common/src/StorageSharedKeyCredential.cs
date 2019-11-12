@@ -12,7 +12,7 @@ namespace Azure.Storage
     /// A <see cref="StorageSharedKeyCredential"/> is a credential backed by
     /// a Storage Account's name and one of its access keys.
     /// </summary>
-    public sealed class StorageSharedKeyCredential
+    public class StorageSharedKeyCredential
     {
         /// <summary>
         /// Gets the name of the Storage Account.
@@ -73,5 +73,16 @@ namespace Azure.Storage
         /// <returns>The signed message.</returns>
         internal string ComputeHMACSHA256(string message) =>
             Convert.ToBase64String(new HMACSHA256(AccountKeyValue).ComputeHash(Encoding.UTF8.GetBytes(message)));
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="credential"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        protected static string ComputeSasSignature(StorageSharedKeyCredential credential, string message)
+        {
+            return credential.ComputeHMACSHA256(message);
+        }
     }
 }

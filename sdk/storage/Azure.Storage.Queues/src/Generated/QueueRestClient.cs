@@ -37,7 +37,7 @@ namespace Azure.Storage.Queues
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response> SetPropertiesAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Queues.Models.QueueServiceProperties properties,
@@ -47,7 +47,7 @@ namespace Azure.Storage.Queues
                 string operationName = "Azure.Storage.Queues.ServiceClient.SetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -178,7 +178,7 @@ namespace Azure.Storage.Queues
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Storage Service Properties.</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Queues.Models.QueueServiceProperties>> GetPropertiesAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -187,7 +187,7 @@ namespace Azure.Storage.Queues
                 string operationName = "Azure.Storage.Queues.ServiceClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -285,7 +285,7 @@ namespace Azure.Storage.Queues
                     }
                     case 304:
                     {
-                        return new Azure.NoBodyResponse<Azure.Storage.Queues.Models.QueueServiceProperties>(response);
+                        return new Azure.Storage.Shared.NoBodyResponse<Azure.Storage.Queues.Models.QueueServiceProperties>(response);
                     }
                     default:
                     {
@@ -313,7 +313,7 @@ namespace Azure.Storage.Queues
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Statistics for the storage service.</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Queues.Models.QueueServiceStatistics>> GetStatisticsAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -322,7 +322,7 @@ namespace Azure.Storage.Queues
                 string operationName = "Azure.Storage.Queues.ServiceClient.GetStatistics",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -420,7 +420,7 @@ namespace Azure.Storage.Queues
                     }
                     case 304:
                     {
-                        return new Azure.NoBodyResponse<Azure.Storage.Queues.Models.QueueServiceStatistics>(response);
+                        return new Azure.Storage.Shared.NoBodyResponse<Azure.Storage.Queues.Models.QueueServiceStatistics>(response);
                     }
                     default:
                     {
@@ -452,7 +452,7 @@ namespace Azure.Storage.Queues
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>The object returned when calling List Queues on a Queue Service.</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Queues.Models.QueuesSegment>> ListQueuesSegmentAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string prefix = default,
@@ -465,7 +465,7 @@ namespace Azure.Storage.Queues
                 string operationName = "Azure.Storage.Queues.ServiceClient.ListQueuesSegment",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -578,7 +578,7 @@ namespace Azure.Storage.Queues
                     }
                     case 304:
                     {
-                        return new Azure.NoBodyResponse<Azure.Storage.Queues.Models.QueuesSegment>(response);
+                        return new Azure.Storage.Shared.NoBodyResponse<Azure.Storage.Queues.Models.QueuesSegment>(response);
                     }
                     default:
                     {
@@ -615,7 +615,7 @@ namespace Azure.Storage.Queues
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response> CreateAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -625,7 +625,7 @@ namespace Azure.Storage.Queues
                 string operationName = "Azure.Storage.Queues.QueueClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -753,7 +753,7 @@ namespace Azure.Storage.Queues
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response> DeleteAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -762,7 +762,7 @@ namespace Azure.Storage.Queues
                 string operationName = "Azure.Storage.Queues.QueueClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -877,7 +877,7 @@ namespace Azure.Storage.Queues
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Queues.Models.QueueProperties}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Queues.Models.QueueProperties>> GetPropertiesAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -886,7 +886,7 @@ namespace Azure.Storage.Queues
                 string operationName = "Azure.Storage.Queues.QueueClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -997,7 +997,7 @@ namespace Azure.Storage.Queues
                     }
                     case 304:
                     {
-                        return new Azure.NoBodyResponse<Azure.Storage.Queues.Models.QueueProperties>(response);
+                        return new Azure.Storage.Shared.NoBodyResponse<Azure.Storage.Queues.Models.QueueProperties>(response);
                     }
                     default:
                     {
@@ -1026,7 +1026,7 @@ namespace Azure.Storage.Queues
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response> SetMetadataAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1036,7 +1036,7 @@ namespace Azure.Storage.Queues
                 string operationName = "Azure.Storage.Queues.QueueClient.SetMetadata",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -1161,7 +1161,7 @@ namespace Azure.Storage.Queues
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>a collection of signed identifiers</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.QueueSignedIdentifier>>> GetAccessPolicyAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1170,7 +1170,7 @@ namespace Azure.Storage.Queues
                 string operationName = "Azure.Storage.Queues.QueueClient.GetAccessPolicy",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -1271,7 +1271,7 @@ namespace Azure.Storage.Queues
                     }
                     case 304:
                     {
-                        return new Azure.NoBodyResponse<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.QueueSignedIdentifier>>(response);
+                        return new Azure.Storage.Shared.NoBodyResponse<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.QueueSignedIdentifier>>(response);
                     }
                     default:
                     {
@@ -1300,7 +1300,7 @@ namespace Azure.Storage.Queues
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response> SetAccessPolicyAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.QueueSignedIdentifier> permissions = default,
@@ -1310,7 +1310,7 @@ namespace Azure.Storage.Queues
                 string operationName = "Azure.Storage.Queues.QueueClient.SetAccessPolicy",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -1453,7 +1453,7 @@ namespace Azure.Storage.Queues
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>The object returned when calling Get Messages on a Queue</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.QueueMessage>>> DequeueAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? numberOfMessages = default,
@@ -1464,7 +1464,7 @@ namespace Azure.Storage.Queues
                 string operationName = "Azure.Storage.Queues.MessagesClient.Dequeue",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -1572,7 +1572,7 @@ namespace Azure.Storage.Queues
                     }
                     case 304:
                     {
-                        return new Azure.NoBodyResponse<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.QueueMessage>>(response);
+                        return new Azure.Storage.Shared.NoBodyResponse<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.QueueMessage>>(response);
                     }
                     default:
                     {
@@ -1600,7 +1600,7 @@ namespace Azure.Storage.Queues
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response> ClearAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1609,7 +1609,7 @@ namespace Azure.Storage.Queues
                 string operationName = "Azure.Storage.Queues.MessagesClient.Clear",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -1727,7 +1727,7 @@ namespace Azure.Storage.Queues
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>The object returned when calling Put Message on a Queue</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.SendReceipt>>> EnqueueAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Queues.Models.QueueSendMessage message,
@@ -1739,7 +1739,7 @@ namespace Azure.Storage.Queues
                 string operationName = "Azure.Storage.Queues.MessagesClient.Enqueue",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -1886,7 +1886,7 @@ namespace Azure.Storage.Queues
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>The object returned when calling Peek Messages on a Queue</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.PeekedMessage>>> PeekAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? numberOfMessages = default,
@@ -1896,7 +1896,7 @@ namespace Azure.Storage.Queues
                 string operationName = "Azure.Storage.Queues.MessagesClient.Peek",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -2001,7 +2001,7 @@ namespace Azure.Storage.Queues
                     }
                     case 304:
                     {
-                        return new Azure.NoBodyResponse<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.PeekedMessage>>(response);
+                        return new Azure.Storage.Shared.NoBodyResponse<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.PeekedMessage>>(response);
                     }
                     default:
                     {
@@ -2040,7 +2040,7 @@ namespace Azure.Storage.Queues
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Queues.Models.UpdateReceipt}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Queues.Models.UpdateReceipt>> UpdateAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Queues.Models.QueueSendMessage message,
@@ -2052,7 +2052,7 @@ namespace Azure.Storage.Queues
                 string operationName = "Azure.Storage.Queues.MessageIdClient.Update",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -2209,7 +2209,7 @@ namespace Azure.Storage.Queues
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response> DeleteAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string popReceipt,
@@ -2219,7 +2219,7 @@ namespace Azure.Storage.Queues
                 string operationName = "Azure.Storage.Queues.MessageIdClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);

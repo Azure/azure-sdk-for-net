@@ -7,8 +7,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Shared;
 using Azure.Storage.Files.DataLake.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
+using Internals = Azure.Storage.Shared;
 
 namespace Azure.Storage.Files.DataLake
 {
@@ -380,6 +382,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Response Delete(
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)

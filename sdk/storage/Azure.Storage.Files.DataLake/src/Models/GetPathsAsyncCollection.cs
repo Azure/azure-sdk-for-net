@@ -4,10 +4,12 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Storage.Shared;
+using Internals = Azure.Storage.Shared;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
-    internal class GetPathsAsyncCollection : StorageCollectionEnumerator<PathItem>
+    internal class GetPathsAsyncCollection : Internals.StorageCollectionEnumerator<PathItem>
     {
         private readonly DataLakeFileSystemClient _client;
         private readonly string _path;

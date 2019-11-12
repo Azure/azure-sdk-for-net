@@ -8,9 +8,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 
+#if StorageSDK
+namespace Azure.Storage.Shared
+#else
 namespace Azure.Core.Pipeline
+#endif
 {
-    internal readonly struct DiagnosticScope : IDisposable
+internal readonly struct DiagnosticScope : IDisposable
     {
         private readonly DiagnosticActivity? _activity;
 

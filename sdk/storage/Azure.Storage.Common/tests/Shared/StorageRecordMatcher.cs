@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Xml.Linq;
 using Azure.Core.Testing;
+using Internals = Azure.Storage.Shared.Common;
 
 namespace Azure.Storage.Test.Shared
 {
@@ -186,7 +187,7 @@ namespace Azure.Storage.Test.Shared
             parts.Add("Path", path);
 
             var query = new Dictionary<string, object>();
-            foreach (KeyValuePair<string, string> pair in new UriQueryParamsCollection(builder.Query))
+            foreach (KeyValuePair<string, string> pair in new Internals.UriQueryParamsCollection(builder.Query))
             {
                 query.Add(pair.Key, pair.Value);
             }

@@ -5,7 +5,9 @@ using System;
 using System.Net;
 using System.Text;
 using Azure.Core;
+using Azure.Storage.Shared;
 using Azure.Storage.Sas;
+using Internals = Azure.Storage.Shared;
 
 namespace Azure.Storage.Queues
 {
@@ -175,7 +177,7 @@ namespace Azure.Storage.Queues
                 }
                 else
                 {
-                    AccountName = uri.GetAccountNameFromDomain(Constants.Queue.UriSubDomain) ?? string.Empty;
+                    AccountName = uri.GetAccountNameFromDomain(Internals.Constants.Queue.UriSubDomain) ?? string.Empty;
                 }
 
                 // Find the next slash (if it exists)
@@ -205,10 +207,10 @@ namespace Azure.Storage.Queues
             }
 
             // Convert the query parameters to a case-sensitive map & trim whitespace
-            var paramsMap = new UriQueryParamsCollection(uri.Query);
-            if (paramsMap.ContainsKey(Constants.Sas.Parameters.Version))
+            var paramsMap = new Internals.UriQueryParamsCollection(uri.Query);
+            if (paramsMap.ContainsKey(Internals.Constants.Sas.Parameters.Version))
             {
-                Sas = new SasQueryParameters(paramsMap);
+                Sas = SasQueryParameters.Create(paramsMap);
             }
             Query = paramsMap.ToString();
         }

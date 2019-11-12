@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Storage.Shared;
+using Internals = Azure.Storage.Shared;
 
 namespace Azure.Storage.Files.Shares.Models
 {
@@ -16,6 +18,6 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="response">The failed response.</param>
         /// <returns>A RequestFailedException.</returns>
         public Exception CreateException(Azure.Response response)
-            => StorageExceptionExtensions.CreateException(response, null, null, ErrorCode);
+            => Internals.StorageExceptionExtensions.CreateException(response, null, null, ErrorCode);
     }
 }

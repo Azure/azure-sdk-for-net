@@ -5,6 +5,7 @@ using System;
 using Azure.Core.Extensions;
 using Azure.Storage;
 using Azure.Storage.Blobs;
+using Azure.Storage.Shared;
 
 namespace Microsoft.Extensions.Azure
 {

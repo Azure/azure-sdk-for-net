@@ -6,8 +6,10 @@ using System.IO;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Shared;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
+using Internals = Azure.Storage.Shared.Common;
 
 namespace Azure.Storage.Blobs.Test
 {
@@ -27,7 +29,7 @@ namespace Azure.Storage.Blobs.Test
             // First upload a regular block blob
             var blobName = this.GetNewBlobName();
             var blob = this.InstrumentClient(test.Container.GetBlockBlobClient(blobName));
-            var data = this.GetRandomBuffer(Constants.KB);
+            var data = this.GetRandomBuffer(Internals.Constants.KB);
             using var stream = new MemoryStream(data);
             await blob.UploadAsync(stream);
 

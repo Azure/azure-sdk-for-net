@@ -3,7 +3,9 @@
 
 using System;
 using System.Text;
+using Azure.Storage.Shared;
 using Azure.Storage.Sas;
+using Internals = Azure.Storage.Shared;
 
 namespace Azure.Storage.Sas
 {
@@ -76,31 +78,31 @@ namespace Azure.Storage.Queues
             var sb = new StringBuilder();
             if ((permissions & QueueAccountSasPermissions.Read) == QueueAccountSasPermissions.Read)
             {
-                sb.Append(Constants.Sas.Permissions.Read);
+                sb.Append(Internals.Constants.Sas.Permissions.Read);
             }
             if ((permissions & QueueAccountSasPermissions.Write) == QueueAccountSasPermissions.Write)
             {
-                sb.Append(Constants.Sas.Permissions.Write);
+                sb.Append(Internals.Constants.Sas.Permissions.Write);
             }
             if ((permissions & QueueAccountSasPermissions.Delete) == QueueAccountSasPermissions.Delete)
             {
-                sb.Append(Constants.Sas.Permissions.Delete);
+                sb.Append(Internals.Constants.Sas.Permissions.Delete);
             }
             if ((permissions & QueueAccountSasPermissions.List) == QueueAccountSasPermissions.List)
             {
-                sb.Append(Constants.Sas.Permissions.List);
+                sb.Append(Internals.Constants.Sas.Permissions.List);
             }
             if ((permissions & QueueAccountSasPermissions.Add) == QueueAccountSasPermissions.Add)
             {
-                sb.Append(Constants.Sas.Permissions.Add);
+                sb.Append(Internals.Constants.Sas.Permissions.Add);
             }
             if ((permissions & QueueAccountSasPermissions.Update) == QueueAccountSasPermissions.Update)
             {
-                sb.Append(Constants.Sas.Permissions.Update);
+                sb.Append(Internals.Constants.Sas.Permissions.Update);
             }
             if ((permissions & QueueAccountSasPermissions.Process) == QueueAccountSasPermissions.Process)
             {
-                sb.Append(Constants.Sas.Permissions.Process);
+                sb.Append(Internals.Constants.Sas.Permissions.Process);
             }
             return sb.ToString();
         }

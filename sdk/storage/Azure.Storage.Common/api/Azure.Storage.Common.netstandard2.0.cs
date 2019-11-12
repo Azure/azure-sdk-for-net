@@ -1,9 +1,10 @@
 namespace Azure.Storage
 {
-    public sealed partial class StorageSharedKeyCredential
+    public partial class StorageSharedKeyCredential
     {
         public StorageSharedKeyCredential(string accountName, string accountKey) { }
         public string AccountName { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        protected static string ComputeSasSignature(Azure.Storage.StorageSharedKeyCredential credential, string message) { throw null; }
         public void SetAccountKey(string accountKey) { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -101,8 +102,8 @@ namespace Azure.Storage.Sas
     }
     public partial class SasQueryParameters
     {
-        internal SasQueryParameters() { }
         public const string DefaultSasVersion = "2019-02-02";
+        protected SasQueryParameters() { }
         public string CacheControl { get { throw null; } }
         public string ContentDisposition { get { throw null; } }
         public string ContentEncoding { get { throw null; } }
@@ -120,6 +121,9 @@ namespace Azure.Storage.Sas
         public string Signature { get { throw null; } }
         public System.DateTimeOffset StartsOn { get { throw null; } }
         public string Version { get { throw null; } }
+        public static Azure.Storage.Sas.SasQueryParameters Create(System.Collections.Generic.Dictionary<string, string> values, bool includeBlobParameters = false, Azure.Storage.Sas.SasQueryParameters instance = null) { throw null; }
+        public static Azure.Storage.Sas.SasQueryParameters Create(string version, Azure.Storage.Sas.AccountSasServices? services, Azure.Storage.Sas.AccountSasResourceTypes? resourceTypes, Azure.Storage.Sas.SasProtocol protocol, System.DateTimeOffset startsOn, System.DateTimeOffset expiresOn, Azure.Storage.Sas.SasIPRange ipRange, string identifier, string resource, string permissions, string signature, string keyOid = null, string keyTid = null, System.DateTimeOffset keyStart = default(System.DateTimeOffset), System.DateTimeOffset keyExpiry = default(System.DateTimeOffset), string keyService = null, string keyVersion = null, string cacheControl = null, string contentDisposition = null, string contentEncoding = null, string contentLanguage = null, string contentType = null, Azure.Storage.Sas.SasQueryParameters instance = null) { throw null; }
+        protected string Encode(bool includeBlobParameters = false) { throw null; }
         public override string ToString() { throw null; }
     }
 }

@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Shared;
+using Internals = Azure.Storage.Shared;
 
 namespace Azure.Storage.Blobs
 {
@@ -36,14 +38,14 @@ namespace Azure.Storage.Blobs
             _client = client;
             _maxWorkerCount =
                 transferOptions.MaximumConcurrency ??
-                Constants.Blob.Block.DefaultConcurrentTransfersCount;
+                Internals.Constants.Blob.Block.DefaultConcurrentTransfersCount;
             _initialRangeSize =
                 initialTransferLength ??
                 ((long?)transferOptions.MaximumTransferLength) ??
-                Constants.DefaultBufferSize;
+                Internals.Constants.DefaultBufferSize;
             _rangeSize = Math.Min(
-                Constants.Blob.Block.MaxDownloadBytes,
-                transferOptions.MaximumTransferLength ?? Constants.DefaultBufferSize);
+                Internals.Constants.Blob.Block.MaxDownloadBytes,
+                transferOptions.MaximumTransferLength ?? Internals.Constants.DefaultBufferSize);
         }
 
         public async Task<Response> DownloadToAsync(
@@ -53,7 +55,7 @@ namespace Azure.Storage.Blobs
         {
             // Wrap the download range calls in a Download span for distributed
             // tracing
-            DiagnosticScope scope = _client.ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(Specialized)}.{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadTo)}");
+            Internals.DiagnosticScope scope = _client.ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(Specialized)}.{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadTo)}");
             try
             {
                 scope.Start();
@@ -177,7 +179,7 @@ namespace Azure.Storage.Blobs
         {
             // Wrap the download range calls in a Download span for distributed
             // tracing
-            DiagnosticScope scope = _client.ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(Specialized)}.{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadTo)}");
+            Internals.DiagnosticScope scope = _client.ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(Specialized)}.{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadTo)}");
             try
             {
                 scope.Start();
@@ -270,7 +272,7 @@ namespace Azure.Storage.Blobs
             CancellationToken cancellationToken) =>
             await result.Content.CopyToAsync(
                 destination,
-                Constants.DefaultDownloadCopyBufferSize,
+                Internals.Constants.DefaultDownloadCopyBufferSize,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -280,7 +282,7 @@ namespace Azure.Storage.Blobs
             CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            result.Content.CopyTo(destination, Constants.DefaultDownloadCopyBufferSize);
+            result.Content.CopyTo(destination, Internals.Constants.DefaultDownloadCopyBufferSize);
         }
 
         private IEnumerable<HttpRange> GetRanges(long initialLength, long totalLength)

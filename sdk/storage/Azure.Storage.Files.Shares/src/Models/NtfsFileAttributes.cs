@@ -3,7 +3,9 @@
 
 using System;
 using System.Text;
+using Azure.Storage.Shared;
 using Azure.Storage.Files.Shares.Models;
+using Internals = Azure.Storage.Shared;
 
 namespace Azure.Storage.Files.Shares.Models
 {
@@ -161,7 +163,7 @@ namespace Azure.Storage.Files.Shares
 
             if (splitString.Length == 0)
             {
-                throw Errors.InvalidArgument(attributesString);
+                throw Internals.Errors.InvalidArgument(attributesString);
             }
 
             NtfsFileAttributes attributes = default;
@@ -211,7 +213,7 @@ namespace Azure.Storage.Files.Shares
                 }
                 else
                 {
-                    throw Errors.InvalidArgument(trimmed);
+                    throw Internals.Errors.InvalidArgument(trimmed);
                 }
             }
             return attributes;

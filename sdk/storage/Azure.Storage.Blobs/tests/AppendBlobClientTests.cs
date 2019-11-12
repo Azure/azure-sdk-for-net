@@ -12,9 +12,11 @@ using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Shared;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
+using Internals = Azure.Storage.Shared.Common;
 
 namespace Azure.Storage.Blobs.Test
 {
@@ -35,7 +37,7 @@ namespace Azure.Storage.Blobs.Test
             var blobEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + accountName + "-secondary");
 
-            var connectionString = new StorageConnectionString(credentials, (blobEndpoint, blobSecondaryEndpoint), (default, default), (default, default), (default, default));
+            var connectionString = new Internals.StorageConnectionString(credentials, (blobEndpoint, blobSecondaryEndpoint), (default, default), (default, default), (default, default));
 
             var containerName = GetNewContainerName();
             var blobName = GetNewBlobName();
@@ -318,7 +320,7 @@ namespace Azure.Storage.Blobs.Test
             var blobName = GetNewBlobName();
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
             await blob.CreateAsync();
-            const int blobSize = Constants.KB;
+            const int blobSize = Internals.Constants.KB;
             var data = GetRandomBuffer(blobSize);
 
             // Act
@@ -345,7 +347,7 @@ namespace Azure.Storage.Blobs.Test
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
             CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
             blob = InstrumentClient(blob.WithCustomerProvidedKey(customerProvidedKey));
-            var data = GetRandomBuffer(Constants.KB);
+            var data = GetRandomBuffer(Internals.Constants.KB);
             await blob.CreateAsync();
 
             // Act
@@ -365,7 +367,7 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
             await blob.CreateAsync();
-            var data = GetRandomBuffer(Constants.KB);
+            var data = GetRandomBuffer(Internals.Constants.KB);
 
             // Act
             using (var stream = new MemoryStream(data))
@@ -387,7 +389,7 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
             await blob.CreateAsync();
-            var data = GetRandomBuffer(Constants.KB);
+            var data = GetRandomBuffer(Internals.Constants.KB);
 
             // Act
             using (var stream = new MemoryStream(data))
@@ -407,7 +409,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Arrange
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
-            var data = GetRandomBuffer(Constants.KB);
+            var data = GetRandomBuffer(Internals.Constants.KB);
 
             // Act
             using (var stream = new MemoryStream(data))
@@ -505,7 +507,7 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task AppendBlockAsync_WithUnreliableConnection()
         {
-            const int blobSize = 1 * Constants.MB;
+            const int blobSize = 1 * Internals.Constants.MB;
             await using DisposingContainer test = await GetTestContainerAsync();
 
             BlobContainerClient containerFaulty = InstrumentClient(
@@ -553,7 +555,7 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
 
-            var data = GetRandomBuffer(Constants.KB);
+            var data = GetRandomBuffer(Internals.Constants.KB);
 
             using (var stream = new MemoryStream(data))
             {
@@ -565,7 +567,7 @@ namespace Azure.Storage.Blobs.Test
                 await destBlob.CreateAsync();
 
                 // Act
-                await destBlob.AppendBlockFromUriAsync(sourceBlob.Uri, new HttpRange(0, Constants.KB));
+                await destBlob.AppendBlockFromUriAsync(sourceBlob.Uri, new HttpRange(0, Internals.Constants.KB));
             }
         }
 
@@ -577,7 +579,7 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
 
-            var data = GetRandomBuffer(Constants.KB);
+            var data = GetRandomBuffer(Internals.Constants.KB);
 
             using (var stream = new MemoryStream(data))
             {
@@ -593,7 +595,7 @@ namespace Azure.Storage.Blobs.Test
                 // Act
                 Response<BlobAppendInfo> response = await destBlob.AppendBlockFromUriAsync(
                     sourceBlob.Uri,
-                    new HttpRange(0, Constants.KB));
+                    new HttpRange(0, Internals.Constants.KB));
 
                 Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
             }
@@ -607,7 +609,7 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
 
-            var data = GetRandomBuffer(4 * Constants.KB);
+            var data = GetRandomBuffer(4 * Internals.Constants.KB);
 
             using (var stream = new MemoryStream(data))
             {
@@ -619,14 +621,14 @@ namespace Azure.Storage.Blobs.Test
                 await destBlob.CreateAsync();
 
                 // Act
-                await destBlob.AppendBlockFromUriAsync(sourceBlob.Uri, new HttpRange(2 * Constants.KB, 2 * Constants.KB));
+                await destBlob.AppendBlockFromUriAsync(sourceBlob.Uri, new HttpRange(2 * Internals.Constants.KB, 2 * Internals.Constants.KB));
 
                 // Assert
-                Response<BlobDownloadInfo> result = await destBlob.DownloadAsync(new HttpRange(0, 2 * Constants.KB));
+                Response<BlobDownloadInfo> result = await destBlob.DownloadAsync(new HttpRange(0, 2 * Internals.Constants.KB));
                 var dataResult = new MemoryStream();
                 await result.Value.Content.CopyToAsync(dataResult);
-                Assert.AreEqual(2 * Constants.KB, dataResult.Length);
-                TestHelper.AssertSequenceEqual(data.Skip(2 * Constants.KB).Take(2 * Constants.KB), dataResult.ToArray());
+                Assert.AreEqual(2 * Internals.Constants.KB, dataResult.Length);
+                TestHelper.AssertSequenceEqual(data.Skip(2 * Internals.Constants.KB).Take(2 * Internals.Constants.KB), dataResult.ToArray());
             }
         }
 
@@ -638,7 +640,7 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
 
-            var data = GetRandomBuffer(Constants.KB);
+            var data = GetRandomBuffer(Internals.Constants.KB);
 
             using (var stream = new MemoryStream(data))
             {
@@ -664,7 +666,7 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
 
-            var data = GetRandomBuffer(Constants.KB);
+            var data = GetRandomBuffer(Internals.Constants.KB);
 
             using (var stream = new MemoryStream(data))
             {

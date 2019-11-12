@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Shared;
+using Internals = Azure.Storage.Shared;
 
 namespace Azure.Storage.Blobs
 {
@@ -43,13 +45,13 @@ namespace Azure.Storage.Blobs
             _arrayPool = arrayPool ?? ArrayPool<byte>.Shared;
             _maxWorkerCount =
                 transferOptions.MaximumConcurrency ??
-                Constants.Blob.Block.DefaultConcurrentTransfersCount;
-            _singleUploadThreshold = singleUploadThreshold ?? Constants.Blob.Block.MaxUploadBytes;
+                Internals.Constants.Blob.Block.DefaultConcurrentTransfersCount;
+            _singleUploadThreshold = singleUploadThreshold ?? Internals.Constants.Blob.Block.MaxUploadBytes;
             _blockSize = null;
             if (transferOptions.MaximumTransferLength != null)
             {
                 _blockSize = Math.Min(
-                    Constants.Blob.Block.MaxStageBytes,
+                    Internals.Constants.Blob.Block.MaxStageBytes,
                     transferOptions.MaximumTransferLength.Value);
             }
         }
@@ -83,9 +85,9 @@ namespace Azure.Storage.Blobs
             // content.
             int blockSize =
                 _blockSize != null ? _blockSize.Value :
-                length < Constants.LargeUploadThreshold ?
-                    Constants.DefaultBufferSize :
-                    Constants.LargeBufferSize;
+                length < Internals.Constants.LargeUploadThreshold ?
+                    Internals.Constants.DefaultBufferSize :
+                    Internals.Constants.LargeBufferSize;
 
             // Otherwise stage individual blocks in parallel
             return await UploadInParallelAsync(
@@ -128,9 +130,9 @@ namespace Azure.Storage.Blobs
             // content.
             int blockSize =
                 _blockSize != null ? _blockSize.Value :
-                length < Constants.LargeUploadThreshold ?
-                    Constants.DefaultBufferSize :
-                    Constants.LargeBufferSize;
+                length < Internals.Constants.LargeUploadThreshold ?
+                    Internals.Constants.DefaultBufferSize :
+                    Internals.Constants.LargeBufferSize;
 
             // Otherwise stage individual blocks one at a time.  It's not as
             // fast as a parallel upload, but you get the benefit of the retry
@@ -158,7 +160,7 @@ namespace Azure.Storage.Blobs
         {
             // Wrap the staging and commit calls in an Upload span for
             // distributed tracing
-            DiagnosticScope scope = _client.ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(BlobClient)}.{nameof(BlobClient.Upload)}");
+            Internals.DiagnosticScope scope = _client.ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(BlobClient)}.{nameof(BlobClient.Upload)}");
             try
             {
                 scope.Start();
@@ -221,7 +223,7 @@ namespace Azure.Storage.Blobs
         {
             // Wrap the staging and commit calls in an Upload span for
             // distributed tracing
-            DiagnosticScope scope = _client.ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(BlobClient)}.{nameof(BlobClient.Upload)}");
+            Internals.DiagnosticScope scope = _client.ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(BlobClient)}.{nameof(BlobClient.Upload)}");
             try
             {
                 scope.Start();

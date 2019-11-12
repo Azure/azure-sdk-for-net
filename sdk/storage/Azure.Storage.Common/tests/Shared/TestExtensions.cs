@@ -3,7 +3,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Threading.Tasks;
+using Internals = Azure.Storage.Shared.Common;
 
 namespace Azure.Storage
 {
@@ -60,6 +63,109 @@ namespace Azure.Storage
                 Port = 80
             };
             return builder.Uri;
+        }
+
+        /// <summary>
+        /// Returns a connection string for the storage account, optionally with sensitive data.
+        /// </summary>
+        /// <param name="exportSecrets"><c>True</c> to include sensitive data in the string; otherwise, <c>false</c>.</param>
+        /// <returns>A connection string.</returns>
+        internal static string ToString(this Internals.StorageConnectionString conn, bool exportSecrets)
+        {
+            if (conn.Settings == null)
+            {
+                conn.Settings = new Dictionary<string, string>();
+
+                if (conn.DefaultEndpoints)
+                {
+                    conn.Settings.Add(Internals.Constants.ConnectionStrings.DefaultEndpointsProtocolSetting, conn.BlobEndpoint.Scheme);
+
+                    if (conn.EndpointSuffix != null)
+                    {
+                        conn.Settings.Add(Internals.Constants.ConnectionStrings.EndpointSuffixSetting, conn.EndpointSuffix);
+                    }
+                }
+                else
+                {
+                    if (conn.BlobEndpoint != null)
+                    {
+                        conn.Settings.Add(Internals.Constants.ConnectionStrings.BlobEndpointSetting, conn.BlobEndpoint.ToString());
+                    }
+
+                    if (conn.QueueEndpoint != null)
+                    {
+                        conn.Settings.Add(Internals.Constants.ConnectionStrings.QueueEndpointSetting, conn.QueueEndpoint.ToString());
+                    }
+
+                    if (conn.TableEndpoint != null)
+                    {
+                        conn.Settings.Add(Internals.Constants.ConnectionStrings.TableEndpointSetting, conn.TableEndpoint.ToString());
+                    }
+
+                    if (conn.FileEndpoint != null)
+                    {
+                        conn.Settings.Add(Internals.Constants.ConnectionStrings.FileEndpointSetting, conn.FileEndpoint.ToString());
+                    }
+
+                    if (conn.BlobStorageUri.SecondaryUri != null)
+                    {
+                        conn.Settings.Add(Internals.Constants.ConnectionStrings.BlobSecondaryEndpointSetting,
+                            conn.BlobStorageUri.SecondaryUri.ToString());
+                    }
+
+                    if (conn.QueueStorageUri.SecondaryUri != null)
+                    {
+                        conn.Settings.Add(Internals.Constants.ConnectionStrings.QueueSecondaryEndpointSetting,
+                            conn.QueueStorageUri.SecondaryUri.ToString());
+                    }
+
+                    if (conn.TableStorageUri.SecondaryUri != null)
+                    {
+                        conn.Settings.Add(Internals.Constants.ConnectionStrings.TableSecondaryEndpointSetting,
+                            conn.TableStorageUri.SecondaryUri.ToString());
+                    }
+
+                    if (conn.FileStorageUri.SecondaryUri != null)
+                    {
+                        conn.Settings.Add(Internals.Constants.ConnectionStrings.FileSecondaryEndpointSetting,
+                            conn.FileStorageUri.SecondaryUri.ToString());
+                    }
+                }
+            }
+
+            var listOfSettings = conn.Settings.Select(pair => string.Format(CultureInfo.InvariantCulture, "{0}={1}", pair.Key, pair.Value)).ToList();
+
+            if (conn.Credentials != null && !conn.IsDevStoreAccount)
+            {
+                listOfSettings.Add(ToString(conn.Credentials, exportSecrets));
+            }
+
+            if (!string.IsNullOrWhiteSpace(conn._accountName) && (conn.Credentials is StorageSharedKeyCredential sharedKeyCredentials ? string.IsNullOrWhiteSpace(sharedKeyCredentials.AccountName) : true))
+            {
+                listOfSettings.Add(string.Format(CultureInfo.InvariantCulture, "{0}={1}", Internals.Constants.ConnectionStrings.AccountNameSetting, conn._accountName));
+            }
+
+            return string.Join(";", listOfSettings);
+        }
+
+        private static string ToString(object credentials, bool exportSecrets)
+        {
+            if (credentials is StorageSharedKeyCredential sharedKeyCredentials)
+            {
+                return string.Format(
+                    CultureInfo.InvariantCulture,
+                    "{0}={1};{2}={3}",
+                    Internals.Constants.ConnectionStrings.AccountNameSetting,
+                    sharedKeyCredentials.AccountName,
+                    Internals.Constants.ConnectionStrings.AccountKeySetting,
+                    exportSecrets ? sharedKeyCredentials.ExportBase64EncodedKey() : "Sanitized");
+            }
+            else if (credentials is Internals.SharedAccessSignatureCredentials sasCredentials)
+            {
+                return string.Format(CultureInfo.InvariantCulture, "{0}={1}", Internals.Constants.ConnectionStrings.SharedAccessSignatureSetting, exportSecrets ? sasCredentials.SasToken : "[signature hidden]");
+            }
+
+            return string.Empty;
         }
     }
 }

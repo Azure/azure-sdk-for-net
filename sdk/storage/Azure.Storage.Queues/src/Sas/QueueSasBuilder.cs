@@ -3,7 +3,11 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Storage.Shared;
 using Azure.Storage.Queues;
+using Azure.Storage.Sas.Shared;
+using Internals = Azure.Storage.Shared;
+using SasInternals = Azure.Storage.Sas.Shared;
 
 namespace Azure.Storage.Sas
 {
@@ -121,22 +125,22 @@ namespace Azure.Storage.Sas
         /// </returns>
         public SasQueryParameters ToSasQueryParameters(StorageSharedKeyCredential sharedKeyCredential)
         {
-            sharedKeyCredential = sharedKeyCredential ?? throw Errors.ArgumentNull(nameof(sharedKeyCredential));
+            sharedKeyCredential = sharedKeyCredential ?? throw Internals.Errors.ArgumentNull(nameof(sharedKeyCredential));
             if (ExpiresOn == default)
             {
-                throw Errors.SasMissingData(nameof(ExpiresOn));
+                throw Internals.Errors.SasMissingData(nameof(ExpiresOn));
             }
             if (string.IsNullOrEmpty(Permissions))
             {
-                throw Errors.SasMissingData(nameof(Permissions));
+                throw Internals.Errors.SasMissingData(nameof(Permissions));
             }
             if (string.IsNullOrEmpty(Version))
             {
                 Version = SasQueryParameters.DefaultSasVersion;
             }
 
-            var startTime = SasQueryParameters.FormatTimesForSasSigning(StartsOn);
-            var expiryTime = SasQueryParameters.FormatTimesForSasSigning(ExpiresOn);
+            var startTime = SasInternals.SasExtensions.FormatTimesForSasSigning(StartsOn);
+            var expiryTime = SasInternals.SasExtensions.FormatTimesForSasSigning(ExpiresOn);
 
             // String to sign: http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
             var stringToSign = string.Join("\n",
@@ -146,10 +150,10 @@ namespace Azure.Storage.Sas
                 GetCanonicalName(sharedKeyCredential.AccountName, QueueName ?? string.Empty),
                 Identifier,
                 IPRange.ToString(),
-                Protocol.ToProtocolString(),
+                SasInternals.SasExtensions.ToProtocolString(Protocol),
                 Version);
-            var signature = sharedKeyCredential.ComputeHMACSHA256(stringToSign);
-            var p = new SasQueryParameters(
+            var signature = StorageSharedKeyCredentialExtensions.ComputeSasSignature(sharedKeyCredential, stringToSign);
+            var p = SasQueryParameters.Create(
                 version: Version,
                 services: default,
                 resourceTypes: default,

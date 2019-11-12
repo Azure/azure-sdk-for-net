@@ -4,7 +4,9 @@
 using System;
 using System.ComponentModel;
 using System.Text;
+using Azure.Storage.Shared;
 using Azure.Storage.Files.DataLake.Sas;
+using Internals = Azure.Storage.Shared;
 
 namespace Azure.Storage.Files.DataLake.Sas
 {
@@ -67,23 +69,23 @@ namespace Azure.Storage.Files.DataLake
             var sb = new StringBuilder();
             if ((permissions & DataLakeSasPermissions.Read) == DataLakeSasPermissions.Read)
             {
-                sb.Append(Constants.Sas.Permissions.Read);
+                sb.Append(Internals.Constants.Sas.Permissions.Read);
             }
             if ((permissions & DataLakeSasPermissions.Add) == DataLakeSasPermissions.Add)
             {
-                sb.Append(Constants.Sas.Permissions.Add);
+                sb.Append(Internals.Constants.Sas.Permissions.Add);
             }
             if ((permissions & DataLakeSasPermissions.Create) == DataLakeSasPermissions.Create)
             {
-                sb.Append(Constants.Sas.Permissions.Create);
+                sb.Append(Internals.Constants.Sas.Permissions.Create);
             }
             if ((permissions & DataLakeSasPermissions.Write) == DataLakeSasPermissions.Write)
             {
-                sb.Append(Constants.Sas.Permissions.Write);
+                sb.Append(Internals.Constants.Sas.Permissions.Write);
             }
             if ((permissions & DataLakeSasPermissions.Delete) == DataLakeSasPermissions.Delete)
             {
-                sb.Append(Constants.Sas.Permissions.Delete);
+                sb.Append(Internals.Constants.Sas.Permissions.Delete);
             }
             return sb.ToString();
         }

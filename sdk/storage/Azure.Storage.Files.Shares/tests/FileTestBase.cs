@@ -8,10 +8,12 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Testing;
+using Azure.Storage.Shared;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
+using Internals = Azure.Storage.Shared.Common;
 
 namespace Azure.Storage.Files.Shares.Tests
 {
@@ -38,7 +40,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 Retry =
                 {
                     Mode = RetryMode.Exponential,
-                    MaxRetries = Azure.Storage.Constants.MaxReliabilityRetries,
+                    MaxRetries = Internals.Constants.MaxReliabilityRetries,
                     Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
                     MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 10)
                 }
@@ -285,7 +287,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             public static async Task<DisposingFile> CreateAsync(DisposingDirectory test, ShareFileClient file)
             {
-                await file.CreateAsync(maxSize: Constants.MB);
+                await file.CreateAsync(maxSize: Internals.Constants.MB);
                 return new DisposingFile(test, file);
             }
 

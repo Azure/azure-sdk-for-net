@@ -9,10 +9,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Shared;
+using Internals = Azure.Storage.Shared;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
-    internal class GetFileSystemsAsyncCollection : StorageCollectionEnumerator<FileSystemItem>
+    internal class GetFileSystemsAsyncCollection : Internals.StorageCollectionEnumerator<FileSystemItem>
     {
         private readonly BlobServiceClient _client;
         private readonly FileSystemTraits _traits;

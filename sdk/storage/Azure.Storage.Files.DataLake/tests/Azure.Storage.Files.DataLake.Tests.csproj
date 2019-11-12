@@ -5,6 +5,7 @@
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.Files.DataLake client library tests</AssemblyTitle>
     <IsPackable>false</IsPackable>
+    <DefineConstants>FileSDK;StorageSDK;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />

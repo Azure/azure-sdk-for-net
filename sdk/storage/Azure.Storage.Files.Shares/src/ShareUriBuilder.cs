@@ -6,7 +6,9 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using Azure.Core;
+using Azure.Storage.Shared;
 using Azure.Storage.Sas;
+using Internals = Azure.Storage.Shared;
 
 namespace Azure.Storage.Files.Shares
 {
@@ -191,7 +193,7 @@ namespace Azure.Storage.Files.Shares
                 }
                 else
                 {
-                    AccountName = uri.GetAccountNameFromDomain(Constants.File.UriSubDomain) ?? string.Empty;
+                    AccountName = uri.GetAccountNameFromDomain(Internals.Constants.File.UriSubDomain) ?? string.Empty;
                 }
 
                 // Find the next slash (if it exists)
@@ -210,19 +212,19 @@ namespace Azure.Storage.Files.Shares
 
             // Convert the query parameters to a case-sensitive map & trim whitespace
 
-            var paramsMap = new UriQueryParamsCollection(uri.Query);
+            var paramsMap = new Internals.UriQueryParamsCollection(uri.Query);
 
-            if (paramsMap.TryGetValue(Constants.SnapshotParameterName, out var snapshotTime))
+            if (paramsMap.TryGetValue(Internals.Constants.SnapshotParameterName, out var snapshotTime))
             {
                 Snapshot = snapshotTime;
 
                 // If we recognized the query parameter, remove it from the map
-                paramsMap.Remove(Constants.SnapshotParameterName);
+                paramsMap.Remove(Internals.Constants.SnapshotParameterName);
             }
 
-            if (paramsMap.ContainsKey(Constants.Sas.Parameters.Version))
+            if (paramsMap.ContainsKey(Internals.Constants.Sas.Parameters.Version))
             {
-                Sas = new SasQueryParameters(paramsMap);
+                Sas = SasQueryParameters.Create(paramsMap);
             }
 
             Query = paramsMap.ToString();
@@ -289,7 +291,7 @@ namespace Azure.Storage.Files.Shares
             if (!string.IsNullOrWhiteSpace(Snapshot))
             {
                 if (query.Length > 0) { query.Append("&"); }
-                query.Append(Constants.SnapshotParameterName).Append("=").Append(Snapshot);
+                query.Append(Internals.Constants.SnapshotParameterName).Append("=").Append(Snapshot);
             }
             var sas = Sas?.ToString();
             if (!string.IsNullOrWhiteSpace(sas))

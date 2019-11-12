@@ -55,4 +55,7 @@
 
   <!-- Pull in Azure.Core helpers for TEST projects -->
   <Import Condition="'$(IsTestProject)' == 'true' and '$(IsClientLibrary)' == 'true'" Project="$(MSBuildThisFileDirectory)..\core\Azure.Core\tests\TestFramework.props" />
+  
+  <!--Add shared storage properties-->
+  <Import Project="$(MSBuildThisFileDirectory)\Azure.Storage.Common\src\Azure.Storage.Common.props" />
 </Project>

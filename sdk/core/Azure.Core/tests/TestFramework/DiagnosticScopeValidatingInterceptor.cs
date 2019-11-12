@@ -30,7 +30,7 @@ namespace Azure.Core.Testing
                 using TestDiagnosticListener diagnosticListener = new TestDiagnosticListener(s => s.Name.StartsWith("Azure."));
                 invocation.Proceed();
 
-                bool strict = !invocation.Method.GetCustomAttributes(true).Any(a => a.GetType().FullName == "Azure.Core.ForwardsClientCallsAttribute");
+                bool strict = !invocation.Method.GetCustomAttributes(true).Any(a => a.GetType().Name == "ForwardsClientCallsAttribute");
                 if (invocation.Method.ReturnType.Name.Contains("Pageable") ||
                     invocation.Method.ReturnType.Name.Contains("IAsyncEnumerable"))
                 {

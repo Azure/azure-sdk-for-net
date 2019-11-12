@@ -11,9 +11,12 @@ using Azure.Core.Testing;
 using Azure.Identity;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Shared;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using Azure.Storage.Tests;
 using NUnit.Framework;
+using Internals = Azure.Storage.Shared.Common;
 
 namespace Azure.Storage.Blobs.Test
 {
@@ -34,7 +37,7 @@ namespace Azure.Storage.Blobs.Test
             var blobEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + accountName + "-secondary");
 
-            var connectionString = new StorageConnectionString(credentials, (blobEndpoint, blobSecondaryEndpoint), (default, default), (default, default), (default, default));
+            var connectionString = new Internals.StorageConnectionString(credentials, (blobEndpoint, blobSecondaryEndpoint), (default, default), (default, default), (default, default));
 
             var containerName = "containername";
 
@@ -1297,7 +1300,7 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             var blobName = GetNewBlobName();
             BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(blobName));
-            var data = GetRandomBuffer(Constants.KB);
+            var data = GetRandomBuffer(Internals.Constants.KB);
             var blockId = ToBase64(GetNewBlockName());
 
             using (var stream = new MemoryStream(data))
@@ -1493,7 +1496,7 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             var blobName = GetNewBlobName();
             BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(blobName));
-            var data = GetRandomBuffer(Constants.KB);
+            var data = GetRandomBuffer(Internals.Constants.KB);
             var blockId = ToBase64(GetNewBlockName());
 
             using (var stream = new MemoryStream(data))
@@ -1689,7 +1692,7 @@ namespace Azure.Storage.Blobs.Test
         {
             var blobNames = BlobNames;
 
-            var data = GetRandomBuffer(Constants.KB);
+            var data = GetRandomBuffer(Internals.Constants.KB);
 
             var blobs = new BlockBlobClient[blobNames.Length];
 
