@@ -55,7 +55,7 @@ namespace Azure.Storage.Files.DataLake.Models
             if (entityId != null
                 && !(accessControlType == AccessControlType.User || accessControlType == AccessControlType.Group))
             {
-                throw new ArgumentException("AccessControlType must be User or Group if entityId is specified.");
+                throw new ArgumentException($"AccessControlType must be User or Group if entityId is specified.  Value is \"{accessControlType.ToString()}\"");
             }
 
             DefaultScope = defaultScope;
@@ -103,14 +103,14 @@ namespace Azure.Storage.Files.DataLake.Models
 
             if (parts.Length < 3 || parts.Length > 4)
             {
-                throw new ArgumentException($"{nameof(s)} should have 3 or 4 parts delimited by colons");
+                throw new ArgumentException($"{nameof(s)} should have 3 or 4 parts delimited by colons.  Value is \"{s}\"");
             }
 
             if (parts.Length == 4)
             {
                 if (!parts[0].Equals("default", StringComparison.OrdinalIgnoreCase))
                 {
-                    throw new ArgumentException($"If {nameof(s)} is 4 parts, the first must be \"default\"");
+                    throw new ArgumentException($"If {nameof(s)} is 4 parts, the first must be \"default\".  Value is \"{s}\"");
                 }
                 entry.DefaultScope = true;
                 indexOffset = 1;
@@ -126,27 +126,27 @@ namespace Azure.Storage.Files.DataLake.Models
             return entry;
         }
 
-        internal static AccessControlType ParseAccesControlType(string typeString)
+        internal static AccessControlType ParseAccesControlType(string s)
         {
-            if ("user".Equals(typeString, StringComparison.OrdinalIgnoreCase))
+            if ("user".Equals(s, StringComparison.OrdinalIgnoreCase))
             {
                 return AccessControlType.User;
             }
-            else if ("group".Equals(typeString, StringComparison.OrdinalIgnoreCase))
+            else if ("group".Equals(s, StringComparison.OrdinalIgnoreCase))
             {
                 return AccessControlType.Group;
             }
-            else if ("mask".Equals(typeString, StringComparison.OrdinalIgnoreCase))
+            else if ("mask".Equals(s, StringComparison.OrdinalIgnoreCase))
             {
                 return AccessControlType.Mask;
             }
-            else if ("other".Equals(typeString, StringComparison.OrdinalIgnoreCase))
+            else if ("other".Equals(s, StringComparison.OrdinalIgnoreCase))
             {
                 return AccessControlType.Other;
             }
             else
             {
-                throw Errors.InvalidArgument(nameof(typeString));
+                throw Errors.InvalidArgument(nameof(s));
             }
         }
     }

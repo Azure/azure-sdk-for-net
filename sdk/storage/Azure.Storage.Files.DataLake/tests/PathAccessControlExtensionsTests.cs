@@ -30,23 +30,23 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             TestHelper.AssertExpectedException(
                 () => PathAccessControlExtensions.ParseOctalRolePermissions('/'),
-                new ArgumentOutOfRangeException("octalRolePermission", "Value must be between 0 and 7 inclusive, not -1"));
+                new ArgumentOutOfRangeException("c", "Value must be between 0 and 7 inclusive, not -1"));
 
             TestHelper.AssertExpectedException(
                 () => PathAccessControlExtensions.ParseOctalRolePermissions('8'),
-                new ArgumentOutOfRangeException("octalRolePermission", "Value must be between 0 and 7 inclusive, not 8"));
+                new ArgumentOutOfRangeException("c", "Value must be between 0 and 7 inclusive, not 8"));
         }
 
         [Test]
         public void ParseSymbolic_NoSticky()
         {
-            Assert.AreEqual(RolePermissions.None, PathAccessControlExtensions.ParseSymbolicRolePermissions("---", false));
-            Assert.AreEqual(RolePermissions.Execute, PathAccessControlExtensions.ParseSymbolicRolePermissions("--x", false));
-            Assert.AreEqual(RolePermissions.Write, PathAccessControlExtensions.ParseSymbolicRolePermissions("-w-", false));
-            Assert.AreEqual(RolePermissions.Read, PathAccessControlExtensions.ParseSymbolicRolePermissions("r--", false));
-            Assert.AreEqual(RolePermissions.Write | RolePermissions.Execute, PathAccessControlExtensions.ParseSymbolicRolePermissions("-wx", false));
-            Assert.AreEqual(RolePermissions.Read | RolePermissions.Execute, PathAccessControlExtensions.ParseSymbolicRolePermissions("r-x", false));
-            Assert.AreEqual(RolePermissions.Read | RolePermissions.Write, PathAccessControlExtensions.ParseSymbolicRolePermissions("rw-", false));
+            Assert.AreEqual(RolePermissions.None, PathAccessControlExtensions.ParseSymbolicRolePermissions("---"));
+            Assert.AreEqual(RolePermissions.Execute, PathAccessControlExtensions.ParseSymbolicRolePermissions("--x"));
+            Assert.AreEqual(RolePermissions.Write, PathAccessControlExtensions.ParseSymbolicRolePermissions("-w-"));
+            Assert.AreEqual(RolePermissions.Read, PathAccessControlExtensions.ParseSymbolicRolePermissions("r--"));
+            Assert.AreEqual(RolePermissions.Write | RolePermissions.Execute, PathAccessControlExtensions.ParseSymbolicRolePermissions("-wx"));
+            Assert.AreEqual(RolePermissions.Read | RolePermissions.Execute, PathAccessControlExtensions.ParseSymbolicRolePermissions("r-x"));
+            Assert.AreEqual(RolePermissions.Read | RolePermissions.Write, PathAccessControlExtensions.ParseSymbolicRolePermissions("rw-"));
             Assert.AreEqual(RolePermissions.Read | RolePermissions.Write | RolePermissions.Execute, PathAccessControlExtensions.ParseSymbolicRolePermissions("rwx", false));
         }
 
@@ -54,28 +54,28 @@ namespace Azure.Storage.Files.DataLake.Tests
         public void ParseSymbolic_NoSticky_InvalidCharacters()
         {
             TestHelper.AssertExpectedException(
-                () => PathAccessControlExtensions.ParseSymbolicRolePermissions(null, false),
-                new ArgumentNullException("symbolicRolePermissions"));
+                () => PathAccessControlExtensions.ParseSymbolicRolePermissions(null),
+                new ArgumentNullException("s"));
 
             TestHelper.AssertExpectedException(
-                () => PathAccessControlExtensions.ParseSymbolicRolePermissions("a--", false),
-                new ArgumentException("Role permission contains an invalid character"));
+                () => PathAccessControlExtensions.ParseSymbolicRolePermissions("a--"),
+                new ArgumentException("Role permission contains an invalid character.  Value is \"a--\""));
 
             TestHelper.AssertExpectedException(
-                () => PathAccessControlExtensions.ParseSymbolicRolePermissions("-a-", false),
-                new ArgumentException("Role permission contains an invalid character"));
+                () => PathAccessControlExtensions.ParseSymbolicRolePermissions("-a-"),
+                new ArgumentException("Role permission contains an invalid character.  Value is \"-a-\""));
 
             TestHelper.AssertExpectedException(
-                () => PathAccessControlExtensions.ParseSymbolicRolePermissions("--a", false),
-                new ArgumentException("Role permission contains an invalid character"));
+                () => PathAccessControlExtensions.ParseSymbolicRolePermissions("--a"),
+                new ArgumentException("Role permission contains an invalid character.  Value is \"--a\""));
 
             TestHelper.AssertExpectedException(
-                () => PathAccessControlExtensions.ParseSymbolicRolePermissions("-", false),
-                new ArgumentException("Role permission must be 3 characters"));
+                () => PathAccessControlExtensions.ParseSymbolicRolePermissions("-"),
+                new ArgumentException("Role permission must be 3 characters.  Value is \"-\""));
 
             TestHelper.AssertExpectedException(
-                () => PathAccessControlExtensions.ParseSymbolicRolePermissions("----", false),
-                new ArgumentException("Role permission must be 3 characters"));
+                () => PathAccessControlExtensions.ParseSymbolicRolePermissions("----"),
+                new ArgumentException("Role permission must be 3 characters.  Value is \"----\""));
         }
 
         [Test]
@@ -106,27 +106,27 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             TestHelper.AssertExpectedException(
                 () => PathAccessControlExtensions.ParseSymbolicRolePermissions(null, true),
-                new ArgumentNullException("symbolicRolePermissions"));
+                new ArgumentNullException("s"));
 
             TestHelper.AssertExpectedException(
                 () => PathAccessControlExtensions.ParseSymbolicRolePermissions("a--", true),
-                new ArgumentException("Role permission contains an invalid character"));
+                new ArgumentException("Role permission contains an invalid character.  Value is \"a--\""));
 
             TestHelper.AssertExpectedException(
                 () => PathAccessControlExtensions.ParseSymbolicRolePermissions("-a-", true),
-                new ArgumentException("Role permission contains an invalid character"));
+                new ArgumentException("Role permission contains an invalid character.  Value is \"-a-\""));
 
             TestHelper.AssertExpectedException(
                 () => PathAccessControlExtensions.ParseSymbolicRolePermissions("--a", true),
-                new ArgumentException("Role permission contains an invalid character"));
+                new ArgumentException("Role permission contains an invalid character.  Value is \"--a\""));
 
             TestHelper.AssertExpectedException(
                 () => PathAccessControlExtensions.ParseSymbolicRolePermissions("-", true),
-                new ArgumentException("Role permission must be 3 characters"));
+                new ArgumentException("Role permission must be 3 characters.  Value is \"-\""));
 
             TestHelper.AssertExpectedException(
                 () => PathAccessControlExtensions.ParseSymbolicRolePermissions("----", true),
-                new ArgumentException("Role permission must be 3 characters"));
+                new ArgumentException("Role permission must be 3 characters.  Value is \"----\""));
         }
 
         [Test]
@@ -167,7 +167,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 _entityId);
 
             // Act
-            string result = PathAccessControlExtensions.SerializeAccessControlList(new List<PathAccessControlEntry>()
+            string result = PathAccessControlExtensions.ToAccessControlListString(new List<PathAccessControlEntry>()
             {
                 accessControlEntry
             });
@@ -176,7 +176,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual("default:user:entityId:rwx", result);
 
             // Act
-            result = PathAccessControlExtensions.SerializeAccessControlList(new List<PathAccessControlEntry>()
+            result = PathAccessControlExtensions.ToAccessControlListString(new List<PathAccessControlEntry>()
             {
                 accessControlEntry,
                 new PathAccessControlEntry(
@@ -192,7 +192,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public void SerializeAccessControlList_Invalid()
         {
-            Assert.AreEqual(null, PathAccessControlExtensions.SerializeAccessControlList(null));
+            Assert.AreEqual(null, PathAccessControlExtensions.ToAccessControlListString(null));
         }
 
         [Test]
@@ -206,14 +206,14 @@ namespace Azure.Storage.Files.DataLake.Tests
                 _entityId);
 
             // Act
-            IList<PathAccessControlEntry> list = PathAccessControlExtensions.DeserializeAccessControlList("default:user:entityId:rwx");
+            IList<PathAccessControlEntry> list = PathAccessControlExtensions.ParseAccessControlList("default:user:entityId:rwx");
 
             // Assert
             Assert.AreEqual(1, list.Count);
             AssertPathAccessControlEntryEquality(accessControlEntry, list[0]);
 
             // Act
-            list = PathAccessControlExtensions.DeserializeAccessControlList("default:user:entityId:rwx,default:mask::rwx");
+            list = PathAccessControlExtensions.ParseAccessControlList("default:user:entityId:rwx,default:mask::rwx");
 
             // Assert
             Assert.AreEqual(2, list.Count);
@@ -228,7 +228,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public void DeserializeAccessControlList_Invalid()
         {
-            Assert.AreEqual(null, PathAccessControlExtensions.DeserializeAccessControlList(null));
+            Assert.AreEqual(null, PathAccessControlExtensions.ParseAccessControlList(null));
         }
     }
 }

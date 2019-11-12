@@ -40,7 +40,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// information on the owner, owning group, and other, but the ACLs may contain more permissions for specific users
         /// or groups.
         /// </summary>
-        public bool ExtendedInfoInAcl { get; set; }
+        public bool ExtendedAcls { get; set; }
 
         /// <summary>
         /// Internal empty constructor.
@@ -66,7 +66,7 @@ namespace Azure.Storage.Files.DataLake.Models
             Group = group;
             Other = other;
             StickyBit = stickyBit;
-            ExtendedInfoInAcl = extendedInfoInAcl;
+            ExtendedAcls = extendedInfoInAcl;
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Azure.Storage.Files.DataLake.Models
 
             if (s.Length != 4)
             {
-                throw new ArgumentException($"{nameof(s)} must be 4 characters");
+                throw new ArgumentException($"{nameof(s)} must be 4 characters.  Value is \"{s}\"");
             }
 
             var pathPermissions = new PathPermissions();
@@ -98,7 +98,7 @@ namespace Azure.Storage.Files.DataLake.Models
             }
             else
             {
-                throw new ArgumentException($"First digit of {nameof(s)} must be 0 or 1");
+                throw new ArgumentException($"First digit of {nameof(s)} must be 0 or 1.  Value is \"{s}\"");
             }
 
             pathPermissions.Owner = PathAccessControlExtensions.ParseOctalRolePermissions(s[1]);
@@ -122,7 +122,7 @@ namespace Azure.Storage.Files.DataLake.Models
 
             if (s.Length != 9 && s.Length != 10)
             {
-                throw new ArgumentException($"{nameof(s)} must be 9 or 10 characters");
+                throw new ArgumentException($"{nameof(s)} must be 9 or 10 characters.  Value is \"{s}\"");
             }
 
             var pathPermissions = new PathPermissions();
@@ -142,7 +142,7 @@ namespace Azure.Storage.Files.DataLake.Models
             {
                 if (s[9] == '+')
                 {
-                    pathPermissions.ExtendedInfoInAcl = true;
+                    pathPermissions.ExtendedAcls = true;
                 }
                 else
                 {
@@ -151,7 +151,7 @@ namespace Azure.Storage.Files.DataLake.Models
             }
             else
             {
-                pathPermissions.ExtendedInfoInAcl = false;
+                pathPermissions.ExtendedAcls = false;
             }
 
             pathPermissions.Owner = PathAccessControlExtensions.ParseSymbolicRolePermissions(s.Substring(0, 3), allowStickyBit: false);
@@ -202,7 +202,7 @@ namespace Azure.Storage.Files.DataLake.Models
                 sb.Append("t");
             }
 
-            if (ExtendedInfoInAcl)
+            if (ExtendedAcls)
             {
                 sb.Append("+");
             }

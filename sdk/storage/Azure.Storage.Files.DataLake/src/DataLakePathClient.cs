@@ -1092,7 +1092,7 @@ namespace Azure.Storage.Files.DataLake
                             Owner = response.Value.Owner,
                             Group = response.Value.Group,
                             Permissions = PathPermissions.ParseSymbolicPermissions(response.Value.Permissions),
-                            AccessControlList = PathAccessControlExtensions.DeserializeAccessControlList(response.Value.ACL)
+                            AccessControlList = PathAccessControlExtensions.ParseAccessControlList(response.Value.ACL)
                         },
                         response.GetRawResponse());
                 }
@@ -1266,7 +1266,7 @@ namespace Azure.Storage.Files.DataLake
                             leaseId: conditions?.LeaseId,
                             owner: owner,
                             group: group,
-                            acl: PathAccessControlExtensions.SerializeAccessControlList(accessControlList),
+                            acl: PathAccessControlExtensions.ToAccessControlListString(accessControlList),
                             ifMatch: conditions?.IfMatch,
                             ifNoneMatch: conditions?.IfNoneMatch,
                             ifModifiedSince: conditions?.IfModifiedSince,

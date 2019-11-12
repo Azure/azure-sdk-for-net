@@ -28,7 +28,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public readonly string ContentLanguage = "language";
         public readonly string ContentType = "type";
         public readonly IList<PathAccessControlEntry> AccessControlList
-            = PathAccessControlExtensions.DeserializeAccessControlList("user::rwx,group::r--,other::---,mask::rwx");
+            = PathAccessControlExtensions.ParseAccessControlList("user::rwx,group::r--,other::---,mask::rwx");
         public readonly PathPermissions PathPermissions = PathPermissions.ParseSymbolicPermissions("rwxrwxrwx");
 
         public DataLakeTestBase(bool async) : this(async, null) { }
@@ -170,7 +170,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(expected.Group, actual.Group);
             Assert.AreEqual(expected.Other, actual.Other);
             Assert.AreEqual(expected.StickyBit, actual.StickyBit);
-            Assert.AreEqual(expected.ExtendedInfoInAcl, actual.ExtendedInfoInAcl);
+            Assert.AreEqual(expected.ExtendedAcls, actual.ExtendedAcls);
         }
 
         public DataLakeServiceClient GetServiceClient_AccountSas(

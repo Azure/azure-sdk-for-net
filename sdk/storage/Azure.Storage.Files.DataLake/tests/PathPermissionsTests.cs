@@ -34,11 +34,11 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             TestHelper.AssertExpectedException(
                 () => PathPermissions.ParseOctalPermissions("777"),
-                new ArgumentException("s must be 4 characters"));
+                new ArgumentException("s must be 4 characters.  Value is \"777\""));
 
             TestHelper.AssertExpectedException(
                 () => PathPermissions.ParseOctalPermissions("3777"),
-                new ArgumentException("First digit of s must be 0 or 1"));
+                new ArgumentException("First digit of s must be 0 or 1.  Value is \"3777\""));
         }
 
         [Test]
@@ -79,7 +79,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             TestHelper.AssertExpectedException(
                 () => PathPermissions.ParseSymbolicPermissions("rwxrwxrw"),
-                new ArgumentException("s must be 9 or 10 characters"));
+                new ArgumentException("s must be 9 or 10 characters.  Value is \"rwxrwxrw\""));
         }
 
         [Test]

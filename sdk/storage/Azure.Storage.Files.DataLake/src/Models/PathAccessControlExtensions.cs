@@ -16,15 +16,15 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// Parses octal char to RolePermissions.
         /// </summary>
-        public static RolePermissions ParseOctalRolePermissions(char octalRolePermission)
+        public static RolePermissions ParseOctalRolePermissions(char c)
         {
             RolePermissions rolePermissions = RolePermissions.None;
 
-            int value = (int)char.GetNumericValue(octalRolePermission);
+            int value = (int)char.GetNumericValue(c);
 
             if (value < 0 || value > 7)
             {
-                throw Errors.MustBeBetweenInclusive(nameof(octalRolePermission), 0, 7, value);
+                throw Errors.MustBeBetweenInclusive(nameof(c), 0, 7, value);
             }
 
             if ((value & 4) > 0)
@@ -48,58 +48,58 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// Parses symbolic permissions string to RolePermissions.
         /// </summary>
-        /// <param name="symbolicRolePermissions">String to parse.</param>
+        /// <param name="s">String to parse.</param>
         /// <param name="allowStickyBit">If sticky bit is allowed.</param>
         /// <returns><see cref="RolePermissions"/>.</returns>
-        public static RolePermissions ParseSymbolicRolePermissions(string symbolicRolePermissions, bool allowStickyBit)
+        public static RolePermissions ParseSymbolicRolePermissions(string s, bool allowStickyBit = false)
         {
             RolePermissions rolePermissions = RolePermissions.None;
-            ArgumentException argumentException = new ArgumentException("Role permission contains an invalid character");
+            ArgumentException argumentException = new ArgumentException($"Role permission contains an invalid character.  Value is \"{s}\"");
 
-            if (symbolicRolePermissions == null)
+            if (s == null)
             {
-                throw Errors.ArgumentNull(nameof(symbolicRolePermissions));
+                throw Errors.ArgumentNull(nameof(s));
             }
 
-            if (symbolicRolePermissions.Length != 3)
+            if (s.Length != 3)
             {
-                throw new ArgumentException("Role permission must be 3 characters");
+                throw new ArgumentException($"Role permission must be 3 characters.  Value is \"{s}\"");
             }
 
-            if (symbolicRolePermissions[0] == 'r')
+            if (s[0] == 'r')
             {
                 rolePermissions |= RolePermissions.Read;
             }
-            else if (symbolicRolePermissions[0] != '-')
+            else if (s[0] != '-')
             {
                 throw argumentException;
             }
 
-            if (symbolicRolePermissions[1] == 'w')
+            if (s[1] == 'w')
             {
                 rolePermissions |= RolePermissions.Write;
             }
-            else if (symbolicRolePermissions[1] != '-')
+            else if (s[1] != '-')
             {
                 throw argumentException;
             }
 
-            if (symbolicRolePermissions[2] == 'x')
+            if (s[2] == 'x')
             {
                 rolePermissions |= RolePermissions.Execute;
             }
             else if (allowStickyBit)
             {
-                if (symbolicRolePermissions[2] == 't')
+                if (s[2] == 't')
                 {
                     rolePermissions |= RolePermissions.Execute;
                 }
-                else if (symbolicRolePermissions[2] != 'T' && symbolicRolePermissions[2] != '-')
+                else if (s[2] != 'T' && s[2] != '-')
                 {
                     throw argumentException;
                 }
             }
-            else if (symbolicRolePermissions[2] != '-')
+            else if (s[2] != '-')
             {
                 throw argumentException;
             }
@@ -153,7 +153,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// </summary>
         /// <param name="accessControlList">The Access Control List to serialize</param>
         /// <returns>string.</returns>
-        public static string SerializeAccessControlList(IList<PathAccessControlEntry> accessControlList)
+        public static string ToAccessControlListString(IList<PathAccessControlEntry> accessControlList)
         {
             if (accessControlList == null)
             {
@@ -171,16 +171,16 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// Deseralizes an access control list string  into a list of PathAccessControlEntries.
         /// </summary>
-        /// <param name="accessControlListString">The string to parse.</param>
+        /// <param name="s">The string to parse.</param>
         /// <returns>A List of <see cref="PathAccessControlEntry"/>.</returns>
-        public static IList<PathAccessControlEntry> DeserializeAccessControlList(string accessControlListString)
+        public static IList<PathAccessControlEntry> ParseAccessControlList(string s)
         {
-            if (accessControlListString == null)
+            if (s == null)
             {
                 return null;
             }
 
-            string[] strings = accessControlListString.Split(',');
+            string[] strings = s.Split(',');
             List<PathAccessControlEntry> accessControlList = new List<PathAccessControlEntry>();
             foreach (string entry in strings)
             {

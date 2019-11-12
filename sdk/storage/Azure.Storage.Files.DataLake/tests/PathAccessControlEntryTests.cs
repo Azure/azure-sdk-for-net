@@ -16,7 +16,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             TestHelper.AssertExpectedException(
             () => new PathAccessControlEntry(AccessControlType.Other, RolePermissions.Read, entityId: _entityId),
-            new ArgumentException("AccessControlType must be User or Group if entityId is specified."));
+            new ArgumentException("AccessControlType must be User or Group if entityId is specified.  Value is \"Other\""));
         }
 
         [Test]
@@ -70,15 +70,15 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             TestHelper.AssertExpectedException(
                 () => PathAccessControlEntry.Parse("a:b"),
-                new ArgumentException("s should have 3 or 4 parts delimited by colons"));
+                new ArgumentException("s should have 3 or 4 parts delimited by colons.  Value is \"a:b\""));
 
             TestHelper.AssertExpectedException(
                 () => PathAccessControlEntry.Parse("a:b:c:d:e"),
-                new ArgumentException("s should have 3 or 4 parts delimited by colons"));
+                new ArgumentException("s should have 3 or 4 parts delimited by colons.  Value is \"a:b:c:d:e\""));
 
             TestHelper.AssertExpectedException(
                 () => PathAccessControlEntry.Parse("a:b:c:d"),
-                new ArgumentException("If s is 4 parts, the first must be \"default\""));
+                new ArgumentException("If s is 4 parts, the first must be \"default\".  Value is \"a:b:c:d\""));
         }
     }
 }

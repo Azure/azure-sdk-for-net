@@ -485,7 +485,7 @@ namespace Azure.Storage.Files.DataLake.Samples
                 // Create a DataLake file so we can set the Access Controls on the files
                 DataLakeFileClient fileClient = filesystem.GetFileClient(Randomize("sample-file"));
                 await fileClient.CreateAsync();
-                IList<PathAccessControlEntry> acessControlList = PathAccessControlExtensions.DeserializeAccessControlList("user::rwx,group::r--,mask::rwx,other::---");
+                IList<PathAccessControlEntry> acessControlList = PathAccessControlExtensions.ParseAccessControlList("user::rwx,group::r--,mask::rwx,other::---");
 
                 // Set Access Control List
                 await fileClient.SetAccessControlListAsync(acessControlList);

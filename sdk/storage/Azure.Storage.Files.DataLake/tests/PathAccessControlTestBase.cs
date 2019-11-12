@@ -27,7 +27,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(expected.Group, actual.Group);
             Assert.AreEqual(expected.Other, actual.Other);
             Assert.AreEqual(expected.StickyBit, actual.StickyBit);
-            Assert.AreEqual(expected.ExtendedInfoInAcl, actual.ExtendedInfoInAcl);
+            Assert.AreEqual(expected.ExtendedAcls, actual.ExtendedAcls);
         }
     }
 }
