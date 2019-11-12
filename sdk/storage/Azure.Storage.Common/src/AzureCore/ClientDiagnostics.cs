@@ -6,11 +6,7 @@ using Azure.Core;
 
 #nullable enable
 
-#if BlobSDK || FileSDK || QueueSDK
-namespace Azure.Storage.Shared
-#else
 namespace Azure.Core.Pipeline
-#endif
 {
 #pragma warning disable CA1001 // Types that own disposable fields should be disposable
     internal sealed class ClientDiagnostics

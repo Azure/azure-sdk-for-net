@@ -1,15 +1,11 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Buffers;
 using System.Diagnostics;
 
-#if BlobSDK || FileSDK || QueueSDK
-namespace Azure.Storage.Shared
-#else
 namespace Azure.Core
-#endif
 {
     /// <summary>
     /// Represents a heap-based, array-backed output sink into which <typeparam name="T"/> data can be written.

@@ -4,6 +4,7 @@
 using System;
 using Azure.Storage.Queues.Tests;
 using Azure.Storage.Sas;
+using Azure.Storage.Sas.Shared;
 using NUnit.Framework;
 using TestConstants = Azure.Storage.Test.Constants;
 
@@ -113,7 +114,7 @@ namespace Azure.Storage.Queues.Test
                 "/queue/" + constants.Sas.Account + "/" + queueName,
                 constants.Sas.Identifier,
                 constants.Sas.IPRange.ToString(),
-                SasProtocol.Https.ToProtocolString(),
+                Sas.Shared.SasExtensions.ToProtocolString(SasProtocol.Https),
                 includeVersion ? constants.Sas.Version : SasQueryParameters.DefaultSasVersion);
 
             return constants.Sas.SharedKeyCredential.ComputeHMACSHA256(stringToSign);

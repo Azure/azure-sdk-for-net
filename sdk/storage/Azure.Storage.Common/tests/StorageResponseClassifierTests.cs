@@ -8,7 +8,7 @@ using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 using NUnit.Framework;
 
-namespace Azure.Storage.Common.Tests
+namespace Azure.Storage.Shared.Tests
 {
     public class StorageResponseClassifierTests
     {

@@ -3,11 +3,7 @@
 
 using System;
 
-#if BlobSDK || FileSDK || QueueSDK
-namespace Azure.Storage.Shared
-#else
 namespace Azure
-#endif
 {
     internal class NoBodyResponse<T> : Response<T>
     {

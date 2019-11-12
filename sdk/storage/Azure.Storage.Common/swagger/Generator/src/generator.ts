@@ -176,7 +176,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     w.line(`/// <returns>${operation.response.model.description || returnType.replace(/</g, '{').replace(/>/g, '}')}</returns>`);
     w.write(`public static async System.Threading.Tasks.ValueTask<${sendMethodReturnType}> ${methodName}(`);
     w.scope(() => {
-        w.line(`Azure.Core.Pipeline.ClientDiagnostics ${clientDiagnostics},`);
+        w.line(`Azure.Storage.Shared.ClientDiagnostics ${clientDiagnostics},`);
         const separateParams = IndentWriter.createFenceposter();
         for (const arg of operation.request.arguments) {
             if (separateParams()) { w.line(`,`); }
@@ -194,7 +194,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
         w.write(')')
     });
     w.scope('{', '}', () => {
-        w.line(`Azure.Core.Pipeline.DiagnosticScope ${scopeName} = ${clientDiagnostics}.CreateScope(${operationName});`)
+        w.line(`Azure.Storage.Shared.DiagnosticScope ${scopeName} = ${clientDiagnostics}.CreateScope(${operationName});`)
         w.line(`try`);
         w.scope('{', '}', () => {
             for (const arg of operation.request.arguments) {
@@ -495,7 +495,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                     } else {
                         // Return an exploding Response if there's a model type
                         // (NoBodyResponse is shared source)
-                        w.line(`return new Azure.NoBodyResponse<${types.getName(result)}>(${responseName});`);
+                        w.line(`return new Azure.Storage.Shared.NoBodyResponse<${types.getName(result)}>(${responseName});`);
                     }
                 });
             }
@@ -1008,7 +1008,7 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                     w.line(`[System.ComponentModel.EditorBrowsable((System.ComponentModel.EditorBrowsableState.Never))]`);
                     w.line(`public override int GetHashCode()`);
                     w.scope('{', '}', () => {
-                        w.line(`var hashCode = new Azure.Core.HashCodeBuilder();`);
+                        w.line(`var hashCode = new Azure.Storage.Shared.HashCodeBuilder();`);
                         for (const property of properties) {
                             if (types.getDeclarationType(property.model, property.required, property.readonly) === "string") {
                                 w.line(`if (${naming.property(property.clientName)} != null)`)

@@ -1,12 +1,9 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
-#if BlobSDK || FileSDK || QueueSDK
-namespace Azure.Storage.Shared
-#else
+
 namespace Azure.Core
-#endif
 {
     /// <summary>
     /// Marks methods that call methods on other client and don't need their diagnostics verified

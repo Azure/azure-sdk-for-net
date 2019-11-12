@@ -3,10 +3,15 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <AssemblyTitle>Microsoft Azure.Storage.Files.DataLake client library samples</AssemblyTitle>
     <IsPackable>false</IsPackable>
+    <DefineConstants>FileSDK;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\src\Azure.Storage.Files.DataLake.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />
+    <Compile Include="$(AzureStorageSharedSources)*.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="Core\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)NoBodyResponse{T}.cs" Link="Core\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
 
   <ItemGroup>

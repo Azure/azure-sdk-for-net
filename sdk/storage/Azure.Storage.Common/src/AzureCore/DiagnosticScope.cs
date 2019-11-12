@@ -8,13 +8,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 
-#if BlobSDK || FileSDK || QueueSDK
-namespace Azure.Storage.Shared
-#else
 namespace Azure.Core.Pipeline
-#endif
 {
-internal readonly struct DiagnosticScope : IDisposable
+    internal readonly struct DiagnosticScope : IDisposable
     {
         private readonly DiagnosticActivity? _activity;
 
@@ -131,16 +127,18 @@ internal readonly struct DiagnosticScope : IDisposable
 
         public static bool SetW3CFormat(this Activity activity)
         {
-            if (s_setIdFormatMethod == null) return false;
+            if (s_setIdFormatMethod == null)
+                return false;
 
-            s_setIdFormatMethod.Invoke(activity, new object[]{ 2 /* ActivityIdFormat.W3C */});
+            s_setIdFormatMethod.Invoke(activity, new object[] { 2 /* ActivityIdFormat.W3C */});
 
             return true;
         }
 
         public static bool IsW3CFormat(this Activity activity)
         {
-            if (s_getIdFormatMethod == null) return false;
+            if (s_getIdFormatMethod == null)
+                return false;
 
             object result = s_getIdFormatMethod.Invoke(activity, Array.Empty<object>());
 
@@ -151,7 +149,8 @@ internal readonly struct DiagnosticScope : IDisposable
         {
             traceState = null;
 
-            if (s_getTraceStateStringMethod == null) return false;
+            if (s_getTraceStateStringMethod == null)
+                return false;
 
             traceState = s_getTraceStateStringMethod.Invoke(activity, Array.Empty<object>()) as string;
 

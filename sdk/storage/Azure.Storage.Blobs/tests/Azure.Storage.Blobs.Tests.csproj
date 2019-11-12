@@ -5,6 +5,7 @@
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.Blobs client library tests</AssemblyTitle>
     <IsPackable>false</IsPackable>
+    <DefineConstants>BlobSDK;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />

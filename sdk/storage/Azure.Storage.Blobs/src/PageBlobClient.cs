@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Shared;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 #pragma warning disable SA1402  // File may only contain a single type
@@ -176,7 +177,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="clientDiagnostics">Client diagnostics.</param>
         /// <param name="customerProvidedKey">Customer provided key.</param>
-        internal PageBlobClient(Uri blobUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
+        internal PageBlobClient(Uri blobUri, HttpPipeline pipeline, Shared.ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
             : base(blobUri, pipeline, clientDiagnostics, customerProvidedKey)
         {
         }

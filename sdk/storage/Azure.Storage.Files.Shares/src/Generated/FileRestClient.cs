@@ -36,7 +36,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response> SetPropertiesAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Files.Shares.Models.ShareServiceProperties properties,
@@ -45,7 +45,7 @@ namespace Azure.Storage.Files.Shares
                 string operationName = "Azure.Storage.Files.Shares.ServiceClient.SetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -171,7 +171,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Storage service properties.</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.ShareServiceProperties>> GetPropertiesAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -179,7 +179,7 @@ namespace Azure.Storage.Files.Shares
                 string operationName = "Azure.Storage.Files.Shares.ServiceClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -273,7 +273,7 @@ namespace Azure.Storage.Files.Shares
                     }
                     case 304:
                     {
-                        return new Azure.NoBodyResponse<Azure.Storage.Files.Shares.Models.ShareServiceProperties>(response);
+                        return new Azure.Storage.Shared.NoBodyResponse<Azure.Storage.Files.Shares.Models.ShareServiceProperties>(response);
                     }
                     default:
                     {
@@ -304,7 +304,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of shares.</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.SharesSegment>> ListSharesSegmentAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string prefix = default,
@@ -316,7 +316,7 @@ namespace Azure.Storage.Files.Shares
                 string operationName = "Azure.Storage.Files.Shares.ServiceClient.ListSharesSegment",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -425,7 +425,7 @@ namespace Azure.Storage.Files.Shares
                     }
                     case 304:
                     {
-                        return new Azure.NoBodyResponse<Azure.Storage.Files.Shares.Models.SharesSegment>(response);
+                        return new Azure.Storage.Shared.NoBodyResponse<Azure.Storage.Files.Shares.Models.SharesSegment>(response);
                     }
                     default:
                     {
@@ -462,7 +462,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.ShareInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.ShareInfo>> CreateAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -472,7 +472,7 @@ namespace Azure.Storage.Files.Shares
                 string operationName = "Azure.Storage.Files.Shares.ShareClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -612,7 +612,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Properties of a share.</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.ShareProperties>> GetPropertiesAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string sharesnapshot = default,
@@ -621,7 +621,7 @@ namespace Azure.Storage.Files.Shares
                 string operationName = "Azure.Storage.Files.Shares.ShareClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -740,7 +740,7 @@ namespace Azure.Storage.Files.Shares
                     }
                     case 304:
                     {
-                        return new Azure.NoBodyResponse<Azure.Storage.Files.Shares.Models.ShareProperties>(response);
+                        return new Azure.Storage.Shared.NoBodyResponse<Azure.Storage.Files.Shares.Models.ShareProperties>(response);
                     }
                     default:
                     {
@@ -769,7 +769,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response> DeleteAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string sharesnapshot = default,
@@ -779,7 +779,7 @@ namespace Azure.Storage.Files.Shares
                 string operationName = "Azure.Storage.Files.Shares.ShareClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -899,7 +899,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.ShareSnapshotInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.ShareSnapshotInfo>> CreateSnapshotAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -908,7 +908,7 @@ namespace Azure.Storage.Files.Shares
                 string operationName = "Azure.Storage.Files.Shares.ShareClient.CreateSnapshot",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -1049,7 +1049,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.PermissionInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.PermissionInfo>> CreatePermissionAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string sharePermissionJson,
@@ -1058,7 +1058,7 @@ namespace Azure.Storage.Files.Shares
                 string operationName = "Azure.Storage.Files.Shares.ShareClient.CreatePermission",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -1195,7 +1195,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>A permission (a security descriptor) at the share level.</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<string>> GetPermissionAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string filePermissionKey,
@@ -1204,7 +1204,7 @@ namespace Azure.Storage.Files.Shares
                 string operationName = "Azure.Storage.Files.Shares.ShareClient.GetPermission",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -1309,7 +1309,7 @@ namespace Azure.Storage.Files.Shares
                     }
                     case 304:
                     {
-                        return new Azure.NoBodyResponse<string>(response);
+                        return new Azure.Storage.Shared.NoBodyResponse<string>(response);
                     }
                     default:
                     {
@@ -1337,7 +1337,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.ShareInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.ShareInfo>> SetQuotaAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1346,7 +1346,7 @@ namespace Azure.Storage.Files.Shares
                 string operationName = "Azure.Storage.Files.Shares.ShareClient.SetQuota",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -1478,7 +1478,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.ShareInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.ShareInfo>> SetMetadataAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1487,7 +1487,7 @@ namespace Azure.Storage.Files.Shares
                 string operationName = "Azure.Storage.Files.Shares.ShareClient.SetMetadata",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -1623,7 +1623,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>A collection of signed identifiers.</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Files.Shares.Models.ShareSignedIdentifier>>> GetAccessPolicyAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1631,7 +1631,7 @@ namespace Azure.Storage.Files.Shares
                 string operationName = "Azure.Storage.Files.Shares.ShareClient.GetAccessPolicy",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -1729,7 +1729,7 @@ namespace Azure.Storage.Files.Shares
                     }
                     case 304:
                     {
-                        return new Azure.NoBodyResponse<System.Collections.Generic.IEnumerable<Azure.Storage.Files.Shares.Models.ShareSignedIdentifier>>(response);
+                        return new Azure.Storage.Shared.NoBodyResponse<System.Collections.Generic.IEnumerable<Azure.Storage.Files.Shares.Models.ShareSignedIdentifier>>(response);
                     }
                     default:
                     {
@@ -1757,7 +1757,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.ShareInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.ShareInfo>> SetAccessPolicyAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Collections.Generic.IEnumerable<Azure.Storage.Files.Shares.Models.ShareSignedIdentifier> permissions = default,
@@ -1766,7 +1766,7 @@ namespace Azure.Storage.Files.Shares
                 string operationName = "Azure.Storage.Files.Shares.ShareClient.SetAccessPolicy",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -1910,7 +1910,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Stats for the share.</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.ShareStatistics>> GetStatisticsAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1918,7 +1918,7 @@ namespace Azure.Storage.Files.Shares
                 string operationName = "Azure.Storage.Files.Shares.ShareClient.GetStatistics",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -2012,7 +2012,7 @@ namespace Azure.Storage.Files.Shares
                     }
                     case 304:
                     {
-                        return new Azure.NoBodyResponse<Azure.Storage.Files.Shares.Models.ShareStatistics>(response);
+                        return new Azure.Storage.Shared.NoBodyResponse<Azure.Storage.Files.Shares.Models.ShareStatistics>(response);
                     }
                     default:
                     {
@@ -2053,7 +2053,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.RawStorageDirectoryInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.RawStorageDirectoryInfo>> CreateAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string fileAttributes,
@@ -2067,7 +2067,7 @@ namespace Azure.Storage.Files.Shares
                 string operationName = "Azure.Storage.Files.Shares.DirectoryClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -2263,7 +2263,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.RawStorageDirectoryProperties}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.RawStorageDirectoryProperties>> GetPropertiesAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string sharesnapshot = default,
@@ -2272,7 +2272,7 @@ namespace Azure.Storage.Files.Shares
                 string operationName = "Azure.Storage.Files.Shares.DirectoryClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -2419,7 +2419,7 @@ namespace Azure.Storage.Files.Shares
                     }
                     case 304:
                     {
-                        return new Azure.NoBodyResponse<Azure.Storage.Files.Shares.Models.RawStorageDirectoryProperties>(response);
+                        return new Azure.Storage.Shared.NoBodyResponse<Azure.Storage.Files.Shares.Models.RawStorageDirectoryProperties>(response);
                     }
                     default:
                     {
@@ -2446,7 +2446,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response> DeleteAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -2454,7 +2454,7 @@ namespace Azure.Storage.Files.Shares
                 string operationName = "Azure.Storage.Files.Shares.DirectoryClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -2570,7 +2570,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.RawStorageDirectoryInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.RawStorageDirectoryInfo>> SetPropertiesAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string fileAttributes,
@@ -2583,7 +2583,7 @@ namespace Azure.Storage.Files.Shares
                 string operationName = "Azure.Storage.Files.Shares.DirectoryClient.SetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -2771,7 +2771,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.RawStorageDirectoryInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.RawStorageDirectoryInfo>> SetMetadataAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -2780,7 +2780,7 @@ namespace Azure.Storage.Files.Shares
                 string operationName = "Azure.Storage.Files.Shares.DirectoryClient.SetMetadata",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -2920,7 +2920,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of directories and files.</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.FilesAndDirectoriesSegment>> ListFilesAndDirectoriesSegmentAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string prefix = default,
@@ -2932,7 +2932,7 @@ namespace Azure.Storage.Files.Shares
                 string operationName = "Azure.Storage.Files.Shares.DirectoryClient.ListFilesAndDirectoriesSegment",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -3042,7 +3042,7 @@ namespace Azure.Storage.Files.Shares
                     }
                     case 304:
                     {
-                        return new Azure.NoBodyResponse<Azure.Storage.Files.Shares.Models.FilesAndDirectoriesSegment>(response);
+                        return new Azure.Storage.Shared.NoBodyResponse<Azure.Storage.Files.Shares.Models.FilesAndDirectoriesSegment>(response);
                     }
                     default:
                     {
@@ -3073,7 +3073,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of handles.</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.StorageHandlesSegment>> ListHandlesAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string marker = default,
@@ -3085,7 +3085,7 @@ namespace Azure.Storage.Files.Shares
                 string operationName = "Azure.Storage.Files.Shares.DirectoryClient.ListHandles",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -3198,7 +3198,7 @@ namespace Azure.Storage.Files.Shares
                     }
                     case 304:
                     {
-                        return new Azure.NoBodyResponse<Azure.Storage.Files.Shares.Models.StorageHandlesSegment>(response);
+                        return new Azure.Storage.Shared.NoBodyResponse<Azure.Storage.Files.Shares.Models.StorageHandlesSegment>(response);
                     }
                     default:
                     {
@@ -3229,7 +3229,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.StorageClosedHandlesSegment}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.StorageClosedHandlesSegment>> ForceCloseHandlesAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string handleId,
@@ -3241,7 +3241,7 @@ namespace Azure.Storage.Files.Shares
                 string operationName = "Azure.Storage.Files.Shares.DirectoryClient.ForceCloseHandles",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -3412,7 +3412,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.RawStorageFileInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.RawStorageFileInfo>> CreateAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 long fileContentLength,
@@ -3433,7 +3433,7 @@ namespace Azure.Storage.Files.Shares
                 string operationName = "Azure.Storage.Files.Shares.FileClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -3672,7 +3672,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.FlattenedStorageFileProperties}</returns>
             public static async System.Threading.Tasks.ValueTask<(Azure.Response<Azure.Storage.Files.Shares.Models.FlattenedStorageFileProperties>, System.IO.Stream)> DownloadAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -3682,7 +3682,7 @@ namespace Azure.Storage.Files.Shares
                 string operationName = "Azure.Storage.Files.Shares.FileClient.Download",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -4027,7 +4027,7 @@ namespace Azure.Storage.Files.Shares
                     }
                     case 304:
                     {
-                        return new Azure.NoBodyResponse<Azure.Storage.Files.Shares.Models.FlattenedStorageFileProperties>(response);
+                        return new Azure.Storage.Shared.NoBodyResponse<Azure.Storage.Files.Shares.Models.FlattenedStorageFileProperties>(response);
                     }
                     default:
                     {
@@ -4055,7 +4055,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.RawStorageFileProperties}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.RawStorageFileProperties>> GetPropertiesAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string sharesnapshot = default,
@@ -4064,7 +4064,7 @@ namespace Azure.Storage.Files.Shares
                 string operationName = "Azure.Storage.Files.Shares.FileClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -4262,7 +4262,7 @@ namespace Azure.Storage.Files.Shares
                     }
                     case 304:
                     {
-                        return new Azure.NoBodyResponse<Azure.Storage.Files.Shares.Models.RawStorageFileProperties>(response);
+                        return new Azure.Storage.Shared.NoBodyResponse<Azure.Storage.Files.Shares.Models.RawStorageFileProperties>(response);
                     }
                     default:
                     {
@@ -4295,7 +4295,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response> DeleteAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -4303,7 +4303,7 @@ namespace Azure.Storage.Files.Shares
                 string operationName = "Azure.Storage.Files.Shares.FileClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -4425,7 +4425,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.RawStorageFileInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.RawStorageFileInfo>> SetPropertiesAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string fileAttributes,
@@ -4445,7 +4445,7 @@ namespace Azure.Storage.Files.Shares
                 string operationName = "Azure.Storage.Files.Shares.FileClient.SetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -4674,7 +4674,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.RawStorageFileInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.RawStorageFileInfo>> SetMetadataAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -4683,7 +4683,7 @@ namespace Azure.Storage.Files.Shares
                 string operationName = "Azure.Storage.Files.Shares.FileClient.SetMetadata",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -4827,7 +4827,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.ShareFileUploadInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileUploadInfo>> UploadRangeAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string range,
@@ -4840,7 +4840,7 @@ namespace Azure.Storage.Files.Shares
                 string operationName = "Azure.Storage.Files.Shares.FileClient.UploadRange",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -5007,7 +5007,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.FileUploadRangeFromURLResult}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.FileUploadRangeFromURLResult>> UploadRangeFromURLAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string range,
@@ -5022,7 +5022,7 @@ namespace Azure.Storage.Files.Shares
                 string operationName = "Azure.Storage.Files.Shares.FileClient.UploadRangeFromURL",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -5195,7 +5195,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.ShareFileRangeInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileRangeInfo>> GetRangeListAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string sharesnapshot = default,
@@ -5205,7 +5205,7 @@ namespace Azure.Storage.Files.Shares
                 string operationName = "Azure.Storage.Files.Shares.FileClient.GetRangeList",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -5326,7 +5326,7 @@ namespace Azure.Storage.Files.Shares
                     }
                     case 304:
                     {
-                        return new Azure.NoBodyResponse<Azure.Storage.Files.Shares.Models.ShareFileRangeInfo>(response);
+                        return new Azure.Storage.Shared.NoBodyResponse<Azure.Storage.Files.Shares.Models.ShareFileRangeInfo>(response);
                     }
                     default:
                     {
@@ -5355,7 +5355,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.ShareFileCopyInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileCopyInfo>> StartCopyAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Uri copySource,
@@ -5365,7 +5365,7 @@ namespace Azure.Storage.Files.Shares
                 string operationName = "Azure.Storage.Files.Shares.FileClient.StartCopy",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -5516,7 +5516,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response> AbortCopyAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string copyId,
@@ -5525,7 +5525,7 @@ namespace Azure.Storage.Files.Shares
                 string operationName = "Azure.Storage.Files.Shares.FileClient.AbortCopy",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -5648,7 +5648,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of handles.</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.StorageHandlesSegment>> ListHandlesAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string marker = default,
@@ -5659,7 +5659,7 @@ namespace Azure.Storage.Files.Shares
                 string operationName = "Azure.Storage.Files.Shares.FileClient.ListHandles",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -5764,7 +5764,7 @@ namespace Azure.Storage.Files.Shares
                     }
                     case 304:
                     {
-                        return new Azure.NoBodyResponse<Azure.Storage.Files.Shares.Models.StorageHandlesSegment>(response);
+                        return new Azure.Storage.Shared.NoBodyResponse<Azure.Storage.Files.Shares.Models.StorageHandlesSegment>(response);
                     }
                     default:
                     {
@@ -5794,7 +5794,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.StorageClosedHandlesSegment}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.StorageClosedHandlesSegment>> ForceCloseHandlesAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string handleId,
@@ -5805,7 +5805,7 @@ namespace Azure.Storage.Files.Shares
                 string operationName = "Azure.Storage.Files.Shares.FileClient.ForceCloseHandles",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);

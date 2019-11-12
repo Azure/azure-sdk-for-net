@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Shared;
 
 namespace Azure.Storage.Blobs
 {
@@ -53,7 +54,7 @@ namespace Azure.Storage.Blobs
         {
             // Wrap the download range calls in a Download span for distributed
             // tracing
-            DiagnosticScope scope = _client.ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(Specialized)}.{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadTo)}");
+            Shared.DiagnosticScope scope = _client.ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(Specialized)}.{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadTo)}");
             try
             {
                 scope.Start();
@@ -177,7 +178,7 @@ namespace Azure.Storage.Blobs
         {
             // Wrap the download range calls in a Download span for distributed
             // tracing
-            DiagnosticScope scope = _client.ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(Specialized)}.{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadTo)}");
+            Shared.DiagnosticScope scope = _client.ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(Specialized)}.{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadTo)}");
             try
             {
                 scope.Start();

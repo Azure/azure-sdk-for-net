@@ -3,7 +3,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyTitle>Microsoft Azure.Storage.Common client library</AssemblyTitle>
+    <AssemblyTitle>Microsoft Azure.Storage.Shared client library</AssemblyTitle>
     <Version>12.1.0-preview.1</Version>
     <DefineConstants>CommonSDK;$(DefineConstants)</DefineConstants>
     <PackageTags>Microsoft Azure Storage Common, Microsoft, Azure, StorageScalable, azureofficial</PackageTags>
@@ -12,8 +12,8 @@
     </PackageReleaseNotes>
     <Description>
       This client library enables working with the Microsoft Azure Storage services which include the blob and file services for storing binary and text data, and the queue service for storing messages that may be accessed by a client.
-      For this release see notes - https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Common/README.md and https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Common/changelog.txt
-      in addition to the breaking changes https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Common/BreakingChanges.txt
+      For this release see notes - https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Shared/README.md and https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Shared/changelog.txt
+      in addition to the breaking changes https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Shared/BreakingChanges.txt
       Microsoft Azure Storage quickstarts and tutorials - https://docs.microsoft.com/en-us/azure/storage/
       Microsoft Azure Storage REST API Reference - https://docs.microsoft.com/en-us/rest/api/storageservices/
     </Description>
@@ -30,5 +30,8 @@
     <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" Link="AzureCoreShared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" Link="AzureCoreShared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)NoBodyResponse{T}.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Remove="Shared\*.cs" />
+    <Compile Include="Shared\SasExtensions.cs" />
+
   </ItemGroup>
 </Project>

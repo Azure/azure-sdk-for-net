@@ -5,6 +5,7 @@
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.Queues client library tests</AssemblyTitle>
     <IsPackable>false</IsPackable>
+    <DefineConstants>QueueSDK;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="SessionRecords\" />

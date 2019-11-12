@@ -3,6 +3,7 @@
 
 using System;
 using System.Text;
+using Azure.Storage.Shared;
 using Azure.Storage.Sas;
 
 namespace Azure.Storage.Sas
