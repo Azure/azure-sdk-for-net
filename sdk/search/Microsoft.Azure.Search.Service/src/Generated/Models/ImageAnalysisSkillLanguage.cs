@@ -11,50 +11,101 @@
 namespace Microsoft.Azure.Search.Models
 {
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ImageAnalysisSkillLanguage.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum ImageAnalysisSkillLanguage
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(ImageAnalysisSkillLanguageConverter))]
+    public struct ImageAnalysisSkillLanguage : System.IEquatable<ImageAnalysisSkillLanguage>
     {
-        [EnumMember(Value = "en")]
-        En,
-        [EnumMember(Value = "zh")]
-        Zh
-    }
-    internal static class ImageAnalysisSkillLanguageEnumExtension
-    {
-        internal static string ToSerializedValue(this ImageAnalysisSkillLanguage? value)
+        private ImageAnalysisSkillLanguage(string underlyingValue)
         {
-            return value == null ? null : ((ImageAnalysisSkillLanguage)value).ToSerializedValue();
+            UnderlyingValue=underlyingValue;
         }
 
-        internal static string ToSerializedValue(this ImageAnalysisSkillLanguage value)
+        /// <summary>
+        /// English
+        /// </summary>
+        public static readonly ImageAnalysisSkillLanguage En = "en";
+
+        /// <summary>
+        /// Chinese
+        /// </summary>
+        public static readonly ImageAnalysisSkillLanguage Zh = "zh";
+
+
+        /// <summary>
+        /// Underlying value of enum ImageAnalysisSkillLanguage
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for ImageAnalysisSkillLanguage
+        /// </summary>
+        public override string ToString()
         {
-            switch( value )
-            {
-                case ImageAnalysisSkillLanguage.En:
-                    return "en";
-                case ImageAnalysisSkillLanguage.Zh:
-                    return "zh";
-            }
-            return null;
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
         }
 
-        internal static ImageAnalysisSkillLanguage? ParseImageAnalysisSkillLanguage(this string value)
+        /// <summary>
+        /// Compares enums of type ImageAnalysisSkillLanguage
+        /// </summary>
+        public bool Equals(ImageAnalysisSkillLanguage e)
         {
-            switch( value )
-            {
-                case "en":
-                    return ImageAnalysisSkillLanguage.En;
-                case "zh":
-                    return ImageAnalysisSkillLanguage.Zh;
-            }
-            return null;
+            return UnderlyingValue.Equals(e.UnderlyingValue);
         }
+
+        /// <summary>
+        /// Implicit operator to convert string to ImageAnalysisSkillLanguage
+        /// </summary>
+        public static implicit operator ImageAnalysisSkillLanguage(string value)
+        {
+            return new ImageAnalysisSkillLanguage(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert ImageAnalysisSkillLanguage to string
+        /// </summary>
+        public static implicit operator string(ImageAnalysisSkillLanguage e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum ImageAnalysisSkillLanguage
+        /// </summary>
+        public static bool operator == (ImageAnalysisSkillLanguage e1, ImageAnalysisSkillLanguage e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum ImageAnalysisSkillLanguage
+        /// </summary>
+        public static bool operator != (ImageAnalysisSkillLanguage e1, ImageAnalysisSkillLanguage e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for ImageAnalysisSkillLanguage
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is ImageAnalysisSkillLanguage && Equals((ImageAnalysisSkillLanguage)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode ImageAnalysisSkillLanguage
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

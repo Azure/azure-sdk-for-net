@@ -11,92 +11,136 @@
 namespace Microsoft.Azure.Search.Models
 {
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for SplitSkillLanguage.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum SplitSkillLanguage
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(SplitSkillLanguageConverter))]
+    public struct SplitSkillLanguage : System.IEquatable<SplitSkillLanguage>
     {
-        [EnumMember(Value = "da")]
-        Da,
-        [EnumMember(Value = "de")]
-        De,
-        [EnumMember(Value = "en")]
-        En,
-        [EnumMember(Value = "es")]
-        Es,
-        [EnumMember(Value = "fi")]
-        Fi,
-        [EnumMember(Value = "fr")]
-        Fr,
-        [EnumMember(Value = "it")]
-        It,
-        [EnumMember(Value = "ko")]
-        Ko,
-        [EnumMember(Value = "pt")]
-        Pt
-    }
-    internal static class SplitSkillLanguageEnumExtension
-    {
-        internal static string ToSerializedValue(this SplitSkillLanguage? value)
+        private SplitSkillLanguage(string underlyingValue)
         {
-            return value == null ? null : ((SplitSkillLanguage)value).ToSerializedValue();
+            UnderlyingValue=underlyingValue;
         }
 
-        internal static string ToSerializedValue(this SplitSkillLanguage value)
+        /// <summary>
+        /// Danish
+        /// </summary>
+        public static readonly SplitSkillLanguage Da = "da";
+
+        /// <summary>
+        /// German
+        /// </summary>
+        public static readonly SplitSkillLanguage De = "de";
+
+        /// <summary>
+        /// English
+        /// </summary>
+        public static readonly SplitSkillLanguage En = "en";
+
+        /// <summary>
+        /// Spanish
+        /// </summary>
+        public static readonly SplitSkillLanguage Es = "es";
+
+        /// <summary>
+        /// Finnish
+        /// </summary>
+        public static readonly SplitSkillLanguage Fi = "fi";
+
+        /// <summary>
+        /// French
+        /// </summary>
+        public static readonly SplitSkillLanguage Fr = "fr";
+
+        /// <summary>
+        /// Italian
+        /// </summary>
+        public static readonly SplitSkillLanguage It = "it";
+
+        /// <summary>
+        /// Korean
+        /// </summary>
+        public static readonly SplitSkillLanguage Ko = "ko";
+
+        /// <summary>
+        /// Portuguese
+        /// </summary>
+        public static readonly SplitSkillLanguage Pt = "pt";
+
+
+        /// <summary>
+        /// Underlying value of enum SplitSkillLanguage
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for SplitSkillLanguage
+        /// </summary>
+        public override string ToString()
         {
-            switch( value )
-            {
-                case SplitSkillLanguage.Da:
-                    return "da";
-                case SplitSkillLanguage.De:
-                    return "de";
-                case SplitSkillLanguage.En:
-                    return "en";
-                case SplitSkillLanguage.Es:
-                    return "es";
-                case SplitSkillLanguage.Fi:
-                    return "fi";
-                case SplitSkillLanguage.Fr:
-                    return "fr";
-                case SplitSkillLanguage.It:
-                    return "it";
-                case SplitSkillLanguage.Ko:
-                    return "ko";
-                case SplitSkillLanguage.Pt:
-                    return "pt";
-            }
-            return null;
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
         }
 
-        internal static SplitSkillLanguage? ParseSplitSkillLanguage(this string value)
+        /// <summary>
+        /// Compares enums of type SplitSkillLanguage
+        /// </summary>
+        public bool Equals(SplitSkillLanguage e)
         {
-            switch( value )
-            {
-                case "da":
-                    return SplitSkillLanguage.Da;
-                case "de":
-                    return SplitSkillLanguage.De;
-                case "en":
-                    return SplitSkillLanguage.En;
-                case "es":
-                    return SplitSkillLanguage.Es;
-                case "fi":
-                    return SplitSkillLanguage.Fi;
-                case "fr":
-                    return SplitSkillLanguage.Fr;
-                case "it":
-                    return SplitSkillLanguage.It;
-                case "ko":
-                    return SplitSkillLanguage.Ko;
-                case "pt":
-                    return SplitSkillLanguage.Pt;
-            }
-            return null;
+            return UnderlyingValue.Equals(e.UnderlyingValue);
         }
+
+        /// <summary>
+        /// Implicit operator to convert string to SplitSkillLanguage
+        /// </summary>
+        public static implicit operator SplitSkillLanguage(string value)
+        {
+            return new SplitSkillLanguage(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert SplitSkillLanguage to string
+        /// </summary>
+        public static implicit operator string(SplitSkillLanguage e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum SplitSkillLanguage
+        /// </summary>
+        public static bool operator == (SplitSkillLanguage e1, SplitSkillLanguage e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum SplitSkillLanguage
+        /// </summary>
+        public static bool operator != (SplitSkillLanguage e1, SplitSkillLanguage e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for SplitSkillLanguage
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is SplitSkillLanguage && Equals((SplitSkillLanguage)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode SplitSkillLanguage
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

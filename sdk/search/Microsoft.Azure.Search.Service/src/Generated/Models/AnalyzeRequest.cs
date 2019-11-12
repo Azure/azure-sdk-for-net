@@ -65,12 +65,11 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="tokenizer">The name of the tokenizer to use to break
         /// the given text. If this parameter is not specified, you must
         /// specify an analyzer instead. The tokenizer and analyzer parameters
-        /// are mutually exclusive. Possible values include: 'classic',
-        /// 'edgeNGram', 'keyword_v2', 'letter', 'lowercase',
-        /// 'microsoft_language_tokenizer',
-        /// 'microsoft_language_stemming_tokenizer', 'nGram',
-        /// 'path_hierarchy_v2', 'pattern', 'standard_v2', 'uax_url_email',
-        /// 'whitespace'</param>
+        /// are mutually exclusive. Possible values include: 'Classic',
+        /// 'EdgeNGram', 'Keyword', 'Letter', 'Lowercase',
+        /// 'MicrosoftLanguageTokenizer', 'MicrosoftLanguageStemmingTokenizer',
+        /// 'NGram', 'PathHierarchy', 'Pattern', 'Standard', 'UaxUrlEmail',
+        /// 'Whitespace'</param>
         /// <param name="tokenFilters">An optional list of token filters to use
         /// when breaking the given text. This parameter can only be set when
         /// using the tokenizer parameter.</param>
@@ -135,12 +134,11 @@ namespace Microsoft.Azure.Search.Models
         /// Gets or sets the name of the tokenizer to use to break the given
         /// text. If this parameter is not specified, you must specify an
         /// analyzer instead. The tokenizer and analyzer parameters are
-        /// mutually exclusive. Possible values include: 'classic',
-        /// 'edgeNGram', 'keyword_v2', 'letter', 'lowercase',
-        /// 'microsoft_language_tokenizer',
-        /// 'microsoft_language_stemming_tokenizer', 'nGram',
-        /// 'path_hierarchy_v2', 'pattern', 'standard_v2', 'uax_url_email',
-        /// 'whitespace'
+        /// mutually exclusive. Possible values include: 'Classic',
+        /// 'EdgeNGram', 'Keyword', 'Letter', 'Lowercase',
+        /// 'MicrosoftLanguageTokenizer', 'MicrosoftLanguageStemmingTokenizer',
+        /// 'NGram', 'PathHierarchy', 'Pattern', 'Standard', 'UaxUrlEmail',
+        /// 'Whitespace'
         /// </summary>
         [JsonProperty(PropertyName = "tokenizer")]
         public TokenizerName? Tokenizer { get; set; }

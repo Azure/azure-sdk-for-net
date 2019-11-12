@@ -54,16 +54,6 @@ namespace Microsoft.Azure.Search.Models
         public int? MaxFailedItemsPerBatch { get; set; }
 
         /// <summary>
-        /// Gets or sets whether indexer will base64-encode all values that
-        /// are inserted into key field of the target index. This is needed
-        /// if keys can contain characters that are invalid in keys (such as
-        /// dot '.'). Default is false.
-        /// </summary>
-        [Obsolete("This property is obsolete. Please create a field mapping using 'FieldMapping.Base64Encode' instead.")]
-        [JsonProperty(PropertyName = "base64EncodeKeys")]
-        public bool? Base64EncodeKeys { get; set; }
-
-        /// <summary>
         /// Gets or sets a dictionary of indexer-specific configuration
         /// properties. Each name is the name of a specific property. Each
         /// value must be of a primitive type.
