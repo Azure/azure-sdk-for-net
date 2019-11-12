@@ -179,12 +179,6 @@ namespace Azure.Messaging.EventHubs
         private CancellationTokenSource RunningTaskTokenSource { get; set; }
 
         /// <summary>
-        ///   The set of partition pumps used by this event processor.  Partition ids are used as keys.
-        /// </summary>
-        ///
-        private ConcurrentDictionary<string, PartitionPump> PartitionPumps { get; }
-
-        /// <summary>
         ///   The running task responsible for performing partition load balancing between multiple <see cref="EventProcessorClient" />
         ///   instances, as well as managing partition pumps and ownership.
         /// </summary>
@@ -974,34 +968,6 @@ namespace Azure.Messaging.EventHubs
             // No ownership was claimed.
 
             return null;
-        }
-
-        /// <summary>
-        ///   Stops an owned partition pump instance in case it exists.  It is also removed from the pumps dictionary.
-        /// </summary>
-        ///
-        /// <param name="partitionId">The identifier of the Event Hub partition the partition pump is associated with.</param>
-        /// <param name="reason">The reason why the processing for the specified partition is being stopped.</param>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
-        private async Task RemovePartitionPumpIfItExistsAsync(string partitionId,
-                                                              ProcessingStoppedReason reason)
-        {
-            if (PartitionPumps.TryRemove(partitionId, out PartitionPump pump))
-            {
-                try
-                {
-                    await pump.StopAsync().ConfigureAwait(false);
-                }
-                catch (Exception)
-                {
-                    // TODO: delegate the exception handling to an Exception Callback.
-                }
-            }
-
-            var context = new PartitionContext(EventHubName, partitionId);
-            await ProcessingForPartitionStoppedAsync(reason, context);
         }
 
         /// <summary>
