@@ -66,7 +66,7 @@ Import-Module Az.Resources
 # == Function Imports ==
 # ==========================
 
-. .\functions\azure-principal-functions.ps1
+. .\functions\azure-resource-functions.ps1
 
 function DisplayHelp
 {
@@ -146,7 +146,7 @@ if ([string]::IsNullOrEmpty($azureRegion))
 
 ValidateParameters -ServicePrincipalName "$($servicePrincipalName)" -AzureRegion "$($azureRegion)"
 $subscription = GetSubscriptionAndSetAzureContext -SubscriptionName "$($subscriptionName)"
-$isResourceGroupCreated = CreateResourceGroupIfMissing -ResourceGroupName "$($resourceGroupName)" -AzureRegion "$($azureRegion)"
+$wasResourceGroupCreated = CreateResourceGroupIfMissing -ResourceGroupName "$($resourceGroupName)" -AzureRegion "$($azureRegion)"
 
 # At this point, we may have created a resource, so be safe and allow for removing any
 # resources created should the script fail.
@@ -155,15 +155,15 @@ try
 {
     Start-Sleep 1
 
-    $isNamespaceCreated = CreateNamespaceIfMissing -ResourceGroupName "$($resourceGroupName)" `
-                                                   -NamespaceName "$($namespaceName)" `
-                                                   -AzureRegion "$($azureRegion)"
+    $wasNamespaceCreated = CreateNamespaceIfMissing -ResourceGroupName "$($resourceGroupName)" `
+                                                    -NamespaceName "$($namespaceName)" `
+                                                    -AzureRegion "$($azureRegion)"
 
     $namespaceInformation = GetNamespaceInformation -ResourceGroupName "$($resourceGroupName)" -NamespaceName "$($namespaceName)"
 
-    $isEventHubCreated = CreateHubIfMissing -ResourceGroupName "$($resourceGroupName)" `
-                                            -NamespaceName "$($namespaceName)" `
-                                            -EventHubName "$($eventHubName)"
+    $wasEventHubCreated = CreateEventHubIfMissing -ResourceGroupName "$($resourceGroupName)" `
+                                                  -NamespaceName "$($namespaceName)" `
+                                                  -EventHubName "$($eventHubName)"
 
     # Create the service principal and grant 'Azure Event Hubs Data Owner' access in the event hubs.
     
@@ -196,8 +196,8 @@ catch
     TearDownResources -ResourceGroupName "$($resourceGroupName)" `
                       -NamespaceName "$($namespaceName)" `
                       -EventHubName "$($eventHubName)" `
-                      -IsResourceGroupCreated $isResourceGroupCreated `
-                      -IsNamespaceCreated $isNamespaceCreated `
-                      -IsEventHubCreated $isEventHubCreated
+                      -WasResourceGroupCreated $wasResourceGroupCreated `
+                      -WasNamespaceCreated $wasNamespaceCreated `
+                      -WasEventHubCreated $wasEventHubCreated
     exit -1
 }

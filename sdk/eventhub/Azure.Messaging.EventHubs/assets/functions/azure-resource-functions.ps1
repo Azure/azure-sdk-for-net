@@ -42,7 +42,7 @@ function GenerateRandomPassword()
   return (-join $scrambled)
 }
 
-function SelectRandomCharacters 
+function SelectRandomCharacters()
 {    
   <#
     .SYNOPSIS
@@ -65,48 +65,6 @@ function SelectRandomCharacters
 #endregion Principal
 
 #region EventHubs
-
-function CreateHubIfMissing()
-{
-  <#
-    .SYNOPSIS
-      It tries to retrieve the specified namespace.
-      It creates if it may not be found.
-  #>
-
-  param
-  (
-    [Parameter(Mandatory=$true)]
-    [string] $resourceGroupName,
-
-    [Parameter(Mandatory=$true)]
-    [string] $namespaceName,
-
-    [Parameter(Mandatory=$true)]
-    [string] $eventHubName
-  )
-
-  Write-Host "`t...Requesting eventHub"
-  
-  $eventHub = Get-AzEventHub -ResourceGroupName $resourceGroupName `
-                             -NamespaceName $namespaceName `
-                             -EventHubName $eventHubName `
-                             -ErrorAction SilentlyContinue
-
-  if ($eventHub -eq $null)
-  {
-      # Creates the Event Hub if does not exist
-      Write-Host "`t...Creating new eventHub"
-
-      New-AzEventHub -ResourceGroupName $resourceGroupName `
-                     -NamespaceName $namespaceName `
-                     -EventHubName $eventHubName | Out-Null
-
-      return $true
-  }
-
-  return $false
-}
 
 function GetFullyQualifiedDomainName()
 {
@@ -215,6 +173,54 @@ function GetNamespaceInformation()
 
 #region ResourceManagement
 
+function CreateResourceGroupIfMissing()
+{
+  <#
+    .SYNOPSIS
+      It tries to retrieve the specified resource group.
+      It creates if it may not be found.
+
+    .DESCRIPTION
+      It tries to retrieve the specified resource group.
+      It creates if it may not be found.
+  #>
+
+  param
+  (
+    [Parameter(Mandatory=$true)]
+    [string] $resourceGroupName,
+
+    [Parameter(Mandatory=$true)]  
+    [string] $azureRegion
+  )
+
+  # Create the resource group, if needed.
+
+  Write-Host "`t...Requesting resource group"
+
+  $createResourceGroup = $false
+  $resourceGroup = (Get-AzResourceGroup -ResourceGroupName "$($resourceGroupName)" -ErrorAction SilentlyContinue)
+
+  if ($resourceGroup -eq $null)
+  {
+      $createResourceGroup = $true
+  }
+
+  if ($createResourceGroup)
+  {
+      Write-Host "`t...Creating new resource group"
+      $resourceGroup = (New-AzResourceGroup -Name "$($resourceGroupName)" -Location "$($azureRegion)")
+  }
+
+  if ($resourceGroup -eq $null)
+  {
+      Write-Error "Unable to locate or create the resource group: $($resourceGroupName)"
+      exit -1
+  }
+
+  return $createResourceGroup
+}
+
 function CreateNamespaceIfMissing()
 {
   <#
@@ -257,7 +263,49 @@ function CreateNamespaceIfMissing()
   return $false
 }
 
-function TearDownResources 
+function CreateEventHubIfMissing()
+{
+  <#
+    .SYNOPSIS
+      It tries to retrieve the specified namespace.
+      It creates if it may not be found.
+  #>
+
+  param
+  (
+    [Parameter(Mandatory=$true)]
+    [string] $resourceGroupName,
+
+    [Parameter(Mandatory=$true)]
+    [string] $namespaceName,
+
+    [Parameter(Mandatory=$true)]
+    [string] $eventHubName
+  )
+
+  Write-Host "`t...Requesting eventHub"
+  
+  $eventHub = Get-AzEventHub -ResourceGroupName $resourceGroupName `
+                             -NamespaceName $namespaceName `
+                             -EventHubName $eventHubName `
+                             -ErrorAction SilentlyContinue
+
+  if ($eventHub -eq $null)
+  {
+      # Creates the Event Hub if does not exist
+      Write-Host "`t...Creating new eventHub"
+
+      New-AzEventHub -ResourceGroupName $resourceGroupName `
+                     -NamespaceName $namespaceName `
+                     -EventHubName $eventHubName | Out-Null
+
+      return $true
+  }
+
+  return $false
+}
+
+function TearDownResources()
 {
   <#
     .SYNOPSIS
@@ -283,29 +331,29 @@ function TearDownResources
     [string] $eventHubName,
 
     [Parameter(Mandatory=$false)]
-    [string] $isResourceGroupCreated = $false,
+    [string] $wasResourceGroupCreated = $false,
 
     [Parameter(Mandatory=$false)]
-    [string] $isNamespaceCreated = $false,
+    [string] $wasNamespaceCreated = $false,
 
     [Parameter(Mandatory=$false)]
-    [string] $isEventHubCreated = $false
+    [string] $wasEventHubCreated = $false
   )
 
-  if($isEventHubCreated -eq $true)
+  if($wasEventHubCreated -eq $true)
   {
     TearDownEventHub -ResourceGroupName "$($resourceGroupName)" `
                      -NamespaceName "$($namespaceName)" `
                      -EventHubName "$($eventHubName)"
   }
 
-  if($isNamespaceCreated -eq $true)
+  if($wasNamespaceCreated -eq $true)
   {
     TearDownNamespace -ResourceGroupName "$($resourceGroupName)" `
                       -NamespaceName "$($namespaceName)"
   }
 
-  if ($isResourceGroupCreated -eq $true)
+  if ($wasResourceGroupCreated -eq $true)
   {
     TearDownResourceGroup -ResourceGroupName "$($resourceGroupName)"
   }
@@ -401,7 +449,7 @@ function TearDownResourceGroup()
   }
 }
 
-function CreateServicePrincipalAndWait 
+function CreateServicePrincipalAndWait()
 {
   <#
     .SYNOPSIS
@@ -444,7 +492,7 @@ function CreateServicePrincipalAndWait
   return $principal
 }
 
-function GetSubscriptionAndSetAzureContext
+function GetSubscriptionAndSetAzureContext()
 {
   <#
     .SYNOPSIS
@@ -479,54 +527,6 @@ function GetSubscriptionAndSetAzureContext
   Set-AzContext -SubscriptionId "$($subscription.Id)" -Scope "Process" | Out-Null
 
   return $subscription
-}
-
-function CreateResourceGroupIfMissing()
-{
-  <#
-    .SYNOPSIS
-      It tries to retrieve the specified resource group.
-      It creates if it may not be found.
-
-    .DESCRIPTION
-      It tries to retrieve the specified resource group.
-      It creates if it may not be found.
-  #>
-
-  param
-  (
-    [Parameter(Mandatory=$true)]
-    [string] $resourceGroupName,
-
-    [Parameter(Mandatory=$true)]  
-    [string] $azureRegion
-  )
-
-  # Create the resource group, if needed.
-
-  Write-Host "`t...Requesting resource group"
-
-  $createResourceGroup = $false
-  $resourceGroup = (Get-AzResourceGroup -ResourceGroupName "$($resourceGroupName)" -ErrorAction SilentlyContinue)
-
-  if ($resourceGroup -eq $null)
-  {
-      $createResourceGroup = $true
-  }
-
-  if ($createResourceGroup)
-  {
-      Write-Host "`t...Creating new resource group"
-      $resourceGroup = (New-AzResourceGroup -Name "$($resourceGroupName)" -Location "$($azureRegion)")
-  }
-
-  if ($resourceGroup -eq $null)
-  {
-      Write-Error "Unable to locate or create the resource group: $($resourceGroupName)"
-      exit -1
-  }
-
-  return $createResourceGroup
 }
 
 function AssignRole()
@@ -684,7 +684,7 @@ function ValidateServicePrincipal()
   }
 }
 
-function ValidateAzureRegion 
+function ValidateAzureRegion()
 {
   <#
     .SYNOPSIS

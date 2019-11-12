@@ -56,7 +56,7 @@ Import-Module Az.Resources
 # == Function Imports ==
 # ==========================
 
-. .\functions\azure-principal-functions.ps1
+. .\functions\azure-resource-functions.ps1
 
 function DisplayHelp
 {
@@ -129,7 +129,7 @@ if ([string]::IsNullOrEmpty($azureRegion))
 
 ValidateParameters -ServicePrincipalName "$($servicePrincipalName)" -AzureRegion "$($azureRegion)"
 $subscription = GetSubscriptionAndSetAzureContext -SubscriptionName "$($subscriptionName)"
-$isResourceGroupCreated = CreateResourceGroupIfMissing -ResourceGroupName "$($resourceGroupName)" -AzureRegion "$($azureRegion)"
+$wasResourceGroupCreated = CreateResourceGroupIfMissing -ResourceGroupName "$($resourceGroupName)" -AzureRegion "$($azureRegion)"
 
 # At this point, we may have created a resource, so be safe and allow for removing any
 # resources created should the script fail.
@@ -173,6 +173,6 @@ catch
 {
     Write-Error $_.Exception.Message
     TearDownResources -ResourceGroupName "$($resourceGroupName)" `
-                      -IsResourceGroupCreated $isResourceGroupCreated
+                      -WasResourceGroupCreated $wasResourceGroupCreated
     exit -1
 }
