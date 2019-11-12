@@ -76,7 +76,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         /// <param name="consumerGroup">The name of the consumer group the event processors are associated with.  Events are read in the context of this group.</param>
-        /// <param name="connection">The <see cref="EventHubConnection" /> to use for communication with the Event Hubs service.</param>
+        /// <param name="connectionString">TODO.</param>
         /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.</param>
         /// <param name="options">The set of options to use for the event processors.</param>
         /// <param name="onInitialize">A callback action to be called on <see cref="EventProcessorClient.InitializeProcessingForPartitionAsyncHandler" />.</param>
@@ -85,7 +85,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <param name="onProcessException">A callback action to be called on <see cref="EventProcessorClient.ProcessErrorAsyncHandler" />.</param>
         ///
         public EventProcessorManager(string consumerGroup,
-                                     EventHubConnection connection,
+                                     string connectionString,
                                      PartitionManager partitionManager = null,
                                      EventProcessorClientOptions options = null,
                                      Action<InitializePartitionProcessingContext> onInitialize = null,
@@ -94,7 +94,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                      Action<ProcessorErrorContext> onProcessException = null)
         {
             ConsumerGroup = consumerGroup;
-            Connection = connection;
+            Connection = new EventHubConnection(connectionString);
             InnerPartitionManager = partitionManager ?? new InMemoryPartitionManager();
 
             // In case it has not been specified, set the maximum receive wait time to 2 seconds because the default

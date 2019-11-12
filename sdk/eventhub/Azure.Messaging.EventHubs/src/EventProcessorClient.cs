@@ -341,6 +341,8 @@ namespace Azure.Messaging.EventHubs
             PartitionPumps = new ConcurrentDictionary<string, PartitionPump>();
         }
 
+        // TODO: remove this constructor if not needed anymore.
+
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventProcessorClient"/> class.
         /// </summary>
