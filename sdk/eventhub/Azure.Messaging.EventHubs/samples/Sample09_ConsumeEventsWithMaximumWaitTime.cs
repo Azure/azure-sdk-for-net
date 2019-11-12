@@ -87,15 +87,11 @@ namespace Azure.Messaging.EventHubs.Samples
                 // To be sure that we do not block forever waiting on an event that is not published, we will request cancellation after a
                 // fairly long interval.
 
-                EventData[] eventsToPublish = new EventData[]
-                {
-                    new EventData(Encoding.UTF8.GetBytes("Hello, Event Hubs!")),
-                    new EventData(Encoding.UTF8.GetBytes("Goodbye, Event Hubs!"))
-                };
-
                 bool wereEventsPublished = false;
-                Stopwatch watch = Stopwatch.StartNew();
+                int eventBatchCount = 0;
                 List<EventData> receivedEvents = new List<EventData>();
+
+                Stopwatch watch = Stopwatch.StartNew();
 
                 CancellationTokenSource cancellationSource = new CancellationTokenSource();
                 cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
@@ -106,17 +102,24 @@ namespace Azure.Messaging.EventHubs.Samples
                 {
                     if (!wereEventsPublished)
                     {
-                        await using var producerClient = new EventHubProducerClient(connectionString, eventHubName, new EventHubProducerClientOptions { PartitionId = firstPartition });
-                        await producerClient.SendAsync(eventsToPublish);
-                        wereEventsPublished = true;
+                        await using (var producerClient = new EventHubProducerClient(connectionString, eventHubName))
+                        {
+                            using EventDataBatch eventBatch = await producerClient.CreateBatchAsync(new CreateBatchOptions { PartitionId = firstPartition });
+                            eventBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes("Hello, Event Hubs!")));
+                            eventBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes("Goodbye, Event Hubs!")));
 
-                        Console.WriteLine("The event batch has been published.");
+                            await producerClient.SendAsync(eventBatch);
+                            wereEventsPublished = true;
+
+                            eventBatchCount = eventBatch.Count;
+                            Console.WriteLine("The event batch has been published.");
+                        }
                     }
                     else
                     {
                         receivedEvents.Add(currentEvent.Data);
 
-                        if (receivedEvents.Count > eventsToPublish.Length)
+                        if (receivedEvents.Count > eventBatchCount)
                         {
                             watch.Stop();
                             break;

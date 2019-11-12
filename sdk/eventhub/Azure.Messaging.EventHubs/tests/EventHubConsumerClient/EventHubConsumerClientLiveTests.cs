@@ -108,7 +108,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var partition = (await connection.GetPartitionIdsAsync(DefaultRetryPolicy)).First();
 
-                    await using (var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions { PartitionId = partition }))
+                    await using (var producer = new EventHubProducerClient(connection))
                     await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString))
                     {
                         // Read the events.
@@ -123,7 +123,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                             if (!wereEventsPublished)
                             {
-                                await producer.SendAsync(eventBatch);
+                                await producer.SendAsync(eventBatch, new SendOptions { PartitionId = partition });
                                 wereEventsPublished = true;
                             }
 
@@ -176,7 +176,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var partition = (await connection.GetPartitionIdsAsync(DefaultRetryPolicy)).First();
 
-                    await using (var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions { PartitionId = partition }))
+                    await using (var producer = new EventHubProducerClient(connection))
                     await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString))
                     {
                         /// Read the events.
@@ -191,7 +191,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                             if (!wereEventsPublished)
                             {
-                                await producer.SendAsync(eventBatch);
+                                await producer.SendAsync(eventBatch, new SendOptions { PartitionId = partition });
                                 wereEventsPublished = true;
                             }
 
@@ -246,7 +246,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var partition = (await connection.GetPartitionIdsAsync(DefaultRetryPolicy)).First();
 
-                    await using (var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions { PartitionId = partition }))
+                    await using (var producer = new EventHubProducerClient(connection))
                     await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection))
                     {
                         // Read the events.
@@ -261,7 +261,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                             if (!wereEventsPublished)
                             {
-                                await producer.SendAsync(eventSet);
+                                await producer.SendAsync(eventSet, new SendOptions { PartitionId = partition });
                                 wereEventsPublished = true;
                             }
 
@@ -319,7 +319,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     var retryOptions = new RetryOptions { TryTimeout = TimeSpan.FromMinutes(5) };
                     var partition = (await connection.GetPartitionIdsAsync(DefaultRetryPolicy)).First();
 
-                    await using (var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions { PartitionId = partition, RetryOptions = retryOptions }))
+                    await using (var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions { RetryOptions = retryOptions }))
                     await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection, new EventHubConsumerClientOptions { RetryOptions = retryOptions }))
                     {
                         // Read the events.
@@ -334,7 +334,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                             if (!wereEventsPublished)
                             {
-                                await producer.SendAsync(eventBatch);
+                                await producer.SendAsync(eventBatch, new SendOptions { PartitionId = partition });
                                 wereEventsPublished = true;
                             }
 
@@ -396,7 +396,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var partition = (await connection.GetPartitionIdsAsync(DefaultRetryPolicy)).First();
 
-                    await using (var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions { PartitionId = partition }))
+                    await using (var producer = new EventHubProducerClient(connection))
                     await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection))
                     {
                         // Read the events.
@@ -411,7 +411,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                             if (!wereEventsPublished)
                             {
-                                await producer.SendAsync(eventBatch);
+                                await producer.SendAsync(eventBatch, new SendOptions { PartitionId = partition });
                                 wereEventsPublished = true;
                             }
 
@@ -466,7 +466,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     var stampEvent = new EventData(new byte[1]);
                     stampEvent.Properties["stamp"] = Guid.NewGuid().ToString();
 
-                    await using (var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions { PartitionId = partition }))
+                    await using (var producer = new EventHubProducerClient(connection))
                     await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection))
                     {
                         // Sending some events beforehand so the partition has some information.
@@ -483,7 +483,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                             if (!wereEventsPublished)
                             {
-                                await producer.SendAsync(stampEvent);
+                                await producer.SendAsync(stampEvent, new SendOptions { PartitionId = partition });
                                 wereEventsPublished = true;
                             }
 
@@ -522,12 +522,12 @@ namespace Azure.Messaging.EventHubs.Tests
                     var partition = (await connection.GetPartitionIdsAsync(DefaultRetryPolicy)).First();
                     var expectedEventsCount = 10;
 
-                    await using (var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions { PartitionId = partition }))
+                    await using (var producer = new EventHubProducerClient(connection))
                     await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection))
                     {
                         for (int i = 0; i < expectedEventsCount; i++)
                         {
-                            await producer.SendAsync(new EventData(new byte[1]));
+                            await producer.SendAsync(new EventData(new byte[1]), new SendOptions { PartitionId = partition });
                         }
 
                         // Read the events.
@@ -570,13 +570,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var partition = (await connection.GetPartitionIdsAsync(DefaultRetryPolicy)).First();
 
-                    await using (var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions { PartitionId = partition }))
+                    await using (var producer = new EventHubProducerClient(connection))
                     {
                         // Sending some events beforehand so the partition has some information.
 
                         for (var i = 0; i < 10; i++)
                         {
-                            await producer.SendAsync(new EventData(new byte[1]));
+                            await producer.SendAsync(new EventData(new byte[1]), new SendOptions { PartitionId = partition });
                         }
 
                         // Store last enqueued offset.
@@ -640,13 +640,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var partition = (await connection.GetPartitionIdsAsync(DefaultRetryPolicy)).First();
 
-                    await using (var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions { PartitionId = partition }))
+                    await using (var producer = new EventHubProducerClient(connection))
                     {
                         // Sending some events beforehand so the partition has some information.
 
                         for (var i = 0; i < 10; i++)
                         {
-                            await producer.SendAsync(new EventData(new byte[1]));
+                            await producer.SendAsync(new EventData(new byte[1]), new SendOptions { PartitionId = partition });
                         }
 
                         // Store last enqueued time.
@@ -708,7 +708,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var partition = (await connection.GetPartitionIdsAsync(DefaultRetryPolicy)).First();
 
-                    await using (var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions { PartitionId = partition }))
+                    await using (var producer = new EventHubProducerClient(connection))
                     {
                         // Sending some events beforehand so the partition has some information.
 
@@ -729,7 +729,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             var stampEvent = new EventData(new byte[1]);
                             stampEvent.Properties["stamp"] = Guid.NewGuid().ToString();
 
-                            await producer.SendAsync(stampEvent);
+                            await producer.SendAsync(stampEvent, new SendOptions { PartitionId = partition });
 
                             // Read the events.
 
@@ -1443,7 +1443,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     using var cancellationSource = new CancellationTokenSource();
                     cancellationSource.CancelAfter(TimeSpan.FromMinutes(5));
 
-                    await using var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions { PartitionId = partitionIds[0] });
+                    await using var producer = new EventHubProducerClient(connection);
                     await using var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString);
 
                     var receivedEvents = new List<EventData>();
@@ -1461,7 +1461,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                             for (var batchesCount = 0; batchesCount < batches; batchesCount++)
                             {
-                                await producer.SendAsync(eventBatch);
+                                await producer.SendAsync(eventBatch, new SendOptions { PartitionId = partitionIds[0] });
                             }
 
                             wereEventsPublished = true;
@@ -1516,8 +1516,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // Send the batch of events.
 
-                    await using var producer = new EventHubProducerClient(connectionString, new EventHubProducerClientOptions { PartitionId = partition });
-                    await producer.SendAsync(eventBatch);
+                    await using var producer = new EventHubProducerClient(connectionString);
+                    await producer.SendAsync(eventBatch, new SendOptions { PartitionId = partition });
 
                     // Read back the events from two different consumer groups.
 

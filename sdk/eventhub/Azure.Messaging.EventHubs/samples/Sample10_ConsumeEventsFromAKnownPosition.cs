@@ -98,18 +98,20 @@ namespace Azure.Messaging.EventHubs.Samples
                     {
                         if (!wereEventsPublished)
                         {
-                            EventData[] eventBatch = new EventData[eventBatchSize];
-
-                            for (int index = 0; index < eventBatchSize; ++index)
+                            await using (var producerClient = new EventHubProducerClient(connectionString, eventHubName))
                             {
-                                eventBatch[index] = new EventData(Encoding.UTF8.GetBytes($"I am event #{ index }"));
+                                using EventDataBatch eventBatch = await producerClient.CreateBatchAsync(new CreateBatchOptions { PartitionId = firstPartition });
+
+                                for (int index = 0; index < eventBatchSize; ++index)
+                                {
+                                    eventBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes($"I am event #{ index }")));
+                                }
+
+                                await producerClient.SendAsync(eventBatch);
+                                wereEventsPublished = true;
+
+                                Console.WriteLine($"The event batch with { eventBatchSize } events has been published.");
                             }
-
-                            await using var producerClient = new EventHubProducerClient(connectionString, eventHubName, new EventHubProducerClientOptions { PartitionId = firstPartition });
-                            await producerClient.SendAsync(eventBatch);
-                            wereEventsPublished = true;
-
-                            Console.WriteLine($"The event batch with { eventBatchSize } events has been published.");
                         }
 
                         // Because publishing and receiving events is asynchronous, the events that we published may not
