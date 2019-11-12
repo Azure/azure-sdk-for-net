@@ -11,6 +11,11 @@ namespace Azure.Identity
     public class DefaultAzureCredentialOptions : TokenCredentialOptions
     {
         /// <summary>
+        ///
+        /// </summary>
+        public string InteractiveBrowserTenantId { get; set; } = EnvironmentVariables.TenantId;
+
+        /// <summary>
         /// Specifies the tenant id of the preferred authentication account, to be retrieved from the shared token cache for single sign on authentication with
         /// development tools, in the case multiple accounts are found in the shared token.
         /// </summary>
@@ -55,7 +60,7 @@ namespace Azure.Identity
 
         /// <summary>
         /// Specifies whether the <see cref="InteractiveBrowserCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
-        /// Setting to true disables launching the default system browser to authenticate in developement environments.
+        /// Setting to true disables launching the default system browser to authenticate in development environments.
         /// </summary>
         public bool ExcludeInteractiveBrowserCredential { get; set; } = true;
     }

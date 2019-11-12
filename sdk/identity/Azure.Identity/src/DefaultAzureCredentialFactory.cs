@@ -31,9 +31,9 @@ namespace Azure.Identity
             return new SharedTokenCacheCredential(tenantId, username, Pipeline);
         }
 
-        public virtual IExtendedTokenCredential CreateInteractiveBrowserCredential()
+        public virtual IExtendedTokenCredential CreateInteractiveBrowserCredential(string tenantId)
         {
-            return new InteractiveBrowserCredential(null, Constants.DeveloperSignOnClientId, Pipeline);
+            return new InteractiveBrowserCredential(tenantId, Constants.DeveloperSignOnClientId, Pipeline);
         }
     }
 }

@@ -150,7 +150,7 @@ namespace Azure.Identity
 
             if (!options.ExcludeInteractiveBrowserCredential)
             {
-                chain[i++] = factory.CreateInteractiveBrowserCredential();
+                chain[i++] = factory.CreateInteractiveBrowserCredential(options.InteractiveBrowserTenantId);
             }
 
             if (i == 0)
