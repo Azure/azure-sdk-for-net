@@ -26,12 +26,6 @@ namespace Azure.Messaging.EventHubs
     ///
     public class EventProcessorClient : EventProcessorBase, IAsyncDisposable
     {
-        /// <summary>The seed to use for initializing random number generated for a given thread-specific instance.</summary>
-        private static int s_randomSeed = Environment.TickCount;
-
-        /// <summary>The random number generator to use for a specific thread.</summary>
-        private static readonly ThreadLocal<Random> RandomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
-
         /// <summary>The primitive for synchronizing access during start and close operations.</summary>
         private readonly SemaphoreSlim RunningTaskSemaphore = new SemaphoreSlim(1, 1);
 
@@ -116,7 +110,7 @@ namespace Azure.Messaging.EventHubs
         ///   A unique name used to identify this event processor.
         /// </summary>
         ///
-        public string Identifier { get; }
+        public override string Identifier { get; }
 
         /// <summary>
         ///   The minimum amount of time to be elapsed between two load balancing verifications.
@@ -863,111 +857,6 @@ namespace Azure.Messaging.EventHubs
                     await Task.Delay(remainingTimeUntilNextCycle, cancellationToken).ConfigureAwait(false);
                 }
             }
-        }
-
-        /// <summary>
-        ///   Finds and tries to claim an ownership if this <see cref="EventProcessorClient" /> instance is eligible to increase its ownership
-        ///   list.
-        /// </summary>
-        ///
-        /// <param name="partitionIds">TODO.</param>
-        /// <param name="completeOwnershipEnumerable">A complete enumerable of ownership obtained from the stored service provided by the user.</param>
-        /// <param name="activeOwnership">The set of ownership that are still active.</param>
-        ///
-        /// <returns>The claimed ownership. <c>null</c> if this instance is not eligible, if no claimable ownership was found or if the claim attempt failed.</returns>
-        ///
-        private async Task<PartitionOwnership> FindAndClaimOwnershipAsync(string[] partitionIds,
-                                                                          IEnumerable<PartitionOwnership> completeOwnershipEnumerable,
-                                                                          IEnumerable<PartitionOwnership> activeOwnership)
-        {
-            // Create a partition distribution dictionary from the active ownership list we have, mapping an owner's identifier to the amount of
-            // partitions it owns.  When an event processor goes down and it has only expired ownership, it will not be taken into consideration
-            // by others.
-
-            var partitionDistribution = new Dictionary<string, int>
-            {
-                { Identifier, 0 }
-            };
-
-            foreach (PartitionOwnership ownership in activeOwnership)
-            {
-                if (partitionDistribution.TryGetValue(ownership.OwnerIdentifier, out var value))
-                {
-                    partitionDistribution[ownership.OwnerIdentifier] = value + 1;
-                }
-                else
-                {
-                    partitionDistribution[ownership.OwnerIdentifier] = 1;
-                }
-            }
-
-            // The minimum owned partitions count is the minimum amount of partitions every event processor needs to own when the distribution
-            // is balanced.  If n = minimumOwnedPartitionsCount, a balanced distribution will only have processors that own n or n + 1 partitions
-            // each.  We can guarantee the partition distribution has at least one key, which corresponds to this event processor instance, even
-            // if it owns no partitions.
-
-            var minimumOwnedPartitionsCount = partitionIds.Length / partitionDistribution.Keys.Count;
-            var ownedPartitionsCount = partitionDistribution[Identifier];
-
-            // There are two possible situations in which we may need to claim a partition ownership.
-            //
-            // The first one is when we are below the minimum amount of owned partitions.  There's nothing more to check, as we need to claim more
-            // partitions to enforce balancing.
-            //
-            // The second case is a bit tricky.  Sometimes the claim must be performed by an event processor that already has reached the minimum
-            // amount of ownership.  This may happen, for instance, when we have 13 partitions and 3 processors, each of them owning 4 partitions.
-            // The minimum amount of partitions per processor is, in fact, 4, but in this example we still have 1 orphan partition to claim.  To
-            // avoid overlooking this kind of situation, we may want to claim an ownership when we have exactly the minimum amount of ownership,
-            // but we are making sure there are no better candidates among the other event processors.
-
-            if (ownedPartitionsCount < minimumOwnedPartitionsCount ||
-                ownedPartitionsCount == minimumOwnedPartitionsCount && !partitionDistribution.Values.Any(partitions => partitions < minimumOwnedPartitionsCount))
-            {
-                // Look for unclaimed partitions.  If any, randomly pick one of them to claim.
-
-                IEnumerable<string> unclaimedPartitions = partitionIds
-                    .Except(activeOwnership.Select(ownership => ownership.PartitionId));
-
-                if (unclaimedPartitions.Any())
-                {
-                    var index = RandomNumberGenerator.Value.Next(unclaimedPartitions.Count());
-
-                    return await ClaimOwnershipAsync(unclaimedPartitions.ElementAt(index), completeOwnershipEnumerable).ConfigureAwait(false);
-                }
-
-                // Only try to steal partitions if there are no unclaimed partitions left.  At first, only processors that have exceeded the
-                // maximum owned partition count should be targeted.
-
-                var maximumOwnedPartitionsCount = minimumOwnedPartitionsCount + 1;
-
-                IEnumerable<string> stealablePartitions = activeOwnership
-                    .Where(ownership => partitionDistribution[ownership.OwnerIdentifier] > maximumOwnedPartitionsCount)
-                    .Select(ownership => ownership.PartitionId);
-
-                // Here's the important part.  If there are no processors that have exceeded the maximum owned partition count allowed, we may
-                // need to steal from the processors that have exactly the maximum amount.  If this instance is below the minimum count, then
-                // we have no choice as we need to enforce balancing.  Otherwise, leave it as it is because the distribution wouldn't change.
-
-                if (!stealablePartitions.Any() && ownedPartitionsCount < minimumOwnedPartitionsCount)
-                {
-                    stealablePartitions = activeOwnership
-                        .Where(ownership => partitionDistribution[ownership.OwnerIdentifier] == maximumOwnedPartitionsCount)
-                        .Select(ownership => ownership.PartitionId);
-                }
-
-                // If any stealable partitions were found, randomly pick one of them to claim.
-
-                if (stealablePartitions.Any())
-                {
-                    var index = RandomNumberGenerator.Value.Next(stealablePartitions.Count());
-
-                    return await ClaimOwnershipAsync(stealablePartitions.ElementAt(index), completeOwnershipEnumerable).ConfigureAwait(false);
-                }
-            }
-
-            // No ownership was claimed.
-
-            return null;
         }
 
         /// <summary>
