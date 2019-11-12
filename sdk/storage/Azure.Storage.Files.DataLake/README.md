@@ -169,7 +169,7 @@ fileClient.Create();
 
 // Set Access Control List
 IList<PathAccessControlEntry> accessControlList
-    = PathAccessControlExtensions.DeserializeAccessControlList("user::rwx,group::r--,mask::rwx,other::---");
+    = PathAccessControlExtensions.ParseAccessControlList("user::rwx,group::r--,mask::rwx,other::---");
 fileClient.SetAccessControlList(accessControlList);
 ```
 
