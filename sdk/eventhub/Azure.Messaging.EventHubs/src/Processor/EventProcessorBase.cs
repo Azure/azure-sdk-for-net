@@ -142,6 +142,20 @@ namespace Azure.Messaging.EventHubs.Processor
                                                                        string eTag);
 
         /// <summary>
+        ///   Creates an <see cref="EventHubConnection" /> instance.  The returned instance must not be returned again by other
+        ///   <see cref="CreateConnection" /> calls.
+        /// </summary>
+        ///
+        /// <returns>A new <see cref="EventHubConnection" /> instance.</returns>
+        ///
+        /// <remarks>
+        ///   The abstract <see cref="EventProcessorBase" /> class has ownership of the returned connection and, therefore, is
+        ///   responsible for closing it.  Attempting to close the connection in the derived class may result in undefined behavior.
+        /// </remarks>
+        ///
+        protected abstract EventHubConnection CreateConnection();
+
+        /// <summary>
         ///   Tries to claim ownership of the specified partition. TODO: make it private.
         /// </summary>
         ///

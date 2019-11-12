@@ -423,7 +423,7 @@ namespace Azure.Messaging.EventHubs
                     startingPosition = EventPosition.FromSequenceNumber(ownership.SequenceNumber.Value);
                 }
 
-                var partitionPump = new PartitionPump(ConnectionFactory(), ConsumerGroup, context, startingPosition, ProcessEventAsync, Options);
+                var partitionPump = new PartitionPump(CreateConnection(), ConsumerGroup, context, startingPosition, ProcessEventAsync, Options);
                 await partitionPump.StartAsync().ConfigureAwait(false);
 
                 PartitionPumps[context.PartitionId] = partitionPump;
@@ -579,6 +579,20 @@ namespace Azure.Messaging.EventHubs
                                                                        long? sequenceNumber,
                                                                        DateTimeOffset? lastModifiedTime,
                                                                        string eTag) => new PartitionOwnership(FullyQualifiedNamespace, EventHubName, ConsumerGroup, Identifier, partitionId, offset, sequenceNumber, lastModifiedTime, eTag);
+
+        /// <summary>
+        ///   Creates an <see cref="EventHubConnection" /> instance.  The returned instance must not be returned again by other
+        ///   <see cref="CreateConnection" /> calls.
+        /// </summary>
+        ///
+        /// <returns>A new <see cref="EventHubConnection" /> instance.</returns>
+        ///
+        /// <remarks>
+        ///   The abstract <see cref="EventProcessorBase" /> class has ownership of the returned connection and, therefore, is
+        ///   responsible for closing it.  Attempting to close the connection in the derived class may result in undefined behavior.
+        /// </remarks>
+        ///
+        protected override EventHubConnection CreateConnection() => ConnectionFactory();
 
         /// <summary>
         ///   Starts the event processor.  In case it's already running, nothing happens.
@@ -770,7 +784,7 @@ namespace Azure.Messaging.EventHubs
         {
             // We'll use this connection to retrieve an updated list of partition ids from the service.
 
-            await using var connection = ConnectionFactory();
+            await using var connection = CreateConnection();
 
             while (!cancellationToken.IsCancellationRequested)
             {
