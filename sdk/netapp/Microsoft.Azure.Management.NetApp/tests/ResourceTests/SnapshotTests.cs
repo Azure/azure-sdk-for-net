@@ -24,19 +24,16 @@ namespace NetApp.Tests.ResourceTests
             {
                 var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
-                var timeNow = DateTime.UtcNow;
-
                 // create the snapshot
                 ResourceUtils.CreateSnapshot(netAppMgmtClient);
 
                 // check snapshot exists
                 var snapshotsBefore = netAppMgmtClient.Snapshots.List(ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1, ResourceUtils.volumeName1);
                 Assert.Single(snapshotsBefore);
-                // check date created - might have taken a few minutes
-                // possible issue with recording times. Commenting out
+                // check date created has been set to something
+                // can't check exact times becausefails in playback mode
                 Assert.True(true);
-                //Assert.True((timeNow < snapshotsBefore.First().Created) &&
-                //            (snapshotsBefore.First().Created <(timeNow.AddMinutes(20))));
+                Assert.NotNull(snapshotsBefore.First().Created);
 
                 // delete the snapshot and check again
                 netAppMgmtClient.Snapshots.Delete(ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1, ResourceUtils.volumeName1, ResourceUtils.snapshotName1);
