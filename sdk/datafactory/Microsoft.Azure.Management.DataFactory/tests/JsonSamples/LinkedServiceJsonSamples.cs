@@ -2389,7 +2389,9 @@ namespace DataFactory.Tests.JsonSamples
             password : {
                 type : ""SecureString"",
                 value : ""some password""
-            }
+            },
+            packageCollection : ""fakepackageCollection"",
+            certificateCommonName : ""fakecertificateCommonName""
         }
     }
 }";
