@@ -20,8 +20,8 @@ namespace Azure.Storage.Blobs.Test
         public void SasQueryParameters_RoundTrip()
         {
             var version = "2018-03-28";
-            AccountSasServices service = AccountSasServices.Blobs;
-            AccountSasResourceTypes resourceType = AccountSasResourceTypes.Container;
+            var service = "b";
+            var resourceType = "c";
             SasProtocol protocol = SasProtocol.Https;
             DateTimeOffset startTime = DateTimeOffset.Now;
             DateTimeOffset expiryTime = startTime.AddDays(1);

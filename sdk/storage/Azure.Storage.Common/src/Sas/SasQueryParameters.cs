@@ -41,10 +41,10 @@ namespace Azure.Storage.Sas
         private readonly string _version;
 
         // ss
-        private readonly AccountSasServices? _services;
+        private readonly string _services;
 
         // srt
-        private readonly AccountSasResourceTypes? _resourceTypes;
+        private readonly string _resourceTypes;
 
         // spr
         private readonly SasProtocol _protocol;
@@ -96,12 +96,12 @@ namespace Azure.Storage.Sas
         /// Gets the signed services accessible with an account level shared
         /// access signature.
         /// </summary>
-        public AccountSasServices? Services => _services;
+        public string Services => _services ?? string.Empty;
 
         /// <summary>
         /// Gets which resources are accessible via the shared access signature.
         /// </summary>
-        public AccountSasResourceTypes? ResourceTypes => _resourceTypes;
+        public string ResourceTypes => _resourceTypes ?? string.Empty;
 
         /// <summary>
         /// Optional. Specifies the protocol permitted for a request made with
@@ -223,8 +223,8 @@ namespace Azure.Storage.Sas
         /// </summary>
         internal SasQueryParameters(
             string version,
-            AccountSasServices? services,
-            AccountSasResourceTypes? resourceTypes,
+            string services,
+            string resourceTypes,
             SasProtocol protocol,
             DateTimeOffset startTime,
             DateTimeOffset expiryTime,
@@ -247,8 +247,8 @@ namespace Azure.Storage.Sas
         {
             // Assume URL-decoded
             _version = version ?? DefaultSasVersion;
-            _services = services;
-            _resourceTypes = resourceTypes;
+            _services = services ?? string.Empty;
+            _resourceTypes = resourceTypes ?? string.Empty;
             _protocol = protocol;
             _startTime = startTime;
             _expiryTime = expiryTime;
@@ -297,13 +297,13 @@ namespace Azure.Storage.Sas
                         _version = kv.Value;
                         break;
                     case Constants.Sas.Parameters.ServicesUpper:
-                        _services = SasExtensions.ParseAccountServices(kv.Value);
+                        _services = kv.Value;
                         break;
                     case Constants.Sas.Parameters.ResourceTypesUpper:
-                        _resourceTypes = SasExtensions.ParseResourceTypes(kv.Value);
+                        _resourceTypes = kv.Value;
                         break;
                     case Constants.Sas.Parameters.ProtocolUpper:
-                        _protocol = SasExtensions.ParseProtocol(kv.Value);
+                        _protocol = SasProtocol.Parse(kv.Value);
                         break;
                     case Constants.Sas.Parameters.StartTimeUpper:
                         _startTime = DateTimeOffset.ParseExact(kv.Value, Constants.SasTimeFormat, CultureInfo.InvariantCulture);
@@ -418,19 +418,19 @@ namespace Azure.Storage.Sas
                 AddToBuilder(Constants.Sas.Parameters.Version, Version);
             }
 
-            if (Services != null)
+            if (!string.IsNullOrWhiteSpace(Services))
             {
-                AddToBuilder(Constants.Sas.Parameters.Services, Services.Value.ToPermissionsString());
+                AddToBuilder(Constants.Sas.Parameters.Services, Services);
             }
 
-            if (ResourceTypes != null)
+            if (!string.IsNullOrWhiteSpace(ResourceTypes))
             {
-                AddToBuilder(Constants.Sas.Parameters.ResourceTypes, ResourceTypes.Value.ToPermissionsString());
+                AddToBuilder(Constants.Sas.Parameters.ResourceTypes, ResourceTypes);
             }
 
-            if (Protocol != default)
+            if (Protocol != SasProtocol.None)
             {
-                AddToBuilder(Constants.Sas.Parameters.Protocol, Protocol.ToProtocolString());
+                AddToBuilder(Constants.Sas.Parameters.Protocol, Protocol.ToString());
             }
 
             if (StartTime != DateTimeOffset.MinValue)

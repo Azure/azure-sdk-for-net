@@ -49,8 +49,8 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(SasQueryParameters.DefaultSasVersion, sasQueryParameters.Version);
-            Assert.IsNull(sasQueryParameters.Services);
-            Assert.IsNull(sasQueryParameters.ResourceTypes);
+            Assert.AreEqual(String.Empty, sasQueryParameters.Services);
+            Assert.AreEqual(String.Empty, sasQueryParameters.ResourceTypes);
             Assert.AreEqual(constants.Sas.Protocol, sasQueryParameters.Protocol);
             Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartTime);
             Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiryTime);
@@ -77,8 +77,8 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(SasQueryParameters.DefaultSasVersion, sasQueryParameters.Version);
-            Assert.IsNull(sasQueryParameters.Services);
-            Assert.IsNull(sasQueryParameters.ResourceTypes);
+            Assert.AreEqual(String.Empty, sasQueryParameters.Services);
+            Assert.AreEqual(String.Empty, sasQueryParameters.ResourceTypes);
             Assert.AreEqual(constants.Sas.Protocol, sasQueryParameters.Protocol);
             Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartTime);
             Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiryTime);
@@ -111,8 +111,8 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(SasQueryParameters.DefaultSasVersion, sasQueryParameters.Version);
-            Assert.IsNull(sasQueryParameters.Services);
-            Assert.IsNull(sasQueryParameters.ResourceTypes);
+            Assert.AreEqual(String.Empty, sasQueryParameters.Services);
+            Assert.AreEqual(String.Empty, sasQueryParameters.ResourceTypes);
             Assert.AreEqual(constants.Sas.Protocol, sasQueryParameters.Protocol);
             Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartTime);
             Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiryTime);
@@ -139,8 +139,8 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(SasQueryParameters.DefaultSasVersion, sasQueryParameters.Version);
-            Assert.IsNull(sasQueryParameters.Services);
-            Assert.IsNull(sasQueryParameters.ResourceTypes);
+            Assert.AreEqual(String.Empty, sasQueryParameters.Services);
+            Assert.AreEqual(String.Empty, sasQueryParameters.ResourceTypes);
             Assert.AreEqual(constants.Sas.Protocol, sasQueryParameters.Protocol);
             Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartTime);
             Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiryTime);
@@ -173,8 +173,8 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(SasQueryParameters.DefaultSasVersion, sasQueryParameters.Version);
-            Assert.IsNull(sasQueryParameters.Services);
-            Assert.IsNull(sasQueryParameters.ResourceTypes);
+            Assert.AreEqual(String.Empty, sasQueryParameters.Services);
+            Assert.AreEqual(String.Empty, sasQueryParameters.ResourceTypes);
             Assert.AreEqual(constants.Sas.Protocol, sasQueryParameters.Protocol);
             Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartTime);
             Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiryTime);
@@ -201,8 +201,8 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(SasQueryParameters.DefaultSasVersion, sasQueryParameters.Version);
-            Assert.IsNull(sasQueryParameters.Services);
-            Assert.IsNull(sasQueryParameters.ResourceTypes);
+            Assert.AreEqual(String.Empty, sasQueryParameters.Services);
+            Assert.AreEqual(String.Empty, sasQueryParameters.ResourceTypes);
             Assert.AreEqual(constants.Sas.Protocol, sasQueryParameters.Protocol);
             Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartTime);
             Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiryTime);

@@ -102,10 +102,10 @@ namespace Azure.Storage.Queues.Samples
             AccountSasBuilder sas = new AccountSasBuilder
             {
                 // Allow access to queues
-                Services = AccountSasServices.Queues,
+                Services = new AccountSasServices() { Queues = true }.ToString(),
 
                 // Allow access to the service level APIs
-                ResourceTypes = AccountSasResourceTypes.Service,
+                ResourceTypes = new AccountSasResourceTypes() { Service = true }.ToString(),
 
                 // Allow read access
                 Permissions = new AccountSasPermissions() { Read = true }.ToString(),

@@ -175,8 +175,8 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual("rw", blobUriBuilder.Sas.Permissions);
             Assert.AreEqual(SasProtocol.Https, blobUriBuilder.Sas.Protocol);
             Assert.AreEqual("b", blobUriBuilder.Sas.Resource);
-            Assert.IsNull(blobUriBuilder.Sas.ResourceTypes);
-            Assert.IsNull(blobUriBuilder.Sas.Services);
+            Assert.AreEqual("", blobUriBuilder.Sas.ResourceTypes);
+            Assert.AreEqual("", blobUriBuilder.Sas.Services);
             Assert.AreEqual("Z/RHIX5Xcg0Mq2rqI3OlWTjEg2tYkboXr1P9ZUXDtkk=", blobUriBuilder.Sas.Signature);
             Assert.AreEqual(new DateTimeOffset(2015, 4, 29, 22, 18, 26, TimeSpan.Zero), blobUriBuilder.Sas.StartTime);
             Assert.AreEqual("2015-04-05", blobUriBuilder.Sas.Version);
@@ -336,8 +336,8 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual("rw", blobUriBuilder.Sas.Permissions);
             Assert.AreEqual(SasProtocol.Https, blobUriBuilder.Sas.Protocol);
             Assert.AreEqual("b", blobUriBuilder.Sas.Resource);
-            Assert.IsNull(blobUriBuilder.Sas.ResourceTypes);
-            Assert.IsNull(blobUriBuilder.Sas.Services);
+            Assert.AreEqual("", blobUriBuilder.Sas.ResourceTypes);
+            Assert.AreEqual("", blobUriBuilder.Sas.Services);
             Assert.AreEqual("Z/RHIX5Xcg0Mq2rqI3OlWTjEg2tYkboXr1P9ZUXDtkk=", blobUriBuilder.Sas.Signature);
             Assert.AreEqual(new DateTimeOffset(2015, 4, 29, 22, 18, 26, TimeSpan.Zero), blobUriBuilder.Sas.StartTime);
             Assert.AreEqual("2015-04-05", blobUriBuilder.Sas.Version);

@@ -2,47 +2,36 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Text;
 
 namespace Azure.Storage.Sas
 {
     /// <summary>
     /// Specifies the services accessible from an account level shared access
-    /// signature.
+    /// signature.  Use <see cref="ToString"/> to produce a value that can be
+    /// used for <see cref="AccountSasBuilder.Services"/>.
     /// </summary>
-    [Flags]
-    public enum AccountSasServices
+    public struct AccountSasServices : IEquatable<AccountSasServices>
     {
         /// <summary>
-        /// Indicates whether Azure Blob Storage resources are
+        /// Gets a value indicating whether Azure Blob Storage resources are
         /// accessible from the shared access signature.
         /// </summary>
-        Blobs = 1,
+        public bool Blobs { get; set; }
 
         /// <summary>
-        /// Indicates whether Azure Queue Storage resources are
+        /// Gets a value indicating whether Azure Queue Storage resources are
         /// accessible from the shared access signature.
         /// </summary>
-        Queues = 2,
+        public bool Queues { get; set; }
 
         /// <summary>
-        /// Indicates whether Azure File Storage resources are
+        /// Gets a value indicating whether Azure File Storage resources are
         /// accessible from the shared access signature.
         /// </summary>
-        Files = 4,
+        public bool Files { get; set; }
 
-        /// <summary>
-        /// Indicates all services are accessible from the shared
-        /// access signature.
-        /// </summary>
-        All = ~0
-    }
-
-    /// <summary>
-    /// Extension methods for AccountSasServices enum
-    /// </summary>
-    internal static partial class SasExtensions
-    {
         /// <summary>
         /// Creates a string representing which services can be used for
         /// <see cref="AccountSasBuilder.Services"/>.
@@ -50,23 +39,65 @@ namespace Azure.Storage.Sas
         /// <returns>
         /// A string representing which services are allowed.
         /// </returns>
-        internal static string ToPermissionsString(this AccountSasServices services)
+        public override string ToString()
         {
             var sb = new StringBuilder();
-            if ((services & AccountSasServices.Blobs) == AccountSasServices.Blobs)
-            {
-                sb.Append(Constants.Sas.AccountServices.Blob);
-            }
-            if ((services & AccountSasServices.Queues) == AccountSasServices.Queues)
-            {
-                sb.Append(Constants.Sas.AccountServices.Queue);
-            }
-            if ((services & AccountSasServices.Files) == AccountSasServices.Files)
-            {
-                sb.Append(Constants.Sas.AccountServices.File);
-            }
+            if (Blobs) { sb.Append(Constants.Sas.AccountServices.Blob); }
+            if (Queues) { sb.Append(Constants.Sas.AccountServices.Queue); }
+            if (Files) { sb.Append(Constants.Sas.AccountServices.File); }
             return sb.ToString();
         }
+
+        /// <summary>
+        /// Check if two <see cref="AccountSasServices"/> instances are equal.
+        /// </summary>
+        /// <param name="obj">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) =>
+            obj is AccountSasServices other &&
+            Equals(other);
+
+        /// <summary>
+        /// Get a hash code for the <see cref="AccountSasServices"/>.
+        /// </summary>
+        /// <returns>
+        /// Hash code for the <see cref="AccountSasServices"/>.
+        /// </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() =>
+            (Blobs ? 0b001 : 0) +
+            (Queues ? 0b010 : 0) +
+            (Files ? 0b100 : 0);
+
+        /// <summary>
+        /// Check if two <see cref="AccountSasServices"/> instances are equal.
+        /// </summary>
+        /// <param name="other">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        public bool Equals(AccountSasServices other) =>
+            other.Blobs == Blobs &&
+            other.Queues == Queues &&
+            other.Files == Files;
+
+        /// <summary>
+        /// Check if two <see cref="AccountSasServices"/> instances are equal.
+        /// </summary>
+        /// <param name="left">The first instance to compare.</param>
+        /// <param name="right">The second instance to compare.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        public static bool operator ==(AccountSasServices left, AccountSasServices right) =>
+            left.Equals(right);
+
+        /// <summary>
+        /// Check if two <see cref="AccountSasServices"/> instances are not
+        /// equal.
+        /// </summary>
+        /// <param name="left">The first instance to compare.</param>
+        /// <param name="right">The second instance to compare.</param>
+        /// <returns>True if they're not equal, false otherwise.</returns>
+        public static bool operator !=(AccountSasServices left, AccountSasServices right) =>
+            !(left == right);
 
         /// <summary>
         /// Parse a string representing which services are accessible from a
@@ -78,18 +109,25 @@ namespace Azure.Storage.Sas
         /// <returns>
         /// An <see cref="AccountSasServices"/> instance.
         /// </returns>
-        internal static AccountSasServices ParseAccountServices(string s)
+        public static AccountSasServices Parse(string s)
         {
-            AccountSasServices svcs = default;
+            var svcs = new AccountSasServices();
             foreach (var ch in s)
             {
-                svcs |= ch switch
+                switch (ch)
                 {
-                    Constants.Sas.AccountServices.Blob => AccountSasServices.Blobs,
-                    Constants.Sas.AccountServices.Queue => AccountSasServices.Queues,
-                    Constants.Sas.AccountServices.File => AccountSasServices.Files,
-                    _ => throw Errors.InvalidService(ch),
-                };
+                    case Constants.Sas.AccountServices.Blob:
+                        svcs.Blobs = true;
+                        break;
+                    case Constants.Sas.AccountServices.Queue:
+                        svcs.Queues = true;
+                        break;
+                    case Constants.Sas.AccountServices.File:
+                        svcs.Files = true;
+                        break;
+                    default:
+                        throw Errors.InvalidService(ch);
+                }
             }
             return svcs;
         }

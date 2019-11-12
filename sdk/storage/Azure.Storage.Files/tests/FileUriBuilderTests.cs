@@ -164,8 +164,8 @@ namespace Azure.Storage.Files.Test
             Assert.AreEqual("rw", fileUriBuilder.Sas.Permissions);
             Assert.AreEqual(SasProtocol.Https, fileUriBuilder.Sas.Protocol);
             Assert.AreEqual("b", fileUriBuilder.Sas.Resource);
-            Assert.IsNull(fileUriBuilder.Sas.ResourceTypes);
-            Assert.IsNull(fileUriBuilder.Sas.Services);
+            Assert.AreEqual("", fileUriBuilder.Sas.ResourceTypes);
+            Assert.AreEqual("", fileUriBuilder.Sas.Services);
             Assert.AreEqual("Z/RHIX5Xcg0Mq2rqI3OlWTjEg2tYkboXr1P9ZUXDtkk=", fileUriBuilder.Sas.Signature);
             Assert.AreEqual(new DateTimeOffset(2015, 4, 29, 22, 18, 26, TimeSpan.Zero), fileUriBuilder.Sas.StartTime);
             Assert.AreEqual("2015-04-05", fileUriBuilder.Sas.Version);

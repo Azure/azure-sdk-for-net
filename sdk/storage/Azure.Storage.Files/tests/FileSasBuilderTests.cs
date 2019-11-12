@@ -33,8 +33,8 @@ namespace Azure.Storage.Files.Test
 
             // Assert
             Assert.AreEqual(constants.Sas.Version, sasQueryParameters.Version);
-            Assert.IsNull(sasQueryParameters.Services);
-            Assert.IsNull(sasQueryParameters.ResourceTypes);
+            Assert.AreEqual(string.Empty, sasQueryParameters.Services);
+            Assert.AreEqual(string.Empty, sasQueryParameters.ResourceTypes);
             Assert.AreEqual(constants.Sas.Protocol, sasQueryParameters.Protocol);
             Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartTime);
             Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiryTime);
@@ -61,8 +61,8 @@ namespace Azure.Storage.Files.Test
 
             // Assert
             Assert.AreEqual(SasQueryParameters.DefaultSasVersion, sasQueryParameters.Version);
-            Assert.IsNull(sasQueryParameters.Services);
-            Assert.IsNull(sasQueryParameters.ResourceTypes);
+            Assert.AreEqual(string.Empty, sasQueryParameters.Services);
+            Assert.AreEqual(string.Empty, sasQueryParameters.ResourceTypes);
             Assert.AreEqual(constants.Sas.Protocol, sasQueryParameters.Protocol);
             Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartTime);
             Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiryTime);

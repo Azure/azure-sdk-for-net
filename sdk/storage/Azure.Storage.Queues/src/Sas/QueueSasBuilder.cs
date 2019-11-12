@@ -113,8 +113,8 @@ namespace Azure.Storage.Sas
             var signature = sharedKeyCredential.ComputeHMACSHA256(stringToSign);
             var p = new SasQueryParameters(
                 version: Version,
-                services: default,
-                resourceTypes: default,
+                services: null,
+                resourceTypes: null,
                 protocol: Protocol,
                 startTime: StartTime,
                 expiryTime: ExpiryTime,
