@@ -12,6 +12,7 @@
     <PackageReference Include="Newtonsoft.Json" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\identity\Azure.Identity\src\Azure.Identity.csproj" />
     <ProjectReference Include="..\src\Azure.Data.AppConfiguration.csproj" />
   </ItemGroup>
 
