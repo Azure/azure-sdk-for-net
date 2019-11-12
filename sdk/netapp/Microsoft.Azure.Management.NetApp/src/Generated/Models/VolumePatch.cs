@@ -14,6 +14,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -41,7 +43,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="serviceLevel">serviceLevel</param>
         /// <param name="usageThreshold">usageThreshold</param>
         /// <param name="exportPolicy">exportPolicy</param>
-        public VolumePatch(string location = default(string), string id = default(string), string name = default(string), string type = default(string), object tags = default(object), string serviceLevel = default(string), long? usageThreshold = default(long?), VolumePatchPropertiesExportPolicy exportPolicy = default(VolumePatchPropertiesExportPolicy))
+        public VolumePatch(string location = default(string), string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string serviceLevel = default(string), long? usageThreshold = default(long?), VolumePatchPropertiesExportPolicy exportPolicy = default(VolumePatchPropertiesExportPolicy))
         {
             Location = location;
             Id = id;
@@ -87,7 +89,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// Gets or sets resource tags
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
-        public object Tags { get; set; }
+        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// Gets or sets serviceLevel

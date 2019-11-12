@@ -2018,10 +2018,10 @@ namespace DataFactory.Tests.JsonSamples
                         ""type"": ""LinkedServiceReference"" 
                     }
                 ],
-				""connectVia"": {
-					referenceName : ""TestIR"",
-					type : ""IntegrationRuntimeReference""
-				}
+                ""connectVia"": {
+                    referenceName : ""TestIR"",
+                    type : ""IntegrationRuntimeReference""
+                }
             }
       }
     ]
@@ -4008,20 +4008,20 @@ namespace DataFactory.Tests.JsonSamples
     properties: {
         activities: [
             {
-                ""type"": ""Validation"",
-                ""name"": ""ValidationActivity"",
-                ""description"": ""Test activity description"",
-                ""typeProperties"": {
-                    ""timeout"": ""00:03:00"",
-                    ""sleep"": 10,
-                    ""minimumSize"": {
-                        ""type"": ""Expression"",
-                        ""value"": ""@add(0,1)""
+                ""type"": ""Validation"",
+                ""name"": ""ValidationActivity"",
+                ""description"": ""Test activity description"",
+                ""typeProperties"": {
+                    ""timeout"": ""00:03:00"",
+                    ""sleep"": 10,
+                    ""minimumSize"": {
+                        ""type"": ""Expression"",
+                        ""value"": ""@add(0,1)""
                     },
-                    ""dataset"": {
-                        ""referenceName"": ""FileDataset"",
-                        ""type"": ""DatasetReference""
-                    }
+                    ""dataset"": {
+                        ""referenceName"": ""FileDataset"",
+                        ""type"": ""DatasetReference""
+                    }
                 }
             }
         ]
@@ -5834,5 +5834,92 @@ namespace DataFactory.Tests.JsonSamples
     }
 }";
 
+        [JsonSample(version: "Copy")]
+        public const string CopyCsvToSqlDW_WithCopyCommand = @"
+{
+  ""name"": ""MyPipelineName"",
+  ""properties"": {
+    ""description"" : ""Copy from CSV to SQL DW with Copy Command"",
+    ""activities"": [
+      {
+        ""type"": ""Copy"",
+        ""name"": ""TestActivity"",
+        ""description"": ""Test activity description"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""DelimitedTextSource"",
+            ""storeSettings"": {
+              ""type"": ""AzureBlobStorageReadSettings"",
+              ""recursive"": true
+            },
+            ""formatSettings"": {
+              ""type"": ""DelimitedTextReadSettings"",
+              ""rowDelimiter"": ""\n"",
+              ""quoteChar"": ""\"""",
+              ""escapeChar"": ""\""""
+            }
+          },
+          ""sink"": {
+            ""type"": ""SqlDWSink"",
+            ""allowCopyCommand"": true,
+            ""copyCommandSettings"": {
+              ""defaultValues"": [
+                {
+                  ""columnName"": ""col_string"",
+                  ""defaultValue"": ""Cincinnati""
+                },
+                {
+                  ""columnName"": ""col_binary"",
+                  ""defaultValue"": ""0xAE""
+                },
+                {
+                  ""columnName"": ""col_datetime"",
+                  ""defaultValue"": ""December 5, 1985""
+                },
+                {
+                  ""columnName"": ""col_integer"",
+                  ""defaultValue"": ""1894""
+                },
+                {
+                  ""columnName"": ""col_decimal"",
+                  ""defaultValue"": ""12.345000000""
+                },
+                {
+                  ""columnName"": ""col_float"",
+                  ""defaultValue"": ""0.5E-2""
+                },
+                {
+                  ""columnName"": ""col_money"",
+                  ""defaultValue"": ""$542023.14""
+                },
+                {
+                  ""columnName"": ""col_uniqueidentifier1"",
+                  ""defaultValue"": ""6F9619FF-8B86-D011-B42D-00C04FC964FF""
+                }
+              ],
+              ""additionalOptions"": {
+                ""MAXERRORS"": ""10000"",
+                ""DATEFORMAT"": ""'ymd'""
+              }
+            }
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ]
+      }
+    ]
+  }
+}
+";
     }
 }

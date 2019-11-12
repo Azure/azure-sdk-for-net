@@ -66,10 +66,12 @@ different service features.  We specify all of them via a
 `TestConfigurations.xml` file.  It includes:
 
 * `TargetTestTenant` - the default Storage account for our tests
-* `TargetSecondaryTestTenant` - a Storage account with Read Access Geo-Redundant Storage enabled
+* `TargetSecondaryTestTenant` - A Storage account with Read Access Geo-Redundant Storage enabled
 * `TargetPremiumBlobTenant` - A Storage account using Premium SSDs
 * `TargetPreviewBlobTenant` - A Storage account with access to preview features
 * `TargetOAuthTenant` - A Storage account configured to authenticate with Azure Active Directory
+* `TargetHierarchicalNamespaceTenant` - A Storage account with hierarchical namespace enabled
+   and configured to authenticate with Azure Active Directory (OAuth access)
 
 If you want to run live tests against your own account, you can edit the
 [`TestConfigurationsTemplate.xml`](.\Azure.Storage.Common\tests\Shared\TestConfigurationsTemplate.xml)

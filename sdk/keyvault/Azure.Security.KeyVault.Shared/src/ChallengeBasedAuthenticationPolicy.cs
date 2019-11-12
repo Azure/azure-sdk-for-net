@@ -72,7 +72,7 @@ namespace Azure.Security.KeyVault
                 // update the cached challenge
                 var challenge = AuthenticationChallenge.GetChallenge(message);
 
-                // if a challenge was returned and it's different from the cached _challenge
+                // if a challenge was returned and its different from the cached _challenge
                 if (challenge != null && !challenge.Equals(_challenge))
                 {
                     // update the cached challenge

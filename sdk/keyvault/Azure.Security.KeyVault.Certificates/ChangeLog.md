@@ -1,5 +1,12 @@
 # Release History
 
+## 4.0.0-preview.7
+
+### Breaking changes
+
+- `CertificateClient.DeleteCertificate` has been renamed to `CertificateClient.StartDeleteCertificate` and now returns a `DeleteCertificateOperation` to track this long-running operation.
+- `CertificateClient.RecoverDeletedCertificate` has been renamed to `CertificateClient.StartRecoverDeletedCertificate` and now returns a `RecoverDeletedCertificateOperation` to track this long-running operation.
+
 ## 4.0.0-preview.6 (2019-11)
 
 ### Breaking changes
