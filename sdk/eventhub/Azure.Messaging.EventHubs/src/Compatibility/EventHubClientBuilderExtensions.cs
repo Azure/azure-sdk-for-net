@@ -4,9 +4,7 @@
 using Azure.Core.Extensions;
 using Azure.Messaging.EventHubs;
 
-#pragma warning disable AZC0001 // https://github.com/Azure/azure-sdk-tools/issues/213
 namespace Microsoft.Extensions.Azure
-#pragma warning restore AZC0001
 {
     /// <summary>
     ///    The set of extensions to add the Event Hub client types to the clients builder

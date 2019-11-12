@@ -30,6 +30,8 @@
 
   <!-- Add Client SDK Analyzers -->
   <ItemGroup>
+    <PackageReference Condition="'$(GenerateAPIListing)' == 'true'" Include="Microsoft.DotNet.GenAPI" PrivateAssets="All" />
+
     <PackageReference Condition="'$(EnableClientSdkAnalyzers)' == 'true'" Include="Azure.ClientSdk.Analyzers" PrivateAssets="All" />
 
     <PackageReference Condition="'$(EnableFxCopAnalyzers)' == 'true'" Include="Microsoft.CodeAnalysis.FxCopAnalyzers">
@@ -72,6 +74,7 @@
 
   <Import Project="Versioning.targets" />
 
+  <Import Project="ApiListing.targets" />
 
   <!-- CentralPackageVersions properties -->
   <PropertyGroup>

@@ -1,0 +1,31 @@
+<Project>
+
+  <PropertyGroup>
+    <_SupportsApiListing Condition="'$(IsShippingClientLibrary)' == 'true' AND '$(GenerateApiListingOnBuild)' == 'true'">true</_SupportsApiListing>
+  </PropertyGroup>
+
+  <Target
+    Name="_GenerateApiListing"
+    Condition="'$(_SupportsApiListing)' == 'true' AND '$(GenerateAPIListing)' == 'true'"
+    AfterTargets="_GenerateApiListingAfterBuild"
+    DependsOnTargets="GenerateReferenceAssemblySource" />
+
+  <Target 
+    Name="_GenerateApiListingAfterBuild"
+    AfterTargets="CoreBuild" 
+    Condition="'$(_SupportsApiListing)' == 'true'">
+    
+    <PropertyGroup>
+      <_RefSourceOutputPath>$([System.IO.Directory]::GetParent('$(MSBuildProjectDirectory)'))/api/</_RefSourceOutputPath>
+      <GenAPITargetPath>$(_RefSourceOutputPath)$(AssemblyName).$(TargetFramework).cs</GenAPITargetPath>
+    </PropertyGroup>
+    <Delete Files="$(GenAPITargetPath)" />
+  </Target>
+
+  <Target Name="_CheckGenerateAPIListingValue" AfterTargets="Build">
+    <Error
+      Condition="'$(IsShippingClientLibrary)' == 'true' AND '$(GenerateAPIListing)' != 'true' AND '$(HasReleaseVersion)' != 'false'"
+      Text="GenerateAPIListing must be set to true for non preview version" />
+  </Target>
+
+</Project>

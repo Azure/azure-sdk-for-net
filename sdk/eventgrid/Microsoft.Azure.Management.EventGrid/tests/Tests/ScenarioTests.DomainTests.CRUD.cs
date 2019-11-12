@@ -47,7 +47,12 @@ namespace EventGrid.Tests.ScenarioTests
                 Domain domain = new Domain()
                 {
                     Location = location,
-                    Tags = originalTagsDictionary
+                    Tags = originalTagsDictionary,
+                    InputSchema = InputSchema.CloudEventSchemaV10,
+                    InputSchemaMapping = new JsonInputSchemaMapping()
+                    {
+                        Topic = new JsonField("myTopicField")
+                    }
                 };
 
                 var createDomainResponse = this.EventGridManagementClient.Domains.CreateOrUpdateAsync(resourceGroup, domainName, domain).Result;

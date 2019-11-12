@@ -6,7 +6,7 @@ To get started, you'll need a URI to an Azure Key Vault. See the [README](../REA
 ## Creating a SecretClient
 
 To create a new `SecretClient` to create, get, update, or delete secrets, you need the endpoint to a Key Vault and credentials.
-You can use the `DefaultAzureCredential` to try a number of common authentication methods optimized for both running as a service and development.
+You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.
 
 In the sample below, you can set `keyVaultUrl` based on an environment variable, configuration setting, or any way that works for your application.
 
@@ -101,3 +101,5 @@ To see the full example source, see:
 
 * [Synchronous Sample1_HelloWorld.cs](../tests/samples/Sample1_HelloWorld.cs)
 * [Asynchronous Sample1_HelloWorld.cs](../tests/samples/Sample1_HelloWorldAsync.cs)
+
+[DefaultAzureCredential]: ../../../identity/Azure.Identity/README.md

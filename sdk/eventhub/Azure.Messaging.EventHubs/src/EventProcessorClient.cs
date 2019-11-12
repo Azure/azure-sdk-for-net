@@ -818,7 +818,7 @@ namespace Azure.Messaging.EventHubs
                             {
                                 await RemovePartitionPumpIfItExistsAsync(kvp.Key, ProcessingStoppedReason.Exception).ConfigureAwait(false);
 
-                                var context = new PartitionContext(kvp.Key);
+                                var context = new PartitionContext(EventHubName, kvp.Key);
                                 await InitializeProcessingForPartitionAsync(context).ConfigureAwait(false);
                             }
                         }))
@@ -838,7 +838,7 @@ namespace Azure.Messaging.EventHubs
                 {
                     InstanceOwnership[claimedOwnership.PartitionId] = claimedOwnership;
 
-                    var context = new PartitionContext(claimedOwnership.PartitionId);
+                    var context = new PartitionContext(EventHubName, claimedOwnership.PartitionId);
                     await InitializeProcessingForPartitionAsync(context).ConfigureAwait(false);
                 }
 
@@ -986,7 +986,7 @@ namespace Azure.Messaging.EventHubs
                 }
             }
 
-            var context = new PartitionContext(partitionId);
+            var context = new PartitionContext(EventHubName, partitionId);
             await ProcessingForPartitionStoppedAsync(reason, context);
         }
 

@@ -49,10 +49,10 @@ namespace Azure.Messaging.EventHubs.Authorization
         private const char TokenValuePairDelimiter = '&';
 
         /// <summary>The default length of time to consider a signature valid, if not otherwise specified.</summary>
-        private static readonly TimeSpan s_defaultSignatureValidityDuration = TimeSpan.FromMinutes(30);
+        private static readonly TimeSpan DefaultSignatureValidityDuration = TimeSpan.FromMinutes(30);
 
         /// <summary>Represents the Unix epoch time value, January 1, 1970 12:00:00, UTC.</summary>
-        private static readonly DateTimeOffset s_epoch = new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero);
+        private static readonly DateTimeOffset Epoch = new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero);
 
         /// <summary>
         ///   The name of the shared access key, either for the Event Hubs namespace
@@ -102,7 +102,7 @@ namespace Azure.Messaging.EventHubs.Authorization
                                      string sharedAccessKey,
                                      TimeSpan? signatureValidityDuration = default)
         {
-            signatureValidityDuration ??= s_defaultSignatureValidityDuration;
+            signatureValidityDuration ??= DefaultSignatureValidityDuration;
 
             Argument.AssertNotNullOrEmpty(eventHubResource, nameof(eventHubResource));
             Argument.AssertNotNullOrEmpty(sharedAccessKeyName, nameof(sharedAccessKeyName));
@@ -393,7 +393,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         /// <returns>The date/time, in UTC, which corresponds to the specified timestamp.</returns>
         ///
         private static DateTimeOffset ConvertFromUnixTime(long unixTime) =>
-            s_epoch.AddSeconds(unixTime);
+            Epoch.AddSeconds(unixTime);
 
         /// <summary>
         ///   Converts a <see cref="DateTimeOffset" /> value to the corresponding Unix-style timestamp.
@@ -404,8 +404,6 @@ namespace Azure.Messaging.EventHubs.Authorization
         /// <returns>The Unix-style timestamp which corresponds to the specified date/time.</returns>
         ///
         private static long ConvertToUnixTime(DateTimeOffset dateTimeOffset) =>
-            Convert.ToInt64((dateTimeOffset - s_epoch).TotalSeconds);
-
-
+            Convert.ToInt64((dateTimeOffset - Epoch).TotalSeconds);
     }
 }
