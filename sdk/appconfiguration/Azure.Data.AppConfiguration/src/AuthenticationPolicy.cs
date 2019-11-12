@@ -94,11 +94,5 @@ namespace Azure.Data.AppConfiguration
             using var hmac = new HMACSHA256(_secret);
             return Convert.ToBase64String(hmac.ComputeHash(Encoding.ASCII.GetBytes(value)));
         }
-
-        private static void AddHeaders(HttpMessage message, string contentHash, string date, string authorization) {
-            message.Request.Headers.SetValue("x-ms-content-sha256", contentHash);
-            message.Request.Headers.SetValue(HttpHeader.Names.Date, date);
-            message.Request.Headers.SetValue(HttpHeader.Names.Authorization, authorization);
-        }
     }
 }

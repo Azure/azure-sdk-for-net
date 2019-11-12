@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Testing;
 using Azure.Identity;
 using NUnit.Framework;
@@ -33,6 +34,14 @@ namespace Azure.Data.AppConfiguration.Tests
                 new ConfigurationClient(
                     Recording.GetConnectionStringFromEnvironment("APPCONFIGURATION_CONNECTION_STRING"),
                     Recording.InstrumentClientOptions(new ConfigurationClientOptions())));
+        }
+
+        private ConfigurationClient GetAADClient()
+        {
+            string endpoint = Recording.RequireVariableFromEnvironment("APPCONFIGURATION_ENDPOINT_STRING");
+            TokenCredential credential = Recording.GetCredential(new DefaultAzureCredential());
+            ConfigurationClientOptions options = Recording.InstrumentClientOptions(new ConfigurationClientOptions());
+            return InstrumentClient(new ConfigurationClient(new Uri(endpoint), credential, options));
         }
 
         private ConfigurationSetting CreateSetting()
@@ -1269,11 +1278,7 @@ namespace Azure.Data.AppConfiguration.Tests
         [Test]
         public async Task AddSettingDefaultAAD()
         {
-            var endpoint = Recording.RequireVariableFromEnvironment("APPCONFIGURATION_ENDPOINT_STRING");
-            var credential = Recording.GetCredential(new DefaultAzureCredential());
-            var configurationClient = new ConfigurationClient(new Uri(endpoint), credential, Recording.InstrumentClientOptions(new ConfigurationClientOptions()));
-
-            ConfigurationClient service = InstrumentClient(configurationClient);
+            ConfigurationClient service = GetAADClient();
             ConfigurationSetting testSetting = CreateSetting();
 
             try

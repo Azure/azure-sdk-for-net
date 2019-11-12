@@ -16,7 +16,7 @@ namespace Azure.Data.AppConfiguration
     /// </summary>
     public partial class ConfigurationClient
     {
-        private readonly Uri _baseUri;
+        private readonly Uri _endpoint;
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
 
@@ -48,7 +48,7 @@ namespace Azure.Data.AppConfiguration
             if (options == null)
                 throw new ArgumentNullException(nameof(options));
 
-            ParseConnectionString(connectionString, out _baseUri, out var credential, out var secret);
+            ParseConnectionString(connectionString, out _endpoint, out var credential, out var secret);
 
             _pipeline = CreatePipeline(options, new AuthenticationPolicy(credential, secret));
 
@@ -58,26 +58,26 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigurationClient"/> class.
         /// </summary>
-        /// <param name="uri">The <see cref="Uri"/> referencing the app configuration storage.</param>
+        /// <param name="endpoint">The <see cref="Uri"/> referencing the app configuration storage.</param>
         /// <param name="credential">The token credential used to sign requests.</param>
-        public ConfigurationClient(Uri uri, TokenCredential credential)
-            : this(uri, credential, new ConfigurationClientOptions())
+        public ConfigurationClient(Uri endpoint, TokenCredential credential)
+            : this(endpoint, credential, new ConfigurationClientOptions())
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigurationClient"/> class.
         /// </summary>
-        /// <param name="uri">The <see cref="Uri"/> referencing the app configuration storage.</param>
+        /// <param name="endpoint">The <see cref="Uri"/> referencing the app configuration storage.</param>
         /// <param name="credential">The token credential used to sign requests.</param>
         /// <param name="options">Options that allow configuration of requests sent to the configuration store.</param>
-        public ConfigurationClient(Uri uri, TokenCredential credential, ConfigurationClientOptions options)
+        public ConfigurationClient(Uri endpoint, TokenCredential credential, ConfigurationClientOptions options)
         {
-            Argument.AssertNotNull(uri, nameof(uri));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
 
-            _baseUri = uri;
-            _pipeline = CreatePipeline(options, new BearerTokenAuthenticationPolicy(credential, GetDefaultScope(uri)));
+            _endpoint = endpoint;
+            _pipeline = CreatePipeline(options, new BearerTokenAuthenticationPolicy(credential, GetDefaultScope(endpoint)));
 
             _clientDiagnostics = new ClientDiagnostics(options);
         }
