@@ -10,7 +10,7 @@
       Initial Preview Release.
       ]]>
     </PackageReleaseNotes>
-
+    <GenerateAPIListing>false</GenerateAPIListing>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
