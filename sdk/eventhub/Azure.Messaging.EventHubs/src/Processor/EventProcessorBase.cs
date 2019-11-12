@@ -54,6 +54,13 @@ namespace Azure.Messaging.EventHubs.Processor
         public abstract string Identifier { get; }
 
         /// <summary>
+        ///   The active policy which governs retry attempts for the
+        ///   processor.
+        /// </summary>
+        ///
+        protected abstract EventHubsRetryPolicy RetryPolicy { get; }
+
+        /// <summary>
         ///   The minimum amount of time to be elapsed between two load balancing verifications.
         /// </summary>
         ///
@@ -64,13 +71,6 @@ namespace Azure.Messaging.EventHubs.Processor
         /// </summary>
         ///
         protected virtual TimeSpan OwnershipExpiration => TimeSpan.FromSeconds(30);
-
-        /// <summary>
-        ///   The active policy which governs retry attempts for the
-        ///   processor.
-        /// </summary>
-        ///
-        protected abstract EventHubsRetryPolicy RetryPolicy { get; }
 
         /// <summary>
         ///   A <see cref="CancellationTokenSource"/> instance to signal the request to cancel the current running task.
@@ -312,14 +312,14 @@ namespace Azure.Messaging.EventHubs.Processor
 
         /// <summary>
         ///   Performs load balancing between multiple <see cref="EventProcessorClient" /> instances, claiming others' partitions to enforce
-        ///   a more equal distribution when necessary.  It also manages its own partition pumps and ownership. TODO: make it private.
+        ///   a more equal distribution when necessary.  It also manages its own partition pumps and ownership.
         /// </summary>
         ///
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        protected async Task RunAsync(CancellationToken cancellationToken)
+        private async Task RunAsync(CancellationToken cancellationToken)
         {
             // We'll use this connection to retrieve an updated list of partition ids from the service.
 
@@ -412,7 +412,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
         /// <summary>
         ///   Finds and tries to claim an ownership if this <see cref="EventProcessorClient" /> instance is eligible to increase its ownership
-        ///   list.  TODO: make it private.
+        ///   list.
         /// </summary>
         ///
         /// <param name="partitionIds">TODO.</param>
@@ -421,9 +421,9 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>The claimed ownership. <c>null</c> if this instance is not eligible, if no claimable ownership was found or if the claim attempt failed.</returns>
         ///
-        protected async Task<PartitionOwnership> FindAndClaimOwnershipAsync(string[] partitionIds,
-                                                                            IEnumerable<PartitionOwnership> completeOwnershipEnumerable,
-                                                                            IEnumerable<PartitionOwnership> activeOwnership)
+        private async Task<PartitionOwnership> FindAndClaimOwnershipAsync(string[] partitionIds,
+                                                                          IEnumerable<PartitionOwnership> completeOwnershipEnumerable,
+                                                                          IEnumerable<PartitionOwnership> activeOwnership)
         {
             // Create a partition distribution dictionary from the active ownership list we have, mapping an owner's identifier to the amount of
             // partitions it owns.  When an event processor goes down and it has only expired ownership, it will not be taken into consideration
@@ -516,7 +516,7 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
-        ///   Stops an owned partition pump instance in case it exists.  It is also removed from the pumps dictionary. TODO: make it private.
+        ///   Stops an owned partition pump instance in case it exists.  It is also removed from the pumps dictionary.
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the Event Hub partition the partition pump is associated with.</param>
@@ -524,8 +524,8 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        protected async Task RemovePartitionPumpIfItExistsAsync(string partitionId,
-                                                                ProcessingStoppedReason reason)
+        private async Task RemovePartitionPumpIfItExistsAsync(string partitionId,
+                                                              ProcessingStoppedReason reason)
         {
             if (PartitionPumps.TryRemove(partitionId, out PartitionPump pump))
             {
@@ -544,7 +544,7 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
-        ///   Tries to claim ownership of the specified partition. TODO: make it private.
+        ///   Tries to claim ownership of the specified partition.
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the Event Hub partition the ownership is associated with.</param>
@@ -552,8 +552,8 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>The claimed ownership. <c>null</c> if the claim attempt failed.</returns>
         ///
-        protected async Task<PartitionOwnership> ClaimOwnershipAsync(string partitionId,
-                                                                     IEnumerable<PartitionOwnership> completeOwnershipEnumerable)
+        private async Task<PartitionOwnership> ClaimOwnershipAsync(string partitionId,
+                                                                   IEnumerable<PartitionOwnership> completeOwnershipEnumerable)
         {
             // We need the eTag from the most recent ownership of this partition, even if it's expired.  We want to keep the offset and
             // the sequence number as well.
@@ -569,12 +569,12 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
-        ///   Renews this instance's ownership so they don't expire. TODO: make it private.
+        ///   Renews this instance's ownership so they don't expire.
         /// </summary>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        protected Task RenewOwnershipAsync()
+        private Task RenewOwnershipAsync()
         {
             IEnumerable<PartitionOwnership> ownershipToRenew = InstanceOwnership.Values
                 .Select(ownership => new PartitionOwnership
