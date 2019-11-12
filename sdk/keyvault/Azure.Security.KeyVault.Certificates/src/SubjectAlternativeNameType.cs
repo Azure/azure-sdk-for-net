@@ -4,7 +4,7 @@
 namespace Azure.Security.KeyVault.Certificates
 {
     /// <summary>
-    /// Represents the type of Subject Alternative Names (SAN) which to apply to an x509 certificate
+    /// Represents the type of subject alternative names (SANs) which to apply to an X.509 certificate.
     /// </summary>
     public enum SubjectAlternativeNameType
     {

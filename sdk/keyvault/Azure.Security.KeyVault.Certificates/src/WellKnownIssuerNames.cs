@@ -3,6 +3,9 @@
 
 namespace Azure.Security.KeyVault.Certificates
 {
+    /// <summary>
+    /// Well known issuer names.
+    /// </summary>
     public static class WellKnownIssuerNames
     {
         /// <summary>

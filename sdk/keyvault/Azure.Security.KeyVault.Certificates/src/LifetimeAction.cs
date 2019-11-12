@@ -30,17 +30,17 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Specifies the action should be performed the specified number of days before the certificate will expire
+        /// Gets or sets the action should be performed the specified number of days before the certificate will expire.
         /// </summary>
         public int? DaysBeforeExpiry { get; set; }
 
         /// <summary>
-        /// Specifies the action should be performed when the certificate reaches the specified percentage of its lifetime. Valid values include 1-99
+        /// Gets or setsthe action should be performed when the certificate reaches the specified percentage of its lifetime. Valid values include 1-99.
         /// </summary>
         public int? LifetimePercentage { get; set; }
 
         /// <summary>
-        /// The action to be performed
+        /// Gets or sets the <see cref="CertificatePolicyAction"/> to be performed.
         /// </summary>
         public CertificatePolicyAction Action { get; set; }
 

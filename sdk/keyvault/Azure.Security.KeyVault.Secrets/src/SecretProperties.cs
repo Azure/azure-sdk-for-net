@@ -50,7 +50,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <summary>
         /// Initializes a new instance of the <see cref="SecretProperties"/> class.
         /// </summary>
-        /// <param name="id">The Id of the secret.</param>
+        /// <param name="id">The identifier of the secret.</param>
         /// <exception cref="ArgumentNullException"><paramref name="id"/> is null.</exception>
         public SecretProperties(Uri id)
         {

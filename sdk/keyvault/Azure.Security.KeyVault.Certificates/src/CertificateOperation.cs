@@ -29,17 +29,17 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// The properties of the pending certificate operation
+        /// Gets the properties of the pending certificate operation.
         /// </summary>
         public CertificateOperationProperties Properties { get; private set; }
 
         /// <summary>
-        /// Specifies whether the operation has reached a terminal state
+        /// Gets a value indicating whether the operation has reached a terminal state.
         /// </summary>
         public override bool HasCompleted => _completed;
 
         /// <summary>
-        /// Specifies whether the Value property can be safely accessed
+        /// Gets a value indicating whether the Value property can be safely accessed.
         /// </summary>
         public override bool HasValue => _value != null;
 
@@ -61,10 +61,10 @@ namespace Azure.Security.KeyVault.Certificates
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
         /// <summary>
-        /// Updates the status of the certificate operation
+        /// Updates the status of the certificate operation.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The raw response of the poll operation</returns>
+        /// <returns>The raw response of the poll operation.</returns>
         public override Response UpdateStatus(CancellationToken cancellationToken = default)
         {
             if (!_completed)
@@ -103,10 +103,10 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Updates the status of the certificate operation
+        /// Updates the status of the certificate operation.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The raw response of the poll operation</returns>
+        /// <returns>The raw response of the poll operation.</returns>
         public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
         {
             if (!_completed)

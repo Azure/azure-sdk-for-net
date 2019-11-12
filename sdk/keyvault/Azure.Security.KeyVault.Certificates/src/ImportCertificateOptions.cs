@@ -43,22 +43,22 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// The name of the certificate to import.
+        /// Gets the name of the certificate to import.
         /// </summary>
         public string Name { get; }
 
         /// <summary>
-        /// The PFX or PEM formatted value of the certificate containing both the x509 certificates and the private key.
+        /// Gets the PFX or PEM formatted value of the certificate containing both the x509 certificates and the private key.
         /// </summary>
         public byte[] Value { get; }
 
         /// <summary>
-        /// The policy which governs the lifecycle of the imported certificate and its properties when it is rotated.
+        /// Gets the policy which governs the lifecycle of the imported certificate and its properties when it is rotated.
         /// </summary>
         public CertificatePolicy Policy { get; }
 
         /// <summary>
-        /// The password protecting the certificate specified in the Value.
+        /// Gets or sets the password protecting the certificate specified in the Value.
         /// </summary>
         public string Password { get; set; }
 
@@ -68,7 +68,7 @@ namespace Azure.Security.KeyVault.Certificates
         public bool? Enabled { get; set; }
 
         /// <summary>
-        /// Tags to be applied to the imported certificate.
+        /// Gets the tags to be applied to the imported certificate.
         /// </summary>
         public IDictionary<string, string> Tags => LazyInitializer.EnsureInitialized(ref _tags);
 

@@ -7,7 +7,7 @@ using System.ComponentModel;
 namespace Azure.Security.KeyVault.Certificates
 {
     /// <summary>
-    /// Supported usages of a certificate key
+    /// Supported usages of a certificate key.
     /// </summary>
     public readonly struct CertificateKeyUsage : IEquatable<CertificateKeyUsage>
     {
@@ -33,47 +33,47 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// The certificate key can be used as a digital signatures
+        /// Gets that the certificate key can be used as a digital signatures.
         /// </summary>
         public static CertificateKeyUsage DigitalSignature { get; } = new CertificateKeyUsage(DigitalSignatureValue);
 
         /// <summary>
-        /// The certificate key can be used for authentication
+        /// Gets that the certificate key can be used for authentication.
         /// </summary>
         public static CertificateKeyUsage NonRepudiation { get; } = new CertificateKeyUsage(NonRepudiationValue);
 
         /// <summary>
-        /// The certificate key can be used for key encryption
+        /// Gets that the certificate key can be used for key encryption.
         /// </summary>
         public static CertificateKeyUsage KeyEncipherment { get; } = new CertificateKeyUsage(KeyEnciphermentValue);
 
         /// <summary>
-        /// The certificate key can be used for data encryption
+        /// Gets that the certificate key can be used for data encryption.
         /// </summary>
         public static CertificateKeyUsage DataEncipherment { get; } = new CertificateKeyUsage(DataEnciphermentValue);
 
         /// <summary>
-        /// The certificate key can be used to determine key agreement, such as a key created using the Diffie-Hellman key agreement algorithm.
+        /// Gets that the certificate key can be used to determine key agreement, such as a key created using the Diffie-Hellman key agreement algorithm.
         /// </summary>
         public static CertificateKeyUsage KeyAgreement { get; } = new CertificateKeyUsage(KeyAgreementValue);
 
         /// <summary>
-        /// The certificate key can be used to sign certificates
+        /// Gets that the certificate key can be used to sign certificates.
         /// </summary>
         public static CertificateKeyUsage KeyCertSign { get; } = new CertificateKeyUsage(KeyCertSignValue);
 
         /// <summary>
-        /// The certificate key can be used to sign a certificate revocation list
+        /// Gets that the certificate key can be used to sign a certificate revocation list.
         /// </summary>
         public static CertificateKeyUsage CrlSign { get; } = new CertificateKeyUsage(CrlSignValue);
 
         /// <summary>
-        /// The certificate key can be used for encryption only
+        /// Gets that the certificate key can be used for encryption only.
         /// </summary>
         public static CertificateKeyUsage EncipherOnly { get; } = new CertificateKeyUsage(EncipherOnlyValue);
 
         /// <summary>
-        /// The certificate key can be used for decryption only
+        /// Gets that the certificate key can be used for decryption only.
         /// </summary>
         public static CertificateKeyUsage DecipherOnly { get; } = new CertificateKeyUsage(DecipherOnlyValue);
 

@@ -42,7 +42,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyProperties"/> class.
         /// </summary>
-        /// <param name="id">The Id of the key.</param>
+        /// <param name="id">The identifier of the key.</param>
         /// <exception cref="ArgumentNullException"><paramref name="id"/> is null.</exception>
         public KeyProperties(Uri id)
         {
