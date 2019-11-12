@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -48,6 +49,25 @@ namespace Azure.Messaging.EventHubs.Processor
         /// </summary>
         ///
         public abstract string Identifier { get; }
+
+        /// <summary>
+        ///   The minimum amount of time to be elapsed between two load balancing verifications.
+        /// </summary>
+        ///
+        protected virtual TimeSpan LoadBalanceUpdate => TimeSpan.FromSeconds(10);
+
+        /// <summary>
+        ///   The minimum amount of time for an ownership to be considered expired without further updates.
+        /// </summary>
+        ///
+        protected virtual TimeSpan OwnershipExpiration => TimeSpan.FromSeconds(30);
+
+        /// <summary>
+        ///   The active policy which governs retry attempts for the
+        ///   processor.
+        /// </summary>
+        ///
+        protected abstract EventHubsRetryPolicy RetryPolicy { get; }
 
         /// <summary>
         ///   The set of partition pumps used by this event processor.  Partition ids are used as keys. TODO: make set private. Make it protected.
@@ -174,6 +194,106 @@ namespace Azure.Messaging.EventHubs.Processor
         /// </remarks>
         ///
         protected abstract EventHubConnection CreateConnection();
+
+        /// <summary>
+        ///   Performs load balancing between multiple <see cref="EventProcessorClient" /> instances, claiming others' partitions to enforce
+        ///   a more equal distribution when necessary.  It also manages its own partition pumps and ownership. TODO: make it private.
+        /// </summary>
+        ///
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        ///
+        protected async Task RunAsync(CancellationToken cancellationToken)
+        {
+            // We'll use this connection to retrieve an updated list of partition ids from the service.
+
+            await using var connection = CreateConnection();
+
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                Stopwatch cycleDuration = Stopwatch.StartNew();
+
+                // Renew this instance's ownership so they don't expire.
+
+                await RenewOwnershipAsync().ConfigureAwait(false);
+
+                // From the storage service provided by the user, obtain a complete list of ownership, including expired ones.  We may still need
+                // their eTags to claim orphan partitions.
+
+                var completeOwnershipList = (await ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup)
+                    .ConfigureAwait(false))
+                    .ToList();
+
+                // Filter the complete ownership list to obtain only the ones that are still active.  The expiration time defaults to 30 seconds,
+                // but it may be overridden by a derived class.
+
+                IEnumerable<PartitionOwnership> activeOwnership = completeOwnershipList
+                    .Where(ownership => DateTimeOffset.UtcNow.Subtract(ownership.LastModifiedTime.Value) < OwnershipExpiration);
+
+                // Dispose of all previous partition ownership instances and get a whole new dictionary.
+
+                InstanceOwnership = activeOwnership
+                    .Where(ownership => ownership.OwnerIdentifier == Identifier)
+                    .ToDictionary(ownership => ownership.PartitionId);
+
+                // Some previously owned partitions might have had their ownership expired or might have been stolen, so we need to stop
+                // the pumps we don't need anymore.
+
+                await Task.WhenAll(PartitionPumps.Keys
+                    .Except(InstanceOwnership.Keys)
+                    .Select(partitionId => RemovePartitionPumpIfItExistsAsync(partitionId, ProcessingStoppedReason.OwnershipLost)))
+                    .ConfigureAwait(false);
+
+                // Now that we are left with pumps that should be running, check their status.  If any has stopped, it means an
+                // unexpected failure has happened, so try closing it and starting a new one.  In case we don't have a pump that
+                // should exist, create it.  This might happen when pump creation has failed in a previous cycle.
+
+                await Task.WhenAll(InstanceOwnership
+                    .Select(async kvp =>
+                    {
+                        if (PartitionPumps.TryGetValue(kvp.Key, out PartitionPump pump) && !pump.IsRunning)
+                        {
+                            await RemovePartitionPumpIfItExistsAsync(kvp.Key, ProcessingStoppedReason.Exception).ConfigureAwait(false);
+
+                            var context = new PartitionContext(EventHubName, kvp.Key);
+                            await InitializeProcessingForPartitionAsync(context).ConfigureAwait(false);
+                        }
+                    }))
+                    .ConfigureAwait(false);
+
+                // Get a complete list of the partition ids present in the Event Hub.  This should be immutable for the time being, but
+                // it may change in the future.
+
+                var partitionIds = await connection.GetPartitionIdsAsync(RetryPolicy).ConfigureAwait(false);
+
+                // Find an ownership to claim and try to claim it.  The method will return null if this instance was not eligible to
+                // increase its ownership list, if no claimable ownership could be found or if a claim attempt failed.
+
+                PartitionOwnership claimedOwnership = await FindAndClaimOwnershipAsync(partitionIds, completeOwnershipList, activeOwnership).ConfigureAwait(false);
+
+                if (claimedOwnership != null)
+                {
+                    InstanceOwnership[claimedOwnership.PartitionId] = claimedOwnership;
+
+                    var context = new PartitionContext(EventHubName, claimedOwnership.PartitionId);
+                    await InitializeProcessingForPartitionAsync(context).ConfigureAwait(false);
+                }
+
+                // Wait the remaining time, if any, to start the next cycle.  The total time of a cycle defaults to 10 seconds,
+                // but it may be overridden by a derived class.
+
+                TimeSpan remainingTimeUntilNextCycle = LoadBalanceUpdate - cycleDuration.Elapsed;
+
+                if (remainingTimeUntilNextCycle > TimeSpan.Zero)
+                {
+                    // If a stop request has been issued, Task.Delay will throw a TaskCanceledException.  This is expected and it
+                    // will be caught by the StopAsync method.
+
+                    await Task.Delay(remainingTimeUntilNextCycle, cancellationToken).ConfigureAwait(false);
+                }
+            }
+        }
 
         /// <summary>
         ///   Finds and tries to claim an ownership if this <see cref="EventProcessorClient" /> instance is eligible to increase its ownership
