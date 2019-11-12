@@ -70,6 +70,18 @@ namespace Microsoft.Azure.Search
         /// </summary>
         public bool UseHttpGetForQueries { get; set; }
 
+        /// <summary>
+        /// Changes the BaseUri of this client to target a different index in the same Azure Cognitive Search service. This method is NOT thread-safe; You
+        /// must guarantee that no other threads are using the client before calling it.
+        /// </summary>
+        /// <param name="newIndexName">The name of the index to which all subsequent requests should be sent.</param>
+        [Obsolete("This method is deprecated. Please set the IndexName property instead.")]
+        public void TargetDifferentIndex(string newIndexName)
+        {
+            ThrowIfNullOrEmptyIndexName(newIndexName, nameof(newIndexName));
+            IndexName = newIndexName;
+        }
+
         partial void CustomInitialize()
         {
             Documents = new DocumentsOperations(this);
