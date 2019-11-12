@@ -76,7 +76,7 @@ known_content_issues:
   - ['sdk/storage/Azure.Storage.Common/swagger/Generator/readme.md','azure-sdk-tools/issues/42']
   - ['sdk/cognitiveservices/Language.TextAnalytics/src/Readme.md','#5499']
   - ['sdk/cognitiveservices/Personalizer/src/Readme.md','#5499']
-  - ['sdk/cognitiveservices/textanalytics/Azure.AI.TextAnalytics/src/Readme.md','#5499']
+  - ['sdk/cognitiveservices/textanalytics/Azure.AI.TextAnalytics/src/README.md','#5499']
   - ['sdk/batch/Microsoft.Azure.Batch/README.md','#5499']
   - ['sdk/batch/Microsoft.Azure.Batch.Conventions.Files/README.md','#5499']
 
