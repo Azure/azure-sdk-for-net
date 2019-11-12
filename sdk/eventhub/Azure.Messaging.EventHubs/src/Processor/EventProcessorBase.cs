@@ -23,6 +23,9 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <summary>The random number generator to use for a specific thread.</summary>
         private static readonly ThreadLocal<Random> RandomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
 
+        /// <summary>The primitive for synchronizing access during start and close operations.</summary>
+        private readonly SemaphoreSlim RunningTaskSemaphore = new SemaphoreSlim(1, 1);
+
         /// <summary>
         ///   The fully qualified Event Hubs namespace that the processor is associated with.  This is likely
         ///   to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
@@ -70,6 +73,12 @@ namespace Azure.Messaging.EventHubs.Processor
         protected abstract EventHubsRetryPolicy RetryPolicy { get; }
 
         /// <summary>
+        ///   A <see cref="CancellationTokenSource"/> instance to signal the request to cancel the current running task.
+        /// </summary>
+        ///
+        private CancellationTokenSource RunningTaskTokenSource { get; set; }
+
+        /// <summary>
         ///   The set of partition pumps used by this event processor.  Partition ids are used as keys. TODO: make set private. Make it protected.
         /// </summary>
         ///
@@ -80,6 +89,13 @@ namespace Azure.Messaging.EventHubs.Processor
         /// </summary>
         ///
         protected Dictionary<string, PartitionOwnership> InstanceOwnership { get; set; }
+
+        /// <summary>
+        ///   The running task responsible for performing partition load balancing between multiple <see cref="EventProcessorClient" />
+        ///   instances, as well as managing partition pumps and ownership.  TODO: make it fully private (expose IsRunning property).
+        /// </summary>
+        ///
+        protected Task ActiveLoadBalancingTask { get; private set; }
 
         /// <summary>
         ///   The function to be called just before event processing starts for a given partition.
@@ -194,6 +210,105 @@ namespace Azure.Messaging.EventHubs.Processor
         /// </remarks>
         ///
         protected abstract EventHubConnection CreateConnection();
+
+        /// <summary>
+        ///   Starts the event processor.  In case it's already running, nothing happens.
+        /// </summary>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        ///
+        public virtual async Task StartAsync()
+        {
+            if (ActiveLoadBalancingTask == null)
+            {
+                await RunningTaskSemaphore.WaitAsync().ConfigureAwait(false);
+
+                try
+                {
+                    if (ActiveLoadBalancingTask == null)
+                    {
+                        // We expect the token source to be null, but we are playing safe.
+
+                        RunningTaskTokenSource?.Cancel();
+                        RunningTaskTokenSource = new CancellationTokenSource();
+
+                        // Initialize our empty ownership dictionary.
+
+                        InstanceOwnership = new Dictionary<string, PartitionOwnership>();
+
+                        // Start the main running task.  It is responsible for managing the partition pumps and for partition
+                        // load balancing among multiple event processor instances.
+
+                        ActiveLoadBalancingTask = RunAsync(RunningTaskTokenSource.Token);
+                    }
+                }
+                finally
+                {
+                    RunningTaskSemaphore.Release();
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Stops the event processor.  In case it isn't running, nothing happens.
+        /// </summary>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        ///
+        public virtual async Task StopAsync()
+        {
+            if (ActiveLoadBalancingTask != null)
+            {
+                await RunningTaskSemaphore.WaitAsync().ConfigureAwait(false);
+
+                try
+                {
+                    if (ActiveLoadBalancingTask != null)
+                    {
+                        // Cancel the current running task.
+
+                        RunningTaskTokenSource.Cancel();
+                        RunningTaskTokenSource = null;
+
+                        // Now that a cancellation request has been issued, wait for the running task to finish.  In case something
+                        // unexpected happened and it stopped working midway, this is the moment we expect to catch an exception.
+
+                        try
+                        {
+                            await ActiveLoadBalancingTask.ConfigureAwait(false);
+                        }
+                        catch (TaskCanceledException)
+                        {
+                            // The running task has an inner delay that is likely to throw a TaskCanceledException upon token cancellation.
+                            // The task might end up leaving its main loop gracefully by chance, so we won't necessarily reach this part of
+                            // the code.
+                        }
+                        catch (Exception)
+                        {
+                            // TODO: delegate the exception handling to an Exception Callback.
+                        }
+
+                        // Now that the task has finished, clean up what is left.  Stop and remove every partition pump that is still
+                        // running and dispose of our ownership dictionary.
+
+                        InstanceOwnership = null;
+
+                        await Task.WhenAll(PartitionPumps.Keys
+                            .Select(partitionId => RemovePartitionPumpIfItExistsAsync(partitionId, ProcessingStoppedReason.Shutdown)))
+                            .ConfigureAwait(false);
+
+                        // We need to wait until all pumps have stopped before making the Active Load Balancing Task null.  If we did it sooner,
+                        // we would have a race condition where the user could update the processing handlers while some pumps are still running.
+
+                        ActiveLoadBalancingTask = null;
+                    }
+                }
+                finally
+                {
+                    RunningTaskSemaphore.Release();
+                }
+            }
+        }
 
         /// <summary>
         ///   Performs load balancing between multiple <see cref="EventProcessorClient" /> instances, claiming others' partitions to enforce

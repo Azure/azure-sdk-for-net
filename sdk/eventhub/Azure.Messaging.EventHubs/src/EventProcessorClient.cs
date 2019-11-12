@@ -25,9 +25,6 @@ namespace Azure.Messaging.EventHubs
     ///
     public class EventProcessorClient : EventProcessorBase, IAsyncDisposable
     {
-        /// <summary>The primitive for synchronizing access during start and close operations.</summary>
-        private readonly SemaphoreSlim RunningTaskSemaphore = new SemaphoreSlim(1, 1);
-
         /// <summary>The primitive for synchronizing access during start and set handler operations.</summary>
         private readonly object StartProcessorGuard = new object();
 
@@ -152,19 +149,6 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         protected override EventHubsRetryPolicy RetryPolicy { get; }
-
-        /// <summary>
-        ///   A <see cref="CancellationTokenSource"/> instance to signal the request to cancel the current running task.
-        /// </summary>
-        ///
-        private CancellationTokenSource RunningTaskTokenSource { get; set; }
-
-        /// <summary>
-        ///   The running task responsible for performing partition load balancing between multiple <see cref="EventProcessorClient" />
-        ///   instances, as well as managing partition pumps and ownership.
-        /// </summary>
-        ///
-        private Task ActiveLoadBalancingTask { get; set; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventProcessorClient"/> class.
@@ -570,122 +554,6 @@ namespace Azure.Messaging.EventHubs
         protected override EventHubConnection CreateConnection() => ConnectionFactory();
 
         /// <summary>
-        ///   Starts the event processor.  In case it's already running, nothing happens.
-        /// </summary>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
-        /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="ProcessEventAsyncHandler" /> or <see cref="ProcessErrorAsyncHandler" /> set.</exception>
-        ///
-        public virtual async Task StartAsync()
-        {
-            Argument.AssertNotClosed(Closed, nameof(EventProcessorClient));
-
-            if (ActiveLoadBalancingTask == null)
-            {
-                await RunningTaskSemaphore.WaitAsync().ConfigureAwait(false);
-
-                try
-                {
-                    lock (StartProcessorGuard)
-                    {
-                        if (ActiveLoadBalancingTask == null)
-                        {
-                            if (_processEventAsyncHandler == null)
-                            {
-                                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotStartEventProcessorWithoutHandler, nameof(ProcessEventAsyncHandler)));
-                            }
-
-                            if (_processErrorAsyncHandler == null)
-                            {
-                                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotStartEventProcessorWithoutHandler, nameof(ProcessErrorAsyncHandler)));
-                            }
-
-                            // We expect the token source to be null, but we are playing safe.
-
-                            RunningTaskTokenSource?.Cancel();
-                            RunningTaskTokenSource = new CancellationTokenSource();
-
-                            // Initialize our empty ownership dictionary.
-
-                            InstanceOwnership = new Dictionary<string, PartitionOwnership>();
-
-                            // Start the main running task.  It is responsible for managing the partition pumps and for partition
-                            // load balancing among multiple event processor instances.
-
-                            ActiveLoadBalancingTask = RunAsync(RunningTaskTokenSource.Token);
-                        }
-                    }
-                }
-                finally
-                {
-                    RunningTaskSemaphore.Release();
-                }
-            }
-        }
-
-        /// <summary>
-        ///   Stops the event processor.  In case it isn't running, nothing happens.
-        /// </summary>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
-        public virtual async Task StopAsync()
-        {
-            if (ActiveLoadBalancingTask != null)
-            {
-                await RunningTaskSemaphore.WaitAsync().ConfigureAwait(false);
-
-                try
-                {
-                    if (ActiveLoadBalancingTask != null)
-                    {
-                        // Cancel the current running task.
-
-                        RunningTaskTokenSource.Cancel();
-                        RunningTaskTokenSource = null;
-
-                        // Now that a cancellation request has been issued, wait for the running task to finish.  In case something
-                        // unexpected happened and it stopped working midway, this is the moment we expect to catch an exception.
-
-                        try
-                        {
-                            await ActiveLoadBalancingTask.ConfigureAwait(false);
-                        }
-                        catch (TaskCanceledException)
-                        {
-                            // The running task has an inner delay that is likely to throw a TaskCanceledException upon token cancellation.
-                            // The task might end up leaving its main loop gracefully by chance, so we won't necessarily reach this part of
-                            // the code.
-                        }
-                        catch (Exception)
-                        {
-                            // TODO: delegate the exception handling to an Exception Callback.
-                        }
-
-                        // Now that the task has finished, clean up what is left.  Stop and remove every partition pump that is still
-                        // running and dispose of our ownership dictionary.
-
-                        InstanceOwnership = null;
-
-                        await Task.WhenAll(PartitionPumps.Keys
-                            .Select(partitionId => RemovePartitionPumpIfItExistsAsync(partitionId, ProcessingStoppedReason.Shutdown)))
-                            .ConfigureAwait(false);
-
-                        // We need to wait until all pumps have stopped before making the Active Load Balancing Task null.  If we did it sooner,
-                        // we would have a race condition where the user could update the processing handlers while some pumps are still running.
-
-                        ActiveLoadBalancingTask = null;
-                    }
-                }
-                finally
-                {
-                    RunningTaskSemaphore.Release();
-                }
-            }
-        }
-
-        /// <summary>
         ///   Closes the event processor.
         /// </summary>
         ///
@@ -745,6 +613,34 @@ namespace Azure.Messaging.EventHubs
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
+
+        /// <summary>
+        ///   Starts the event processor.  In case it's already running, nothing happens.
+        /// </summary>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        ///
+        /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="ProcessEventAsyncHandler" /> or <see cref="ProcessErrorAsyncHandler" /> set.</exception>
+        ///
+        public override Task StartAsync()
+        {
+            Argument.AssertNotClosed(Closed, nameof(EventProcessorClient));
+
+            lock (StartProcessorGuard)
+            {
+                if (_processEventAsyncHandler == null)
+                {
+                    throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotStartEventProcessorWithoutHandler, nameof(ProcessEventAsyncHandler)));
+                }
+
+                if (_processErrorAsyncHandler == null)
+                {
+                    throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotStartEventProcessorWithoutHandler, nameof(ProcessErrorAsyncHandler)));
+                }
+
+                return base.StartAsync();
+            }
+        }
 
         /// <summary>
         ///   Invokes a specified action only if this <see cref="EventProcessorClient" /> instance is not running.
