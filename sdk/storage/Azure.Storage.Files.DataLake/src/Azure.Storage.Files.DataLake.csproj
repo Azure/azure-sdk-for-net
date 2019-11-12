@@ -18,6 +18,7 @@
       Microsoft Azure Storage REST API Reference - https://docs.microsoft.com/en-us/rest/api/storageservices/
       REST API Reference for Data Lake - https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/filesystem
     </Description>
+    <GenerateAPIListing>false</GenerateAPIListing>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Storage.Blobs" />

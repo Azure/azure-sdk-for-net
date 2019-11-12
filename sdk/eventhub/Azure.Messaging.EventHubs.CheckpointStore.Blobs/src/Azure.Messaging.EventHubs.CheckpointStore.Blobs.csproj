@@ -6,6 +6,7 @@
     <PackageReleaseNotes>https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs.CheckpointStore.Blob/CHANGELOG.md</PackageReleaseNotes>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableFxCopAnalyzers>false</EnableFxCopAnalyzers>
+    <GenerateAPIListing>false</GenerateAPIListing>
   </PropertyGroup>
 
   <ItemGroup>

@@ -84,6 +84,49 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(expTenantId, actTenantId);
         }
 
+        [Test]
+        [NonParallelizable]
+        public void ValidateEnvironmentBasedOptionsPassedToCredentials([Values]bool clientIdSpecified, [Values]bool usernameSpecified, [Values]bool tenantIdSpecified)
+        {
+            var expClientId = clientIdSpecified ? Guid.NewGuid().ToString() : null;
+            var expUsername = usernameSpecified ? Guid.NewGuid().ToString() : null;
+            var expTenantId = tenantIdSpecified ? Guid.NewGuid().ToString() : null;
+            bool onCreateSharedCalled = false;
+            bool onCreatedManagedCalled = false;
+
+            using (new TestEnvVar("AZURE_CLIENT_ID", expClientId))
+            using (new TestEnvVar("AZURE_USERNAME", expUsername))
+            using (new TestEnvVar("AZURE_TENANT_ID", expTenantId))
+            {
+                var credFactory = new MockDefaultAzureCredentialFactory(CredentialPipeline.GetInstance(null));
+
+                credFactory.OnCreateManagedIdentityCredential = (clientId, _) =>
+                {
+                    onCreatedManagedCalled = true;
+                    Assert.AreEqual(expClientId, clientId);
+                };
+
+                credFactory.OnCreateSharedTokenCacheCredential = (tenantId, username, _) =>
+                {
+                    onCreateSharedCalled = true;
+                    Assert.AreEqual(expTenantId, tenantId);
+                    Assert.AreEqual(expUsername, username);
+                };
+
+                var options = new DefaultAzureCredentialOptions
+                {
+                    ExcludeEnvironmentCredential = true,
+                    ExcludeManagedIdentityCredential = false,
+                    ExcludeSharedTokenCacheCredential = false,
+                    ExcludeInteractiveBrowserCredential = true
+                };
+
+                var cred = new DefaultAzureCredential(credFactory, options);
+
+                Assert.IsTrue(onCreateSharedCalled);
+                Assert.IsTrue(onCreatedManagedCalled);
+            }
+        }
 
         [Test]
         public void ValidateCtorWithExcludeOptions([Values(true, false)]bool excludeEnvironmentCredential, [Values(true, false)]bool excludeManagedIdentityCredential, [Values(true, false)]bool excludeSharedTokenCacheCredential, [Values(true, false)]bool excludeInteractiveBrowserCredential)
@@ -99,13 +142,10 @@ namespace Azure.Identity.Tests
             credFactory.OnCreateInteractiveBrowserCredential = (_) => interactiveBrowserCredentialIncluded = true;
             credFactory.OnCreateManagedIdentityCredential = (clientId, _) =>
             {
-                Assert.IsNull(clientId);
                 managedIdentityCredentialIncluded = true;
             };
             credFactory.OnCreateSharedTokenCacheCredential = (tenantId, username, _) =>
             {
-                Assert.IsNull(tenantId);
-                Assert.IsNull(username);
                 sharedTokenCacheCredentialIncluded = true;
             };
 
