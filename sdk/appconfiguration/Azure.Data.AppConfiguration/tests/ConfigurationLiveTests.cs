@@ -562,6 +562,45 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [Test]
+        public async Task GetRevisionsByKeyAndLabel()
+        {
+            // The service keeps revision history even after the key was removed
+            // Avoid reusing ids
+            Recording.DisableIdReuse();
+
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            //Prepare environment
+            ConfigurationSetting setting = testSetting;
+
+            setting.Key = GenerateKeyId("key-");
+            ConfigurationSetting testSettingUpdate = setting.Clone();
+            testSettingUpdate.Label = "test_label_update";
+
+            try
+            {
+                await service.SetConfigurationSettingAsync(setting);
+                await service.SetConfigurationSettingAsync(testSettingUpdate);
+                AsyncPageable<ConfigurationSetting> revisions = service.GetRevisionsAsync(testSettingUpdate.Key, testSettingUpdate.Label, CancellationToken.None);
+
+                int resultsReturned = 0;
+                await foreach (ConfigurationSetting value in revisions)
+                {
+                    Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(value, testSettingUpdate));
+                    resultsReturned++;
+                }
+
+                Assert.AreEqual(1, resultsReturned);
+            }
+            finally
+            {
+                await service.DeleteConfigurationSettingAsync(setting.Key, setting.Label);
+                await service.DeleteConfigurationSettingAsync(testSettingUpdate.Key, testSettingUpdate.Label);
+            }
+        }
+
+        [Test]
         public async Task GetSetting()
         {
             ConfigurationClient service = GetClient();
