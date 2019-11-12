@@ -363,7 +363,7 @@ namespace Microsoft.Azure.Management.DeploymentManager
             ArtifactSources = new ArtifactSourcesOperations(this);
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-09-01-preview";
+            ApiVersion = "2019-11-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -397,6 +397,8 @@ namespace Microsoft.Azure.Management.DeploymentManager
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Authentication>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<StepProperties>("stepType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<StepProperties>("stepType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<HealthCheckStepAttributes>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<HealthCheckStepAttributes>("type"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());

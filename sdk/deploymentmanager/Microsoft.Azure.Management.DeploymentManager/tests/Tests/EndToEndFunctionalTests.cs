@@ -376,7 +376,128 @@ namespace DeploymentManager.Tests
                 resourceGroupName: clientHelper.ResourceGroupName,
                 stepName: stepName));
             Assert.Equal(HttpStatusCode.NotFound, cloudException.Response.StatusCode);
+            
+            this.HealthCheckStepTests(location, clientHelper, deploymentManagerClient);
         }
+
+        private void HealthCheckStepTests(
+            string location,
+            DeploymentManagerClientHelper clientHelper,
+            AzureDeploymentManagerClient deploymentManagerClient)
+        {
+            // Test Create step.
+            var stepName = clientHelper.ResourceGroupName + "HealthCheckStep";
+
+            var healthChecks = new List<RestHealthCheck>();
+
+            healthChecks.Add(new RestHealthCheck()
+            {
+                Name = "webAppHealthCheck",
+                Request = new RestRequest()
+                {
+                    Method = RestRequestMethod.GET,
+                    Uri = "https://clientvalidations.deploymentmanager.net/healthstatus",
+                    Authentication = new RestRequestAuthentication()
+                    {
+                        Name = "code",
+                        InProperty = RestAuthLocation.Header,
+                        Value = "AuthValue"
+                    }
+                },
+                Response = new RestResponse()
+                {
+                    SuccessStatusCodes = new List<string> { "200", "204" },
+                    Regex = new RestResponseRegex()
+                    {
+                        MatchQuantifier = RestMatchQuantifier.All,
+                        Matches = new List<string>
+                        {
+                            "Contoso-Service-EndToEnd",
+                            "(?i)\"health_status\":((.|\n)*)\"(green|yellow)\"",
+                            "(?mi)^(\"application_host\": 94781052)$"
+                        }
+                    }
+                }
+            });
+
+            var stepProperties = new HealthCheckStepProperties()
+            {
+                Attributes = new RestHealthCheckStepAttributes()
+                {
+                    WaitDuration = "PT10M",
+                    MaxElasticDuration = "PT15M",
+                    HealthyStateDuration = "PT30M",
+                    HealthChecks = healthChecks
+                }
+            };
+
+            var inputStep = new StepResource(
+                location: location,
+                properties: stepProperties,
+                name: stepName);
+
+            var stepResponse = deploymentManagerClient.Steps.CreateOrUpdate(
+                resourceGroupName: clientHelper.ResourceGroupName,
+                stepName: stepName,
+                stepInfo: inputStep);
+
+            this.ValidateHealthCheckStep(inputStep, stepResponse);
+
+            deploymentManagerClient.Steps.Delete(
+                resourceGroupName: clientHelper.ResourceGroupName,
+                stepName: stepName);
+
+            var cloudException = Assert.Throws<CloudException>(() => deploymentManagerClient.Steps.Get(
+                resourceGroupName: clientHelper.ResourceGroupName,
+                stepName: stepName));
+            Assert.Equal(HttpStatusCode.NotFound, cloudException.Response.StatusCode);
+        }
+
+        private void ValidateHealthCheckStep(StepResource inputStep, StepResource stepResponse)
+        {
+            Assert.NotNull(stepResponse);
+            Assert.Equal(inputStep.Location, stepResponse.Location);
+            Assert.Equal(inputStep.Name, stepResponse.Name);
+
+            var stepProperties = stepResponse.Properties as HealthCheckStepProperties;
+            Assert.NotNull(stepProperties);
+            Assert.Equal(((HealthCheckStepProperties)inputStep.Properties).Attributes.WaitDuration, stepProperties.Attributes.WaitDuration);
+            Assert.Equal(((HealthCheckStepProperties)inputStep.Properties).Attributes.MaxElasticDuration, stepProperties.Attributes.MaxElasticDuration);
+            Assert.Equal(((HealthCheckStepProperties)inputStep.Properties).Attributes.HealthyStateDuration, stepProperties.Attributes.HealthyStateDuration);
+            Assert.Equal(
+                ((RestHealthCheckStepAttributes)((HealthCheckStepProperties)inputStep.Properties).Attributes).HealthChecks.Count, 
+                ((RestHealthCheckStepAttributes)stepProperties.Attributes).HealthChecks.Count);
+            Assert.Equal(
+                ((RestHealthCheckStepAttributes)((HealthCheckStepProperties)inputStep.Properties).Attributes).HealthChecks[0].Name, 
+                ((RestHealthCheckStepAttributes)stepProperties.Attributes).HealthChecks[0].Name);
+            Assert.Equal(
+                ((RestHealthCheckStepAttributes)((HealthCheckStepProperties)inputStep.Properties).Attributes).HealthChecks[0].Request.Method, 
+                ((RestHealthCheckStepAttributes)stepProperties.Attributes).HealthChecks[0].Request.Method);
+            Assert.Equal(
+                ((RestHealthCheckStepAttributes)((HealthCheckStepProperties)inputStep.Properties).Attributes).HealthChecks[0].Request.Uri, 
+                ((RestHealthCheckStepAttributes)stepProperties.Attributes).HealthChecks[0].Request.Uri);
+            Assert.Equal(
+                ((RestHealthCheckStepAttributes)((HealthCheckStepProperties)inputStep.Properties).Attributes).HealthChecks[0].Request.Authentication.Name, 
+                ((RestHealthCheckStepAttributes)stepProperties.Attributes).HealthChecks[0].Request.Authentication.Name);
+            Assert.Equal(
+                ((RestHealthCheckStepAttributes)((HealthCheckStepProperties)inputStep.Properties).Attributes).HealthChecks[0].Request.Authentication.InProperty, 
+                ((RestHealthCheckStepAttributes)stepProperties.Attributes).HealthChecks[0].Request.Authentication.InProperty);
+            Assert.Equal(
+                ((RestHealthCheckStepAttributes)((HealthCheckStepProperties)inputStep.Properties).Attributes).HealthChecks[0].Request.Authentication.Value, 
+                ((RestHealthCheckStepAttributes)stepProperties.Attributes).HealthChecks[0].Request.Authentication.Value);
+            Assert.Equal(
+                ((RestHealthCheckStepAttributes)((HealthCheckStepProperties)inputStep.Properties).Attributes).HealthChecks[0].Response.SuccessStatusCodes.Count, 
+                ((RestHealthCheckStepAttributes)stepProperties.Attributes).HealthChecks[0].Response.SuccessStatusCodes.Count);
+            Assert.Equal(
+                ((RestHealthCheckStepAttributes)((HealthCheckStepProperties)inputStep.Properties).Attributes).HealthChecks[0].Response.Regex.MatchQuantifier, 
+                ((RestHealthCheckStepAttributes)stepProperties.Attributes).HealthChecks[0].Response.Regex.MatchQuantifier);
+
+            foreach (var regex in ((RestHealthCheckStepAttributes)((HealthCheckStepProperties)inputStep.Properties).Attributes).HealthChecks[0].Response.Regex.Matches)
+            {
+                Assert.True(
+                    ((RestHealthCheckStepAttributes)stepProperties.Attributes).HealthChecks[0].Response.Regex.Matches.Contains(regex));
+            }
+         }
 
         private void ValidateStep(StepResource inputStep, StepResource stepResponse)
         {
