@@ -349,12 +349,14 @@ namespace Azure.Messaging.EventHubs
         ///   responsible for publishing <see cref="EventData" /> to the Event Hub.
         /// </summary>
         ///
+        /// <param name="partitionId">The identifier of the partition to which the transport producer should be bound; if <c>null</c>, the producer is unbound.</param>
         /// <param name="producerOptions">The set of options to apply when creating the producer.</param>
         ///
         /// <returns>A <see cref="TransportProducer"/> configured in the requested manner.</returns>
         ///
-        internal virtual TransportProducer CreateTransportProducer(EventHubProducerClientOptions producerOptions = default) =>
-            InnerClient.CreateProducer(producerOptions?.Clone() ?? new EventHubProducerClientOptions());
+        internal virtual TransportProducer CreateTransportProducer(string partitionId,
+                                                                   EventHubProducerClientOptions producerOptions = default) =>
+            InnerClient.CreateProducer(partitionId, producerOptions?.Clone() ?? new EventHubProducerClientOptions());
 
         /// <summary>
         ///   Creates a consumer strongly aligned with the active protocol and transport, responsible
