@@ -193,9 +193,9 @@ namespace Azure.Messaging.EventHubs.Samples
                     }
 
                     // Because there is some non-determinism in the messaging flow, the sent events may not be immediately
-                    // available.  For this reason, we wait 500 ms before resuming.
+                    // available.  For this reason, we wait 1000 ms before resuming.
 
-                    await Task.Delay(500);
+                    await Task.Delay(1000);
 
                     // Once stopped, the event processor won't receive events anymore.  In case there are still events being
                     // processed when the stop method is called, the processing will complete before the corresponding partition
