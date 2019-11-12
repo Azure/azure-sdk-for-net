@@ -114,9 +114,11 @@ namespace Microsoft.Azure.Search.Models
         public static readonly TokenFilterName IndicNormalization = "indic_normalization";
 
         /// <summary>
-        /// KeywordRepeat
+        /// Emits each incoming token twice, once as keyword and once as
+        /// non-keyword. See
+        /// http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/KeywordRepeatFilter.html
         /// </summary>
-        public static readonly TokenFilterName EmitseachincomingtokentwiceonceaskeywordandonceasnonKeywordSeehttpLuceneapacheorgCore4103AnalyzersCommonOrgApacheLuceneAnalysisMiscellaneousKeywordRepeatFilterhtml = "keyword_repeat";
+        public static readonly TokenFilterName KeywordRepeat = "keyword_repeat";
 
         /// <summary>
         /// A high-performance kstem filter for English. See
