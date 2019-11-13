@@ -168,7 +168,7 @@ DataLakeFileClient fileClient = filesystem.GetFileClient(Randomize("sample-file"
 fileClient.Create();
 
 // Set Access Control List
-IList<PathAccessControlEntry> accessControlList
+IList<PathAccessControlItem> accessControlList
     = PathAccessControlExtensions.ParseAccessControlList("user::rwx,group::r--,mask::rwx,other::---");
 fileClient.SetAccessControlList(accessControlList);
 ```
