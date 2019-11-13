@@ -1,27 +1,25 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System.Linq;
-using System.Net;
 using Microsoft.Azure.Management.Security;
 using Microsoft.Azure.Management.Security.Models;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using SecurityCenter.Tests.Helpers;
+using System.Net;
 using Xunit;
 
 namespace SecurityCenter.Tests
 {
-    public class IotSecuritySolutionsAnalyticsAggregatedAlertTests : TestBase
+    public class SubAssessmentTests : TestBase
     {
         #region Test setup
-
-        private static readonly string AggregatedAlertName = "IoT_AgentDroppedEvents/2019-05-26";
-        private static readonly string ResourceGroupName = "nir-test";
-        private static readonly string SolutionName = "singahub";
-        private static readonly string AscLocation = "southeastasia";
+        private static readonly string AssessmentName = "94829b47-fb4e-4d24-93fd-e172b5575289";
+        private static readonly string SubAssessmentName = "44828267-f9c0-0e11-0372-75507a7092b1";
+        private static readonly string AscLocation = "centralus";
         private static TestEnvironment TestEnvironment { get; set; }
+        #endregion
 
         private static SecurityCenterClient GetSecurityCenterClient(MockContext context)
         {
@@ -41,46 +39,49 @@ namespace SecurityCenter.Tests
             return securityCenterClient;
         }
 
-        #endregion
-
         #region Tests
-
         [Fact]
-        public void IotSecuritySolutionsAnalyticsAggregatedAlert_Get()
+        public void SubAssessments_ListAll()
         {
+            string scope = "subscriptions/2f5dc369-6812-4c7b-9900-30baa10952c5";
+
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var ret = securityCenterClient.IotSecuritySolutionsAnalyticsAggregatedAlert.Get(ResourceGroupName, SolutionName, AggregatedAlertName);
-                Assert.NotNull(ret);
-            }
-        }
-
-        [Fact]
-        public void IotSecuritySolutionsAnalyticsAggregatedAlert_List()
-        {
-            using (var context = MockContext.Start(this.GetType()))
-            {
-                var securityCenterClient = GetSecurityCenterClient(context);
-                var ret = securityCenterClient.IotSecuritySolutionsAnalyticsAggregatedAlert.List(ResourceGroupName, SolutionName);
+                var ret = securityCenterClient.SubAssessments.ListAll(scope);
                 Validate(ret);
             }
         }
 
         [Fact]
-        public void IotSecuritySolutionsAnalyticsAggregatedAlert_Dismiss()
+        public void SubAssessments_List()
         {
+            string scope = "subscriptions/2f5dc369-6812-4c7b-9900-30baa10952c5/resourceGroups/sdkGroup/providers/Microsoft.ContainerRegistry/registries/sdkRef";
+
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                securityCenterClient.IotSecuritySolutionsAnalyticsAggregatedAlert.Dismiss(ResourceGroupName, SolutionName, AggregatedAlertName);
+                var ret = securityCenterClient.SubAssessments.List(scope, AssessmentName);
+                Validate(ret);
             }
         }
 
+        [Fact]
+        public void SubAssessments_Get()
+        {
+            string scope = "subscriptions/2f5dc369-6812-4c7b-9900-30baa10952c5/resourceGroups/sdkGroup/providers/Microsoft.ContainerRegistry/registries/sdkRef";
+
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                var securityCenterClient = GetSecurityCenterClient(context);
+                var ret = securityCenterClient.SubAssessments.Get(scope, AssessmentName, SubAssessmentName);
+                Assert.NotNull(ret);
+            }
+        }
         #endregion
 
         #region Validations
-        private static void Validate(IPage<IoTSecurityAggregatedAlert> ret)
+        private static void Validate(IPage<SecuritySubAssessment> ret)
         {
             Assert.True(ret.IsAny(), "Got empty list");
             foreach (var item in ret)

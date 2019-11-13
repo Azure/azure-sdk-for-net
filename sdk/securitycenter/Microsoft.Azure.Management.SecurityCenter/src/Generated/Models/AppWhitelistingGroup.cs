@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="location">Location where the resource is
         /// stored</param>
         /// <param name="enforcementMode">Possible values include: 'Audit',
-        /// 'Enforce'</param>
+        /// 'Enforce', 'None'</param>
         /// <param name="configurationStatus">Possible values include:
         /// 'Configured', 'NotConfigured', 'InProgress', 'Failed',
         /// 'NoStatus'</param>
@@ -46,13 +46,14 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="sourceSystem">Possible values include:
         /// 'Azure_AppLocker', 'Azure_AuditD', 'NonAzure_AppLocker',
         /// 'NonAzure_AuditD', 'None'</param>
-        public AppWhitelistingGroup(string id = default(string), string name = default(string), string type = default(string), string location = default(string), string enforcementMode = default(string), string configurationStatus = default(string), string recommendationStatus = default(string), IList<AppWhitelistingIssueSummary> issues = default(IList<AppWhitelistingIssueSummary>), string sourceSystem = default(string), IList<VmRecommendation> vmRecommendations = default(IList<VmRecommendation>), IList<PathRecommendation> pathRecommendations = default(IList<PathRecommendation>))
+        public AppWhitelistingGroup(string id = default(string), string name = default(string), string type = default(string), string location = default(string), string enforcementMode = default(string), ProtectionMode protectionMode = default(ProtectionMode), string configurationStatus = default(string), string recommendationStatus = default(string), IList<AppWhitelistingIssueSummary> issues = default(IList<AppWhitelistingIssueSummary>), string sourceSystem = default(string), IList<VmRecommendation> vmRecommendations = default(IList<VmRecommendation>), IList<PathRecommendation> pathRecommendations = default(IList<PathRecommendation>))
         {
             Id = id;
             Name = name;
             Type = type;
             Location = location;
             EnforcementMode = enforcementMode;
+            ProtectionMode = protectionMode;
             ConfigurationStatus = configurationStatus;
             RecommendationStatus = recommendationStatus;
             Issues = issues;
@@ -92,10 +93,15 @@ namespace Microsoft.Azure.Management.Security.Models
         public string Location { get; private set; }
 
         /// <summary>
-        /// Gets or sets possible values include: 'Audit', 'Enforce'
+        /// Gets or sets possible values include: 'Audit', 'Enforce', 'None'
         /// </summary>
         [JsonProperty(PropertyName = "properties.enforcementMode")]
         public string EnforcementMode { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.protectionMode")]
+        public ProtectionMode ProtectionMode { get; set; }
 
         /// <summary>
         /// Gets or sets possible values include: 'Configured',

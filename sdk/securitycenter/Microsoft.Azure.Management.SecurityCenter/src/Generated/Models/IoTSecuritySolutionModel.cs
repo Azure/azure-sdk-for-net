@@ -51,7 +51,9 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="autoDiscoveredResources">List of resources that were
         /// automatically discovered as relevant to the security
         /// solution.</param>
-        public IoTSecuritySolutionModel(string workspace, string displayName, IList<string> iotHubs, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), string status = default(string), IList<string> export = default(IList<string>), IList<string> disabledDataSources = default(IList<string>), UserDefinedResourcesProperties userDefinedResources = default(UserDefinedResourcesProperties), IList<string> autoDiscoveredResources = default(IList<string>), IList<RecommendationConfigurationProperties> recommendationsConfiguration = default(IList<RecommendationConfigurationProperties>))
+        /// <param name="unmaskedIpLoggingStatus">Unmasked IP address logging
+        /// status. Possible values include: 'Disabled', 'Enabled'</param>
+        public IoTSecuritySolutionModel(string workspace, string displayName, IList<string> iotHubs, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), string status = default(string), IList<string> export = default(IList<string>), IList<string> disabledDataSources = default(IList<string>), UserDefinedResourcesProperties userDefinedResources = default(UserDefinedResourcesProperties), IList<string> autoDiscoveredResources = default(IList<string>), IList<RecommendationConfigurationProperties> recommendationsConfiguration = default(IList<RecommendationConfigurationProperties>), string unmaskedIpLoggingStatus = default(string))
         {
             Id = id;
             Name = name;
@@ -67,6 +69,7 @@ namespace Microsoft.Azure.Management.Security.Models
             UserDefinedResources = userDefinedResources;
             AutoDiscoveredResources = autoDiscoveredResources;
             RecommendationsConfiguration = recommendationsConfiguration;
+            UnmaskedIpLoggingStatus = unmaskedIpLoggingStatus;
             CustomInit();
         }
 
@@ -160,6 +163,13 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.recommendationsConfiguration")]
         public IList<RecommendationConfigurationProperties> RecommendationsConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets unmasked IP address logging status. Possible values
+        /// include: 'Disabled', 'Enabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.unmaskedIpLoggingStatus")]
+        public string UnmaskedIpLoggingStatus { get; set; }
 
         /// <summary>
         /// Validate the object.
