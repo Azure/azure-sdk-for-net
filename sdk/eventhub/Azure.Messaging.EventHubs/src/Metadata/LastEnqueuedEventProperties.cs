@@ -15,25 +15,25 @@ namespace Azure.Messaging.EventHubs.Metadata
         ///   The sequence number of the last observed event to be enqueued in the partition.
         /// </summary>
         ///
-        public long? LastEnqueuedSequenceNumber { get; }
+        public long? SequenceNumber { get; }
 
         /// <summary>
         ///   The offset of the last observed event to be enqueued in the partition.
         /// </summary>
         ///
-        public long? LastEnqueuedOffset { get; }
+        public long? Offset { get; }
 
         /// <summary>
         ///   The date and time, in UTC, that the last observed event was enqueued in the partition.
         /// </summary>
         ///
-        public DateTimeOffset? LastEnqueuedTime { get; }
+        public DateTimeOffset? EnqueuedTime { get; }
 
         /// <summary>
         ///   The date and time, in UTC, that the information about the last enqueued event was received.
         /// </summary>
         ///
-        public DateTimeOffset? InformationReceived { get; }
+        public DateTimeOffset? LastReceivedTime { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="LastEnqueuedEventProperties"/> class.
@@ -49,10 +49,10 @@ namespace Azure.Messaging.EventHubs.Metadata
                                            DateTimeOffset? lastEnqueuedTime,
                                            DateTimeOffset? lastReceivedTime)
         {
-            LastEnqueuedSequenceNumber = lastSequenceNumber;
-            LastEnqueuedOffset = lastOffset;
-            LastEnqueuedTime = lastEnqueuedTime;
-            InformationReceived = lastReceivedTime;
+            SequenceNumber = lastSequenceNumber;
+            Offset = lastOffset;
+            EnqueuedTime = lastEnqueuedTime;
+            LastReceivedTime = lastReceivedTime;
         }
 
         /// <summary>

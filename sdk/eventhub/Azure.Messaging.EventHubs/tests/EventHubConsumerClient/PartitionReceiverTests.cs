@@ -156,10 +156,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var receiver = new PartitionReceiver("group", partition, eventHub, true, TimeSpan.Zero, transportMock);
             var metrics = receiver.ReadLastEnqueuedEventInformation();
 
-            Assert.That(metrics.LastEnqueuedSequenceNumber, Is.EqualTo(lastEvent.LastPartitionSequenceNumber), "The sequence number should match.");
-            Assert.That(metrics.LastEnqueuedOffset, Is.EqualTo(lastEvent.LastPartitionOffset), "The offset should match.");
-            Assert.That(metrics.LastEnqueuedTime, Is.EqualTo(lastEvent.LastPartitionEnqueuedTime), "The enqueue time should match.");
-            Assert.That(metrics.InformationReceived, Is.EqualTo(lastEvent.LastPartitionInformationRetrievalTime), "The retrieval time should match.");
+            Assert.That(metrics.SequenceNumber, Is.EqualTo(lastEvent.LastPartitionSequenceNumber), "The sequence number should match.");
+            Assert.That(metrics.Offset, Is.EqualTo(lastEvent.LastPartitionOffset), "The offset should match.");
+            Assert.That(metrics.EnqueuedTime, Is.EqualTo(lastEvent.LastPartitionEnqueuedTime), "The enqueue time should match.");
+            Assert.That(metrics.LastReceivedTime, Is.EqualTo(lastEvent.LastPartitionInformationRetrievalTime), "The retrieval time should match.");
         }
 
         /// <summary>
