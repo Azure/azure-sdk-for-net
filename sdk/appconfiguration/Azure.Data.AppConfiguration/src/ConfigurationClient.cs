@@ -866,7 +866,7 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary>
-        /// Sets an existing <see cref="ConfigurationSetting"/> as read only in the configuration store.
+        /// Sets an existing <see cref="ConfigurationSetting"/> to read only or read write state in the configuration store.
         /// </summary>
         /// <param name="key">The primary identifier of the configuration setting.</param>
         /// <param name="isReadOnly">If true, the <see cref="ConfigurationSetting"/> will be set to read only in the configuration store. If false, it will be set to read write.</param>
@@ -875,7 +875,7 @@ namespace Azure.Data.AppConfiguration
             => SetReadOnlyAsync(key, label: default, isReadOnly, cancellationToken);
 
         /// <summary>
-        /// Sets an existing <see cref="ConfigurationSetting"/> as read only in the configuration store.
+        /// Sets an existing <see cref="ConfigurationSetting"/> to read only or read write state in the configuration store.
         /// </summary>
         /// <param name="key">The primary identifier of the configuration setting.</param>
         /// <param name="isReadOnly">If true, the <see cref="ConfigurationSetting"/> will be set to read only in the configuration store. If false, it will be set to read write.</param>
@@ -884,7 +884,7 @@ namespace Azure.Data.AppConfiguration
             => SetReadOnly(key, label: default, isReadOnly, cancellationToken);
 
         /// <summary>
-        /// Sets an existing <see cref="ConfigurationSetting"/> as read only in the configuration store.
+        /// Sets an existing <see cref="ConfigurationSetting"/> to read only or read write state in the configuration store.
         /// </summary>
         /// <param name="key">The primary identifier of the configuration setting.</param>
         /// <param name="label">A label used to group this configuration setting with others.</param>
@@ -919,7 +919,7 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary>
-        /// Specifies whether an existing <see cref="ConfigurationSetting"/> is read only in the configuration store.
+        /// Sets an existing <see cref="ConfigurationSetting"/> to read only or read write state in the configuration store.
         /// </summary>
         /// <param name="key">The primary identifier of the configuration setting.</param>
         /// <param name="label">A label used to group this configuration setting with others.</param>
