@@ -517,6 +517,7 @@ namespace Azure.Data.AppConfiguration
         /// <returns>A response containing the retrieved <see cref="ConfigurationSetting"/>.</returns>
         public virtual async Task<Response<ConfigurationSetting>> GetConfigurationSettingAsync(string key, string label = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
             return await GetConfigurationSettingAsync(key, label, acceptDateTime: default, requestOptions: default, cancellationToken).ConfigureAwait(false);
         }
 
@@ -544,16 +545,8 @@ namespace Azure.Data.AppConfiguration
         /// <returns>A response containing the retrieved <see cref="ConfigurationSetting"/>.</returns>
         public virtual async Task<Response<ConfigurationSetting>> GetConfigurationSettingAsync(ConfigurationSetting setting, bool onlyIfChanged = false, CancellationToken cancellationToken = default)
         {
-            if (setting == null)
-                throw new ArgumentNullException($"{nameof(setting)}");
-
-            MatchConditions requestOptions = default;
-            if (onlyIfChanged)
-            {
-                requestOptions = new MatchConditions();
-                requestOptions.IfNoneMatch = setting.ETag;
-            }
-
+            Argument.AssertNotNull(setting, nameof(setting));
+            MatchConditions requestOptions = onlyIfChanged ? new MatchConditions { IfNoneMatch = setting.ETag } : default;
             return await GetConfigurationSettingAsync(setting.Key, setting.Label, acceptDateTime: default, requestOptions, cancellationToken).ConfigureAwait(false);
         }
 
@@ -582,10 +575,36 @@ namespace Azure.Data.AppConfiguration
             return GetConfigurationSetting(setting.Key, setting.Label, acceptDateTime: default, requestOptions, cancellationToken);
         }
 
-        internal virtual async Task<Response<ConfigurationSetting>> GetConfigurationSettingAsync(string key, string label, DateTimeOffset acceptDateTime, MatchConditions requestOptions, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Retrieve an existing <see cref="ConfigurationSetting"/> from the configuration store.
+        /// </summary>
+        /// <param name="setting">The <see cref="ConfigurationSetting"/> to retrieve.</param>
+        /// <param name="acceptDateTime">The setting will be retrieved exactly as it existed at the provided time.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A response containing the retrieved <see cref="ConfigurationSetting"/>.</returns>
+        public virtual async Task<Response<ConfigurationSetting>> GetConfigurationSettingAsync(ConfigurationSetting setting, DateTimeOffset acceptDateTime, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(setting, nameof(setting));
+            return await GetConfigurationSettingAsync(setting.Key, setting.Label, acceptDateTime, requestOptions: default, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieve an existing <see cref="ConfigurationSetting"/> from the configuration store.
+        /// </summary>
+        /// <param name="setting">The <see cref="ConfigurationSetting"/> to retrieve.</param>
+        /// <param name="acceptDateTime">The setting will be retrieved exactly as it existed at the provided time.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A response containing the retrieved <see cref="ConfigurationSetting"/>.</returns>
+        public virtual Response<ConfigurationSetting> GetConfigurationSetting(ConfigurationSetting setting, DateTimeOffset acceptDateTime, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(setting, nameof(setting));
+            return GetConfigurationSetting(setting.Key, setting.Label, acceptDateTime, requestOptions: default, cancellationToken);
+        }
+
+        private async Task<Response<ConfigurationSetting>> GetConfigurationSettingAsync(string key, string label, DateTimeOffset acceptDateTime, MatchConditions requestOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.GetConfigurationSetting");
-            scope.AddAttribute("key", key);
+            scope.AddAttribute(nameof(key), key);
             scope.Start();
 
             try
@@ -607,7 +626,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        internal virtual Response<ConfigurationSetting> GetConfigurationSetting(string key, string label, DateTimeOffset acceptDateTime, MatchConditions requestOptions, CancellationToken cancellationToken = default)
+        private Response<ConfigurationSetting> GetConfigurationSetting(string key, string label, DateTimeOffset acceptDateTime, MatchConditions requestOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.GetConfigurationSetting");
             scope.AddAttribute(nameof(key), key);
@@ -615,17 +634,15 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
-                using (Request request = CreateGetRequest(key, label, acceptDateTime, requestOptions))
-                {
-                    Response response = _pipeline.SendRequest(request, cancellationToken);
+                using Request request = CreateGetRequest(key, label, acceptDateTime, requestOptions);
+                Response response = _pipeline.SendRequest(request, cancellationToken);
 
-                    return response.Status switch
-                    {
-                        200 => CreateResponse(response),
-                        304 => CreateResourceModifiedResponse(response),
-                        _ => throw response.CreateRequestFailedException(),
-                    };
-                }
+                return response.Status switch
+                {
+                    200 => CreateResponse(response),
+                    304 => CreateResourceModifiedResponse(response),
+                    _ => throw response.CreateRequestFailedException(),
+                };
             }
             catch (Exception e)
             {

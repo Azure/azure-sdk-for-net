@@ -685,7 +685,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 // Test
                 // TODO: add a test with a more granular timestamp.
-                ConfigurationSetting responseSetting = await service.GetConfigurationSettingAsync(testSetting.Key, testSetting.Label, DateTimeOffset.MaxValue, requestOptions: default);
+                ConfigurationSetting responseSetting = await service.GetConfigurationSettingAsync(testSetting, DateTimeOffset.MaxValue);
                 Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, responseSetting));
             }
             finally
