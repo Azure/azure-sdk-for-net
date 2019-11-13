@@ -131,12 +131,12 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Responsible for processing events received from the Event Hubs service.
         /// </summary>
         ///
-        /// <param name="eventData">TODO.</param>
+        /// <param name="partitionEvent">TODO.</param>
         /// <param name="context">TODO.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        protected abstract Task ProcessEventAsync(EventData eventData,
+        protected abstract Task ProcessEventAsync(PartitionEvent partitionEvent,
                                                   T context);
 
         /// <summary>
@@ -668,7 +668,7 @@ namespace Azure.Messaging.EventHubs.Processor
                         {
                             // TODO: fix it.
                             var context = CreateContext(partitionId);
-                            await ProcessEventAsync(partitionEvent.Data, context).ConfigureAwait(false);
+                            await ProcessEventAsync(partitionEvent, context).ConfigureAwait(false);
                         }
                         catch (Exception eventProcessingException)
                         {

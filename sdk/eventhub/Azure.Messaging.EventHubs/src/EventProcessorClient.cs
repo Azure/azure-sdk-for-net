@@ -417,15 +417,15 @@ namespace Azure.Messaging.EventHubs
         ///   Responsible for processing events received from the Event Hubs service.
         /// </summary>
         ///
-        /// <param name="eventData">TODO.</param>
+        /// <param name="partitionEvent">TODO.</param>
         /// <param name="context">TODO.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        protected override Task ProcessEventAsync(EventData eventData,
+        protected override Task ProcessEventAsync(PartitionEvent partitionEvent,
                                                   PartitionContext context)
         {
-            var processorEvent = new EventProcessorEvent(context, eventData, UpdateCheckpointAsync);
+            var processorEvent = new EventProcessorEvent(context, partitionEvent.Data, UpdateCheckpointAsync);
             return ProcessEventAsyncHandler(processorEvent);
         }
 
