@@ -171,28 +171,6 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [Test]
-        public async Task GetWithAcceptDateTime()
-        {
-            var mockResponse = new MockResponse(200);
-            mockResponse.SetContent(SerializationHelpers.Serialize(s_testSetting, SerializeSetting));
-
-            var mockTransport = new MockTransport(mockResponse);
-            ConfigurationClient service = CreateTestService(mockTransport);
-
-            Response<ConfigurationSetting> response = await service.GetConfigurationSettingAsync(s_testSetting.Key, DateTimeOffset.MaxValue);
-
-            MockRequest request = mockTransport.SingleRequest;
-
-            AssertRequestCommon(request);
-            Assert.AreEqual(RequestMethod.Get, request.Method);
-            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}", request.Uri.ToString());
-            Assert.True(request.Headers.TryGetValue("Accept-Datetime", out var acceptDateTime));
-            Assert.AreEqual(DateTimeOffset.MaxValue.UtcDateTime.ToString("R", CultureInfo.InvariantCulture), acceptDateTime);
-            Assert.False(request.Headers.TryGetValue("If-Match", out var ifMatch));
-            Assert.False(request.Headers.TryGetValue("If-None-Match", out var ifNoneMatch));
-        }
-
-        [Test]
         public async Task Add()
         {
             var response = new MockResponse(200);
