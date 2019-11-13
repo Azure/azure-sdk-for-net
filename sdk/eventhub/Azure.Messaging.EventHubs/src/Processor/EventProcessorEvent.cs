@@ -72,11 +72,9 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Updates the checkpoint using the given information for the associated partition and consumer group in the chosen storage service. TODO: add exceptions?
         /// </summary>
         ///
-        /// <param name="eventData">The event containing the information to be stored in the checkpoint.</param>
-        ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public Task UpdateCheckpointAsync(EventData eventData)
+        public Task UpdateCheckpointAsync()
         {
             var processor = default(EventProcessorClient);
 
@@ -88,7 +86,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 Argument.AssertNotClosed(true, Resources.ClientNeededForThisInformation);
             }
 
-            return processor.UpdateCheckpointAsync(eventData, Context);
+            return processor.UpdateCheckpointAsync(Data, Context);
         }
     }
 }
