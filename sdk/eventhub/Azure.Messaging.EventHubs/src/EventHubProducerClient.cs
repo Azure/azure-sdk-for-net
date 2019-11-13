@@ -528,7 +528,7 @@ namespace Azure.Messaging.EventHubs
             AssertSinglePartitionReference(options.PartitionId, options.PartitionKey);
 
             TransportEventBatch transportBatch = await GatewayProducer.CreateBatchAsync(options, cancellationToken).ConfigureAwait(false);
-            return new EventDataBatch(transportBatch, options);
+            return new EventDataBatch(transportBatch, options.ToSendOptions());
         }
 
         /// <summary>
