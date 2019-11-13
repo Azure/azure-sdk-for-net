@@ -17,7 +17,7 @@ namespace Azure.Messaging.EventHubs.Processor
     ///   TODO.
     /// </summary>
     ///
-    public abstract class EventProcessorBase
+    public abstract class EventProcessorBase<T>
     {
         /// <summary>The seed to use for initializing random number generated for a given thread-specific instance.</summary>
         private static int s_randomSeed = Environment.TickCount;
@@ -113,7 +113,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        protected virtual Task InitializeProcessingForPartitionAsync(PartitionContext context) => Task.CompletedTask;
+        protected virtual Task InitializeProcessingForPartitionAsync(T context) => Task.CompletedTask;
 
         /// <summary>
         ///   The handler to be called once event processing stops for a given partition.
@@ -125,7 +125,7 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         protected virtual Task ProcessingForPartitionStoppedAsync(ProcessingStoppedReason reason,
-                                                                  PartitionContext context) => Task.CompletedTask;
+                                                                  T context) => Task.CompletedTask;
 
         /// <summary>
         ///   Responsible for processing events received from the Event Hubs service.
@@ -137,7 +137,7 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         protected abstract Task ProcessEventAsync(EventData eventData,
-                                                  PartitionContext context);
+                                                  T context);
 
         /// <summary>
         ///   Responsible for processing unhandled exceptions thrown while this processor is running.
@@ -149,7 +149,7 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         protected abstract Task ProcessErrorAsync(Exception exception,
-                                                  PartitionContext context);
+                                                  T context);
 
         /// <summary>
         ///   Retrieves a complete ownership list from the chosen storage service.
@@ -213,11 +213,22 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <returns>A new <see cref="EventHubConnection" /> instance.</returns>
         ///
         /// <remarks>
-        ///   The abstract <see cref="EventProcessorBase" /> class has ownership of the returned connection and, therefore, is
+        ///   The abstract <see cref="EventProcessorBase{T}" /> class has ownership of the returned connection and, therefore, is
         ///   responsible for closing it.  Attempting to close the connection in the derived class may result in undefined behavior.
         /// </remarks>
         ///
         protected abstract EventHubConnection CreateConnection();
+
+        /// <summary>
+        ///   Creates a context associated with a specific partition.  It will be passed to partition processing related methods,
+        ///   such as <see cref="ProcessEventAsync" /> and <see cref="ProcessErrorAsync" />.
+        /// </summary>
+        ///
+        /// <param name="partitionId">TODO.</param>
+        ///
+        /// <returns>The context associated with the specified partition.</returns>
+        ///
+        protected abstract T CreateContext(string partitionId);
 
         /// <summary>
         ///   Starts the event processor.  In case it's already running, nothing happens.
@@ -379,7 +390,7 @@ namespace Azure.Messaging.EventHubs.Processor
                         {
                             await StopPartitionProcessingIfRunningAsync(kvp.Key, ProcessingStoppedReason.Exception).ConfigureAwait(false);
 
-                            var context = new PartitionContext(EventHubName, kvp.Key);
+                            var context = CreateContext(kvp.Key);
                             await InitializeProcessingForPartitionAsync(context).ConfigureAwait(false);
                         }
                     }))
@@ -399,7 +410,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 {
                     InstanceOwnership[claimedOwnership.PartitionId] = claimedOwnership;
 
-                    var context = new PartitionContext(EventHubName, claimedOwnership.PartitionId);
+                    var context = CreateContext(claimedOwnership.PartitionId);
                     await InitializeProcessingForPartitionAsync(context).ConfigureAwait(false);
                 }
 
@@ -553,7 +564,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 }
             }
 
-            var context = new PartitionContext(EventHubName, partitionId);
+            var context = CreateContext(partitionId);
             await ProcessingForPartitionStoppedAsync(reason, context);
         }
 
@@ -656,6 +667,7 @@ namespace Azure.Messaging.EventHubs.Processor
                         try
                         {
                             // TODO: fix it.
+                            var context = CreateContext(partitionId);
                             await ProcessEventAsync(partitionEvent.Data, context).ConfigureAwait(false);
                         }
                         catch (Exception eventProcessingException)

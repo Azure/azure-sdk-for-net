@@ -21,7 +21,7 @@ namespace Azure.Messaging.EventHubs
     ///   through the provided handlers.
     /// </summary>
     ///
-    public class EventProcessorClient : EventProcessorBase, IAsyncDisposable
+    public class EventProcessorClient : EventProcessorBase<PartitionContext>, IAsyncDisposable
     {
         /// <summary>The primitive for synchronizing access during start and set handler operations.</summary>
         private readonly object StartProcessorGuard = new object();
@@ -539,11 +539,22 @@ namespace Azure.Messaging.EventHubs
         /// <returns>A new <see cref="EventHubConnection" /> instance.</returns>
         ///
         /// <remarks>
-        ///   The abstract <see cref="EventProcessorBase" /> class has ownership of the returned connection and, therefore, is
+        ///   The abstract <see cref="EventProcessorBase{T}" /> class has ownership of the returned connection and, therefore, is
         ///   responsible for closing it.  Attempting to close the connection in the derived class may result in undefined behavior.
         /// </remarks>
         ///
         protected override EventHubConnection CreateConnection() => ConnectionFactory();
+
+        /// <summary>
+        ///   Creates a context associated with a specific partition.  It will be passed to partition processing related methods,
+        ///   such as <see cref="ProcessEventAsync" /> and <see cref="ProcessErrorAsync" />.
+        /// </summary>
+        ///
+        /// <param name="partitionId">TODO.</param>
+        ///
+        /// <returns>The context associated with the specified partition.</returns>
+        ///
+        protected override PartitionContext CreateContext(string partitionId) => new PartitionContext(EventHubName, partitionId);
 
         /// <summary>
         ///   Closes the event processor.
