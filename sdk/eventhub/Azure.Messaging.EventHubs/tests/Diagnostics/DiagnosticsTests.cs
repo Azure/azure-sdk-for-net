@@ -244,7 +244,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var eventHubName = "SomeName";
             var endpoint = new Uri("amqp://some.endpoint.com/path");
             var fakeConnection = new MockConnection(endpoint, eventHubName);
-            var context = new PartitionContext(eventHubName, "partition");
+            var context = new PartitionContext("partition");
             var data = new EventData(new byte[0], sequenceNumber: 0, offset: 0);
 
             var processor = new EventProcessorClient("cg", new InMemoryPartitionManager(), fakeConnection, null);
@@ -306,7 +306,7 @@ namespace Azure.Messaging.EventHubs.Tests
             };
 
             var updateCheckpointMock = Mock.Of<Func<EventData, PartitionContext, Task>>();
-            var manager = new PartitionPump(connectionMock.Object, "cg", new PartitionContext("eventHubName", "pid"), EventPosition.Earliest, processEventAsync, updateCheckpointMock, new EventProcessorClientOptions());
+            var manager = new PartitionPump(connectionMock.Object, "cg", new PartitionContext("pid"), EventPosition.Earliest, processEventAsync, updateCheckpointMock, new EventProcessorClientOptions());
 
             await manager.StartAsync();
             await processorCalledSource.Task;

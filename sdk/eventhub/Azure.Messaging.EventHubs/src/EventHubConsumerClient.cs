@@ -683,7 +683,7 @@ namespace Azure.Messaging.EventHubs
                 (
                     transportConsumer,
                     channel,
-                    new PartitionContext(EventHubName, partitionId, transportConsumer),
+                    new PartitionContext(partitionId, transportConsumer),
                     ex => { observedException = ex; },
                     publishingCancellationSource.Token
                 );
