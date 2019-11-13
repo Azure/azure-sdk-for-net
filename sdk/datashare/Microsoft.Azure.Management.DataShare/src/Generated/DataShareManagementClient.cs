@@ -388,7 +388,7 @@ namespace Microsoft.Azure.Management.DataShare
             SynchronizationSettings = new SynchronizationSettingsOperations(this);
             Triggers = new TriggersOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-11-01";
+            ApiVersion = "2018-11-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

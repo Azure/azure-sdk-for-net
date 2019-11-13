@@ -267,84 +267,6 @@ namespace Microsoft.Azure.Management.DataShare
             }
 
             /// <summary>
-            /// List of available share subscriptions under an account.
-            /// </summary>
-            /// <remarks>
-            /// List share subscriptions in an account
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the share account.
-            /// </param>
-            /// <param name='skipToken'>
-            /// Continuation Token
-            /// </param>
-            public static IPage<ShareSubscription> ListByAccount(this IShareSubscriptionsOperations operations, string resourceGroupName, string accountName, string skipToken = default(string))
-            {
-                return operations.ListByAccountAsync(resourceGroupName, accountName, skipToken).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List of available share subscriptions under an account.
-            /// </summary>
-            /// <remarks>
-            /// List share subscriptions in an account
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the share account.
-            /// </param>
-            /// <param name='skipToken'>
-            /// Continuation Token
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<ShareSubscription>> ListByAccountAsync(this IShareSubscriptionsOperations operations, string resourceGroupName, string accountName, string skipToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByAccountWithHttpMessagesAsync(resourceGroupName, accountName, skipToken, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// List of available share subscriptions under an account.
-            /// </summary>
-            /// <remarks>
-            /// List share subscriptions in an account
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the share account.
-            /// </param>
-            /// <param name='skipToken'>
-            /// Continuation Token
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse<IPage<ShareSubscription>> ListByAccountWithHttpMessages(this IShareSubscriptionsOperations operations, string resourceGroupName, string accountName, string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.ListByAccountWithHttpMessagesAsync(resourceGroupName, accountName, skipToken, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
             /// Get source share synchronization settings for a shareSubscription.
             /// </summary>
             /// <remarks>
@@ -789,6 +711,84 @@ namespace Microsoft.Azure.Management.DataShare
             }
 
             /// <summary>
+            /// List of available share subscriptions under an account.
+            /// </summary>
+            /// <remarks>
+            /// List share subscriptions in an account
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the share account.
+            /// </param>
+            /// <param name='skipToken'>
+            /// Continuation Token
+            /// </param>
+            public static IPage<ShareSubscription> ListByAccount(this IShareSubscriptionsOperations operations, string resourceGroupName, string accountName, string skipToken = default(string))
+            {
+                return operations.ListByAccountAsync(resourceGroupName, accountName, skipToken).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List of available share subscriptions under an account.
+            /// </summary>
+            /// <remarks>
+            /// List share subscriptions in an account
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the share account.
+            /// </param>
+            /// <param name='skipToken'>
+            /// Continuation Token
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ShareSubscription>> ListByAccountAsync(this IShareSubscriptionsOperations operations, string resourceGroupName, string accountName, string skipToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByAccountWithHttpMessagesAsync(resourceGroupName, accountName, skipToken, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List of available share subscriptions under an account.
+            /// </summary>
+            /// <remarks>
+            /// List share subscriptions in an account
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the share account.
+            /// </param>
+            /// <param name='skipToken'>
+            /// Continuation Token
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static AzureOperationResponse<IPage<ShareSubscription>> ListByAccountWithHttpMessages(this IShareSubscriptionsOperations operations, string resourceGroupName, string accountName, string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.ListByAccountWithHttpMessagesAsync(resourceGroupName, accountName, skipToken, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
             /// Delete shareSubscription in an account.
             /// </summary>
             /// <remarks>
@@ -1041,66 +1041,6 @@ namespace Microsoft.Azure.Management.DataShare
             }
 
             /// <summary>
-            /// List of available share subscriptions under an account.
-            /// </summary>
-            /// <remarks>
-            /// List share subscriptions in an account
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<ShareSubscription> ListByAccountNext(this IShareSubscriptionsOperations operations, string nextPageLink)
-            {
-                return operations.ListByAccountNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List of available share subscriptions under an account.
-            /// </summary>
-            /// <remarks>
-            /// List share subscriptions in an account
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<ShareSubscription>> ListByAccountNextAsync(this IShareSubscriptionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByAccountNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// List of available share subscriptions under an account.
-            /// </summary>
-            /// <remarks>
-            /// List share subscriptions in an account
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse<IPage<ShareSubscription>> ListByAccountNextWithHttpMessages(this IShareSubscriptionsOperations operations, string nextPageLink, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.ListByAccountNextWithHttpMessagesAsync(nextPageLink, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
             /// Get source share synchronization settings for a shareSubscription.
             /// </summary>
             /// <remarks>
@@ -1278,6 +1218,66 @@ namespace Microsoft.Azure.Management.DataShare
             public static AzureOperationResponse<IPage<SynchronizationDetails>> ListSynchronizationDetailsNextWithHttpMessages(this IShareSubscriptionsOperations operations, string nextPageLink, Dictionary<string, List<string>> customHeaders = null)
             {
                 return operations.ListSynchronizationDetailsNextWithHttpMessagesAsync(nextPageLink, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List of available share subscriptions under an account.
+            /// </summary>
+            /// <remarks>
+            /// List share subscriptions in an account
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<ShareSubscription> ListByAccountNext(this IShareSubscriptionsOperations operations, string nextPageLink)
+            {
+                return operations.ListByAccountNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List of available share subscriptions under an account.
+            /// </summary>
+            /// <remarks>
+            /// List share subscriptions in an account
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ShareSubscription>> ListByAccountNextAsync(this IShareSubscriptionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByAccountNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List of available share subscriptions under an account.
+            /// </summary>
+            /// <remarks>
+            /// List share subscriptions in an account
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static AzureOperationResponse<IPage<ShareSubscription>> ListByAccountNextWithHttpMessages(this IShareSubscriptionsOperations operations, string nextPageLink, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.ListByAccountNextWithHttpMessagesAsync(nextPageLink, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
     }
