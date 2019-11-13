@@ -30,12 +30,12 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='transferName'>
             /// Transfer Name.
             /// </param>
-            /// <param name='body'>
-            /// Accept transfer parameters.
+            /// <param name='parameters'>
+            /// Parameters supplied to accept the transfer.
             /// </param>
-            public static RecipientTransferDetails Accept(this IRecipientTransfersOperations operations, string transferName, AcceptTransferRequest body)
+            public static RecipientTransferDetails Accept(this IRecipientTransfersOperations operations, string transferName, AcceptTransferRequest parameters)
             {
-                return operations.AcceptAsync(transferName, body).GetAwaiter().GetResult();
+                return operations.AcceptAsync(transferName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -47,15 +47,57 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='transferName'>
             /// Transfer Name.
             /// </param>
-            /// <param name='body'>
-            /// Accept transfer parameters.
+            /// <param name='parameters'>
+            /// Parameters supplied to accept the transfer.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RecipientTransferDetails> AcceptAsync(this IRecipientTransfersOperations operations, string transferName, AcceptTransferRequest body, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RecipientTransferDetails> AcceptAsync(this IRecipientTransfersOperations operations, string transferName, AcceptTransferRequest parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.AcceptWithHttpMessagesAsync(transferName, body, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AcceptWithHttpMessagesAsync(transferName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Validates if the products can be transferred in the context of the given
+            /// transfer name.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='transferName'>
+            /// Transfer Name.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to validate the transfer.
+            /// </param>
+            public static ValidateTransferListResponse Validate(this IRecipientTransfersOperations operations, string transferName, AcceptTransferRequest parameters)
+            {
+                return operations.ValidateAsync(transferName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Validates if the products can be transferred in the context of the given
+            /// transfer name.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='transferName'>
+            /// Transfer Name.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to validate the transfer.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ValidateTransferListResponse> ValidateAsync(this IRecipientTransfersOperations operations, string transferName, AcceptTransferRequest parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ValidateWithHttpMessagesAsync(transferName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

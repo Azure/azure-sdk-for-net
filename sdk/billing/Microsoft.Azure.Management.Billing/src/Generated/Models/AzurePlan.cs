@@ -10,34 +10,31 @@
 
 namespace Microsoft.Azure.Management.Billing.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Summary of cancel product operation
+    /// Details about the azure plan.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class UpdateAutoRenewOperationSummary
+    public partial class AzurePlan
     {
         /// <summary>
-        /// Initializes a new instance of the UpdateAutoRenewOperationSummary
-        /// class.
+        /// Initializes a new instance of the AzurePlan class.
         /// </summary>
-        public UpdateAutoRenewOperationSummary()
+        public AzurePlan()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the UpdateAutoRenewOperationSummary
-        /// class.
+        /// Initializes a new instance of the AzurePlan class.
         /// </summary>
-        /// <param name="endDate">The end date of this asset</param>
-        public UpdateAutoRenewOperationSummary(System.DateTime? endDate = default(System.DateTime?))
+        /// <param name="skuId">The sku id.</param>
+        /// <param name="skuDescription">The sku description.</param>
+        public AzurePlan(string skuId = default(string), string skuDescription = default(string))
         {
-            EndDate = endDate;
+            SkuId = skuId;
+            SkuDescription = skuDescription;
             CustomInit();
         }
 
@@ -47,10 +44,16 @@ namespace Microsoft.Azure.Management.Billing.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the end date of this asset
+        /// Gets or sets the sku id.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.endDate")]
-        public System.DateTime? EndDate { get; set; }
+        [JsonProperty(PropertyName = "skuId")]
+        public string SkuId { get; set; }
+
+        /// <summary>
+        /// Gets the sku description.
+        /// </summary>
+        [JsonProperty(PropertyName = "skuDescription")]
+        public string SkuDescription { get; private set; }
 
     }
 }

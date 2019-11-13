@@ -14,27 +14,27 @@ namespace Microsoft.Azure.Management.Billing.Models
     using System.Linq;
 
     /// <summary>
-    /// Details about the enabled azure sku.
+    /// Details about a reseller.
     /// </summary>
-    public partial class EnabledAzureSKUs
+    public partial class Reseller
     {
         /// <summary>
-        /// Initializes a new instance of the EnabledAzureSKUs class.
+        /// Initializes a new instance of the Reseller class.
         /// </summary>
-        public EnabledAzureSKUs()
+        public Reseller()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the EnabledAzureSKUs class.
+        /// Initializes a new instance of the Reseller class.
         /// </summary>
-        /// <param name="skuId">The sku id.</param>
-        /// <param name="skuDescription">The sku description.</param>
-        public EnabledAzureSKUs(string skuId = default(string), string skuDescription = default(string))
+        /// <param name="resellerId">The reseller id.</param>
+        /// <param name="description">A description of the reseller.</param>
+        public Reseller(string resellerId = default(string), string description = default(string))
         {
-            SkuId = skuId;
-            SkuDescription = skuDescription;
+            ResellerId = resellerId;
+            Description = description;
             CustomInit();
         }
 
@@ -44,16 +44,16 @@ namespace Microsoft.Azure.Management.Billing.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the sku id.
+        /// Gets the reseller id.
         /// </summary>
-        [JsonProperty(PropertyName = "skuId")]
-        public string SkuId { get; private set; }
+        [JsonProperty(PropertyName = "resellerId")]
+        public string ResellerId { get; private set; }
 
         /// <summary>
-        /// Gets the sku description.
+        /// Gets a description of the reseller.
         /// </summary>
-        [JsonProperty(PropertyName = "skuDescription")]
-        public string SkuDescription { get; private set; }
+        [JsonProperty(PropertyName = "description")]
+        public string Description { get; private set; }
 
     }
 }

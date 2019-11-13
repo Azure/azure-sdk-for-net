@@ -16,29 +16,28 @@ namespace Microsoft.Azure.Management.Billing.Models
     using System.Linq;
 
     /// <summary>
-    /// Result of listing reservation transactions summary.
+    /// Result of transfer validation.
     /// </summary>
-    public partial class TransactionsListResult
+    public partial class ValidateTransferListResponse
     {
         /// <summary>
-        /// Initializes a new instance of the TransactionsListResult class.
+        /// Initializes a new instance of the ValidateTransferListResponse
+        /// class.
         /// </summary>
-        public TransactionsListResult()
+        public ValidateTransferListResponse()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the TransactionsListResult class.
+        /// Initializes a new instance of the ValidateTransferListResponse
+        /// class.
         /// </summary>
-        /// <param name="value">The list of reservation transactions
-        /// summary.</param>
-        /// <param name="nextLink">The link (url) to the next page of
+        /// <param name="value">The list of transfer validation
         /// results.</param>
-        public TransactionsListResult(IList<TransactionsSummary> value = default(IList<TransactionsSummary>), string nextLink = default(string))
+        public ValidateTransferListResponse(IList<ValidateTransferResponse> value = default(IList<ValidateTransferResponse>))
         {
             Value = value;
-            NextLink = nextLink;
             CustomInit();
         }
 
@@ -48,16 +47,10 @@ namespace Microsoft.Azure.Management.Billing.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the list of reservation transactions summary.
+        /// Gets the list of transfer validation results.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<TransactionsSummary> Value { get; private set; }
-
-        /// <summary>
-        /// Gets the link (url) to the next page of results.
-        /// </summary>
-        [JsonProperty(PropertyName = "nextLink")]
-        public string NextLink { get; private set; }
+        public IList<ValidateTransferResponse> Value { get; private set; }
 
     }
 }

@@ -16,21 +16,21 @@ namespace Microsoft.Azure.Management.Billing.Models
     using System.Linq;
 
     /// <summary>
-    /// A billing Subscription summary resource.
+    /// A billing Subscription resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class BillingSubscriptionSummary : Resource
+    public partial class BillingSubscription : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the BillingSubscriptionSummary class.
+        /// Initializes a new instance of the BillingSubscription class.
         /// </summary>
-        public BillingSubscriptionSummary()
+        public BillingSubscription()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the BillingSubscriptionSummary class.
+        /// Initializes a new instance of the BillingSubscription class.
         /// </summary>
         /// <param name="id">Resource Id.</param>
         /// <param name="name">Resource name.</param>
@@ -44,15 +44,20 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="monthToDateCharges">Month to date charges.</param>
         /// <param name="billingProfileId">Billing Profile id to which this
         /// product belongs.</param>
-        /// <param name="billingProfileName">Billing Profile name to which this
-        /// product belongs.</param>
+        /// <param name="billingProfileDisplayName">Billing Profile display
+        /// name to which this product belongs.</param>
+        /// <param name="customerId">Customer id to which this product
+        /// belongs.</param>
+        /// <param name="customerDisplayName">Display name of customer to which
+        /// this product belongs.</param>
         /// <param name="invoiceSectionId">Invoice section id to which this
         /// product belongs.</param>
-        /// <param name="invoiceSectionName">Invoice section name to which this
-        /// product belongs.</param>
+        /// <param name="invoiceSectionDisplayName">Invoice section display
+        /// name to which this product belongs.</param>
+        /// <param name="reseller">Reseller for this subscription.</param>
         /// <param name="skuId">The sku id.</param>
         /// <param name="skuDescription">The sku description.</param>
-        public BillingSubscriptionSummary(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), System.Guid? subscriptionId = default(System.Guid?), string subscriptionBillingStatus = default(string), Amount lastMonthCharges = default(Amount), Amount monthToDateCharges = default(Amount), string billingProfileId = default(string), string billingProfileName = default(string), string invoiceSectionId = default(string), string invoiceSectionName = default(string), string skuId = default(string), string skuDescription = default(string))
+        public BillingSubscription(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), System.Guid? subscriptionId = default(System.Guid?), string subscriptionBillingStatus = default(string), Amount lastMonthCharges = default(Amount), Amount monthToDateCharges = default(Amount), string billingProfileId = default(string), string billingProfileDisplayName = default(string), string customerId = default(string), string customerDisplayName = default(string), string invoiceSectionId = default(string), string invoiceSectionDisplayName = default(string), Reseller reseller = default(Reseller), string skuId = default(string), string skuDescription = default(string))
             : base(id, name, type)
         {
             DisplayName = displayName;
@@ -61,9 +66,12 @@ namespace Microsoft.Azure.Management.Billing.Models
             LastMonthCharges = lastMonthCharges;
             MonthToDateCharges = monthToDateCharges;
             BillingProfileId = billingProfileId;
-            BillingProfileName = billingProfileName;
+            BillingProfileDisplayName = billingProfileDisplayName;
+            CustomerId = customerId;
+            CustomerDisplayName = customerDisplayName;
             InvoiceSectionId = invoiceSectionId;
-            InvoiceSectionName = invoiceSectionName;
+            InvoiceSectionDisplayName = invoiceSectionDisplayName;
+            Reseller = reseller;
             SkuId = skuId;
             SkuDescription = skuDescription;
             CustomInit();
@@ -112,10 +120,22 @@ namespace Microsoft.Azure.Management.Billing.Models
         public string BillingProfileId { get; private set; }
 
         /// <summary>
-        /// Gets billing Profile name to which this product belongs.
+        /// Gets billing Profile display name to which this product belongs.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.billingProfileName")]
-        public string BillingProfileName { get; private set; }
+        [JsonProperty(PropertyName = "properties.billingProfileDisplayName")]
+        public string BillingProfileDisplayName { get; private set; }
+
+        /// <summary>
+        /// Gets customer id to which this product belongs.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.customerId")]
+        public string CustomerId { get; private set; }
+
+        /// <summary>
+        /// Gets display name of customer to which this product belongs.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.customerDisplayName")]
+        public string CustomerDisplayName { get; private set; }
 
         /// <summary>
         /// Gets invoice section id to which this product belongs.
@@ -124,10 +144,16 @@ namespace Microsoft.Azure.Management.Billing.Models
         public string InvoiceSectionId { get; private set; }
 
         /// <summary>
-        /// Gets invoice section name to which this product belongs.
+        /// Gets invoice section display name to which this product belongs.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.invoiceSectionName")]
-        public string InvoiceSectionName { get; private set; }
+        [JsonProperty(PropertyName = "properties.invoiceSectionDisplayName")]
+        public string InvoiceSectionDisplayName { get; private set; }
+
+        /// <summary>
+        /// Gets reseller for this subscription.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.reseller")]
+        public Reseller Reseller { get; private set; }
 
         /// <summary>
         /// Gets or sets the sku id.

@@ -11,33 +11,30 @@
 namespace Microsoft.Azure.Management.Billing.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
     /// The properties of an InvoiceSection.
     /// </summary>
-    public partial class InvoiceSectionProperties
+    public partial class InvoiceSectionCreationRequest
     {
         /// <summary>
-        /// Initializes a new instance of the InvoiceSectionProperties class.
+        /// Initializes a new instance of the InvoiceSectionCreationRequest
+        /// class.
         /// </summary>
-        public InvoiceSectionProperties()
+        public InvoiceSectionCreationRequest()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the InvoiceSectionProperties class.
+        /// Initializes a new instance of the InvoiceSectionCreationRequest
+        /// class.
         /// </summary>
         /// <param name="displayName">The name of the InvoiceSection.</param>
-        /// <param name="billingProfiles">The billing profiles associated to
-        /// the billing account.</param>
-        public InvoiceSectionProperties(string displayName = default(string), IList<BillingProfile> billingProfiles = default(IList<BillingProfile>))
+        public InvoiceSectionCreationRequest(string displayName = default(string))
         {
             DisplayName = displayName;
-            BillingProfiles = billingProfiles;
             CustomInit();
         }
 
@@ -51,13 +48,6 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// </summary>
         [JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the billing profiles associated to the billing
-        /// account.
-        /// </summary>
-        [JsonProperty(PropertyName = "billingProfiles")]
-        public IList<BillingProfile> BillingProfiles { get; set; }
 
     }
 }

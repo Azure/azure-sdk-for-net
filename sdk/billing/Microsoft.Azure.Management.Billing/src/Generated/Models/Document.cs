@@ -16,23 +16,23 @@ namespace Microsoft.Azure.Management.Billing.Models
     /// <summary>
     /// The properties of the invoice download.
     /// </summary>
-    public partial class DownloadProperties
+    public partial class Document
     {
         /// <summary>
-        /// Initializes a new instance of the DownloadProperties class.
+        /// Initializes a new instance of the Document class.
         /// </summary>
-        public DownloadProperties()
+        public Document()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DownloadProperties class.
+        /// Initializes a new instance of the Document class.
         /// </summary>
         /// <param name="kind">Document type. Possible values include:
         /// 'Invoice', 'VoidNote', 'Receipt', 'CreditNote'</param>
         /// <param name="url">Document URL.</param>
-        public DownloadProperties(string kind = default(string), string url = default(string))
+        public Document(string kind = default(string), string url = default(string))
         {
             Kind = kind;
             Url = url;

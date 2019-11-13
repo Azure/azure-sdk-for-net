@@ -16,21 +16,21 @@ namespace Microsoft.Azure.Management.Billing.Models
     using System.Linq;
 
     /// <summary>
-    /// A product summary resource.
+    /// A product resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class ProductSummary : Resource
+    public partial class Product : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the ProductSummary class.
+        /// Initializes a new instance of the Product class.
         /// </summary>
-        public ProductSummary()
+        public Product()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ProductSummary class.
+        /// Initializes a new instance of the Product class.
         /// </summary>
         /// <param name="id">Resource Id.</param>
         /// <param name="name">Resource name.</param>
@@ -54,13 +54,18 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="parentProductId">Parent Product Id.</param>
         /// <param name="invoiceSectionId">Invoice section id to which this
         /// product belongs.</param>
-        /// <param name="invoiceSectionName">Invoice section name to which this
-        /// product belongs.</param>
+        /// <param name="invoiceSectionDisplayName">Invoice section display
+        /// name to which this product belongs.</param>
         /// <param name="billingProfileId">Billing Profile id to which this
         /// product belongs.</param>
-        /// <param name="billingProfileName">Billing Profile name to which this
-        /// product belongs.</param>
-        public ProductSummary(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), System.DateTime? purchaseDate = default(System.DateTime?), string productTypeId = default(string), string productType = default(string), string status = default(string), System.DateTime? endDate = default(System.DateTime?), string billingFrequency = default(string), Amount lastCharge = default(Amount), System.DateTime? lastChargeDate = default(System.DateTime?), double? quantity = default(double?), string skuId = default(string), string skuDescription = default(string), string availabilityId = default(string), string parentProductId = default(string), string invoiceSectionId = default(string), string invoiceSectionName = default(string), string billingProfileId = default(string), string billingProfileName = default(string))
+        /// <param name="billingProfileDisplayName">Billing Profile display
+        /// name to which this product belongs.</param>
+        /// <param name="customerId">Customer id to which this product
+        /// belongs.</param>
+        /// <param name="customerDisplayName">Display name of customer to which
+        /// this product belongs.</param>
+        /// <param name="reseller">Reseller for this product.</param>
+        public Product(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), System.DateTime? purchaseDate = default(System.DateTime?), string productTypeId = default(string), string productType = default(string), string status = default(string), System.DateTime? endDate = default(System.DateTime?), string billingFrequency = default(string), Amount lastCharge = default(Amount), System.DateTime? lastChargeDate = default(System.DateTime?), double? quantity = default(double?), string skuId = default(string), string skuDescription = default(string), string availabilityId = default(string), string parentProductId = default(string), string invoiceSectionId = default(string), string invoiceSectionDisplayName = default(string), string billingProfileId = default(string), string billingProfileDisplayName = default(string), string customerId = default(string), string customerDisplayName = default(string), Reseller reseller = default(Reseller))
             : base(id, name, type)
         {
             DisplayName = displayName;
@@ -78,9 +83,12 @@ namespace Microsoft.Azure.Management.Billing.Models
             AvailabilityId = availabilityId;
             ParentProductId = parentProductId;
             InvoiceSectionId = invoiceSectionId;
-            InvoiceSectionName = invoiceSectionName;
+            InvoiceSectionDisplayName = invoiceSectionDisplayName;
             BillingProfileId = billingProfileId;
-            BillingProfileName = billingProfileName;
+            BillingProfileDisplayName = billingProfileDisplayName;
+            CustomerId = customerId;
+            CustomerDisplayName = customerDisplayName;
+            Reseller = reseller;
             CustomInit();
         }
 
@@ -183,10 +191,10 @@ namespace Microsoft.Azure.Management.Billing.Models
         public string InvoiceSectionId { get; private set; }
 
         /// <summary>
-        /// Gets invoice section name to which this product belongs.
+        /// Gets invoice section display name to which this product belongs.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.invoiceSectionName")]
-        public string InvoiceSectionName { get; private set; }
+        [JsonProperty(PropertyName = "properties.invoiceSectionDisplayName")]
+        public string InvoiceSectionDisplayName { get; private set; }
 
         /// <summary>
         /// Gets billing Profile id to which this product belongs.
@@ -195,10 +203,28 @@ namespace Microsoft.Azure.Management.Billing.Models
         public string BillingProfileId { get; private set; }
 
         /// <summary>
-        /// Gets billing Profile name to which this product belongs.
+        /// Gets billing Profile display name to which this product belongs.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.billingProfileName")]
-        public string BillingProfileName { get; private set; }
+        [JsonProperty(PropertyName = "properties.billingProfileDisplayName")]
+        public string BillingProfileDisplayName { get; private set; }
+
+        /// <summary>
+        /// Gets customer id to which this product belongs.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.customerId")]
+        public string CustomerId { get; private set; }
+
+        /// <summary>
+        /// Gets display name of customer to which this product belongs.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.customerDisplayName")]
+        public string CustomerDisplayName { get; private set; }
+
+        /// <summary>
+        /// Gets reseller for this product.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.reseller")]
+        public Reseller Reseller { get; private set; }
 
     }
 }

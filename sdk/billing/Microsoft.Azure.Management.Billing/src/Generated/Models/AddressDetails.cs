@@ -16,18 +16,18 @@ namespace Microsoft.Azure.Management.Billing.Models
     /// <summary>
     /// Address details.
     /// </summary>
-    public partial class Address
+    public partial class AddressDetails
     {
         /// <summary>
-        /// Initializes a new instance of the Address class.
+        /// Initializes a new instance of the AddressDetails class.
         /// </summary>
-        public Address()
+        public AddressDetails()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Address class.
+        /// Initializes a new instance of the AddressDetails class.
         /// </summary>
         /// <param name="firstName">First Name.</param>
         /// <param name="lastName">Last Name.</param>
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="country">Country code uses ISO2, 2-digit
         /// format.</param>
         /// <param name="postalCode">Address Postal Code.</param>
-        public Address(string firstName = default(string), string lastName = default(string), string companyName = default(string), string addressLine1 = default(string), string addressLine2 = default(string), string addressLine3 = default(string), string city = default(string), string region = default(string), string country = default(string), string postalCode = default(string))
+        public AddressDetails(string firstName = default(string), string lastName = default(string), string companyName = default(string), string addressLine1 = default(string), string addressLine2 = default(string), string addressLine3 = default(string), string city = default(string), string region = default(string), string country = default(string), string postalCode = default(string))
         {
             FirstName = firstName;
             LastName = lastName;

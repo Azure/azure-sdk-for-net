@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<InvoiceListResult>> ListByBillingAccountNameWithHttpMessagesAsync(string billingAccountName, string periodStartDate, string periodEndDate, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<InvoiceListResult>> ListByBillingAccountWithHttpMessagesAsync(string billingAccountName, string periodStartDate, string periodEndDate, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List of invoices for a billing profile.
         /// </summary>
@@ -109,6 +109,6 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<InvoiceSummary>> GetWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string invoiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Invoice>> GetWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string invoiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

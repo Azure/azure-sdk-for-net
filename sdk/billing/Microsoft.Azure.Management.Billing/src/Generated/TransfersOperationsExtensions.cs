@@ -30,15 +30,18 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
+            /// <param name='billingProfileName'>
+            /// Billing Profile Id.
+            /// </param>
             /// <param name='invoiceSectionName'>
             /// InvoiceSection Id.
             /// </param>
-            /// <param name='body'>
-            /// Initiate transfer parameters.
+            /// <param name='parameters'>
+            /// Parameters supplied to initiate the transfer.
             /// </param>
-            public static TransferDetails Initiate(this ITransfersOperations operations, string billingAccountName, string invoiceSectionName, InitiateTransferRequest body)
+            public static TransferDetails Initiate(this ITransfersOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, InitiateTransferRequest parameters)
             {
-                return operations.InitiateAsync(billingAccountName, invoiceSectionName, body).GetAwaiter().GetResult();
+                return operations.InitiateAsync(billingAccountName, billingProfileName, invoiceSectionName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -50,18 +53,21 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
+            /// <param name='billingProfileName'>
+            /// Billing Profile Id.
+            /// </param>
             /// <param name='invoiceSectionName'>
             /// InvoiceSection Id.
             /// </param>
-            /// <param name='body'>
-            /// Initiate transfer parameters.
+            /// <param name='parameters'>
+            /// Parameters supplied to initiate the transfer.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TransferDetails> InitiateAsync(this ITransfersOperations operations, string billingAccountName, string invoiceSectionName, InitiateTransferRequest body, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TransferDetails> InitiateAsync(this ITransfersOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, InitiateTransferRequest parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.InitiateWithHttpMessagesAsync(billingAccountName, invoiceSectionName, body, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.InitiateWithHttpMessagesAsync(billingAccountName, billingProfileName, invoiceSectionName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -76,15 +82,18 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
+            /// <param name='billingProfileName'>
+            /// Billing Profile Id.
+            /// </param>
             /// <param name='invoiceSectionName'>
             /// InvoiceSection Id.
             /// </param>
             /// <param name='transferName'>
             /// Transfer Name.
             /// </param>
-            public static TransferDetails Get(this ITransfersOperations operations, string billingAccountName, string invoiceSectionName, string transferName)
+            public static TransferDetails Get(this ITransfersOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, string transferName)
             {
-                return operations.GetAsync(billingAccountName, invoiceSectionName, transferName).GetAwaiter().GetResult();
+                return operations.GetAsync(billingAccountName, billingProfileName, invoiceSectionName, transferName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -96,6 +105,9 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
+            /// <param name='billingProfileName'>
+            /// Billing Profile Id.
+            /// </param>
             /// <param name='invoiceSectionName'>
             /// InvoiceSection Id.
             /// </param>
@@ -105,9 +117,9 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TransferDetails> GetAsync(this ITransfersOperations operations, string billingAccountName, string invoiceSectionName, string transferName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TransferDetails> GetAsync(this ITransfersOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, string transferName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(billingAccountName, invoiceSectionName, transferName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(billingAccountName, billingProfileName, invoiceSectionName, transferName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -122,15 +134,18 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
+            /// <param name='billingProfileName'>
+            /// Billing Profile Id.
+            /// </param>
             /// <param name='invoiceSectionName'>
             /// InvoiceSection Id.
             /// </param>
             /// <param name='transferName'>
             /// Transfer Name.
             /// </param>
-            public static TransferDetails Cancel(this ITransfersOperations operations, string billingAccountName, string invoiceSectionName, string transferName)
+            public static TransferDetails Cancel(this ITransfersOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, string transferName)
             {
-                return operations.CancelAsync(billingAccountName, invoiceSectionName, transferName).GetAwaiter().GetResult();
+                return operations.CancelAsync(billingAccountName, billingProfileName, invoiceSectionName, transferName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -142,6 +157,9 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
+            /// <param name='billingProfileName'>
+            /// Billing Profile Id.
+            /// </param>
             /// <param name='invoiceSectionName'>
             /// InvoiceSection Id.
             /// </param>
@@ -151,9 +169,9 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TransferDetails> CancelAsync(this ITransfersOperations operations, string billingAccountName, string invoiceSectionName, string transferName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TransferDetails> CancelAsync(this ITransfersOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, string transferName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CancelWithHttpMessagesAsync(billingAccountName, invoiceSectionName, transferName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CancelWithHttpMessagesAsync(billingAccountName, billingProfileName, invoiceSectionName, transferName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -168,12 +186,15 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
+            /// <param name='billingProfileName'>
+            /// Billing Profile Id.
+            /// </param>
             /// <param name='invoiceSectionName'>
             /// InvoiceSection Id.
             /// </param>
-            public static IPage<TransferDetails> List(this ITransfersOperations operations, string billingAccountName, string invoiceSectionName)
+            public static IPage<TransferDetails> List(this ITransfersOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName)
             {
-                return operations.ListAsync(billingAccountName, invoiceSectionName).GetAwaiter().GetResult();
+                return operations.ListAsync(billingAccountName, billingProfileName, invoiceSectionName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -185,15 +206,18 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
+            /// <param name='billingProfileName'>
+            /// Billing Profile Id.
+            /// </param>
             /// <param name='invoiceSectionName'>
             /// InvoiceSection Id.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<TransferDetails>> ListAsync(this ITransfersOperations operations, string billingAccountName, string invoiceSectionName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<TransferDetails>> ListAsync(this ITransfersOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(billingAccountName, invoiceSectionName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(billingAccountName, billingProfileName, invoiceSectionName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
