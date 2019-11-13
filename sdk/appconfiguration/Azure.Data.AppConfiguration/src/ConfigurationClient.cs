@@ -869,7 +869,7 @@ namespace Azure.Data.AppConfiguration
         /// Sets an existing <see cref="ConfigurationSetting"/> as read only in the configuration store.
         /// </summary>
         /// <param name="key">The primary identifier of the configuration setting.</param>
-        /// <param name="isReadOnly">true, to set an existing <see cref="ConfigurationSetting"/> as read only in the configuration store; otherwise, false.</param>
+        /// <param name="isReadOnly">If true, the <see cref="ConfigurationSetting"/> will be set to read only in the configuration store. If false, it will be set to read write.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Task<Response<ConfigurationSetting>> SetReadOnlyAsync(string key, bool isReadOnly, CancellationToken cancellationToken = default)
             => SetReadOnlyAsync(key, label: default, isReadOnly, cancellationToken);
@@ -878,7 +878,7 @@ namespace Azure.Data.AppConfiguration
         /// Sets an existing <see cref="ConfigurationSetting"/> as read only in the configuration store.
         /// </summary>
         /// <param name="key">The primary identifier of the configuration setting.</param>
-        /// <param name="isReadOnly">true, to set an existing <see cref="ConfigurationSetting"/> as read only in the configuration store; otherwise, false.</param>
+        /// <param name="isReadOnly">If true, the <see cref="ConfigurationSetting"/> will be set to read only in the configuration store. If false, it will be set to read write.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<ConfigurationSetting> SetReadOnly(string key, bool isReadOnly, CancellationToken cancellationToken = default)
             => SetReadOnly(key, label: default, isReadOnly, cancellationToken);
@@ -888,7 +888,7 @@ namespace Azure.Data.AppConfiguration
         /// </summary>
         /// <param name="key">The primary identifier of the configuration setting.</param>
         /// <param name="label">A label used to group this configuration setting with others.</param>
-        /// <param name="isReadOnly">true, to set an existing <see cref="ConfigurationSetting"/> as read only in the configuration store; otherwise, false.</param>
+        /// <param name="isReadOnly">If true, the <see cref="ConfigurationSetting"/> will be set to read only in the configuration store. If false, it will be set to read write.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<ConfigurationSetting>> SetReadOnlyAsync(string key, string label, bool isReadOnly, CancellationToken cancellationToken = default)
         {
@@ -923,7 +923,7 @@ namespace Azure.Data.AppConfiguration
         /// </summary>
         /// <param name="key">The primary identifier of the configuration setting.</param>
         /// <param name="label">A label used to group this configuration setting with others.</param>
-        /// <param name="isReadOnly">true, to set an existing <see cref="ConfigurationSetting"/> as read only in the configuration store; otherwise, false.</param>
+        /// <param name="isReadOnly">If true, the <see cref="ConfigurationSetting"/> will be set to read only in the configuration store. If false, it will be set to read write.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<ConfigurationSetting> SetReadOnly(string key, string label, bool isReadOnly, CancellationToken cancellationToken = default)
         {
