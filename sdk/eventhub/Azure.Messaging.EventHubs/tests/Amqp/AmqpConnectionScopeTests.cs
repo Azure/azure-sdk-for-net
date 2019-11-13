@@ -317,27 +317,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void OpenConsumerLinkAsyncValidatesTheEventPosition()
-        {
-            var endpoint = new Uri("amqp://test.service.gov");
-            var eventHub = "myHub";
-            var consumerGroup = "$Default";
-            var partitionId = "0";
-            var options = new EventHubConsumerClientOptions();
-            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
-            var transport = TransportType.AmqpTcp;
-            var identifier = "customIdentIFIER";
-
-            using var scope = new AmqpConnectionScope(endpoint, eventHub, credential.Object, transport, null, identifier);
-            Assert.That(() => scope.OpenConsumerLinkAsync(consumerGroup, partitionId, null, options, TimeSpan.FromDays(1), CancellationToken.None), Throws.InstanceOf<ArgumentException>());
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="AmqpConnectionScope.OpenConsumerLinkAsync" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
         public void OpenConsumerLinkAsyncValidatesTheConsumerOptions()
         {
             var endpoint = new Uri("amqp://test.service.gov");

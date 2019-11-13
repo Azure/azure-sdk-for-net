@@ -389,7 +389,6 @@ namespace Azure.Messaging.EventHubs
         {
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
             Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
-            Argument.AssertNotNull(eventPosition, nameof(eventPosition));
 
             return InnerClient.CreateConsumer(consumerGroup, partitionId, eventPosition, consumerOptions?.Clone() ?? new EventHubConsumerClientOptions());
         }
