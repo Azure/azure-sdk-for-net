@@ -167,7 +167,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [Ignore("Unstable test. (Undergoing rewrites; addressed in that scope)")]
         public async Task PartitionProcessorProcessEventsAsyncReceivesAllEvents()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
@@ -619,7 +618,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [Ignore("Unstable test. (Undergoing rewrites; addressed in that scope)")]
         public async Task PartitionProcessorCanCreateACheckpoint()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
