@@ -52,7 +52,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
                 Console.WriteLine("The Event Hub has the following properties:");
                 Console.WriteLine($"\tThe path to the Event Hub from the namespace is: { properties.Name }");
-                Console.WriteLine($"\tThe Event Hub was created at: { properties.CreatedAt.ToString("yyyy-MM-dd hh:mm:ss tt (zzz)") }, in UTC.");
+                Console.WriteLine($"\tThe Event Hub was created at: { properties.CreatedOn.ToString("yyyy-MM-dd hh:mm:ss tt (zzz)") }, in UTC.");
                 Console.WriteLine();
 
                 // Partitions of an Event Hub are an important concept.  Using the Event Hub properties, we'll inspect each of its partitions,

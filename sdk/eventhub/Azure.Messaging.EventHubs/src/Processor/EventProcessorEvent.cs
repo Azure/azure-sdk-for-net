@@ -53,18 +53,10 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
-        ///   Updates the checkpoint using the given information for the associated partition and consumer group in the chosen storage service.
+        ///   Updates the checkpoint for the <see cref="PartitionContext" /> and <see cref="EventData" /> associated with
+        ///   this event.
         /// </summary>
         ///
-        /// <param name="eventData">The event containing the information to be stored in the checkpoint.</param>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
-        public Task UpdateCheckpointAsync(EventData eventData)
-        {
-            // Verification is done by the Event Processor Client.
-
-            return OnUpdateCheckpoint(eventData, Context);
-        }
+        public Task UpdateCheckpointAsync() => OnUpdateCheckpoint(Data, Context);
     }
 }
