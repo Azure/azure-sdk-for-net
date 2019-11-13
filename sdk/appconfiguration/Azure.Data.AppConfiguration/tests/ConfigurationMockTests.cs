@@ -634,7 +634,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(response);
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            ConfigurationSetting setting = await service.SetReadOnlyAsync(testSetting.Key);
+            ConfigurationSetting setting = await service.SetReadOnlyAsync(testSetting.Key, true);
             var request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
@@ -663,7 +663,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(response);
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            ConfigurationSetting setting = await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label);
+            ConfigurationSetting setting = await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label, true);
             var request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
@@ -681,7 +681,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
-                await service.SetReadOnlyAsync(s_testSetting.Key);
+                await service.SetReadOnlyAsync(s_testSetting.Key, true);
             });
 
             Assert.AreEqual(404, exception.Status);
@@ -707,7 +707,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(response);
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            ConfigurationSetting setting = await service.ClearReadOnlyAsync(testSetting.Key);
+            ConfigurationSetting setting = await service.SetReadOnlyAsync(testSetting.Key, false);
             var request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
@@ -736,7 +736,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(response);
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            ConfigurationSetting setting = await service.ClearReadOnlyAsync(testSetting.Key, testSetting.Label);
+            ConfigurationSetting setting = await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label, false);
             var request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
@@ -754,7 +754,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
-                await service.ClearReadOnlyAsync(s_testSetting.Key);
+                await service.SetReadOnlyAsync(s_testSetting.Key, false);
             });
 
             Assert.AreEqual(404, exception.Status);
