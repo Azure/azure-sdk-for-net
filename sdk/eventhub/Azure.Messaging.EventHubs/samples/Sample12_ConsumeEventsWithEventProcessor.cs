@@ -171,6 +171,11 @@ namespace Azure.Messaging.EventHubs.Samples
                         await Task.Delay(500, cancellationSource.Token);
                     }
 
+                    // The processor may take some time to connect to the Event Hubs service.  Let's wait 1 second before sending
+                    // events so we don't end up missing events.
+
+                    await Task.Delay(1000);
+
                     // To test our event processor, we are publishing 10 sets of events to the Event Hub.  Notice that we are not
                     // specifying a partition to send events to, so these sets may end up in different partitions.
 
@@ -193,9 +198,9 @@ namespace Azure.Messaging.EventHubs.Samples
                     }
 
                     // Because there is some non-determinism in the messaging flow, the sent events may not be immediately
-                    // available.  For this reason, we wait 1000 ms before resuming.
+                    // available.  For this reason, we wait 500 ms before resuming.
 
-                    await Task.Delay(1000);
+                    await Task.Delay(500);
 
                     // Once stopped, the event processor won't receive events anymore.  In case there are still events being
                     // processed when the stop method is called, the processing will complete before the corresponding partition
