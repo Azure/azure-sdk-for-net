@@ -49,6 +49,35 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             try
             {
+                await operation.CancelAsync();
+            }
+            catch (RequestFailedException ex) when (ex.Status == 403)
+            {
+                Assert.Inconclusive("The create operation completed before it could be canceled.");
+            }
+
+            await WaitForCompletion(operation);
+
+            Assert.AreEqual(200, operation.GetRawResponse().Status);
+        }
+
+        [Test]
+        public async Task VerifyUnexpectedCancelCertificateOperation()
+        {
+            // Log details why this fails often for live tests on net461.
+            using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger(EventLevel.Verbose);
+
+            string certName = Recording.GenerateId();
+
+            CertificatePolicy certificatePolicy = DefaultPolicy;
+
+            CertificateOperation operation = await Client.StartCreateCertificateAsync(certName, certificatePolicy);
+
+            RegisterForCleanup(certName);
+
+            try
+            {
+                // Calling through the CertificateClient directly won't affect the CertificateOperation, so subsequent status updates should throw.
                 await Client.CancelCertificateOperationAsync(certName);
             }
             catch (RequestFailedException ex) when (ex.Status == 403)
@@ -71,9 +100,30 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             RegisterForCleanup(certName);
 
+            await operation.DeleteAsync();
+
+            await WaitForCompletion(operation);
+
+            Assert.AreEqual(404, operation.GetRawResponse().Status);
+        }
+
+        [Test]
+        public async Task VerifyUnexpectedDeleteCertificateOperation()
+        {
+            string certName = Recording.GenerateId();
+
+            CertificatePolicy certificatePolicy = DefaultPolicy;
+            certificatePolicy.IssuerName = WellKnownIssuerNames.Unknown;
+
+            CertificateOperation operation = await Client.StartCreateCertificateAsync(certName, certificatePolicy);
+
+            RegisterForCleanup(certName);
+
+            // Calling through the CertificateClient directly won't affect the CertificateOperation, so subsequent status updates should throw.
             await Client.DeleteCertificateOperationAsync(certName);
 
-            Assert.ThrowsAsync<RequestFailedException>(() => WaitForCompletion(operation));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(() => WaitForCompletion(operation));
+            Assert.AreEqual(404, ex.Status);
         }
 
         [Test]

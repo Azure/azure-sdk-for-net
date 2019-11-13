@@ -320,7 +320,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="certificateName">The name of the <see cref="KeyVaultCertificate"/> to delete.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="DeleteCertificateOperation"/> to wait on this long-running operation.
+        /// A <see cref="Certificates.DeleteCertificateOperation"/> to wait on this long-running operation.
         /// If the Key Vault is soft delete-enabled, you only need to wait for the operation to complete if you need to recover or purge the certificate;
         /// otherwise, the certificate is deleted automatically on the <see cref="DeletedCertificate.ScheduledPurgeDate"/>.
         /// </returns>
@@ -353,7 +353,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="certificateName">The name of the <see cref="KeyVaultCertificate"/> to delete.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="DeleteCertificateOperation"/> to wait on this long-running operation.
+        /// A <see cref="Certificates.DeleteCertificateOperation"/> to wait on this long-running operation.
         /// If the Key Vault is soft delete-enabled, you only need to wait for the operation to complete if you need to recover or purge the certificate;
         /// otherwise, the certificate is deleted automatically on the <see cref="DeletedCertificate.ScheduledPurgeDate"/>.
         /// </returns>
@@ -1224,126 +1224,6 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Cancels a pending <see cref="CertificateOperation"/> in the key vault. This operation requires the certificates/update permission.
-        /// </summary>
-        /// <param name="certificateName">The name of the <see cref="KeyVaultCertificate"/> to cancel the current pending operation.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The canceled certificate operation.</returns>
-        /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> is null.</exception>
-        public virtual CertificateOperation CancelCertificateOperation(string certificateName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
-
-            var parameters = new CertificateOperationUpdateParameters(true);
-
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.CancelCertificateOperation");
-            scope.AddAttribute("certificate", certificateName);
-            scope.Start();
-
-            try
-            {
-                Response<CertificateOperationProperties> response = _pipeline.SendRequest(RequestMethod.Patch, parameters, () => new CertificateOperationProperties(), cancellationToken, CertificatesPath, certificateName, "/pending");
-
-                return new CertificateOperation(response, this);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Cancels a pending <see cref="CertificateOperation"/> in the key vault. This operation requires the certificates/update permission.
-        /// </summary>
-        /// <param name="certificateName">The name of the <see cref="KeyVaultCertificate"/> to cancel the current pending operation.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The canceled certificate operation.</returns>
-        /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> is null.</exception>
-        public virtual async Task<CertificateOperation> CancelCertificateOperationAsync(string certificateName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
-
-            var parameters = new CertificateOperationUpdateParameters(true);
-
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.CancelCertificateOperation");
-            scope.AddAttribute("certificate", certificateName);
-            scope.Start();
-
-            try
-            {
-                Response<CertificateOperationProperties> response = await _pipeline.SendRequestAsync(RequestMethod.Patch, parameters, () => new CertificateOperationProperties(), cancellationToken, CertificatesPath, certificateName, "/pending").ConfigureAwait(false);
-
-                return new CertificateOperation(response, this);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes a pending <see cref="CertificateOperation"/> in the key vault. This operation requires the certificates/delete permission.
-        /// </summary>
-        /// <param name="certificateName">The name of the <see cref="KeyVaultCertificate"/> to delete the current pending operation.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The deleted certificate operation.</returns>
-        /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> is null.</exception>
-        public virtual CertificateOperation DeleteCertificateOperation(string certificateName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
-
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.DeleteCertificateOperation");
-            scope.AddAttribute("certificate", certificateName);
-            scope.Start();
-
-            try
-            {
-                Response<CertificateOperationProperties> response = _pipeline.SendRequest(RequestMethod.Delete, () => new CertificateOperationProperties(), cancellationToken, CertificatesPath, certificateName, "/pending");
-
-                return new CertificateOperation(response, this);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes a pending <see cref="CertificateOperation"/> in the key vault. This operation requires the certificates/delete permission.
-        /// </summary>
-        /// <param name="certificateName">The name of the <see cref="KeyVaultCertificate"/> to delete the current pending operation.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The deleted certificate operation.</returns>
-        /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> is null.</exception>
-        public virtual async Task<CertificateOperation> DeleteCertificateOperationAsync(string certificateName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
-
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.DeleteCertificateOperation");
-            scope.AddAttribute("certificate", certificateName);
-            scope.Start();
-
-            try
-            {
-                Response<CertificateOperationProperties> response = await _pipeline.SendRequestAsync(RequestMethod.Delete, () => new CertificateOperationProperties(), cancellationToken, CertificatesPath, certificateName, "/pending").ConfigureAwait(false);
-
-                return new CertificateOperation(response, this);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Sets the certificate <see cref="CertificateContact"/>s for the key vault, replacing any existing contacts. This operation requires the certificates/managecontacts permission.
         /// </summary>
         /// <param name="contacts">The certificate contacts for the vault.</param>
@@ -1545,7 +1425,7 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
 
-        internal virtual Response<CertificateOperationProperties> GetPendingCertificate(string certificateName, CancellationToken cancellationToken = default)
+        internal virtual Response<CertificateOperationProperties> GetPendingCertificate(string certificateName, CertificateOperationRequest requestedOperation, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
@@ -1555,7 +1435,19 @@ namespace Azure.Security.KeyVault.Certificates
 
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Get, () => new CertificateOperationProperties(), cancellationToken, CertificatesPath, certificateName, "/pending");
+                Response response = _pipeline.GetResponse(RequestMethod.Get, cancellationToken, CertificatesPath, certificateName, "/pending");
+                switch (response.Status)
+                {
+                    case 200:
+                    case 403:
+                        return _pipeline.CreateResponse(response, new CertificateOperationProperties());
+
+                    case 404 when requestedOperation == CertificateOperationRequest.Delete:
+                        return Response.FromValue<CertificateOperationProperties>(null, response);
+
+                    default:
+                        throw response.CreateRequestFailedException();
+                }
             }
             catch (Exception e)
             {
@@ -1564,7 +1456,7 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
 
-        internal virtual async Task<Response<CertificateOperationProperties>> GetPendingCertificateAsync(string certificateName, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<CertificateOperationProperties>> GetPendingCertificateAsync(string certificateName, CertificateOperationRequest requestedOperation, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
@@ -1574,7 +1466,99 @@ namespace Azure.Security.KeyVault.Certificates
 
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Get, () => new CertificateOperationProperties(), cancellationToken, CertificatesPath, certificateName, "/pending").ConfigureAwait(false);
+                Response response = await _pipeline.GetResponseAsync(RequestMethod.Get, cancellationToken, CertificatesPath, certificateName, "/pending").ConfigureAwait(false);
+                switch (response.Status)
+                {
+                    case 200:
+                    case 403:
+                        return _pipeline.CreateResponse(response, new CertificateOperationProperties());
+
+                    case 404 when requestedOperation == CertificateOperationRequest.Delete:
+                        return Response.FromValue<CertificateOperationProperties>(null, response);
+
+                    default:
+                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        internal virtual Response<CertificateOperationProperties> CancelCertificateOperation(string certificateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+
+            var parameters = new CertificateOperationUpdateParameters(true);
+
+            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.CancelCertificateOperation");
+            scope.AddAttribute("certificate", certificateName);
+            scope.Start();
+
+            try
+            {
+                return _pipeline.SendRequest(RequestMethod.Patch, parameters, () => new CertificateOperationProperties(), cancellationToken, CertificatesPath, certificateName, "/pending");
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        internal virtual async Task<Response<CertificateOperationProperties>> CancelCertificateOperationAsync(string certificateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+
+            var parameters = new CertificateOperationUpdateParameters(true);
+
+            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.CancelCertificateOperation");
+            scope.AddAttribute("certificate", certificateName);
+            scope.Start();
+
+            try
+            {
+                return await _pipeline.SendRequestAsync(RequestMethod.Patch, parameters, () => new CertificateOperationProperties(), cancellationToken, CertificatesPath, certificateName, "/pending").ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        internal virtual Response<CertificateOperationProperties> DeleteCertificateOperation(string certificateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+
+            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.DeleteCertificateOperation");
+            scope.AddAttribute("certificate", certificateName);
+            scope.Start();
+
+            try
+            {
+                return _pipeline.SendRequest(RequestMethod.Delete, () => new CertificateOperationProperties(), cancellationToken, CertificatesPath, certificateName, "/pending");
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        internal virtual async Task<Response<CertificateOperationProperties>> DeleteCertificateOperationAsync(string certificateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+
+            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.DeleteCertificateOperation");
+            scope.AddAttribute("certificate", certificateName);
+            scope.Start();
+
+            try
+            {
+                return await _pipeline.SendRequestAsync(RequestMethod.Delete, () => new CertificateOperationProperties(), cancellationToken, CertificatesPath, certificateName, "/pending").ConfigureAwait(false);
             }
             catch (Exception e)
             {

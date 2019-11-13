@@ -90,7 +90,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 }
                 else
                 {
-                    while (!operation.HasValue)
+                    while (!operation.HasCompleted)
                     {
                         operation.UpdateStatus(cts.Token);
 
