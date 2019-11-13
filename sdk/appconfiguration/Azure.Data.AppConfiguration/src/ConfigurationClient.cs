@@ -579,7 +579,7 @@ namespace Azure.Data.AppConfiguration
             try
             {
                 using Request request = CreateGetRequest(key, label, acceptDateTime, requestOptions);
-                using Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 return response.Status switch
                 {
@@ -604,7 +604,7 @@ namespace Azure.Data.AppConfiguration
             try
             {
                 using Request request = CreateGetRequest(key, label, acceptDateTime, requestOptions);
-                using Response response = _pipeline.SendRequest(request, cancellationToken);
+                Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 return response.Status switch
                 {
