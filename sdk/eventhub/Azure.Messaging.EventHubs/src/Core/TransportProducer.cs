@@ -24,7 +24,7 @@ namespace Azure.Messaging.EventHubs.Core
         ///   <c>true</c> if the producer is closed; otherwise, <c>false</c>.
         /// </value>
         ///
-        public virtual bool Closed { get; }
+        public virtual bool IsClosed { get; }
 
         /// <summary>
         ///   Sends a set of events to the associated Event Hub using a batched approach.  If the size of events exceed the

@@ -25,7 +25,7 @@ namespace Azure.Messaging.EventHubs.Core
         ///   <c>true</c> if the consumer is closed; otherwise, <c>false</c>.
         /// </value>
         ///
-        public virtual bool Closed { get; }
+        public virtual bool IsClosed { get; }
 
         /// <summary>
         ///   The most recent event received from the Event Hubs service by this consumer instance.

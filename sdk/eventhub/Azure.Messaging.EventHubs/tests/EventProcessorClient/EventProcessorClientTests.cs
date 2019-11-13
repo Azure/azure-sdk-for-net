@@ -384,7 +384,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await processor.CloseAsync();
 
             var connection = GetConnection(processor);
-            Assert.That(connection.Closed, Is.True);
+            Assert.That(connection.IsClosed, Is.True);
         }
 
         /// <summary>
@@ -401,7 +401,7 @@ namespace Azure.Messaging.EventHubs.Tests
             processor.Close();
 
             var connection = GetConnection(processor);
-            Assert.That(connection.Closed, Is.True);
+            Assert.That(connection.IsClosed, Is.True);
         }
 
         /// <summary>
@@ -416,7 +416,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var processor = new EventProcessorClient(EventHubConsumerClient.DefaultConsumerGroupName, Mock.Of<PartitionManager>(), connection, default);
 
             await processor.CloseAsync();
-            Assert.That(connection.Closed, Is.False);
+            Assert.That(connection.IsClosed, Is.False);
         }
 
         /// <summary>
@@ -431,7 +431,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var processor = new EventProcessorClient(EventHubConsumerClient.DefaultConsumerGroupName, Mock.Of<PartitionManager>(), connection, default);
 
             processor.Close();
-            Assert.That(connection.Closed, Is.False);
+            Assert.That(connection.IsClosed, Is.False);
         }
 
         /// <summary>

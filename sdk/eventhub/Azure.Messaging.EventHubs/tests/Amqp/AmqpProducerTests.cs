@@ -76,10 +76,10 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task CloseMarksTheProducerAsClosed()
         {
             var producer = new AmqpProducer("aHub", "0", Mock.Of<AmqpConnectionScope>(), Mock.Of<AmqpMessageConverter>(), Mock.Of<EventHubsRetryPolicy>());
-            Assert.That(producer.Closed, Is.False, "The producer should not be closed on creation");
+            Assert.That(producer.IsClosed, Is.False, "The producer should not be closed on creation");
 
             await producer.CloseAsync(CancellationToken.None);
-            Assert.That(producer.Closed, Is.True, "The producer should be marked as closed after closing");
+            Assert.That(producer.IsClosed, Is.True, "The producer should be marked as closed after closing");
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             cancellationSource.Cancel();
             Assert.That(async () => await producer.CloseAsync(cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>(), "Cancellation should trigger the appropriate exception.");
-            Assert.That(producer.Closed, Is.False, "Cancellation should have interrupted closing and left the producer in an open state.");
+            Assert.That(producer.IsClosed, Is.False, "Cancellation should have interrupted closing and left the producer in an open state.");
         }
 
         /// <summary>

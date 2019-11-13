@@ -39,7 +39,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///   <c>true</c> if the producer is closed; otherwise, <c>false</c>.
         /// </value>
         ///
-        public override bool Closed => _closed;
+        public override bool IsClosed => _closed;
 
         /// <summary>
         ///   The name of the Event Hub to which the producer is bound.

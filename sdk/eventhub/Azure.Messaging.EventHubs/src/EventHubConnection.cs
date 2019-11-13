@@ -48,7 +48,7 @@ namespace Azure.Messaging.EventHubs
         ///   <c>true</c> if the connection is closed; otherwise, <c>false</c>.
         /// </value>
         ///
-        public bool Closed => InnerClient.Closed;
+        public bool IsClosed => InnerClient.IsClosed;
 
         /// <summary>
         ///   The endpoint for the Event Hubs service to which the connection is associated.
