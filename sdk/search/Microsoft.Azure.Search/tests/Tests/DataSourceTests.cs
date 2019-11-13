@@ -307,6 +307,11 @@ namespace Microsoft.Azure.Search.Tests
             // Azure Table Storage
             testMethod(searchClient, CreateTestTableDataSource());
             testMethod(searchClient, CreateTestTableDataSource(deletionDetectionPolicy));
+
+            // MySQL
+            testMethod(searchClient, CreateTestMySqlDataSource());
+            testMethod(searchClient, CreateTestMySqlDataSource(changeDetectionPolicy, deletionDetectionPolicy));
+
         }
 
         private void CreateAndValidateDataSource(SearchServiceClient searchClient, DataSource expectedDataSource)
@@ -463,6 +468,20 @@ namespace Microsoft.Azure.Search.Tests
                 storageConnectionString: "DefaultEndpointsProtocol=https;AccountName=NotaRealAccount;AccountKey=fake;", // [SuppressMessage("Microsoft.Security", "CS001:SecretInline", Justification = "This is not a real secret")]
                 tableName: "faketable",
                 query: "fake query",
+                deletionDetectionPolicy: deletionDetectionPolicy,
+                description: FakeDescription);
+        }
+
+        private static DataSource CreateTestMySqlDataSource(
+            HighWaterMarkChangeDetectionPolicy changeDetectionPolicy = null,
+            DataDeletionDetectionPolicy deletionDetectionPolicy = null)
+        {
+            return DataSource.MySql(
+                name: SearchTestUtilities.GenerateName(),
+                connectionString: "Server=fakeserver.mysql.database.azure.com; Port=3306; Database=fake-db; Uid=fakeuser@fakeserver; Pwd=fakePassword; SslMode=Preferred", // [SuppressMessage("Microsoft.Security", "CS001:SecretInline", Justification = "This is not a real secret")]
+                tableName: "faketable",
+                query: "fake query",
+                changeDetectionPolicy: changeDetectionPolicy,
                 deletionDetectionPolicy: deletionDetectionPolicy,
                 description: FakeDescription);
         }

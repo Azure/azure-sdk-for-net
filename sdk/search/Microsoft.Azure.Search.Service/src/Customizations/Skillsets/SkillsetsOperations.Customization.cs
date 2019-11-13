@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Search
         /// <inheritdoc />
         public Task<AzureOperationResponse<Skillset>> CreateOrUpdateWithHttpMessagesAsync(Skillset skillset, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return CreateOrUpdateWithHttpMessagesAsync(skillset?.Name, skillset, searchRequestOptions, customHeaders, cancellationToken);
+            return CreateOrUpdateWithHttpMessagesAsync(skillset?.Name, skillset, searchRequestOptions, accessCondition, customHeaders, cancellationToken);
         }
 
         /// <inheritdoc />
