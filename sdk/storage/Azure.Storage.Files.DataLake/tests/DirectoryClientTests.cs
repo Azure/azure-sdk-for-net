@@ -693,7 +693,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             using (GetNewDirectory(out DataLakeDirectoryClient directoryClient))
             {
                 // Act
-                Response<PathInfo>  response = await directoryClient.SetAccessControlListAsync(AccessControlList);
+                Response<PathInfo> response = await directoryClient.SetAccessControlListAsync(AccessControlList);
 
                 // Assert
                 AssertValidStoragePathInfo(response);

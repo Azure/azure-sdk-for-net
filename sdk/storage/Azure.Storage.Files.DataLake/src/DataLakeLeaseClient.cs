@@ -2,11 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Files.DataLake.Models;
@@ -39,6 +37,12 @@ namespace Azure.Storage.Files.DataLake
         /// </summary>
         public virtual string LeaseId => _blobLeaseClient.LeaseId;
 
+        /// <summary>
+        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
+        /// every request.
+        /// </summary>
+        internal virtual ClientDiagnostics ClientDiagnostics => _blobLeaseClient?.ClientDiagnostics;
+
         #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="DataLakeLeaseClient"/> class
@@ -61,7 +65,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         public DataLakeLeaseClient(DataLakePathClient client, string leaseId = null)
         {
-            _blobLeaseClient = new Blobs.Specialized.BlobLeaseClient(client.BlobClient, leaseId);
+            _blobLeaseClient = new BlobLeaseClient(client.BlobClient, leaseId);
         }
 
         /// <summary>
@@ -77,7 +81,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         public DataLakeLeaseClient(DataLakeFileSystemClient client, string leaseId = null)
         {
-            _blobLeaseClient = new Blobs.Specialized.BlobLeaseClient(client.ContainerClient, leaseId);
+            _blobLeaseClient = new BlobLeaseClient(client.ContainerClient, leaseId);
         }
         #endregion ctors
 
@@ -116,20 +120,35 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response<DataLakeLease> Acquire(
             TimeSpan duration,
             RequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            Response<Blobs.Models.BlobLease> response = _blobLeaseClient.Acquire(
-                duration,
-                conditions,
-                cancellationToken);
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeLeaseClient)}.{nameof(Acquire)}");
 
-            return Response.FromValue(
-                response.Value.ToDataLakeLease(),
-                response.GetRawResponse());
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobLease> response = _blobLeaseClient.Acquire(
+                    duration,
+                    conditions,
+                    cancellationToken);
+
+                return Response.FromValue(
+                    response.Value.ToDataLakeLease(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
         }
 
         /// <summary>
@@ -166,23 +185,37 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual async Task<Response<DataLakeLease>> AcquireAsync(
             TimeSpan duration,
             RequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            Response<Blobs.Models.BlobLease> response = await _blobLeaseClient.AcquireAsync(
-                duration,
-                conditions,
-                cancellationToken)
-                .ConfigureAwait(false);
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeLeaseClient)}.{nameof(Acquire)}");
 
-            return Response.FromValue(
-                response.Value.ToDataLakeLease(),
-                response.GetRawResponse());
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobLease> response = await _blobLeaseClient.AcquireAsync(
+                    duration,
+                    conditions,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(
+                    response.Value.ToDataLakeLease(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
         }
-
         #endregion Acquire
 
         #region Renew
@@ -213,18 +246,33 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response<DataLakeLease> Renew(
             RequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            Response<Blobs.Models.BlobLease> response = _blobLeaseClient.Renew(
-                conditions,
-                cancellationToken);
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeLeaseClient)}.{nameof(Renew)}");
 
-            return Response.FromValue(
-                response.Value.ToDataLakeLease(),
-                response.GetRawResponse());
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobLease> response = _blobLeaseClient.Renew(
+                    conditions,
+                    cancellationToken);
+
+                return Response.FromValue(
+                    response.Value.ToDataLakeLease(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
         }
 
         /// <summary>
@@ -254,19 +302,33 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual async Task<Response<DataLakeLease>> RenewAsync(
             RequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            Response<Blobs.Models.BlobLease> response = await _blobLeaseClient.RenewAsync(
-                conditions,
-                cancellationToken)
-                .ConfigureAwait(false);
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeLeaseClient)}.{nameof(Renew)}");
 
-            return Response.FromValue(
-                response.Value.ToDataLakeLease(),
-                response.GetRawResponse());
+            try
+            {
+                scope.Start();
+                Response<Blobs.Models.BlobLease> response = await _blobLeaseClient.RenewAsync(
+                    conditions,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(
+                    response.Value.ToDataLakeLease(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
         }
         #endregion Renew
 
@@ -298,18 +360,33 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response<ReleasedObjectInfo> Release(
             RequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            Response<Blobs.Models.ReleasedObjectInfo> response = _blobLeaseClient.Release(
-                conditions,
-                cancellationToken);
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeLeaseClient)}.{nameof(Release)}");
 
-            return Response.FromValue(
-                new ReleasedObjectInfo(response.Value.ETag, response.Value.LastModified),
-                response.GetRawResponse());
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.ReleasedObjectInfo> response = _blobLeaseClient.Release(
+                    conditions,
+                    cancellationToken);
+
+                return Response.FromValue(
+                    new ReleasedObjectInfo(response.Value.ETag, response.Value.LastModified),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
         }
 
         /// <summary>
@@ -339,19 +416,34 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual async Task<Response<ReleasedObjectInfo>> ReleaseAsync(
             RequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            Response<Blobs.Models.ReleasedObjectInfo> response =  await _blobLeaseClient.ReleaseAsync(
-                conditions,
-                cancellationToken)
-                .ConfigureAwait(false);
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeLeaseClient)}.{nameof(Release)}");
 
-            return Response.FromValue(
-                new ReleasedObjectInfo(response.Value.ETag, response.Value.LastModified),
-                response.GetRawResponse());
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.ReleasedObjectInfo> response = await _blobLeaseClient.ReleaseAsync(
+                    conditions,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(
+                    new ReleasedObjectInfo(response.Value.ETag, response.Value.LastModified),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
         }
         #endregion Release
 
@@ -383,20 +475,35 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response<DataLakeLease> Change(
             string proposedId,
             RequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            Response<Blobs.Models.BlobLease> response = _blobLeaseClient.Change(
-                proposedId,
-                conditions,
-                cancellationToken);
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeLeaseClient)}.{nameof(Change)}");
 
-            return Response.FromValue(
-                response.Value.ToDataLakeLease(),
-                response.GetRawResponse());
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobLease> response = _blobLeaseClient.Change(
+                    proposedId,
+                    conditions,
+                    cancellationToken);
+
+                return Response.FromValue(
+                    response.Value.ToDataLakeLease(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
         }
 
         /// <summary>
@@ -426,21 +533,36 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual async Task<Response<DataLakeLease>> ChangeAsync(
             string proposedId,
             RequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            Response<Blobs.Models.BlobLease> response =  await _blobLeaseClient.ChangeAsync(
-                proposedId,
-                conditions,
-                cancellationToken)
-                .ConfigureAwait(false);
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeLeaseClient)}.{nameof(Change)}");
 
-            return Response.FromValue(
-                response.Value.ToDataLakeLease(),
-                response.GetRawResponse());
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobLease> response = await _blobLeaseClient.ChangeAsync(
+                    proposedId,
+                    conditions,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(
+                    response.Value.ToDataLakeLease(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
         }
         #endregion Change
 
@@ -490,20 +612,35 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response<DataLakeLease> Break(
             TimeSpan? breakPeriod = default,
             RequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            Response<Blobs.Models.BlobLease> response = _blobLeaseClient.Break(
-                breakPeriod,
-                conditions,
-                cancellationToken);
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeLeaseClient)}.{nameof(Break)}");
 
-            return Response.FromValue(
-                response.Value.ToDataLakeLease(),
-                response.GetRawResponse());
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobLease> response = _blobLeaseClient.Break(
+                    breakPeriod,
+                    conditions,
+                    cancellationToken);
+
+                return Response.FromValue(
+                    response.Value.ToDataLakeLease(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
         }
 
         /// <summary>
@@ -551,20 +688,35 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual async Task<Response<DataLakeLease>> BreakAsync(
             TimeSpan? breakPeriod = default,
            RequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            Response<Blobs.Models.BlobLease> response = await _blobLeaseClient.BreakAsync(
-                breakPeriod,
-                conditions,
-                cancellationToken).ConfigureAwait(false);
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeLeaseClient)}.{nameof(Break)}");
 
-            return Response.FromValue(
-                response.Value.ToDataLakeLease(),
-                response.GetRawResponse());
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobLease> response = await _blobLeaseClient.BreakAsync(
+                    breakPeriod,
+                    conditions,
+                    cancellationToken).ConfigureAwait(false);
+
+                return Response.FromValue(
+                    response.Value.ToDataLakeLease(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
         }
         #endregion Break
     }
