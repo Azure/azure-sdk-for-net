@@ -71,7 +71,8 @@ function GetFullyQualifiedDomainName()
   <#
     .SYNOPSIS
       It takes an access key as input.
-      It returns the fully qualified domain name (FQDN).
+      It returns the fully qualified domain name (FQDN) in the form of
+      {yournamespace}.servicebus.windows.net.
 
     .DESCRIPTION
       It returns the fully qualified domain name.
