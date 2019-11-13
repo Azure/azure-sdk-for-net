@@ -8,6 +8,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
+using Azure.Messaging.EventHubs.Diagnostics;
 
 namespace Azure.Messaging.EventHubs.Processor
 {
@@ -17,6 +19,9 @@ namespace Azure.Messaging.EventHubs.Processor
     ///
     public abstract class EventProcessorBase
     {
+        // TODO: Remove this when moving to the consumer's iterator.
+        private const int MaximumMessageCount = 25;
+
         /// <summary>The seed to use for initializing random number generated for a given thread-specific instance.</summary>
         private static int s_randomSeed = Environment.TickCount;
 
@@ -79,10 +84,16 @@ namespace Azure.Messaging.EventHubs.Processor
         private CancellationTokenSource RunningTaskTokenSource { get; set; }
 
         /// <summary>
-        ///   The set of partition pumps used by this event processor.  Partition ids are used as keys. TODO: make set private. Make it protected.
+        ///   TODO.
         /// </summary>
         ///
-        internal ConcurrentDictionary<string, PartitionPump> PartitionPumps { get; set; }
+        protected ConcurrentDictionary<string, Task> ActivePartitionProcessors { get; private set; }
+
+        /// <summary>
+        ///   TODO.
+        /// </summary>
+        ///
+        private ConcurrentDictionary<string, CancellationTokenSource> ActivePartitionProcessorTokenSources { get; set; }
 
         /// <summary>
         ///   The set of partition ownership this event processor owns.  Partition ids are used as keys. TODO: make it private.
@@ -232,9 +243,9 @@ namespace Azure.Messaging.EventHubs.Processor
                         RunningTaskTokenSource?.Cancel();
                         RunningTaskTokenSource = new CancellationTokenSource();
 
-                        // Initialize our empty ownership dictionary.
-
                         InstanceOwnership = new Dictionary<string, PartitionOwnership>();
+                        ActivePartitionProcessors = new ConcurrentDictionary<string, Task>();
+                        ActivePartitionProcessorTokenSources = new ConcurrentDictionary<string, CancellationTokenSource>();
 
                         // Start the main running task.  It is responsible for managing the partition pumps and for partition
                         // load balancing among multiple event processor instances.
@@ -293,8 +304,8 @@ namespace Azure.Messaging.EventHubs.Processor
 
                         InstanceOwnership = null;
 
-                        await Task.WhenAll(PartitionPumps.Keys
-                            .Select(partitionId => RemovePartitionPumpIfItExistsAsync(partitionId, ProcessingStoppedReason.Shutdown)))
+                        await Task.WhenAll(ActivePartitionProcessors.Keys
+                            .Select(partitionId => StopPartitionProcessingIfRunningAsync(partitionId, ProcessingStoppedReason.Shutdown)))
                             .ConfigureAwait(false);
 
                         // We need to wait until all pumps have stopped before making the Active Load Balancing Task null.  If we did it sooner,
@@ -355,9 +366,9 @@ namespace Azure.Messaging.EventHubs.Processor
                 // Some previously owned partitions might have had their ownership expired or might have been stolen, so we need to stop
                 // the pumps we don't need anymore.
 
-                await Task.WhenAll(PartitionPumps.Keys
+                await Task.WhenAll(ActivePartitionProcessors.Keys
                     .Except(InstanceOwnership.Keys)
-                    .Select(partitionId => RemovePartitionPumpIfItExistsAsync(partitionId, ProcessingStoppedReason.OwnershipLost)))
+                    .Select(partitionId => StopPartitionProcessingIfRunningAsync(partitionId, ProcessingStoppedReason.OwnershipLost)))
                     .ConfigureAwait(false);
 
                 // Now that we are left with pumps that should be running, check their status.  If any has stopped, it means an
@@ -367,9 +378,9 @@ namespace Azure.Messaging.EventHubs.Processor
                 await Task.WhenAll(InstanceOwnership
                     .Select(async kvp =>
                     {
-                        if (PartitionPumps.TryGetValue(kvp.Key, out PartitionPump pump) && !pump.IsRunning)
+                        if (ActivePartitionProcessors.TryGetValue(kvp.Key, out Task processingTask) && processingTask.IsCompleted)
                         {
-                            await RemovePartitionPumpIfItExistsAsync(kvp.Key, ProcessingStoppedReason.Exception).ConfigureAwait(false);
+                            await StopPartitionProcessingIfRunningAsync(kvp.Key, ProcessingStoppedReason.Exception).ConfigureAwait(false);
 
                             var context = new PartitionContext(EventHubName, kvp.Key);
                             await InitializeProcessingForPartitionAsync(context).ConfigureAwait(false);
@@ -516,26 +527,32 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
-        ///   Stops an owned partition pump instance in case it exists.  It is also removed from the pumps dictionary.
+        ///   TODO: what if there is no token source?
         /// </summary>
         ///
-        /// <param name="partitionId">The identifier of the Event Hub partition the partition pump is associated with.</param>
+        /// <param name="partitionId">The identifier of the Event Hub partition whose processing is being stopped.</param>
         /// <param name="reason">The reason why the processing for the specified partition is being stopped.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        private async Task RemovePartitionPumpIfItExistsAsync(string partitionId,
-                                                              ProcessingStoppedReason reason)
+        private async Task StopPartitionProcessingIfRunningAsync(string partitionId,
+                                                                 ProcessingStoppedReason reason)
         {
-            if (PartitionPumps.TryRemove(partitionId, out PartitionPump pump))
+            if (ActivePartitionProcessors.TryRemove(partitionId, out Task processingTask) &&
+                ActivePartitionProcessorTokenSources.TryRemove(partitionId, out CancellationTokenSource tokenSource))
             {
                 try
                 {
-                    await pump.StopAsync().ConfigureAwait(false);
+                    tokenSource.Cancel();
+                    await processingTask.ConfigureAwait(false);
                 }
                 catch (Exception)
                 {
                     // TODO: delegate the exception handling to an Exception Callback.
+                }
+                finally
+                {
+                    tokenSource.Dispose();
                 }
             }
 
@@ -596,5 +613,99 @@ namespace Azure.Messaging.EventHubs.Processor
 
             return ClaimOwnershipAsync(ownershipToRenew);
         }
+
+        /// <summary>
+        ///   TODO. Include Cancellation Token? Should we cancel previous run for the same partitionId? Argument assertions?
+        /// </summary>
+        ///
+        /// <returns>TODO.</returns>
+        ///
+        protected virtual Task RunPartitionProcessingAsync(string partitionId,
+                                                           EventPosition startingPosition,
+                                                           PartitionContext context,
+                                                           TimeSpan? maximumReceiveWaitTime,
+                                                           RetryOptions retryOptions,
+                                                           bool trackLastEnqueuedEventInformation) => Task.Run(async () =>
+            {
+                var tokenSource = new CancellationTokenSource();
+                var cancellationToken = tokenSource.Token;
+
+                ActivePartitionProcessorTokenSources[partitionId] = tokenSource;
+
+                var options = new EventHubConsumerClientOptions
+                {
+                    RetryOptions = retryOptions,
+                    TrackLastEnqueuedEventInformation = trackLastEnqueuedEventInformation
+                };
+
+                // TODO: does the order matter?
+
+                await using var connection = CreateConnection();
+                await using var consumer = new EventHubConsumerClient(ConsumerGroup, partitionId, startingPosition, connection, options);
+
+                List<EventData> receivedEvents;
+                Exception unrecoverableException = null;
+
+                while (!cancellationToken.IsCancellationRequested)
+                {
+                    try
+                    {
+                        receivedEvents = (await consumer.ReceiveAsync(MaximumMessageCount, maximumReceiveWaitTime, cancellationToken).ConfigureAwait(false)).ToList();
+
+                        using DiagnosticScope diagnosticScope = EventDataInstrumentation.ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName);
+                        diagnosticScope.AddAttribute("kind", "server");
+
+                        if (diagnosticScope.IsEnabled)
+                        {
+                            foreach (var eventData in receivedEvents)
+                            {
+                                if (EventDataInstrumentation.TryExtractDiagnosticId(eventData, out string diagnosticId))
+                                {
+                                    diagnosticScope.AddLink(diagnosticId);
+                                }
+                            }
+                        }
+
+                        // Small workaround to make sure we call ProcessEvent with EventData = null when no events have been received.
+                        // The code is expected to get simpler when we start using the async enumerator internally to receive events.
+
+                        if (receivedEvents.Count == 0)
+                        {
+                            receivedEvents.Add(null);
+                        }
+
+                        diagnosticScope.Start();
+
+                        foreach (var eventData in receivedEvents)
+                        {
+                            try
+                            {
+                                await ProcessEventAsync(eventData, context).ConfigureAwait(false);
+                            }
+                            catch (Exception eventProcessingException)
+                            {
+                                diagnosticScope.Failed(eventProcessingException);
+                                unrecoverableException = eventProcessingException;
+
+                                break;
+                            }
+                        }
+                    }
+                    catch (Exception eventHubException)
+                    {
+                        // Stop running only if it's not a retriable exception.
+
+                        if (RetryPolicy.CalculateRetryDelay(eventHubException, 1) == null)
+                        {
+                            throw eventHubException;
+                        }
+                    }
+
+                    if (unrecoverableException != null)
+                    {
+                        throw unrecoverableException;
+                    }
+                }
+            });
     }
 }

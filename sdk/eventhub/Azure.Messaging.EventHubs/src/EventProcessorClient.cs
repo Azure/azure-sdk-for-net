@@ -2,11 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -259,7 +257,6 @@ namespace Azure.Messaging.EventHubs
             Options = processorOptions;
             RetryPolicy = processorOptions.RetryOptions.ToRetryPolicy();
             Identifier = Guid.NewGuid().ToString();
-            PartitionPumps = new ConcurrentDictionary<string, PartitionPump>();
         }
 
         /// <summary>
@@ -297,7 +294,6 @@ namespace Azure.Messaging.EventHubs
             Options = processorOptions;
             RetryPolicy = processorOptions.RetryOptions.ToRetryPolicy();
             Identifier = Guid.NewGuid().ToString();
-            PartitionPumps = new ConcurrentDictionary<string, PartitionPump>();
         }
 
         // TODO: remove this constructor if not needed anymore.
@@ -335,7 +331,6 @@ namespace Azure.Messaging.EventHubs
             Options = processorOptions;
             RetryPolicy = processorOptions.RetryOptions.ToRetryPolicy();
             Identifier = Guid.NewGuid().ToString();
-            PartitionPumps = new ConcurrentDictionary<string, PartitionPump>();
         }
 
         /// <summary>
@@ -382,10 +377,7 @@ namespace Azure.Messaging.EventHubs
                     startingPosition = EventPosition.FromSequenceNumber(ownership.SequenceNumber.Value);
                 }
 
-                var partitionPump = new PartitionPump(CreateConnection(), ConsumerGroup, context, startingPosition, ProcessEventAsync, Options);
-                await partitionPump.StartAsync().ConfigureAwait(false);
-
-                PartitionPumps[context.PartitionId] = partitionPump;
+                ActivePartitionProcessors[context.PartitionId] = RunPartitionProcessingAsync(context.PartitionId, startingPosition, context, Options.MaximumReceiveWaitTime, Options.RetryOptions, Options.TrackLastEnqueuedEventInformation);
             }
             catch (Exception)
             {
