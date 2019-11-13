@@ -54,7 +54,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public static RolePermissions ParseSymbolicRolePermissions(string s, bool allowStickyBit = false)
         {
             RolePermissions rolePermissions = RolePermissions.None;
-            ArgumentException argumentException = new ArgumentException($"Role permission contains an invalid character.  Value is \"{s}\"");
+            ArgumentException argumentException = DataLakeErrors.RolePermissionsSymbolicInvalidCharacter(s);
 
             if (s == null)
             {
@@ -63,7 +63,7 @@ namespace Azure.Storage.Files.DataLake.Models
 
             if (s.Length != 3)
             {
-                throw new ArgumentException($"Role permission must be 3 characters.  Value is \"{s}\"");
+                throw DataLakeErrors.RolePermissionsSymbolicInvalidLength(s);
             }
 
             if (s[0] == 'r')
@@ -153,7 +153,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// </summary>
         /// <param name="accessControlList">The Access Control List to serialize</param>
         /// <returns>string.</returns>
-        public static string ToAccessControlListString(IList<PathAccessControlEntry> accessControlList)
+        public static string ToAccessControlListString(IList<PathAccessControlItem> accessControlList)
         {
             if (accessControlList == null)
             {
@@ -161,7 +161,7 @@ namespace Azure.Storage.Files.DataLake.Models
             }
 
             IList<string> serializedAcl = new List<string>();
-            foreach (PathAccessControlEntry ac in accessControlList)
+            foreach (PathAccessControlItem ac in accessControlList)
             {
                 serializedAcl.Add(ac.ToString());
             }
@@ -172,8 +172,8 @@ namespace Azure.Storage.Files.DataLake.Models
         /// Deseralizes an access control list string  into a list of PathAccessControlEntries.
         /// </summary>
         /// <param name="s">The string to parse.</param>
-        /// <returns>A List of <see cref="PathAccessControlEntry"/>.</returns>
-        public static IList<PathAccessControlEntry> ParseAccessControlList(string s)
+        /// <returns>A List of <see cref="PathAccessControlItem"/>.</returns>
+        public static IList<PathAccessControlItem> ParseAccessControlList(string s)
         {
             if (s == null)
             {
@@ -181,10 +181,10 @@ namespace Azure.Storage.Files.DataLake.Models
             }
 
             string[] strings = s.Split(',');
-            List<PathAccessControlEntry> accessControlList = new List<PathAccessControlEntry>();
+            List<PathAccessControlItem> accessControlList = new List<PathAccessControlItem>();
             foreach (string entry in strings)
             {
-                accessControlList.Add(PathAccessControlEntry.Parse(entry));
+                accessControlList.Add(PathAccessControlItem.Parse(entry));
             }
             return accessControlList;
         }

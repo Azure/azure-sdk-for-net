@@ -14,7 +14,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public readonly string _entityId = "entityId";
         public readonly RolePermissions _rolePermissions = RolePermissions.Read | RolePermissions.Write | RolePermissions.Execute;
 
-        public void AssertPathAccessControlEntryEquality(PathAccessControlEntry expected, PathAccessControlEntry actual)
+        public void AssertPathAccessControlEntryEquality(PathAccessControlItem expected, PathAccessControlItem actual)
         {
             Assert.AreEqual(expected.DefaultScope, actual.DefaultScope);
             Assert.AreEqual(expected.AccessControlType, actual.AccessControlType);

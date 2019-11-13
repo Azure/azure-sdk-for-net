@@ -5,13 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
+using Azure.Storage.Files.DataLake;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
     /// Represents an access control in a file access control list.
     /// </summary>
-    public class PathAccessControlEntry
+    public class PathAccessControlItem
     {
         /// <summary>
         /// Indicates whether this is the default entry for the ACL.
@@ -37,7 +38,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// Empty constructor.
         /// </summary>
-        public PathAccessControlEntry() { }
+        public PathAccessControlItem() { }
 
         /// <summary>
         /// Constructor.
@@ -46,7 +47,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <param name="permissions">Specifies the permissions granted to this entry.</param>
         /// <param name="defaultScope">Indicates whether this is the default entry for the ACL.</param>
         /// <param name="entityId">Optional entity ID to which this entry applies.</param>
-        public PathAccessControlEntry(
+        public PathAccessControlItem(
             AccessControlType accessControlType,
             RolePermissions permissions,
             bool defaultScope = false,
@@ -55,7 +56,7 @@ namespace Azure.Storage.Files.DataLake.Models
             if (entityId != null
                 && !(accessControlType == AccessControlType.User || accessControlType == AccessControlType.Group))
             {
-                throw new ArgumentException($"AccessControlType must be User or Group if entityId is specified.  Value is \"{accessControlType.ToString()}\"");
+                throw DataLakeErrors.EntityIdAndInvalidAccessControlType(accessControlType.ToString());
             }
 
             DefaultScope = defaultScope;
@@ -86,31 +87,31 @@ namespace Azure.Storage.Files.DataLake.Models
         }
 
         /// <summary>
-        /// Parses the provided string into a <see cref="PathAccessControlEntry"/>
+        /// Parses the provided string into a <see cref="PathAccessControlItem"/>
         /// </summary>
         /// <param name="s">The string representation of the access control list.</param>
-        /// <returns>A <see cref="PathAccessControlEntry"/>.</returns>
-        public static PathAccessControlEntry Parse(string s)
+        /// <returns>A <see cref="PathAccessControlItem"/>.</returns>
+        public static PathAccessControlItem Parse(string s)
         {
             if (s == null)
             {
                 return null;
             }
 
-            PathAccessControlEntry entry = new PathAccessControlEntry();
+            PathAccessControlItem entry = new PathAccessControlItem();
             string[] parts = s.Split(':');
             int indexOffset = 0;
 
             if (parts.Length < 3 || parts.Length > 4)
             {
-                throw new ArgumentException($"{nameof(s)} should have 3 or 4 parts delimited by colons.  Value is \"{s}\"");
+                throw DataLakeErrors.PathAccessControlItemStringInvalidLength(s);
             }
 
             if (parts.Length == 4)
             {
                 if (!parts[0].Equals("default", StringComparison.OrdinalIgnoreCase))
                 {
-                    throw new ArgumentException($"If {nameof(s)} is 4 parts, the first must be \"default\".  Value is \"{s}\"");
+                    throw DataLakeErrors.PathAccessControlItemStringInvalidPrefix(s);
                 }
                 entry.DefaultScope = true;
                 indexOffset = 1;

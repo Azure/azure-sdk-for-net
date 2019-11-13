@@ -83,7 +83,7 @@ namespace Azure.Storage.Files.DataLake.Models
 
             if (s.Length != 4)
             {
-                throw new ArgumentException($"{nameof(s)} must be 4 characters.  Value is \"{s}\"");
+                throw DataLakeErrors.PathPermissionsOctalInvalidLength(s);
             }
 
             var pathPermissions = new PathPermissions();
@@ -98,7 +98,7 @@ namespace Azure.Storage.Files.DataLake.Models
             }
             else
             {
-                throw new ArgumentException($"First digit of {nameof(s)} must be 0 or 1.  Value is \"{s}\"");
+                throw DataLakeErrors.PathPermissionsOctalInvalidFirstDigit(s);
             }
 
             pathPermissions.Owner = PathAccessControlExtensions.ParseOctalRolePermissions(s[1]);
@@ -122,7 +122,7 @@ namespace Azure.Storage.Files.DataLake.Models
 
             if (s.Length != 9 && s.Length != 10)
             {
-                throw new ArgumentException($"{nameof(s)} must be 9 or 10 characters.  Value is \"{s}\"");
+                throw DataLakeErrors.PathPermissionsSymbolicInvalidLength(s);
             }
 
             var pathPermissions = new PathPermissions();
@@ -188,7 +188,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// Returns the symbolic represenation of this PathPermissions as a string.
         /// </summary>
-        /// <returns>string</returns>
+        /// <returns>string.</returns>
         public string ToSymbolicPermissions()
         {
             var sb = new StringBuilder();

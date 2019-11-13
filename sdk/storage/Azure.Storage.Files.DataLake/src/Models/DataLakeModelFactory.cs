@@ -162,7 +162,7 @@ namespace Azure.Storage.Files.DataLake.Models
             string owner,
             string group,
             PathPermissions permissions,
-            IList<PathAccessControlEntry> acl)
+            IList<PathAccessControlItem> acl)
             => new PathAccessControl()
             {
                 Owner = owner,

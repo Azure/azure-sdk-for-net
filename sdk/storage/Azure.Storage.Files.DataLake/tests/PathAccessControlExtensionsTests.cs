@@ -160,14 +160,14 @@ namespace Azure.Storage.Files.DataLake.Tests
         public void SerializeAccessControlList()
         {
             // Arrange
-            PathAccessControlEntry accessControlEntry = new PathAccessControlEntry(
+            PathAccessControlItem accessControlEntry = new PathAccessControlItem(
                 AccessControlType.User,
                 _rolePermissions,
                 true,
                 _entityId);
 
             // Act
-            string result = PathAccessControlExtensions.ToAccessControlListString(new List<PathAccessControlEntry>()
+            string result = PathAccessControlExtensions.ToAccessControlListString(new List<PathAccessControlItem>()
             {
                 accessControlEntry
             });
@@ -176,10 +176,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual("default:user:entityId:rwx", result);
 
             // Act
-            result = PathAccessControlExtensions.ToAccessControlListString(new List<PathAccessControlEntry>()
+            result = PathAccessControlExtensions.ToAccessControlListString(new List<PathAccessControlItem>()
             {
                 accessControlEntry,
-                new PathAccessControlEntry(
+                new PathAccessControlItem(
                     AccessControlType.Mask,
                     _rolePermissions,
                     true),
@@ -199,14 +199,14 @@ namespace Azure.Storage.Files.DataLake.Tests
         public void DeserializeAccessControlList()
         {
             // Arrange
-            PathAccessControlEntry accessControlEntry = new PathAccessControlEntry(
+            PathAccessControlItem accessControlEntry = new PathAccessControlItem(
                 AccessControlType.User,
                 _rolePermissions,
                 true,
                 _entityId);
 
             // Act
-            IList<PathAccessControlEntry> list = PathAccessControlExtensions.ParseAccessControlList("default:user:entityId:rwx");
+            IList<PathAccessControlItem> list = PathAccessControlExtensions.ParseAccessControlList("default:user:entityId:rwx");
 
             // Assert
             Assert.AreEqual(1, list.Count);
@@ -218,7 +218,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Assert
             Assert.AreEqual(2, list.Count);
             AssertPathAccessControlEntryEquality(accessControlEntry, list[0]);
-            AssertPathAccessControlEntryEquality(new PathAccessControlEntry(
+            AssertPathAccessControlEntryEquality(new PathAccessControlItem(
                     AccessControlType.Mask,
                     _rolePermissions,
                     true),

@@ -27,7 +27,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public readonly string ContentEncoding = "encoding";
         public readonly string ContentLanguage = "language";
         public readonly string ContentType = "type";
-        public readonly IList<PathAccessControlEntry> AccessControlList
+        public readonly IList<PathAccessControlItem> AccessControlList
             = PathAccessControlExtensions.ParseAccessControlList("user::rwx,group::r--,other::---,mask::rwx");
         public readonly PathPermissions PathPermissions = PathPermissions.ParseSymbolicPermissions("rwxrwxrwx");
 

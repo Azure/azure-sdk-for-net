@@ -497,7 +497,7 @@ namespace Azure.Storage.Files.DataLake.Samples
                 fileClient.Create();
 
                 // Set Access Control List
-                IList<PathAccessControlEntry> accessControlList
+                IList<PathAccessControlItem> accessControlList
                     = PathAccessControlExtensions.ParseAccessControlList("user::rwx,group::r--,mask::rwx,other::---");
                 fileClient.SetAccessControlList(accessControlList);
                 #endregion Snippet:SampleSnippetDataLakeFileClient_SetAcls

@@ -1143,7 +1143,7 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         [ForwardsClientCalls]
         public virtual Response<PathInfo> SetAccessControlList(
-            IList<PathAccessControlEntry> accessControlList,
+            IList<PathAccessControlItem> accessControlList,
             string owner = default,
             string group = default,
             DataLakeRequestConditions conditions = default,
@@ -1190,7 +1190,7 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<PathInfo>> SetAccessControlListAsync(
-            IList<PathAccessControlEntry> accessControlList,
+            IList<PathAccessControlItem> accessControlList,
             string owner = default,
             string group = default,
             DataLakeRequestConditions conditions = default,
@@ -1239,7 +1239,7 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<PathInfo>> SetAccessControlListInternal(
-            IList<PathAccessControlEntry> accessControlList,
+            IList<PathAccessControlItem> accessControlList,
             string owner,
             string group,
             DataLakeRequestConditions conditions,
