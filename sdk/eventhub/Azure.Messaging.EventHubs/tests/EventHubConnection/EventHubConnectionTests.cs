@@ -524,18 +524,6 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="EventHubConnection.CreateTransportConsumer" />
-        ///    method.
-        /// </summary>
-        ///
-        [Test]
-        public void CreateConsumerRequiresEventPosition()
-        {
-            var client = new EventHubConnection("Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real]", "fake", new EventHubConnectionOptions());
-            Assert.That(() => client.CreateTransportConsumer(EventHubConsumerClient.DefaultConsumerGroupName, "123", null), Throws.ArgumentNullException);
-        }
-
-        /// <summary>
         ///   Verifies functionality of the <see cref="EventHubConnection.Close" />
         ///   method.
         /// </summary>

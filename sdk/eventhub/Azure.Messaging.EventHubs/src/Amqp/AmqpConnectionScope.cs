@@ -245,7 +245,6 @@ namespace Azure.Messaging.EventHubs.Amqp
         {
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
             Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
-            Argument.AssertNotNull(eventPosition, nameof(eventPosition));
             Argument.AssertNotNull(consumerOptions, nameof(consumerOptions));
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();

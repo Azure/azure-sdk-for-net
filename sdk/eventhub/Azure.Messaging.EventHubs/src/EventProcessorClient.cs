@@ -831,7 +831,7 @@ namespace Azure.Messaging.EventHubs
 
             try
             {
-                EventPosition startingPosition = default;
+                EventPosition? startingPosition = default;
 
                 if (initialSequenceNumber.HasValue)
                 {

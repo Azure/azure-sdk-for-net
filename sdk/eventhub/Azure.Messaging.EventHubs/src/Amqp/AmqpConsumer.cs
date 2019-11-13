@@ -123,7 +123,6 @@ namespace Azure.Messaging.EventHubs.Amqp
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
             Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
-            Argument.AssertNotNull(eventPosition, nameof(EventPosition));
             Argument.AssertNotNull(consumerOptions, nameof(EventHubConsumerClientOptions));
             Argument.AssertNotNull(connectionScope, nameof(connectionScope));
             Argument.AssertNotNull(messageConverter, nameof(messageConverter));

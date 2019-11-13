@@ -54,8 +54,6 @@ namespace Azure.Messaging.EventHubs
         ///
         public static string BuildFilterExpression(EventPosition eventPosition)
         {
-            Argument.AssertNotNull(eventPosition, nameof(eventPosition));
-
             // Build the filter expression, in the order of significance.
 
             if (!string.IsNullOrEmpty(eventPosition.Offset))

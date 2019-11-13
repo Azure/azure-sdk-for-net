@@ -120,7 +120,6 @@ namespace Azure.Messaging.EventHubs.Processor
             Argument.AssertNotNull(connection, nameof(connection));
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
             Argument.AssertNotNull(partitionContext, nameof(partitionContext));
-            Argument.AssertNotNull(startingPosition, nameof(startingPosition));
             Argument.AssertNotNull(processEventAsync, nameof(processEventAsync));
             Argument.AssertNotNull(updateCheckpointAsync, nameof(updateCheckpointAsync));
             Argument.AssertNotNull(options, nameof(options));
