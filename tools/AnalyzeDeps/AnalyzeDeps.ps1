@@ -99,8 +99,11 @@ Function Get-PackageExport($Pkgs, $Internal) {
       type    = "internal";
       deps    = $PkgInfo.Deps
     }
+  }
 
-    foreach ($Dep in $PkgInfo.Deps) {
+  $PkgIds = $DumpData.Keys | ForEach-Object ToString
+  foreach ($PkgId in $PkgIds) {
+    foreach ($Dep in $DumpData[$PkgId].deps) {
       $DepId = $Dep.name + ":" + $Dep.version
       if (-Not $DumpData.ContainsKey($DepId)) {
         $DumpData[$DepId] = @{
