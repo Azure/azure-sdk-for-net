@@ -35,7 +35,7 @@ namespace Azure.Security.KeyVault.Secrets
         }
 
         /// <summary>
-        /// Gets a <see cref="DateTimeOffset"/> of when the secret was deleted.
+        /// Gets a <see cref="DateTimeOffset"/> indicating when the secret was deleted.
         /// </summary>
         public DateTimeOffset? DeletedOn { get; internal set; }
 

@@ -9,7 +9,7 @@ using System.Threading;
 namespace Azure.Security.KeyVault.Certificates
 {
     /// <summary>
-    /// A certificate issuer used to sign certificates managed by Azure Key Vault
+    /// A certificate issuer used to sign certificates managed by Azure Key Vault.
     /// </summary>
     public class CertificateIssuer : IJsonDeserializable, IJsonSerializable
     {
@@ -41,7 +41,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CertificateContact"/> class with the given <paramref name="name"/>.
+        /// Initializes a new instance of the <see cref="CertificateIssuer"/> class with the given <paramref name="name"/>.
         /// </summary>
         /// <param name="name">The name of the issuer, including values from <see cref="WellKnownIssuerNames"/>.</param>
         public CertificateIssuer(string name)
@@ -50,42 +50,42 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// The unique identifier of the certificate issuer
+        /// Gets the unique identifier of the certificate issuer.
         /// </summary>
         public Uri Id => Properties.Id;
 
         /// <summary>
-        /// The name of the certificate issuer
+        /// Gets the name of the certificate issuer.
         /// </summary>
         public string Name => Properties.Name;
 
         /// <summary>
-        /// The account identifier or username used to authenticate to the certificate issuer
+        /// Gets or sets the account identifier or username used to authenticate to the certificate issuer.
         /// </summary>
         public string AccountId { get; set; }
 
         /// <summary>
-        /// The password or key used to authenticate to the certificate issuer
+        /// Gets or sets the password or key used to authenticate to the certificate issuer.
         /// </summary>
         public string Password { get; set; }
 
         /// <summary>
-        /// The organizational identifier for the issuer
+        /// Gets or sets the organizational identifier for the issuer.
         /// </summary>
         public string OrganizationId { get; set; }
 
         /// <summary>
-        /// A list of contacts who administrate the certificate issuer account
+        /// Gets a list of contacts who administer the certificate issuer account.
         /// </summary>
         public IList<AdministratorContact> Administrators => LazyInitializer.EnsureInitialized(ref _administrators);
 
         /// <summary>
-        /// The time the issuer was created in UTC
+        /// Gets a <see cref="DateTimeOffset"/> indicating when the certificate was created.
         /// </summary>
         public DateTimeOffset? CreatedOn { get; internal set; }
 
         /// <summary>
-        /// The last modified time of the issuer in UTC
+        /// Gets a <see cref="DateTimeOffset"/> indicating when the certificate was updated.
         /// </summary>
         public DateTimeOffset? UpdatedOn { get; internal set; }
 
@@ -95,7 +95,7 @@ namespace Azure.Security.KeyVault.Certificates
         public bool? Enabled { get; set; }
 
         /// <summary>
-        /// Gets or sets the attributes of the <see cref="CertificateIssuer"/>.
+        /// Gets the attributes of the <see cref="CertificateIssuer"/>.
         /// </summary>
         public IssuerProperties Properties { get; }
 

@@ -22,7 +22,7 @@ namespace Azure.Security.KeyVault.Certificates
         private Dictionary<string, string> _tags;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CertificateContact"/> class.
+        /// Initializes a new instance of the <see cref="MergeCertificateOptions"/> class.
         /// </summary>
         /// <param name="name">The name of the certificate.</param>
         /// <param name="x509certificates">The certificate or certificate chain to merge.</param>
@@ -53,7 +53,7 @@ namespace Azure.Security.KeyVault.Certificates
         public bool? Enabled { get; set; }
 
         /// <summary>
-        /// Tags to be applied to the merged certificate.
+        /// Gets the tags to be applied to the merged certificate.
         /// </summary>
         public IDictionary<string, string> Tags => LazyInitializer.EnsureInitialized(ref _tags);
 
