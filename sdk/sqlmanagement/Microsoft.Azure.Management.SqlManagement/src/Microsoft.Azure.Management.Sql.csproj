@@ -9,7 +9,7 @@
 		<AssemblyName>Microsoft.Azure.Management.Sql</AssemblyName>
 		<Version>2.0.0-preview</Version>
 		<PackageTags>Microsoft Azure SQL Management;SQL;SQL Management;</PackageTags>
-		<<PackageReleaseNotes>
+		<PackageReleaseNotes>
 			<![CDATA[
 - Operations Get, Create, Update and Delete from ManagedInstanceAdministratorsOperations have a different signature. Parameter "administratorName" is omitted.
       ]]>
