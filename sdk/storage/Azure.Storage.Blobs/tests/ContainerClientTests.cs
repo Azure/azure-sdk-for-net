@@ -54,7 +54,7 @@ namespace Azure.Storage.Blobs.Test
             var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
             var blobEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var credentials = new StorageSharedKeyCredential(accountName, accountKey);
-            var tokenCredentials = new SharedTokenCacheCredential();
+            var tokenCredentials = new DefaultAzureCredential();
 
             BlobContainerClient client1 = InstrumentClient(new BlobContainerClient(blobEndpoint, credentials));
             BlobContainerClient client2 = InstrumentClient(new BlobContainerClient(blobEndpoint));
@@ -324,9 +324,8 @@ namespace Azure.Storage.Blobs.Test
             };
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
-                container.DeleteAsync(conditions: conditions),
-             e => { });
+            await TestHelper.CatchAsync<ArgumentOutOfRangeException>(
+                () => container.DeleteAsync(conditions: conditions));
         }
 
         [Test]
@@ -343,9 +342,8 @@ namespace Azure.Storage.Blobs.Test
             };
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
-                container.DeleteAsync(conditions: conditions),
-             e => { });
+            await TestHelper.CatchAsync<ArgumentOutOfRangeException>(
+                () => container.DeleteAsync(conditions: conditions));
         }
 
         [Test]

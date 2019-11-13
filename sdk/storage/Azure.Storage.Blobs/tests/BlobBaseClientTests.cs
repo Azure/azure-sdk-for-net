@@ -546,36 +546,39 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task DownloadToAsync_PathOverloads()
         {
-            await using DisposingContainer test = await GetTestContainerAsync();
-            var data = GetRandomBuffer(Constants.KB);
-
-            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            using (var stream = new MemoryStream(data))
-            {
-                await blob.UploadAsync(stream);
-            }
             var path = Path.GetTempFileName();
-            await Verify(await blob.DownloadToAsync(path));
-            await Verify(await blob.DownloadToAsync(path, CancellationToken.None));
-            await Verify(await blob.DownloadToAsync(path, new BlobRequestConditions()
+            try
             {
-                IfModifiedSince = default
-            }));
+                await using DisposingContainer test = await GetTestContainerAsync();
+                var data = GetRandomBuffer(Constants.KB);
 
-
-            async Task Verify(Response response)
-            {
-                Assert.AreEqual(data.Length, File.ReadAllBytes(path).Length);
-                using var actual = new MemoryStream();
-                using (FileStream resultStream = File.OpenRead(path))
+                BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+                using (var stream = new MemoryStream(data))
                 {
-                    await resultStream.CopyToAsync(actual);
-                    TestHelper.AssertSequenceEqual(data, actual.ToArray());
+                    await blob.UploadAsync(stream);
+                }
+                await Verify(await blob.DownloadToAsync(path));
+                await Verify(await blob.DownloadToAsync(path, CancellationToken.None));
+                await Verify(await blob.DownloadToAsync(path,
+                    new BlobRequestConditions() { IfModifiedSince = default }));
+
+                async Task Verify(Response response)
+                {
+                    Assert.AreEqual(data.Length, File.ReadAllBytes(path).Length);
+                    using var actual = new MemoryStream();
+                    using (FileStream resultStream = File.OpenRead(path))
+                    {
+                        await resultStream.CopyToAsync(actual);
+                        TestHelper.AssertSequenceEqual(data, actual.ToArray());
+                    }
                 }
             }
-            if (File.Exists(path))
+            finally
             {
-                File.Delete(path);
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
             }
         }
 
@@ -602,10 +605,8 @@ namespace Azure.Storage.Blobs.Test
             }
             using (var resultStream = new MemoryStream())
             {
-                await blob.DownloadToAsync(resultStream, new BlobRequestConditions()
-                {
-                    IfModifiedSince = default
-                });
+                await blob.DownloadToAsync(resultStream,
+                    new BlobRequestConditions() { IfModifiedSince = default });
                 Verify(resultStream);
             }
 
