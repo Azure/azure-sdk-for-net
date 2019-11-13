@@ -28,7 +28,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// </summary>
         /// <param name="name">A name for the imported certificate.</param>
         /// <param name="value">The PFX or PEM formatted value of the certificate containing both the x509 certificates and the private key.</param>
-        /// <param name="policy">The policy which governs the lifecycle of the imported certificate and it's properties when it is rotated.</param>
+        /// <param name="policy">The policy which governs the lifecycle of the imported certificate and its properties when it is rotated.</param>
         /// <exception cref="ArgumentException"><paramref name="name"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/>, <paramref name="policy"/>, or <paramref name="value"/> is null.</exception>
         public ImportCertificateOptions(string name, byte[] value, CertificatePolicy policy)
@@ -53,7 +53,7 @@ namespace Azure.Security.KeyVault.Certificates
         public byte[] Value { get; }
 
         /// <summary>
-        /// The policy which governs the lifecycle of the imported certificate and it's properties when it is rotated.
+        /// The policy which governs the lifecycle of the imported certificate and its properties when it is rotated.
         /// </summary>
         public CertificatePolicy Policy { get; }
 

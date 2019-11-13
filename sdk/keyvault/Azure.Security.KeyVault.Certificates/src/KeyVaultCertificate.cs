@@ -44,7 +44,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// The Id of the Key Vault Secret which contains the PEM of PFX formatted content of the certficate and it's private key.
+        /// The Id of the Key Vault Secret which contains the PEM of PFX formatted content of the certificate and its private key.
         /// </summary>
         public Uri SecretId
         {

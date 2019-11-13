@@ -1,4 +1,11 @@
 # Release History
+## Unreleased
+
+### Fixes and improvements
+- Update `SharedTokenCacheCredential` to filter accounts by tenant id
+  - Added `SharedTokenCacheCredentialOptions` class with properties `TenantId` and `Username`
+  - Added constructor overload to `SharedTokenCacheCredential` which accepts `SharedTokenCacheCredentialOptions` 
+  - Added property `SharedTokenCacheTenantId` to `DefaultAzureCredentialOptions`
 
 ## 1.0.0
 - First stable release of Azure.Identity package.

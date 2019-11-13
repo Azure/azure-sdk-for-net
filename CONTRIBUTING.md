@@ -115,6 +115,10 @@ If for any reason there is an update to the build tools, you will then need to f
 3. Invoke `dotnet test eng\service.proj --filter TestCategory!=Live`
    <br/><br/>
 
+## Public API changes
+
+If you make a public API change `eng\Export-API.ps1` script has to be run to update public API listings.
+
 # On-boarding New Libraries
 
 ### Project Structure

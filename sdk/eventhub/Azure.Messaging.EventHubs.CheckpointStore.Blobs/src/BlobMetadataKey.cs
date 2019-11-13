@@ -15,12 +15,12 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blobs
     internal static class BlobMetadataKey
     {
         /// <summary>The key to the owner identifier metadata.</summary>
-        public const string OwnerIdentifier = "owner_id";
+        public const string OwnerIdentifier = "ownerid";
 
         /// <summary>The key to the offset metadata.</summary>
         public const string Offset = "offset";
 
         /// <summary>The key to the sequence number metadata.</summary>
-        public const string SequenceNumber = "sequence_number";
+        public const string SequenceNumber = "sequencenumber";
     }
 }

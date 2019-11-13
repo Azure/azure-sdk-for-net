@@ -1,9 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core.Diagnostics;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.Threading.Tasks;
 
 namespace Azure.Security.KeyVault.Certificates.Tests
@@ -34,6 +36,9 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         [Test]
         public async Task VerifyCancelCertificateOperation()
         {
+            // Log details why this fails often for live tests on net461.
+            using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger(EventLevel.Verbose);
+
             string certName = Recording.GenerateId();
 
             CertificatePolicy certificatePolicy = DefaultPolicy;
@@ -164,7 +169,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             Assert.NotNull(original);
 
-            DeletedCertificate deletedCert = await Client.DeleteCertificateAsync(certName);
+            DeleteCertificateOperation deleteOperation = await Client.StartDeleteCertificateAsync(certName);
+            DeletedCertificate deletedCert = deleteOperation.Value;
 
             Assert.IsNotNull(deletedCert);
 
@@ -172,13 +178,14 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             await WaitForDeletedCertificate(certName);
 
-            _ = await Client.RecoverDeletedCertificateAsync(certName);
+            _ = await Client.StartRecoverDeletedCertificateAsync(certName);
 
             Assert.NotNull(original);
 
             await PollForCertificate(certName);
 
-            deletedCert = await Client.DeleteCertificateAsync(certName);
+            deleteOperation = await Client.StartDeleteCertificateAsync(certName);
+            deletedCert = deleteOperation.Value;
 
             Assert.IsNotNull(deletedCert);
 

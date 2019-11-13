@@ -31,12 +31,12 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         public static IEnumerable<object[]> ConstructorExpandedArgumentInvalidCases()
         {
-            TokenCredential credential = Mock.Of<TokenCredential>();
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
 
-            yield return new object[] { null, "fakePath", credential };
-            yield return new object[] { "", "fakePath", credential };
-            yield return new object[] { "FakeNamespace", null, credential };
-            yield return new object[] { "FakNamespace", "", credential };
+            yield return new object[] { null, "fakePath", credential.Object };
+            yield return new object[] { "", "fakePath", credential.Object };
+            yield return new object[] { "FakeNamespace", null, credential.Object };
+            yield return new object[] { "FakNamespace", "", credential.Object };
             yield return new object[] { "FakeNamespace", "FakePath", null };
         }
 
@@ -46,11 +46,12 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         public static IEnumerable<object[]> ConstructorCreatesDefaultOptionsCases()
         {
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
             var fakeConnection = "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake";
 
             yield return new object[] { new ReadableOptionsMock(fakeConnection), "simple connection string" };
             yield return new object[] { new ReadableOptionsMock(fakeConnection), "connection string with null options" };
-            yield return new object[] { new ReadableOptionsMock("fullyQualifiedNamespace", "path", Mock.Of<TokenCredential>()), "expanded argument" };
+            yield return new object[] { new ReadableOptionsMock("fullyQualifiedNamespace", "path", credential.Object), "expanded argument" };
         }
 
         /// <summary>
@@ -59,6 +60,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         public static IEnumerable<object[]> ConstructorClonesOptionsCases()
         {
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
             var fakeConnection = "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake";
 
             var options = new EventHubConnectionOptions
@@ -68,7 +70,7 @@ namespace Azure.Messaging.EventHubs.Tests
             };
 
             yield return new object[] { new ReadableOptionsMock(fakeConnection, options), options, "connection string" };
-            yield return new object[] { new ReadableOptionsMock("fullyQualifiedNamespace", "path", Mock.Of<TokenCredential>(), options), options, "expanded argument" };
+            yield return new object[] { new ReadableOptionsMock("fullyQualifiedNamespace", "path", credential.Object, options), options, "expanded argument" };
         }
 
         /// <summary>
@@ -260,8 +262,8 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var fullyQualifiedNamespace = "host.windows.servicebus.net";
             var entityPath = "somePath";
-            TokenCredential credential = Mock.Of<TokenCredential>();
-            var client = new EventHubConnection(fullyQualifiedNamespace, entityPath, credential);
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var client = new EventHubConnection(fullyQualifiedNamespace, entityPath, credential.Object);
 
             Assert.That(client.EventHubName, Is.EqualTo(entityPath));
         }
@@ -288,6 +290,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorWithExpandedArgumentsValidatesOptions()
         {
+            var token = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
             var invalidOptions = new EventHubConnectionOptions { TransportType = TransportType.AmqpTcp, Proxy = Mock.Of<IWebProxy>() };
             Assert.That(() => new EventHubConnection("fullyQualifiedNamespace", "path", Mock.Of<TokenCredential>(), invalidOptions), Throws.ArgumentException, "The expanded argument constructor should validate client options");
         }
@@ -379,9 +382,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new EventHubConnectionOptions { TransportType = connectionType };
             var signature = new SharedAccessSignature(resource, keyName, key);
             var credential = new SharedAccessSignatureCredential(signature);
+            var eventHubCredential = new EventHubTokenCredential(credential, resource);
             var client = new EventHubConnection(fullyQualifiedNamespace, path, credential);
 
-            Assert.That(() => client.CreateTransportClient(fullyQualifiedNamespace, path, credential, options), Throws.Nothing);
+            Assert.That(() => client.CreateTransportClient(fullyQualifiedNamespace, path, eventHubCredential, options), Throws.Nothing);
         }
 
         /// <summary>
@@ -401,9 +405,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new EventHubConnectionOptions { TransportType = connectionType };
             var signature = new SharedAccessSignature(resource, keyName, key);
             var credential = new SharedAccessSignatureCredential(signature);
+            var eventHubCredential = new EventHubTokenCredential(credential, resource);
             var client = new EventHubConnection(fullyQualifiedNamespace, path, credential);
 
-            Assert.That(() => client.CreateTransportClient(fullyQualifiedNamespace, path, credential, options), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.CreateTransportClient(fullyQualifiedNamespace, path, eventHubCredential, options), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -813,7 +818,7 @@ namespace Azure.Messaging.EventHubs.Tests
             {
             }
 
-            internal override TransportClient CreateTransportClient(string fullyQualifiedNamespace, string eventHubName, TokenCredential credential, EventHubConnectionOptions options)
+            internal override TransportClient CreateTransportClient(string fullyQualifiedNamespace, string eventHubName, EventHubTokenCredential credential, EventHubConnectionOptions options)
             {
                 TransportClientOptions = options;
                 _transportClient = new ObservableTransportClientMock();
@@ -878,7 +883,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             internal override TransportClient CreateTransportClient(string fullyQualifiedNamespace,
                                                                    string eventHubName,
-                                                                   TokenCredential credential,
+                                                                   EventHubTokenCredential credential,
                                                                    EventHubConnectionOptions options) => TransportClient;
 
             private void SetTransportClient(TransportClient transportClient) =>
