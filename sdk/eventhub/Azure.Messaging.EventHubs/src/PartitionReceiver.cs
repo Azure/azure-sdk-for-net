@@ -154,7 +154,7 @@ namespace Azure.Messaging.EventHubs
                 throw new InvalidOperationException(Resources.TrackLastEnqueuedEventInformationNotSet);
             }
 
-            return new LastEnqueuedEventProperties(EventHubName, PartitionId, InnerConsumer.LastReceivedEvent);
+            return new LastEnqueuedEventProperties(InnerConsumer.LastReceivedEvent);
         }
 
         /// <summary>

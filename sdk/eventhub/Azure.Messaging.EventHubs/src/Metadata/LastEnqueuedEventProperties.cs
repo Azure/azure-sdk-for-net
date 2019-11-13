@@ -12,19 +12,6 @@ namespace Azure.Messaging.EventHubs.Metadata
     public struct LastEnqueuedEventProperties
     {
         /// <summary>
-        ///   The name of the Event Hub where the partitions reside, specific to the
-        ///   Event Hubs namespace that contains it.
-        /// </summary>
-        ///
-        public string EventHubName { get; }
-
-        /// <summary>
-        ///   The identifier of the partition, unique to the Event Hub which contains it.
-        /// </summary>
-        ///
-        public string PartitionId { get; }
-
-        /// <summary>
         ///   The sequence number of the last observed event to be enqueued in the partition.
         /// </summary>
         ///
@@ -52,22 +39,16 @@ namespace Azure.Messaging.EventHubs.Metadata
         ///   Initializes a new instance of the <see cref="LastEnqueuedEventProperties"/> class.
         /// </summary>
         ///
-        /// <param name="eventHubName">The name of the Event Hub that contains the partitions.</param>
-        /// <param name="partitionId">The identifier of the partition.</param>
         /// <param name="lastSequenceNumber">The sequence number observed the last event to be enqueued in the partition.</param>
         /// <param name="lastOffset">The offset of the last event to be enqueued in the partition.</param>
         /// <param name="lastEnqueuedTime">The date and time, in UTC, that the last event was enqueued in the partition.</param>
         /// <param name="lastReceivedTime">The date and time, in UTC, that the information was last received.</param>
         ///
-        public LastEnqueuedEventProperties(string eventHubName,
-                                           string partitionId,
-                                           long? lastSequenceNumber,
+        public LastEnqueuedEventProperties(long? lastSequenceNumber,
                                            long? lastOffset,
                                            DateTimeOffset? lastEnqueuedTime,
                                            DateTimeOffset? lastReceivedTime)
         {
-            EventHubName = eventHubName;
-            PartitionId = partitionId;
             LastEnqueuedSequenceNumber = lastSequenceNumber;
             LastEnqueuedOffset = lastOffset;
             LastEnqueuedTime = lastEnqueuedTime;
@@ -78,16 +59,10 @@ namespace Azure.Messaging.EventHubs.Metadata
         ///   Initializes a new instance of the <see cref="LastEnqueuedEventProperties"/> class.
         /// </summary>
         ///
-        /// <param name="eventHubName">The name of the Event Hub that contains the partitions.</param>
-        /// <param name="partitionId">The identifier of the partition.</param>
         /// <param name="sourceEvent">The event to use as the source for the partition information.</param>
         ///
-        internal LastEnqueuedEventProperties(string eventHubName,
-                                             string partitionId,
-                                             EventData sourceEvent) :
-            this(eventHubName,
-                 partitionId,
-                 sourceEvent?.LastPartitionSequenceNumber,
+        internal LastEnqueuedEventProperties(EventData sourceEvent) :
+            this(sourceEvent?.LastPartitionSequenceNumber,
                  sourceEvent?.LastPartitionOffset,
                  sourceEvent?.LastPartitionEnqueuedTime,
                  sourceEvent?.LastPartitionInformationRetrievalTime)
