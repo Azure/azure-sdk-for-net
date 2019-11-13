@@ -61,8 +61,8 @@ namespace Azure.Messaging.EventHubs
         /// </value>
         ///
         /// <remarks>
-        ///     If the <see cref="CreateBatchOptions.PartitionKey" /> is specified, then no <see cref="CreateBatchOptions.PartitionId" />
-        ///     may be set when sending.
+        ///   If the <see cref="CreateBatchOptions.PartitionKey" /> is specified, then no <see cref="CreateBatchOptions.PartitionId" />
+        ///   may be set when sending.
         /// </remarks>
         ///
         public string PartitionKey { get; set; }

@@ -789,7 +789,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             {
                                 ++count;
 
-                                if ((count >= countBeforeClose) && (!closeCalled))
+                                if ((count == countBeforeClose) && (!closeCalled))
                                 {
                                     if (sync)
                                     {
@@ -1605,7 +1605,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ConsumerCannotReeadWhenProxyIsInvalid()
+        public async Task ConsumerCannotReadWhenProxyIsInvalid()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
@@ -1824,15 +1824,16 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <param name="consumer">The consumer to use for reading.</param>
         /// <param name="partition">The partition read from.</param>
         /// <param name="startingPosition">The position in the partition to start reading from.</param>
+        /// <param name="iterationCount">The number of iterations to perform.</param>
         ///
         private async Task ReadNothingAsync(EventHubConsumerClient consumer,
                                             string partition,
                                             EventPosition startingPosition,
-                                            int iterationCount = 5)
+                                            int iterationCount = 10)
         {
             await foreach (var item in consumer.ReadEventsFromPartitionAsync(partition, startingPosition, TimeSpan.FromMilliseconds(50)))
             {
-                await Task.Delay(150);
+                await Task.Delay(250);
 
                 if (--iterationCount <= 0)
                 {
