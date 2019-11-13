@@ -158,17 +158,19 @@ namespace Azure.Messaging.EventHubs.Authorization
         /// <param name="value">The shared access signature to be used for authorization.</param>
         /// <param name="signatureExpiration">The date and time that the shared access signature expires, in UTC.</param>
         ///
-        /// <remarks>
-        ///     This constructor is intended to support cloning of the signature and internal testing,
-        ///     allowing for direct setting of the property values without validation or adjustment.
-        /// </remarks>
-        ///
-        internal SharedAccessSignature(string eventHubResource,
-                                       string sharedAccessKeyName,
-                                       string sharedAccessKey,
-                                       string value,
-                                       DateTimeOffset signatureExpiration)
+        public SharedAccessSignature(string eventHubResource,
+                                     string sharedAccessKeyName,
+                                     string sharedAccessKey,
+                                     string value,
+                                     DateTimeOffset signatureExpiration)
         {
+            Argument.AssertNotNullOrEmpty(eventHubResource, nameof(eventHubResource));
+            Argument.AssertNotNullOrEmpty(sharedAccessKeyName, nameof(sharedAccessKeyName));
+            Argument.AssertNotNullOrEmpty(sharedAccessKey, nameof(sharedAccessKey));
+
+            Argument.AssertNotTooLong(sharedAccessKeyName, MaximumKeyNameLength, nameof(sharedAccessKeyName));
+            Argument.AssertNotTooLong(sharedAccessKey, MaximumKeyLength, nameof(sharedAccessKey));
+
             Resource = eventHubResource;
             SharedAccessKeyName = sharedAccessKeyName;
             SharedAccessKey = sharedAccessKey;
@@ -177,14 +179,14 @@ namespace Azure.Messaging.EventHubs.Authorization
         }
 
         /// <summary>
-        ///   Extends the period for which the shared access signature is considered valid by adjusting the
-        ///   calculated expiration time.  Upon successful extension, the <see cref="Value" /> of the signature will
-        ///   be updated with the new expiration.
+        ///   Creates a new signature with the specified period for which the shared access signature is considered valid.
         /// </summary>
         ///
         /// <param name="signatureValidityDuration">The duration that the signature should be considered valid.</param>
         ///
-        public void ExtendExpiration(TimeSpan signatureValidityDuration)
+        /// <returns>A new <see cref="SharedAccessSignature" /> based on the same key, but with a new expiration time.</returns>
+        ///
+        public SharedAccessSignature CloneWithNewExpiration(TimeSpan signatureValidityDuration)
         {
             Argument.AssertNotNegative(signatureValidityDuration, nameof(signatureValidityDuration));
 
@@ -195,29 +197,8 @@ namespace Azure.Messaging.EventHubs.Authorization
                 throw new InvalidOperationException(Resources.SharedAccessKeyIsRequired);
             }
 
-            SignatureExpiration = DateTimeOffset.UtcNow.Add(signatureValidityDuration);
-            Value = BuildSignature(Resource, SharedAccessKeyName, SharedAccessKey, SignatureExpiration);
+            return new SharedAccessSignature(Resource, SharedAccessKeyName, SharedAccessKey, signatureValidityDuration);
         }
-
-        /// <summary>
-        ///   Returns a hash code for this instance.
-        /// </summary>
-        ///
-        /// <returns>A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.</returns>
-        ///
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => base.GetHashCode();
-
-        /// <summary>
-        ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
-        /// </summary>
-        ///
-        /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
-        ///
-        /// <returns><c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.</returns>
-        ///
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => base.Equals(obj);
 
         /// <summary>
         ///   Converts the instance to string representation.
@@ -226,15 +207,6 @@ namespace Azure.Messaging.EventHubs.Authorization
         /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
         ///
         public override string ToString() => Value;
-
-        /// <summary>
-        ///   Creates a new copy of the current <see cref="SharedAccessSignature" />, cloning its attributes into a new instance.
-        /// </summary>
-        ///
-        /// <returns>A new copy of <see cref="SharedAccessSignature" />.</returns>
-        ///
-        internal SharedAccessSignature Clone() =>
-            new SharedAccessSignature(Resource, SharedAccessKeyName, SharedAccessKey, Value, SignatureExpiration);
 
         /// <summary>
         ///   Parses a shared access signature into its component parts.

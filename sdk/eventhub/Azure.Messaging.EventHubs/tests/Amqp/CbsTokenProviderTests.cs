@@ -66,7 +66,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task GetTokenAsyncSetsTheCorrectTypeForSharedAccessSignatureTokens()
         {
             var value = "TOkEn!";
-            var signature = new SharedAccessSignature(string.Empty, "keyName", "key", value, DateTimeOffset.Parse("2015-10-27T00:00:00Z"));
+            var signature = new SharedAccessSignature("hub", "keyName", "key", value, DateTimeOffset.Parse("2015-10-27T00:00:00Z"));
             var sasCredential = new SharedAccessSignatureCredential(signature);
             var credential = new EventHubTokenCredential(sasCredential, "test");
             var provider = new CbsTokenProvider(credential, default);
