@@ -39,9 +39,12 @@ namespace Microsoft.Azure.Search
             /// <param name='searchRequestOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static Skillset CreateOrUpdate(this ISkillsetsOperations operations, string skillsetName, Skillset skillset, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
+            /// <param name='accessCondition'>
+            /// Additional parameters for the operation
+            /// </param>
+            public static Skillset CreateOrUpdate(this ISkillsetsOperations operations, string skillsetName, Skillset skillset, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition))
             {
-                return operations.CreateOrUpdateAsync(skillsetName, skillset, searchRequestOptions).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(skillsetName, skillset, searchRequestOptions, accessCondition).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -62,12 +65,15 @@ namespace Microsoft.Azure.Search
             /// <param name='searchRequestOptions'>
             /// Additional parameters for the operation
             /// </param>
+            /// <param name='accessCondition'>
+            /// Additional parameters for the operation
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Skillset> CreateOrUpdateAsync(this ISkillsetsOperations operations, string skillsetName, Skillset skillset, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Skillset> CreateOrUpdateAsync(this ISkillsetsOperations operations, string skillsetName, Skillset skillset, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(skillsetName, skillset, searchRequestOptions, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(skillsetName, skillset, searchRequestOptions, accessCondition, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -86,9 +92,12 @@ namespace Microsoft.Azure.Search
             /// <param name='searchRequestOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static void Delete(this ISkillsetsOperations operations, string skillsetName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
+            /// <param name='accessCondition'>
+            /// Additional parameters for the operation
+            /// </param>
+            public static void Delete(this ISkillsetsOperations operations, string skillsetName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition))
             {
-                operations.DeleteAsync(skillsetName, searchRequestOptions).GetAwaiter().GetResult();
+                operations.DeleteAsync(skillsetName, searchRequestOptions, accessCondition).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -104,12 +113,15 @@ namespace Microsoft.Azure.Search
             /// <param name='searchRequestOptions'>
             /// Additional parameters for the operation
             /// </param>
+            /// <param name='accessCondition'>
+            /// Additional parameters for the operation
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this ISkillsetsOperations operations, string skillsetName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this ISkillsetsOperations operations, string skillsetName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(skillsetName, searchRequestOptions, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(skillsetName, searchRequestOptions, accessCondition, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
