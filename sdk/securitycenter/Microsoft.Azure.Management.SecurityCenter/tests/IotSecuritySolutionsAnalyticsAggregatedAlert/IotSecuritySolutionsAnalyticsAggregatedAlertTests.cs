@@ -17,10 +17,10 @@ namespace SecurityCenter.Tests
     {
         #region Test setup
 
-        private static readonly string AggregatedAlertName = "IoT_SuspiciousUseradd/2019-09-15";
-        private static readonly string ResourceGroupName = "ResourceGroup-CUS";
-        private static readonly string SolutionName = "IotHub-CUS";
-        private static readonly string AscLocation = "centralus";
+        private static readonly string AggregatedAlertName = "IoT_AgentDroppedEvents/2019-05-26";
+        private static readonly string ResourceGroupName = "nir-test";
+        private static readonly string SolutionName = "singahub";
+        private static readonly string AscLocation = "southeastasia";
         private static TestEnvironment TestEnvironment { get; set; }
 
         private static SecurityCenterClient GetSecurityCenterClient(MockContext context)
