@@ -19,9 +19,6 @@ namespace Azure.Messaging.EventHubs.Processor
     ///
     public abstract class EventProcessorBase
     {
-        // TODO: Remove this when moving to the consumer's iterator.
-        private const int MaximumMessageCount = 25;
-
         /// <summary>The seed to use for initializing random number generated for a given thread-specific instance.</summary>
         private static int s_randomSeed = Environment.TickCount;
 
@@ -638,72 +635,34 @@ namespace Azure.Messaging.EventHubs.Processor
                     TrackLastEnqueuedEventInformation = trackLastEnqueuedEventInformation
                 };
 
-                // TODO: does the order matter?
-
                 await using var connection = CreateConnection();
-                await using var consumer = new EventHubConsumerClient(ConsumerGroup, partitionId, startingPosition, connection, options);
 
-                List<EventData> receivedEvents;
-                Exception unrecoverableException = null;
-
-                while (!cancellationToken.IsCancellationRequested)
+                await using (var consumer = new EventHubConsumerClient(ConsumerGroup, partitionId, startingPosition, connection, options))
                 {
-                    try
+                    await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partitionId, startingPosition, maximumReceiveWaitTime, cancellationToken))
                     {
-                        receivedEvents = (await consumer.ReceiveAsync(MaximumMessageCount, maximumReceiveWaitTime, cancellationToken).ConfigureAwait(false)).ToList();
-
                         using DiagnosticScope diagnosticScope = EventDataInstrumentation.ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName);
                         diagnosticScope.AddAttribute("kind", "server");
 
-                        if (diagnosticScope.IsEnabled)
+                        if (diagnosticScope.IsEnabled
+                            && partitionEvent.Data != null
+                            && EventDataInstrumentation.TryExtractDiagnosticId(partitionEvent.Data, out string diagnosticId))
                         {
-                            foreach (var eventData in receivedEvents)
-                            {
-                                if (EventDataInstrumentation.TryExtractDiagnosticId(eventData, out string diagnosticId))
-                                {
-                                    diagnosticScope.AddLink(diagnosticId);
-                                }
-                            }
-                        }
-
-                        // Small workaround to make sure we call ProcessEvent with EventData = null when no events have been received.
-                        // The code is expected to get simpler when we start using the async enumerator internally to receive events.
-
-                        if (receivedEvents.Count == 0)
-                        {
-                            receivedEvents.Add(null);
+                            diagnosticScope.AddLink(diagnosticId);
                         }
 
                         diagnosticScope.Start();
 
-                        foreach (var eventData in receivedEvents)
+                        try
                         {
-                            try
-                            {
-                                await ProcessEventAsync(eventData, context).ConfigureAwait(false);
-                            }
-                            catch (Exception eventProcessingException)
-                            {
-                                diagnosticScope.Failed(eventProcessingException);
-                                unrecoverableException = eventProcessingException;
-
-                                break;
-                            }
+                            // TODO: fix it.
+                            await ProcessEventAsync(partitionEvent.Data, context).ConfigureAwait(false);
                         }
-                    }
-                    catch (Exception eventHubException)
-                    {
-                        // Stop running only if it's not a retriable exception.
-
-                        if (RetryPolicy.CalculateRetryDelay(eventHubException, 1) == null)
+                        catch (Exception eventProcessingException)
                         {
-                            throw eventHubException;
+                            diagnosticScope.Failed(eventProcessingException);
+                            throw;
                         }
-                    }
-
-                    if (unrecoverableException != null)
-                    {
-                        throw unrecoverableException;
                     }
                 }
             });
