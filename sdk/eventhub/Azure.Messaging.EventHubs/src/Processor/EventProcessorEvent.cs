@@ -9,10 +9,10 @@ namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
     ///   A <see cref="PartitionEvent" /> that is strongly tied to an <see cref="EventProcessorClient" />.  It
-    ///   provides a means to create event processing checkpoints.
+    ///   provides a means to create event processing checkpoints. TODO: fix.
     /// </summary>
     ///
-    public struct EventProcessorEvent
+    public class EventProcessorEvent
     {
         /// <summary>
         ///   The context of the Event Hub partition this instance is associated with.
@@ -27,33 +27,49 @@ namespace Azure.Messaging.EventHubs.Processor
         public EventData Data { get; }
 
         /// <summary>
-        ///   The function to call on checkpoint update.
+        ///   TODO.
         /// </summary>
         ///
-        private Func<EventData, PartitionContext, Task> OnUpdateCheckpoint { get; }
+        private WeakReference<EventProcessorClient> Processor { get; }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventProcessorEvent"/> structure.
+        ///   Initializes a new instance of the <see cref="EventProcessorEvent"/> class.
         /// </summary>
         ///
         /// <param name="partitionContext">The context of the Event Hub partition this instance is associated with.</param>
         /// <param name="eventData">The received event to be processed.  Expected to be <c>null</c> if the receive call has timed out.</param>
-        /// <param name="onUpdateCheckpoint">The function to call on checkpoint update.</param>
+        /// <param name="processor">TODO.</param>
         ///
-        public EventProcessorEvent(PartitionContext partitionContext,
-                                   EventData eventData,
-                                   Func<EventData, PartitionContext, Task> onUpdateCheckpoint)
+        internal EventProcessorEvent(PartitionContext partitionContext,
+                                     EventData eventData,
+                                     EventProcessorClient processor)
         {
             Argument.AssertNotNull(partitionContext, nameof(partitionContext));
-            Argument.AssertNotNull(onUpdateCheckpoint, nameof(onUpdateCheckpoint));
+            Argument.AssertNotNull(processor, nameof(processor));
 
             Context = partitionContext;
             Data = eventData;
-            OnUpdateCheckpoint = onUpdateCheckpoint;
+            Processor = new WeakReference<EventProcessorClient>(processor);
         }
 
         /// <summary>
-        ///   Updates the checkpoint using the given information for the associated partition and consumer group in the chosen storage service.
+        ///   Initializes a new instance of the <see cref="EventProcessorEvent"/> class.
+        /// </summary>
+        ///
+        /// <param name="partitionContext">The context of the Event Hub partition this instance is associated with.</param>
+        /// <param name="eventData">The received event to be processed.  Expected to be <c>null</c> if the receive call has timed out.</param>
+        ///
+        protected internal EventProcessorEvent(PartitionContext partitionContext,
+                                               EventData eventData)
+        {
+            Argument.AssertNotNull(partitionContext, nameof(partitionContext));
+
+            Context = partitionContext;
+            Data = eventData;
+        }
+
+        /// <summary>
+        ///   Updates the checkpoint using the given information for the associated partition and consumer group in the chosen storage service. TODO: add exceptions?
         /// </summary>
         ///
         /// <param name="eventData">The event containing the information to be stored in the checkpoint.</param>
@@ -62,9 +78,17 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         public Task UpdateCheckpointAsync(EventData eventData)
         {
-            // Verification is done by the Event Processor Client.
+            var processor = default(EventProcessorClient);
 
-            return OnUpdateCheckpoint(eventData, Context);
+            if ((Processor)?.TryGetTarget(out processor) == false || (processor == null))
+            {
+                // If the processor instance was not available, treat it as a closed instance for
+                // messaging consistency.
+
+                Argument.AssertNotClosed(true, Resources.ClientNeededForThisInformation);
+            }
+
+            return processor.UpdateCheckpointAsync(eventData, Context);
         }
     }
 }

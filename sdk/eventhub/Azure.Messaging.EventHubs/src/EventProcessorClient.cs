@@ -425,7 +425,7 @@ namespace Azure.Messaging.EventHubs
         protected override Task ProcessEventAsync(PartitionEvent partitionEvent,
                                                   PartitionContext context)
         {
-            var processorEvent = new EventProcessorEvent(context, partitionEvent.Data, UpdateCheckpointAsync);
+            var processorEvent = new EventProcessorEvent(context, partitionEvent.Data, this);
             return ProcessEventAsyncHandler(processorEvent);
         }
 
@@ -478,8 +478,8 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        protected override async Task UpdateCheckpointAsync(EventData eventData,
-                                                            PartitionContext context)
+        protected internal override async Task UpdateCheckpointAsync(EventData eventData,
+                                                                     PartitionContext context)
         {
             Argument.AssertNotNull(eventData, nameof(eventData));
             Argument.AssertNotNull(eventData.Offset, nameof(eventData.Offset));
