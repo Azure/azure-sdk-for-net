@@ -1091,8 +1091,8 @@ namespace Azure.Storage.Files.DataLake
                         {
                             Owner = response.Value.Owner,
                             Group = response.Value.Group,
-                            Permissions = response.Value.Permissions,
-                            Acl = response.Value.ACL
+                            Permissions = PathPermissions.ParseSymbolicPermissions(response.Value.Permissions),
+                            AccessControlList = PathAccessControlExtensions.ParseAccessControlList(response.Value.ACL)
                         },
                         response.GetRawResponse());
                 }
@@ -1111,12 +1111,12 @@ namespace Azure.Storage.Files.DataLake
 
         #region Set Access Control
         /// <summary>
-        /// The <see cref="SetAccessControl"/> operation sets the
+        /// The <see cref="SetAccessControlList"/> operation sets the
         /// Access Control on a path
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
         /// </summary>
-        /// <param name="acl">
+        /// <param name="accessControlList">
         /// The POSIX access control list for the file or directory.
         /// </param>
         /// <param name="owner">
@@ -1142,14 +1142,14 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
-        public virtual Response<PathInfo> SetAccessControl(
-            string acl,
+        public virtual Response<PathInfo> SetAccessControlList(
+            IList<PathAccessControlItem> accessControlList,
             string owner = default,
             string group = default,
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
-            SetAccessControlInternal(
-                acl,
+            SetAccessControlListInternal(
+                accessControlList,
                 owner,
                 group,
                 conditions,
@@ -1158,12 +1158,12 @@ namespace Azure.Storage.Files.DataLake
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="SetAccessControlAsync"/> operation sets the
+        /// The <see cref="SetAccessControlListAsync"/> operation sets the
         /// Access Control on a path
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
         /// </summary>
-        /// <param name="acl">
+        /// <param name="accessControlList">
         /// The POSIX access control list for the file or directory.
         /// </param>
         /// <param name="owner">
@@ -1189,14 +1189,14 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PathInfo>> SetAccessControlAsync(
-            string acl,
+        public virtual async Task<Response<PathInfo>> SetAccessControlListAsync(
+            IList<PathAccessControlItem> accessControlList,
             string owner = default,
             string group = default,
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
-            await SetAccessControlInternal(
-                acl,
+            await SetAccessControlListInternal(
+                accessControlList,
                 owner,
                 group,
                 conditions,
@@ -1205,12 +1205,12 @@ namespace Azure.Storage.Files.DataLake
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="SetAccessControlInternal"/> operation sets the
+        /// The <see cref="SetAccessControlListInternal"/> operation sets the
         /// Access Control on a path
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
         /// </summary>
-        /// <param name="acl">
+        /// <param name="accessControlList">
         /// The POSIX access control list for the file or directory.
         /// </param>
         /// <param name="owner">
@@ -1238,8 +1238,8 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<PathInfo>> SetAccessControlInternal(
-            string acl,
+        private async Task<Response<PathInfo>> SetAccessControlListInternal(
+            IList<PathAccessControlItem> accessControlList,
             string owner,
             string group,
             DataLakeRequestConditions conditions,
@@ -1252,7 +1252,7 @@ namespace Azure.Storage.Files.DataLake
                     nameof(DataLakePathClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(acl)}: {acl}\n" +
+                    $"{nameof(accessControlList)}: {accessControlList}\n" +
                     $"{nameof(owner)}: {owner}\n" +
                     $"{nameof(group)}: {group}\n" +
                     $"{nameof(conditions)}: {conditions}");
@@ -1266,7 +1266,7 @@ namespace Azure.Storage.Files.DataLake
                             leaseId: conditions?.LeaseId,
                             owner: owner,
                             group: group,
-                            acl: acl,
+                            acl: PathAccessControlExtensions.ToAccessControlListString(accessControlList),
                             ifMatch: conditions?.IfMatch,
                             ifNoneMatch: conditions?.IfNoneMatch,
                             ifModifiedSince: conditions?.IfModifiedSince,
@@ -1330,7 +1330,7 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         [ForwardsClientCalls]
         public virtual Response<PathInfo> SetPermissions(
-            string permissions,
+            PathPermissions permissions,
             string owner = default,
             string group = default,
             DataLakeRequestConditions conditions = default,
@@ -1377,7 +1377,7 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<PathInfo>> SetPermissionsAsync(
-            string permissions,
+            PathPermissions permissions,
             string owner = default,
             string group = default,
             DataLakeRequestConditions conditions = default,
@@ -1426,7 +1426,7 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<PathInfo>> SetPermissionsInternal(
-            string permissions,
+            PathPermissions permissions,
             string owner,
             string group,
             DataLakeRequestConditions conditions,
@@ -1453,7 +1453,7 @@ namespace Azure.Storage.Files.DataLake
                             leaseId: conditions?.LeaseId,
                             owner: owner,
                             group: group,
-                            permissions: permissions,
+                            permissions: permissions.ToSymbolicPermissions(),
                             ifMatch: conditions?.IfMatch,
                             ifNoneMatch: conditions?.IfNoneMatch,
                             ifModifiedSince: conditions?.IfModifiedSince,
