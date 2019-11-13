@@ -664,7 +664,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await producer.CloseAsync();
 
             var connection = GetConnection(producer);
-            Assert.That(connection.Closed, Is.True);
+            Assert.That(connection.IsClosed, Is.True);
         }
 
         /// <summary>
@@ -681,7 +681,7 @@ namespace Azure.Messaging.EventHubs.Tests
             producer.Close();
 
             var connection = GetConnection(producer);
-            Assert.That(connection.Closed, Is.True);
+            Assert.That(connection.IsClosed, Is.True);
         }
 
         /// <summary>
@@ -697,7 +697,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var producer = new EventHubProducerClient(connection);
 
             await producer.CloseAsync();
-            Assert.That(connection.Closed, Is.False);
+            Assert.That(connection.IsClosed, Is.False);
         }
 
         /// <summary>
@@ -713,7 +713,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var producer = new EventHubProducerClient(connection);
 
             producer.Close();
-            Assert.That(connection.Closed, Is.False);
+            Assert.That(connection.IsClosed, Is.False);
         }
 
         /// <summary>

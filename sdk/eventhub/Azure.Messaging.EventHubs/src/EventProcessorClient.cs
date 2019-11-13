@@ -149,7 +149,7 @@ namespace Azure.Messaging.EventHubs
         ///   <c>true</c> if the client is closed; otherwise, <c>false</c>.
         /// </value>
         ///
-        public bool Closed { get; protected set; } = false;
+        public bool IsClosed { get; protected set; } = false;
 
         /// <summary>
         ///   Indicates whether the client has ownership of the associated <see cref="EventHubConnection" />
@@ -440,7 +440,7 @@ namespace Azure.Messaging.EventHubs
         ///
         public virtual async Task StartAsync()
         {
-            Argument.AssertNotClosed(Closed, nameof(EventProcessorClient));
+            Argument.AssertNotClosed(IsClosed, nameof(EventProcessorClient));
 
             if (ActiveLoadBalancingTask == null)
             {
@@ -556,7 +556,7 @@ namespace Azure.Messaging.EventHubs
         ///
         public virtual async Task CloseAsync(CancellationToken cancellationToken = default)
         {
-            Closed = true;
+            IsClosed = true;
 
             try
             {

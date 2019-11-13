@@ -449,7 +449,6 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(actualOptions, Is.Not.Null, "The consumer options should have been set.");
             Assert.That(actualOptions.OwnerLevel, Is.EqualTo(expectedOptions.OwnerLevel), "The owner levels should match.");
-            Assert.That(actualOptions.Identifier, Is.EqualTo(expectedOptions.Identifier), "The identifiers should match.");
             Assert.That(actualOptions.PrefetchCount, Is.EqualTo(expectedOptions.PrefetchCount), "The prefetch counts should match.");
             Assert.That(actualOptions.RetryOptions.IsEquivalentTo(expectedOptions.RetryOptions), Is.True, "The retries should match.");
             Assert.That(actualOptions.MaximumReceiveWaitTimeOrDefault, Is.EqualTo(expectedOptions.MaximumReceiveWaitTimeOrDefault), "The wait times should match.");
@@ -473,7 +472,6 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedOptions = new EventHubConsumerClientOptions
             {
                 OwnerLevel = 251,
-                Identifier = "Bob",
                 PrefetchCount = 600,
                 RetryOptions = retryOptions,
                 DefaultMaximumReceiveWaitTime = TimeSpan.FromSeconds(123)
@@ -492,7 +490,6 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(actualOptions, Is.Not.Null, "The consumer options should have been set.");
             Assert.That(actualOptions, Is.Not.SameAs(expectedOptions), "A clone of the options should have been made.");
             Assert.That(actualOptions.OwnerLevel, Is.EqualTo(expectedOptions.OwnerLevel), "The owner levels should match.");
-            Assert.That(actualOptions.Identifier, Is.EqualTo(expectedOptions.Identifier), "The identifiers should match.");
             Assert.That(actualOptions.PrefetchCount, Is.EqualTo(expectedOptions.PrefetchCount), "The prefetch counts should match.");
             Assert.That(actualOptions.RetryOptions.IsEquivalentTo(expectedOptions.RetryOptions), Is.True, "The retries should match.");
             Assert.That(actualOptions.MaximumReceiveWaitTimeOrDefault, Is.EqualTo(expectedOptions.MaximumReceiveWaitTimeOrDefault), "The wait times should match.");
@@ -674,7 +671,6 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(actualOptions, Is.Not.Null, "The consumer options should have been set.");
             Assert.That(actualPosition.Offset, Is.EqualTo(expectedPosition.Offset), "The event position to receive should match.");
             Assert.That(actualOptions.OwnerLevel, Is.EqualTo(expectedOptions.OwnerLevel), "The owner levels should match.");
-            Assert.That(actualOptions.Identifier, Is.EqualTo(expectedOptions.Identifier), "The identifiers should match.");
             Assert.That(actualOptions.PrefetchCount, Is.EqualTo(expectedOptions.PrefetchCount), "The prefetch counts should match.");
             Assert.That(actualOptions.MaximumReceiveWaitTimeOrDefault, Is.EqualTo(expectedOptions.MaximumReceiveWaitTimeOrDefault), "The wait times should match.");
         }

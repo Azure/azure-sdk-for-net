@@ -27,9 +27,6 @@ namespace Azure.Messaging.EventHubs
         /// <summary>The prefetch count to use for the consumer.</summary>
         private int _prefetchCount = 300;
 
-        /// <summary>The identifier to use for the consumer.</summary>
-        private string _identifier = null;
-
         /// <summary>The set of options to use for configuring the connection to the Event Hubs service.</summary>
         private EventHubConnectionOptions _connectionOptions = new EventHubConnectionOptions();
 
@@ -75,23 +72,6 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         internal TimeSpan? MaximumReceiveWaitTimeOrDefault => (_maximumReceiveWaitTime == TimeSpan.Zero) ? null : _maximumReceiveWaitTime;
-
-        /// <summary>
-        ///     An optional text-based identifier label to assign to a consumer.
-        /// </summary>
-        ///
-        /// <value>The identifier is used for informational purposes only.  If not specified, the receiver will have no assigned identifier label.</value>
-        ///
-        public string Identifier
-        {
-            get => _identifier;
-
-            set
-            {
-                ValidateIdentifier(value);
-                _identifier = value;
-            }
-        }
 
         /// <summary>
         ///   The count used by the consumer to control the number of events this consumer will actively receive
@@ -195,7 +175,6 @@ namespace Azure.Messaging.EventHubs
             {
                 OwnerLevel = OwnerLevel,
                 TrackLastEnqueuedEventInformation = TrackLastEnqueuedEventInformation,
-                _identifier = _identifier,
                 _prefetchCount = _prefetchCount,
                 _maximumReceiveWaitTime = _maximumReceiveWaitTime,
                 _connectionOptions = ConnectionOptions.Clone(),

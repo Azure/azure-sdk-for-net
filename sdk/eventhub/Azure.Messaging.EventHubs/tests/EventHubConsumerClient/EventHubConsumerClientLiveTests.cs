@@ -73,7 +73,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
-                var options = new EventHubConsumerClientOptions { Identifier = "FakeIdentifier" };
+                var options = new EventHubConsumerClientOptions { TrackLastEnqueuedEventInformation = false };
 
                 await using (var connection = new EventHubConnection(connectionString, new EventHubConnectionOptions { TransportType = transportType }))
                 {
@@ -1595,65 +1595,6 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     Assert.That(elapsedTime, Is.GreaterThan(maximumWaitTimeInSecs - 0.1));
                     Assert.That(elapsedTime, Is.LessThan(maximumWaitTimeInSecs + 5));
-                }
-            }
-        }
-
-        /// <summary>
-        ///   Verifies that the <see cref="EventHubConsumerClient" /> is able to
-        ///   connect to the Event Hubs service and perform operations.
-        /// </summary>
-        ///
-        [Test]
-        public async Task QuotaExceedExceptionMessageContainsExistingConsumerIdentifiers()
-        {
-            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
-            {
-                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
-
-                await using (var connection = new EventHubConnection(connectionString))
-                {
-                    var partition = (await connection.GetPartitionIdsAsync(DefaultRetryPolicy)).First();
-                    var consumers = new List<EventHubConsumerClient>();
-                    var readers = new List<IAsyncEnumerator<PartitionEvent>>();
-                    var maximumConsumersQuota = 5;
-
-                    using var cancellationSource = new CancellationTokenSource();
-                    cancellationSource.CancelAfter(TimeSpan.FromMinutes(5));
-
-                    try
-                    {
-                        for (int i = 0; i < maximumConsumersQuota; i++)
-                        {
-                            var consumerOptions = new EventHubConsumerClientOptions { Identifier = $"consumer{i}" };
-                            var newConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection, consumerOptions);
-                            var newReader = newConsumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, TimeSpan.FromMilliseconds(50), cancellationSource.Token).GetAsyncEnumerator();
-
-                            Assert.That(async () => await newReader.MoveNextAsync(), Throws.Nothing);
-
-                            readers.Add(newReader);
-                            consumers.Add(newConsumer);
-                        }
-
-                        // Attempt to create 6th consumer. This should fail.
-
-                        await using var failConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString);
-                        await ReadNothingAsync(failConsumer, partition, EventPosition.Latest);
-
-                        throw new InvalidOperationException("6th consumer should have encountered QuotaExceededException.");
-                    }
-                    catch (QuotaExceededException ex)
-                    {
-                        foreach (EventHubConsumerClient consumer in consumers)
-                        {
-                            Assert.That(ex.Message.Contains(consumer.Identifier), Is.True, $"QuotaExceededException message is missing consumer identifier '{consumer.Identifier}')");
-                        }
-                    }
-                    finally
-                    {
-                        await Task.WhenAll(readers.Select(reader => reader.DisposeAsync().AsTask()));
-                        await Task.WhenAll(consumers.Select(consumer => consumer.CloseAsync()));
-                    }
                 }
             }
         }

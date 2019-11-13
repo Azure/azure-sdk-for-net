@@ -494,11 +494,6 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                 linkSettings.AddProperty(AmqpProperty.EntityType, (int)AmqpProperty.Entity.ConsumerGroup);
 
-                if (!string.IsNullOrEmpty(consumerOptions.Identifier))
-                {
-                    linkSettings.AddProperty(AmqpProperty.ConsumerIdentifier, consumerOptions.Identifier);
-                }
-
                 if (consumerOptions.OwnerLevel.HasValue)
                 {
                     linkSettings.AddProperty(AmqpProperty.OwnerLevel, consumerOptions.OwnerLevel.Value);

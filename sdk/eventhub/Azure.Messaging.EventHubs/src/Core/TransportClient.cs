@@ -25,7 +25,7 @@ namespace Azure.Messaging.EventHubs.Core
         ///   <c>true</c> if the client is closed; otherwise, <c>false</c>.
         /// </value>
         ///
-        public virtual bool Closed { get; }
+        public virtual bool IsClosed { get; }
 
         /// <summary>
         ///   The endpoint for the Event Hubs service to which the client is associated.

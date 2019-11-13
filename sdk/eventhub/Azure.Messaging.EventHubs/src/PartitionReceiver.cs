@@ -59,7 +59,7 @@ namespace Azure.Messaging.EventHubs
         ///   <c>true</c> if the receiver is closed; otherwise, <c>false</c>.
         /// </value>
         ///
-        public bool Closed { get; protected set; }
+        public bool IsClosed { get; protected set; }
 
         /// <summary>
         ///   The transport consumer that is used for operations performed against
@@ -189,7 +189,7 @@ namespace Azure.Messaging.EventHubs
         ///
         public virtual async Task CloseAsync(CancellationToken cancellationToken = default)
         {
-            Closed = true;
+            IsClosed = true;
 
             try
             {
@@ -197,7 +197,7 @@ namespace Azure.Messaging.EventHubs
             }
             catch (Exception ex) when (ex is TaskCanceledException || ex is OperationCanceledException)
             {
-                Closed = InnerConsumer.Closed;
+                IsClosed = InnerConsumer.IsClosed;
                 throw;
             }
         }
