@@ -545,7 +545,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 // Test
                 var selector = new SettingSelector(setting.Key)
                 {
-                    AsOf = DateTimeOffset.MaxValue
+                    AcceptDateTime = DateTimeOffset.MaxValue
                 };
 
                 int resultsReturned = 0;

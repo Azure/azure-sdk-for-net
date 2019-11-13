@@ -775,9 +775,9 @@ namespace Azure.Data.AppConfiguration
             request.Method = RequestMethod.Get;
             BuildUriForGetBatch(request.Uri, selector, pageLink);
             request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
-            if (selector.AsOf.HasValue)
+            if (selector.AcceptDateTime.HasValue)
             {
-                var dateTime = selector.AsOf.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
+                var dateTime = selector.AcceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
                 request.Headers.Add(AcceptDatetimeHeader, dateTime);
             }
 
@@ -856,9 +856,9 @@ namespace Azure.Data.AppConfiguration
             request.Method = RequestMethod.Get;
             BuildUriForRevisions(request.Uri, selector, pageLink);
             request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
-            if (selector.AsOf.HasValue)
+            if (selector.AcceptDateTime.HasValue)
             {
-                var dateTime = selector.AsOf.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
+                var dateTime = selector.AcceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
                 request.Headers.Add(AcceptDatetimeHeader, dateTime);
             }
 

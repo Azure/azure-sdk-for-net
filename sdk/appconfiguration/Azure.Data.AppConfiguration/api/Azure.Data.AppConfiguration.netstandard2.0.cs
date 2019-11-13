@@ -86,7 +86,7 @@ namespace Azure.Data.AppConfiguration
         public static readonly string Any;
         public SettingSelector() { }
         public SettingSelector(string key, string label = null) { }
-        public System.DateTimeOffset? AsOf { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public System.DateTimeOffset? AcceptDateTime { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
         public Azure.Data.AppConfiguration.SettingFields Fields { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
         public System.Collections.Generic.IList<string> Keys { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public System.Collections.Generic.IList<string> Labels { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
