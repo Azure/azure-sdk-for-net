@@ -125,7 +125,7 @@ namespace Azure.Security.KeyVault.Certificates
         public CertificateKeyCurveName? KeyCurveName { get; set; }
 
         /// <summary>
-        /// Gets or sets the size of the RSA key, the value must be a valid RSA key length such as 2048 or 4092.
+        /// Gets or sets the size of the RSA key. The value must be a valid RSA key length such as 2048 or 4092.
         /// </summary>
         public int? KeySize { get; set; }
 
@@ -170,12 +170,12 @@ namespace Azure.Security.KeyVault.Certificates
         public bool? Enabled { get; set; }
 
         /// <summary>
-        /// Gets a <see cref="DateTimeOffset"/> of when the certificate was updated.
+        /// Gets a <see cref="DateTimeOffset"/> indicating when the certificate was updated.
         /// </summary>
         public DateTimeOffset? UpdatedOn { get; internal set; }
 
         /// <summary>
-        /// Gets a <see cref="DateTimeOffset"/> of when the certificate was created.
+        /// Gets a <see cref="DateTimeOffset"/> indicating when the certificate was created.
         /// </summary>
         public DateTimeOffset? CreatedOn { get; internal set; }
 

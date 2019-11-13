@@ -90,7 +90,7 @@ namespace Azure.Security.KeyVault.Certificates
             {
                 _completed = true;
 
-                throw new OperationCanceledException("The certificate opertation has been canceled");
+                throw new OperationCanceledException("The certificate operation has been canceled");
             }
             else if (Properties.Error != null)
             {
@@ -132,7 +132,7 @@ namespace Azure.Security.KeyVault.Certificates
             {
                 _completed = true;
 
-                throw new OperationCanceledException("The certificate opertation has been canceled");
+                throw new OperationCanceledException("The certificate operation has been canceled");
             }
             else if (Properties.Error != null)
             {

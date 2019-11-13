@@ -48,7 +48,7 @@ namespace Azure.Security.KeyVault.Certificates
         public string IssuerName { get; internal set; }
 
         /// <summary>
-        /// Gets the CSR which is pending signature for the certificate operation.
+        /// Gets the certificate signing request (CSR) which is pending signature for the certificate operation.
         /// </summary>
         public string CertificateSigningRequest { get; internal set; }
 

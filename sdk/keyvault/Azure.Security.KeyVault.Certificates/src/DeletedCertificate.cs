@@ -31,7 +31,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Gets a <see cref="DateTimeOffset"/> of when the certificate was deleted.
+        /// Gets a <see cref="DateTimeOffset"/> indicating when the certificate was deleted.
         /// </summary>
         public DateTimeOffset? DeletedOn { get; internal set; }
 

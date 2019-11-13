@@ -35,7 +35,7 @@ namespace Azure.Security.KeyVault.Certificates
         public string Name => Properties.Name;
 
         /// <summary>
-        /// Gets the identifier of the Key Vault Key backing the certifcate.
+        /// Gets the identifier of the Key Vault Key backing the certificate.
         /// </summary>
         public Uri KeyId
         {

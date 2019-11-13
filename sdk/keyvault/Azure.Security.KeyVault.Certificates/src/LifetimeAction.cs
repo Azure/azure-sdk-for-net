@@ -6,7 +6,7 @@ using System.Text.Json;
 namespace Azure.Security.KeyVault.Certificates
 {
     /// <summary>
-    /// An action to be executed at a perscribed time in a certificates lifecycle
+    /// An action to be executed at a prescribed time in a certificates lifecycle
     /// </summary>
     public class LifetimeAction : IJsonSerializable, IJsonDeserializable
     {
@@ -35,7 +35,7 @@ namespace Azure.Security.KeyVault.Certificates
         public int? DaysBeforeExpiry { get; set; }
 
         /// <summary>
-        /// Gets or setsthe action should be performed when the certificate reaches the specified percentage of its lifetime. Valid values include 1-99.
+        /// Gets or sets the action should be performed when the certificate reaches the specified percentage of its lifetime. Valid values include 1-99.
         /// </summary>
         public int? LifetimePercentage { get; set; }
 

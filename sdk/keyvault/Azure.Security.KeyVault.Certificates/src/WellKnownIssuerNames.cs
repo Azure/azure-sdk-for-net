@@ -4,7 +4,7 @@
 namespace Azure.Security.KeyVault.Certificates
 {
     /// <summary>
-    /// Well known issuer names.
+    /// Well known issuer names you can pass to <see cref="CertificatePolicy(string, string)"/> or <see cref="CertificatePolicy(SubjectAlternativeNames, string)"/>.
     /// </summary>
     public static class WellKnownIssuerNames
     {

@@ -76,11 +76,11 @@ namespace Azure.Security.KeyVault.Certificates
         /// This operation requires the certificates/create permission.
         /// </remarks>
         /// <param name="certificateName">The name of the certificate to create.</param>
-        /// <param name="policy">The <see cref="CertificatePolicy"/> which governs the proprerties and lifecycle of the created certificate.</param>
+        /// <param name="policy">The <see cref="CertificatePolicy"/> which governs the properties and lifecycle of the created certificate.</param>
         /// <param name="enabled">Specifies whether the certificate should be created in an enabled state. If null, the server default will be used.</param>
         /// <param name="tags">Tags to be applied to the created certificate.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="CertificateOperation"/> which contians details on the create operation, and can be used to retrieve updated status.</returns>
+        /// <returns>A <see cref="CertificateOperation"/> which contains details on the create operation, and can be used to retrieve updated status.</returns>
         /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> or <paramref name="policy"/> is null.</exception>
         public virtual CertificateOperation StartCreateCertificate(string certificateName, CertificatePolicy policy, bool? enabled = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
@@ -115,11 +115,11 @@ namespace Azure.Security.KeyVault.Certificates
         /// This operation requires the certificates/create permission.
         /// </remarks>
         /// <param name="certificateName">The name of the certificate to create.</param>
-        /// <param name="policy">The <see cref="CertificatePolicy"/> which governs the proprerties and lifecycle of the created certificate.</param>
+        /// <param name="policy">The <see cref="CertificatePolicy"/> which governs the properties and lifecycle of the created certificate.</param>
         /// <param name="enabled">Specifies whether the certificate should be created in an enabled state. If null, the server default will be used.</param>
         /// <param name="tags">Tags to be applied to the created certificate.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="CertificateOperation"/> which contians details on the create operation, and can be used to retrieve updated status.</returns>
+        /// <returns>A <see cref="CertificateOperation"/> which contains details on the create operation, and can be used to retrieve updated status.</returns>
         /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> or <paramref name="policy"/> is null.</exception>
         public virtual async Task<CertificateOperation> StartCreateCertificateAsync(string certificateName, CertificatePolicy policy, bool? enabled = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
@@ -204,7 +204,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// Gets a specific version of the <see cref="KeyVaultCertificate"/>. This operation requires the certificates/get permission.
         /// </summary>
         /// <param name="certificateName">The name of the <see cref="KeyVaultCertificate"/> to retrieve.</param>
-        /// <param name="version">Ther version of the <see cref="KeyVaultCertificate"/> to retrieve.</param>
+        /// <param name="version">The version of the <see cref="KeyVaultCertificate"/> to retrieve.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The requested <see cref="KeyVaultCertificate"/>.</returns>
         /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
@@ -232,7 +232,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// Gets a specific version of the <see cref="KeyVaultCertificate"/>. This operation requires the certificates/get permission.
         /// </summary>
         /// <param name="certificateName">The name of the <see cref="KeyVaultCertificate"/> to retrieve.</param>
-        /// <param name="version">Ther version of the <see cref="KeyVaultCertificate"/> to retrieve.</param>
+        /// <param name="version">The version of the <see cref="KeyVaultCertificate"/> to retrieve.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The requested <see cref="KeyVaultCertificate"/>.</returns>
         /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
@@ -314,7 +314,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Deletes all versions of the specified <see cref="KeyVaultCertificate"/>. If the vault is soft delete-enabled, the <see cref="KeyVaultCertificate"/> will be marked for perminent deletion
+        /// Deletes all versions of the specified <see cref="KeyVaultCertificate"/>. If the vault is soft delete-enabled, the <see cref="KeyVaultCertificate"/> will be marked for permanent deletion
         /// and can be recovered with <see cref="StartRecoverDeletedCertificate"/>, or purged with <see cref="PurgeDeletedCertificate"/>. This operation requires the certificates/delete permission.
         /// </summary>
         /// <param name="certificateName">The name of the <see cref="KeyVaultCertificate"/> to delete.</param>
@@ -347,7 +347,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Deletes all versions of the specified <see cref="KeyVaultCertificate"/>. If the vault is soft delete-enabled, the <see cref="KeyVaultCertificate"/> will be marked for perminent deletion
+        /// Deletes all versions of the specified <see cref="KeyVaultCertificate"/>. If the vault is soft delete-enabled, the <see cref="KeyVaultCertificate"/> will be marked for permanent deletion
         /// and can be recovered with <see cref="StartRecoverDeletedCertificate"/>, or purged with <see cref="PurgeDeletedCertificate"/>. This operation requires the certificates/delete permission.
         /// </summary>
         /// <param name="certificateName">The name of the <see cref="KeyVaultCertificate"/> to delete.</param>
@@ -497,9 +497,9 @@ namespace Azure.Security.KeyVault.Certificates
         /// Permanently and irreversibly deletes the specified deleted certificate, without the possibility of recovery. This operation is only applicable in vaults enabled for soft delete, and
         /// requires the certificates/purge permission. The operation is not available if the DeletedCertificate.RecoveryLevel of the DeletedCertificate does not specify 'Purgeable'.
         /// </summary>
-        /// <param name="certificateName">The name of the <see cref="DeletedCertificate"/> to perminantly delete.</param>
+        /// <param name="certificateName">The name of the <see cref="DeletedCertificate"/> to permanently delete.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The http response from the service.</returns>
+        /// <returns>The HTTP response from the service.</returns>
         /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> is null.</exception>
         public virtual Response PurgeDeletedCertificate(string certificateName, CancellationToken cancellationToken = default)
@@ -525,9 +525,9 @@ namespace Azure.Security.KeyVault.Certificates
         /// Permanently and irreversibly deletes the specified deleted certificate, without the possibility of recovery. This operation is only applicable in vaults enabled for soft delete, and
         /// requires the certificates/purge permission. The operation is not available if the DeletedCertificate.RecoveryLevel of the DeletedCertificate does not specify 'Purgeable'.
         /// </summary>
-        /// <param name="certificateName">The name of the <see cref="DeletedCertificate"/> to perminantly delete.</param>
+        /// <param name="certificateName">The name of the <see cref="DeletedCertificate"/> to permanently delete.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The http response from the service.</returns>
+        /// <returns>The HTTP response from the service.</returns>
         /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> is null.</exception>
         public virtual async Task<Response> PurgeDeletedCertificateAsync(string certificateName, CancellationToken cancellationToken = default)
@@ -663,7 +663,7 @@ namespace Azure.Security.KeyVault.Certificates
 
         /// <summary>
         /// Imports a pre-existing certificate to the key vault. The specified certificate must be in PFX or PEM format, and must contain the private key as well as the X.509 certificates. This operation requires the
-        /// certifcates/import permission.
+        /// certificates/import permission.
         /// </summary>
         /// <param name="importCertificateOptions">The details of the certificate to import to the key vault.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -692,7 +692,7 @@ namespace Azure.Security.KeyVault.Certificates
 
         /// <summary>
         /// Imports a pre-existing certificate to the key vault. The specified certificate must be in PFX or PEM format, and must contain the private key as well as the X.509 certificates. This operation requires the
-        /// certifcates/import permission.
+        /// certificates/import permission.
         /// </summary>
         /// <param name="importCertificateOptions">The details of the certificate to import to the key vault.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -751,7 +751,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// Lists the properties of all versions of the specified certificate in the specified vault. You can use the returned <see cref="CertificateProperties.Name"/> in subsequent calls to <see cref="GetCertificateVersion(string, string, CancellationToken)"/>.
         /// This operation requires the certificates/list permission.
         /// </summary>
-        /// <param name="certificateName">The name of the certificate to retrieve the versions of.</param>
+        /// <param name="certificateName">The name of the certificate whose versions should be retrieved.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An enumerable collection of the certificate's versions.</returns>
         /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
@@ -769,7 +769,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// Lists the properties of all versions of the specified certificate in the specified vault. You can use the returned <see cref="CertificateProperties.Name"/> in subsequent calls to <see cref="GetCertificateVersion(string, string, CancellationToken)"/>.
         /// This operation requires the certificates/list permission.
         /// </summary>
-        /// <param name="certificateName">The name of the certificate to retrieve the versions of.</param>
+        /// <param name="certificateName">The name of the certificate whose versions should be retrieved.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An enumerable collection of the certificate's versions.</returns>
         /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
@@ -812,7 +812,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Retrieves the <see cref="CertificatePolicy"/> of the specified certificate. This operation requires the certificate/get permission.
         /// </summary>
-        /// <param name="certificateName">The name of the certificate to retrieve the policy of.</param>
+        /// <param name="certificateName">The name of the certificate whose policy should be retrieved.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="CertificatePolicy"/> of the specified certificate.</returns>
         /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
@@ -839,7 +839,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Retrieves the <see cref="CertificatePolicy"/> of the specified certificate. This operation requires the certificate/get permission.
         /// </summary>
-        /// <param name="certificateName">The name of the certificate to retrieve the policy of.</param>
+        /// <param name="certificateName">The name of the certificate whose policy should be retrieved.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="CertificatePolicy"/> of the specified certificate.</returns>
         /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
@@ -866,7 +866,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Updates the <see cref="CertificatePolicy"/> of the specified certificate. This operation requires the certificate/update permission.
         /// </summary>
-        /// <param name="certificateName">The name of the certificate to update the policy.</param>
+        /// <param name="certificateName">The name of the certificate whose policy should be updated.</param>
         /// <param name="policy">The updated policy for the specified certificate.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The updated certificate policy.</returns>
@@ -894,7 +894,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Updates the <see cref="CertificatePolicy"/> of the specified certificate. This operation requires the certificate/update permission.
         /// </summary>
-        /// <param name="certificateName">The name of the certificate to update the policy.</param>
+        /// <param name="certificateName">The name of the certificate whose policy should be updated.</param>
         /// <param name="policy">The updated policy for the specified certificate.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The updated certificate policy.</returns>
@@ -978,7 +978,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Retrieves the specified certificate <see cref="CertificateIssuer"/> from the vault. This operation requires the certificates/getissuers permission.
         /// </summary>
-        /// <param name="issuerName">The name of the <see cref="CertificateIssuer"/> to retreive.</param>
+        /// <param name="issuerName">The name of the <see cref="CertificateIssuer"/> to retrieve.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The retrieved certificate issuer.</returns>
         /// <exception cref="ArgumentException"><paramref name="issuerName"/> is empty.</exception>
@@ -1005,7 +1005,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Retrieves the specified certificate <see cref="CertificateIssuer"/> from the vault. This operation requires the certificates/getissuers permission.
         /// </summary>
-        /// <param name="issuerName">The name of the <see cref="CertificateIssuer"/> to retreive.</param>
+        /// <param name="issuerName">The name of the <see cref="CertificateIssuer"/> to retrieve.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The retrieved certificate issuer.</returns>
         /// <exception cref="ArgumentException"><paramref name="issuerName"/> is empty.</exception>
@@ -1168,9 +1168,9 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Gets a pending <see cref="CertificateOperation"/> from the key vault. This operation requires the certificates/get permission.
         /// </summary>
-        /// <param name="certificateName">The name of the <see cref="KeyVaultCertificate"/> to retrieve the current pending operation.</param>
+        /// <param name="certificateName">The name of the certificate for which an operation is pending.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The given certificates current pending operation.</returns>
+        /// <returns>The given certificate's current pending operation.</returns>
         /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> is null.</exception>
         public virtual CertificateOperation GetCertificateOperation(string certificateName, CancellationToken cancellationToken = default)
@@ -1197,9 +1197,9 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Gets a pending <see cref="CertificateOperation"/> from the key vault. This operation requires the certificates/get permission.
         /// </summary>
-        /// <param name="certificateName">The name of the <see cref="KeyVaultCertificate"/> to retrieve the current pending operation.</param>
+        /// <param name="certificateName">The name of the certificate for which an operation is pending.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The given certificates current pending operation.</returns>
+        /// <returns>The given certificate's current pending operation.</returns>
         /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> is null.</exception>
         public virtual async Task<CertificateOperation> GetCertificateOperationAsync(string certificateName, CancellationToken cancellationToken = default)
@@ -1444,7 +1444,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Delets all certificate <see cref="CertificateContact"/>s from the key vault, replacing any existing contacts. This operation requires the certificates/managecontacts permission.
+        /// Deletes all certificate <see cref="CertificateContact"/>s from the key vault, replacing any existing contacts. This operation requires the certificates/managecontacts permission.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The certificate contacts deleted from the vault.</returns>
@@ -1467,7 +1467,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Delets all certificate <see cref="CertificateContact"/>s from the key vault, replacing any existing contacts. This operation requires the certificates/managecontacts permission.
+        /// Deletes all certificate <see cref="CertificateContact"/>s from the key vault, replacing any existing contacts. This operation requires the certificates/managecontacts permission.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The certificate contacts deleted from the vault.</returns>

@@ -89,31 +89,31 @@ namespace Azure.Security.KeyVault.Certificates
         public bool? Enabled { get => _attributes.Enabled; set => _attributes.Enabled = value; }
 
         /// <summary>
-        /// Gets a <see cref="DateTimeOffset"/> of when the certificate will be valid.
+        /// Gets a <see cref="DateTimeOffset"/> indicating when the certificate will be valid.
         /// </summary>
         public DateTimeOffset? NotBefore { get => _attributes.NotBefore; internal set => _attributes.NotBefore = value; }
 
         /// <summary>
-        /// Gets a <see cref="DateTimeOffset"/> of when the certificate will expire.
+        /// Gets a <see cref="DateTimeOffset"/> indicating when the certificate will expire.
         /// </summary>
         public DateTimeOffset? ExpiresOn { get => _attributes.ExpiresOn; internal set => _attributes.ExpiresOn = value; }
 
         /// <summary>
-        /// Gets a <see cref="DateTimeOffset"/> of when the certificate was created.
+        /// Gets a <see cref="DateTimeOffset"/> indicating when the certificate was created.
         /// </summary>
         public DateTimeOffset? CreatedOn { get => _attributes.CreatedOn; internal set => _attributes.CreatedOn = value; }
 
         /// <summary>
-        /// Gets a <see cref="DateTimeOffset"/> of when the certificate was updated.
+        /// Gets a <see cref="DateTimeOffset"/> indicating when the certificate was updated.
         /// </summary>
         public DateTimeOffset? UpdatedOn { get => _attributes.UpdatedOn; internal set => _attributes.UpdatedOn = value; }
 
         /// <summary>
         /// Gets the recovery level currently in effect for certificates in the Key Vault.
-        /// If "Purgeable", the certificates can be permanently deleted by an authorized user;
+        /// If <c>Purgeable</c>, the certificates can be permanently deleted by an authorized user;
         /// otherwise, only the service can purge the certificates at the end of the retention interval.
         /// </summary>
-        /// <value>Possible values include "Purgeable", "Recoverable+Purgeable", "Recoverable", and "Recoverable+ProtectedSubscription".</value>
+        /// <value>Possible values include <c>Purgeable</c>, <c>Recoverable+Purgeable</c>, <c>Recoverable</c>, and <c>Recoverable+ProtectedSubscription</c>.</value>
         public string RecoveryLevel { get => _attributes.RecoveryLevel; internal set => _attributes.RecoveryLevel = value; }
 
         internal bool HasTags => _tags != null;

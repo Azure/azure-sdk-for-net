@@ -385,12 +385,6 @@ namespace Azure.Security.KeyVault.Certificates
         public System.Collections.Generic.IEnumerator<string> GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public enum SubjectAlternativeNameType
-    {
-        Dns = 0,
-        Email = 1,
-        Upn = 2,
-    }
     public static partial class WellKnownIssuerNames
     {
         public const string Self = "Self";

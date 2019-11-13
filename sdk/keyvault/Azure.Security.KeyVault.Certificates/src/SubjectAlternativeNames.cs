@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.Security.KeyVault.Certificates
 {
     /// <summary>
-    /// A collection of subject alternative names (SANs) for a x509 certificate. SANs can be DNS entries, emails, or unique prinicpal names.
+    /// A collection of subject alternative names (SANs) for a X.509 certificate. SANs can be DNS entries, emails, or unique principal names.
     /// </summary>
     public class SubjectAlternativeNames : IEnumerable<string>, IJsonSerializable, IJsonDeserializable
     {
@@ -36,7 +36,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Creates a collection of DNS subject alternative names (SANs).
+        /// Creates a collection of subject alternative names (SANs) containing DNS names.
         /// </summary>
         /// <param name="names">The DNS entries.</param>
         /// <returns>A <see cref="SubjectAlternativeNames"/> of DNS entries.</returns>
@@ -50,7 +50,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Creates a collection of DNS subject alternative names (SANs).
+        /// Creates a collection of subject alternative names (SANs) containing DNS names.
         /// </summary>
         /// <param name="names">The DNS entries.</param>
         /// <returns>A <see cref="SubjectAlternativeNames"/> of DNS entries.</returns>
@@ -64,7 +64,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Creates a collection of email subject alternative names (SANs).
+        /// Creates a collection of subject alternative names (SANs) containing email addresses.
         /// </summary>
         /// <param name="names">The email entries.</param>
         /// <returns>A <see cref="SubjectAlternativeNames"/> of email entries.</returns>
@@ -78,7 +78,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Creates a collection of email subject alternative names (SANs).
+        /// Creates a collection of subject alternative names (SANs) containing email addresses.
         /// </summary>
         /// <param name="names">The email entries.</param>
         /// <returns>A <see cref="SubjectAlternativeNames"/> of email entries.</returns>
@@ -92,7 +92,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Creates a collection of unique principal names (UPNs) subject alternative names (SANs).
+        /// Creates a collection of subject alternative names (SANs) containing unique principal names (UPNs).
         /// </summary>
         /// <param name="names">The unique principal names (UPNs) entries.</param>
         /// <returns>A <see cref="SubjectAlternativeNames"/> of unique principal names (UPNs) entries.</returns>
@@ -106,7 +106,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Creates a collection of unique principal names (UPNs) subject alternative names (SANs).
+        /// Creates a collection of subject alternative names (SANs) containing unique principal names (UPNs).
         /// </summary>
         /// <param name="names">The unique principal names (UPNs) entries.</param>
         /// <returns>A <see cref="SubjectAlternativeNames"/> of unique principal names (UPNs) entries.</returns>
