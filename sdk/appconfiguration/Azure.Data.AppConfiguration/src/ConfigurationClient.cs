@@ -869,92 +869,38 @@ namespace Azure.Data.AppConfiguration
         /// Sets an existing <see cref="ConfigurationSetting"/> as read only in the configuration store.
         /// </summary>
         /// <param name="key">The primary identifier of the configuration setting.</param>
-        /// <param name="label">A label used to group this configuration setting with others.</param>
+        /// <param name="isReadOnly">true, to set an existing <see cref="ConfigurationSetting"/> as read only in the configuration store; otherwise, false.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response<ConfigurationSetting>> SetReadOnlyAsync(string key, string label = default, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.SetReadOnly");
-            scope.AddAttribute("key", key);
-            scope.Start();
+        public virtual Task<Response<ConfigurationSetting>> SetReadOnlyAsync(string key, bool isReadOnly, CancellationToken cancellationToken = default)
+            => SetReadOnlyAsync(key, label: default, isReadOnly, cancellationToken);
 
-            try
-            {
-                using Request request = CreateSetReadOnlyRequest(key, label);
-                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
-
-                switch (response.Status)
-                {
-                    case 200:
-                        return CreateResponse(response);
-                    default:
-                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        /// <summary>
+        /// Sets an existing <see cref="ConfigurationSetting"/> as read only in the configuration store.
+        /// </summary>
+        /// <param name="key">The primary identifier of the configuration setting.</param>
+        /// <param name="isReadOnly">true, to set an existing <see cref="ConfigurationSetting"/> as read only in the configuration store; otherwise, false.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual Response<ConfigurationSetting> SetReadOnly(string key, bool isReadOnly, CancellationToken cancellationToken = default)
+            => SetReadOnly(key, label: default, isReadOnly, cancellationToken);
 
         /// <summary>
         /// Sets an existing <see cref="ConfigurationSetting"/> as read only in the configuration store.
         /// </summary>
         /// <param name="key">The primary identifier of the configuration setting.</param>
         /// <param name="label">A label used to group this configuration setting with others.</param>
+        /// <param name="isReadOnly">true, to set an existing <see cref="ConfigurationSetting"/> as read only in the configuration store; otherwise, false.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response<ConfigurationSetting> SetReadOnly(string key, string label = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfigurationSetting>> SetReadOnlyAsync(string key, string label, bool isReadOnly, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.SetReadOnly");
             scope.AddAttribute("key", key);
             scope.Start();
 
             try
             {
-                using Request request = CreateSetReadOnlyRequest(key, label);
-                Response response = _pipeline.SendRequest(request, cancellationToken);
-
-                switch (response.Status)
-                {
-                    case 200:
-                        return CreateResponse(response);
-                    default:
-                        throw response.CreateRequestFailedException();
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        private Request CreateSetReadOnlyRequest(string key, string label)
-        {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
-
-            Request request = _pipeline.CreateRequest();
-            request.Method = RequestMethod.Put;
-            BuildUriForLocksRoute(request.Uri, key, label);
-
-            return request;
-        }
-
-        /// <summary>
-        /// Sets an existing <see cref="ConfigurationSetting"/> as read write in the configuration store.
-        /// </summary>
-        /// <param name="key">The primary identifier of the configuration setting.</param>
-        /// <param name="label">A label used to group this configuration setting with others.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response<ConfigurationSetting>> ClearReadOnlyAsync(string key, string label = default, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.ClearReadOnly");
-            scope.AddAttribute("key", key);
-            scope.Start();
-
-            try
-            {
-                using Request request = CreateClearReadOnlyRequest(key, label);
+                using Request request = CreateSetReadOnlyRequest(key, label, isReadOnly);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
@@ -973,20 +919,23 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary>
-        /// Sets an existing <see cref="ConfigurationSetting"/> as read write in the configuration store.
+        /// Specifies whether an existing <see cref="ConfigurationSetting"/> is read only in the configuration store.
         /// </summary>
         /// <param name="key">The primary identifier of the configuration setting.</param>
         /// <param name="label">A label used to group this configuration setting with others.</param>
+        /// <param name="isReadOnly">true, to set an existing <see cref="ConfigurationSetting"/> as read only in the configuration store; otherwise, false.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response<ConfigurationSetting> ClearReadOnly(string key, string label = default, CancellationToken cancellationToken = default)
+        public virtual Response<ConfigurationSetting> SetReadOnly(string key, string label, bool isReadOnly, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.ClearReadOnly");
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.SetReadOnly");
             scope.AddAttribute("key", key);
             scope.Start();
 
             try
             {
-                using Request request = CreateClearReadOnlyRequest(key, label);
+                using Request request = CreateSetReadOnlyRequest(key, label, isReadOnly);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 switch (response.Status)
@@ -1004,12 +953,10 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        private Request CreateClearReadOnlyRequest(string key, string label)
+        private Request CreateSetReadOnlyRequest(string key, string label, bool isReadOnly)
         {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
-
             Request request = _pipeline.CreateRequest();
-            request.Method = RequestMethod.Delete;
+            request.Method = isReadOnly ? RequestMethod.Put : RequestMethod.Delete;
             BuildUriForLocksRoute(request.Uri, key, label);
 
             return request;
