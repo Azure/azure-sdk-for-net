@@ -678,7 +678,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             {
                                 if (processorEvent.Data != null)
                                 {
-                                    processorEvent.UpdateCheckpointAsync(processorEvent.Data);
+                                    processorEvent.UpdateCheckpointAsync();
                                 }
                             }
                         );
