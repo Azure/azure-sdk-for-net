@@ -449,7 +449,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ConsumerCanReceiveFromLatestEvent()
+        public async Task ConsumerCanReadFromLatestEvent()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
@@ -511,7 +511,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ConsumerCanReceiveFromEarliestEvent()
+        public async Task ConsumerCanReadFromEarliestEvent()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
@@ -584,7 +584,6 @@ namespace Azure.Messaging.EventHubs.Tests
                         var offset = (await producer.GetPartitionPropertiesAsync(partition)).LastEnqueuedOffset;
 
                         await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection))
-                        await using (var receiver = consumer.CreatePartitionReceiver(partition, EventPosition.Latest))
                         {
                             // Send a single event which is expected to go to the end of stream.
 
@@ -614,10 +613,6 @@ namespace Azure.Messaging.EventHubs.Tests
 
                             Assert.That(receivedEvents.Count, Is.EqualTo(expectedEventsCount), $"The number of received events should be { expectedEventsCount }.");
                             Assert.That(receivedEvents.Last().IsEquivalentTo(stampEvent), Is.True, "The received event did not match the sent event.");
-
-                            // Next receive on this partition shouldn't return any more messages.
-
-                            Assert.That(await receiver.ReceiveAsync(10, TimeSpan.FromSeconds(2)), Is.Empty);
                         }
                     }
                 }
@@ -722,7 +717,6 @@ namespace Azure.Messaging.EventHubs.Tests
                         var sequenceNumber = (await producer.GetPartitionPropertiesAsync(partition)).LastEnqueuedSequenceNumber;
 
                         await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection))
-                        await using (var receiver = consumer.CreatePartitionReceiver(partition, EventPosition.Latest))
                         {
                             // Send a single event which is expected to go to the end of stream.
 
@@ -1260,55 +1254,72 @@ namespace Azure.Messaging.EventHubs.Tests
                     // higher exclusive consumer.
 
                     var firstIteration = true;
+                    var scenariosComplete = false;
 
                     await using var lowerExclusiveConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection, new EventHubConsumerClientOptions { OwnerLevel = 20 });
-                    await foreach (var lowerEvent in lowerExclusiveConsumer.ReadEventsFromPartitionAsync(partitionIds[0], EventPosition.Latest, TimeSpan.FromMilliseconds(50), cancellationSource.Token))
+
+                    try
                     {
-                        if (!firstIteration)
+                        await foreach (var lowerEvent in lowerExclusiveConsumer.ReadEventsFromPartitionAsync(partitionIds[0], EventPosition.Latest, TimeSpan.FromMilliseconds(50), cancellationSource.Token))
                         {
-                            // Since there is an exclusive consumer reading, the non-exclusive consumer should be rejected.
-
-                            await using var nonExclusiveConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection);
-                            Assert.That(async () => await ReadNothingAsync(nonExclusiveConsumer, partitionIds[0], EventPosition.Latest), Throws.InstanceOf<ConsumerDisconnectedException>());
-
-                            // Create the higher level exclusive consumer; this should force the lower exclusive consumer to disconnect.
-
-                            var innerFirstIteration = true;
-
-                            await using var higherExclusiveConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection, new EventHubConsumerClientOptions { OwnerLevel = 30 });
-                            await foreach (var higherEvent in higherExclusiveConsumer.ReadEventsFromPartitionAsync(partitionIds[0], EventPosition.Latest, TimeSpan.FromMilliseconds(50), cancellationSource.Token))
+                            if (!firstIteration)
                             {
-                                if (!innerFirstIteration)
+                                // Since there is an exclusive consumer reading, the non-exclusive consumer should be rejected.
+
+                                await using var nonExclusiveConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection);
+                                Assert.That(async () => await ReadNothingAsync(nonExclusiveConsumer, partitionIds[0], EventPosition.Latest), Throws.InstanceOf<ConsumerDisconnectedException>());
+
+                                // Create the higher level exclusive consumer; this should force the lower exclusive consumer to disconnect.
+
+                                var innerFirstIteration = true;
+
+                                await using var higherExclusiveConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection, new EventHubConsumerClientOptions { OwnerLevel = 30 });
+                                await foreach (var higherEvent in higherExclusiveConsumer.ReadEventsFromPartitionAsync(partitionIds[0], EventPosition.Latest, TimeSpan.FromMilliseconds(50), cancellationSource.Token))
                                 {
-                                    // Consumers for other partitions and consumer groups should be allowed to read without interference.
+                                    if (!innerFirstIteration)
+                                    {
+                                        // Consumers for other partitions and consumer groups should be allowed to read without interference.
 
-                                    await using var differentConsumerGroupConsumer = new EventHubConsumerClient(customConsumerGroup, connection);
-                                    Assert.That(async () => await ReadNothingAsync(differentConsumerGroupConsumer, partitionIds[0], EventPosition.Latest), Throws.Nothing);
+                                        await using var differentConsumerGroupConsumer = new EventHubConsumerClient(customConsumerGroup, connection);
+                                        Assert.That(async () => await ReadNothingAsync(differentConsumerGroupConsumer, partitionIds[0], EventPosition.Latest), Throws.Nothing);
 
-                                    await using var differentPartitionConsumer = new EventHubConsumerClient(customConsumerGroup, connection);
-                                    Assert.That(async () => await ReadNothingAsync(differentPartitionConsumer, partitionIds[1], EventPosition.Latest), Throws.Nothing);
+                                        await using var differentPartitionConsumer = new EventHubConsumerClient(customConsumerGroup, connection);
+                                        Assert.That(async () => await ReadNothingAsync(differentPartitionConsumer, partitionIds[1], EventPosition.Latest), Throws.Nothing);
 
-                                    // Exceptions for invalid resources should continue to be thrown.
+                                        // Exceptions for invalid resources should continue to be thrown.
 
-                                    await using var invalidConsumerGroupConsumer = new EventHubConsumerClient("XYZ", connection);
-                                    Assert.That(async () => await ReadNothingAsync(invalidConsumerGroupConsumer, partitionIds[0], EventPosition.Latest), Throws.InstanceOf<EventHubsResourceNotFoundException>());
+                                        await using var invalidConsumerGroupConsumer = new EventHubConsumerClient("XYZ", connection);
+                                        Assert.That(async () => await ReadNothingAsync(invalidConsumerGroupConsumer, partitionIds[0], EventPosition.Latest), Throws.InstanceOf<EventHubsResourceNotFoundException>());
 
-                                    await using var invalidPartitionConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection);
-                                    Assert.That(async () => await ReadNothingAsync(invalidPartitionConsumer, "ABC", EventPosition.Latest), Throws.InstanceOf<ArgumentOutOfRangeException>());
+                                        await using var invalidPartitionConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection);
+                                        Assert.That(async () => await ReadNothingAsync(invalidPartitionConsumer, "ABC", EventPosition.Latest), Throws.InstanceOf<ArgumentOutOfRangeException>());
 
-                                    break;
+                                        scenariosComplete = true;
+                                        break;
+                                    }
+
+                                    await Task.Delay(150);
+                                    innerFirstIteration = false;
                                 }
 
-                                await Task.Delay(150);
-                                innerFirstIteration = false;
+                                break;
                             }
 
-                            break;
+                            await Task.Delay(250);
+                            firstIteration = false;
                         }
-
-                        await Task.Delay(250);
-                        firstIteration = false;
                     }
+                    catch (ConsumerDisconnectedException)
+                    {
+                        // This is an possible outcome depending on whether the inner dispose
+                        // completes before the outer iteration ticks.  Since there is an element of
+                        // non-determinism here, allow this.
+                        //
+                        // To ensure that things are in the correct state, validate that the
+                        // scenarios were completed before iteration stopped.
+                    }
+
+                    Assert.That(scenariosComplete, Is.True, "The lower exclusive consumer should not have been disconnected before the scenarios were completed.");
                 }
             }
         }
@@ -1829,7 +1840,7 @@ namespace Azure.Messaging.EventHubs.Tests
         private async Task ReadNothingAsync(EventHubConsumerClient consumer,
                                             string partition,
                                             EventPosition startingPosition,
-                                            int iterationCount = 10)
+                                            int iterationCount = 5)
         {
             await foreach (var item in consumer.ReadEventsFromPartitionAsync(partition, startingPosition, TimeSpan.FromMilliseconds(50)))
             {

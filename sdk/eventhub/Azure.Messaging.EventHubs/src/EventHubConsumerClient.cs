@@ -432,49 +432,6 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Creates a <see cref="PartitionReceiver" /> which allows events from a specific partition of an Event Hub to be read
-        ///   with a greater level of control over communication with the Event Hubs service than is offered by other ways of consuming
-        ///   events.
-        /// </summary>
-        ///
-        /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
-        /// <param name="startingPosition">The position within the partition where the consumer should begin reading events.</param>
-        ///
-        /// <returns>A <see cref="PartitionReceiver"/> to be used for iterating over events in the partition.</returns>
-        ///
-        /// <remarks>
-        ///   It is recommended that the <see cref="EventProcessorClient" /> or <see cref="EventHubConsumerClient" />
-        ///   be used for reading and processing events for the majority of scenarios.  The partition receiver is
-        ///   intended to enable scenarios with special needs which require more direct control.
-        /// </remarks>
-        ///
-        /// <seealso cref="EventProcessorClient" />
-        /// <seealso cref="ReadEventsFromPartitionAsync(string, EventPosition, CancellationToken)"/>
-        /// <seealso cref="ReadEventsFromPartitionAsync(string, EventPosition, TimeSpan?, CancellationToken)"/>
-        ///
-        public virtual PartitionReceiver CreatePartitionReceiver(string partitionId,
-                                                                 EventPosition startingPosition)
-        {
-            var transportConsumer = Connection.CreateTransportConsumer(ConsumerGroup, partitionId, startingPosition, Options);
-
-            if (!ActiveConsumers.TryAdd(Guid.NewGuid().ToString(), transportConsumer))
-            {
-                transportConsumer.CloseAsync(CancellationToken.None).GetAwaiter().GetResult();
-                throw new EventHubsException(false, EventHubName, String.Format(CultureInfo.CurrentCulture, Resources.FailedToCreateReader, EventHubName, partitionId, ConsumerGroup));
-            }
-
-            return new PartitionReceiver
-            (
-                ConsumerGroup,
-                partitionId,
-                EventHubName,
-                Options.TrackLastEnqueuedEventInformation,
-                Options.DefaultMaximumReceiveWaitTime ?? RetryPolicy.CalculateTryTimeout(0),
-                transportConsumer
-             );
-        }
-
-        /// <summary>
         ///   Closes the consumer.
         /// </summary>
         ///
