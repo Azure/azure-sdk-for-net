@@ -24,11 +24,10 @@ namespace Azure.Messaging.EventHubs.Errors
         public bool IsTransient { get; }
 
         /// <summary>
-        ///   The name of the Event Hubs resource, such as an Event Hub, consumer group, or partition,
-        ///   to which the exception is associated.
+        ///   The name of the Event Hubs to which the exception is associated.
         /// </summary>
         ///
-        /// <value>The name of the resource, if available; otherwise, <c>null</c>.</value>
+        /// <value>The name of the Event Hub, if available; otherwise, <c>null</c>.</value>
         ///
         public string EventHubName { get; }
 
@@ -54,7 +53,7 @@ namespace Azure.Messaging.EventHubs.Errors
         /// </summary>
         ///
         /// <param name="isTransient"><c>true</c> if the exception should be considered transient; otherwise, <c>false</c>.</param>
-        /// <param name="eventHubName">The name of the Event Hubs resource, such as an Event Hub, consumer group, or partition, to which the exception is associated.</param>
+        /// <param name="eventHubName">The name of the Event Hub to which the exception is associated.</param>
         ///
         internal EventHubsException(bool isTransient,
                                     string eventHubName) : this(isTransient, eventHubName, null, null)
@@ -66,7 +65,7 @@ namespace Azure.Messaging.EventHubs.Errors
         /// </summary>
         ///
         /// <param name="isTransient"><c>true</c> if the exception should be considered transient; otherwise, <c>false</c>.</param>
-        /// <param name="eventHubName">The name of the Event Hubs resource, such as an Event Hub, consumer group, or partition, to which the exception is associated.</param>
+        /// <param name="eventHubName">The name of the Event Hub to which the exception is associated.</param>
         /// <param name="message">The error message that explains the reason for the exception.</param>
         ///
         internal EventHubsException(bool isTransient,
@@ -80,7 +79,7 @@ namespace Azure.Messaging.EventHubs.Errors
         /// </summary>
         ///
         /// <param name="isTransient"><c>true</c> if the exception should be considered transient; otherwise, <c>false</c>.</param>
-        /// <param name="eventHubName">The name of the Event Hubs resource, such as an Event Hub, consumer group, or partition, to which the exception is associated.</param>
+        /// <param name="eventHubName">The name of the Event Hub to which the exception is associated.</param>
         /// <param name="message">The error message that explains the reason for the exception.</param>
         /// <param name="innerException">The exception that is the cause of the current exception, or a null reference if no inner exception is specified.</param>
         ///

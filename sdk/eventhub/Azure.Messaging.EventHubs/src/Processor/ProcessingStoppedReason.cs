@@ -9,7 +9,7 @@ namespace Azure.Messaging.EventHubs.Processor
     ///
     public enum ProcessingStoppedReason
     {
-       /// <summary>A request was made to stop processing.</summary>
+        /// <summary>A request was made to stop processing.</summary>
         Shutdown,
 
         /// <summary>The ownership of the associated partition was lost.</summary>

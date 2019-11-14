@@ -123,7 +123,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void TheSameequenceNumbersAreEqual()
+        public void TheSameSequenceNumbersAreEqual()
         {
             var first = EventPosition.FromSequenceNumber(12);
             var second = EventPosition.FromSequenceNumber(12);

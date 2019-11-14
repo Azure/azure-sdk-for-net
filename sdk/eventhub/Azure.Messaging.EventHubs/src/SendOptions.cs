@@ -40,7 +40,7 @@ namespace Azure.Messaging.EventHubs
         public string PartitionKey { get; set; }
 
         /// <summary>
-        ///   If specified, the sender is requesting that events be sent to this specific partition.  If the identifier is not
+        ///   If specified, events be published to this specific partition.  If the identifier is not
         ///   specified, the Event Hubs service will be responsible for routing events automatically to an available partition.
         /// </summary>
         ///
@@ -65,7 +65,7 @@ namespace Azure.Messaging.EventHubs
         public string PartitionId { get; set; }
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="SendOptions"/> class.
+        ///   Initializes a new instance of the <see cref="SendOptions"/> class.
         /// </summary>
         ///
         public SendOptions()

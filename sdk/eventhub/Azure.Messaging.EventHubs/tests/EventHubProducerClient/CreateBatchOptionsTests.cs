@@ -30,8 +30,8 @@ namespace Azure.Messaging.EventHubs.Tests
             };
 
             CreateBatchOptions clone = options.Clone();
-            Assert.That(clone, Is.TypeOf<CreateBatchOptions>(), "The clone should be a BatchOptions instance.");
             Assert.That(clone, Is.Not.Null, "The clone should not be null.");
+            Assert.That(clone, Is.TypeOf<CreateBatchOptions>(), "The clone should be a BatchOptions instance.");
             Assert.That(clone, Is.Not.SameAs(options), "The clone should not the same reference as the options.");
             Assert.That(clone.PartitionId, Is.EqualTo(options.PartitionId), "The partition identifier of the clone should match.");
             Assert.That(clone.PartitionKey, Is.EqualTo(options.PartitionKey), "The partition key of the clone should match.");
@@ -54,8 +54,8 @@ namespace Azure.Messaging.EventHubs.Tests
             };
 
             var sendOptions = options.ToSendOptions();
-            Assert.That(sendOptions, Is.TypeOf<SendOptions>(), "The send options should be a SendOptions instance.");
             Assert.That(sendOptions, Is.Not.Null, "The send options should not be null.");
+            Assert.That(sendOptions, Is.TypeOf<SendOptions>(), "The send options should be a SendOptions instance.");
             Assert.That(sendOptions, Is.Not.SameAs(options), "The send options should not the same reference as the options.");
             Assert.That(sendOptions.PartitionId, Is.EqualTo(options.PartitionId), "The partition identifier of the send options should match.");
             Assert.That(sendOptions.PartitionKey, Is.EqualTo(options.PartitionKey), "The partition key of the send options should match.");
