@@ -31,6 +31,14 @@ namespace Microsoft.Extensions.Azure.Tests
             Assert.AreEqual(logLevel, logs[0].level);
         }
 
+        [Test]
+        public void WorksWithNullLoggerFactory()
+        {
+            using var forwarder = new EventSourceLogForwarder( null);
+            TestSource.Log.Informational();
+        }
+
+
         public class MockLogger : ILogger
         {
             public string CategoryName { get; }

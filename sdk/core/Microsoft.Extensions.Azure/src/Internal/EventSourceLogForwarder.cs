@@ -30,6 +30,11 @@ namespace Microsoft.Extensions.Azure
 
         private void LogEvent(EventWrittenEventArgs eventData)
         {
+            if (_loggerFactory == null)
+            {
+                return;
+            }
+
             var logger = _loggers.GetOrAdd(eventData.EventSource.Name, name => _loggerFactory.CreateLogger(ToLoggerName(name)));
             logger.Log(MapLevel(eventData.Level), new EventId(eventData.EventId, eventData.EventName), new EventSourceEvent(eventData), null, _formatMessage);
         }
