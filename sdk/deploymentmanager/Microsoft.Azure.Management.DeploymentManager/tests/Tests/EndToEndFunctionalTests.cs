@@ -11,6 +11,7 @@ namespace DeploymentManager.Tests
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Net;
     using Xunit;
 
@@ -32,6 +33,14 @@ namespace DeploymentManager.Tests
         private const string InvalidParametersArtifactSourceRelativePath = ArtifactRoot + @"\" + InvalidParametersFileName;
         private const string ParametersCopyArtifactSourceRelativePath = ArtifactRoot + @"\" + ParametersCopyFileName;
         private const string TemplateCopyArtifactSourceRelativePath = ArtifactRoot + @"\" + TemplateCopyFileName;
+
+        /// <summary>
+        /// Terminal ARM deployment states
+        /// </summary>
+        private static string[] terminalStates =
+        {
+            "Succeeded", "Failed", "Canceled"
+        };
 
         /// <summary>
         /// Tests the end to end scenarios by creating all dependent resources that are part of the API.
@@ -104,22 +113,48 @@ namespace DeploymentManager.Tests
 
                     // Test Update topology.
                     serviceTopology.ArtifactSourceId = artifactSource.Id;
-                    var updatedStepResource = deploymentManagerClient.ServiceTopologies.CreateOrUpdate(
+                    var updatedServiceTopology = deploymentManagerClient.ServiceTopologies.CreateOrUpdate(
                         resourceGroupName: clientHelper.ResourceGroupName,
                         serviceTopologyName: serviceTopologyName,
                         serviceTopologyInfo: serviceTopology);
 
-                    this.ValidateTopology(serviceTopology, updatedStepResource);
+                    this.ValidateTopology(serviceTopology, updatedServiceTopology);
+
+                    // Add second topology to test list operation.
+                    var secondTopologyName = serviceTopologyName + "2";
+                    serviceTopology.ArtifactSourceId = artifactSource.Id;
+                    var secondServiceTopology = deploymentManagerClient.ServiceTopologies.CreateOrUpdate(
+                        resourceGroupName: clientHelper.ResourceGroupName,
+                        serviceTopologyName: secondTopologyName,
+                        serviceTopologyInfo: serviceTopology);
+
+                    // Test list topology.
+                    var serviceTopologies = deploymentManagerClient.ServiceTopologies.List(
+                        resourceGroupName: clientHelper.ResourceGroupName);
+
+                    Assert.Equal(2, serviceTopologies.Count);
+                    this.ValidateTopology(updatedServiceTopology, serviceTopologies.ToList().First(st => st.Name.Equals(serviceTopology.Name, StringComparison.InvariantCultureIgnoreCase)));
 
                     // Test Delete topology.
                     deploymentManagerClient.ServiceTopologies.Delete(
                         resourceGroupName: clientHelper.ResourceGroupName,
                         serviceTopologyName: serviceTopologyName);
 
+                    deploymentManagerClient.ServiceTopologies.Delete(
+                        resourceGroupName: clientHelper.ResourceGroupName,
+                        serviceTopologyName: secondTopologyName);
+
                     var cloudException = Assert.Throws<CloudException>(() => deploymentManagerClient.ServiceTopologies.Get(
                         resourceGroupName: clientHelper.ResourceGroupName,
                         serviceTopologyName: serviceTopologyName));
                     Assert.Equal(HttpStatusCode.NotFound, cloudException.Response.StatusCode);
+
+                    // Test list artifact sources.
+                    var artifactSources = deploymentManagerClient.ArtifactSources.List(
+                        resourceGroupName: clientHelper.ResourceGroupName);
+
+                    Assert.Equal(2, artifactSources.Count);
+                    this.ValidateArtifactSource(artifactSource, artifactSources.ToList().First(@as => @as.Name.Equals(artifactSource.Name, StringComparison.InvariantCultureIgnoreCase)));
 
                     // Cleanup artifact source
                     this.CleanupArtifactSources(artifactSourceName, location, deploymentManagerClient, clientHelper);
@@ -188,11 +223,32 @@ namespace DeploymentManager.Tests
 
             this.ValidateService(service, updatedService);
 
+            // Add second service to test list operation.
+            var secondServiceName = serviceName + "2";
+            var secondService = deploymentManagerClient.Services.CreateOrUpdate(
+                resourceGroupName: clientHelper.ResourceGroupName,
+                serviceTopologyName: serviceTopologyResource.Name,
+                serviceName: secondServiceName,
+                serviceInfo: service);
+
+            // Test list services.
+            var services = deploymentManagerClient.Services.List(
+                resourceGroupName: clientHelper.ResourceGroupName,
+                serviceTopologyName: serviceTopologyResource.Name);
+
+            Assert.Equal(2, services.Count);
+            this.ValidateService(updatedService, services.ToList().First(st => st.Name.Equals(service.Name, StringComparison.InvariantCultureIgnoreCase)));
+
             // Test Delete service.
             deploymentManagerClient.Services.Delete(
                 resourceGroupName: clientHelper.ResourceGroupName,
                 serviceTopologyName: serviceTopologyResource.Name,
                 serviceName: serviceName);
+
+            deploymentManagerClient.Services.Delete(
+                resourceGroupName: clientHelper.ResourceGroupName,
+                serviceTopologyName: serviceTopologyResource.Name,
+                serviceName: secondServiceName);
 
             var cloudException = Assert.Throws<CloudException>(() => deploymentManagerClient.Services.Get(
                 resourceGroupName: clientHelper.ResourceGroupName,
@@ -280,14 +336,23 @@ namespace DeploymentManager.Tests
             serviceUnit.DeploymentMode = DeploymentMode.Complete;
             serviceUnit.Artifacts.ParametersArtifactSourceRelativePath = ParametersCopyFileName;
             serviceUnit.Artifacts.TemplateArtifactSourceRelativePath = TemplateCopyFileName;
-            var updatedService = deploymentManagerClient.ServiceUnits.CreateOrUpdate(
+            var updatedServiceUnit = deploymentManagerClient.ServiceUnits.CreateOrUpdate(
                 resourceGroupName: clientHelper.ResourceGroupName,
                 serviceTopologyName: serviceTopologyResource.Name,
                 serviceName: serviceName,
                 serviceUnitName: serviceUnitName,
                 serviceUnitInfo: serviceUnit);
 
-            this.ValidateServiceUnit(serviceUnit, updatedService);
+            this.ValidateServiceUnit(serviceUnit, updatedServiceUnit);
+
+            // Test list service units
+            var serviceUnits = deploymentManagerClient.ServiceUnits.List(
+                resourceGroupName: clientHelper.ResourceGroupName,
+                serviceTopologyName: serviceTopologyResource.Name,
+                serviceName: serviceName);
+
+            Assert.Equal(2, serviceUnits.Count);
+            this.ValidateServiceUnit(updatedServiceUnit, serviceUnits.ToList().First(st => st.Name.Equals(updatedServiceUnit.Name, StringComparison.InvariantCultureIgnoreCase)));
 
             // Test Delete service unit.
             deploymentManagerClient.ServiceUnits.Delete(
@@ -366,6 +431,8 @@ namespace DeploymentManager.Tests
                 stepInfo: getStepResource);
 
             this.ValidateStep(getStepResource, updatedStepResource);
+            
+            this.HealthCheckStepTests(location, clientHelper, deploymentManagerClient);
 
             // Test Delete step.
             deploymentManagerClient.Steps.Delete(
@@ -376,8 +443,6 @@ namespace DeploymentManager.Tests
                 resourceGroupName: clientHelper.ResourceGroupName,
                 stepName: stepName));
             Assert.Equal(HttpStatusCode.NotFound, cloudException.Response.StatusCode);
-            
-            this.HealthCheckStepTests(location, clientHelper, deploymentManagerClient);
         }
 
         private void HealthCheckStepTests(
@@ -442,6 +507,12 @@ namespace DeploymentManager.Tests
                 stepInfo: inputStep);
 
             this.ValidateHealthCheckStep(inputStep, stepResponse);
+
+            // Test list steps.
+            var steps = deploymentManagerClient.Steps.List(
+                resourceGroupName: clientHelper.ResourceGroupName);
+            Assert.Equal(2, steps.Count);
+            this.ValidateHealthCheckStep(inputStep, steps.ToList().First(s => s.Name.Equals(inputStep.Name, StringComparison.InvariantCultureIgnoreCase)));
 
             deploymentManagerClient.Steps.Delete(
                 resourceGroupName: clientHelper.ResourceGroupName,
@@ -599,6 +670,12 @@ namespace DeploymentManager.Tests
                 deploymentManagerClient,
                 clientHelper);
 
+            var rollouts = deploymentManagerClient.Rollouts.List(
+                resourceGroupName: clientHelper.ResourceGroupName);
+
+            Assert.Equal(2, rollouts.Count);
+            Assert.NotEmpty(rollouts.Where(r => r.Name.Equals(failureRolloutName, StringComparison.InvariantCultureIgnoreCase)));
+
             // Test delete rollout.
             deploymentManagerClient.Rollouts.Delete(
                 resourceGroupName: clientHelper.ResourceGroupName,
@@ -641,9 +718,15 @@ namespace DeploymentManager.Tests
                 rollout = deploymentManagerClient.Rollouts.Get(
                    resourceGroupName: clientHelper.ResourceGroupName,
                    rolloutName: rolloutName);
-            } while (rollout.Status == "Running");
+            } while (!this.IsRolloutInTerminalState(rollout.Status));
 
             return rollout;
+        }
+
+        private bool IsRolloutInTerminalState(string status)
+        {
+            return EndToEndFunctionalTests.terminalStates.Any(
+                s => s.Equals(status, StringComparison.OrdinalIgnoreCase));
         }
 
         private void ValidateRollout(RolloutRequest rolloutRequest, RolloutRequest rolloutResponse)
