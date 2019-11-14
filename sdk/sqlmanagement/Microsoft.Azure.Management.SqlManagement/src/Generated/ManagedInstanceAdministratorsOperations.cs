@@ -255,9 +255,6 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='managedInstanceName'>
         /// The name of the managed instance.
         /// </param>
-        /// <param name='administratorName'>
-        /// The administrator name.
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -279,7 +276,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ManagedInstanceAdministrator>> GetWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, string administratorName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ManagedInstanceAdministrator>> GetWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -289,14 +286,11 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "managedInstanceName");
             }
-            if (administratorName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "administratorName");
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
+            string administratorName = "ActiveDirectory";
             string apiVersion = "2017-03-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -459,9 +453,6 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='managedInstanceName'>
         /// The name of the managed instance.
         /// </param>
-        /// <param name='administratorName'>
-        /// The requested administrator name.
-        /// </param>
         /// <param name='parameters'>
         /// The requested administrator parameters.
         /// </param>
@@ -471,10 +462,10 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<ManagedInstanceAdministrator>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, string administratorName, ManagedInstanceAdministrator parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ManagedInstanceAdministrator>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, ManagedInstanceAdministrator parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<ManagedInstanceAdministrator> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, managedInstanceName, administratorName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<ManagedInstanceAdministrator> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, managedInstanceName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -488,19 +479,16 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='managedInstanceName'>
         /// The name of the managed instance.
         /// </param>
-        /// <param name='administratorName'>
-        /// The administrator name.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, string administratorName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, managedInstanceName, administratorName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, managedInstanceName, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -513,9 +501,6 @@ namespace Microsoft.Azure.Management.Sql
         /// </param>
         /// <param name='managedInstanceName'>
         /// The name of the managed instance.
-        /// </param>
-        /// <param name='administratorName'>
-        /// The requested administrator name.
         /// </param>
         /// <param name='parameters'>
         /// The requested administrator parameters.
@@ -541,7 +526,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ManagedInstanceAdministrator>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, string administratorName, ManagedInstanceAdministrator parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ManagedInstanceAdministrator>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, ManagedInstanceAdministrator parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -550,10 +535,6 @@ namespace Microsoft.Azure.Management.Sql
             if (managedInstanceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "managedInstanceName");
-            }
-            if (administratorName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "administratorName");
             }
             if (parameters == null)
             {
@@ -567,6 +548,7 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
+            string administratorName = "ActiveDirectory";
             string apiVersion = "2017-03-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -754,9 +736,6 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='managedInstanceName'>
         /// The name of the managed instance.
         /// </param>
-        /// <param name='administratorName'>
-        /// The administrator name.
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -775,7 +754,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, string administratorName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -785,14 +764,11 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "managedInstanceName");
             }
-            if (administratorName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "administratorName");
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
+            string administratorName = "ActiveDirectory";
             string apiVersion = "2017-03-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
