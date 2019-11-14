@@ -528,7 +528,7 @@ namespace Azure.Storage.Blobs.Test
             var progressHandler = new Progress<long>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
 
             // Act
-            using (var stream = new FaultyStream(new MemoryStream(data), 256 * Constants.KB, 1, new Exception("Simulated stream fault")))
+            using (var stream = new FaultyStream(new MemoryStream(data), 256 * Constants.KB, 1, new IOException("Simulated stream fault")))
             {
                 await blobFaulty.AppendBlockAsync(stream, progressHandler: progressHandler);
                 await WaitForProgressAsync(progressList, data.LongLength);
