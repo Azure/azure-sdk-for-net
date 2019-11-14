@@ -101,7 +101,7 @@ namespace Azure.Messaging.EventHubs
         private bool OwnsConnection { get; } = true;
 
         /// <summary>
-        ///   The set of consumer options used for creation of this consumer.
+        ///   The set of options used for creation of this consumer.
         /// </summary>
         ///
         private EventHubConsumerClientOptions Options { get; }

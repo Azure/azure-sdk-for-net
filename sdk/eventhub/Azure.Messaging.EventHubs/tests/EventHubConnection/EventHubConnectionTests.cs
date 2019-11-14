@@ -423,10 +423,9 @@ namespace Azure.Messaging.EventHubs.Tests
             var connectionString = "Endpoint=value.com;SharedAccessKeyName=[value];SharedAccessKey=[value];EntityPath=[value]";
             var mockClient = new ReadableOptionsMock(connectionString, new EventHubConnectionOptions());
 
-            mockClient.CreateTransportProducer();
+            mockClient.CreateTransportProducer(null);
 
             Assert.That(mockClient.ProducerOptions, Is.Not.Null, "The producer options should have been set.");
-            Assert.That(mockClient.ProducerOptions.PartitionId, Is.EqualTo(expected.PartitionId), "The partition identifiers should match.");
             Assert.That(mockClient.ProducerOptions.RetryOptions.IsEquivalentTo(expected.RetryOptions), Is.True, "The retries should match.");
         }
 
@@ -644,11 +643,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var client = new InjectableTransportClientMock(transportClient, "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake");
             var expectedOptions = new EventHubProducerClientOptions { RetryOptions = new RetryOptions { MaximumRetries = 6, TryTimeout = TimeSpan.FromMinutes(4) } };
 
-            client.CreateTransportProducer(expectedOptions);
+            client.CreateTransportProducer(null, expectedOptions);
 
             Assert.That(transportClient.CreateProducerCalledWith, Is.Not.Null, "The producer options should have been set.");
-            Assert.That(transportClient.CreateProducerCalledWith.PartitionId, Is.EqualTo(expectedOptions.PartitionId), "The partition identifiers should match.");
-            Assert.That(transportClient.CreateProducerCalledWith.RetryOptions.IsEquivalentTo(expectedOptions.RetryOptions), Is.True, "The retry options should match.");
+            Assert.That(transportClient.CreateProducerCalledWith.PartitionId, Is.Null, "There should have been no partition specified.");
+            Assert.That(transportClient.CreateProducerCalledWith.Options.RetryOptions.IsEquivalentTo(expectedOptions.RetryOptions), Is.True, "The retry options should match.");
         }
 
         /// <summary>
@@ -801,7 +800,7 @@ namespace Azure.Messaging.EventHubs.Tests
                    .GetValue(this) as EventHubConnectionOptions;
 
             public EventHubConnectionOptions TransportClientOptions;
-            public EventHubProducerClientOptions ProducerOptions => _transportClient.CreateProducerCalledWith;
+            public EventHubProducerClientOptions ProducerOptions => _transportClient.CreateProducerCalledWith.Options;
             public EventHubConsumerClientOptions ConsumerOptions => _transportClient.CreateConsumerCalledWith.Options;
 
             private ObservableTransportClientMock _transportClient;
@@ -900,7 +899,7 @@ namespace Azure.Messaging.EventHubs.Tests
         private class ObservableTransportClientMock : TransportClient
         {
             public (string ConsumerGroup, string Partition, EventPosition Position, EventHubConsumerClientOptions Options) CreateConsumerCalledWith;
-            public EventHubProducerClientOptions CreateProducerCalledWith;
+            public (string PartitionId, EventHubProducerClientOptions Options) CreateProducerCalledWith;
             public string GetPartitionPropertiesCalledForId;
             public bool WasGetPropertiesCalled;
             public bool WasCloseCalled;
@@ -920,9 +919,10 @@ namespace Azure.Messaging.EventHubs.Tests
                 return Task.FromResult(default(PartitionProperties));
             }
 
-            public override TransportProducer CreateProducer(EventHubProducerClientOptions producerOptions)
+            public override TransportProducer CreateProducer(string partitionId,
+                                                             EventHubProducerClientOptions producerOptions)
             {
-                CreateProducerCalledWith = producerOptions;
+                CreateProducerCalledWith = (partitionId, producerOptions);
                 return default;
             }
 

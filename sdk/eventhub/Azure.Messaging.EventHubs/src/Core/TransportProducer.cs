@@ -65,9 +65,9 @@ namespace Azure.Messaging.EventHubs.Core
         ///
         /// <returns>An <see cref="EventDataBatch" /> with the requested <paramref name="options"/>.</returns>
         ///
-        /// <seealso cref="CreateBatchAsync(BatchOptions, CancellationToken)" />
+        /// <seealso cref="CreateBatchAsync(CreateBatchOptions, CancellationToken)" />
         ///
-        public abstract ValueTask<TransportEventBatch> CreateBatchAsync(BatchOptions options,
+        public abstract ValueTask<TransportEventBatch> CreateBatchAsync(CreateBatchOptions options,
                                                                         CancellationToken cancellationToken);
 
         /// <summary>

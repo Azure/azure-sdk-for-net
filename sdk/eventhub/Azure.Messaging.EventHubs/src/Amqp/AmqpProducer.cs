@@ -189,7 +189,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <returns>An <see cref="EventDataBatch" /> with the requested <paramref name="options"/>.</returns>
         ///
-        public override async ValueTask<TransportEventBatch> CreateBatchAsync(BatchOptions options,
+        public override async ValueTask<TransportEventBatch> CreateBatchAsync(CreateBatchOptions options,
                                                                               CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(options, nameof(options));

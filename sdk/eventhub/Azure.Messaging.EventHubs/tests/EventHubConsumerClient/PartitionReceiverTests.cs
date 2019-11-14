@@ -2,20 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading;
-using System.Threading.Channels;
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Core;
-using Azure.Messaging.EventHubs.Errors;
-using Azure.Messaging.EventHubs.Metadata;
 using Moq;
 using NUnit.Framework;
 

@@ -11,7 +11,7 @@ namespace Azure.Messaging.EventHubs
     ///   behaves and is sent to the Event Hubs service.
     /// </summary>
     ///
-    public class BatchOptions : SendOptions
+    public class CreateBatchOptions : SendOptions
     {
         /// <summary>The requested maximum size to allow for the batch, in bytes.</summary>
         private long? _maximumSizeInBytes = null;
@@ -41,14 +41,15 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Creates a new copy of the current <see cref="BatchOptions" />, cloning its attributes into a new instance.
+        ///   Creates a new copy of the current <see cref="CreateBatchOptions" />, cloning its attributes into a new instance.
         /// </summary>
         ///
-        /// <returns>A new copy of <see cref="BatchOptions" />.</returns>
+        /// <returns>A new copy of <see cref="CreateBatchOptions" />.</returns>
         ///
-        internal BatchOptions Clone() =>
-            new BatchOptions
+        internal CreateBatchOptions Clone() =>
+            new CreateBatchOptions
             {
+                PartitionId = PartitionId,
                 PartitionKey = PartitionKey,
                 _maximumSizeInBytes = MaximumSizeInBytes
             };

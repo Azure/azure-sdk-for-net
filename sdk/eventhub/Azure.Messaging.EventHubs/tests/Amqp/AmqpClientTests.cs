@@ -420,7 +420,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var client = new AmqpClient("my.eventhub.com", "somePath", credential.Object, new EventHubConnectionOptions());
             await client.CloseAsync(cancellationSource.Token);
 
-            Assert.That(() => client.CreateProducer(new EventHubProducerClientOptions()), Throws.InstanceOf<EventHubsClientClosedException>());
+            Assert.That(() => client.CreateProducer(null, new EventHubProducerClientOptions()), Throws.InstanceOf<EventHubsClientClosedException>());
         }
 
         /// <summary>

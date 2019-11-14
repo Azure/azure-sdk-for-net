@@ -19,16 +19,19 @@ namespace Azure.Messaging.EventHubs.Authorization
     internal class SharedAccessSignatureCredential : TokenCredential
     {
         /// <summary>The buffer to apply when considering refreshing; signatures that expire less than this duration will be refreshed.</summary>
-        private static readonly TimeSpan SignatureRefreshBuffer = TimeSpan.FromMinutes(5);
+        private static readonly TimeSpan SignatureRefreshBuffer = TimeSpan.FromMinutes(10);
 
         /// <summary>The length of time extend signature validity, if a token was requested.</summary>
         private static readonly TimeSpan SignatureExtensionDuration = TimeSpan.FromMinutes(30);
+
+        /// <summary>Provides a target for synchronization to guard against concurrent token expirations.</summary>
+        private readonly object ExtensionSyncRoot = new object();
 
         /// <summary>
         ///   The shared access signature that forms the basis of this security token.
         /// </summary>
         ///
-        public SharedAccessSignature SharedAccessSignature { get; }
+        private SharedAccessSignature SharedAccessSignature { get; set; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="SharedAccessSignatureCredential"/> class.
@@ -57,7 +60,13 @@ namespace Azure.Messaging.EventHubs.Authorization
         {
             if (SharedAccessSignature.SignatureExpiration <= DateTimeOffset.UtcNow.Add(SignatureRefreshBuffer))
             {
-                SharedAccessSignature.ExtendExpiration(SignatureExtensionDuration);
+                lock (ExtensionSyncRoot)
+                {
+                    if (SharedAccessSignature.SignatureExpiration <= DateTimeOffset.UtcNow.Add(SignatureRefreshBuffer))
+                    {
+                        SharedAccessSignature = SharedAccessSignature.CloneWithNewExpiration(SignatureExtensionDuration);
+                    }
+                }
             }
 
             return new AccessToken(SharedAccessSignature.Value, SharedAccessSignature.SignatureExpiration);

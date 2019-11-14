@@ -105,7 +105,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(Task.CompletedTask);
 
             transportMock
-                .Setup(m => m.CreateBatchAsync(It.IsAny<BatchOptions>(), It.IsAny<CancellationToken>()))
+                .Setup(m => m.CreateBatchAsync(It.IsAny<CreateBatchOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(new ValueTask<TransportEventBatch>(Task.FromResult(batchTransportMock.Object)));
 
             var producer = new EventHubProducerClient(fakeConnection, transportMock.Object);
@@ -202,7 +202,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(Task.CompletedTask);
 
             transportMock
-                .Setup(m => m.CreateBatchAsync(It.IsAny<BatchOptions>(), It.IsAny<CancellationToken>()))
+                .Setup(m => m.CreateBatchAsync(It.IsAny<CreateBatchOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(new ValueTask<TransportEventBatch>(Task.FromResult(batchTransportMock.Object)));
 
             var producer = new EventHubProducerClient(fakeConnection, transportMock.Object);

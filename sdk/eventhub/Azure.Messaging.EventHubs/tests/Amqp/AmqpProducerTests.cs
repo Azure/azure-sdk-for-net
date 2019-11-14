@@ -134,7 +134,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(Task.FromResult(new SendingAmqpLink(new AmqpLinkSettings())))
                 .Verifiable();
 
-            using TransportEventBatch batch = await producer.Object.CreateBatchAsync(new BatchOptions(), default);
+            using TransportEventBatch batch = await producer.Object.CreateBatchAsync(new CreateBatchOptions(), default);
             producer.VerifyAll();
         }
 
@@ -147,7 +147,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task CreateBatchAsyncDefaultsTheMaximumSizeWhenNotProvided()
         {
             var expectedMaximumSize = 512;
-            var options = new BatchOptions { MaximumSizeInBytes = null };
+            var options = new CreateBatchOptions { MaximumSizeInBytes = null };
             var retryPolicy = new BasicRetryPolicy(new RetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
 
             var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
@@ -178,7 +178,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task CreateBatchAsyncRespectsTheMaximumSizeWhenProvided()
         {
             var expectedMaximumSize = 512;
-            var options = new BatchOptions { MaximumSizeInBytes = expectedMaximumSize };
+            var options = new CreateBatchOptions { MaximumSizeInBytes = expectedMaximumSize };
             var retryPolicy = new BasicRetryPolicy(new RetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
 
             var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
@@ -209,7 +209,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void CreateBatchAsyncVerifiesTheMaximumSize()
         {
             var linkMaximumSize = 512;
-            var options = new BatchOptions { MaximumSizeInBytes = 1024 };
+            var options = new CreateBatchOptions { MaximumSizeInBytes = 1024 };
             var retryPolicy = new BasicRetryPolicy(new RetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
 
             var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
@@ -238,7 +238,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task CreateBatchAsyncBuildsAnAmqpEventBatchWithTheOptions()
         {
-            var options = new BatchOptions { MaximumSizeInBytes = 512 };
+            var options = new CreateBatchOptions { MaximumSizeInBytes = 512 };
             var retryPolicy = new BasicRetryPolicy(new RetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
 
             var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
@@ -298,7 +298,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task SendEnumerableUsesThePartitionKey()
         {
             var expectedPartitionKey = "some key";
-            var options = new BatchOptions { PartitionKey = expectedPartitionKey };
+            var options = new CreateBatchOptions { PartitionKey = expectedPartitionKey };
             var retryPolicy = new BasicRetryPolicy(new RetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
 
             var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
@@ -429,7 +429,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task SendBatchEnsuresNotClosed()
         {
             var expectedMaximumSize = 512;
-            var options = new BatchOptions { MaximumSizeInBytes = null };
+            var options = new CreateBatchOptions { MaximumSizeInBytes = null };
             var retryPolicy = new BasicRetryPolicy(new RetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
 
             var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
@@ -462,7 +462,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var expectedMaximumSize = 512;
             var expectedPartitionKey = "some key";
-            var options = new BatchOptions { PartitionKey = expectedPartitionKey };
+            var options = new CreateBatchOptions { PartitionKey = expectedPartitionKey };
             var retryPolicy = new BasicRetryPolicy(new RetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
 
             var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
@@ -507,7 +507,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var messageFactory = default(Func<AmqpMessage>);
             var expectedMaximumSize = 512;
-            var options = new BatchOptions { PartitionKey = partitonKey };
+            var options = new CreateBatchOptions { PartitionKey = partitonKey };
             var retryPolicy = new BasicRetryPolicy(new RetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
 
             var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
@@ -556,7 +556,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task SendBatchDoesNotDisposeTheEventDataBatch()
         {
             var expectedMaximumSize = 512;
-            var options = new BatchOptions { MaximumSizeInBytes = null };
+            var options = new CreateBatchOptions { MaximumSizeInBytes = null };
             var retryPolicy = new BasicRetryPolicy(new RetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
 
             var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
@@ -601,7 +601,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task SendBatchDoesNotDisposeTheEventsInTheSourceBatch()
         {
             var expectedMaximumSize = 512;
-            var options = new BatchOptions { MaximumSizeInBytes = null };
+            var options = new CreateBatchOptions { MaximumSizeInBytes = null };
             var retryPolicy = new BasicRetryPolicy(new RetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
 
             var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
@@ -646,7 +646,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task SendBatchRespectsTheCancellationTokenIfSetWhenCalled()
         {
             var expectedMaximumSize = 512;
-            var options = new BatchOptions();
+            var options = new CreateBatchOptions();
             var retryPolicy = new BasicRetryPolicy(new RetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
 
             var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
@@ -680,7 +680,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void SendBatchRespectsTheRetryPolicy(RetryOptions retryOptions)
         {
             var partitionKey = "testMe";
-            var options = new BatchOptions { PartitionKey = partitionKey };
+            var options = new CreateBatchOptions { PartitionKey = partitionKey };
             var retriableException = new EventHubsException(true, "Test");
             var retryPolicy = new BasicRetryPolicy(retryOptions);
             var batch = new EventDataBatch(Mock.Of<TransportEventBatch>(), options);
@@ -718,8 +718,8 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         /// <returns>The batch options.</returns>
         ///
-        private static BatchOptions GetEventBatchOptions(AmqpEventBatch batch) =>
-            (BatchOptions)
+        private static CreateBatchOptions GetEventBatchOptions(AmqpEventBatch batch) =>
+            (CreateBatchOptions)
                 typeof(AmqpEventBatch)
                     .GetProperty("Options", BindingFlags.Instance | BindingFlags.NonPublic)
                     .GetValue(batch);

@@ -357,18 +357,20 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///   responsible for publishing <see cref="EventData" /> to the Event Hub.
         /// </summary>
         ///
+        /// <param name="partitionId">The identifier of the partition to which the transport producer should be bound; if <c>null</c>, the producer is unbound.</param>
         /// <param name="producerOptions">The set of options to apply when creating the producer.</param>
         ///
         /// <returns>A <see cref="TransportProducer"/> configured in the requested manner.</returns>
         ///
-        public override TransportProducer CreateProducer(EventHubProducerClientOptions producerOptions)
+        public override TransportProducer CreateProducer(string partitionId,
+                                                         EventHubProducerClientOptions producerOptions)
         {
             Argument.AssertNotClosed(_closed, nameof(AmqpClient));
 
             return new AmqpProducer
             (
                 EventHubName,
-                producerOptions.PartitionId,
+                partitionId,
                 ConnectionScope,
                 MessageConverter,
                 producerOptions.RetryOptions.ToRetryPolicy()
