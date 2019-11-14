@@ -30,6 +30,9 @@ namespace Microsoft.Azure.Search
         /// <param name='accessCondition'>
         /// Additional parameters for the operation
         /// </param>
+        /// <returns>
+        /// The skillset that was created or updated.
+        /// </returns>
         public static Skillset CreateOrUpdate(this ISkillsetsOperations operations, Skillset skillset, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition))
         {
             return operations.CreateOrUpdateAsync(skillset, searchRequestOptions, accessCondition).GetAwaiter().GetResult();
@@ -54,6 +57,9 @@ namespace Microsoft.Azure.Search
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <returns>
+        /// The skillset that was created or updated.
+        /// </returns>
         public static async Task<Skillset> CreateOrUpdateAsync(this ISkillsetsOperations operations, Skillset skillset, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), CancellationToken cancellationToken = default(CancellationToken))
         {
             using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(skillset, searchRequestOptions, accessCondition, null, cancellationToken).ConfigureAwait(false))
