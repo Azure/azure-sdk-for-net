@@ -99,14 +99,16 @@ namespace Azure.Messaging.EventHubs.Processor
         private ConcurrentDictionary<string, CancellationTokenSource> ActivePartitionProcessorTokenSources { get; set; }
 
         /// <summary>
-        ///   The set of partition ownership this event processor owns.  Partition ids are used as keys. TODO: make it private.
+        ///   The set of partition ownership this event processor owns.  Partition ids are used as keys.
+        ///   TODO: we should decide whether this property should be made private or not (and how would the concrete class obtain checkpoint information).
         /// </summary>
         ///
         protected Dictionary<string, PartitionOwnership> InstanceOwnership { get; set; }
 
         /// <summary>
         ///   The running task responsible for performing partition load balancing between multiple <see cref="EventProcessorClient" />
-        ///   instances, as well as managing partition processing tasks and ownership.  TODO: make it fully private (expose IsRunning property).
+        ///   instances, as well as managing partition processing tasks and ownership.
+        ///   TODO: once IsRunning is implemented, we should make it private.
         /// </summary>
         ///
         protected Task ActiveLoadBalancingTask { get; private set; }
@@ -320,7 +322,8 @@ namespace Azure.Messaging.EventHubs.Processor
                         }
                         catch (Exception)
                         {
-                            // TODO: delegate the exception handling to an Exception Callback.  Should we surface it?
+                            // TODO: delegate the exception handling to an Exception Callback.  Instead of delegating it to the handler,
+                            // should we surface it?
                         }
 
                         // Now that the task has finished, clean up what is left.  Stop and remove every partition processing task that is
@@ -334,9 +337,9 @@ namespace Azure.Messaging.EventHubs.Processor
                         ActivePartitionProcessors = null;
                         ActivePartitionProcessorTokenSources = null;
 
-                        // We need to wait until all pumps have stopped before making the load balancing task null.  If we did it sooner, we
+                        // TODO: once IsRunning is implemented, update the following comment.
+                        // We need to wait until all tasks have stopped before making the load balancing task null.  If we did it sooner, we
                         // would have a race condition where the user could update the processing handlers while some pumps are still running.
-                        // TODO: update comment once IsRunning is implemented.
 
                         ActiveLoadBalancingTask = null;
                     }
@@ -392,7 +395,7 @@ namespace Azure.Messaging.EventHubs.Processor
                     .ToDictionary(ownership => ownership.PartitionId);
 
                 // Some previously owned partitions might have had their ownership expired or might have been stolen, so we need to stop
-                // the processing tasks we don't need anymore.  TODO: what if one of them threw an exception? What's the close reason?
+                // the processing tasks we don't need anymore.
 
                 await Task.WhenAll(ActivePartitionProcessors.Keys
                     .Except(InstanceOwnership.Keys)
@@ -400,13 +403,14 @@ namespace Azure.Messaging.EventHubs.Processor
                     .ConfigureAwait(false);
 
                 // Now that we are left with processing tasks that should be running, check their status.  If any has stopped, it
-                // means an unexpected failure has happened, so try closing it and starting a new one.  In case we don't have a task
-                // that should exist, create it.  This might happen when task creation has failed in a previous cycle.  TODO: can task creation fail?
+                // means a failure has happened, so try closing it and starting a new one.  In case we don't have a task that should
+                // exist, create it.  This might happen if the user hasn't updated ActivePartitionProcessors when initializing processing
+                // in the previous cycle.
 
                 await Task.WhenAll(InstanceOwnership
                     .Select(async kvp =>
                     {
-                        if (ActivePartitionProcessors.TryGetValue(kvp.Key, out Task processingTask) && processingTask.IsCompleted)
+                        if (!ActivePartitionProcessors.TryGetValue(kvp.Key, out Task processingTask) || processingTask.IsCompleted)
                         {
                             await StopPartitionProcessingIfRunningAsync(kvp.Key, ProcessingStoppedReason.Exception).ConfigureAwait(false);
 
@@ -575,7 +579,7 @@ namespace Azure.Messaging.EventHubs.Processor
         private async Task StopPartitionProcessingIfRunningAsync(string partitionId,
                                                                  ProcessingStoppedReason reason)
         {
-            // TODO: what if there is no token source?
+            // TODO: what if there is no token source?  It could happen if the user added a task by themself.
 
             if (ActivePartitionProcessors.TryRemove(partitionId, out var processingTask)
                 && ActivePartitionProcessorTokenSources.TryRemove(partitionId, out var tokenSource))
@@ -594,6 +598,9 @@ namespace Azure.Messaging.EventHubs.Processor
                     tokenSource.Dispose();
                 }
             }
+
+            // TODO: create the context only once instead of doing it every single time.
+            // TODO: if reason = Shutdown or OwnershipLost and we got an exception when closing, what should the final reason be?
 
             var context = CreateContext(partitionId);
             await ProcessingForPartitionStoppedAsync(reason, context);
@@ -671,10 +678,10 @@ namespace Azure.Messaging.EventHubs.Processor
                                                            RetryOptions retryOptions,
                                                            bool trackLastEnqueuedEventInformation) => Task.Run(async () =>
             {
-                // TODO: should we include a cancellation token?
-                // TODO: should we double check if a previous run already exists? Close it?
+                // TODO: let the user include a cancellation token?  Why would they need to stop the processing?
+                // TODO: should we double check if a previous run already exists and close it?
                 // TODO: should we assert arguments are valid? We should do it before returning the task.
-                // TODO: should the retry options used here be the same for the RetryPolicy property?
+                // TODO: should the retry options used here be the same for the abstract RetryPolicy property?
 
                 var tokenSource = new CancellationTokenSource();
                 var cancellationToken = tokenSource.Token;

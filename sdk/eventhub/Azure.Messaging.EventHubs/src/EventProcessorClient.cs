@@ -298,8 +298,6 @@ namespace Azure.Messaging.EventHubs
             Identifier = Guid.NewGuid().ToString();
         }
 
-        // TODO: remove this constructor if not needed anymore.
-
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventProcessorClient"/> class.
         /// </summary>
@@ -318,6 +316,10 @@ namespace Azure.Messaging.EventHubs
                                                 EventHubConnection connection,
                                                 EventProcessorClientOptions processorOptions)
         {
+            // TODO: we probably can remove this constructor and OwnsConnection property because the processor does not have
+            // a single connection anymore.  In fact, returning the same connection from the factory might result in undefined
+            // behavior.  We could take a connection factory here instead of a single connection.
+
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
             Argument.AssertNotNull(partitionManager, nameof(partitionManager));
             Argument.AssertNotNull(connection, nameof(connection));
@@ -377,14 +379,17 @@ namespace Azure.Messaging.EventHubs
                     startingPosition = EventPosition.FromSequenceNumber(ownership.SequenceNumber.Value);
                 }
 
+                // TODO: it might be troublesome to let the users add running tasks by themselves.  If the user adds a custom
+                // processing task that's not RunPartitionProcessingAsync, how would the base stop it?  It would not have a cancellation
+                // token to do so.
+
                 ActivePartitionProcessors[context.PartitionId] = RunPartitionProcessingAsync(context.PartitionId, startingPosition, Options.MaximumReceiveWaitTime, Options.RetryOptions, Options.TrackLastEnqueuedEventInformation);
             }
             catch (Exception)
             {
                 // If processing task creation fails, we'll try again on the next time this method is called.  This should happen
                 // on the next load balancing loop as long as this instance still owns the partition.
-                // TODO: delegate the exception handling to an Exception Callback.
-                // TODO: we should only worry about failing in the handler call.
+                // TODO: delegate the exception handling to an Exception Callback.  Do we really need a try-catch here?
             }
         }
 
@@ -410,6 +415,7 @@ namespace Azure.Messaging.EventHubs
                 catch (Exception)
                 {
                     // TODO: delegate the exception handling to an Exception Callback.
+                    // Maybe we should just surface the exception.
                 }
             }
         }
