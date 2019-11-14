@@ -48,10 +48,10 @@ namespace Azure.Security.KeyVault.Certificates
         public virtual Azure.AsyncPageable<Azure.Security.KeyVault.Certificates.CertificateProperties> GetPropertiesOfCertificateVersionsAsync(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Security.KeyVault.Certificates.IssuerProperties> GetPropertiesOfIssuers(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Security.KeyVault.Certificates.IssuerProperties> GetPropertiesOfIssuersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Security.KeyVault.Certificates.KeyVaultCertificateWithPolicy> ImportCertificate(Azure.Security.KeyVault.Certificates.ImportCertificateOptions certificateImportOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Certificates.KeyVaultCertificateWithPolicy>> ImportCertificateAsync(Azure.Security.KeyVault.Certificates.ImportCertificateOptions certificateImportOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Security.KeyVault.Certificates.KeyVaultCertificateWithPolicy> MergeCertificate(Azure.Security.KeyVault.Certificates.MergeCertificateOptions certificateMergeOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Certificates.KeyVaultCertificateWithPolicy>> MergeCertificateAsync(Azure.Security.KeyVault.Certificates.MergeCertificateOptions certificateMergeOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Security.KeyVault.Certificates.KeyVaultCertificateWithPolicy> ImportCertificate(Azure.Security.KeyVault.Certificates.ImportCertificateOptions importCertificateOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Certificates.KeyVaultCertificateWithPolicy>> ImportCertificateAsync(Azure.Security.KeyVault.Certificates.ImportCertificateOptions importCertificateOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Security.KeyVault.Certificates.KeyVaultCertificateWithPolicy> MergeCertificate(Azure.Security.KeyVault.Certificates.MergeCertificateOptions mergeCertificateOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Certificates.KeyVaultCertificateWithPolicy>> MergeCertificateAsync(Azure.Security.KeyVault.Certificates.MergeCertificateOptions mergeCertificateOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response PurgeDeletedCertificate(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> PurgeDeletedCertificateAsync(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Certificates.KeyVaultCertificateWithPolicy> RestoreCertificateBackup(byte[] backup, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -384,12 +384,6 @@ namespace Azure.Security.KeyVault.Certificates
         public static Azure.Security.KeyVault.Certificates.SubjectAlternativeNames FromUpn(params string[] names) { throw null; }
         public System.Collections.Generic.IEnumerator<string> GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public enum SubjectAlternativeNameType
-    {
-        Dns = 0,
-        Email = 1,
-        Upn = 2,
     }
     public static partial class WellKnownIssuerNames
     {

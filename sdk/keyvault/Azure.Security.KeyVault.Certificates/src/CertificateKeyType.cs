@@ -29,27 +29,27 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// An EC (EllipticCurve) key
+        /// An Elliptic Curve Cryptographic (ECC) algorithm.
         /// </summary>
         public static CertificateKeyType Ec { get; } = new CertificateKeyType(EcValue);
 
         /// <summary>
-        /// A hardware-protected EC (EllipticCurve) key
+        /// An Elliptic Curve Cryptographic (ECC) algorithm backed by HSM.
         /// </summary>
         public static CertificateKeyType EcHsm { get; } = new CertificateKeyType(EcHsmValue);
 
         /// <summary>
-        /// A RSA key
+        /// An RSA cryptographic algorithm.
         /// </summary>
         public static CertificateKeyType Rsa { get; } = new CertificateKeyType(RsaValue);
 
         /// <summary>
-        /// A hardware-protected RSA key
+        /// An RSA cryptographic algorithm backed by HSM.
         /// </summary>
         public static CertificateKeyType RsaHsm { get; } = new CertificateKeyType(RsaHsmValue);
 
         /// <summary>
-        /// A octal (Symmetric) key
+        /// An AES cryptographic algorithm.
         /// </summary>
         public static CertificateKeyType Oct { get; } = new CertificateKeyType(OctValue);
 

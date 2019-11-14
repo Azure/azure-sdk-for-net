@@ -26,12 +26,12 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// An action that will auto-renew a certificate
+        /// Gets a <see cref="CertificatePolicyAction"/> that will auto-renew a certificate.
         /// </summary>
         public static CertificatePolicyAction AutoRenew { get; } = new CertificatePolicyAction(AutoRenewValue);
 
         /// <summary>
-        /// An action that will email certificate contacts
+        /// Gets a <see cref="CertificatePolicyAction"/> action that will email certificate contacts.
         /// </summary>
         public static CertificatePolicyAction EmailContacts { get; } = new CertificatePolicyAction(EmailContactsValue);
 

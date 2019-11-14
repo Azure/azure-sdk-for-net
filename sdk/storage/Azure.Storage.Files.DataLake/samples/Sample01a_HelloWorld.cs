@@ -462,7 +462,8 @@ namespace Azure.Storage.Files.DataLake.Samples
                 PathAccessControl accessControlResponse = fileClient.GetAccessControl();
 
                 // Check Access Control permissions
-                Assert.AreEqual(pathPermissions, accessControlResponse.Permissions);
+                Assert.AreEqual(pathPermissions.ToSymbolicPermissions(), accessControlResponse.Permissions.ToSymbolicPermissions());
+                Assert.AreEqual(pathPermissions.ToOctalPermissions(), accessControlResponse.Permissions.ToOctalPermissions());
             }
             finally
             {
@@ -507,7 +508,9 @@ namespace Azure.Storage.Files.DataLake.Samples
                 #endregion Snippet:SampleSnippetDataLakeFileClient_GetAcls
 
                 // Check Access Control permissions
-                Assert.AreEqual("user::rwx,group::r--,mask::rwx,other::---", accessControlResponse.AccessControlList);
+                Assert.AreEqual(
+                    PathAccessControlExtensions.ToAccessControlListString(accessControlList),
+                    PathAccessControlExtensions.ToAccessControlListString(accessControlResponse.AccessControlList.ToList()));
             }
             finally
             {

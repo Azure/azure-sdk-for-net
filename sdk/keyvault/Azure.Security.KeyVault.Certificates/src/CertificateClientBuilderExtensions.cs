@@ -8,12 +8,12 @@ using Azure.Security.KeyVault.Certificates;
 namespace Microsoft.Extensions.Azure
 {
     /// <summary>
-    /// Extension methods to add <see cref="CertificateClient"/> to clients builder
+    /// Extension methods to add <see cref="CertificateClient"/> to clients builder.
     /// </summary>
     public static class CertificateClientBuilderExtensions
     {
         /// <summary>
-        /// Registers a <see cref="CertificateClient"/> instance with the provided <paramref name="vaultUri"/>
+        /// Registers a <see cref="CertificateClient"/> instance with the provided <paramref name="vaultUri"/>.
         /// </summary>
         public static IAzureClientBuilder<CertificateClient, CertificateClientOptions> AddCertificateClient<TBuilder>(this TBuilder builder, Uri vaultUri)
             where TBuilder : IAzureClientFactoryBuilderWithCredential

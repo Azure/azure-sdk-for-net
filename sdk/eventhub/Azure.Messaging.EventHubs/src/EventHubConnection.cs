@@ -10,6 +10,7 @@ using Azure.Core;
 using Azure.Messaging.EventHubs.Amqp;
 using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Core;
+using Azure.Messaging.EventHubs.Diagnostics;
 using Azure.Messaging.EventHubs.Metadata;
 
 namespace Azure.Messaging.EventHubs
@@ -230,7 +231,25 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public virtual Task CloseAsync(CancellationToken cancellationToken = default) => InnerClient.CloseAsync(cancellationToken);
+        public async virtual Task CloseAsync(CancellationToken cancellationToken = default)
+        {
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            EventHubsEventSource.Log.ClientCloseStart(typeof(EventHubConnection), EventHubName, FullyQualifiedNamespace);
+
+            try
+            {
+                await InnerClient.CloseAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                EventHubsEventSource.Log.ClientCloseError(typeof(EventHubConnection), EventHubName, FullyQualifiedNamespace, ex.Message);
+                throw;
+            }
+            finally
+            {
+                EventHubsEventSource.Log.ClientCloseComplete(typeof(EventHubConnection), EventHubName, FullyQualifiedNamespace);
+            }
+        }
 
         /// <summary>
         ///   Closes the connection to the Event Hubs namespace and associated Event Hub.

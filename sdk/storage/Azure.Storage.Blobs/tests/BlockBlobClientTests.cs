@@ -146,7 +146,7 @@ namespace Azure.Storage.Blobs.Test
             BlockBlobClient httpBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
             CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
             httpBlob = InstrumentClient(new BlockBlobClient(
-                httpBlob.Uri,
+                httpBlob.Uri.ToHttp(),
                 httpBlob.Pipeline,
                 httpBlob.ClientDiagnostics,
                 customerProvidedKey));
@@ -366,7 +366,7 @@ namespace Azure.Storage.Blobs.Test
             BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
             CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
             destBlob = InstrumentClient(new BlockBlobClient(
-                destBlob.Uri,
+                destBlob.Uri.ToHttp(),
                 destBlob.Pipeline,
                 destBlob.ClientDiagnostics,
                 customerProvidedKey));
@@ -1180,7 +1180,7 @@ namespace Azure.Storage.Blobs.Test
             BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
             CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
             blob = InstrumentClient(new BlockBlobClient(
-                blob.Uri,
+                blob.Uri.ToHttp(),
                 blob.Pipeline,
                 blob.ClientDiagnostics,
                 customerProvidedKey));
