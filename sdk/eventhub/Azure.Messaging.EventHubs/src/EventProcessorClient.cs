@@ -377,7 +377,7 @@ namespace Azure.Messaging.EventHubs
                     startingPosition = EventPosition.FromSequenceNumber(ownership.SequenceNumber.Value);
                 }
 
-                ActivePartitionProcessors[context.PartitionId] = RunPartitionProcessingAsync(context.PartitionId, startingPosition, context, Options.MaximumReceiveWaitTime, Options.RetryOptions, Options.TrackLastEnqueuedEventInformation);
+                ActivePartitionProcessors[context.PartitionId] = RunPartitionProcessingAsync(context.PartitionId, startingPosition, Options.MaximumReceiveWaitTime, Options.RetryOptions, Options.TrackLastEnqueuedEventInformation);
             }
             catch (Exception)
             {
@@ -391,7 +391,7 @@ namespace Azure.Messaging.EventHubs
         ///   The handler to be called once event processing stops for a given partition.
         /// </summary>
         ///
-        /// <param name="reason">The reason why the processing for the specified partition is being stopped.</param>
+        /// <param name="reason">The reason why the processing for the associated partition is being stopped.</param>
         /// <param name="context">TODO.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
@@ -453,7 +453,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the ownership are associated with.</param>
         ///
-        /// <returns>An enumerable containing all the existing ownership for the associated Event Hub and consumer group.</returns>
+        /// <returns>An enumerable containing all the existing ownership for the associated namespace, Event Hub and consumer group.</returns>
         ///
         protected override Task<IEnumerable<PartitionOwnership>> ListOwnershipAsync(string fullyQualifiedNamespace,
                                                                                     string eventHubName,
@@ -552,7 +552,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="partitionId">TODO.</param>
         ///
-        /// <returns>The context associated with the specified partition.</returns>
+        /// <returns>A context associated with the specified partition.</returns>
         ///
         protected override PartitionContext CreateContext(string partitionId) => new PartitionContext(EventHubName, partitionId);
 
@@ -622,6 +622,11 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
+        ///
+        /// <remarks>
+        ///   If overridden, the base class implementation must be explicitly called in order to make the event processor start
+        ///   running.
+        /// </remarks>
         ///
         /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="ProcessEventAsyncHandler" /> or <see cref="ProcessErrorAsyncHandler" /> set.</exception>
         ///
