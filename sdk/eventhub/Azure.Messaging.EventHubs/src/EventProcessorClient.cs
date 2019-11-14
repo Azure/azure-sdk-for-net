@@ -11,6 +11,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
+using Azure.Messaging.EventHubs.Errors;
 using Azure.Messaging.EventHubs.Metadata;
 using Azure.Messaging.EventHubs.Processor;
 
@@ -107,7 +108,8 @@ namespace Azure.Messaging.EventHubs
         public override string Identifier { get; }
 
         /// <summary>
-        ///   TODO.
+        ///   A factory used to provide new <see cref="EventHubConnection" /> instances upon <see cref="CreateConnection"/>
+        ///   call.
         /// </summary>
         ///
         private Func<EventHubConnection> ConnectionFactory { get; }
@@ -343,12 +345,10 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   The function to be called just before event processing starts for a given partition.  It creates and starts
-        ///   a new partition pump associated with the specified partition.  A partition pump might be overwritten by the
-        ///   creation of the new one and, for this reason, it needs to be stopped prior to this method call.
+        ///   The function to be called just before event processing starts for a given partition.
         /// </summary>
         ///
-        /// <param name="context">TODO.</param>
+        /// <param name="context">The context in which the associated partition will be processed.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
@@ -381,9 +381,10 @@ namespace Azure.Messaging.EventHubs
             }
             catch (Exception)
             {
-                // If partition pump creation fails, we'll try again on the next time this method is called.  This should happen
+                // If processing task creation fails, we'll try again on the next time this method is called.  This should happen
                 // on the next load balancing loop as long as this instance still owns the partition.
                 // TODO: delegate the exception handling to an Exception Callback.
+                // TODO: we should only worry about failing in the handler call.
             }
         }
 
@@ -392,7 +393,7 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <param name="reason">The reason why the processing for the associated partition is being stopped.</param>
-        /// <param name="context">TODO.</param>
+        /// <param name="context">The context in which the associated partition was being processed.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
@@ -417,8 +418,8 @@ namespace Azure.Messaging.EventHubs
         ///   Responsible for processing events received from the Event Hubs service.
         /// </summary>
         ///
-        /// <param name="partitionEvent">TODO.</param>
-        /// <param name="context">TODO.</param>
+        /// <param name="partitionEvent">The partition event to be processed.</param>
+        /// <param name="context">The context in which the associated partition is being processed.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
@@ -433,8 +434,8 @@ namespace Azure.Messaging.EventHubs
         ///   Responsible for processing unhandled exceptions thrown while this processor is running.
         /// </summary>
         ///
-        /// <param name="exception">TODO.</param>
-        /// <param name="context">TODO.</param>
+        /// <param name="exception">The exception to be processed.</param>
+        /// <param name="context">The context in which the associated partition was being processed when the exception was thrown.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
@@ -550,7 +551,7 @@ namespace Azure.Messaging.EventHubs
         ///   such as <see cref="ProcessEventAsync" /> and <see cref="ProcessErrorAsync" />.
         /// </summary>
         ///
-        /// <param name="partitionId">TODO.</param>
+        /// <param name="partitionId">The partition the context is associated with.</param>
         ///
         /// <returns>A context associated with the specified partition.</returns>
         ///
@@ -628,6 +629,7 @@ namespace Azure.Messaging.EventHubs
         ///   running.
         /// </remarks>
         ///
+        /// <exception cref="EventHubsClientClosedException">Occurs when this <see cref="EventProcessorClient" /> instance is already closed.</exception>
         /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="ProcessEventAsyncHandler" /> or <see cref="ProcessErrorAsyncHandler" /> set.</exception>
         ///
         public override Task StartAsync()
