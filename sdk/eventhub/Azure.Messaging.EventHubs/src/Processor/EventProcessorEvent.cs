@@ -4,12 +4,14 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Messaging.EventHubs.Errors;
 
 namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
-    ///   A <see cref="PartitionEvent" /> that is strongly tied to an <see cref="EventProcessorClient" />.  It
-    ///   provides a means to create event processing checkpoints. TODO: fix.
+    ///   Contains information about a partition that has attempted to receive an event from the Azure Event Hub
+    ///   service in an <see cref="EventProcessorClient" /> context, as well as the received event, if any.  It
+    ///   also provides a way of creating a checkpoint based on the information contained in the associated event.
     /// </summary>
     ///
     public class EventProcessorEvent
@@ -27,7 +29,7 @@ namespace Azure.Messaging.EventHubs.Processor
         public EventData Data { get; }
 
         /// <summary>
-        ///   TODO.
+        ///   The <see cref="EventProcessorClient" /> for this instance to use as a way of checkpoiting.
         /// </summary>
         ///
         private WeakReference<EventProcessorClient> Processor { get; }
@@ -38,7 +40,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <param name="partitionContext">The context of the Event Hub partition this instance is associated with.</param>
         /// <param name="eventData">The received event to be processed.  Expected to be <c>null</c> if the receive call has timed out.</param>
-        /// <param name="processor">TODO.</param>
+        /// <param name="processor">The <see cref="EventProcessorClient" /> for this instance to use as a way of checkpoiting.</param>
         ///
         internal EventProcessorEvent(PartitionContext partitionContext,
                                      EventData eventData,
@@ -69,10 +71,14 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
-        ///   Updates the checkpoint using the given information for the associated partition and consumer group in the chosen storage service. TODO: add exceptions?
+        ///   Updates the checkpoint using the information contained in this instance for the associated partition
+        ///   and consumer group.
         /// </summary>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
+        ///
+        /// <exception cref="ArgumentNullException">Occurs when <see cref="Data" /> is <c>null</c>.</exception>
+        /// <exception cref="EventHubsClientClosedException">Occurs when the <see cref="EventProcessorClient" /> needed to perform this operation is no longer available.</exception>
         ///
         public Task UpdateCheckpointAsync()
         {
@@ -85,6 +91,8 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 Argument.AssertNotClosed(true, Resources.ClientNeededForThisInformation);
             }
+
+            // Data validation is done by the event processor.
 
             return processor.UpdateCheckpointAsync(Data, Context);
         }
