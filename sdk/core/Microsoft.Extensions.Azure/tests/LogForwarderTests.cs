@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
+using System.Reflection;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 
@@ -22,7 +23,7 @@ namespace Microsoft.Extensions.Azure.Tests
             var loggerFactory = new MockLoggerFactory();
             using (var forwarder = new EventSourceLogForwarder(loggerFactory))
             {
-                typeof(TestSource).GetMethod(eventLevel.ToString()).Invoke(TestSource.Log, Array.Empty<object>());
+                typeof(TestSource).GetMethod(eventLevel.ToString(), BindingFlags.Instance | BindingFlags.Public).Invoke(TestSource.Log, Array.Empty<object>());
             }
 
             var logs = loggerFactory.Loggers["Test.source"].Logs;
