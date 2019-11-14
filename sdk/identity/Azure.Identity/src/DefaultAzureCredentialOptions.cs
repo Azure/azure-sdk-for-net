@@ -11,7 +11,9 @@ namespace Azure.Identity
     public class DefaultAzureCredentialOptions : TokenCredentialOptions
     {
         /// <summary>
-        ///
+        /// The tenant id of the user to authenticate, in the case the <see cref="DefaultAzureCredential"/> authenticates through, the
+        /// <see cref="InteractiveBrowserCredential"/>. The default is null and will authenticate users to their default tenant.
+        /// The value can also be set by setting the environment variable AZURE_TENANT_ID.
         /// </summary>
         public string InteractiveBrowserTenantId { get; set; } = EnvironmentVariables.TenantId;
 
