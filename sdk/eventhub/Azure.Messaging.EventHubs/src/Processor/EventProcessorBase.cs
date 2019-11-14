@@ -689,7 +689,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 await using var connection = CreateConnection();
 
-                await using (var consumer = new EventHubConsumerClient(ConsumerGroup, partitionId, startingPosition, connection, options))
+                await using (var consumer = new EventHubConsumerClient(ConsumerGroup, connection, options))
                 {
                     await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partitionId, startingPosition, maximumReceiveWaitTime, cancellationToken))
                     {
