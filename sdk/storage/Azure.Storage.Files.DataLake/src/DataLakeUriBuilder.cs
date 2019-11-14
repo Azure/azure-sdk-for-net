@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -239,6 +240,54 @@ namespace Azure.Storage.Files.DataLake
                 _uri = BuildUri().ToUri();
             }
             return _uri;
+        }
+
+        /// <summary>
+        /// Gets the blob Uri.
+        /// </summary>
+        internal Uri ToBlobUri()
+        {
+            // AccountName cannot be null
+            // Host.Length mst be at least 5 character longth than AccountName.Length to account for ".dfs."
+            // Host must begin with "[AccountName]."
+            // The substring of Host immediately following "[AccountName]." must be "dfs."
+            if (AccountName != null
+                && Host.Length >= AccountName.Length + 5
+                && Host.Substring(0, AccountName.Length + 1).Equals(AccountName + ".", StringComparison.OrdinalIgnoreCase)
+                && Host.Substring(AccountName.Length + 1, 4).Equals(Constants.DataLake.DfsUriSuffix + ".", StringComparison.OrdinalIgnoreCase))
+            {
+                StringBuilder stringBuilder = new StringBuilder(Host);
+
+                // Replace "dfs" with "blob"
+                stringBuilder.Replace(Constants.DataLake.DfsUriSuffix, Constants.DataLake.BlobUriSuffix, AccountName.Length + 1, 3);
+                Host = stringBuilder.ToString();
+            }
+
+            return ToUri();
+        }
+
+        /// <summary>
+        /// Gets the dfs Uri.
+        /// </summary>
+        internal Uri ToDfsUri()
+        {
+            // AccontName cannot be null
+            // Host.Length must be at least 6 characters longther than AccountName.Length to account for ".blob."
+            // Host must begin with "[AccountName]."
+            // The substring of Host immediately following "[AccountName]." must be ".blob."
+            if (AccountName != null
+                && Host.Length >= AccountName.Length + 6
+                && Host.Substring(0, AccountName.Length + 1).Equals(AccountName + ".", StringComparison.OrdinalIgnoreCase)
+                && Host.Substring(AccountName.Length + 1, 5).Equals(Constants.DataLake.BlobUriSuffix + ".", StringComparison.OrdinalIgnoreCase))
+            {
+                StringBuilder stringBuilder = new StringBuilder(Host);
+
+                // Replace "blob" with "dfs"
+                stringBuilder.Replace(Constants.DataLake.BlobUriSuffix, Constants.DataLake.DfsUriSuffix, AccountName.Length + 1, 4);
+                Host = stringBuilder.ToString();
+            }
+
+            return ToUri();
         }
 
         /// <summary>

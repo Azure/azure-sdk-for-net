@@ -239,7 +239,7 @@ namespace Azure.Storage.Files.DataLake
             options ??= new DataLakeClientOptions();
             _pipeline = options.Build(authentication);
             _uri = serviceUri;
-            _blobUri = GetBlobUri(serviceUri);
+            _blobUri = new DataLakeUriBuilder(serviceUri).ToBlobUri();
             _clientDiagnostics = clientDiagnostics ?? new ClientDiagnostics(options);
             _blobServiceClient = new BlobServiceClient(
                 serviceUri: _blobUri,
@@ -249,27 +249,6 @@ namespace Azure.Storage.Files.DataLake
                 customerProvidedKey: null);
         }
         #endregion ctors
-
-        /// <summary>
-        /// Gets the blob Uri.
-        /// </summary>
-        private static Uri GetBlobUri(Uri uri)
-        {
-            Uri blobUri;
-            if (uri.Host.Contains(Constants.DataLake.DfsUriSuffix))
-            {
-                UriBuilder uriBuilder = new UriBuilder(uri);
-                uriBuilder.Host = uriBuilder.Host.Replace(
-                    Constants.DataLake.DfsUriSuffix,
-                    Constants.DataLake.BlobUriSuffix);
-                blobUri = uriBuilder.Uri;
-            }
-            else
-            {
-                blobUri = uri;
-            }
-            return blobUri;
-        }
 
         /// <summary>
         /// Create a new <see cref="DataLakeFileSystemClient"/> object by appending
