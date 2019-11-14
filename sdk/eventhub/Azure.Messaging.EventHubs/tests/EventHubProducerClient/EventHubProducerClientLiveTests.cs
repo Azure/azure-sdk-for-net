@@ -741,17 +741,19 @@ namespace Azure.Messaging.EventHubs.Tests
                         var partitionIds = await producer.GetPartitionIdsAsync();
                         var partitionsCount = 0;
                         var consumers = new List<EventHubConsumerClient>();
+                        var receivers = new List<PartitionReceiver>();
 
                         try
                         {
                             for (var index = 0; index < partitions; index++)
                             {
                                 consumers.Add(new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, partitionIds[index], EventPosition.Latest, connection));
+                                receivers.Add(consumers[index].CreatePartitionReceiver(partitionIds[index], EventPosition.Latest));
 
                                 // Initiate an operation to force the consumer to connect and set its position at the
                                 // end of the event stream.
 
-                                await consumers[index].ReceiveAsync(1, TimeSpan.Zero);
+                                await receivers[index].ReceiveAsync(1, TimeSpan.Zero);
                             }
 
                             // Send the batches of events.
@@ -765,14 +767,14 @@ namespace Azure.Messaging.EventHubs.Tests
                             // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
                             // to account for availability delays.
 
-                            foreach (EventHubConsumerClient consumer in consumers)
+                            foreach (PartitionReceiver receiver in receivers)
                             {
                                 var receivedEvents = new List<EventData>();
                                 var index = 0;
 
                                 while (++index < ReceiveRetryLimit)
                                 {
-                                    receivedEvents.AddRange(await consumer.ReceiveAsync(batches + 10, TimeSpan.FromMilliseconds(25)));
+                                    receivedEvents.AddRange(await receiver.ReceiveAsync(batches + 10, TimeSpan.FromMilliseconds(25)));
                                 }
 
                                 if (receivedEvents.Count > 0)
@@ -783,6 +785,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         }
                         finally
                         {
+                            await Task.WhenAll(receivers.Select(receiver => receiver.CloseAsync()));
                             await Task.WhenAll(consumers.Select(consumer => consumer.CloseAsync()));
                         }
 
@@ -818,17 +821,19 @@ namespace Azure.Messaging.EventHubs.Tests
                     var partitionsCount = 0;
                     var receivedEventsCount = 0;
                     var consumers = new List<EventHubConsumerClient>();
+                    var receivers = new List<PartitionReceiver>();
 
                     try
                     {
                         for (var index = 0; index < partitions; index++)
                         {
                             consumers.Add(new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, partitionIds[index], EventPosition.Latest, connection));
+                            receivers.Add(consumers[index].CreatePartitionReceiver(partitionIds[index], EventPosition.Latest));
 
                             // Initiate an operation to force the consumer to connect and set its position at the
                             // end of the event stream.
 
-                            await consumers[index].ReceiveAsync(1, TimeSpan.Zero);
+                            await receivers[index].ReceiveAsync(1, TimeSpan.Zero);
                         }
 
                         // Send the batch of events.
@@ -839,14 +844,14 @@ namespace Azure.Messaging.EventHubs.Tests
                         // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
                         // to account for availability delays.
 
-                        foreach (EventHubConsumerClient consumer in consumers)
+                        foreach (PartitionReceiver receiver in receivers)
                         {
                             var receivedEvents = new List<EventData>();
                             var index = 0;
 
                             while (++index < ReceiveRetryLimit)
                             {
-                                receivedEvents.AddRange(await consumer.ReceiveAsync(eventBatch.Count + 10, TimeSpan.FromMilliseconds(25)));
+                                receivedEvents.AddRange(await receiver.ReceiveAsync(eventBatch.Count + 10, TimeSpan.FromMilliseconds(25)));
                             }
 
                             if (receivedEvents.Count > 0)
@@ -858,6 +863,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     }
                     finally
                     {
+                        await Task.WhenAll(receivers.Select(receiver => receiver.CloseAsync()));
                         await Task.WhenAll(consumers.Select(consumer => consumer.CloseAsync()));
                     }
 
@@ -890,17 +896,19 @@ namespace Azure.Messaging.EventHubs.Tests
                     var partitionsCount = 0;
                     var receivedEventsCount = 0;
                     var consumers = new List<EventHubConsumerClient>();
+                    var receivers = new List<PartitionReceiver>();
 
                     try
                     {
                         for (var index = 0; index < partitions; index++)
                         {
                             consumers.Add(new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, partitionIds[index], EventPosition.Latest, connection));
+                            receivers.Add(consumers[index].CreatePartitionReceiver(partitionIds[index], EventPosition.Latest));
 
                             // Initiate an operation to force the consumer to connect and set its position at the
                             // end of the event stream.
 
-                            await consumers[index].ReceiveAsync(1, TimeSpan.Zero);
+                            await receivers[index].ReceiveAsync(1, TimeSpan.Zero);
                         }
 
                         // Send the batches of events.
@@ -916,14 +924,14 @@ namespace Azure.Messaging.EventHubs.Tests
                         // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
                         // to account for availability delays.
 
-                        foreach (EventHubConsumerClient consumer in consumers)
+                        foreach (PartitionReceiver receiver in receivers)
                         {
                             var receivedEvents = new List<EventData>();
                             var index = 0;
 
                             while (++index < ReceiveRetryLimit)
                             {
-                                receivedEvents.AddRange(await consumer.ReceiveAsync(batches + 10, TimeSpan.FromMilliseconds(25)));
+                                receivedEvents.AddRange(await receiver.ReceiveAsync(batches + 10, TimeSpan.FromMilliseconds(25)));
                             }
 
                             if (receivedEvents.Count > 0)
@@ -940,6 +948,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     }
                     finally
                     {
+                        await Task.WhenAll(receivers.Select(receiver => receiver.CloseAsync()));
                         await Task.WhenAll(consumers.Select(consumer => consumer.CloseAsync()));
                     }
 

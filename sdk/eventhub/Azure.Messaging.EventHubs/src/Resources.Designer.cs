@@ -132,13 +132,13 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Could not create a subscription for events for Event Hub: &apos;{0}&apos;, partition: &apos;{1}&apos;, consumer group: &apos;{2}&apos;..
+        ///   Looks up a localized string similar to Could not create a reader for events for Event Hub: &apos;{0}&apos;, partition: &apos;{1}&apos;, consumer group: &apos;{2}&apos;..
         /// </summary>
-        internal static string FailedToCreateEventSubscription
+        internal static string FailedToCreateReader
         {
             get
             {
-                return ResourceManager.GetString("FailedToCreateEventSubscription", resourceCulture);
+                return ResourceManager.GetString("FailedToCreateReader", resourceCulture);
             }
         }
 

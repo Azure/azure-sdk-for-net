@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Channels;
@@ -135,6 +137,13 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         private TransportConsumer InnerConsumer { get; }
+
+        /// <summary>
+        ///   The set of active Event Hub transport-specific consumers created by this client for use with
+        ///   delegated operations.
+        /// </summary>
+        ///
+        private ConcurrentDictionary<string, TransportConsumer> ActiveConsumers { get; } = new ConcurrentDictionary<string, TransportConsumer>();
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventHubConsumerClient"/> class.
@@ -390,52 +399,6 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   A set of information about the last enqueued event of a partition, as observed by the consumer as
-        ///   events are received from the Event Hubs service.  This is only available if the consumer was
-        ///   created with <see cref="EventHubConsumerClientOptions.TrackLastEnqueuedEventInformation" /> set.
-        /// </summary>
-        ///
-        /// <remarks>
-        ///   When information about the partition's last enqueued event is being tracked, each event received from the Event Hubs
-        ///   service will carry metadata about the partition that it otherwise would not. This results in a small amount of
-        ///   additional network bandwidth consumption that is generally a favorable trade-off when considered
-        ///   against periodically making requests for partition properties using an Event Hub client.
-        /// </remarks>
-        ///
-        /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="EventHubConsumerClientOptions.TrackLastEnqueuedEventInformation" /> set.</exception>
-        ///
-        public virtual LastEnqueuedEventProperties ReadLastEnqueuedEventInformation()
-        {
-            if (!Options.TrackLastEnqueuedEventInformation)
-            {
-                throw new InvalidOperationException(Resources.TrackLastEnqueuedEventInformationNotSet);
-            }
-
-            return new LastEnqueuedEventProperties(EventHubName, PartitionId, InnerConsumer.LastReceivedEvent);
-        }
-
-        /// <summary>
-        ///   Receives a batch of <see cref="EventData" /> from the Event Hub partition.
-        /// </summary>
-        ///
-        /// <param name="maximumMessageCount">The maximum number of messages to receive in this batch.</param>
-        /// <param name="maximumWaitTime">The maximum amount of time to wait to build up the requested message count for the batch; if not specified, the per-try timeout specified by the retry policy will be used.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <returns>The batch of <see cref="EventData" /> from the Event Hub partition this consumer is associated with.  If no events are present, an empty enumerable is returned.</returns>
-        ///
-        public virtual Task<IEnumerable<EventData>> ReceiveAsync(int maximumMessageCount,
-                                                                 TimeSpan? maximumWaitTime = default,
-                                                                 CancellationToken cancellationToken = default)
-        {
-            maximumWaitTime ??= Options.DefaultMaximumReceiveWaitTime;
-
-            Argument.AssertInRange(maximumMessageCount, 1, int.MaxValue, nameof(maximumMessageCount));
-            Argument.AssertNotNegative(maximumWaitTime.Value, nameof(maximumWaitTime));
-
-            return InnerConsumer.ReceiveAsync(maximumMessageCount, maximumWaitTime.Value, cancellationToken);
-        }
-        /// <summary>
         ///   Reads events from the requested partition as an asynchronous enumerable, allowing events to be iterated as they
         ///   become available on the partition, waiting as necessary should there be no events available.
         ///
@@ -485,12 +448,14 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <seealso cref="ReadEventsFromPartitionAsync(string, EventPosition, CancellationToken)"/>
         ///
-        public async IAsyncEnumerable<PartitionEvent> ReadEventsFromPartitionAsync(string partitionId,
-                                                                                   EventPosition startingPosition,
-                                                                                   TimeSpan? maximumWaitTime,
-                                                                                   [EnumeratorCancellation] CancellationToken cancellationToken = default)
+        public virtual async IAsyncEnumerable<PartitionEvent> ReadEventsFromPartitionAsync(string partitionId,
+                                                                                           EventPosition startingPosition,
+                                                                                           TimeSpan? maximumWaitTime,
+                                                                                           [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotClosed(Closed, nameof(EventHubConsumerClient));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
             EventHubsEventSource.Log.ReadEventsFromPartitionStart(EventHubName, PartitionId);
 
             var cancelPublishingAsync = default(Func<Task>);
@@ -534,6 +499,39 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   Creates a <see cref="PartitionReceiver" /> which allows events from a specific partition of an Event Hub to be read
+        ///   with a greater level of control over communication with the Event Hubs service than is offered by other ways of consuming
+        ///   events.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
+        /// <param name="startingPosition">The position within the partition where the consumer should begin reading events.</param>
+        ///
+        /// <returns>A <see cref="PartitionReceiver"/> to be used for iterating over events in the partition.</returns>
+        ///
+        /// <remarks>
+        ///   It is recommended that the <see cref="EventProcessorClient" /> or <see cref="EventHubConsumerClient" />
+        ///   be used for reading and processing events for the majority of scenarios.  The partition receiver is
+        ///   intended to enable scenarios with special needs which require more direct control.
+        /// </remarks>
+        ///
+        /// <seealso cref="EventProcessorClient" />
+        /// <seealso cref="ReadEventsFromPartitionAsync(string, EventPosition, CancellationToken)"/>
+        /// <seealso cref="ReadEventsFromPartitionAsync(string, EventPosition, TimeSpan?, CancellationToken)"/>
+        ///
+        public virtual PartitionReceiver CreatePartitionReceiver(string partitionId,
+                                                                 EventPosition startingPosition) =>
+            new PartitionReceiver
+            (
+                ConsumerGroup,
+                partitionId,
+                EventHubName,
+                Options.TrackLastEnqueuedEventInformation,
+                Options.DefaultMaximumReceiveWaitTime ?? RetryPolicy.CalculateTryTimeout(0),
+                Connection.CreateTransportConsumer(ConsumerGroup, partitionId, startingPosition, Options)
+             );
+
+        /// <summary>
         ///   Closes the consumer.
         /// </summary>
         ///
@@ -543,11 +541,23 @@ namespace Azure.Messaging.EventHubs
         ///
         public virtual async Task CloseAsync(CancellationToken cancellationToken = default)
         {
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Closed = true;
 
             try
             {
                 await InnerConsumer.CloseAsync(cancellationToken).ConfigureAwait(false);
+
+                var pendingCloses = new List<Task>();
+
+                foreach (var consumer in ActiveConsumers.Values)
+                {
+                   pendingCloses.Add(consumer.CloseAsync(CancellationToken.None));
+                }
+
+                ActiveConsumers.Clear();
+                await Task.WhenAll(pendingCloses).ConfigureAwait(false);
+
 
                 if (OwnsConnection)
                 {
@@ -638,6 +648,8 @@ namespace Azure.Messaging.EventHubs
 
             var transportConsumer = default(TransportConsumer);
             var publishingTask = default(Task);
+            var observedException = default(Exception);
+            var publisherId = Guid.NewGuid().ToString();
 
             // Termination must take place in multiple places due to the a catch block being
             // disallowed with the use of "yield return".  Create a local function that encapsulates
@@ -662,12 +674,24 @@ namespace Azure.Messaging.EventHubs
                 if (transportConsumer != null)
                 {
                     await transportConsumer.CloseAsync(CancellationToken.None).ConfigureAwait(false);
+                    ActiveConsumers.TryRemove(publisherId, out var _);
                 }
 
                 publishingCancellationSource?.Dispose();
                 channel.Writer.TryComplete();
 
-                EventHubsEventSource.Log.PublishPartitionEventsToChannelComplete(EventHubName, partitionId);
+                try
+                {
+                    if (observedException != default)
+                    {
+                        EventHubsEventSource.Log.PublishPartitionEventsToChannelError(EventHubName, partitionId, observedException.Message);
+                        throw observedException;
+                    }
+                }
+                finally
+                {
+                    EventHubsEventSource.Log.PublishPartitionEventsToChannelComplete(EventHubName, partitionId);
+                }
             }
 
             // Setup the publishing context and begin publishing to the channel in the background.
@@ -675,7 +699,22 @@ namespace Azure.Messaging.EventHubs
             try
             {
                 transportConsumer = Connection.CreateTransportConsumer(ConsumerGroup, partitionId, startingPosition, Options);
-                publishingTask = StartBackgroundChannelPublishingAsync(transportConsumer, channel, new PartitionContext(EventHubName, partitionId, transportConsumer), publishingCancellationSource.Token);
+
+                if (!ActiveConsumers.TryAdd(publisherId, transportConsumer))
+                {
+                    await transportConsumer.CloseAsync(CancellationToken.None).ConfigureAwait(false);
+                    transportConsumer = null;
+                    throw new EventHubsException(false, EventHubName, String.Format(CultureInfo.CurrentCulture, Resources.FailedToCreateReader, EventHubName, partitionId, ConsumerGroup));
+                }
+
+                publishingTask = StartBackgroundChannelPublishingAsync
+                (
+                    transportConsumer,
+                    channel,
+                    new PartitionContext(EventHubName, partitionId, transportConsumer),
+                    ex => { observedException = ex; },
+                    publishingCancellationSource.Token
+                );
             }
             catch (Exception ex)
             {
@@ -696,6 +735,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="transportConsumer">The consumer to use for receiving events.</param>
         /// <param name="channel">The channel to which received events should be published.</param>
         /// <param name="partitionContext">The context that represents the partition from which events being received.</param>
+        /// <param name="notifyException">An action to be invoked when an exception is encountered during publishing.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to signal the request to cancel the background publishing.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
@@ -703,6 +743,7 @@ namespace Azure.Messaging.EventHubs
         private Task StartBackgroundChannelPublishingAsync(TransportConsumer transportConsumer,
                                                            Channel<PartitionEvent> channel,
                                                            PartitionContext partitionContext,
+                                                           Action<Exception> notifyException,
                                                            CancellationToken cancellationToken) =>
             Task.Run(async () =>
             {
@@ -737,9 +778,16 @@ namespace Azure.Messaging.EventHubs
                         activeException = (cancellationToken.IsCancellationRequested) ? null : ex;
                         break;
                     }
-                    catch (ConsumerDisconnectedException ex)
+                    catch (OperationCanceledException ex)
                     {
-                        // If the consumer was disconnected, it is known to be unrecoverable; do not offer the chance to retry.
+                        activeException = new TaskCanceledException(ex.Message, ex);
+                        break;
+                    }
+                    catch (Exception ex) when
+                        (ex is ConsumerDisconnectedException
+                        || ex is EventHubsClientClosedException)
+                    {
+                        // If the consumer was disconnected or closed, it is known to be unrecoverable; do not offer the chance to retry.
 
                         activeException = ex;
                         break;
@@ -779,6 +827,7 @@ namespace Azure.Messaging.EventHubs
                 if (activeException != null)
                 {
                     channel.Writer.TryComplete(activeException);
+                    notifyException(activeException);
                 }
 
             }, cancellationToken);

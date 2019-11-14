@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Security.KeyVault.Tests;
 using NUnit.Framework;
@@ -173,6 +175,78 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 json.WriteObject(policy);
 
                 Assert.AreEqual(@"{""attributes"":{""enabled"":false}}", json.ToString());
+            }
+        }
+
+        [Test]
+        public void DefaultWithSubjectName()
+        {
+            var expected = new CertificatePolicy("CN=DefaultPolicy", "Self");
+            AssertAreEqual(expected, CertificatePolicy.Default);
+        }
+
+        private static void AssertAreEqual(CertificatePolicy expected, CertificatePolicy actual)
+        {
+            Assert.AreEqual(expected.Subject, actual.Subject);
+            CollectionAssert.AreEqual(expected.SubjectAlternativeNames, actual.SubjectAlternativeNames);
+            Assert.AreEqual(expected.IssuerName, actual.IssuerName);
+
+            Assert.AreEqual(expected.CertificateTransparency, actual.CertificateTransparency);
+            Assert.AreEqual(expected.CertificateType, actual.CertificateType);
+            Assert.AreEqual(expected.ContentType, actual.ContentType);
+            Assert.AreEqual(expected.CreatedOn, actual.CreatedOn);
+            Assert.AreEqual(expected.Enabled, actual.Enabled);
+            CollectionAssert.AreEqual(expected.EnhancedKeyUsage, actual.EnhancedKeyUsage);
+            Assert.AreEqual(expected.Exportable, actual.Exportable);
+            Assert.AreEqual(expected.KeyCurveName, actual.KeyCurveName);
+            Assert.AreEqual(expected.KeySize, actual.KeySize);
+            Assert.AreEqual(expected.KeyType, actual.KeyType);
+            CollectionAssert.AreEqual(expected.KeyUsage, actual.KeyUsage);
+            CollectionAssert.AreEqual(expected.LifetimeActions, actual.LifetimeActions, LifetimeActionComparer.Instance);
+            Assert.AreEqual(expected.ReuseKey, actual.ReuseKey);
+            Assert.AreEqual(expected.UpdatedOn, actual.UpdatedOn);
+            Assert.AreEqual(expected.ValidityInMonths, actual.ValidityInMonths);
+        }
+
+        private class LifetimeActionComparer : IComparer<LifetimeAction>, IComparer
+        {
+            public static readonly LifetimeActionComparer Instance = new LifetimeActionComparer();
+
+            public int Compare(LifetimeAction x, LifetimeAction y)
+            {
+                int comparison = Comparer<CertificatePolicyAction>.Default.Compare(x.Action, y.Action);
+                if (comparison != 0)
+                {
+                    return comparison;
+                }
+
+                comparison = Comparer<int?>.Default.Compare(x.DaysBeforeExpiry, y.DaysBeforeExpiry);
+                if (comparison != 0)
+                {
+                    return comparison;
+                }
+
+                return Comparer<int?>.Default.Compare(x.LifetimePercentage, y.LifetimePercentage);
+            }
+
+            public int Compare(object x, object y)
+            {
+                if (ReferenceEquals(x, y))
+                {
+                    return 0;
+                }
+
+                if (x is LifetimeAction left)
+                {
+                    if (y is LifetimeAction right)
+                    {
+                        return Compare(left, right);
+                    }
+
+                    return 1;
+                }
+
+                return -1;
             }
         }
     }
