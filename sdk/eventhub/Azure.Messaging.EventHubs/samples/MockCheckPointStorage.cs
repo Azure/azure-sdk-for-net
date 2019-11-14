@@ -9,10 +9,16 @@ using System.Threading.Tasks;
 namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
-    ///   A volatile in-memory storage service that keeps track of checkpoints and ownership.
+    /// The EventProcessor relies on a <see cref="PartitionManager" /> to store checkpoints and handle partition
+    /// ownerships.  <see cref="MockCheckPointStorage"/> is simple partition manager that stores checkpoints and
+    /// partition ownerships in memory of your program.
+    ///
+    /// You can use the <see cref="MockCheckPointStorage"/> to get started with using the `EventProcessor`.
+    /// But in production, you should choose an implementation of the <see cref="PartitionManager" /> interface that will
+    /// store the checkpoints and partition ownerships to a durable store instead.
     /// </summary>
     ///
-    public sealed class InMemoryPartitionManager : PartitionManager
+    public sealed class MockCheckPointStorage : PartitionManager
     {
         /// <summary>The primitive for synchronizing access during ownership update.</summary>
         private readonly object _ownershipLock = new object();
@@ -24,12 +30,12 @@ namespace Azure.Messaging.EventHubs.Processor
         private readonly Action<string> _logger;
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="InMemoryPartitionManager"/> class.
+        ///   Initializes a new instance of the <see cref="MockCheckPointStorage"/> class.
         /// </summary>
         ///
         /// <param name="logger">Logs activities performed by this partition manager.</param>
         ///
-        public InMemoryPartitionManager(Action<string> logger = null)
+        public MockCheckPointStorage(Action<string> logger = null)
         {
             _logger = logger;
 

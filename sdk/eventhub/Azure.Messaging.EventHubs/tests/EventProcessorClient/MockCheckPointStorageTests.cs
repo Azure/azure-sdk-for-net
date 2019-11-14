@@ -11,36 +11,36 @@ using NUnit.Framework;
 namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
-    ///   The suite of tests for the <see cref="InMemoryPartitionManager" />
+    ///   The suite of tests for the <see cref="MockCheckPointStorage" />
     ///   class.
     /// </summary>
     ///
     [TestFixture]
-    public class InMemoryPartitionManagerTests
+    public class MockCheckPointStorageTests
     {
         /// <summary>
-        ///    Verifies functionality of the <see cref="InMemoryPartitionManager.ListOwnershipAsync" />
+        ///    Verifies functionality of the <see cref="MockCheckPointStorage.ListOwnershipAsync" />
         ///    method.
         /// </summary>
         ///
         [Test]
         public async Task ListOwnershipAsyncReturnsEmptyIEnumerableWhenThereAreNoOwnership()
         {
-            var partitionManager = new InMemoryPartitionManager();
+            var partitionManager = new MockCheckPointStorage();
             IEnumerable<PartitionOwnership> ownership = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
 
             Assert.That(ownership, Is.Not.Null.And.Empty);
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="InMemoryPartitionManager.ClaimOwnershipAsync" />
+        ///    Verifies functionality of the <see cref="MockCheckPointStorage.ClaimOwnershipAsync" />
         ///    method.
         /// </summary>
         ///
         [Test]
         public async Task FirstOwnershipClaimSucceeds()
         {
-            var partitionManager = new InMemoryPartitionManager();
+            var partitionManager = new MockCheckPointStorage();
             var ownershipList = new List<PartitionOwnership>();
             var ownership =
                 new PartitionOwnership
@@ -64,7 +64,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="InMemoryPartitionManager.ClaimOwnershipAsync" />
+        ///    Verifies functionality of the <see cref="MockCheckPointStorage.ClaimOwnershipAsync" />
         ///    method.
         /// </summary>
         ///
@@ -73,7 +73,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("invalidETag")]
         public async Task OwnershipClaimFailsWhenETagIsInvalid(string eTag)
         {
-            var partitionManager = new InMemoryPartitionManager();
+            var partitionManager = new MockCheckPointStorage();
             var ownershipList = new List<PartitionOwnership>();
             var firstOwnership =
                 new PartitionOwnership
@@ -116,14 +116,14 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="InMemoryPartitionManager.ClaimOwnershipAsync" />
+        ///    Verifies functionality of the <see cref="MockCheckPointStorage.ClaimOwnershipAsync" />
         ///    method.
         /// </summary>
         ///
         [Test]
         public async Task OwnershipClaimSucceedsWhenETagIsValid()
         {
-            var partitionManager = new InMemoryPartitionManager();
+            var partitionManager = new MockCheckPointStorage();
             var ownershipList = new List<PartitionOwnership>();
             var firstOwnership =
                 new PartitionOwnership
@@ -170,14 +170,14 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="InMemoryPartitionManager.ClaimOwnershipAsync" />
+        ///    Verifies functionality of the <see cref="MockCheckPointStorage.ClaimOwnershipAsync" />
         ///    method.
         /// </summary>
         ///
         [Test]
         public async Task ClaimOwnershipAsyncCanClaimMultipleOwnership()
         {
-            var partitionManager = new InMemoryPartitionManager();
+            var partitionManager = new MockCheckPointStorage();
             var ownershipList = new List<PartitionOwnership>();
             var ownershipCount = 5;
 
@@ -204,14 +204,14 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="InMemoryPartitionManager.ClaimOwnershipAsync" />
+        ///    Verifies functionality of the <see cref="MockCheckPointStorage.ClaimOwnershipAsync" />
         ///    method.
         /// </summary>
         ///
         [Test]
         public async Task ClaimOwnershipAsyncReturnsOnlyTheSuccessfullyClaimedOwnership()
         {
-            var partitionManager = new InMemoryPartitionManager();
+            var partitionManager = new MockCheckPointStorage();
             var ownershipList = new List<PartitionOwnership>();
             var ownershipCount = 5;
 
@@ -264,14 +264,14 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="InMemoryPartitionManager.ClaimOwnershipAsync" />
+        ///    Verifies functionality of the <see cref="MockCheckPointStorage.ClaimOwnershipAsync" />
         ///    method.
         /// </summary>
         ///
         [Test]
         public async Task OwnershipClaimDoesNotInterfereWithOtherConsumerGroups()
         {
-            var partitionManager = new InMemoryPartitionManager();
+            var partitionManager = new MockCheckPointStorage();
             var ownershipList = new List<PartitionOwnership>();
             var firstOwnership =
                 new PartitionOwnership
@@ -321,14 +321,14 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="InMemoryPartitionManager.ClaimOwnershipAsync" />
+        ///    Verifies functionality of the <see cref="MockCheckPointStorage.ClaimOwnershipAsync" />
         ///    method.
         /// </summary>
         ///
         [Test]
         public async Task OwnershipClaimDoesNotInterfereWithOtherEventHubs()
         {
-            var partitionManager = new InMemoryPartitionManager();
+            var partitionManager = new MockCheckPointStorage();
             var ownershipList = new List<PartitionOwnership>();
             var firstOwnership =
                 new PartitionOwnership
@@ -378,14 +378,14 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="InMemoryPartitionManager.ClaimOwnershipAsync" />
+        ///    Verifies functionality of the <see cref="MockCheckPointStorage.ClaimOwnershipAsync" />
         ///    method.
         /// </summary>
         ///
         [Test]
         public async Task OwnershipClaimDoesNotInterfereWithOtherNamespaces()
         {
-            var partitionManager = new InMemoryPartitionManager();
+            var partitionManager = new MockCheckPointStorage();
             var ownershipList = new List<PartitionOwnership>();
             var firstOwnership =
                 new PartitionOwnership
@@ -442,7 +442,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task CheckpointUpdateFailsWhenAssociatedOwnershipDoesNotExist()
         {
-            var partitionManager = new InMemoryPartitionManager();
+            var partitionManager = new MockCheckPointStorage();
 
             await partitionManager.UpdateCheckpointAsync(new Checkpoint
                 ("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", offset: 10, sequenceNumber: 20));
@@ -454,14 +454,14 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="InMemoryPartitionManager.UpdateCheckpointAsync" />
+        ///    Verifies functionality of the <see cref="MockCheckPointStorage.UpdateCheckpointAsync" />
         ///    method.
         /// </summary>
         ///
         [Test]
         public async Task CheckpointUpdateFailsWhenOwnerChanges()
         {
-            var partitionManager = new InMemoryPartitionManager();
+            var partitionManager = new MockCheckPointStorage();
             var originalOwnership = new PartitionOwnership
                 ("namespace", "eventHubName", "consumerGroup", "ownerIdentifier1", "partitionId", offset: 1, sequenceNumber: 2, lastModifiedTime: DateTimeOffset.UtcNow);
 
@@ -494,14 +494,14 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="InMemoryPartitionManager.UpdateCheckpointAsync" />
+        ///    Verifies functionality of the <see cref="MockCheckPointStorage.UpdateCheckpointAsync" />
         ///    method.
         /// </summary>
         ///
         [Test]
         public async Task CheckpointUpdateUpdatesOwnershipInformation()
         {
-            var partitionManager = new InMemoryPartitionManager();
+            var partitionManager = new MockCheckPointStorage();
             var originalOwnership = new PartitionOwnership
                 ("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", offset: 1, sequenceNumber: 2, lastModifiedTime: DateTimeOffset.UtcNow.Subtract(TimeSpan.FromMinutes(1)));
 
@@ -533,14 +533,14 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="InMemoryPartitionManager.UpdateCheckpointAsync" />
+        ///    Verifies functionality of the <see cref="MockCheckPointStorage.UpdateCheckpointAsync" />
         ///    method.
         /// </summary>
         ///
         [Test]
         public async Task CheckpointUpdateDoesNotInterfereWithOtherConsumerGroups()
         {
-            var partitionManager = new InMemoryPartitionManager();
+            var partitionManager = new MockCheckPointStorage();
 
             var ownership1 = new PartitionOwnership
                 ("namespace", "eventHubName", "consumerGroup1", "ownerIdentifier", "partitionId", offset: 1);
@@ -561,14 +561,14 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="InMemoryPartitionManager.UpdateCheckpointAsync" />
+        ///    Verifies functionality of the <see cref="MockCheckPointStorage.UpdateCheckpointAsync" />
         ///    method.
         /// </summary>
         ///
         [Test]
         public async Task CheckpointUpdateDoesNotInterfereWithOtherEventHubs()
         {
-            var partitionManager = new InMemoryPartitionManager();
+            var partitionManager = new MockCheckPointStorage();
 
             var ownership1 = new PartitionOwnership
                 ("namespace", "eventHubName1", "consumerGroup", "ownerIdentifier", "partitionId", offset: 1);
@@ -589,14 +589,14 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="InMemoryPartitionManager.UpdateCheckpointAsync" />
+        ///    Verifies functionality of the <see cref="MockCheckPointStorage.UpdateCheckpointAsync" />
         ///    method.
         /// </summary>
         ///
         [Test]
         public async Task CheckpointUpdateDoesNotInterfereWithOtherNamespaces()
         {
-            var partitionManager = new InMemoryPartitionManager();
+            var partitionManager = new MockCheckPointStorage();
 
             var ownership1 = new PartitionOwnership
                 ("namespace1", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", offset: 1);
@@ -617,14 +617,14 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="InMemoryPartitionManager.UpdateCheckpointAsync" />
+        ///    Verifies functionality of the <see cref="MockCheckPointStorage.UpdateCheckpointAsync" />
         ///    method.
         /// </summary>
         ///
         [Test]
         public async Task CheckpointUpdateDoesNotInterfereWithOtherPartitions()
         {
-            var partitionManager = new InMemoryPartitionManager();
+            var partitionManager = new MockCheckPointStorage();
 
             var ownership1 = new PartitionOwnership
                 ("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId1", offset: 1);

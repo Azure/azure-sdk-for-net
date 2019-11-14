@@ -567,7 +567,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // Create a partition manager and add an ownership with a checkpoint in it.
 
-                    var partitionManager = new InMemoryPartitionManager();
+                    var partitionManager = new MockCheckPointStorage();
 
                     await partitionManager.ClaimOwnershipAsync(new List<PartitionOwnership>()
                     {
@@ -667,7 +667,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // Create a partition manager so we can retrieve the created checkpoint from it.
 
-                    var partitionManager = new InMemoryPartitionManager();
+                    var partitionManager = new MockCheckPointStorage();
 
                     // Create the event processor manager to manage our event processors.
 

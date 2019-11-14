@@ -49,10 +49,12 @@ namespace Azure.Messaging.EventHubs.Samples
 
             // A partition manager may create checkpoints and list/claim partition ownership.  A developer may implement their
             // own partition manager by creating a subclass from the PartitionManager abstract class.  Here we are creating
-            // a new instance of an InMemoryPartitionManager, provided by the Azure.Messaging.EventHubs.Processor namespace.
+            // a new instance of a MockCheckPointStorage to get started with using the `EventProcessor` but in production,
+            // you should choose an implementation of the PartitionManager interface that will
+            // store the checkpoints and partition ownerships to a durable store instead.
             // This isn't relevant to understanding this sample, but is required by the event processor constructor.
 
-            var partitionManager = new InMemoryPartitionManager();
+            var partitionManager = new MockCheckPointStorage();
 
             // It's also possible to specify custom options upon event processor creation.  We don't want to wait
             // more than 1 second for every set of events.

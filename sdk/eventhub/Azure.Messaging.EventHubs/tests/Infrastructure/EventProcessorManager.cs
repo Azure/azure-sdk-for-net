@@ -95,7 +95,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             ConsumerGroup = consumerGroup;
             Connection = connection;
-            InnerPartitionManager = partitionManager ?? new InMemoryPartitionManager();
+            InnerPartitionManager = partitionManager ?? new MockCheckPointStorage();
 
             // In case it has not been specified, set the maximum receive wait time to 2 seconds because the default
             // value (1 minute) would take too much time.

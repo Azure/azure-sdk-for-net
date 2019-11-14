@@ -247,7 +247,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var context = new PartitionContext(eventHubName, "partition");
             var data = new EventData(new byte[0], sequenceNumber: 0, offset: 0);
 
-            var processor = new EventProcessorClient("cg", new InMemoryPartitionManager(), fakeConnection, null);
+            var processor = new EventProcessorClient("cg", new MockCheckPointStorage(), fakeConnection, null);
 
             await processor.UpdateCheckpointAsync(data, context);
 
