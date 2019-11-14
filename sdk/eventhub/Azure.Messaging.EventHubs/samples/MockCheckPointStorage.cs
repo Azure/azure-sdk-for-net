@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventHubs.Processor
     ///
     /// You can use the <see cref="MockCheckPointStorage"/> to get started with using the `EventProcessor`.
     /// But in production, you should choose an implementation of the <see cref="PartitionManager" /> interface that will
-    /// store the checkpoints and partition ownerships to a durable store instead.
+    /// store the checkpoints and partition ownerships to a persistent store instead.
     /// </summary>
     ///
     public sealed class MockCheckPointStorage : PartitionManager
