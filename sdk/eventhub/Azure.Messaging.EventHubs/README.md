@@ -237,10 +237,7 @@ The available samples are:
 - [Consume events from a known position in the Event Hub partition](./samples/Sample10_ConsumeEventsFromAKnownPosition.cs)
   An example of consuming events, starting at a well-known position in the Event Hub partition.
   
-- [Consume events from an Event Hub partition in batches](./samples/Sample11_ConsumeEventsByBatch.cs)
-  An example of consuming events, using a batch approach to control throughput.
-  
-- [Consume events from all partitions of an Event Hub with the Event Processor](./samples/Sample12_ConsumeEventsWithEventProcessor.cs)
+- [Consume events from all partitions of an Event Hub with the Event Processor](./samples/Sample11_ConsumeEventsWithEventProcessor.cs)
   An example of consuming events from all Event Hub partitions at once, using the Event Processor client.
 
 ## Contributing  

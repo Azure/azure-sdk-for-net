@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Testing;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Data.AppConfiguration.Tests
@@ -32,6 +34,14 @@ namespace Azure.Data.AppConfiguration.Tests
                 new ConfigurationClient(
                     Recording.GetConnectionStringFromEnvironment("APPCONFIGURATION_CONNECTION_STRING"),
                     Recording.InstrumentClientOptions(new ConfigurationClientOptions())));
+        }
+
+        private ConfigurationClient GetAADClient()
+        {
+            string endpoint = Recording.RequireVariableFromEnvironment("APPCONFIGURATION_ENDPOINT_STRING");
+            TokenCredential credential = Recording.GetCredential(new DefaultAzureCredential());
+            ConfigurationClientOptions options = Recording.InstrumentClientOptions(new ConfigurationClientOptions());
+            return InstrumentClient(new ConfigurationClient(new Uri(endpoint), credential, options));
         }
 
         private ConfigurationSetting CreateSetting()
@@ -535,7 +545,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 // Test
                 var selector = new SettingSelector(setting.Key)
                 {
-                    AsOf = DateTimeOffset.MaxValue
+                    AcceptDateTime = DateTimeOffset.MaxValue
                 };
 
                 int resultsReturned = 0;
@@ -1258,6 +1268,23 @@ namespace Azure.Data.AppConfiguration.Tests
                 {
                     await service.SetReadOnlyAsync(testSetting.Key);
                 });
+            }
+            finally
+            {
+                await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
+            }
+        }
+
+        [Test]
+        public async Task AddSettingDefaultAAD()
+        {
+            ConfigurationClient service = GetAADClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            try
+            {
+                ConfigurationSetting setting = await service.AddConfigurationSettingAsync(testSetting);
+                Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting));
             }
             finally
             {

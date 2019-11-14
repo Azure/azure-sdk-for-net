@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace Azure.Data.AppConfiguration
     /// </summary>
     public partial class ConfigurationClient
     {
-        private readonly Uri _baseUri;
+        private readonly Uri _endpoint;
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
 
@@ -47,18 +48,48 @@ namespace Azure.Data.AppConfiguration
             if (options == null)
                 throw new ArgumentNullException(nameof(options));
 
-            ParseConnectionString(connectionString, out _baseUri, out var credential, out var secret);
+            ParseConnectionString(connectionString, out _endpoint, out var credential, out var secret);
 
-            _pipeline = HttpPipelineBuilder.Build(options,
-                    new HttpPipelinePolicy[] { new CustomHeadersPolicy() },
-                    new HttpPipelinePolicy[] {
-                        new ApiVersionPolicy(options.GetVersionString()),
-                        new AuthenticationPolicy(credential, secret),
-                        new SyncTokenPolicy() },
-                    new ResponseClassifier());
+            _pipeline = CreatePipeline(options, new AuthenticationPolicy(credential, secret));
 
             _clientDiagnostics = new ClientDiagnostics(options);
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConfigurationClient"/> class.
+        /// </summary>
+        /// <param name="endpoint">The <see cref="Uri"/> referencing the app configuration storage.</param>
+        /// <param name="credential">The token credential used to sign requests.</param>
+        public ConfigurationClient(Uri endpoint, TokenCredential credential)
+            : this(endpoint, credential, new ConfigurationClientOptions())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConfigurationClient"/> class.
+        /// </summary>
+        /// <param name="endpoint">The <see cref="Uri"/> referencing the app configuration storage.</param>
+        /// <param name="credential">The token credential used to sign requests.</param>
+        /// <param name="options">Options that allow configuration of requests sent to the configuration store.</param>
+        public ConfigurationClient(Uri endpoint, TokenCredential credential, ConfigurationClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            _endpoint = endpoint;
+            _pipeline = CreatePipeline(options, new BearerTokenAuthenticationPolicy(credential, GetDefaultScope(endpoint)));
+
+            _clientDiagnostics = new ClientDiagnostics(options);
+        }
+
+        private static HttpPipeline CreatePipeline(ConfigurationClientOptions options, HttpPipelinePolicy authenticationPolicy)
+            => HttpPipelineBuilder.Build(options,
+                new HttpPipelinePolicy[] { new CustomHeadersPolicy() },
+                new HttpPipelinePolicy[] { new ApiVersionPolicy(options.GetVersionString()), authenticationPolicy, new SyncTokenPolicy() },
+                new ResponseClassifier());
+
+        private static string GetDefaultScope(Uri uri)
+            => $"{uri.GetComponents(UriComponents.SchemeAndServer, UriFormat.SafeUnescaped)}/.default";
 
         /// <summary>
         /// Creates a <see cref="ConfigurationSetting"/> if the setting, uniquely identified by key and label, does not already exist in the configuration store.
@@ -744,9 +775,9 @@ namespace Azure.Data.AppConfiguration
             request.Method = RequestMethod.Get;
             BuildUriForGetBatch(request.Uri, selector, pageLink);
             request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
-            if (selector.AsOf.HasValue)
+            if (selector.AcceptDateTime.HasValue)
             {
-                var dateTime = selector.AsOf.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
+                var dateTime = selector.AcceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
                 request.Headers.Add(AcceptDatetimeHeader, dateTime);
             }
 
@@ -825,9 +856,9 @@ namespace Azure.Data.AppConfiguration
             request.Method = RequestMethod.Get;
             BuildUriForRevisions(request.Uri, selector, pageLink);
             request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
-            if (selector.AsOf.HasValue)
+            if (selector.AcceptDateTime.HasValue)
             {
-                var dateTime = selector.AsOf.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
+                var dateTime = selector.AcceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
                 request.Headers.Add(AcceptDatetimeHeader, dateTime);
             }
 
