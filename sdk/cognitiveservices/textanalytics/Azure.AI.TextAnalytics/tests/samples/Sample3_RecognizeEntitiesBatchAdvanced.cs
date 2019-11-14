@@ -24,27 +24,24 @@ namespace Azure.AI.TextAnalytics.Samples
 
             var inputs = new List<DocumentInput>
             {
-                new DocumentInput
+                new DocumentInput("1")
                 {
-                     Id = "1",
                      Language = "en",
                      Text = "Microsoft was founded by Bill Gates and Paul Allen."
                 },
-                new DocumentInput
+                new DocumentInput("2")
                 {
-                     Id = "2",
                      Language = "en",
                      Text = "Text Analytics is one of the Azure Cognitive Services.",
                 },
-                new DocumentInput
+                new DocumentInput("3")
                 {
-                     Id = "3",
                      Language = "en",
                      Text = "A key technology in Text Analytics is Named Entity Recognition (NER).",
                 }
             };
 
-            var resultCollection = client.RecognizeEntities(inputs, new TextAnalyticsRequestOptions(showStats: true)).Value;
+            var resultCollection = client.RecognizeEntities(inputs, new TextAnalyticsRequestOptions(showStatistics: true)).Value;
 
             int i = 0;
             Debug.WriteLine($"Results of Azure Text Analytics \"Named Entity Recognition\" Model, version: \"{resultCollection.ModelVersion}\"");
@@ -71,7 +68,7 @@ namespace Azure.AI.TextAnalytics.Samples
             Debug.WriteLine($"Batch operation statistics:");
             Debug.WriteLine($"    Document count: {resultCollection.Statistics.DocumentCount}");
             Debug.WriteLine($"    Valid document count: {resultCollection.Statistics.ValidDocumentCount}");
-            Debug.WriteLine($"    Erroroneous document count:{resultCollection.Statistics.ErroneousDocumentCount}");
+            Debug.WriteLine($"    Erroroneous document count:{resultCollection.Statistics.InvalidDocumentCount}");
             Debug.WriteLine($"    Transaction count:{resultCollection.Statistics.TransactionCount}");
             Debug.WriteLine("");
         }

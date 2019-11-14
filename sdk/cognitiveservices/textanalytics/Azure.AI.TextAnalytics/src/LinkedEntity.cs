@@ -28,7 +28,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// </summary>
-        public Uri Url { get; set; }
+        public Uri Uri { get; set; }
 
         /// <summary>
         /// </summary>

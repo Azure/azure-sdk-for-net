@@ -10,12 +10,18 @@ namespace Azure.AI.TextAnalytics
     public class DocumentResult<T> : Collection<T>
     {
         /// <summary>
-        /// Gets or sets unique, non-empty document identifier.
+        /// </summary>
+        internal DocumentResult()
+        {
+        }
+
+        /// <summary>
+        /// Gets unique, non-empty document identifier.
         /// </summary>
         public string Id { get; internal set; }
 
         /// <summary>
-        /// Gets or sets (Optional) if showStats=true was specified in the
+        /// Gets (Optional) if showStatistics=true was specified in the
         /// request this field will contain information about the document
         /// payload.
         /// </summary>

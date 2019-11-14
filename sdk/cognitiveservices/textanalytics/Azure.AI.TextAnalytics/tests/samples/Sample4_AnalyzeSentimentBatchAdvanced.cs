@@ -23,33 +23,29 @@ namespace Azure.AI.TextAnalytics.Samples
 
             var inputs = new List<DocumentInput>
             {
-                new DocumentInput
+                new DocumentInput("1")
                 {
-                     Id = "1",
                      Language = "en",
                      Text = "That was the best day of my life!"
                 },
-                new DocumentInput
+                new DocumentInput("2")
                 {
-                     Id = "2",
                      Language = "en",
                      Text = "This food is very bad. Everyone who ate with us got sick."
                 },
-                new DocumentInput
+                new DocumentInput("3")
                 {
-                     Id = "3",
                      Language = "en",
                      Text = "I'm not sure how I feel about this product.",
                 },
-                new DocumentInput
+                new DocumentInput("4")
                 {
-                     Id = "4",
                      Language = "en",
                      Text = "Pike Place Market is my favorite Seattle attraction.  We had so much fun there."
                 }
             };
 
-            SentimentResultCollection results = client.AnalyzeSentiment(inputs, new TextAnalyticsRequestOptions(showStats: true)).Value;
+            SentimentResultCollection results = client.AnalyzeSentiment(inputs, new TextAnalyticsRequestOptions(showStatistics: true)).Value;
 
             int i = 0;
             Debug.WriteLine($"Results of Azure Text Analytics \"Sentiment Analysis\" Model, version: \"{results.ModelVersion}\"");
@@ -87,7 +83,7 @@ namespace Azure.AI.TextAnalytics.Samples
             Debug.WriteLine($"Batch operation statistics:");
             Debug.WriteLine($"    Document count: {results.Statistics.DocumentCount}");
             Debug.WriteLine($"    Valid document count: {results.Statistics.ValidDocumentCount}");
-            Debug.WriteLine($"    Erroroneous document count:{results.Statistics.ErroneousDocumentCount}");
+            Debug.WriteLine($"    Erroroneous document count:{results.Statistics.InvalidDocumentCount}");
             Debug.WriteLine($"    Transaction count:{results.Statistics.TransactionCount}");
             Debug.WriteLine("");
         }

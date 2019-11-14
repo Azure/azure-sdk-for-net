@@ -9,17 +9,17 @@ namespace Azure.AI.TextAnalytics
     {
         /// <summary>
         /// </summary>
-        /// <param name="showStats"></param>
+        /// <param name="showStatistics"></param>
         /// <param name="modelVersion"></param>
-        public TextAnalyticsRequestOptions(bool showStats = false, string modelVersion = default)
+        public TextAnalyticsRequestOptions(bool showStatistics = false, string modelVersion = default)
         {
-            ShowStats = showStats;
+            ShowStatistics = showStatistics;
             ModelVersion = modelVersion;
         }
 
         /// <summary>
         /// </summary>
-        public bool ShowStats { get; }
+        public bool ShowStatistics { get; }
 
         /// <summary>
         /// </summary>

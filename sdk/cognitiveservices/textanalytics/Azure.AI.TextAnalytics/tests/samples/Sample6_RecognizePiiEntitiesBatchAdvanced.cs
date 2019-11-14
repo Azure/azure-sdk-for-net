@@ -24,27 +24,24 @@ namespace Azure.AI.TextAnalytics.Samples
 
             var inputs = new List<DocumentInput>
             {
-                new DocumentInput
+                new DocumentInput("1")
                 {
-                     Id = "1",
                      Language = "en",
                      Text = "A developer with SSN 859-98-0987 whose phone number is 206-867-5309 is building tools with our APIs."
                 },
-                new DocumentInput
+                new DocumentInput("2")
                 {
-                     Id = "2",
                      Language = "en",
                      Text = "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check.",
                 },
-                new DocumentInput
+                new DocumentInput("3")
                 {
-                     Id = "3",
                      Language = "en",
                      Text = "Is 998.214.865-68 your Brazilian CPF number?",
                 }
             };
 
-            var resultCollection = client.RecognizePiiEntities(inputs, new TextAnalyticsRequestOptions(showStats: true)).Value;
+            var resultCollection = client.RecognizePiiEntities(inputs, new TextAnalyticsRequestOptions(showStatistics: true)).Value;
 
             int i = 0;
             Debug.WriteLine($"Results of Azure Text Analytics \"Pii Entity Recognition\" Model, version: \"{resultCollection.ModelVersion}\"");
@@ -71,7 +68,7 @@ namespace Azure.AI.TextAnalytics.Samples
             Debug.WriteLine($"Batch operation statistics:");
             Debug.WriteLine($"    Document count: {resultCollection.Statistics.DocumentCount}");
             Debug.WriteLine($"    Valid document count: {resultCollection.Statistics.ValidDocumentCount}");
-            Debug.WriteLine($"    Erroroneous document count:{resultCollection.Statistics.ErroneousDocumentCount}");
+            Debug.WriteLine($"    Erroroneous document count:{resultCollection.Statistics.InvalidDocumentCount}");
             Debug.WriteLine($"    Transaction count:{resultCollection.Statistics.TransactionCount}");
             Debug.WriteLine("");
         }

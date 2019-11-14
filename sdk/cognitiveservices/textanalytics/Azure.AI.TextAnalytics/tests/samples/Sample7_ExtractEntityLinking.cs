@@ -29,7 +29,7 @@ namespace Azure.AI.TextAnalytics.Samples
             Debug.WriteLine($"Extracted {linkedEntities.Count()} linked entit{(linkedEntities.Count() > 1 ? "ies" : "y")}:");
             foreach (LinkedEntity linkedEntity in linkedEntities)
             {
-                Debug.WriteLine($"Name: {linkedEntity.Name}, Id: {linkedEntity.Id}, Language: {linkedEntity.Language}, Data Source: {linkedEntity.DataSource}, Url: {linkedEntity.Url.ToString()}");
+                Debug.WriteLine($"Name: {linkedEntity.Name}, Id: {linkedEntity.Id}, Language: {linkedEntity.Language}, Data Source: {linkedEntity.DataSource}, Uri: {linkedEntity.Uri.ToString()}");
                 foreach (LinkedEntityMatch match in linkedEntity.Matches)
                 {
                     Debug.WriteLine($"    Match Text: {match.Text}, Score: {match.Score:0.00}, Offset: {match.Offset}, Length: {match.Length}.");

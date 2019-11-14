@@ -10,32 +10,32 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Predicted sentiment for document.
         /// </summary>
-        public SentimentClass SentimentClass { get; set; }
+        public SentimentClass SentimentClass { get; internal set; }
 
         /// <summary>
         /// </summary>
-        public double PositiveScore { get; set; }
+        public double PositiveScore { get; internal set; }
 
         /// <summary>
         /// </summary>
-        public double NeutralScore { get; set; }
+        public double NeutralScore { get; internal set; }
 
         /// <summary>
         /// </summary>
-        public double NegativeScore { get; set; }
+        public double NegativeScore { get; internal set; }
 
         /// <summary>
-        /// Gets or sets start position (in Unicode characters) for the entity
+        /// Gets start position (in Unicode characters) for the entity
         /// match text.
         /// Start position (in Unicode characters) for the entity text.
         /// </summary>
-        public int Offset { get; set; }
+        public int Offset { get; internal set; }
 
         /// <summary>
-        /// Gets or sets length (in Unicode characters) for the entity match
+        /// Gets length (in Unicode characters) for the entity match
         /// text.
         /// Length (in Unicode characters) for the entity text.
         /// </summary>
-        public int Length { get; set; }
+        public int Length { get; internal set; }
     }
 }

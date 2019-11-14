@@ -24,27 +24,24 @@ namespace Azure.AI.TextAnalytics.Samples
 
             var inputs = new List<DocumentInput>
             {
-                new DocumentInput
+                new DocumentInput("1")
                 {
-                     Id = "1",
                      Language = "en",
                      Text = "Microsoft was founded by Bill Gates and Paul Allen."
                 },
-                new DocumentInput
+                new DocumentInput("2")
                 {
-                     Id = "2",
                      Language = "en",
                      Text = "Text Analytics is one of the Azure Cognitive Services."
                 },
-                new DocumentInput
+                new DocumentInput("3")
                 {
-                     Id = "3",
                      Language = "en",
                      Text = "Pike place market is my favorite Seattle attraction."
                 }
             };
 
-            var resultCollection = client.ExtractEntityLinking(inputs, new TextAnalyticsRequestOptions(showStats: true)).Value;
+            var resultCollection = client.ExtractEntityLinking(inputs, new TextAnalyticsRequestOptions(showStatistics: true)).Value;
 
             int i = 0;
             Debug.WriteLine($"Results of Azure Text Analytics \"Entity Linking\", version: \"{resultCollection.ModelVersion}\"");
@@ -59,7 +56,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
                 foreach (var linkedEntity in result)
                 {
-                    Debug.WriteLine($"    Name: \"{linkedEntity.Name}\", Id: \"{linkedEntity.Id}\", Language: {linkedEntity.Language}, Data Source: {linkedEntity.DataSource}, Url: {linkedEntity.Url.ToString()}");
+                    Debug.WriteLine($"    Name: \"{linkedEntity.Name}\", Id: \"{linkedEntity.Id}\", Language: {linkedEntity.Language}, Data Source: {linkedEntity.DataSource}, Uri: {linkedEntity.Uri.ToString()}");
                     foreach (LinkedEntityMatch match in linkedEntity.Matches)
                     {
                         Debug.WriteLine($"        Match Text: \"{match.Text}\", Score: {match.Score:0.00}, Offset: {match.Offset}, Length: {match.Length}.");
@@ -75,7 +72,7 @@ namespace Azure.AI.TextAnalytics.Samples
             Debug.WriteLine($"Batch operation statistics:");
             Debug.WriteLine($"    Document count: {resultCollection.Statistics.DocumentCount}");
             Debug.WriteLine($"    Valid document count: {resultCollection.Statistics.ValidDocumentCount}");
-            Debug.WriteLine($"    Erroroneous document count:{resultCollection.Statistics.ErroneousDocumentCount}");
+            Debug.WriteLine($"    Invalid document count:{resultCollection.Statistics.InvalidDocumentCount}");
             Debug.WriteLine($"    Transaction count:{resultCollection.Statistics.TransactionCount}");
             Debug.WriteLine("");
         }

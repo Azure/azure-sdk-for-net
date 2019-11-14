@@ -23,33 +23,29 @@ namespace Azure.AI.TextAnalytics.Samples
 
             var inputs = new List<DetectLanguageInput>
             {
-                new DetectLanguageInput
+                new DetectLanguageInput("1")
                 {
-                     Id = "1", // TODO: Id should be int?
                      CountryHint = "us",
                      Text = "Hello world"
                 },
-                new DetectLanguageInput
+                new DetectLanguageInput("2")
                 {
-                     Id = "2",
                      CountryHint = "fr",
                      Text = "Bonjour tout le monde",
                 },
-                new DetectLanguageInput
+                new DetectLanguageInput("3")
                 {
-                     Id = "3",
                      CountryHint = "es",
                      Text = "Hola mundo",
                 },
-                new DetectLanguageInput
+                new DetectLanguageInput("4")
                 {
-                     Id = "4",
                      CountryHint = "us",
                      Text = ":) :( :D"
                 }
             };
 
-            DocumentResultCollection<DetectedLanguage> results = client.DetectLanguages(inputs, new TextAnalyticsRequestOptions(showStats:true));
+            DocumentResultCollection<DetectedLanguage> results = client.DetectLanguages(inputs, new TextAnalyticsRequestOptions(showStatistics: true));
 
             int i = 0;
             Debug.WriteLine($"Results of Azure Text Analytics \"Detect Language\" Model, version: \"{results.ModelVersion}\"");
@@ -71,7 +67,7 @@ namespace Azure.AI.TextAnalytics.Samples
             Debug.WriteLine($"Batch operation statistics:");
             Debug.WriteLine($"    Document count: {results.Statistics.DocumentCount}");
             Debug.WriteLine($"    Valid document count: {results.Statistics.ValidDocumentCount}");
-            Debug.WriteLine($"    Erroroneous document count:{results.Statistics.ErroneousDocumentCount}");
+            Debug.WriteLine($"    Erroroneous document count:{results.Statistics.InvalidDocumentCount}");
             Debug.WriteLine($"    Transaction count:{results.Statistics.TransactionCount}");
             Debug.WriteLine("");
         }

@@ -8,12 +8,20 @@ namespace Azure.AI.TextAnalytics
     public class DocumentInput
     {
         /// <summary>
-        /// Gets or sets unique, non-empty document identifier.
         /// </summary>
-        public string Id { get; set; }
+        /// <param name="id"></param>
+        public DocumentInput(string id)
+        {
+            Id = id;
+        }
 
         /// <summary>
-        /// Language of the document
+        /// Gets unique, non-empty document identifier.
+        /// </summary>
+        public string Id { get; }
+
+        /// <summary>
+        /// Language of the document.
         /// Gets or sets this is the 2 letter ISO 639-1 representation of a
         /// language. For example, use "en" for English; "es" for Spanish etc.
         /// </summary>

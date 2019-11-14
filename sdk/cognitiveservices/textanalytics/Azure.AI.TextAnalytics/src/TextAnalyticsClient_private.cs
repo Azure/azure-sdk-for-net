@@ -21,7 +21,7 @@ namespace Azure.AI.TextAnalytics
         private const string KeyPhrasesRoute = "/keyPhrases";
         private const string EntityLinkingRoute = "/entities/linking";
 
-        private const string ShowStats = "showStats";
+        private const string ShowStatistics = "showStats";
         private const string ModelVersion = "model-version";
 
         #region Detect Language
@@ -181,9 +181,9 @@ namespace Azure.AI.TextAnalytics
             builder.AppendPath(_apiVersion, escape: false);
             builder.AppendPath(route, escape: false);
 
-            if (options.ShowStats)
+            if (options.ShowStatistics)
             {
-                builder.AppendQuery(ShowStats, "true");
+                builder.AppendQuery(ShowStatistics, "true");
             }
 
             if (!string.IsNullOrEmpty(options.ModelVersion))

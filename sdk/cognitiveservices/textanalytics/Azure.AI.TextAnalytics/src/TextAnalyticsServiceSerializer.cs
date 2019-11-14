@@ -173,7 +173,7 @@ namespace Azure.AI.TextAnalytics
                 if (statisticsElement.TryGetProperty("validDocumentsCount", out JsonElement validDocumentCountValue))
                     statistics.ValidDocumentCount = validDocumentCountValue.GetInt32();
                 if (statisticsElement.TryGetProperty("erroneousDocumentsCount", out JsonElement erroneousDocumentCountValue))
-                    statistics.ErroneousDocumentCount = erroneousDocumentCountValue.GetInt32();
+                    statistics.InvalidDocumentCount = erroneousDocumentCountValue.GetInt32();
                 if (statisticsElement.TryGetProperty("transactionsCount", out JsonElement transactionCountValue))
                     statistics.DocumentCount = transactionCountValue.GetInt32();
 
@@ -730,7 +730,7 @@ namespace Azure.AI.TextAnalytics
             if (entityElement.TryGetProperty("dataSource", out JsonElement dataSourceValue))
                 linkedEntity.DataSource = dataSourceValue.ToString();
             if (entityElement.TryGetProperty("url", out JsonElement urlValue))
-                linkedEntity.Url = new Uri(urlValue.ToString());
+                linkedEntity.Uri = new Uri(urlValue.ToString());
 
             linkedEntity.Matches = ReadLinkedEntityMatches(entityElement);
 

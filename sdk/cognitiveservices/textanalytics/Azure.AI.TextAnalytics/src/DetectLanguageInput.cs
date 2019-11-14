@@ -8,9 +8,17 @@ namespace Azure.AI.TextAnalytics
     public class DetectLanguageInput
     {
         /// <summary>
-        /// Gets or sets unique, non-empty document identifier.
         /// </summary>
-        public string Id { get; set; }
+        /// <param name="id"></param>
+        public DetectLanguageInput(string id)
+        {
+            Id = id;
+        }
+
+        /// <summary>
+        /// Gets unique, non-empty document identifier.
+        /// </summary>
+        public string Id { get; }
 
         /// <summary>
         /// </summary>

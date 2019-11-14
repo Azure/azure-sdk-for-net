@@ -20,7 +20,7 @@ namespace Azure.AI.TextAnalytics
         public List<DocumentError> Errors { get; } = new List<DocumentError>();
 
         /// <summary>
-        /// Gets (Optional) if showStats=true was specified in the request this
+        /// Gets (Optional) if showStatistics=true was specified in the request this
         /// field will contain information about the request payload.
         /// </summary>
         public DocumentBatchStatistics Statistics { get; internal set; }

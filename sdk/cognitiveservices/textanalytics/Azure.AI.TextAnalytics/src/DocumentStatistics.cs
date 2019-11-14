@@ -8,12 +8,12 @@ namespace Azure.AI.TextAnalytics
     public struct DocumentStatistics
     {
         /// <summary>
-        /// Gets or sets number of text elements recognized in the document.
+        /// Gets number of text elements recognized in the document.
         /// </summary>
         public int CharacterCount { get; internal set; }
 
         /// <summary>
-        /// Gets or sets number of transactions for the document.
+        /// Gets number of transactions for the document.
         /// </summary>
         public int TransactionCount { get; internal set; }
     }

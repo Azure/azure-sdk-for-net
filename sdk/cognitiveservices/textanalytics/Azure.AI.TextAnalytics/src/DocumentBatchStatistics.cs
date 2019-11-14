@@ -8,24 +8,24 @@ namespace Azure.AI.TextAnalytics
     public struct DocumentBatchStatistics
     {
         /// <summary>
-        /// Gets or sets number of documents submitted in the request.
+        /// Gets number of documents submitted in the request.
         /// </summary>
         public int DocumentCount { get; internal set; }
 
         /// <summary>
-        /// Gets or sets number of valid documents. This excludes empty,
+        /// Gets number of valid documents. This excludes empty,
         /// over-size limit or non-supported languages documents.
         /// </summary>
         public int ValidDocumentCount { get; internal set; }
 
         /// <summary>
-        /// Gets or sets number of invalid documents. This includes empty,
+        /// Gets number of invalid documents. This includes empty,
         /// over-size limit or non-supported languages documents.
         /// </summary>
-        public int ErroneousDocumentCount { get; internal set; }
+        public int InvalidDocumentCount { get; internal set; }
 
         /// <summary>
-        /// Gets or sets number of transactions for the request.
+        /// Gets number of transactions for the request.
         /// </summary>
         public long TransactionCount { get; internal set; }
     }
