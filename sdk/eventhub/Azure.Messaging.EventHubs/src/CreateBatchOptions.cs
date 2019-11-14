@@ -68,12 +68,12 @@ namespace Azure.Messaging.EventHubs
         public string PartitionKey { get; set; }
 
         /// <summary>
-        ///   If specified, the sender is requesting that events be sent to this specific partition.  If the identifier is not
+        ///   If specified, events will be published to this specific partition.  If the identifier is not
         ///   specified, the Event Hubs service will be responsible for routing events automatically to an available partition.
         /// </summary>
         ///
         /// <value>
-        ///   If the producer wishes the events to be automatically to partitions, <c>null</c>; otherwise, the identifier
+        ///   If the producer wishes the events to be automatically routed to partitions, <c>null</c>; otherwise, the identifier
         ///   of the desired partition.
         /// </value>
         ///
