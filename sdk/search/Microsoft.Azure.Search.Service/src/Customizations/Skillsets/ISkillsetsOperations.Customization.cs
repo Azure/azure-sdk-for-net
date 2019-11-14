@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Search
         /// Determines whether or not the given skillset exists in the search service.
         /// </summary>
         /// <param name="skillsetName">
-        /// The name of the data source.
+        /// The name of the skillset.
         /// </param>
         /// <param name='searchRequestOptions'>
         /// Additional parameters for the operation
