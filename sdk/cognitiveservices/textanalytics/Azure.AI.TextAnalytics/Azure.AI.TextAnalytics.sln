@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.TextAnalytics", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\..\..\core\Azure.Core\src\Azure.Core.csproj", "{019A28FC-EFEA-4431-872C-AB8F9C0049BF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.TextAnalytics.Samples.Tests", "samples\Azure.AI.TextAnalytics.Samples.Tests.csproj", "{4C4126CB-6EC1-4DFB-9A1F-C52C440BC5CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.TextAnalytics.Tests", "tests\Azure.AI.TextAnalytics.Tests.csproj", "{5FB75291-CE2C-44FC-86AD-5FBB954457B8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{019A28FC-EFEA-4431-872C-AB8F9C0049BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{019A28FC-EFEA-4431-872C-AB8F9C0049BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{019A28FC-EFEA-4431-872C-AB8F9C0049BF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4C4126CB-6EC1-4DFB-9A1F-C52C440BC5CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4C4126CB-6EC1-4DFB-9A1F-C52C440BC5CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4C4126CB-6EC1-4DFB-9A1F-C52C440BC5CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4C4126CB-6EC1-4DFB-9A1F-C52C440BC5CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FB75291-CE2C-44FC-86AD-5FBB954457B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FB75291-CE2C-44FC-86AD-5FBB954457B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FB75291-CE2C-44FC-86AD-5FBB954457B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FB75291-CE2C-44FC-86AD-5FBB954457B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
