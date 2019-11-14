@@ -23,6 +23,6 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// </summary>
-        Mixed
+        Mixed,
     }
 }

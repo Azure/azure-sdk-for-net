@@ -14,6 +14,6 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// </summary>
-        public DocumentResult<Sentiment> SentenceSentiments { get => this; }
+        public DocumentResult<Sentiment> SentenceSentiments => this;
     }
 }

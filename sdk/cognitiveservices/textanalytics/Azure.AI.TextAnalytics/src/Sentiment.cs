@@ -8,7 +8,7 @@ namespace Azure.AI.TextAnalytics
     public struct Sentiment
     {
         /// <summary>
-        /// Predicted sentiment for document.
+        /// Gets redicted sentiment for document.
         /// </summary>
         public SentimentClass SentimentClass { get; internal set; }
 

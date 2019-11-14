@@ -46,7 +46,7 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-            Argument.AssertNotNull(options, nameof(options));
+            options ??= new TextAnalyticsClientOptions();
 
             throw new NotImplementedException();
         }
@@ -98,7 +98,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateDetectLanguageRequest(new List<string> { inputText }, countryHint);
+                using Request request = CreateDetectLanguageRequest(new string[] { inputText }, countryHint);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
@@ -138,7 +138,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateDetectLanguageRequest(new List<string> { inputText }, countryHint);
+                using Request request = CreateDetectLanguageRequest(new string[] { inputText }, countryHint);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 switch (response.Status)
@@ -350,7 +350,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateStringCollectionRequest(new List<string> { inputText }, language, EntitiesRoute);
+                using Request request = CreateStringCollectionRequest(new string[] { inputText }, language, EntitiesRoute);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
@@ -390,7 +390,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateStringCollectionRequest(new List<string> { inputText }, language, EntitiesRoute);
+                using Request request = CreateStringCollectionRequest(new string[] { inputText }, language, EntitiesRoute);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 switch (response.Status)
@@ -560,7 +560,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateStringCollectionRequest(new List<string> { inputText }, language, SentimentRoute);
+                using Request request = CreateStringCollectionRequest(new string[] { inputText }, language, SentimentRoute);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
@@ -600,7 +600,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateStringCollectionRequest(new List<string> { inputText }, language, SentimentRoute);
+                using Request request = CreateStringCollectionRequest(new string[] { inputText }, language, SentimentRoute);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 switch (response.Status)
@@ -768,7 +768,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateStringCollectionRequest(new List<string> { inputText }, language, KeyPhrasesRoute);
+                using Request request = CreateStringCollectionRequest(new string[] { inputText }, language, KeyPhrasesRoute);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
@@ -808,7 +808,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateStringCollectionRequest(new List<string> { inputText }, language, KeyPhrasesRoute);
+                using Request request = CreateStringCollectionRequest(new string[] { inputText }, language, KeyPhrasesRoute);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 switch (response.Status)
@@ -978,7 +978,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateStringCollectionRequest(new List<string> { inputText }, language, PiiEntitiesRoute);
+                using Request request = CreateStringCollectionRequest(new string[] { inputText }, language, PiiEntitiesRoute);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
@@ -1018,7 +1018,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateStringCollectionRequest(new List<string> { inputText }, language, PiiEntitiesRoute);
+                using Request request = CreateStringCollectionRequest(new string[] { inputText }, language, PiiEntitiesRoute);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 switch (response.Status)
@@ -1188,7 +1188,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateStringCollectionRequest(new List<string> { inputText }, language, EntityLinkingRoute);
+                using Request request = CreateStringCollectionRequest(new string[] { inputText }, language, EntityLinkingRoute);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
@@ -1228,7 +1228,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateStringCollectionRequest(new List<string> { inputText }, language, EntityLinkingRoute);
+                using Request request = CreateStringCollectionRequest(new string[] { inputText }, language, EntityLinkingRoute);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 switch (response.Status)
@@ -1382,9 +1382,6 @@ namespace Azure.AI.TextAnalytics
 
         private Request CreateStringCollectionRequest(IEnumerable<string> inputs, string language, string route)
         {
-            Argument.AssertNotNull(inputs, nameof(inputs));
-            Argument.AssertNotNull(language, nameof(language));
-
             Request request = _pipeline.CreateRequest();
 
             ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDocumentInputs(inputs, language);

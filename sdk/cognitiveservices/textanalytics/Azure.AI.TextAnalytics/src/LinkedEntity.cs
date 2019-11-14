@@ -12,26 +12,26 @@ namespace Azure.AI.TextAnalytics
     {
         /// <summary>
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; internal set; }
 
         /// <summary>
         /// </summary>
-        public string Id { get; set; }
+        public string Id { get; internal set; }
 
         /// <summary>
         /// </summary>
-        public string Language { get; set; }
+        public string Language { get; internal set; }
 
         /// <summary>
         /// </summary>
-        public string DataSource { get; set; }
+        public string DataSource { get; internal set; }
 
         /// <summary>
         /// </summary>
-        public Uri Uri { get; set; }
+        public Uri Uri { get; internal set; }
 
         /// <summary>
         /// </summary>
-        public IEnumerable<LinkedEntityMatch> Matches { get; set; }
+        public IEnumerable<LinkedEntityMatch> Matches { get; internal set; }
     }
 }
