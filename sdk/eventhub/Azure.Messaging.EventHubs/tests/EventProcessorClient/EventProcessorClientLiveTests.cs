@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Processor;
 using Azure.Messaging.EventHubs.Tests.Infrastructure;
 using NUnit.Framework;
+using Azure.Messaging.EventHubs.Samples.Infrastructure;
 
 namespace Azure.Messaging.EventHubs.Tests
 {
