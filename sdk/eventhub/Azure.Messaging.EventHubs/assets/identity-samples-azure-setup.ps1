@@ -181,6 +181,8 @@ try
     Write-Host "After building the sample project, you can run it using the Azure resources that you just created with the following command."
     Write-Host "You can also launch the Samples project from within Visual Studio and enter the Azure information when prompted or set them in the project properties."
     Write-Host ""
+    Write-Host "After building the solution, you may find the executable under the following folder: ""artifacts\bin\Azure.Messaging.EventHubs.Samples\Debug\netcoreapp2.1"""
+    Write-Host ""
     Write-Host "dotnet Azure.Messaging.EventHubs.Samples.dll ``"
     Write-Host "--ConnectionString ""$($namespaceInformation.PrimaryConnectionString)"" ``"
     Write-Host "--FullyQualifiedNamespace ""$($namespaceInformation.FullyQualifiedDomainName)"" ``"
