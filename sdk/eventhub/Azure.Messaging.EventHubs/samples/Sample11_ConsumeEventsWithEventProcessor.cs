@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,13 +14,13 @@ namespace Azure.Messaging.EventHubs.Samples
     ///   An example of consuming events from all Event Hub partitions at once, using the Event Processor.
     /// </summary>
     ///
-    public class Sample12_ConsumeEventsWithEventProcessor : IEventHubsSample
+    public class Sample11_ConsumeEventsWithEventProcessor : IEventHubsSample
     {
         /// <summary>
         ///   The name of the sample.
         /// </summary>
         ///
-        public string Name { get; } = nameof(Sample12_ConsumeEventsWithEventProcessor);
+        public string Name { get; } = nameof(Sample11_ConsumeEventsWithEventProcessor);
 
         /// <summary>
         ///   A short description of the sample.
@@ -78,7 +76,7 @@ namespace Azure.Messaging.EventHubs.Samples
                     // This is the last piece of code guaranteed to run before event processing, so all initialization
                     // must be done by the moment this method returns.
 
-                    // We want to receive events from the latest available position so older events don't interefere with our sample.
+                    // We want to receive events from the latest available position so older events don't interfere with our sample.
 
                     initializationContext.DefaultStartingPosition = EventPosition.Latest;
 
@@ -88,7 +86,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
                     // This method is asynchronous, which means it's expected to return a Task.
 
-                    return Task.CompletedTask;
+                    return new ValueTask();
                 };
 
                 eventProcessor.ProcessingForPartitionStoppedAsync = (stopContext) =>
@@ -102,7 +100,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
                     // This method is asynchronous, which means it's expected to return a Task.
 
-                    return Task.CompletedTask;
+                    return new ValueTask();
                 };
 
                 eventProcessor.ProcessEventAsync = (processorEvent) =>
@@ -121,7 +119,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
                     // This method is asynchronous, which means it's expected to return a Task.
 
-                    return Task.CompletedTask;
+                    return new ValueTask();
                 };
 
                 eventProcessor.ProcessExceptionAsync = (errorContext) =>
@@ -142,7 +140,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
                     // This method is asynchronous, which means it's expected to return a Task.
 
-                    return Task.CompletedTask;
+                    return new ValueTask();
                 };
 
                 // Once started, the event processor will start to claim partitions and receive events from them.
@@ -174,14 +172,9 @@ namespace Azure.Messaging.EventHubs.Samples
                     // To test our event processor, we are publishing 10 sets of events to the Event Hub.  Notice that we are not
                     // specifying a partition to send events to, so these sets may end up in different partitions.
 
-                    EventData[] eventsToPublish = new EventData[]
-                    {
-                        new EventData(Encoding.UTF8.GetBytes("I am not the second event.")),
-                        new EventData(Encoding.UTF8.GetBytes("I am not the first event."))
-                    };
-
                     int amountOfSets = 10;
-                    int expectedAmountOfEvents = amountOfSets * eventsToPublish.Length;
+                    int eventsPerSet = 2;
+                    int expectedAmountOfEvents = amountOfSets * eventsPerSet;
 
                     Console.WriteLine();
                     Console.WriteLine("Sending events to the Event Hub.");
@@ -189,7 +182,11 @@ namespace Azure.Messaging.EventHubs.Samples
 
                     for (int i = 0; i < amountOfSets; i++)
                     {
-                        await producerClient.SendAsync(eventsToPublish);
+                        using EventDataBatch eventBatch = await producerClient.CreateBatchAsync();
+                        eventBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes("I am not the second event.")));
+                        eventBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes("I am not the first event.")));
+
+                        await producerClient.SendAsync(eventBatch);
                     }
 
                     // Because there is some non-determinism in the messaging flow, the sent events may not be immediately

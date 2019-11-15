@@ -108,7 +108,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             if (exception is EventHubsException)
             {
-                Assert.That(((EventHubsException)exception).ResourceName, Is.EqualTo(resourceName), "The exception should report the proper resource");
+                Assert.That(((EventHubsException)exception).EventHubName, Is.EqualTo(resourceName), "The exception should report the proper resource");
             }
         }
 
@@ -207,7 +207,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             if (exception is EventHubsException)
             {
-                Assert.That(((EventHubsException)exception).ResourceName, Is.EqualTo(resourceName), "The exception should report the proper resource");
+                Assert.That(((EventHubsException)exception).EventHubName, Is.EqualTo(resourceName), "The exception should report the proper resource");
             }
         }
 
@@ -346,7 +346,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             if (exception is EventHubsException)
             {
-                Assert.That(((EventHubsException)exception).ResourceName, Is.EqualTo(resourceName), "The exception should report the proper resource");
+                Assert.That(((EventHubsException)exception).EventHubName, Is.EqualTo(resourceName), "The exception should report the proper resource");
             }
         }
 

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
+using Azure.Identity;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Test;
@@ -53,12 +54,16 @@ namespace Azure.Storage.Blobs.Test
             var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
             var blobEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+            var tokenCredentials = new DefaultAzureCredential();
 
             BlobContainerClient client1 = InstrumentClient(new BlobContainerClient(blobEndpoint, credentials));
             BlobContainerClient client2 = InstrumentClient(new BlobContainerClient(blobEndpoint));
+            BlobContainerClient client3 = InstrumentClient(new BlobContainerClient(blobEndpoint, tokenCredentials));
+
 
             Assert.AreEqual(accountName, client1.AccountName);
             Assert.AreEqual(accountName, client2.AccountName);
+            Assert.AreEqual(accountName, client3.AccountName);
 
         }
 
@@ -303,6 +308,42 @@ namespace Azure.Storage.Blobs.Test
                 // Assert
                 Assert.IsNotNull(response.Headers.RequestId);
             }
+        }
+
+        [Test]
+        public async Task DeleteAsync_AccessConditions_Conditions_IfMatch_Should_Throw()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+            await container.CreateAsync();
+            var conditions = new BlobRequestConditions()
+            {
+                IfMatch = new ETag("etag")
+            };
+
+            // Act
+            await TestHelper.CatchAsync<ArgumentOutOfRangeException>(
+                () => container.DeleteAsync(conditions: conditions));
+        }
+
+        [Test]
+        public async Task DeleteAsync_AccessConditions_Conditions_IfNoneMatch_Should_Throw()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+            await container.CreateAsync();
+            var conditions = new BlobRequestConditions()
+            {
+                IfNoneMatch = new ETag("etag")
+            };
+
+            // Act
+            await TestHelper.CatchAsync<ArgumentOutOfRangeException>(
+                () => container.DeleteAsync(conditions: conditions));
         }
 
         [Test]

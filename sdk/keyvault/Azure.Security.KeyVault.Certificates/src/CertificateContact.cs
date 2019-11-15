@@ -26,16 +26,17 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Email address of the contact
+        /// Gets or sets the email address of the contact.
         /// </summary>
         public string Email { get; set; }
+
         /// <summary>
-        /// Name of the contact
+        /// Gets or sets the name of the contact.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// Phone number of the contact
+        /// Gets or sets the phone number of the contact.
         /// </summary>
         public string Phone { get; set; }
 

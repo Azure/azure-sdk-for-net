@@ -33,7 +33,7 @@ namespace Azure.Data.AppConfiguration.Samples
             client.SetConfigurationSetting(setting);
 
             // Make the setting read only.
-            client.SetReadOnly(setting.Key);
+            client.SetReadOnly(setting.Key, true);
 
             // Modify the value to attempt to update it.
             setting.Value = "new_value";
@@ -50,7 +50,7 @@ namespace Azure.Data.AppConfiguration.Samples
             }
 
             // Make the setting read write again.
-            client.ClearReadOnly(setting.Key);
+            client.SetReadOnly(setting.Key, false);
 
             // Try to update to the new value again.
             // SetConfigurationSetting should now succeed because the setting is read write.

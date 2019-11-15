@@ -45,7 +45,7 @@ namespace Azure.Data.AppConfiguration
         /// If set, all properties of the <see cref="ConfigurationSetting"/> entities in the returned group will be exactly what they
         /// were at this time.
         /// </summary>
-        public DateTimeOffset? AsOf { get; set; }
+        public DateTimeOffset? AcceptDateTime { get; set; }
 
         /// <summary>
         /// Creates a <see cref="SettingSelector"/> that will retrieve all <see cref="ConfigurationSetting"/> entities in the

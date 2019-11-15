@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Storage;
 using Azure.Storage.Files.DataLake;
@@ -446,13 +447,15 @@ namespace Azure.Storage.Files.DataLake.Samples
                 await fileClient.CreateAsync();
 
                 // Set the Permissions of the file
-                await fileClient.SetPermissionsAsync(permissions: "rwxrwxrwx");
+                PathPermissions pathPermissions = PathPermissions.ParseSymbolicPermissions("rwxrwxrwx");
+                await fileClient.SetPermissionsAsync(permissions: pathPermissions);
 
                 // Get Access Control List
                 PathAccessControl accessControlResponse = await fileClient.GetAccessControlAsync();
 
                 // Check Access Control permissions
-                Assert.AreEqual("rwxrwxrwx", accessControlResponse.Permissions);
+                Assert.AreEqual(pathPermissions.ToSymbolicPermissions(), accessControlResponse.Permissions.ToSymbolicPermissions());
+                Assert.AreEqual(pathPermissions.ToOctalPermissions(), accessControlResponse.Permissions.ToOctalPermissions());
             }
             finally
             {
@@ -484,15 +487,18 @@ namespace Azure.Storage.Files.DataLake.Samples
                 // Create a DataLake file so we can set the Access Controls on the files
                 DataLakeFileClient fileClient = filesystem.GetFileClient(Randomize("sample-file"));
                 await fileClient.CreateAsync();
+                IList<PathAccessControlItem> accessControlList = PathAccessControlExtensions.ParseAccessControlList("user::rwx,group::r--,mask::rwx,other::---");
 
                 // Set Access Control List
-                await fileClient.SetAccessControlAsync("user::rwx,group::r--,mask::rwx,other::---");
+                await fileClient.SetAccessControlListAsync(accessControlList);
 
                 // Get Access Control List
                 PathAccessControl accessControlResponse = await fileClient.GetAccessControlAsync();
 
                 // Check Access Control permissions
-                Assert.AreEqual("user::rwx,group::r--,mask::rwx,other::---", accessControlResponse.Acl);
+                Assert.AreEqual(
+                    PathAccessControlExtensions.ToAccessControlListString(accessControlList),
+                    PathAccessControlExtensions.ToAccessControlListString(accessControlResponse.AccessControlList.ToList()));
             }
             finally
             {

@@ -92,10 +92,17 @@ If your project doesn't have C# 8.0 enabled you can still iterate over `AsyncPag
 AsyncPageable<SecretProperties> response = client.GetPropertiesOfSecretsAsync();
 
 IAsyncEnumerator<SecretProperties> enumerator = response.GetAsyncEnumerator();
-while (await enumerator.MoveNextAsync())
+try
 {
-    SecretProperties secretProperties = enumerator.Current;
-    Console.WriteLine(secretProperties.Name);
+    while (await enumerator.MoveNextAsync())
+    {
+        SecretProperties secretProperties = enumerator.Current;
+        Console.WriteLine(secretProperties.Name);
+    }
+}
+finally
+{
+    await enumerator.DisposeAsync();
 }
 ```
 

@@ -34,6 +34,21 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void IgnoresEventCountersEvents()
+        {
+            var invocations = new List<(EventWrittenEventArgs, string)>();
+            using var _ = new AzureEventSourceListener(
+                (args, s) =>
+                {
+                    invocations.Add((args, s));
+                }, EventLevel.Verbose);
+
+            TestSource.Log.Write("EventCounters");
+
+            Assert.AreEqual(0, invocations.Count);
+        }
+
+        [Test]
         public void FormatsUsingMessageWhenAvailable()
         {
             (EventWrittenEventArgs e, string message) = ExpectSingleEvent(() => TestSource.Log.LogWithMessage("a message"));

@@ -17,12 +17,6 @@ namespace Azure.Messaging.EventHubs
     public class PartitionContext
     {
         /// <summary>
-        ///   The name of the Event Hub this context is associated with.
-        /// </summary>
-        ///
-        public string EventHubName { get; }
-
-        /// <summary>
         ///   The identifier of the Event Hub partition this context is associated with.
         /// </summary>
         ///
@@ -62,14 +56,13 @@ namespace Azure.Messaging.EventHubs
                 Argument.AssertNotClosed(true, Resources.ClientNeededForThisInformation);
             }
 
-            return new LastEnqueuedEventProperties(EventHubName, PartitionId, consumer.LastReceivedEvent);
+            return new LastEnqueuedEventProperties(consumer.LastReceivedEvent);
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="PartitionContext"/> class.
         /// </summary>
         ///
-        /// <param name="eventHubName">The name of the Event Hub that this context is associated with.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition this context is associated with.</param>
         /// <param name="consumer">The <see cref="TransportConsumer" /> for this context to use as the source for information.</param>
         ///
@@ -79,9 +72,8 @@ namespace Azure.Messaging.EventHubs
         ///   consumer instance.
         /// </remarks>
         ///
-        internal PartitionContext(string eventHubName,
-                                  string partitionId,
-                                  TransportConsumer consumer) : this(eventHubName, partitionId)
+        internal PartitionContext(string partitionId,
+                                  TransportConsumer consumer) : this(partitionId)
         {
             Argument.AssertNotNull(consumer, nameof(consumer));
             SourceConsumer = new WeakReference<TransportConsumer>(consumer);
@@ -91,16 +83,11 @@ namespace Azure.Messaging.EventHubs
         ///   Initializes a new instance of the <see cref="PartitionContext"/> class.
         /// </summary>
         ///
-        /// <param name="eventHubName">The name of the Event Hub that this context is associated with.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition this context is associated with.</param>
         ///
-        protected internal PartitionContext(string eventHubName,
-                                            string partitionId)
+        protected internal PartitionContext(string partitionId)
         {
-            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
             Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
-
-            EventHubName = eventHubName;
             PartitionId = partitionId;
         }
     }

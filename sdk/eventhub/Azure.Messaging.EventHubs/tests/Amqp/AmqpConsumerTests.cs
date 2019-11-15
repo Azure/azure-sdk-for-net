@@ -73,16 +73,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void ConstructorRequiresTheEventPosition()
-        {
-            Assert.That(() => new AmqpConsumer("theMostAwesomeHubEvar", "$DEFAULT", "0", null, new EventHubConsumerClientOptions(), Mock.Of<AmqpConnectionScope>(), Mock.Of<AmqpMessageConverter>(), Mock.Of<EventHubsRetryPolicy>()), Throws.ArgumentNullException);
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the constructor.
-        /// </summary>
-        ///
-        [Test]
         public void ConstructorRequiresTheOptions()
         {
             Assert.That(() => new AmqpConsumer("theMostAwesomeHubEvar", "$DEFAULT", "0", EventPosition.FromOffset(1), null, Mock.Of<AmqpConnectionScope>(), Mock.Of<AmqpMessageConverter>(), Mock.Of<EventHubsRetryPolicy>()), Throws.ArgumentNullException);
@@ -117,10 +107,10 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task CloseMarksTheConsumerAsClosed()
         {
             var consumer = new AmqpConsumer("aHub", "$DEFAULT", "0", EventPosition.Earliest, new EventHubConsumerClientOptions(), Mock.Of<AmqpConnectionScope>(), Mock.Of<AmqpMessageConverter>(), Mock.Of<EventHubsRetryPolicy>());
-            Assert.That(consumer.Closed, Is.False, "The consumer should not be closed on creation");
+            Assert.That(consumer.IsClosed, Is.False, "The consumer should not be closed on creation");
 
             await consumer.CloseAsync(CancellationToken.None);
-            Assert.That(consumer.Closed, Is.True, "The consumer should be marked as closed after closing");
+            Assert.That(consumer.IsClosed, Is.True, "The consumer should be marked as closed after closing");
         }
 
         /// <summary>
@@ -136,7 +126,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             cancellationSource.Cancel();
             Assert.That(async () => await consumer.CloseAsync(cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>(), "Cancellation should trigger the appropriate exception.");
-            Assert.That(consumer.Closed, Is.False, "Cancellation should have interrupted closing and left the consumer in an open state.");
+            Assert.That(consumer.IsClosed, Is.False, "Cancellation should have interrupted closing and left the consumer in an open state.");
         }
 
         /// <summary>
@@ -154,7 +144,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var consumerGroup = "$DEFAULT";
             var partition = "3";
             var eventPosition = EventPosition.FromOffset(123);
-            var options = new EventHubConsumerClientOptions { Identifier = "OMG!" };
+            var options = new EventHubConsumerClientOptions();
             var retryPolicy = new BasicRetryPolicy(new RetryOptions());
             var retriableException = new EventHubsException(true, "Test");
             var mockConverter = new Mock<AmqpMessageConverter>();
@@ -179,7 +169,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var consumerGroup = "$DEFAULT";
             var partition = "3";
             var eventPosition = EventPosition.FromOffset(123);
-            var options = new EventHubConsumerClientOptions { Identifier = "OMG!" };
+            var options = new EventHubConsumerClientOptions();
             var retryPolicy = new BasicRetryPolicy(new RetryOptions());
             var retriableException = new EventHubsException(true, "Test");
             var mockConverter = new Mock<AmqpMessageConverter>();
@@ -207,7 +197,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var consumerGroup = "$DEFAULT";
             var partition = "3";
             var eventPosition = EventPosition.FromOffset(123);
-            var options = new EventHubConsumerClientOptions { Identifier = "OMG!" };
+            var options = new EventHubConsumerClientOptions();
             var tokenValue = "123ABC";
             var retryPolicy = new BasicRetryPolicy(retryOptions);
             var retriableException = new EventHubsException(true, "Test");
@@ -257,7 +247,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var consumerGroup = "$DEFAULT";
             var partition = "3";
             var eventPosition = EventPosition.FromOffset(123);
-            var options = new EventHubConsumerClientOptions { Identifier = "OMG!" };
+            var options = new EventHubConsumerClientOptions();
             var retryPolicy = new BasicRetryPolicy(new RetryOptions());
             var retriableException = new EventHubsException(true, "Test");
             var mockConverter = new Mock<AmqpMessageConverter>();

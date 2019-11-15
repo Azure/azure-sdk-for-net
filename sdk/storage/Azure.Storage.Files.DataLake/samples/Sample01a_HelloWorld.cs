@@ -454,14 +454,16 @@ namespace Azure.Storage.Files.DataLake.Samples
                 fileClient.Create();
 
                 // Set the Permissions of the file
-                fileClient.SetPermissions(permissions: "rwxrwxrwx");
+                PathPermissions pathPermissions = PathPermissions.ParseSymbolicPermissions("rwxrwxrwx");
+                fileClient.SetPermissions(permissions: pathPermissions);
                 #endregion Snippet:SampleSnippetDataLakeFileClient_SetPermissions
 
                 // Get Access Control List
                 PathAccessControl accessControlResponse = fileClient.GetAccessControl();
 
                 // Check Access Control permissions
-                Assert.AreEqual("rwxrwxrwx", accessControlResponse.Permissions);
+                Assert.AreEqual(pathPermissions.ToSymbolicPermissions(), accessControlResponse.Permissions.ToSymbolicPermissions());
+                Assert.AreEqual(pathPermissions.ToOctalPermissions(), accessControlResponse.Permissions.ToOctalPermissions());
             }
             finally
             {
@@ -496,7 +498,9 @@ namespace Azure.Storage.Files.DataLake.Samples
                 fileClient.Create();
 
                 // Set Access Control List
-                fileClient.SetAccessControl("user::rwx,group::r--,mask::rwx,other::---");
+                IList<PathAccessControlItem> accessControlList
+                    = PathAccessControlExtensions.ParseAccessControlList("user::rwx,group::r--,mask::rwx,other::---");
+                fileClient.SetAccessControlList(accessControlList);
                 #endregion Snippet:SampleSnippetDataLakeFileClient_SetAcls
                 #region Snippet:SampleSnippetDataLakeFileClient_GetAcls
                 // Get Access Control List
@@ -504,7 +508,9 @@ namespace Azure.Storage.Files.DataLake.Samples
                 #endregion Snippet:SampleSnippetDataLakeFileClient_GetAcls
 
                 // Check Access Control permissions
-                Assert.AreEqual("user::rwx,group::r--,mask::rwx,other::---", accessControlResponse.Acl);
+                Assert.AreEqual(
+                    PathAccessControlExtensions.ToAccessControlListString(accessControlList),
+                    PathAccessControlExtensions.ToAccessControlListString(accessControlResponse.AccessControlList.ToList()));
             }
             finally
             {

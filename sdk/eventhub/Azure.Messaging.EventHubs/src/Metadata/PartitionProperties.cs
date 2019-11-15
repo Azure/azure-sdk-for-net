@@ -9,7 +9,7 @@ namespace Azure.Messaging.EventHubs.Metadata
     ///   A set of information for a single partition of an Event Hub.
     /// </summary>
     ///
-    public struct PartitionProperties
+    public class PartitionProperties
     {
         /// <summary>
         ///   The name of the Event Hub where the partitions reside, specific to the
@@ -68,13 +68,13 @@ namespace Azure.Messaging.EventHubs.Metadata
         /// <param name="lastOffset">The offset of the last event to be enqueued in the partition.</param>
         /// <param name="lastEnqueuedTime">The date and time, in UTC, that the last event was enqueued in the partition.</param>
         ///
-        public PartitionProperties(string eventHubName,
-                                   string partitionId,
-                                   bool isEmpty,
-                                   long beginningSequenceNumber,
-                                   long lastSequenceNumber,
-                                   long lastOffset,
-                                   DateTimeOffset lastEnqueuedTime)
+        protected internal PartitionProperties(string eventHubName,
+                                               string partitionId,
+                                               bool isEmpty,
+                                               long beginningSequenceNumber,
+                                               long lastSequenceNumber,
+                                               long lastOffset,
+                                               DateTimeOffset lastEnqueuedTime)
         {
             EventHubName = eventHubName;
             Id = partitionId;

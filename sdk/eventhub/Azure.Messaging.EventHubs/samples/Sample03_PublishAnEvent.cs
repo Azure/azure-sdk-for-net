@@ -57,14 +57,15 @@ namespace Azure.Messaging.EventHubs.Samples
                 //
                 // In our case, we will translate a simple sentence into bytes and send it to our Event Hub.
 
-                var eventData = new EventData(Encoding.UTF8.GetBytes("Hello, Event Hubs!"));
+                using EventDataBatch eventBatch = await producerClient.CreateBatchAsync();
+                eventBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes("Hello, Event Hubs!")));
 
                 // When the producer sends the event, it will receive an acknowledgment from the Event Hubs service; so
                 // long as there is no exception thrown by this call, the service is now responsible for delivery.  Your
                 // event data will be published to one of the Event Hub partitions, though there may be a (very) slight
                 // delay until it is available to be consumed.
 
-                await producerClient.SendAsync(eventData);
+                await producerClient.SendAsync(eventBatch);
 
                 Console.WriteLine("The event has been published.");
             }

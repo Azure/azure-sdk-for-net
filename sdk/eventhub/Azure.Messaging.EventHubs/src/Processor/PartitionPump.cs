@@ -65,7 +65,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Responsible for processing events received from the Event Hubs service.
         /// </summary>
         ///
-        private Func<EventProcessorEvent, Task> ProcessEventAsync { get; }
+        private Func<EventProcessorEvent, ValueTask> ProcessEventAsync { get; }
 
         /// <summary>
         ///   Updates the checkpoint using the given information for the associated partition and consumer group in the chosen storage service.
@@ -113,14 +113,13 @@ namespace Azure.Messaging.EventHubs.Processor
                                string consumerGroup,
                                PartitionContext partitionContext,
                                EventPosition startingPosition,
-                               Func<EventProcessorEvent, Task> processEventAsync,
+                               Func<EventProcessorEvent, ValueTask> processEventAsync,
                                Func<EventData, PartitionContext, Task> updateCheckpointAsync,
                                EventProcessorClientOptions options)
         {
             Argument.AssertNotNull(connection, nameof(connection));
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
             Argument.AssertNotNull(partitionContext, nameof(partitionContext));
-            Argument.AssertNotNull(startingPosition, nameof(startingPosition));
             Argument.AssertNotNull(processEventAsync, nameof(processEventAsync));
             Argument.AssertNotNull(updateCheckpointAsync, nameof(updateCheckpointAsync));
             Argument.AssertNotNull(options, nameof(options));
@@ -155,7 +154,7 @@ namespace Azure.Messaging.EventHubs.Processor
                         RunningTaskTokenSource?.Cancel();
                         RunningTaskTokenSource = new CancellationTokenSource();
 
-                        InnerConsumer = new EventHubConsumerClient(ConsumerGroup, Context.PartitionId, StartingPosition, Connection);
+                        InnerConsumer = new EventHubConsumerClient(ConsumerGroup, Connection);
 
                         RunningTask = RunAsync(RunningTaskTokenSource.Token);
                     }
@@ -225,63 +224,66 @@ namespace Azure.Messaging.EventHubs.Processor
 
             while (!cancellationToken.IsCancellationRequested)
             {
-                try
+                await using (var partitionReceiver = InnerConsumer.CreatePartitionReceiver(Context.PartitionId, StartingPosition))
                 {
-                    receivedEvents = (await InnerConsumer.ReceiveAsync(MaximumMessageCount, Options.MaximumReceiveWaitTime, cancellationToken).ConfigureAwait(false)).ToList();
-
-                    using DiagnosticScope diagnosticScope = EventDataInstrumentation.ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName);
-                    diagnosticScope.AddAttribute("kind", "server");
-
-                    if (diagnosticScope.IsEnabled)
+                    try
                     {
+                        receivedEvents = (await partitionReceiver.ReceiveAsync(MaximumMessageCount, Options.MaximumReceiveWaitTime, cancellationToken).ConfigureAwait(false)).ToList();
+
+                        using DiagnosticScope diagnosticScope = EventDataInstrumentation.ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName);
+                        diagnosticScope.AddAttribute("kind", "server");
+
+                        if (diagnosticScope.IsEnabled)
+                        {
+                            foreach (var eventData in receivedEvents)
+                            {
+                                if (EventDataInstrumentation.TryExtractDiagnosticId(eventData, out string diagnosticId))
+                                {
+                                    diagnosticScope.AddLink(diagnosticId);
+                                }
+                            }
+                        }
+
+                        // Small workaround to make sure we call ProcessEvent with EventData = null when no events have been received.
+                        // The code is expected to get simpler when we start using the async enumerator internally to receive events.
+
+                        if (receivedEvents.Count == 0)
+                        {
+                            receivedEvents.Add(null);
+                        }
+
+                        diagnosticScope.Start();
+
                         foreach (var eventData in receivedEvents)
                         {
-                            if (EventDataInstrumentation.TryExtractDiagnosticId(eventData, out string diagnosticId))
+                            try
                             {
-                                diagnosticScope.AddLink(diagnosticId);
+                                var processorEvent = new EventProcessorEvent(Context, eventData, UpdateCheckpointAsync);
+                                await ProcessEventAsync(processorEvent).ConfigureAwait(false);
+                            }
+                            catch (Exception eventProcessingException)
+                            {
+                                diagnosticScope.Failed(eventProcessingException);
+                                unrecoverableException = eventProcessingException;
+
+                                break;
                             }
                         }
                     }
-
-                    // Small workaround to make sure we call ProcessEvent with EventData = null when no events have been received.
-                    // The code is expected to get simpler when we start using the async enumerator internally to receive events.
-
-                    if (receivedEvents.Count == 0)
+                    catch (Exception eventHubException)
                     {
-                        receivedEvents.Add(null);
-                    }
+                        // Stop running only if it's not a retriable exception.
 
-                    diagnosticScope.Start();
-
-                    foreach (var eventData in receivedEvents)
-                    {
-                        try
+                        if (RetryPolicy.CalculateRetryDelay(eventHubException, 1) == null)
                         {
-                            var processorEvent = new EventProcessorEvent(Context, eventData, UpdateCheckpointAsync);
-                            await ProcessEventAsync(processorEvent).ConfigureAwait(false);
-                        }
-                        catch (Exception eventProcessingException)
-                        {
-                            diagnosticScope.Failed(eventProcessingException);
-                            unrecoverableException = eventProcessingException;
-
-                            break;
+                            throw eventHubException;
                         }
                     }
-                }
-                catch (Exception eventHubException)
-                {
-                    // Stop running only if it's not a retriable exception.
 
-                    if (RetryPolicy.CalculateRetryDelay(eventHubException, 1) == null)
+                    if (unrecoverableException != null)
                     {
-                        throw eventHubException;
+                        throw unrecoverableException;
                     }
-                }
-
-                if (unrecoverableException != null)
-                {
-                    throw unrecoverableException;
                 }
             }
         }

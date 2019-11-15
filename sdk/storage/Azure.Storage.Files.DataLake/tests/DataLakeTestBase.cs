@@ -27,7 +27,9 @@ namespace Azure.Storage.Files.DataLake.Tests
         public readonly string ContentEncoding = "encoding";
         public readonly string ContentLanguage = "language";
         public readonly string ContentType = "type";
-        public readonly string AccessControl = "user::rwx,group::r--,other::---,mask::rwx";
+        public readonly IList<PathAccessControlItem> AccessControlList
+            = PathAccessControlExtensions.ParseAccessControlList("user::rwx,group::r--,other::---,mask::rwx");
+        public readonly PathPermissions PathPermissions = PathPermissions.ParseSymbolicPermissions("rwxrwxrwx");
 
         public DataLakeTestBase(bool async) : this(async, null) { }
 
@@ -160,6 +162,15 @@ namespace Azure.Storage.Files.DataLake.Tests
                     Assert.Fail($"Expected key <{kvp.Key}> with value <{kvp.Value}> not found");
                 }
             }
+        }
+
+        public void AssertPathPermissionsEquality(PathPermissions expected, PathPermissions actual)
+        {
+            Assert.AreEqual(expected.Owner, actual.Owner);
+            Assert.AreEqual(expected.Group, actual.Group);
+            Assert.AreEqual(expected.Other, actual.Other);
+            Assert.AreEqual(expected.StickyBit, actual.StickyBit);
+            Assert.AreEqual(expected.ExtendedAcls, actual.ExtendedAcls);
         }
 
         public DataLakeServiceClient GetServiceClient_AccountSas(

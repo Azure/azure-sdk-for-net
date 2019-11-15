@@ -182,7 +182,7 @@ namespace Azure.Storage.Blobs.Specialized
             _uri = builder.ToUri();
             _pipeline = options.Build(conn.Credentials);
             _clientDiagnostics = new ClientDiagnostics(options);
-            _customerProvidedKey = options?.CustomerProvidedKey;
+            _customerProvidedKey = options.CustomerProvidedKey;
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
         }
 
@@ -272,7 +272,7 @@ namespace Azure.Storage.Blobs.Specialized
             _uri = blobUri;
             _pipeline = options.Build(authentication);
             _clientDiagnostics = new ClientDiagnostics(options);
-            _customerProvidedKey = options?.CustomerProvidedKey;
+            _customerProvidedKey = options.CustomerProvidedKey;
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
         }
 

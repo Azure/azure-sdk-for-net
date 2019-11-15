@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -9,7 +10,7 @@ using Azure.Core;
 namespace Azure.Security.KeyVault.Certificates
 {
     /// <summary>
-    /// A collection of subject alternative names (SANs) for a x509 certificate. SANs can be DNS entries, emails, or unique prinicpal names.
+    /// A collection of subject alternative names (SANs) for a X.509 certificate. SANs can be DNS entries, emails, or unique principal names.
     /// </summary>
     public class SubjectAlternativeNames : IEnumerable<string>, IJsonSerializable, IJsonDeserializable
     {
@@ -35,10 +36,12 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Creates a collection of DNS subject alternative names (SANs)
+        /// Creates a collection of subject alternative names (SANs) containing DNS names.
         /// </summary>
-        /// <param name="names">The SAN entries</param>
-        /// <returns>The created subject alternative name collection</returns>
+        /// <param name="names">The DNS entries.</param>
+        /// <returns>A <see cref="SubjectAlternativeNames"/> of DNS entries.</returns>
+        /// <exception cref="ArgumentException"><paramref name="names"/> is empty.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="names"/> is null.</exception>
         public static SubjectAlternativeNames FromDns(params string[] names)
         {
             Argument.AssertNotNullOrEmpty(names, nameof(names));
@@ -47,10 +50,12 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Creates a collection of DNS subject alternative names (SANs)
+        /// Creates a collection of subject alternative names (SANs) containing DNS names.
         /// </summary>
-        /// <param name="names">The SAN entries</param>
-        /// <returns>The created subject alternative name collection</returns>
+        /// <param name="names">The DNS entries.</param>
+        /// <returns>A <see cref="SubjectAlternativeNames"/> of DNS entries.</returns>
+        /// <exception cref="ArgumentException"><paramref name="names"/> is empty.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="names"/> is null.</exception>
         public static SubjectAlternativeNames FromDns(IEnumerable<string> names)
         {
             Argument.AssertNotNullOrEmpty(names, nameof(names));
@@ -59,10 +64,12 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Creates a collection of email subject alternative names (SANs)
+        /// Creates a collection of subject alternative names (SANs) containing email addresses.
         /// </summary>
-        /// <param name="names">The SAN entries</param>
-        /// <returns>The created subject alternative name collection</returns>
+        /// <param name="names">The email entries.</param>
+        /// <returns>A <see cref="SubjectAlternativeNames"/> of email entries.</returns>
+        /// <exception cref="ArgumentException"><paramref name="names"/> is empty.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="names"/> is null.</exception>
         public static SubjectAlternativeNames FromEmail(params string[] names)
         {
             Argument.AssertNotNullOrEmpty(names, nameof(names));
@@ -71,10 +78,12 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Creates a collection of email subject alternative names (SANs)
+        /// Creates a collection of subject alternative names (SANs) containing email addresses.
         /// </summary>
-        /// <param name="names">The SAN entries</param>
-        /// <returns>The created subject alternative name collection</returns>
+        /// <param name="names">The email entries.</param>
+        /// <returns>A <see cref="SubjectAlternativeNames"/> of email entries.</returns>
+        /// <exception cref="ArgumentException"><paramref name="names"/> is empty.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="names"/> is null.</exception>
         public static SubjectAlternativeNames FromEmail(IEnumerable<string> names)
         {
             Argument.AssertNotNullOrEmpty(names, nameof(names));
@@ -83,10 +92,12 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Creates a collection of unique principal name (UPN) subject alternative names (SANs)
+        /// Creates a collection of subject alternative names (SANs) containing unique principal names (UPNs).
         /// </summary>
-        /// <param name="names">The SAN entries</param>
-        /// <returns>The created subject alternative name collection</returns>
+        /// <param name="names">The unique principal names (UPNs) entries.</param>
+        /// <returns>A <see cref="SubjectAlternativeNames"/> of unique principal names (UPNs) entries.</returns>
+        /// <exception cref="ArgumentException"><paramref name="names"/> is empty.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="names"/> is null.</exception>
         public static SubjectAlternativeNames FromUpn(params string[] names)
         {
             Argument.AssertNotNullOrEmpty(names, nameof(names));
@@ -95,10 +106,12 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Creates a collection of unique principal name (UPN) subject alternative names (SANs)
+        /// Creates a collection of subject alternative names (SANs) containing unique principal names (UPNs).
         /// </summary>
-        /// <param name="names">The SAN entries</param>
-        /// <returns>The created subject alternative name collection</returns>
+        /// <param name="names">The unique principal names (UPNs) entries.</param>
+        /// <returns>A <see cref="SubjectAlternativeNames"/> of unique principal names (UPNs) entries.</returns>
+        /// <exception cref="ArgumentException"><paramref name="names"/> is empty.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="names"/> is null.</exception>
         public static SubjectAlternativeNames FromUpn(IEnumerable<string> names)
         {
             Argument.AssertNotNullOrEmpty(names, nameof(names));
@@ -107,18 +120,18 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Gets an enumerator for the SAN collection
+        /// Gets the subject alternative names (SANs) for this instance.
         /// </summary>
-        /// <returns>The created enumerator</returns>
+        /// <returns>The subject alternative names (SANs) for this instance.</returns>
         public IEnumerator<string> GetEnumerator()
         {
             return _names.GetEnumerator();
         }
 
         /// <summary>
-        /// Gets an enumerator for the SAN collection
+        /// Gets the subject alternative names (SANs) for this instance.
         /// </summary>
-        /// <returns>The created enumerator</returns>
+        /// <returns>The subject alternative names (SANs) for this instance.</returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return _names.GetEnumerator();
