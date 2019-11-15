@@ -7,6 +7,11 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public class SentimentResult : DocumentResult<Sentiment>
     {
+        internal SentimentResult(string id, DocumentStatistics statistics)
+            : base(id, statistics)
+        {
+        }
+
         // TODO: set DocumentSentiment.Length
         /// <summary>
         /// </summary>

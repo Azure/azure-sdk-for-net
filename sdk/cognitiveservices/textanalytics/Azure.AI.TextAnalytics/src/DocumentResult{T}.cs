@@ -11,20 +11,22 @@ namespace Azure.AI.TextAnalytics
     {
         /// <summary>
         /// </summary>
-        internal DocumentResult()
+        internal DocumentResult(string id, DocumentStatistics statistics)
         {
+            Id = id;
+            Statistics = statistics;
         }
 
         /// <summary>
         /// Gets unique, non-empty document identifier.
         /// </summary>
-        public string Id { get; internal set; }
+        public string Id { get; }
 
         /// <summary>
         /// Gets (Optional) if showStatistics=true was specified in the
         /// request this field will contain information about the document
         /// payload.
         /// </summary>
-        public DocumentStatistics Statistics { get; internal set; }
+        public DocumentStatistics Statistics { get; }
     }
 }

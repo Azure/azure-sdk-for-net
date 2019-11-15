@@ -7,14 +7,20 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public struct DocumentError
     {
+        internal DocumentError(string id, string message)
+        {
+            Id = id;
+            Message = message;
+        }
+
         /// <summary>
         /// Gets input document unique identifier the error refers to.
         /// </summary>
-        public string Id { get; internal set; }
+        public string Id { get; }
 
         /// <summary>
         /// Gets error message.
         /// </summary>
-        public string Message { get; internal set; }
+        public string Message { get; }
     }
 }

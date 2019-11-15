@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>This is the Microsoft Azure Cognitive Services Text Analystics Service client library</Description>
+    <Description>This is the Microsoft Azure Cognitive Services Text Analytics Service client library</Description>
     <AssemblyTitle>Microsoft Azure.AI.TextAnalytics client library</AssemblyTitle>
     <Version>1.0.0-preview.1</Version>
     <PackageTags>Microsoft Azure Text Analytics</PackageTags>

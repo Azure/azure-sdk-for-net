@@ -10,28 +10,38 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public struct LinkedEntity
     {
-        /// <summary>
-        /// </summary>
-        public string Name { get; internal set; }
+        internal LinkedEntity(string name, string id, string language, string dataSource, Uri uri, IEnumerable<LinkedEntityMatch> matches)
+        {
+            Name = name;
+            Id = id;
+            Language = language;
+            DataSource = dataSource;
+            Uri = uri;
+            Matches = matches;
+        }
 
         /// <summary>
         /// </summary>
-        public string Id { get; internal set; }
+        public string Name { get; }
 
         /// <summary>
         /// </summary>
-        public string Language { get; internal set; }
+        public string Id { get; }
 
         /// <summary>
         /// </summary>
-        public string DataSource { get; internal set; }
+        public string Language { get; }
 
         /// <summary>
         /// </summary>
-        public Uri Uri { get; internal set; }
+        public string DataSource { get; }
 
         /// <summary>
         /// </summary>
-        public IEnumerable<LinkedEntityMatch> Matches { get; internal set; }
+        public Uri Uri { get; }
+
+        /// <summary>
+        /// </summary>
+        public IEnumerable<LinkedEntityMatch> Matches { get; }
     }
 }

@@ -7,20 +7,28 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public struct LinkedEntityMatch
     {
-        /// <summary>
-        /// </summary>
-        public string Text { get; set; }
+        internal LinkedEntityMatch(string text, double score, int offset, int length)
+        {
+            Text = text;
+            Score = score;
+            Offset = offset;
+            Length = length;
+        }
 
         /// <summary>
         /// </summary>
-        public double Score { get; set; }
+        public string Text { get; }
 
         /// <summary>
         /// </summary>
-        public int Offset { get; set; }
+        public double Score { get; }
 
         /// <summary>
         /// </summary>
-        public int Length { get; set; }
+        public int Offset { get; }
+
+        /// <summary>
+        /// </summary>
+        public int Length { get; }
     }
 }
