@@ -517,6 +517,7 @@ namespace Azure.Messaging.EventHubs
             catch (Exception e)
             {
                 scope.Failed(e);
+                throw;
             }
         }
 

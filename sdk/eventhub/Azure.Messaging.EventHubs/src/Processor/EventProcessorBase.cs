@@ -314,11 +314,9 @@ namespace Azure.Messaging.EventHubs.Processor
                         {
                             await ActiveLoadBalancingTask.ConfigureAwait(false);
                         }
-                        catch (TaskCanceledException)
+                        catch (Exception ex) when (ex is TaskCanceledException || ex is OperationCanceledException)
                         {
-                            // The running task has an inner delay that is likely to throw a TaskCanceledException upon token cancellation.
-                            // The task might end up leaving its main loop gracefully by chance, so we won't necessarily reach this part of
-                            // the code.
+                            // Nothing to do here.  These exceptions are expected.
                         }
                         catch (Exception)
                         {
@@ -590,6 +588,10 @@ namespace Azure.Messaging.EventHubs.Processor
                 {
                     tokenSource.Cancel();
                     await processingTask.ConfigureAwait(false);
+                }
+                catch (Exception ex) when (ex is TaskCanceledException || ex is OperationCanceledException)
+                {
+                    // Nothing to do here.  These exceptions are expected.
                 }
                 catch (Exception)
                 {
