@@ -3,7 +3,7 @@
 ## 1.0.1
 
 - Fix issues with log redaction where first query character was replaced with '?' character.
-- Exclude EventCounter events from AzureEventSourceListener
+- Exclude EventCounter events from AzureEventSourceListener.
 - Add `AZURE_TRACING_DISABLED` environment variable support.
 
 ## 1.0.0
