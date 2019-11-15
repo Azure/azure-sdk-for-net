@@ -4,6 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text;
+using Azure.Core;
 
 namespace Azure.Data.AppConfiguration
 {
@@ -17,28 +19,25 @@ namespace Azure.Data.AppConfiguration
     /// </summary>
     public class SettingSelector
     {
+        private StringBuilder _keys;
+        private StringBuilder _labels;
+        private SettingFields _fields = SettingFields.All;
+
+        private StringBuilder Keys => _keys ??= new StringBuilder();
+        private StringBuilder Labels => _labels ??= new StringBuilder();
+
+        private const char AnyChar = '*';
+        private const char EscapeChar = '\\';
+        private const char SeparatorChar = ',';
+        private const string KeyQueryFilter = "key";
+        private const string LabelQueryFilter = "label";
+        private const string FieldsQueryFilter = "$select";
+
         /// <summary>
         /// A wildcard that matches any key or any label when passed as a filter
         /// to Keys or Labels.
         /// </summary>
         public static readonly string Any = "*";
-
-        /// <summary>
-        /// Keys or key filters that will be used to select a set of <see cref="ConfigurationSetting"/> entities.
-        /// </summary>
-        /// <remarks>See the documentation for this client library for details on the format of filter expressions.</remarks>
-        public IList<string> Keys { get; }
-
-        /// <summary>
-        /// Labels or label filters that will be used to select a set of <see cref="ConfigurationSetting"/> entities.
-        /// </summary>
-        /// <remarks>See the documentation for this client library for details on the format of filter expressions.</remarks>
-        public IList<string> Labels { get; }
-
-        /// <summary>
-        /// The fields of the <see cref="ConfigurationSetting"/> to retrieve for each setting in the retrieved group.
-        /// </summary>
-        public SettingFields Fields { get; set; } = SettingFields.All;
 
         /// <summary>
         /// Indicates the point in time in the revision history of the selected <see cref="ConfigurationSetting"/> entities to retrieve.
@@ -48,27 +47,195 @@ namespace Azure.Data.AppConfiguration
         public DateTimeOffset? AcceptDateTime { get; set; }
 
         /// <summary>
-        /// Creates a <see cref="SettingSelector"/> that will retrieve all <see cref="ConfigurationSetting"/> entities in the
-        /// configuration store by setting both Key and Label filters to Any.
+        /// Creates a <see cref="SettingSelector"/> that will retrieve all <see cref="ConfigurationSetting"/> entities in the configuration store.
         /// </summary>
-        public SettingSelector() : this(Any, Any) { }
+        public SettingSelector() { }
 
         /// <summary>
-        /// Creates a <see cref="SettingSelector"/> that will retrieve <see cref="ConfigurationSetting"/> entities that match
-        /// the passed-in keys and labels.
+        /// Creates a <see cref="SettingSelector"/> that will retrieve <see cref="ConfigurationSetting"/> entities that match the passed-in key filter.
         /// </summary>
-        /// <param name="key">A key or key filter indicating which <see cref="ConfigurationSetting"/> entities to select.</param>
-        /// <param name="label">A label or label filter indicating which <see cref="ConfigurationSetting"/> entities to select</param>
-        public SettingSelector(string key, string label = default)
+        /// <param name="rawKeyFilter">A key filter indicating which <see cref="ConfigurationSetting"/> entities to select.</param>
+        public SettingSelector(string rawKeyFilter)
         {
-            Keys = new List<string>
-            {
-                key ?? Any
-            };
+            Argument.AssertNotNullOrEmpty(rawKeyFilter, nameof(rawKeyFilter));
+            _keys = new StringBuilder(rawKeyFilter);
+        }
 
-            Labels = new List<string>();
-            if (label != null)
-                Labels.Add(label);
+        /// <summary>
+        /// Creates a <see cref="SettingSelector"/> that will retrieve <see cref="ConfigurationSetting"/> entities that match the passed-in key filter and label filter.
+        /// </summary>
+        /// <param name="rawKeyFilter">A key filter indicating which <see cref="ConfigurationSetting"/> entities to select.</param>
+        /// <param name="rawLabelFilter">A label filter indicating which <see cref="ConfigurationSetting"/> entities to select.</param>
+        public SettingSelector(string rawKeyFilter, string rawLabelFilter = default)
+        {
+            Argument.AssertNotNullOrEmpty(rawKeyFilter, nameof(rawKeyFilter));
+            Argument.AssertNotNullOrEmpty(rawLabelFilter, nameof(rawLabelFilter));
+            _keys = new StringBuilder(rawKeyFilter);
+            _labels = new StringBuilder(rawLabelFilter);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns>A reference to this instance after the operation has completed.</returns>
+        public SettingSelector AddKey(string key)
+        {
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+            AppendSeparator(Keys);
+            AppendEscaped(Keys, key);
+            return this;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns>A reference to this instance after the operation has completed.</returns>
+        public SettingSelector AddKeyStartsWith(string key)
+        {
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+            AppendSeparator(Keys);
+            AppendEscaped(Keys, key);
+            AppendAny(Keys);
+            return this;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns>A reference to this instance after the operation has completed.</returns>
+        public SettingSelector AddKeyEndsWith(string key)
+        {
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+            AppendSeparator(Keys);
+            AppendAny(Keys);
+            AppendEscaped(Keys, key);
+            return this;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns>A reference to this instance after the operation has completed.</returns>
+        public SettingSelector AddKeyContains(string key)
+        {
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+            AppendSeparator(Keys);
+            AppendAny(Keys);
+            AppendEscaped(Keys, key);
+            AppendAny(Keys);
+            return this;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="label"></param>
+        /// <returns>A reference to this instance after the operation has completed.</returns>
+        public SettingSelector AddLabel(string label)
+        {
+            Argument.AssertNotNull(label, nameof(label));
+            AppendSeparator(Labels);
+            AppendEscaped(Labels, label.Length > 0 ? label : "\0");
+            return this;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="label"></param>
+        /// <returns>A reference to this instance after the operation has completed.</returns>
+        public SettingSelector AddLabelStartsWith(string label)
+        {
+            Argument.AssertNotNullOrEmpty(label, nameof(label));
+            AppendSeparator(Labels);
+            AppendEscaped(Labels, label);
+            AppendAny(Labels);
+            return this;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="label"></param>
+        /// <returns>A reference to this instance after the operation has completed.</returns>
+        public SettingSelector AddLabelEndsWith(string label)
+        {
+            Argument.AssertNotNullOrEmpty(label, nameof(label));
+            AppendSeparator(Labels);
+            AppendAny(Labels);
+            AppendEscaped(Labels, label);
+            return this;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="label"></param>
+        /// <returns>A reference to this instance after the operation has completed.</returns>
+        public SettingSelector AddLabelContains(string label)
+        {
+            Argument.AssertNotNullOrEmpty(label, nameof(label));
+            AppendSeparator(Labels);
+            AppendAny(Labels);
+            AppendEscaped(Labels, label);
+            AppendAny(Labels);
+            return this;
+        }
+
+        /// <summary>
+        /// The fields of the <see cref="ConfigurationSetting"/> to retrieve for each setting in the retrieved group.
+        /// </summary>
+        /// <param name="fields">Fields to be returned.</param>
+        /// <returns>A reference to this instance after the operation has completed.</returns>
+        public SettingSelector SetFields(SettingFields fields)
+        {
+            _fields = fields;
+            return this;
+        }
+
+        internal void BuildBatchQuery(RequestUriBuilder builder, string pageLink)
+        {
+            var keys = _keys != default ? _keys.ToString() : new string(AnyChar, 1);
+            builder.AppendQuery(KeyQueryFilter, keys);
+
+            if (_labels != default)
+            {
+                builder.AppendQuery(LabelQueryFilter, _labels.ToString());
+            }
+
+            if (_fields != SettingFields.All)
+            {
+                var filter = _fields.ToString().ToLowerInvariant().Replace("isreadonly", "locked");
+                builder.AppendQuery(FieldsQueryFilter, filter);
+            }
+
+            if (!string.IsNullOrEmpty(pageLink))
+            {
+                builder.AppendQuery("after", pageLink, escapeValue: false);
+            }
+        }
+
+        private static void AppendSeparator(StringBuilder sb)
+        {
+            if (sb.Length > 0)
+            {
+                sb.Append(SeparatorChar);
+            }
+        }
+
+        private static void AppendAny(StringBuilder sb) => sb.Append(AnyChar);
+
+        private static void AppendEscaped(StringBuilder sb, string input)
+        {
+            foreach (var c in input)
+            {
+                switch (c)
+                {
+                    case AnyChar:
+                    case SeparatorChar:
+                    case EscapeChar:
+                        sb.Append(EscapeChar);
+                        break;
+                }
+
+                sb.Append(c);
+            }
         }
 
         #region nobody wants to see these

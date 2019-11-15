@@ -519,7 +519,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(response1, response2);
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            var query = new SettingSelector();
+            var query = new SettingSelector(SettingSelector.Any, SettingSelector.Any);
             int keyIndex = 0;
 
             await foreach (ConfigurationSetting value in service.GetConfigurationSettingsAsync(query, CancellationToken.None))

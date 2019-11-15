@@ -32,27 +32,73 @@ namespace Azure.Data.AppConfiguration.Tests
         [Test]
         public void FilterReservedCharacter()
         {
-            var selector = new SettingSelector("my_key", "my_label");
-            selector.Keys.Add( "key,key" );
-            selector.Labels.Add("label,label");
+            var selector = new SettingSelector()
+                .AddKey("my_key")
+                .AddKey("key,key")
+                .AddLabel("my_label")
+                .AddLabel("label,label");
 
             var builder = new RequestUriBuilder();
             builder.Reset(new Uri("http://localhost/"));
-
-            ConfigurationClient.BuildBatchQuery(builder, selector, null);
+            selector.BuildBatchQuery(builder, null);
 
             Assert.AreEqual(@"http://localhost/?key=my_key%2Ckey%5C%2Ckey&label=my_label%2Clabel%5C%2Clabel", builder.ToUri().AbsoluteUri);
 
         }
 
         [Test]
+        public void FilterStartsWith()
+        {
+            var selector = new SettingSelector()
+                .AddKeyStartsWith("key")
+                .AddLabelStartsWith("label");
+
+            var builder = new RequestUriBuilder();
+            builder.Reset(new Uri("http://localhost/"));
+
+            selector.BuildBatchQuery(builder, null);
+
+            Assert.AreEqual("http://localhost/?key=key%2A&label=label%2A", builder.ToUri().AbsoluteUri);
+        }
+
+        [Test]
+        public void FilterEndsWith()
+        {
+            var selector = new SettingSelector()
+                .AddKeyEndsWith("key")
+                .AddLabelEndsWith("label");
+
+            var builder = new RequestUriBuilder();
+            builder.Reset(new Uri("http://localhost/"));
+
+            selector.BuildBatchQuery(builder, null);
+
+            Assert.AreEqual("http://localhost/?key=%2Akey&label=%2Alabel", builder.ToUri().AbsoluteUri);
+        }
+
+        [Test]
         public void FilterContains()
+        {
+            var selector = new SettingSelector()
+                .AddKeyContains("key")
+                .AddLabelContains("label");
+
+            var builder = new RequestUriBuilder();
+            builder.Reset(new Uri("http://localhost/"));
+
+            selector.BuildBatchQuery(builder, null);
+
+            Assert.AreEqual("http://localhost/?key=%2Akey%2A&label=%2Alabel%2A", builder.ToUri().AbsoluteUri);
+        }
+
+        [Test]
+        public void RawFilterContains()
         {
             var selector = new SettingSelector("*key*", "*label*");
             var builder = new RequestUriBuilder();
             builder.Reset(new Uri("http://localhost/"));
 
-            ConfigurationClient.BuildBatchQuery(builder, selector, null);
+            selector.BuildBatchQuery(builder, null);
 
             Assert.AreEqual("http://localhost/?key=%2Akey%2A&label=%2Alabel%2A", builder.ToUri().AbsoluteUri);
         }
@@ -60,12 +106,13 @@ namespace Azure.Data.AppConfiguration.Tests
         [Test]
         public void FilterNullLabel()
         {
-            var selector = new SettingSelector(SettingSelector.Any, string.Empty);
+            var selector = new SettingSelector(SettingSelector.Any)
+                .AddLabel(string.Empty);
 
             var builder = new RequestUriBuilder();
             builder.Reset(new Uri("http://localhost/"));
 
-            ConfigurationClient.BuildBatchQuery(builder, selector, null);
+            selector.BuildBatchQuery(builder, null);
 
             Assert.AreEqual("http://localhost/?key=%2A&label=%00", builder.ToUri().AbsoluteUri);
         }
@@ -76,11 +123,10 @@ namespace Azure.Data.AppConfiguration.Tests
             var key = "my-key";
             var selector = new SettingSelector(key);
 
-
             var builder = new RequestUriBuilder();
             builder.Reset(new Uri("http://localhost/"));
 
-            ConfigurationClient.BuildBatchQuery(builder, selector, null);
+            selector.BuildBatchQuery(builder, null);
 
             Assert.AreEqual($"http://localhost/?key={key}", builder.ToUri().AbsoluteUri);
         }
@@ -89,13 +135,13 @@ namespace Azure.Data.AppConfiguration.Tests
         public void FilterOnlyLabel()
         {
             var label = "my-label";
-            var selector = new SettingSelector(null, label);
-
+            var selector = new SettingSelector()
+                .AddLabel(label);
 
             var builder = new RequestUriBuilder();
             builder.Reset(new Uri("http://localhost/"));
 
-            ConfigurationClient.BuildBatchQuery(builder, selector, null);
+            selector.BuildBatchQuery(builder, null);
 
             Assert.AreEqual($"http://localhost/?key=%2A&label={label}", builder.ToUri().AbsoluteUri);
         }
@@ -104,14 +150,12 @@ namespace Azure.Data.AppConfiguration.Tests
         public void SettingSomeFields()
         {
             var selector = new SettingSelector("key")
-            {
-                Fields = SettingFields.Key | SettingFields.Value
-            };
+                .SetFields(SettingFields.Key | SettingFields.Value);
 
             var builder = new RequestUriBuilder();
             builder.Reset(new Uri("http://localhost/"));
 
-            ConfigurationClient.BuildBatchQuery(builder, selector, null);
+            selector.BuildBatchQuery(builder, null);
 
             Assert.AreEqual($"http://localhost/?key=key&$select=key%2C%20value", builder.ToUri().AbsoluteUri);
         }
@@ -120,14 +164,12 @@ namespace Azure.Data.AppConfiguration.Tests
         public void SettingAllFields()
         {
             var selector = new SettingSelector("key")
-            {
-                Fields = SettingFields.All
-            };
+                .SetFields(SettingFields.All);
 
             var builder = new RequestUriBuilder();
             builder.Reset(new Uri("http://localhost/"));
 
-            ConfigurationClient.BuildBatchQuery(builder, selector, null);
+            selector.BuildBatchQuery(builder, null);
 
             Assert.AreEqual($"http://localhost/?key=key", builder.ToUri().AbsoluteUri);
         }

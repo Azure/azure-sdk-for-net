@@ -55,7 +55,7 @@ namespace Azure.Data.AppConfiguration.Samples
             // call GetConfigurationSettingsAsync a setting selector that filters for settings
             // with the "production" label.  This will retrieve all the Configuration Settings
             // in the store that satisfy that condition.
-            var selector = new SettingSelector(SettingSelector.Any, "production");
+            var selector = new SettingSelector().AddLabel("production");
 
             Debug.WriteLine("Settings for Production environment:");
             await foreach (ConfigurationSetting setting in client.GetConfigurationSettingsAsync(selector))

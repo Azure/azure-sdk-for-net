@@ -41,7 +41,7 @@ namespace Azure.Data.AppConfiguration.Samples
             ConfigurationSetting settingV3 = await client.SetConfigurationSettingAsync(settingV2);
 
             // Retrieve revisions for the setting.
-            var selector = new SettingSelector(setting.Key);
+            var selector = new SettingSelector().AddKey(setting.Key);
 
             Debug.WriteLine("Revisions of the setting: ");
             await foreach (ConfigurationSetting settingVersion in client.GetRevisionsAsync(selector))

@@ -202,8 +202,7 @@ namespace Azure.Data.AppConfiguration
 
             BuildUriForKvRoute(request.Uri, setting);
 
-            MatchConditions requestOptions = new MatchConditions();
-            requestOptions.IfNoneMatch = ETag.All;
+            MatchConditions requestOptions = new MatchConditions { IfNoneMatch = ETag.All };
             ConditionalRequestOptionsExtensions.ApplyHeaders(request, requestOptions);
 
             request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);

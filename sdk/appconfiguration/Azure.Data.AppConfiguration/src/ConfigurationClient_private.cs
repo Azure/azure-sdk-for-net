@@ -19,11 +19,7 @@ namespace Azure.Data.AppConfiguration
         private const string KvRoute = "/kv/";
         private const string RevisionsRoute = "/revisions/";
         private const string LocksRoute = "/locks/";
-        private const string KeyQueryFilter = "key";
         private const string LabelQueryFilter = "label";
-        private const string FieldsQueryFilter = "$select";
-
-        private static readonly char[] s_reservedCharacters = new char[] { ',', '\\' };
 
         private static readonly HttpHeader s_mediaTypeKeyValueApplicationHeader = new HttpHeader(
             HttpHeader.Names.Accept,
@@ -114,74 +110,18 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        private static string EscapeReservedCharacters(string input)
-        {
-            string resp = string.Empty;
-            for (int i = 0; i < input.Length; i++)
-            {
-                if (s_reservedCharacters.Contains(input[i]))
-                {
-                    resp += $"\\{input[i]}";
-                }
-                else
-                {
-                    resp += input[i];
-                }
-            }
-            return resp;
-        }
-
-        internal static void BuildBatchQuery(RequestUriBuilder builder, SettingSelector selector, string pageLink)
-        {
-            if (selector.Keys.Count > 0)
-            {
-                var keysCopy = new List<string>();
-                foreach (var key in selector.Keys)
-                {
-                    if (key.IndexOfAny(s_reservedCharacters) != -1)
-                    {
-                        keysCopy.Add(EscapeReservedCharacters(key));
-                    }
-                    else
-                    {
-                        keysCopy.Add(key);
-                    }
-                }
-                var keys = string.Join(",", keysCopy);
-                builder.AppendQuery(KeyQueryFilter, keys);
-            }
-
-            if (selector.Labels.Count > 0)
-            {
-                var labelsCopy = selector.Labels.Select(label => string.IsNullOrEmpty(label) ? "\0" : EscapeReservedCharacters(label));
-                var labels = string.Join(",", labelsCopy);
-                builder.AppendQuery(LabelQueryFilter, labels);
-            }
-
-            if (selector.Fields != SettingFields.All)
-            {
-                var filter = selector.Fields.ToString().ToLowerInvariant().Replace("isreadonly", "locked");
-                builder.AppendQuery(FieldsQueryFilter, filter);
-            }
-
-            if (!string.IsNullOrEmpty(pageLink))
-            {
-                builder.AppendQuery("after", pageLink, escapeValue: false);
-            }
-        }
-
         private void BuildUriForGetBatch(RequestUriBuilder builder, SettingSelector selector, string pageLink)
         {
             builder.Reset(_endpoint);
             builder.AppendPath(KvRoute, escape: false);
-            BuildBatchQuery(builder, selector, pageLink);
+            selector.BuildBatchQuery(builder, pageLink);
         }
 
         private void BuildUriForRevisions(RequestUriBuilder builder, SettingSelector selector, string pageLink)
         {
             builder.Reset(_endpoint);
             builder.AppendPath(RevisionsRoute, escape: false);
-            BuildBatchQuery(builder, selector, pageLink);
+            selector.BuildBatchQuery(builder, pageLink);
         }
 
         #region nobody wants to see these

@@ -5,10 +5,10 @@
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Date": "Wed, 25 Sep 2019 17:00:43 GMT",
-        "traceparent": "00-ce145c048c9fb348903141a759ea2233-7364351fc3008449-00",
+        "Date": "Fri, 15 Nov 2019 16:11:58 GMT",
+        "traceparent": "00-22e50b0631f7aa49a0c4e73df0e3097c-8987ab45b5e10041-00",
         "User-Agent": [
-          "azsdk-net-Data.AppConfiguration/1.0.0-dev.20190925.1\u002B2f1a40e8df7f9d1120725e84e599b4c90ba521b5",
+          "azsdk-net-Data.AppConfiguration/1.0.0-dev.20191115.1\u002B3fdc29ffefe1c2a21b3ae10d36e8e428b6b8d6c5",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "e2e1bcdbdab97ecc8306faf869a0fe25",
@@ -25,12 +25,12 @@
         "Access-Control-Expose-Headers": "DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type, Authorization, x-ms-client-request-id, x-ms-content-sha256, x-ms-date, host, Accept, Accept-Datetime, Date, If-Match, If-None-Match, Sync-Token, x-ms-return-client-request-id, ETag, Last-Modified, Link, Memento-Datetime, x-ms-retry-after, x-ms-request-id, WWW-Authenticate",
         "Connection": "keep-alive",
         "Content-Length": "0",
-        "Date": "Wed, 25 Sep 2019 17:00:43 GMT",
-        "Server": "nginx/1.13.12",
+        "Date": "Fri, 15 Nov 2019 16:11:56 GMT",
+        "Server": "openresty/1.15.8.1",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "x-ms-client-request-id": "e2e1bcdbdab97ecc8306faf869a0fe25",
-        "x-ms-correlation-request-id": "3c5ab699-a9fa-41e2-91b5-97bbd719878f",
-        "x-ms-request-id": "3c5ab699-a9fa-41e2-91b5-97bbd719878f"
+        "x-ms-correlation-request-id": "2138905b-4f94-4723-b3b5-c2757b7eb0ce",
+        "x-ms-request-id": "2138905b-4f94-4723-b3b5-c2757b7eb0ce"
       },
       "ResponseBody": []
     },
@@ -39,10 +39,10 @@
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Date": "Wed, 25 Sep 2019 17:00:43 GMT",
-        "traceparent": "00-45bf012931341f4daea5852c578e2e99-854da3ee50f5d44c-00",
+        "Date": "Fri, 15 Nov 2019 16:11:58 GMT",
+        "traceparent": "00-94b244fc2a1a1146a755bede064722f3-8a42699f1be17e4f-00",
         "User-Agent": [
-          "azsdk-net-Data.AppConfiguration/1.0.0-dev.20190925.1\u002B2f1a40e8df7f9d1120725e84e599b4c90ba521b5",
+          "azsdk-net-Data.AppConfiguration/1.0.0-dev.20191115.1\u002B3fdc29ffefe1c2a21b3ae10d36e8e428b6b8d6c5",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "2d38a14480c4be0bf1f22cfde1baa9c0",
@@ -57,14 +57,14 @@
         "Access-Control-Allow-Methods": "GET, PUT, POST, DELETE, PATCH, OPTIONS",
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type, Authorization, x-ms-client-request-id, x-ms-content-sha256, x-ms-date, host, Accept, Accept-Datetime, Date, If-Match, If-None-Match, Sync-Token, x-ms-return-client-request-id, ETag, Last-Modified, Link, Memento-Datetime, x-ms-retry-after, x-ms-request-id, WWW-Authenticate",
-        "Connection": "close",
+        "Connection": "keep-alive",
         "Content-Type": "application/vnd.microsoft.appconfig.kv\u002Bjson; charset=utf-8",
-        "Date": "Wed, 25 Sep 2019 17:00:43 GMT",
-        "Server": "nginx/1.13.12",
+        "Date": "Fri, 15 Nov 2019 16:11:56 GMT",
+        "Server": "openresty/1.15.8.1",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "x-ms-client-request-id": "2d38a14480c4be0bf1f22cfde1baa9c0",
-        "x-ms-correlation-request-id": "43217264-a592-4a18-9dc8-4f972c05c157",
-        "x-ms-request-id": "43217264-a592-4a18-9dc8-4f972c05c157"
+        "x-ms-correlation-request-id": "4c1d36fd-5841-40f8-b95c-3467e6097dbc",
+        "x-ms-request-id": "4c1d36fd-5841-40f8-b95c-3467e6097dbc"
       },
       "ResponseBody": []
     }

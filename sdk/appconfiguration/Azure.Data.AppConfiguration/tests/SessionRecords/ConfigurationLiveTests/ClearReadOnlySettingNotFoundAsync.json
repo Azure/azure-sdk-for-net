@@ -5,10 +5,10 @@
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Date": "Wed, 25 Sep 2019 17:00:44 GMT",
-        "traceparent": "00-8a05b79d0a324648af80da1a9f9098a2-fbaccfb2bcc01048-00",
+        "Date": "Fri, 15 Nov 2019 16:12:00 GMT",
+        "traceparent": "00-f1b05fa86787d54eae82d25d1922cd24-b29307ad653ad547-00",
         "User-Agent": [
-          "azsdk-net-Data.AppConfiguration/1.0.0-dev.20190925.1\u002B2f1a40e8df7f9d1120725e84e599b4c90ba521b5",
+          "azsdk-net-Data.AppConfiguration/1.0.0-dev.20191115.1\u002B3fdc29ffefe1c2a21b3ae10d36e8e428b6b8d6c5",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "590bbbbf326c4467c4da870c455e571a",
@@ -25,12 +25,12 @@
         "Access-Control-Expose-Headers": "DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type, Authorization, x-ms-client-request-id, x-ms-content-sha256, x-ms-date, host, Accept, Accept-Datetime, Date, If-Match, If-None-Match, Sync-Token, x-ms-return-client-request-id, ETag, Last-Modified, Link, Memento-Datetime, x-ms-retry-after, x-ms-request-id, WWW-Authenticate",
         "Connection": "keep-alive",
         "Content-Length": "0",
-        "Date": "Wed, 25 Sep 2019 17:00:44 GMT",
-        "Server": "nginx/1.13.12",
+        "Date": "Fri, 15 Nov 2019 16:11:58 GMT",
+        "Server": "openresty/1.15.8.1",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "x-ms-client-request-id": "590bbbbf326c4467c4da870c455e571a",
-        "x-ms-correlation-request-id": "c861b892-05b3-4764-b395-9363afa5fd38",
-        "x-ms-request-id": "c861b892-05b3-4764-b395-9363afa5fd38"
+        "x-ms-correlation-request-id": "9662a9df-4829-4031-a3ac-9ae309f705fe",
+        "x-ms-request-id": "9662a9df-4829-4031-a3ac-9ae309f705fe"
       },
       "ResponseBody": []
     },
@@ -39,10 +39,10 @@
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Date": "Wed, 25 Sep 2019 17:00:44 GMT",
-        "traceparent": "00-d19a0d3a1220fb45a489b9b315db6610-08d0c725b697cd49-00",
+        "Date": "Fri, 15 Nov 2019 16:12:01 GMT",
+        "traceparent": "00-f85d9dbc47824c48bd8a872d197d6d76-7882d21a6c22ab47-00",
         "User-Agent": [
-          "azsdk-net-Data.AppConfiguration/1.0.0-dev.20190925.1\u002B2f1a40e8df7f9d1120725e84e599b4c90ba521b5",
+          "azsdk-net-Data.AppConfiguration/1.0.0-dev.20191115.1\u002B3fdc29ffefe1c2a21b3ae10d36e8e428b6b8d6c5",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "449e07aae71accaa76874cd35cff029c",
@@ -59,12 +59,12 @@
         "Access-Control-Expose-Headers": "DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type, Authorization, x-ms-client-request-id, x-ms-content-sha256, x-ms-date, host, Accept, Accept-Datetime, Date, If-Match, If-None-Match, Sync-Token, x-ms-return-client-request-id, ETag, Last-Modified, Link, Memento-Datetime, x-ms-retry-after, x-ms-request-id, WWW-Authenticate",
         "Connection": "keep-alive",
         "Content-Type": "application/vnd.microsoft.appconfig.kv\u002Bjson; charset=utf-8",
-        "Date": "Wed, 25 Sep 2019 17:00:45 GMT",
-        "Server": "nginx/1.13.12",
+        "Date": "Fri, 15 Nov 2019 16:11:59 GMT",
+        "Server": "openresty/1.15.8.1",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "x-ms-client-request-id": "449e07aae71accaa76874cd35cff029c",
-        "x-ms-correlation-request-id": "6f0f9103-5158-46c9-b279-914774dbb40b",
-        "x-ms-request-id": "6f0f9103-5158-46c9-b279-914774dbb40b"
+        "x-ms-correlation-request-id": "d3c83a6a-a193-4944-9446-d94522b375e6",
+        "x-ms-request-id": "d3c83a6a-a193-4944-9446-d94522b375e6"
       },
       "ResponseBody": []
     }
