@@ -517,13 +517,14 @@ namespace Azure.Messaging.EventHubs.Processor
             {
                 // Look for unclaimed partitions.  If any, randomly pick one of them to claim.
 
-                IEnumerable<string> unclaimedPartitions = partitionIds
-                    .Except(activeOwnership.Select(ownership => ownership.PartitionId));
+                var unclaimedPartitions = partitionIds
+                    .Except(activeOwnership.Select(ownership => ownership.PartitionId))
+                    .ToArray();
 
-                if (unclaimedPartitions.Any())
+                if (unclaimedPartitions.Length > 0)
                 {
-                    var index = RandomNumberGenerator.Value.Next(unclaimedPartitions.Count());
-                    var returnTask = ClaimOwnershipAsync(unclaimedPartitions.ElementAt(index), completeOwnershipEnumerable);
+                    var index = RandomNumberGenerator.Value.Next(unclaimedPartitions.Length);
+                    var returnTask = ClaimOwnershipAsync(unclaimedPartitions[index], completeOwnershipEnumerable);
 
                     return new ValueTask<PartitionOwnership>(returnTask);
                 }
@@ -533,28 +534,30 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 var maximumOwnedPartitionsCount = minimumOwnedPartitionsCount + 1;
 
-                IEnumerable<string> stealablePartitions = activeOwnership
+                var stealablePartitions = activeOwnership
                     .Where(ownership => partitionDistribution[ownership.OwnerIdentifier] > maximumOwnedPartitionsCount)
-                    .Select(ownership => ownership.PartitionId);
+                    .Select(ownership => ownership.PartitionId)
+                    .ToArray();
 
                 // Here's the important part.  If there are no processors that have exceeded the maximum owned partition count allowed, we may
                 // need to steal from the processors that have exactly the maximum amount.  If this instance is below the minimum count, then
                 // we have no choice as we need to enforce balancing.  Otherwise, leave it as it is because the distribution wouldn't change.
 
-                if (!stealablePartitions.Any()
+                if (stealablePartitions.Length == 0
                     && ownedPartitionsCount < minimumOwnedPartitionsCount)
                 {
                     stealablePartitions = activeOwnership
                         .Where(ownership => partitionDistribution[ownership.OwnerIdentifier] == maximumOwnedPartitionsCount)
-                        .Select(ownership => ownership.PartitionId);
+                        .Select(ownership => ownership.PartitionId)
+                        .ToArray();
                 }
 
                 // If any stealable partitions were found, randomly pick one of them to claim.
 
-                if (stealablePartitions.Any())
+                if (stealablePartitions.Length > 0)
                 {
-                    var index = RandomNumberGenerator.Value.Next(stealablePartitions.Count());
-                    var returnTask = ClaimOwnershipAsync(stealablePartitions.ElementAt(index), completeOwnershipEnumerable);
+                    var index = RandomNumberGenerator.Value.Next(stealablePartitions.Length);
+                    var returnTask = ClaimOwnershipAsync(stealablePartitions[index], completeOwnershipEnumerable);
 
                     return new ValueTask<PartitionOwnership>(returnTask);
                 }
