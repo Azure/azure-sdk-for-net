@@ -383,8 +383,10 @@ namespace Azure.Messaging.EventHubs.Processor
                 // Filter the complete ownership list to obtain only the ones that are still active.  The expiration time defaults to 30 seconds,
                 // but it may be overridden by a derived class.
 
+                var utcNow = DateTimeOffset.UtcNow;
+
                 IEnumerable<PartitionOwnership> activeOwnership = completeOwnershipList
-                    .Where(ownership => DateTimeOffset.UtcNow.Subtract(ownership.LastModifiedTime.Value) < OwnershipExpiration);
+                    .Where(ownership => utcNow.Subtract(ownership.LastModifiedTime.Value) < OwnershipExpiration);
 
                 // Dispose of all previous partition ownership instances and get a whole new dictionary.
 
