@@ -79,7 +79,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
         protected async Task<KeyVaultCertificateWithPolicy> WaitForCompletion(CertificateOperation operation)
         {
-            CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(1));
+            using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(1));
             TimeSpan pollingInterval = TimeSpan.FromSeconds((Mode == RecordedTestMode.Playback) ? 0 : 1);
 
             try

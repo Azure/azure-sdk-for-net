@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 
 using Azure.Core.Diagnostics;
+using Azure.Core.Testing;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Security.KeyVault.Certificates.Tests
@@ -14,6 +16,23 @@ namespace Azure.Security.KeyVault.Certificates.Tests
     {
         public CertificateClientLiveTests(bool isAsync) : base(isAsync)
         {
+        }
+
+        [Test]
+        public void StartCreateCertificateError()
+        {
+            string certName = Recording.GenerateId();
+
+            CertificatePolicy certificatePolicy = new CertificatePolicy("invalid", "Self")
+            {
+                KeyUsage =
+                {
+                    "invalid",
+                },
+            };
+
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(() => Client.StartCreateCertificateAsync(certName, certificatePolicy));
+            Assert.AreEqual(400, ex.Status);
         }
 
         [Test]
@@ -116,6 +135,59 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsFalse(operation.HasValue);
             Assert.AreEqual(404, operation.GetRawResponse().Status);
+        }
+
+        [Test]
+        public async Task VerifyCertificateOperationError()
+        {
+            string issuerName = Recording.GenerateId();
+            string certName = Recording.GenerateId();
+
+            CertificateIssuer certIssuer = new CertificateIssuer(issuerName)
+            {
+                AccountId = "test",
+                Password = "test",
+                OrganizationId = "test",
+            };
+            certIssuer.Properties.Provider = "DigiCert";
+
+            await Client.CreateIssuerAsync(certIssuer);
+
+            CertificateOperation operation = null;
+            try
+            {
+                CertificatePolicy certificatePolicy = DefaultPolicy;
+                certificatePolicy.IssuerName = issuerName;
+
+                operation = await Client.StartCreateCertificateAsync(certName, certificatePolicy);
+
+                RegisterForCleanup(certName);
+
+                using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(1));
+                TimeSpan pollingInterval = TimeSpan.FromSeconds((Mode == RecordedTestMode.Playback) ? 0 : 1);
+
+                while (!operation.HasCompleted)
+                {
+                    await Task.Delay(pollingInterval, cts.Token);
+                    await operation.UpdateStatusAsync(cts.Token);
+                }
+
+                InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => { KeyVaultCertificateWithPolicy cert = operation.Value; });
+                Assert.AreEqual("The certificate operation failed. See Properties.Error for details.", ex.Message);
+
+                Assert.IsTrue(operation.HasCompleted);
+                Assert.IsFalse(operation.HasValue);
+                Assert.AreEqual(200, operation.GetRawResponse().Status);
+                Assert.AreEqual("failed", operation.Properties.Status);
+            }
+            catch (TaskCanceledException) when (operation != null)
+            {
+                Assert.Inconclusive("Timed out while waiting for operation {0}", operation.Id);
+            }
+            finally
+            {
+                await Client.DeleteIssuerAsync(issuerName);
+            }
         }
 
         [Test]

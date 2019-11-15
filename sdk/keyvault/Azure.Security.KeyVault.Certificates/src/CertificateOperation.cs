@@ -48,9 +48,9 @@ namespace Azure.Security.KeyVault.Certificates
         /// <inheritdoc />
         public override KeyVaultCertificateWithPolicy Value
         {
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
             get
             {
-#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
                 if (Properties is null)
                 {
                     throw new InvalidOperationException("The operation was deleted so no value is available.");
@@ -60,10 +60,15 @@ namespace Azure.Security.KeyVault.Certificates
                 {
                     throw new OperationCanceledException("The operation was canceled so no value is available.");
                 }
-#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+
+                if (Properties.Error != null)
+                {
+                    throw new InvalidOperationException("The certificate operation failed. See Properties.Error for details.");
+                }
 
                 return OperationHelpers.GetValue(ref _value);
             }
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
         }
 
         /// <inheritdoc />
@@ -117,8 +122,6 @@ namespace Azure.Security.KeyVault.Certificates
             else if (Properties.Error != null)
             {
                 _completed = true;
-
-                throw new InvalidOperationException("The certificate operation failed. See Properties.Error for details.");
             }
 
             return GetRawResponse();
@@ -164,8 +167,6 @@ namespace Azure.Security.KeyVault.Certificates
             else if (Properties.Error != null)
             {
                 _completed = true;
-
-                throw new InvalidOperationException("The certificate operation failed. See Properties.Error for details.");
             }
 
             return GetRawResponse();
