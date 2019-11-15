@@ -595,8 +595,6 @@ namespace Azure.Messaging.EventHubs.Processor
         private async Task StopPartitionProcessingIfRunningAsync(string partitionId,
                                                                  ProcessingStoppedReason reason)
         {
-            // TODO: what if there is no token source?  It could happen if the user added a task by themself.
-
             if (ActivePartitionProcessors.TryRemove(partitionId, out var processingTask)
                 && ActivePartitionProcessorTokenSources.TryRemove(partitionId, out var tokenSource))
             {
