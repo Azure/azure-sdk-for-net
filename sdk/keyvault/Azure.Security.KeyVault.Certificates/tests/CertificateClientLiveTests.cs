@@ -173,7 +173,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 }
 
                 InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => { KeyVaultCertificateWithPolicy cert = operation.Value; });
-                Assert.AreEqual("The certificate operation failed. See Properties.Error for details.", ex.Message);
+                StringAssert.StartsWith("The certificate operation failed: ", ex.Message);
 
                 Assert.IsTrue(operation.HasCompleted);
                 Assert.IsFalse(operation.HasValue);

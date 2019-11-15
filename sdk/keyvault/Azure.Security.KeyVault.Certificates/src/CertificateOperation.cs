@@ -63,7 +63,7 @@ namespace Azure.Security.KeyVault.Certificates
 
                 if (Properties.Error != null)
                 {
-                    throw new InvalidOperationException("The certificate operation failed. See Properties.Error for details.");
+                    throw new InvalidOperationException($"The certificate operation failed: {Properties.Error.Message}");
                 }
 
                 return OperationHelpers.GetValue(ref _value);
