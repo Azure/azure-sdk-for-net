@@ -12,9 +12,5 @@ internal class StorageSharedKeyCredentialExtensions : StorageSharedKeyCredential
 
         internal static new string ComputeSasSignature(StorageSharedKeyCredential credential, string message) =>
             StorageSharedKeyCredential.ComputeSasSignature(credential, message);
-
-
-        internal static new string ExportBase64EncodedKey(StorageSharedKeyCredential credential) =>
-            StorageSharedKeyCredential.ExportBase64EncodedKey(credential);
     }
 }

@@ -60,7 +60,7 @@ namespace Azure.Storage.Sas
         /// <summary>
         /// Creates a new BlobSasQueryParameters instance.
         /// </summary>
-        internal static BlobSasQueryParameters Create(
+        internal BlobSasQueryParameters (
             string version,
             AccountSasServices? services,
             AccountSasResourceTypes? resourceTypes,
@@ -83,39 +83,30 @@ namespace Azure.Storage.Sas
             string contentEncoding = default,
             string contentLanguage = default,
             string contentType = default)
+            : base(
+                version,
+                services,
+                resourceTypes,
+                protocol,
+                startsOn,
+                expiresOn,
+                ipRange,
+                identifier,
+                resource,
+                permissions,
+                signature,
+                cacheControl,
+                contentDisposition,
+                contentEncoding,
+                contentLanguage,
+                contentType)
         {
-            var blobParameters = new BlobSasQueryParameters();
-            blobParameters._keyProperties._objectId = keyOid;
-            blobParameters._keyProperties._tenantId = keyTid;
-            blobParameters._keyProperties._startsOn = keyStart;
-            blobParameters._keyProperties._expiresOn = keyExpiry;
-            blobParameters._keyProperties._service = keyService;
-            blobParameters._keyProperties._version = keyVersion;
-            SasQueryParameters.Create(
-            version: version ?? SasQueryParameters.DefaultSasVersion,
-            services: services,
-            resourceTypes: resourceTypes,
-            protocol: protocol,
-            startsOn: startsOn,
-            expiresOn: expiresOn,
-            ipRange: ipRange,
-            identifier: identifier,
-            resource: resource,
-            permissions: permissions,
-            signature: signature,  // Should never be null
-            keyOid: keyOid,
-            keyTid: keyTid,
-            keyStart: keyStart,
-            keyExpiry: keyExpiry,
-            keyService: keyService,
-            keyVersion: keyVersion,
-            cacheControl: cacheControl,
-            contentDisposition: contentDisposition,
-            contentEncoding: contentEncoding,
-            contentLanguage: contentLanguage,
-            contentType: contentType,
-            instance: blobParameters);
-            return blobParameters;
+            _keyProperties._objectId = keyOid;
+            _keyProperties._tenantId = keyTid;
+            _keyProperties._startsOn = keyStart;
+            _keyProperties._expiresOn = keyExpiry;
+            _keyProperties._service = keyService;
+            _keyProperties._version = keyVersion;
         }
 
         /// <summary>
@@ -123,19 +114,11 @@ namespace Azure.Storage.Sas
         /// </summary>
         /// <param name="values"></param>
         /// <returns></returns>
-        internal static BlobSasQueryParameters Create(
+        internal BlobSasQueryParameters (
             Dictionary<string, string> values)
+            : base (values)
         {
-            var blobParameters = new BlobSasQueryParameters();
-            SasQueryParametersExtensions.ParseKeyProperties(
-                blobParameters,
-                values,
-                preserve: true);
-            return
-                (BlobSasQueryParameters)SasQueryParameters.Create(
-                    values,
-                    includeBlobParameters: true,
-                    blobParameters);
+            this.ParseKeyProperties(values);
         }
 
         /// <summary>
@@ -144,7 +127,9 @@ namespace Azure.Storage.Sas
         /// <returns>
         /// A URL encoded query string representing the SAS.
         /// </returns>
-        public override string ToString() =>
-            Encode(includeBlobParameters: true);
+        public override string ToString()
+        {
+            return _keyProperties.ToString() + Encode();
+        }
     }
 }

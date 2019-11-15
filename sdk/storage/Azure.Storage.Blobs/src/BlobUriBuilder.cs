@@ -230,7 +230,7 @@ namespace Azure.Storage.Blobs
 
             if (paramsMap.ContainsKey(Constants.Sas.Parameters.Version))
             {
-                Sas = BlobSasQueryParameters.Create(paramsMap);
+                Sas = new BlobSasQueryParameters(paramsMap);
             }
 
             Query = paramsMap.ToString();

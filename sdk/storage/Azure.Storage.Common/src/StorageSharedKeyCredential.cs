@@ -27,10 +27,10 @@ namespace Azure.Storage
         /// <summary>
         /// Gets the value of a Storage Account access key.
         /// </summary>
-        internal byte[] AccountKeyValue
+        private byte[] AccountKeyValue
         {
             get => Volatile.Read(ref _accountKeyValue);
-            private set => Volatile.Write(ref _accountKeyValue, value);
+            set => Volatile.Write(ref _accountKeyValue, value);
         }
 
         /// <summary>
@@ -57,15 +57,6 @@ namespace Azure.Storage
             AccountKeyValue = Convert.FromBase64String(accountKey);
 
         /// <summary>
-        /// Exports the value of the account's key to a Base64-encoded string.
-        /// </summary>
-        /// <returns>The account's key.</returns>
-        internal string ExportBase64EncodedKey() =>
-            AccountKeyValue == null ?
-                null :
-                Convert.ToBase64String(AccountKeyValue);
-
-        /// <summary>
         /// Generates a base-64 hash signature string for an HTTP request or
         /// for a SAS.
         /// </summary>
@@ -83,16 +74,6 @@ namespace Azure.Storage
         protected static string ComputeSasSignature(StorageSharedKeyCredential credential, string message)
         {
             return credential.ComputeHMACSHA256(message);
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="credential"></param>
-        /// <returns></returns>
-        protected static string ExportBase64EncodedKey(StorageSharedKeyCredential credential)
-        {
-            return credential.ExportBase64EncodedKey();
         }
     }
 }

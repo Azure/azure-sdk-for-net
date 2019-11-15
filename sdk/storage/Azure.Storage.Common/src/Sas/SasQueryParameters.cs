@@ -187,27 +187,6 @@ namespace Azure.Storage.Sas
         /// </summary>
         public string Signature => _signature ?? string.Empty;
 
-        #region Blob Only Parameters
-        // skoid
-        //internal string _keyObjectId;
-
-        //// sktid
-        //internal string _keyTenantId;
-
-        //// skt
-        //internal DateTimeOffset _keyStart;
-
-        //// ske
-        //internal DateTimeOffset _keyExpiry;
-
-        //// sks
-        //internal string _keyService;
-
-        //// skv
-        //internal string _keyVersion;
-        internal UserDelegationKeyProperties _keyProperties;
-        #endregion Blob Only Parameters
-
         /// <summary>
         /// Gets empty shared access signature query parameters.
         /// </summary>
@@ -218,68 +197,6 @@ namespace Azure.Storage.Sas
         /// </summary>
         protected SasQueryParameters() { }
 
-        /// <summary>
-        /// Creates a new instance of the <see cref="SasQueryParameters"/> type.
-        ///
-        /// Expects decoded values.
-        /// </summary>
-        [Obsolete]
-        internal SasQueryParameters(
-            string version,
-            AccountSasServices? services,
-            AccountSasResourceTypes? resourceTypes,
-            SasProtocol protocol,
-            DateTimeOffset startsOn,
-            DateTimeOffset expiresOn,
-            SasIPRange ipRange,
-            string identifier,
-            string resource,
-            string permissions,
-            string signature,
-            string keyOid = default,
-            string keyTid = default,
-            DateTimeOffset keyStart = default,
-            DateTimeOffset keyExpiry = default,
-            string keyService = default,
-            string keyVersion = default,
-            string cacheControl = default,
-            string contentDisposition = default,
-            string contentEncoding = default,
-            string contentLanguage = default,
-            string contentType = default)
-        {
-            // Assume URL-decoded
-            _version = version ?? DefaultSasVersion;
-            _services = services;
-            _resourceTypes = resourceTypes;
-            _protocol = protocol;
-            _startTime = startsOn;
-            _expiryTime = expiresOn;
-            _ipRange = ipRange;
-            _identifier = identifier ?? string.Empty;
-            _resource = resource ?? string.Empty;
-            _permissions = permissions ?? string.Empty;
-            _signature = signature ?? string.Empty;  // Should never be null
-            _keyProperties._objectId = keyOid;
-            _keyProperties._tenantId = keyTid;
-            _keyProperties._startsOn = keyStart;
-            _keyProperties._expiresOn = keyExpiry;
-            _keyProperties._service = keyService;
-            _keyProperties._version = keyVersion;
-            _cacheControl = cacheControl;
-            _contentDisposition = contentDisposition;
-            _contentEncoding = contentEncoding;
-            _contentLanguage = contentLanguage;
-            _contentType = contentType;
-        }
-
-        [Obsolete]
-        internal SasQueryParameters(
-            UriQueryParamsCollection values,
-            bool includeBlobParameters = false) : this((Dictionary<string,string>) values, includeBlobParameters)
-        {
-
-        }
 
         /// <summary>
         /// Creates a new instance of the <see cref="SasQueryParameters"/> type
@@ -288,13 +205,8 @@ namespace Azure.Storage.Sas
         /// <paramref name="values"/>.
         /// </summary>
         /// <param name="values">URI query parameters</param>
-        /// <param name="includeBlobParameters">
-        /// Optional flag indicating whether to process blob-specific query
-        /// parameters.  The default value is false.
-        /// </param>
-        internal SasQueryParameters(
-            Dictionary<string, string> values,
-            bool includeBlobParameters = false)
+        public SasQueryParameters(
+            Dictionary<string, string> values)
         {
             // make copy, otherwise we'll get an exception when we remove
             IEnumerable<KeyValuePair<string, string>> kvps = values.ToArray();
@@ -365,11 +277,45 @@ namespace Azure.Storage.Sas
                     values.Remove(kv.Key);
                 }
             }
-            // Optionally include Blob parameters
-            if (includeBlobParameters)
-            {
-                SasQueryParametersExtensions.ParseKeyProperties(this, values);
-            }
+        }
+
+        /// <summary>
+        /// Creates a new SasQueryParameters instance.
+        /// </summary>
+        public SasQueryParameters(
+            string version,
+            AccountSasServices? services,
+            AccountSasResourceTypes? resourceTypes,
+            SasProtocol protocol,
+            DateTimeOffset startsOn,
+            DateTimeOffset expiresOn,
+            SasIPRange ipRange,
+            string identifier,
+            string resource,
+            string permissions,
+            string signature,
+            string cacheControl = default,
+            string contentDisposition = default,
+            string contentEncoding = default,
+            string contentLanguage = default,
+            string contentType = default)
+        {
+            _version = version;
+            _services = services;
+            _resourceTypes = resourceTypes;
+            _protocol = protocol;
+            _startTime = startsOn;
+            _expiryTime = expiresOn;
+            _ipRange = ipRange;
+            _identifier = identifier;
+            _resource = resource;
+            _permissions = permissions;
+            _signature = signature;
+            _cacheControl = cacheControl;
+            _contentDisposition = contentDisposition;
+            _contentEncoding = contentEncoding;
+            _contentLanguage = contentLanguage;
+            _contentType = contentType;
         }
 
         /// <summary>
@@ -384,14 +330,10 @@ namespace Azure.Storage.Sas
         /// <summary>
         /// Convert the SAS query parameters into a URL encoded query string.
         /// </summary>
-        /// <param name="includeBlobParameters">
-        /// Optional flag indicating whether to encode blob-specific query
-        /// parameters.  The default value is false.
-        /// </param>
         /// <returns>
         /// A URL encoded query string representing the SAS.
         /// </returns>
-        protected string Encode(bool includeBlobParameters = false)
+        protected string Encode()
         {
             var sb = new StringBuilder();
 
@@ -479,38 +421,6 @@ namespace Azure.Storage.Sas
                 AddToBuilder(Constants.Sas.Parameters.ContentType, ContentType);
             }
 
-            if (includeBlobParameters)
-            {
-                if (!string.IsNullOrWhiteSpace(_keyProperties._objectId))
-                {
-                    AddToBuilder(Constants.Sas.Parameters.KeyObjectId, _keyProperties._objectId);
-                }
-
-                if (!string.IsNullOrWhiteSpace(_keyProperties._tenantId))
-                {
-                    AddToBuilder(Constants.Sas.Parameters.KeyTenantId, _keyProperties._tenantId);
-                }
-
-                if (_keyProperties._startsOn != DateTimeOffset.MinValue)
-                {
-                    AddToBuilder(Constants.Sas.Parameters.KeyStart, WebUtility.UrlEncode(_keyProperties._startsOn.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
-                }
-
-                if (_keyProperties._expiresOn != DateTimeOffset.MinValue)
-                {
-                    AddToBuilder(Constants.Sas.Parameters.KeyExpiry, WebUtility.UrlEncode(_keyProperties._expiresOn.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
-                }
-
-                if (!string.IsNullOrWhiteSpace(_keyProperties._service))
-                {
-                    AddToBuilder(Constants.Sas.Parameters.KeyService, _keyProperties._service);
-                }
-
-                if (!string.IsNullOrWhiteSpace(_keyProperties._version))
-                {
-                    AddToBuilder(Constants.Sas.Parameters.KeyVersion, _keyProperties._version);
-                }
-            }
 
             if (!string.IsNullOrWhiteSpace(Signature))
             {
@@ -518,157 +428,6 @@ namespace Azure.Storage.Sas
             }
 
             return sb.ToString();
-        }
-
-        /// <summary>
-        /// Creates a new SasQueryParameters instance.
-        /// </summary>
-        public static SasQueryParameters Create(
-            string version,
-            AccountSasServices? services,
-            AccountSasResourceTypes? resourceTypes,
-            SasProtocol protocol,
-            DateTimeOffset startsOn,
-            DateTimeOffset expiresOn,
-            SasIPRange ipRange,
-            string identifier,
-            string resource,
-            string permissions,
-            string signature,
-            string keyOid = default,
-            string keyTid = default,
-            DateTimeOffset keyStart = default,
-            DateTimeOffset keyExpiry = default,
-            string keyService = default,
-            string keyVersion = default,
-            string cacheControl = default,
-            string contentDisposition = default,
-            string contentEncoding = default,
-            string contentLanguage = default,
-            string contentType = default,
-            SasQueryParameters instance = default) =>
-                CopyToInstance(
-                    instance ?? new SasQueryParameters(),
-                    version,
-                    services,
-                    resourceTypes,
-                    protocol,
-                    startsOn,
-                    expiresOn,
-                    ipRange,
-                    identifier,
-                    resource,
-                    permissions,
-                    signature,
-                    keyOid,
-                    keyTid,
-                    keyStart,
-                    keyExpiry,
-                    keyService,
-                    keyVersion,
-                    cacheControl,
-                    contentDisposition,
-                    contentEncoding,
-                    contentLanguage,
-                    contentType);
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="values"></param>
-        /// <param name="includeBlobParameters"></param>
-        /// <param name="instance"></param>
-        /// <returns></returns>
-        public static SasQueryParameters Create(
-            Dictionary<string, string> values,
-            bool includeBlobParameters = false,
-            SasQueryParameters instance = default)
-        {
-            if (instance == default)
-            {
-                return new SasQueryParameters(values, includeBlobParameters);
-            }
-            else
-            {
-                var copy = new SasQueryParameters(values, includeBlobParameters);
-                return CopyToInstance(
-                    instance,
-                    version: copy.Version,
-                    services: copy.Services,
-                    resourceTypes: copy.ResourceTypes,
-                    protocol: copy.Protocol,
-                    startsOn: copy.StartsOn,
-                    expiresOn: copy.ExpiresOn,
-                    ipRange: copy.IPRange,
-                    identifier: copy.Identifier,
-                    resource: copy.Resource,
-                    permissions: copy.Permissions,
-                    signature: copy.Signature,
-                    keyOid: copy._keyProperties._objectId,
-                    keyTid: copy._keyProperties._tenantId,
-                    keyStart: copy._keyProperties._startsOn,
-                    keyExpiry: copy._keyProperties._expiresOn,
-                    keyService: copy._keyProperties._service,
-                    keyVersion: copy._keyProperties._version,
-                    cacheControl: copy.CacheControl,
-                    contentDisposition: copy.ContentDisposition,
-                    contentEncoding: copy.ContentEncoding,
-                    contentLanguage: copy.ContentLanguage,
-                    contentType: copy.ContentType);
-            }
-        }
-
-        /// <summary>
-        /// Creates a new SasQueryParameters instance.
-        /// </summary>
-        private static SasQueryParameters CopyToInstance(
-            SasQueryParameters instance,
-            string version,
-            AccountSasServices? services,
-            AccountSasResourceTypes? resourceTypes,
-            SasProtocol protocol,
-            DateTimeOffset startsOn,
-            DateTimeOffset expiresOn,
-            SasIPRange ipRange,
-            string identifier,
-            string resource,
-            string permissions,
-            string signature,
-            string keyOid = default,
-            string keyTid = default,
-            DateTimeOffset keyStart = default,
-            DateTimeOffset keyExpiry = default,
-            string keyService = default,
-            string keyVersion = default,
-            string cacheControl = default,
-            string contentDisposition = default,
-            string contentEncoding = default,
-            string contentLanguage = default,
-            string contentType = default)
-        {
-            instance._version = version ?? SasQueryParameters.DefaultSasVersion;
-            instance._services = services;
-            instance._resourceTypes = resourceTypes;
-            instance._protocol = protocol;
-            instance._startTime = startsOn;
-            instance._expiryTime = expiresOn;
-            instance._ipRange = ipRange;
-            instance._identifier = identifier;
-            instance._resource = resource;
-            instance._permissions = permissions;
-            instance._signature = signature;  // Should never be null
-            instance._keyProperties._objectId = keyOid;
-            instance._keyProperties._tenantId = keyTid;
-            instance._keyProperties._startsOn = keyStart;
-            instance._keyProperties._expiresOn = keyExpiry;
-            instance._keyProperties._service = keyService;
-            instance._keyProperties._version = keyVersion;
-            instance._cacheControl = cacheControl;
-            instance._contentDisposition = contentDisposition;
-            instance._contentEncoding = contentEncoding;
-            instance._contentLanguage = contentLanguage;
-            instance._contentType = contentType;
-            return instance;
         }
     }
 }

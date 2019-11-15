@@ -209,7 +209,7 @@ namespace Azure.Storage.Sas
 
             var signature = StorageSharedKeyCredentialExtensions.ComputeSasSignature(sharedKeyCredential, stringToSign);
 
-            var p = SasQueryParameters.Create(
+            var p = new SasQueryParameters(
                 version: Version,
                 services: default,
                 resourceTypes: default,

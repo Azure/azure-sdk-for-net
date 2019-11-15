@@ -208,7 +208,7 @@ namespace Azure.Storage.Queues
             var paramsMap = new UriQueryParamsCollection(uri.Query);
             if (paramsMap.ContainsKey(Constants.Sas.Parameters.Version))
             {
-                Sas = SasQueryParameters.Create(paramsMap);
+                Sas = new SasQueryParameters(paramsMap);
             }
             Query = paramsMap.ToString();
         }

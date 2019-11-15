@@ -230,7 +230,7 @@ namespace Azure.Storage.Sas
 
             var signature = StorageSharedKeyCredentialExtensions.ComputeSasSignature(sharedKeyCredential,stringToSign);
 
-            var p = BlobSasQueryParameters.Create(
+            var p = new BlobSasQueryParameters(
                 version: Version,
                 services: default,
                 resourceTypes: default,
@@ -299,7 +299,7 @@ namespace Azure.Storage.Sas
 
             var signature = ComputeHMACSHA256(userDelegationKey.Value, stringToSign);
 
-            var p = BlobSasQueryParameters.Create(
+            var p = new BlobSasQueryParameters(
                 version: Version,
                 services: default,
                 resourceTypes: default,

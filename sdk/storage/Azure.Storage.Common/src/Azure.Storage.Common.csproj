@@ -21,5 +21,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)NoBodyResponse{T}.cs" Link="Core\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Remove="Shared\SasQueryParametersExtensions.cs" />
+
   </ItemGroup>
 </Project>

@@ -213,7 +213,7 @@ namespace Azure.Storage.Files.DataLake.Sas
 
             var signature = StorageSharedKeyCredentialExtensions.ComputeSasSignature(sharedKeyCredential, stringToSign);
 
-            var p = DataLakeSasQueryParameters.Create(
+            var p = new DataLakeSasQueryParameters(
                 version: Version,
                 services: default,
                 resourceTypes: default,
@@ -282,7 +282,7 @@ namespace Azure.Storage.Files.DataLake.Sas
 
             var signature = ComputeHMACSHA256(userDelegationKey.Value, stringToSign);
 
-            var p = DataLakeSasQueryParameters.Create(
+            var p = new DataLakeSasQueryParameters(
                 version: Version,
                 services: default,
                 resourceTypes: default,

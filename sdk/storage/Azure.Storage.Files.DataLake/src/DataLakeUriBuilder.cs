@@ -223,7 +223,7 @@ namespace Azure.Storage.Files.DataLake
 
             if (paramsMap.ContainsKey(Constants.Sas.Parameters.Version))
             {
-                Sas = DataLakeSasQueryParameters.Create(paramsMap);
+                Sas = new DataLakeSasQueryParameters(paramsMap);
             }
 
             Query = paramsMap.ToString();

@@ -5,8 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
-
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Azure.Storage
 {
@@ -158,7 +159,7 @@ namespace Azure.Storage
                     Constants.ConnectionStrings.AccountNameSetting,
                     sharedKeyCredentials.AccountName,
                     Constants.ConnectionStrings.AccountKeySetting,
-                    exportSecrets ? StorageSharedKeyCredentialExtensions.ExportBase64EncodedKey(sharedKeyCredentials) : "Sanitized");
+                    exportSecrets ? ((StorageSharedKeyCredential)credentials).ExportBase64EncodedKey() : "Sanitized");
             }
             else if (credentials is SharedAccessSignatureCredentials sasCredentials)
             {
@@ -166,6 +167,16 @@ namespace Azure.Storage
             }
 
             return string.Empty;
+        }
+
+        internal static string ExportBase64EncodedKey(this StorageSharedKeyCredential credential)
+        {
+            Type type = credential.GetType();
+            PropertyInfo prop = type.GetProperty("AccountKeyValue", BindingFlags.NonPublic | BindingFlags.Instance);
+            var val = prop.GetValue(credential);
+            return !(val is byte[] key) ?
+                null :
+                Convert.ToBase64String(key);
         }
     }
 }
