@@ -100,6 +100,13 @@ namespace Azure.Messaging.EventHubs.Processor
         private ConcurrentDictionary<string, CancellationTokenSource> ActivePartitionProcessorTokenSources { get; set; }
 
         /// <summary>
+        ///   The set of contexts associated with partitions that are currently being processed.  Partition ids are used
+        ///   as keys.
+        /// </summary>
+        ///
+        private ConcurrentDictionary<string, T> PartitionContexts { get; set; }
+
+        /// <summary>
         ///   The set of partition ownership this event processor owns.  Partition ids are used as keys.
         ///   TODO: we should decide whether this property should be made private or not (and how would the concrete class obtain checkpoint information).
         /// </summary>
@@ -268,6 +275,7 @@ namespace Azure.Messaging.EventHubs.Processor
                         InstanceOwnership = new Dictionary<string, PartitionOwnership>();
                         ActivePartitionProcessors = new ConcurrentDictionary<string, Task>();
                         ActivePartitionProcessorTokenSources = new ConcurrentDictionary<string, CancellationTokenSource>();
+                        PartitionContexts = new ConcurrentDictionary<string, T>();
 
                         // Start the main running task.  It is responsible for managing the active partition processing tasks and
                         // for partition load balancing among multiple event processor instances.
@@ -335,6 +343,7 @@ namespace Azure.Messaging.EventHubs.Processor
                         InstanceOwnership = null;
                         ActivePartitionProcessors = null;
                         ActivePartitionProcessorTokenSources = null;
+                        PartitionContexts = null;
 
                         // TODO: once IsRunning is implemented, update the following comment.
                         // We need to wait until all tasks have stopped before making the load balancing task null.  If we did it sooner, we
@@ -418,6 +427,8 @@ namespace Azure.Messaging.EventHubs.Processor
                             await StopPartitionProcessingIfRunningAsync(kvp.Key, ProcessingStoppedReason.Shutdown).ConfigureAwait(false);
 
                             var context = CreateContext(kvp.Key);
+                            PartitionContexts[kvp.Key] = context;
+
                             await InitializeProcessingForPartitionAsync(context).ConfigureAwait(false);
                         }
                     }))
@@ -438,6 +449,8 @@ namespace Azure.Messaging.EventHubs.Processor
                     InstanceOwnership[claimedOwnership.PartitionId] = claimedOwnership;
 
                     var context = CreateContext(claimedOwnership.PartitionId);
+                    PartitionContexts[claimedOwnership.PartitionId] = context;
+
                     await InitializeProcessingForPartitionAsync(context).ConfigureAwait(false);
                 }
 
@@ -605,10 +618,9 @@ namespace Azure.Messaging.EventHubs.Processor
                 }
             }
 
-            // TODO: create the context only once instead of doing it every single time.
             // TODO: if reason = Shutdown or OwnershipLost and we got an exception when closing, what should the final reason be?
 
-            var context = CreateContext(partitionId);
+            PartitionContexts.TryRemove(partitionId, out var context);
             await ProcessingForPartitionStoppedAsync(reason, context);
         }
 
@@ -694,6 +706,11 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 ActivePartitionProcessorTokenSources[partitionId] = tokenSource;
 
+                // Context is set to default if operation fails.  This shouldn't fail unless the user tries processing
+                // a partition they don't own.
+
+                PartitionContexts.TryGetValue(partitionId, out var context);
+
                 var options = new EventHubConsumerClientOptions
                 {
                     RetryOptions = retryOptions,
@@ -720,7 +737,6 @@ namespace Azure.Messaging.EventHubs.Processor
 
                         try
                         {
-                            var context = CreateContext(partitionId);
                             await ProcessEventAsync(partitionEvent, context).ConfigureAwait(false);
                         }
                         catch (Exception eventProcessingException)
