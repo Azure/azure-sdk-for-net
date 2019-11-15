@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
@@ -687,6 +688,7 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="maximumReceiveWaitTime">The maximum amount of time to wait to for an event to be available before emitting an empty item; if <c>null</c>, empty items will not be published.</param>
         /// <param name="retryOptions">The set of options to use for determining whether a failed operation should be retried and, if so, the amount of time to wait between retry attempts.</param>
         /// <param name="trackLastEnqueuedEventInformation">Indicates whether or not the task should request information on the last enqueued event on the partition associated with a given event, and track that information as events are received.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>The running task that is currently receiving and processing events in the context of the specified partition.</returns>
         ///
@@ -694,17 +696,22 @@ namespace Azure.Messaging.EventHubs.Processor
                                                            EventPosition startingPosition,
                                                            TimeSpan? maximumReceiveWaitTime,
                                                            RetryOptions retryOptions,
-                                                           bool trackLastEnqueuedEventInformation) => Task.Run(async () =>
+                                                           bool trackLastEnqueuedEventInformation,
+                                                           CancellationToken cancellationToken = default)
+        {
+            // TODO: should the retry options used here be the same for the abstract RetryPolicy property?
+
+            Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
+            Argument.AssertNotNull(retryOptions, nameof(retryOptions));
+
+            return Task.Run(async () =>
             {
-                // TODO: let the user include a cancellation token?  Why would they need to stop the processing?
-                // TODO: should we double check if a previous run already exists and close it?
-                // TODO: should we assert arguments are valid? We should do it before returning the task.
-                // TODO: should the retry options used here be the same for the abstract RetryPolicy property?
+                // TODO: should we double check if a previous run already exists and close it?  We have a race condition.  Maybe we should throw in case another task exists.
 
-                var tokenSource = new CancellationTokenSource();
-                var cancellationToken = tokenSource.Token;
+                var cancellationSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+                var taskCancellationToken = cancellationSource.Token;
 
-                ActivePartitionProcessorTokenSources[partitionId] = tokenSource;
+                ActivePartitionProcessorTokenSources[partitionId] = cancellationSource;
 
                 // Context is set to default if operation fails.  This shouldn't fail unless the user tries processing
                 // a partition they don't own.
@@ -721,7 +728,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 await using (var consumer = new EventHubConsumerClient(ConsumerGroup, connection, options))
                 {
-                    await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partitionId, startingPosition, maximumReceiveWaitTime, cancellationToken))
+                    await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partitionId, startingPosition, maximumReceiveWaitTime, taskCancellationToken))
                     {
                         using DiagnosticScope diagnosticScope = EventDataInstrumentation.ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName);
                         diagnosticScope.AddAttribute("kind", "server");
@@ -747,5 +754,6 @@ namespace Azure.Messaging.EventHubs.Processor
                     }
                 }
             });
+        }
     }
 }
