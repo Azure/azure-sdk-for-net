@@ -67,6 +67,30 @@ namespace Compute.Tests
         /// Create RG
         /// Create Storage Account
         /// Create Network Resources
+        /// Create Azure Spot VMScaleSet with no EvictionPolicy specified
+        /// Get VMScaleSet Model View
+        /// Get VMScaleSet Instance View
+        /// List VMScaleSets in a RG
+        /// List Available Skus
+        /// Delete VMScaleSet
+        /// Delete RG
+        /// </summary>
+        [Fact]
+        [Trait("Name", "TestVMScaleSetScenarioOperations_Accept_Spot")]
+        public void TestVMScaleSetScenarioOperations_Accept_Spot()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                // Create Azure Spot scaleset with no eviction policy specified. Eviction policy is defaulted to Deallocate.
+                TestVMScaleSetPriorityOperationsInternal(context, VirtualMachinePriorityTypes.Spot, hasManagedDisks: true);
+            }
+        }
+
+        /// <summary>
+        /// Covers following Operations:
+        /// Create RG
+        /// Create Storage Account
+        /// Create Network Resources
         /// Create Low Priority VMScaleSet with 'Delete' EvictionPolicy specified
         /// Delete VMScaleSet
         /// Delete RG
