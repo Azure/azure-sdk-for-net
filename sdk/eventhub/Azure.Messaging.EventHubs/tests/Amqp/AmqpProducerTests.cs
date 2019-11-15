@@ -76,10 +76,10 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task CloseMarksTheProducerAsClosed()
         {
             var producer = new AmqpProducer("aHub", "0", Mock.Of<AmqpConnectionScope>(), Mock.Of<AmqpMessageConverter>(), Mock.Of<EventHubsRetryPolicy>());
-            Assert.That(producer.Closed, Is.False, "The producer should not be closed on creation");
+            Assert.That(producer.IsClosed, Is.False, "The producer should not be closed on creation");
 
             await producer.CloseAsync(CancellationToken.None);
-            Assert.That(producer.Closed, Is.True, "The producer should be marked as closed after closing");
+            Assert.That(producer.IsClosed, Is.True, "The producer should be marked as closed after closing");
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             cancellationSource.Cancel();
             Assert.That(async () => await producer.CloseAsync(cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>(), "Cancellation should trigger the appropriate exception.");
-            Assert.That(producer.Closed, Is.False, "Cancellation should have interrupted closing and left the producer in an open state.");
+            Assert.That(producer.IsClosed, Is.False, "Cancellation should have interrupted closing and left the producer in an open state.");
         }
 
         /// <summary>
@@ -298,7 +298,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task SendEnumerableUsesThePartitionKey()
         {
             var expectedPartitionKey = "some key";
-            var options = new CreateBatchOptions { PartitionKey = expectedPartitionKey };
+            var options = new SendOptions { PartitionKey = expectedPartitionKey };
             var retryPolicy = new BasicRetryPolicy(new RetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
 
             var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
@@ -489,7 +489,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Verifiable();
 
             using TransportEventBatch batch = await producer.Object.CreateBatchAsync(options, default);
-            await producer.Object.SendAsync(new EventDataBatch(batch, options), CancellationToken.None);
+            await producer.Object.SendAsync(new EventDataBatch(batch, options.ToSendOptions()), CancellationToken.None);
 
             producer.VerifyAll();
         }
@@ -535,7 +535,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             using TransportEventBatch transportBatch = await producer.Object.CreateBatchAsync(options, default);
 
-            using var batch = new EventDataBatch(transportBatch, options);
+            using var batch = new EventDataBatch(transportBatch, options.ToSendOptions());
             batch.TryAdd(new EventData(new byte[] { 0x15 }));
 
             await producer.Object.SendAsync(batch, CancellationToken.None);
@@ -583,7 +583,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             using TransportEventBatch transportBatch = await producer.Object.CreateBatchAsync(options, default);
 
-            using var batch = new EventDataBatch(transportBatch, options);
+            using var batch = new EventDataBatch(transportBatch, options.ToSendOptions());
             batch.TryAdd(new EventData(new byte[] { 0x15 }));
 
             await producer.Object.SendAsync(batch, CancellationToken.None);
@@ -628,7 +628,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             using TransportEventBatch transportBatch = await producer.Object.CreateBatchAsync(options, default);
 
-            using var batch = new EventDataBatch(transportBatch, options);
+            using var batch = new EventDataBatch(transportBatch, options.ToSendOptions());
             batch.TryAdd(new EventData(new byte[] { 0x15 }));
 
             await producer.Object.SendAsync(batch, CancellationToken.None);
@@ -667,7 +667,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using CancellationTokenSource cancellationSource = new CancellationTokenSource();
 
             cancellationSource.Cancel();
-            Assert.That(async () => await producer.Object.SendAsync(new EventDataBatch(batch, options), cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
+            Assert.That(async () => await producer.Object.SendAsync(new EventDataBatch(batch, options.ToSendOptions()), cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
         }
 
         /// <summary>
@@ -683,7 +683,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new CreateBatchOptions { PartitionKey = partitionKey };
             var retriableException = new EventHubsException(true, "Test");
             var retryPolicy = new BasicRetryPolicy(retryOptions);
-            var batch = new EventDataBatch(Mock.Of<TransportEventBatch>(), options);
+            var batch = new EventDataBatch(Mock.Of<TransportEventBatch>(), options.ToSendOptions());
 
             var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
             {

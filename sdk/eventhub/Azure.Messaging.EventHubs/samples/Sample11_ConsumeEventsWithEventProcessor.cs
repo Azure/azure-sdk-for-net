@@ -86,7 +86,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
                     // This method is asynchronous, which means it's expected to return a Task.
 
-                    return Task.CompletedTask;
+                    return new ValueTask();
                 };
 
                 eventProcessor.ProcessingForPartitionStoppedAsyncHandler = (stopContext) =>
@@ -100,7 +100,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
                     // This method is asynchronous, which means it's expected to return a Task.
 
-                    return Task.CompletedTask;
+                    return new ValueTask();
                 };
 
                 eventProcessor.ProcessEventAsyncHandler = (processorEvent) =>
@@ -119,7 +119,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
                     // This method is asynchronous, which means it's expected to return a Task.
 
-                    return Task.CompletedTask;
+                    return new ValueTask();
                 };
 
                 eventProcessor.ProcessErrorAsyncHandler = (errorContext) =>
@@ -140,7 +140,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
                     // This method is asynchronous, which means it's expected to return a Task.
 
-                    return Task.CompletedTask;
+                    return new ValueTask();
                 };
 
                 // Once started, the event processor will start to claim partitions and receive events from them.

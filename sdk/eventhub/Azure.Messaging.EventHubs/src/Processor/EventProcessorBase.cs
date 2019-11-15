@@ -121,7 +121,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        protected virtual Task InitializeProcessingForPartitionAsync(T context) => Task.CompletedTask;
+        protected virtual ValueTask InitializeProcessingForPartitionAsync(T context) => new ValueTask();
 
         /// <summary>
         ///   The handler to be called once event processing stops for a given partition.
@@ -132,8 +132,8 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        protected virtual Task ProcessingForPartitionStoppedAsync(ProcessingStoppedReason reason,
-                                                                  T context) => Task.CompletedTask;
+        protected virtual ValueTask ProcessingForPartitionStoppedAsync(ProcessingStoppedReason reason,
+                                                                       T context) => new ValueTask();
 
         /// <summary>
         ///   Responsible for processing events received from the Event Hubs service.
@@ -144,8 +144,8 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        protected abstract Task ProcessEventAsync(PartitionEvent partitionEvent,
-                                                  T context);
+        protected abstract ValueTask ProcessEventAsync(PartitionEvent partitionEvent,
+                                                       T context);
 
         /// <summary>
         ///   Responsible for processing unhandled exceptions thrown while this processor is running.
@@ -156,8 +156,8 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        protected abstract Task ProcessErrorAsync(Exception exception,
-                                                  T context);
+        protected abstract ValueTask ProcessErrorAsync(Exception exception,
+                                                       T context);
 
         /// <summary>
         ///   Retrieves a complete ownership list from the chosen storage service.
@@ -412,7 +412,9 @@ namespace Azure.Messaging.EventHubs.Processor
                     {
                         if (!ActivePartitionProcessors.TryGetValue(kvp.Key, out Task processingTask) || processingTask.IsCompleted)
                         {
-                            await StopPartitionProcessingIfRunningAsync(kvp.Key, ProcessingStoppedReason.Exception).ConfigureAwait(false);
+                            // TODO: if the task fails, what's the expected reason?
+
+                            await StopPartitionProcessingIfRunningAsync(kvp.Key, ProcessingStoppedReason.Shutdown).ConfigureAwait(false);
 
                             var context = CreateContext(kvp.Key);
                             await InitializeProcessingForPartitionAsync(context).ConfigureAwait(false);

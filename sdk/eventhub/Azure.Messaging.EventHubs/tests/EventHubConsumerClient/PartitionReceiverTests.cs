@@ -125,8 +125,7 @@ namespace Azure.Messaging.EventHubs.Tests
             if (trackingEnabled)
             {
                 var metrics = receiver.ReadLastEnqueuedEventInformation();
-                Assert.That(metrics.EventHubName, Is.Not.Null.And.Not.Empty, "The Event Hub name should be present.");
-                Assert.That(metrics.PartitionId, Is.Not.Null.And.Not.Empty, "The partition id should be present.");
+                Assert.That(metrics, Is.Not.Null, "The metrics should be present.");
             }
             else
             {
@@ -157,12 +156,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var receiver = new PartitionReceiver("group", partition, eventHub, true, TimeSpan.Zero, transportMock);
             var metrics = receiver.ReadLastEnqueuedEventInformation();
 
-            Assert.That(metrics.EventHubName, Is.EqualTo(eventHub), "The Event Hub name should match.");
-            Assert.That(metrics.PartitionId, Is.EqualTo(partition), "The partition id should match.");
-            Assert.That(metrics.LastEnqueuedSequenceNumber, Is.EqualTo(lastEvent.LastPartitionSequenceNumber), "The sequence number should match.");
-            Assert.That(metrics.LastEnqueuedOffset, Is.EqualTo(lastEvent.LastPartitionOffset), "The offset should match.");
-            Assert.That(metrics.LastEnqueuedTime, Is.EqualTo(lastEvent.LastPartitionEnqueuedTime), "The enqueue time should match.");
-            Assert.That(metrics.InformationReceived, Is.EqualTo(lastEvent.LastPartitionInformationRetrievalTime), "The retrieval time should match.");
+            Assert.That(metrics.SequenceNumber, Is.EqualTo(lastEvent.LastPartitionSequenceNumber), "The sequence number should match.");
+            Assert.That(metrics.Offset, Is.EqualTo(lastEvent.LastPartitionOffset), "The offset should match.");
+            Assert.That(metrics.EnqueuedTime, Is.EqualTo(lastEvent.LastPartitionEnqueuedTime), "The enqueue time should match.");
+            Assert.That(metrics.LastReceivedTime, Is.EqualTo(lastEvent.LastPartitionInformationRetrievalTime), "The retrieval time should match.");
         }
 
         /// <summary>

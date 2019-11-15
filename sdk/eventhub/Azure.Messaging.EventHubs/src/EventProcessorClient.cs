@@ -28,22 +28,22 @@ namespace Azure.Messaging.EventHubs
         private readonly object StartProcessorGuard = new object();
 
         /// <summary>The handler to be called just before event processing starts for a given partition.</summary>
-        private Func<InitializePartitionProcessingContext, Task> _initializeProcessingForPartitionAsyncHandler;
+        private Func<InitializePartitionProcessingContext, ValueTask> _initializeProcessingForPartitionAsyncHandler;
 
         /// <summary>The handler to be called once event processing stops for a given partition.</summary>
-        private Func<PartitionProcessingStoppedContext, Task> _processingForPartitionStoppedAsyncHandler;
+        private Func<PartitionProcessingStoppedContext, ValueTask> _processingForPartitionStoppedAsyncHandler;
 
         /// <summary>Responsible for processing events received from the Event Hubs service.</summary>
-        private Func<EventProcessorEvent, Task> _processEventAsyncHandler;
+        private Func<EventProcessorEvent, ValueTask> _processEventAsyncHandler;
 
         /// <summary>Responsible for processing unhandled exceptions thrown while this processor is running.</summary>
-        private Func<ProcessorErrorContext, Task> _processErrorAsyncHandler;
+        private Func<ProcessorErrorContext, ValueTask> _processErrorAsyncHandler;
 
         /// <summary>
         ///   The handler to be called just before event processing starts for a given partition.
         /// </summary>
         ///
-        public Func<InitializePartitionProcessingContext, Task> InitializeProcessingForPartitionAsyncHandler
+        public Func<InitializePartitionProcessingContext, ValueTask> InitializeProcessingForPartitionAsyncHandler
         {
             get => _initializeProcessingForPartitionAsyncHandler;
             set => EnsureNotRunningAndInvoke(() => _initializeProcessingForPartitionAsyncHandler = value);
@@ -53,7 +53,7 @@ namespace Azure.Messaging.EventHubs
         ///   The handler to be called once event processing stops for a given partition.
         /// </summary>
         ///
-        public Func<PartitionProcessingStoppedContext, Task> ProcessingForPartitionStoppedAsyncHandler
+        public Func<PartitionProcessingStoppedContext, ValueTask> ProcessingForPartitionStoppedAsyncHandler
         {
             get => _processingForPartitionStoppedAsyncHandler;
             set => EnsureNotRunningAndInvoke(() => _processingForPartitionStoppedAsyncHandler = value);
@@ -63,7 +63,7 @@ namespace Azure.Messaging.EventHubs
         ///   Responsible for processing events received from the Event Hubs service.  Implementation is mandatory.
         /// </summary>
         ///
-        public Func<EventProcessorEvent, Task> ProcessEventAsyncHandler
+        public Func<EventProcessorEvent, ValueTask> ProcessEventAsyncHandler
         {
             get => _processEventAsyncHandler;
             set => EnsureNotRunningAndInvoke(() => _processEventAsyncHandler = value);
@@ -74,7 +74,7 @@ namespace Azure.Messaging.EventHubs
         ///   Implementation is mandatory.
         /// </summary>
         ///
-        public Func<ProcessorErrorContext, Task> ProcessErrorAsyncHandler
+        public Func<ProcessorErrorContext, ValueTask> ProcessErrorAsyncHandler
         {
             get => _processErrorAsyncHandler;
             set => EnsureNotRunningAndInvoke(() => _processErrorAsyncHandler = value);
@@ -128,7 +128,7 @@ namespace Azure.Messaging.EventHubs
         ///   <c>true</c> if the client is closed; otherwise, <c>false</c>.
         /// </value>
         ///
-        public bool Closed { get; protected set; } = false;
+        public bool IsClosed { get; protected set; } = false;
 
         /// <summary>
         ///   Indicates whether the client has ownership of the associated <see cref="EventHubConnection" />
@@ -354,7 +354,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        protected override async Task InitializeProcessingForPartitionAsync(PartitionContext context)
+        protected override async ValueTask InitializeProcessingForPartitionAsync(PartitionContext context)
         {
             try
             {
@@ -402,8 +402,8 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        protected async override Task ProcessingForPartitionStoppedAsync(ProcessingStoppedReason reason,
-                                                                         PartitionContext context)
+        protected async override ValueTask ProcessingForPartitionStoppedAsync(ProcessingStoppedReason reason,
+                                                                              PartitionContext context)
         {
             if (ProcessingForPartitionStoppedAsyncHandler != null)
             {
@@ -429,8 +429,8 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        protected override Task ProcessEventAsync(PartitionEvent partitionEvent,
-                                                  PartitionContext context)
+        protected override ValueTask ProcessEventAsync(PartitionEvent partitionEvent,
+                                                       PartitionContext context)
         {
             var processorEvent = new EventProcessorEvent(context, partitionEvent.Data, this);
             return ProcessEventAsyncHandler(processorEvent);
@@ -445,8 +445,8 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        protected override Task ProcessErrorAsync(Exception exception,
-                                                  PartitionContext context)
+        protected override ValueTask ProcessErrorAsync(Exception exception,
+                                                       PartitionContext context)
         {
             var errorContext = new ProcessorErrorContext(context?.PartitionId, exception);
             return ProcessErrorAsyncHandler(errorContext);
@@ -561,7 +561,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>A context associated with the specified partition.</returns>
         ///
-        protected override PartitionContext CreateContext(string partitionId) => new PartitionContext(EventHubName, partitionId);
+        protected override PartitionContext CreateContext(string partitionId) => new PartitionContext(partitionId);
 
         /// <summary>
         ///   Closes the event processor.
@@ -573,7 +573,7 @@ namespace Azure.Messaging.EventHubs
         ///
         public virtual async Task CloseAsync(CancellationToken cancellationToken = default)
         {
-            Closed = true;
+            IsClosed = true;
 
             await StopAsync().ConfigureAwait(false);
         }
@@ -640,7 +640,7 @@ namespace Azure.Messaging.EventHubs
         ///
         public override Task StartAsync()
         {
-            Argument.AssertNotClosed(Closed, nameof(EventProcessorClient));
+            Argument.AssertNotClosed(IsClosed, nameof(EventProcessorClient));
 
             lock (StartProcessorGuard)
             {

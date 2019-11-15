@@ -245,7 +245,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var eventHubName = "SomeName";
             var endpoint = new Uri("amqp://some.endpoint.com/path");
             var fakeConnection = new MockConnection(endpoint, eventHubName);
-            var context = new PartitionContext(eventHubName, "partition");
+            var context = new PartitionContext("partition");
             var data = new EventData(new byte[0], sequenceNumber: 0, offset: 0);
 
             var processor = new EventProcessorClient("cg", new InMemoryPartitionManager(), fakeConnection, null);
@@ -304,10 +304,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var connectionMock = new Mock<EventHubConnection>("namespace", "eventHubName", Mock.Of<TokenCredential>(), new EventHubConnectionOptions());
             connectionMock.Setup(c => c.CreateTransportConsumer("cg", "pid", It.IsAny<EventPosition>(), It.IsAny<EventHubConsumerClientOptions>())).Returns(consumerMock.Object);
 
-            Func<EventData, PartitionContext, Task> processEventAsync = (eventData, context) =>
+            Func<EventProcessorEvent, ValueTask> processEventAsync = processorEvent =>
             {
                 processorCalledSource.SetResult(null);
-                return Task.CompletedTask;
+                return new ValueTask();
             };
 
             // TODO: partition pump type does not exist anymore. Figure out how to call RunPartitionProcessingAsync.

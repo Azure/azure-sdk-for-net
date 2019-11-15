@@ -45,7 +45,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///   <c>true</c> if the client is closed; otherwise, <c>false</c>.
         /// </value>
         ///
-        public override bool Closed => _closed;
+        public override bool IsClosed => _closed;
 
         /// <summary>
         ///   The endpoint for the Event Hubs service to which the client is associated.

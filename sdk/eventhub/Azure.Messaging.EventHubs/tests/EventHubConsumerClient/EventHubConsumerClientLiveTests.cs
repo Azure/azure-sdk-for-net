@@ -73,7 +73,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
-                var options = new EventHubConsumerClientOptions { Identifier = "FakeIdentifier" };
+                var options = new EventHubConsumerClientOptions { TrackLastEnqueuedEventInformation = false };
 
                 await using (var connection = new EventHubConnection(connectionString, new EventHubConnectionOptions { TransportType = transportType }))
                 {
@@ -789,7 +789,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             {
                                 ++count;
 
-                                if ((count >= countBeforeClose) && (!closeCalled))
+                                if ((count == countBeforeClose) && (!closeCalled))
                                 {
                                     if (sync)
                                     {
@@ -1605,66 +1605,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task QuotaExceedExceptionMessageContainsExistingConsumerIdentifiers()
-        {
-            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
-            {
-                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
-
-                await using (var connection = new EventHubConnection(connectionString))
-                {
-                    var partition = (await connection.GetPartitionIdsAsync(DefaultRetryPolicy)).First();
-                    var consumers = new List<EventHubConsumerClient>();
-                    var readers = new List<IAsyncEnumerator<PartitionEvent>>();
-                    var maximumConsumersQuota = 5;
-
-                    using var cancellationSource = new CancellationTokenSource();
-                    cancellationSource.CancelAfter(TimeSpan.FromMinutes(5));
-
-                    try
-                    {
-                        for (int i = 0; i < maximumConsumersQuota; i++)
-                        {
-                            var consumerOptions = new EventHubConsumerClientOptions { Identifier = $"consumer{i}" };
-                            var newConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection, consumerOptions);
-                            var newReader = newConsumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, TimeSpan.FromMilliseconds(50), cancellationSource.Token).GetAsyncEnumerator();
-
-                            Assert.That(async () => await newReader.MoveNextAsync(), Throws.Nothing);
-
-                            readers.Add(newReader);
-                            consumers.Add(newConsumer);
-                        }
-
-                        // Attempt to create 6th consumer. This should fail.
-
-                        await using var failConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString);
-                        await ReadNothingAsync(failConsumer, partition, EventPosition.Latest);
-
-                        throw new InvalidOperationException("6th consumer should have encountered QuotaExceededException.");
-                    }
-                    catch (QuotaExceededException ex)
-                    {
-                        foreach (EventHubConsumerClient consumer in consumers)
-                        {
-                            Assert.That(ex.Message.Contains(consumer.Identifier), Is.True, $"QuotaExceededException message is missing consumer identifier '{consumer.Identifier}')");
-                        }
-                    }
-                    finally
-                    {
-                        await Task.WhenAll(readers.Select(reader => reader.DisposeAsync().AsTask()));
-                        await Task.WhenAll(consumers.Select(consumer => consumer.CloseAsync()));
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        ///   Verifies that the <see cref="EventHubConsumerClient" /> is able to
-        ///   connect to the Event Hubs service and perform operations.
-        /// </summary>
-        ///
-        [Test]
-        public async Task ConsumerCannotReeadWhenProxyIsInvalid()
+        public async Task ConsumerCannotReadWhenProxyIsInvalid()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
@@ -1714,7 +1655,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     Assert.That(properties, Is.Not.Null, "A set of properties should have been returned.");
                     Assert.That(properties.Name, Is.EqualTo(scope.EventHubName), "The property Event Hub name should match the scope.");
                     Assert.That(properties.PartitionIds.Length, Is.EqualTo(partitionCount), "The properties should have the requested number of partitions.");
-                    Assert.That(properties.CreatedAt, Is.EqualTo(DateTimeOffset.UtcNow).Within(TimeSpan.FromSeconds(60)), "The Event Hub should have been created just about now.");
+                    Assert.That(properties.CreatedOn, Is.EqualTo(DateTimeOffset.UtcNow).Within(TimeSpan.FromSeconds(60)), "The Event Hub should have been created just about now.");
                 }
             }
         }
@@ -1883,15 +1824,16 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <param name="consumer">The consumer to use for reading.</param>
         /// <param name="partition">The partition read from.</param>
         /// <param name="startingPosition">The position in the partition to start reading from.</param>
+        /// <param name="iterationCount">The number of iterations to perform.</param>
         ///
         private async Task ReadNothingAsync(EventHubConsumerClient consumer,
                                             string partition,
                                             EventPosition startingPosition,
-                                            int iterationCount = 5)
+                                            int iterationCount = 10)
         {
             await foreach (var item in consumer.ReadEventsFromPartitionAsync(partition, startingPosition, TimeSpan.FromMilliseconds(50)))
             {
-                await Task.Delay(150);
+                await Task.Delay(250);
 
                 if (--iterationCount <= 0)
                 {

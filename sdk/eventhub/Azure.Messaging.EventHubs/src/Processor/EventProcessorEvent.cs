@@ -71,8 +71,8 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
-        ///   Updates the checkpoint using the information contained in this instance for the associated partition
-        ///   and consumer group.
+        ///   Updates the checkpoint for the <see cref="PartitionContext" /> and <see cref="EventData" /> associated with
+        ///   this event.
         /// </summary>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>

@@ -10,7 +10,7 @@ namespace Azure.Messaging.EventHubs
     ///   are sent to the Event Hubs service.
     /// </summary>
     ///
-    public class SendOptions
+    internal class SendOptions
     {
         /// <summary>
         ///   Allows a hashing key to be provided for the batch of events, which instructs the Event Hubs
@@ -40,8 +40,8 @@ namespace Azure.Messaging.EventHubs
         public string PartitionKey { get; set; }
 
         /// <summary>
-        ///   If the identifier is not specified, the Event Hubs service will be responsible for routing events automatically to
-        ///   to an available partition.  If specified, the sender is requesting that events be sent to this specific partition.
+        ///   If specified, events be published to this specific partition.  If the identifier is not
+        ///   specified, the Event Hubs service will be responsible for routing events automatically to an available partition.
         /// </summary>
         ///
         /// <value>
@@ -63,6 +63,28 @@ namespace Azure.Messaging.EventHubs
         /// </remarks>
         ///
         public string PartitionId { get; set; }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="SendOptions"/> class.
+        /// </summary>
+        ///
+        public SendOptions()
+        {
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="SendOptions"/> class.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the partition to which events should be sent.</param>
+        /// <param name="partitionKey">The hashing key to use for influencing the partition to which the events are routed.</param>
+        ///
+        internal SendOptions(string partitionId,
+                             string partitionKey)
+        {
+            PartitionId = partitionId;
+            PartitionKey = partitionKey;
+        }
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.

@@ -1321,7 +1321,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await consumer.CloseAsync();
 
             var connection = GetConnection(consumer);
-            Assert.That(connection.Closed, Is.True);
+            Assert.That(connection.IsClosed, Is.True);
         }
 
         /// <summary>
@@ -1338,7 +1338,7 @@ namespace Azure.Messaging.EventHubs.Tests
             consumer.Close();
 
             var connection = GetConnection(consumer);
-            Assert.That(connection.Closed, Is.True);
+            Assert.That(connection.IsClosed, Is.True);
         }
 
         /// <summary>
@@ -1354,7 +1354,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection);
 
             await consumer.CloseAsync();
-            Assert.That(connection.Closed, Is.False);
+            Assert.That(connection.IsClosed, Is.False);
         }
 
         /// <summary>
@@ -1370,7 +1370,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection);
 
             consumer.Close();
-            Assert.That(connection.Closed, Is.False);
+            Assert.That(connection.IsClosed, Is.False);
         }
 
         /// <summary>

@@ -63,7 +63,7 @@ namespace Azure.Messaging.EventHubs
         ///   <c>true</c> if the client is closed; otherwise, <c>false</c>.
         /// </value>
         ///
-        public bool Closed { get; protected set; } = false;
+        public bool IsClosed { get; protected set; } = false;
 
         /// <summary>
         ///   Indicates whether the client has ownership of the associated <see cref="EventHubConnection" />
@@ -281,7 +281,7 @@ namespace Azure.Messaging.EventHubs
         ///
         public virtual Task<EventHubProperties> GetEventHubPropertiesAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotClosed(Closed, nameof(EventHubProducerClient));
+            Argument.AssertNotClosed(IsClosed, nameof(EventHubProducerClient));
             return Connection.GetPropertiesAsync(RetryPolicy, cancellationToken);
         }
 
@@ -302,7 +302,7 @@ namespace Azure.Messaging.EventHubs
         public virtual Task<string[]> GetPartitionIdsAsync(CancellationToken cancellationToken = default)
         {
 
-            Argument.AssertNotClosed(Closed, nameof(EventHubProducerClient));
+            Argument.AssertNotClosed(IsClosed, nameof(EventHubProducerClient));
             return Connection.GetPartitionIdsAsync(RetryPolicy, cancellationToken);
         }
 
@@ -319,7 +319,7 @@ namespace Azure.Messaging.EventHubs
         public virtual Task<PartitionProperties> GetPartitionPropertiesAsync(string partitionId,
                                                                              CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotClosed(Closed, nameof(EventHubProducerClient));
+            Argument.AssertNotClosed(IsClosed, nameof(EventHubProducerClient));
             return Connection.GetPartitionPropertiesAsync(partitionId, RetryPolicy, cancellationToken);
         }
 
@@ -528,7 +528,7 @@ namespace Azure.Messaging.EventHubs
             AssertSinglePartitionReference(options.PartitionId, options.PartitionKey);
 
             TransportEventBatch transportBatch = await GatewayProducer.CreateBatchAsync(options, cancellationToken).ConfigureAwait(false);
-            return new EventDataBatch(transportBatch, options);
+            return new EventDataBatch(transportBatch, options.ToSendOptions());
         }
 
         /// <summary>
@@ -542,7 +542,7 @@ namespace Azure.Messaging.EventHubs
         public virtual async Task CloseAsync(CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            Closed = true;
+            IsClosed = true;
 
             var identifier = GetHashCode().ToString();
             EventHubsEventSource.Log.ClientCloseStart(typeof(EventHubProducerClient), EventHubName, identifier);
