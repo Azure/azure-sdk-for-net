@@ -15,9 +15,10 @@ namespace Billing.Tests.ScenarioTests
     public class BillingPropertyOperationsTest : TestBase
     {
         private const string BillingAccountName = "723c8ce0-33ba-5ba7-ef23-e1b72f15f1d8:4ce5b530-c82b-44e8-97ec-49f3cce9f14d_2019-05-31";
+        private const string BillingProfileName = "H6RI-TXWC-BG7-PGB";
 
         [Fact]
-        public void ListAgreementsByBillingAccountTest()
+        public void GetBillingPropertyTest()
         {
             var something = typeof(Billing.Tests.ScenarioTests.OperationsTests);
             string executingAssemblyPath = something.GetTypeInfo().Assembly.Location;
@@ -29,11 +30,12 @@ namespace Billing.Tests.ScenarioTests
                 var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                 // Get the billing property
-                var agreements = billingMgmtClient.BillingProperty.Get();
+                var billingProperty = billingMgmtClient.BillingProperty.Get();
 
                 // Verify the response
-                Assert.NotNull(agreements);
-                Assert.Empty(agreements.Value);
+                Assert.NotNull(billingProperty);
+                Assert.Contains(BillingAccountName, billingProperty.BillingAccountId);
+                Assert.Contains(BillingProfileName, billingProperty.BillingProfileId);
             }
         }
     }
