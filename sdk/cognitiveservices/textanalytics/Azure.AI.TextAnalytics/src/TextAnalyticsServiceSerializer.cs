@@ -194,38 +194,30 @@ namespace Azure.AI.TextAnalytics
 
         public static async Task<DocumentResultCollection<DetectedLanguage>> DeserializeDetectLanguageResponseAsync(Stream content, CancellationToken cancellation)
         {
-            using (JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false))
-            {
-                JsonElement root = json.RootElement;
-                return ReadDetectLanguageResultCollection(root);
-            }
+            using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
+            JsonElement root = json.RootElement;
+            return ReadDetectLanguageResultCollection(root);
         }
 
         public static DocumentResultCollection<DetectedLanguage> DeserializeDetectLanguageResponse(Stream content)
         {
-            using (JsonDocument json = JsonDocument.Parse(content, default))
-            {
-                JsonElement root = json.RootElement;
-                return ReadDetectLanguageResultCollection(root);
-            }
+            using JsonDocument json = JsonDocument.Parse(content, default);
+            JsonElement root = json.RootElement;
+            return ReadDetectLanguageResultCollection(root);
         }
 
         public static async Task<IEnumerable<DetectedLanguage>> DeserializeDetectedLanguageCollectionAsync(Stream content, CancellationToken cancellation)
         {
-            using (JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false))
-            {
-                JsonElement root = json.RootElement;
-                return ReadDetectedLanguageCollection(root);
-            }
+            using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
+            JsonElement root = json.RootElement;
+            return ReadDetectedLanguageCollection(root);
         }
 
         public static IEnumerable<DetectedLanguage> DeserializeDetectedLanguageCollection(Stream content)
         {
-            using (JsonDocument json = JsonDocument.Parse(content))
-            {
-                JsonElement root = json.RootElement;
-                return ReadDetectedLanguageCollection(root);
-            }
+            using JsonDocument json = JsonDocument.Parse(content);
+            JsonElement root = json.RootElement;
+            return ReadDetectedLanguageCollection(root);
         }
 
         private static DocumentResultCollection<DetectedLanguage> ReadDetectLanguageResultCollection(JsonElement root)
@@ -304,38 +296,30 @@ namespace Azure.AI.TextAnalytics
 
         public static async Task<DocumentResultCollection<Entity>> DeserializeRecognizeEntitiesResponseAsync(Stream content, CancellationToken cancellation)
         {
-            using (JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false))
-            {
-                JsonElement root = json.RootElement;
-                return ReadEntityResultCollection(root);
-            }
+            using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
+            JsonElement root = json.RootElement;
+            return ReadEntityResultCollection(root);
         }
 
         public static DocumentResultCollection<Entity> DeserializeRecognizeEntitiesResponse(Stream content)
         {
-            using (JsonDocument json = JsonDocument.Parse(content, default))
-            {
-                JsonElement root = json.RootElement;
-                return ReadEntityResultCollection(root);
-            }
+            using JsonDocument json = JsonDocument.Parse(content, default);
+            JsonElement root = json.RootElement;
+            return ReadEntityResultCollection(root);
         }
 
         public static async Task<IEnumerable<IEnumerable<Entity>>> DeserializeEntityCollectionAsync(Stream content, CancellationToken cancellation)
         {
-            using (JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false))
-            {
-                JsonElement root = json.RootElement;
-                return ReadEntityCollection(root);
-            }
+            using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
+            JsonElement root = json.RootElement;
+            return ReadEntityCollection(root);
         }
 
         public static IEnumerable<IEnumerable<Entity>> DeserializeEntityCollection(Stream content)
         {
-            using (JsonDocument json = JsonDocument.Parse(content))
-            {
-                JsonElement root = json.RootElement;
-                return ReadEntityCollection(root);
-            }
+            using JsonDocument json = JsonDocument.Parse(content);
+            JsonElement root = json.RootElement;
+            return ReadEntityCollection(root);
         }
 
         private static DocumentResultCollection<Entity> ReadEntityResultCollection(JsonElement root)
@@ -419,38 +403,30 @@ namespace Azure.AI.TextAnalytics
 
         public static async Task<SentimentResultCollection> DeserializeAnalyzeSentimentResponseAsync(Stream content, CancellationToken cancellation)
         {
-            using (JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false))
-            {
-                JsonElement root = json.RootElement;
-                return ReadSentimentResult(root);
-            }
+            using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
+            JsonElement root = json.RootElement;
+            return ReadSentimentResult(root);
         }
 
         public static SentimentResultCollection DeserializeAnalyzeSentimentResponse(Stream content)
         {
-            using (JsonDocument json = JsonDocument.Parse(content, default))
-            {
-                JsonElement root = json.RootElement;
-                return ReadSentimentResult(root);
-            }
+            using JsonDocument json = JsonDocument.Parse(content, default);
+            JsonElement root = json.RootElement;
+            return ReadSentimentResult(root);
         }
 
         public static async Task<IEnumerable<Sentiment>> DeserializeSentimentCollectionAsync(Stream content, CancellationToken cancellation)
         {
-            using (JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false))
-            {
-                JsonElement root = json.RootElement;
-                return ReadSentimentCollection(root);
-            }
+            using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
+            JsonElement root = json.RootElement;
+            return ReadSentimentCollection(root);
         }
 
         public static IEnumerable<Sentiment> DeserializeSentimentCollection(Stream content)
         {
-            using (JsonDocument json = JsonDocument.Parse(content))
-            {
-                JsonElement root = json.RootElement;
-                return ReadSentimentCollection(root);
-            }
+            using JsonDocument json = JsonDocument.Parse(content);
+            JsonElement root = json.RootElement;
+            return ReadSentimentCollection(root);
         }
 
         private static SentimentResultCollection ReadSentimentResult(JsonElement root)
@@ -545,38 +521,30 @@ namespace Azure.AI.TextAnalytics
 
         public static async Task<DocumentResultCollection<string>> DeserializeKeyPhraseResponseAsync(Stream content, CancellationToken cancellation)
         {
-            using (JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false))
-            {
-                JsonElement root = json.RootElement;
-                return ReadKeyPhraseResultCollection(root);
-            }
+            using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
+            JsonElement root = json.RootElement;
+            return ReadKeyPhraseResultCollection(root);
         }
 
         public static DocumentResultCollection<string> DeserializeKeyPhraseResponse(Stream content)
         {
-            using (JsonDocument json = JsonDocument.Parse(content, default))
-            {
-                JsonElement root = json.RootElement;
-                return ReadKeyPhraseResultCollection(root);
-            }
+            using JsonDocument json = JsonDocument.Parse(content, default);
+            JsonElement root = json.RootElement;
+            return ReadKeyPhraseResultCollection(root);
         }
 
         public static async Task<IEnumerable<IEnumerable<string>>> DeserializeKeyPhraseCollectionAsync(Stream content, CancellationToken cancellation)
         {
-            using (JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false))
-            {
-                JsonElement root = json.RootElement;
-                return ReadKeyPhraseCollection(root);
-            }
+            using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
+            JsonElement root = json.RootElement;
+            return ReadKeyPhraseCollection(root);
         }
 
         public static IEnumerable<IEnumerable<string>> DeserializeKeyPhraseCollection(Stream content)
         {
-            using (JsonDocument json = JsonDocument.Parse(content))
-            {
-                JsonElement root = json.RootElement;
-                return ReadKeyPhraseCollection(root);
-            }
+            using JsonDocument json = JsonDocument.Parse(content);
+            JsonElement root = json.RootElement;
+            return ReadKeyPhraseCollection(root);
         }
 
         private static DocumentResultCollection<string> ReadKeyPhraseResultCollection(JsonElement root)
@@ -634,38 +602,30 @@ namespace Azure.AI.TextAnalytics
 
         public static async Task<DocumentResultCollection<LinkedEntity>> DeserializeLinkedEntityResponseAsync(Stream content, CancellationToken cancellation)
         {
-            using (JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false))
-            {
-                JsonElement root = json.RootElement;
-                return ReadLinkedEntityResultCollection(root);
-            }
+            using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
+            JsonElement root = json.RootElement;
+            return ReadLinkedEntityResultCollection(root);
         }
 
         public static DocumentResultCollection<LinkedEntity> DeserializeLinkedEntityResponse(Stream content)
         {
-            using (JsonDocument json = JsonDocument.Parse(content, default))
-            {
-                JsonElement root = json.RootElement;
-                return ReadLinkedEntityResultCollection(root);
-            }
+            using JsonDocument json = JsonDocument.Parse(content, default);
+            JsonElement root = json.RootElement;
+            return ReadLinkedEntityResultCollection(root);
         }
 
         public static async Task<IEnumerable<IEnumerable<LinkedEntity>>> DeserializeLinkedEntityCollectionAsync(Stream content, CancellationToken cancellation)
         {
-            using (JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false))
-            {
-                JsonElement root = json.RootElement;
-                return ReadLinkedEntityCollection(root);
-            }
+            using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
+            JsonElement root = json.RootElement;
+            return ReadLinkedEntityCollection(root);
         }
 
         public static IEnumerable<IEnumerable<LinkedEntity>> DeserializeLinkedEntityCollection(Stream content)
         {
-            using (JsonDocument json = JsonDocument.Parse(content))
-            {
-                JsonElement root = json.RootElement;
-                return ReadLinkedEntityCollection(root);
-            }
+            using JsonDocument json = JsonDocument.Parse(content);
+            JsonElement root = json.RootElement;
+            return ReadLinkedEntityCollection(root);
         }
 
         private static DocumentResultCollection<LinkedEntity> ReadLinkedEntityResultCollection(JsonElement root)

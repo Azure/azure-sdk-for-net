@@ -31,10 +31,8 @@ namespace Azure.AI.TextAnalytics
             return Response.FromValue(result, response);
         }
 
-        private static Response<DocumentResultCollection<DetectedLanguage>> CreateDetectLanguageResponse(Response response)
-        {
-            return Response.FromValue(TextAnalyticsServiceSerializer.DeserializeDetectLanguageResponse(response.ContentStream), response);
-        }
+        private static Response<DocumentResultCollection<DetectedLanguage>> CreateDetectLanguageResponse(Response response) =>
+            Response.FromValue(TextAnalyticsServiceSerializer.DeserializeDetectLanguageResponse(response.ContentStream), response);
 
         private static async Task<Response<IEnumerable<DetectedLanguage>>> CreateDetectLanguageResponseSimpleAsync(Response response, CancellationToken cancellation)
         {
@@ -42,15 +40,11 @@ namespace Azure.AI.TextAnalytics
             return Response.FromValue(result, response);
         }
 
-        private static Response<IEnumerable<DetectedLanguage>> CreateDetectLanguageResponseSimple(Response response)
-        {
-            return Response.FromValue(TextAnalyticsServiceSerializer.DeserializeDetectedLanguageCollection(response.ContentStream), response);
-        }
+        private static Response<IEnumerable<DetectedLanguage>> CreateDetectLanguageResponseSimple(Response response) =>
+            Response.FromValue(TextAnalyticsServiceSerializer.DeserializeDetectedLanguageCollection(response.ContentStream), response);
 
-        private static Response<DetectedLanguage> CreateDetectedLanguageResponseSimple(Response response, DetectedLanguage detectedLanguage)
-        {
-            return Response.FromValue(detectedLanguage, response);
-        }
+        private static Response<DetectedLanguage> CreateDetectedLanguageResponseSimple(Response response, DetectedLanguage detectedLanguage) =>
+            Response.FromValue(detectedLanguage, response);
 
         #endregion
 
@@ -61,10 +55,8 @@ namespace Azure.AI.TextAnalytics
             return Response.FromValue(result, response);
         }
 
-        private static Response<DocumentResultCollection<Entity>> CreateRecognizeEntitiesResponse(Response response)
-        {
-            return Response.FromValue(TextAnalyticsServiceSerializer.DeserializeRecognizeEntitiesResponse(response.ContentStream), response);
-        }
+        private static Response<DocumentResultCollection<Entity>> CreateRecognizeEntitiesResponse(Response response) =>
+            Response.FromValue(TextAnalyticsServiceSerializer.DeserializeRecognizeEntitiesResponse(response.ContentStream), response);
 
         private static async Task<Response<IEnumerable<IEnumerable<Entity>>>> CreateRecognizeEntitiesResponseSimpleAsync(Response response, CancellationToken cancellation)
         {
@@ -72,15 +64,11 @@ namespace Azure.AI.TextAnalytics
             return Response.FromValue(result, response);
         }
 
-        private static Response<IEnumerable<IEnumerable<Entity>>> CreateRecognizeEntitiesResponseSimple(Response response)
-        {
-            return Response.FromValue(TextAnalyticsServiceSerializer.DeserializeEntityCollection(response.ContentStream), response);
-        }
+        private static Response<IEnumerable<IEnumerable<Entity>>> CreateRecognizeEntitiesResponseSimple(Response response) =>
+            Response.FromValue(TextAnalyticsServiceSerializer.DeserializeEntityCollection(response.ContentStream), response);
 
-        private static Response<IEnumerable<Entity>> CreateRecognizeEntitiesResponseSimple(Response response, IEnumerable<Entity> entities)
-        {
-            return Response.FromValue(entities, response);
-        }
+        private static Response<IEnumerable<Entity>> CreateRecognizeEntitiesResponseSimple(Response response, IEnumerable<Entity> entities) =>
+            Response.FromValue(entities, response);
 
         #endregion
 
@@ -91,10 +79,8 @@ namespace Azure.AI.TextAnalytics
             return Response.FromValue(result, response);
         }
 
-        private static Response<SentimentResultCollection> CreateAnalyzeSentimentResponse(Response response)
-        {
-            return Response.FromValue(TextAnalyticsServiceSerializer.DeserializeAnalyzeSentimentResponse(response.ContentStream), response);
-        }
+        private static Response<SentimentResultCollection> CreateAnalyzeSentimentResponse(Response response) =>
+            Response.FromValue(TextAnalyticsServiceSerializer.DeserializeAnalyzeSentimentResponse(response.ContentStream), response);
 
         private static async Task<Response<IEnumerable<Sentiment>>> CreateAnalyzeSentimentResponseSimpleAsync(Response response, CancellationToken cancellation)
         {
@@ -102,15 +88,11 @@ namespace Azure.AI.TextAnalytics
             return Response.FromValue(result, response);
         }
 
-        private static Response<IEnumerable<Sentiment>> CreateAnalyzeSentimentResponseSimple(Response response)
-        {
-            return Response.FromValue(TextAnalyticsServiceSerializer.DeserializeSentimentCollection(response.ContentStream), response);
-        }
+        private static Response<IEnumerable<Sentiment>> CreateAnalyzeSentimentResponseSimple(Response response) =>
+            Response.FromValue(TextAnalyticsServiceSerializer.DeserializeSentimentCollection(response.ContentStream), response);
 
-        private static Response<Sentiment> CreateAnalyzeSentimentResponseSimple(Response response, Sentiment sentiment)
-        {
-            return Response.FromValue(sentiment, response);
-        }
+        private static Response<Sentiment> CreateAnalyzeSentimentResponseSimple(Response response, Sentiment sentiment) =>
+            Response.FromValue(sentiment, response);
 
         #endregion  Analyze Sentiment
 
@@ -121,10 +103,8 @@ namespace Azure.AI.TextAnalytics
             return Response.FromValue(result, response);
         }
 
-        private static Response<DocumentResultCollection<string>> CreateKeyPhraseResponse(Response response)
-        {
-            return Response.FromValue(TextAnalyticsServiceSerializer.DeserializeKeyPhraseResponse(response.ContentStream), response);
-        }
+        private static Response<DocumentResultCollection<string>> CreateKeyPhraseResponse(Response response) =>
+            Response.FromValue(TextAnalyticsServiceSerializer.DeserializeKeyPhraseResponse(response.ContentStream), response);
 
         private static async Task<Response<IEnumerable<IEnumerable<string>>>> CreateKeyPhraseResponseSimpleAsync(Response response, CancellationToken cancellation)
         {
@@ -132,15 +112,11 @@ namespace Azure.AI.TextAnalytics
             return Response.FromValue(result, response);
         }
 
-        private static Response<IEnumerable<IEnumerable<string>>> CreateKeyPhraseResponseSimple(Response response)
-        {
-            return Response.FromValue(TextAnalyticsServiceSerializer.DeserializeKeyPhraseCollection(response.ContentStream), response);
-        }
+        private static Response<IEnumerable<IEnumerable<string>>> CreateKeyPhraseResponseSimple(Response response) =>
+            Response.FromValue(TextAnalyticsServiceSerializer.DeserializeKeyPhraseCollection(response.ContentStream), response);
 
-        private static Response<IEnumerable<string>> CreateKeyPhraseResponseSimple(Response response, IEnumerable<string> keyPhrases)
-        {
-            return Response.FromValue(keyPhrases, response);
-        }
+        private static Response<IEnumerable<string>> CreateKeyPhraseResponseSimple(Response response, IEnumerable<string> keyPhrases) =>
+            Response.FromValue(keyPhrases, response);
 
         #endregion Extract KeyPhrases
 
@@ -151,10 +127,8 @@ namespace Azure.AI.TextAnalytics
             return Response.FromValue(result, response);
         }
 
-        private static Response<DocumentResultCollection<LinkedEntity>> CreateLinkedEntityResponse(Response response)
-        {
-            return Response.FromValue(TextAnalyticsServiceSerializer.DeserializeLinkedEntityResponse(response.ContentStream), response);
-        }
+        private static Response<DocumentResultCollection<LinkedEntity>> CreateLinkedEntityResponse(Response response) =>
+            Response.FromValue(TextAnalyticsServiceSerializer.DeserializeLinkedEntityResponse(response.ContentStream), response);
 
         private static async Task<Response<IEnumerable<IEnumerable<LinkedEntity>>>> CreateLinkedEntityResponseSimpleAsync(Response response, CancellationToken cancellation)
         {
@@ -162,15 +136,11 @@ namespace Azure.AI.TextAnalytics
             return Response.FromValue(result, response);
         }
 
-        private static Response<IEnumerable<IEnumerable<LinkedEntity>>> CreateLinkedEntityResponseSimple(Response response)
-        {
-            return Response.FromValue(TextAnalyticsServiceSerializer.DeserializeLinkedEntityCollection(response.ContentStream), response);
-        }
+        private static Response<IEnumerable<IEnumerable<LinkedEntity>>> CreateLinkedEntityResponseSimple(Response response) =>
+            Response.FromValue(TextAnalyticsServiceSerializer.DeserializeLinkedEntityCollection(response.ContentStream), response);
 
-        private static Response<IEnumerable<LinkedEntity>> CreateLinkedEntityResponseSimple(Response response, IEnumerable<LinkedEntity> entities)
-        {
-            return Response.FromValue(entities, response);
-        }
+        private static Response<IEnumerable<LinkedEntity>> CreateLinkedEntityResponseSimple(Response response, IEnumerable<LinkedEntity> entities) =>
+            Response.FromValue(entities, response);
 
         #endregion
 
