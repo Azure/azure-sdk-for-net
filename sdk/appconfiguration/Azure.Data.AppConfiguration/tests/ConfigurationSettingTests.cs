@@ -92,9 +92,9 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [Test]
-        public void RawFilterContains()
+        public void FilterStringContains()
         {
-            var selector = new SettingSelector("*key*", "*label*");
+            var selector = SettingSelector.FromFilterString("*key*", "*label*");
             var builder = new RequestUriBuilder();
             builder.Reset(new Uri("http://localhost/"));
 
@@ -106,8 +106,7 @@ namespace Azure.Data.AppConfiguration.Tests
         [Test]
         public void FilterNullLabel()
         {
-            var selector = new SettingSelector(SettingSelector.Any)
-                .AddLabel(string.Empty);
+            var selector = new SettingSelector().AddLabel(string.Empty);
 
             var builder = new RequestUriBuilder();
             builder.Reset(new Uri("http://localhost/"));
@@ -121,7 +120,8 @@ namespace Azure.Data.AppConfiguration.Tests
         public void FilterOnlyKey()
         {
             var key = "my-key";
-            var selector = new SettingSelector(key);
+            var selector = new SettingSelector()
+                .AddKey(key);
 
             var builder = new RequestUriBuilder();
             builder.Reset(new Uri("http://localhost/"));
@@ -149,8 +149,10 @@ namespace Azure.Data.AppConfiguration.Tests
         [Test]
         public void SettingSomeFields()
         {
-            var selector = new SettingSelector("key")
-                .SetFields(SettingFields.Key | SettingFields.Value);
+            var selector = new SettingSelector
+            {
+                Fields = SettingFields.Key | SettingFields.Value
+            }.AddKey("key");
 
             var builder = new RequestUriBuilder();
             builder.Reset(new Uri("http://localhost/"));
@@ -163,8 +165,10 @@ namespace Azure.Data.AppConfiguration.Tests
         [Test]
         public void SettingAllFields()
         {
-            var selector = new SettingSelector("key")
-                .SetFields(SettingFields.All);
+            SettingSelector selector = new SettingSelector
+            {
+                Fields = SettingFields.Key | SettingFields.IsReadOnly
+            }.AddKey("key");
 
             var builder = new RequestUriBuilder();
             builder.Reset(new Uri("http://localhost/"));

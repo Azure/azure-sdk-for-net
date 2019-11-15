@@ -34,10 +34,9 @@ namespace Azure.Data.AppConfiguration
         private const string FieldsQueryFilter = "$select";
 
         /// <summary>
-        /// A wildcard that matches any key or any label when passed as a filter
-        /// to Keys or Labels.
+        /// The fields of the <see cref="ConfigurationSetting"/> to retrieve for each setting in the retrieved group.
         /// </summary>
-        public static readonly string Any = "*";
+        public SettingFields Fields { get; set; } = SettingFields.All;
 
         /// <summary>
         /// Indicates the point in time in the revision history of the selected <see cref="ConfigurationSetting"/> entities to retrieve.
@@ -54,24 +53,30 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// Creates a <see cref="SettingSelector"/> that will retrieve <see cref="ConfigurationSetting"/> entities that match the passed-in key filter.
         /// </summary>
-        /// <param name="rawKeyFilter">A key filter indicating which <see cref="ConfigurationSetting"/> entities to select.</param>
-        public SettingSelector(string rawKeyFilter)
+        /// <param name="keyFilter">A key filter indicating which <see cref="ConfigurationSetting"/> entities to select.</param>
+        public static SettingSelector FromFilterString(string keyFilter)
         {
-            Argument.AssertNotNullOrEmpty(rawKeyFilter, nameof(rawKeyFilter));
-            _keys = new StringBuilder(rawKeyFilter);
+            Argument.AssertNotNullOrEmpty(keyFilter, nameof(keyFilter));
+            return new SettingSelector
+            {
+                _keys = new StringBuilder(keyFilter)
+            };
         }
 
         /// <summary>
-        /// Creates a <see cref="SettingSelector"/> that will retrieve <see cref="ConfigurationSetting"/> entities that match the passed-in key filter and label filter.
+        /// Creates a <see cref="SettingSelector"/> that will retrieve <see cref="ConfigurationSetting"/> entities that match the passed-in key filter.
         /// </summary>
-        /// <param name="rawKeyFilter">A key filter indicating which <see cref="ConfigurationSetting"/> entities to select.</param>
-        /// <param name="rawLabelFilter">A label filter indicating which <see cref="ConfigurationSetting"/> entities to select.</param>
-        public SettingSelector(string rawKeyFilter, string rawLabelFilter = default)
+        /// <param name="keyFilter">A key filter indicating which <see cref="ConfigurationSetting"/> entities to select.</param>
+        /// <param name="labelFilter">A label filter indicating which <see cref="ConfigurationSetting"/> entities to select.</param>
+        public static SettingSelector FromFilterString(string keyFilter, string labelFilter)
         {
-            Argument.AssertNotNullOrEmpty(rawKeyFilter, nameof(rawKeyFilter));
-            Argument.AssertNotNullOrEmpty(rawLabelFilter, nameof(rawLabelFilter));
-            _keys = new StringBuilder(rawKeyFilter);
-            _labels = new StringBuilder(rawLabelFilter);
+            Argument.AssertNotNullOrEmpty(keyFilter, nameof(keyFilter));
+            Argument.AssertNotNullOrEmpty(labelFilter, nameof(labelFilter));
+            return new SettingSelector
+            {
+                _keys = new StringBuilder(keyFilter),
+                _labels = new StringBuilder(labelFilter)
+            };
         }
 
         /// <summary>
@@ -175,17 +180,6 @@ namespace Azure.Data.AppConfiguration
             AppendAny(Labels);
             AppendEscaped(Labels, label);
             AppendAny(Labels);
-            return this;
-        }
-
-        /// <summary>
-        /// The fields of the <see cref="ConfigurationSetting"/> to retrieve for each setting in the retrieved group.
-        /// </summary>
-        /// <param name="fields">Fields to be returned.</param>
-        /// <returns>A reference to this instance after the operation has completed.</returns>
-        public SettingSelector SetFields(SettingFields fields)
-        {
-            _fields = fields;
             return this;
         }
 

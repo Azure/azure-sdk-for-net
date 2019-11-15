@@ -682,7 +682,7 @@ namespace Azure.Data.AppConfiguration
         public virtual AsyncPageable<ConfigurationSetting> GetRevisionsAsync(string key, string label = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
-            return GetRevisionsAsync(new SettingSelector(key, label), cancellationToken);
+            return GetRevisionsAsync(new SettingSelector().AddKey(key).AddLabel(label), cancellationToken);
         }
 
         /// <summary>
@@ -694,7 +694,7 @@ namespace Azure.Data.AppConfiguration
         public virtual Pageable<ConfigurationSetting> GetRevisions(string key, string label = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
-            return GetRevisions(new SettingSelector(key, label), cancellationToken);
+            return GetRevisions(new SettingSelector().AddKey(key).AddLabel(label), cancellationToken);
         }
 
         /// <summary>
