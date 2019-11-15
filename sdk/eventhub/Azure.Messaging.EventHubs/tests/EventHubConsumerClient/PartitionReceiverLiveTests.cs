@@ -7,10 +7,8 @@ using System.Linq;
 using System.Net;
 using System.Net.WebSockets;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Errors;
-using Azure.Messaging.EventHubs.Metadata;
 using Azure.Messaging.EventHubs.Tests.Infrastructure;
 using NUnit.Framework;
 
@@ -60,7 +58,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var partition = (await connection.GetPartitionIdsAsync(DefaultRetryPolicy)).First();
 
-                    await using (var producer = new EventHubProducerClient(connectionString, new EventHubProducerClientOptions { PartitionId = partition }))
+                    await using (var producer = new EventHubProducerClient(connectionString))
                     await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection))
                     await using (var receiver = consumer.CreatePartitionReceiver(partition, EventPosition.Latest))
                     {
@@ -71,7 +69,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         // Send the batch of events.
 
-                        await producer.SendAsync(eventSet);
+                        await producer.SendAsync(eventSet, new SendOptions { PartitionId = partition });
 
                         // Receive the events; because there is some non-determinism in the messaging flow, the
                         // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
@@ -127,13 +125,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var partition = (await connection.GetPartitionIdsAsync(DefaultRetryPolicy)).First();
 
-                    await using (var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions { PartitionId = partition }))
+                    await using (var producer = new EventHubProducerClient(connection))
                     await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection))
                     await using (var receiver = consumer.CreatePartitionReceiver(partition, EventPosition.Latest))
                     {
                         // Create the batch of events to publish.
 
-                        using EventDataBatch eventBatch = await producer.CreateBatchAsync();
+                        using EventDataBatch eventBatch = await producer.CreateBatchAsync(new CreateBatchOptions { PartitionId = partition });
 
                         foreach (EventData eventData in eventSet)
                         {
@@ -215,13 +213,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var partition = (await connection.GetPartitionIdsAsync(DefaultRetryPolicy)).First();
 
-                    await using (var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions { PartitionId = partition }))
+                    await using (var producer = new EventHubProducerClient(connection))
                     await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection))
                     await using (var receiver = consumer.CreatePartitionReceiver(partition, EventPosition.Latest))
                     {
                         // Create the batch of events to publish.
 
-                        using EventDataBatch eventBatch = await producer.CreateBatchAsync();
+                        using EventDataBatch eventBatch = await producer.CreateBatchAsync(new CreateBatchOptions { PartitionId = partition });
 
                         foreach (EventData eventData in eventSet)
                         {
@@ -297,7 +295,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var partition = (await connection.GetPartitionIdsAsync(DefaultRetryPolicy)).First();
 
-                    await using (var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions { PartitionId = partition }))
+                    await using (var producer = new EventHubProducerClient(connection))
                     await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString))
                     await using (var receiver = consumer.CreatePartitionReceiver(partition, EventPosition.Latest))
                     {
@@ -308,7 +306,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         // Send the batch of events.
 
-                        await producer.SendAsync(eventBatch);
+                        await producer.SendAsync(eventBatch, new SendOptions { PartitionId = partition });
 
                         // Receive the events; because there is some non-determinism in the messaging flow, the
                         // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
@@ -360,7 +358,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var partition = (await connection.GetPartitionIdsAsync(DefaultRetryPolicy)).First();
 
-                    await using (var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions { PartitionId = partition }))
+                    await using (var producer = new EventHubProducerClient(connection))
                     await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString))
                     await using (var receiver = consumer.CreatePartitionReceiver(partition, EventPosition.Latest))
                     {
@@ -371,7 +369,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         // Send the batch of events.
 
-                        await producer.SendAsync(eventBatch);
+                        await producer.SendAsync(eventBatch, new SendOptions { PartitionId = partition });
 
                         // Receive the events; because there is some non-determinism in the messaging flow, the
                         // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
@@ -425,7 +423,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var partition = (await connection.GetPartitionIdsAsync(DefaultRetryPolicy)).First();
 
-                    await using (var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions { PartitionId = partition }))
+                    await using (var producer = new EventHubProducerClient(connection))
                     await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection))
                     await using (var receiver = consumer.CreatePartitionReceiver(partition, EventPosition.Latest))
                     {
@@ -436,7 +434,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         // Send the set of events.
 
-                        await producer.SendAsync(eventSet);
+                        await producer.SendAsync(eventSet, new SendOptions { PartitionId = partition });
 
                         // Receive the events; because there is some non-determinism in the messaging flow, the
                         // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
@@ -493,7 +491,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     var retryOptions = new RetryOptions { TryTimeout = TimeSpan.FromMinutes(5) };
                     var partition = (await connection.GetPartitionIdsAsync(DefaultRetryPolicy)).First();
 
-                    await using (var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions { PartitionId = partition, RetryOptions = retryOptions }))
+                    await using (var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions { RetryOptions = retryOptions }))
                     await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection, new EventHubConsumerClientOptions { RetryOptions = retryOptions }))
                     await using (var receiver = consumer.CreatePartitionReceiver(partition, EventPosition.Latest))
                     {
@@ -504,7 +502,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         // Send the batch of events.
 
-                        await producer.SendAsync(eventBatch);
+                        await producer.SendAsync(eventBatch, new SendOptions { PartitionId = partition });
 
                         // A short delay is necessary to persist the large event.
 
@@ -569,7 +567,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var partition = (await connection.GetPartitionIdsAsync(DefaultRetryPolicy)).First();
 
-                    await using (var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions { PartitionId = partition }))
+                    await using (var producer = new EventHubProducerClient(connection))
                     await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection))
                     await using (var receiver = consumer.CreatePartitionReceiver(partition, EventPosition.Latest))
                     {
@@ -580,7 +578,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         // Send the batch of events.
 
-                        await producer.SendAsync(eventBatch);
+                        await producer.SendAsync(eventBatch, new SendOptions { PartitionId = partition });
 
                         // Receive the events; because there is some non-determinism in the messaging flow, the
                         // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
@@ -627,7 +625,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var partition = (await connection.GetPartitionIdsAsync(DefaultRetryPolicy)).First();
 
-                    await using (var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions { PartitionId = partition }))
+                    await using (var producer = new EventHubProducerClient(connection))
                     await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection))
                     await using (var receiver = consumer.CreatePartitionReceiver(partition, EventPosition.Latest))
                     {
@@ -636,7 +634,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         for (int i = 0; i < 10; i++)
                         {
-                            await producer.SendAsync(new EventData(new byte[1]));
+                            await producer.SendAsync(new EventData(new byte[1]), new SendOptions { PartitionId = partition });
                         }
 
                         // Initiate an operation to force the consumer to connect and set its position at the
@@ -692,7 +690,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     var partition = (await connection.GetPartitionIdsAsync(DefaultRetryPolicy)).First();
 
                     await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection))
-                    await using (var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions { PartitionId = partition }))
+                    await using (var producer = new EventHubProducerClient(connection))
                     await using (var receiver = consumer.CreatePartitionReceiver(partition, EventPosition.Earliest))
                     {
                         // Sending some events beforehand so the partition has some information.
@@ -701,7 +699,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         for (int i = 0; i < expectedEventsCount; i++)
                         {
-                            await producer.SendAsync(new EventData(new byte[1]));
+                            await producer.SendAsync(new EventData(new byte[1]), new SendOptions { PartitionId = partition });
                         }
 
                         // Receive and validate the events; because there is some non-determinism in the messaging flow, the
@@ -738,13 +736,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var partition = (await connection.GetPartitionIdsAsync(DefaultRetryPolicy)).First();
 
-                    await using (var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions { PartitionId = partition }))
+                    await using (var producer = new EventHubProducerClient(connection))
                     {
                         // Sending some events beforehand so the partition has some information.
 
                         for (var i = 0; i < 10; i++)
                         {
-                            await producer.SendAsync(new EventData(new byte[1]));
+                            await producer.SendAsync(new EventData(new byte[1]), new SendOptions { PartitionId = partition });
                         }
 
                         // Store last enqueued offset.
@@ -802,13 +800,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var partition = (await connection.GetPartitionIdsAsync(DefaultRetryPolicy)).First();
 
-                    await using (var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions { PartitionId = partition }))
+                    await using (var producer = new EventHubProducerClient(connection))
                     {
                         // Sending some events beforehand so the partition has some information.
 
                         for (var i = 0; i < 10; i++)
                         {
-                            await producer.SendAsync(new EventData(new byte[1]));
+                            await producer.SendAsync(new EventData(new byte[1]), new SendOptions { PartitionId = partition });
                         }
 
                         // Store last enqueued time.
@@ -869,13 +867,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var partition = (await connection.GetPartitionIdsAsync(DefaultRetryPolicy)).First();
 
-                    await using (var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions { PartitionId = partition }))
+                    await using (var producer = new EventHubProducerClient(connection))
                     {
                         // Sending some events beforehand so the partition has some information.
 
                         for (var i = 0; i < 10; i++)
                         {
-                            await producer.SendAsync(new EventData(new byte[1]));
+                            await producer.SendAsync(new EventData(new byte[1]), new SendOptions { PartitionId = partition });
                         }
 
                         // Store last enqueued sequence number.
@@ -1010,7 +1008,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var partition = (await connection.GetPartitionIdsAsync(DefaultRetryPolicy)).First();
 
-                    await using (var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions { PartitionId = partition }))
+                    await using (var producer = new EventHubProducerClient(connection))
                     await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection))
                     await using (var receiver = consumer.CreatePartitionReceiver(partition, EventPosition.Latest))
                     {
@@ -1021,7 +1019,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         // Send the batch of events.
 
-                        await producer.SendAsync(eventBatch);
+                        await producer.SendAsync(eventBatch, new SendOptions { PartitionId = partition });
 
                         // Receive and validate the events.
 
@@ -1488,7 +1486,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var partitionIds = await connection.GetPartitionIdsAsync(DefaultRetryPolicy);
 
-                    await using (var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions { PartitionId = partitionIds[0] }))
+                    await using (var producer = new EventHubProducerClient(connection))
                     await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString))
                     await using (var receiver = consumer.CreatePartitionReceiver(partitionIds[1], EventPosition.Latest))
                     {
@@ -1503,7 +1501,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         for (var batchesCount = 0; batchesCount < batches; batchesCount++)
                         {
-                            await producer.SendAsync(eventBatch);
+                            await producer.SendAsync(eventBatch, new SendOptions { PartitionId = partitionIds[0] });
                         }
 
                         // Receive and validate the events; because there is some non-determinism in the messaging flow, the
@@ -1549,7 +1547,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var partition = (await connection.GetPartitionIdsAsync(DefaultRetryPolicy)).First();
 
-                    await using var producer = new EventHubProducerClient(connectionString, new EventHubProducerClientOptions { PartitionId = partition });
+                    await using var producer = new EventHubProducerClient(connectionString);
                     await using var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString);
                     await using var anotherConsumer = new EventHubConsumerClient(customConsumerGroup, connection);
 
@@ -1564,7 +1562,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         // Send the batch of events.
 
-                        await producer.SendAsync(eventBatch);
+                        await producer.SendAsync(eventBatch, new SendOptions { PartitionId = partition });
 
                         // Receive and validate the events; because there is some non-determinism in the messaging flow, the
                         // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order

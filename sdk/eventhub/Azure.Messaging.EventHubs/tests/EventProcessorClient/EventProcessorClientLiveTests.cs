@@ -225,9 +225,9 @@ namespace Azure.Messaging.EventHubs.Tests
                             new EventData(Encoding.UTF8.GetBytes($"{ partitionId }: the end has come."))
                         };
 
-                        await using (var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions { PartitionId = partitionId }))
+                        await using (var producer = new EventHubProducerClient(connection))
                         {
-                            await producer.SendAsync(expectedEvents[partitionId]);
+                            await producer.SendAsync(expectedEvents[partitionId], new SendOptions { PartitionId = partitionId });
                         }
                     }
 
@@ -681,7 +681,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             {
                                 if (processorEvent.Data != null)
                                 {
-                                    processorEvent.UpdateCheckpointAsync(processorEvent.Data);
+                                    processorEvent.UpdateCheckpointAsync();
                                 }
                             }
                         );

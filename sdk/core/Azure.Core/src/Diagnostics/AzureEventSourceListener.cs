@@ -67,6 +67,12 @@ namespace Azure.Core.Diagnostics
         /// <inheritdoc />
         protected sealed override void OnEventWritten(EventWrittenEventArgs eventData)
         {
+            // Workaround https://github.com/dotnet/corefx/issues/42600
+            if (eventData.EventId == -1)
+            {
+                return;
+            }
+
             _log(eventData, EventSourceEventFormatting.Format(eventData));
         }
 

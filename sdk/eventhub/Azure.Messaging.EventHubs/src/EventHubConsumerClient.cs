@@ -78,12 +78,6 @@ namespace Azure.Messaging.EventHubs
         public long? OwnerLevel => Options?.OwnerLevel;
 
         /// <summary>
-        ///   The text-based identifier label that has optionally been assigned to the consumer.
-        /// </summary>
-        ///
-        public string Identifier => Options?.Identifier;
-
-        /// <summary>
         ///   Indicates whether or not this <see cref="EventHubConsumerClient"/> has been closed.
         /// </summary>
         ///
@@ -91,7 +85,7 @@ namespace Azure.Messaging.EventHubs
         ///   <c>true</c> if the client is closed; otherwise, <c>false</c>.
         /// </value>
         ///
-        public bool Closed { get; protected set; } = false;
+        public bool IsClosed { get; protected set; } = false;
 
         /// <summary>
         ///   Indicates whether the client has ownership of the associated <see cref="EventHubConnection" />
@@ -101,7 +95,7 @@ namespace Azure.Messaging.EventHubs
         private bool OwnsConnection { get; } = true;
 
         /// <summary>
-        ///   The set of consumer options used for creation of this consumer.
+        ///   The set of options used for creation of this consumer.
         /// </summary>
         ///
         private EventHubConsumerClientOptions Options { get; }
@@ -295,7 +289,7 @@ namespace Azure.Messaging.EventHubs
         ///
         public virtual Task<EventHubProperties> GetEventHubPropertiesAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotClosed(Closed, nameof(EventHubConsumerClient));
+            Argument.AssertNotClosed(IsClosed, nameof(EventHubConsumerClient));
             return Connection.GetPropertiesAsync(RetryPolicy, cancellationToken);
         }
 
@@ -316,7 +310,7 @@ namespace Azure.Messaging.EventHubs
         public virtual Task<string[]> GetPartitionIdsAsync(CancellationToken cancellationToken = default)
         {
 
-            Argument.AssertNotClosed(Closed, nameof(EventHubConsumerClient));
+            Argument.AssertNotClosed(IsClosed, nameof(EventHubConsumerClient));
             return Connection.GetPartitionIdsAsync(RetryPolicy, cancellationToken);
         }
 
@@ -333,7 +327,7 @@ namespace Azure.Messaging.EventHubs
         public virtual Task<PartitionProperties> GetPartitionPropertiesAsync(string partitionId,
                                                                              CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotClosed(Closed, nameof(EventHubConsumerClient));
+            Argument.AssertNotClosed(IsClosed, nameof(EventHubConsumerClient));
             return Connection.GetPartitionPropertiesAsync(partitionId, RetryPolicy, cancellationToken);
         }
 
@@ -392,7 +386,7 @@ namespace Azure.Messaging.EventHubs
                                                                                            TimeSpan? maximumWaitTime,
                                                                                            [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotClosed(Closed, nameof(EventHubConsumerClient));
+            Argument.AssertNotClosed(IsClosed, nameof(EventHubConsumerClient));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             EventHubsEventSource.Log.ReadEventsFromPartitionStart(EventHubName, partitionId);
@@ -491,9 +485,10 @@ namespace Azure.Messaging.EventHubs
         public virtual async Task CloseAsync(CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            Closed = true;
+            IsClosed = true;
 
-            EventHubsEventSource.Log.ClientCloseStart(typeof(EventHubConsumerClient), EventHubName, Identifier);
+            var clientHash = GetHashCode().ToString();
+            EventHubsEventSource.Log.ClientCloseStart(typeof(EventHubConsumerClient), EventHubName, clientHash);
 
             // Attempt to close the active transport consumers.  In the event that an exception is encountered,
             // it should not impact the attempt to close the connection, assuming ownership.
@@ -514,7 +509,7 @@ namespace Azure.Messaging.EventHubs
             }
             catch (Exception ex)
             {
-                EventHubsEventSource.Log.ClientCloseError(typeof(EventHubConsumerClient), EventHubName, Identifier, ex.Message);
+                EventHubsEventSource.Log.ClientCloseError(typeof(EventHubConsumerClient), EventHubName, clientHash, ex.Message);
                 transportConsumerException = ex;
             }
 
@@ -530,13 +525,13 @@ namespace Azure.Messaging.EventHubs
             }
             catch (Exception ex)
             {
-                EventHubsEventSource.Log.ClientCloseError(typeof(EventHubConsumerClient), EventHubName, Identifier, ex.Message);
+                EventHubsEventSource.Log.ClientCloseError(typeof(EventHubConsumerClient), EventHubName, clientHash, ex.Message);
                 transportConsumerException = null;
                 throw;
             }
             finally
             {
-                EventHubsEventSource.Log.ClientCloseComplete(typeof(EventHubConsumerClient), EventHubName, Identifier);
+                EventHubsEventSource.Log.ClientCloseComplete(typeof(EventHubConsumerClient), EventHubName, clientHash);
             }
 
             // If there was an active exception pending from closing the individual
@@ -688,7 +683,7 @@ namespace Azure.Messaging.EventHubs
                 (
                     transportConsumer,
                     channel,
-                    new PartitionContext(EventHubName, partitionId, transportConsumer),
+                    new PartitionContext(partitionId, transportConsumer),
                     ex => { observedException = ex; },
                     publishingCancellationSource.Token
                 );

@@ -1,9 +1,21 @@
 #requires -version 5
 
+[CmdletBinding()]
+param (
+    [Parameter(Position=0)]
+    [ValidateNotNullOrEmpty()]
+    [string] $ServiceDirectory
+)
+
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version 1
 
-$repoRoot = Resolve-Path "$PSScriptRoot/../sdk/"
+$root = "$PSScriptRoot/../sdk"
+if ($ServiceDirectory) {
+    $root += '/' + $ServiceDirectory
+}
+
+$repoRoot = Resolve-Path "$root"
 
 [string[]] $errors = @()
 
@@ -57,12 +69,12 @@ try {
 
     Write-Host "Re-generating readmes"
     Invoke-Block {
-        & $PSScriptRoot\Update-Snippets.ps1
+        & $PSScriptRoot\Update-Snippets.ps1 @script:PSBoundParameters
     }
 
     Write-Host "Re-generating lisgings"
     Invoke-Block {
-        & $PSScriptRoot\Export-API.ps1
+        & $PSScriptRoot\Export-API.ps1 @script:PSBoundParameters
     }
 
     Write-Host "Re-generating clients"

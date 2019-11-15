@@ -1002,12 +1002,6 @@ namespace Azure.Storage.Blobs
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
 
-                    // Return an exploding Response on 304
-                    if (response.IsUnavailable())
-                    {
-                        return response.GetRawResponse().AsNoBodyResponse<BlobContainerProperties>();
-                    }
-
                     // Turn the flattened properties into a BlobContainerProperties
                     return Response.FromValue(
                         new BlobContainerProperties()

@@ -65,7 +65,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Responsible for processing events received from the Event Hubs service.
         /// </summary>
         ///
-        private Func<EventProcessorEvent, Task> ProcessEventAsync { get; }
+        private Func<EventProcessorEvent, ValueTask> ProcessEventAsync { get; }
 
         /// <summary>
         ///   Updates the checkpoint using the given information for the associated partition and consumer group in the chosen storage service.
@@ -113,14 +113,13 @@ namespace Azure.Messaging.EventHubs.Processor
                                string consumerGroup,
                                PartitionContext partitionContext,
                                EventPosition startingPosition,
-                               Func<EventProcessorEvent, Task> processEventAsync,
+                               Func<EventProcessorEvent, ValueTask> processEventAsync,
                                Func<EventData, PartitionContext, Task> updateCheckpointAsync,
                                EventProcessorClientOptions options)
         {
             Argument.AssertNotNull(connection, nameof(connection));
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
             Argument.AssertNotNull(partitionContext, nameof(partitionContext));
-            Argument.AssertNotNull(startingPosition, nameof(startingPosition));
             Argument.AssertNotNull(processEventAsync, nameof(processEventAsync));
             Argument.AssertNotNull(updateCheckpointAsync, nameof(updateCheckpointAsync));
             Argument.AssertNotNull(options, nameof(options));

@@ -50,17 +50,17 @@ namespace Sql.Tests
 
 				// Add new Active Directory Admin
 				ManagedInstanceAdministrator newAdmin = new ManagedInstanceAdministrator(login: aadAdmin, sid: objectId, tenantId: tenantId);
-				ManagedInstanceAdministrator createResult = sqlClient.ManagedInstanceAdministrators.CreateOrUpdate(resourceGroup.Name, instance.Name, "ActiveDirectory", newAdmin);
+				ManagedInstanceAdministrator createResult = sqlClient.ManagedInstanceAdministrators.CreateOrUpdate(resourceGroup.Name, instance.Name, newAdmin);
 				Assert.Equal(aadAdmin, createResult.Login);
 
 				// Get the current Active Directory Admin
-				ManagedInstanceAdministrator getResult = sqlClient.ManagedInstanceAdministrators.Get(resourceGroup.Name, instance.Name, "ActiveDirectory");
+				ManagedInstanceAdministrator getResult = sqlClient.ManagedInstanceAdministrators.Get(resourceGroup.Name, instance.Name);
 				Assert.Equal(aadAdmin, getResult.Login);
 				Assert.Equal(objectId, getResult.Sid);
 				Assert.Equal(tenantId, getResult.TenantId);
 
 				// Delete the Active Directory Admin on server
-				sqlClient.ManagedInstanceAdministrators.Delete(resourceGroup.Name, instance.Name, "ActiveDirectory");
+				sqlClient.ManagedInstanceAdministrators.Delete(resourceGroup.Name, instance.Name);
 
 				// List all Active Directory Admins for isntance.
 				Microsoft.Azure.Management.Sql.Models.Page1<ManagedInstanceAdministrator> admins = (Microsoft.Azure.Management.Sql.Models.Page1<ManagedInstanceAdministrator>)sqlClient.ManagedInstanceAdministrators.ListByInstance(resourceGroup.Name, instance.Name);

@@ -88,7 +88,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
                     // This method is asynchronous, which means it's expected to return a Task.
 
-                    return Task.CompletedTask;
+                    return new ValueTask();
                 };
 
                 eventProcessor.ProcessingForPartitionStoppedAsync = (stopContext) =>
@@ -102,7 +102,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
                     // This method is asynchronous, which means it's expected to return a Task.
 
-                    return Task.CompletedTask;
+                    return new ValueTask();
                 };
 
                 eventProcessor.ProcessEventAsync = (processorEvent) =>
@@ -121,7 +121,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
                     // This method is asynchronous, which means it's expected to return a Task.
 
-                    return Task.CompletedTask;
+                    return new ValueTask();
                 };
 
                 eventProcessor.ProcessExceptionAsync = (errorContext) =>
@@ -142,7 +142,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
                     // This method is asynchronous, which means it's expected to return a Task.
 
-                    return Task.CompletedTask;
+                    return new ValueTask();
                 };
 
                 // Once started, the event processor will start to claim partitions and receive events from them.
@@ -174,14 +174,9 @@ namespace Azure.Messaging.EventHubs.Samples
                     // To test our event processor, we are publishing 10 sets of events to the Event Hub.  Notice that we are not
                     // specifying a partition to send events to, so these sets may end up in different partitions.
 
-                    EventData[] eventsToPublish = new EventData[]
-                    {
-                        new EventData(Encoding.UTF8.GetBytes("I am not the second event.")),
-                        new EventData(Encoding.UTF8.GetBytes("I am not the first event."))
-                    };
-
                     int amountOfSets = 10;
-                    int expectedAmountOfEvents = amountOfSets * eventsToPublish.Length;
+                    int eventsPerSet = 2;
+                    int expectedAmountOfEvents = amountOfSets * eventsPerSet;
 
                     Console.WriteLine();
                     Console.WriteLine("Sending events to the Event Hub.");
@@ -189,7 +184,11 @@ namespace Azure.Messaging.EventHubs.Samples
 
                     for (int i = 0; i < amountOfSets; i++)
                     {
-                        await producerClient.SendAsync(eventsToPublish);
+                        using EventDataBatch eventBatch = await producerClient.CreateBatchAsync();
+                        eventBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes("I am not the second event.")));
+                        eventBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes("I am not the first event.")));
+
+                        await producerClient.SendAsync(eventBatch);
                     }
 
                     // Because there is some non-determinism in the messaging flow, the sent events may not be immediately

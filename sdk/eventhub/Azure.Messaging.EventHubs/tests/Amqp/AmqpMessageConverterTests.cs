@@ -1329,7 +1329,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(properties, Is.Not.Null, "The properties should have been created");
             Assert.That(properties.Name, Is.EqualTo(name), "The name should match");
-            Assert.That(properties.CreatedAt, Is.EqualTo(created), "The created date should match");
+            Assert.That(properties.CreatedOn, Is.EqualTo(created), "The created date should match");
             Assert.That(properties.PartitionIds, Is.EquivalentTo(identifiers), "The set of partition identifiers should match");
         }
 

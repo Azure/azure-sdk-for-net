@@ -90,10 +90,10 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
             var client = new AmqpClient("my.eventhub.com", "somePath", credential.Object, new EventHubConnectionOptions());
-            Assert.That(client.Closed, Is.False, "The client should not be closed on creation");
+            Assert.That(client.IsClosed, Is.False, "The client should not be closed on creation");
 
             await client.CloseAsync(CancellationToken.None);
-            Assert.That(client.Closed, Is.True, "The client should be marked as closed after closing");
+            Assert.That(client.IsClosed, Is.True, "The client should be marked as closed after closing");
         }
 
         /// <summary>
@@ -122,10 +122,10 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
             var client = new AmqpClient("my.eventhub.com", "somePath", credential.Object, new EventHubConnectionOptions());
-            Assert.That(client.Closed, Is.False, "The client should not be closed on creation");
+            Assert.That(client.IsClosed, Is.False, "The client should not be closed on creation");
 
             await client.DisposeAsync();
-            Assert.That(client.Closed, Is.True, "The client should be closed after disposal");
+            Assert.That(client.IsClosed, Is.True, "The client should be closed after disposal");
         }
 
         /// <summary>
@@ -420,7 +420,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var client = new AmqpClient("my.eventhub.com", "somePath", credential.Object, new EventHubConnectionOptions());
             await client.CloseAsync(cancellationSource.Token);
 
-            Assert.That(() => client.CreateProducer(new EventHubProducerClientOptions()), Throws.InstanceOf<EventHubsClientClosedException>());
+            Assert.That(() => client.CreateProducer(null, new EventHubProducerClientOptions()), Throws.InstanceOf<EventHubsClientClosedException>());
         }
 
         /// <summary>

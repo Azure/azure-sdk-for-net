@@ -139,7 +139,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     eventProcessor.InitializeProcessingForPartitionAsync = initializationContext =>
                     {
                         OnInitialize(initializationContext);
-                        return Task.CompletedTask;
+                        return new ValueTask();
                     };
                 }
 
@@ -148,20 +148,20 @@ namespace Azure.Messaging.EventHubs.Tests
                     eventProcessor.ProcessingForPartitionStoppedAsync = stopContext =>
                     {
                         OnStop(stopContext);
-                        return Task.CompletedTask;
+                        return new ValueTask();
                     };
                 }
 
                 eventProcessor.ProcessEventAsync = processorEvent =>
                 {
                     OnProcessEvent?.Invoke(processorEvent);
-                    return Task.CompletedTask;
+                    return new ValueTask();
                 };
 
                 eventProcessor.ProcessExceptionAsync = errorContext =>
                 {
                     OnProcessException?.Invoke(errorContext);
-                    return Task.CompletedTask;
+                    return new ValueTask();
                 };
 
                 EventProcessors.Add(eventProcessor);
