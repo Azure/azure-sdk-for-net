@@ -467,9 +467,9 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>The claimed ownership. <c>null</c> if this instance is not eligible, if no claimable ownership was found or if the claim attempt failed.</returns>
         ///
-        private Task<PartitionOwnership> FindAndClaimOwnershipAsync(string[] partitionIds,
-                                                                    IEnumerable<PartitionOwnership> completeOwnershipEnumerable,
-                                                                    IEnumerable<PartitionOwnership> activeOwnership)
+        private ValueTask<PartitionOwnership> FindAndClaimOwnershipAsync(string[] partitionIds,
+                                                                         IEnumerable<PartitionOwnership> completeOwnershipEnumerable,
+                                                                         IEnumerable<PartitionOwnership> activeOwnership)
         {
             // Create a partition distribution dictionary from the active ownership list we have, mapping an owner's identifier to the amount of
             // partitions it owns.  When an event processor goes down and it has only expired ownership, it will not be taken into consideration
@@ -523,8 +523,9 @@ namespace Azure.Messaging.EventHubs.Processor
                 if (unclaimedPartitions.Any())
                 {
                     var index = RandomNumberGenerator.Value.Next(unclaimedPartitions.Count());
+                    var returnTask = ClaimOwnershipAsync(unclaimedPartitions.ElementAt(index), completeOwnershipEnumerable);
 
-                    return ClaimOwnershipAsync(unclaimedPartitions.ElementAt(index), completeOwnershipEnumerable);
+                    return new ValueTask<PartitionOwnership>(returnTask);
                 }
 
                 // Only try to steal partitions if there are no unclaimed partitions left.  At first, only processors that have exceeded the
@@ -553,14 +554,15 @@ namespace Azure.Messaging.EventHubs.Processor
                 if (stealablePartitions.Any())
                 {
                     var index = RandomNumberGenerator.Value.Next(stealablePartitions.Count());
+                    var returnTask = ClaimOwnershipAsync(stealablePartitions.ElementAt(index), completeOwnershipEnumerable);
 
-                    return ClaimOwnershipAsync(stealablePartitions.ElementAt(index), completeOwnershipEnumerable);
+                    return new ValueTask<PartitionOwnership>(returnTask);
                 }
             }
 
             // No ownership has been claimed.
 
-            return Task.FromResult<PartitionOwnership>(null);
+            return new ValueTask<PartitionOwnership>(default(PartitionOwnership));
         }
 
         /// <summary>
