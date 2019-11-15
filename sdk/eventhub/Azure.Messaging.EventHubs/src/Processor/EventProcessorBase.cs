@@ -454,10 +454,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
             // If cancellation has been requested, throw an exception so we can keep a consistent behavior.
 
-            if (cancellationToken.IsCancellationRequested)
-            {
-                throw new TaskCanceledException();
-            }
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
         }
 
         /// <summary>
