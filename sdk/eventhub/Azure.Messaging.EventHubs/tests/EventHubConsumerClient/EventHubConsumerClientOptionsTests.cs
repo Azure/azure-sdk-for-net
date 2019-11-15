@@ -28,8 +28,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 TrackLastEnqueuedEventInformation = false,
                 RetryOptions = new RetryOptions { Mode = RetryMode.Fixed },
                 ConnectionOptions = new EventHubConnectionOptions { TransportType = TransportType.AmqpWebSockets },
-                DefaultMaximumReceiveWaitTime = TimeSpan.FromMinutes(65),
-                Identifier = "an_event_consumer"
+                DefaultMaximumReceiveWaitTime = TimeSpan.FromMinutes(65)
             };
 
             EventHubConsumerClientOptions clone = options.Clone();
@@ -38,7 +37,6 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(clone.OwnerLevel, Is.EqualTo(options.OwnerLevel), "The owner level of the clone should match.");
             Assert.That(clone.TrackLastEnqueuedEventInformation, Is.EqualTo(options.TrackLastEnqueuedEventInformation), "The tracking of last event information of the clone should match.");
             Assert.That(clone.DefaultMaximumReceiveWaitTime, Is.EqualTo(options.DefaultMaximumReceiveWaitTime), "The default maximum wait time of the clone should match.");
-            Assert.That(clone.Identifier, Is.EqualTo(options.Identifier), "The identifier of the clone should match.");
             Assert.That(clone.ConnectionOptions.TransportType, Is.EqualTo(options.ConnectionOptions.TransportType), "The connection options of the clone should copy properties.");
             Assert.That(clone.ConnectionOptions, Is.Not.SameAs(options.ConnectionOptions), "The connection options of the clone should be a copy, not the same instance.");
             Assert.That(clone.RetryOptions.IsEquivalentTo(options.RetryOptions), Is.True, "The retry options of the clone should be considered equal.");
@@ -55,20 +53,6 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var options = new MockOptions();
             Assert.That(() => options.PrefetchCount = (options.MinPrefixCount - 1), Throws.InstanceOf<ArgumentOutOfRangeException>());
-        }
-
-        /// <summary>
-        ///  Verifies that setting the <see cref="EventHubConsumerClientOptions.Identifier" /> is
-        ///  validated.
-        /// </summary>
-        ///
-        [Test]
-        public void IdentifierIsValidated()
-        {
-            var options = new MockOptions();
-            var tooLongIdentifier = new string('x', (options.MaxIdentifierLength + 1));
-
-            Assert.That(() => options.Identifier = tooLongIdentifier, Throws.ArgumentException);
         }
 
         /// <summary>

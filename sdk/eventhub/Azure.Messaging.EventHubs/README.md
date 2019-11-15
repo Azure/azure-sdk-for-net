@@ -30,6 +30,8 @@ To quickly create the needed Event Hubs resources in Azure and to receive a conn
 
 [![](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-sdk-for-net%2Fmaster%2Fsdk%2Feventhub%2FAzure.Messaging.EventHubs%2Fassets%2Fsamples-azure-deploy.json)
 
+If you'd like to run samples that use [Azure.Identity](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity), you'll also need a service principal with the correct roles. To make configuration for the identity samples easier, a [PowerShell script](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/assets/identity-tests-azure-setup.ps1) script is available. Please see the [Contributing Guide](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/CONTRIBUTING.md#Azure-Identity-Samples) for more details about the script.
+
 ### Install the package
 
 Install the Azure Event Hubs client library for .NET with [NuGet](https://www.nuget.org/):
@@ -237,10 +239,7 @@ The available samples are:
 - [Consume events from a known position in the Event Hub partition](./samples/Sample10_ConsumeEventsFromAKnownPosition.cs)
   An example of consuming events, starting at a well-known position in the Event Hub partition.
   
-- [Consume events from an Event Hub partition in batches](./samples/Sample11_ConsumeEventsByBatch.cs)
-  An example of consuming events, using a batch approach to control throughput.
-  
-- [Consume events from all partitions of an Event Hub with the Event Processor](./samples/Sample12_ConsumeEventsWithEventProcessor.cs)
+- [Consume events from all partitions of an Event Hub with the Event Processor](./samples/Sample11_ConsumeEventsWithEventProcessor.cs)
   An example of consuming events from all Event Hub partitions at once, using the Event Processor client.
 
 ## Contributing  

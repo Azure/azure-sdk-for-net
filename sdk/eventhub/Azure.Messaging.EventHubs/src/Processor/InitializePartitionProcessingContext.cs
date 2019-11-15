@@ -14,8 +14,6 @@ namespace Azure.Messaging.EventHubs.Processor
     ///
     public class InitializePartitionProcessingContext
     {
-        private EventPosition _defaultStartingPosition = EventPosition.Earliest;
-
         /// <summary>
         ///   The context of the Event Hub partition this instance is associated with.
         /// </summary>
@@ -27,16 +25,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   begin reading events when no checkpoint can be found.
         /// </summary>
         ///
-        public EventPosition DefaultStartingPosition
-        {
-            get => _defaultStartingPosition;
-
-            set
-            {
-                Argument.AssertNotNull(value, nameof(DefaultStartingPosition));
-                _defaultStartingPosition = value;
-            }
-        }
+        public EventPosition DefaultStartingPosition { get; set; } = EventPosition.Earliest;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="InitializePartitionProcessingContext"/> class.

@@ -36,6 +36,14 @@ namespace Azure.Messaging.EventHubs.Tests
         private static readonly Lazy<string> s_eventHubsSecretInstance =
             new Lazy<string>(() => ReadAndVerifyEnvironmentVariable("EVENT_HUBS_SECRET"), LazyThreadSafetyMode.PublicationOnly);
 
+        /// <summary>The environment variable value for the Azure Active Directory client identifier of the service principal, lazily evaluated.</summary>
+        private static readonly Lazy<string> s_eventHubsIdentityClientInstance =
+            new Lazy<string>(() => ReadAndVerifyEnvironmentVariable("EVENT_HUBS_IDENTITY_CLIENT"), LazyThreadSafetyMode.PublicationOnly);
+
+        /// <summary>The environment variable value for the Azure Active Directory client secret of the service principal, lazily evaluated.</summary>
+        private static readonly Lazy<string> s_eventHubsIdentitySecretInstance =
+            new Lazy<string>(() => ReadAndVerifyEnvironmentVariable("EVENT_HUBS_IDENTITY_SECRET"), LazyThreadSafetyMode.PublicationOnly);
+
         /// <summary>The active Event Hubs namespace for this test run, lazily created.</summary>
         private static readonly Lazy<EventHubScope.NamespaceProperties> s_activeEventHubsNamespace =
             new Lazy<EventHubScope.NamespaceProperties>(CreateNamespace, LazyThreadSafetyMode.ExecutionAndPublication);
@@ -120,7 +128,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         /// <value>The namespace connection string is based on the dynamic Event Hubs scope.</value>
         ///
-        public static string BuildConnectionStringForEventHub(string eventHubName) => $"{ EventHubsConnectionString };EntityPath={eventHubName}";
+        public static string BuildConnectionStringForEventHub(string eventHubName) => $"{ EventHubsConnectionString };EntityPath={ eventHubName }";
 
         /// <summary>
         ///   Reads an environment variable, ensuring that it is populated.

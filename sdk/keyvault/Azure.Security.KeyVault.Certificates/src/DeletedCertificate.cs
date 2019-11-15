@@ -7,7 +7,7 @@ using System.Text.Json;
 namespace Azure.Security.KeyVault.Certificates
 {
     /// <summary>
-    /// A certificate which has been deleted from the vault
+    /// A deleted <see cref="KeyVaultCertificateWithPolicy"/>.
     /// </summary>
     public class DeletedCertificate : KeyVaultCertificateWithPolicy
     {
@@ -22,7 +22,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Id identifying the deleted certificate
+        /// Gets the identifier of the deleted certificate.
         /// </summary>
         public Uri RecoveryId
         {
@@ -31,12 +31,12 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// The time the certificate was deleted in UTC
+        /// Gets a <see cref="DateTimeOffset"/> indicating when the certificate was deleted.
         /// </summary>
         public DateTimeOffset? DeletedOn { get; internal set; }
 
         /// <summary>
-        /// The time the certificate is scheduled to be permanently deleted in UTC
+        /// Gets a <see cref="DateTimeOffset"/> for when the deleted certificate will be purged.
         /// </summary>
         public DateTimeOffset? ScheduledPurgeDate { get; internal set; }
 

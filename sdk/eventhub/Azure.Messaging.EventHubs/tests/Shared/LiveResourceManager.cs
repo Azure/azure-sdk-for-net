@@ -31,7 +31,7 @@ namespace Azure.Messaging.EventHubs.Tests.Infrastructure
         private const double RetryExponentialBackoffSeconds = 2.5;
 
         /// <summary>The number of seconds to use as the basis for applying jitter to retry back-off calculations.</summary>
-        private const double RetryBaseJitterSeconds = 18.0;
+        private const double RetryBaseJitterSeconds = 20.0;
 
         /// <summary>The buffer to apply when considering refreshing; credentials that expire less than this duration will be refreshed.</summary>
         private static readonly TimeSpan CredentialRefreshBuffer = TimeSpan.FromMinutes(5);

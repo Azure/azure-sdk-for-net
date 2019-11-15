@@ -9,7 +9,7 @@ namespace Azure.Messaging.EventHubs.Metadata
     ///   A set of information for an Event Hub.
     /// </summary>
     ///
-    public struct EventHubProperties
+    public class EventHubProperties
     {
         /// <summary>
         ///   The name of the Event Hub, specific to the namespace
@@ -22,7 +22,7 @@ namespace Azure.Messaging.EventHubs.Metadata
         ///   The date and time, in UTC, at which the Event Hub was created.
         /// </summary>
         ///
-        public DateTimeOffset CreatedAt { get; }
+        public DateTimeOffset CreatedOn { get; }
 
         /// <summary>
         ///   The set of unique identifiers for each partition in the Event Hub.
@@ -35,15 +35,15 @@ namespace Azure.Messaging.EventHubs.Metadata
         /// </summary>
         ///
         /// <param name="name">The name of the Event Hub.</param>
-        /// <param name="createdAt">The date and time at which the Event Hub was created.</param>
+        /// <param name="createdOn">The date and time at which the Event Hub was created.</param>
         /// <param name="partitionIds">The set of unique identifiers for each partition.</param>
         ///
-        public EventHubProperties(string name,
-                                  DateTimeOffset createdAt,
-                                  string[] partitionIds)
+        protected internal EventHubProperties(string name,
+                                              DateTimeOffset createdOn,
+                                              string[] partitionIds)
         {
             Name = name;
-            CreatedAt = createdAt;
+            CreatedOn = createdOn;
             PartitionIds = partitionIds;
         }
     }

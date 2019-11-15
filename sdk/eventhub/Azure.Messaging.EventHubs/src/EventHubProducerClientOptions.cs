@@ -13,44 +13,11 @@ namespace Azure.Messaging.EventHubs
     ///
     public class EventHubProducerClientOptions
     {
-        /// <summary>The identifier of the partition that the producer will be bound to.</summary>
-        private string _partitionId = null;
-
         /// <summary>The set of options to use for configuring the connection to the Event Hubs service.</summary>
         private EventHubConnectionOptions _connectionOptions = new EventHubConnectionOptions();
 
         /// <summary>The set of options to govern retry behavior and try timeouts.</summary>
         private RetryOptions _retryOptions = new RetryOptions();
-
-        /// <summary>
-        ///   The identifier of the Event Hub partition that the <see cref="EventHubProducerClient" /> will be bound to,
-        ///   limiting it to sending events to only that partition.
-        ///
-        ///   If the identifier is not specified, the Event Hubs service will be responsible for routing events that
-        ///   are sent to an available partition.
-        /// </summary>
-        ///
-        /// <value>If the producer wishes the events to be automatically to partitions, <c>null</c>; otherwise, the identifier of the desired partition.</value>
-        ///
-        /// <remarks>
-        ///   Allowing automatic routing of partitions is recommended when:
-        ///   <para>- The sending of events needs to be highly available.</para>
-        ///   <para>- The event data should be evenly distributed among all available partitions.</para>
-        ///
-        ///   If no partition is specified, the following rules are used for automatically selecting one:
-        ///   <para>1) Distribute the events equally amongst all available partitions using a round-robin approach.</para>
-        ///   <para>2) If a partition becomes unavailable, the Event Hubs service will automatically detect it and forward the message to another available partition.</para>
-        /// </remarks>
-        ///
-        public string PartitionId
-        {
-            get => _partitionId;
-            set
-            {
-                Argument.AssertNotEmptyOrWhiteSpace(value, nameof(PartitionId));
-                _partitionId = value;
-            }
-        }
 
         /// <summary>
         ///   Gets or sets the options used for configuring the connection to the Event Hubs service.
@@ -120,7 +87,6 @@ namespace Azure.Messaging.EventHubs
         internal EventHubProducerClientOptions Clone() =>
             new EventHubProducerClientOptions
             {
-                _partitionId = PartitionId,
                 _connectionOptions = ConnectionOptions.Clone(),
                 _retryOptions = RetryOptions.Clone()
             };

@@ -10,7 +10,7 @@ namespace Azure.Messaging.EventHubs
     ///   are sent to the Event Hubs service.
     /// </summary>
     ///
-    public class SendOptions
+    internal class SendOptions
     {
         /// <summary>
         ///   Allows a hashing key to be provided for the batch of events, which instructs the Event Hubs
@@ -27,9 +27,64 @@ namespace Azure.Messaging.EventHubs
         ///   specified directly when sending the batch.
         /// </summary>
         ///
-        /// <value>The partition hashing key to associate with the event or batch of events.</value>
+        /// <value>
+        ///   If the producer wishes to influence the automatic routing of events to partitions, the partition
+        ///   hashing key to associate with the event or batch of events; otherwise, <c>null</c>.
+        /// </value>
+        ///
+        /// <remarks>
+        ///   If the <see cref="SendOptions.PartitionKey" /> is specified, then no <see cref="SendOptions.PartitionId" />
+        ///   may be set when sending.
+        /// </remarks>
         ///
         public string PartitionKey { get; set; }
+
+        /// <summary>
+        ///   If specified, events be published to this specific partition.  If the identifier is not
+        ///   specified, the Event Hubs service will be responsible for routing events automatically to an available partition.
+        /// </summary>
+        ///
+        /// <value>
+        ///   If the producer wishes the events to be automatically to partitions, <c>null</c>; otherwise, the identifier
+        ///   of the desired partition.
+        /// </value>
+        ///
+        /// <remarks>
+        ///   If the <see cref="SendOptions.PartitionId" /> is specified, then no <see cref="SendOptions.PartitionKey" />
+        ///   may be set when sending.
+        ///
+        ///   <para>Allowing automatic routing of partitions is recommended when:</para>
+        ///   <para>- The sending of events needs to be highly available.</para>
+        ///   <para>- The event data should be evenly distributed among all available partitions.</para>
+        ///
+        ///   If no partition is specified, the following rules are used for automatically selecting one:
+        ///   <para>1) Distribute the events equally amongst all available partitions using a round-robin approach.</para>
+        ///   <para>2) If a partition becomes unavailable, the Event Hubs service will automatically detect it and forward the message to another available partition.</para>
+        /// </remarks>
+        ///
+        public string PartitionId { get; set; }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="SendOptions"/> class.
+        /// </summary>
+        ///
+        public SendOptions()
+        {
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="SendOptions"/> class.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the partition to which events should be sent.</param>
+        /// <param name="partitionKey">The hashing key to use for influencing the partition to which the events are routed.</param>
+        ///
+        internal SendOptions(string partitionId,
+                             string partitionKey)
+        {
+            PartitionId = partitionId;
+            PartitionKey = partitionKey;
+        }
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.

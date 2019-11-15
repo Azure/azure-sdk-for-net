@@ -423,10 +423,9 @@ namespace Azure.Messaging.EventHubs.Tests
             var connectionString = "Endpoint=value.com;SharedAccessKeyName=[value];SharedAccessKey=[value];EntityPath=[value]";
             var mockClient = new ReadableOptionsMock(connectionString, new EventHubConnectionOptions());
 
-            mockClient.CreateTransportProducer();
+            mockClient.CreateTransportProducer(null);
 
             Assert.That(mockClient.ProducerOptions, Is.Not.Null, "The producer options should have been set.");
-            Assert.That(mockClient.ProducerOptions.PartitionId, Is.EqualTo(expected.PartitionId), "The partition identifiers should match.");
             Assert.That(mockClient.ProducerOptions.RetryOptions.IsEquivalentTo(expected.RetryOptions), Is.True, "The retries should match.");
         }
 
@@ -450,7 +449,6 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(actualOptions, Is.Not.Null, "The consumer options should have been set.");
             Assert.That(actualOptions.OwnerLevel, Is.EqualTo(expectedOptions.OwnerLevel), "The owner levels should match.");
-            Assert.That(actualOptions.Identifier, Is.EqualTo(expectedOptions.Identifier), "The identifiers should match.");
             Assert.That(actualOptions.PrefetchCount, Is.EqualTo(expectedOptions.PrefetchCount), "The prefetch counts should match.");
             Assert.That(actualOptions.RetryOptions.IsEquivalentTo(expectedOptions.RetryOptions), Is.True, "The retries should match.");
             Assert.That(actualOptions.MaximumReceiveWaitTimeOrDefault, Is.EqualTo(expectedOptions.MaximumReceiveWaitTimeOrDefault), "The wait times should match.");
@@ -474,7 +472,6 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedOptions = new EventHubConsumerClientOptions
             {
                 OwnerLevel = 251,
-                Identifier = "Bob",
                 PrefetchCount = 600,
                 RetryOptions = retryOptions,
                 DefaultMaximumReceiveWaitTime = TimeSpan.FromSeconds(123)
@@ -493,7 +490,6 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(actualOptions, Is.Not.Null, "The consumer options should have been set.");
             Assert.That(actualOptions, Is.Not.SameAs(expectedOptions), "A clone of the options should have been made.");
             Assert.That(actualOptions.OwnerLevel, Is.EqualTo(expectedOptions.OwnerLevel), "The owner levels should match.");
-            Assert.That(actualOptions.Identifier, Is.EqualTo(expectedOptions.Identifier), "The identifiers should match.");
             Assert.That(actualOptions.PrefetchCount, Is.EqualTo(expectedOptions.PrefetchCount), "The prefetch counts should match.");
             Assert.That(actualOptions.RetryOptions.IsEquivalentTo(expectedOptions.RetryOptions), Is.True, "The retries should match.");
             Assert.That(actualOptions.MaximumReceiveWaitTimeOrDefault, Is.EqualTo(expectedOptions.MaximumReceiveWaitTimeOrDefault), "The wait times should match.");
@@ -525,18 +521,6 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var client = new EventHubConnection("Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real]", "fake", new EventHubConnectionOptions());
             Assert.That(() => client.CreateTransportConsumer("someGroup", partition, EventPosition.Earliest), Throws.InstanceOf<ArgumentException>());
-        }
-
-        /// <summary>
-        ///    Verifies functionality of the <see cref="EventHubConnection.CreateTransportConsumer" />
-        ///    method.
-        /// </summary>
-        ///
-        [Test]
-        public void CreateConsumerRequiresEventPosition()
-        {
-            var client = new EventHubConnection("Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real]", "fake", new EventHubConnectionOptions());
-            Assert.That(() => client.CreateTransportConsumer(EventHubConsumerClient.DefaultConsumerGroupName, "123", null), Throws.ArgumentNullException);
         }
 
         /// <summary>
@@ -644,11 +628,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var client = new InjectableTransportClientMock(transportClient, "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake");
             var expectedOptions = new EventHubProducerClientOptions { RetryOptions = new RetryOptions { MaximumRetries = 6, TryTimeout = TimeSpan.FromMinutes(4) } };
 
-            client.CreateTransportProducer(expectedOptions);
+            client.CreateTransportProducer(null, expectedOptions);
 
             Assert.That(transportClient.CreateProducerCalledWith, Is.Not.Null, "The producer options should have been set.");
-            Assert.That(transportClient.CreateProducerCalledWith.PartitionId, Is.EqualTo(expectedOptions.PartitionId), "The partition identifiers should match.");
-            Assert.That(transportClient.CreateProducerCalledWith.RetryOptions.IsEquivalentTo(expectedOptions.RetryOptions), Is.True, "The retry options should match.");
+            Assert.That(transportClient.CreateProducerCalledWith.PartitionId, Is.Null, "There should have been no partition specified.");
+            Assert.That(transportClient.CreateProducerCalledWith.Options.RetryOptions.IsEquivalentTo(expectedOptions.RetryOptions), Is.True, "The retry options should match.");
         }
 
         /// <summary>
@@ -675,7 +659,6 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(actualOptions, Is.Not.Null, "The consumer options should have been set.");
             Assert.That(actualPosition.Offset, Is.EqualTo(expectedPosition.Offset), "The event position to receive should match.");
             Assert.That(actualOptions.OwnerLevel, Is.EqualTo(expectedOptions.OwnerLevel), "The owner levels should match.");
-            Assert.That(actualOptions.Identifier, Is.EqualTo(expectedOptions.Identifier), "The identifiers should match.");
             Assert.That(actualOptions.PrefetchCount, Is.EqualTo(expectedOptions.PrefetchCount), "The prefetch counts should match.");
             Assert.That(actualOptions.MaximumReceiveWaitTimeOrDefault, Is.EqualTo(expectedOptions.MaximumReceiveWaitTimeOrDefault), "The wait times should match.");
         }
@@ -801,7 +784,7 @@ namespace Azure.Messaging.EventHubs.Tests
                    .GetValue(this) as EventHubConnectionOptions;
 
             public EventHubConnectionOptions TransportClientOptions;
-            public EventHubProducerClientOptions ProducerOptions => _transportClient.CreateProducerCalledWith;
+            public EventHubProducerClientOptions ProducerOptions => _transportClient.CreateProducerCalledWith.Options;
             public EventHubConsumerClientOptions ConsumerOptions => _transportClient.CreateConsumerCalledWith.Options;
 
             private ObservableTransportClientMock _transportClient;
@@ -900,7 +883,7 @@ namespace Azure.Messaging.EventHubs.Tests
         private class ObservableTransportClientMock : TransportClient
         {
             public (string ConsumerGroup, string Partition, EventPosition Position, EventHubConsumerClientOptions Options) CreateConsumerCalledWith;
-            public EventHubProducerClientOptions CreateProducerCalledWith;
+            public (string PartitionId, EventHubProducerClientOptions Options) CreateProducerCalledWith;
             public string GetPartitionPropertiesCalledForId;
             public bool WasGetPropertiesCalled;
             public bool WasCloseCalled;
@@ -920,9 +903,10 @@ namespace Azure.Messaging.EventHubs.Tests
                 return Task.FromResult(default(PartitionProperties));
             }
 
-            public override TransportProducer CreateProducer(EventHubProducerClientOptions producerOptions)
+            public override TransportProducer CreateProducer(string partitionId,
+                                                             EventHubProducerClientOptions producerOptions)
             {
-                CreateProducerCalledWith = producerOptions;
+                CreateProducerCalledWith = (partitionId, producerOptions);
                 return default;
             }
 

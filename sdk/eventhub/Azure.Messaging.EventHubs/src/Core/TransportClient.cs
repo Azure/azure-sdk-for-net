@@ -25,7 +25,7 @@ namespace Azure.Messaging.EventHubs.Core
         ///   <c>true</c> if the client is closed; otherwise, <c>false</c>.
         /// </value>
         ///
-        public virtual bool Closed { get; }
+        public virtual bool IsClosed { get; }
 
         /// <summary>
         ///   The endpoint for the Event Hubs service to which the client is associated.
@@ -66,11 +66,13 @@ namespace Azure.Messaging.EventHubs.Core
         ///   responsible for publishing <see cref="EventData" /> to the Event Hub.
         /// </summary>
         ///
+        /// <param name="partitionId">The identifier of the partition to which the transport producer should be bound; if <c>null</c>, the producer is unbound.</param>
         /// <param name="producerOptions">The set of options to apply when creating the producer.</param>
         ///
         /// <returns>A <see cref="TransportProducer"/> configured in the requested manner.</returns>
         ///
-        public abstract TransportProducer CreateProducer(EventHubProducerClientOptions producerOptions);
+        public abstract TransportProducer CreateProducer(string partitionId,
+                                                         EventHubProducerClientOptions producerOptions);
 
         /// <summary>
         ///   Creates a consumer strongly aligned with the active protocol and transport, responsible
