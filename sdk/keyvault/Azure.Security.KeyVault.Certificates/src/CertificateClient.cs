@@ -1425,7 +1425,7 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
 
-        internal virtual Response<CertificateOperationProperties> GetPendingCertificate(string certificateName, CertificateOperationRequest requestedOperation, CancellationToken cancellationToken = default)
+        internal virtual Response<CertificateOperationProperties> GetPendingCertificate(string certificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
@@ -1442,7 +1442,7 @@ namespace Azure.Security.KeyVault.Certificates
                     case 403:
                         return _pipeline.CreateResponse(response, new CertificateOperationProperties());
 
-                    case 404 when requestedOperation == CertificateOperationRequest.Delete:
+                    case 404:
                         return Response.FromValue<CertificateOperationProperties>(null, response);
 
                     default:
@@ -1456,7 +1456,7 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
 
-        internal virtual async Task<Response<CertificateOperationProperties>> GetPendingCertificateAsync(string certificateName, CertificateOperationRequest requestedOperation, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<CertificateOperationProperties>> GetPendingCertificateAsync(string certificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
@@ -1473,7 +1473,7 @@ namespace Azure.Security.KeyVault.Certificates
                     case 403:
                         return _pipeline.CreateResponse(response, new CertificateOperationProperties());
 
-                    case 404 when requestedOperation == CertificateOperationRequest.Delete:
+                    case 404:
                         return Response.FromValue<CertificateOperationProperties>(null, response);
 
                     default:

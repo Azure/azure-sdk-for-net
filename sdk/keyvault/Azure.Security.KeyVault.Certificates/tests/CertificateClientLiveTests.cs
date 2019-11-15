@@ -51,13 +51,16 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             {
                 await operation.CancelAsync();
             }
-            catch (RequestFailedException ex) when (ex.Status == 403)
+            catch (RequestFailedException e) when (e.Status == 403)
             {
                 Assert.Inconclusive("The create operation completed before it could be canceled.");
             }
 
-            await WaitForCompletion(operation);
+            OperationCanceledException ex = Assert.ThrowsAsync<OperationCanceledException>(() => WaitForCompletion(operation));
+            Assert.AreEqual("The operation was canceled so no value is available.", ex.Message);
 
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsFalse(operation.HasValue);
             Assert.AreEqual(200, operation.GetRawResponse().Status);
         }
 
@@ -80,12 +83,17 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 // Calling through the CertificateClient directly won't affect the CertificateOperation, so subsequent status updates should throw.
                 await Client.CancelCertificateOperationAsync(certName);
             }
-            catch (RequestFailedException ex) when (ex.Status == 403)
+            catch (RequestFailedException e) when (e.Status == 403)
             {
                 Assert.Inconclusive("The create operation completed before it could be canceled.");
             }
 
-            Assert.ThrowsAsync<OperationCanceledException>(() => WaitForCompletion(operation));
+            OperationCanceledException ex = Assert.ThrowsAsync<OperationCanceledException>(() => WaitForCompletion(operation));
+            Assert.AreEqual("The operation was canceled so no value is available.", ex.Message);
+
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsFalse(operation.HasValue);
+            Assert.AreEqual(200, operation.GetRawResponse().Status);
         }
 
         [Test]
@@ -102,8 +110,11 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             await operation.DeleteAsync();
 
-            await WaitForCompletion(operation);
+            InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(() => WaitForCompletion(operation));
+            Assert.AreEqual("The operation was deleted so no value is available.", ex.Message);
 
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsFalse(operation.HasValue);
             Assert.AreEqual(404, operation.GetRawResponse().Status);
         }
 
@@ -119,11 +130,12 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             RegisterForCleanup(certName);
 
-            // Calling through the CertificateClient directly won't affect the CertificateOperation, so subsequent status updates should throw.
-            await Client.DeleteCertificateOperationAsync(certName);
+            InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(() => WaitForCompletion(operation));
+            Assert.AreEqual("The operation was deleted so no value is available.", ex.Message);
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(() => WaitForCompletion(operation));
-            Assert.AreEqual(404, ex.Status);
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsFalse(operation.HasValue);
+            Assert.AreEqual(404, operation.GetRawResponse().Status);
         }
 
         [Test]
