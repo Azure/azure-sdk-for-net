@@ -5,6 +5,7 @@ namespace Azure.Storage
         public StorageSharedKeyCredential(string accountName, string accountKey) { }
         public string AccountName { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         protected static string ComputeSasSignature(Azure.Storage.StorageSharedKeyCredential credential, string message) { throw null; }
+        protected static string ExportBase64EncodedKey(Azure.Storage.StorageSharedKeyCredential credential) { throw null; }
         public void SetAccountKey(string accountKey) { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

@@ -12,15 +12,9 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 
-#if CommonSDK
-using Internals = Azure.Storage.Shared.Common;
-namespace Azure.Storage.Shared.Common
-#else
-using Internals = Azure.Storage.Shared;
-namespace Azure.Storage.Shared
-#endif
+namespace Azure.Storage
 {
-internal sealed class StreamPartition : Stream
+    internal sealed class StreamPartition : Stream
     {
         private Action _disposeAction;
         private ReadOnlyMemory<byte> _memory;

@@ -19,4 +19,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Azure.Storage.Common\tests\TestExtensions.cs" Link="TestExtensions.cs" />
+  </ItemGroup>
 </Project>

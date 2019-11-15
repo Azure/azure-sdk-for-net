@@ -4,8 +4,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Storage.Sas;
-using Azure.Storage.Sas.Shared;
-using SasInternals = Azure.Storage.Files.DataLake.Sas.Shared;
 
 namespace Azure.Storage.Files.DataLake.Sas
 {
@@ -19,11 +17,7 @@ namespace Azure.Storage.Files.DataLake.Sas
     /// </summary>
     public sealed class DataLakeSasQueryParameters : SasQueryParameters
     {
-        internal
-#if RELEASE
-            new
-#endif
-            UserDelegationKeyProperties _keyProperties;
+        internal UserDelegationKeyProperties _keyProperties;
 
         /// <summary>
         /// Gets the Azure Active Directory object ID in GUID format.
@@ -135,12 +129,12 @@ namespace Azure.Storage.Files.DataLake.Sas
             Dictionary<string, string> values)
         {
             var dataLakeParameters = new DataLakeSasQueryParameters();
-            SasInternals.SasQueryParametersExtensions.ParseKeyProperties(
+            SasQueryParametersExtensions.ParseKeyProperties(
                 dataLakeParameters,
                 values,
                 preserve: true);
             return
-                (DataLakeSasQueryParameters)SasQueryParameters.Create(
+                (DataLakeSasQueryParameters) Create(
                     values,
                     includeBlobParameters: true,
                     dataLakeParameters);

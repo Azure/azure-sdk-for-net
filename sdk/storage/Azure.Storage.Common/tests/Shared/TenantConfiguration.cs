@@ -5,7 +5,7 @@ using System;
 using System.Text;
 using System.Xml.Linq;
 using Azure.Storage.Tests;
-using Internals = Azure.Storage.Shared.Common;
+
 
 namespace Azure.Storage.Test
 {
@@ -52,7 +52,7 @@ namespace Azure.Storage.Test
         /// <returns>A connnection string for this tenant.</returns>
         private string BuildConnectionString(bool sanitize = true)
         {
-            var connection = new Internals.StorageConnectionString(
+            var connection = new StorageConnectionString(
                 storageCredentials: new StorageSharedKeyCredential(AccountName, AccountKey),
                 blobStorageUri: (AsUri(BlobServiceEndpoint), AsUri(BlobServiceSecondaryEndpoint)),
                 fileStorageUri: (AsUri(FileServiceEndpoint), AsUri(FileServiceSecondaryEndpoint)),

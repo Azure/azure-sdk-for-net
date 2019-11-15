@@ -10,10 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Storage.Shared;
 using Azure.Storage.Files.Shares.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
-using Internals = Azure.Storage.Shared;
 
 namespace Azure.Storage.Files.Shares
 {
@@ -49,13 +47,13 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
         /// every request.
         /// </summary>
-        private readonly Internals.ClientDiagnostics _clientDiagnostics;
+        private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary>
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
         /// every request.
         /// </summary>
-        internal virtual Internals.ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
+        internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
 
         /// <summary>
         /// The Storage account name corresponding to the share client.
@@ -141,11 +139,11 @@ namespace Azure.Storage.Files.Shares
         public ShareClient(string connectionString, string shareName, ShareClientOptions options)
         {
             options ??= new ShareClientOptions();
-            var conn = Internals.StorageConnectionString.Parse(connectionString);
+            var conn = StorageConnectionString.Parse(connectionString);
             var builder = new ShareUriBuilder(conn.FileEndpoint) { ShareName = shareName };
             _uri = builder.ToUri();
             _pipeline = options.Build(conn.Credentials);
-            _clientDiagnostics = new Internals.ClientDiagnostics(options);
+            _clientDiagnostics = new ClientDiagnostics(options);
         }
 
         /// <summary>
@@ -208,7 +206,7 @@ namespace Azure.Storage.Files.Shares
             options ??= new ShareClientOptions();
             _uri = shareUri;
             _pipeline = options.Build(authentication);
-            _clientDiagnostics = new Internals.ClientDiagnostics(options);
+            _clientDiagnostics = new ClientDiagnostics(options);
         }
 
         /// <summary>
@@ -223,7 +221,7 @@ namespace Azure.Storage.Files.Shares
         /// The transport pipeline used to send every request.
         /// </param>
         /// <param name="clientDiagnostics"></param>
-        internal ShareClient(Uri shareUri, HttpPipeline pipeline, Internals.ClientDiagnostics clientDiagnostics)
+        internal ShareClient(Uri shareUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
         {
             _uri = shareUri;
             _pipeline = pipeline;
@@ -410,7 +408,7 @@ namespace Azure.Storage.Files.Shares
                         metadata: metadata,
                         quotaInGB: quotaInGB,
                         async: async,
-                        operationName: Internals.Constants.File.Share.CreateOperationName,
+                        operationName: Constants.File.Share.CreateOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -527,7 +525,7 @@ namespace Azure.Storage.Files.Shares
                         Uri,
                         metadata: metadata,
                         async: async,
-                        operationName: Internals.Constants.File.Share.CreateSnapshotOperationName,
+                        operationName: Constants.File.Share.CreateSnapshotOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -648,7 +646,7 @@ namespace Azure.Storage.Files.Shares
                         Uri,
                         deleteSnapshots: includeSnapshots ? DeleteSnapshotsOptionType.Include : (DeleteSnapshotsOptionType?)null,
                         async: async,
-                        operationName: Internals.Constants.File.Share.DeleteOperationName,
+                        operationName: Constants.File.Share.DeleteOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -757,7 +755,7 @@ namespace Azure.Storage.Files.Shares
                         Pipeline,
                         Uri,
                         async: async,
-                        operationName: Internals.Constants.File.Share.GetPropertiesOperationName,
+                        operationName: Constants.File.Share.GetPropertiesOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -870,7 +868,7 @@ namespace Azure.Storage.Files.Shares
                         Uri,
                         quotaInGB: quotaInGB,
                         async: async,
-                        operationName: Internals.Constants.File.Share.SetQuotaOperationName,
+                        operationName: Constants.File.Share.SetQuotaOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -990,7 +988,7 @@ namespace Azure.Storage.Files.Shares
                         Uri,
                         metadata: metadata,
                         async: async,
-                        operationName: Internals.Constants.File.Share.SetMetadataOperationName,
+                        operationName: Constants.File.Share.SetMetadataOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1098,7 +1096,7 @@ namespace Azure.Storage.Files.Shares
                         Pipeline,
                         Uri,
                         async: async,
-                        operationName: Internals.Constants.File.Share.GetAccessPolicyOperationName,
+                        operationName: Constants.File.Share.GetAccessPolicyOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1224,7 +1222,7 @@ namespace Azure.Storage.Files.Shares
                         Uri,
                         permissions: permissions,
                         async: async,
-                        operationName: Internals.Constants.File.Share.SetAccessPolicyOperationName,
+                        operationName: Constants.File.Share.SetAccessPolicyOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1326,7 +1324,7 @@ namespace Azure.Storage.Files.Shares
                         Pipeline,
                         Uri,
                         async: async,
-                        operationName: Internals.Constants.File.Share.GetStatisticsOperationName,
+                        operationName: Constants.File.Share.GetStatisticsOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1408,7 +1406,7 @@ namespace Azure.Storage.Files.Shares
                             Uri,
                             filePermissionKey: filePermissionKey,
                             async: async,
-                            operationName: Internals.Constants.File.Share.GetPermissionOperationName,
+                            operationName: Constants.File.Share.GetPermissionOperationName,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
 
@@ -1529,7 +1527,7 @@ namespace Azure.Storage.Files.Shares
                         Uri,
                         sharePermissionJson: json,
                         async: async,
-                        operationName: Internals.Constants.File.Share.CreatePermissionOperationName,
+                        operationName: Constants.File.Share.CreatePermissionOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1577,7 +1575,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [Internals.ForwardsClientCalls]
+        [ForwardsClientCalls]
         public virtual Response<ShareDirectoryClient> CreateDirectory(
            string directoryName,
            IDictionary<string, string> metadata = default,
@@ -1624,7 +1622,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [Internals.ForwardsClientCalls]
+        [ForwardsClientCalls]
         public virtual async Task<Response<ShareDirectoryClient>> CreateDirectoryAsync(
            string directoryName,
            IDictionary<string, string> metadata = default,
@@ -1662,7 +1660,7 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// Note that the directory must be empty before it can be deleted.
         /// </remarks>
-        [Internals.ForwardsClientCalls]
+        [ForwardsClientCalls]
         public virtual Response DeleteDirectory(
             string directoryName,
             CancellationToken cancellationToken = default) =>
@@ -1687,7 +1685,7 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// Note that the directory must be empty before it can be deleted.
         /// </remarks>
-        [Internals.ForwardsClientCalls]
+        [ForwardsClientCalls]
         public virtual async Task<Response> DeleteDirectoryAsync(
             string directoryName,
             CancellationToken cancellationToken = default) =>

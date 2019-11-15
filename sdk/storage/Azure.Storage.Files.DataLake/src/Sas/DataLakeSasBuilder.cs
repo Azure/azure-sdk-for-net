@@ -5,12 +5,8 @@ using System;
 using System.ComponentModel;
 using System.Security.Cryptography;
 using System.Text;
-using Azure.Storage.Shared;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
-using Azure.Storage.Sas.Shared;
-using Internals = Azure.Storage.Shared;
-using SasInternals = Azure.Storage.Sas.Shared;
 
 namespace Azure.Storage.Files.DataLake.Sas
 {
@@ -190,12 +186,12 @@ namespace Azure.Storage.Files.DataLake.Sas
         /// </returns>
         public DataLakeSasQueryParameters ToSasQueryParameters(StorageSharedKeyCredential sharedKeyCredential)
         {
-            sharedKeyCredential = sharedKeyCredential ?? throw Internals.Errors.ArgumentNull(nameof(sharedKeyCredential));
+            sharedKeyCredential = sharedKeyCredential ?? throw Errors.ArgumentNull(nameof(sharedKeyCredential));
 
             EnsureState();
 
-            var startTime = SasInternals.SasExtensions.FormatTimesForSasSigning(StartsOn);
-            var expiryTime = SasInternals.SasExtensions.FormatTimesForSasSigning(ExpiresOn);
+            var startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
+            var expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
 
             // See http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
             var stringToSign = String.Join("\n",
@@ -205,7 +201,7 @@ namespace Azure.Storage.Files.DataLake.Sas
                 GetCanonicalName(sharedKeyCredential.AccountName, FileSystemName ?? String.Empty, Path ?? String.Empty),
                 Identifier,
                 IPRange.ToString(),
-                SasInternals.SasExtensions.ToProtocolString(Protocol),
+                SasExtensions.ToProtocolString(Protocol),
                 Version,
                 Resource,
                 null, // snapshot
@@ -252,14 +248,14 @@ namespace Azure.Storage.Files.DataLake.Sas
         /// </returns>
         public DataLakeSasQueryParameters ToSasQueryParameters(UserDelegationKey userDelegationKey, string accountName)
         {
-            userDelegationKey = userDelegationKey ?? throw Internals.Errors.ArgumentNull(nameof(userDelegationKey));
+            userDelegationKey = userDelegationKey ?? throw Errors.ArgumentNull(nameof(userDelegationKey));
 
             EnsureState();
 
-            var startTime = SasInternals.SasExtensions.FormatTimesForSasSigning(StartsOn);
-            var expiryTime = SasInternals.SasExtensions.FormatTimesForSasSigning(ExpiresOn);
-            var signedStart = SasInternals.SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedStartsOn);
-            var signedExpiry = SasInternals.SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedExpiresOn);
+            var startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
+            var expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
+            var signedStart = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedStartsOn);
+            var signedExpiry = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedExpiresOn);
 
             // See http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
             var stringToSign = String.Join("\n",
@@ -274,7 +270,7 @@ namespace Azure.Storage.Files.DataLake.Sas
                 userDelegationKey.SignedService,
                 userDelegationKey.SignedVersion,
                 IPRange.ToString(),
-                SasInternals.SasExtensions.ToProtocolString(Protocol),
+                SasExtensions.ToProtocolString(Protocol),
                 Version,
                 Resource,
                 null, // snapshot
@@ -365,13 +361,13 @@ namespace Azure.Storage.Files.DataLake.Sas
             // File System
             if (string.IsNullOrEmpty(Path))
             {
-                Resource = Internals.Constants.Sas.Resource.Container;
+                Resource = Constants.Sas.Resource.Container;
             }
 
             // Path
             else
             {
-                Resource = Internals.Constants.Sas.Resource.Blob;
+                Resource = Constants.Sas.Resource.Blob;
             }
             if (string.IsNullOrEmpty(Version))
             {

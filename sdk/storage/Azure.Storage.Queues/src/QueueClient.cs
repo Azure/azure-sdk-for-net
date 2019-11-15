@@ -9,10 +9,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Storage.Shared;
 using Azure.Storage.Queues.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
-using Internals = Azure.Storage.Shared;
 
 namespace Azure.Storage.Queues
 {
@@ -55,24 +53,24 @@ namespace Azure.Storage.Queues
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
         /// every request.
         /// </summary>
-        private readonly Internals.ClientDiagnostics _clientDiagnostics;
+        private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary>
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
         /// every request.
         /// </summary>
-        internal virtual Internals.ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
+        internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
 
         /// <summary>
         /// QueueMaxMessagesPeek indicates the maximum number of messages
         /// you can retrieve with each call to Peek.
         /// </summary>
-        public virtual int MaxPeekableMessages => Internals.Constants.Queue.MaxMessagesDequeue;
+        public virtual int MaxPeekableMessages => Constants.Queue.MaxMessagesDequeue;
 
         /// <summary>
         /// Gets the maximum number of bytes allowed for a message's UTF-8 text.
         /// </summary>
-        public virtual int MessageMaxBytes => Internals.Constants.Queue.QueueMessageMaxBytes;
+        public virtual int MessageMaxBytes => Constants.Queue.QueueMessageMaxBytes;
 
         /// <summary>
         /// The Storage account name corresponding to the queue client.
@@ -157,17 +155,17 @@ namespace Azure.Storage.Queues
         /// </param>
         public QueueClient(string connectionString, string queueName, QueueClientOptions options)
         {
-            var conn = Internals.StorageConnectionString.Parse(connectionString);
+            var conn = StorageConnectionString.Parse(connectionString);
             var builder =
                 new QueueUriBuilder(conn.QueueEndpoint)
                 {
                     QueueName = queueName
                 };
             _uri = builder.ToUri();
-            _messagesUri = _uri.AppendToPath(Internals.Constants.Queue.MessagesUri);
+            _messagesUri = _uri.AppendToPath(Constants.Queue.MessagesUri);
             options ??= new QueueClientOptions();
             _pipeline = options.Build(conn.Credentials);
-            _clientDiagnostics = new Internals.ClientDiagnostics(options);
+            _clientDiagnostics = new ClientDiagnostics(options);
         }
 
         /// <summary>
@@ -254,10 +252,10 @@ namespace Azure.Storage.Queues
         internal QueueClient(Uri queueUri, HttpPipelinePolicy authentication, QueueClientOptions options)
         {
             _uri = queueUri;
-            _messagesUri = queueUri.AppendToPath(Internals.Constants.Queue.MessagesUri);
+            _messagesUri = queueUri.AppendToPath(Constants.Queue.MessagesUri);
             options ??= new QueueClientOptions();
             _pipeline = options.Build(authentication);
-            _clientDiagnostics = new Internals.ClientDiagnostics(options);
+            _clientDiagnostics = new ClientDiagnostics(options);
         }
 
         /// <summary>
@@ -273,10 +271,10 @@ namespace Azure.Storage.Queues
         /// The transport pipeline used to send every request.
         /// </param>
         /// <param name="clientDiagnostics"></param>
-        internal QueueClient(Uri queueUri, HttpPipeline pipeline, Internals.ClientDiagnostics clientDiagnostics)
+        internal QueueClient(Uri queueUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
         {
             _uri = queueUri;
-            _messagesUri = queueUri.AppendToPath(Internals.Constants.Queue.MessagesUri);
+            _messagesUri = queueUri.AppendToPath(Constants.Queue.MessagesUri);
             _pipeline = pipeline;
             _clientDiagnostics = clientDiagnostics;
         }
@@ -893,7 +891,7 @@ namespace Azure.Storage.Queues
                         Pipeline,
                         MessagesUri,
                         async: async,
-                        operationName: Internals.Constants.Queue.ClearMessagesOperationName,
+                        operationName: Constants.Queue.ClearMessagesOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1101,7 +1099,7 @@ namespace Azure.Storage.Queues
                             visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
                             messageTimeToLive: (int?)timeToLive?.TotalSeconds,
                             async: async,
-                            operationName: Internals.Constants.Queue.SendMessageOperationName,
+                            operationName: Constants.Queue.SendMessageOperationName,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     // The service returns a sequence of messages, but the
@@ -1274,7 +1272,7 @@ namespace Azure.Storage.Queues
                         numberOfMessages: maxMessages,
                         visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
                         async: async,
-                        operationName: Internals.Constants.Queue.ReceiveMessagesOperationName,
+                        operationName: Constants.Queue.ReceiveMessagesOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
@@ -1380,7 +1378,7 @@ namespace Azure.Storage.Queues
                         MessagesUri,
                         numberOfMessages: maxMessages,
                         async: async,
-                        operationName: Internals.Constants.Queue.PeekMessagesOperationName,
+                        operationName: Constants.Queue.PeekMessagesOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
@@ -1500,7 +1498,7 @@ namespace Azure.Storage.Queues
                         uri,
                         popReceipt: popReceipt,
                         async: async,
-                        operationName: Internals.Constants.Queue.DeleteMessageOperationName,
+                        operationName: Constants.Queue.DeleteMessageOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1644,7 +1642,7 @@ namespace Azure.Storage.Queues
                         popReceipt: popReceipt,
                         visibilitytimeout: (int)visibilityTimeout.TotalSeconds,
                         async: async,
-                        operationName: Internals.Constants.Queue.UpdateMessageOperationName,
+                        operationName: Constants.Queue.UpdateMessageOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }

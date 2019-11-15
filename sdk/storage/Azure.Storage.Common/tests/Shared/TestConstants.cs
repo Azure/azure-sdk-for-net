@@ -10,7 +10,7 @@ using Azure.Storage.Test.Shared;
 
 namespace Azure.Storage.Test
 {
-    internal class Constants
+    public class TestConstants
     {
         public const int KB = 1024;
         public const int MB = KB * 1024;
@@ -27,7 +27,7 @@ namespace Azure.Storage.Test
         public byte[] ContentMD5 { get; private set; }
         public SasConstants Sas { get; private set; }
 
-        internal class SasConstants
+        public class SasConstants
         {
             public string KeyObjectId { get; } = "KeyOid";
             public string KeyTenantId { get; } = "KeyTid";
@@ -55,7 +55,7 @@ namespace Azure.Storage.Test
             public StorageSharedKeyCredential SharedKeyCredential { get; protected internal set; }
         }
 
-        public Constants(StorageTestBase test)
+        public TestConstants(StorageTestBase test)
         {
             CacheControl = test.GetNewString();
             ContentDisposition = test.GetNewString();

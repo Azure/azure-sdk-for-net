@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.Storage;
-using Azure.Storage.Shared;
 using Azure.Storage.Files.Shares;
 using Azure.Storage.Sas;
 using NUnit.Framework;

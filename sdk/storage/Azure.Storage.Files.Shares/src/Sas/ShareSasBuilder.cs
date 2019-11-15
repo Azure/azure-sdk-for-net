@@ -3,11 +3,7 @@
 
 using System;
 using System.ComponentModel;
-using Azure.Storage.Shared;
 using Azure.Storage.Files.Shares;
-using Azure.Storage.Sas.Shared;
-using Internals = Azure.Storage.Shared;
-using SasInternals = Azure.Storage.Sas.Shared;
 
 namespace Azure.Storage.Sas
 {
@@ -166,25 +162,25 @@ namespace Azure.Storage.Sas
         /// </returns>
         public SasQueryParameters ToSasQueryParameters(StorageSharedKeyCredential sharedKeyCredential)
         {
-            sharedKeyCredential = sharedKeyCredential ?? throw Internals.Errors.ArgumentNull(nameof(sharedKeyCredential));
+            sharedKeyCredential = sharedKeyCredential ?? throw Errors.ArgumentNull(nameof(sharedKeyCredential));
             if (ExpiresOn == default)
             {
-                throw Internals.Errors.SasMissingData(nameof(ExpiresOn));
+                throw Errors.SasMissingData(nameof(ExpiresOn));
             }
             if (string.IsNullOrEmpty(Permissions))
             {
-                throw Internals.Errors.SasMissingData(nameof(Permissions));
+                throw Errors.SasMissingData(nameof(Permissions));
             }
 
             string resource;
 
             if (string.IsNullOrEmpty(FilePath))
             {
-                resource = Internals.Constants.Sas.Resource.Share;
+                resource = Constants.Sas.Resource.Share;
             }
             else
             {
-                resource = Internals.Constants.Sas.Resource.File;
+                resource = Constants.Sas.Resource.File;
             }
 
             if (string.IsNullOrEmpty(Version))
@@ -192,8 +188,8 @@ namespace Azure.Storage.Sas
                 Version = SasQueryParameters.DefaultSasVersion;
             }
 
-            var startTime = SasInternals.SasExtensions.FormatTimesForSasSigning(StartsOn);
-            var expiryTime = SasInternals.SasExtensions.FormatTimesForSasSigning(ExpiresOn);
+            var startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
+            var expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
 
             // String to sign: http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
             var stringToSign = string.Join("\n",
@@ -203,7 +199,7 @@ namespace Azure.Storage.Sas
                 GetCanonicalName(sharedKeyCredential.AccountName, ShareName ?? string.Empty, FilePath ?? string.Empty),
                 Identifier,
                 IPRange.ToString(),
-                SasInternals.SasExtensions.ToProtocolString(Protocol),
+                SasExtensions.ToProtocolString(Protocol),
                 Version,
                 CacheControl,
                 ContentDisposition,

@@ -5,18 +5,12 @@ using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-#if CommonSDK
-using Internals = Azure.Storage.Shared.Common;
-namespace Azure.Storage.Shared.Common
-#else
-using Internals = Azure.Storage.Shared;
-namespace Azure.Storage.Shared
-#endif
+namespace Azure.Storage
 {
-/// <summary>
-/// Extensions to ensure async Tasks execute synchronously.
-/// </summary>
-internal static class TaskExtensions
+    /// <summary>
+    /// Extensions to ensure async Tasks execute synchronously.
+    /// </summary>
+    internal static class TaskExtensions
     {
         /// <summary>
         /// Ensure the Task has finished executing.

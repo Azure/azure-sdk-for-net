@@ -79,11 +79,7 @@ namespace Azure.Core.Testing
             {
                 if (property.ValueKind == JsonValueKind.Object)
                 {
-					#if StorageSDK
-					var arrayBufferWriter = new Azure.Storage.Shared.ArrayBufferWriter<byte>();
-					#else
-					var arrayBufferWriter = new ArrayBufferWriter<byte>();
-					#endif
+                    var arrayBufferWriter = new ArrayBufferWriter<byte>();
                     using var writer = new Utf8JsonWriter(arrayBufferWriter);
                     property.WriteTo(writer);
                     writer.Flush();

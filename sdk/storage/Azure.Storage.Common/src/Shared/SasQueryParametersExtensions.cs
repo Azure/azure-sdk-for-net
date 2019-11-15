@@ -7,15 +7,11 @@ using System.Globalization;
 using System.Linq;
 
 #if CommonSDK
-using Internals = Azure.Storage.Shared.Common;
-namespace Azure.Storage.Sas.Shared.Common
+namespace Azure.Storage.Sas
 #elif BlobSDK
-using Internals = Azure.Storage.Shared;
-namespace Azure.Storage.Sas.Shared
+namespace Azure.Storage.Sas
 #elif DataLakeSDK
-using Internals = Azure.Storage.Shared;
-using Azure.Storage.Files.DataLake.Sas;
-namespace Azure.Storage.Files.DataLake.Sas.Shared
+namespace Azure.Storage.Files.DataLake.Sas
 #endif
 {
 
@@ -42,22 +38,22 @@ namespace Azure.Storage.Files.DataLake.Sas.Shared
                 switch (kv.Key.ToUpperInvariant())
                 {
                     // Optionally include Blob parameters
-                    case Internals.Constants.Sas.Parameters.KeyObjectIdUpper:
+                    case Constants.Sas.Parameters.KeyObjectIdUpper:
                         parameters._keyProperties._objectId = kv.Value;
                         break;
-                    case Internals.Constants.Sas.Parameters.KeyTenantIdUpper:
+                    case Constants.Sas.Parameters.KeyTenantIdUpper:
                         parameters._keyProperties._tenantId = kv.Value;
                         break;
-                    case Internals.Constants.Sas.Parameters.KeyStartUpper:
-                        parameters._keyProperties._startsOn = DateTimeOffset.ParseExact(kv.Value, Internals.Constants.SasTimeFormat, CultureInfo.InvariantCulture);
+                    case Constants.Sas.Parameters.KeyStartUpper:
+                        parameters._keyProperties._startsOn = DateTimeOffset.ParseExact(kv.Value, Constants.SasTimeFormat, CultureInfo.InvariantCulture);
                         break;
-                    case Internals.Constants.Sas.Parameters.KeyExpiryUpper:
-                        parameters._keyProperties._expiresOn = DateTimeOffset.ParseExact(kv.Value, Internals.Constants.SasTimeFormat, CultureInfo.InvariantCulture);
+                    case Constants.Sas.Parameters.KeyExpiryUpper:
+                        parameters._keyProperties._expiresOn = DateTimeOffset.ParseExact(kv.Value, Constants.SasTimeFormat, CultureInfo.InvariantCulture);
                         break;
-                    case Internals.Constants.Sas.Parameters.KeyServiceUpper:
+                    case Constants.Sas.Parameters.KeyServiceUpper:
                         parameters._keyProperties._service = kv.Value;
                         break;
-                    case Internals.Constants.Sas.Parameters.KeyVersionUpper:
+                    case Constants.Sas.Parameters.KeyVersionUpper:
                         parameters._keyProperties._version = kv.Value;
                         break;
 

@@ -11,7 +11,7 @@ using Azure.Core.Testing;
 using Azure.Identity;
 using Azure.Storage.Sas;
 using NUnit.Framework;
-using TestConstants = Azure.Storage.Test.Constants;
+using TestConstants = Azure.Storage.Test.TestConstants;
 
 namespace Azure.Storage.Test.Shared
 {
@@ -332,7 +332,7 @@ namespace Azure.Storage.Test.Shared
             return response;
         }
 
-        internal void AssertResponseHeaders(Constants constants, SasQueryParameters sasQueryParameters)
+        internal void AssertResponseHeaders(TestConstants constants, SasQueryParameters sasQueryParameters)
         {
             Assert.AreEqual(constants.Sas.CacheControl, sasQueryParameters.CacheControl);
             Assert.AreEqual(constants.Sas.ContentDisposition, sasQueryParameters.ContentDisposition);

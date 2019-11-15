@@ -5,13 +5,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-#if CommonSDK
-using Internals = Azure.Storage.Shared.Common;
-namespace Azure.Storage.Shared.Common
-#else
-using Internals = Azure.Storage.Shared;
-namespace Azure.Storage.Shared
-#endif
+namespace Azure.Storage
 {
 internal abstract class StorageCollectionEnumerator<T>
     {
@@ -36,7 +30,7 @@ internal abstract class StorageCollectionEnumerator<T>
         /// </summary>
         private class StoragePageable : Pageable<T>
         {
-            private Internals.StorageCollectionEnumerator<T> _enumerator;
+            private StorageCollectionEnumerator<T> _enumerator;
 
             // for mocking
             protected StoragePageable()

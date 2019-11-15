@@ -8,7 +8,7 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Testing;
-using Internals = Azure.Storage.Shared.Common;
+
 
 namespace Azure.Storage.Test.Shared
 {
@@ -20,7 +20,7 @@ namespace Azure.Storage.Test.Shared
         public override string SanitizeUri(string uri)
         {
             var builder = new UriBuilder(base.SanitizeUri(uri));
-            var query = new Internals.UriQueryParamsCollection(builder.Query);
+            var query = new UriQueryParamsCollection(builder.Query);
             if (query.ContainsKey(SignatureQueryName))
             {
                 query[SignatureQueryName] = SanitizeValue;
@@ -101,7 +101,7 @@ namespace Azure.Storage.Test.Shared
                     // If it's been URL encoded, make sure it doesn't contain
                     // a client_secret
                     var builder = new UriBuilder() { Query = body };
-                    var query = new Internals.UriQueryParamsCollection(body);
+                    var query = new UriQueryParamsCollection(body);
                     if (query.ContainsKey("client_secret"))
                     {
                         query["client_secret"] = SanitizeValue;

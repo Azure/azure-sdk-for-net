@@ -6,8 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.Shared;
-using Internals = Azure.Storage.Shared;
 
 #pragma warning disable SA1402  // File may only contain a single type
 
@@ -59,12 +57,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
         /// every request.
         /// </summary>
-        internal virtual Internals.ClientDiagnostics ClientDiagnostics => BlobClient?.ClientDiagnostics ?? BlobContainerClient.ClientDiagnostics;
+        internal virtual ClientDiagnostics ClientDiagnostics => BlobClient?.ClientDiagnostics ?? BlobContainerClient.ClientDiagnostics;
 
         /// <summary>
         /// The <see cref="TimeSpan"/> representing an infinite lease duration.
         /// </summary>
-        public static readonly TimeSpan InfiniteLeaseDuration = TimeSpan.FromSeconds(Internals.Constants.Blob.Lease.InfiniteLeaseDuration);
+        public static readonly TimeSpan InfiniteLeaseDuration = TimeSpan.FromSeconds(Constants.Blob.Lease.InfiniteLeaseDuration);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobLeaseClient"/> class
@@ -88,7 +86,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         public BlobLeaseClient(BlobBaseClient client, string leaseId = null)
         {
-            _blob = client ?? throw Internals.Errors.ArgumentNull(nameof(client));
+            _blob = client ?? throw Errors.ArgumentNull(nameof(client));
             _container = null;
             LeaseId = leaseId ?? CreateUniqueLeaseId();
         }
@@ -107,7 +105,7 @@ namespace Azure.Storage.Blobs.Specialized
         public BlobLeaseClient(BlobContainerClient client, string leaseId = null)
         {
             _blob = null;
-            _container = client ?? throw Internals.Errors.ArgumentNull(nameof(client));
+            _container = client ?? throw Errors.ArgumentNull(nameof(client));
             LeaseId = leaseId ?? CreateUniqueLeaseId();
         }
 
@@ -265,7 +263,7 @@ namespace Azure.Storage.Blobs.Specialized
         {
             EnsureClient();
             // Int64 is an overflow safe cast relative to TimeSpan.MaxValue
-            var serviceDuration = duration < TimeSpan.Zero ? Internals.Constants.Blob.Lease.InfiniteLeaseDuration : Convert.ToInt64(duration.TotalSeconds);
+            var serviceDuration = duration < TimeSpan.Zero ? Constants.Blob.Lease.InfiniteLeaseDuration : Convert.ToInt64(duration.TotalSeconds);
             using (Pipeline.BeginLoggingScope(nameof(BlobLeaseClient)))
             {
                 Pipeline.LogMethodEnter(
@@ -289,7 +287,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifMatch: conditions?.IfMatch,
                             ifNoneMatch: conditions?.IfNoneMatch,
                             async: async,
-                            operationName: Internals.Constants.Blob.Lease.AcquireOperationName,
+                            operationName: Constants.Blob.Lease.AcquireOperationName,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -310,7 +308,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             async: async,
-                            operationName: Internals.Constants.Blob.Lease.AcquireOperationName,
+                            operationName: Constants.Blob.Lease.AcquireOperationName,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -458,7 +456,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifMatch: conditions?.IfMatch,
                             ifNoneMatch: conditions?.IfNoneMatch,
                             async: async,
-                            operationName: Internals.Constants.Blob.Lease.RenewOperationName,
+                            operationName: Constants.Blob.Lease.RenewOperationName,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -478,7 +476,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             async: async,
-                            operationName: Internals.Constants.Blob.Lease.RenewOperationName,
+                            operationName: Constants.Blob.Lease.RenewOperationName,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -628,7 +626,7 @@ namespace Azure.Storage.Blobs.Specialized
                                 ifMatch: conditions?.IfMatch,
                                 ifNoneMatch: conditions?.IfNoneMatch,
                                 async: async,
-                                operationName: Internals.Constants.Blob.Lease.ReleaseOperationName,
+                                operationName: Constants.Blob.Lease.ReleaseOperationName,
                                 cancellationToken: cancellationToken)
                                 .ConfigureAwait(false);
                         return Response.FromValue(new ReleasedObjectInfo(response.Value), response.GetRawResponse());
@@ -650,7 +648,7 @@ namespace Azure.Storage.Blobs.Specialized
                                 ifModifiedSince: conditions?.IfModifiedSince,
                                 ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                                 async: async,
-                                operationName: Internals.Constants.Blob.Lease.ReleaseOperationName,
+                                operationName: Constants.Blob.Lease.ReleaseOperationName,
                                 cancellationToken: cancellationToken)
                                 .ConfigureAwait(false);
                         return Response.FromValue(new ReleasedObjectInfo(response.Value), response.GetRawResponse());
@@ -807,7 +805,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifMatch: conditions?.IfMatch,
                             ifNoneMatch: conditions?.IfNoneMatch,
                             async: async,
-                            operationName: Internals.Constants.Blob.Lease.ChangeOperationName,
+                            operationName: Constants.Blob.Lease.ChangeOperationName,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -828,7 +826,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             async: async,
-                            operationName: Internals.Constants.Blob.Lease.ChangeOperationName,
+                            operationName: Constants.Blob.Lease.ChangeOperationName,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -1037,7 +1035,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifMatch: conditions?.IfMatch,
                             ifNoneMatch: conditions?.IfNoneMatch,
                             async: async,
-                            operationName: Internals.Constants.Blob.Lease.BreakOperationName,
+                            operationName: Constants.Blob.Lease.BreakOperationName,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false))
                             .ToLease();
@@ -1058,7 +1056,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             async: async,
-                            operationName: Internals.Constants.Blob.Lease.BreakOperationName,
+                            operationName: Constants.Blob.Lease.BreakOperationName,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false))
                             .ToLease();

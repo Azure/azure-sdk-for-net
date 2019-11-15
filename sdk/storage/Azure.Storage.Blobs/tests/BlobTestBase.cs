@@ -13,7 +13,6 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Sas;
-using Azure.Storage.Shared;
 
 namespace Azure.Storage.Test.Shared
 {
@@ -52,7 +51,7 @@ namespace Azure.Storage.Test.Shared
                 Retry =
                 {
                     Mode = RetryMode.Exponential,
-                    MaxRetries = Storage.Shared.Constants.MaxReliabilityRetries,
+                    MaxRetries = Storage.Constants.MaxReliabilityRetries,
                     Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
                     MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 10)
                 }
@@ -373,8 +372,8 @@ namespace Azure.Storage.Test.Shared
         {
             var uriBuilder = new UriBuilder(uri)
             {
-                Scheme = Constants.Https,
-                Port = Constants.HttpPort
+                Scheme = TestConstants.Https,
+                Port = TestConstants.HttpPort
             };
             return uriBuilder.Uri;
         }

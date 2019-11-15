@@ -9,9 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.Shared;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
-using Internals = Azure.Storage.Shared;
 
 #pragma warning disable SA1402  // File may only contain a single type
 
@@ -49,13 +47,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
         /// every request.
         /// </summary>
-        private readonly Internals.ClientDiagnostics _clientDiagnostics;
+        private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary>
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
         /// every request.
         /// </summary>
-        internal virtual Internals.ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
+        internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
 
         /// <summary>
         /// The <see cref="CustomerProvidedKey"/> to be used when sending requests.
@@ -174,7 +172,7 @@ namespace Azure.Storage.Blobs.Specialized
         public BlobBaseClient(string connectionString, string blobContainerName, string blobName, BlobClientOptions options)
         {
             options ??= new BlobClientOptions();
-            var conn = Internals.StorageConnectionString.Parse(connectionString);
+            var conn = StorageConnectionString.Parse(connectionString);
             var builder =
                 new BlobUriBuilder(conn.BlobEndpoint)
                 {
@@ -298,7 +296,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="clientDiagnostics">Client diagnostics.</param>
         /// <param name="customerProvidedKey">Customer provided key.</param>
-        internal BlobBaseClient(Uri blobUri, HttpPipeline pipeline, Internals.ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
+        internal BlobBaseClient(Uri blobUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
         {
             _uri = blobUri;
             _pipeline = pipeline;
@@ -653,7 +651,7 @@ namespace Azure.Storage.Blobs.Specialized
                                 .ConfigureAwait(false))
                             .Item2,
                         Pipeline.ResponseClassifier,
-                        Internals.Constants.MaxReliabilityRetries);
+                        Constants.MaxReliabilityRetries);
 
                     // Wrap the FlattenedDownloadProperties into a BlobDownloadOperation
                     // to make the Content easier to find
@@ -1181,12 +1179,12 @@ namespace Azure.Storage.Blobs.Specialized
             ///// progress updates about data transfers.
             ///// </param>
             //IProgress<long> progressHandler, // TODO: #8506
-            long initialTransferLength = Internals.Constants.Blob.Block.MaxDownloadBytes,
+            long initialTransferLength = Constants.Blob.Block.MaxDownloadBytes,
             StorageTransferOptions transferOptions = default,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            Debug.Assert(initialTransferLength <= Internals.Constants.Blob.Block.MaxDownloadBytes);
+            Debug.Assert(initialTransferLength <= Constants.Blob.Block.MaxDownloadBytes);
 
             var client = new BlobBaseClient(Uri, Pipeline, ClientDiagnostics, CustomerProvidedKey);
             PartitionedDownloader downloader = new PartitionedDownloader(client, transferOptions, initialTransferLength);
@@ -1826,12 +1824,12 @@ namespace Azure.Storage.Blobs.Specialized
                     conditions,
                     async,
                     cancellationToken,
-                    Internals.Constants.Blob.Base.DeleteIfExists)
+                    Constants.Blob.Base.DeleteIfExists)
                     .ConfigureAwait(false);
                 return Response.FromValue(true, response);
             }
             catch (RequestFailedException storageRequestFailedException)
-            when (storageRequestFailedException.ErrorCode == Internals.Constants.Blob.NotFound)
+            when (storageRequestFailedException.ErrorCode == Constants.Blob.NotFound)
             {
                 return Response.FromValue(false, default);
             }
@@ -1877,7 +1875,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken,
-            string operationName = Internals.Constants.Blob.Base.Delete)
+            string operationName = Constants.Blob.Base.Delete)
         {
             using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {

@@ -4,12 +4,10 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Storage.Shared;
-using Internals = Azure.Storage.Shared;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal class GetDirectoryHandlesAsyncCollection : Internals.StorageCollectionEnumerator<ShareFileHandle>
+    internal class GetDirectoryHandlesAsyncCollection : StorageCollectionEnumerator<ShareFileHandle>
     {
         private readonly ShareDirectoryClient _client;
         private readonly bool? _recursive;

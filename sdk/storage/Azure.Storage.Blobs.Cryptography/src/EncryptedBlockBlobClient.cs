@@ -5,7 +5,6 @@ using System;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.Shared;
 
 #pragma warning disable SA1402  // File may only contain a single type
 
@@ -152,7 +151,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="clientDiagnostics">Client diagnostics.</param>
         /// <param name="customerProvidedKey">Customer provided key.</param>
-        internal EncryptedBlockBlobClient(Uri blobUri, HttpPipeline pipeline, Shared.ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
+        internal EncryptedBlockBlobClient(Uri blobUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
             : base(blobUri, pipeline, clientDiagnostics, customerProvidedKey)
         {
         }

@@ -7,20 +7,19 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 using NUnit.Framework;
-using Internals = Azure.Storage.Shared.Common;
 
-namespace Azure.Storage.Shared.Tests
+namespace Azure.Storage.Tests
 {
     public class StorageResponseClassifierTests
     {
         private static readonly Uri MockPrimaryUri = new Uri("http://dummyaccount.blob.core.windows.net");
         private static readonly Uri MockSecondaryUri = new Uri("http://dummyaccount-secondary.blob.core.windows.net");
-        private static readonly Internals.StorageResponseClassifier classifier = new Internals.StorageResponseClassifier(MockSecondaryUri);
+        private static readonly StorageResponseClassifier classifier = new StorageResponseClassifier(MockSecondaryUri);
 
         [Test]
         public void IsRetriableResponse_404OnSecondary_ShouldBeTrue()
         {
-            HttpMessage message = BuildMessage(new MockResponse(Internals.Constants.HttpStatusCode.NotFound));
+            HttpMessage message = BuildMessage(new MockResponse(Constants.HttpStatusCode.NotFound));
             message.Request.Uri.Host = MockSecondaryUri.Host;
 
             Assert.IsTrue(classifier.IsRetriableResponse(message));
@@ -41,7 +40,7 @@ namespace Azure.Storage.Shared.Tests
         [Test]
         public void IsRetriableResponse_404OnPrimary_ShouldBeFalse()
         {
-            HttpMessage message = BuildMessage(new MockResponse(Internals.Constants.HttpStatusCode.NotFound));
+            HttpMessage message = BuildMessage(new MockResponse(Constants.HttpStatusCode.NotFound));
             message.Request.Uri.Host = MockPrimaryUri.Host;
 
             Assert.IsFalse(classifier.IsRetriableResponse(message));
@@ -54,7 +53,7 @@ namespace Azure.Storage.Shared.Tests
                 {
                     Method = RequestMethod.Get
                 },
-                new Internals.StorageResponseClassifier(MockSecondaryUri))
+                new StorageResponseClassifier(MockSecondaryUri))
             {
                 Response = response
             };

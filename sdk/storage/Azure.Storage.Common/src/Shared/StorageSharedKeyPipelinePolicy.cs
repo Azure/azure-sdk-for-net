@@ -9,13 +9,7 @@ using System.Text;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-#if CommonSDK
-using Internals = Azure.Storage.Shared.Common;
-namespace Azure.Storage.Shared.Common
-#else
-using Internals = Azure.Storage.Shared;
-namespace Azure.Storage.Shared
-#endif
+namespace Azure.Storage
 {
 /// <summary>
 /// HttpPipelinePolicy to sign requests using an Azure Storage shared key.

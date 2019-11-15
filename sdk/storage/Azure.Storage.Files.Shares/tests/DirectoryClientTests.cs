@@ -6,12 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
-using Azure.Storage.Shared;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Files.Shares.Tests;
 using Azure.Storage.Test;
 using NUnit.Framework;
-using Internals = Azure.Storage.Shared.Common;
 
 namespace Azure.Storage.Files.Shares.Test
 {
@@ -32,7 +30,7 @@ namespace Azure.Storage.Files.Shares.Test
             var fileEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var fileSecondaryEndpoint = new Uri("http://127.0.0.1/" + accountName + "-secondary");
 
-            var connectionString = new Internals.StorageConnectionString(credentials, (default, default), (default, default), (default, default), (fileEndpoint, fileSecondaryEndpoint));
+            var connectionString = new StorageConnectionString(credentials, (default, default), (default, default), (default, default), (fileEndpoint, fileSecondaryEndpoint));
 
             var shareName = GetNewShareName();
             var directoryPath = GetNewDirectoryName();
@@ -152,7 +150,7 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Arrange
             ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
-            var filePermission = new string('*', 9 * Internals.Constants.KB);
+            var filePermission = new string('*', 9 * Constants.KB);
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
@@ -346,7 +344,7 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Arrange
             ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
-            var filePermission = new string('*', 9 * Internals.Constants.KB);
+            var filePermission = new string('*', 9 * Constants.KB);
             await directory.CreateAsync();
 
             // Act
@@ -434,7 +432,7 @@ namespace Azure.Storage.Files.Shares.Test
             {
                 ShareFileClient file = InstrumentClient(directory.GetFileClient(fileName));
 
-                await file.CreateAsync(maxSize: Internals.Constants.MB);
+                await file.CreateAsync(maxSize: Constants.MB);
             }
 
             foreach (var subDirName in directoryNames)

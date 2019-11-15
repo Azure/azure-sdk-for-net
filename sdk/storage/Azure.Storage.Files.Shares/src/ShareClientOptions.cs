@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Azure.Storage.Shared;
-using Internals = Azure.Storage.Shared;
 
 namespace Azure.Storage.Files.Shares
 {
@@ -51,7 +49,7 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         public ShareClientOptions(ServiceVersion version = LatestVersion)
         {
-            Version = version == ServiceVersion.V2019_02_02 ? version : throw Internals.Errors.VersionNotSupported(nameof(version));
+            Version = version == ServiceVersion.V2019_02_02 ? version : throw Errors.VersionNotSupported(nameof(version));
             this.Initialize();
             AddHeadersAndQueryParameters();
         }

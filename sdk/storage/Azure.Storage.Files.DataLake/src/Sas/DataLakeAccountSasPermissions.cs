@@ -3,9 +3,7 @@
 
 using System;
 using System.Text;
-using Azure.Storage.Shared;
 using Azure.Storage.Files.DataLake.Sas;
-using Internals = Azure.Storage.Shared;
 
 namespace Azure.Storage.Files.DataLake.Sas
 {
@@ -73,27 +71,27 @@ namespace Azure.Storage.Files.DataLake
             var sb = new StringBuilder();
             if ((permissions & DataLakeAccountSasPermissions.Read) == DataLakeAccountSasPermissions.Read)
             {
-                sb.Append(Internals.Constants.Sas.Permissions.Read);
+                sb.Append(Constants.Sas.Permissions.Read);
             }
             if ((permissions & DataLakeAccountSasPermissions.Add) == DataLakeAccountSasPermissions.Add)
             {
-                sb.Append(Internals.Constants.Sas.Permissions.Add);
+                sb.Append(Constants.Sas.Permissions.Add);
             }
             if ((permissions & DataLakeAccountSasPermissions.Create) == DataLakeAccountSasPermissions.Create)
             {
-                sb.Append(Internals.Constants.Sas.Permissions.Create);
+                sb.Append(Constants.Sas.Permissions.Create);
             }
             if ((permissions & DataLakeAccountSasPermissions.Write) == DataLakeAccountSasPermissions.Write)
             {
-                sb.Append(Internals.Constants.Sas.Permissions.Write);
+                sb.Append(Constants.Sas.Permissions.Write);
             }
             if ((permissions & DataLakeAccountSasPermissions.Delete) == DataLakeAccountSasPermissions.Delete)
             {
-                sb.Append(Internals.Constants.Sas.Permissions.Delete);
+                sb.Append(Constants.Sas.Permissions.Delete);
             }
             if ((permissions & DataLakeAccountSasPermissions.List) == DataLakeAccountSasPermissions.List)
             {
-                sb.Append(Internals.Constants.Sas.Permissions.List);
+                sb.Append(Constants.Sas.Permissions.List);
             }
             return sb.ToString();
         }

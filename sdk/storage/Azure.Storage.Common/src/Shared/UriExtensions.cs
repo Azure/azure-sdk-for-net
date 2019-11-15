@@ -6,13 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
 
-#if CommonSDK
-using Internals = Azure.Storage.Shared.Common;
-namespace Azure.Storage.Shared.Common
-#else
-using Internals = Azure.Storage.Shared;
-namespace Azure.Storage.Shared
-#endif
+namespace Azure.Storage
 {
     /// <summary>
     /// Extension methods used to manipulate URIs.

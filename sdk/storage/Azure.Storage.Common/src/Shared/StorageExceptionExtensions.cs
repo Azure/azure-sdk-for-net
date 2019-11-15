@@ -7,13 +7,7 @@ using System.Globalization;
 using System.Text;
 using Azure.Core;
 
-#if CommonSDK
-using Internals = Azure.Storage.Shared.Common;
-namespace Azure.Storage.Shared.Common
-#else
-using Internals = Azure.Storage.Shared;
-namespace Azure.Storage.Shared
-#endif
+namespace Azure.Storage
 {
     /// <summary>
     /// Provide helpful information about errors calling Azure Storage endpoints.
@@ -36,7 +30,7 @@ namespace Azure.Storage.Shared
             string errorCode = null,
             IDictionary<string, string> additionalInfo = null)
         {
-            int status = response?.Status ?? throw Internals.Errors.ArgumentNull(nameof(response));
+            int status = response?.Status ?? throw Errors.ArgumentNull(nameof(response));
             string code = GetErrorCode(response, errorCode);
 
             var exception = new RequestFailedException(
@@ -66,7 +60,7 @@ namespace Azure.Storage.Shared
         {
             if (string.IsNullOrEmpty(errorCode))
             {
-                response.Headers.TryGetValue(Internals.Constants.HeaderNames.ErrorCode, out errorCode);
+                response.Headers.TryGetValue(Constants.HeaderNames.ErrorCode, out errorCode);
             }
             return errorCode;
         }
@@ -152,6 +146,6 @@ namespace Azure.Storage.Shared
         /// <param name="rawResponse">The raw response.</param>
         /// <returns>A response that will throw if accessed.</returns>
         public static Response<T> AsNoBodyResponse<T>(this Response rawResponse) =>
-            new Internals.NoBodyResponse<T>(rawResponse);
+            new NoBodyResponse<T>(rawResponse);
     }
 }

@@ -11,20 +11,18 @@ using System.Threading.Tasks;
 using Azure.Core.Testing;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.Shared;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using Azure.Storage.Tests;
 using NUnit.Framework;
-using Internals = Azure.Storage.Shared.Common;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
-using TestConstants = Azure.Storage.Test.Constants;
+using TestConstants = Azure.Storage.Test.TestConstants;
 
 namespace Azure.Storage.Blobs.Test
 {
     public class BlockBlobClientTests : BlobTestBase
     {
-        private const long Size = 4 * Internals.Constants.KB;
+        private const long Size = 4 * Constants.KB;
 
         public BlockBlobClientTests(bool async)
             : base(async, null /* RecordedTestMode.Record /* to re-record */)
@@ -41,7 +39,7 @@ namespace Azure.Storage.Blobs.Test
             var blobEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + accountName + "-secondary");
 
-            var connectionString = new Internals.StorageConnectionString(credentials, (blobEndpoint, blobSecondaryEndpoint), (default, default), (default, default), (default, default));
+            var connectionString = new StorageConnectionString(credentials, (blobEndpoint, blobSecondaryEndpoint), (default, default), (default, default), (default, default));
 
             var containerName = GetNewContainerName();
             var blobName = GetNewBlobName();
@@ -237,7 +235,7 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task StageBlockAsync_WithUnreliableConnection()
         {
-            const int blobSize = 1 * Internals.Constants.MB;
+            const int blobSize = 1 * Constants.MB;
             await using DisposingContainer test = await GetTestContainerAsync();
 
 
@@ -305,7 +303,7 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
-            const int blobSize = Internals.Constants.KB;
+            const int blobSize = Constants.KB;
             var data = GetRandomBuffer(blobSize);
 
             BlockBlobClient sourceBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
@@ -326,7 +324,7 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
-            const int blobSize = Internals.Constants.KB;
+            const int blobSize = Constants.KB;
             var data = GetRandomBuffer(blobSize);
 
             BlockBlobClient sourceBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
@@ -351,7 +349,7 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
-            const int blobSize = Internals.Constants.KB;
+            const int blobSize = Constants.KB;
             var data = GetRandomBuffer(blobSize);
 
             BlockBlobClient sourceBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
@@ -376,7 +374,7 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
-            const int blobSize = Internals.Constants.KB;
+            const int blobSize = Constants.KB;
             var data = GetRandomBuffer(blobSize);
 
             BlockBlobClient sourceBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
@@ -400,7 +398,7 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
-            const int blobSize = Internals.Constants.KB;
+            const int blobSize = Constants.KB;
             var data = GetRandomBuffer(blobSize);
 
             BlockBlobClient sourceBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
@@ -428,7 +426,7 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
-            const int blobSize = Internals.Constants.KB;
+            const int blobSize = Constants.KB;
             var data = GetRandomBuffer(blobSize);
 
             BlockBlobClient sourceBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
@@ -460,7 +458,7 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
-            const int blobSize = Internals.Constants.KB;
+            const int blobSize = Constants.KB;
             var data = GetRandomBuffer(blobSize);
 
             BlockBlobClient sourceBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
@@ -496,7 +494,7 @@ namespace Azure.Storage.Blobs.Test
                 await using DisposingContainer test = await GetTestContainerAsync();
 
                 // Arrange
-                const int blobSize = Internals.Constants.KB;
+                const int blobSize = Constants.KB;
                 var data = GetRandomBuffer(blobSize);
 
                 BlockBlobClient sourceBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
@@ -526,7 +524,7 @@ namespace Azure.Storage.Blobs.Test
                 await using DisposingContainer test = await GetTestContainerAsync();
 
                 // Arrange
-                const int blobSize = Internals.Constants.KB;
+                const int blobSize = Constants.KB;
                 var data = GetRandomBuffer(blobSize);
 
                 BlockBlobClient sourceBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
@@ -1244,7 +1242,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Arrange
             BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            var data = GetRandomBuffer(Internals.Constants.KB);
+            var data = GetRandomBuffer(Constants.KB);
 
             // Act
             using (var stream = new MemoryStream(data))
@@ -1260,7 +1258,7 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task UploadAsync_WithUnreliableConnection()
         {
-            const int blobSize = 1 * Internals.Constants.MB;
+            const int blobSize = 1 * Constants.MB;
             Metadata metadata = BuildMetadata();
             await using DisposingContainer test = await GetTestContainerAsync();
 

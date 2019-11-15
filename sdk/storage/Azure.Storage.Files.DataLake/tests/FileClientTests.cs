@@ -20,7 +20,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 {
     public class FileClientTests : PathTestBase
     {
-        private const long Size = 4 * Internals.Constants.KB;
+        private const long Size = 4 * Constants.KB;
 
         public FileClientTests(bool async)
             : base(async, null /* RecordedTestMode.Record /* to re-record */)

@@ -12,6 +12,7 @@
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs.Batch\src\Azure.Storage.Blobs.Batch.csproj" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs.Cryptography\src\Azure.Storage.Blobs.Cryptography.csproj" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="..\..\Azure.Storage.Common\tests\TestExtensions.cs" Link="TestExtensions.cs" />
   </ItemGroup>
 
   <ItemGroup>

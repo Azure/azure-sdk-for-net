@@ -12,7 +12,6 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
-using Internals = Azure.Storage.Shared.Common;
 
 namespace Azure.Storage.Blobs.Test
 {
@@ -605,7 +604,7 @@ namespace Azure.Storage.Blobs.Test
                 for (int i = 0; i < count; i++)
                 {
                     blobs[i] = _test.InstrumentClient(container.GetBlobClient("blob" + (++_blobId)));
-                    await blobs[i].UploadAsync(new MemoryStream(_test.GetRandomBuffer(Internals.Constants.KB)));
+                    await blobs[i].UploadAsync(new MemoryStream(_test.GetRandomBuffer(Constants.KB)));
                 }
                 return blobs;
             }

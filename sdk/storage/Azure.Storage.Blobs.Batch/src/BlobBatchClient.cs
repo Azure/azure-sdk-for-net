@@ -9,8 +9,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.Shared;
-using Internals = Azure.Storage.Shared;
 
 #pragma warning disable SA1402  // File may only contain a single type
 
@@ -37,7 +35,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
         /// every request.
         /// </summary>
-        internal virtual Internals.ClientDiagnostics ClientDiagnostics { get; }
+        internal virtual ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
         /// The <see cref="HttpPipeline"/> transport pipeline used to prepare
@@ -153,7 +151,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// failures will only throw if <paramref name="throwOnAnyFailure"/> is
         /// true and be wrapped in an <see cref="AggregateException"/>.
         /// </remarks>
-[Internals.ForwardsClientCalls] // TODO: Throwing exceptions fails tests
+[ForwardsClientCalls] // TODO: Throwing exceptions fails tests
         public virtual Response SubmitBatch(
             BlobBatch batch,
             bool throwOnAnyFailure = false,
@@ -188,7 +186,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// failures will only throw if <paramref name="throwOnAnyFailure"/> is
         /// true and be wrapped in an <see cref="AggregateException"/>.
         /// </remarks>
-[Internals.ForwardsClientCalls] // TODO: Throwing exceptions fails tests
+[ForwardsClientCalls] // TODO: Throwing exceptions fails tests
         public virtual async Task<Response> SubmitBatchAsync(
             BlobBatch batch,
             bool throwOnAnyFailure = false,
@@ -454,7 +452,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure to submit the batch occurs.  Individual sub-operation
         /// failures will be wrapped in an <see cref="AggregateException"/>.
         /// </remarks>
-        [Internals.ForwardsClientCalls]
+        [ForwardsClientCalls]
         public virtual Response[] DeleteBlobs(
             IEnumerable<Uri> blobUris,
             DeleteSnapshotsOption snapshotsOption = default,
@@ -487,7 +485,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure to submit the batch occurs.  Individual sub-operation
         /// failures will be wrapped in an <see cref="AggregateException"/>.
         /// </remarks>
-        [Internals.ForwardsClientCalls]
+        [ForwardsClientCalls]
         public virtual async Task<Response[]> DeleteBlobsAsync(
             IEnumerable<Uri> blobUris,
             DeleteSnapshotsOption snapshotsOption = default,
@@ -577,7 +575,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure to submit the batch occurs.  Individual sub-operation
         /// failures will be wrapped in an <see cref="AggregateException"/>.
         /// </remarks>
-        [Internals.ForwardsClientCalls]
+        [ForwardsClientCalls]
         public virtual Response[] SetBlobsAccessTier(
             IEnumerable<Uri> blobUris,
             AccessTier accessTier,
@@ -616,7 +614,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure to submit the batch occurs.  Individual sub-operation
         /// failures will be wrapped in an <see cref="AggregateException"/>.
         /// </remarks>
-        [Internals.ForwardsClientCalls]
+        [ForwardsClientCalls]
         public virtual async Task<Response[]> SetBlobsAccessTierAsync(
             IEnumerable<Uri> blobUris,
             AccessTier accessTier,

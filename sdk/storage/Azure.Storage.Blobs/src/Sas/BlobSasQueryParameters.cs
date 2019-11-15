@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Storage.Sas.Shared;
 
 namespace Azure.Storage.Sas
 {
@@ -17,11 +16,7 @@ namespace Azure.Storage.Sas
     /// </summary>
     public sealed class BlobSasQueryParameters : SasQueryParameters
     {
-        internal
-#if RELEASE
-            new
-#endif
-            UserDelegationKeyProperties _keyProperties;
+        internal UserDelegationKeyProperties _keyProperties;
         /// <summary>
         /// Gets the Azure Active Directory object ID in GUID format.
         /// </summary>

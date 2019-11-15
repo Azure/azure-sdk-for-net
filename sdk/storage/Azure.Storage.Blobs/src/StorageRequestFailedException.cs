@@ -4,8 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
-using Azure.Storage.Shared;
-using Internals = Azure.Storage.Shared;
 
 #pragma warning disable SA1402  // File may only contain a single type
 
@@ -32,8 +30,8 @@ namespace Azure.Storage.Blobs.Models
             {
                 switch (element.Name.LocalName)
                 {
-                    case Internals.Constants.Xml.Code:
-                    case Internals.Constants.Xml.Message:
+                    case Constants.Xml.Code:
+                    case Constants.Xml.Message:
                         continue;
                     default:
                         error.AdditionalInformation[element.Name.LocalName] = element.Value;
@@ -48,7 +46,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="response">The failed response.</param>
         /// <returns>A RequestFailedException.</returns>
         public Exception CreateException(Azure.Response response)
-            => Internals.StorageExceptionExtensions.CreateException(response, Message, null, Code, AdditionalInformation);
+            => StorageExceptionExtensions.CreateException(response, Message, null, Code, AdditionalInformation);
     }
 
     /// <summary>
@@ -62,7 +60,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="response">The failed response.</param>
         /// <returns>A RequestFailedException.</returns>
         public Exception CreateException(Azure.Response response)
-            => Internals.StorageExceptionExtensions.CreateException(response, null, null, ErrorCode);
+            => StorageExceptionExtensions.CreateException(response, null, null, ErrorCode);
     }
 
     /// <summary>
@@ -76,6 +74,6 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="response">The failed response.</param>
         /// <returns>A RequestFailedException.</returns>
         public Exception CreateException(Azure.Response response)
-            => Internals.StorageExceptionExtensions.CreateException(response, Error.Message, null, Error.Code);
+            => StorageExceptionExtensions.CreateException(response, Error.Message, null, Error.Code);
     }
 }

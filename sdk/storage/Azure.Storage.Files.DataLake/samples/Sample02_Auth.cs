@@ -14,7 +14,6 @@ using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Files.DataLake.Sas;
 using Azure.Storage.Sas;
 using NUnit.Framework;
-using Azure.Storage.Shared;
 
 namespace Azure.Storage.Files.DataLake.Samples
 {

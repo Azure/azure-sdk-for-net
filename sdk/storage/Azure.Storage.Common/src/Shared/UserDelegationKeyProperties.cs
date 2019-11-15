@@ -3,11 +3,7 @@
 
 using System;
 
-#if CommonSDK
-namespace Azure.Storage.Sas.Shared.Common
-#else
-namespace Azure.Storage.Sas.Shared
-#endif
+namespace Azure.Storage.Sas
 {
 internal struct UserDelegationKeyProperties
     {

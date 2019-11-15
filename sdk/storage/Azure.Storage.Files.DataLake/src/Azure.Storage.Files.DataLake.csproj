@@ -30,17 +30,7 @@
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />
     <ProjectReference Include="..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
   </ItemGroup>
+  <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Shared\SasQueryParametersExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="System.Text.Json" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Azure.Storage.Blobs">
-      <HintPath>..\..\..\..\artifacts\bin\Azure.Storage.Blobs\Debug\netstandard2.0\Azure.Storage.Blobs.dll</HintPath>
-    </Reference>
   </ItemGroup>
 </Project>

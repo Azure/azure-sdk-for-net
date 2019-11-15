@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
-using Azure.Storage.Shared;
+
 using Azure.Storage.Files.DataLake;
 using Azure.Storage.Files.DataLake.Models;
 using NUnit.Framework;

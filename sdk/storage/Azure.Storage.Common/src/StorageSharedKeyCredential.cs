@@ -84,5 +84,15 @@ namespace Azure.Storage
         {
             return credential.ComputeHMACSHA256(message);
         }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="credential"></param>
+        /// <returns></returns>
+        protected static string ExportBase64EncodedKey(StorageSharedKeyCredential credential)
+        {
+            return credential.ExportBase64EncodedKey();
+        }
     }
 }

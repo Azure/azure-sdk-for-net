@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.Storage.Test
 {
-    internal static partial class TestHelper
+    public static partial class TestHelper
     {
         public static byte[] GetRandomBuffer(long size, Random random = null)
         {

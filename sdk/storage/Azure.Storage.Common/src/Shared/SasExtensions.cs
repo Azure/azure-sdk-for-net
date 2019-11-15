@@ -7,13 +7,7 @@ using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-#if CommonSDK
-using Internals = Azure.Storage.Shared.Common;
-namespace Azure.Storage.Sas.Shared.Common
-#else
-using Internals = Azure.Storage.Shared;
-namespace Azure.Storage.Sas.Shared
-#endif
+namespace Azure.Storage.Sas
 {
     /// <summary>
     /// Extension methods for Sas.
@@ -32,15 +26,15 @@ namespace Azure.Storage.Sas.Shared
             var sb = new StringBuilder();
             if ((resourceTypes & AccountSasResourceTypes.Service) == AccountSasResourceTypes.Service)
             {
-                sb.Append(Internals.Constants.Sas.AccountResources.Service);
+                sb.Append(Constants.Sas.AccountResources.Service);
             }
             if ((resourceTypes & AccountSasResourceTypes.Container) == AccountSasResourceTypes.Container)
             {
-                sb.Append(Internals.Constants.Sas.AccountResources.Container);
+                sb.Append(Constants.Sas.AccountResources.Container);
             }
             if ((resourceTypes & AccountSasResourceTypes.Object) == AccountSasResourceTypes.Object)
             {
-                sb.Append(Internals.Constants.Sas.AccountResources.Object);
+                sb.Append(Constants.Sas.AccountResources.Object);
             }
             return sb.ToString();
         }
@@ -62,10 +56,10 @@ namespace Azure.Storage.Sas.Shared
             {
                 types |= ch switch
                 {
-                    Internals.Constants.Sas.AccountResources.Service => AccountSasResourceTypes.Service,
-                    Internals.Constants.Sas.AccountResources.Container => AccountSasResourceTypes.Container,
-                    Internals.Constants.Sas.AccountResources.Object => AccountSasResourceTypes.Object,
-                    _ => throw Internals.Errors.InvalidResourceType(ch),
+                    Constants.Sas.AccountResources.Service => AccountSasResourceTypes.Service,
+                    Constants.Sas.AccountResources.Container => AccountSasResourceTypes.Container,
+                    Constants.Sas.AccountResources.Object => AccountSasResourceTypes.Object,
+                    _ => throw Errors.InvalidResourceType(ch),
                 };
             }
             return types;
@@ -110,7 +104,7 @@ namespace Azure.Storage.Sas.Shared
                 case HttpsAndHttpName:
                     return SasProtocol.HttpsAndHttp;
                 default:
-                    throw Internals.Errors.InvalidSasProtocol(nameof(s), nameof(SasProtocol));
+                    throw Errors.InvalidSasProtocol(nameof(s), nameof(SasProtocol));
             }
         }
 
@@ -126,15 +120,15 @@ namespace Azure.Storage.Sas.Shared
             var sb = new StringBuilder();
             if ((services & AccountSasServices.Blobs) == AccountSasServices.Blobs)
             {
-                sb.Append(Internals.Constants.Sas.AccountServices.Blob);
+                sb.Append(Constants.Sas.AccountServices.Blob);
             }
             if ((services & AccountSasServices.Queues) == AccountSasServices.Queues)
             {
-                sb.Append(Internals.Constants.Sas.AccountServices.Queue);
+                sb.Append(Constants.Sas.AccountServices.Queue);
             }
             if ((services & AccountSasServices.Files) == AccountSasServices.Files)
             {
-                sb.Append(Internals.Constants.Sas.AccountServices.File);
+                sb.Append(Constants.Sas.AccountServices.File);
             }
             return sb.ToString();
         }
@@ -156,10 +150,10 @@ namespace Azure.Storage.Sas.Shared
             {
                 svcs |= ch switch
                 {
-                    Internals.Constants.Sas.AccountServices.Blob => AccountSasServices.Blobs,
-                    Internals.Constants.Sas.AccountServices.Queue => AccountSasServices.Queues,
-                    Internals.Constants.Sas.AccountServices.File => AccountSasServices.Files,
-                    _ => throw Internals.Errors.InvalidService(ch),
+                    Constants.Sas.AccountServices.Blob => AccountSasServices.Blobs,
+                    Constants.Sas.AccountServices.Queue => AccountSasServices.Queues,
+                    Constants.Sas.AccountServices.File => AccountSasServices.Files,
+                    _ => throw Errors.InvalidService(ch),
                 };
             }
             return svcs;
@@ -173,6 +167,6 @@ namespace Azure.Storage.Sas.Shared
         /// <returns></returns>
         internal static string FormatTimesForSasSigning(DateTimeOffset time) =>
             // "yyyy-MM-ddTHH:mm:ssZ"
-            (time == new DateTimeOffset()) ? "" : time.ToString(Internals.Constants.SasTimeFormat, CultureInfo.InvariantCulture);
+            (time == new DateTimeOffset()) ? "" : time.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture);
     }
 }

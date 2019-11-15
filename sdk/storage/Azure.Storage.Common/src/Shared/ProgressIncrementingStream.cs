@@ -6,13 +6,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-#if CommonSDK
-using Internals = Azure.Storage.Shared.Common;
-namespace Azure.Storage.Shared.Common
-#else
-using Internals = Azure.Storage.Shared;
-namespace Azure.Storage.Shared
-#endif
+namespace Azure.Storage
 {
     /// <summary>
     /// Wraps a stream, and reports position updates to a progress incrementer
@@ -20,12 +14,12 @@ namespace Azure.Storage.Shared
     internal class ProgressIncrementingStream : Stream
     {
         private readonly Stream _innerStream;
-        private readonly Internals.AggregatingProgressIncrementer _incrementer;
+        private readonly AggregatingProgressIncrementer _incrementer;
 
-        public ProgressIncrementingStream(Stream stream, Internals.AggregatingProgressIncrementer incrementer)
+        public ProgressIncrementingStream(Stream stream, AggregatingProgressIncrementer incrementer)
         {
-            _innerStream = stream ?? throw Internals.Errors.ArgumentNull(nameof(stream));
-            _incrementer = incrementer ?? throw Internals.Errors.ArgumentNull(nameof(incrementer));
+            _innerStream = stream ?? throw Errors.ArgumentNull(nameof(stream));
+            _incrementer = incrementer ?? throw Errors.ArgumentNull(nameof(incrementer));
         }
 
         public override bool CanRead => _innerStream.CanRead;

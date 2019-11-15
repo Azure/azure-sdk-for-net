@@ -1,9 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Storage.Shared;
-using Internals = Azure.Storage.Shared;
-
 namespace Azure.Storage.Blobs.Specialized
 {
     /// <summary>
@@ -12,9 +9,9 @@ namespace Azure.Storage.Blobs.Specialized
     internal static class BatchConstants
     {
         public const int NoStatusCode = 0;
-        public const int RequestBufferSize = Internals.Constants.KB;
-        public const int ResponseLineSize = 4 * Internals.Constants.KB;
-        public const int ResponseBufferSize = 16 * Internals.Constants.KB;
+        public const int RequestBufferSize = Constants.KB;
+        public const int ResponseLineSize = 4 * Constants.KB;
+        public const int ResponseBufferSize = 16 * Constants.KB;
 
         public const string XmsVersionName = "x-ms-version";
         public const string XmsClientRequestIdName = "x-ms-client-request-id";

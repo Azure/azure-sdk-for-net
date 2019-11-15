@@ -40,7 +40,7 @@ namespace Azure.Storage.Files.DataLake
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.DataLake.Models.ServiceListFileSystemsResult}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.DataLake.Models.ServiceListFileSystemsResult>> ListFileSystemsAsync(
-                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string prefix = default,
@@ -52,7 +52,7 @@ namespace Azure.Storage.Files.DataLake
                 string operationName = "Azure.Storage.Files.DataLake.ServiceClient.ListFileSystems",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -173,7 +173,7 @@ namespace Azure.Storage.Files.DataLake
                     }
                     case 304:
                     {
-                        return new Azure.Storage.Shared.NoBodyResponse<Azure.Storage.Files.DataLake.Models.ServiceListFileSystemsResult>(response);
+                        return new Azure.NoBodyResponse<Azure.Storage.Files.DataLake.Models.ServiceListFileSystemsResult>(response);
                     }
                     default:
                     {
@@ -213,7 +213,7 @@ namespace Azure.Storage.Files.DataLake
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.DataLake.Models.FileSystemCreateResult}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemCreateResult>> CreateAsync(
-                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string requestId = default,
@@ -223,7 +223,7 @@ namespace Azure.Storage.Files.DataLake
                 string operationName = "Azure.Storage.Files.DataLake.FileSystemClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -368,7 +368,7 @@ namespace Azure.Storage.Files.DataLake
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.DataLake.Models.FileSystemSetPropertiesResult}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemSetPropertiesResult>> SetPropertiesAsync(
-                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string requestId = default,
@@ -380,7 +380,7 @@ namespace Azure.Storage.Files.DataLake
                 string operationName = "Azure.Storage.Files.DataLake.FileSystemClient.SetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -526,7 +526,7 @@ namespace Azure.Storage.Files.DataLake
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.DataLake.Models.FileSystemGetPropertiesResult}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemGetPropertiesResult>> GetPropertiesAsync(
-                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string requestId = default,
@@ -535,7 +535,7 @@ namespace Azure.Storage.Files.DataLake
                 string operationName = "Azure.Storage.Files.DataLake.FileSystemClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -650,7 +650,7 @@ namespace Azure.Storage.Files.DataLake
                     }
                     case 304:
                     {
-                        return new Azure.Storage.Shared.NoBodyResponse<Azure.Storage.Files.DataLake.Models.FileSystemGetPropertiesResult>(response);
+                        return new Azure.NoBodyResponse<Azure.Storage.Files.DataLake.Models.FileSystemGetPropertiesResult>(response);
                     }
                     default:
                     {
@@ -683,7 +683,7 @@ namespace Azure.Storage.Files.DataLake
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response> DeleteAsync(
-                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string requestId = default,
@@ -694,7 +694,7 @@ namespace Azure.Storage.Files.DataLake
                 string operationName = "Azure.Storage.Files.DataLake.FileSystemClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -826,7 +826,7 @@ namespace Azure.Storage.Files.DataLake
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.DataLake.Models.FileSystemListPathsResult}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemListPathsResult>> ListPathsAsync(
-                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 bool recursive,
@@ -840,7 +840,7 @@ namespace Azure.Storage.Files.DataLake
                 string operationName = "Azure.Storage.Files.DataLake.FileSystemClient.ListPaths",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -980,7 +980,7 @@ namespace Azure.Storage.Files.DataLake
                     }
                     case 304:
                     {
-                        return new Azure.Storage.Shared.NoBodyResponse<Azure.Storage.Files.DataLake.Models.FileSystemListPathsResult>(response);
+                        return new Azure.NoBodyResponse<Azure.Storage.Files.DataLake.Models.FileSystemListPathsResult>(response);
                     }
                     default:
                     {
@@ -1041,7 +1041,7 @@ namespace Azure.Storage.Files.DataLake
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.DataLake.Models.PathCreateResult}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.DataLake.Models.PathCreateResult>> CreateAsync(
-                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string requestId = default,
@@ -1072,7 +1072,7 @@ namespace Azure.Storage.Files.DataLake
                 string operationName = "Azure.Storage.Files.DataLake.PathClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -1323,7 +1323,7 @@ namespace Azure.Storage.Files.DataLake
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.DataLake.Models.PathUpdateResult}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.DataLake.Models.PathUpdateResult>> UpdateAsync(
-                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Files.DataLake.Models.PathUpdateAction action,
@@ -1354,7 +1354,7 @@ namespace Azure.Storage.Files.DataLake
                 string operationName = "Azure.Storage.Files.DataLake.PathClient.Update",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -1653,7 +1653,7 @@ namespace Azure.Storage.Files.DataLake
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.DataLake.Models.PathLeaseResult}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.DataLake.Models.PathLeaseResult>> LeaseAsync(
-                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Files.DataLake.Models.PathLeaseAction xMSLeaseAction,
@@ -1671,7 +1671,7 @@ namespace Azure.Storage.Files.DataLake
                 string operationName = "Azure.Storage.Files.DataLake.PathClient.Lease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -1897,7 +1897,7 @@ namespace Azure.Storage.Files.DataLake
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.DataLake.Models.PathReadResult}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.DataLake.Models.PathReadResult>> ReadAsync(
-                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string requestId = default,
@@ -1913,7 +1913,7 @@ namespace Azure.Storage.Files.DataLake
                 string operationName = "Azure.Storage.Files.DataLake.PathClient.Read",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -2188,7 +2188,7 @@ namespace Azure.Storage.Files.DataLake
                     }
                     case 304:
                     {
-                        return new Azure.Storage.Shared.NoBodyResponse<Azure.Storage.Files.DataLake.Models.PathReadResult>(response);
+                        return new Azure.NoBodyResponse<Azure.Storage.Files.DataLake.Models.PathReadResult>(response);
                     }
                     default:
                     {
@@ -2226,7 +2226,7 @@ namespace Azure.Storage.Files.DataLake
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.DataLake.Models.PathGetPropertiesResult}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.DataLake.Models.PathGetPropertiesResult>> GetPropertiesAsync(
-                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string requestId = default,
@@ -2242,7 +2242,7 @@ namespace Azure.Storage.Files.DataLake
                 string operationName = "Azure.Storage.Files.DataLake.PathClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -2452,7 +2452,7 @@ namespace Azure.Storage.Files.DataLake
                     }
                     case 304:
                     {
-                        return new Azure.Storage.Shared.NoBodyResponse<Azure.Storage.Files.DataLake.Models.PathGetPropertiesResult>(response);
+                        return new Azure.NoBodyResponse<Azure.Storage.Files.DataLake.Models.PathGetPropertiesResult>(response);
                     }
                     default:
                     {
@@ -2490,7 +2490,7 @@ namespace Azure.Storage.Files.DataLake
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.DataLake.Models.PathDeleteResult}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.DataLake.Models.PathDeleteResult>> DeleteAsync(
-                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string requestId = default,
@@ -2506,7 +2506,7 @@ namespace Azure.Storage.Files.DataLake
                 string operationName = "Azure.Storage.Files.DataLake.PathClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -2676,7 +2676,7 @@ namespace Azure.Storage.Files.DataLake
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.DataLake.Models.PathSetAccessControlResult}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.DataLake.Models.PathSetAccessControlResult>> SetAccessControlAsync(
-                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -2694,7 +2694,7 @@ namespace Azure.Storage.Files.DataLake
                 string operationName = "Azure.Storage.Files.DataLake.PathClient.SetAccessControl",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -2883,7 +2883,7 @@ namespace Azure.Storage.Files.DataLake
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.DataLake.Models.PathFlushDataResult}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.DataLake.Models.PathFlushDataResult>> FlushDataAsync(
-                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -2907,7 +2907,7 @@ namespace Azure.Storage.Files.DataLake
                 string operationName = "Azure.Storage.Files.DataLake.PathClient.FlushData",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);
@@ -3122,7 +3122,7 @@ namespace Azure.Storage.Files.DataLake
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.DataLake.Models.PathAppendDataResult}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.DataLake.Models.PathAppendDataResult>> AppendDataAsync(
-                Azure.Storage.Shared.ClientDiagnostics clientDiagnostics,
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.IO.Stream body,
@@ -3136,7 +3136,7 @@ namespace Azure.Storage.Files.DataLake
                 string operationName = "Azure.Storage.Files.DataLake.PathClient.AppendData",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Storage.Shared.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("url", resourceUri);

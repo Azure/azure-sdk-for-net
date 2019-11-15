@@ -10,9 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Testing;
-using Azure.Storage.Shared;
 using NUnit.Framework;
-using Internals = Azure.Storage.Shared.Common;
 
 namespace Azure.Storage.Test
 {
@@ -23,7 +21,7 @@ namespace Azure.Storage.Test
         public void CreateFromResponse()
         {
             var response = new MockResponse(400, "reason");
-            var ex = Internals.StorageExceptionExtensions.CreateException(response);
+            var ex = StorageExceptionExtensions.CreateException(response);
 
             Assert.AreEqual(400, ex.Status);
             StringAssert.StartsWith("reason", ex.Message);
@@ -33,7 +31,7 @@ namespace Azure.Storage.Test
         public void CreateFromResponseAndMessage()
         {
             var response = new MockResponse(400, "reason");
-            var ex = Internals.StorageExceptionExtensions.CreateException(response, "message");
+            var ex = StorageExceptionExtensions.CreateException(response, "message");
 
             Assert.AreEqual(400, ex.Status);
             StringAssert.StartsWith("message", ex.Message);
@@ -45,7 +43,7 @@ namespace Azure.Storage.Test
         {
             var response = new MockResponse(400, "reason");
             var inner = new Exception("Boom!");
-            var ex = Internals.StorageExceptionExtensions.CreateException(response, "message", inner);
+            var ex = StorageExceptionExtensions.CreateException(response, "message", inner);
 
             Assert.AreEqual(400, ex.Status);
             StringAssert.StartsWith("message", ex.Message);
@@ -58,7 +56,7 @@ namespace Azure.Storage.Test
         {
             var response = new MockResponse(400, "reason");
             var inner = new Exception("Boom!");
-            var ex = Internals.StorageExceptionExtensions.CreateException(response, null, inner);
+            var ex = StorageExceptionExtensions.CreateException(response, null, inner);
 
             Assert.AreEqual(400, ex.Status);
             StringAssert.StartsWith("reason", ex.Message);
@@ -70,7 +68,7 @@ namespace Azure.Storage.Test
         {
             var response = new MockResponse(400, "reason");
             var inner = new Exception("Boom!");
-            var ex = Internals.StorageExceptionExtensions.CreateException(response, "message", inner, "storagecode");
+            var ex = StorageExceptionExtensions.CreateException(response, "message", inner, "storagecode");
 
             Assert.AreEqual(400, ex.Status);
             StringAssert.StartsWith("message", ex.Message);
@@ -90,7 +88,7 @@ namespace Azure.Storage.Test
                 { "foo", "bar" },
                 { "qux", "quux" }
             };
-            var ex = Internals.StorageExceptionExtensions.CreateException(response, "message", inner, "storagecode", additional);
+            var ex = StorageExceptionExtensions.CreateException(response, "message", inner, "storagecode", additional);
 
             Assert.AreEqual(400, ex.Status);
             StringAssert.StartsWith("message", ex.Message);
@@ -106,7 +104,7 @@ namespace Azure.Storage.Test
         public void CreateFromResponseAndErrorCode()
         {
             var response = new MockResponse(400, "reason");
-            var ex = Internals.StorageExceptionExtensions.CreateException(response, null, null, "storagecode");
+            var ex = StorageExceptionExtensions.CreateException(response, null, null, "storagecode");
 
             Assert.AreEqual(400, ex.Status);
             StringAssert.StartsWith("reason", ex.Message);
@@ -117,7 +115,7 @@ namespace Azure.Storage.Test
         [Test]
         public void MessageIncludesStatus()
         {
-            var ex = Internals.StorageExceptionExtensions.CreateException(new MockResponse(400, "reason"));
+            var ex = StorageExceptionExtensions.CreateException(new MockResponse(400, "reason"));
 
             Assert.AreEqual(400, ex.Status);
             StringAssert.Contains("400", ex.Message);
@@ -126,10 +124,10 @@ namespace Azure.Storage.Test
         [Test]
         public void AdditionalInfoOnlyWhenPresent()
         {
-            var ex = Internals.StorageExceptionExtensions.CreateException(new MockResponse(400, "reason"), null, null, null, new Dictionary<string, string> { { "foo", "bar" } });
+            var ex = StorageExceptionExtensions.CreateException(new MockResponse(400, "reason"), null, null, null, new Dictionary<string, string> { { "foo", "bar" } });
             StringAssert.Contains("Additional Information", ex.Message);
 
-            ex = Internals.StorageExceptionExtensions.CreateException(new MockResponse(400, "reason"));
+            ex = StorageExceptionExtensions.CreateException(new MockResponse(400, "reason"));
             StringAssert.DoesNotContain("Additional Information", ex.Message);
         }
 
@@ -138,7 +136,7 @@ namespace Azure.Storage.Test
         {
             var response = new MockResponse(400, "reason");
             response.AddHeader(new HttpHeader("x-ms-error-code", "storagecode"));
-            var ex = Internals.StorageExceptionExtensions.CreateException(response);
+            var ex = StorageExceptionExtensions.CreateException(response);
 
             Assert.AreEqual(400, ex.Status);
             StringAssert.StartsWith("reason", ex.Message);
@@ -149,10 +147,10 @@ namespace Azure.Storage.Test
         [Test]
         public void NullResponseThrows()
         {
-            Assert.Throws<ArgumentNullException>(() => Internals.StorageExceptionExtensions.CreateException(null));
-            Assert.Throws<ArgumentNullException>(() => Internals.StorageExceptionExtensions.CreateException(null, "message"));
-            Assert.Throws<ArgumentNullException>(() => Internals.StorageExceptionExtensions.CreateException(null, null, new Exception()));
-            Assert.Throws<ArgumentNullException>(() => Internals.StorageExceptionExtensions.CreateException(null, null, null, "storagecode"));
+            Assert.Throws<ArgumentNullException>(() => StorageExceptionExtensions.CreateException(null));
+            Assert.Throws<ArgumentNullException>(() => StorageExceptionExtensions.CreateException(null, "message"));
+            Assert.Throws<ArgumentNullException>(() => StorageExceptionExtensions.CreateException(null, null, new Exception()));
+            Assert.Throws<ArgumentNullException>(() => StorageExceptionExtensions.CreateException(null, null, null, "storagecode"));
         }
     }
 }

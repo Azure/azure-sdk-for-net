@@ -4,13 +4,7 @@
 using System;
 using System.Threading.Tasks;
 
-#if CommonSDK
-using Internals = Azure.Storage.Shared.Common;
-namespace Azure.Storage.Shared.Common
-#else
-using Internals = Azure.Storage.Shared;
-namespace Azure.Storage.Shared
-#endif
+namespace Azure.Storage
 {
     internal static class ReliableOperation
     {
@@ -46,9 +40,9 @@ namespace Azure.Storage.Shared
             }
         }
 
-        public static ValueTask<T> DoAsync<T>(Func<ValueTask<T>> operation, Internals.ReliabilityConfiguration? reliabilityConfiguration = default, int maximumRetries = Internals.Constants.MaxReliabilityRetries)
+        public static ValueTask<T> DoAsync<T>(Func<ValueTask<T>> operation, ReliabilityConfiguration? reliabilityConfiguration = default, int maximumRetries = Constants.MaxReliabilityRetries)
         {
-            reliabilityConfiguration ??= Internals.ReliabilityConfiguration.Default;
+            reliabilityConfiguration ??= ReliabilityConfiguration.Default;
 
             return DoAsync(operation, reliabilityConfiguration.Value.Reset, reliabilityConfiguration.Value.Cleanup, reliabilityConfiguration.Value.ExceptionPredicate, maximumRetries);
         }

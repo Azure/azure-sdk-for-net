@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Text;
-using Azure.Storage.Shared;
-using Internals = Azure.Storage.Shared;
 
 namespace Azure.Storage.Files.Shares
 {
@@ -13,12 +11,12 @@ namespace Azure.Storage.Files.Shares
         {
             if (filePermission != null && filePermissionKey != null)
             {
-                throw Internals.Errors.CannotBothBeNotNull(nameof(filePermission), nameof(filePermissionKey));
+                throw Errors.CannotBothBeNotNull(nameof(filePermission), nameof(filePermissionKey));
             }
 
-            if (filePermission != null && Encoding.UTF8.GetByteCount(filePermission) > Internals.Constants.File.MaxFilePermissionHeaderSize)
+            if (filePermission != null && Encoding.UTF8.GetByteCount(filePermission) > Constants.File.MaxFilePermissionHeaderSize)
             {
-                throw Internals.Errors.MustBeLessThanOrEqualTo(nameof(filePermission), Internals.Constants.File.MaxFilePermissionHeaderSize);
+                throw Errors.MustBeLessThanOrEqualTo(nameof(filePermission), Constants.File.MaxFilePermissionHeaderSize);
             }
         }
     }

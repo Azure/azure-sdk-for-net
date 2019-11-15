@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
-using Internals = Azure.Storage.Shared.Common;
+
 
 namespace Azure.Storage
 {
@@ -70,7 +70,7 @@ namespace Azure.Storage
         /// </summary>
         /// <param name="exportSecrets"><c>True</c> to include sensitive data in the string; otherwise, <c>false</c>.</param>
         /// <returns>A connection string.</returns>
-        internal static string ToString(this Internals.StorageConnectionString conn, bool exportSecrets)
+        internal static string ToString(this StorageConnectionString conn, bool exportSecrets)
         {
             if (conn.Settings == null)
             {
@@ -78,56 +78,56 @@ namespace Azure.Storage
 
                 if (conn.DefaultEndpoints)
                 {
-                    conn.Settings.Add(Internals.Constants.ConnectionStrings.DefaultEndpointsProtocolSetting, conn.BlobEndpoint.Scheme);
+                    conn.Settings.Add(Constants.ConnectionStrings.DefaultEndpointsProtocolSetting, conn.BlobEndpoint.Scheme);
 
                     if (conn.EndpointSuffix != null)
                     {
-                        conn.Settings.Add(Internals.Constants.ConnectionStrings.EndpointSuffixSetting, conn.EndpointSuffix);
+                        conn.Settings.Add(Constants.ConnectionStrings.EndpointSuffixSetting, conn.EndpointSuffix);
                     }
                 }
                 else
                 {
                     if (conn.BlobEndpoint != null)
                     {
-                        conn.Settings.Add(Internals.Constants.ConnectionStrings.BlobEndpointSetting, conn.BlobEndpoint.ToString());
+                        conn.Settings.Add(Constants.ConnectionStrings.BlobEndpointSetting, conn.BlobEndpoint.ToString());
                     }
 
                     if (conn.QueueEndpoint != null)
                     {
-                        conn.Settings.Add(Internals.Constants.ConnectionStrings.QueueEndpointSetting, conn.QueueEndpoint.ToString());
+                        conn.Settings.Add(Constants.ConnectionStrings.QueueEndpointSetting, conn.QueueEndpoint.ToString());
                     }
 
                     if (conn.TableEndpoint != null)
                     {
-                        conn.Settings.Add(Internals.Constants.ConnectionStrings.TableEndpointSetting, conn.TableEndpoint.ToString());
+                        conn.Settings.Add(Constants.ConnectionStrings.TableEndpointSetting, conn.TableEndpoint.ToString());
                     }
 
                     if (conn.FileEndpoint != null)
                     {
-                        conn.Settings.Add(Internals.Constants.ConnectionStrings.FileEndpointSetting, conn.FileEndpoint.ToString());
+                        conn.Settings.Add(Constants.ConnectionStrings.FileEndpointSetting, conn.FileEndpoint.ToString());
                     }
 
                     if (conn.BlobStorageUri.SecondaryUri != null)
                     {
-                        conn.Settings.Add(Internals.Constants.ConnectionStrings.BlobSecondaryEndpointSetting,
+                        conn.Settings.Add(Constants.ConnectionStrings.BlobSecondaryEndpointSetting,
                             conn.BlobStorageUri.SecondaryUri.ToString());
                     }
 
                     if (conn.QueueStorageUri.SecondaryUri != null)
                     {
-                        conn.Settings.Add(Internals.Constants.ConnectionStrings.QueueSecondaryEndpointSetting,
+                        conn.Settings.Add(Constants.ConnectionStrings.QueueSecondaryEndpointSetting,
                             conn.QueueStorageUri.SecondaryUri.ToString());
                     }
 
                     if (conn.TableStorageUri.SecondaryUri != null)
                     {
-                        conn.Settings.Add(Internals.Constants.ConnectionStrings.TableSecondaryEndpointSetting,
+                        conn.Settings.Add(Constants.ConnectionStrings.TableSecondaryEndpointSetting,
                             conn.TableStorageUri.SecondaryUri.ToString());
                     }
 
                     if (conn.FileStorageUri.SecondaryUri != null)
                     {
-                        conn.Settings.Add(Internals.Constants.ConnectionStrings.FileSecondaryEndpointSetting,
+                        conn.Settings.Add(Constants.ConnectionStrings.FileSecondaryEndpointSetting,
                             conn.FileStorageUri.SecondaryUri.ToString());
                     }
                 }
@@ -142,7 +142,7 @@ namespace Azure.Storage
 
             if (!string.IsNullOrWhiteSpace(conn._accountName) && (conn.Credentials is StorageSharedKeyCredential sharedKeyCredentials ? string.IsNullOrWhiteSpace(sharedKeyCredentials.AccountName) : true))
             {
-                listOfSettings.Add(string.Format(CultureInfo.InvariantCulture, "{0}={1}", Internals.Constants.ConnectionStrings.AccountNameSetting, conn._accountName));
+                listOfSettings.Add(string.Format(CultureInfo.InvariantCulture, "{0}={1}", Constants.ConnectionStrings.AccountNameSetting, conn._accountName));
             }
 
             return string.Join(";", listOfSettings);
@@ -155,14 +155,14 @@ namespace Azure.Storage
                 return string.Format(
                     CultureInfo.InvariantCulture,
                     "{0}={1};{2}={3}",
-                    Internals.Constants.ConnectionStrings.AccountNameSetting,
+                    Constants.ConnectionStrings.AccountNameSetting,
                     sharedKeyCredentials.AccountName,
-                    Internals.Constants.ConnectionStrings.AccountKeySetting,
-                    exportSecrets ? sharedKeyCredentials.ExportBase64EncodedKey() : "Sanitized");
+                    Constants.ConnectionStrings.AccountKeySetting,
+                    exportSecrets ? StorageSharedKeyCredentialExtensions.ExportBase64EncodedKey(sharedKeyCredentials) : "Sanitized");
             }
-            else if (credentials is Internals.SharedAccessSignatureCredentials sasCredentials)
+            else if (credentials is SharedAccessSignatureCredentials sasCredentials)
             {
-                return string.Format(CultureInfo.InvariantCulture, "{0}={1}", Internals.Constants.ConnectionStrings.SharedAccessSignatureSetting, exportSecrets ? sasCredentials.SasToken : "[signature hidden]");
+                return string.Format(CultureInfo.InvariantCulture, "{0}={1}", Constants.ConnectionStrings.SharedAccessSignatureSetting, exportSecrets ? sasCredentials.SasToken : "[signature hidden]");
             }
 
             return string.Empty;

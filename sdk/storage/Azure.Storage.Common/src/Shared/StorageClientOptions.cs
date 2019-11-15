@@ -6,13 +6,7 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-#if CommonSDK
-using Internals = Azure.Storage.Shared.Common;
-namespace Azure.Storage.Shared.Common
-#else
-using Internals = Azure.Storage.Shared;
-namespace Azure.Storage.Shared
-#endif
+namespace Azure.Storage
 {
 /// <summary>
 /// Defines the client configuration options for connecting to Azure
@@ -44,7 +38,7 @@ internal static class StorageClientOptions
         /// <param name="credential">Credential to use.</param>
         /// <returns>An authentication policy.</returns>
         public static HttpPipelinePolicy AsPolicy(this StorageSharedKeyCredential credential) =>
-            new Internals.StorageSharedKeyPipelinePolicy(
+            new StorageSharedKeyPipelinePolicy(
                 credential ?? throw Errors.ArgumentNull(nameof(credential)));
 
         /// <summary>
@@ -67,7 +61,7 @@ internal static class StorageClientOptions
             // Use the credentials to decide on the authentication policy
             switch (credentials)
             {
-                case Internals.SharedAccessSignatureCredentials _:
+                case SharedAccessSignatureCredentials _:
                 case null: // Anonymous authentication
                     return null;
                 case StorageSharedKeyCredential sharedKey:
@@ -75,7 +69,7 @@ internal static class StorageClientOptions
                 case TokenCredential token:
                     return token.AsPolicy();
                 default:
-                    throw Internals.Errors.InvalidCredentials(credentials.GetType().FullName);
+                    throw Errors.InvalidCredentials(credentials.GetType().FullName);
             }
         }
 
@@ -88,13 +82,13 @@ internal static class StorageClientOptions
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
         public static HttpPipeline Build(this ClientOptions options, HttpPipelinePolicy authentication = null, Uri geoRedundantSecondaryStorageUri = null)
         {
-            Internals.StorageResponseClassifier classifier = null;
+            StorageResponseClassifier classifier = null;
             List<HttpPipelinePolicy> perRetryClientPolicies = new List<HttpPipelinePolicy>();
             if (geoRedundantSecondaryStorageUri != null)
             {
-                perRetryClientPolicies.Add(new Internals.GeoRedundantReadPolicy(geoRedundantSecondaryStorageUri));
+                perRetryClientPolicies.Add(new GeoRedundantReadPolicy(geoRedundantSecondaryStorageUri));
                 // we use a custom response classifier so that we can retry in case of a 404 that occurs against the secondary host. The retry will happen on the primary host.
-                classifier = new Internals.StorageResponseClassifier(geoRedundantSecondaryStorageUri);
+                classifier = new StorageResponseClassifier(geoRedundantSecondaryStorageUri);
             }
 
             perRetryClientPolicies.Add(StorageRequestValidationPipelinePolicy.Shared);

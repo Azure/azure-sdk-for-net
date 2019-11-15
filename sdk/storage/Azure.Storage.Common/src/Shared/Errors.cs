@@ -5,13 +5,7 @@ using System;
 using System.Globalization;
 using System.Security.Authentication;
 
-#if CommonSDK
-using Internals = Azure.Storage.Shared.Common;
-namespace Azure.Storage.Shared.Common
-#else
-using Internals = Azure.Storage.Shared;
-namespace Azure.Storage.Shared
-#endif
+namespace Azure.Storage
 {
     /// <summary>
     /// Create exceptions for common error cases.
@@ -32,6 +26,13 @@ namespace Azure.Storage.Shared
 
         public static ArgumentOutOfRangeException MustBeLessThanOrEqualTo(string paramName, long value)
             => new ArgumentOutOfRangeException(paramName, $"Value must be less than or equal to {value}");
+
+        public static ArgumentOutOfRangeException MustBeBetweenInclusive(
+            string paramName,
+            long lower,
+            long upper,
+            long actual)
+        => new ArgumentOutOfRangeException(paramName, $"Value must be between {lower} and {upper} inclusive, not {actual}");
 
         public static ArgumentOutOfRangeException MustBeGreaterThanValueOrEqualToOtherValue(
                 string paramName,
@@ -98,7 +99,7 @@ namespace Azure.Storage.Shared
             => new AuthenticationException($"Cannot authenticate credentials with {fullName}");
 
         public static RequestFailedException ClientRequestIdMismatch(Response response, string echo, string original)
-            => Internals.StorageExceptionExtensions.CreateException(
+            => StorageExceptionExtensions.CreateException(
                     response,
                     $"Response x-ms-client-request-id '{echo}' does not match the original expected request id, '{original}'.");
 

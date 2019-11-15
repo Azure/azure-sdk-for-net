@@ -2,11 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Storage.Shared;
 using Azure.Storage.Sas;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
-using Internals = Azure.Storage.Shared.Common;
 
 namespace Azure.Storage.Blobs.Test
 {
@@ -61,7 +59,7 @@ namespace Azure.Storage.Blobs.Test
 
             var sasString = sasQueryParameters.ToString();
 
-            var roundTripSas = SasQueryParameters.Create(new Internals.UriQueryParamsCollection(sasString));
+            var roundTripSas = SasQueryParameters.Create(new UriQueryParamsCollection(sasString));
 
             Assert.AreEqual(sasQueryParameters.ToString(), roundTripSas.ToString());
         }

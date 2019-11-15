@@ -8,9 +8,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.Shared;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
-using Internals = Azure.Storage.Shared;
 
 #pragma warning disable SA1402  // File may only contain a single type
 
@@ -37,12 +35,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// Gets the maximum number of bytes that can be sent in a call
         /// to AppendBlock.
         /// </summary>
-        public virtual int AppendBlobMaxAppendBlockBytes => Internals.Constants.Blob.Append.MaxAppendBlockBytes;
+        public virtual int AppendBlobMaxAppendBlockBytes => Constants.Blob.Append.MaxAppendBlockBytes;
 
         /// <summary>
         /// Gets the maximum number of blocks allowed in an append blob.
         /// </summary>
-        public virtual int AppendBlobMaxBlocks => Internals.Constants.Blob.Append.MaxBlocks;
+        public virtual int AppendBlobMaxBlocks => Constants.Blob.Append.MaxBlocks;
 
         #region ctors
         /// <summary>
@@ -183,7 +181,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="clientDiagnostics">Client diagnostics.</param>
         /// <param name="customerProvidedKey">Customer provided key.</param>
-        internal AppendBlobClient(Uri blobUri, HttpPipeline pipeline, Internals.ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
+        internal AppendBlobClient(Uri blobUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
             : base(blobUri, pipeline, clientDiagnostics, customerProvidedKey)
         {
         }
@@ -409,7 +407,7 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            var conditions = new AppendBlobRequestConditions { IfNoneMatch = new ETag(Internals.Constants.Wildcard) };
+            var conditions = new AppendBlobRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) };
             try
             {
                 return await CreateInternal(
@@ -418,11 +416,11 @@ namespace Azure.Storage.Blobs.Specialized
                     conditions,
                     async,
                     cancellationToken,
-                    Internals.Constants.Blob.Append.CreateIfNotExistsOperationName)
+                    Constants.Blob.Append.CreateIfNotExistsOperationName)
                     .ConfigureAwait(false);
             }
             catch (RequestFailedException storageRequestFailedException)
-            when (storageRequestFailedException.ErrorCode == Internals.Constants.Blob.AlreadyExists)
+            when (storageRequestFailedException.ErrorCode == Constants.Blob.AlreadyExists)
             {
                 return default;
             }
@@ -471,7 +469,7 @@ namespace Azure.Storage.Blobs.Specialized
             AppendBlobRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken,
-            string operationName = Internals.Constants.Blob.Append.CreateOperationName)
+            string operationName = Constants.Blob.Append.CreateOperationName)
         {
             using (Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
             {

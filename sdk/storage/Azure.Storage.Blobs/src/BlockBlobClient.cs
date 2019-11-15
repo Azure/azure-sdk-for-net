@@ -10,9 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.Shared;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
-using Internals = Azure.Storage.Shared;
 
 #pragma warning disable SA1402  // File may only contain a single type
 
@@ -85,18 +83,18 @@ namespace Azure.Storage.Blobs.Specialized
         /// Gets the maximum number of bytes that can be sent in a call
         /// to <see cref="UploadAsync"/>.
         /// </summary>
-        public virtual int BlockBlobMaxUploadBlobBytes => Internals.Constants.Blob.Block.MaxUploadBytes;
+        public virtual int BlockBlobMaxUploadBlobBytes => Constants.Blob.Block.MaxUploadBytes;
 
         /// <summary>
         /// Gets the maximum number of bytes that can be sent in a call
         /// to <see cref="StageBlockAsync"/>.
         /// </summary>
-        public virtual int BlockBlobMaxStageBlockBytes => Internals.Constants.Blob.Block.MaxStageBytes;
+        public virtual int BlockBlobMaxStageBlockBytes => Constants.Blob.Block.MaxStageBytes;
 
         /// <summary>
         /// Gets the maximum number of blocks allowed in a block blob.
         /// </summary>
-        public virtual int BlockBlobMaxBlocks => Internals.Constants.Blob.Block.MaxBlocks;
+        public virtual int BlockBlobMaxBlocks => Constants.Blob.Block.MaxBlocks;
 
         #region ctors
         /// <summary>
@@ -233,7 +231,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="clientDiagnostics">Client diagnostics.</param>
         /// <param name="customerProvidedKey">Customer provided key.</param>
-        internal BlockBlobClient(Uri blobUri, HttpPipeline pipeline, Internals.ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
+        internal BlockBlobClient(Uri blobUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
             : base(blobUri, pipeline, clientDiagnostics, customerProvidedKey)
         {
         }
@@ -1013,7 +1011,7 @@ namespace Azure.Storage.Blobs.Specialized
                         sourceIfMatch: sourceConditions?.IfMatch,
                         sourceIfNoneMatch: sourceConditions?.IfNoneMatch,
                         async: async,
-                        operationName: Internals.Constants.Blob.Block.StageBlockFromUriOperationName,
+                        operationName: Constants.Blob.Block.StageBlockFromUriOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1261,7 +1259,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
                         async: async,
-                        operationName: Internals.Constants.Blob.Block.CommitBlockListOperationName,
+                        operationName: Constants.Blob.Block.CommitBlockListOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1445,7 +1443,7 @@ namespace Azure.Storage.Blobs.Specialized
                         snapshot: snapshot,
                         leaseId: conditions?.LeaseId,
                         async: async,
-                        operationName: Internals.Constants.Blob.Block.GetBlockListOperationName,
+                        operationName: Constants.Blob.Block.GetBlockListOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false))
                         .ToBlockList();

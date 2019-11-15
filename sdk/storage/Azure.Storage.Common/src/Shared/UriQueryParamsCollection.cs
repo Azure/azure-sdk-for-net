@@ -7,13 +7,7 @@ using System.Globalization;
 using System.Net;
 using System.Text;
 
-#if CommonSDK
-using Internals = Azure.Storage.Shared.Common;
-namespace Azure.Storage.Shared.Common
-#else
-using Internals = Azure.Storage.Shared;
-namespace Azure.Storage.Shared
-#endif
+namespace Azure.Storage
 {
     internal sealed class UriQueryParamsCollection : Dictionary<string, string>
     {
@@ -25,7 +19,7 @@ namespace Azure.Storage.Shared
         /// <param name="encodedQueryParamString"></param>
 		public UriQueryParamsCollection(string encodedQueryParamString)
         {
-            encodedQueryParamString = encodedQueryParamString ?? throw Internals.Errors.ArgumentNull(nameof(encodedQueryParamString));
+            encodedQueryParamString = encodedQueryParamString ?? throw Errors.ArgumentNull(nameof(encodedQueryParamString));
 
             if (encodedQueryParamString.StartsWith("?", true, CultureInfo.InvariantCulture))
             {

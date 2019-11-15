@@ -10,9 +10,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.Shared;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
-using Internals = Azure.Storage.Shared;
 
 namespace Azure.Storage.Blobs
 {
@@ -25,17 +23,17 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The Azure Storage name used to identify a storage account's root container.
         /// </summary>
-        public static readonly string RootBlobContainerName = Internals.Constants.Blob.Container.RootName;
+        public static readonly string RootBlobContainerName = Constants.Blob.Container.RootName;
 
         /// <summary>
         /// The Azure Storage name used to identify a storage account's logs container.
         /// </summary>
-        public static readonly string LogsBlobContainerName = Internals.Constants.Blob.Container.LogsName;
+        public static readonly string LogsBlobContainerName = Constants.Blob.Container.LogsName;
 
         /// <summary>
         /// The Azure Storage name used to identify a storage account's web content container.
         /// </summary>
-        public static readonly string WebBlobContainerName = Internals.Constants.Blob.Container.WebName;
+        public static readonly string WebBlobContainerName = Constants.Blob.Container.WebName;
 
 #pragma warning disable IDE0032 // Use auto property
         /// <summary>
@@ -65,13 +63,13 @@ namespace Azure.Storage.Blobs
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
         /// every request.
         /// </summary>
-        private readonly Internals.ClientDiagnostics _clientDiagnostics;
+        private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary>
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
         /// every request.
         /// </summary>
-        internal virtual Internals.ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
+        internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
 
         /// <summary>
         /// The <see cref="CustomerProvidedKey"/> to be used when sending requests.
@@ -166,12 +164,12 @@ namespace Azure.Storage.Blobs
         /// </param>
         public BlobContainerClient(string connectionString, string blobContainerName, BlobClientOptions options)
         {
-            var conn = Internals.StorageConnectionString.Parse(connectionString);
+            var conn = StorageConnectionString.Parse(connectionString);
             var builder = new BlobUriBuilder(conn.BlobEndpoint) { BlobContainerName = blobContainerName };
             _uri = builder.ToUri();
             options ??= new BlobClientOptions();
             _pipeline = options.Build(conn.Credentials);
-            _clientDiagnostics = new Internals.ClientDiagnostics(options);
+            _clientDiagnostics = new ClientDiagnostics(options);
             _customerProvidedKey = options.CustomerProvidedKey;
         }
 
@@ -261,7 +259,7 @@ namespace Azure.Storage.Blobs
             _uri = blobContainerUri;
             options ??= new BlobClientOptions();
             _pipeline = options.Build(authentication);
-            _clientDiagnostics = new Internals.ClientDiagnostics(options);
+            _clientDiagnostics = new ClientDiagnostics(options);
             _customerProvidedKey = options.CustomerProvidedKey;
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
         }
@@ -280,7 +278,7 @@ namespace Azure.Storage.Blobs
         /// </param>
         /// <param name="clientDiagnostics"></param>
         /// /// <param name="customerProvidedKey">Customer provided key.</param>
-        internal BlobContainerClient(Uri containerUri, HttpPipeline pipeline, Internals.ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
+        internal BlobContainerClient(Uri containerUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
         {
             _uri = containerUri;
             _pipeline = pipeline;
@@ -551,11 +549,11 @@ namespace Azure.Storage.Blobs
                     metadata,
                     async,
                     cancellationToken,
-                    Internals.Constants.Blob.Container.CreateIfNotExistsOperationName)
+                    Constants.Blob.Container.CreateIfNotExistsOperationName)
                     .ConfigureAwait(false);
             }
             catch (RequestFailedException storageRequestFailedException)
-            when (storageRequestFailedException.ErrorCode == Internals.Constants.Blob.Container.AlreadyExists)
+            when (storageRequestFailedException.ErrorCode == Constants.Blob.Container.AlreadyExists)
             {
                 response = default;
             }
@@ -608,7 +606,7 @@ namespace Azure.Storage.Blobs
             Metadata metadata,
             bool async,
             CancellationToken cancellationToken,
-            string operationName = Internals.Constants.Blob.Container.CreateOperationName)
+            string operationName = Constants.Blob.Container.CreateOperationName)
         {
             using (Pipeline.BeginLoggingScope(nameof(BlobContainerClient)))
             {
@@ -807,12 +805,12 @@ namespace Azure.Storage.Blobs
                     conditions,
                     async,
                     cancellationToken,
-                    Internals.Constants.Blob.Container.DeleteIfExistsOperationName)
+                    Constants.Blob.Container.DeleteIfExistsOperationName)
                     .ConfigureAwait(false);
                 return Response.FromValue(true, response);
             }
             catch (RequestFailedException storageRequestFailedException)
-            when (storageRequestFailedException.ErrorCode == Internals.Constants.Blob.Container.NotFound)
+            when (storageRequestFailedException.ErrorCode == Constants.Blob.Container.NotFound)
             {
                 return Response.FromValue(false, default);
             }
@@ -850,7 +848,7 @@ namespace Azure.Storage.Blobs
             BlobRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken,
-            string operationName = Internals.Constants.Blob.Container.DeleteOperationName)
+            string operationName = Constants.Blob.Container.DeleteOperationName)
         {
             using (Pipeline.BeginLoggingScope(nameof(BlobContainerClient)))
             {
@@ -1008,7 +1006,7 @@ namespace Azure.Storage.Blobs
                             Uri,
                             leaseId: conditions?.LeaseId,
                             async: async,
-                            operationName: Internals.Constants.Blob.Container.GetPropertiesOperationName,
+                            operationName: Constants.Blob.Container.GetPropertiesOperationName,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
 
@@ -1172,7 +1170,7 @@ namespace Azure.Storage.Blobs
                         leaseId: conditions?.LeaseId,
                         ifModifiedSince: conditions?.IfModifiedSince,
                         async: async,
-                        operationName: Internals.Constants.Blob.Container.SetMetaDataOperationName,
+                        operationName: Constants.Blob.Container.SetMetaDataOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1300,7 +1298,7 @@ namespace Azure.Storage.Blobs
                         Uri,
                         leaseId: conditions?.LeaseId,
                         async: async,
-                        operationName: Internals.Constants.Blob.Container.GetAccessPolicyOperationName,
+                        operationName: Constants.Blob.Container.GetAccessPolicyOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1499,7 +1497,7 @@ namespace Azure.Storage.Blobs
                         ifModifiedSince: conditions?.IfModifiedSince,
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                         async: async,
-                        operationName: Internals.Constants.Blob.Container.SetAccessPolicyOperationName,
+                        operationName: Constants.Blob.Container.SetAccessPolicyOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1958,7 +1956,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [Internals.ForwardsClientCalls]
+        [ForwardsClientCalls]
         public virtual Response<BlobContentInfo> UploadBlob(
             string blobName,
             Stream content,
@@ -1997,7 +1995,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [Internals.ForwardsClientCalls]
+        [ForwardsClientCalls]
         public virtual async Task<Response<BlobContentInfo>> UploadBlobAsync(
             string blobName,
             Stream content,
@@ -2040,7 +2038,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [Internals.ForwardsClientCalls]
+        [ForwardsClientCalls]
         public virtual Response DeleteBlob(
             string blobName,
             DeleteSnapshotsOption snapshotsOption = default,
@@ -2082,7 +2080,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [Internals.ForwardsClientCalls]
+        [ForwardsClientCalls]
         public virtual async Task<Response> DeleteBlobAsync(
             string blobName,
             DeleteSnapshotsOption snapshotsOption = default,
@@ -2125,7 +2123,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [Internals.ForwardsClientCalls]
+        [ForwardsClientCalls]
         public virtual Response<bool> DeleteBlobIfExists(
             string blobName,
             DeleteSnapshotsOption snapshotsOption = default,
@@ -2167,7 +2165,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [Internals.ForwardsClientCalls]
+        [ForwardsClientCalls]
         public virtual async Task<Response<bool>> DeleteBlobIfExistsAsync(
             string blobName,
             DeleteSnapshotsOption snapshotsOption = default,

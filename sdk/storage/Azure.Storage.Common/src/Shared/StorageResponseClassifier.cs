@@ -5,13 +5,7 @@ using System;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-#if CommonSDK
-using Internals = Azure.Storage.Shared.Common;
-namespace Azure.Storage.Shared.Common
-#else
-using Internals = Azure.Storage.Shared;
-namespace Azure.Storage.Shared
-#endif
+namespace Azure.Storage
 {
 internal class StorageResponseClassifier : ResponseClassifier
     {
@@ -29,7 +23,7 @@ internal class StorageResponseClassifier : ResponseClassifier
         /// <returns></returns>
         public override bool IsRetriableResponse(HttpMessage message)
         {
-            if (message.Request.Uri.Host == SecondaryStorageUri.Host && message.Response.Status == Internals.Constants.HttpStatusCode.NotFound)
+            if (message.Request.Uri.Host == SecondaryStorageUri.Host && message.Response.Status == Constants.HttpStatusCode.NotFound)
             {
                 return true;
             }

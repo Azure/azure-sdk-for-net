@@ -5,11 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-#if StorageSDK
-namespace Azure.Storage.Shared
-#else
 namespace Azure.Core
-#endif
 {
     /// <summary>
     /// Copied from https://github.com/dotnet/corefx/blob/master/src/Common/src/CoreLib/System/HashCode.cs.

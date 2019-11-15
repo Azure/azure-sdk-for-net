@@ -7,13 +7,7 @@ using System.Threading.Tasks;
 
 #pragma warning disable SA1402  // File may only contain a single type
 
-#if CommonSDK
-using Internals = Azure.Storage.Shared.Common;
-namespace Azure.Storage.Shared.Common
-#else
-using Internals = Azure.Storage.Shared;
-namespace Azure.Storage.Shared
-#endif
+namespace Azure.Storage
 {
     internal class NonDisposingStream : Stream
     {

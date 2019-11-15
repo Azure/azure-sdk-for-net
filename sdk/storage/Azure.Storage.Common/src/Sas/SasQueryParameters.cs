@@ -7,9 +7,6 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Text;
-using Azure.Storage.Sas.Shared.Common;
-using Internals = Azure.Storage.Shared.Common;
-using SasInternals = Azure.Storage.Sas.Shared.Common;
 
 namespace Azure.Storage.Sas
 {
@@ -26,17 +23,17 @@ namespace Azure.Storage.Sas
         /// <summary>
         /// The default service version to use for Shared Access Signatures.
         /// </summary>
-        public const string DefaultSasVersion = Internals.Constants.DefaultSasVersion;
+        public const string DefaultSasVersion = Constants.DefaultSasVersion;
 
-        /// <summary>
-        /// FormatTimesForSASSigning converts a time.Time to a snapshotTimeFormat string suitable for a
-        /// SASField's StartTime or ExpiryTime fields. Returns "" if value.IsZero().
-        /// </summary>
-        /// <param name="time"></param>
-        /// <returns></returns>
-        internal static string FormatTimesForSasSigning(DateTimeOffset time) =>
-            // "yyyy-MM-ddTHH:mm:ssZ"
-            (time == new DateTimeOffset()) ? "" : time.ToString(Internals.Constants.SasTimeFormat, CultureInfo.InvariantCulture);
+        ///// <summary>
+        ///// FormatTimesForSASSigning converts a time.Time to a snapshotTimeFormat string suitable for a
+        ///// SASField's StartTime or ExpiryTime fields. Returns "" if value.IsZero().
+        ///// </summary>
+        ///// <param name="time"></param>
+        ///// <returns></returns>
+        //internal static string FormatTimesForSasSigning(DateTimeOffset time) =>
+        //    // "yyyy-MM-ddTHH:mm:ssZ"
+        //    (time == new DateTimeOffset()) ? "" : time.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture);
 
         // All members are immutable or values so copies of this struct are thread safe.
 
@@ -307,52 +304,52 @@ namespace Azure.Storage.Sas
                 var isSasKey = true;
                 switch (kv.Key.ToUpperInvariant())
                 {
-                    case Internals.Constants.Sas.Parameters.VersionUpper:
+                    case Constants.Sas.Parameters.VersionUpper:
                         _version = kv.Value;
                         break;
-                    case Internals.Constants.Sas.Parameters.ServicesUpper:
-                        _services = SasInternals.SasExtensions.ParseAccountServices(kv.Value);
+                    case Constants.Sas.Parameters.ServicesUpper:
+                        _services = SasExtensions.ParseAccountServices(kv.Value);
                         break;
-                    case Internals.Constants.Sas.Parameters.ResourceTypesUpper:
-                        _resourceTypes = SasInternals.SasExtensions.ParseResourceTypes(kv.Value);
+                    case Constants.Sas.Parameters.ResourceTypesUpper:
+                        _resourceTypes = SasExtensions.ParseResourceTypes(kv.Value);
                         break;
-                    case Internals.Constants.Sas.Parameters.ProtocolUpper:
-                        _protocol = SasInternals.SasExtensions.ParseProtocol(kv.Value);
+                    case Constants.Sas.Parameters.ProtocolUpper:
+                        _protocol = SasExtensions.ParseProtocol(kv.Value);
                         break;
-                    case Internals.Constants.Sas.Parameters.StartTimeUpper:
-                        _startTime = DateTimeOffset.ParseExact(kv.Value, Internals.Constants.SasTimeFormat, CultureInfo.InvariantCulture);
+                    case Constants.Sas.Parameters.StartTimeUpper:
+                        _startTime = DateTimeOffset.ParseExact(kv.Value, Constants.SasTimeFormat, CultureInfo.InvariantCulture);
                         break;
-                    case Internals.Constants.Sas.Parameters.ExpiryTimeUpper:
-                        _expiryTime = DateTimeOffset.ParseExact(kv.Value, Internals.Constants.SasTimeFormat, CultureInfo.InvariantCulture);
+                    case Constants.Sas.Parameters.ExpiryTimeUpper:
+                        _expiryTime = DateTimeOffset.ParseExact(kv.Value, Constants.SasTimeFormat, CultureInfo.InvariantCulture);
                         break;
-                    case Internals.Constants.Sas.Parameters.IPRangeUpper:
+                    case Constants.Sas.Parameters.IPRangeUpper:
                         _ipRange = SasIPRange.Parse(kv.Value);
                         break;
-                    case Internals.Constants.Sas.Parameters.IdentifierUpper:
+                    case Constants.Sas.Parameters.IdentifierUpper:
                         _identifier = kv.Value;
                         break;
-                    case Internals.Constants.Sas.Parameters.ResourceUpper:
+                    case Constants.Sas.Parameters.ResourceUpper:
                         _resource = kv.Value;
                         break;
-                    case Internals.Constants.Sas.Parameters.PermissionsUpper:
+                    case Constants.Sas.Parameters.PermissionsUpper:
                         _permissions = kv.Value;
                         break;
-                    case Internals.Constants.Sas.Parameters.SignatureUpper:
+                    case Constants.Sas.Parameters.SignatureUpper:
                         _signature = kv.Value;
                         break;
-                    case Internals.Constants.Sas.Parameters.CacheControlUpper:
+                    case Constants.Sas.Parameters.CacheControlUpper:
                         _cacheControl = kv.Value;
                         break;
-                    case Internals.Constants.Sas.Parameters.ContentDispositionUpper:
+                    case Constants.Sas.Parameters.ContentDispositionUpper:
                         _contentDisposition = kv.Value;
                         break;
-                    case Internals.Constants.Sas.Parameters.ContentEncodingUpper:
+                    case Constants.Sas.Parameters.ContentEncodingUpper:
                         _contentEncoding = kv.Value;
                         break;
-                    case Internals.Constants.Sas.Parameters.ContentLanguageUpper:
+                    case Constants.Sas.Parameters.ContentLanguageUpper:
                         _contentLanguage = kv.Value;
                         break;
-                    case Internals.Constants.Sas.Parameters.ContentTypeUpper:
+                    case Constants.Sas.Parameters.ContentTypeUpper:
                         _contentType = kv.Value;
                         break;
 
@@ -408,116 +405,116 @@ namespace Azure.Storage.Sas
 
             if (!string.IsNullOrWhiteSpace(Version))
             {
-                AddToBuilder(Internals.Constants.Sas.Parameters.Version, Version);
+                AddToBuilder(Constants.Sas.Parameters.Version, Version);
             }
 
             if (Services != null)
             {
-                AddToBuilder(Internals.Constants.Sas.Parameters.Services, Services.Value.ToPermissionsString());
+                AddToBuilder(Constants.Sas.Parameters.Services, Services.Value.ToPermissionsString());
             }
 
             if (ResourceTypes != null)
             {
-                AddToBuilder(Internals.Constants.Sas.Parameters.ResourceTypes, ResourceTypes.Value.ToPermissionsString());
+                AddToBuilder(Constants.Sas.Parameters.ResourceTypes, ResourceTypes.Value.ToPermissionsString());
             }
 
             if (Protocol != default)
             {
-                AddToBuilder(Internals.Constants.Sas.Parameters.Protocol, Protocol.ToProtocolString());
+                AddToBuilder(Constants.Sas.Parameters.Protocol, Protocol.ToProtocolString());
             }
 
             if (StartsOn != DateTimeOffset.MinValue)
             {
-                AddToBuilder(Internals.Constants.Sas.Parameters.StartTime, WebUtility.UrlEncode(StartsOn.ToString(Internals.Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
+                AddToBuilder(Constants.Sas.Parameters.StartTime, WebUtility.UrlEncode(StartsOn.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
             }
 
             if (ExpiresOn != DateTimeOffset.MinValue)
             {
-                AddToBuilder(Internals.Constants.Sas.Parameters.ExpiryTime, WebUtility.UrlEncode(ExpiresOn.ToString(Internals.Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
+                AddToBuilder(Constants.Sas.Parameters.ExpiryTime, WebUtility.UrlEncode(ExpiresOn.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
             }
 
             var ipr = IPRange.ToString();
             if (ipr.Length > 0)
             {
-                AddToBuilder(Internals.Constants.Sas.Parameters.IPRange, ipr);
+                AddToBuilder(Constants.Sas.Parameters.IPRange, ipr);
             }
 
             if (!string.IsNullOrWhiteSpace(Identifier))
             {
-                AddToBuilder(Internals.Constants.Sas.Parameters.Identifier, Identifier);
+                AddToBuilder(Constants.Sas.Parameters.Identifier, Identifier);
             }
 
             if (!string.IsNullOrWhiteSpace(Resource))
             {
-                AddToBuilder(Internals.Constants.Sas.Parameters.Resource, Resource);
+                AddToBuilder(Constants.Sas.Parameters.Resource, Resource);
             }
 
             if (!string.IsNullOrWhiteSpace(Permissions))
             {
-                AddToBuilder(Internals.Constants.Sas.Parameters.Permissions, Permissions);
+                AddToBuilder(Constants.Sas.Parameters.Permissions, Permissions);
             }
 
             if (!string.IsNullOrWhiteSpace(CacheControl))
             {
-                AddToBuilder(Internals.Constants.Sas.Parameters.CacheControl, CacheControl);
+                AddToBuilder(Constants.Sas.Parameters.CacheControl, CacheControl);
             }
 
             if (!string.IsNullOrWhiteSpace(ContentDisposition))
             {
-                AddToBuilder(Internals.Constants.Sas.Parameters.ContentDisposition, ContentDisposition);
+                AddToBuilder(Constants.Sas.Parameters.ContentDisposition, ContentDisposition);
             }
 
             if (!string.IsNullOrWhiteSpace(ContentEncoding))
             {
-                AddToBuilder(Internals.Constants.Sas.Parameters.ContentEncoding, ContentEncoding);
+                AddToBuilder(Constants.Sas.Parameters.ContentEncoding, ContentEncoding);
             }
 
             if (!string.IsNullOrWhiteSpace(ContentLanguage))
             {
-                AddToBuilder(Internals.Constants.Sas.Parameters.ContentLanguage, ContentLanguage);
+                AddToBuilder(Constants.Sas.Parameters.ContentLanguage, ContentLanguage);
             }
 
             if (!string.IsNullOrWhiteSpace(ContentType))
             {
-                AddToBuilder(Internals.Constants.Sas.Parameters.ContentType, ContentType);
+                AddToBuilder(Constants.Sas.Parameters.ContentType, ContentType);
             }
 
             if (includeBlobParameters)
             {
                 if (!string.IsNullOrWhiteSpace(_keyProperties._objectId))
                 {
-                    AddToBuilder(Internals.Constants.Sas.Parameters.KeyObjectId, _keyProperties._objectId);
+                    AddToBuilder(Constants.Sas.Parameters.KeyObjectId, _keyProperties._objectId);
                 }
 
                 if (!string.IsNullOrWhiteSpace(_keyProperties._tenantId))
                 {
-                    AddToBuilder(Internals.Constants.Sas.Parameters.KeyTenantId, _keyProperties._tenantId);
+                    AddToBuilder(Constants.Sas.Parameters.KeyTenantId, _keyProperties._tenantId);
                 }
 
                 if (_keyProperties._startsOn != DateTimeOffset.MinValue)
                 {
-                    AddToBuilder(Internals.Constants.Sas.Parameters.KeyStart, WebUtility.UrlEncode(_keyProperties._startsOn.ToString(Internals.Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
+                    AddToBuilder(Constants.Sas.Parameters.KeyStart, WebUtility.UrlEncode(_keyProperties._startsOn.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
                 }
 
                 if (_keyProperties._expiresOn != DateTimeOffset.MinValue)
                 {
-                    AddToBuilder(Internals.Constants.Sas.Parameters.KeyExpiry, WebUtility.UrlEncode(_keyProperties._expiresOn.ToString(Internals.Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
+                    AddToBuilder(Constants.Sas.Parameters.KeyExpiry, WebUtility.UrlEncode(_keyProperties._expiresOn.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
                 }
 
                 if (!string.IsNullOrWhiteSpace(_keyProperties._service))
                 {
-                    AddToBuilder(Internals.Constants.Sas.Parameters.KeyService, _keyProperties._service);
+                    AddToBuilder(Constants.Sas.Parameters.KeyService, _keyProperties._service);
                 }
 
                 if (!string.IsNullOrWhiteSpace(_keyProperties._version))
                 {
-                    AddToBuilder(Internals.Constants.Sas.Parameters.KeyVersion, _keyProperties._version);
+                    AddToBuilder(Constants.Sas.Parameters.KeyVersion, _keyProperties._version);
                 }
             }
 
             if (!string.IsNullOrWhiteSpace(Signature))
             {
-                AddToBuilder(Internals.Constants.Sas.Parameters.Signature, WebUtility.UrlEncode(Signature));
+                AddToBuilder(Constants.Sas.Parameters.Signature, WebUtility.UrlEncode(Signature));
             }
 
             return sb.ToString();

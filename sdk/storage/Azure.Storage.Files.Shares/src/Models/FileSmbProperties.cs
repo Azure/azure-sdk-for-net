@@ -7,8 +7,6 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using Azure.Storage.Shared;
-using Internals = Azure.Storage.Shared;
 
 #pragma warning disable SA1402 // File may only contain a single type
 
@@ -140,7 +138,7 @@ namespace Azure.Storage.Files.Shares.Models
             => dateTimeOffset.HasValue ? DateTimeOffSetToString(dateTimeOffset.Value) : null;
 
         private static string DateTimeOffSetToString(DateTimeOffset dateTimeOffset)
-            => dateTimeOffset.UtcDateTime.ToString(Internals.Constants.File.FileTimeFormat, CultureInfo.InvariantCulture);
+            => dateTimeOffset.UtcDateTime.ToString(Constants.File.FileTimeFormat, CultureInfo.InvariantCulture);
     }
   /// <summary>
   /// FilesModelFactory provides utilities for mocking.

@@ -5,9 +5,7 @@ using System;
 using System.Net;
 using System.Text;
 using Azure.Core;
-using Azure.Storage.Shared;
 using Azure.Storage.Sas;
-using Internals = Azure.Storage.Shared;
 
 namespace Azure.Storage.Blobs
 {
@@ -195,7 +193,7 @@ namespace Azure.Storage.Blobs
                 }
                 else
                 {
-                    AccountName = uri.GetAccountNameFromDomain(Internals.Constants.Blob.UriSubDomain) ?? string.Empty;
+                    AccountName = uri.GetAccountNameFromDomain(Constants.Blob.UriSubDomain) ?? string.Empty;
                 }
 
                 // Find the next slash (if it exists)
@@ -212,14 +210,14 @@ namespace Azure.Storage.Blobs
             }
 
             // Convert the query parameters to a case-sensitive map & trim whitespace
-            var paramsMap = new Internals.UriQueryParamsCollection(uri.Query);
+            var paramsMap = new UriQueryParamsCollection(uri.Query);
 
-            if (paramsMap.TryGetValue(Internals.Constants.SnapshotParameterName, out var snapshotTime))
+            if (paramsMap.TryGetValue(Constants.SnapshotParameterName, out var snapshotTime))
             {
                 Snapshot = snapshotTime;
 
                 // If we recognized the query parameter, remove it from the map
-                paramsMap.Remove(Internals.Constants.SnapshotParameterName);
+                paramsMap.Remove(Constants.SnapshotParameterName);
             }
 
             //if(paramsMap.TryGetValue(VersionIdParameterName, out var versionId))
@@ -230,7 +228,7 @@ namespace Azure.Storage.Blobs
             //    paramsMap.Remove(VersionIdParameterName);
             //}
 
-            if (paramsMap.ContainsKey(Internals.Constants.Sas.Parameters.Version))
+            if (paramsMap.ContainsKey(Constants.Sas.Parameters.Version))
             {
                 Sas = BlobSasQueryParameters.Create(paramsMap);
             }
@@ -300,7 +298,7 @@ namespace Azure.Storage.Blobs
             {
                 if (query.Length > 0)
                 { query.Append("&"); }
-                query.Append(Internals.Constants.SnapshotParameterName).Append("=").Append(Snapshot);
+                query.Append(Constants.SnapshotParameterName).Append("=").Append(Snapshot);
             }
             //if (!String.IsNullOrWhiteSpace(this.VersionId))
             //{

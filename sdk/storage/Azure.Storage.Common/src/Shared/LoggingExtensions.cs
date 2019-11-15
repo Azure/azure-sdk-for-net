@@ -12,13 +12,7 @@ using System.Runtime.ExceptionServices;
 using System.Web;
 using Azure.Core.Pipeline;
 
-#if CommonSDK
-using Internals = Azure.Storage.Shared.Common;
-namespace Azure.Storage.Shared.Common
-#else
-using Internals = Azure.Storage.Shared;
-namespace Azure.Storage.Shared
-#endif
+namespace Azure.Storage
 {
     internal static class LoggingExtensions
     {

@@ -5,13 +5,7 @@ using System;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-#if CommonSDK
-using Internals = Azure.Storage.Shared.Common;
-namespace Azure.Storage.Shared.Common
-#else
-using Internals = Azure.Storage.Shared;
-namespace Azure.Storage.Shared
-#endif
+namespace Azure.Storage
 {
     /// <summary>
     /// This policy is used if the SecondaryUri property is passed in on the clientOptions. It allows for storage
@@ -25,7 +19,7 @@ namespace Azure.Storage.Shared
         {
             if (secondaryStorageUri == null)
             {
-                throw Internals.Errors.ArgumentNull(nameof(secondaryStorageUri));
+                throw Errors.ArgumentNull(nameof(secondaryStorageUri));
             }
             _secondaryStorageHost = secondaryStorageUri.Host;
         }
@@ -41,14 +35,14 @@ namespace Azure.Storage.Shared
             // not be set.
             string alternateHost =
                 message.TryGetProperty(
-                    Internals.Constants.GeoRedundantRead.AlternateHostKey,
+                    Constants.GeoRedundantRead.AlternateHostKey,
                     out var alternateHostObj)
                 ? alternateHostObj as string
                 : null;
             if (alternateHost == null)
             {
                 // queue up the secondary host for subsequent retries
-                message.SetProperty(Internals.Constants.GeoRedundantRead.AlternateHostKey, _secondaryStorageHost);
+                message.SetProperty(Constants.GeoRedundantRead.AlternateHostKey, _secondaryStorageHost);
                 return;
             }
 
@@ -57,7 +51,7 @@ namespace Azure.Storage.Shared
             // Also, the flag being set implies that the current request must already be set to the primary host, so we
             // are safe to return without checking if the current host is secondary or primary.
             var resourceNotReplicated =
-                message.TryGetProperty(Internals.Constants.GeoRedundantRead.ResourceNotReplicated, out var value)
+                message.TryGetProperty(Constants.GeoRedundantRead.ResourceNotReplicated, out var value)
                 && (bool)value;
             if (resourceNotReplicated)
             {
@@ -70,16 +64,16 @@ namespace Azure.Storage.Shared
 
             // If necessary, set the flag to indicate that the resource has not yet been propagated to the secondary host.
             if (message.HasResponse
-                && message.Response.Status == Internals.Constants.HttpStatusCode.NotFound
+                && message.Response.Status == Constants.HttpStatusCode.NotFound
                 && lastTriedHost == _secondaryStorageHost)
             {
-                message.SetProperty(Internals.Constants.GeoRedundantRead.ResourceNotReplicated, true);
+                message.SetProperty(Constants.GeoRedundantRead.ResourceNotReplicated, true);
             }
 
             // Toggle the host set in the request to use the alternate host for the upcoming attempt, and update the
             // the property for the AlternateHostKey to be the host used in the last try.
             message.Request.Uri.Host = alternateHost;
-            message.SetProperty(Internals.Constants.GeoRedundantRead.AlternateHostKey, lastTriedHost);
+            message.SetProperty(Constants.GeoRedundantRead.AlternateHostKey, lastTriedHost);
         }
     }
 }

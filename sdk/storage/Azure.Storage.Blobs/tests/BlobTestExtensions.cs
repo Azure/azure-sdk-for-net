@@ -11,7 +11,7 @@ namespace Azure.Storage
     /// <summary>
     /// Extension methods to make tests easier to author.
     /// </summary>
-    public static partial class TestExtensions
+    public static partial class BlobTestExtensions
     {
         private static Uri ToHttps(Uri uri)
         {

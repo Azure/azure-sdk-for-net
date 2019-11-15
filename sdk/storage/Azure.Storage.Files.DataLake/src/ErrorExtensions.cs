@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using System.Text.Json;
-using Azure.Storage.Shared;
-using Internals = Azure.Storage.Shared;
 
 namespace Azure.Storage.Files.DataLake
 {
@@ -29,8 +27,8 @@ namespace Azure.Storage.Files.DataLake
                     = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, string>>>(jsonMessage);
                 return new RequestFailedException(
                     status: response.Status,
-                    errorCode: errorDictionary[Internals.Constants.DataLake.ErrorKey][Internals.Constants.DataLake.ErrorCodeKey],
-                    message: errorDictionary[Internals.Constants.DataLake.ErrorKey][Internals.Constants.DataLake.ErrorMessageKey],
+                    errorCode: errorDictionary[Constants.DataLake.ErrorKey][Constants.DataLake.ErrorCodeKey],
+                    message: errorDictionary[Constants.DataLake.ErrorKey][Constants.DataLake.ErrorMessageKey],
                     innerException: new Exception());
             }
         }

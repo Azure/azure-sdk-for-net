@@ -2,15 +2,8 @@
 // Licensed under the MIT License.
 
 using System.Threading;
-using Shared = Azure.Storage.Shared;
 
-#if CommonSDK
-using Internals = Azure.Storage.Shared.Common;
-namespace Azure.Storage.Shared.Common
-#else
-using Internals = Azure.Storage.Shared;
-namespace Azure.Storage.Shared
-#endif
+namespace Azure.Storage
 {
 internal struct Volatile<T> where T : class
     {
@@ -21,6 +14,6 @@ internal struct Volatile<T> where T : class
             get => Volatile.Read(ref m_t);
             set => Volatile.Write(ref m_t, value);
         }
-        public static implicit operator T(Internals.Volatile<T> volatileT) => volatileT.Value;
+        public static implicit operator T(Volatile<T> volatileT) => volatileT.Value;
     }
 }

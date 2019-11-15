@@ -8,9 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Storage.Shared;
 using Azure.Storage.Files.Shares.Models;
-using Internals = Azure.Storage.Shared;
 
 namespace Azure.Storage.Files.Shares
 {
@@ -47,13 +45,13 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
         /// every request.
         /// </summary>
-        private readonly Internals.ClientDiagnostics _clientDiagnostics;
+        private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary>
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
         /// every request.
         /// </summary>
-        internal virtual Internals.ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
+        internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
 
         /// <summary>
         /// The Storage account name corresponding to the file service client.
@@ -119,10 +117,10 @@ namespace Azure.Storage.Files.Shares
         public ShareServiceClient(string connectionString, ShareClientOptions options)
         {
             options ??= new ShareClientOptions();
-            var conn = Internals.StorageConnectionString.Parse(connectionString);
+            var conn = StorageConnectionString.Parse(connectionString);
             _uri = conn.FileEndpoint;
             _pipeline = options.Build(conn.Credentials);
-            _clientDiagnostics = new Internals.ClientDiagnostics(options);
+            _clientDiagnostics = new ClientDiagnostics(options);
         }
 
         /// <summary>
@@ -182,7 +180,7 @@ namespace Azure.Storage.Files.Shares
             options ??= new ShareClientOptions();
             _uri = serviceUri;
             _pipeline = options.Build(authentication);
-            _clientDiagnostics = new Internals.ClientDiagnostics(options);
+            _clientDiagnostics = new ClientDiagnostics(options);
         }
 
         /// <summary>
@@ -196,7 +194,7 @@ namespace Azure.Storage.Files.Shares
         /// The transport pipeline used to send every request.
         /// </param>
         /// <param name="clientDiagnostics"></param>
-        internal ShareServiceClient(Uri serviceUri, HttpPipeline pipeline, Internals.ClientDiagnostics clientDiagnostics)
+        internal ShareServiceClient(Uri serviceUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
         {
             _uri = serviceUri;
             _pipeline = pipeline;
@@ -485,7 +483,7 @@ namespace Azure.Storage.Files.Shares
                         Pipeline,
                         Uri,
                         async: async,
-                        operationName: Internals.Constants.File.Service.GetPropertiesOperationName,
+                        operationName: Constants.File.Service.GetPropertiesOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -608,7 +606,7 @@ namespace Azure.Storage.Files.Shares
                         Uri,
                         properties: properties,
                         async: async,
-                        operationName: Internals.Constants.File.Service.SetPropertiesOperationName,
+                        operationName: Constants.File.Service.SetPropertiesOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -654,7 +652,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [Internals.ForwardsClientCalls]
+        [ForwardsClientCalls]
         public virtual Response<ShareClient> CreateShare(
             string shareName,
             IDictionary<string, string> metadata = default,
@@ -694,7 +692,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [Internals.ForwardsClientCalls]
+        [ForwardsClientCalls]
         public virtual async Task<Response<ShareClient>> CreateShareAsync(
             string shareName,
             IDictionary<string, string> metadata = default,
@@ -734,7 +732,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [Internals.ForwardsClientCalls]
+        [ForwardsClientCalls]
         public virtual Response DeleteShare(
             string shareName,
             bool includeSnapshots = true,
@@ -767,7 +765,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [Internals.ForwardsClientCalls]
+        [ForwardsClientCalls]
         public virtual async Task<Response> DeleteShareAsync(
             string shareName,
             bool includeSnapshots = true,

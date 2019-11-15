@@ -11,6 +11,7 @@
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="Core\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)NoBodyResponse{T}.cs" Link="Core\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="..\..\Azure.Storage.Common\tests\TestExtensions.cs" Link="TestExtensions.cs" />
   </ItemGroup>
 
   <ItemGroup>

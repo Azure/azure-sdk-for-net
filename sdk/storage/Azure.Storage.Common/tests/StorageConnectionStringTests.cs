@@ -3,13 +3,7 @@
 
 using System;
 using System.Globalization;
-using System.Linq;
-using Azure.Storage.Shared;
-using Azure.Storage.Shared.Common;
-using Azure.Storage.Test;
-using Azure.Storage.Tests;
 using NUnit.Framework;
-using Internals = Azure.Storage.Shared.Common;
 
 namespace Azure.Storage.Test
 {
@@ -27,21 +21,21 @@ namespace Azure.Storage.Test
 
             var credentials1 = new StorageSharedKeyCredential(accountName, emptyKeyValueAsString);
 
-            var conn1 = new Internals.StorageConnectionString(credentials1, true);
+            var conn1 = new StorageConnectionString(credentials1, true);
             Assert.AreEqual(emptyKeyConnectionString, conn1.ToString(true));
             Assert.IsNotNull(conn1.Credentials);
             Assert.IsInstanceOf(typeof(StorageSharedKeyCredential), conn1.Credentials);
             Assert.AreEqual(accountName, ((StorageSharedKeyCredential)conn1.Credentials).AccountName);
             Assert.AreEqual(emptyKeyValueAsString, ((StorageSharedKeyCredential)conn1.Credentials).ExportBase64EncodedKey());
 
-            var account2 = Internals.StorageConnectionString.Parse(emptyKeyConnectionString);
+            var account2 = StorageConnectionString.Parse(emptyKeyConnectionString);
             Assert.AreEqual(emptyKeyConnectionString, account2.ToString(true));
             Assert.IsNotNull(account2.Credentials);
             Assert.IsInstanceOf(typeof(StorageSharedKeyCredential), account2.Credentials);
             Assert.AreEqual(accountName, ((StorageSharedKeyCredential)account2.Credentials).AccountName);
             Assert.AreEqual(emptyKeyValueAsString, ((StorageSharedKeyCredential)account2.Credentials).ExportBase64EncodedKey());
 
-            var isValidAccount3 = Internals.StorageConnectionString.TryParse(emptyKeyConnectionString, out Internals.StorageConnectionString account3);
+            var isValidAccount3 = StorageConnectionString.TryParse(emptyKeyConnectionString, out StorageConnectionString account3);
             Assert.IsTrue(isValidAccount3);
             Assert.IsNotNull(account3);
             Assert.AreEqual(emptyKeyConnectionString, account3.ToString(true));
@@ -51,7 +45,7 @@ namespace Azure.Storage.Test
             Assert.AreEqual(emptyKeyValueAsString, ((StorageSharedKeyCredential)account3.Credentials).ExportBase64EncodedKey());
         }
 
-        private void AccountsAreEqual(Internals.StorageConnectionString a, Internals.StorageConnectionString b)
+        private void AccountsAreEqual(StorageConnectionString a, StorageConnectionString b)
         {
             // endpoints are the same
             Assert.AreEqual(a.BlobEndpoint, b.BlobEndpoint);
@@ -79,8 +73,8 @@ namespace Azure.Storage.Test
                 Assert.AreEqual(a.GetType(), b.GetType());
 
                 // make sure
-                if (a.Credentials != Internals.StorageConnectionString.DevelopmentStorageAccount.Credentials &&
-                    b.Credentials != Internals.StorageConnectionString.DevelopmentStorageAccount.Credentials)
+                if (a.Credentials != StorageConnectionString.DevelopmentStorageAccount.Credentials &&
+                    b.Credentials != StorageConnectionString.DevelopmentStorageAccount.Credentials)
                 {
                     StringAssert.AreNotEqualIgnoringCase(aToStringWithSecrets, bToStringNoSecrets);
                 }
@@ -99,7 +93,7 @@ namespace Azure.Storage.Test
         [Description("DevStore account")]
         public void DevelopmentStorageAccount()
         {
-            Internals.StorageConnectionString devstoreAccount = Internals.StorageConnectionString.DevelopmentStorageAccount;
+            StorageConnectionString devstoreAccount = StorageConnectionString.DevelopmentStorageAccount;
             Assert.AreEqual(new Uri("http://127.0.0.1:10000/devstoreaccount1"), devstoreAccount.BlobEndpoint);
             Assert.AreEqual(new Uri("http://127.0.0.1:10001/devstoreaccount1"), devstoreAccount.QueueEndpoint);
             Assert.AreEqual(new Uri("http://127.0.0.1:10002/devstoreaccount1"), devstoreAccount.TableEndpoint);
@@ -113,10 +107,10 @@ namespace Azure.Storage.Test
             Assert.IsNull(devstoreAccount.FileStorageUri.SecondaryUri);
 
             var devstoreAccountToStringWithSecrets = devstoreAccount.ToString(true);
-            var testAccount = Internals.StorageConnectionString.Parse(devstoreAccountToStringWithSecrets);
+            var testAccount = StorageConnectionString.Parse(devstoreAccountToStringWithSecrets);
 
             AccountsAreEqual(testAccount, devstoreAccount);
-            if (!Internals.StorageConnectionString.TryParse(devstoreAccountToStringWithSecrets, out _))
+            if (!StorageConnectionString.TryParse(devstoreAccountToStringWithSecrets, out _))
             {
                 Assert.Fail("Expected TryParse success.");
             }
@@ -127,7 +121,7 @@ namespace Azure.Storage.Test
         public void DefaultStorageAccountWithHttp()
         {
             var cred = new StorageSharedKeyCredential(TestConfigurations.DefaultTargetTenant.AccountName, TestConfigurations.DefaultTargetTenant.AccountKey);
-            var conn = new Internals.StorageConnectionString(cred, false);
+            var conn = new StorageConnectionString(cred, false);
             Assert.AreEqual(conn.BlobEndpoint,
                 new Uri(string.Format("http://{0}.blob.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
             Assert.AreEqual(conn.QueueEndpoint,
@@ -146,7 +140,7 @@ namespace Azure.Storage.Test
                 new Uri(string.Format("http://{0}-secondary.file.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
             _ = conn.ToString();
             var storageConnectionStringToStringWithSecrets = conn.ToString(true);
-            var testAccount = Internals.StorageConnectionString.Parse(storageConnectionStringToStringWithSecrets);
+            var testAccount = StorageConnectionString.Parse(storageConnectionStringToStringWithSecrets);
 
             AccountsAreEqual(testAccount, conn);
         }
@@ -156,7 +150,7 @@ namespace Azure.Storage.Test
         public void DefaultStorageAccountWithHttps()
         {
             var cred = new StorageSharedKeyCredential(TestConfigurations.DefaultTargetTenant.AccountName, TestConfigurations.DefaultTargetTenant.AccountKey);
-            var conn = new Internals.StorageConnectionString(cred, true);
+            var conn = new StorageConnectionString(cred, true);
             Assert.AreEqual(conn.BlobEndpoint,
                 new Uri(string.Format("https://{0}.blob.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
             Assert.AreEqual(conn.QueueEndpoint,
@@ -175,7 +169,7 @@ namespace Azure.Storage.Test
                 new Uri(string.Format("https://{0}-secondary.file.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
 
             var storageConnectionStringToStringWithSecrets = conn.ToString(true);
-            var testAccount = Internals.StorageConnectionString.Parse(storageConnectionStringToStringWithSecrets);
+            var testAccount = StorageConnectionString.Parse(storageConnectionStringToStringWithSecrets);
 
             AccountsAreEqual(testAccount, conn);
         }
@@ -186,7 +180,7 @@ namespace Azure.Storage.Test
         {
             const string TestEndpointSuffix = "fake.endpoint.suffix";
 
-            var conn = Internals.StorageConnectionString.Parse(
+            var conn = StorageConnectionString.Parse(
                 string.Format(
                     "DefaultEndpointsProtocol=http;AccountName={0};AccountKey={1};EndpointSuffix={2};",
                     TestConfigurations.DefaultTargetTenant.AccountName,
@@ -211,7 +205,7 @@ namespace Azure.Storage.Test
                new Uri(string.Format("http://{0}-secondary.file.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
 
             var storageConnectionStringToStringWithSecrets = conn.ToString(true);
-            var testAccount = Internals.StorageConnectionString.Parse(storageConnectionStringToStringWithSecrets);
+            var testAccount = StorageConnectionString.Parse(storageConnectionStringToStringWithSecrets);
 
             AccountsAreEqual(testAccount, conn);
         }
@@ -222,7 +216,7 @@ namespace Azure.Storage.Test
         {
             const string TestEndpointSuffix = "fake.endpoint.suffix";
 
-            var conn = Internals.StorageConnectionString.Parse(
+            var conn = StorageConnectionString.Parse(
                 string.Format(
                     "DefaultEndpointsProtocol=https;AccountName={0};AccountKey={1};EndpointSuffix={2};",
                     TestConfigurations.DefaultTargetTenant.AccountName,
@@ -247,7 +241,7 @@ namespace Azure.Storage.Test
                 new Uri(string.Format("https://{0}-secondary.file.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
 
             var storageConnectionStringToStringWithSecrets = conn.ToString(true);
-            var testAccount = Internals.StorageConnectionString.Parse(storageConnectionStringToStringWithSecrets);
+            var testAccount = StorageConnectionString.Parse(storageConnectionStringToStringWithSecrets);
 
             AccountsAreEqual(testAccount, conn);
         }
@@ -260,7 +254,7 @@ namespace Azure.Storage.Test
             const string AlternateBlobEndpoint = "http://blob.other.endpoint/";
 
             var testAccount =
-                Internals.StorageConnectionString.Parse(
+                StorageConnectionString.Parse(
                     string.Format(
                         "DefaultEndpointsProtocol=http;AccountName={0};AccountKey={1};EndpointSuffix={2};BlobEndpoint={3}",
                         TestConfigurations.DefaultTargetTenant.AccountName,
@@ -268,7 +262,7 @@ namespace Azure.Storage.Test
                         TestEndpointSuffix,
                         AlternateBlobEndpoint));
 
-            var conn = Internals.StorageConnectionString.Parse(testAccount.ToString(true));
+            var conn = StorageConnectionString.Parse(testAccount.ToString(true));
 
             // make sure it round trips
             AccountsAreEqual(testAccount, conn);
@@ -464,14 +458,14 @@ namespace Azure.Storage.Test
                         );
 
 
-                Internals.StorageConnectionString.Parse(accountStringKeyPrimary); // no exception expected
+                StorageConnectionString.Parse(accountStringKeyPrimary); // no exception expected
 
                 TestHelper.AssertExpectedException(
-                    () => Internals.StorageConnectionString.Parse(accountStringKeySecondary),
+                    () => StorageConnectionString.Parse(accountStringKeySecondary),
                     new FormatException("No valid combination of account information found.")
                     );
 
-                Internals.StorageConnectionString.Parse(accountStringKeyPrimarySecondary); // no exception expected
+                StorageConnectionString.Parse(accountStringKeyPrimarySecondary); // no exception expected
 
                 // account key, no default protocol
 
@@ -495,14 +489,14 @@ namespace Azure.Storage.Test
                         );
 
 
-                Internals.StorageConnectionString.Parse(accountStringKeyNoDefaultProtocolPrimary); // no exception expected
+                StorageConnectionString.Parse(accountStringKeyNoDefaultProtocolPrimary); // no exception expected
 
                 TestHelper.AssertExpectedException(
-                    () => Internals.StorageConnectionString.Parse(accountStringKeyNoDefaultProtocolSecondary),
+                    () => StorageConnectionString.Parse(accountStringKeyNoDefaultProtocolSecondary),
                     new FormatException("No valid combination of account information found.")
                     );
 
-                Internals.StorageConnectionString.Parse(accountStringKeyNoDefaultProtocolPrimarySecondary); // no exception expected
+                StorageConnectionString.Parse(accountStringKeyNoDefaultProtocolPrimarySecondary); // no exception expected
 
                 // SAS
 
@@ -524,14 +518,14 @@ namespace Azure.Storage.Test
                         accountSasParams
                         );
 
-                Internals.StorageConnectionString.Parse(accountStringSasPrimary); // no exception expected
+                StorageConnectionString.Parse(accountStringSasPrimary); // no exception expected
 
                 TestHelper.AssertExpectedException(
-                    () => Internals.StorageConnectionString.Parse(accountStringSasSecondary),
+                    () => StorageConnectionString.Parse(accountStringSasSecondary),
                     new FormatException("No valid combination of account information found.")
                     );
 
-                Internals.StorageConnectionString.Parse(accountStringSasPrimarySecondary); // no exception expected
+                StorageConnectionString.Parse(accountStringSasPrimarySecondary); // no exception expected
 
                 // SAS, no default protocol
 
@@ -553,14 +547,14 @@ namespace Azure.Storage.Test
                         accountSasParams
                         );
 
-                Internals.StorageConnectionString.Parse(accountStringSasNoDefaultProtocolPrimary); // no exception expected
+                StorageConnectionString.Parse(accountStringSasNoDefaultProtocolPrimary); // no exception expected
 
                 TestHelper.AssertExpectedException(
-                    () => Internals.StorageConnectionString.Parse(accountStringSasNoDefaultProtocolSecondary),
+                    () => StorageConnectionString.Parse(accountStringSasNoDefaultProtocolSecondary),
                     new FormatException("No valid combination of account information found.")
                     );
 
-                Internals.StorageConnectionString.Parse(accountStringSasNoDefaultProtocolPrimarySecondary); // no exception expected
+                StorageConnectionString.Parse(accountStringSasNoDefaultProtocolPrimarySecondary); // no exception expected
 
                 // SAS without AccountName
 
@@ -589,28 +583,28 @@ namespace Azure.Storage.Test
                         );
 
                 TestHelper.AssertExpectedException(
-                    () => Internals.StorageConnectionString.Parse(accountStringSasNoNameNoEndpoint),
+                    () => StorageConnectionString.Parse(accountStringSasNoNameNoEndpoint),
                     new FormatException("No valid combination of account information found.")
                     );
 
-                Internals.StorageConnectionString.Parse(accountStringSasNoNamePrimary); // no exception expected
+                StorageConnectionString.Parse(accountStringSasNoNamePrimary); // no exception expected
 
                 TestHelper.AssertExpectedException(
-                    () => Internals.StorageConnectionString.Parse(accountStringSasNoNameSecondary),
+                    () => StorageConnectionString.Parse(accountStringSasNoNameSecondary),
                     new FormatException("No valid combination of account information found.")
                     );
 
-                Internals.StorageConnectionString.Parse(accountStringSasNoNamePrimarySecondary); // no exception expected
+                StorageConnectionString.Parse(accountStringSasNoNamePrimarySecondary); // no exception expected
             }
         }
 
         private void ValidateRoundTrip(string connectionString)
         {
-            var parsed = Internals.StorageConnectionString.Parse(connectionString);
+            var parsed = StorageConnectionString.Parse(connectionString);
 
             var reserialized = parsed.ToString(true);
 
-            var reparsed = Internals.StorageConnectionString.Parse(reserialized);
+            var reparsed = StorageConnectionString.Parse(reserialized);
 
             // make sure it round trips
             AccountsAreEqual(parsed, reparsed);
@@ -621,28 +615,28 @@ namespace Azure.Storage.Test
         public void TryParseNullEmpty()
         {
             // TryParse should not throw exception when passing in null or empty string
-            Assert.IsFalse(Internals.StorageConnectionString.TryParse(null, out _));
-            Assert.IsFalse(Internals.StorageConnectionString.TryParse(string.Empty, out _));
+            Assert.IsFalse(StorageConnectionString.TryParse(null, out _));
+            Assert.IsFalse(StorageConnectionString.TryParse(string.Empty, out _));
         }
 
         [Test]
         [Description("UseDevelopmentStorage=false should fail")]
-        public void DevStoreNonTrueFails() => Assert.IsFalse(Internals.StorageConnectionString.TryParse("UseDevelopmentStorage=false", out _));
+        public void DevStoreNonTrueFails() => Assert.IsFalse(StorageConnectionString.TryParse("UseDevelopmentStorage=false", out _));
 
         [Test]
         [Description("UseDevelopmentStorage should fail when used with an account name")]
-        public void DevStorePlusAccountFails() => Assert.IsFalse(Internals.StorageConnectionString.TryParse("UseDevelopmentStorage=false;AccountName=devstoreaccount1", out _));
+        public void DevStorePlusAccountFails() => Assert.IsFalse(StorageConnectionString.TryParse("UseDevelopmentStorage=false;AccountName=devstoreaccount1", out _));
 
         [Test]
         [Description("UseDevelopmentStorage should fail when used with a custom endpoint")]
-        public void DevStorePlusEndpointFails() => Assert.IsFalse(Internals.StorageConnectionString.TryParse("UseDevelopmentStorage=false;BlobEndpoint=http://127.0.0.1:1000/devstoreaccount1", out _));
+        public void DevStorePlusEndpointFails() => Assert.IsFalse(StorageConnectionString.TryParse("UseDevelopmentStorage=false;BlobEndpoint=http://127.0.0.1:1000/devstoreaccount1", out _));
 
         [Test]
         [Description("Custom endpoints")]
         public void DefaultEndpointOverride()
         {
 
-            Assert.IsTrue(Internals.StorageConnectionString.TryParse("DefaultEndpointsProtocol=http;BlobEndpoint=http://customdomain.com/;AccountName=asdf;AccountKey=123=", out Internals.StorageConnectionString account));
+            Assert.IsTrue(StorageConnectionString.TryParse("DefaultEndpointsProtocol=http;BlobEndpoint=http://customdomain.com/;AccountName=asdf;AccountKey=123=", out StorageConnectionString account));
             Assert.AreEqual(new Uri("http://customdomain.com/"), account.BlobEndpoint);
             Assert.IsNull(account.BlobStorageUri.SecondaryUri);
         }
@@ -651,7 +645,7 @@ namespace Azure.Storage.Test
         [Description("Use DevStore with a proxy")]
         public void DevStoreProxyUri()
         {
-            Assert.IsTrue(Internals.StorageConnectionString.TryParse("UseDevelopmentStorage=true;DevelopmentStorageProxyUri=http://ipv4.fiddler", out Internals.StorageConnectionString devstoreAccount));
+            Assert.IsTrue(StorageConnectionString.TryParse("UseDevelopmentStorage=true;DevelopmentStorageProxyUri=http://ipv4.fiddler", out StorageConnectionString devstoreAccount));
             Assert.AreEqual(new Uri("http://ipv4.fiddler:10000/devstoreaccount1"), devstoreAccount.BlobEndpoint);
             Assert.AreEqual(new Uri("http://ipv4.fiddler:10001/devstoreaccount1"), devstoreAccount.QueueEndpoint);
             Assert.AreEqual(new Uri("http://ipv4.fiddler:10002/devstoreaccount1"), devstoreAccount.TableEndpoint);
@@ -671,7 +665,7 @@ namespace Azure.Storage.Test
         {
             var accountString = "UseDevelopmentStorage=true";
 
-            Assert.AreEqual(accountString, Internals.StorageConnectionString.Parse(accountString).ToString(true));
+            Assert.AreEqual(accountString, StorageConnectionString.Parse(accountString).ToString(true));
         }
 
         [Test]
@@ -680,7 +674,7 @@ namespace Azure.Storage.Test
         {
             var accountString = "UseDevelopmentStorage=true;DevelopmentStorageProxyUri=http://ipv4.fiddler/";
 
-            Assert.AreEqual(accountString, Internals.StorageConnectionString.Parse(accountString).ToString(true));
+            Assert.AreEqual(accountString, StorageConnectionString.Parse(accountString).ToString(true));
         }
 
         [Test]
@@ -689,7 +683,7 @@ namespace Azure.Storage.Test
         {
             var accountString = "DefaultEndpointsProtocol=http;AccountName=test;AccountKey=abc=";
 
-            Assert.AreEqual(accountString, Internals.StorageConnectionString.Parse(accountString).ToString(true));
+            Assert.AreEqual(accountString, StorageConnectionString.Parse(accountString).ToString(true));
         }
 
         [Test]
@@ -698,11 +692,11 @@ namespace Azure.Storage.Test
         {
             var accountString = "BlobEndpoint=http://blobs/";
 
-            Assert.AreEqual(accountString, Internals.StorageConnectionString.Parse(accountString).ToString(true));
+            Assert.AreEqual(accountString, StorageConnectionString.Parse(accountString).ToString(true));
 
-            var account = new Internals.StorageConnectionString(null, new Uri("http://blobs/"), null, null, null);
+            var account = new StorageConnectionString(null, new Uri("http://blobs/"), null, null, null);
 
-            AccountsAreEqual(account, Internals.StorageConnectionString.Parse(account.ToString(true)));
+            AccountsAreEqual(account, StorageConnectionString.Parse(account.ToString(true)));
         }
 
         [Test]
@@ -711,7 +705,7 @@ namespace Azure.Storage.Test
         {
             var accountKeyString = "abc2564=";
             var accountString = "BlobEndpoint=http://blobs/;AccountName=test;AccountKey=" + accountKeyString;
-            var account = Internals.StorageConnectionString.Parse(accountString);
+            var account = StorageConnectionString.Parse(accountString);
             var accountAndKey = (StorageSharedKeyCredential)account.Credentials;
             var key = accountAndKey.ExportBase64EncodedKey();
             Assert.AreEqual(accountKeyString, key);

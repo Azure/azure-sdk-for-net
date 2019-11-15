@@ -4,12 +4,10 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Storage.Shared;
-using Internals = Azure.Storage.Shared;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal class GetBlobContainersAsyncCollection : Internals.StorageCollectionEnumerator<BlobContainerItem>
+    internal class GetBlobContainersAsyncCollection : StorageCollectionEnumerator<BlobContainerItem>
     {
         private readonly BlobServiceClient _client;
         private readonly BlobContainerTraits _traits;

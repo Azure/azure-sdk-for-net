@@ -4,15 +4,13 @@
 using System;
 using System.Globalization;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.Shared;
-using Internals = Azure.Storage.Shared;
 
 namespace Azure.Storage.Blobs
 {
     /// <summary>
     /// Create exceptions for common error cases.
     /// </summary>
-    internal class BlobErrors : Internals.Errors
+    internal class BlobErrors : Errors
     {
         public static ArgumentOutOfRangeException BlobConditionsMustBeDefault(params string[] conditions) =>
             new ArgumentOutOfRangeException($"The {string.Join(" and ", conditions)} conditions must have their default values because they are ignored by the blob service");

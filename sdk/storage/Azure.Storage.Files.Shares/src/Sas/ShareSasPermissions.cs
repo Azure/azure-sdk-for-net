@@ -3,9 +3,7 @@
 
 using System;
 using System.Text;
-using Azure.Storage.Shared;
 using Azure.Storage.Sas;
-using Internals = Azure.Storage.Shared;
 
 namespace Azure.Storage.Sas
 {
@@ -68,23 +66,23 @@ namespace Azure.Storage.Files.Shares
             var sb = new StringBuilder();
             if ((permissions & ShareSasPermissions.Read) == ShareSasPermissions.Read)
             {
-                sb.Append(Internals.Constants.Sas.Permissions.Read);
+                sb.Append(Constants.Sas.Permissions.Read);
             }
             if ((permissions & ShareSasPermissions.Create) == ShareSasPermissions.Create)
             {
-                sb.Append(Internals.Constants.Sas.Permissions.Create);
+                sb.Append(Constants.Sas.Permissions.Create);
             }
             if ((permissions & ShareSasPermissions.Write) == ShareSasPermissions.Write)
             {
-                sb.Append(Internals.Constants.Sas.Permissions.Write);
+                sb.Append(Constants.Sas.Permissions.Write);
             }
             if ((permissions & ShareSasPermissions.Delete) == ShareSasPermissions.Delete)
             {
-                sb.Append(Internals.Constants.Sas.Permissions.Delete);
+                sb.Append(Constants.Sas.Permissions.Delete);
             }
             if ((permissions & ShareSasPermissions.List) == ShareSasPermissions.List)
             {
-                sb.Append(Internals.Constants.Sas.Permissions.List);
+                sb.Append(Constants.Sas.Permissions.List);
             }
             return sb.ToString();
         }

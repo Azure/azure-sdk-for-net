@@ -5,8 +5,6 @@ using System;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.Shared;
-using Internals = Azure.Storage.Shared;
 
 namespace Azure.Storage.Blobs
 {
@@ -71,7 +69,7 @@ namespace Azure.Storage.Blobs
         /// </param>
         public BlobClientOptions(ServiceVersion version = LatestVersion)
         {
-            Version = version == ServiceVersion.V2019_02_02 ? version : throw Internals.Errors.VersionNotSupported(nameof(version));
+            Version = version == ServiceVersion.V2019_02_02 ? version : throw Errors.VersionNotSupported(nameof(version));
             this.Initialize();
             AddHeadersAndQueryParameters();
         }

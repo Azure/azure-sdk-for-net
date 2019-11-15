@@ -3,7 +3,7 @@
 
 using System;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.Shared;
+
 
 #pragma warning disable SA1402  // File may only contain a single type
 

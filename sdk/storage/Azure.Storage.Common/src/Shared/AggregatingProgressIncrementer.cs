@@ -6,13 +6,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-#if CommonSDK
-using Internals = Azure.Storage.Shared.Common;
-namespace Azure.Storage.Shared.Common
-#else
-using Internals = Azure.Storage.Shared;
-namespace Azure.Storage.Shared
-#endif
+namespace Azure.Storage
 {
     /// <summary>
     /// An accumulator for request and response data transfers.
@@ -49,7 +43,7 @@ namespace Azure.Storage.Shared
         /// <summary>
         /// Returns an instance that no-ops accumulation.
         /// </summary>
-        public static Internals.AggregatingProgressIncrementer None { get; } = new Internals.AggregatingProgressIncrementer(default);
+        public static AggregatingProgressIncrementer None { get; } = new AggregatingProgressIncrementer(default);
 
         /// <summary>
         /// Returns a long instance representing the current progress value.

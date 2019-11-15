@@ -14,7 +14,6 @@ using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
-using Internals = Azure.Storage.Shared.Common;
 
 namespace Azure.Storage.Files.DataLake.Tests
 {
@@ -54,7 +53,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Retry =
                 {
                     Mode = RetryMode.Exponential,
-                    MaxRetries = Internals.Constants.MaxReliabilityRetries,
+                    MaxRetries = Constants.MaxReliabilityRetries,
                     Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
                     MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 10)
                 }
