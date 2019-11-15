@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Billing
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/billing/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\\Users\\ansar\\Documents\\GitHub\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "171725b7357d1ea469541c46b8ad40e42c833b97";
+      public static readonly String GithubCommidId = "12e0f25e050206c77422151da8f3531f8cc65ce4";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

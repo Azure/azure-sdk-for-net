@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Billing.Models
     public static class MarketplacePurchasesPolicy
     {
         public const string AllAllowed = "AllAllowed";
-        public const string FreeAllowed = "FreeAllowed";
+        public const string OnlyFreeAllowed = "OnlyFreeAllowed";
         public const string NotAllowed = "NotAllowed";
     }
 }

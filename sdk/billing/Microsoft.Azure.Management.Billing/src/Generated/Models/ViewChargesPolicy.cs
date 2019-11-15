@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Billing.Models
     /// </summary>
     public static class ViewChargesPolicy
     {
-        public const string None = "None";
-        public const string SubscriptionOwner = "SubscriptionOwner";
+        public const string Allowed = "Allowed";
+        public const string NotAllowed = "NotAllowed";
     }
 }
