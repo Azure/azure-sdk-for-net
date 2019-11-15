@@ -188,7 +188,7 @@ namespace Azure.Messaging.EventHubs
             Connection = new EventHubConnection(connectionString, eventHubName, producerOptions.ConnectionOptions);
             Options = producerOptions;
             RetryPolicy = producerOptions.RetryOptions.ToRetryPolicy();
-            GatewayProducer = Connection.CreateTransportProducer(null, producerOptions);
+            GatewayProducer = Connection.CreateTransportProducer(null, RetryPolicy);
         }
 
         /// <summary>
@@ -215,7 +215,7 @@ namespace Azure.Messaging.EventHubs
             Connection = new EventHubConnection(fullyQualifiedNamespace, eventHubName, credential, producerOptions.ConnectionOptions);
             Options = producerOptions;
             RetryPolicy = producerOptions.RetryOptions.ToRetryPolicy();
-            GatewayProducer = Connection.CreateTransportProducer(null, producerOptions);
+            GatewayProducer = Connection.CreateTransportProducer(null, RetryPolicy);
         }
 
         /// <summary>
@@ -235,7 +235,7 @@ namespace Azure.Messaging.EventHubs
             Connection = connection;
             Options = producerOptions;
             RetryPolicy = producerOptions.RetryOptions.ToRetryPolicy();
-            GatewayProducer = Connection.CreateTransportProducer(null, producerOptions);
+            GatewayProducer = Connection.CreateTransportProducer(null, RetryPolicy);
         }
 
         /// <summary>
@@ -421,7 +421,7 @@ namespace Azure.Messaging.EventHubs
             }
             else
             {
-                activeProducer = PartitionProducers.GetOrAdd(options.PartitionId, id => Connection.CreateTransportProducer(id, Options));
+                activeProducer = PartitionProducers.GetOrAdd(options.PartitionId, id => Connection.CreateTransportProducer(id, RetryPolicy));
             }
 
             using DiagnosticScope scope = CreateDiagnosticScope();
@@ -472,7 +472,7 @@ namespace Azure.Messaging.EventHubs
             }
             else
             {
-                activeProducer = PartitionProducers.GetOrAdd(eventBatch.SendOptions.PartitionId, id => Connection.CreateTransportProducer(id, Options));
+                activeProducer = PartitionProducers.GetOrAdd(eventBatch.SendOptions.PartitionId, id => Connection.CreateTransportProducer(id, RetryPolicy));
             }
 
             using DiagnosticScope scope = CreateDiagnosticScope();

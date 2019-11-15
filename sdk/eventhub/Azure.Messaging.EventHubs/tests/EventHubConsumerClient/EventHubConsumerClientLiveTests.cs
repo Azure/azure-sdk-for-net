@@ -34,6 +34,9 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <summary>The default retry policy to use when performing operations.</summary>
         private readonly EventHubsRetryPolicy DefaultRetryPolicy = new RetryOptions().ToRetryPolicy();
 
+        /// <summary>The default set of options for reading, allowing a small wait time.</summary>
+        private readonly ReadOptions DefaultReadOptions = new ReadOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(250) };
+
         /// <summary>
         ///   Verifies that the <see cref="EventHubConsumerClient" /> is able to
         ///   connect to the Event Hubs service and perform operations.
@@ -73,7 +76,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
-                var options = new EventHubConsumerClientOptions { TrackLastEnqueuedEventInformation = false };
+                var options = new EventHubConsumerClientOptions { RetryOptions = new RetryOptions { MaximumRetries = 7 } };
 
                 await using (var connection = new EventHubConnection(connectionString, new EventHubConnectionOptions { TransportType = transportType }))
                 {
@@ -117,14 +120,16 @@ namespace Azure.Messaging.EventHubs.Tests
                         var consecutiveEmpties = 0;
                         var wereEventsPublished = false;
 
-                        await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, TimeSpan.FromMilliseconds(50)))
+                        await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, DefaultReadOptions))
                         {
                             // Send a single event to receive.
 
                             if (!wereEventsPublished)
                             {
                                 await producer.SendAsync(eventBatch, new SendOptions { PartitionId = partition });
+
                                 wereEventsPublished = true;
+                                continue;
                             }
 
                             if (partitionEvent.Data != null)
@@ -185,14 +190,16 @@ namespace Azure.Messaging.EventHubs.Tests
                         var consecutiveEmpties = 0;
                         var wereEventsPublished = false;
 
-                        await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, TimeSpan.FromMilliseconds(50)))
+                        await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, DefaultReadOptions))
                         {
                             // Send a single event to receive.
 
                             if (!wereEventsPublished)
                             {
                                 await producer.SendAsync(eventBatch, new SendOptions { PartitionId = partition });
+
                                 wereEventsPublished = true;
+                                continue;
                             }
 
                             if (partitionEvent.Data != null)
@@ -255,14 +262,16 @@ namespace Azure.Messaging.EventHubs.Tests
                         var consecutiveEmpties = 0;
                         var wereEventsPublished = false;
 
-                        await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, TimeSpan.FromMilliseconds(50)))
+                        await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, DefaultReadOptions))
                         {
                             // Send a single event to receive.
 
                             if (!wereEventsPublished)
                             {
                                 await producer.SendAsync(eventSet, new SendOptions { PartitionId = partition });
+
                                 wereEventsPublished = true;
+                                continue;
                             }
 
                             if (partitionEvent.Data != null)
@@ -327,21 +336,24 @@ namespace Azure.Messaging.EventHubs.Tests
                         var receivedEvents = new List<EventData>();
                         var consecutiveEmpties = 0;
                         var wereEventsPublished = false;
+                        var readOptions = new ReadOptions { MaximumWaitTime = TimeSpan.FromSeconds(2) };
 
-                        await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, TimeSpan.FromMilliseconds(50)))
+                        await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, readOptions))
                         {
                             // Send a single event to receive.
 
                             if (!wereEventsPublished)
                             {
                                 await producer.SendAsync(eventBatch, new SendOptions { PartitionId = partition });
+
                                 wereEventsPublished = true;
+                                continue;
                             }
 
                             if (partitionEvent.Data != null)
                             {
                                 receivedEvents.Add(partitionEvent.Data);
-                                consecutiveEmpties = 0;
+                                break;
                             }
                             else if (++consecutiveEmpties >= 5)
                             {
@@ -405,14 +417,16 @@ namespace Azure.Messaging.EventHubs.Tests
                         var consecutiveEmpties = 0;
                         var wereEventsPublished = false;
 
-                        await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, TimeSpan.FromMilliseconds(50)))
+                        await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, DefaultReadOptions))
                         {
                             // Send a single event to receive.
 
                             if (!wereEventsPublished)
                             {
                                 await producer.SendAsync(eventBatch, new SendOptions { PartitionId = partition });
+
                                 wereEventsPublished = true;
+                                continue;
                             }
 
                             if (partitionEvent.Data != null)
@@ -477,14 +491,16 @@ namespace Azure.Messaging.EventHubs.Tests
                             await producer.SendAsync(new EventData(new byte[1]));
                         }
 
-                        await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, TimeSpan.FromMilliseconds(50)))
+                        await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, DefaultReadOptions))
                         {
                             // Send a single event to receive.
 
                             if (!wereEventsPublished)
                             {
                                 await producer.SendAsync(stampEvent, new SendOptions { PartitionId = partition });
+
                                 wereEventsPublished = true;
+                                continue;
                             }
 
                             if (partitionEvent.Data != null)
@@ -535,7 +551,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         var consecutiveEmpties = 0;
                         var receivedEvents = new List<EventData>();
 
-                        await foreach (PartitionEvent partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Earliest, TimeSpan.FromMilliseconds(50)))
+                        await foreach (PartitionEvent partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Earliest, DefaultReadOptions))
                         {
                             if (partitionEvent.Data != null)
                             {
@@ -597,8 +613,9 @@ namespace Azure.Messaging.EventHubs.Tests
                             var expectedEventsCount = 2;
                             var consecutiveEmpties = 0;
                             var receivedEvents = new List<EventData>();
+                            var readOptions = new ReadOptions { MaximumWaitTime = TimeSpan.FromSeconds(1) };
 
-                            await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.FromOffset(offset), TimeSpan.FromMilliseconds(50)))
+                            await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.FromOffset(offset), readOptions))
                             {
                                 if (partitionEvent.Data != null)
                                 {
@@ -663,8 +680,9 @@ namespace Azure.Messaging.EventHubs.Tests
                             var expectedEventsCount = 1;
                             var consecutiveEmpties = 0;
                             var receivedEvents = new List<EventData>();
+                            var readOptions = new ReadOptions { MaximumWaitTime = TimeSpan.FromSeconds(1) };
 
-                            await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.FromEnqueuedTime(enqueuedTime), TimeSpan.FromMilliseconds(50)))
+                            await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.FromEnqueuedTime(enqueuedTime), readOptions))
                             {
                                 if (partitionEvent.Data != null)
                                 {
@@ -730,8 +748,9 @@ namespace Azure.Messaging.EventHubs.Tests
                             var expectedEventsCount = isInclusive ? 2 : 1;
                             var consecutiveEmpties = 0;
                             var receivedEvents = new List<EventData>();
+                            var readOptions = new ReadOptions { MaximumWaitTime = TimeSpan.FromSeconds(1) };
 
-                            await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.FromSequenceNumber(sequenceNumber, isInclusive), TimeSpan.FromMilliseconds(50)))
+                            await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.FromSequenceNumber(sequenceNumber, isInclusive), readOptions))
                             {
                                 if (partitionEvent.Data != null)
                                 {
@@ -779,7 +798,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             var countBeforeClose = 3;
                             var closeCalled = false;
 
-                            await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, TimeSpan.FromMilliseconds(50)))
+                            await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, DefaultReadOptions))
                             {
                                 ++count;
 
@@ -872,11 +891,14 @@ namespace Azure.Messaging.EventHubs.Tests
                     var partition = (await connection.GetPartitionIdsAsync(DefaultRetryPolicy)).First();
                     var firstIteration = true;
 
+                    var exclusiveReadOptions = DefaultReadOptions.Clone();
+                    exclusiveReadOptions.OwnerLevel = 20;
+
                     using var cancellationSource = new CancellationTokenSource();
                     cancellationSource.CancelAfter(TimeSpan.FromMinutes(5));
 
-                    await using var exclusiveConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection, new EventHubConsumerClientOptions { OwnerLevel = 20 });
-                    await foreach (var exclusiveEvent in exclusiveConsumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, TimeSpan.FromMilliseconds(50), cancellationSource.Token))
+                    await using var exclusiveConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection);
+                    await foreach (var exclusiveEvent in exclusiveConsumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, exclusiveReadOptions, cancellationSource.Token))
                     {
                         if (!firstIteration)
                         {
@@ -905,22 +927,25 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
-                await using (var connection = new EventHubConnection(connectionString))
+                await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString))
                 {
-                    var partition = (await connection.GetPartitionIdsAsync(DefaultRetryPolicy)).First();
+                    var partition = (await consumer.GetPartitionIdsAsync()).First();
                     var firstIteration = true;
+
+                    var higherExclusiveReadOptions = DefaultReadOptions.Clone();
+                    higherExclusiveReadOptions.OwnerLevel = 30;
 
                     using var cancellationSource = new CancellationTokenSource();
                     cancellationSource.CancelAfter(TimeSpan.FromMinutes(5));
 
-                    await using var higherExclusiveConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection, new EventHubConsumerClientOptions { OwnerLevel = 20 });
-                    await foreach (var higherEvent in higherExclusiveConsumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, TimeSpan.FromMilliseconds(50), cancellationSource.Token))
+                    await foreach (var higherEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, higherExclusiveReadOptions, cancellationSource.Token))
                     {
                         if (!firstIteration)
                         {
-                            await using var lowerExclusiveConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection, new EventHubConsumerClientOptions { OwnerLevel = 10 });
-                            Assert.That(async () => await ReadNothingAsync(lowerExclusiveConsumer, partition, EventPosition.Latest), Throws.InstanceOf<ConsumerDisconnectedException>());
+                            var lowerExclusiveReadOptions = DefaultReadOptions.Clone();
+                            lowerExclusiveReadOptions.OwnerLevel = 20;
 
+                            Assert.That(async () => await ReadNothingAsync(consumer, partition, EventPosition.Latest, lowerExclusiveReadOptions), Throws.InstanceOf<ConsumerDisconnectedException>());
                             break;
                         }
 
@@ -943,24 +968,26 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
-                await using (var connection = new EventHubConnection(connectionString))
+                await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString))
                 {
-                    var partitionIds = await connection.GetPartitionIdsAsync(DefaultRetryPolicy);
+                    var partitionIds = (await consumer.GetPartitionIdsAsync());
                     var firstIteration = true;
+
+                    var higherExclusiveReadOptions = DefaultReadOptions.Clone();
+                    higherExclusiveReadOptions.OwnerLevel = 20;
 
                     var cancellationSource = new CancellationTokenSource();
                     cancellationSource.CancelAfter(TimeSpan.FromMinutes(5));
 
-                    await using var higherExclusiveConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection, new EventHubConsumerClientOptions { OwnerLevel = 20 });
-                    await foreach (var higherEvent in higherExclusiveConsumer.ReadEventsFromPartitionAsync(partitionIds[0], EventPosition.Latest, TimeSpan.FromMilliseconds(50), cancellationSource.Token))
+                    await foreach (var higherEvent in consumer.ReadEventsFromPartitionAsync(partitionIds[0], EventPosition.Latest, higherExclusiveReadOptions, cancellationSource.Token))
                     {
                         if (!firstIteration)
                         {
-                            await using var lowerExclusiveConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection, new EventHubConsumerClientOptions { OwnerLevel = 10 });
-                            Assert.That(async () => await ReadNothingAsync(lowerExclusiveConsumer, partitionIds[1], EventPosition.Latest), Throws.Nothing);
+                            var lowerExclusiveReadOptions = DefaultReadOptions.Clone();
+                            lowerExclusiveReadOptions.OwnerLevel = 10;
 
-                            await using var nonExclusiveConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection, new EventHubConsumerClientOptions { OwnerLevel = 10 });
-                            Assert.That(async () => await ReadNothingAsync(nonExclusiveConsumer, partitionIds[2], EventPosition.Latest), Throws.Nothing);
+                            Assert.That(async () => await ReadNothingAsync(consumer, partitionIds[1], EventPosition.Latest, lowerExclusiveReadOptions), Throws.Nothing);
+                            Assert.That(async () => await ReadNothingAsync(consumer, partitionIds[2], EventPosition.Latest, DefaultReadOptions), Throws.Nothing);
 
                             break;
                         }
@@ -998,13 +1025,19 @@ namespace Azure.Messaging.EventHubs.Tests
                     using var cancellationSource = new CancellationTokenSource();
                     cancellationSource.CancelAfter(TimeSpan.FromMinutes(5));
 
-                    await using var higherExclusiveConsumer = new EventHubConsumerClient(consumerGroups[0], connection, new EventHubConsumerClientOptions { OwnerLevel = 20 });
-                    await foreach (var higherEvent in higherExclusiveConsumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, TimeSpan.FromMilliseconds(50), cancellationSource.Token))
+                    var higherExclusiveReadOptions = DefaultReadOptions.Clone();
+                    higherExclusiveReadOptions.OwnerLevel = 20;
+
+                    await using var higherExclusiveConsumer = new EventHubConsumerClient(consumerGroups[0], connection);
+                    await foreach (var higherEvent in higherExclusiveConsumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, higherExclusiveReadOptions, cancellationSource.Token))
                     {
                         if (!firstIteration)
                         {
-                            await using var lowerExclusiveConsumer = new EventHubConsumerClient(consumerGroups[1], connection, new EventHubConsumerClientOptions { OwnerLevel = 10 });
-                            Assert.That(async () => await ReadNothingAsync(lowerExclusiveConsumer, partition, EventPosition.Latest), Throws.Nothing);
+                            var lowerExclusiveReadOptions = DefaultReadOptions.Clone();
+                            lowerExclusiveReadOptions.OwnerLevel = 10;
+
+                            await using var lowerExclusiveConsumer = new EventHubConsumerClient(consumerGroups[1], connection);
+                            Assert.That(async () => await ReadNothingAsync(lowerExclusiveConsumer, partition, EventPosition.Latest, lowerExclusiveReadOptions), Throws.Nothing);
 
                             await using var nonExclusiveConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection);
                             Assert.That(async () => await ReadNothingAsync(nonExclusiveConsumer, partition, EventPosition.Latest), Throws.Nothing);
@@ -1031,9 +1064,9 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
-                await using (var connection = new EventHubConnection(connectionString))
+                await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString))
                 {
-                    var partition = (await connection.GetPartitionIdsAsync(DefaultRetryPolicy)).First();
+                    var partition = (await consumer.GetPartitionIdsAsync()).First();
                     var firstIteration = true;
 
                     using var cancellationSource = new CancellationTokenSource();
@@ -1041,21 +1074,22 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // Non-exclusive may read before an exclusive claims.
 
-                    await using var nonExclusiveConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection);
-                    Assert.That(async () => await ReadNothingAsync(nonExclusiveConsumer, partition, EventPosition.Latest), Throws.Nothing);
+                    Assert.That(async () => await ReadNothingAsync(consumer, partition, EventPosition.Latest), Throws.Nothing);
 
                     // Exclusive may read without an issue.
 
-                    await using var exclusiveConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection, new EventHubConsumerClientOptions { OwnerLevel = 20 });
-                    Assert.That(async () => await ReadNothingAsync(exclusiveConsumer, partition, EventPosition.Latest), Throws.Nothing);
+                    var exclusiveReadOptions = DefaultReadOptions.Clone();
+                    exclusiveReadOptions.OwnerLevel = 20;
+
+                    Assert.That(async () => await ReadNothingAsync(consumer, partition, EventPosition.Latest, exclusiveReadOptions), Throws.Nothing);
 
                     // Once the exclusive is active, ensure that the non-exclusive is denied access.
 
-                    await foreach (var exclusiveEvent in exclusiveConsumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, TimeSpan.FromMilliseconds(50), cancellationSource.Token))
+                    await foreach (var exclusiveEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, exclusiveReadOptions, cancellationSource.Token))
                     {
                         if (!firstIteration)
                         {
-                            Assert.That(async () => await ReadNothingAsync(nonExclusiveConsumer, partition, EventPosition.Latest), Throws.InstanceOf<ConsumerDisconnectedException>());
+                            Assert.That(async () => await ReadNothingAsync(consumer, partition, EventPosition.Latest), Throws.InstanceOf<ConsumerDisconnectedException>());
                             break;
                         }
 
@@ -1078,31 +1112,35 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
-                await using (var connection = new EventHubConnection(connectionString))
+                await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString))
                 {
-                    var partition = (await connection.GetPartitionIdsAsync(DefaultRetryPolicy)).First();
+                    var partition = (await consumer.GetPartitionIdsAsync()).First();
                     var firstIteration = true;
+
+                    var higherExclusiveReadOptions = DefaultReadOptions.Clone();
+                    higherExclusiveReadOptions.OwnerLevel = 30;
+
+                    var lowerExclusiveReadOptions = DefaultReadOptions.Clone();
+                    lowerExclusiveReadOptions.OwnerLevel = 20;
 
                     using var cancellationSource = new CancellationTokenSource();
                     cancellationSource.CancelAfter(TimeSpan.FromMinutes(5));
 
                     // Non-exclusive may read before an exclusive claims.
 
-                    await using var lowerExclusiveConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection, new EventHubConsumerClientOptions { OwnerLevel = 10 });
-                    Assert.That(async () => await ReadNothingAsync(lowerExclusiveConsumer, partition, EventPosition.Latest), Throws.Nothing);
+                    Assert.That(async () => await ReadNothingAsync(consumer, partition, EventPosition.Latest, lowerExclusiveReadOptions), Throws.Nothing);
 
                     // Exclusive may read without an issue.
 
-                    await using var higherExclusiveConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection, new EventHubConsumerClientOptions { OwnerLevel = 20 });
-                    Assert.That(async () => await ReadNothingAsync(higherExclusiveConsumer, partition, EventPosition.Latest), Throws.Nothing);
+                    Assert.That(async () => await ReadNothingAsync(consumer, partition, EventPosition.Latest, higherExclusiveReadOptions), Throws.Nothing);
 
                     // Once the exclusive is active, ensure that the non-exclusive is denied access.
 
-                    await foreach (var higherEvent in higherExclusiveConsumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, TimeSpan.FromMilliseconds(50), cancellationSource.Token))
+                    await foreach (var higherEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, higherExclusiveReadOptions, cancellationSource.Token))
                     {
                         if (!firstIteration)
                         {
-                            Assert.That(async () => await ReadNothingAsync(lowerExclusiveConsumer, partition, EventPosition.Latest), Throws.InstanceOf<ConsumerDisconnectedException>());
+                            Assert.That(async () => await ReadNothingAsync(consumer, partition, EventPosition.Latest, lowerExclusiveReadOptions), Throws.InstanceOf<ConsumerDisconnectedException>());
                             break;
                         }
 
@@ -1125,9 +1163,9 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
-                await using (var connection = new EventHubConnection(connectionString))
+                await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString))
                 {
-                    var partitionIds = await connection.GetPartitionIdsAsync(DefaultRetryPolicy);
+                    var partitionIds = await consumer.GetPartitionIdsAsync();
                     var firstIteration = true;
 
                     using var cancellationSource = new CancellationTokenSource();
@@ -1135,8 +1173,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // Begin reading with the non-exclusive consumer so that it is actively engaged when the others read.
 
-                    await using var nonExclusiveConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection);
-                    await foreach (var nonExclusiveEvent in nonExclusiveConsumer.ReadEventsFromPartitionAsync(partitionIds[0], EventPosition.Latest, TimeSpan.FromMilliseconds(50), cancellationSource.Token))
+                    await foreach (var nonExclusiveEvent in consumer.ReadEventsFromPartitionAsync(partitionIds[0], EventPosition.Latest, DefaultReadOptions, cancellationSource.Token))
                     {
                         if (!firstIteration)
                         {
@@ -1144,16 +1181,19 @@ namespace Azure.Messaging.EventHubs.Tests
 
                             var innerFirstIteration = true;
 
-                            await using var lowerExclusiveConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection, new EventHubConsumerClientOptions { OwnerLevel = 10 });
-                            await foreach (var lowerExclusiveEvent in lowerExclusiveConsumer.ReadEventsFromPartitionAsync(partitionIds[1], EventPosition.Latest, TimeSpan.FromMilliseconds(50), cancellationSource.Token))
+                            var lowerExclusiveReadOptions = DefaultReadOptions.Clone();
+                            lowerExclusiveReadOptions.OwnerLevel = 20;
+
+                            await foreach (var lowerExclusiveEvent in consumer.ReadEventsFromPartitionAsync(partitionIds[1], EventPosition.Latest, lowerExclusiveReadOptions, cancellationSource.Token))
                             {
                                 // Ensure that the higher level consumer can read without interfering with the other active consumers.
 
                                 if (!innerFirstIteration)
                                 {
-                                    await using var higherExclusiveConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection, new EventHubConsumerClientOptions { OwnerLevel = 20 });
-                                    Assert.That(async () => await ReadNothingAsync(higherExclusiveConsumer, partitionIds[2], EventPosition.Latest), Throws.Nothing);
+                                    var higherExclusiveReadOptions = DefaultReadOptions.Clone();
+                                    higherExclusiveReadOptions.OwnerLevel = 30;
 
+                                    Assert.That(async () => await ReadNothingAsync(consumer, partitionIds[2], EventPosition.Latest, higherExclusiveReadOptions), Throws.Nothing);
                                     break;
                                 }
 
@@ -1198,19 +1238,25 @@ namespace Azure.Messaging.EventHubs.Tests
                     cancellationSource.CancelAfter(TimeSpan.FromMinutes(5));
 
                     await using var nonExclusiveConsumer = new EventHubConsumerClient(consumerGroups[0], connection);
-                    await foreach (var exclusiveEvent in nonExclusiveConsumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, TimeSpan.FromMilliseconds(50), cancellationSource.Token))
+                    await foreach (var nonExclusiveEvent in nonExclusiveConsumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, DefaultReadOptions, cancellationSource.Token))
                     {
                         if (!firstIteration)
                         {
                             var innerFirstIteration = true;
 
-                            await using var lowerExclusiveConsumer = new EventHubConsumerClient(consumerGroups[1], connection, new EventHubConsumerClientOptions { OwnerLevel = 10 });
-                            await foreach (var lowerEvent in lowerExclusiveConsumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, TimeSpan.FromMilliseconds(50), cancellationSource.Token))
+                            var lowerExclusiveReadOptions = DefaultReadOptions.Clone();
+                            lowerExclusiveReadOptions.OwnerLevel = 10;
+
+                            await using var lowerExclusiveConsumer = new EventHubConsumerClient(consumerGroups[1], connection);
+                            await foreach (var lowerEvent in lowerExclusiveConsumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, lowerExclusiveReadOptions, cancellationSource.Token))
                             {
                                 if (!innerFirstIteration)
                                 {
-                                    await using var higherExclusiveConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection, new EventHubConsumerClientOptions { OwnerLevel = 20 });
-                                    Assert.That(async () => await ReadNothingAsync(higherExclusiveConsumer, partition, EventPosition.Latest), Throws.Nothing);
+                                    var higherExclusiveReadOptions = DefaultReadOptions.Clone();
+                                    higherExclusiveReadOptions.OwnerLevel = 20;
+
+                                    await using var higherExclusiveConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection);
+                                    Assert.That(async () => await ReadNothingAsync(higherExclusiveConsumer, partition, EventPosition.Latest, higherExclusiveReadOptions), Throws.Nothing);
 
                                     break;
                                 }
@@ -1243,9 +1289,9 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
-                await using (var connection = new EventHubConnection(connectionString))
+                await using (var defaultGroupConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString))
                 {
-                    var partitionIds = await connection.GetPartitionIdsAsync(DefaultRetryPolicy);
+                    var partitionIds = await defaultGroupConsumer.GetPartitionIdsAsync();
 
                     using var cancellationSource = new CancellationTokenSource();
                     cancellationSource.CancelAfter(TimeSpan.FromMinutes(5));
@@ -1256,42 +1302,44 @@ namespace Azure.Messaging.EventHubs.Tests
                     var firstIteration = true;
                     var scenariosComplete = false;
 
-                    await using var lowerExclusiveConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection, new EventHubConsumerClientOptions { OwnerLevel = 20 });
+                    var lowerExclusiveReadOptions = DefaultReadOptions.Clone();
+                    lowerExclusiveReadOptions.OwnerLevel = 10;
 
                     try
                     {
-                        await foreach (var lowerEvent in lowerExclusiveConsumer.ReadEventsFromPartitionAsync(partitionIds[0], EventPosition.Latest, TimeSpan.FromMilliseconds(50), cancellationSource.Token))
+                        await foreach (var lowerEvent in defaultGroupConsumer.ReadEventsFromPartitionAsync(partitionIds[0], EventPosition.Latest, lowerExclusiveReadOptions, cancellationSource.Token))
                         {
                             if (!firstIteration)
                             {
                                 // Since there is an exclusive consumer reading, the non-exclusive consumer should be rejected.
 
-                                await using var nonExclusiveConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection);
-                                Assert.That(async () => await ReadNothingAsync(nonExclusiveConsumer, partitionIds[0], EventPosition.Latest), Throws.InstanceOf<ConsumerDisconnectedException>());
+                                Assert.That(async () => await ReadNothingAsync(defaultGroupConsumer, partitionIds[0], EventPosition.Latest), Throws.InstanceOf<ConsumerDisconnectedException>());
 
                                 // Create the higher level exclusive consumer; this should force the lower exclusive consumer to disconnect.
 
                                 var innerFirstIteration = true;
 
-                                await using var higherExclusiveConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection, new EventHubConsumerClientOptions { OwnerLevel = 30 });
-                                await foreach (var higherEvent in higherExclusiveConsumer.ReadEventsFromPartitionAsync(partitionIds[0], EventPosition.Latest, TimeSpan.FromMilliseconds(50), cancellationSource.Token))
+                                var higherExclusiveReadOptions = DefaultReadOptions.Clone();
+                                higherExclusiveReadOptions.OwnerLevel = 20;
+
+                                await foreach (var higherEvent in defaultGroupConsumer.ReadEventsFromPartitionAsync(partitionIds[0], EventPosition.Latest, higherExclusiveReadOptions, cancellationSource.Token))
                                 {
                                     if (!innerFirstIteration)
                                     {
                                         // Consumers for other partitions and consumer groups should be allowed to read without interference.
 
-                                        await using var differentConsumerGroupConsumer = new EventHubConsumerClient(customConsumerGroup, connection);
+                                        await using var differentConsumerGroupConsumer = new EventHubConsumerClient(customConsumerGroup, connectionString);
                                         Assert.That(async () => await ReadNothingAsync(differentConsumerGroupConsumer, partitionIds[0], EventPosition.Latest), Throws.Nothing);
 
-                                        await using var differentPartitionConsumer = new EventHubConsumerClient(customConsumerGroup, connection);
-                                        Assert.That(async () => await ReadNothingAsync(differentPartitionConsumer, partitionIds[1], EventPosition.Latest), Throws.Nothing);
+                                        await using var differentGroupAndPartitionConsumer = new EventHubConsumerClient(customConsumerGroup, connectionString);
+                                        Assert.That(async () => await ReadNothingAsync(differentGroupAndPartitionConsumer, partitionIds[1], EventPosition.Latest), Throws.Nothing);
 
                                         // Exceptions for invalid resources should continue to be thrown.
 
-                                        await using var invalidConsumerGroupConsumer = new EventHubConsumerClient("XYZ", connection);
+                                        await using var invalidConsumerGroupConsumer = new EventHubConsumerClient("XYZ", connectionString);
                                         Assert.That(async () => await ReadNothingAsync(invalidConsumerGroupConsumer, partitionIds[0], EventPosition.Latest), Throws.InstanceOf<EventHubsResourceNotFoundException>());
 
-                                        await using var invalidPartitionConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection);
+                                        await using var invalidPartitionConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString);
                                         Assert.That(async () => await ReadNothingAsync(invalidPartitionConsumer, "ABC", EventPosition.Latest), Throws.InstanceOf<ArgumentOutOfRangeException>());
 
                                         scenariosComplete = true;
@@ -1336,34 +1384,35 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
-                await using (var connection = new EventHubConnection(connectionString))
+                await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString))
                 {
-                    var partition = (await connection.GetPartitionIdsAsync(DefaultRetryPolicy)).First();
+                    var partition = (await consumer.GetPartitionIdsAsync()).First();
 
                     using var cancellationSource = new CancellationTokenSource();
                     cancellationSource.CancelAfter(TimeSpan.FromMinutes(5));
 
                     // Begin with attempting to read from an invalid partition.
 
-                    await using var invalidPartitionConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection);
-                    Assert.That(async () => await ReadNothingAsync(invalidPartitionConsumer, "XYZ", EventPosition.Latest), Throws.InstanceOf<ArgumentOutOfRangeException>());
+                    Assert.That(async () => await ReadNothingAsync(consumer, "XYZ", EventPosition.Latest), Throws.InstanceOf<ArgumentOutOfRangeException>());
 
                     // It should be possible to create new valid consumers.
 
-                    await using var exclusiveConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection, new EventHubConsumerClientOptions { OwnerLevel = 20 });
-                    Assert.That(async () => await ReadNothingAsync(exclusiveConsumer, partition, EventPosition.Latest), Throws.Nothing);
+                    var exclusiveReadOptions = DefaultReadOptions.Clone();
+                    exclusiveReadOptions.OwnerLevel = 20;
+
+                    Assert.That(async () => await ReadNothingAsync(consumer, partition, EventPosition.Latest, exclusiveReadOptions), Throws.Nothing);
 
                     // Exceptions should continue to be thrown properly.
 
-                    await foreach (var exclusiveItem in exclusiveConsumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, TimeSpan.FromMilliseconds(50), cancellationSource.Token))
+                    await foreach (var exclusiveItem in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, exclusiveReadOptions, cancellationSource.Token))
                     {
-                        await using var invalidConsumerGroupConsumer = new EventHubConsumerClient("fake", connection);
+                        await using var invalidConsumerGroupConsumer = new EventHubConsumerClient("fake", connectionString);
                         Assert.That(async () => await ReadNothingAsync(invalidConsumerGroupConsumer, partition, EventPosition.Latest), Throws.InstanceOf<EventHubsResourceNotFoundException>());
 
-                        await using var otherInvalidPartitionConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection);
+                        await using var otherInvalidPartitionConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString);
                         Assert.That(async () => await ReadNothingAsync(otherInvalidPartitionConsumer, "ABC", EventPosition.Latest), Throws.InstanceOf<ArgumentOutOfRangeException>());
 
-                        await using var nonExclusiveConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection);
+                        await using var nonExclusiveConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString);
                         Assert.That(async () => await ReadNothingAsync(nonExclusiveConsumer, partition, EventPosition.Latest), Throws.InstanceOf<ConsumerDisconnectedException>());
 
                         break;
@@ -1388,6 +1437,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var partition = (await connection.GetPartitionIdsAsync(DefaultRetryPolicy)).First();
 
+                    var exclusiveReadOptions = DefaultReadOptions.Clone();
+                    exclusiveReadOptions.OwnerLevel = 20;
+
                     using var cancellationSource = new CancellationTokenSource();
                     cancellationSource.CancelAfter(TimeSpan.FromMinutes(5));
 
@@ -1398,14 +1450,14 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // It should be possible to create new valid consumers.
 
-                    await using var exclusiveConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection, new EventHubConsumerClientOptions { OwnerLevel = 20 });
-                    Assert.That(async () => await ReadNothingAsync(exclusiveConsumer, partition, EventPosition.Latest), Throws.Nothing);
+                    await using var exclusiveConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection);
+                    Assert.That(async () => await ReadNothingAsync(exclusiveConsumer, partition, EventPosition.Latest, exclusiveReadOptions), Throws.Nothing);
 
                     // Exceptions should continue to be thrown properly.
 
                     var firstIteration = true;
 
-                    await foreach (var exclusiveItem in exclusiveConsumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, TimeSpan.FromMilliseconds(50), cancellationSource.Token))
+                    await foreach (var exclusiveItem in exclusiveConsumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, exclusiveReadOptions, cancellationSource.Token))
                     {
                         if (!firstIteration)
                         {
@@ -1462,7 +1514,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     var maximumConsecutiveEmpties = 5;
                     var consecutiveEmpties = 0;
 
-                    await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partitionIds[1], EventPosition.Latest, TimeSpan.FromMilliseconds(50), cancellationSource.Token))
+                    await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partitionIds[1], EventPosition.Latest, DefaultReadOptions, cancellationSource.Token))
                     {
                         if (!wereEventsPublished)
                         {
@@ -1476,6 +1528,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             }
 
                             wereEventsPublished = true;
+                            continue;
                         }
 
                         if (partitionEvent.Data != null)
@@ -1536,14 +1589,15 @@ namespace Azure.Messaging.EventHubs.Tests
                     var consecutiveEmpties = 0;
                     var consumerReceivedEvents = new List<EventData>();
                     var anotherReceivedEvents = new List<EventData>();
+                    var readOptions = new ReadOptions { MaximumWaitTime = TimeSpan.FromSeconds(1) };
 
 
-                    await foreach (var consumerEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Earliest, TimeSpan.FromMilliseconds(50), cancellationSource.Token))
+                    await foreach (var consumerEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Earliest, readOptions, cancellationSource.Token))
                     {
                         if (consumerEvent.Data != null)
                         {
                             consumerReceivedEvents.Add(consumerEvent.Data);
-                            consecutiveEmpties =0;
+                            consecutiveEmpties = 0;
                         }
                         else if (++consecutiveEmpties >= maximumConsecutiveEmpties)
                         {
@@ -1552,7 +1606,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     }
 
                     consecutiveEmpties = 0;
-                    await foreach (var anotherEvent in anotherConsumer.ReadEventsFromPartitionAsync(partition, EventPosition.Earliest, TimeSpan.FromMilliseconds(50), cancellationSource.Token))
+                    await foreach (var anotherEvent in anotherConsumer.ReadEventsFromPartitionAsync(partition, EventPosition.Earliest, readOptions, cancellationSource.Token))
                     {
                         if (anotherEvent.Data != null)
                         {
@@ -1597,8 +1651,9 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     var startTime = DateTime.UtcNow;
                     var elapsedTime = 0.0;
+                    var readOptions = new ReadOptions { MaximumWaitTime = TimeSpan.FromSeconds(maximumWaitTimeInSecs) };
 
-                    await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, TimeSpan.FromSeconds(maximumWaitTimeInSecs), cancellationSource.Token))
+                    await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, readOptions, cancellationSource.Token))
                     {
                         elapsedTime = DateTime.UtcNow.Subtract(startTime).TotalSeconds;
                         break;
@@ -1622,21 +1677,25 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
-                var connectionOptions = new EventHubConnectionOptions
-                {
-                    Proxy = new WebProxy("http://1.2.3.4:9999"),
-                    TransportType = TransportType.AmqpWebSockets
-                };
-
                 await using (var connection = new EventHubConnection(connectionString))
-                await using (var invalidProxyConnection = new EventHubConnection(connectionString, connectionOptions))
                 {
-                    var options = new EventHubConsumerClientOptions { RetryOptions = new RetryOptions { TryTimeout = TimeSpan.FromMinutes(2) } };
                     var partition = (await connection.GetPartitionIdsAsync(DefaultRetryPolicy)).First();
 
-                    await using (var invalidProxyConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, invalidProxyConnection, options))
+                    var options = new EventHubConsumerClientOptions
                     {
-                        Assert.That(async () => await ReadNothingAsync(invalidProxyConsumer, partition, EventPosition.Latest), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
+                        RetryOptions = new RetryOptions { TryTimeout = TimeSpan.FromMinutes(2) },
+
+                        ConnectionOptions = new EventHubConnectionOptions
+                        {
+                            Proxy = new WebProxy("http://1.2.3.4:9999"),
+                            TransportType = TransportType.AmqpWebSockets
+                        }
+                    };
+
+                    await using (var invalidProxyConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString, options))
+                    {
+                        var readOptions = new ReadOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(250) };
+                        Assert.That(async () => await ReadNothingAsync(invalidProxyConsumer, partition, EventPosition.Latest, readOptions), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
                     }
                 }
             }
@@ -1840,9 +1899,12 @@ namespace Azure.Messaging.EventHubs.Tests
         private async Task ReadNothingAsync(EventHubConsumerClient consumer,
                                             string partition,
                                             EventPosition startingPosition,
+                                            ReadOptions readOptions = default,
                                             int iterationCount = 5)
         {
-            await foreach (var item in consumer.ReadEventsFromPartitionAsync(partition, startingPosition, TimeSpan.FromMilliseconds(50)))
+            readOptions ??= new ReadOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(150) };
+
+            await foreach (var item in consumer.ReadEventsFromPartitionAsync(partition, startingPosition, readOptions))
             {
                 await Task.Delay(250);
 

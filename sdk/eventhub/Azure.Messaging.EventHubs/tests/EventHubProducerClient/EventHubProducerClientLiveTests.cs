@@ -34,6 +34,9 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <summary>The default retry policy to use when performing operations.</summary>
         private readonly EventHubsRetryPolicy DefaultRetryPolicy = new RetryOptions().ToRetryPolicy();
 
+        /// <summary>The default set of options for reading, allowing a small wait time.</summary>
+        private readonly ReadOptions DefaultReadOptions = new ReadOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(50) };
+
         /// <summary>
         ///   Verifies that the <see cref="EventHubProducerClient" /> is able to
         ///   connect to the Event Hubs service and perform operations.
@@ -836,7 +839,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             var consecutiveEmpties = 0;
                             var maximumConsecutiveEmpties = 5;
 
-                            await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Earliest, TimeSpan.FromMilliseconds(50), cancellationSource.Token))
+                            await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Earliest, DefaultReadOptions, cancellationSource.Token))
                             {
                                 if (partitionEvent.Data != null)
                                 {
@@ -903,7 +906,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         var consecutiveEmpties = 0;
                         var maximumConsecutiveEmpties = 5;
 
-                        await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Earliest, TimeSpan.FromMilliseconds(50), cancellationSource.Token))
+                        await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Earliest, DefaultReadOptions, cancellationSource.Token))
                         {
                             if (partitionEvent.Data != null)
                             {
@@ -973,7 +976,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         var consecutiveEmpties = 0;
                         var maximumConsecutiveEmpties = 5;
 
-                        await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Earliest, TimeSpan.FromMilliseconds(50), cancellationSource.Token))
+                        await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Earliest, DefaultReadOptions, cancellationSource.Token))
                         {
                             if (partitionEvent.Data != null)
                             {
