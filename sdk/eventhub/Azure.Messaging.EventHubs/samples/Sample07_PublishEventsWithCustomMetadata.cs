@@ -64,7 +64,11 @@ namespace Azure.Messaging.EventHubs.Samples
                 secondEvent.Properties.Add("priority", "17");
                 secondEvent.Properties.Add("blob", true);
 
-                await producerClient.SendAsync(new[] { firstEvent, secondEvent });
+                using EventDataBatch eventBatch = await producerClient.CreateBatchAsync();
+                eventBatch.TryAdd(firstEvent);
+                eventBatch.TryAdd(secondEvent);
+
+                await producerClient.SendAsync(eventBatch);
 
                 Console.WriteLine("The event batch has been published.");
             }

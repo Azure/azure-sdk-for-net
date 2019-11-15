@@ -24,12 +24,12 @@ namespace Azure.Security.KeyVault.Keys
         public IList<KeyOperation> KeyOperations { get; } = new List<KeyOperation>();
 
         /// <summary>
-        /// Gets or sets a <see cref="DateTimeOffset"/> of when the key will be valid.
+        /// Gets or sets a <see cref="DateTimeOffset"/> indicating when the key will be valid.
         /// </summary>
         public DateTimeOffset? NotBefore { get; set; }
 
         /// <summary>
-        /// Gets or sets a <see cref="DateTimeOffset"/> of when the key will expire.
+        /// Gets or sets a <see cref="DateTimeOffset"/> indicating when the key will expire.
         /// </summary>
         public DateTimeOffset? ExpiresOn { get; set; }
 

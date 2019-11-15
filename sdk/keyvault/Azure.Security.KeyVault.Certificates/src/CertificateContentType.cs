@@ -23,12 +23,12 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Content is downloaded in pkcs12 (PFX) format
+        /// Gets a value indicating that content is downloaded in pkcs12 (PFX) format.
         /// </summary>
         public static CertificateContentType Pkcs12 { get; } = new CertificateContentType("application/x-pkcs12");
 
         /// <summary>
-        /// Content is downloaded in PEM format
+        /// Gets a value indicating that content is downloaded in PEM format.
         /// </summary>
         public static CertificateContentType Pem { get; } = new CertificateContentType("application/x-pem");
 

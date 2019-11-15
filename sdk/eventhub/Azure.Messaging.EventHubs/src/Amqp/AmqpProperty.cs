@@ -38,12 +38,6 @@ namespace Azure.Messaging.EventHubs
         public static AmqpSymbol Timeout { get; } = AmqpConstants.Vendor + ":timeout";
 
         /// <summary>
-        ///   The identifier of the consumer to associate with a link.
-        /// </summary>
-        ///
-        public static AmqpSymbol ConsumerIdentifier { get; } = AmqpConstants.Vendor + ":receiver-name";
-
-        /// <summary>
         ///   The date and time, in UTC, that a message was enqueued.
         /// </summary>
         ///
