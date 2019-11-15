@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
 
 namespace Azure.Messaging.EventHubs.Processor
@@ -443,15 +444,12 @@ namespace Azure.Messaging.EventHubs.Processor
                 // Wait the remaining time, if any, to start the next cycle.  The total time of a cycle defaults to 10 seconds,
                 // but it may be overridden by a derived class.
 
-                TimeSpan remainingTimeUntilNextCycle = LoadBalanceUpdate - cycleDuration.Elapsed;
+                var remainingTimeUntilNextCycle = LoadBalanceUpdate.CalculateRemaining(cycleDuration.Elapsed);
 
-                if (remainingTimeUntilNextCycle > TimeSpan.Zero)
-                {
-                    // If a stop request has been issued, Task.Delay will throw a TaskCanceledException.  This is expected and it
-                    // will be caught by the StopAsync method.
+                // If a stop request has been issued, Task.Delay will throw a TaskCanceledException.  This is expected and it
+                // will be caught by the StopAsync method.
 
-                    await Task.Delay(remainingTimeUntilNextCycle, cancellationToken).ConfigureAwait(false);
-                }
+                await Task.Delay(remainingTimeUntilNextCycle, cancellationToken).ConfigureAwait(false);
             }
 
             // If cancellation has been requested, throw an exception so we can keep a consistent behavior.
