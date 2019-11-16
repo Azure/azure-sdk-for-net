@@ -5,7 +5,7 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// </summary>
-    public struct Sentiment
+    public readonly struct Sentiment
     {
         internal Sentiment(SentimentClass sentimentClass, double positiveScore, double neutralScore, double negativeScore, int offset, int length)
         {

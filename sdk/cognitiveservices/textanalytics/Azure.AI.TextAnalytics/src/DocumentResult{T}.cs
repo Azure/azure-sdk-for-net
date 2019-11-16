@@ -9,8 +9,6 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public class DocumentResult<T> : Collection<T>
     {
-        /// <summary>
-        /// </summary>
         internal DocumentResult(string id, DocumentStatistics statistics)
         {
             Id = id;

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
@@ -49,25 +48,25 @@ namespace Azure.AI.TextAnalytics
         #endregion
 
         #region Recognize Entities
-        private static async Task<Response<DocumentResultCollection<Entity>>> CreateRecognizeEntitiesResponseAsync(Response response, CancellationToken cancellation)
+        private static async Task<Response<DocumentResultCollection<NamedEntity>>> CreateRecognizeEntitiesResponseAsync(Response response, CancellationToken cancellation)
         {
-            DocumentResultCollection<Entity> result = await TextAnalyticsServiceSerializer.DeserializeRecognizeEntitiesResponseAsync(response.ContentStream, cancellation).ConfigureAwait(false);
+            DocumentResultCollection<NamedEntity> result = await TextAnalyticsServiceSerializer.DeserializeRecognizeEntitiesResponseAsync(response.ContentStream, cancellation).ConfigureAwait(false);
             return Response.FromValue(result, response);
         }
 
-        private static Response<DocumentResultCollection<Entity>> CreateRecognizeEntitiesResponse(Response response) =>
+        private static Response<DocumentResultCollection<NamedEntity>> CreateRecognizeEntitiesResponse(Response response) =>
             Response.FromValue(TextAnalyticsServiceSerializer.DeserializeRecognizeEntitiesResponse(response.ContentStream), response);
 
-        private static async Task<Response<IEnumerable<IEnumerable<Entity>>>> CreateRecognizeEntitiesResponseSimpleAsync(Response response, CancellationToken cancellation)
+        private static async Task<Response<IEnumerable<IEnumerable<NamedEntity>>>> CreateRecognizeEntitiesResponseSimpleAsync(Response response, CancellationToken cancellation)
         {
             var result = await TextAnalyticsServiceSerializer.DeserializeEntityCollectionAsync(response.ContentStream, cancellation).ConfigureAwait(false);
             return Response.FromValue(result, response);
         }
 
-        private static Response<IEnumerable<IEnumerable<Entity>>> CreateRecognizeEntitiesResponseSimple(Response response) =>
+        private static Response<IEnumerable<IEnumerable<NamedEntity>>> CreateRecognizeEntitiesResponseSimple(Response response) =>
             Response.FromValue(TextAnalyticsServiceSerializer.DeserializeEntityCollection(response.ContentStream), response);
 
-        private static Response<IEnumerable<Entity>> CreateRecognizeEntitiesResponseSimple(Response response, IEnumerable<Entity> entities) =>
+        private static Response<IEnumerable<NamedEntity>> CreateRecognizeEntitiesResponseSimple(Response response, IEnumerable<NamedEntity> entities) =>
             Response.FromValue(entities, response);
 
         #endregion

@@ -5,10 +5,8 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// </summary>
-    public struct DetectedLanguage
+    public readonly struct DetectedLanguage
     {
-        /// <summary>
-        /// </summary>
         internal DetectedLanguage(string name, string iso6391Name, double score)
         {
             Name = name;

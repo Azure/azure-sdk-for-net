@@ -340,7 +340,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="language"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response<IEnumerable<Entity>>> RecognizeEntitiesAsync(string inputText, string language = "en", CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IEnumerable<NamedEntity>>> RecognizeEntitiesAsync(string inputText, string language = "en", CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
 
@@ -356,7 +356,7 @@ namespace Azure.AI.TextAnalytics
                 switch (response.Status)
                 {
                     case 200:
-                        DocumentResultCollection<Entity> result = await CreateRecognizeEntitiesResponseAsync(response, cancellationToken).ConfigureAwait(false);
+                        DocumentResultCollection<NamedEntity> result = await CreateRecognizeEntitiesResponseAsync(response, cancellationToken).ConfigureAwait(false);
                         if (result.Errors.Count > 0)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
@@ -380,7 +380,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="language"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response<IEnumerable<Entity>> RecognizeEntities(string inputText, string language = "en", CancellationToken cancellationToken = default)
+        public virtual Response<IEnumerable<NamedEntity>> RecognizeEntities(string inputText, string language = "en", CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
 
@@ -396,7 +396,7 @@ namespace Azure.AI.TextAnalytics
                 switch (response.Status)
                 {
                     case 200:
-                        DocumentResultCollection<Entity> result = CreateRecognizeEntitiesResponse(response);
+                        DocumentResultCollection<NamedEntity> result = CreateRecognizeEntitiesResponse(response);
                         if (result.Errors.Count > 0)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
@@ -420,7 +420,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="language"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response<IEnumerable<IEnumerable<Entity>>>> RecognizeEntitiesAsync(IEnumerable<string> inputs, string language = "en", CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IEnumerable<IEnumerable<NamedEntity>>>> RecognizeEntitiesAsync(IEnumerable<string> inputs, string language = "en", CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
@@ -453,7 +453,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="language"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response<IEnumerable<IEnumerable<Entity>>> RecognizeEntities(IEnumerable<string> inputs, string language = "en", CancellationToken cancellationToken = default)
+        public virtual Response<IEnumerable<IEnumerable<NamedEntity>>> RecognizeEntities(IEnumerable<string> inputs, string language = "en", CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeEntities");
@@ -484,7 +484,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response<DocumentResultCollection<Entity>>> RecognizeEntitiesAsync(IEnumerable<DocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DocumentResultCollection<NamedEntity>>> RecognizeEntitiesAsync(IEnumerable<DocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
@@ -515,7 +515,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response<DocumentResultCollection<Entity>> RecognizeEntities(IEnumerable<DocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<DocumentResultCollection<NamedEntity>> RecognizeEntities(IEnumerable<DocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
@@ -968,7 +968,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="language"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response<IEnumerable<Entity>>> RecognizePiiEntitiesAsync(string inputText, string language = "en", CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IEnumerable<NamedEntity>>> RecognizePiiEntitiesAsync(string inputText, string language = "en", CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
 
@@ -984,7 +984,7 @@ namespace Azure.AI.TextAnalytics
                 switch (response.Status)
                 {
                     case 200:
-                        DocumentResultCollection<Entity> result = await CreateRecognizeEntitiesResponseAsync(response, cancellationToken).ConfigureAwait(false);
+                        DocumentResultCollection<NamedEntity> result = await CreateRecognizeEntitiesResponseAsync(response, cancellationToken).ConfigureAwait(false);
                         if (result.Errors.Count > 0)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
@@ -1008,7 +1008,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="language"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response<IEnumerable<Entity>> RecognizePiiEntities(string inputText, string language = "en", CancellationToken cancellationToken = default)
+        public virtual Response<IEnumerable<NamedEntity>> RecognizePiiEntities(string inputText, string language = "en", CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
 
@@ -1024,7 +1024,7 @@ namespace Azure.AI.TextAnalytics
                 switch (response.Status)
                 {
                     case 200:
-                        DocumentResultCollection<Entity> result = CreateRecognizeEntitiesResponse(response);
+                        DocumentResultCollection<NamedEntity> result = CreateRecognizeEntitiesResponse(response);
                         if (result.Errors.Count > 0)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
@@ -1048,7 +1048,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="language"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response<IEnumerable<IEnumerable<Entity>>>> RecognizePiiEntitiesAsync(IEnumerable<string> inputs, string language = "en", CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IEnumerable<IEnumerable<NamedEntity>>>> RecognizePiiEntitiesAsync(IEnumerable<string> inputs, string language = "en", CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
@@ -1081,7 +1081,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="language"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response<IEnumerable<IEnumerable<Entity>>> RecognizePiiEntities(IEnumerable<string> inputs, string language = "en", CancellationToken cancellationToken = default)
+        public virtual Response<IEnumerable<IEnumerable<NamedEntity>>> RecognizePiiEntities(IEnumerable<string> inputs, string language = "en", CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizePiiEntities");
@@ -1112,7 +1112,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response<DocumentResultCollection<Entity>>> RecognizePiiEntitiesAsync(IEnumerable<DocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DocumentResultCollection<NamedEntity>>> RecognizePiiEntitiesAsync(IEnumerable<DocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
@@ -1143,7 +1143,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response<DocumentResultCollection<Entity>> RecognizePiiEntities(IEnumerable<DocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<DocumentResultCollection<NamedEntity>> RecognizePiiEntities(IEnumerable<DocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 

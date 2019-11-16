@@ -5,7 +5,7 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// </summary>
-    public struct LinkedEntityMatch
+    public readonly struct LinkedEntityMatch
     {
         internal LinkedEntityMatch(string text, double score, int offset, int length)
         {

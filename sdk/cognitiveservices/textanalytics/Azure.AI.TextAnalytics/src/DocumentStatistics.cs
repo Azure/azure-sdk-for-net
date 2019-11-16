@@ -5,7 +5,7 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// </summary>
-    public struct DocumentStatistics
+    public readonly struct DocumentStatistics
     {
         internal DocumentStatistics(int characterCount, int transactionCount)
         {

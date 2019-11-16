@@ -294,37 +294,37 @@ namespace Azure.AI.TextAnalytics
 
         #region Recognize Entities
 
-        public static async Task<DocumentResultCollection<Entity>> DeserializeRecognizeEntitiesResponseAsync(Stream content, CancellationToken cancellation)
+        public static async Task<DocumentResultCollection<NamedEntity>> DeserializeRecognizeEntitiesResponseAsync(Stream content, CancellationToken cancellation)
         {
             using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
             JsonElement root = json.RootElement;
             return ReadEntityResultCollection(root);
         }
 
-        public static DocumentResultCollection<Entity> DeserializeRecognizeEntitiesResponse(Stream content)
+        public static DocumentResultCollection<NamedEntity> DeserializeRecognizeEntitiesResponse(Stream content)
         {
             using JsonDocument json = JsonDocument.Parse(content, default);
             JsonElement root = json.RootElement;
             return ReadEntityResultCollection(root);
         }
 
-        public static async Task<IEnumerable<IEnumerable<Entity>>> DeserializeEntityCollectionAsync(Stream content, CancellationToken cancellation)
+        public static async Task<IEnumerable<IEnumerable<NamedEntity>>> DeserializeEntityCollectionAsync(Stream content, CancellationToken cancellation)
         {
             using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
             JsonElement root = json.RootElement;
             return ReadEntityCollection(root);
         }
 
-        public static IEnumerable<IEnumerable<Entity>> DeserializeEntityCollection(Stream content)
+        public static IEnumerable<IEnumerable<NamedEntity>> DeserializeEntityCollection(Stream content)
         {
             using JsonDocument json = JsonDocument.Parse(content);
             JsonElement root = json.RootElement;
             return ReadEntityCollection(root);
         }
 
-        private static DocumentResultCollection<Entity> ReadEntityResultCollection(JsonElement root)
+        private static DocumentResultCollection<NamedEntity> ReadEntityResultCollection(JsonElement root)
         {
-            var result = new DocumentResultCollection<Entity>();
+            var result = new DocumentResultCollection<NamedEntity>();
             if (root.TryGetProperty("documents", out JsonElement documentsValue))
             {
                 foreach (JsonElement documentElement in documentsValue.EnumerateArray())
@@ -340,9 +340,9 @@ namespace Azure.AI.TextAnalytics
             return result;
         }
 
-        private static IEnumerable<IEnumerable<Entity>> ReadEntityCollection(JsonElement root)
+        private static IEnumerable<IEnumerable<NamedEntity>> ReadEntityCollection(JsonElement root)
         {
-            var result = new List<List<Entity>>();
+            var result = new List<List<NamedEntity>>();
             if (root.TryGetProperty("documents", out JsonElement documentsValue))
             {
                 foreach (JsonElement documentElement in documentsValue.EnumerateArray())
@@ -354,9 +354,9 @@ namespace Azure.AI.TextAnalytics
             return result;
         }
 
-        private static DocumentResult<Entity> ReadEntityResult(JsonElement documentElement)
+        private static DocumentResult<NamedEntity> ReadEntityResult(JsonElement documentElement)
         {
-            var documentResult = new DocumentResult<Entity>(
+            var documentResult = new DocumentResult<NamedEntity>(
                 ReadDocumentId(documentElement),
                 ReadDocumentStatistics(documentElement)
             );
@@ -372,7 +372,7 @@ namespace Azure.AI.TextAnalytics
             return documentResult;
         }
 
-        private static Entity ReadEntity(JsonElement entityElement)
+        private static NamedEntity ReadEntity(JsonElement entityElement)
         {
             string text = default;
             string type = default;
@@ -394,7 +394,7 @@ namespace Azure.AI.TextAnalytics
             if (entityElement.TryGetProperty("score", out JsonElement scoreValue))
                 scoreValue.TryGetDouble(out score);
 
-            return new Entity(text, type, subType, offset, length, score);
+            return new NamedEntity(text, type, subType, offset, length, score);
         }
 
         #endregion Recognize Entities

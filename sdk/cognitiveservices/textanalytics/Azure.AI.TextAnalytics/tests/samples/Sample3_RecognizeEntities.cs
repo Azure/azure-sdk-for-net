@@ -27,7 +27,7 @@ namespace Azure.AI.TextAnalytics.Samples
             var entities = client.RecognizeEntities(input).Value;
 
             Debug.WriteLine($"Recognized {entities.Count()} entities:");
-            foreach (Entity entity in entities)
+            foreach (NamedEntity entity in entities)
             {
                 Debug.WriteLine($"Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType ?? "N/A"}, Score: {entity.Score}, Offset: {entity.Offset}, Length: {entity.Length}");
             }

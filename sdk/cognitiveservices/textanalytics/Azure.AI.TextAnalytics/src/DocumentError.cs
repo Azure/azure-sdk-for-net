@@ -5,7 +5,7 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// </summary>
-    public struct DocumentError
+    public readonly struct DocumentError
     {
         internal DocumentError(string id, string message)
         {

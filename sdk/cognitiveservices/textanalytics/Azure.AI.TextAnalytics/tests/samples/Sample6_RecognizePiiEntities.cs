@@ -27,7 +27,7 @@ namespace Azure.AI.TextAnalytics.Samples
             var entities = client.RecognizePiiEntities(input).Value;
 
             Debug.WriteLine($"Recognized {entities.Count()} PII entit{(entities.Count() > 1 ? "ies" : "y")}:");
-            foreach (Entity entity in entities)
+            foreach (NamedEntity entity in entities)
             {
                 Debug.WriteLine($"Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType ?? "N/A"}, Score: {entity.Score}, Offset: {entity.Offset}, Length: {entity.Length}");
             }

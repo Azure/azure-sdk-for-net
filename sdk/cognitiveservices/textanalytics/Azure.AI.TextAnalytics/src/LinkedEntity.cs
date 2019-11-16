@@ -8,7 +8,7 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// </summary>
-    public struct LinkedEntity
+    public readonly struct LinkedEntity
     {
         internal LinkedEntity(string name, string id, string language, string dataSource, Uri uri, IEnumerable<LinkedEntityMatch> matches)
         {
