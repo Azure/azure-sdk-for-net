@@ -293,9 +293,6 @@ namespace Azure.AI.TextAnalytics
 
         private Request CreateDetectLanguageRequest(IEnumerable<string> inputs, string countryHint)
         {
-            Argument.AssertNotNull(inputs, nameof(inputs));
-            Argument.AssertNotNull(countryHint, nameof(countryHint));
-
             Request request = _pipeline.CreateRequest();
 
             ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDetectLanguageInputs(inputs, countryHint);
@@ -313,8 +310,6 @@ namespace Azure.AI.TextAnalytics
 
         private Request CreateDetectLanguageRequest(IEnumerable<DetectLanguageInput> inputs, TextAnalyticsRequestOptions options)
         {
-            Argument.AssertNotNull(inputs, nameof(inputs));
-
             Request request = _pipeline.CreateRequest();
 
             ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDetectLanguageInputs(inputs);
@@ -1399,8 +1394,6 @@ namespace Azure.AI.TextAnalytics
 
         private Request CreateDocumentInputRequest(IEnumerable<DocumentInput> inputs, TextAnalyticsRequestOptions options, string route)
         {
-            Argument.AssertNotNull(inputs, nameof(inputs));
-
             Request request = _pipeline.CreateRequest();
 
             ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDocumentInputs(inputs);
