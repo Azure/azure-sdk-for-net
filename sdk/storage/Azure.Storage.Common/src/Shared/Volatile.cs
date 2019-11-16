@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace Azure.Storage
 {
-internal struct Volatile<T> where T : class
+    internal struct Volatile<T> where T : class
     {
         private T m_t;
 

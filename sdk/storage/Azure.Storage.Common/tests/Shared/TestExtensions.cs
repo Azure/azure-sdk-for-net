@@ -7,7 +7,6 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Azure.Storage
 {
@@ -171,12 +170,19 @@ namespace Azure.Storage
 
         internal static string ExportBase64EncodedKey(this StorageSharedKeyCredential credential)
         {
+            byte[] key = credential.GetAccountKey();
+            return key == null ?
+                null :
+                Convert.ToBase64String(key);
+        }
+
+        internal static byte[] GetAccountKey(this StorageSharedKeyCredential credential)
+        {
             Type type = credential.GetType();
             PropertyInfo prop = type.GetProperty("AccountKeyValue", BindingFlags.NonPublic | BindingFlags.Instance);
             var val = prop.GetValue(credential);
-            return !(val is byte[] key) ?
-                null :
-                Convert.ToBase64String(key);
+            return val as byte[];
+
         }
     }
 }

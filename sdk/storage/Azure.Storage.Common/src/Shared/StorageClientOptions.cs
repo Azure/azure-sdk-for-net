@@ -8,11 +8,11 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Storage
 {
-/// <summary>
-/// Defines the client configuration options for connecting to Azure
-/// Storage.
-/// </summary>
-internal static class StorageClientOptions
+    /// <summary>
+    /// Defines the client configuration options for connecting to Azure
+    /// Storage.
+    /// </summary>
+    internal static class StorageClientOptions
     {
         /// <summary>
         /// The default scope used for token authentication with Storage.

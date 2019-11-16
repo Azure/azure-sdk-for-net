@@ -66,11 +66,12 @@ namespace Azure.Storage
             Convert.ToBase64String(new HMACSHA256(AccountKeyValue).ComputeHash(Encoding.UTF8.GetBytes(message)));
 
         /// <summary>
-        ///
+        /// Generates a base-64 hash signature string for an HTTP request or
+        /// for a SAS.
         /// </summary>
-        /// <param name="credential"></param>
-        /// <param name="message"></param>
-        /// <returns></returns>
+        /// <param name="credential">The credential.</param>
+        /// <param name="message">The message to sign.</param>
+        /// <returns>The signed message.</returns>
         protected static string ComputeSasSignature(StorageSharedKeyCredential credential, string message)
         {
             return credential.ComputeHMACSHA256(message);

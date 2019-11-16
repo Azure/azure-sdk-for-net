@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Azure.Storage.Sas
 {
@@ -17,6 +18,7 @@ namespace Azure.Storage.Sas
     public sealed class BlobSasQueryParameters : SasQueryParameters
     {
         internal UserDelegationKeyProperties _keyProperties;
+
         /// <summary>
         /// Gets the Azure Active Directory object ID in GUID format.
         /// </summary>
@@ -110,13 +112,15 @@ namespace Azure.Storage.Sas
         }
 
         /// <summary>
-        ///
+        /// Creates a new instance of the <see cref="BlobSasQueryParameters"/>
+        /// type based on the supplied query parameters <paramref name="values"/>.
+        /// All SAS-related query parameters will be removed from
+        /// <paramref name="values"/>.
         /// </summary>
-        /// <param name="values"></param>
-        /// <returns></returns>
+        /// <param name="values">URI query parameters</param>
         internal BlobSasQueryParameters (
             Dictionary<string, string> values)
-            : base (values)
+            : base(values)
         {
             this.ParseKeyProperties(values);
         }
@@ -129,7 +133,10 @@ namespace Azure.Storage.Sas
         /// </returns>
         public override string ToString()
         {
-            return _keyProperties.ToString() + Encode();
+            StringBuilder sb = new StringBuilder();
+            _keyProperties.BuildParameterString(sb);
+            this.BuildParameterString(sb);
+            return sb.ToString();
         }
     }
 }

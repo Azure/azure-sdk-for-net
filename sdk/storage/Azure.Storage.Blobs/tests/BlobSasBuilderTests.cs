@@ -5,13 +5,11 @@ using System;
 using System.Security.Cryptography;
 using System.Text;
 using Azure.Storage.Blobs.Models;
-
 using Azure.Storage.Sas;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 using TestConstants = Azure.Storage.Test.TestConstants;
 using SasExtensions = Azure.Storage.Sas.SasExtensions;
-
 
 namespace Azure.Storage.Blobs.Test
 {

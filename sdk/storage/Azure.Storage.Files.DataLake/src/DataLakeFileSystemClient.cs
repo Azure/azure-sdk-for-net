@@ -251,7 +251,7 @@ namespace Azure.Storage.Files.DataLake
             _dfsUri = uriBuilder.ToDfsUri();
             _pipeline = options.Build(authentication);
             _clientDiagnostics = new ClientDiagnostics(options);
-            _containerClient = new BlobContainerClient(_blobUri, _pipeline, _clientDiagnostics, null);
+            _containerClient = BlobContainerClientHelper.Create(_blobUri, _pipeline, _clientDiagnostics);
         }
 
         /// <summary>
@@ -274,7 +274,21 @@ namespace Azure.Storage.Files.DataLake
             _dfsUri = uriBuilder.ToDfsUri();
             _pipeline = pipeline;
             _clientDiagnostics = clientDiagnostics;
-            _containerClient = new BlobContainerClient(_blobUri, pipeline, clientDiagnostics, null);
+            _containerClient = BlobContainerClientHelper.Create(_blobUri, pipeline, _clientDiagnostics);
+        }
+
+        private class BlobContainerClientHelper : BlobContainerClient
+        {
+            public static BlobContainerClient Create(Uri uri, HttpPipeline pipeline, ClientDiagnostics diagnostics)
+            {
+                return BlobContainerClient.CreateClient(
+                    uri,
+                    pipeline,
+                    new BlobClientOptions()
+                    {
+                        Diagnostics = { IsDistributedTracingEnabled = diagnostics.IsActivityEnabled }
+                    });
+            }
         }
         #endregion ctors
 

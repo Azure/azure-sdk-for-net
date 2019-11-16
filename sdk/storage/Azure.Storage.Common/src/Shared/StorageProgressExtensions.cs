@@ -6,7 +6,7 @@ using System.IO;
 
 namespace Azure.Storage
 {
-internal static class StorageProgressExtensions
+    internal static class StorageProgressExtensions
     {
         public static Stream WithProgress(this Stream stream, IProgress<long> progressHandler)
             =>

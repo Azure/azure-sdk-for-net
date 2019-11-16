@@ -9,7 +9,6 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Testing;
 
-
 namespace Azure.Storage.Test.Shared
 {
     public class StorageRecordedTestSanitizer : RecordedTestSanitizer

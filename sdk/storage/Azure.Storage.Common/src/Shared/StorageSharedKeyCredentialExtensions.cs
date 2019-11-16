@@ -3,7 +3,7 @@
 
 namespace Azure.Storage
 {
-internal class StorageSharedKeyCredentialExtensions : StorageSharedKeyCredential
+    internal class StorageSharedKeyCredentialExtensions : StorageSharedKeyCredential
     {
         public StorageSharedKeyCredentialExtensions(string accountName, string accountKey) :
             base(accountName, accountKey)

@@ -123,7 +123,6 @@ namespace Azure.Storage.Sas
         public string Signature { get { throw null; } }
         public System.DateTimeOffset StartsOn { get { throw null; } }
         public string Version { get { throw null; } }
-        protected string Encode() { throw null; }
         public override string ToString() { throw null; }
     }
 }

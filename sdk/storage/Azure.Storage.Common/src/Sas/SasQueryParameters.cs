@@ -25,18 +25,6 @@ namespace Azure.Storage.Sas
         /// </summary>
         public const string DefaultSasVersion = Constants.DefaultSasVersion;
 
-        ///// <summary>
-        ///// FormatTimesForSASSigning converts a time.Time to a snapshotTimeFormat string suitable for a
-        ///// SASField's StartTime or ExpiryTime fields. Returns "" if value.IsZero().
-        ///// </summary>
-        ///// <param name="time"></param>
-        ///// <returns></returns>
-        //internal static string FormatTimesForSasSigning(DateTimeOffset time) =>
-        //    // "yyyy-MM-ddTHH:mm:ssZ"
-        //    (time == new DateTimeOffset()) ? "" : time.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture);
-
-        // All members are immutable or values so copies of this struct are thread safe.
-
         // sv
         private string _version;
 
@@ -197,7 +185,6 @@ namespace Azure.Storage.Sas
         /// </summary>
         protected SasQueryParameters() { }
 
-
         /// <summary>
         /// Creates a new instance of the <see cref="SasQueryParameters"/> type
         /// based on the supplied query parameters <paramref name="values"/>.
@@ -324,109 +311,10 @@ namespace Azure.Storage.Sas
         /// <returns>
         /// A URL encoded query string representing the SAS.
         /// </returns>
-        public override string ToString() =>
-            Encode();
-
-        /// <summary>
-        /// Convert the SAS query parameters into a URL encoded query string.
-        /// </summary>
-        /// <returns>
-        /// A URL encoded query string representing the SAS.
-        /// </returns>
-        protected string Encode()
+        public override string ToString()
         {
-            var sb = new StringBuilder();
-
-            void AddToBuilder(string key, string value)
-                =>
-                sb
-                .Append(sb.Length > 0 ? "&" : "")
-                .Append(key)
-                .Append('=')
-                .Append(value);
-
-            if (!string.IsNullOrWhiteSpace(Version))
-            {
-                AddToBuilder(Constants.Sas.Parameters.Version, Version);
-            }
-
-            if (Services != null)
-            {
-                AddToBuilder(Constants.Sas.Parameters.Services, Services.Value.ToPermissionsString());
-            }
-
-            if (ResourceTypes != null)
-            {
-                AddToBuilder(Constants.Sas.Parameters.ResourceTypes, ResourceTypes.Value.ToPermissionsString());
-            }
-
-            if (Protocol != default)
-            {
-                AddToBuilder(Constants.Sas.Parameters.Protocol, Protocol.ToProtocolString());
-            }
-
-            if (StartsOn != DateTimeOffset.MinValue)
-            {
-                AddToBuilder(Constants.Sas.Parameters.StartTime, WebUtility.UrlEncode(StartsOn.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
-            }
-
-            if (ExpiresOn != DateTimeOffset.MinValue)
-            {
-                AddToBuilder(Constants.Sas.Parameters.ExpiryTime, WebUtility.UrlEncode(ExpiresOn.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
-            }
-
-            var ipr = IPRange.ToString();
-            if (ipr.Length > 0)
-            {
-                AddToBuilder(Constants.Sas.Parameters.IPRange, ipr);
-            }
-
-            if (!string.IsNullOrWhiteSpace(Identifier))
-            {
-                AddToBuilder(Constants.Sas.Parameters.Identifier, Identifier);
-            }
-
-            if (!string.IsNullOrWhiteSpace(Resource))
-            {
-                AddToBuilder(Constants.Sas.Parameters.Resource, Resource);
-            }
-
-            if (!string.IsNullOrWhiteSpace(Permissions))
-            {
-                AddToBuilder(Constants.Sas.Parameters.Permissions, Permissions);
-            }
-
-            if (!string.IsNullOrWhiteSpace(CacheControl))
-            {
-                AddToBuilder(Constants.Sas.Parameters.CacheControl, CacheControl);
-            }
-
-            if (!string.IsNullOrWhiteSpace(ContentDisposition))
-            {
-                AddToBuilder(Constants.Sas.Parameters.ContentDisposition, ContentDisposition);
-            }
-
-            if (!string.IsNullOrWhiteSpace(ContentEncoding))
-            {
-                AddToBuilder(Constants.Sas.Parameters.ContentEncoding, ContentEncoding);
-            }
-
-            if (!string.IsNullOrWhiteSpace(ContentLanguage))
-            {
-                AddToBuilder(Constants.Sas.Parameters.ContentLanguage, ContentLanguage);
-            }
-
-            if (!string.IsNullOrWhiteSpace(ContentType))
-            {
-                AddToBuilder(Constants.Sas.Parameters.ContentType, ContentType);
-            }
-
-
-            if (!string.IsNullOrWhiteSpace(Signature))
-            {
-                AddToBuilder(Constants.Sas.Parameters.Signature, WebUtility.UrlEncode(Signature));
-            }
-
+            StringBuilder sb = new StringBuilder();
+            this.BuildParameterString(sb);
             return sb.ToString();
         }
     }

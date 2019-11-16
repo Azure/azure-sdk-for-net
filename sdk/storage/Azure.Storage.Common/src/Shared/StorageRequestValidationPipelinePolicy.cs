@@ -8,11 +8,11 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Storage
 {
-/// <summary>
-/// Pipeline policy to verify x-ms-client-request-id and x-ms-client-return-request-id
-/// headers that are echoed back from a request match.
-/// </summary>
-internal class StorageRequestValidationPipelinePolicy : HttpPipelineSynchronousPolicy
+    /// <summary>
+    /// Pipeline policy to verify x-ms-client-request-id and x-ms-client-return-request-id
+    /// headers that are echoed back from a request match.
+    /// </summary>
+    internal class StorageRequestValidationPipelinePolicy : HttpPipelineSynchronousPolicy
     {
         /// <summary>
         /// Create a new StorageRequestValidationPipelinePolicy

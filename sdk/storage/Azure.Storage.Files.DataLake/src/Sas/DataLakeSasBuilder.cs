@@ -5,10 +5,10 @@ using System;
 using System.ComponentModel;
 using System.Security.Cryptography;
 using System.Text;
+using Azure.Storage.Files.DataLake;
 using Azure.Storage.Files.DataLake.Models;
-using Azure.Storage.Sas;
 
-namespace Azure.Storage.Files.DataLake.Sas
+namespace Azure.Storage.Sas
 {
     /// <summary>
     /// <see cref="DataLakeSasBuilder"/> is used to generate a Shared Access

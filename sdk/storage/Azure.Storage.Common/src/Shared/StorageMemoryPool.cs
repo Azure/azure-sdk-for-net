@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace Azure.Storage
 {
-/// <summary>
-/// Private memory pool specific to Azure storage transfers, based on ArrayPool.
-/// </summary>
-internal class StorageMemoryPool : MemoryPool<byte>
+    /// <summary>
+    /// Private memory pool specific to Azure storage transfers, based on ArrayPool.
+    /// </summary>
+    internal class StorageMemoryPool : MemoryPool<byte>
     {
         private ArrayPool<byte> _arrayPool;
 

@@ -8,6 +8,10 @@ using System.Text;
 
 namespace Azure.Storage.Sas
 {
+    /// <summary>
+    /// Encapsulates the shared properties used by both
+    /// BlobSasQueryParameters and DataLakeSasQueryParameters.
+    /// </summary>
     internal struct UserDelegationKeyProperties
     {
         // skoid
@@ -29,57 +33,39 @@ namespace Azure.Storage.Sas
         internal string _version;
 
         /// <summary>
-        /// Convert the SAS query parameters into a URL encoded query string.
+        /// Builds up the UserDelegationKey portion of the SAS query parameter string.
         /// </summary>
-        /// <returns>
-        /// A URL encoded query string representing the SAS.
-        /// </returns>
-
-        public override string ToString()
+        public void BuildParameterString(StringBuilder stringBuilder)
         {
-
-            var sb = new StringBuilder();
-
-            void AddToBuilder(string key, string value)
-            =>
-            sb
-            .Append(sb.Length > 0 ? "&" : "")
-            .Append(key)
-            .Append('=')
-            .Append(value);
-
             if (!string.IsNullOrWhiteSpace(_objectId))
             {
-                AddToBuilder(Constants.Sas.Parameters.KeyObjectId, _objectId);
+                stringBuilder.AddQueryParam(Constants.Sas.Parameters.KeyObjectId, _objectId);
             }
 
             if (!string.IsNullOrWhiteSpace(_tenantId))
             {
-                AddToBuilder(Constants.Sas.Parameters.KeyTenantId, _tenantId);
+                stringBuilder.AddQueryParam(Constants.Sas.Parameters.KeyTenantId, _tenantId);
             }
 
             if (_startsOn != DateTimeOffset.MinValue)
             {
-                AddToBuilder(Constants.Sas.Parameters.KeyStart, WebUtility.UrlEncode(_startsOn.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
+                stringBuilder.AddQueryParam(Constants.Sas.Parameters.KeyStart, WebUtility.UrlEncode(_startsOn.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
             }
 
             if (_expiresOn != DateTimeOffset.MinValue)
             {
-                AddToBuilder(Constants.Sas.Parameters.KeyExpiry, WebUtility.UrlEncode(_expiresOn.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
+                stringBuilder.AddQueryParam(Constants.Sas.Parameters.KeyExpiry, WebUtility.UrlEncode(_expiresOn.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
             }
 
             if (!string.IsNullOrWhiteSpace(_service))
             {
-                AddToBuilder(Constants.Sas.Parameters.KeyService, _service);
+                stringBuilder.AddQueryParam(Constants.Sas.Parameters.KeyService, _service);
             }
 
             if (!string.IsNullOrWhiteSpace(_version))
             {
-                AddToBuilder(Constants.Sas.Parameters.KeyVersion, _version);
+                stringBuilder.AddQueryParam(Constants.Sas.Parameters.KeyVersion, _version);
             }
-
-            return sb.ToString();
-
         }
     }
 }

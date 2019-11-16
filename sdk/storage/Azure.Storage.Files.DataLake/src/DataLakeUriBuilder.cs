@@ -8,7 +8,6 @@ using System.Net;
 using System.Text;
 using Azure.Core;
 using Azure.Storage.Sas;
-using Azure.Storage.Files.DataLake.Sas;
 
 namespace Azure.Storage.Files.DataLake
 {

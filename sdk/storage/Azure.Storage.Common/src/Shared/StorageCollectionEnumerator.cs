@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Storage
 {
-internal abstract class StorageCollectionEnumerator<T>
+    internal abstract class StorageCollectionEnumerator<T>
     {
         public abstract ValueTask<Page<T>> GetNextPageAsync(
             string continuationToken,
@@ -209,30 +209,6 @@ internal abstract class StorageCollectionEnumerator<T>
                     foreach (T item in page.Values)
                     {
                         yield return item;
-                    }
-                } while (CanContinue(continuationToken));
-            }
-
-            /// <summary>
-            /// Enumerate the values in the collection synchronously.  This may
-            /// make mutliple service requests.
-            /// </summary>
-            /// <returns>A sequence of values.</returns>
-            protected IEnumerator<Response<T>> GetEnumerator()
-            {
-                string continuationToken = null;
-                do
-                {
-                    Page<T> page = _enumerator.GetNextPageAsync(
-                        continuationToken,
-                        null,
-                        isAsync: false,
-                        cancellationToken: CancellationToken)
-                        .EnsureCompleted();
-                    continuationToken = page.ContinuationToken;
-                    foreach (T item in page.Values)
-                    {
-                        yield return Response.FromValue(item, page.GetRawResponse());
                     }
                 } while (CanContinue(continuationToken));
             }

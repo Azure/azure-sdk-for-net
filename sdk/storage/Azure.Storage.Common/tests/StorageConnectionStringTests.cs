@@ -710,10 +710,10 @@ namespace Azure.Storage.Test
             var key = accountAndKey.ExportBase64EncodedKey();
             Assert.AreEqual(accountKeyString, key);
 
-           // var keyBytes = accountAndKey.AccountKeyValue;
+            var keyBytes = accountAndKey.GetAccountKey();
             var expectedKeyBytes = Convert.FromBase64String(accountKeyString);
 
-            //TestHelper.AssertSequenceEqual(expectedKeyBytes, keyBytes);
+            TestHelper.AssertSequenceEqual(expectedKeyBytes, keyBytes);
         }
     }
 

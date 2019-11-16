@@ -3,9 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Storage.Sas;
+using System.Text;
 
-namespace Azure.Storage.Files.DataLake.Sas
+namespace Azure.Storage.Sas
 {
     /// <summary>
     /// A <see cref="DataLakeSasQueryParameters"/> object represents the components
@@ -112,10 +112,12 @@ namespace Azure.Storage.Files.DataLake.Sas
         }
 
         /// <summary>
-        ///
+        /// Creates a new instance of the <see cref="BlobSasQueryParameters"/>
+        /// type based on the supplied query parameters <paramref name="values"/>.
+        /// All SAS-related query parameters will be removed from
+        /// <paramref name="values"/>.
         /// </summary>
-        /// <param name="values"></param>
-        /// <returns></returns>
+        /// <param name="values">URI query parameters</param>
         internal DataLakeSasQueryParameters(
             Dictionary<string, string> values)
             : base(values)
@@ -131,7 +133,10 @@ namespace Azure.Storage.Files.DataLake.Sas
         /// </returns>
         public override string ToString()
         {
-            return _keyProperties.ToString() + Encode();
+            StringBuilder sb = new StringBuilder();
+            _keyProperties.BuildParameterString(sb);
+            this.BuildParameterString(sb);
+            return sb.ToString();
         }
     }
 }

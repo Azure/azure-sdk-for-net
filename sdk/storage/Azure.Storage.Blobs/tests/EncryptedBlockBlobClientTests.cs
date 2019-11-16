@@ -32,7 +32,13 @@ namespace Azure.Storage.Blobs.Test
             await blob.UploadAsync(stream);
 
             // Create an EncryptedBlockBlobClient pointing at the same blob
-            var encryptedBlob = InstrumentClient(new EncryptedBlockBlobClient(blob.Uri, new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey)));
+            var encryptedBlob = InstrumentClient(
+                new EncryptedBlockBlobClient(
+                    blob.Uri,
+                    new StorageSharedKeyCredential(
+                        TestConfigDefault.AccountName,
+                        TestConfigDefault.AccountKey),
+                    GetOptions()));
 
             // Delete the blob
             var response = await encryptedBlob.DeleteAsync();

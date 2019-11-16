@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-
 using Azure.Storage.Files.Shares.Tests;
 using Azure.Storage.Sas;
 using NUnit.Framework;

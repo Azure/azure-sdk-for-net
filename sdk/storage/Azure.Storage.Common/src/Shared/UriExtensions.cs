@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
+using System.Text;
 
 namespace Azure.Storage
 {
@@ -107,5 +108,13 @@ namespace Azure.Storage
            !string.IsNullOrEmpty(uri.Host) &&
             uri.Host.IndexOf(".", StringComparison.InvariantCulture) >= 0 &&
             IPAddress.TryParse(uri.Host, out _);
+
+        internal static void AddQueryParam(this StringBuilder sb, string key, string value)
+            =>
+            sb
+            .Append(sb.Length > 0 ? "&" : "")
+            .Append(key)
+            .Append('=')
+            .Append(value);
     }
 }

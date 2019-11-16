@@ -7,7 +7,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Storage
 {
-internal class StorageResponseClassifier : ResponseClassifier
+    internal class StorageResponseClassifier : ResponseClassifier
     {
         public Uri SecondaryStorageUri { get; }
 
