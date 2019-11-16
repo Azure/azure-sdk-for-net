@@ -206,7 +206,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         [Test]
         public void DefaultWithSubjectName()
         {
-            var expected = new CertificatePolicy("CN=DefaultPolicy", "Self");
+            CertificatePolicy expected = new CertificatePolicy("Self", "CN=DefaultPolicy");
             AssertAreEqual(expected, CertificatePolicy.Default);
         }
 
