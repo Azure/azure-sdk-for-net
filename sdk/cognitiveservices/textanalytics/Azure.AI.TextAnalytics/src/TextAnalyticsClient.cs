@@ -207,6 +207,7 @@ namespace Azure.AI.TextAnalytics
         public virtual Response<IEnumerable<DetectedLanguage>> DetectLanguages(IEnumerable<string> inputs, string countryHint = "us", CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.DetectLanguages");
             scope.Start();
 
@@ -451,6 +452,7 @@ namespace Azure.AI.TextAnalytics
         public virtual Response<IEnumerable<IEnumerable<NamedEntity>>> RecognizeEntities(IEnumerable<string> inputs, string language = "en", CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeEntities");
             scope.Start();
 
@@ -659,6 +661,7 @@ namespace Azure.AI.TextAnalytics
         public virtual Response<IEnumerable<Sentiment>> AnalyzeSentiment(IEnumerable<string> inputs, string language = "en", CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.AnalyzeSentiment");
             scope.Start();
 
@@ -869,6 +872,7 @@ namespace Azure.AI.TextAnalytics
         public virtual Response<IEnumerable<IEnumerable<string>>> ExtractKeyPhrases(IEnumerable<string> inputs, string language = "en", CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.ExtractKeyPhrases");
             scope.Start();
 
@@ -1079,6 +1083,7 @@ namespace Azure.AI.TextAnalytics
         public virtual Response<IEnumerable<IEnumerable<NamedEntity>>> RecognizePiiEntities(IEnumerable<string> inputs, string language = "en", CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizePiiEntities");
             scope.Start();
 
@@ -1289,6 +1294,7 @@ namespace Azure.AI.TextAnalytics
         public virtual Response<IEnumerable<IEnumerable<LinkedEntity>>> ExtractEntityLinking(IEnumerable<string> inputs, string language = "en", CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.ExtractEntityLinking");
             scope.Start();
 
