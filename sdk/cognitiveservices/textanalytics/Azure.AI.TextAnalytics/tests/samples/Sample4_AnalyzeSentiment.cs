@@ -27,7 +27,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
             Debug.WriteLine($"Sentiment was {sentiment.SentimentClass.ToString()}, with scores: ");
             Debug.WriteLine($"    Positive score: {sentiment.PositiveScore:0.00}.");
-            Debug.WriteLine($"     Neutral score: {sentiment.NeutralScore:0.00}.");
+            Debug.WriteLine($"    Neutral score: {sentiment.NeutralScore:0.00}.");
             Debug.WriteLine($"    Negative score: {sentiment.NeutralScore:0.00}.");
         }
     }

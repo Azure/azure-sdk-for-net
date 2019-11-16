@@ -67,7 +67,7 @@ namespace Azure.AI.TextAnalytics.Samples
             Debug.WriteLine($"Batch operation statistics:");
             Debug.WriteLine($"    Document count: {results.Statistics.DocumentCount}");
             Debug.WriteLine($"    Valid document count: {results.Statistics.ValidDocumentCount}");
-            Debug.WriteLine($"    Erroroneous document count:{results.Statistics.InvalidDocumentCount}");
+            Debug.WriteLine($"    Invalid document count:{results.Statistics.InvalidDocumentCount}");
             Debug.WriteLine($"    Transaction count:{results.Statistics.TransactionCount}");
             Debug.WriteLine("");
         }
