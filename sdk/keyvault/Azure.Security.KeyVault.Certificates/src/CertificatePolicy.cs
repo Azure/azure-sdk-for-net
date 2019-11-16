@@ -129,7 +129,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// Gets a new <see cref="CertificatePolicy"/> suitable for self-signed certificate requests.
         /// You should change the <see cref="Subject"/> before passing this policy to create a certificate.
         /// </summary>
-        public static CertificatePolicy Default => new CertificatePolicy(DefaultSubject, DefaultIssuerName);
+        public static CertificatePolicy Default => new CertificatePolicy(DefaultIssuerName, DefaultSubject);
 
         /// <summary>
         /// Gets or sets the type of backing key to be generated when issuing new certificates.
