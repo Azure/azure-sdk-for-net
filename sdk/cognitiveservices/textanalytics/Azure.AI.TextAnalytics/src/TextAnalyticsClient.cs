@@ -105,10 +105,10 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         DocumentResultCollection<DetectedLanguage> result = await CreateDetectLanguageResponseAsync(response, cancellationToken).ConfigureAwait(false);
-                        if (result.Errors.Count > 0)
+                        if (result[0].ErrorMessage != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw await response.CreateRequestFailedExceptionAsync(result.Errors[0].Message).ConfigureAwait(false);
+                            throw await response.CreateRequestFailedExceptionAsync(result[0].ErrorMessage).ConfigureAwait(false);
                         }
                         return CreateDetectedLanguageResponseSimple(response, result[0][0]);
                     default:
@@ -145,10 +145,10 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         DocumentResultCollection<DetectedLanguage> result = CreateDetectLanguageResponse(response);
-                        if (result.Errors.Count > 0)
+                        if (result[0].ErrorMessage != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw response.CreateRequestFailedException(result.Errors[0].Message);
+                            throw response.CreateRequestFailedException(result[0].ErrorMessage);
                         }
                         return CreateDetectedLanguageResponseSimple(response, result[0][0]);
                     default:
@@ -353,10 +353,10 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         DocumentResultCollection<NamedEntity> result = await CreateRecognizeEntitiesResponseAsync(response, cancellationToken).ConfigureAwait(false);
-                        if (result.Errors.Count > 0)
+                        if (result[0].ErrorMessage != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw await response.CreateRequestFailedExceptionAsync(result.Errors[0].Message).ConfigureAwait(false);
+                            throw await response.CreateRequestFailedExceptionAsync(result[0].ErrorMessage).ConfigureAwait(false);
                         }
                         return CreateRecognizeEntitiesResponseSimple(response, result[0]);
                     default:
@@ -393,10 +393,10 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         DocumentResultCollection<NamedEntity> result = CreateRecognizeEntitiesResponse(response);
-                        if (result.Errors.Count > 0)
+                        if (result[0].ErrorMessage != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw response.CreateRequestFailedException(result.Errors[0].Message);
+                            throw response.CreateRequestFailedException(result[0].ErrorMessage);
                         }
                         return CreateRecognizeEntitiesResponseSimple(response, result[0]);
                     default:
@@ -564,10 +564,10 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         SentimentResultCollection results = await CreateAnalyzeSentimentResponseAsync(response, cancellationToken).ConfigureAwait(false);
-                        if (results.Errors.Count > 0)
+                        if (results[0].ErrorMessage != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw await response.CreateRequestFailedExceptionAsync(results.Errors[0].Message).ConfigureAwait(false);
+                            throw await response.CreateRequestFailedExceptionAsync(results[0].ErrorMessage).ConfigureAwait(false);
                         }
                         return CreateAnalyzeSentimentResponseSimple(response, (results[0] as SentimentResult).DocumentSentiment);
                     default:
@@ -604,10 +604,10 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         SentimentResultCollection results = CreateAnalyzeSentimentResponse(response);
-                        if (results.Errors.Count > 0)
+                        if (results[0].ErrorMessage != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw response.CreateRequestFailedException(results.Errors[0].Message);
+                            throw response.CreateRequestFailedException(results[0].ErrorMessage);
                         }
                         return CreateAnalyzeSentimentResponseSimple(response, (results[0] as SentimentResult).DocumentSentiment);
                     default:
@@ -773,10 +773,10 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         DocumentResultCollection<string> result = await CreateKeyPhraseResponseAsync(response, cancellationToken).ConfigureAwait(false);
-                        if (result.Errors.Count > 0)
+                        if (result[0].ErrorMessage != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw await response.CreateRequestFailedExceptionAsync(result.Errors[0].Message).ConfigureAwait(false);
+                            throw await response.CreateRequestFailedExceptionAsync(result[0].ErrorMessage).ConfigureAwait(false);
                         }
                         return CreateKeyPhraseResponseSimple(response, result[0]);
                     default:
@@ -813,10 +813,10 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         DocumentResultCollection<string> result = CreateKeyPhraseResponse(response);
-                        if (result.Errors.Count > 0)
+                        if (result[0].ErrorMessage != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw response.CreateRequestFailedException(result.Errors[0].Message);
+                            throw response.CreateRequestFailedException(result[0].ErrorMessage);
                         }
                         return CreateKeyPhraseResponseSimple(response, result[0]);
                     default:
@@ -984,10 +984,10 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         DocumentResultCollection<NamedEntity> result = await CreateRecognizeEntitiesResponseAsync(response, cancellationToken).ConfigureAwait(false);
-                        if (result.Errors.Count > 0)
+                        if (result[0].ErrorMessage != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw await response.CreateRequestFailedExceptionAsync(result.Errors[0].Message).ConfigureAwait(false);
+                            throw await response.CreateRequestFailedExceptionAsync(result[0].ErrorMessage).ConfigureAwait(false);
                         }
                         return CreateRecognizeEntitiesResponseSimple(response, result[0]);
                     default:
@@ -1024,10 +1024,10 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         DocumentResultCollection<NamedEntity> result = CreateRecognizeEntitiesResponse(response);
-                        if (result.Errors.Count > 0)
+                        if (result[0].ErrorMessage != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw response.CreateRequestFailedException(result.Errors[0].Message);
+                            throw response.CreateRequestFailedException(result[0].ErrorMessage);
                         }
                         return CreateRecognizeEntitiesResponseSimple(response, result[0]);
                     default:
@@ -1195,10 +1195,10 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         DocumentResultCollection<LinkedEntity> result = await CreateLinkedEntityResponseAsync(response, cancellationToken).ConfigureAwait(false);
-                        if (result.Errors.Count > 0)
+                        if (result[0].ErrorMessage != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw await response.CreateRequestFailedExceptionAsync(result.Errors[0].Message).ConfigureAwait(false);
+                            throw await response.CreateRequestFailedExceptionAsync(result[0].ErrorMessage).ConfigureAwait(false);
                         }
                         return CreateLinkedEntityResponseSimple(response, result[0]);
                     default:
@@ -1235,10 +1235,10 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         DocumentResultCollection<LinkedEntity> result = CreateLinkedEntityResponse(response);
-                        if (result.Errors.Count > 0)
+                        if (result[0].ErrorMessage != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw response.CreateRequestFailedException(result.Errors[0].Message);
+                            throw response.CreateRequestFailedException(result[0].ErrorMessage);
                         }
                         return CreateLinkedEntityResponseSimple(response, result[0]);
                     default:

@@ -52,17 +52,25 @@ namespace Azure.AI.TextAnalytics.Samples
                 var document = inputs[i++];
 
                 Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
-                Debug.WriteLine($"    Recognized the following {result.Count()} entities:");
 
-                foreach (var entity in result)
+                if (result.ErrorMessage != default)
                 {
-                    Debug.WriteLine($"        Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType ?? "N/A"}, Score: {entity.Score:0.00}, Offset: {entity.Offset}, Length: {entity.Length}");
+                    Debug.WriteLine($"    Document error: {result.ErrorMessage}.");
                 }
+                else
+                {
+                    Debug.WriteLine($"    Recognized the following {result.Count()} entities:");
 
-                Debug.WriteLine($"    Document statistics:");
-                Debug.WriteLine($"        Character count: {result.Statistics.CharacterCount}");
-                Debug.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
-                Debug.WriteLine("");
+                    foreach (var entity in result)
+                    {
+                        Debug.WriteLine($"        Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType ?? "N/A"}, Score: {entity.Score:0.00}, Offset: {entity.Offset}, Length: {entity.Length}");
+                    }
+
+                    Debug.WriteLine($"    Document statistics:");
+                    Debug.WriteLine($"        Character count: {result.Statistics.CharacterCount}");
+                    Debug.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
+                    Debug.WriteLine("");
+                }
             }
 
             Debug.WriteLine($"Batch operation statistics:");

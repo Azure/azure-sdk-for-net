@@ -15,6 +15,12 @@ namespace Azure.AI.TextAnalytics
             Statistics = statistics;
         }
 
+        internal DocumentResult(string id, string errorMessage)
+        {
+            Id = id;
+            ErrorMessage = errorMessage;
+        }
+
         /// <summary>
         /// Gets unique, non-empty document identifier.
         /// </summary>
@@ -26,5 +32,10 @@ namespace Azure.AI.TextAnalytics
         /// payload.
         /// </summary>
         public DocumentStatistics Statistics { get; }
+
+        /// <summary>
+        /// Errors and Warnings by document.
+        /// </summary>
+        public string ErrorMessage { get; }
     }
 }

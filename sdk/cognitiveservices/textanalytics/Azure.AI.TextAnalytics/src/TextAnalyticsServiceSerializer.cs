@@ -130,7 +130,7 @@ namespace Azure.AI.TextAnalytics
             return default;
         }
 
-        private static void ReadDocumentErrors(JsonElement documentElement, List<DocumentError> errors)
+        private static void ReadDocumentErrors<T>(JsonElement documentElement, DocumentResultCollection<T> results)
         {
             if (documentElement.TryGetProperty("errors", out JsonElement errorsValue))
             {
@@ -149,8 +149,40 @@ namespace Azure.AI.TextAnalytics
                         }
                     }
 
-                    errors.Add(new DocumentError(id, message));
+                    results.Add(new DocumentResult<T>(id, message));
                 }
+
+                // TODO: This makes the assumption that input ids are passed-in in order.
+                // Can we make that assumption?
+                results.OrderBy(result => result.Id);
+            }
+        }
+
+        private static void ReadSentimentResultErrors(JsonElement documentElement, SentimentResultCollection results)
+        {
+            if (documentElement.TryGetProperty("errors", out JsonElement errorsValue))
+            {
+                foreach (JsonElement errorElement in errorsValue.EnumerateArray())
+                {
+                    string id = default;
+                    string message = default;
+
+                    if (errorElement.TryGetProperty("id", out JsonElement idValue))
+                        id = idValue.ToString();
+                    if (errorElement.TryGetProperty("error", out JsonElement errorValue))
+                    {
+                        if (errorsValue.TryGetProperty("message", out JsonElement messageValue))
+                        {
+                            message = messageValue.ToString();
+                        }
+                    }
+
+                    results.Add(new SentimentResult(id, message));
+                }
+
+                // TODO: This makes the assumption that input ids are passed-in in order.
+                // Can we make that assumption?
+                results.OrderBy(result => result.Id);
             }
         }
 
@@ -231,7 +263,7 @@ namespace Azure.AI.TextAnalytics
                 }
             }
 
-            ReadDocumentErrors(root, result.Errors);
+            ReadDocumentErrors(root, result);
             result.ModelVersion = ReadModelVersion(root);
             result.Statistics = ReadDocumentBatchStatistics(root);
 
@@ -333,7 +365,7 @@ namespace Azure.AI.TextAnalytics
                 }
             }
 
-            ReadDocumentErrors(root, result.Errors);
+            ReadDocumentErrors(root, result);
             result.ModelVersion = ReadModelVersion(root);
             result.Statistics = ReadDocumentBatchStatistics(root);
 
@@ -440,7 +472,7 @@ namespace Azure.AI.TextAnalytics
                 }
             }
 
-            ReadDocumentErrors(root, result.Errors);
+            ReadSentimentResultErrors(root, result);
             result.ModelVersion = ReadModelVersion(root);
             result.Statistics = ReadDocumentBatchStatistics(root);
 
@@ -558,7 +590,7 @@ namespace Azure.AI.TextAnalytics
                 }
             }
 
-            ReadDocumentErrors(root, result.Errors);
+            ReadDocumentErrors(root, result);
             result.ModelVersion = ReadModelVersion(root);
             result.Statistics = ReadDocumentBatchStatistics(root);
 
@@ -639,7 +671,7 @@ namespace Azure.AI.TextAnalytics
                 }
             }
 
-            ReadDocumentErrors(root, result.Errors);
+            ReadDocumentErrors(root, result);
             result.ModelVersion = ReadModelVersion(root);
             result.Statistics = ReadDocumentBatchStatistics(root);
 

@@ -12,6 +12,11 @@ namespace Azure.AI.TextAnalytics
         {
         }
 
+        internal SentimentResult(string id, string errorMessage)
+            : base(id, errorMessage)
+        {
+        }
+
         // TODO: set DocumentSentiment.Length
         /// <summary>
         /// </summary>

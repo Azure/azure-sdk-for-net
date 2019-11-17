@@ -55,29 +55,34 @@ namespace Azure.AI.TextAnalytics.Samples
             {
                 var document = inputs[i++];
 
-                Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
-
-                Debug.WriteLine($"Document sentiment is {result.DocumentSentiment.SentimentClass.ToString()}, with scores: ");
-                Debug.WriteLine($"    Positive score: {result.DocumentSentiment.PositiveScore:0.00}.");
-                Debug.WriteLine($"    Neutral score: {result.DocumentSentiment.NeutralScore:0.00}.");
-                Debug.WriteLine($"    Negative score: {result.DocumentSentiment.NegativeScore:0.00}.");
-
-                Debug.WriteLine($"    Sentence sentiment results:");
-
-                foreach (var sentenceSentiment in result.SentenceSentiments)
+                if (result.ErrorMessage != default)
                 {
-                    Debug.WriteLine($"    On sentence \"{document.Text.Substring(sentenceSentiment.Offset, sentenceSentiment.Length)}\"");
-
-                    Debug.WriteLine($"    Sentiment is {sentenceSentiment.SentimentClass.ToString()}, with scores: ");
-                    Debug.WriteLine($"        Positive score: {sentenceSentiment.PositiveScore:0.00}.");
-                    Debug.WriteLine($"        Neutral score: {sentenceSentiment.NeutralScore:0.00}.");
-                    Debug.WriteLine($"        Negative score: {sentenceSentiment.NegativeScore:0.00}.");
+                    Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
                 }
+                else
+                {
+                    Debug.WriteLine($"Document sentiment is {result.DocumentSentiment.SentimentClass.ToString()}, with scores: ");
+                    Debug.WriteLine($"    Positive score: {result.DocumentSentiment.PositiveScore:0.00}.");
+                    Debug.WriteLine($"    Neutral score: {result.DocumentSentiment.NeutralScore:0.00}.");
+                    Debug.WriteLine($"    Negative score: {result.DocumentSentiment.NegativeScore:0.00}.");
 
-                Debug.WriteLine($"    Document statistics:");
-                Debug.WriteLine($"        Character count: {result.Statistics.CharacterCount}");
-                Debug.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
-                Debug.WriteLine("");
+                    Debug.WriteLine($"    Sentence sentiment results:");
+
+                    foreach (var sentenceSentiment in result.SentenceSentiments)
+                    {
+                        Debug.WriteLine($"    On sentence \"{document.Text.Substring(sentenceSentiment.Offset, sentenceSentiment.Length)}\"");
+
+                        Debug.WriteLine($"    Sentiment is {sentenceSentiment.SentimentClass.ToString()}, with scores: ");
+                        Debug.WriteLine($"        Positive score: {sentenceSentiment.PositiveScore:0.00}.");
+                        Debug.WriteLine($"        Neutral score: {sentenceSentiment.NeutralScore:0.00}.");
+                        Debug.WriteLine($"        Negative score: {sentenceSentiment.NegativeScore:0.00}.");
+                    }
+
+                    Debug.WriteLine($"    Document statistics:");
+                    Debug.WriteLine($"        Character count: {result.Statistics.CharacterCount}");
+                    Debug.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
+                    Debug.WriteLine("");
+                }
             }
 
             Debug.WriteLine($"Batch operation statistics:");

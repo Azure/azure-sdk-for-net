@@ -56,12 +56,20 @@ namespace Azure.AI.TextAnalytics.Samples
                 var document = inputs[i++];
 
                 Debug.WriteLine($"On document (Id={document.Id}, CountryHint=\"{document.CountryHint}\", Text=\"{document.Text}\"):");
-                Debug.WriteLine($"    Detected language {result[0].Name} with confidence {result[0].Score:0.00}.");
 
-                Debug.WriteLine($"    Document statistics:");
-                Debug.WriteLine($"        Character count: {result.Statistics.CharacterCount}");
-                Debug.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
-                Debug.WriteLine("");
+                if (result.ErrorMessage != default)
+                {
+                    Debug.WriteLine($"    Document error: {result.ErrorMessage}.");
+                }
+                else
+                {
+                    Debug.WriteLine($"    Detected language {result[0].Name} with confidence {result[0].Score:0.00}.");
+
+                    Debug.WriteLine($"    Document statistics:");
+                    Debug.WriteLine($"        Character count: {result.Statistics.CharacterCount}");
+                    Debug.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
+                    Debug.WriteLine("");
+                }
             }
 
             Debug.WriteLine($"Batch operation statistics:");
