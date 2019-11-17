@@ -2,12 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Core;
+using Azure.Messaging.EventHubs.Metadata;
 using Azure.Messaging.EventHubs.Processor;
 using Moq;
 using NUnit.Framework;
@@ -434,6 +437,238 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(connection.IsClosed, Is.False);
         }
 
+        [Test]
+        public async Task FindAndClaimOwnershipAsyncClaimsAllClaimablePartitions()
+        {
+            var connection = new MockConnection();
+            var partitionManager = new InMemoryPartitionManager();
+            var processor = new MockEventProcessorClient(
+                "consumerGroup",
+                partitionManager,
+                connection,
+                default);
+
+            var partitionIds = Enumerable.Range(1, 3)
+                .Select(i => i.ToString())
+                .ToList();
+            var completeOwnership = connection.CreatePartitionOwnerships(partitionIds, processor.Identifier);
+
+            // ownership should start empty
+            var activeOwnership = await partitionManager.ListOwnershipAsync(connection.FullyQualifiedNamespace, connection.EventHubName, processor.ConsumerGroup);
+            CollectionAssert.IsEmpty(activeOwnership);
+
+
+            // FindAndClaimOwnershipAsync should claim a random partition until none are left
+            for (int i = 1; i <= partitionIds.Count; i++)
+            {
+                await processor.FindAndClaimOwnershipAsync(completeOwnership, activeOwnership);
+                activeOwnership = await partitionManager.ListOwnershipAsync(connection.FullyQualifiedNamespace, connection.EventHubName, processor.ConsumerGroup);
+
+                // currentOwnership should contain one of the completeOwnership partitions
+                Assert.AreEqual(i, activeOwnership.Count());
+                Assert.IsTrue(activeOwnership.All(p => partitionIds.Contains(p.PartitionId)));
+            }
+
+            // FindAndClaimOwnershipAsync should not change ownership after all partitions are claimed
+            await processor.FindAndClaimOwnershipAsync(completeOwnership, activeOwnership);
+            activeOwnership = await partitionManager.ListOwnershipAsync(connection.FullyQualifiedNamespace, connection.EventHubName, processor.ConsumerGroup);
+
+            Assert.AreEqual(partitionIds.Count, activeOwnership.Count());
+        }
+
+        [Test]
+        public async Task FindAndClaimOwnershipAsync_ClaimsPartitions_WhenOwned_Equals_MinimumOwnedPartitionsCount()
+        {
+            const int minimumParitionCount = 4;
+            const int NumberOfPartitions = 13;
+            var connection = new MockConnection(numberOfPartitions: NumberOfPartitions);
+            var partitionManager = new InMemoryPartitionManager();
+            var processor = new MockEventProcessorClient(
+                "consumerGroup",
+                partitionManager,
+                connection,
+                default);
+
+            // create more partitions owned by this Processor
+            var processor1PartitionIds = Enumerable.Range(1, minimumParitionCount)
+                .Select(i => i.ToString());
+            var ownedPartitions = connection.CreatePartitionOwnerships(processor1PartitionIds, processor.Identifier);
+
+            // create more partitions owned by a different Processor
+            var Processor2Id = Guid.NewGuid().ToString();
+            var processor2PartitionIds = Enumerable.Range(minimumParitionCount + 1, minimumParitionCount)
+                .Select(i => i.ToString());
+            ownedPartitions = ownedPartitions
+                .Concat(connection.CreatePartitionOwnerships(processor2PartitionIds, Processor2Id));
+
+            // create more partitions owned by a different Processor
+            var Processor3Id = Guid.NewGuid().ToString();
+            var processor3PartitionIds = Enumerable.Range((2 * minimumParitionCount) + 1, minimumParitionCount)
+                .Select(i => i.ToString());
+            ownedPartitions = ownedPartitions
+                .Concat(connection.CreatePartitionOwnerships(processor3PartitionIds, Processor3Id));
+
+            // seed the partitionManager with the owned partitions
+            await partitionManager.ClaimOwnershipAsync(ownedPartitions);
+
+            var claimablePartitionIds = (await connection.GetPartitionIdsAsync(Mock.Of<EventHubsRetryPolicy>()))
+                                            .Except(ownedPartitions.Select(p => p.PartitionId));
+
+            // get owned partitions
+            var totalOwnedPartitions = await partitionManager.ListOwnershipAsync(connection.FullyQualifiedNamespace, connection.EventHubName, processor.ConsumerGroup);
+            var ownedByProcessor1 = totalOwnedPartitions
+                                        .Where(p => p.OwnerIdentifier == processor.Identifier);
+
+            // verify owned partitionIds match the owned partitions
+            Assert.AreEqual(minimumParitionCount, ownedByProcessor1.Count());
+            Assert.IsFalse(ownedByProcessor1.Any(owned => claimablePartitionIds.Contains(owned.PartitionId)));
+
+            // claim owership from of a Partition even though ownedPartitionCount == minimumOwnedPartitionsCount
+            await processor.FindAndClaimOwnershipAsync(ownedPartitions, ownedPartitions);
+
+            // get owned partitions
+            totalOwnedPartitions = await partitionManager.ListOwnershipAsync(connection.FullyQualifiedNamespace, connection.EventHubName, processor.ConsumerGroup);
+            ownedByProcessor1 = totalOwnedPartitions
+                                        .Where(p => p.OwnerIdentifier == processor.Identifier);
+
+            //verify that we took ownership of the additional partition
+            Assert.Greater(ownedByProcessor1.Count(), minimumParitionCount);
+            Assert.IsTrue(ownedByProcessor1.Any(owned => claimablePartitionIds.Contains(owned.PartitionId)));
+        }
+
+        // pre-req: when no unclaimed partitions exist
+        [Test]
+        public async Task FindAndClaimOwnershipAsync_StealsPartitions_ThisProcessor_OwnsMinPartitions_OtherProcessorOwnsGreatherThanMaxPartitions()
+        {
+            const int minimumParitionCount = 4;
+            const int maximumParitionCount = 5;
+            const int NumberOfPartitions = 14;
+            var connection = new MockConnection(numberOfPartitions: NumberOfPartitions);
+            var partitionManager = new InMemoryPartitionManager();
+            var processor = new MockEventProcessorClient(
+                "consumerGroup",
+                partitionManager,
+                connection,
+                default);
+
+            // create partitions owned by this Processor
+            var processor1PartitionIds = Enumerable.Range(1, minimumParitionCount)
+                .Select(i => i.ToString());
+            var completeOwnership = connection.CreatePartitionOwnerships(processor1PartitionIds, processor.Identifier);
+
+            // create partitions owned by a different Processor
+            var Processor2Id = Guid.NewGuid().ToString();
+            var processor2PartitionIds = Enumerable.Range(minimumParitionCount + 1, minimumParitionCount)
+                .Select(i => i.ToString());
+            completeOwnership = completeOwnership
+                .Concat(connection.CreatePartitionOwnerships(processor2PartitionIds, Processor2Id));
+
+            // create partitions owned by a different Processor above the maximumPartitionCount
+            var Processor3Id = Guid.NewGuid().ToString();
+            var stealablePartitionIds = Enumerable.Range((2 * minimumParitionCount) + 1, NumberOfPartitions - (2 * minimumParitionCount))
+                .Select(i => i.ToString());
+            completeOwnership = completeOwnership
+                .Concat(connection.CreatePartitionOwnerships(stealablePartitionIds, Processor3Id));
+
+            // seed the partitionManager with the owned partitions
+            await partitionManager.ClaimOwnershipAsync(completeOwnership);
+
+            // get owned partitions
+            var totalOwnedPartitions = await partitionManager.ListOwnershipAsync(connection.FullyQualifiedNamespace, connection.EventHubName, processor.ConsumerGroup);
+            var ownedByProcessor1 = totalOwnedPartitions
+                                        .Where(p => p.OwnerIdentifier == processor.Identifier);
+            var ownedByProcessor3 = totalOwnedPartitions
+                                        .Where(p => p.OwnerIdentifier == Processor3Id);
+
+            // verify owned partitionIds match the owned partitions
+            Assert.IsFalse(ownedByProcessor1.Any(owned => stealablePartitionIds.Contains(owned.PartitionId)));
+
+            //verify processor 3 has stealable partitions
+            Assert.Greater(ownedByProcessor3.Count(), maximumParitionCount);
+
+            // steal owership from of a when ownedPartitionCount == minimumOwnedPartitionsCount but a processor owns > maximumPartitionCount
+            await processor.FindAndClaimOwnershipAsync(completeOwnership, completeOwnership);
+
+            // get owned partitions
+            totalOwnedPartitions = await partitionManager.ListOwnershipAsync(connection.FullyQualifiedNamespace, connection.EventHubName, processor.ConsumerGroup);
+            ownedByProcessor1 = totalOwnedPartitions
+                .Where(p => p.OwnerIdentifier == processor.Identifier);
+            ownedByProcessor3 = totalOwnedPartitions
+                .Where(p => p.OwnerIdentifier == Processor3Id);
+
+            //verify that we took ownership of the additional partition
+            Assert.IsTrue(ownedByProcessor1.Any(owned => stealablePartitionIds.Contains(owned.PartitionId)));
+
+            //verify processor 3 now does not own > maximumPartitionCount
+            Assert.AreEqual(maximumParitionCount, ownedByProcessor3.Count());
+        }
+
+        [Test]
+        public async Task FindAndClaimOwnershipAsync_StealsPartitions_ThisProcessor_OwnsLessThanMinPartitions_OtherProcessor_OwnsMaxPartitions()
+        {
+            const int minimumParitionCount = 4;
+            const int maximumParitionCount = 5;
+            const int NumberOfPartitions = 12;
+            var connection = new MockConnection(numberOfPartitions: NumberOfPartitions);
+            var partitionManager = new InMemoryPartitionManager();
+            var processor = new MockEventProcessorClient(
+                "consumerGroup",
+                partitionManager,
+                connection,
+                default);
+
+            // create more partitions owned by this Processor
+            var processor1PartitionIds = Enumerable.Range(1, minimumParitionCount - 1)
+                .Select(i => i.ToString());
+            var completeOwnership = connection.CreatePartitionOwnerships(processor1PartitionIds, processor.Identifier);
+
+            // create more partitions owned by a different Processor
+            var Processor2Id = Guid.NewGuid().ToString();
+            var processor2PartitionIds = Enumerable.Range(minimumParitionCount, minimumParitionCount)
+                .Select(i => i.ToString());
+            completeOwnership = completeOwnership
+                .Concat(connection.CreatePartitionOwnerships(processor2PartitionIds, Processor2Id));
+
+            // create more partitions owned by a different Processor above the maximumPartitionCount
+            var Processor3Id = Guid.NewGuid().ToString();
+            var stealablePartitionIds = Enumerable.Range((2 * minimumParitionCount), maximumParitionCount)
+                .Select(i => i.ToString());
+            completeOwnership = completeOwnership
+                .Concat(connection.CreatePartitionOwnerships(stealablePartitionIds, Processor3Id));
+
+            // seed the partitionManager with the owned partitions
+            await partitionManager.ClaimOwnershipAsync(completeOwnership);
+
+            // get owned partitions
+            var totalOwnedPartitions = await partitionManager.ListOwnershipAsync(connection.FullyQualifiedNamespace, connection.EventHubName, processor.ConsumerGroup);
+            var ownedByProcessor1 = totalOwnedPartitions
+                                        .Where(p => p.OwnerIdentifier == processor.Identifier);
+            var ownedByProcessor3 = totalOwnedPartitions
+                                        .Where(p => p.OwnerIdentifier == Processor3Id);
+
+            // verify owned partitionIds match the owned partitions
+            Assert.IsFalse(ownedByProcessor1.Any(owned => stealablePartitionIds.Contains(owned.PartitionId)));
+
+            //verify processor 3 has stealable partitions
+            Assert.AreEqual(maximumParitionCount, ownedByProcessor3.Count());
+
+            // steal owership from of a when ownedPartitionCount == minimumOwnedPartitionsCount but a processor owns > maximumPartitionCount
+            await processor.FindAndClaimOwnershipAsync(completeOwnership, completeOwnership);
+
+            // get owned partitions
+            totalOwnedPartitions = await partitionManager.ListOwnershipAsync(connection.FullyQualifiedNamespace, connection.EventHubName, processor.ConsumerGroup);
+            ownedByProcessor1 = totalOwnedPartitions
+                .Where(p => p.OwnerIdentifier == processor.Identifier);
+            ownedByProcessor3 = totalOwnedPartitions
+                .Where(p => p.OwnerIdentifier == Processor3Id);
+
+            //verify that we took ownership of the additional partition
+            Assert.IsTrue(ownedByProcessor1.Any(owned => stealablePartitionIds.Contains(owned.PartitionId)));
+
+            //verify processor 3 now does not own > maximumPartitionCount
+            Assert.Less(ownedByProcessor3.Count(), maximumParitionCount);
+        }
+
         /// <summary>
         ///   Retrieves the Connection for the processor client using its private accessor.
         /// </summary>
@@ -488,9 +723,32 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         private class MockConnection : EventHubConnection
         {
+
+            private readonly Mock<TransportClient> client = new Mock<TransportClient>();
+            private readonly EventHubProperties _eventHubProperties;
+
+            private readonly Dictionary<string, ConcurrentQueue<EventData>> eventPipeline = new Dictionary<string, ConcurrentQueue<EventData>>();
+
+            private EventHubProperties MockProperties => _eventHubProperties;
+
             public MockConnection(string namespaceName = "fakeNamespace",
-                                  string eventHubName = "fakeEventHub") : base(namespaceName, eventHubName, CreateCredentials())
+                                  string eventHubName = "fakeEventHub",
+                                  int numberOfPartitions = 3) : base(namespaceName, eventHubName, CreateCredentials())
             {
+                var partitionIds = Enumerable
+                    .Range(1, numberOfPartitions)
+                    .Select(p => p.ToString())
+                    .ToArray();
+
+                foreach (var partitionId in partitionIds)
+                {
+                    eventPipeline[partitionId] = new ConcurrentQueue<EventData>();
+                }
+
+                _eventHubProperties = new EventHubProperties(
+                    eventHubName,
+                    DateTime.UtcNow,
+                    partitionIds);
             }
 
             private static EventHubTokenCredential CreateCredentials()
@@ -498,15 +756,81 @@ namespace Azure.Messaging.EventHubs.Tests
                 return new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net").Object;
             }
 
+            internal override TransportProducer CreateTransportProducer(string partitionID, EventHubProducerClientOptions producerOptions = null)
+            {
+                var transportProducer = new Mock<TransportProducer>();
+
+                transportProducer
+                    .Setup(producer => producer.SendAsync(It.IsAny<IEnumerable<EventData>>(), It.IsAny<SendOptions>(), It.IsAny<System.Threading.CancellationToken>()))
+                    .Returns(Task.CompletedTask)
+                    .Callback<IEnumerable<EventData>, SendOptions, System.Threading.CancellationToken>((events, options, token) =>
+                    {
+                        foreach (var eventData in events)
+                        {
+                            eventPipeline[options.PartitionKey].Enqueue(eventData);
+                        }
+                    });
+
+                return transportProducer.Object;
+            }
+
+            internal override TransportConsumer CreateTransportConsumer(string consumerGroup,
+                                                                        string partitionId,
+                                                                        EventPosition eventPosition,
+                                                                        EventHubConsumerClientOptions consumerOptions = default)
+            {
+                var transportConsumer = new Mock<TransportConsumer>();
+
+                transportConsumer
+                    .Setup(consumer => consumer.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), It.IsAny<System.Threading.CancellationToken>()))
+                    .Returns<int, TimeSpan, System.Threading.CancellationToken>((maxCount, wait, token) =>
+                     {
+                         int receiveCount = 0;
+                         var events = new List<EventData>();
+                         while (eventPipeline[partitionId].TryDequeue(out var eventData) && receiveCount < maxCount)
+                         {
+                             events.Add(eventData);
+                             receiveCount++;
+                         }
+                         return Task.FromResult((IEnumerable<EventData>)events);
+                     });
+
+                return transportConsumer.Object;
+            }
             internal override TransportClient CreateTransportClient(string fullyQualifiedNamespace, string eventHubName, EventHubTokenCredential credential, EventHubConnectionOptions options)
             {
-                var client = new Mock<TransportClient>();
-
                 client
                     .Setup(client => client.ServiceEndpoint)
                     .Returns(new Uri($"amgp://{ fullyQualifiedNamespace}.com/{eventHubName}"));
 
+                client
+                    .Setup(client => client.CloseAsync(It.IsAny<System.Threading.CancellationToken>()))
+                    .Returns(Task.CompletedTask);
+
                 return client.Object;
+            }
+
+            internal override Task<EventHubProperties> GetPropertiesAsync(EventHubsRetryPolicy retryPolicy, System.Threading.CancellationToken cancellationToken = default)
+            {
+                return Task.FromResult(MockProperties);
+            }
+
+            internal IEnumerable<PartitionOwnership> CreatePartitionOwnerships(IEnumerable<string> partitionIds, string identifier)
+            {
+                return partitionIds
+                    .Select(partitionId =>
+                        new PartitionOwnership
+                            (
+                                this.FullyQualifiedNamespace,
+                                this.EventHubName,
+                                "consumerGroup",
+                                identifier,
+                                partitionId,
+                                null,
+                                null,
+                                DateTimeOffset.UtcNow,
+                                Guid.NewGuid().ToString()
+                            )).ToList();
             }
         }
     }
