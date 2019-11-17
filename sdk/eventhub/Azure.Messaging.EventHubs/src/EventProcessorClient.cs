@@ -716,7 +716,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>The claimed ownership. <c>null</c> if this instance is not eligible, if no claimable ownership was found or if the claim attempt failed.</returns>
         ///
-        internal async Task<PartitionOwnership> FindAndClaimOwnershipAsync(IEnumerable<PartitionOwnership> completeOwnershipEnumerable,
+        private async Task<PartitionOwnership> FindAndClaimOwnershipAsync(IEnumerable<PartitionOwnership> completeOwnershipEnumerable,
                                                                           IEnumerable<PartitionOwnership> activeOwnership)
         {
             // Get a complete list of the partition ids present in the Event Hub.  This should be immutable for the time being, but
