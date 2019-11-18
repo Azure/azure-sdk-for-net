@@ -440,7 +440,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task FindAndClaimOwnershipAsyncClaimsAllClaimablePartitions()
         {
-            var connection = new MockConnection();
+            const int partitionCount = 3;
+            var connection = new MockConnection(numberOfPartitions: partitionCount);
             var partitionManager = new InMemoryPartitionManager();
             var processor = new MockEventProcessorClient(
                 "consumerGroup",
@@ -448,14 +449,17 @@ namespace Azure.Messaging.EventHubs.Tests
                 connection,
                 default);
 
-            var partitionIds = Enumerable.Range(1, 3)
+            var ownedPartitionIds = Enumerable.Range(1, 1)
                 .Select(i => i.ToString())
                 .ToList();
-            var completeOwnership = connection.CreatePartitionOwnerships(partitionIds, processor.Identifier);
+            var ownedPartitions = connection.CreatePartitionOwnerships(ownedPartitionIds, processor.Identifier);
+
+            // seed the partitionManager with the owned partitions
+            await partitionManager.ClaimOwnershipAsync(ownedPartitions);
 
             // ownership should start empty
             var activeOwnership = await partitionManager.ListOwnershipAsync(connection.FullyQualifiedNamespace, connection.EventHubName, processor.ConsumerGroup);
-            CollectionAssert.IsEmpty(activeOwnership);
+            Assert.AreEqual(1, activeOwnership.Count());
 
 
             // start the processor so that the procesor claims a random partition until none are left
@@ -465,7 +469,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             activeOwnership = await partitionManager.ListOwnershipAsync(connection.FullyQualifiedNamespace, connection.EventHubName, processor.ConsumerGroup);
 
-            Assert.AreEqual(partitionIds.Count, activeOwnership.Count());
+            Assert.AreEqual(partitionCount, activeOwnership.Count());
         }
 
         [Test]
