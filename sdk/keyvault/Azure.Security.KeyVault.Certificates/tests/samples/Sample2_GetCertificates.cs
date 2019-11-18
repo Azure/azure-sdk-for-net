@@ -16,6 +16,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
     /// using the synchronous methods of the CertificateClient.
     /// </summary>
     [LiveOnly]
+    [NonParallelizable]
     public partial class GetCertificates
     {
         [Test]

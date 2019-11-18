@@ -14,6 +14,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
     /// This sample demonstrates how to create, get, update, and delete a certificate using the synchronous methods of the <see cref="CertificateClient">.
     /// </summary>
     [LiveOnly]
+    [NonParallelizable]
     public partial class HelloWorld
     {
         [Test]

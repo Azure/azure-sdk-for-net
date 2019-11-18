@@ -61,7 +61,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             #endregion
         }
 
-        [Test]
+        [Ignore("The certificate was already created in the synchronous method.")]
         public async Task CreateCertificateAsync()
         {
             #region Snippet:CreateCertificateAsync
