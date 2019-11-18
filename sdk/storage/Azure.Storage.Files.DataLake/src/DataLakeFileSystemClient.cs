@@ -266,9 +266,10 @@ namespace Azure.Storage.Files.DataLake
        /// <param name="clientDiagnostics"></param>
         internal DataLakeFileSystemClient(Uri fileSystemUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
         {
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(fileSystemUri);
             _uri = fileSystemUri;
-            _blobUri = new DataLakeUriBuilder(fileSystemUri).ToBlobUri();
-            _dfsUri = new DataLakeUriBuilder(fileSystemUri).ToDfsUri();
+            _blobUri = uriBuilder.ToBlobUri();
+            _dfsUri = uriBuilder.ToDfsUri();
             _pipeline = pipeline;
             _clientDiagnostics = clientDiagnostics;
             _containerClient = new BlobContainerClient(_blobUri, pipeline, clientDiagnostics, null);
