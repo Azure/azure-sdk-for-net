@@ -27,7 +27,7 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// Whether the Uri is an IP Uri as determined by
-        /// <see cref="IsHostIPEndPointStyle"/>.
+        /// <see cref="UriExtensions.IsHostIPEndPointStyle(Uri)"/>.
         /// </summary>
         private readonly bool _isIPStyleUri;
 
@@ -165,11 +165,11 @@ namespace Azure.Storage.Files.DataLake
             // Find the share & directory/file path (if any)
             if (!string.IsNullOrEmpty(uri.AbsolutePath))
             {
-                var path = GetPath(uri);
+                var path = uri.GetPath();
 
                 var startIndex = 0;
 
-                if (IsHostIPEndPointStyle(uri))
+                if (uri.IsHostIPEndPointStyle())
                 {
                     _isIPStyleUri = true;
                     var accountEndIndex = path.IndexOf("/", StringComparison.InvariantCulture);
@@ -362,26 +362,5 @@ namespace Azure.Storage.Files.DataLake
                 Query = query.Length > 0 ? "?" + query.ToString() : null
             };
         }
-
-        /// <summary>
-        /// If path starts with a slash, remove it
-        /// </summary>
-        /// <param name="uri">The Uri.</param>
-        /// <returns>Sanitized Uri.</returns>
-        internal static string GetPath(Uri uri) =>
-            (uri.AbsolutePath[0] == '/') ?
-                uri.AbsolutePath.Substring(1) :
-                uri.AbsolutePath;
-
-        // See remarks at https://docs.microsoft.com/en-us/dotnet/api/system.net.ipaddress.tryparse?view=netframework-4.7.2
-        /// <summary>
-        /// Check to see if Uri is using IP Endpoint style.
-        /// </summary>
-        /// <param name="uri">The Uri.</param>
-        /// <returns>True if using IP Endpoint style.</returns>
-        internal static bool IsHostIPEndPointStyle(Uri uri) =>
-           !string.IsNullOrEmpty(uri.Host) &&
-            uri.Host.IndexOf(".", StringComparison.InvariantCulture) >= 0 &&
-            IPAddress.TryParse(uri.Host, out _);
     }
 }
