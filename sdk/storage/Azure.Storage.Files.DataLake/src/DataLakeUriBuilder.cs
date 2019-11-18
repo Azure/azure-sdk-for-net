@@ -189,8 +189,8 @@ namespace Azure.Storage.Files.DataLake
                 else
                 {
                     // DataLake Uris have two allowed subdomains
-                    AccountName = UriExtensions.GetAccountNameFromDomain(uri, Constants.DataLake.BlobUriSuffix) ??
-                        UriExtensions.GetAccountNameFromDomain(uri, Constants.DataLake.DfsUriSuffix) ??
+                    AccountName = uri.GetAccountNameFromDomain(Constants.DataLake.BlobUriSuffix) ??
+                        uri.GetAccountNameFromDomain(Constants.DataLake.DfsUriSuffix) ??
                         string.Empty;
                 }
 
