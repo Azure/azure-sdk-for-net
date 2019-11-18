@@ -7,7 +7,7 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"marketplacePurchases\": \"AllAllowed\",\r\n    \"reservationPurchases\": \"Allowed\",\r\n    \"viewCharges\": \"NotAllowed\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "819d95de-b4f9-48e4-8ebc-8653960bcc20"
+          "c45cc1ba-ceb2-4be8-ae71-29f36505de28"
         ],
         "Accept-Language": [
           "en-US"
@@ -51,19 +51,19 @@
           "DENY"
         ],
         "x-ms-request-id": [
-          "40657c94-3b01-4706-9c6c-9b108763a510"
+          "dd4844a3-0141-4b35-ae7f-bc4324e883ef"
         ],
         "x-ms-correlation-request-id": [
-          "40657c94-3b01-4706-9c6c-9b108763a510"
+          "dd4844a3-0141-4b35-ae7f-bc4324e883ef"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20191118T223450Z:40657c94-3b01-4706-9c6c-9b108763a510"
+          "WESTUS:20191118T234143Z:dd4844a3-0141-4b35-ae7f-bc4324e883ef"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Mon, 18 Nov 2019 22:34:49 GMT"
+          "Mon, 18 Nov 2019 23:41:42 GMT"
         ],
         "Content-Length": [
           "385"
