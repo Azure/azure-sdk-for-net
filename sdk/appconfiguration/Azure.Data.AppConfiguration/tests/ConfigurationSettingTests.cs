@@ -167,7 +167,7 @@ namespace Azure.Data.AppConfiguration.Tests
         {
             SettingSelector selector = new SettingSelector
             {
-                Fields = SettingFields.Key | SettingFields.IsReadOnly
+                Fields = SettingFields.All
             }.AddKey("key");
 
             var builder = new RequestUriBuilder();

@@ -21,7 +21,6 @@ namespace Azure.Data.AppConfiguration
     {
         private StringBuilder _keys;
         private StringBuilder _labels;
-        private SettingFields _fields = SettingFields.All;
 
         private StringBuilder Keys => _keys ??= new StringBuilder();
         private StringBuilder Labels => _labels ??= new StringBuilder();
@@ -193,9 +192,9 @@ namespace Azure.Data.AppConfiguration
                 builder.AppendQuery(LabelQueryFilter, _labels.ToString());
             }
 
-            if (_fields != SettingFields.All)
+            if (Fields != SettingFields.All)
             {
-                var filter = _fields.ToString().ToLowerInvariant().Replace("isreadonly", "locked");
+                var filter = Fields.ToString().ToLowerInvariant().Replace("isreadonly", "locked");
                 builder.AppendQuery(FieldsQueryFilter, filter);
             }
 
