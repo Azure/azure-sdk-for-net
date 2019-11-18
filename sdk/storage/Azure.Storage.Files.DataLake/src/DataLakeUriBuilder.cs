@@ -247,11 +247,13 @@ namespace Azure.Storage.Files.DataLake
         /// </summary>
         internal Uri ToBlobUri()
         {
-            // AccountName cannot be null
+            // Cannot be a IP-style URL
+            // AccountName cannot be null or empty
             // Host.Length mst be at least 5 character longth than AccountName.Length to account for ".dfs."
             // Host must begin with "[AccountName]."
             // The substring of Host immediately following "[AccountName]." must be "dfs."
-            if (AccountName != null
+            if (!_isIPStyleUri
+                && !string.IsNullOrEmpty(AccountName)
                 && Host.Length >= AccountName.Length + 5
                 && Host.Substring(0, AccountName.Length + 1).Equals(AccountName + ".", StringComparison.OrdinalIgnoreCase)
                 && Host.Substring(AccountName.Length + 1, 4).Equals(Constants.DataLake.DfsUriSuffix + ".", StringComparison.OrdinalIgnoreCase))
@@ -271,11 +273,13 @@ namespace Azure.Storage.Files.DataLake
         /// </summary>
         internal Uri ToDfsUri()
         {
-            // AccontName cannot be null
+            // Cannot be a IP-style URL
+            // AccontName cannot be null or empty
             // Host.Length must be at least 6 characters longther than AccountName.Length to account for ".blob."
             // Host must begin with "[AccountName]."
-            // The substring of Host immediately following "[AccountName]." must be ".blob."
-            if (AccountName != null
+            // The substring of Host immediately following "[AccountName]." must be "blob."
+            if (!_isIPStyleUri
+                && !string.IsNullOrEmpty(AccountName)
                 && Host.Length >= AccountName.Length + 6
                 && Host.Substring(0, AccountName.Length + 1).Equals(AccountName + ".", StringComparison.OrdinalIgnoreCase)
                 && Host.Substring(AccountName.Length + 1, 5).Equals(Constants.DataLake.BlobUriSuffix + ".", StringComparison.OrdinalIgnoreCase))
