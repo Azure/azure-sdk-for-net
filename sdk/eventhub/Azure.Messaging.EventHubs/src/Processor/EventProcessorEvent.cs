@@ -94,7 +94,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
             // Data validation is done by the event processor.
 
-            return processor.UpdateCheckpointAsync(Data, Context);
+            return processor.InternalUpdateCheckpointAsync(Data, Context);
         }
     }
 }

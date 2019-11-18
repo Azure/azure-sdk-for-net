@@ -485,8 +485,8 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        protected internal override async Task UpdateCheckpointAsync(EventData eventData,
-                                                                     PartitionContext context)
+        protected override async Task UpdateCheckpointAsync(EventData eventData,
+                                                            PartitionContext context)
         {
             Argument.AssertNotNull(eventData, nameof(eventData));
             Argument.AssertNotNull(eventData.Offset, nameof(eventData.Offset));
@@ -520,6 +520,18 @@ namespace Azure.Messaging.EventHubs
                 throw;
             }
         }
+
+        /// <summary>
+        ///   Updates the checkpoint using the given information for the associated partition and consumer group in the chosen storage service.
+        /// </summary>
+        ///
+        /// <param name="eventData">The event containing the information to be stored in the checkpoint.</param>
+        /// <param name="context">The context of the partition the checkpoint is associated with.</param>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        ///
+        internal Task InternalUpdateCheckpointAsync(EventData eventData,
+                                                    PartitionContext context) => UpdateCheckpointAsync(eventData, context);
 
         /// <summary>
         ///   Creates a <see cref="PartitionOwnership" /> instance based on the provided information.

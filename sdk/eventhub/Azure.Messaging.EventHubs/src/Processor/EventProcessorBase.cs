@@ -201,8 +201,8 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        protected internal abstract Task UpdateCheckpointAsync(EventData eventData,
-                                                               PartitionContext context);
+        protected abstract Task UpdateCheckpointAsync(EventData eventData,
+                                                      PartitionContext context);
 
         /// <summary>
         ///   Creates a <see cref="PartitionOwnership" /> instance based on the provided information.
