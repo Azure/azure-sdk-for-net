@@ -4,6 +4,8 @@
 
 ### Breaking changes
 
+- Moved `CertificateClient.CancelCertificationOperation` to `CertificateOperation.Cancel`.
+- Moved `CertificateClient.DeleteCertificateOperation` to `CertificateOperation.Delete`.
 - `CertificateClient.DeleteCertificate` has been renamed to `CertificateClient.StartDeleteCertificate` and now returns a `DeleteCertificateOperation` to track this long-running operation.
 - `CertificateClient.RecoverDeletedCertificate` has been renamed to `CertificateClient.StartRecoverDeletedCertificate` and now returns a `RecoverDeletedCertificateOperation` to track this long-running operation.
 - `subject` and `issuerName` constructor parameters have been switched on `CertificatePolicy`.
