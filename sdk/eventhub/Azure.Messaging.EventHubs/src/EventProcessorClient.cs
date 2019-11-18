@@ -694,9 +694,16 @@ namespace Azure.Messaging.EventHubs
 
                 // Some previously owned partitions might have had their ownership expired or might have been stolen, so we need to stop
                 // the pumps we don't need anymore.
+                var partitionIdsToStop = new List<string>();
+                foreach (var partitionId in PartitionPumps.Keys)
+                {
+                    if (!InstanceOwnership.ContainsKey(partitionId))
+                    {
+                        partitionIdsToStop.Add(partitionId);
+                    }
+                }
 
-                await Task.WhenAll(PartitionPumps.Keys
-                    .Except(InstanceOwnership.Keys)
+                await Task.WhenAll(partitionIdsToStop
                     .Select(partitionId => RemovePartitionPumpIfItExistsAsync(partitionId, ProcessingStoppedReason.OwnershipLost)))
                     .ConfigureAwait(false);
 
@@ -780,8 +787,8 @@ namespace Azure.Messaging.EventHubs
             // but we are making sure there are no better candidates among the other event processors.
 
             if (ownedPartitionsCount < minimumOwnedPartitionsCount ||
-                ownedPartitionsCount == minimumOwnedPartitionsCount &&
-                !activeOwnershipWithDistribution.Values.Any(partitions => partitions.Count < minimumOwnedPartitionsCount))
+                (ownedPartitionsCount == minimumOwnedPartitionsCount &&
+                    !activeOwnershipWithDistribution.Values.Any(partitions => partitions.Count < minimumOwnedPartitionsCount)))
             {
                 // Look for unclaimed partitions.  If any, randomly pick one of them to claim.
                 if (unclaimedPartitions.Count > 0)
@@ -796,31 +803,53 @@ namespace Azure.Messaging.EventHubs
 
                 var maximumOwnedPartitionsCount = minimumOwnedPartitionsCount + 1;
 
-                IEnumerable<string> stealablePartitions = activeOwnershipWithDistribution.Values
-                    .Where(distribution => distribution.Count > maximumOwnedPartitionsCount)
-                    .SelectMany(distribution => distribution.PartitionList)
-                    .Select(ownership => ownership.PartitionId);
+                var partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount = new List<string>();
+                var partitionsOwnedByProcessorWithExactlyMaximumOwnedPartitionsCount = new List<string>();
 
+                // Build a list of partitions owned by processors owninng exactly maximumOwnedPartitionsCount partitions
+                // and a list of partitions owned by processors owninng greater than maximumOwnedPartitionsCount partitions.
+                foreach (var key in activeOwnershipWithDistribution.Keys)
+                {
+                    // Ignore the partitions already owned by this processor
+                    if (key == Identifier)
+                    {
+                        continue;
+                    }
+                    if (activeOwnershipWithDistribution[key].Count == maximumOwnedPartitionsCount)
+                    {
+                        activeOwnershipWithDistribution[key].PartitionList
+                            .ForEach(ownership => partitionsOwnedByProcessorWithExactlyMaximumOwnedPartitionsCount.Add(ownership.PartitionId));
+                    }
+                    else if (activeOwnershipWithDistribution[key].Count > maximumOwnedPartitionsCount)
+                    {
+                        activeOwnershipWithDistribution[key].PartitionList
+                            .ForEach(ownership => partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount.Add(ownership.PartitionId));
+                    }
+                }
 
                 // Here's the important part.  If there are no processors that have exceeded the maximum owned partition count allowed, we may
                 // need to steal from the processors that have exactly the maximum amount.  If this instance is below the minimum count, then
                 // we have no choice as we need to enforce balancing.  Otherwise, leave it as it is because the distribution wouldn't change.
 
-                if (!stealablePartitions.Any() && ownedPartitionsCount < minimumOwnedPartitionsCount)
+                if (!partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount.Any() && ownedPartitionsCount < minimumOwnedPartitionsCount)
                 {
-                    stealablePartitions = activeOwnershipWithDistribution.Values
-                        .Where(distribution => distribution.Count == maximumOwnedPartitionsCount)
-                        .SelectMany(distribution => distribution.PartitionList)
-                        .Select(ownership => ownership.PartitionId);
+                    // If any stealable partitions were found, randomly pick one of them to claim.
+                    var index = RandomNumberGenerator.Value.Next(partitionsOwnedByProcessorWithExactlyMaximumOwnedPartitionsCount.Count());
+
+                    return await ClaimOwnershipAsync(
+                        partitionsOwnedByProcessorWithExactlyMaximumOwnedPartitionsCount.ElementAt(index),
+                        completeOwnershipEnumerable)
+                        .ConfigureAwait(false);
                 }
-
-                // If any stealable partitions were found, randomly pick one of them to claim.
-
-                if (stealablePartitions.Any())
+                else if (partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount.Any())
                 {
-                    var index = RandomNumberGenerator.Value.Next(stealablePartitions.Count());
+                    // If any stealable partitions were found, randomly pick one of them to claim.
+                    var index = RandomNumberGenerator.Value.Next(partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount.Count());
 
-                    return await ClaimOwnershipAsync(stealablePartitions.ElementAt(index), completeOwnershipEnumerable).ConfigureAwait(false);
+                    return await ClaimOwnershipAsync(
+                        partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount.ElementAt(index),
+                        completeOwnershipEnumerable)
+                        .ConfigureAwait(false);
                 }
             }
 
