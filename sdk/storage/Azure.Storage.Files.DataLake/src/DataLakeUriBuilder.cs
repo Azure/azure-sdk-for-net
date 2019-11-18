@@ -247,22 +247,23 @@ namespace Azure.Storage.Files.DataLake
         /// </summary>
         internal Uri ToBlobUri()
         {
-            // Cannot be a IP-style URL
-            // AccountName cannot be null or empty
-            // Host.Length mst be at least 5 character longth than AccountName.Length to account for ".dfs."
-            // Host must begin with "[AccountName]."
-            // The substring of Host immediately following "[AccountName]." must be "dfs."
-            if (!_isIPStyleUri
-                && !string.IsNullOrEmpty(AccountName)
-                && Host.Length >= AccountName.Length + 5
-                && Host.Substring(0, AccountName.Length + 1).Equals(AccountName + ".", StringComparison.OrdinalIgnoreCase)
-                && Host.Substring(AccountName.Length + 1, 4).Equals(Constants.DataLake.DfsUriSuffix + ".", StringComparison.OrdinalIgnoreCase))
+            if (!_isIPStyleUri)
             {
-                StringBuilder stringBuilder = new StringBuilder(Host);
+                ToUri();
+                string account = _uri.GetAccountNameFromDomain(Constants.DataLake.DfsUriSuffix);
 
-                // Replace "dfs" with "blob"
-                stringBuilder.Replace(Constants.DataLake.DfsUriSuffix, Constants.DataLake.BlobUriSuffix, AccountName.Length + 1, 3);
-                Host = stringBuilder.ToString();
+                if (account != null)
+                {
+                    StringBuilder stringBuilder = new StringBuilder(Host);
+
+                    // Replace "dfs" with "blob"
+                    stringBuilder.Replace(
+                        Constants.DataLake.DfsUriSuffix,
+                        Constants.DataLake.BlobUriSuffix,
+                        AccountName.Length + 1,
+                        3);
+                    Host = stringBuilder.ToString();
+                }
             }
 
             return ToUri();
@@ -273,22 +274,24 @@ namespace Azure.Storage.Files.DataLake
         /// </summary>
         internal Uri ToDfsUri()
         {
-            // Cannot be a IP-style URL
-            // AccontName cannot be null or empty
-            // Host.Length must be at least 6 characters longther than AccountName.Length to account for ".blob."
-            // Host must begin with "[AccountName]."
-            // The substring of Host immediately following "[AccountName]." must be "blob."
-            if (!_isIPStyleUri
-                && !string.IsNullOrEmpty(AccountName)
-                && Host.Length >= AccountName.Length + 6
-                && Host.Substring(0, AccountName.Length + 1).Equals(AccountName + ".", StringComparison.OrdinalIgnoreCase)
-                && Host.Substring(AccountName.Length + 1, 5).Equals(Constants.DataLake.BlobUriSuffix + ".", StringComparison.OrdinalIgnoreCase))
+            if (!_isIPStyleUri)
             {
-                StringBuilder stringBuilder = new StringBuilder(Host);
+                ToUri();
+                string account = _uri.GetAccountNameFromDomain(Constants.DataLake.BlobUriSuffix);
 
-                // Replace "blob" with "dfs"
-                stringBuilder.Replace(Constants.DataLake.BlobUriSuffix, Constants.DataLake.DfsUriSuffix, AccountName.Length + 1, 4);
-                Host = stringBuilder.ToString();
+                if (account != null)
+                {
+                    StringBuilder stringBuilder = new StringBuilder(Host);
+
+                    // Replace "blob" with "dfs"
+                    stringBuilder.Replace(
+                        Constants.DataLake.BlobUriSuffix,
+                        Constants.DataLake.DfsUriSuffix,
+                        AccountName.Length + 1,
+                        4);
+                    Host = stringBuilder.ToString();
+                }
+
             }
 
             return ToUri();
