@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "cdn/resource-manager" -AutoRestVersion "latest"
+Start-AutoRestCodeGeneration -ResourceProvider "cdn/resource-manager" -AutoRestVersion "latest" -ConfigFileTag "package-2019-04"
