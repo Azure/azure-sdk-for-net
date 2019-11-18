@@ -112,6 +112,23 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
+        /// <summary>
+        /// The path corresponding to the path client.
+        /// </summary>
+        private string _path;
+
+        /// <summary>
+        /// Gets the path corresponding to the path client.
+        /// </summary>
+        public virtual string Path
+        {
+            get
+            {
+                SetNameFieldsIfNull();
+                return _path;
+            }
+        }
+
         #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="DataLakePathClient"/>
@@ -357,11 +374,12 @@ namespace Azure.Storage.Files.DataLake
         /// </summary>
         internal virtual void SetNameFieldsIfNull()
         {
-            if (_fileSystemName == null || _accountName == null)
+            if (_fileSystemName == null || _accountName == null || _path == null)
             {
                 var builder = new DataLakeUriBuilder(Uri);
                 _fileSystemName = builder.FileSystemName;
                 _accountName = builder.AccountName;
+                _path = builder.DirectoryOrFilePath;
             }
         }
 
