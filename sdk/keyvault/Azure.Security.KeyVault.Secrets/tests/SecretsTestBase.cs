@@ -6,12 +6,11 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
 using Azure.Identity;
-using Azure.Security.KeyVault.Secrets;
 using NUnit.Framework;
 
-namespace Azure.Security.KeyVault.Test
+namespace Azure.Security.KeyVault.Secrets.Tests
 {
-    public abstract class KeyVaultTestBase : RecordedTestBase
+    public abstract class SecretsTestBase : RecordedTestBase
     {
         public const string AzureKeyVaultUrlEnvironmentVariable = "AZURE_KEYVAULT_URL";
 
@@ -21,7 +20,7 @@ namespace Azure.Security.KeyVault.Test
 
         private readonly Queue<(string Name, bool Delete)> _secretsToCleanup = new Queue<(string, bool)>();
 
-        protected KeyVaultTestBase(bool isAsync) : base(isAsync)
+        protected SecretsTestBase(bool isAsync) : base(isAsync)
         {
         }
 
@@ -44,38 +43,40 @@ namespace Azure.Security.KeyVault.Test
             VaultUri = new Uri(Recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable));
         }
 
-        [TearDown]
+        [OneTimeTearDown]
         public async Task Cleanup()
         {
-            // TODO: Change to OneTimeTearDown at end of TestFixture and await the LRO for deleting a secret.
+            List<Task> cleanupTasks = new List<Task>();
+
+            foreach ((string name, bool delete) in _secretsToCleanup)
+            {
+                if (delete)
+                {
+                    cleanupTasks.Add(CleanupSecret(name));
+                }
+
+                await Task.WhenAll(cleanupTasks);
+            }
+        }
+
+        protected async Task CleanupSecret(string name)
+        {
             try
             {
-                foreach ((string Name, bool Delete) cleanupItem in _secretsToCleanup)
-                {
-                    if (cleanupItem.Delete)
-                    {
-                        await Client.StartDeleteSecretAsync(cleanupItem.Name);
-                    }
-                }
+                await Client.StartDeleteSecretAsync(name);
 
-                foreach ((string Name, bool Delete) cleanupItem in _secretsToCleanup)
-                {
-                    await WaitForDeletedSecret(cleanupItem.Name);
-                }
-
-                foreach ((string Name, bool Delete) cleanupItem in _secretsToCleanup)
-                {
-                    await Client.PurgeDeletedSecretAsync(cleanupItem.Name);
-                }
-
-                foreach ((string Name, bool Delete) cleanupItem in _secretsToCleanup)
-                {
-                    await WaitForPurgedSecret(cleanupItem.Name);
-                }
+                await WaitForDeletedSecret(name);
             }
-            finally
+            catch (RequestFailedException ex) when (ex.Status == 404)
             {
-                _secretsToCleanup.Clear();
+            }
+
+            try
+            {
+                await Client.PurgeDeletedSecretAsync(name);
+            }
+            catch (RequestFailedException ex) when (ex.Status == 404)
+            {
             }
         }
 

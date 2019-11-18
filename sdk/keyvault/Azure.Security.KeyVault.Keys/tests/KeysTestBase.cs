@@ -43,37 +43,40 @@ namespace Azure.Security.KeyVault.Keys.Tests
             VaultUri = new Uri(Recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable));
         }
 
-        [TearDown]
+        [OneTimeTearDown]
         public async Task Cleanup()
+        {
+            List<Task> cleanupTasks = new List<Task>();
+
+            foreach ((string name, bool delete) in _keysToCleanup)
+            {
+                if (delete)
+                {
+                    cleanupTasks.Add(CleanupKey(name));
+                }
+
+                await Task.WhenAll(cleanupTasks);
+            }
+        }
+
+        protected async Task CleanupKey(string name)
         {
             try
             {
-                foreach ((string Name, bool Delete) cleanupItem in _keysToCleanup)
-                {
-                    if (cleanupItem.Delete)
-                    {
-                        await Client.StartDeleteKeyAsync(cleanupItem.Name);
-                    }
-                }
+                await Client.StartDeleteKeyAsync(name);
 
-                foreach ((string Name, bool Delete) cleanupItem in _keysToCleanup)
-                {
-                    await WaitForDeletedKey(cleanupItem.Name);
-                }
-
-                foreach ((string Name, bool Delete) cleanupItem in _keysToCleanup)
-                {
-                    await Client.PurgeDeletedKeyAsync(cleanupItem.Name);
-                }
-
-                foreach ((string Name, bool Delete) cleanupItem in _keysToCleanup)
-                {
-                    await WaitForPurgedKey(cleanupItem.Name);
-                }
+                await WaitForDeletedKey(name);
             }
-            finally
+            catch (RequestFailedException ex) when (ex.Status == 404)
             {
-                _keysToCleanup.Clear();
+            }
+
+            try
+            {
+                await Client.PurgeDeletedKeyAsync(name);
+            }
+            catch (RequestFailedException ex) when (ex.Status == 404)
+            {
             }
         }
 

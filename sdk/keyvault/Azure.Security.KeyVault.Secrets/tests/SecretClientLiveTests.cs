@@ -6,14 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using Azure.Security.KeyVault.Secrets;
 using Azure.Core.Testing;
 using System.Text;
 using NUnit.Framework.Constraints;
 
-namespace Azure.Security.KeyVault.Test
+namespace Azure.Security.KeyVault.Secrets.Tests
 {
-    public class SecretClientLiveTests : KeyVaultTestBase
+    public class SecretClientLiveTests : SecretsTestBase
     {
         private const int PagedSecretCount = 50;
 
