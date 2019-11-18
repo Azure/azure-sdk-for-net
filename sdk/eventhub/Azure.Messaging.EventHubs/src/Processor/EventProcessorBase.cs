@@ -91,28 +91,28 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   used as keys.
         /// </summary>
         ///
-        protected ConcurrentDictionary<string, Task> ActivePartitionProcessors { get; private set; }
+        protected ConcurrentDictionary<string, Task> ActivePartitionProcessors { get; private set; } = new ConcurrentDictionary<string, Task>();
 
         /// <summary>
         ///   The set of token sources that can be used to cancel currently active partition processing tasks.  Partition
         ///   ids are used as keys.
         /// </summary>
         ///
-        private ConcurrentDictionary<string, CancellationTokenSource> ActivePartitionProcessorTokenSources { get; set; }
+        private ConcurrentDictionary<string, CancellationTokenSource> ActivePartitionProcessorTokenSources { get; set; } = new ConcurrentDictionary<string, CancellationTokenSource>();
 
         /// <summary>
         ///   The set of contexts associated with partitions that are currently being processed.  Partition ids are used
         ///   as keys.
         /// </summary>
         ///
-        private ConcurrentDictionary<string, T> PartitionContexts { get; set; }
+        private ConcurrentDictionary<string, T> PartitionContexts { get; set; } = new ConcurrentDictionary<string, T>();
 
         /// <summary>
         ///   The set of partition ownership this event processor owns.  Partition ids are used as keys.
         ///   TODO: we should decide whether this property should be made private or not (and how would the concrete class obtain checkpoint information).
         /// </summary>
         ///
-        protected Dictionary<string, PartitionOwnership> InstanceOwnership { get; set; }
+        protected Dictionary<string, PartitionOwnership> InstanceOwnership { get; set; } = new Dictionary<string, PartitionOwnership>();
 
         /// <summary>
         ///   The running task responsible for performing partition load balancing between multiple <see cref="EventProcessorClient" />
@@ -273,11 +273,6 @@ namespace Azure.Messaging.EventHubs.Processor
                         RunningTaskTokenSource?.Cancel();
                         RunningTaskTokenSource = new CancellationTokenSource();
 
-                        InstanceOwnership = new Dictionary<string, PartitionOwnership>();
-                        ActivePartitionProcessors = new ConcurrentDictionary<string, Task>();
-                        ActivePartitionProcessorTokenSources = new ConcurrentDictionary<string, CancellationTokenSource>();
-                        PartitionContexts = new ConcurrentDictionary<string, T>();
-
                         // Start the main running task.  It is responsible for managing the active partition processing tasks and
                         // for partition load balancing among multiple event processor instances.
 
@@ -335,16 +330,14 @@ namespace Azure.Messaging.EventHubs.Processor
                         }
 
                         // Now that the task has finished, clean up what is left.  Stop and remove every partition processing task that is
-                        // still running and dispose of our dictionaries.
+                        // still running and clear our dictionaries.  ActivePartitionProcessors, ActivePartitionProcessorTokenSources and
+                        // PartitionContexts are already cleared by the StopPartitionProcessingIfRunningAsync method.
 
                         await Task.WhenAll(ActivePartitionProcessors.Keys
                             .Select(partitionId => StopPartitionProcessingIfRunningAsync(partitionId, ProcessingStoppedReason.Shutdown)))
                             .ConfigureAwait(false);
 
-                        InstanceOwnership = null;
-                        ActivePartitionProcessors = null;
-                        ActivePartitionProcessorTokenSources = null;
-                        PartitionContexts = null;
+                        InstanceOwnership.Clear();
 
                         // TODO: once IsRunning is implemented, update the following comment.
                         // We need to wait until all tasks have stopped before making the load balancing task null.  If we did it sooner, we
