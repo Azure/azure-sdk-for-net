@@ -235,8 +235,9 @@ namespace Azure.Security.KeyVault.Certificates
     }
     public partial class CertificatePolicy
     {
-        public CertificatePolicy(Azure.Security.KeyVault.Certificates.SubjectAlternativeNames subjectAlternativeNames, string issuerName) { }
-        public CertificatePolicy(string subject, string issuerName) { }
+        public CertificatePolicy(string issuerName, Azure.Security.KeyVault.Certificates.SubjectAlternativeNames subjectAlternativeNames) { }
+        public CertificatePolicy(string issuerName, string subject) { }
+        public CertificatePolicy(string issuerName, string subject, Azure.Security.KeyVault.Certificates.SubjectAlternativeNames subjectAlternativeNames) { }
         public bool? CertificateTransparency { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
         public string CertificateType { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
         public Azure.Security.KeyVault.Certificates.CertificateContentType? ContentType { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
@@ -373,17 +374,12 @@ namespace Azure.Security.KeyVault.Certificates
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Security.KeyVault.Certificates.KeyVaultCertificateWithPolicy>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Security.KeyVault.Certificates.KeyVaultCertificateWithPolicy>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
-    public partial class SubjectAlternativeNames : System.Collections.Generic.IEnumerable<string>, System.Collections.IEnumerable
+    public partial class SubjectAlternativeNames
     {
-        internal SubjectAlternativeNames() { }
-        public static Azure.Security.KeyVault.Certificates.SubjectAlternativeNames FromDns(System.Collections.Generic.IEnumerable<string> names) { throw null; }
-        public static Azure.Security.KeyVault.Certificates.SubjectAlternativeNames FromDns(params string[] names) { throw null; }
-        public static Azure.Security.KeyVault.Certificates.SubjectAlternativeNames FromEmail(System.Collections.Generic.IEnumerable<string> names) { throw null; }
-        public static Azure.Security.KeyVault.Certificates.SubjectAlternativeNames FromEmail(params string[] names) { throw null; }
-        public static Azure.Security.KeyVault.Certificates.SubjectAlternativeNames FromUpn(System.Collections.Generic.IEnumerable<string> names) { throw null; }
-        public static Azure.Security.KeyVault.Certificates.SubjectAlternativeNames FromUpn(params string[] names) { throw null; }
-        public System.Collections.Generic.IEnumerator<string> GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+        public SubjectAlternativeNames() { }
+        public System.Collections.Generic.ICollection<string> DnsNames { get { throw null; } }
+        public System.Collections.Generic.ICollection<string> Emails { get { throw null; } }
+        public System.Collections.Generic.ICollection<string> UserPrincipalNames { get { throw null; } }
     }
     public static partial class WellKnownIssuerNames
     {
