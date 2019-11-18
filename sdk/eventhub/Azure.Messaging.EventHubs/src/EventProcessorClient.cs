@@ -561,7 +561,7 @@ namespace Azure.Messaging.EventHubs
 
             try
             {
-                await StopAsync().ConfigureAwait(false); ;
+                await StopAsync().ConfigureAwait(false);
             }
             finally
             {
