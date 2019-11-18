@@ -790,17 +790,16 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// </remarks>
         ///
         protected virtual Task<DateTime> RequestAuthorizationUsingCbsAsync(AmqpConnection connection,
-                                                                          CbsTokenProvider tokenProvider,
-                                                                          Uri endpoint,
-                                                                          string audience,
-                                                                          string resource,
-                                                                          string[] requiredClaims,
-                                                                          TimeSpan timeout)
+                                                                           CbsTokenProvider tokenProvider,
+                                                                           Uri endpoint,
+                                                                           string audience,
+                                                                           string resource,
+                                                                           string[] requiredClaims,
+                                                                           TimeSpan timeout)
         {
             var authLink = connection.Extensions.Find<AmqpCbsLink>();
             return authLink.SendTokenAsync(TokenProvider, endpoint, audience, resource, requiredClaims, timeout);
         }
-
 
         /// <summary>
         ///   Creates the settings to use for AMQP communication.
