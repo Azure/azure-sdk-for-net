@@ -29,7 +29,7 @@ namespace Azure.Security.KeyVault.Certificates
         public string Message { get; internal set; }
 
         /// <summary>
-        /// Gets an underlying error, if exists, for the current error.
+        /// Gets an underlying error - if one exists - for the current error.
         /// </summary>
         public CertificateOperationError InnerError { get; internal set; }
 

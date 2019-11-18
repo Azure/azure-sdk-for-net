@@ -217,18 +217,21 @@ namespace Azure.Messaging.EventHubs.Processor
         private async Task RunAsync(CancellationToken cancellationToken)
         {
             List<EventData> receivedEvents;
+            TransportConsumer transportConsumer = null;
             Exception unrecoverableException = null;
 
             // We'll break from the loop upon encountering a non-retriable exception.  The event processor periodically
             // checks its pumps' status, so it should be aware of when one of them stops working.
 
-            while (!cancellationToken.IsCancellationRequested)
+            try
             {
-                await using (var partitionReceiver = InnerConsumer.CreatePartitionReceiver(Context.PartitionId, StartingPosition))
+                transportConsumer = Connection.CreateTransportConsumer(ConsumerGroup, Context.PartitionId, StartingPosition);
+
+                while (!cancellationToken.IsCancellationRequested)
                 {
                     try
                     {
-                        receivedEvents = (await partitionReceiver.ReceiveAsync(MaximumMessageCount, Options.MaximumReceiveWaitTime, cancellationToken).ConfigureAwait(false)).ToList();
+                        receivedEvents = (await transportConsumer.ReceiveAsync(MaximumMessageCount, Options.MaximumReceiveWaitTime, cancellationToken).ConfigureAwait(false)).ToList();
 
                         using DiagnosticScope diagnosticScope = EventDataInstrumentation.ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName);
                         diagnosticScope.AddAttribute("kind", "server");
@@ -284,6 +287,13 @@ namespace Azure.Messaging.EventHubs.Processor
                     {
                         throw unrecoverableException;
                     }
+                }
+            }
+            finally
+            {
+                if (transportConsumer != null)
+                {
+                    await transportConsumer.CloseAsync(CancellationToken.None).ConfigureAwait(false);
                 }
             }
         }

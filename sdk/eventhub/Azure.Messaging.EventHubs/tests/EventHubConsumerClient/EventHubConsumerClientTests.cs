@@ -429,8 +429,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockConnection = new MockConnection(() => transportConsumer);
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, mockConnection);
 
-            await using var firstReceiver = consumer.CreatePartitionReceiver("0", EventPosition.Earliest);
-            await using var secondReceiver = consumer.CreatePartitionReceiver("0", EventPosition.FromOffset(23));
+            await using var firstIterator = consumer.ReadEventsFromPartitionAsync("0", EventPosition.FromOffset(23), TimeSpan.FromMilliseconds(25)).GetAsyncEnumerator();
+            await using var secondIterator = consumer.ReadEventsFromPartitionAsync("0", EventPosition.FromOffset(23), TimeSpan.FromMilliseconds(25)).GetAsyncEnumerator();
+
+            await firstIterator.MoveNextAsync();
+            await secondIterator.MoveNextAsync();
 
             await consumer.CloseAsync();
             Assert.That(transportConsumer.WasCloseCalled, Is.True);
@@ -452,7 +455,17 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(consumer => consumer.CloseAsync(It.IsAny<CancellationToken>()))
                 .Returns(Task.FromException(new InvalidCastException()));
 
-            try { await using var receiver = consumer.CreatePartitionReceiver("0", EventPosition.Earliest); } catch {}
+
+
+
+            try
+            {
+                await using var iterator = consumer.ReadEventsFromPartitionAsync("0", EventPosition.FromOffset(23), TimeSpan.FromMilliseconds(25)).GetAsyncEnumerator();
+                await iterator.MoveNextAsync();
+            }
+            catch
+            {
+            }
 
             Assert.That(async () => await consumer.CloseAsync(), Throws.InstanceOf<InvalidCastException>());
         }
@@ -469,8 +482,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockConnection = new MockConnection(() => transportConsumer);
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, mockConnection);
 
-            await using var firstReceiver = consumer.CreatePartitionReceiver("0", EventPosition.Earliest);
-            await using var secondReceiver = consumer.CreatePartitionReceiver("0", EventPosition.FromOffset(23));
+            await using var firstIterator = consumer.ReadEventsFromPartitionAsync("0", EventPosition.FromOffset(23), TimeSpan.FromMilliseconds(25)).GetAsyncEnumerator();
+            await using var secondIterator = consumer.ReadEventsFromPartitionAsync("0", EventPosition.FromOffset(23), TimeSpan.FromMilliseconds(25)).GetAsyncEnumerator();
+
+            await firstIterator.MoveNextAsync();
+            await secondIterator.MoveNextAsync();
 
             consumer.Close();
             Assert.That(transportConsumer.WasCloseCalled, Is.True);
@@ -492,7 +508,14 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(consumer => consumer.CloseAsync(It.IsAny<CancellationToken>()))
                 .Returns(Task.FromException(new InvalidCastException()));
 
-            try { await using var receiver = consumer.CreatePartitionReceiver("0", EventPosition.Earliest); } catch {}
+            try
+            {
+                await using var iterator = consumer.ReadEventsFromPartitionAsync("0", EventPosition.FromOffset(23), TimeSpan.FromMilliseconds(25)).GetAsyncEnumerator();
+                await iterator.MoveNextAsync();
+            }
+            catch
+            {
+            }
 
             Assert.That(() => consumer.Close(), Throws.InstanceOf<InvalidCastException>());
         }
