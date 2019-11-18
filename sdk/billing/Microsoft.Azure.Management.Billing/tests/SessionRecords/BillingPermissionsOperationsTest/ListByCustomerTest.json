@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "7ebaa0c9-a400-4fc9-8288-d5fe8fa3c33f"
+          "0249744b-64cd-438c-af6f-445e409b7586"
         ],
         "Accept-Language": [
           "en-US"
@@ -30,7 +30,7 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "11999"
+          "11998"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -45,19 +45,19 @@
           "DENY"
         ],
         "x-ms-request-id": [
-          "627e401d-1d8c-4933-9ce7-86865b4a65a3"
+          "7814b56c-1587-4054-9c79-c57fa9e56207"
         ],
         "x-ms-correlation-request-id": [
-          "627e401d-1d8c-4933-9ce7-86865b4a65a3"
+          "7814b56c-1587-4054-9c79-c57fa9e56207"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20191115T021011Z:627e401d-1d8c-4933-9ce7-86865b4a65a3"
+          "WESTUS2:20191118T223441Z:7814b56c-1587-4054-9c79-c57fa9e56207"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 15 Nov 2019 02:10:11 GMT"
+          "Mon, 18 Nov 2019 22:34:41 GMT"
         ],
         "Content-Length": [
           "26"
