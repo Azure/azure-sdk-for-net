@@ -23,6 +23,10 @@ namespace Azure.Security.KeyVault.Keys.Samples
         [Test]
         public async Task SignVerifyAsync()
         {
+#if NET461
+            Assert.Ignore("Using CryptographyClient with EC keys is not supported on .NET Framework 4.6.1.");
+#endif
+
             // Environment variable with the Key Vault endpoint.
             string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
 
