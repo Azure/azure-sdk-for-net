@@ -99,6 +99,8 @@ package_indexing_exclusion_list:
   - 'Gallery'
   - 'Intune'
   - 'Common'
+  - 'SnippetGenerator'
+  - 'docgen'
 package_indexing_traversal_stops:
   - 'sdk/'
   - 'src/SDKs/'

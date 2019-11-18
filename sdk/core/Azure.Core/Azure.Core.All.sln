@@ -83,10 +83,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.Azure.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.Azure.Tests", "..\Microsoft.Extensions.Azure\tests\Microsoft.Extensions.Azure.Tests.csproj", "{F8A2ED33-F549-4126-8641-01208C69E29F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.InkRecognizer", "..\..\cognitiveservices\InkRecognizer\src\Azure.AI.InkRecognizer.csproj", "{1A52E345-444E-4D5A-BCFF-82273CD6F4AE}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.InkRecognizer.Tests", "..\..\cognitiveservices\InkRecognizer\tests\Azure.AI.InkRecognizer.Tests.csproj", "{D042FEB0-869D-4B50-9308-0BB22B5BA734}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Batch", "..\..\storage\Azure.Storage.Blobs.Batch\src\Azure.Storage.Blobs.Batch.csproj", "{E46AE747-54C7-48C1-AE61-FE17B58A3651}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Batch.Tests", "..\..\storage\Azure.Storage.Blobs.Batch\tests\Azure.Storage.Blobs.Batch.Tests.csproj", "{B339B3B7-E256-462A-A6C1-03C086F5E70D}"
@@ -581,30 +577,6 @@ Global
 		{F8A2ED33-F549-4126-8641-01208C69E29F}.Release|x64.Build.0 = Release|Any CPU
 		{F8A2ED33-F549-4126-8641-01208C69E29F}.Release|x86.ActiveCfg = Release|Any CPU
 		{F8A2ED33-F549-4126-8641-01208C69E29F}.Release|x86.Build.0 = Release|Any CPU
-		{1A52E345-444E-4D5A-BCFF-82273CD6F4AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1A52E345-444E-4D5A-BCFF-82273CD6F4AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1A52E345-444E-4D5A-BCFF-82273CD6F4AE}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{1A52E345-444E-4D5A-BCFF-82273CD6F4AE}.Debug|x64.Build.0 = Debug|Any CPU
-		{1A52E345-444E-4D5A-BCFF-82273CD6F4AE}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{1A52E345-444E-4D5A-BCFF-82273CD6F4AE}.Debug|x86.Build.0 = Debug|Any CPU
-		{1A52E345-444E-4D5A-BCFF-82273CD6F4AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1A52E345-444E-4D5A-BCFF-82273CD6F4AE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1A52E345-444E-4D5A-BCFF-82273CD6F4AE}.Release|x64.ActiveCfg = Release|Any CPU
-		{1A52E345-444E-4D5A-BCFF-82273CD6F4AE}.Release|x64.Build.0 = Release|Any CPU
-		{1A52E345-444E-4D5A-BCFF-82273CD6F4AE}.Release|x86.ActiveCfg = Release|Any CPU
-		{1A52E345-444E-4D5A-BCFF-82273CD6F4AE}.Release|x86.Build.0 = Release|Any CPU
-		{D042FEB0-869D-4B50-9308-0BB22B5BA734}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D042FEB0-869D-4B50-9308-0BB22B5BA734}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D042FEB0-869D-4B50-9308-0BB22B5BA734}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{D042FEB0-869D-4B50-9308-0BB22B5BA734}.Debug|x64.Build.0 = Debug|Any CPU
-		{D042FEB0-869D-4B50-9308-0BB22B5BA734}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{D042FEB0-869D-4B50-9308-0BB22B5BA734}.Debug|x86.Build.0 = Debug|Any CPU
-		{D042FEB0-869D-4B50-9308-0BB22B5BA734}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D042FEB0-869D-4B50-9308-0BB22B5BA734}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D042FEB0-869D-4B50-9308-0BB22B5BA734}.Release|x64.ActiveCfg = Release|Any CPU
-		{D042FEB0-869D-4B50-9308-0BB22B5BA734}.Release|x64.Build.0 = Release|Any CPU
-		{D042FEB0-869D-4B50-9308-0BB22B5BA734}.Release|x86.ActiveCfg = Release|Any CPU
-		{D042FEB0-869D-4B50-9308-0BB22B5BA734}.Release|x86.Build.0 = Release|Any CPU
 		{E46AE747-54C7-48C1-AE61-FE17B58A3651}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E46AE747-54C7-48C1-AE61-FE17B58A3651}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E46AE747-54C7-48C1-AE61-FE17B58A3651}.Debug|x64.ActiveCfg = Debug|Any CPU
