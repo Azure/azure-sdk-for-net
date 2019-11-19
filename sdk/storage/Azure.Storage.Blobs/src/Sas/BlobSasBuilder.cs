@@ -228,7 +228,7 @@ namespace Azure.Storage.Sas
                 ContentLanguage,
                 ContentType);
 
-            var signature = StorageSharedKeyCredentialExtensions.ComputeSasSignature(sharedKeyCredential,stringToSign);
+            var signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(sharedKeyCredential,stringToSign);
 
             var p = new BlobSasQueryParameters(
                 version: Version,

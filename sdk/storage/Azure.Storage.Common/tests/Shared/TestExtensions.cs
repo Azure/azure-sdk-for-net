@@ -176,6 +176,9 @@ namespace Azure.Storage
                 Convert.ToBase64String(key);
         }
 
+        // We don't want to expose the AccountKey to users to encourage them to properly manage their secrets,
+        // and we don't want to expose all of Azure.Storage.Common's internals to all our tests,
+        // so we're making a strategic choice to use private reflection for this field.
         internal static byte[] GetAccountKey(this StorageSharedKeyCredential credential)
         {
             Type type = credential.GetType();

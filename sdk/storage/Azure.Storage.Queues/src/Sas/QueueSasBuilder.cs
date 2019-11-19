@@ -148,7 +148,7 @@ namespace Azure.Storage.Sas
                 IPRange.ToString(),
                 SasExtensions.ToProtocolString(Protocol),
                 Version);
-            var signature = StorageSharedKeyCredentialExtensions.ComputeSasSignature(sharedKeyCredential, stringToSign);
+            var signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(sharedKeyCredential, stringToSign);
             var p = new SasQueryParameters(
                 version: Version,
                 services: default,

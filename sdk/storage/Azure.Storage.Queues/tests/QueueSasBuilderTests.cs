@@ -116,7 +116,7 @@ namespace Azure.Storage.Queues.Test
                 SasExtensions.ToProtocolString(SasProtocol.Https),
                 includeVersion ? constants.Sas.Version : SasQueryParameters.DefaultSasVersion);
 
-            return StorageSharedKeyCredentialExtensions.ComputeSasSignature(constants.Sas.SharedKeyCredential, stringToSign);
+            return StorageSharedKeyCredentialInternals.ComputeSasSignature(constants.Sas.SharedKeyCredential, stringToSign);
         }
     }
 }

@@ -11,7 +11,6 @@ using Azure.Core.Testing;
 using Azure.Identity;
 using Azure.Storage.Sas;
 using NUnit.Framework;
-using TestConstants = Azure.Storage.Test.TestConstants;
 
 namespace Azure.Storage.Test.Shared
 {

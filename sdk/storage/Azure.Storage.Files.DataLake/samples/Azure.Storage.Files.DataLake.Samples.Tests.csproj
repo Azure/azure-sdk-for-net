@@ -3,7 +3,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <AssemblyTitle>Microsoft Azure.Storage.Files.DataLake client library samples</AssemblyTitle>
     <IsPackable>false</IsPackable>
-    <DefineConstants>FileSDK;StorageSDK;$(DefineConstants)</DefineConstants>
+    <DefineConstants>FileSDK;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />

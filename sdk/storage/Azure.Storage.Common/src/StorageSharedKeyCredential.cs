@@ -72,9 +72,7 @@ namespace Azure.Storage
         /// <param name="credential">The credential.</param>
         /// <param name="message">The message to sign.</param>
         /// <returns>The signed message.</returns>
-        protected static string ComputeSasSignature(StorageSharedKeyCredential credential, string message)
-        {
-            return credential.ComputeHMACSHA256(message);
-        }
+        protected static string ComputeSasSignature(StorageSharedKeyCredential credential, string message) =>
+            credential.ComputeHMACSHA256(message);
     }
 }

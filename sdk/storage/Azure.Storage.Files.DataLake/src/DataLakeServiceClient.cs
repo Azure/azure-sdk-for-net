@@ -243,25 +243,25 @@ namespace Azure.Storage.Files.DataLake
             _uri = serviceUri;
             _blobUri = new DataLakeUriBuilder(serviceUri).ToBlobUri();
             _clientDiagnostics = clientDiagnostics ?? new ClientDiagnostics(options);
-            _blobServiceClient = BlobServiceClientHelper.Create(
+            _blobServiceClient = BlobServiceClientInternals.Create(
                 _blobUri,
                 _pipeline,
                 authentication,
                 _clientDiagnostics);
         }
 
-        private class BlobServiceClientHelper : BlobServiceClient
+        private class BlobServiceClientInternals : BlobServiceClient
         {
             public static BlobServiceClient Create(Uri uri, HttpPipeline pipeline, HttpPipelinePolicy authentication, ClientDiagnostics diagnostics)
             {
                 return BlobServiceClient.CreateClient(
                     uri,
-                    pipeline,
-                    authentication,
                     new BlobClientOptions()
                     {
                         Diagnostics = { IsDistributedTracingEnabled = diagnostics.IsActivityEnabled }
-                    });
+                    },
+                    authentication,
+                    pipeline);
             }
         }
         #endregion ctors

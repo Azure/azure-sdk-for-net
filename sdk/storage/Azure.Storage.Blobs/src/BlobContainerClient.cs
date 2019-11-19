@@ -296,18 +296,18 @@ namespace Azure.Storage.Blobs
         /// name of the account, the name of the container, and the name of
         /// the blob.
         /// </param>
-        /// <param name="pipeline">
-        /// The transport pipeline used to send every request.
-        /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
+        /// <param name="pipeline">
+        /// The transport pipeline used to send every request.
+        /// </param>
         /// <returns>
         /// New instanc of the <see cref="BlobContainerClient"/> class.
         /// </returns>
-        protected static BlobContainerClient CreateClient(Uri containerUri, HttpPipeline pipeline, BlobClientOptions options)
+        protected static BlobContainerClient CreateClient(Uri containerUri, BlobClientOptions options, HttpPipeline pipeline)
         {
             return new BlobContainerClient(containerUri, pipeline, new ClientDiagnostics(options), null);
         }

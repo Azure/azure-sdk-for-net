@@ -109,8 +109,13 @@ namespace Azure.Storage
             uri.Host.IndexOf(".", StringComparison.InvariantCulture) >= 0 &&
             IPAddress.TryParse(uri.Host, out _);
 
-        internal static void AddQueryParam(this StringBuilder sb, string key, string value)
-            =>
+        /// <summary>
+        /// Appends a query parameter to the string builder.
+        /// </summary>
+        /// <param name="sb">string builder instance.</param>
+        /// <param name="key">query parameter key.</param>
+        /// <param name="value">query parameter value.</param>
+        internal static void AppendQueryParameter(this StringBuilder sb, string key, string value) =>
             sb
             .Append(sb.Length > 0 ? "&" : "")
             .Append(key)

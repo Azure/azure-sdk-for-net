@@ -16,7 +16,6 @@ using Azure.Storage.Test.Shared;
 using Azure.Storage.Tests;
 using NUnit.Framework;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
-using TestConstants = Azure.Storage.Test.TestConstants;
 
 namespace Azure.Storage.Blobs.Test
 {

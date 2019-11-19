@@ -295,7 +295,7 @@ namespace Azure.Storage.Files.DataLake
             _dfsUri = uriBuilder.ToDfsUri();
             _pipeline = options.Build(authentication);
             _clientDiagnostics = new ClientDiagnostics(options);
-            _blockBlobClient = BlockBlobClientHelper.Create(_blobUri, _pipeline, _clientDiagnostics);
+            _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _pipeline, _clientDiagnostics);
 
         }
 
@@ -322,21 +322,20 @@ namespace Azure.Storage.Files.DataLake
             _dfsUri = new DataLakeUriBuilder(pathUri).ToDfsUri();
             _pipeline = pipeline;
             _clientDiagnostics = new ClientDiagnostics(options ?? new DataLakeClientOptions());
-            _blockBlobClient = BlockBlobClientHelper.Create(_blobUri, _pipeline, _clientDiagnostics);
+            _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _pipeline, _clientDiagnostics);
         }
 
-
-        private class BlockBlobClientHelper : BlockBlobClient
+        private class BlockBlobClientInternals : BlockBlobClient
         {
             public static BlockBlobClient Create(Uri uri, HttpPipeline pipeline, ClientDiagnostics diagnostics)
             {
                 return BlockBlobClient.CreateClient(
                     uri,
-                    pipeline,
                     new BlobClientOptions()
                     {
                         Diagnostics = { IsDistributedTracingEnabled = diagnostics.IsActivityEnabled }
-                    });
+                    },
+                    pipeline);
             }
         }
         #endregion

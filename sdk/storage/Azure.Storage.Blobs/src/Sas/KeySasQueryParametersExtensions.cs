@@ -33,6 +33,7 @@ namespace Azure.Storage.Sas
             // make copy, otherwise we'll get an exception when we remove
             IEnumerable<KeyValuePair<string, string>> kvps = values.ToArray();
             var isSasKey = true;
+            parameters._keyProperties = new UserDelegationKeyProperties();
             foreach (KeyValuePair<string, string> kv in kvps)
             {
                 // these are already decoded

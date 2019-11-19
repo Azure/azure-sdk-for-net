@@ -12,6 +12,10 @@ using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
+    /// <summary>
+    /// This class wraps the BlobServiceClient.GetContainersAsync return values
+    /// and maps them into DataLake types.
+    /// </summary>
     internal class GetFileSystemsAsyncCollection
     {
         private readonly BlobServiceClient _client;
@@ -31,7 +35,7 @@ namespace Azure.Storage.Files.DataLake.Models
         private static Page<FileSystemItem> ConvertPage(Page<BlobContainerItem> page)
         {
             return Page<FileSystemItem>.FromValues(
-                page.Values.Select(item => item.ToFileSystemItem()).ToArray(),
+                page.Values.Select(ConvertItem).ToArray(),
                 page.ContinuationToken,
                 page.GetRawResponse());
         }
@@ -39,6 +43,14 @@ namespace Azure.Storage.Files.DataLake.Models
         private static FileSystemItem ConvertItem(BlobContainerItem item)
         {
             return item.ToFileSystemItem();
+        }
+
+        private static AsyncPageable<BlobContainerItem> ConvertCollection(GetFileSystemsAsyncCollection collection, CancellationToken cancellationToken)
+        {
+            return collection._client.GetBlobContainersAsync(
+                       (BlobContainerTraits)collection._traits,
+                       collection._prefix,
+                       cancellationToken);
         }
 
         public Pageable<FileSystemItem> ToSyncCollection(CancellationToken cancellationToken)
@@ -56,12 +68,12 @@ namespace Azure.Storage.Files.DataLake.Models
         /// </summary>
         private class StoragePageable : Pageable<FileSystemItem>
         {
-            private GetFileSystemsAsyncCollection _enumerator;
+            private GetFileSystemsAsyncCollection _collection;
 
-            public StoragePageable(GetFileSystemsAsyncCollection enumerator, CancellationToken cancellationToken)
+            public StoragePageable(GetFileSystemsAsyncCollection collection, CancellationToken cancellationToken)
                 : base(cancellationToken)
             {
-                _enumerator = enumerator;
+                _collection = collection;
             }
 
             /// <summary>
@@ -83,9 +95,9 @@ namespace Azure.Storage.Files.DataLake.Models
                 string continuationToken = default,
                 int? pageHintSize = default)
             {
-                return _enumerator._client.GetBlobContainers(
-                    (BlobContainerTraits)_enumerator._traits,
-                    _enumerator._prefix,
+                return _collection._client.GetBlobContainers(
+                    (BlobContainerTraits)_collection._traits,
+                    _collection._prefix,
                     CancellationToken)
                     .AsPages(continuationToken, pageHintSize)
                     .Select(ConvertPage);
@@ -98,9 +110,9 @@ namespace Azure.Storage.Files.DataLake.Models
             /// <returns>A sequence of values.</returns>
             public override IEnumerator<FileSystemItem> GetEnumerator()
             {
-                return _enumerator._client.GetBlobContainers(
-                    (BlobContainerTraits)_enumerator._traits,
-                    _enumerator._prefix,
+                return _collection._client.GetBlobContainers(
+                    (BlobContainerTraits)_collection._traits,
+                    _collection._prefix,
                     CancellationToken)
                     .Select(ConvertItem)
                     .GetEnumerator();
@@ -112,7 +124,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// </summary>
         private class StorageAsyncPageable : AsyncPageable<FileSystemItem>
         {
-            private GetFileSystemsAsyncCollection _enumerator;
+            private GetFileSystemsAsyncCollection _collection;
 
             // for mocking
             protected StorageAsyncPageable()
@@ -120,10 +132,10 @@ namespace Azure.Storage.Files.DataLake.Models
             {
             }
 
-            public StorageAsyncPageable(GetFileSystemsAsyncCollection enumerator, CancellationToken cancellationToken)
+            public StorageAsyncPageable(GetFileSystemsAsyncCollection collection, CancellationToken cancellationToken)
                 : base(cancellationToken)
             {
-                _enumerator = enumerator;
+                _collection = collection;
             }
 
             /// <summary>
@@ -145,12 +157,11 @@ namespace Azure.Storage.Files.DataLake.Models
                 string continuationToken = default,
                 int? pageHintSize = default)
             {
-                await foreach (Page<BlobContainerItem> page in
-                    _enumerator._client.GetBlobContainersAsync(
-                        (BlobContainerTraits)_enumerator._traits,
-                        _enumerator._prefix,
-                        CancellationToken)
-                        .AsPages(continuationToken, pageHintSize))
+                IAsyncEnumerable<Page<BlobContainerItem>> pages =
+                    ConvertCollection(_collection, CancellationToken)
+                    .AsPages(continuationToken, pageHintSize);
+
+                await foreach (Page<BlobContainerItem> page in pages)
                 {
                     yield return ConvertPage(page);
                 }
@@ -174,12 +185,11 @@ namespace Azure.Storage.Files.DataLake.Models
                     cancellationToken = CancellationToken;
                 }
 
-                await foreach (Page<BlobContainerItem> page in
-                    _enumerator._client.GetBlobContainersAsync(
-                        (BlobContainerTraits)_enumerator._traits,
-                        _enumerator._prefix,
-                        cancellationToken)
-                        .AsPages())
+                IAsyncEnumerable<Page<BlobContainerItem>> pages =
+                    ConvertCollection(_collection, cancellationToken)
+                    .AsPages();
+
+                await foreach (Page<BlobContainerItem> page in pages)
                 {
                     foreach (BlobContainerItem item in page.Values)
                     {

@@ -143,7 +143,7 @@ namespace Azure.Storage.Files.Test
                 constants.Sas.ContentLanguage,
                 constants.Sas.ContentType);
 
-            return StorageSharedKeyCredentialExtensions.ComputeSasSignature(constants.Sas.SharedKeyCredential, stringToSign);
+            return StorageSharedKeyCredentialInternals.ComputeSasSignature(constants.Sas.SharedKeyCredential, stringToSign);
         }
     }
 }

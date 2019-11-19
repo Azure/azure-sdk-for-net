@@ -22,32 +22,32 @@ namespace Azure.Storage.Sas
         /// <summary>
         /// Gets the Azure Active Directory object ID in GUID format.
         /// </summary>
-        public string KeyObjectId => _keyProperties._objectId;
+        public string KeyObjectId => _keyProperties?._objectId;
 
         /// <summary>
         /// Gets the Azure Active Directory tenant ID in GUID format
         /// </summary>
-        public string KeyTenantId => _keyProperties._tenantId;
+        public string KeyTenantId => _keyProperties?._tenantId;
 
         /// <summary>
         /// Gets the time at which the key becomes valid.
         /// </summary>
-        public DateTimeOffset KeyStartsOn => _keyProperties._startsOn;
+        public DateTimeOffset KeyStartsOn => (DateTimeOffset)_keyProperties?._startsOn;
 
         /// <summary>
         /// Gets the time at which the key becomes expires.
         /// </summary>
-        public DateTimeOffset KeyExpiresOn => _keyProperties._expiresOn;
+        public DateTimeOffset KeyExpiresOn => (DateTimeOffset)_keyProperties?._expiresOn;
 
         /// <summary>
         /// Gets the Storage service that accepts the key.
         /// </summary>
-        public string KeyService => _keyProperties._service;
+        public string KeyService => _keyProperties?._service;
 
         /// <summary>
         /// Gets the Storage service version that created the key.
         /// </summary>
-        public string KeyVersion => _keyProperties._version;
+        public string KeyVersion => _keyProperties?._version;
 
         /// <summary>
         /// Gets empty shared access signature query parameters.
@@ -103,12 +103,15 @@ namespace Azure.Storage.Sas
                 contentLanguage,
                 contentType)
         {
-            _keyProperties._objectId = keyOid;
-            _keyProperties._tenantId = keyTid;
-            _keyProperties._startsOn = keyStart;
-            _keyProperties._expiresOn = keyExpiry;
-            _keyProperties._service = keyService;
-            _keyProperties._version = keyVersion;
+            _keyProperties = new UserDelegationKeyProperties
+            {
+                _objectId = keyOid,
+                _tenantId = keyTid,
+                _startsOn = keyStart,
+                _expiresOn = keyExpiry,
+                _service = keyService,
+                _version = keyVersion
+            };
         }
 
         /// <summary>
@@ -134,7 +137,7 @@ namespace Azure.Storage.Sas
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            _keyProperties.BuildParameterString(sb);
+            _keyProperties.AppendProperties(sb);
             this.BuildParameterString(sb);
             return sb.ToString();
         }
