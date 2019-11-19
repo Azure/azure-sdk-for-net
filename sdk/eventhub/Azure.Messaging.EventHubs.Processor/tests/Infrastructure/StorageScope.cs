@@ -12,7 +12,7 @@ using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.Storage.Models;
 using Microsoft.Rest;
 
-namespace Azure.Messaging.EventHubs.CheckpointStore.Blobs.Tests.Infrastructure
+namespace Azure.Messaging.EventHubs.Processor.Tests.Infrastructure
 {
     /// <summary>
     ///  Provides a dynamically created Azure blob container instance which exists only in the context

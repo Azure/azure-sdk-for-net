@@ -4,9 +4,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.EventHubs.CheckpointStore.Blobs.Tests.Infrastructure;
+using Azure.Messaging.EventHubs.Processor.Tests.Infrastructure;
 
-namespace Azure.Messaging.EventHubs.CheckpointStore.Blobs.Tests
+namespace Azure.Messaging.EventHubs.Processor.Tests
 {
     /// <summary>
     ///   Represents the ambient environment for Azure storage resource in which the test suite is

@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Messaging.EventHubs.CheckpointStore.Blobs
+namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
     ///   The set of keys to access or modify metadata for a blob.

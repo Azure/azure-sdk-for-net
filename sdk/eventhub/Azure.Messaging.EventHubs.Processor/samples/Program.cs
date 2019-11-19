@@ -5,9 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Messaging.EventHubs.CheckpointStore.Blobs.Samples.Infrastructure;
+using Azure.Messaging.EventHubs.Processor.Samples.Infrastructure;
 
-namespace Azure.Messaging.EventHubs.CheckpointStore.Blobs.Samples
+namespace Azure.Messaging.EventHubs.Processor.Samples
 {
     /// <summary>
     ///   The main entry point for executing the samples.
@@ -154,13 +154,13 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blobs.Samples
             Console.WriteLine("\t\tThe name of the blob container under the storage account to use for checkpoints.");
             Console.WriteLine();
             Console.WriteLine("Usage:");
-            Console.WriteLine($"\tAzure.Messaging.EventHubs.CheckpointStore.Blobs.Samples.exe");
+            Console.WriteLine($"\tAzure.Messaging.EventHubs.Processor.Samples.exe");
             Console.WriteLine();
-            Console.WriteLine($"\tAzure.Messaging.EventHubs.CheckpointStore.Blobs.Samples.exe { CommandLineArguments.ArgumentPrefix }{ nameof(CommandLineArguments.EventHubsConnectionString) } \"{ eventHubsSample }\" { CommandLineArguments.ArgumentPrefix }{ nameof(CommandLineArguments.EventHub) } \"SomeHub\"{ CommandLineArguments.ArgumentPrefix }{ nameof(CommandLineArguments.StorageConnectionString) } \"{ storageSample }\" { CommandLineArguments.ArgumentPrefix }{ nameof(CommandLineArguments.BlobContainer) } \"Checkpoints\"");
+            Console.WriteLine($"\tAzure.Messaging.EventHubs.Processor.Samples.exe { CommandLineArguments.ArgumentPrefix }{ nameof(CommandLineArguments.EventHubsConnectionString) } \"{ eventHubsSample }\" { CommandLineArguments.ArgumentPrefix }{ nameof(CommandLineArguments.EventHub) } \"SomeHub\"{ CommandLineArguments.ArgumentPrefix }{ nameof(CommandLineArguments.StorageConnectionString) } \"{ storageSample }\" { CommandLineArguments.ArgumentPrefix }{ nameof(CommandLineArguments.BlobContainer) } \"Checkpoints\"");
             Console.WriteLine();
-            Console.WriteLine($"\tAzure.Messaging.EventHubs.CheckpointStore.Blobs.Samples.exe \"{ eventHubsSample}\" \"SomeHub\" \"{ storageSample }\" \"Checkpoints\"");
+            Console.WriteLine($"\tAzure.Messaging.EventHubs.Processor.Samples.exe \"{ eventHubsSample}\" \"SomeHub\" \"{ storageSample }\" \"Checkpoints\"");
             Console.WriteLine();
-            Console.WriteLine($"\tAzure.Messaging.EventHubs.CheckpointStore.Blobs.Samples.exe { CommandLineArguments.ArgumentPrefix }{ nameof(CommandLineArguments.Help) }");
+            Console.WriteLine($"\tAzure.Messaging.EventHubs.Processor.Samples.exe { CommandLineArguments.ArgumentPrefix }{ nameof(CommandLineArguments.Help) }");
             Console.WriteLine();
         }
 
