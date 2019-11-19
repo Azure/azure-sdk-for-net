@@ -649,7 +649,7 @@ namespace Azure.Messaging.EventHubs
                 // it may change in the future.
 
                 var partitionIds = await Connection.GetPartitionIdsAsync(RetryPolicy).ConfigureAwait(false);
-                var partitionHash = new HashSet<string>(partitionIds);
+                var unclaimedPartitions = new HashSet<string>(partitionIds);
 
                 // Filter the complete ownership list to obtain only the ones that are still active.  The expiration time defaults to 30 seconds,
                 // but it may be overridden by a derived class.
@@ -657,7 +657,7 @@ namespace Azure.Messaging.EventHubs
                 // partitions it owns and its list of partitions.  When an event processor goes down and it has only expired ownership, it will not be taken into consideration
                 // by others.
 
-                var activeOwnershipWithDistribution = new Dictionary<string, ParitionDistribution>();
+                var activeOwnershipWithDistribution = new Dictionary<string, List<PartitionOwnership>>();
                 var now = DateTimeOffset.UtcNow;
                 foreach (PartitionOwnership ownership in completeOwnershipList)
                 {
@@ -665,18 +665,13 @@ namespace Azure.Messaging.EventHubs
                     {
                         if (activeOwnershipWithDistribution.TryGetValue(ownership.OwnerIdentifier, out var value))
                         {
-                            activeOwnershipWithDistribution[ownership.OwnerIdentifier].Count++;
-                            activeOwnershipWithDistribution[ownership.OwnerIdentifier].PartitionList.Add(ownership);
-                            partitionHash.Remove(ownership.PartitionId);
+                            activeOwnershipWithDistribution[ownership.OwnerIdentifier].Add(ownership);
+                            unclaimedPartitions.Remove(ownership.PartitionId);
                         }
                         else
                         {
-                            activeOwnershipWithDistribution[ownership.OwnerIdentifier] = new ParitionDistribution
-                            {
-                                Count = 1,
-                                PartitionList = new List<PartitionOwnership> { ownership }
-                            };
-                            partitionHash.Remove(ownership.PartitionId);
+                            activeOwnershipWithDistribution[ownership.OwnerIdentifier] = new List<PartitionOwnership> { ownership };
+                            unclaimedPartitions.Remove(ownership.PartitionId);
                         }
                     }
                 }
@@ -684,7 +679,7 @@ namespace Azure.Messaging.EventHubs
                 // Dispose of all previous partition ownership instances and get a whole new dictionary.
                 if (activeOwnershipWithDistribution.TryGetValue(Identifier, out var owned))
                 {
-                    InstanceOwnership = owned.PartitionList
+                    InstanceOwnership = owned
                         .ToDictionary(ownership => ownership.PartitionId);
                 }
                 else
@@ -716,7 +711,6 @@ namespace Azure.Messaging.EventHubs
                         {
                             if (PartitionPumps.TryGetValue(kvp.Key, out PartitionPump pump) && !pump.IsRunning)
                             {
-                                await RemovePartitionPumpIfItExistsAsync(kvp.Key, ProcessingStoppedReason.Shutdown).ConfigureAwait(false);
                                 await AddPartitionPumpAsync(kvp.Key, kvp.Value.SequenceNumber).ConfigureAwait(false);
                             }
                         }))
@@ -725,7 +719,7 @@ namespace Azure.Messaging.EventHubs
                 // Find an ownership to claim and try to claim it.  The method will return null if this instance was not eligible to
                 // increase its ownership list, if no claimable ownership could be found or if a claim attempt failed.
 
-                PartitionOwnership claimedOwnership = await FindAndClaimOwnershipAsync(completeOwnershipList, activeOwnershipWithDistribution, partitionHash, partitionIds.Length).ConfigureAwait(false);
+                PartitionOwnership claimedOwnership = await FindAndClaimOwnershipAsync(completeOwnershipList, activeOwnershipWithDistribution, unclaimedPartitions, partitionIds.Length).ConfigureAwait(false);
 
                 if (claimedOwnership != null)
                 {
@@ -756,13 +750,13 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="completeOwnershipEnumerable">A complete enumerable of ownership obtained from the stored service provided by the user.</param>
         /// <param name="activeOwnershipWithDistribution">The set of ownership that are still active.</param>
-        /// <param name="unclaimedPartitions"></param>
-        /// <param name="partitionCount"></param>
+        /// <param name="unclaimedPartitions">The set of partitionIds that are currently unclaimed.</param>
+        /// <param name="partitionCount">The count of partitions.</param>
         ///
         /// <returns>The claimed ownership. <c>null</c> if this instance is not eligible, if no claimable ownership was found or if the claim attempt failed.</returns>
         ///
         private async Task<PartitionOwnership> FindAndClaimOwnershipAsync(IEnumerable<PartitionOwnership> completeOwnershipEnumerable,
-                                                                          Dictionary<string, ParitionDistribution> activeOwnershipWithDistribution,
+                                                                          Dictionary<string, List<PartitionOwnership>> activeOwnershipWithDistribution,
                                                                           HashSet<string> unclaimedPartitions,
                                                                           int partitionCount)
         {
@@ -808,21 +802,22 @@ namespace Azure.Messaging.EventHubs
 
                 // Build a list of partitions owned by processors owninng exactly maximumOwnedPartitionsCount partitions
                 // and a list of partitions owned by processors owninng greater than maximumOwnedPartitionsCount partitions.
+                // Ignore the partitions already owned by this processor even though the current processor should never meet either criteria
                 foreach (var key in activeOwnershipWithDistribution.Keys)
                 {
-                    // Ignore the partitions already owned by this processor
-                    if (key == Identifier)
+                    if (activeOwnershipWithDistribution[key].Count < maximumOwnedPartitionsCount || key == Identifier)
                     {
+                        // skip if the common case is true
                         continue;
                     }
                     if (activeOwnershipWithDistribution[key].Count == maximumOwnedPartitionsCount)
                     {
-                        activeOwnershipWithDistribution[key].PartitionList
+                        activeOwnershipWithDistribution[key]
                             .ForEach(ownership => partitionsOwnedByProcessorWithExactlyMaximumOwnedPartitionsCount.Add(ownership.PartitionId));
                     }
                     else if (activeOwnershipWithDistribution[key].Count > maximumOwnedPartitionsCount)
                     {
-                        activeOwnershipWithDistribution[key].PartitionList
+                        activeOwnershipWithDistribution[key]
                             .ForEach(ownership => partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount.Add(ownership.PartitionId));
                     }
                 }
@@ -860,7 +855,7 @@ namespace Azure.Messaging.EventHubs
 
         /// <summary>
         ///   Creates and starts a new partition pump associated with the specified partition.  A partition pump might be overwritten by the creation
-        ///   of the new one and, for this reason, it needs to be stopped prior to this method call.
+        ///   of the new one and, for this reason, it handles stopping the existing pump if one exists.
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the Event Hub partition the partition pump will be associated with.  Events will be read only from this partition.</param>
@@ -894,7 +889,22 @@ namespace Azure.Messaging.EventHubs
 
                 await partitionPump.StartAsync().ConfigureAwait(false);
 
-                PartitionPumps[partitionId] = partitionPump;
+                PartitionPump existingPump = null;
+                PartitionPumps.AddOrUpdate(
+                    partitionId,
+                    partitionPump,
+                    (partitionID, existingValue) =>
+                    {
+                        existingPump = existingValue;
+                        return partitionPump;
+                    });
+
+                //stop the pump we replaced
+                if (existingPump != null)
+                {
+                    await StopPartitionPumpAsync(partitionId, ProcessingStoppedReason.Shutdown, existingPump);
+                }
+
             }
             catch (Exception)
             {
@@ -918,28 +928,33 @@ namespace Azure.Messaging.EventHubs
         {
             if (PartitionPumps.TryRemove(partitionId, out PartitionPump pump))
             {
+                await StopPartitionPumpAsync(partitionId, reason, pump);
+            }
+        }
+
+        private async Task StopPartitionPumpAsync(string partitionId, ProcessingStoppedReason reason, PartitionPump pump)
+        {
+            try
+            {
+                await pump.StopAsync().ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                // TODO: delegate the exception handling to an Exception Callback.
+            }
+
+            if (ProcessingForPartitionStoppedAsync != null)
+            {
                 try
                 {
-                    await pump.StopAsync().ConfigureAwait(false);
+                    var partitionContext = new PartitionContext(partitionId);
+                    var stopContext = new PartitionProcessingStoppedContext(partitionContext, reason);
+
+                    await ProcessingForPartitionStoppedAsync(stopContext);
                 }
                 catch (Exception)
                 {
                     // TODO: delegate the exception handling to an Exception Callback.
-                }
-
-                if (ProcessingForPartitionStoppedAsync != null)
-                {
-                    try
-                    {
-                        var partitionContext = new PartitionContext(partitionId);
-                        var stopContext = new PartitionProcessingStoppedContext(partitionContext, reason);
-
-                        await ProcessingForPartitionStoppedAsync(stopContext);
-                    }
-                    catch (Exception)
-                    {
-                        // TODO: delegate the exception handling to an Exception Callback.
-                    }
                 }
             }
         }

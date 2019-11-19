@@ -486,23 +486,20 @@ namespace Azure.Messaging.EventHubs.Tests
                 default);
 
             // create more partitions owned by this Processor
-            var processor1PartitionIds = Enumerable.Range(1, minimumParitionCount)
-                .Select(i => i.ToString());
-            var ownedPartitions = connection.CreatePartitionOwnerships(processor1PartitionIds, processor.Identifier);
+            var processor1PartitionIds = Enumerable.Range(1, minimumParitionCount);
+            var ownedPartitions = connection.CreatePartitionOwnerships(processor1PartitionIds.Select(i => i.ToString()), processor.Identifier);
 
             // create more partitions owned by a different Processor
             var Processor2Id = Guid.NewGuid().ToString();
-            var processor2PartitionIds = Enumerable.Range(minimumParitionCount + 1, minimumParitionCount)
-                .Select(i => i.ToString());
+            var processor2PartitionIds = Enumerable.Range(processor1PartitionIds.Max() + 1, minimumParitionCount);
             ownedPartitions = ownedPartitions
-                .Concat(connection.CreatePartitionOwnerships(processor2PartitionIds, Processor2Id));
+                .Concat(connection.CreatePartitionOwnerships(processor2PartitionIds.Select(i => i.ToString()), Processor2Id));
 
             // create more partitions owned by a different Processor
             var Processor3Id = Guid.NewGuid().ToString();
-            var processor3PartitionIds = Enumerable.Range((2 * minimumParitionCount) + 1, minimumParitionCount)
-                .Select(i => i.ToString());
+            var processor3PartitionIds = Enumerable.Range(processor2PartitionIds.Max() + 1, minimumParitionCount);
             ownedPartitions = ownedPartitions
-                .Concat(connection.CreatePartitionOwnerships(processor3PartitionIds, Processor3Id));
+                .Concat(connection.CreatePartitionOwnerships(processor3PartitionIds.Select(i => i.ToString()), Processor3Id));
 
             // seed the partitionManager with the owned partitions
             await partitionManager.ClaimOwnershipAsync(ownedPartitions);
@@ -550,23 +547,20 @@ namespace Azure.Messaging.EventHubs.Tests
                 default);
 
             // create partitions owned by this Processor
-            var processor1PartitionIds = Enumerable.Range(1, minimumParitionCount)
-                .Select(i => i.ToString());
-            var completeOwnership = connection.CreatePartitionOwnerships(processor1PartitionIds, processor.Identifier);
+            var processor1PartitionIds = Enumerable.Range(1, minimumParitionCount);
+            var completeOwnership = connection.CreatePartitionOwnerships(processor1PartitionIds.Select(i => i.ToString()), processor.Identifier);
 
             // create partitions owned by a different Processor
             var Processor2Id = Guid.NewGuid().ToString();
-            var processor2PartitionIds = Enumerable.Range(minimumParitionCount + 1, minimumParitionCount)
-                .Select(i => i.ToString());
+            var processor2PartitionIds = Enumerable.Range(processor1PartitionIds.Max() + 1, minimumParitionCount);
             completeOwnership = completeOwnership
-                .Concat(connection.CreatePartitionOwnerships(processor2PartitionIds, Processor2Id));
+                .Concat(connection.CreatePartitionOwnerships(processor2PartitionIds.Select(i => i.ToString()), Processor2Id));
 
             // create partitions owned by a different Processor above the maximumPartitionCount
             var Processor3Id = Guid.NewGuid().ToString();
-            var stealablePartitionIds = Enumerable.Range((2 * minimumParitionCount) + 1, NumberOfPartitions - (2 * minimumParitionCount))
-                .Select(i => i.ToString());
+            var stealablePartitionIds = Enumerable.Range(processor2PartitionIds.Max() + 1, maximumParitionCount + 1);
             completeOwnership = completeOwnership
-                .Concat(connection.CreatePartitionOwnerships(stealablePartitionIds, Processor3Id));
+                .Concat(connection.CreatePartitionOwnerships(stealablePartitionIds.Select(i => i.ToString()), Processor3Id));
 
             // seed the partitionManager with the owned partitions
             await partitionManager.ClaimOwnershipAsync(completeOwnership);
@@ -579,7 +573,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                         .Where(p => p.OwnerIdentifier == Processor3Id);
 
             // verify owned partitionIds match the owned partitions
-            Assert.IsFalse(ownedByProcessor1.Any(owned => stealablePartitionIds.Contains(owned.PartitionId)));
+            Assert.IsFalse(ownedByProcessor1.Any(owned => stealablePartitionIds.Contains(int.Parse(owned.PartitionId))));
 
             //verify processor 3 has stealable partitions
             Assert.Greater(ownedByProcessor3.Count(), maximumParitionCount);
@@ -597,7 +591,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Where(p => p.OwnerIdentifier == Processor3Id);
 
             //verify that we took ownership of the additional partition
-            Assert.IsTrue(ownedByProcessor1.Any(owned => stealablePartitionIds.Contains(owned.PartitionId)));
+            Assert.IsTrue(ownedByProcessor1.Any(owned => stealablePartitionIds.Contains(int.Parse(owned.PartitionId))));
 
             //verify processor 3 now does not own > maximumPartitionCount
             Assert.AreEqual(maximumParitionCount, ownedByProcessor3.Count());
@@ -618,23 +612,20 @@ namespace Azure.Messaging.EventHubs.Tests
                 default);
 
             // create more partitions owned by this Processor
-            var processor1PartitionIds = Enumerable.Range(1, minimumParitionCount - 1)
-                .Select(i => i.ToString());
-            var completeOwnership = connection.CreatePartitionOwnerships(processor1PartitionIds, processor.Identifier);
+            var processor1PartitionIds = Enumerable.Range(1, minimumParitionCount - 1);
+            var completeOwnership = connection.CreatePartitionOwnerships(processor1PartitionIds.Select(i => i.ToString()), processor.Identifier);
 
             // create more partitions owned by a different Processor
             var Processor2Id = Guid.NewGuid().ToString();
-            var processor2PartitionIds = Enumerable.Range(minimumParitionCount, minimumParitionCount)
-                .Select(i => i.ToString());
+            var processor2PartitionIds = Enumerable.Range(processor1PartitionIds.Max() + 1, minimumParitionCount);
             completeOwnership = completeOwnership
-                .Concat(connection.CreatePartitionOwnerships(processor2PartitionIds, Processor2Id));
+                .Concat(connection.CreatePartitionOwnerships(processor2PartitionIds.Select(i => i.ToString()), Processor2Id));
 
             // create more partitions owned by a different Processor above the maximumPartitionCount
             var Processor3Id = Guid.NewGuid().ToString();
-            var stealablePartitionIds = Enumerable.Range((2 * minimumParitionCount), maximumParitionCount)
-                .Select(i => i.ToString());
+            var stealablePartitionIds = Enumerable.Range(processor2PartitionIds.Max() + 1, maximumParitionCount);
             completeOwnership = completeOwnership
-                .Concat(connection.CreatePartitionOwnerships(stealablePartitionIds, Processor3Id));
+                .Concat(connection.CreatePartitionOwnerships(stealablePartitionIds.Select(i => i.ToString()), Processor3Id));
 
             // seed the partitionManager with the owned partitions
             await partitionManager.ClaimOwnershipAsync(completeOwnership);
@@ -647,7 +638,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                         .Where(p => p.OwnerIdentifier == Processor3Id);
 
             // verify owned partitionIds match the owned partitions
-            Assert.IsFalse(ownedByProcessor1.Any(owned => stealablePartitionIds.Contains(owned.PartitionId)));
+            Assert.IsFalse(ownedByProcessor1.Any(owned => stealablePartitionIds.Contains(int.Parse(owned.PartitionId))));
 
             //verify processor 3 has stealable partitions
             Assert.AreEqual(maximumParitionCount, ownedByProcessor3.Count());
@@ -665,7 +656,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Where(p => p.OwnerIdentifier == Processor3Id);
 
             //verify that we took ownership of the additional partition
-            Assert.IsTrue(ownedByProcessor1.Any(owned => stealablePartitionIds.Contains(owned.PartitionId)));
+            Assert.IsTrue(ownedByProcessor1.Any(owned => stealablePartitionIds.Contains(int.Parse(owned.PartitionId))));
 
             //verify processor 3 now does not own > maximumPartitionCount
             Assert.Less(ownedByProcessor3.Count(), maximumParitionCount);
