@@ -36,7 +36,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
 
             string certName2 = $"defaultCert-{Guid.NewGuid()}";
 
-            CertificateOperation certOp2 = await client.StartCreateCertificateAsync(certName1, CertificatePolicy.Default);
+            CertificateOperation certOp2 = await client.StartCreateCertificateAsync(certName2, CertificatePolicy.Default);
 
             // Next, let's wait on the certificate operation to complete. Note that certificate creation can last an indeterministic
             // amount of time, so applications should only wait on the operation to complete in the case the issuance time is well

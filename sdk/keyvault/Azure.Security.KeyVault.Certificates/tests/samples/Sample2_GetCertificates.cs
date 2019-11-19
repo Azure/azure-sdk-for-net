@@ -34,7 +34,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             CertificateOperation certOp1 = client.StartCreateCertificate(certName1, CertificatePolicy.Default);
 
             string certName2 = $"defaultCert-{Guid.NewGuid()}";
-            CertificateOperation certOp2 = client.StartCreateCertificate(certName1, CertificatePolicy.Default);
+            CertificateOperation certOp2 = client.StartCreateCertificate(certName2, CertificatePolicy.Default);
 
             while (!certOp1.HasCompleted)
             {
