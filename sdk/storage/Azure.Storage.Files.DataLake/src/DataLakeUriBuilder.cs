@@ -249,8 +249,7 @@ namespace Azure.Storage.Files.DataLake
         {
             if (!_isIPStyleUri)
             {
-                ToUri();
-                string account = _uri.GetAccountNameFromDomain(Constants.DataLake.DfsUriSuffix);
+                string account = UriExtensions.GetAccountNameFromDomain(Host, Constants.DataLake.DfsUriSuffix);
 
                 if (account != null)
                 {
@@ -276,8 +275,7 @@ namespace Azure.Storage.Files.DataLake
         {
             if (!_isIPStyleUri)
             {
-                ToUri();
-                string account = _uri.GetAccountNameFromDomain(Constants.DataLake.BlobUriSuffix);
+                string account = UriExtensions.GetAccountNameFromDomain(Host, Constants.DataLake.BlobUriSuffix);
 
                 if (account != null)
                 {
