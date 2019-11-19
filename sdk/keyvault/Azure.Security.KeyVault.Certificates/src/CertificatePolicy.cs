@@ -65,33 +65,60 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Initializes a new instance of the <see cref="CertificatePolicy"/> class.
         /// </summary>
-        /// <param name="subject">The subject name of the certificate, such as "CN=contoso.com".</param>
         /// <param name="issuerName">The name of an issuer for the certificate, including values from <see cref="WellKnownIssuerNames"/>.</param>
+        /// <param name="subject">The subject name of the certificate, such as "CN=contoso.com".</param>
         /// <exception cref="ArgumentException"><paramref name="subject"/> or <paramref name="issuerName"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="subject"/> or <paramref name="issuerName"/> is null.</exception>
-        public CertificatePolicy(string subject, string issuerName)
+        public CertificatePolicy(string issuerName, string subject)
         {
-            Argument.AssertNotNullOrEmpty(subject, nameof(subject));
             Argument.AssertNotNullOrEmpty(issuerName, nameof(issuerName));
+            Argument.AssertNotNullOrEmpty(subject, nameof(subject));
 
+            IssuerName = issuerName;
             Subject = subject;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CertificatePolicy"/> class.
+        /// </summary>
+        /// <param name="issuerName">The name of an issuer for the certificate, including values from <see cref="WellKnownIssuerNames"/>.</param>
+        /// <param name="subjectAlternativeNames">The subject alternative names (SANs) of the certificate.</param>
+        /// <exception cref="ArgumentException"><paramref name="issuerName"/> is empty or <paramref name="subjectAlternativeNames"/> contains empty collection properties.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="subjectAlternativeNames"/> or <paramref name="issuerName"/> is null.</exception>
+        public CertificatePolicy(string issuerName, SubjectAlternativeNames subjectAlternativeNames)
+        {
+            Argument.AssertNotNullOrEmpty(issuerName, nameof(issuerName));
+            Argument.AssertNotNull(subjectAlternativeNames, nameof(subjectAlternativeNames));
+            if (subjectAlternativeNames.IsEmpty)
+            {
+                throw new ArgumentException("Value cannot contain empty collection properties.", nameof(subjectAlternativeNames));
+            }
+
+            SubjectAlternativeNames = subjectAlternativeNames;
             IssuerName = issuerName;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CertificatePolicy"/> class.
         /// </summary>
-        /// <param name="subjectAlternativeNames">The subject alternative names (SANs) of the certificate.</param>
         /// <param name="issuerName">The name of an issuer for the certificate, including values from <see cref="WellKnownIssuerNames"/>.</param>
-        /// <exception cref="ArgumentException"><paramref name="issuerName"/> is empty.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="subjectAlternativeNames"/> or <paramref name="issuerName"/> is null.</exception>
-        public CertificatePolicy(SubjectAlternativeNames subjectAlternativeNames, string issuerName)
+        /// <param name="subject">The subject name of the certificate, such as "CN=contoso.com".</param>
+        /// <param name="subjectAlternativeNames">The subject alternative names (SANs) of the certificate.</param>
+        /// <exception cref="ArgumentException"><paramref name="subject"/> or <paramref name="issuerName"/> is empty, or <paramref name="subjectAlternativeNames"/> contains empty collection properties.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="subject"/>, <paramref name="issuerName"/>, or <paramref name="subjectAlternativeNames"/> is null.</exception>
+        public CertificatePolicy(string issuerName, string subject, SubjectAlternativeNames subjectAlternativeNames)
         {
-            Argument.AssertNotNull(subjectAlternativeNames, nameof(subjectAlternativeNames));
             Argument.AssertNotNullOrEmpty(issuerName, nameof(issuerName));
+            Argument.AssertNotNullOrEmpty(subject, nameof(subject));
+            Argument.AssertNotNull(subjectAlternativeNames, nameof(subjectAlternativeNames));
+            if (subjectAlternativeNames.IsEmpty)
+            {
+                throw new ArgumentException("Value cannot contain empty collection properties.", nameof(subjectAlternativeNames));
+            }
 
-            SubjectAlternativeNames = subjectAlternativeNames;
+            Subject = subject;
             IssuerName = issuerName;
+            SubjectAlternativeNames = subjectAlternativeNames;
         }
 
         internal CertificatePolicy()
@@ -102,7 +129,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// Gets a new <see cref="CertificatePolicy"/> suitable for self-signed certificate requests.
         /// You should change the <see cref="Subject"/> before passing this policy to create a certificate.
         /// </summary>
-        public static CertificatePolicy Default => new CertificatePolicy(DefaultSubject, DefaultIssuerName);
+        public static CertificatePolicy Default => new CertificatePolicy(DefaultIssuerName, DefaultSubject);
 
         /// <summary>
         /// Gets or sets the type of backing key to be generated when issuing new certificates.
@@ -254,7 +281,7 @@ namespace Azure.Security.KeyVault.Certificates
             }
 
             // X509 Props
-            if (Subject != null || SubjectAlternativeNames != null || !KeyUsage.IsNullOrEmpty() || !EnhancedKeyUsage.IsNullOrEmpty() || ValidityInMonths.HasValue)
+            if (Subject != null || (SubjectAlternativeNames != null && !SubjectAlternativeNames.IsEmpty) || !KeyUsage.IsNullOrEmpty() || !EnhancedKeyUsage.IsNullOrEmpty() || ValidityInMonths.HasValue)
             {
                 json.WriteStartObject(s_x509PropsPropertyNameBytes);
 
@@ -418,7 +445,7 @@ namespace Azure.Security.KeyVault.Certificates
                 json.WriteString(s_subjectPropertyNameBytes, Subject);
             }
 
-            if (SubjectAlternativeNames != null)
+            if (SubjectAlternativeNames != null && !SubjectAlternativeNames.IsEmpty)
             {
                 json.WriteStartObject(s_sansPropertyNameBytes);
 

@@ -124,6 +124,7 @@ namespace Azure.Storage.Queues
         /// </summary>
         /// <param name="serviceUri">
         /// A <see cref="Uri"/> referencing the queue service.
+        /// This is likely to be similar to "https://{account_name}.queue.core.windows.net".
         /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline
@@ -141,6 +142,7 @@ namespace Azure.Storage.Queues
         /// </summary>
         /// <param name="serviceUri">
         /// A <see cref="Uri"/> referencing the queue service.
+        /// This is likely to be similar to "https://{account_name}.queue.core.windows.net".
         /// </param>
         /// <param name="credential">
         /// The shared key credential used to sign requests.
@@ -161,6 +163,7 @@ namespace Azure.Storage.Queues
         /// </summary>
         /// <param name="serviceUri">
         /// A <see cref="Uri"/> referencing the queue service.
+        /// This is likely to be similar to "https://{account_name}.queue.core.windows.net".
         /// </param>
         /// <param name="credential">
         /// The token credential used to sign requests.
@@ -181,6 +184,7 @@ namespace Azure.Storage.Queues
         /// </summary>
         /// <param name="serviceUri">
         /// A <see cref="Uri"/> referencing the queue service.
+        /// This is likely to be similar to "https://{account_name}.queue.core.windows.net".
         /// </param>
         /// <param name="authentication">
         /// An optional authentication policy used to sign requests.
@@ -204,6 +208,7 @@ namespace Azure.Storage.Queues
         /// </summary>
         /// <param name="serviceUri">
         /// A <see cref="Uri"/> referencing the queue service.
+        /// This is likely to be similar to "https://{account_name}.queue.core.windows.net".
         /// </param>
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.

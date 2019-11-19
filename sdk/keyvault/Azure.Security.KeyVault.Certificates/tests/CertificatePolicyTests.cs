@@ -15,30 +15,55 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         [Test]
         public void CertificatePolicyWithSubjectValidation()
         {
-            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => new CertificatePolicy((string)null, null));
-            Assert.AreEqual("subject", ex.ParamName);
-
-            ex = Assert.Throws<ArgumentException>(() => new CertificatePolicy(string.Empty, null));
-            Assert.AreEqual("subject", ex.ParamName);
-
-            ex = Assert.Throws<ArgumentNullException>(() => new CertificatePolicy("CN=contoso.com", null));
+            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => new CertificatePolicy(null, (string)null));
             Assert.AreEqual("issuerName", ex.ParamName);
 
-            ex = Assert.Throws<ArgumentException>(() => new CertificatePolicy("CN=contoso.com", string.Empty));
+            ex = Assert.Throws<ArgumentException>(() => new CertificatePolicy(string.Empty, (string)null));
             Assert.AreEqual("issuerName", ex.ParamName);
+
+            ex = Assert.Throws<ArgumentNullException>(() => new CertificatePolicy("Self", (string)null));
+            Assert.AreEqual("subject", ex.ParamName);
+
+            ex = Assert.Throws<ArgumentException>(() => new CertificatePolicy("Self", string.Empty));
+            Assert.AreEqual("subject", ex.ParamName);
         }
 
         [Test]
         public void CertificatePolicyWithSubjectAlternativeNamesValidation()
         {
-            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => new CertificatePolicy((SubjectAlternativeNames)null, null));
+            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => new CertificatePolicy(null, (SubjectAlternativeNames)null));
+            Assert.AreEqual("issuerName", ex.ParamName);
+
+            ex = Assert.Throws<ArgumentException>(() => new CertificatePolicy(string.Empty, "CN=contoso.com"));
+            Assert.AreEqual("issuerName", ex.ParamName);
+
+            ex = Assert.Throws<ArgumentNullException>(() => new CertificatePolicy("Self", (SubjectAlternativeNames)null));
             Assert.AreEqual("subjectAlternativeNames", ex.ParamName);
 
-            ex = Assert.Throws<ArgumentNullException>(() => new CertificatePolicy("CN=contoso.com", null));
+            ex = Assert.Throws<ArgumentException>(() => new CertificatePolicy("Self", new SubjectAlternativeNames()));
+            Assert.AreEqual("subjectAlternativeNames", ex.ParamName);
+        }
+
+        [Test]
+        public void CertificatePolicyWithSubjectAndSubjectAlternativeNamesValidation()
+        {
+            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => new CertificatePolicy(null, null, null));
             Assert.AreEqual("issuerName", ex.ParamName);
 
-            ex = Assert.Throws<ArgumentException>(() => new CertificatePolicy("CN=contoso.com", string.Empty));
+            ex = Assert.Throws<ArgumentException>(() => new CertificatePolicy(string.Empty, null, null));
             Assert.AreEqual("issuerName", ex.ParamName);
+
+            ex = Assert.Throws<ArgumentNullException>(() => new CertificatePolicy("Self", null, null));
+            Assert.AreEqual("subject", ex.ParamName);
+
+            ex = Assert.Throws<ArgumentException>(() => new CertificatePolicy("Self", string.Empty, null));
+            Assert.AreEqual("subject", ex.ParamName);
+
+            ex = Assert.Throws<ArgumentNullException>(() => new CertificatePolicy("Self", (SubjectAlternativeNames)null));
+            Assert.AreEqual("subjectAlternativeNames", ex.ParamName);
+
+            ex = Assert.Throws<ArgumentException>(() => new CertificatePolicy("Self", new SubjectAlternativeNames()));
+            Assert.AreEqual("subjectAlternativeNames", ex.ParamName);
         }
 
         [Test]
@@ -181,14 +206,14 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         [Test]
         public void DefaultWithSubjectName()
         {
-            var expected = new CertificatePolicy("CN=DefaultPolicy", "Self");
+            CertificatePolicy expected = new CertificatePolicy("Self", "CN=DefaultPolicy");
             AssertAreEqual(expected, CertificatePolicy.Default);
         }
 
         private static void AssertAreEqual(CertificatePolicy expected, CertificatePolicy actual)
         {
             Assert.AreEqual(expected.Subject, actual.Subject);
-            CollectionAssert.AreEqual(expected.SubjectAlternativeNames, actual.SubjectAlternativeNames);
+            AssertAreEqual(expected.SubjectAlternativeNames, actual.SubjectAlternativeNames);
             Assert.AreEqual(expected.IssuerName, actual.IssuerName);
 
             Assert.AreEqual(expected.CertificateTransparency, actual.CertificateTransparency);
@@ -206,6 +231,13 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             Assert.AreEqual(expected.ReuseKey, actual.ReuseKey);
             Assert.AreEqual(expected.UpdatedOn, actual.UpdatedOn);
             Assert.AreEqual(expected.ValidityInMonths, actual.ValidityInMonths);
+        }
+
+        private static void AssertAreEqual(SubjectAlternativeNames expected, SubjectAlternativeNames actual)
+        {
+            CollectionAssert.AreEqual(expected?.DnsNames, actual?.DnsNames, StringComparer.Ordinal);
+            CollectionAssert.AreEqual(expected?.Emails, actual?.Emails, StringComparer.Ordinal);
+            CollectionAssert.AreEqual(expected?.UserPrincipalNames, actual?.UserPrincipalNames, StringComparer.Ordinal);
         }
 
         private class LifetimeActionComparer : IComparer<LifetimeAction>, IComparer

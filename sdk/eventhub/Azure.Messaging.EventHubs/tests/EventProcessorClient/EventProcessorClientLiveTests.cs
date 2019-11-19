@@ -529,7 +529,6 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     await using (var producer = new EventHubProducerClient(connectionString))
                     await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection))
-                    await using (var receiver = consumer.CreatePartitionReceiver(partitionId, EventPosition.Earliest))
                     {
                         // Send a few dummy events.  We are not expecting to receive these.
 
@@ -549,7 +548,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         while ((receivedEvents.Count < dummyEventsCount) && (++index < ReceiveRetryLimit))
                         {
-                            receivedEvents.AddRange(await receiver.ReceiveAsync(dummyEventsCount + 10, TimeSpan.FromMilliseconds(25)));
+                            // TODO: Convert to iterator
+                            //receivedEvents.AddRange(await receiver.ReceiveAsync(dummyEventsCount + 10, TimeSpan.FromMilliseconds(25)));
                         }
 
                         Assert.That(receivedEvents.Count, Is.EqualTo(dummyEventsCount));
@@ -635,7 +635,6 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     await using (var producer = new EventHubProducerClient(connection))
                     await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString))
-                    await using (var receiver = consumer.CreatePartitionReceiver(partitionId, EventPosition.Earliest))
                     {
                         // Send a few events.  We are only interested in the last one of them.
 
@@ -655,7 +654,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         while ((receivedEvents.Count < dummyEventsCount) && (++index < ReceiveRetryLimit))
                         {
-                            receivedEvents.AddRange(await receiver.ReceiveAsync(dummyEventsCount + 10, TimeSpan.FromMilliseconds(25)));
+                            //TODO: Convert to iterator.
+                            //receivedEvents.AddRange(await receiver.ReceiveAsync(dummyEventsCount + 10, TimeSpan.FromMilliseconds(25)));
                         }
 
                         Assert.That(receivedEvents.Count, Is.EqualTo(dummyEventsCount));
