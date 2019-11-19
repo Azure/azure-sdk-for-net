@@ -144,7 +144,7 @@ Response<FileDownloadInfo> fileContents = file.Read();
 
 ### Listing/Traversing through a DataLake Filesystem
 ```C# Snippet:SampleSnippetDataLakeFileClient_List
-foreach (PathItem pathItem in filesystem.ListPaths())
+foreach (PathItem pathItem in filesystem.GetPaths())
 {
     names.Add(pathItem.Name);
 }
