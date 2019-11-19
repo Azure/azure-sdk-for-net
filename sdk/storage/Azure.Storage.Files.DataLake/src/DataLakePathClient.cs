@@ -129,6 +129,23 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
+        /// <summary>
+        /// The name of the file or directory.
+        /// </summary>
+        private string _name;
+
+        /// <summary>
+        /// Gets the name of the file or directory.
+        /// </summary>
+        public virtual string Name
+        {
+            get
+            {
+                SetNameFieldsIfNull();
+                return _name;
+            }
+        }
+
         #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="DataLakePathClient"/>
@@ -374,12 +391,16 @@ namespace Azure.Storage.Files.DataLake
         /// </summary>
         internal virtual void SetNameFieldsIfNull()
         {
-            if (_fileSystemName == null || _accountName == null || _path == null)
+            if (_fileSystemName == null
+                || _accountName == null
+                || _path == null
+                || _name == null)
             {
                 var builder = new DataLakeUriBuilder(Uri);
                 _fileSystemName = builder.FileSystemName;
                 _accountName = builder.AccountName;
                 _path = builder.DirectoryOrFilePath;
+                _name = builder.LastDirectoryOrFileName;
             }
         }
 

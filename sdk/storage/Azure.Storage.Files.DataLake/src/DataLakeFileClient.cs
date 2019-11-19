@@ -18,23 +18,6 @@ namespace Azure.Storage.Files.DataLake
     /// </summary>
     public class DataLakeFileClient : DataLakePathClient
     {
-        /// <summary>
-        /// The name of the file.
-        /// </summary>
-        private string _name;
-
-        /// <summary>
-        /// Gets the name of the file.
-        /// </summary>
-        public virtual string Name
-        {
-            get
-            {
-                SetNameFieldsIfNull();
-                return _name;
-            }
-        }
-
         #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="DataLakeFileClient"/>
@@ -185,19 +168,6 @@ namespace Azure.Storage.Files.DataLake
         {
         }
         #endregion ctors
-
-        /// <summary>
-        /// Sets the various name fields if they are currently null.
-        /// </summary>
-        internal override void SetNameFieldsIfNull()
-        {
-            base.SetNameFieldsIfNull();
-            if (_name == null)
-            {
-                var builder = new DataLakeUriBuilder(Uri);
-                _name = builder.LastDirectoryOrFileName;
-            }
-        }
 
         #region Create
         /// <summary>
