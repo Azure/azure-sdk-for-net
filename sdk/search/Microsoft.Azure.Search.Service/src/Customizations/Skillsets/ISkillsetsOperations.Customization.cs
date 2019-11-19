@@ -27,19 +27,19 @@ namespace Microsoft.Azure.Search
         /// Additional parameters for the operation.
         /// </param>
         /// <param name='customHeaders'>
-        /// Headers that will be added to request.
+        /// Headers that will be added to the request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
         /// <exception cref="CloudException">
-        /// Thrown when the operation returned an invalid status code.
+        /// Thrown when the operation returns an invalid status code.
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response.
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null.
+        /// Thrown when the skillset definition violates validation rules.
         /// </exception>
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null.
@@ -59,19 +59,19 @@ namespace Microsoft.Azure.Search
         /// Additional parameters for the operation
         /// </param>
         /// <param name='customHeaders'>
-        /// The headers that will be added to request.
+        /// Headers that will be added to the request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
         /// <exception cref="CloudException">
-        /// Thrown when the operation returned an invalid status code.
+        /// Thrown when the operation returns an invalid status code.
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response.
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null.
+        /// Thrown when the skillset definition violates validation rules.
         /// </exception>
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null.

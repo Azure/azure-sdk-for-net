@@ -158,12 +158,12 @@ namespace Microsoft.Azure.Search.Models
             Throw.IfArgumentNullOrEmpty(collectionName, nameof(collectionName));
             Throw.IfArgumentNullOrEmpty(cosmosDbConnectionString, nameof(cosmosDbConnectionString));
 
-            return new DataSource()
+            return new DataSource
             {
                 Type = DataSourceType.CosmosDb,
                 Name = name,
                 Description = description,
-                Container = new DataContainer()
+                Container = new DataContainer
                 {
                     Name = collectionName,
                     Query = query
@@ -198,12 +198,12 @@ namespace Microsoft.Azure.Search.Models
             Throw.IfArgumentNullOrEmpty(containerName, nameof(containerName));
             Throw.IfArgumentNullOrEmpty(storageConnectionString, nameof(storageConnectionString));
 
-            return new DataSource()
+            return new DataSource
             {
                 Type = DataSourceType.AzureBlob,
                 Name = name,
                 Description = description,
-                Container = new DataContainer()
+                Container = new DataContainer
                 {
                     Name = containerName,
                     Query = pathPrefix
@@ -236,12 +236,12 @@ namespace Microsoft.Azure.Search.Models
             Throw.IfArgumentNullOrEmpty(tableName, nameof(tableName));
             Throw.IfArgumentNullOrEmpty(storageConnectionString, nameof(storageConnectionString));
 
-            return new DataSource()
+            return new DataSource
             {
                 Type = DataSourceType.AzureTable,
                 Name = name,
                 Description = description,
-                Container = new DataContainer()
+                Container = new DataContainer
                 {
                     Name = tableName,
                     Query = query
@@ -277,12 +277,12 @@ namespace Microsoft.Azure.Search.Models
             Throw.IfArgumentNullOrEmpty(tableName, nameof(tableName));
             Throw.IfArgumentNullOrEmpty(connectionString, nameof(connectionString));
 
-            return new DataSource()
+            return new DataSource
             {
                 Type = DataSourceType.MySql,
                 Name = name,
                 Description = description,
-                Container = new DataContainer()
+                Container = new DataContainer
                 {
                     Name = tableName,
                     Query = query
@@ -305,12 +305,12 @@ namespace Microsoft.Azure.Search.Models
             Throw.IfArgumentNullOrEmpty(tableOrViewName, nameof(tableOrViewName));
             Throw.IfArgumentNullOrEmpty(sqlConnectionString, nameof(sqlConnectionString));
 
-            return new DataSource()
+            return new DataSource
             {
                 Type = DataSourceType.AzureSql,
                 Name = name,
                 Description = description,
-                Container = new DataContainer()
+                Container = new DataContainer
                 {
                     Name = tableOrViewName
                 },

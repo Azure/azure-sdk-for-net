@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Search
         /// Thrown when unable to deserialize the response.
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null.
+        /// Thrown when the skillset definition violates validation rules.
         /// </exception>
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null.
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Search
         /// Thrown when unable to deserialize the response.
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null.
+        /// Thrown when the skillset definition violates validation rules.
         /// </exception>
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null.
