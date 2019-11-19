@@ -22,11 +22,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
         {
             // Environment variable with the Key Vault endpoint.
             string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
-            BackupAndRestoreSync(keyVaultUrl);
-        }
 
-        private void BackupAndRestoreSync(string keyVaultUrl)
-        {
             #region Snippet:KeysSample2KeyClient
             var client = new KeyClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
             #endregion
@@ -69,6 +65,18 @@ namespace Azure.Security.KeyVault.Keys.Samples
                 #endregion
 
                 AssertKeysEqual(storedKey.Properties, restoredKey.Properties);
+
+                // Delete and purge the restored key.
+                operation = client.StartDeleteKey(rsaKeyName);
+
+                while (!operation.HasCompleted)
+                {
+                    Thread.Sleep(2000);
+
+                    operation.UpdateStatus();
+                }
+
+                client.PurgeDeletedKey(rsaKeyName);
             }
         }
 

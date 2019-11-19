@@ -25,11 +25,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
         {
             // Environment variable with the Key Vault endpoint.
             string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
-            await GetSecretsAsync(keyVaultUrl);
-        }
 
-        private async Task GetSecretsAsync(string keyVaultUrl)
-        {
             var client = new SecretClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
 
             string bankSecretName = $"BankAccountPassword-{Guid.NewGuid()}";
@@ -87,7 +83,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             DeleteSecretOperation bankSecretOperation = await client.StartDeleteSecretAsync(bankSecretName);
             DeleteSecretOperation storageSecretOperation = await client.StartDeleteSecretAsync(storageSecretName);
 
-            Task.WaitAll(
+            await Task.WhenAll(
                 bankSecretOperation.WaitForCompletionAsync().AsTask(),
                 storageSecretOperation.WaitForCompletionAsync().AsTask());
 

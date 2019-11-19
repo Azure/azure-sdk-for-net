@@ -62,6 +62,13 @@ namespace Azure.Security.KeyVault.Keys.Samples
                 KeyVaultKey restoredKey = await client.RestoreKeyBackupAsync(memoryStream.ToArray());
 
                 AssertKeysEqual(storedKey.Properties, restoredKey.Properties);
+
+                // Delete and purge the restored key.
+                operation = await client.StartDeleteKeyAsync(rsaKeyName);
+
+                await operation.WaitForCompletionAsync();
+
+                await client.PurgeDeletedKeyAsync(rsaKeyName);
             }
         }
     }

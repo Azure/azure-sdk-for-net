@@ -21,11 +21,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
         {
             // Environment variable with the Key Vault endpoint.
             string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
-            await HelloWorldAsync(keyVaultUrl);
-        }
 
-        private async Task HelloWorldAsync(string keyVaultUrl)
-        {
             var client = new SecretClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
 
             string secretName = $"BankAccountPassword-{Guid.NewGuid()}";

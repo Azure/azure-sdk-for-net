@@ -83,7 +83,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             DeleteKeyOperation ecKeyOperation = await client.StartDeleteKeyAsync(ecKeyName);
 
             // To ensure the keys are deleted on server before we try to purge them.
-            Task.WaitAll(
+            await Task.WhenAll(
                 rsaKeyOperation.WaitForCompletionAsync().AsTask(),
                 ecKeyOperation.WaitForCompletionAsync().AsTask());
 
@@ -94,7 +94,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             }
 
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted keys needs to be purged.
-            Task.WaitAll(
+            await Task.WhenAll(
                 client.PurgeDeletedKeyAsync(rsaKeyName),
                 client.PurgeDeletedKeyAsync(ecKeyName));
         }

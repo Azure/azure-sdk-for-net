@@ -138,6 +138,36 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         }
 
         [Test]
+        public async Task VerifyUnexpectedDeleteCertificateOperation()
+        {
+            string certName = Recording.GenerateId();
+
+            CertificatePolicy certificatePolicy = DefaultPolicy;
+            certificatePolicy.IssuerName = WellKnownIssuerNames.Unknown;
+
+            CertificateOperation operation = await Client.StartCreateCertificateAsync(certName, certificatePolicy);
+
+            RegisterForCleanup(certName);
+
+            try
+            {
+                // Calling through the CertificateClient directly won't affect the CertificateOperation, so subsequent status updates should throw.
+                await Client.DeleteCertificateOperationAsync(certName);
+            }
+            catch (RequestFailedException e) when (e.Status == 403)
+            {
+                Assert.Inconclusive("The create operation completed before it could be canceled.");
+            }
+
+            InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(() => WaitForCompletion(operation));
+            Assert.AreEqual("The operation was deleted so no value is available.", ex.Message);
+
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsFalse(operation.HasValue);
+            Assert.AreEqual(404, operation.GetRawResponse().Status);
+        }
+
+        [Test]
         public async Task VerifyCertificateOperationError()
         {
             string issuerName = Recording.GenerateId();
@@ -188,26 +218,6 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             {
                 await Client.DeleteIssuerAsync(issuerName);
             }
-        }
-
-        [Test]
-        public async Task VerifyUnexpectedDeleteCertificateOperation()
-        {
-            string certName = Recording.GenerateId();
-
-            CertificatePolicy certificatePolicy = DefaultPolicy;
-            certificatePolicy.IssuerName = WellKnownIssuerNames.Unknown;
-
-            CertificateOperation operation = await Client.StartCreateCertificateAsync(certName, certificatePolicy);
-
-            RegisterForCleanup(certName);
-
-            InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(() => WaitForCompletion(operation));
-            Assert.AreEqual("The operation was deleted so no value is available.", ex.Message);
-
-            Assert.IsTrue(operation.HasCompleted);
-            Assert.IsFalse(operation.HasValue);
-            Assert.AreEqual(404, operation.GetRawResponse().Status);
         }
 
         [Test]

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
@@ -18,7 +19,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
 
         public Uri VaultUri { get; set; }
 
-        private readonly Queue<(string Name, bool Delete)> _secretsToCleanup = new Queue<(string, bool)>();
+        private readonly ConcurrentQueue<string> _secretsToCleanup = new ConcurrentQueue<string>();
 
         protected SecretsTestBase(bool isAsync) : base(isAsync)
         {
@@ -48,24 +49,20 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         {
             List<Task> cleanupTasks = new List<Task>();
 
-            foreach ((string name, bool delete) in _secretsToCleanup)
+            foreach (string name in _secretsToCleanup)
             {
-                if (delete)
-                {
-                    cleanupTasks.Add(CleanupSecret(name));
-                }
-
-                await Task.WhenAll(cleanupTasks);
+                Task cleanupTask = CleanupSecret(name);
+                cleanupTasks.Add(cleanupTask);
             }
+
+            await Task.WhenAll(cleanupTasks);
         }
 
         protected async Task CleanupSecret(string name)
         {
             try
             {
-                await Client.StartDeleteSecretAsync(name);
-
-                await WaitForDeletedSecret(name);
+                await Client.StartDeleteSecretAsync(name).ConfigureAwait(false);
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
             {
@@ -73,16 +70,24 @@ namespace Azure.Security.KeyVault.Secrets.Tests
 
             try
             {
-                await Client.PurgeDeletedSecretAsync(name);
+                await WaitForDeletedSecret(name).ConfigureAwait(false);
+            }
+            catch (RequestFailedException ex) when (ex.Status == 404)
+            {
+            }
+
+            try
+            {
+                await Client.PurgeDeletedSecretAsync(name).ConfigureAwait(false);
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
             {
             }
         }
 
-        protected void RegisterForCleanup(string name, bool delete = true)
+        protected void RegisterForCleanup(string name)
         {
-            _secretsToCleanup.Enqueue((name, delete));
+            _secretsToCleanup.Enqueue(name);
         }
 
         protected void AssertSecretsEqual(KeyVaultSecret exp, KeyVaultSecret act)
@@ -141,7 +146,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
 
             using (Recording.DisableRecording())
             {
-                return TestRetryHelper.RetryAsync(async () => await Client.GetDeletedSecretAsync(name));
+                return TestRetryHelper.RetryAsync(async () => await Client.GetDeletedSecretAsync(name).ConfigureAwait(false));
             }
         }
 
@@ -157,10 +162,10 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 return TestRetryHelper.RetryAsync(async () => {
                     try
                     {
-                        await Client.GetDeletedSecretAsync(name);
-                        throw new InvalidOperationException("Secret still exists");
+                        await Client.GetDeletedSecretAsync(name).ConfigureAwait(false);
+                        throw new InvalidOperationException($"Secret {name} still exists");
                     }
-                    catch
+                    catch (RequestFailedException ex) when (ex.Status == 404)
                     {
                         return (Response)null;
                     }
@@ -168,7 +173,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             }
         }
 
-        protected Task PollForSecret(string name)
+        protected Task WaitForSecret(string name)
         {
             if (Mode == RecordedTestMode.Playback)
             {
@@ -177,7 +182,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
 
             using (Recording.DisableRecording())
             {
-                return TestRetryHelper.RetryAsync(async () => await Client.GetSecretAsync(name));
+                return TestRetryHelper.RetryAsync(async () => await Client.GetSecretAsync(name).ConfigureAwait(false));
             }
         }
     }

@@ -22,11 +22,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
         {
             // Environment variable with the Key Vault endpoint.
             string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
-            HelloWorldSync(keyVaultUrl);
-        }
 
-        public void HelloWorldSync(string keyVaultUrl)
-        {
             #region Snippet:CertificatesSample1CertificateClient
             var client = new CertificateClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
             #endregion

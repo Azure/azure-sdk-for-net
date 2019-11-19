@@ -78,12 +78,6 @@ Once you've populated the **AZURE_CLIENT_ID**, **AZURE_CLIENT_SECRET** and **AZU
 // Create a new certificate client using the default credential from Azure.Identity using environment variables previously set,
 // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
 var client = new CertificateClient(vaultUri: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
-
-// Create a certificate using the certificate client.
-CertificateOperation operation = client.StartCreateCertificate("MyCertificate", CertificatePolicy.Default);
-
-// Retrieve a certificate using the certificate client.
-KeyVaultCertificateWithPolicy certificate = client.GetCertificate("MyCertificate");
 ```
 
 ## Key concepts
