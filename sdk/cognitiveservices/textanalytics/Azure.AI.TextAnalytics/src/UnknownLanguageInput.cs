@@ -5,12 +5,12 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// </summary>
-    public class DocumentInput
+    public class UnknownLanguageInput
     {
         /// <summary>
         /// </summary>
         /// <param name="id"></param>
-        public DocumentInput(string id)
+        public UnknownLanguageInput(string id)
         {
             Id = id;
         }
@@ -21,11 +21,8 @@ namespace Azure.AI.TextAnalytics
         public string Id { get; }
 
         /// <summary>
-        /// Language of the document.
-        /// Gets or sets this is the 2 letter ISO 639-1 representation of a
-        /// language. For example, use "en" for English; "es" for Spanish etc.
         /// </summary>
-        public string Language { get; set; }
+        public string CountryHint { get; set; }
 
         /// <summary>
         /// </summary>

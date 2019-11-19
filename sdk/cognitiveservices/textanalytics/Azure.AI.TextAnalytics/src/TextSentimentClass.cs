@@ -6,7 +6,7 @@ namespace Azure.AI.TextAnalytics
     /// <summary>
     /// </summary>
     #pragma warning disable CA1717 // Only FlagsAttribute enums should have plural names
-    public enum SentimentClass
+    public enum TextSentimentClass
     #pragma warning restore
     {
         /// <summary>

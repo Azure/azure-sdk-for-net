@@ -24,6 +24,7 @@ namespace Azure.AI.TextAnalytics.Samples
             string input = "A developer with SSN 859-98-0987 whose phone number is 206-867-5309 is building tools with our APIs.";
 
             Debug.WriteLine($"Recognizing PII entities for input: \"{input}\"");
+            //var entities = client.RecognizeEntities(input, NamedEntityType.PersonallyIdentifiableInformation).Value;
             var entities = client.RecognizePiiEntities(input).Value;
 
             Debug.WriteLine($"Recognized {entities.Count()} PII entit{(entities.Count() > 1 ? "ies" : "y")}:");

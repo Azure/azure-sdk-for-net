@@ -7,15 +7,15 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// </summary>
-    public class DocumentResult<T> : Collection<T>
+    public class KeyPhraseCollection : Collection<string>, ITextAnalysisResult
     {
-        internal DocumentResult(string id, DocumentStatistics statistics)
+        internal KeyPhraseCollection(string id, TextDocumentStatistics statistics)
         {
             Id = id;
             Statistics = statistics;
         }
 
-        internal DocumentResult(string id, string errorMessage)
+        internal KeyPhraseCollection(string id, string errorMessage)
         {
             Id = id;
             ErrorMessage = errorMessage;
@@ -31,7 +31,7 @@ namespace Azure.AI.TextAnalytics
         /// request this field will contain information about the document
         /// payload.
         /// </summary>
-        public DocumentStatistics Statistics { get; }
+        public TextDocumentStatistics Statistics { get; }
 
         /// <summary>
         /// Errors and Warnings by document.

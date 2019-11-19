@@ -5,9 +5,9 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// </summary>
-    public readonly struct Sentiment
+    public readonly struct TextSentiment
     {
-        internal Sentiment(SentimentClass sentimentClass, double positiveScore, double neutralScore, double negativeScore, int offset, int length)
+        internal TextSentiment(TextSentimentClass sentimentClass, double positiveScore, double neutralScore, double negativeScore, int offset, int length)
         {
             SentimentClass = sentimentClass;
             PositiveScore = positiveScore;
@@ -20,7 +20,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Gets redicted sentiment for document.
         /// </summary>
-        public SentimentClass SentimentClass { get; }
+        public TextSentimentClass SentimentClass { get; }
 
         /// <summary>
         /// </summary>
