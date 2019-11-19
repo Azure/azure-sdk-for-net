@@ -97,7 +97,7 @@ namespace Azure.Identity.Tests
 
                 Assert.IsTrue(query.Contains($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
 
-                Assert.IsTrue(query.Contains($"client_id=mock-client-id"));
+                Assert.IsTrue(query.Contains($"clientid=mock-client-id"));
 
                 Assert.IsTrue(request.Headers.TryGetValue("Metadata", out string metadataValue));
 
@@ -223,7 +223,7 @@ namespace Azure.Identity.Tests
 
                 Assert.IsTrue(query.Contains($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
 
-                Assert.IsTrue(query.Contains($"client_id=mock-client-id"));
+                Assert.IsTrue(query.Contains($"clientid=mock-client-id"));
 
                 Assert.IsTrue(request.Headers.TryGetValue("secret", out string actSecretValue));
 
@@ -315,7 +315,7 @@ namespace Azure.Identity.Tests
 
                 Assert.IsTrue(body.Contains($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
 
-                Assert.IsTrue(body.Contains($"client_id=mock-client-id"));
+                Assert.IsTrue(body.Contains($"clientid=mock-client-id"));
 
                 Assert.IsTrue(request.Headers.TryGetValue("Metadata", out string actMetadata));
 

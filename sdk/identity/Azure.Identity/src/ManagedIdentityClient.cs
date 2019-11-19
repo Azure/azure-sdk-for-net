@@ -332,7 +332,7 @@ namespace Azure.Identity
 
             if (!string.IsNullOrEmpty(clientId))
             {
-                request.Uri.AppendQuery("client_id", clientId);
+                request.Uri.AppendQuery("clientid", clientId);
             }
 
             return request;
@@ -357,7 +357,7 @@ namespace Azure.Identity
 
             if (!string.IsNullOrEmpty(clientId))
             {
-                bodyStr += $"&client_id={Uri.EscapeDataString(clientId)}";
+                bodyStr += $"&clientid={Uri.EscapeDataString(clientId)}";
             }
 
             ReadOnlyMemory<byte> content = Encoding.UTF8.GetBytes(bodyStr).AsMemory();
