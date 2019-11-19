@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Version>12.0.0-preview.1</Version>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+
+    <GenerateAPIListing>false</GenerateAPIListing>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <CopyBuildOutputToOutputDirectory>false</CopyBuildOutputToOutputDirectory>
+    <NoWarn>$(NoWarn);NU5128</NoWarn>
+
+    <PackageTags>Storage;Blobs;$(PackageCommonTags)</PackageTags>
+    <Description>
+      Package that references the common Azure Storage libraries for things like blob manipulation.
+    </Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.Storage.Blobs" />
+  </ItemGroup>
+</Project>
