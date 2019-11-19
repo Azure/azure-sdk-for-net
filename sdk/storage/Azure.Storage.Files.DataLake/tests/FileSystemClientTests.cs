@@ -334,7 +334,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task ListPathsAsync()
+        public async Task GetPathsAsync()
         {
             using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
             {
@@ -342,7 +342,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await SetUpFileSystemForListing(fileSystem);
 
                 // Act
-                AsyncPageable<PathItem> response = fileSystem.ListPathsAsync();
+                AsyncPageable<PathItem> response = fileSystem.GetPathsAsync();
                 IList<PathItem> paths = await response.ToListAsync();
 
                 // Assert
@@ -351,7 +351,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task ListPathsAsync_Recursive()
+        public async Task GetPathsAsync_Recursive()
         {
             using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
             {
@@ -359,7 +359,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await SetUpFileSystemForListing(fileSystem);
 
                 // Act
-                AsyncPageable<PathItem> response = fileSystem.ListPathsAsync(recursive: true);
+                AsyncPageable<PathItem> response = fileSystem.GetPathsAsync(recursive: true);
                 IList<PathItem> paths = await response.ToListAsync();
 
                 // Assert
@@ -368,7 +368,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task ListPathsAsync_Upn()
+        public async Task GetPathsAsync_Upn()
         {
             using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
             {
@@ -376,7 +376,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await SetUpFileSystemForListing(fileSystem);
 
                 // Act
-                AsyncPageable<PathItem> response = fileSystem.ListPathsAsync(userPrincipalName: true);
+                AsyncPageable<PathItem> response = fileSystem.GetPathsAsync(userPrincipalName: true);
                 IList<PathItem> paths = await response.ToListAsync();
 
                 // Assert
@@ -385,7 +385,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task ListPathsAsync_Path()
+        public async Task GetPathsAsync_Path()
         {
             using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
             {
@@ -393,7 +393,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await SetUpFileSystemForListing(fileSystem);
 
                 // Act
-                AsyncPageable<PathItem> response = fileSystem.ListPathsAsync(path: "foo");
+                AsyncPageable<PathItem> response = fileSystem.GetPathsAsync(path: "foo");
                 IList<PathItem> paths = await response.ToListAsync();
 
                 // Assert
@@ -403,7 +403,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [AsyncOnly]
-        public async Task ListPathsAsync_MaxResults()
+        public async Task GetPathsAsync_MaxResults()
         {
             using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
             {
@@ -411,7 +411,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await SetUpFileSystemForListing(fileSystem);
 
                 // Act
-                Page<PathItem> page = await fileSystem.ListPathsAsync().AsPages(pageSizeHint: 2).FirstAsync();
+                Page<PathItem> page = await fileSystem.GetPathsAsync().AsPages(pageSizeHint: 2).FirstAsync();
 
                 // Assert
                 Assert.AreEqual(2, page.Values.Count);
@@ -419,7 +419,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task ListPathsAsync_Error()
+        public async Task GetPathsAsync_Error()
         {
             // Arrange
             DataLakeServiceClient service = GetServiceClient_SharedKey();
@@ -427,7 +427,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                fileSystem.ListPathsAsync().ToListAsync(),
+                fileSystem.GetPathsAsync().ToListAsync(),
                 e => Assert.AreEqual("FilesystemNotFound", e.ErrorCode.Split('\n')[0]));
         }
 

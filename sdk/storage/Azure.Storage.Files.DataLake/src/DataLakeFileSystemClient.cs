@@ -822,9 +822,9 @@ namespace Azure.Storage.Files.DataLake
         }
         #endregion SetMetadata
 
-        #region List Paths
+        #region Get Paths
         /// <summary>
-        /// The <see cref="ListPaths"/> operation returns an async sequence
+        /// The <see cref="GetPaths"/> operation returns an async sequence
         /// of paths in this file system.  Enumerating the paths may make
         /// multiple requests to the service while fetching all the values.
         ///
@@ -856,7 +856,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Pageable<PathItem> ListPaths(
+        public virtual Pageable<PathItem> GetPaths(
             string path = default,
             bool recursive = default,
             bool userPrincipalName = default,
@@ -868,7 +868,7 @@ namespace Azure.Storage.Files.DataLake
                 userPrincipalName).ToSyncCollection(cancellationToken);
 
         /// <summary>
-        /// The <see cref="ListPathsAsync"/> operation returns an async
+        /// The <see cref="GetPathsAsync"/> operation returns an async
         /// sequence of paths in this file system.  Enumerating the paths may
         /// make multiple requests to the service while fetching all the
         /// values.
@@ -901,7 +901,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual AsyncPageable<PathItem> ListPathsAsync(
+        public virtual AsyncPageable<PathItem> GetPathsAsync(
             string path = default,
             bool recursive = default,
             bool userPrincipalName = default,
@@ -912,12 +912,12 @@ namespace Azure.Storage.Files.DataLake
                 userPrincipalName).ToAsyncCollection(cancellationToken);
 
         /// <summary>
-        /// The <see cref="ListPathsInternal"/> operation returns a
+        /// The <see cref="GetPathsInternal"/> operation returns a
         /// single segment of paths in this file system, starting
         /// from the specified <paramref name="continuation"/>.  Use an empty
         /// <paramref name="continuation"/> to start enumeration from the beginning
         /// and the <see cref="PathSegment.Continuation"/> if it's not
-        /// empty to make subsequent calls to <see cref="ListPathsAsync"/>
+        /// empty to make subsequent calls to <see cref="GetPathsAsync"/>
         /// to continue enumerating the paths segment by segment. Blobs are
         /// ordered lexicographically by name.
         ///
@@ -962,7 +962,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal async Task<Response<PathSegment>> ListPathsInternal(
+        internal async Task<Response<PathSegment>> GetPathsInternal(
             string path,
             bool recursive,
             bool userPrincipalName,
