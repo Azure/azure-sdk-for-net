@@ -377,9 +377,9 @@ namespace Azure.Security.KeyVault.Certificates
     public partial class SubjectAlternativeNames
     {
         public SubjectAlternativeNames() { }
-        public System.Collections.Generic.ICollection<string> DnsNames { get { throw null; } }
-        public System.Collections.Generic.ICollection<string> Emails { get { throw null; } }
-        public System.Collections.Generic.ICollection<string> UserPrincipalNames { get { throw null; } }
+        public System.Collections.Generic.IList<string> DnsNames { get { throw null; } }
+        public System.Collections.Generic.IList<string> Emails { get { throw null; } }
+        public System.Collections.Generic.IList<string> UserPrincipalNames { get { throw null; } }
     }
     public static partial class WellKnownIssuerNames
     {
