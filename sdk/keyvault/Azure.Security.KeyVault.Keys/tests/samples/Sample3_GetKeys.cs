@@ -79,6 +79,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             DeleteKeyOperation rsaKeyOperation = client.StartDeleteKey(rsaKeyName);
             DeleteKeyOperation ecKeyOperation = client.StartDeleteKey(ecKeyName);
 
+            // You only need to wait for completion if you want to purge or recover the key.
             while (!rsaKeyOperation.HasCompleted || !ecKeyOperation.HasCompleted)
             {
                 Thread.Sleep(2000);
@@ -96,6 +97,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             }
             #endregion
 
+            // You only need to wait for completion if you want to purge or recover the key.
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted keys needs to be purged.
             client.PurgeDeletedKey(rsaKeyName);
             client.PurgeDeletedKey(ecKeyName);

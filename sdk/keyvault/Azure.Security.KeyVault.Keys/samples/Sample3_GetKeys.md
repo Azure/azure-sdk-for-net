@@ -90,6 +90,7 @@ You need to delete them from the Key Vault.
 DeleteKeyOperation rsaKeyOperation = client.StartDeleteKey(rsaKeyName);
 DeleteKeyOperation ecKeyOperation = client.StartDeleteKey(ecKeyName);
 
+// You only need to wait for completion if you want to purge or recover the key.
 while (!rsaKeyOperation.HasCompleted || !ecKeyOperation.HasCompleted)
 {
     Thread.Sleep(2000);

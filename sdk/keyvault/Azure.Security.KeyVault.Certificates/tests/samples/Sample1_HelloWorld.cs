@@ -67,7 +67,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             #region Snippet:CertificatesSample1DeleteCertificate
             DeleteCertificateOperation operation = client.StartDeleteCertificate(certName);
 
-            // To ensure certificate is deleted on server side.
+            // You only need to wait for completion if you want to purge or recover the certificate.
             while (!operation.HasCompleted)
             {
                 Thread.Sleep(2000);

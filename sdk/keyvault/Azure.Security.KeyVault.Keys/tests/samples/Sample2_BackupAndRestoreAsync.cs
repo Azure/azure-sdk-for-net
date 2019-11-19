@@ -66,6 +66,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
                 // Delete and purge the restored key.
                 operation = await client.StartDeleteKeyAsync(rsaKeyName);
 
+                // You only need to wait for completion if you want to purge or recover the key.
                 await operation.WaitForCompletionAsync();
 
                 await client.PurgeDeletedKeyAsync(rsaKeyName);

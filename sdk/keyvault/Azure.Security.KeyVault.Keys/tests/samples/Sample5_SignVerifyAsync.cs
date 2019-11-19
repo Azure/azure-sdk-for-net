@@ -114,7 +114,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             DeleteKeyOperation rsaKeyOperation = await keyClient.StartDeleteKeyAsync(rsaKeyName);
             DeleteKeyOperation ecKeyOperation = await keyClient.StartDeleteKeyAsync(ecKeyName);
 
-            // To ensure the key is deleted on server before we try to purge it.
+            // You only need to wait for completion if you want to purge or recover the key.
             await Task.WhenAll(
                 rsaKeyOperation.WaitForCompletionAsync().AsTask(),
                 ecKeyOperation.WaitForCompletionAsync().AsTask());

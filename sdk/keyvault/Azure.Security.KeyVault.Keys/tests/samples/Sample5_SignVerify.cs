@@ -103,6 +103,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             DeleteKeyOperation rsaKeyOperation = keyClient.StartDeleteKey(rsaKeyName);
             DeleteKeyOperation ecKeyOperation = keyClient.StartDeleteKey(ecKeyName);
 
+            // You only need to wait for completion if you want to purge or recover the key.
             while (!rsaKeyOperation.HasCompleted || !ecKeyOperation.HasCompleted)
             {
                 Thread.Sleep(2000);

@@ -174,7 +174,7 @@ is not enabled for the Key Vault, this operation permanently deletes the certifi
 ```C# Snippet:DeleteAndPurgeCertificate
 DeleteCertificateOperation operation = client.StartDeleteCertificate("MyCertificate");
 
-// You only need to wait for completion if you want to purge or recover the secret.
+// You only need to wait for completion if you want to purge or recover the certificate.
 // You should call `UpdateStatus` in another thread or after doing additional work like pumping messages.
 while (!operation.HasCompleted)
 {
@@ -219,7 +219,7 @@ By default, this loops indefinitely but you can cancel it by passing a `Cancella
 ```C# Snippet:DeleteAndPurgeCertificateAsync
 DeleteCertificateOperation operation = await client.StartDeleteCertificateAsync("MyCertificate");
 
-// You only need to wait for completion if you want to purge or recover the secret.
+// You only need to wait for completion if you want to purge or recover the certificate.
 await operation.WaitForCompletionAsync();
 
 DeletedCertificate secret = operation.Value;

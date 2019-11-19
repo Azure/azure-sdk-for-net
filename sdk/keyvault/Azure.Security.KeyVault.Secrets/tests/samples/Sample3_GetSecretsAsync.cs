@@ -83,6 +83,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             DeleteSecretOperation bankSecretOperation = await client.StartDeleteSecretAsync(bankSecretName);
             DeleteSecretOperation storageSecretOperation = await client.StartDeleteSecretAsync(storageSecretName);
 
+            // You only need to wait for completion if you want to purge or recover the secret.
             await Task.WhenAll(
                 bankSecretOperation.WaitForCompletionAsync().AsTask(),
                 storageSecretOperation.WaitForCompletionAsync().AsTask());

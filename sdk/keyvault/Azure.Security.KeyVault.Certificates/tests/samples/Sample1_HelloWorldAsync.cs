@@ -63,7 +63,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             // The certificate is no longer needed, need to delete it from the Key Vault.
             DeleteCertificateOperation operation = await client.StartDeleteCertificateAsync(certName);
 
-            // To ensure key is deleted on server side.
+            // You only need to wait for completion if you want to purge or recover the certificate.
             await operation.WaitForCompletionAsync();
 
             // If the keyvault is soft-delete enabled, then for permanent deletion, the deleted key needs to be purged.

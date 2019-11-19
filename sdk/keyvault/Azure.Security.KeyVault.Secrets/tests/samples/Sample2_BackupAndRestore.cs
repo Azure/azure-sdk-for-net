@@ -69,6 +69,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             // Delete and purge the restored secret.
             operation = client.StartDeleteSecret(restoreSecret.Name);
 
+            // You only need to wait for completion if you want to purge or recover the secret.
             while (!operation.HasCompleted)
             {
                 Thread.Sleep(2000);

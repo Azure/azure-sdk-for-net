@@ -101,6 +101,7 @@ To list deleted secrets, we also need to wait until they are fully deleted.
 DeleteSecretOperation bankSecretOperation = client.StartDeleteSecret(bankSecretName);
 DeleteSecretOperation storageSecretOperation = client.StartDeleteSecret(storageSecretName);
 
+// You only need to wait for completion if you want to purge or recover the secret.
 while (!bankSecretOperation.HasCompleted || !storageSecretOperation.HasCompleted)
 {
     Thread.Sleep(2000);

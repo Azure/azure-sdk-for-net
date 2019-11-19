@@ -58,6 +58,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             #region Snippet:KeysSample4DeleteKey
             DeleteKeyOperation operation = keyClient.StartDeleteKey(rsaKeyName);
 
+            // You only need to wait for completion if you want to purge or recover the key.
             while (!operation.HasCompleted)
             {
                 Thread.Sleep(2000);

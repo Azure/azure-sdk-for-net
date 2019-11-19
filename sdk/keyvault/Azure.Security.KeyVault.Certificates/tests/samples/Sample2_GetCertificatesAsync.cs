@@ -67,7 +67,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             DeleteCertificateOperation operation1 = await client.StartDeleteCertificateAsync(certName1);
             DeleteCertificateOperation operation2 = await client.StartDeleteCertificateAsync(certName2);
 
-            // To ensure certificates are deleted on server side.
+            // You only need to wait for completion if you want to purge or recover the certificate.
             await Task.WhenAll(
                 operation1.WaitForCompletionAsync().AsTask(),
                 operation2.WaitForCompletionAsync().AsTask());

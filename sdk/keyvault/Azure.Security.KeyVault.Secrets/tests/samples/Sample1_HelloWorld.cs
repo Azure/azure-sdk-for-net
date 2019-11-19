@@ -58,6 +58,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             #endregion
 
             #region Snippet:SecretsSample1PurgeSecret
+            // You only need to wait for completion if you want to purge or recover the secret.
             while (!operation.HasCompleted)
             {
                 Thread.Sleep(2000);

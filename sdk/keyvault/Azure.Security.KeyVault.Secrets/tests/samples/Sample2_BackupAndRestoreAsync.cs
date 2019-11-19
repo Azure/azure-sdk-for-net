@@ -64,6 +64,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             // Delete and purge the restored secret.
             operation = await client.StartDeleteSecretAsync(restoreSecret.Name);
 
+            // You only need to wait for completion if you want to purge or recover the secret.
             await operation.WaitForCompletionAsync();
 
             await client.PurgeDeletedSecretAsync(restoreSecret.Name);
