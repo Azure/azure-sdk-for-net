@@ -202,7 +202,7 @@ namespace Azure.Messaging.EventHubs
                     break;
 
                 case EventHubSharedKeyCredential sharedKeyCredential:
-                    credential = sharedKeyCredential.ConvertToSharedAccessSignatureCredential(BuildAudienceResource(connectionOptions.TransportType, fullyQualifiedNamespace, eventHubName));
+                    credential = sharedKeyCredential.AsSharedAccessSignatureCredential(BuildAudienceResource(connectionOptions.TransportType, fullyQualifiedNamespace, eventHubName));
                     break;
             }
 
