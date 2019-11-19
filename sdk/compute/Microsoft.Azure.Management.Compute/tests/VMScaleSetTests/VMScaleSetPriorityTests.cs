@@ -96,10 +96,10 @@ namespace Compute.Tests
         /// Delete RG
         /// </summary>
         [Fact]
-        [Trait("Name", "TestVMScaleSetEvictionPolicyOperations")]
+        [Trait("Name", "TestVMScaleSetEvictionPolicyOperations_Accept_DeleteEvictionPolicy")]
         public void TestVMScaleSetEvictionPolicyOperations_Accept_DeleteEvictionPolicy()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 // Create low priority scaleset with 'delete' eviction policy specified
                 TestVMScaleSetPriorityOperationsInternal(context, VirtualMachinePriorityTypes.Low, evictionPolicy: VirtualMachineEvictionPolicyTypes.Delete, hasManagedDisks: true);
@@ -126,7 +126,7 @@ namespace Compute.Tests
         [Trait("Name", "TestVMScaleSetVariablePricedLowPriorityVM_Accept_DefaultMaxPrice")]
         public void TestVMScaleSetVariablePricedLowPriorityVM_Accept_DefaultMaxPrice()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 TestVMScaleSetPriorityOperationsInternal(context, VirtualMachinePriorityTypes.Low, new BillingProfile { MaxPrice = -1 }, hasManagedDisks: true);
             }
@@ -148,7 +148,7 @@ namespace Compute.Tests
         [Trait("Name", "TestVMScaleSetVariablePricedLowPriorityVM_Accept_UserSpecifiedMaxPrice")]
         public void TestVMScaleSetVariablePricedLowPriorityVM_Accept_UserSpecifiedMaxPrice()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 TestVMScaleSetPriorityOperationsInternal(context, VirtualMachinePriorityTypes.Low, new BillingProfile { MaxPrice = 100 }, hasManagedDisks: true);
             }
