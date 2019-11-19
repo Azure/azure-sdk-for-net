@@ -11,6 +11,7 @@
 - `subject` and `issuerName` constructor parameters have been switched on `CertificatePolicy`.
 - `subjectAlternativeNames` and `issuerName` constructor parameters have been switched on `CertificatePolicy`.
 - The `SubjectAlternativeNames` class has been rewritten to contain `DnsNames`, `Emails`, and `UserPrincipalNames` collection properties.
+- `CertificateIssuer.Administrators` has been renamed to `CertificateIssuer.AdministratorContacts`.
 
 ### Major changes
 
