@@ -93,7 +93,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             }
 
             // If the Key Vault is soft delete-enabled, then for permanent deletion, deleted secret needs to be purged.
-            Task.WaitAll(
+            await Task.WhenAll(
                 client.PurgeDeletedSecretAsync(bankSecretName),
                 client.PurgeDeletedSecretAsync(storageSecretName));
         }

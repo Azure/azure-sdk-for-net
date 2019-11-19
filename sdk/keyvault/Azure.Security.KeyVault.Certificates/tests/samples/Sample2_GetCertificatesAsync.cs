@@ -68,7 +68,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             DeleteCertificateOperation operation2 = await client.StartDeleteCertificateAsync(certName2);
 
             // To ensure certificates are deleted on server side.
-            Task.WaitAll(
+            await Task.WhenAll(
                 operation1.WaitForCompletionAsync().AsTask(),
                 operation2.WaitForCompletionAsync().AsTask());
 
@@ -79,7 +79,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             }
 
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted keys needs to be purged.
-            Task.WaitAll(
+            await Task.WhenAll(
                 client.PurgeDeletedCertificateAsync(certName1),
                 client.PurgeDeletedCertificateAsync(certName2));
         }

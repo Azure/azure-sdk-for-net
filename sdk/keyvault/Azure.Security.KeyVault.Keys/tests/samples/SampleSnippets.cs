@@ -225,11 +225,11 @@ namespace Azure.Security.KeyVault.Keys.Samples
             try
             {
                 // Deleting a key when soft delete is enabled may not happen immediately.
-                Task.WaitAll(
+                await Task.WhenAll(
                     rsaKeyOperation.WaitForCompletionAsync().AsTask(),
                     ecKeyOperation.WaitForCompletionAsync().AsTask());
 
-                Task.WaitAll(
+                await Task.WhenAll(
                     client.PurgeDeletedKeyAsync(rsaKeyOperation.Value.Name),
                     client.PurgeDeletedKeyAsync(ecKeyOperation.Value.Name));
             }
