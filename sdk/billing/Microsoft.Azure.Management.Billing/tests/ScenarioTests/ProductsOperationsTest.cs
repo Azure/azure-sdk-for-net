@@ -15,16 +15,16 @@ using Microsoft.Azure.Management.Billing.Models;
 
 namespace Billing.Tests.ScenarioTests
 {
-    public class InvoicesOperationsTest : TestBase
+    public class ProductsOperationsTest : TestBase
     {
-        private static readonly DateTime DueDate = DateTime.Parse("11/15/2019");
+        private const string AvailabilityId = "DZH318Z0CCBJ";
         private const string BillingAccountName = "723c8ce0-33ba-5ba7-ef23-e1b72f15f1d8:4ce5b530-c82b-44e8-97ec-49f3cce9f14d_2019-05-31";
         private const string BillingProfileName = "H6RI-TXWC-BG7-PGB";
-        private const string InvoiceNumber = "G000492901";
-        private const string InvoiceStatus = "OverDue";
+        private const string InvoiceSectionName = "ICYS-ZE5B-PJA-PGB";
+        private const string ProductName = "8853e514-bd17-4c9c-8b7c-4d2f520ce9f3";
 
         [Fact]
-        public void GetInvoiceByInvoiceNumberTest()
+        public void GetProductTest()
         {
             var something = typeof(Billing.Tests.ScenarioTests.OperationsTests);
             string executingAssemblyPath = something.GetTypeInfo().Assembly.Location;
@@ -35,20 +35,19 @@ namespace Billing.Tests.ScenarioTests
                 // Create client
                 var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
-                // Get the invoice
-                var invoice = billingMgmtClient.Invoices.Get(BillingAccountName, BillingProfileName, InvoiceNumber);
+                // Get the product
+                var product = billingMgmtClient.Products.Get(BillingAccountName, BillingProfileName, InvoiceSectionName, ProductName);
 
                 // Verify the response
-                Assert.NotNull(invoice);
-                Assert.Contains(BillingProfileName, invoice.BillingProfileId);
-                Assert.Equal(InvoiceNumber, invoice.Name);
-                Assert.Equal(InvoiceStatus, invoice.Status);
-                Assert.Equal(DueDate.Date, invoice.DueDate.Value.Date);
+                Assert.Contains(BillingProfileName, product.BillingProfileId);
+                Assert.Contains(InvoiceSectionName, product.InvoiceSectionId);
+                Assert.Equal(AvailabilityId, product.AvailabilityId);
+                Assert.Equal(ProductName, product.Name);
             }
         }
 
         [Fact]
-        public void ListInvoicesByBillingAccountTest()
+        public void ListProductsByBillingAccountTest()
         {
             var something = typeof(Billing.Tests.ScenarioTests.OperationsTests);
             string executingAssemblyPath = something.GetTypeInfo().Assembly.Location;
@@ -59,21 +58,22 @@ namespace Billing.Tests.ScenarioTests
                 // Create client
                 var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
-                // Get the invoices
-                var invoices = billingMgmtClient.Invoices.ListByBillingAccount(BillingAccountName, "2019-08-01", "2019-11-01");
+                // Get the products
+                var products = billingMgmtClient.Products.ListByBillingAccount(BillingAccountName);
 
                 // Verify the response
-                Assert.NotNull(invoices);
-                var invoice = Assert.Single(invoices.Value);
-                Assert.Contains(BillingProfileName, invoice.BillingProfileId);
-                Assert.Equal(InvoiceNumber, invoice.Name);
-                Assert.Equal(InvoiceStatus, invoice.Status);
-                Assert.Equal(DueDate.Date, invoice.DueDate.Value.Date);
+                Assert.NotNull(products);
+                Assert.Equal(2, products.Count());
+                var product = Assert.Single(products.Where(p => p.Name == ProductName));
+                Assert.Contains(BillingProfileName, product.BillingProfileId);
+                Assert.Contains(InvoiceSectionName, product.InvoiceSectionId);
+                Assert.Equal(AvailabilityId, product.AvailabilityId);
+                Assert.Equal(ProductName, product.Name);
             }
         }
 
         [Fact]
-        public void ListInvoicesByBillingProfileTest()
+        public void ListProductsByInvoiceSectionTest()
         {
             var something = typeof(Billing.Tests.ScenarioTests.OperationsTests);
             string executingAssemblyPath = something.GetTypeInfo().Assembly.Location;
@@ -84,16 +84,17 @@ namespace Billing.Tests.ScenarioTests
                 // Create client
                 var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
-                // Get the invoices
-                var invoices = billingMgmtClient.Invoices.ListByBillingProfile(BillingAccountName, BillingProfileName, "2019-08-01", "2019-11-01");
+                // Get the products
+                var products = billingMgmtClient.Products.ListByInvoiceSection(BillingAccountName, BillingProfileName, InvoiceSectionName);
 
                 // Verify the response
-                Assert.NotNull(invoices);
-                var invoice = Assert.Single(invoices.Value);
-                Assert.Contains(BillingProfileName, invoice.BillingProfileId);
-                Assert.Equal(InvoiceNumber, invoice.Name);
-                Assert.Equal(InvoiceStatus, invoice.Status);
-                Assert.Equal(DueDate.Date, invoice.DueDate.Value.Date);
+                Assert.NotNull(products);
+                Assert.Equal(2, products.Value.Count);
+                var product = Assert.Single(products.Value.Where(p => p.Name == ProductName));
+                Assert.Contains(BillingProfileName, product.BillingProfileId);
+                Assert.Contains(InvoiceSectionName, product.InvoiceSectionId);
+                Assert.Equal(AvailabilityId, product.AvailabilityId);
+                Assert.Equal(ProductName, product.Name);
             }
         }
     }
