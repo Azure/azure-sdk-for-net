@@ -156,6 +156,7 @@ namespace Azure.Storage.Blobs
         /// </summary>
         /// <param name="serviceUri">
         /// A <see cref="Uri"/> referencing the blob service.
+        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net".
         /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline
@@ -173,6 +174,7 @@ namespace Azure.Storage.Blobs
         /// </summary>
         /// <param name="serviceUri">
         /// A <see cref="Uri"/> referencing the blob service.
+        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net".
         /// </param>
         /// <param name="credential">
         /// The shared key credential used to sign requests.
@@ -193,6 +195,7 @@ namespace Azure.Storage.Blobs
         /// </summary>
         /// <param name="serviceUri">
         /// A <see cref="Uri"/> referencing the blob service.
+        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net".
         /// </param>
         /// <param name="credential">
         /// The token credential used to sign requests.
@@ -213,6 +216,7 @@ namespace Azure.Storage.Blobs
         /// </summary>
         /// <param name="serviceUri">
         /// A <see cref="Uri"/> referencing the blob service.
+        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net".
         /// </param>
         /// <param name="authentication">
         /// An optional authentication policy used to sign requests.
@@ -234,6 +238,7 @@ namespace Azure.Storage.Blobs
         /// </summary>
         /// <param name="serviceUri">
         /// A <see cref="Uri"/> referencing the blob service.
+        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net".
         /// </param>
         /// <param name="authentication"></param>
         /// <param name="pipeline">

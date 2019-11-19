@@ -11,6 +11,7 @@
     <PackageReleaseNotes>
   <![CDATA[
 - Added SQL DW Copy Command support in Copy Activity
+- Added report status on callback support for webhook activity
   ]]></PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>

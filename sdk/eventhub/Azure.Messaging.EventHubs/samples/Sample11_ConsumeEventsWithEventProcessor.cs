@@ -73,7 +73,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
                 // TODO: explain callbacks setup once the public API is finished for the next preview.
 
-                eventProcessor.InitializeProcessingForPartitionAsync = (initializationContext) =>
+                eventProcessor.InitializeProcessingForPartitionAsyncHandler = (initializationContext) =>
                 {
                     // This is the last piece of code guaranteed to run before event processing, so all initialization
                     // must be done by the moment this method returns.
@@ -91,7 +91,7 @@ namespace Azure.Messaging.EventHubs.Samples
                     return new ValueTask();
                 };
 
-                eventProcessor.ProcessingForPartitionStoppedAsync = (stopContext) =>
+                eventProcessor.ProcessingForPartitionStoppedAsyncHandler = (stopContext) =>
                 {
                     // The code to be run just before stopping processing events for a partition.  This is the right place to dispose
                     // of objects that will no longer be used.
@@ -105,7 +105,7 @@ namespace Azure.Messaging.EventHubs.Samples
                     return new ValueTask();
                 };
 
-                eventProcessor.ProcessEventAsync = (processorEvent) =>
+                eventProcessor.ProcessEventAsyncHandler = (processorEvent) =>
                 {
                     // Here the user can specify what to do with the event received from the event processor.  We are counting how
                     // many events were received across all partitions so we can check whether all sent events were received.
@@ -124,7 +124,7 @@ namespace Azure.Messaging.EventHubs.Samples
                     return new ValueTask();
                 };
 
-                eventProcessor.ProcessExceptionAsync = (errorContext) =>
+                eventProcessor.ProcessErrorAsyncHandler = (errorContext) =>
                 {
                     // Any exception which occurs as a result of the event processor itself will be passed to
                     // this delegate so it may be handled.  The processor will continue to process events if
@@ -170,6 +170,11 @@ namespace Azure.Messaging.EventHubs.Samples
                     {
                         await Task.Delay(500, cancellationSource.Token);
                     }
+
+                    // The processor may take some time to connect to the Event Hubs service.  Let's wait 1 second before sending
+                    // events so we don't end up missing events.
+
+                    await Task.Delay(1000);
 
                     // To test our event processor, we are publishing 10 sets of events to the Event Hub.  Notice that we are not
                     // specifying a partition to send events to, so these sets may end up in different partitions.

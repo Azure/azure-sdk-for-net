@@ -17,23 +17,6 @@ namespace Azure.Storage.Files.DataLake
     /// </summary>
     public class DataLakeDirectoryClient : DataLakePathClient
     {
-        /// <summary>
-        /// The name of the directory.
-        /// </summary>
-        private string _name;
-
-        /// <summary>
-        /// Gets the name of the directory.
-        /// </summary>
-        public virtual string Name
-        {
-            get
-            {
-                SetNameFieldsIfNull();
-                return _name;
-            }
-        }
-
         #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="DataLakeDirectoryClient"/>
@@ -214,20 +197,6 @@ namespace Azure.Storage.Files.DataLake
         /// <returns>A new <see cref="DataLakeDirectoryClient"/> instance.</returns>
         public virtual DataLakeDirectoryClient GetSubDirectoryClient(string subdirectoryName)
             => new DataLakeDirectoryClient(Uri.AppendToPath(subdirectoryName), Pipeline);
-
-        /// <summary>
-        /// Sets the various name fields if they are currently null.
-        /// </summary>
-        internal override void SetNameFieldsIfNull()
-        {
-            base.SetNameFieldsIfNull();
-
-            if (_name == null)
-            {
-                var builder = new DataLakeUriBuilder(Uri);
-                _name = builder.LastDirectoryOrFileName;
-            }
-        }
 
         #region Create
         /// <summary>

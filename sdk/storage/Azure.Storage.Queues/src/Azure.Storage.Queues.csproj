@@ -6,7 +6,7 @@
     <AssemblyTitle>Microsoft Azure.Storage.Queues client library</AssemblyTitle>
     <Version>12.1.0-preview.1</Version>
     <DefineConstants>QueueSDK;$(DefineConstants)</DefineConstants>
-    <PackageTags>Microsoft Azure Storage Queues, Microsoft, Azure, Queues, Queue, Storage, StorageScalable, azureofficial</PackageTags>
+    <PackageTags>Microsoft Azure Storage Queues;Microsoft;Azure;Queues;Queue;Storage;StorageScalable;$(PackageCommonTags)</PackageTags>
     <PackageReleaseNotes>
       For release notes and more information please visit https://aka.ms/azure-sdk-preview3-net
     </PackageReleaseNotes>

@@ -4,7 +4,7 @@
     <Description>This is the Microsoft Azure Key Vault Keys client library</Description>
     <AssemblyTitle>Microsoft Azure.Security.KeyVault.Keys client library</AssemblyTitle>
     <Version>4.1.0-preview.1</Version>
-    <PackageTags>Microsoft Azure Key Vault Keys</PackageTags>
+    <PackageTags>Microsoft Azure Key Vault Keys;$(PackageCommonTags)</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
       - `Key` has been renamed to `KeyVaultKey` to avoid ambiguity with other libraries and to yield better search results.
