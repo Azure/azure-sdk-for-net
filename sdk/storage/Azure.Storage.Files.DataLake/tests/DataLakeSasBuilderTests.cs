@@ -10,7 +10,6 @@ namespace Azure.Storage.Files.DataLake.Tests
 {
     public class DataLakeSasBuilderTests
     {
-        private readonly string _identifier = "Identifier";
         private readonly DataLakeSasPermissions _sasPermissions = DataLakeSasPermissions.All;
 
         [Test]
@@ -29,14 +28,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             TestHelper.AssertExpectedException(
                 () => sasBuilder.EnsureState(),
                 new InvalidOperationException("SAS is missing required parameter: ExpiresOn"));
-
-            sasBuilder.Identifier = _identifier;
-
-            // Identifier, Permissions, and ExpiresOn present.
-            TestHelper.AssertExpectedException(
-                () => sasBuilder.EnsureState(),
-                new InvalidOperationException("SAS cannot have the Permissions parameter when the Identifier parameter is present"));
-
         }
     }
 }

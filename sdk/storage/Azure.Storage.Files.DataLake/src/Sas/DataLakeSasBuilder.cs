@@ -358,15 +358,6 @@ namespace Azure.Storage.Files.DataLake.Sas
                 }
             }
 
-            // Identifier is present
-            else
-            {
-                if (!string.IsNullOrEmpty(Permissions))
-                {
-                    throw Errors.SasDataNotAllowed(nameof(Identifier), nameof(Permissions));
-                }
-            }
-
             // File System
             if (string.IsNullOrEmpty(Path))
             {
