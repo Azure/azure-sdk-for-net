@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Processor;
+using Azure.Messaging.EventHubs.Samples.Infrastructure;
 
 namespace Azure.Messaging.EventHubs.Tests
 {
@@ -95,7 +96,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             ConsumerGroup = consumerGroup;
             Connection = new EventHubConnection(connectionString);
-            InnerPartitionManager = partitionManager ?? new InMemoryPartitionManager();
+            InnerPartitionManager = partitionManager ?? new MockCheckPointStorage();
 
             // In case it has not been specified, set the maximum receive wait time to 2 seconds because the default
             // value (1 minute) would take too much time.

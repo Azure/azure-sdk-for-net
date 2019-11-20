@@ -13,6 +13,7 @@ using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
 using Azure.Messaging.EventHubs.Processor;
+using Azure.Messaging.EventHubs.Samples.Infrastructure;
 using Moq;
 using NUnit.Framework;
 
@@ -248,7 +249,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var context = new PartitionContext("partition");
             var data = new EventData(new byte[0], sequenceNumber: 0, offset: 0);
 
-            var processor = new EventProcessorClient("cg", new InMemoryPartitionManager(), fakeConnection, null);
+            var processor = new EventProcessorClient("cg", new MockCheckPointStorage(), fakeConnection, null);
 
             // TODO: find a way to call UpdateCheckpointAsync.
 

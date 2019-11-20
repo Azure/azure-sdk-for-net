@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Processor;
+using Azure.Messaging.EventHubs.Samples.Infrastructure;
 using Azure.Messaging.EventHubs.Tests.Infrastructure;
 using NUnit.Framework;
 
@@ -566,7 +567,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // Create a partition manager and add an ownership with a checkpoint in it.
 
-                    var partitionManager = new InMemoryPartitionManager();
+                    var partitionManager = new MockCheckPointStorage();
 
                     await partitionManager.ClaimOwnershipAsync(new List<PartitionOwnership>()
                     {
@@ -665,7 +666,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // Create a partition manager so we can retrieve the created checkpoint from it.
 
-                    var partitionManager = new InMemoryPartitionManager();
+                    var partitionManager = new MockCheckPointStorage();
 
                     // Create the event processor manager to manage our event processors.
 
