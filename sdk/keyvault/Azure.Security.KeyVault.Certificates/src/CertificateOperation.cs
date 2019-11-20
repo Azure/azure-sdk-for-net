@@ -13,11 +13,10 @@ namespace Azure.Security.KeyVault.Certificates
     /// </summary>
     public class CertificateOperation : Operation<KeyVaultCertificateWithPolicy>
     {
-        private bool _completed;
         private readonly CertificateClient _client;
 
+        private bool _completed;
         private Response _response;
-
         private KeyVaultCertificateWithPolicy _value;
 
         internal CertificateOperation(Response<CertificateOperationProperties> properties, CertificateClient client)
@@ -47,7 +46,30 @@ namespace Azure.Security.KeyVault.Certificates
         public override string Id { get; }
 
         /// <inheritdoc />
-        public override KeyVaultCertificateWithPolicy Value => _value;
+        public override KeyVaultCertificateWithPolicy Value
+        {
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+            get
+            {
+                if (Properties is null)
+                {
+                    throw new InvalidOperationException("The operation was deleted so no value is available.");
+                }
+
+                if (Properties.Status == "cancelled")
+                {
+                    throw new OperationCanceledException("The operation was canceled so no value is available.");
+                }
+
+                if (Properties.Error != null)
+                {
+                    throw new InvalidOperationException($"The certificate operation failed: {Properties.Error.Message}");
+                }
+
+                return OperationHelpers.GetValue(ref _value);
+            }
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+        }
 
         /// <inheritdoc />
         public override Response GetRawResponse() => _response;
@@ -74,6 +96,13 @@ namespace Azure.Security.KeyVault.Certificates
                 _response = pollResponse.GetRawResponse();
 
                 Properties = pollResponse;
+
+                // Properties will be null if deleted.
+                if (Properties is null)
+                {
+                    _completed = true;
+                    return _response;
+                }
             }
 
             if (Properties.Status == "completed")
@@ -89,14 +118,10 @@ namespace Azure.Security.KeyVault.Certificates
             else if (Properties.Status == "cancelled")
             {
                 _completed = true;
-
-                throw new OperationCanceledException("The certificate operation has been canceled");
             }
             else if (Properties.Error != null)
             {
                 _completed = true;
-
-                throw new InvalidOperationException("The certificate operation failed");
             }
 
             return GetRawResponse();
@@ -116,6 +141,13 @@ namespace Azure.Security.KeyVault.Certificates
                 _response = pollResponse.GetRawResponse();
 
                 Properties = pollResponse;
+
+                // Properties will be null if deleted.
+                if (Properties is null)
+                {
+                    _completed = true;
+                    return _response;
+                }
             }
 
             if (Properties.Status == "completed")
@@ -131,17 +163,67 @@ namespace Azure.Security.KeyVault.Certificates
             else if (Properties.Status == "cancelled")
             {
                 _completed = true;
-
-                throw new OperationCanceledException("The certificate operation has been canceled");
             }
             else if (Properties.Error != null)
             {
                 _completed = true;
-
-                throw new InvalidOperationException("The certificate operation failed, see Properties.Error for more details");
             }
 
             return GetRawResponse();
+        }
+
+        /// <summary>
+        /// Cancels a pending <see cref="CertificateOperation"/> in the key vault. This operation requires the certificates/update permission.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual void Cancel(CancellationToken cancellationToken = default)
+        {
+            Response<CertificateOperationProperties> response = _client.CancelCertificateOperation(Properties.Name, cancellationToken);
+
+            _response = response.GetRawResponse();
+
+            Properties = response;
+        }
+
+        /// <summary>
+        /// Cancels a pending <see cref="CertificateOperation"/> in the key vault. This operation requires the certificates/update permission.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="Task"/> to track the service request.</returns>
+        public virtual async Task CancelAsync(CancellationToken cancellationToken = default)
+        {
+            Response<CertificateOperationProperties> response = await _client.CancelCertificateOperationAsync(Properties.Name, cancellationToken).ConfigureAwait(false);
+
+            _response = response.GetRawResponse();
+
+            Properties = response;
+        }
+
+        /// <summary>
+        /// Deletes a pending <see cref="CertificateOperation"/> in the key vault. This operation requires the certificates/delete permission.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual void Delete(CancellationToken cancellationToken = default)
+        {
+            Response<CertificateOperationProperties> response = _client.DeleteCertificateOperation(Properties.Name, cancellationToken);
+
+            _response = response.GetRawResponse();
+
+            Properties = response;
+        }
+
+        /// <summary>
+        /// Deletes a pending <see cref="CertificateOperation"/> in the key vault. This operation requires the certificates/delete permission.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="Task"/> to track the service request.</returns>
+        public virtual async Task DeleteAsync(CancellationToken cancellationToken = default)
+        {
+            Response<CertificateOperationProperties> response = await _client.DeleteCertificateOperationAsync(Properties.Name, cancellationToken).ConfigureAwait(false);
+
+            _response = response.GetRawResponse();
+
+            Properties = response;
         }
     }
 }

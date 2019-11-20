@@ -12,6 +12,7 @@ using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Metadata;
 using Azure.Messaging.EventHubs.Processor;
+using Azure.Messaging.EventHubs.Samples.Infrastructure;
 using Moq;
 using NUnit.Framework;
 
@@ -293,9 +294,9 @@ namespace Azure.Messaging.EventHubs.Tests
         public void StartAsyncValidatesProcessEventsAsync()
         {
             var processor = new EventProcessorClient("consumerGroup", Mock.Of<PartitionManager>(), new MockConnection(), default);
-            processor.ProcessExceptionAsync = errorContext => new ValueTask();
+            processor.ProcessErrorAsyncHandler = errorContext => new ValueTask();
 
-            Assert.That(async () => await processor.StartAsync(), Throws.InstanceOf<InvalidOperationException>().And.Message.Contains(nameof(EventProcessorClient.ProcessEventAsync)));
+            Assert.That(async () => await processor.StartAsync(), Throws.InstanceOf<InvalidOperationException>().And.Message.Contains(nameof(EventProcessorClient.ProcessEventAsyncHandler)));
         }
 
         /// <summary>
@@ -307,9 +308,9 @@ namespace Azure.Messaging.EventHubs.Tests
         public void StartAsyncValidatesProcessExceptionAsync()
         {
             var processor = new EventProcessorClient("consumerGroup", Mock.Of<PartitionManager>(), new MockConnection(), default);
-            processor.ProcessEventAsync = processorEvent => new ValueTask();
+            processor.ProcessEventAsyncHandler = processorEvent => new ValueTask();
 
-            Assert.That(async () => await processor.StartAsync(), Throws.InstanceOf<InvalidOperationException>().And.Message.Contains(nameof(EventProcessorClient.ProcessExceptionAsync)));
+            Assert.That(async () => await processor.StartAsync(), Throws.InstanceOf<InvalidOperationException>().And.Message.Contains(nameof(EventProcessorClient.ProcessErrorAsyncHandler)));
         }
 
         /// <summary>
@@ -322,8 +323,8 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var processor = new EventProcessorClient("consumerGroup", Mock.Of<PartitionManager>(), new MockConnection(), default);
 
-            processor.ProcessEventAsync = processorEvent => new ValueTask();
-            processor.ProcessExceptionAsync = errorContext => new ValueTask();
+            processor.ProcessEventAsyncHandler = processorEvent => new ValueTask();
+            processor.ProcessErrorAsyncHandler = errorContext => new ValueTask();
 
             Assert.That(async () => await processor.StartAsync(), Throws.Nothing);
 
@@ -339,15 +340,15 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var processor = new EventProcessorClient("consumerGroup", Mock.Of<PartitionManager>(), new MockConnection(), default);
 
-            processor.ProcessEventAsync = processorEvent => new ValueTask();
-            processor.ProcessExceptionAsync = errorContext => new ValueTask();
+            processor.ProcessEventAsyncHandler = processorEvent => new ValueTask();
+            processor.ProcessErrorAsyncHandler = errorContext => new ValueTask();
 
             await processor.StartAsync();
 
-            Assert.That(() => processor.InitializeProcessingForPartitionAsync = initializationContext => new ValueTask(), Throws.InstanceOf<InvalidOperationException>());
-            Assert.That(() => processor.ProcessingForPartitionStoppedAsync = stopContext => new ValueTask(), Throws.InstanceOf<InvalidOperationException>());
-            Assert.That(() => processor.ProcessEventAsync = processorEvent => new ValueTask(), Throws.InstanceOf<InvalidOperationException>());
-            Assert.That(() => processor.ProcessExceptionAsync = errorContext => new ValueTask(), Throws.InstanceOf<InvalidOperationException>());
+            Assert.That(() => processor.InitializeProcessingForPartitionAsyncHandler = initializationContext => new ValueTask(), Throws.InstanceOf<InvalidOperationException>());
+            Assert.That(() => processor.ProcessingForPartitionStoppedAsyncHandler = stopContext => new ValueTask(), Throws.InstanceOf<InvalidOperationException>());
+            Assert.That(() => processor.ProcessEventAsyncHandler = processorEvent => new ValueTask(), Throws.InstanceOf<InvalidOperationException>());
+            Assert.That(() => processor.ProcessErrorAsyncHandler = errorContext => new ValueTask(), Throws.InstanceOf<InvalidOperationException>());
 
             await processor.StopAsync();
         }
@@ -361,16 +362,16 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var processor = new EventProcessorClient("consumerGroup", Mock.Of<PartitionManager>(), new MockConnection(), default);
 
-            processor.ProcessEventAsync = processorEvent => new ValueTask();
-            processor.ProcessExceptionAsync = errorContext => new ValueTask();
+            processor.ProcessEventAsyncHandler = processorEvent => new ValueTask();
+            processor.ProcessErrorAsyncHandler = errorContext => new ValueTask();
 
             await processor.StartAsync();
             await processor.StopAsync();
 
-            Assert.That(() => processor.InitializeProcessingForPartitionAsync = initializationContext => new ValueTask(), Throws.Nothing);
-            Assert.That(() => processor.ProcessingForPartitionStoppedAsync = stopContext => new ValueTask(), Throws.Nothing);
-            Assert.That(() => processor.ProcessEventAsync = processorEvent => new ValueTask(), Throws.Nothing);
-            Assert.That(() => processor.ProcessExceptionAsync = errorContext => new ValueTask(), Throws.Nothing);
+            Assert.That(() => processor.InitializeProcessingForPartitionAsyncHandler = initializationContext => new ValueTask(), Throws.Nothing);
+            Assert.That(() => processor.ProcessingForPartitionStoppedAsyncHandler = stopContext => new ValueTask(), Throws.Nothing);
+            Assert.That(() => processor.ProcessEventAsyncHandler = processorEvent => new ValueTask(), Throws.Nothing);
+            Assert.That(() => processor.ProcessErrorAsyncHandler = errorContext => new ValueTask(), Throws.Nothing);
         }
 
         /// <summary>
@@ -379,6 +380,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        [Ignore("Event Processor does not have a single connection anymore.")]
         public async Task CloseAsyncClosesTheConnectionWhenOwned()
         {
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
@@ -396,6 +398,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        [Ignore("Event Processor does not have a single connection anymore.")]
         public void CloseClosesTheConnectionWhenOwned()
         {
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
@@ -442,11 +445,13 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             const int partitionCount = 3;
             var connection = new MockConnection(numberOfPartitions: partitionCount);
-            var partitionManager = new InMemoryPartitionManager();
+            var connectionFactory = new MockConnectionFactory(numberOfPartitions: partitionCount);
+            var partitionManager = new MockCheckPointStorage();
             var processor = new MockEventProcessorClient(
                 "consumerGroup",
                 partitionManager,
                 connection,
+                () => connectionFactory.Create(),
                 default);
 
             var ownedPartitionIds = Enumerable.Range(1, 1)
@@ -478,11 +483,13 @@ namespace Azure.Messaging.EventHubs.Tests
             const int minimumParitionCount = 4;
             const int NumberOfPartitions = 13;
             var connection = new MockConnection(numberOfPartitions: NumberOfPartitions);
-            var partitionManager = new InMemoryPartitionManager();
+            var connectionFactory = new MockConnectionFactory(numberOfPartitions: NumberOfPartitions);
+            var partitionManager = new MockCheckPointStorage((s) => Console.WriteLine(s));
             var processor = new MockEventProcessorClient(
                 "consumerGroup",
                 partitionManager,
                 connection,
+                () => connectionFactory.Create(),
                 default);
 
             // create more partitions owned by this Processor
@@ -531,7 +538,6 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.IsTrue(ownedByProcessor1.Any(owned => claimablePartitionIds.Contains(owned.PartitionId)));
         }
 
-        // pre-req: when no unclaimed partitions exist
         [Test]
         public async Task FindAndClaimOwnershipAsync_StealsPartitions_ThisProcessor_OwnsMinPartitions_OtherProcessorOwnsGreatherThanMaxPartitions()
         {
@@ -539,11 +545,13 @@ namespace Azure.Messaging.EventHubs.Tests
             const int maximumParitionCount = 5;
             const int NumberOfPartitions = 14;
             var connection = new MockConnection(numberOfPartitions: NumberOfPartitions);
-            var partitionManager = new InMemoryPartitionManager();
+            var connectionFactory = new MockConnectionFactory(numberOfPartitions: NumberOfPartitions);
+            var partitionManager = new MockCheckPointStorage((s) => Console.WriteLine(s));
             var processor = new MockEventProcessorClient(
                 "consumerGroup",
                 partitionManager,
                 connection,
+                () => connectionFactory.Create(),
                 default);
 
             // create partitions owned by this Processor
@@ -604,11 +612,13 @@ namespace Azure.Messaging.EventHubs.Tests
             const int maximumParitionCount = 5;
             const int NumberOfPartitions = 12;
             var connection = new MockConnection(numberOfPartitions: NumberOfPartitions);
-            var partitionManager = new InMemoryPartitionManager();
+            var connectionFactory = new MockConnectionFactory(numberOfPartitions: NumberOfPartitions);
+            var partitionManager = new MockCheckPointStorage();
             var processor = new MockEventProcessorClient(
                 "consumerGroup",
                 partitionManager,
                 connection,
+                () => connectionFactory.Create(),
                 default);
 
             // create more partitions owned by this Processor
@@ -824,6 +834,31 @@ namespace Azure.Messaging.EventHubs.Tests
                                 DateTimeOffset.UtcNow,
                                 Guid.NewGuid().ToString()
                             )).ToList();
+            }
+        }
+
+        /// <summary>
+        ///   Serves as a non-functional connection for testing consumer functionality.
+        /// </summary>
+        ///
+        private class MockConnectionFactory
+        {
+            private readonly string _namespaceName;
+            private readonly string _eventHubName;
+            private readonly int _numberOfPartitions;
+
+            public MockConnectionFactory(string namespaceName = "fakeNamespace",
+                                  string eventHubName = "fakeEventHub",
+                                  int numberOfPartitions = 3)
+            {
+                _namespaceName = namespaceName;
+                _eventHubName = eventHubName;
+                _numberOfPartitions = numberOfPartitions;
+            }
+
+            public MockConnection Create()
+            {
+                return new MockConnection(_namespaceName, _eventHubName, _numberOfPartitions);
             }
         }
     }

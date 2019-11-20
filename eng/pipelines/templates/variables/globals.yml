@@ -2,6 +2,7 @@ variables:
   DotNetCoreSDKVersion: '3.0.100'
   DotNetCoreRuntimeVersion: '2.1.10'
   OfficialBuildId: $(Build.BuildNumber)
+  ConvertToProjectReferenceOption: ''
   skipComponentGovernanceDetection: true
   ${{ if ne(variables['System.TeamProject'], 'internal') }}:
     BuildConfiguration: 'Debug'

@@ -30,14 +30,15 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task Ctor_Uri()
         {
             string fileSystemName = GetNewFileSystemName();
-            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem, fileSystemName: fileSystemName))
+            string directoryName = GetNewDirectoryName();
+            string fileName = GetNewFileName();
+            using (GetNewDirectory(out DataLakeDirectoryClient directory, fileSystemName: fileSystemName, directoryName: directoryName))
             {
                 // Arrange
-                string fileName = GetNewFileName();
-                await fileSystem.CreateFileAsync(fileName);
+                await directory.CreateFileAsync(fileName);
 
                 SasQueryParameters sasQueryParameters = GetNewAccountSasCredentials();
-                Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{fileName}?{sasQueryParameters}");
+                Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{directoryName}/{fileName}?{sasQueryParameters}");
                 DataLakeFileClient fileClient = InstrumentClient(new DataLakeFileClient(uri, GetOptions()));
 
                 // Act
@@ -46,6 +47,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 // Assert
                 Assert.AreEqual(fileName, fileClient.Name);
                 Assert.AreEqual(fileSystemName, fileClient.FileSystemName);
+                Assert.AreEqual($"{directoryName}/{fileName}", fileClient.Path);
                 Assert.AreEqual(uri, fileClient.Uri);
             }
         }
@@ -54,16 +56,17 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task Ctor_SharedKey()
         {
             string fileSystemName = GetNewFileSystemName();
-            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem, fileSystemName: fileSystemName))
+            string directoryName = GetNewDirectoryName();
+            string fileName = GetNewFileName();
+            using (GetNewDirectory(out DataLakeDirectoryClient directory, fileSystemName: fileSystemName, directoryName: directoryName))
             {
                 // Arrange
-                string fileName = GetNewFileName();
-                await fileSystem.CreateFileAsync(fileName);
+                await directory.CreateFileAsync(fileName);
 
                 StorageSharedKeyCredential sharedKey = new StorageSharedKeyCredential(
                     TestConfigHierarchicalNamespace.AccountName,
                     TestConfigHierarchicalNamespace.AccountKey);
-                Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{fileName}");
+                Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{directoryName}/{fileName}");
                 DataLakeFileClient fileClient = InstrumentClient(new DataLakeFileClient(uri, sharedKey, GetOptions()));
 
                 // Act
@@ -72,6 +75,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 // Assert
                 Assert.AreEqual(fileName, fileClient.Name);
                 Assert.AreEqual(fileSystemName, fileClient.FileSystemName);
+                Assert.AreEqual($"{directoryName}/{fileName}", fileClient.Path);
                 Assert.AreEqual(uri, fileClient.Uri);
             }
         }
@@ -80,14 +84,15 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task Ctor_TokenCredential()
         {
             string fileSystemName = GetNewFileSystemName();
-            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem, fileSystemName: fileSystemName))
+            string directoryName = GetNewDirectoryName();
+            string fileName = GetNewFileName();
+            using (GetNewDirectory(out DataLakeDirectoryClient directory, fileSystemName: fileSystemName, directoryName: directoryName))
             {
                 // Arrange
-                string fileName = GetNewFileName();
-                await fileSystem.CreateFileAsync(fileName);
+                await directory.CreateFileAsync(fileName);
 
                 TokenCredential tokenCredential = GetOAuthCredential(TestConfigHierarchicalNamespace);
-                Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{fileName}").ToHttps();
+                Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{directoryName}/{fileName}").ToHttps();
                 DataLakeFileClient fileClient = InstrumentClient(new DataLakeFileClient(uri, tokenCredential, GetOptions()));
 
                 // Act
@@ -96,6 +101,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 // Assert
                 Assert.AreEqual(fileName, fileClient.Name);
                 Assert.AreEqual(fileSystemName, fileClient.FileSystemName);
+                Assert.AreEqual($"{directoryName}/{fileName}", fileClient.Path);
                 Assert.AreEqual(uri, fileClient.Uri);
             }
         }

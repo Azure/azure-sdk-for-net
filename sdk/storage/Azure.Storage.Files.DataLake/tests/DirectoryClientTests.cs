@@ -25,14 +25,15 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task Ctor_Uri()
         {
             string fileSystemName = GetNewFileSystemName();
-            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem, fileSystemName: fileSystemName))
+            string parentDirectoryName = GetNewDirectoryName();
+            string directoryName = GetNewDirectoryName();
+            using (GetNewDirectory(out DataLakeDirectoryClient parentDirectory, fileSystemName: fileSystemName, directoryName: parentDirectoryName))
             {
                 // Arrange
-                string directoryName = GetNewDirectoryName();
-                await fileSystem.CreateDirectoryAsync(directoryName);
+                await parentDirectory.CreateSubDirectoryAsync(directoryName);
 
                 SasQueryParameters sasQueryParameters = GetNewAccountSasCredentials();
-                Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{directoryName}?{sasQueryParameters}");
+                Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{parentDirectoryName}/{directoryName}?{sasQueryParameters}");
                 DataLakeDirectoryClient directoryClient = InstrumentClient(new DataLakeDirectoryClient(uri, GetOptions()));
 
                 // Act
@@ -41,6 +42,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 // Assert
                 Assert.AreEqual(directoryName, directoryClient.Name);
                 Assert.AreEqual(fileSystemName, directoryClient.FileSystemName);
+                Assert.AreEqual($"{parentDirectoryName}/{directoryName}", directoryClient.Path);
                 Assert.AreEqual(uri, directoryClient.Uri);
             }
         }
@@ -49,16 +51,17 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task Ctor_SharedKey()
         {
             string fileSystemName = GetNewFileSystemName();
-            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem, fileSystemName: fileSystemName))
+            string parentDirectoryName = GetNewDirectoryName();
+            string directoryName = GetNewDirectoryName();
+            using (GetNewDirectory(out DataLakeDirectoryClient parentDirectory, fileSystemName: fileSystemName, directoryName: parentDirectoryName))
             {
                 // Arrange
-                string directoryName = GetNewDirectoryName();
-                await fileSystem.CreateDirectoryAsync(directoryName);
+                await parentDirectory.CreateSubDirectoryAsync(directoryName);
 
                 StorageSharedKeyCredential sharedKey = new StorageSharedKeyCredential(
                     TestConfigHierarchicalNamespace.AccountName,
                     TestConfigHierarchicalNamespace.AccountKey);
-                Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{directoryName}");
+                Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{parentDirectoryName}/{directoryName}");
                 DataLakeDirectoryClient directoryClient = InstrumentClient(new DataLakeDirectoryClient(uri, sharedKey, GetOptions()));
 
                 // Act
@@ -67,6 +70,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 // Assert
                 Assert.AreEqual(directoryName, directoryClient.Name);
                 Assert.AreEqual(fileSystemName, directoryClient.FileSystemName);
+                Assert.AreEqual($"{parentDirectoryName}/{directoryName}", directoryClient.Path);
                 Assert.AreEqual(uri, directoryClient.Uri);
             }
         }
@@ -75,14 +79,15 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task Ctor_TokenCredential()
         {
             string fileSystemName = GetNewFileSystemName();
-            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem, fileSystemName: fileSystemName))
+            string parentDirectoryName = GetNewDirectoryName();
+            string directoryName = GetNewDirectoryName();
+            using (GetNewDirectory(out DataLakeDirectoryClient parentDirectory, fileSystemName: fileSystemName, directoryName: parentDirectoryName))
             {
                 // Arrange
-                string directoryName = GetNewDirectoryName();
-                await fileSystem.CreateDirectoryAsync(directoryName);
+                await parentDirectory.CreateSubDirectoryAsync(directoryName);
 
                 TokenCredential tokenCredential = GetOAuthCredential(TestConfigHierarchicalNamespace);
-                Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{directoryName}").ToHttps();
+                Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{parentDirectoryName}/{directoryName}").ToHttps();
                 DataLakeDirectoryClient directoryClient = InstrumentClient(new DataLakeDirectoryClient(uri, tokenCredential, GetOptions()));
 
                 // Act
@@ -91,6 +96,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 // Assert
                 Assert.AreEqual(directoryName, directoryClient.Name);
                 Assert.AreEqual(fileSystemName, directoryClient.FileSystemName);
+                Assert.AreEqual($"{parentDirectoryName}/{directoryName}", directoryClient.Path);
                 Assert.AreEqual(uri, directoryClient.Uri);
             }
         }

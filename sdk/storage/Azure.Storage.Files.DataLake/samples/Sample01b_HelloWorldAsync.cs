@@ -43,7 +43,7 @@ namespace Azure.Storage.Files.DataLake.Samples
             await file.CreateAsync();
 
             // Verify we created one file
-            AsyncPageable<PathItem> response = filesystem.ListPathsAsync();
+            AsyncPageable<PathItem> response = filesystem.GetPathsAsync();
             IList<PathItem> paths = await response.ToListAsync();
             Assert.AreEqual(1, paths.Count);
 
@@ -80,7 +80,7 @@ namespace Azure.Storage.Files.DataLake.Samples
             await file.CreateAsync();
 
             // Verify we created one file
-            AsyncPageable<PathItem> response = filesystem.ListPathsAsync();
+            AsyncPageable<PathItem> response = filesystem.GetPathsAsync();
             IList<PathItem> paths = await response.ToListAsync();
             Assert.AreEqual(1, paths.Count);
 
@@ -114,7 +114,7 @@ namespace Azure.Storage.Files.DataLake.Samples
             await directory.CreateAsync();
 
             // Verify we created one directory
-            AsyncPageable<PathItem> response = filesystem.ListPathsAsync();
+            AsyncPageable<PathItem> response = filesystem.GetPathsAsync();
             IList<PathItem> paths = await response.ToListAsync();
             Assert.AreEqual(1, paths.Count);
 
@@ -199,7 +199,7 @@ namespace Azure.Storage.Files.DataLake.Samples
                 await file.CreateAsync();
 
                 // Verify we created one file
-                AsyncPageable<PathItem> response = filesystem.ListPathsAsync();
+                AsyncPageable<PathItem> response = filesystem.GetPathsAsync();
                 IList<PathItem> paths = await response.ToListAsync();
                 Assert.AreEqual(1, paths.Count);
 
@@ -298,7 +298,7 @@ namespace Azure.Storage.Files.DataLake.Samples
 
                 // List all the directories
                 List<string> names = new List<string>();
-                await foreach (PathItem pathItem in filesystem.ListPathsAsync())
+                await foreach (PathItem pathItem in filesystem.GetPathsAsync())
                 {
                     names.Add(pathItem.Name);
                 }
@@ -360,7 +360,7 @@ namespace Azure.Storage.Files.DataLake.Samples
 
                 // Keep track of all the names we encounter
                 List<string> names = new List<string>();
-                await foreach (PathItem pathItem in filesystem.ListPathsAsync(recursive: true))
+                await foreach (PathItem pathItem in filesystem.GetPathsAsync(recursive: true))
                 {
                     names.Add(pathItem.Name);
                 }

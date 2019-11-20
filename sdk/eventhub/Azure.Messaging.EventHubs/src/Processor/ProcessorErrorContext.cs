@@ -35,7 +35,6 @@ namespace Azure.Messaging.EventHubs.Processor
         protected internal ProcessorErrorContext(string partitionId,
                                                  Exception exception)
         {
-            Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
             Argument.AssertNotNull(exception, nameof(exception));
 
             PartitionId = partitionId;

@@ -52,9 +52,12 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         protected override TimeSpan OwnershipExpiration => ShortOwnershipExpiration;
 
-        private readonly PartitionManager Manager;
+        protected override Func<EventHubConnection> ConnectionFactory { get; }
 
-        private readonly EventHubConnection Connection;
+        protected override EventHubConnection CreateConnection() => ConnectionFactory();
+
+        private readonly PartitionManager Manager;
+        private readonly bool fakeRunPartitionProcessingAsync;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ShortWaitTimeMock"/> class.
@@ -68,12 +71,15 @@ namespace Azure.Messaging.EventHubs.Tests
         public MockEventProcessorClient(string consumerGroup,
                                  PartitionManager partitionManager,
                                  EventHubConnection connection,
-                                 EventProcessorClientOptions options) : base(consumerGroup, partitionManager, connection, options)
+                                 Func<EventHubConnection> createConnection,
+                                 EventProcessorClientOptions options,
+                                 bool fakeRunPartitionProcessingAsync = true) : base(consumerGroup, partitionManager, connection, options)
         {
+            this.fakeRunPartitionProcessingAsync = fakeRunPartitionProcessingAsync;
             Manager = partitionManager;
-            Connection = connection;
+            ConnectionFactory = () => createConnection();
 
-            ProcessExceptionAsync = async errorContext =>
+            ProcessErrorAsyncHandler = async errorContext =>
             {
                 Exception[] newException = new Exception[] { errorContext.ProcessorException };
                 exceptionCalls.AddOrUpdate(
@@ -83,7 +89,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 await Task.Delay(1);
             };
 
-            ProcessEventAsync = async processorEvent =>
+            ProcessEventAsyncHandler = async processorEvent =>
             {
                 EventData[] newEvent = new EventData[] { processorEvent.Data };
                 processEventCalls.AddOrUpdate(
@@ -93,13 +99,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 await Task.Delay(1);
             };
 
-            InitializeProcessingForPartitionAsync = async initializationContext =>
+            InitializeProcessingForPartitionAsyncHandler = async initializationContext =>
             {
                 initializeCalls.AddOrUpdate(initializationContext.Context.PartitionId, 1, (partitionId, value) => value + 1);
                 await Task.Delay(1);
             };
 
-            ProcessingForPartitionStoppedAsync = async stopContext =>
+            ProcessingForPartitionStoppedAsyncHandler = async stopContext =>
             {
                 closeCalls.AddOrUpdate(stopContext.Context.PartitionId, 1, (partitionId, value) => value + 1);
                 stopReasons[stopContext.Context.PartitionId] = stopContext.Reason;
@@ -121,43 +127,61 @@ namespace Azure.Messaging.EventHubs.Tests
             List<PartitionOwnership> previousActiveOwnership = null;
 
             CancellationToken timeoutToken = (new CancellationTokenSource(TimeSpan.FromSeconds(5))).Token;
-
-            while (!stabilizedStatusAchieved)
+            try
             {
-                // Remember to filter expired ownership.
-
-                var activeOwnership = (await Manager
-                    .ListOwnershipAsync(Connection.FullyQualifiedNamespace, Connection.EventHubName, ConsumerGroup)
-                    .ConfigureAwait(false))
-                    .Where(ownership => DateTimeOffset.UtcNow.Subtract(ownership.LastModifiedTime.Value) < ShortOwnershipExpiration)
-                    .ToList();
-
-                // Increment stabilized status count if current partition distribution matches the previous one.  Reset it
-                // otherwise.
-
-                if (EventProcessorManager.AreOwnershipDistributionsTheSame(previousActiveOwnership, activeOwnership))
+                while (!stabilizedStatusAchieved)
                 {
-                    ++consecutiveStabilizedStatus;
-                }
-                else
-                {
-                    consecutiveStabilizedStatus = 1;
-                }
+                    // Remember to filter expired ownership.
 
-                previousActiveOwnership = activeOwnership;
+                    var activeOwnership = (await Manager
+                        .ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup)
+                        .ConfigureAwait(false))
+                        .Where(ownership => DateTimeOffset.UtcNow.Subtract(ownership.LastModifiedTime.Value) < ShortOwnershipExpiration)
+                        .ToList();
 
-                if (consecutiveStabilizedStatus < 10)
-                {
-                    // Wait a load balance update cycle before the next verification.  Give up if the whole process takes more than 1 minute.
+                    // Increment stabilized status count if current partition distribution matches the previous one.  Reset it
+                    // otherwise.
 
-                    await Task.Delay(ShortLoadBalanceUpdate, timeoutToken);
+                    if (EventProcessorManager.AreOwnershipDistributionsTheSame(previousActiveOwnership, activeOwnership))
+                    {
+                        ++consecutiveStabilizedStatus;
+                    }
+                    else
+                    {
+                        consecutiveStabilizedStatus = 1;
+                    }
+
+                    previousActiveOwnership = activeOwnership;
+
+                    if (consecutiveStabilizedStatus < 10)
+                    {
+                        // Wait a load balance update cycle before the next verification.  Give up if the whole process takes more than 1 minute.
+
+                        await Task.Delay(ShortLoadBalanceUpdate, timeoutToken);
+                    }
+                    else
+                    {
+                        // We'll consider the load stabilized only if its status doesn't change after 10 verifications.
+
+                        stabilizedStatusAchieved = true;
+                    }
                 }
-                else
-                {
-                    // We'll consider the load stabilized only if its status doesn't change after 10 verifications.
+            }
+            catch
+            {
+                return;
+            }
+        }
 
-                    stabilizedStatusAchieved = true;
-                }
+        protected override Task RunPartitionProcessingAsync(string partitionId, EventPosition startingPosition, TimeSpan? maximumReceiveWaitTime, RetryOptions retryOptions, bool trackLastEnqueuedEventInformation, CancellationToken cancellationToken = default)
+        {
+            if (fakeRunPartitionProcessingAsync)
+            {
+                return Task.CompletedTask;
+            }
+            else
+            {
+                return base.RunPartitionProcessingAsync(partitionId, startingPosition, maximumReceiveWaitTime, retryOptions, trackLastEnqueuedEventInformation, cancellationToken);
             }
         }
     }

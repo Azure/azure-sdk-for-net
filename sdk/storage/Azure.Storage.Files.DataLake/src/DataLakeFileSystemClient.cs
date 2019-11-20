@@ -242,10 +242,11 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         internal DataLakeFileSystemClient(Uri fileSystemUri, HttpPipelinePolicy authentication, DataLakeClientOptions options)
         {
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(fileSystemUri);
             options ??= new DataLakeClientOptions();
             _uri = fileSystemUri;
-            _blobUri = GetBlobUri(fileSystemUri);
-            _dfsUri = GetDfsUri(fileSystemUri);
+            _blobUri = uriBuilder.ToBlobUri();
+            _dfsUri = uriBuilder.ToDfsUri();
             _pipeline = options.Build(authentication);
             _clientDiagnostics = new ClientDiagnostics(options);
             _containerClient = new BlobContainerClient(_blobUri, _pipeline, _clientDiagnostics, null);
@@ -265,9 +266,10 @@ namespace Azure.Storage.Files.DataLake
        /// <param name="clientDiagnostics"></param>
         internal DataLakeFileSystemClient(Uri fileSystemUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
         {
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(fileSystemUri);
             _uri = fileSystemUri;
-            _blobUri = GetBlobUri(fileSystemUri);
-            _dfsUri = GetDfsUri(fileSystemUri);
+            _blobUri = uriBuilder.ToBlobUri();
+            _dfsUri = uriBuilder.ToDfsUri();
             _pipeline = pipeline;
             _clientDiagnostics = clientDiagnostics;
             _containerClient = new BlobContainerClient(_blobUri, pipeline, clientDiagnostics, null);
@@ -295,48 +297,6 @@ namespace Azure.Storage.Files.DataLake
         /// <returns>A new <see cref="DataLakeFileClient"/> instance.</returns>
         public virtual DataLakeFileClient GetFileClient(string fileName)
             => new DataLakeFileClient(Uri.AppendToPath(fileName), Pipeline);
-
-        /// <summary>
-        /// Gets the blob Uri.
-        /// </summary>
-        private static Uri GetBlobUri(Uri uri)
-        {
-            Uri blobUri;
-            if (uri.Host.Contains(Constants.DataLake.DfsUriSuffix))
-            {
-                UriBuilder uriBuilder = new UriBuilder(uri);
-                uriBuilder.Host = uriBuilder.Host.Replace(
-                    Constants.DataLake.DfsUriSuffix,
-                    Constants.DataLake.BlobUriSuffix);
-                blobUri = uriBuilder.Uri;
-            }
-            else
-            {
-                blobUri = uri;
-            }
-            return blobUri;
-        }
-
-        /// <summary>
-        /// Gets the dfs Uri.
-        /// </summary>
-        private static Uri GetDfsUri(Uri uri)
-        {
-            Uri dfsUri;
-            if (uri.Host.Contains(Constants.DataLake.BlobUriSuffix))
-            {
-                UriBuilder uriBuilder = new UriBuilder(uri);
-                uriBuilder.Host = uriBuilder.Host.Replace(
-                    Constants.DataLake.BlobUriSuffix,
-                    Constants.DataLake.DfsUriSuffix);
-                dfsUri = uriBuilder.Uri;
-            }
-            else
-            {
-                dfsUri = uri;
-            }
-            return dfsUri;
-        }
 
         /// <summary>
         /// Sets the various name fields if they are currently null.
@@ -822,9 +782,9 @@ namespace Azure.Storage.Files.DataLake
         }
         #endregion SetMetadata
 
-        #region List Paths
+        #region Get Paths
         /// <summary>
-        /// The <see cref="ListPaths"/> operation returns an async sequence
+        /// The <see cref="GetPaths"/> operation returns an async sequence
         /// of paths in this file system.  Enumerating the paths may make
         /// multiple requests to the service while fetching all the values.
         ///
@@ -856,7 +816,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Pageable<PathItem> ListPaths(
+        public virtual Pageable<PathItem> GetPaths(
             string path = default,
             bool recursive = default,
             bool userPrincipalName = default,
@@ -868,7 +828,7 @@ namespace Azure.Storage.Files.DataLake
                 userPrincipalName).ToSyncCollection(cancellationToken);
 
         /// <summary>
-        /// The <see cref="ListPathsAsync"/> operation returns an async
+        /// The <see cref="GetPathsAsync"/> operation returns an async
         /// sequence of paths in this file system.  Enumerating the paths may
         /// make multiple requests to the service while fetching all the
         /// values.
@@ -901,7 +861,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual AsyncPageable<PathItem> ListPathsAsync(
+        public virtual AsyncPageable<PathItem> GetPathsAsync(
             string path = default,
             bool recursive = default,
             bool userPrincipalName = default,
@@ -912,12 +872,12 @@ namespace Azure.Storage.Files.DataLake
                 userPrincipalName).ToAsyncCollection(cancellationToken);
 
         /// <summary>
-        /// The <see cref="ListPathsInternal"/> operation returns a
+        /// The <see cref="GetPathsInternal"/> operation returns a
         /// single segment of paths in this file system, starting
         /// from the specified <paramref name="continuation"/>.  Use an empty
         /// <paramref name="continuation"/> to start enumeration from the beginning
         /// and the <see cref="PathSegment.Continuation"/> if it's not
-        /// empty to make subsequent calls to <see cref="ListPathsAsync"/>
+        /// empty to make subsequent calls to <see cref="GetPathsAsync"/>
         /// to continue enumerating the paths segment by segment. Blobs are
         /// ordered lexicographically by name.
         ///
@@ -962,7 +922,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal async Task<Response<PathSegment>> ListPathsInternal(
+        internal async Task<Response<PathSegment>> GetPathsInternal(
             string path,
             bool recursive,
             bool userPrincipalName,

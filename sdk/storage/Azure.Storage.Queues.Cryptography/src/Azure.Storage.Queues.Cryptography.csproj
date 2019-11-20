@@ -6,7 +6,7 @@
     <AssemblyTitle>Microsoft Azure.Storage.Queues.Cryptography client library</AssemblyTitle>
     <Version>12.0.0-preview.5</Version>
     <DefineConstants>QueueSDK;$(DefineConstants)</DefineConstants>
-    <PackageTags>Microsoft Azure Storage Queues Cryptography, Encrypted queue, client-side encryption, client side ecnryption, Microsoft, Azure, Queues, Queue, Storage, StorageScalable, azureofficial</PackageTags>
+    <PackageTags>Microsoft Azure Storage Queues Cryptography;Encrypted queue;client-side encryption;client side encryption;Microsoft,Azure,Queues,Queue,Storage,StorageScalable,$(PackageCommonTags)</PackageTags>
     <PackageReleaseNotes>
       For release notes and more information please visit https://aka.ms/azure-sdk-preview3-net
     </PackageReleaseNotes>

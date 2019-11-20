@@ -32,7 +32,7 @@ namespace Azure.Storage.Files.DataLake.Models
             bool isAsync,
             CancellationToken cancellationToken)
         {
-            Task<Response<PathSegment>> task = _client.ListPathsInternal(
+            Task<Response<PathSegment>> task = _client.GetPathsInternal(
                 _path,
                 _recursive,
                 _upn,

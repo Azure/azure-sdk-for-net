@@ -36,7 +36,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CertificateIssuer issuer = new CertificateIssuer("test")
             {
                 AccountId = "accountId",
-                Administrators =
+                AdministratorContacts =
                 {
                     new AdministratorContact
                     {

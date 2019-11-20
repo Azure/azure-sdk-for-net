@@ -288,7 +288,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             KeyVaultKey key = await Client.CreateKeyAsync(keyName, KeyType.Ec);
 
-            RegisterForCleanup(key.Name, delete: false);
+            RegisterForCleanup(key.Name);
 
             DeleteKeyOperation operation = await Client.StartDeleteKeyAsync(keyName);
             DeletedKey deletedKey = operation.Value;
@@ -314,7 +314,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             KeyVaultKey key = await Client.CreateKeyAsync(keyName, KeyType.Ec);
 
-            RegisterForCleanup(key.Name, delete: false);
+            RegisterForCleanup(key.Name);
 
             DeleteKeyOperation operation = await Client.StartDeleteKeyAsync(keyName);
             DeletedKey deletedKey = operation.Value;
@@ -354,7 +354,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             RecoverDeletedKeyOperation recoverOperation = await Client.StartRecoverDeletedKeyAsync(keyName);
             KeyVaultKey recoverKeyResult = recoverOperation.Value;
 
-            await PollForKey(keyName);
+            await WaitForKey(keyName);
 
             KeyVaultKey recoveredKey = await Client.GetKeyAsync(keyName);
 
@@ -456,7 +456,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 createdKeys.Add(Key);
                 await Client.StartDeleteKeyAsync(keyName + i);
 
-                RegisterForCleanup(Key.Name, delete: false);
+                RegisterForCleanup(Key.Name);
             }
 
             foreach (KeyVaultKey deletedKey in createdKeys)
