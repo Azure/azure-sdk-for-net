@@ -342,8 +342,9 @@ namespace Azure.Storage.Files.DataLake.Sas
         /// Ensure the <see cref="DataLakeSasBuilder"/>'s properties are in a
         /// consistent state.
         /// </summary>
-        private void EnsureState()
+        internal void EnsureState()
         {
+            // Identifier is not present
             if (string.IsNullOrEmpty(Identifier))
             {
                 if (string.IsNullOrEmpty(Permissions))
@@ -355,7 +356,15 @@ namespace Azure.Storage.Files.DataLake.Sas
                 {
                     throw Errors.SasMissingData(nameof(ExpiresOn));
                 }
+            }
 
+            // Identifier is present
+            else
+            {
+                if (!string.IsNullOrEmpty(Permissions))
+                {
+                    throw Errors.SasDataNotAllowed(nameof(Identifier), nameof(Permissions));
+                }
             }
 
             // File System

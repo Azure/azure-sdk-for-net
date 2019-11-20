@@ -1768,8 +1768,6 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
-
-
         /// <summary>
         /// The <see cref="SetAccessPolicyAsync"/> operation sets the
         /// permissions for the specified file system. The permissions indicate
