@@ -8,6 +8,7 @@ using Xunit;
 using Microsoft.Azure.Management.Billing;
 using Microsoft.Azure.Test.HttpRecorder;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 namespace Billing.Tests.ScenarioTests
@@ -17,7 +18,8 @@ namespace Billing.Tests.ScenarioTests
         private const string BillingAccountName = "723c8ce0-33ba-5ba7-ef23-e1b72f15f1d8:4ce5b530-c82b-44e8-97ec-49f3cce9f14d_2019-05-31";
         private const string BillingProfileName = "H6RI-TXWC-BG7-PGB";
         private const string InvoiceSectionName = "ICYS-ZE5B-PJA-PGB";
-        
+        private const string TransactionName = "98ce813f-facd-43d4-a8fe-b6958fc0f5cf";
+
         [Fact]
         public void ListTransactionsByBillingAccountTest()
         {
@@ -35,6 +37,10 @@ namespace Billing.Tests.ScenarioTests
 
                 // Verify the response
                 Assert.NotNull(transactions);
+                Assert.Equal(2, transactions.Count());
+                var transaction = Assert.Single(transactions.Where(t => t.Name == TransactionName));
+                Assert.Contains(BillingProfileName, transaction.BillingProfileId);
+                Assert.Contains(InvoiceSectionName, transaction.InvoiceSectionId);
             }
         }
 
@@ -56,6 +62,10 @@ namespace Billing.Tests.ScenarioTests
 
                 // Verify the response
                 Assert.NotNull(transactions);
+                Assert.Equal(2, transactions.Value.Count);
+                var transaction = Assert.Single(transactions.Value.Where(t => t.Name == TransactionName));
+                Assert.Contains(BillingProfileName, transaction.BillingProfileId);
+                Assert.Contains(InvoiceSectionName, transaction.InvoiceSectionId);
             }
         }
 
@@ -76,6 +86,10 @@ namespace Billing.Tests.ScenarioTests
 
                 // Verify the response
                 Assert.NotNull(transactions);
+                Assert.Equal(2, transactions.Value.Count);
+                var transaction = Assert.Single(transactions.Value.Where(t => t.Name == TransactionName));
+                Assert.Contains(BillingProfileName, transaction.BillingProfileId);
+                Assert.Contains(InvoiceSectionName, transaction.InvoiceSectionId);
             }
         }
     }

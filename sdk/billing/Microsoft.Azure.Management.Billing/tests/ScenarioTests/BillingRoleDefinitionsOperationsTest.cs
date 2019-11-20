@@ -16,11 +16,11 @@ namespace Billing.Tests.ScenarioTests
     public class BillingRoleDefinitionsOperationsTest : TestBase
     {
         private const string BillingAccountName = "723c8ce0-33ba-5ba7-ef23-e1b72f15f1d8:4ce5b530-c82b-44e8-97ec-49f3cce9f14d_2019-05-31";
-        private const string BillingAccountRoleDefinitionName = "50000000-aaaa-bbbb-cccc-100000000000_5c4fad53-9cfb-4e22-9635-e7f420ab3ca7";
+        private const string BillingAccountRoleDefinitionName = "50000000-aaaa-bbbb-cccc-100000000000";
         private const string BillingProfileName = "H6RI-TXWC-BG7-PGB";
-        private const string BillingProfileRoleDefinitionName = "40000000-aaaa-bbbb-cccc-100000000000_5c4fad53-9cfb-4e22-9635-e7f420ab3ca7";
+        private const string BillingProfileRoleDefinitionName = "40000000-aaaa-bbbb-cccc-100000000000";
         private const string InvoiceSectionName = "ICYS-ZE5B-PJA-PGB";
-        private const string InvoiceSectionRoleDefinitionName = "30000000-aaaa-bbbb-cccc-100000000000_5c4fad53-9cfb-4e22-9635-e7f420ab3ca7";
+        private const string InvoiceSectionRoleDefinitionName = "30000000-aaaa-bbbb-cccc-100000000000";
 
         [Fact]
         public void GetBillingRoleDefinitionByBillingAccountTest()
@@ -101,9 +101,9 @@ namespace Billing.Tests.ScenarioTests
                 var billingRoleDefinitions = billingMgmtClient.BillingRoleDefinitions.ListByBillingAccount(BillingAccountName);
 
                 // Verify the response
-                //Assert.NotNull(billingRoleDefinitions);
-                //Assert.True(billingRoleDefinitions.Value.Count > 0);
-               // Assert.Contains(billingRoleDefinitions.Value, role => role.Name == BillingAccountRoleDefinitionName);
+                Assert.NotNull(billingRoleDefinitions);
+                Assert.True(billingRoleDefinitions.Value.Count > 0);
+                Assert.Contains(billingRoleDefinitions.Value, role => role.Name == BillingAccountRoleDefinitionName);
             }
         }
 
@@ -125,7 +125,7 @@ namespace Billing.Tests.ScenarioTests
                 // Verify the response
                 Assert.NotNull(billingRoleDefinitions);
                 Assert.True(billingRoleDefinitions.Value.Count > 0);
-                //Assert.Contains(billingRoleDefinitions.Value, role => role.Name == BillingProfileRoleDefinitionName);
+                Assert.Contains(billingRoleDefinitions.Value, role => role.Name == BillingProfileRoleDefinitionName);
             }
         }
 
@@ -147,7 +147,7 @@ namespace Billing.Tests.ScenarioTests
                 // Verify the response
                 Assert.NotNull(billingRoleDefinitions);
                 Assert.True(billingRoleDefinitions.Value.Count > 0);
-                //Assert.Contains(billingRoleDefinitions.Value, role => role.Name == InvoiceSectionRoleDefinitionName);
+                Assert.Contains(billingRoleDefinitions.Value, role => role.Name == InvoiceSectionRoleDefinitionName);
             }
         }
     }

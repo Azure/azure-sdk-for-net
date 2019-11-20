@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.Billing/billingAccounts/723c8ce0-33ba-5ba7-ef23-e1b72f15f1d8%3A4ce5b530-c82b-44e8-97ec-49f3cce9f14d_2019-05-31/billingRoleDefinitions/50000000-aaaa-bbbb-cccc-100000000000_5c4fad53-9cfb-4e22-9635-e7f420ab3ca7?api-version=2019-10-01-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmlsbGluZy9iaWxsaW5nQWNjb3VudHMvNzIzYzhjZTAtMzNiYS01YmE3LWVmMjMtZTFiNzJmMTVmMWQ4JTNBNGNlNWI1MzAtYzgyYi00NGU4LTk3ZWMtNDlmM2NjZTlmMTRkXzIwMTktMDUtMzEvYmlsbGluZ1JvbGVEZWZpbml0aW9ucy81MDAwMDAwMC1hYWFhLWJiYmItY2NjYy0xMDAwMDAwMDAwMDBfNWM0ZmFkNTMtOWNmYi00ZTIyLTk2MzUtZTdmNDIwYWIzY2E3P2FwaS12ZXJzaW9uPTIwMTktMTAtMDEtcHJldmlldw==",
+      "RequestUri": "/providers/Microsoft.Billing/billingAccounts/723c8ce0-33ba-5ba7-ef23-e1b72f15f1d8%3A4ce5b530-c82b-44e8-97ec-49f3cce9f14d_2019-05-31/billingRoleDefinitions/50000000-aaaa-bbbb-cccc-100000000000?api-version=2019-10-01-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmlsbGluZy9iaWxsaW5nQWNjb3VudHMvNzIzYzhjZTAtMzNiYS01YmE3LWVmMjMtZTFiNzJmMTVmMWQ4JTNBNGNlNWI1MzAtYzgyYi00NGU4LTk3ZWMtNDlmM2NjZTlmMTRkXzIwMTktMDUtMzEvYmlsbGluZ1JvbGVEZWZpbml0aW9ucy81MDAwMDAwMC1hYWFhLWJiYmItY2NjYy0xMDAwMDAwMDAwMDA/YXBpLXZlcnNpb249MjAxOS0xMC0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "09b24082-8828-472f-b249-54d5be281af2"
+          "e8cb75e2-3194-44c0-ba66-7fbea7e6cffa"
         ],
         "Accept-Language": [
           "en-US"
@@ -26,14 +26,17 @@
         "Pragma": [
           "no-cache"
         ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "11999"
+          "11998"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-service-version": [
-          "9.11.1047.343"
+          "9.11.1052.344"
         ],
         "api-supported-versions": [
           "2019-10-01-preview"
@@ -42,22 +45,22 @@
           "DENY"
         ],
         "x-ms-request-id": [
-          "31987396-f2d1-48c5-b0fa-f5901fc7a91e"
+          "ddc87a77-10e5-472b-9f9f-0d6a96dbd686"
         ],
         "x-ms-correlation-request-id": [
-          "31987396-f2d1-48c5-b0fa-f5901fc7a91e"
+          "ddc87a77-10e5-472b-9f9f-0d6a96dbd686"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20191118T234120Z:31987396-f2d1-48c5-b0fa-f5901fc7a91e"
+          "CANADACENTRAL:20191120T072507Z:ddc87a77-10e5-472b-9f9f-0d6a96dbd686"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Mon, 18 Nov 2019 23:41:20 GMT"
+          "Wed, 20 Nov 2019 07:25:07 GMT"
         ],
         "Content-Length": [
-          "91"
+          "1398"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -66,8 +69,8 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"code\": \"NotFound\",\r\n  \"message\": \"The resource or one of its dependencies could not be found.\"\r\n}",
-      "StatusCode": 404
+      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Billing/billingAccounts/723c8ce0-33ba-5ba7-ef23-e1b72f15f1d8:4ce5b530-c82b-44e8-97ec-49f3cce9f14d_2019-05-31/billingRoleDefinitions/50000000-aaaa-bbbb-cccc-100000000000\",\r\n  \"name\": \"50000000-aaaa-bbbb-cccc-100000000000\",\r\n  \"properties\": {\r\n    \"description\": \"The Owner role gives the user all permissions including access management on the Organization.\",\r\n    \"permissions\": [\r\n      {\r\n        \"actions\": [\r\n          \"50000000-aaaa-bbbb-cccc-200000000000\",\r\n          \"50000000-aaaa-bbbb-cccc-200000000001\",\r\n          \"50000000-aaaa-bbbb-cccc-200000000002\",\r\n          \"50000000-aaaa-bbbb-cccc-200000000003\",\r\n          \"50000000-aaaa-bbbb-cccc-200000000004\",\r\n          \"50000000-aaaa-bbbb-cccc-200000000006\",\r\n          \"10000000-aaaa-bbbb-cccc-200000000001\",\r\n          \"10000000-aaaa-bbbb-cccc-200000000002\",\r\n          \"10000000-aaaa-bbbb-cccc-200000000003\",\r\n          \"10000000-aaaa-bbbb-cccc-200000000006\",\r\n          \"10000000-aaaa-bbbb-cccc-200000000007\",\r\n          \"50000000-aaaa-bbbb-cccc-200000000005\",\r\n          \"30000000-aaaa-bbbb-cccc-200000000000\",\r\n          \"30000000-aaaa-bbbb-cccc-200000000001\",\r\n          \"30000000-aaaa-bbbb-cccc-200000000004\",\r\n          \"30000000-aaaa-bbbb-cccc-200000000007\",\r\n          \"30000000-aaaa-bbbb-cccc-200000000009\",\r\n          \"30000000-aaaa-bbbb-cccc-200000000010\",\r\n          \"30000000-aaaa-bbbb-cccc-200000000015\",\r\n          \"40000000-aaaa-bbbb-cccc-200000000000\",\r\n          \"40000000-aaaa-bbbb-cccc-200000000006\",\r\n          \"40000000-aaaa-bbbb-cccc-200000000007\",\r\n          \"40000000-aaaa-bbbb-cccc-200000000008\"\r\n        ]\r\n      }\r\n    ],\r\n    \"roleName\": \"Billing account owner\"\r\n  },\r\n  \"type\": \"Microsoft.Billing/billingAccounts/billingRoleDefinitions\"\r\n}",
+      "StatusCode": 200
     }
   ],
   "Names": {},
