@@ -158,12 +158,12 @@ namespace Microsoft.Azure.Search.Models
             Throw.IfArgumentNullOrEmpty(collectionName, nameof(collectionName));
             Throw.IfArgumentNullOrEmpty(cosmosDbConnectionString, nameof(cosmosDbConnectionString));
 
-            return new DataSource()
+            return new DataSource
             {
                 Type = DataSourceType.CosmosDb,
                 Name = name,
                 Description = description,
-                Container = new DataContainer()
+                Container = new DataContainer
                 {
                     Name = collectionName,
                     Query = query
@@ -198,12 +198,12 @@ namespace Microsoft.Azure.Search.Models
             Throw.IfArgumentNullOrEmpty(containerName, nameof(containerName));
             Throw.IfArgumentNullOrEmpty(storageConnectionString, nameof(storageConnectionString));
 
-            return new DataSource()
+            return new DataSource
             {
                 Type = DataSourceType.AzureBlob,
                 Name = name,
                 Description = description,
-                Container = new DataContainer()
+                Container = new DataContainer
                 {
                     Name = containerName,
                     Query = pathPrefix
@@ -236,17 +236,59 @@ namespace Microsoft.Azure.Search.Models
             Throw.IfArgumentNullOrEmpty(tableName, nameof(tableName));
             Throw.IfArgumentNullOrEmpty(storageConnectionString, nameof(storageConnectionString));
 
-            return new DataSource()
+            return new DataSource
             {
                 Type = DataSourceType.AzureTable,
                 Name = name,
                 Description = description,
-                Container = new DataContainer()
+                Container = new DataContainer
                 {
                     Name = tableName,
                     Query = query
                 },
                 Credentials = new DataSourceCredentials(storageConnectionString),
+                DataDeletionDetectionPolicy = deletionDetectionPolicy
+            };
+        }
+
+        /// <summary>
+        /// Creates a new DataSource to connect to a MySQL database hosted in Azure
+        /// </summary>
+        /// <param name="name">The name of the data source</param>
+        /// <param name="connectionString">The connection string to the MySQL data base, which should follow the format:
+        /// "Server=server.mysql.database.azure.com; Port=port; Database=database; Uid=user@account; Pwd=password; SslMode=Preferred;"
+        /// </param>
+        /// <param name="tableName">The name of the table from which to read rows.</param>
+        /// <param name="query">Optional. A query that is applied to the table when reading rows.</param>
+        /// <param name="changeDetectionPolicy">Optional. The data change detection policy for the datasource.</param>
+        /// <param name="deletionDetectionPolicy">Optional. The data deletion detection policy for the datasource.</param>
+        /// <param name="description">Optional. Description of the datasource.</param>
+        /// <returns>A new DataSource instance</returns>
+        public static DataSource MySql(
+            string name,
+            string connectionString,
+            string tableName,
+            string query = null,
+            HighWaterMarkChangeDetectionPolicy changeDetectionPolicy = null,
+            DataDeletionDetectionPolicy deletionDetectionPolicy = null,
+            string description = null)
+        {
+            Throw.IfArgumentNullOrEmpty(name, nameof(name));
+            Throw.IfArgumentNullOrEmpty(tableName, nameof(tableName));
+            Throw.IfArgumentNullOrEmpty(connectionString, nameof(connectionString));
+
+            return new DataSource
+            {
+                Type = DataSourceType.MySql,
+                Name = name,
+                Description = description,
+                Container = new DataContainer
+                {
+                    Name = tableName,
+                    Query = query
+                },
+                Credentials = new DataSourceCredentials(connectionString),
+                DataChangeDetectionPolicy = changeDetectionPolicy,
                 DataDeletionDetectionPolicy = deletionDetectionPolicy
             };
         }
@@ -263,12 +305,12 @@ namespace Microsoft.Azure.Search.Models
             Throw.IfArgumentNullOrEmpty(tableOrViewName, nameof(tableOrViewName));
             Throw.IfArgumentNullOrEmpty(sqlConnectionString, nameof(sqlConnectionString));
 
-            return new DataSource()
+            return new DataSource
             {
                 Type = DataSourceType.AzureSql,
                 Name = name,
                 Description = description,
-                Container = new DataContainer()
+                Container = new DataContainer
                 {
                     Name = tableOrViewName
                 },

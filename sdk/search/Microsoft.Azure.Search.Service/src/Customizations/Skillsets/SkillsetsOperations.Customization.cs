@@ -12,13 +12,76 @@ namespace Microsoft.Azure.Search
 
     internal partial class SkillsetsOperations
     {
-        /// <inheritdoc />
+        /// <summary>
+        /// Creates a new skillset or updates a skillset if it already
+        /// exists.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Update-Skillset" />
+        /// </summary>
+        /// <param name='skillset'>
+        /// The definition of the skillset to create or update.
+        /// </param>
+        /// <param name='searchRequestOptions'>
+        /// Additional parameters for the operation.
+        /// </param>
+        /// <param name='accessCondition'>
+        /// Additional parameters for the operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code.
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response.
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when the skillset definition violates validation rules.
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null.
+        /// </exception>
+        /// <returns>
+        /// A response object containing the response body and response headers.
+        /// </returns>
         public Task<AzureOperationResponse<Skillset>> CreateOrUpdateWithHttpMessagesAsync(Skillset skillset, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return CreateOrUpdateWithHttpMessagesAsync(skillset?.Name, skillset, searchRequestOptions, customHeaders, cancellationToken);
+            return CreateOrUpdateWithHttpMessagesAsync(skillset?.Name, skillset, searchRequestOptions, accessCondition, customHeaders, cancellationToken);
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Determines whether or not the given skillset exists in the search service.
+        /// </summary>
+        /// <param name="skillsetName">
+        /// The name of the data source.
+        /// </param>
+        /// <param name='searchRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code.
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response.
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when the skillset definition violates validation rules.
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null.
+        /// </exception>
+        /// <returns>
+        /// A response with the value <c>true</c> if the skillset exists; <c>false</c> otherwise.
+        /// </returns>
         public Task<AzureOperationResponse<bool>> ExistsWithHttpMessagesAsync(
             string skillsetName,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),

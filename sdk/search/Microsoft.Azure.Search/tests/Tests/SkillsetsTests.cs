@@ -326,6 +326,157 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
+        [Fact]
+        public void CreateOrUpdateSkillsetIfNotExistsFailsOnExistingResource()
+        {
+            Run(() =>
+            {
+                AccessConditionTests.CreateOrUpdateIfNotExistsFailsOnExistingResource(
+                    Data.GetSearchServiceClient().Skillsets.CreateOrUpdate,
+                    () => CreateTestSkillsetOcrEntity(
+                        TextExtractionAlgorithm.Printed,
+                        new List<EntityCategory>
+                        {
+                            EntityCategory.Person,
+                            EntityCategory.Location
+                        }),
+                    MutateSkillset);
+            });
+        }
+
+        [Fact]
+        public void CreateOrUpdateSkillsetIfNotExistsSucceedsOnNoResource()
+        {
+            Run(() =>
+            {
+                AccessConditionTests.CreateOrUpdateIfNotExistsSucceedsOnNoResource(
+                    Data.GetSearchServiceClient().Skillsets.CreateOrUpdate,
+                    () => CreateTestSkillsetOcrEntity(
+                        TextExtractionAlgorithm.Printed,
+                        new List<EntityCategory>
+                        {
+                            EntityCategory.Person,
+                            EntityCategory.Location
+                        }));
+            });
+        }
+
+        [Fact]
+        public void UpdateSkillsetIfExistsSucceedsOnExistingResource()
+        {
+            Run(() =>
+            {
+                AccessConditionTests.UpdateIfExistsSucceedsOnExistingResource(
+                    Data.GetSearchServiceClient().Skillsets.CreateOrUpdate,
+                    () => CreateTestSkillsetOcrEntity(
+                        TextExtractionAlgorithm.Printed,
+                        new List<EntityCategory>
+                        {
+                            EntityCategory.Person,
+                            EntityCategory.Location
+                        }),
+                    MutateSkillset);
+            });
+        }
+
+        [Fact]
+        public void UpdateSkillsetIfExistsFailsOnNoResource()
+        {
+            Run(() =>
+            {
+                AccessConditionTests.UpdateIfExistsFailsOnNoResource(
+                    Data.GetSearchServiceClient().Skillsets.CreateOrUpdate,
+                    () => CreateTestSkillsetOcrEntity(
+                        TextExtractionAlgorithm.Printed,
+                        new List<EntityCategory>
+                        {
+                            EntityCategory.Person,
+                            EntityCategory.Location
+                        }));
+            });
+        }
+
+        [Fact]
+        public void UpdateSkillsetIfNotChangedSucceedsWhenResourceUnchanged()
+        {
+            Run(() =>
+            {
+                AccessConditionTests.UpdateIfNotChangedSucceedsWhenResourceUnchanged(
+                    Data.GetSearchServiceClient().Skillsets.CreateOrUpdate,
+                    () => CreateTestSkillsetOcrEntity(
+                        TextExtractionAlgorithm.Printed,
+                        new List<EntityCategory>
+                        {
+                            EntityCategory.Person,
+                            EntityCategory.Location
+                        }),
+                    MutateSkillset);
+            });
+        }
+
+        [Fact]
+        public void UpdateSkillsetIfNotChangedFailsWhenResourceChanged()
+        {
+            Run(() =>
+            {
+                AccessConditionTests.UpdateIfNotChangedFailsWhenResourceChanged(
+                    Data.GetSearchServiceClient().Skillsets.CreateOrUpdate,
+                    () => CreateTestSkillsetOcrEntity(
+                        TextExtractionAlgorithm.Printed,
+                        new List<EntityCategory>
+                        {
+                            EntityCategory.Person,
+                            EntityCategory.Location
+                        }),
+                    MutateSkillset);
+            });
+        }
+
+        [Fact]
+        public void DeleteSkillsetIfNotChangedWorksOnlyOnCurrentResource()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+
+                Skillset Skillset = CreateTestSkillsetOcrEntity(
+                    TextExtractionAlgorithm.Printed,
+                    new List<EntityCategory>
+                    {
+                        EntityCategory.Person,
+                        EntityCategory.Location
+                    });
+
+                AccessConditionTests.DeleteIfNotChangedWorksOnlyOnCurrentResource(
+                    searchClient.Skillsets.Delete,
+                    () => searchClient.Skillsets.CreateOrUpdate(Skillset),
+                    x => searchClient.Skillsets.CreateOrUpdate(MutateSkillset(x)),
+                    Skillset.Name);
+            });
+        }
+
+        [Fact]
+        public void DeleteSkillsetIfExistsWorksOnlyWhenResourceExists()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+
+                Skillset Skillset = CreateTestSkillsetOcrEntity(
+                    TextExtractionAlgorithm.Printed, 
+                    new List<EntityCategory>
+                    {
+                        EntityCategory.Person,
+                        EntityCategory.Location
+                    });
+
+                AccessConditionTests.DeleteIfExistsWorksOnlyWhenResourceExists(
+                    searchClient.Skillsets.Delete,
+                    () => searchClient.Skillsets.CreateOrUpdate(Skillset),
+                    Skillset.Name);
+            });
+        }
+
         public static Skillset CreateTestSkillsetOcrEntity(TextExtractionAlgorithm? algorithm, List<EntityCategory> categories)
         {
             var skills = new List<Skill>();
@@ -378,6 +529,12 @@ namespace Microsoft.Azure.Search.Tests
             });
 
             return new Skillset("testskillset", "Skillset for testing", skills);
+        }
+
+        private static Skillset MutateSkillset(Skillset skillset)
+        {
+            skillset.Description = "Mutated Skillset";
+            return skillset;
         }
 
         private void CreateAndGetSkillset(SearchServiceClient searchClient, Skillset expectedSkillset)

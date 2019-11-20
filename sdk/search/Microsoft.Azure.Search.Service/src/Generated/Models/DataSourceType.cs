@@ -35,6 +35,8 @@ namespace Microsoft.Azure.Search.Models
 
         public static readonly DataSourceType AzureTable = "azuretable";
 
+        public static readonly DataSourceType MySql = "mysql";
+
 
         /// <summary>
         /// Underlying value of enum DataSourceType
