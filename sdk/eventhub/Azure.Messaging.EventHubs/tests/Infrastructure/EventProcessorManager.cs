@@ -52,25 +52,25 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   A callback action to be called on <see cref="EventProcessorClient.InitializeProcessingForPartitionAsyncHandler" />.
         /// </summary>
         ///
-        private Action<InitializePartitionProcessingContext> OnInitialize { get; }
+        private Action<InitializingPartitionEventArgs> OnInitialize { get; }
 
         /// <summary>
         ///   A callback action to be called on <see cref="EventProcessorClient.ProcessingForPartitionStoppedAsyncHandler" />.
         /// </summary>
         ///
-        private Action<PartitionProcessingStoppedContext> OnStop { get; }
+        private Action<ClosingPartitionEventArgs> OnStop { get; }
 
         /// <summary>
         ///   A callback action to be called on <see cref="EventProcessorClient.ProcessEventAsyncHandler" />.
         /// </summary>
         ///
-        private Action<EventProcessorEvent> OnProcessEvent { get; }
+        private Action<ProcessingEventArgs> OnProcessEvent { get; }
 
         /// <summary>
         ///   A callback action to be called on <see cref="EventProcessorClient.ProcessErrorAsyncHandler" />.
         /// </summary>
         ///
-        private Action<ProcessorErrorContext> OnProcessException { get; }
+        private Action<ProcessingErrorEventArgs> OnProcessException { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventProcessorManager"/> class.
@@ -89,10 +89,10 @@ namespace Azure.Messaging.EventHubs.Tests
                                      string connectionString,
                                      PartitionManager partitionManager = null,
                                      EventProcessorClientOptions options = null,
-                                     Action<InitializePartitionProcessingContext> onInitialize = null,
-                                     Action<PartitionProcessingStoppedContext> onStop = null,
-                                     Action<EventProcessorEvent> onProcessEvent = null,
-                                     Action<ProcessorErrorContext> onProcessException = null)
+                                     Action<InitializingPartitionEventArgs> onInitialize = null,
+                                     Action<ClosingPartitionEventArgs> onStop = null,
+                                     Action<ProcessingEventArgs> onProcessEvent = null,
+                                     Action<ProcessingErrorEventArgs> onProcessException = null)
         {
             ConsumerGroup = consumerGroup;
             Connection = new EventHubConnection(connectionString);
@@ -136,31 +136,31 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 if (OnInitialize != null)
                 {
-                    eventProcessor.InitializeProcessingForPartitionAsyncHandler = initializationContext =>
+                    eventProcessor.InitializeProcessingForPartitionAsyncHandler = initializingArgs =>
                     {
-                        OnInitialize(initializationContext);
+                        OnInitialize(initializingArgs);
                         return new ValueTask();
                     };
                 }
 
                 if (OnStop != null)
                 {
-                    eventProcessor.ProcessingForPartitionStoppedAsyncHandler = stopContext =>
+                    eventProcessor.ProcessingForPartitionStoppedAsyncHandler = closingArgs =>
                     {
-                        OnStop(stopContext);
+                        OnStop(closingArgs);
                         return new ValueTask();
                     };
                 }
 
-                eventProcessor.ProcessEventAsyncHandler = processorEvent =>
+                eventProcessor.ProcessEventAsyncHandler = eventArgs =>
                 {
-                    OnProcessEvent?.Invoke(processorEvent);
+                    OnProcessEvent?.Invoke(eventArgs);
                     return new ValueTask();
                 };
 
-                eventProcessor.ProcessErrorAsyncHandler = errorContext =>
+                eventProcessor.ProcessErrorAsyncHandler = errorArgs =>
                 {
-                    OnProcessException?.Invoke(errorContext);
+                    OnProcessException?.Invoke(errorArgs);
                     return new ValueTask();
                 };
 

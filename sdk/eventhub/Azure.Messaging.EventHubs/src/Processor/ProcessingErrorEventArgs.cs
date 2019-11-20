@@ -11,7 +11,7 @@ namespace Azure.Messaging.EventHubs.Processor
     ///   the exception that has been thrown.
     /// </summary>
     ///
-    public class ProcessorErrorContext
+    public class ProcessingErrorEventArgs
     {
         /// <summary>
         ///   The identifier of the partition whose processing threw an exception.
@@ -20,24 +20,34 @@ namespace Azure.Messaging.EventHubs.Processor
         public string PartitionId { get; }
 
         /// <summary>
+        ///   A short description of the operation that was being performed when the exception was thrown.
+        /// </summary>
+        ///
+        public string Operation { get; }
+
+        /// <summary>
         ///   The exception that was thrown by the <see cref="EventProcessorClient" />.
         /// </summary>
         ///
         public Exception ProcessorException { get; }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ProcessorErrorContext"/> class.
+        ///   Initializes a new instance of the <see cref="ProcessingErrorEventArgs"/> class.
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the partition whose processing threw an exception.</param>
+        /// <param name="operation">A short description of the operation that was being performed when the exception was thrown.</param>
         /// <param name="exception">The exception that was thrown by the <see cref="EventProcessorClient" />.</param>
         ///
-        protected internal ProcessorErrorContext(string partitionId,
-                                                 Exception exception)
+        protected internal ProcessingErrorEventArgs(string partitionId,
+                                                    string operation,
+                                                    Exception exception)
         {
+            Argument.AssertNotNullOrEmpty(operation, nameof(operation));
             Argument.AssertNotNull(exception, nameof(exception));
 
             PartitionId = partitionId;
+            Operation = operation;
             ProcessorException = exception;
         }
     }

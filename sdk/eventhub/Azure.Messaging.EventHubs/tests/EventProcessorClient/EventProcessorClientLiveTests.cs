@@ -58,8 +58,8 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             EventHubConsumerClient.DefaultConsumerGroupName,
                             connectionString,
-                            onInitialize: initializationContext =>
-                                initializeCalls.AddOrUpdate(initializationContext.Context.PartitionId, 1, (partitionId, value) => value + 1)
+                            onInitialize: initializingArgs =>
+                                initializeCalls.AddOrUpdate(initializingArgs.Context.PartitionId, 1, (partitionId, value) => value + 1)
                         );
 
                     eventProcessorManager.AddEventProcessors(1);
@@ -119,10 +119,10 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             EventHubConsumerClient.DefaultConsumerGroupName,
                             connectionString,
-                            onStop: stopContext =>
+                            onStop: closingArgs =>
                             {
-                                closeCalls.AddOrUpdate(stopContext.Context.PartitionId, 1, (partitionId, value) => value + 1);
-                                stopReasons[stopContext.Context.PartitionId] = stopContext.Reason;
+                                closeCalls.AddOrUpdate(closingArgs.Context.PartitionId, 1, (partitionId, value) => value + 1);
+                                stopReasons[closingArgs.Context.PartitionId] = closingArgs.Reason;
                             }
                         );
 
@@ -184,17 +184,17 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             EventHubConsumerClient.DefaultConsumerGroupName,
                             connectionString,
-                            onProcessEvent: processorEvent =>
+                            onProcessEvent: eventArgs =>
                             {
-                                if (processorEvent.Data != null)
+                                if (eventArgs.Data != null)
                                 {
                                     allReceivedEvents.AddOrUpdate
                                     (
-                                        processorEvent.Context.PartitionId,
-                                        partitionId => new List<EventData>() { processorEvent.Data },
+                                        eventArgs.Context.PartitionId,
+                                        partitionId => new List<EventData>() { eventArgs.Data },
                                         (partitionId, list) =>
                                         {
-                                            list.Add(processorEvent.Data);
+                                            list.Add(eventArgs.Data);
                                             return list;
                                         }
                                     );
@@ -286,8 +286,8 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             EventHubConsumerClient.DefaultConsumerGroupName,
                             connectionString,
-                            onProcessEvent: processorEvent =>
-                                receivedEvents.Add(processorEvent.Data)
+                            onProcessEvent: eventArgs =>
+                                receivedEvents.Add(eventArgs.Data)
                         );
 
                     eventProcessorManager.AddEventProcessors(1);
@@ -336,7 +336,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             EventHubConsumerClient.DefaultConsumerGroupName,
                             connectionString,
-                            onInitialize: initializationContext =>
+                            onInitialize: initializingArgs =>
                                 Interlocked.Increment(ref initializeCallsCount)
                         );
 
@@ -393,7 +393,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             EventHubConsumerClient.DefaultConsumerGroupName,
                             connectionString,
-                            onStop: stopContext =>
+                            onStop: closingArgs =>
                                 Interlocked.Increment(ref closeCallsCount)
                         );
 
@@ -451,9 +451,9 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             EventHubConsumerClient.DefaultConsumerGroupName,
                             connectionString,
-                            onProcessEvent: processorEvent =>
+                            onProcessEvent: eventArgs =>
                             {
-                                if (processorEvent.Data != null)
+                                if (eventArgs.Data != null)
                                 {
                                     Interlocked.Increment(ref receivedEventsCount);
                                 }
@@ -583,9 +583,9 @@ namespace Azure.Messaging.EventHubs.Tests
                             EventHubConsumerClient.DefaultConsumerGroupName,
                             connectionString,
                             partitionManager,
-                            onProcessEvent: processorEvent =>
+                            onProcessEvent: eventArgs =>
                             {
-                                if (processorEvent.Data != null)
+                                if (eventArgs.Data != null)
                                 {
                                     Interlocked.Increment(ref receivedEventsCount);
                                 }
@@ -675,11 +675,11 @@ namespace Azure.Messaging.EventHubs.Tests
                             EventHubConsumerClient.DefaultConsumerGroupName,
                             connectionString,
                             partitionManager,
-                            onProcessEvent: processorEvent =>
+                            onProcessEvent: eventArgs =>
                             {
-                                if (processorEvent.Data != null)
+                                if (eventArgs.Data != null)
                                 {
-                                    processorEvent.UpdateCheckpointAsync();
+                                    eventArgs.UpdateCheckpointAsync();
                                 }
                             }
                         );
@@ -768,11 +768,11 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             EventHubConsumerClient.DefaultConsumerGroupName,
                             connectionString,
-                            onInitialize: initializationContext =>
-                                initializationContext.DefaultStartingPosition = EventPosition.FromEnqueuedTime(enqueuedTime),
-                            onProcessEvent: processorEvent =>
+                            onInitialize: initializingArgs =>
+                                initializingArgs.DefaultStartingPosition = EventPosition.FromEnqueuedTime(enqueuedTime),
+                            onProcessEvent: eventArgs =>
                             {
-                                if (processorEvent.Data != null)
+                                if (eventArgs.Data != null)
                                 {
                                     Interlocked.Increment(ref receivedEventsCount);
                                 }
@@ -827,14 +827,14 @@ namespace Azure.Messaging.EventHubs.Tests
                             EventHubConsumerClient.DefaultConsumerGroupName,
                             connectionString,
                             options: new EventProcessorClientOptions { MaximumReceiveWaitTime = TimeSpan.FromSeconds(maximumWaitTimeInSecs) },
-                            onInitialize: initializationContext =>
-                                timestamps.TryAdd(initializationContext.Context.PartitionId, new List<DateTimeOffset> { DateTimeOffset.UtcNow }),
-                            onProcessEvent: processorEvent =>
+                            onInitialize: initializingArgs =>
+                                timestamps.TryAdd(initializingArgs.Context.PartitionId, new List<DateTimeOffset> { DateTimeOffset.UtcNow }),
+                            onProcessEvent: eventArgs =>
                                 timestamps.AddOrUpdate
                                     (
                                         // The key already exists, so the 'addValue' factory will never be called.
 
-                                        processorEvent.Context.PartitionId,
+                                        eventArgs.Context.PartitionId,
                                         partitionId => null,
                                         (partitionId, list) =>
                                         {
@@ -911,10 +911,10 @@ namespace Azure.Messaging.EventHubs.Tests
                             EventHubConsumerClient.DefaultConsumerGroupName,
                             connectionString
                             // TODO: fix test. OwnerIdentifier is not accessible anymore.
-                            // onInitialize: initializationContext =>
-                            //     ownedPartitionsCount.AddOrUpdate(initializationContext.Context.OwnerIdentifier, 1, (ownerId, value) => value + 1),
-                            // onStop: stopContext =>
-                            //     ownedPartitionsCount.AddOrUpdate(stopContext.Context.OwnerIdentifier, 0, (ownerId, value) => value - 1)
+                            // onInitialize: initializingArgs =>
+                            //     ownedPartitionsCount.AddOrUpdate(initializingArgs.Context.OwnerIdentifier, 1, (ownerId, value) => value + 1),
+                            // onStop: closingArgs =>
+                            //     ownedPartitionsCount.AddOrUpdate(closingArgs.Context.OwnerIdentifier, 0, (ownerId, value) => value - 1)
                         );
 
                     eventProcessorManager.AddEventProcessors(eventProcessors);
@@ -976,10 +976,10 @@ namespace Azure.Messaging.EventHubs.Tests
                             EventHubConsumerClient.DefaultConsumerGroupName,
                             connectionString
                             // TODO: fix test. OwnerIdentifier is not accessible anymore.
-                            // onInitialize: initializationContext =>
-                            //     ownedPartitionsCount.AddOrUpdate(initializationContext.Context.OwnerIdentifier, 1, (ownerId, value) => value + 1),
-                            // onStop: stopContext =>
-                            //     ownedPartitionsCount.AddOrUpdate(stopContext.Context.OwnerIdentifier, 0, (ownerId, value) => value - 1)
+                            // onInitialize: initializingArgs =>
+                            //     ownedPartitionsCount.AddOrUpdate(initializingArgs.Context.OwnerIdentifier, 1, (ownerId, value) => value + 1),
+                            // onStop: closingArgs =>
+                            //     ownedPartitionsCount.AddOrUpdate(closingArgs.Context.OwnerIdentifier, 0, (ownerId, value) => value - 1)
                         );
 
                     eventProcessorManager.AddEventProcessors(1);

@@ -72,39 +72,39 @@ namespace Azure.Messaging.EventHubs.Samples
 
                 // TODO: explain callbacks setup once the public API is finished for the next preview.
 
-                eventProcessor.InitializeProcessingForPartitionAsyncHandler = (initializationContext) =>
+                eventProcessor.InitializeProcessingForPartitionAsyncHandler = (initializingArgs) =>
                 {
                     // This is the last piece of code guaranteed to run before event processing, so all initialization
                     // must be done by the moment this method returns.
 
                     // We want to receive events from the latest available position so older events don't interfere with our sample.
 
-                    initializationContext.DefaultStartingPosition = EventPosition.Latest;
+                    initializingArgs.DefaultStartingPosition = EventPosition.Latest;
 
                     Interlocked.Increment(ref partitionsBeingProcessedCount);
 
-                    Console.WriteLine($"\tPartition '{ initializationContext.Context.PartitionId }': partition processing has started.");
+                    Console.WriteLine($"\tPartition '{ initializingArgs.Context.PartitionId }': partition processing has started.");
 
                     // This method is asynchronous, which means it's expected to return a Task.
 
                     return new ValueTask();
                 };
 
-                eventProcessor.ProcessingForPartitionStoppedAsyncHandler = (stopContext) =>
+                eventProcessor.ProcessingForPartitionStoppedAsyncHandler = (closingArgs) =>
                 {
                     // The code to be run just before stopping processing events for a partition.  This is the right place to dispose
                     // of objects that will no longer be used.
 
                     Interlocked.Decrement(ref partitionsBeingProcessedCount);
 
-                    Console.WriteLine($"\tPartition '{ stopContext.Context.PartitionId }': partition processing has stopped. Reason: { stopContext.Reason }.");
+                    Console.WriteLine($"\tPartition '{ closingArgs.Context.PartitionId }': partition processing has stopped. Reason: { closingArgs.Reason }.");
 
                     // This method is asynchronous, which means it's expected to return a Task.
 
                     return new ValueTask();
                 };
 
-                eventProcessor.ProcessEventAsyncHandler = (processorEvent) =>
+                eventProcessor.ProcessEventAsyncHandler = (eventArgs) =>
                 {
                     // Here the user can specify what to do with the event received from the event processor.  We are counting how
                     // many events were received across all partitions so we can check whether all sent events were received.
@@ -112,10 +112,10 @@ namespace Azure.Messaging.EventHubs.Samples
                     // It's important to notice that this method is called even when no event is received after the maximum wait time, which
                     // can be specified by the user in the event processor options.  In this case, the received event is null.
 
-                    if (processorEvent.Data != null)
+                    if (eventArgs.Data != null)
                     {
                         Interlocked.Increment(ref totalEventsCount);
-                        Console.WriteLine($"\tPartition '{ processorEvent.Context.PartitionId }': event received.");
+                        Console.WriteLine($"\tPartition '{ eventArgs.Context.PartitionId }': event received.");
                     }
 
                     // This method is asynchronous, which means it's expected to return a Task.
@@ -123,7 +123,7 @@ namespace Azure.Messaging.EventHubs.Samples
                     return new ValueTask();
                 };
 
-                eventProcessor.ProcessErrorAsyncHandler = (errorContext) =>
+                eventProcessor.ProcessErrorAsyncHandler = (errorArgs) =>
                 {
                     // Any exception which occurs as a result of the event processor itself will be passed to
                     // this delegate so it may be handled.  The processor will continue to process events if
@@ -137,7 +137,7 @@ namespace Azure.Messaging.EventHubs.Samples
                     // This piece of code is not supposed to be reached by this sample.  If the following message has been printed
                     // to the Console, then something unexpected has happened.
 
-                    Console.WriteLine($"\tPartition '{ errorContext.PartitionId }': an unhandled exception was encountered. This was not expected to happen.");
+                    Console.WriteLine($"\tPartition '{ errorArgs.PartitionId }': an unhandled exception was encountered. This was not expected to happen.");
 
                     // This method is asynchronous, which means it's expected to return a Task.
 

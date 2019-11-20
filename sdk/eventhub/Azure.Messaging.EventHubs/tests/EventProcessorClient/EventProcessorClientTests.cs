@@ -290,7 +290,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void StartAsyncValidatesProcessEventsAsync()
         {
             var processor = new EventProcessorClient("consumerGroup", Mock.Of<PartitionManager>(), new MockConnection(), default);
-            processor.ProcessErrorAsyncHandler = errorContext => new ValueTask();
+            processor.ProcessErrorAsyncHandler = errorArgs => new ValueTask();
 
             Assert.That(async () => await processor.StartAsync(), Throws.InstanceOf<InvalidOperationException>().And.Message.Contains(nameof(EventProcessorClient.ProcessEventAsyncHandler)));
         }
@@ -304,7 +304,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void StartAsyncValidatesProcessExceptionAsync()
         {
             var processor = new EventProcessorClient("consumerGroup", Mock.Of<PartitionManager>(), new MockConnection(), default);
-            processor.ProcessEventAsyncHandler = processorEvent => new ValueTask();
+            processor.ProcessEventAsyncHandler = eventArgs => new ValueTask();
 
             Assert.That(async () => await processor.StartAsync(), Throws.InstanceOf<InvalidOperationException>().And.Message.Contains(nameof(EventProcessorClient.ProcessErrorAsyncHandler)));
         }
@@ -319,8 +319,8 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var processor = new EventProcessorClient("consumerGroup", Mock.Of<PartitionManager>(), new MockConnection(), default);
 
-            processor.ProcessEventAsyncHandler = processorEvent => new ValueTask();
-            processor.ProcessErrorAsyncHandler = errorContext => new ValueTask();
+            processor.ProcessEventAsyncHandler = eventArgs => new ValueTask();
+            processor.ProcessErrorAsyncHandler = errorArgs => new ValueTask();
 
             Assert.That(async () => await processor.StartAsync(), Throws.Nothing);
 
@@ -336,15 +336,15 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var processor = new EventProcessorClient("consumerGroup", Mock.Of<PartitionManager>(), new MockConnection(), default);
 
-            processor.ProcessEventAsyncHandler = processorEvent => new ValueTask();
-            processor.ProcessErrorAsyncHandler = errorContext => new ValueTask();
+            processor.ProcessEventAsyncHandler = eventArgs => new ValueTask();
+            processor.ProcessErrorAsyncHandler = errorArgs => new ValueTask();
 
             await processor.StartAsync();
 
-            Assert.That(() => processor.InitializeProcessingForPartitionAsyncHandler = initializationContext => new ValueTask(), Throws.InstanceOf<InvalidOperationException>());
-            Assert.That(() => processor.ProcessingForPartitionStoppedAsyncHandler = stopContext => new ValueTask(), Throws.InstanceOf<InvalidOperationException>());
-            Assert.That(() => processor.ProcessEventAsyncHandler = processorEvent => new ValueTask(), Throws.InstanceOf<InvalidOperationException>());
-            Assert.That(() => processor.ProcessErrorAsyncHandler = errorContext => new ValueTask(), Throws.InstanceOf<InvalidOperationException>());
+            Assert.That(() => processor.InitializeProcessingForPartitionAsyncHandler = initializingArgs => new ValueTask(), Throws.InstanceOf<InvalidOperationException>());
+            Assert.That(() => processor.ProcessingForPartitionStoppedAsyncHandler = closingArgs => new ValueTask(), Throws.InstanceOf<InvalidOperationException>());
+            Assert.That(() => processor.ProcessEventAsyncHandler = eventArgs => new ValueTask(), Throws.InstanceOf<InvalidOperationException>());
+            Assert.That(() => processor.ProcessErrorAsyncHandler = errorArgs => new ValueTask(), Throws.InstanceOf<InvalidOperationException>());
 
             await processor.StopAsync();
         }
@@ -358,16 +358,16 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var processor = new EventProcessorClient("consumerGroup", Mock.Of<PartitionManager>(), new MockConnection(), default);
 
-            processor.ProcessEventAsyncHandler = processorEvent => new ValueTask();
-            processor.ProcessErrorAsyncHandler = errorContext => new ValueTask();
+            processor.ProcessEventAsyncHandler = eventArgs => new ValueTask();
+            processor.ProcessErrorAsyncHandler = errorArgs => new ValueTask();
 
             await processor.StartAsync();
             await processor.StopAsync();
 
-            Assert.That(() => processor.InitializeProcessingForPartitionAsyncHandler = initializationContext => new ValueTask(), Throws.Nothing);
-            Assert.That(() => processor.ProcessingForPartitionStoppedAsyncHandler = stopContext => new ValueTask(), Throws.Nothing);
-            Assert.That(() => processor.ProcessEventAsyncHandler = processorEvent => new ValueTask(), Throws.Nothing);
-            Assert.That(() => processor.ProcessErrorAsyncHandler = errorContext => new ValueTask(), Throws.Nothing);
+            Assert.That(() => processor.InitializeProcessingForPartitionAsyncHandler = initializingArgs => new ValueTask(), Throws.Nothing);
+            Assert.That(() => processor.ProcessingForPartitionStoppedAsyncHandler = closingArgs => new ValueTask(), Throws.Nothing);
+            Assert.That(() => processor.ProcessEventAsyncHandler = eventArgs => new ValueTask(), Throws.Nothing);
+            Assert.That(() => processor.ProcessErrorAsyncHandler = errorArgs => new ValueTask(), Throws.Nothing);
         }
 
         /// <summary>

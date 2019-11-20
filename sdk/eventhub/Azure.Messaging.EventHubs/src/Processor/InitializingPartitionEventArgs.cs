@@ -12,7 +12,7 @@ namespace Azure.Messaging.EventHubs.Processor
     ///   it cannot find a checkpoint.
     /// </summary>
     ///
-    public class InitializePartitionProcessingContext
+    public class InitializingPartitionEventArgs
     {
         /// <summary>
         ///   The context of the Event Hub partition this instance is associated with.
@@ -28,12 +28,12 @@ namespace Azure.Messaging.EventHubs.Processor
         public EventPosition DefaultStartingPosition { get; set; } = EventPosition.Earliest;
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="InitializePartitionProcessingContext"/> class.
+        ///   Initializes a new instance of the <see cref="InitializingPartitionEventArgs"/> class.
         /// </summary>
         ///
         /// <param name="partitionContext">The context of the Event Hub partition this instance is associated with.</param>
         ///
-        protected internal InitializePartitionProcessingContext(PartitionContext partitionContext)
+        protected internal InitializingPartitionEventArgs(PartitionContext partitionContext)
         {
             Argument.AssertNotNull(partitionContext, nameof(partitionContext));
 
