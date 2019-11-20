@@ -45,7 +45,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
             };
 
-            TextBatchResponse<DetectedLanguageCollection> response = client.DetectLanguages(inputs, new TextAnalyticsRequestOptions(showStatistics: true));
+            TextBatchResponse<DetectedLanguageResult> response = client.DetectLanguages(inputs, new TextAnalyticsRequestOptions(showStatistics: true));
 
             int i = 0;
             Debug.WriteLine($"Results of Azure Text Analytics \"Detect Language\" Model, version: \"{response.ModelVersion}\"");
@@ -57,17 +57,17 @@ namespace Azure.AI.TextAnalytics.Samples
 
                 Debug.WriteLine($"On document (Id={document.Id}, CountryHint=\"{document.CountryHint}\", Text=\"{document.Text}\"):");
 
-                if (result.ErrorMessage != default)
+                if (result.Details.ErrorMessage != default)
                 {
-                    Debug.WriteLine($"    Document error: {result.ErrorMessage}.");
+                    Debug.WriteLine($"    Document error: {result.Details.ErrorMessage}.");
                 }
                 else
                 {
-                    Debug.WriteLine($"    Detected language {result[0].Name} with confidence {result[0].Score:0.00}.");
+                    Debug.WriteLine($"    Detected language {result.PrimaryLanguage.Name} with confidence {result.PrimaryLanguage.Score:0.00}.");
 
                     Debug.WriteLine($"    Document statistics:");
-                    Debug.WriteLine($"        Character count: {result.Statistics.CharacterCount}");
-                    Debug.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
+                    Debug.WriteLine($"        Character count: {result.Details.Statistics.CharacterCount}");
+                    Debug.WriteLine($"        Transaction count: {result.Details.Statistics.TransactionCount}");
                     Debug.WriteLine("");
                 }
             }

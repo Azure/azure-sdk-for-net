@@ -25,7 +25,8 @@ namespace Azure.AI.TextAnalytics.Samples
 
             Debug.WriteLine($"Recognizing PII entities for input: \"{input}\"");
             //var entities = client.RecognizeEntities(input, NamedEntityType.PersonallyIdentifiableInformation).Value;
-            var entities = client.RecognizePiiEntities(input).Value;
+            var result = client.RecognizePiiEntities(input).Value;
+            var entities = result.NamedEntities;
 
             Debug.WriteLine($"Recognized {entities.Count()} PII entit{(entities.Count() > 1 ? "ies" : "y")}:");
             foreach (NamedEntity entity in entities)

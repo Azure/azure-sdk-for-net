@@ -39,8 +39,9 @@ namespace Azure.AI.TextAnalytics.Samples
             var results = client.AnalyzeSentiment(inputs).Value;
 
             Debug.WriteLine($"Predicted sentiments are:");
-            foreach (TextSentiment sentiment in results)
+            foreach (TextSentimentResult result in results)
             {
+                TextSentiment sentiment = result.DocumentSentiment;
                 Debug.WriteLine($"Document sentiment is {sentiment.SentimentClass.ToString()}, with scores: ");
                 Debug.WriteLine($"    Positive score: {sentiment.PositiveScore:0.00}.");
                 Debug.WriteLine($"    Neutral score: {sentiment.NeutralScore:0.00}.");

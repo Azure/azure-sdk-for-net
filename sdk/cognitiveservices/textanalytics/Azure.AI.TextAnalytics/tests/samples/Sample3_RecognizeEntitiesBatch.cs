@@ -53,22 +53,22 @@ namespace Azure.AI.TextAnalytics.Samples
 
                 Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
 
-                if (result.ErrorMessage != default)
+                if (result.Details.ErrorMessage != default)
                 {
-                    Debug.WriteLine($"    Document error: {result.ErrorMessage}.");
+                    Debug.WriteLine($"    Document error: {result.Details.ErrorMessage}.");
                 }
                 else
                 {
-                    Debug.WriteLine($"    Recognized the following {result.Count()} entities:");
+                    Debug.WriteLine($"    Recognized the following {result.NamedEntities.Count()} entities:");
 
-                    foreach (var entity in result)
+                    foreach (var entity in result.NamedEntities)
                     {
                         Debug.WriteLine($"        Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType ?? "N/A"}, Score: {entity.Score:0.00}, Offset: {entity.Offset}, Length: {entity.Length}");
                     }
 
                     Debug.WriteLine($"    Document statistics:");
-                    Debug.WriteLine($"        Character count: {result.Statistics.CharacterCount}");
-                    Debug.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
+                    Debug.WriteLine($"        Character count: {result.Details.Statistics.CharacterCount}");
+                    Debug.WriteLine($"        Transaction count: {result.Details.Statistics.TransactionCount}");
                     Debug.WriteLine("");
                 }
             }

@@ -55,7 +55,7 @@ namespace Azure.AI.TextAnalytics.Samples
             {
                 var document = inputs[i++];
 
-                if (result.ErrorMessage != default)
+                if (result.Details.ErrorMessage != default)
                 {
                     Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
                 }
@@ -79,8 +79,8 @@ namespace Azure.AI.TextAnalytics.Samples
                     }
 
                     Debug.WriteLine($"    Document statistics:");
-                    Debug.WriteLine($"        Character count: {result.Statistics.CharacterCount}");
-                    Debug.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
+                    Debug.WriteLine($"        Character count: {result.Details.Statistics.CharacterCount}");
+                    Debug.WriteLine($"        Transaction count: {result.Details.Statistics.TransactionCount}");
                     Debug.WriteLine("");
                 }
             }

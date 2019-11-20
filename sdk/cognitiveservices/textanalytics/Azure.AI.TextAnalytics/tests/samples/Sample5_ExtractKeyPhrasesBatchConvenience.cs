@@ -36,9 +36,9 @@ namespace Azure.AI.TextAnalytics.Samples
             foreach (var result in results)
             {
                 Debug.WriteLine($"For input: \"{inputs[i++]}\",");
-                Debug.WriteLine($"the following {result.Count()} key phrases were found: ");
+                Debug.WriteLine($"the following {result.KeyPhrases.Count()} key phrases were found: ");
 
-                foreach (var keyPhrase in result)
+                foreach (var keyPhrase in result.KeyPhrases)
                 {
                     Debug.WriteLine($"    {keyPhrase}");
                 }

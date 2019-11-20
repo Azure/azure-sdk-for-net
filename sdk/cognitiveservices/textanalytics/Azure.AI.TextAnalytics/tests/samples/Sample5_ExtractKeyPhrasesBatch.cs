@@ -54,22 +54,22 @@ namespace Azure.AI.TextAnalytics.Samples
 
                 Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
 
-                if (result.ErrorMessage != default)
+                if (result.Details.ErrorMessage != default)
                 {
                     Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
                 }
                 else
                 {
-                    Debug.WriteLine($"    Extracted the following {result.Count()} key phrases:");
+                    Debug.WriteLine($"    Extracted the following {result.KeyPhrases.Count()} key phrases:");
 
-                    foreach (var keyPhrase in result)
+                    foreach (var keyPhrase in result.KeyPhrases)
                     {
                         Debug.WriteLine($"        {keyPhrase}");
                     }
 
                     Debug.WriteLine($"    Document statistics:");
-                    Debug.WriteLine($"        Character count: {result.Statistics.CharacterCount}");
-                    Debug.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
+                    Debug.WriteLine($"        Character count: {result.Details.Statistics.CharacterCount}");
+                    Debug.WriteLine($"        Transaction count: {result.Details.Statistics.TransactionCount}");
                     Debug.WriteLine("");
                 }
             }

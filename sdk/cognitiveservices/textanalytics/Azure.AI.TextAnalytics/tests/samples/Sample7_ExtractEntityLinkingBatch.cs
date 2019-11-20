@@ -53,15 +53,15 @@ namespace Azure.AI.TextAnalytics.Samples
 
                 Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
 
-                if (result.ErrorMessage != default)
+                if (result.Details.ErrorMessage != default)
                 {
                     Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
                 }
                 else
                 {
-                    Debug.WriteLine($"    Extracted the following {result.Count()} linked entities:");
+                    Debug.WriteLine($"    Extracted the following {result.LinkedEntities.Count()} linked entities:");
 
-                    foreach (var linkedEntity in result)
+                    foreach (var linkedEntity in result.LinkedEntities)
                     {
                         Debug.WriteLine($"    Name: \"{linkedEntity.Name}\", Id: \"{linkedEntity.Id}\", Language: {linkedEntity.Language}, Data Source: {linkedEntity.DataSource}, Uri: {linkedEntity.Uri.ToString()}");
                         foreach (LinkedEntityMatch match in linkedEntity.Matches)
@@ -71,8 +71,8 @@ namespace Azure.AI.TextAnalytics.Samples
                     }
 
                     Debug.WriteLine($"    Document statistics:");
-                    Debug.WriteLine($"        Character count: {result.Statistics.CharacterCount}");
-                    Debug.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
+                    Debug.WriteLine($"        Character count: {result.Details.Statistics.CharacterCount}");
+                    Debug.WriteLine($"        Transaction count: {result.Details.Statistics.TransactionCount}");
                     Debug.WriteLine("");
                 }
             }

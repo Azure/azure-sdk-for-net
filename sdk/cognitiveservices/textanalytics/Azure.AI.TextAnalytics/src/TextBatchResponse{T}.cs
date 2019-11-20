@@ -8,7 +8,7 @@ namespace Azure.AI.TextAnalytics
     /// <summary>
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class TextBatchResponse<T> : Response<Collection<T>> where T : ITextAnalysisResult
+    public class TextBatchResponse<T> : Response<Collection<T>> where T : TextAnalysisResult
     {
         private readonly Response _response;
 

@@ -1,24 +1,24 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.ObjectModel;
-
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// </summary>
-    public class KeyPhraseCollection : Collection<string>, ITextAnalysisResult
+    public readonly struct TextAnalysisResultDetails
     {
-        internal KeyPhraseCollection(string id, TextDocumentStatistics statistics)
+        internal TextAnalysisResultDetails(string id, TextDocumentStatistics statistics)
         {
             Id = id;
             Statistics = statistics;
+            ErrorMessage = default;
         }
 
-        internal KeyPhraseCollection(string id, string errorMessage)
+        internal TextAnalysisResultDetails(string id, string errorMessage)
         {
             Id = id;
             ErrorMessage = errorMessage;
+            Statistics = default;
         }
 
         /// <summary>

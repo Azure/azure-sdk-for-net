@@ -36,9 +36,9 @@ namespace Azure.AI.TextAnalytics.Samples
             foreach (var result in results)
             {
                 Debug.Write($"For input: \"{inputs[i++]}\", ");
-                Debug.WriteLine($"extracted {result.Count()} linked entit{(result.Count() > 1 ? "ies" : "y")}:");
+                Debug.WriteLine($"extracted {result.LinkedEntities.Count()} linked entit{(result.LinkedEntities.Count() > 1 ? "ies" : "y")}:");
 
-                foreach (LinkedEntity linkedEntity in result)
+                foreach (LinkedEntity linkedEntity in result.LinkedEntities)
                 {
                     Debug.WriteLine($"    Name: \"{linkedEntity.Name}\", Id: \"{linkedEntity.Id}\", Language: {linkedEntity.Language}, Data Source: {linkedEntity.DataSource}, Uri: {linkedEntity.Uri.ToString()}");
                     foreach (LinkedEntityMatch match in linkedEntity.Matches)

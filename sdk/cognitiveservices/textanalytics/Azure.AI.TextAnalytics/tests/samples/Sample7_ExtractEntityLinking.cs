@@ -24,10 +24,10 @@ namespace Azure.AI.TextAnalytics.Samples
             string input = "Microsoft was founded by Bill Gates and Paul Allen.";
 
             Debug.WriteLine($"Linking entities for input: \"{input}\"");
-            var linkedEntities = client.ExtractEntityLinking(input).Value;
+            var result = client.ExtractEntityLinking(input).Value;
 
-            Debug.WriteLine($"Extracted {linkedEntities.Count()} linked entit{(linkedEntities.Count() > 1 ? "ies" : "y")}:");
-            foreach (LinkedEntity linkedEntity in linkedEntities)
+            Debug.WriteLine($"Extracted {result.LinkedEntities.Count()} linked entit{(result.LinkedEntities.Count() > 1 ? "ies" : "y")}:");
+            foreach (LinkedEntity linkedEntity in result.LinkedEntities)
             {
                 Debug.WriteLine($"Name: {linkedEntity.Name}, Id: {linkedEntity.Id}, Language: {linkedEntity.Language}, Data Source: {linkedEntity.DataSource}, Uri: {linkedEntity.Uri.ToString()}");
                 foreach (LinkedEntityMatch match in linkedEntity.Matches)
