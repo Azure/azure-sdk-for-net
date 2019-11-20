@@ -162,7 +162,6 @@ namespace Azure.Messaging.EventHubs.Amqp
             {
                 EventHubsEventSource.Log.EventHubClientCreateComplete(host, eventHubName);
             }
-
         }
 
         /// <summary>
