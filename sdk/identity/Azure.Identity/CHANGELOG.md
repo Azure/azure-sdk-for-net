@@ -8,6 +8,7 @@
   - Added property `SharedTokenCacheTenantId` to `DefaultAzureCredentialOptions`
 - Support for personal account authentication in `DefaultAzureCredential`, `InteractiveBrowserCredential`, and `SharedTokenCacheCredential`
 - Added `InteractiveBrowserTenantId` to `DefaultAzureCredentialOptions`
+- Fixed issue with `ManagedIdentityCredential` authentication with user assigned identities
 
 ## 1.0.0
 - First stable release of Azure.Identity package.
