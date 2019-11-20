@@ -1593,7 +1593,7 @@ namespace Azure.Storage.Files.DataLake
         /// </summary>
         /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
-        /// conditions on getting the file systems's access policy.
+        /// conditions on getting the file system's access policy.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1653,7 +1653,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <returns>
         /// A <see cref="Response{FileSystemAccessPolicy}"/> describing
-        /// the file systems's access policy.
+        /// the file system's access policy.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -1713,7 +1713,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <param name="permissions">
         /// Stored access policies that you can use to provide fine grained
-        /// control over container permissions.
+        /// control over file system permissions.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
