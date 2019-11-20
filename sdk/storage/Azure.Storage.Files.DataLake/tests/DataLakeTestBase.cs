@@ -327,6 +327,22 @@ namespace Azure.Storage.Files.DataLake.Tests
             return leaseId == ReceivedLeaseId ? lease.LeaseId : leaseId;
         }
 
+        public DataLakeSignedIdentifier[] BuildSignedIdentifiers() =>
+            new[]
+            {
+                new DataLakeSignedIdentifier
+                {
+                    Id = GetNewString(),
+                    AccessPolicy =
+                        new DataLakeAccessPolicy
+                        {
+                            StartsOn = Recording.UtcNow.AddHours(-1),
+                            ExpiresOn =  Recording.UtcNow.AddHours(1),
+                            Permissions = "rcw"
+                        }
+                }
+            };
+
         public class DisposingFileSystem : IAsyncDisposable
         {
             public DataLakeFileSystemClient FileSystem;
