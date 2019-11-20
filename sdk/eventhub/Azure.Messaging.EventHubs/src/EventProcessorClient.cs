@@ -644,7 +644,6 @@ namespace Azure.Messaging.EventHubs
                     .ListOwnershipAsync(Connection.FullyQualifiedNamespace, Connection.EventHubName, ConsumerGroup)
                     .ConfigureAwait(false);
 
-
                 // Get a complete list of the partition ids present in the Event Hub.  This should be immutable for the time being, but
                 // it may change in the future.
 
@@ -663,7 +662,7 @@ namespace Azure.Messaging.EventHubs
                 {
                     if (now.Subtract(ownership.LastModifiedTime.Value) < OwnershipExpiration)
                     {
-                        if (activeOwnershipWithDistribution.TryGetValue(ownership.OwnerIdentifier, out var value))
+                        if (activeOwnershipWithDistribution.ContainsKey(ownership.OwnerIdentifier))
                         {
                             activeOwnershipWithDistribution[ownership.OwnerIdentifier].Add(ownership);
                             unclaimedPartitions.Remove(ownership.PartitionId);
@@ -829,20 +828,20 @@ namespace Azure.Messaging.EventHubs
                 if (!partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount.Any() && ownedPartitionsCount < minimumOwnedPartitionsCount)
                 {
                     // If any stealable partitions were found, randomly pick one of them to claim.
-                    var index = RandomNumberGenerator.Value.Next(partitionsOwnedByProcessorWithExactlyMaximumOwnedPartitionsCount.Count());
+                    var index = RandomNumberGenerator.Value.Next(partitionsOwnedByProcessorWithExactlyMaximumOwnedPartitionsCount.Count);
 
                     return await ClaimOwnershipAsync(
-                        partitionsOwnedByProcessorWithExactlyMaximumOwnedPartitionsCount.ElementAt(index),
+                        partitionsOwnedByProcessorWithExactlyMaximumOwnedPartitionsCount[index],
                         completeOwnershipEnumerable)
                         .ConfigureAwait(false);
                 }
                 else if (partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount.Any())
                 {
                     // If any stealable partitions were found, randomly pick one of them to claim.
-                    var index = RandomNumberGenerator.Value.Next(partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount.Count());
+                    var index = RandomNumberGenerator.Value.Next(partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount.Count);
 
                     return await ClaimOwnershipAsync(
-                        partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount.ElementAt(index),
+                        partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount[index],
                         completeOwnershipEnumerable)
                         .ConfigureAwait(false);
                 }
@@ -902,7 +901,8 @@ namespace Azure.Messaging.EventHubs
                 //stop the pump we replaced
                 if (existingPump != null)
                 {
-                    await StopPartitionPumpAsync(partitionId, ProcessingStoppedReason.Shutdown, existingPump);
+                    await StopPartitionPumpAsync(partitionId, ProcessingStoppedReason.Shutdown, existingPump)
+                        .ConfigureAwait(false);
                 }
 
             }
@@ -928,7 +928,8 @@ namespace Azure.Messaging.EventHubs
         {
             if (PartitionPumps.TryRemove(partitionId, out PartitionPump pump))
             {
-                await StopPartitionPumpAsync(partitionId, reason, pump);
+                await StopPartitionPumpAsync(partitionId, reason, pump)
+                    .ConfigureAwait(false);
             }
         }
 
