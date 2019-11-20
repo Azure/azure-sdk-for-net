@@ -40,7 +40,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   The set of options to use for the event processors.
         /// </summary>
         ///
-        private EventProcessorClientOptions Options { get; }
+        private EventProcessorClientOptions ClientOptions { get; }
 
         /// <summary>
         ///   The event processors managed by this hub.
@@ -49,13 +49,13 @@ namespace Azure.Messaging.EventHubs.Tests
         private List<EventProcessorClient> EventProcessors { get; }
 
         /// <summary>
-        ///   A callback action to be called on <see cref="EventProcessorClient.InitializeProcessingForPartitionAsyncHandler" />.
+        ///   A callback action to be called on <see cref="EventProcessorClient.InitializingPartitionAsync" />.
         /// </summary>
         ///
         private Action<InitializingPartitionEventArgs> OnInitialize { get; }
 
         /// <summary>
-        ///   A callback action to be called on <see cref="EventProcessorClient.ProcessingForPartitionStoppedAsyncHandler" />.
+        ///   A callback action to be called on <see cref="EventProcessorClient.ClosingPartitionAsync" />.
         /// </summary>
         ///
         private Action<ClosingPartitionEventArgs> OnStop { get; }
@@ -80,15 +80,15 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <param name="connectionString">TODO.</param>
         /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.</param>
         /// <param name="options">The set of options to use for the event processors.</param>
-        /// <param name="onInitialize">A callback action to be called on <see cref="EventProcessorClient.InitializeProcessingForPartitionAsyncHandler" />.</param>
-        /// <param name="onStop">A callback action to be called on <see cref="EventProcessorClient.ProcessingForPartitionStoppedAsyncHandler" />.</param>
+        /// <param name="onInitialize">A callback action to be called on <see cref="EventProcessorClient.InitializingPartitionAsync" />.</param>
+        /// <param name="onStop">A callback action to be called on <see cref="EventProcessorClient.ClosingPartitionAsync" />.</param>
         /// <param name="onProcessEvent">A callback action to be called on <see cref="EventProcessorClient.ProcessEventAsyncHandler" />.</param>
         /// <param name="onProcessException">A callback action to be called on <see cref="EventProcessorClient.ProcessErrorAsyncHandler" />.</param>
         ///
         public EventProcessorManager(string consumerGroup,
                                      string connectionString,
                                      PartitionManager partitionManager = null,
-                                     EventProcessorClientOptions options = null,
+                                     EventProcessorClientOptions clientOptions = null,
                                      Action<InitializingPartitionEventArgs> onInitialize = null,
                                      Action<ClosingPartitionEventArgs> onStop = null,
                                      Action<ProcessingEventArgs> onProcessEvent = null,
@@ -101,11 +101,11 @@ namespace Azure.Messaging.EventHubs.Tests
             // In case it has not been specified, set the maximum receive wait time to 2 seconds because the default
             // value (1 minute) would take too much time.
 
-            Options = options?.Clone() ?? new EventProcessorClientOptions();
+            ClientOptions = clientOptions?.Clone() ?? new EventProcessorClientOptions();
 
-            if (Options.MaximumReceiveWaitTime == null)
+            if (ClientOptions.MaximumReceiveWaitTime == null)
             {
-                Options.MaximumReceiveWaitTime = TimeSpan.FromSeconds(2);
+                ClientOptions.MaximumReceiveWaitTime = TimeSpan.FromSeconds(2);
             }
 
             OnInitialize = onInitialize;
@@ -128,15 +128,15 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 var eventProcessor = new ShortWaitTimeMock
                     (
-                        ConsumerGroup,
                         InnerPartitionManager,
+                        ConsumerGroup,
                         Connection,
-                        Options
+                        ClientOptions
                     );
 
                 if (OnInitialize != null)
                 {
-                    eventProcessor.InitializeProcessingForPartitionAsyncHandler = initializingArgs =>
+                    eventProcessor.InitializingPartitionAsync = initializingArgs =>
                     {
                         OnInitialize(initializingArgs);
                         return new ValueTask();
@@ -145,7 +145,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 if (OnStop != null)
                 {
-                    eventProcessor.ProcessingForPartitionStoppedAsyncHandler = closingArgs =>
+                    eventProcessor.ClosingPartitionAsync = closingArgs =>
                     {
                         OnStop(closingArgs);
                         return new ValueTask();
@@ -177,7 +177,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public Task StartAllAsync()
         {
             return Task.WhenAll(EventProcessors
-                .Select(eventProcessor => eventProcessor.StartAsync()));
+                .Select(eventProcessor => eventProcessor.StartProcessingAsync().AsTask()));
         }
 
         /// <summary>
@@ -189,7 +189,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public Task StopAllAsync()
         {
             return Task.WhenAll(EventProcessors
-                .Select(eventProcessor => eventProcessor.StopAsync()));
+                .Select(eventProcessor => eventProcessor.StopProcessingAsync().AsTask()));
         }
 
         /// <summary>
@@ -337,15 +337,15 @@ namespace Azure.Messaging.EventHubs.Tests
             ///   Initializes a new instance of the <see cref="ShortWaitTimeMock"/> class.
             /// </summary>
             ///
-            /// <param name="consumerGroup">The name of the consumer group this event processor is associated with.  Events are read in the context of this group.</param>
             /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.</param>
+            /// <param name="consumerGroup">The name of the consumer group this event processor is associated with.  Events are read in the context of this group.</param>
             /// <param name="connection">The client used to interact with the Azure Event Hubs service.</param>
-            /// <param name="options">The set of options to use for this event processor.</param>
+            /// <param name="clientOptions">The set of options to use for this event processor.</param>
             ///
-            public ShortWaitTimeMock(string consumerGroup,
-                                     PartitionManager partitionManager,
+            public ShortWaitTimeMock(PartitionManager partitionManager,
+                                     string consumerGroup,
                                      EventHubConnection connection,
-                                     EventProcessorClientOptions options) : base(consumerGroup, partitionManager, connection, options)
+                                     EventProcessorClientOptions clientOptions) : base(partitionManager, consumerGroup, connection, clientOptions)
             {
             }
         }

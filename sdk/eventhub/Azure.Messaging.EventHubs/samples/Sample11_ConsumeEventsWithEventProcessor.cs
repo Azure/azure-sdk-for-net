@@ -65,14 +65,14 @@ namespace Azure.Messaging.EventHubs.Samples
 
             // Let's finally create our event processor.  We're using the default consumer group that was created with the Event Hub.
 
-            await using (var eventProcessor = new EventProcessorClient(EventHubConsumerClient.DefaultConsumerGroupName, partitionManager, connectionString, eventHubName, eventProcessorOptions))
+            await using (var eventProcessor = new EventProcessorClient(partitionManager, EventHubConsumerClient.DefaultConsumerGroupName, connectionString, eventHubName, eventProcessorOptions))
             {
                 int totalEventsCount = 0;
                 int partitionsBeingProcessedCount = 0;
 
                 // TODO: explain callbacks setup once the public API is finished for the next preview.
 
-                eventProcessor.InitializeProcessingForPartitionAsyncHandler = (initializingArgs) =>
+                eventProcessor.InitializingPartitionAsync = (initializingArgs) =>
                 {
                     // This is the last piece of code guaranteed to run before event processing, so all initialization
                     // must be done by the moment this method returns.
@@ -90,7 +90,7 @@ namespace Azure.Messaging.EventHubs.Samples
                     return new ValueTask();
                 };
 
-                eventProcessor.ProcessingForPartitionStoppedAsyncHandler = (closingArgs) =>
+                eventProcessor.ClosingPartitionAsync = (closingArgs) =>
                 {
                     // The code to be run just before stopping processing events for a partition.  This is the right place to dispose
                     // of objects that will no longer be used.
@@ -149,7 +149,7 @@ namespace Azure.Messaging.EventHubs.Samples
                 Console.WriteLine("Starting the event processor.");
                 Console.WriteLine();
 
-                await eventProcessor.StartAsync();
+                await eventProcessor.StartProcessingAsync();
 
                 Console.WriteLine("Event processor started.");
                 Console.WriteLine();
@@ -208,7 +208,7 @@ namespace Azure.Messaging.EventHubs.Samples
                     Console.WriteLine("Stopping the event processor.");
                     Console.WriteLine();
 
-                    await eventProcessor.StopAsync();
+                    await eventProcessor.StopProcessingAsync();
 
                     // Print out the amount of events that we received.
 
