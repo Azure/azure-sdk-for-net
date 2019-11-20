@@ -41,7 +41,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
             };
 
-            var response = client.RecognizePiiEntities(inputs, new TextAnalyticsRequestOptions(showStatistics: true));
+            var response = client.RecognizePiiEntities(inputs, new TextAnalyticsRequestOptions(includeStatistics: true));
 
             int i = 0;
             Debug.WriteLine($"Results of Azure Text Analytics \"Pii Entity Recognition\" Model, version: \"{response.ModelVersion}\"");

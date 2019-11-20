@@ -141,7 +141,7 @@ namespace Azure.AI.TextAnalytics
             builder.AppendPath(_apiVersion, escape: false);
             builder.AppendPath(route, escape: false);
 
-            if (options.ShowStatistics)
+            if (options.IncludeStatistics)
             {
                 builder.AppendQuery(ShowStatistics, "true");
             }
