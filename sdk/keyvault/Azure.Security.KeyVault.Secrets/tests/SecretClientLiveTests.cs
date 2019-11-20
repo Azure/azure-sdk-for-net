@@ -6,14 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using Azure.Security.KeyVault.Secrets;
 using Azure.Core.Testing;
 using System.Text;
 using NUnit.Framework.Constraints;
 
-namespace Azure.Security.KeyVault.Test
+namespace Azure.Security.KeyVault.Secrets.Tests
 {
-    public class SecretClientLiveTests : KeyVaultTestBase
+    public class SecretClientLiveTests : SecretsTestBase
     {
         private const int PagedSecretCount = 50;
 
@@ -84,7 +83,7 @@ namespace Azure.Security.KeyVault.Test
                     createdUpdatedConstraint = Is.InRange(now.AddMinutes(-5), now.AddMinutes(5));
                 }
 
-                RegisterForCleanup(secret.Name, delete: false);
+                RegisterForCleanup(secret.Name);
 
                 Assert.IsNotEmpty(setResult.Properties.Version);
                 Assert.AreEqual("password", setResult.Properties.ContentType);
@@ -302,7 +301,7 @@ namespace Azure.Security.KeyVault.Test
 
             KeyVaultSecret secret = await Client.SetSecretAsync(secretName, "value");
 
-            RegisterForCleanup(secret.Name, delete: false);
+            RegisterForCleanup(secret.Name);
 
             DeleteSecretOperation deleteOperation = await Client.StartDeleteSecretAsync(secretName);
             DeletedSecret deletedSecret = deleteOperation.Value;
@@ -327,7 +326,7 @@ namespace Azure.Security.KeyVault.Test
 
             KeyVaultSecret secret = await Client.SetSecretAsync(secretName, "value");
 
-            RegisterForCleanup(secret.Name, delete: false);
+            RegisterForCleanup(secret.Name);
 
             DeleteSecretOperation deleteOperation = await Client.StartDeleteSecretAsync(secretName);
             DeletedSecret deletedSecret = deleteOperation.Value;
@@ -367,7 +366,7 @@ namespace Azure.Security.KeyVault.Test
             RecoverDeletedSecretOperation operation = await Client.StartRecoverDeletedSecretAsync(secretName);
             SecretProperties recoverSecretResult = operation.Value;
 
-            await PollForSecret(secretName);
+            await WaitForSecret(secretName);
 
             KeyVaultSecret recoveredSecret = await Client.GetSecretAsync(secretName);
 
@@ -440,7 +439,7 @@ namespace Azure.Security.KeyVault.Test
                 deletedSecrets.Add(secret);
                 await Client.StartDeleteSecretAsync(secret.Name);
 
-                RegisterForCleanup(secret.Name, delete: false);
+                RegisterForCleanup(secret.Name);
             }
 
             foreach (KeyVaultSecret deletedSecret in deletedSecrets)

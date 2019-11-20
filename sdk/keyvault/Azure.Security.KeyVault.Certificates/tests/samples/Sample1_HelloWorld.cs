@@ -14,6 +14,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
     /// This sample demonstrates how to create, get, update, and delete a certificate using the synchronous methods of the <see cref="CertificateClient">.
     /// </summary>
     [LiveOnly]
+    [NonParallelizable]
     public partial class HelloWorld
     {
         [Test]
@@ -21,11 +22,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
         {
             // Environment variable with the Key Vault endpoint.
             string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
-            HelloWorldSync(keyVaultUrl);
-        }
 
-        public void HelloWorldSync(string keyVaultUrl)
-        {
             #region Snippet:CertificatesSample1CertificateClient
             var client = new CertificateClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
             #endregion
@@ -70,7 +67,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             #region Snippet:CertificatesSample1DeleteCertificate
             DeleteCertificateOperation operation = client.StartDeleteCertificate(certName);
 
-            // To ensure certificate is deleted on server side.
+            // You only need to wait for completion if you want to purge or recover the certificate.
             while (!operation.HasCompleted)
             {
                 Thread.Sleep(2000);

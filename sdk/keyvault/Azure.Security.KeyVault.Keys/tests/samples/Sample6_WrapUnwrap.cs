@@ -24,11 +24,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
         {
             // Environment variable with the Key Vault endpoint.
             string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
-            WrapUnwrapSync(keyVaultUrl);
-        }
 
-        private void WrapUnwrapSync(string keyVaultUrl)
-        {
             #region Snippet:KeysSample6KeyClient
             var keyClient = new KeyClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
             #endregion
@@ -66,6 +62,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             #region Snippet:KeysSample6DeleteKey
             DeleteKeyOperation operation = keyClient.StartDeleteKey(rsaKeyName);
 
+            // You only need to wait for completion if you want to purge or recover the key.
             while (!operation.HasCompleted)
             {
                 Thread.Sleep(2000);

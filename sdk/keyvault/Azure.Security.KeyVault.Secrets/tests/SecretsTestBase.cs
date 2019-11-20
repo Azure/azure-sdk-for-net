@@ -2,16 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
 using Azure.Identity;
-using Azure.Security.KeyVault.Secrets;
 using NUnit.Framework;
 
-namespace Azure.Security.KeyVault.Test
+namespace Azure.Security.KeyVault.Secrets.Tests
 {
-    public abstract class KeyVaultTestBase : RecordedTestBase
+    public abstract class SecretsTestBase : RecordedTestBase
     {
         public const string AzureKeyVaultUrlEnvironmentVariable = "AZURE_KEYVAULT_URL";
 
@@ -19,9 +19,9 @@ namespace Azure.Security.KeyVault.Test
 
         public Uri VaultUri { get; set; }
 
-        private readonly Queue<(string Name, bool Delete)> _secretsToCleanup = new Queue<(string, bool)>();
+        private readonly ConcurrentQueue<string> _secretsToCleanup = new ConcurrentQueue<string>();
 
-        protected KeyVaultTestBase(bool isAsync) : base(isAsync)
+        protected SecretsTestBase(bool isAsync) : base(isAsync)
         {
         }
 
@@ -44,44 +44,50 @@ namespace Azure.Security.KeyVault.Test
             VaultUri = new Uri(Recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable));
         }
 
-        [TearDown]
+        [OneTimeTearDown]
         public async Task Cleanup()
         {
-            // TODO: Change to OneTimeTearDown at end of TestFixture and await the LRO for deleting a secret.
+            List<Task> cleanupTasks = new List<Task>();
+
+            foreach (string name in _secretsToCleanup)
+            {
+                Task cleanupTask = CleanupSecret(name);
+                cleanupTasks.Add(cleanupTask);
+            }
+
+            await Task.WhenAll(cleanupTasks);
+        }
+
+        protected async Task CleanupSecret(string name)
+        {
             try
             {
-                foreach ((string Name, bool Delete) cleanupItem in _secretsToCleanup)
-                {
-                    if (cleanupItem.Delete)
-                    {
-                        await Client.StartDeleteSecretAsync(cleanupItem.Name);
-                    }
-                }
-
-                foreach ((string Name, bool Delete) cleanupItem in _secretsToCleanup)
-                {
-                    await WaitForDeletedSecret(cleanupItem.Name);
-                }
-
-                foreach ((string Name, bool Delete) cleanupItem in _secretsToCleanup)
-                {
-                    await Client.PurgeDeletedSecretAsync(cleanupItem.Name);
-                }
-
-                foreach ((string Name, bool Delete) cleanupItem in _secretsToCleanup)
-                {
-                    await WaitForPurgedSecret(cleanupItem.Name);
-                }
+                await Client.StartDeleteSecretAsync(name).ConfigureAwait(false);
             }
-            finally
+            catch (RequestFailedException ex) when (ex.Status == 404)
             {
-                _secretsToCleanup.Clear();
+            }
+
+            try
+            {
+                await WaitForDeletedSecret(name).ConfigureAwait(false);
+            }
+            catch (RequestFailedException ex) when (ex.Status == 404)
+            {
+            }
+
+            try
+            {
+                await Client.PurgeDeletedSecretAsync(name).ConfigureAwait(false);
+            }
+            catch (RequestFailedException ex) when (ex.Status == 404)
+            {
             }
         }
 
-        protected void RegisterForCleanup(string name, bool delete = true)
+        protected void RegisterForCleanup(string name)
         {
-            _secretsToCleanup.Enqueue((name, delete));
+            _secretsToCleanup.Enqueue(name);
         }
 
         protected void AssertSecretsEqual(KeyVaultSecret exp, KeyVaultSecret act)
@@ -140,7 +146,7 @@ namespace Azure.Security.KeyVault.Test
 
             using (Recording.DisableRecording())
             {
-                return TestRetryHelper.RetryAsync(async () => await Client.GetDeletedSecretAsync(name));
+                return TestRetryHelper.RetryAsync(async () => await Client.GetDeletedSecretAsync(name).ConfigureAwait(false));
             }
         }
 
@@ -156,10 +162,10 @@ namespace Azure.Security.KeyVault.Test
                 return TestRetryHelper.RetryAsync(async () => {
                     try
                     {
-                        await Client.GetDeletedSecretAsync(name);
-                        throw new InvalidOperationException("Secret still exists");
+                        await Client.GetDeletedSecretAsync(name).ConfigureAwait(false);
+                        throw new InvalidOperationException($"Secret {name} still exists");
                     }
-                    catch
+                    catch (RequestFailedException ex) when (ex.Status == 404)
                     {
                         return (Response)null;
                     }
@@ -167,7 +173,7 @@ namespace Azure.Security.KeyVault.Test
             }
         }
 
-        protected Task PollForSecret(string name)
+        protected Task WaitForSecret(string name)
         {
             if (Mode == RecordedTestMode.Playback)
             {
@@ -176,7 +182,7 @@ namespace Azure.Security.KeyVault.Test
 
             using (Recording.DisableRecording())
             {
-                return TestRetryHelper.RetryAsync(async () => await Client.GetSecretAsync(name));
+                return TestRetryHelper.RetryAsync(async () => await Client.GetSecretAsync(name).ConfigureAwait(false));
             }
         }
     }

@@ -21,11 +21,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
         {
             // Environment variable with the Key Vault endpoint.
             string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
-            HelloWorldSync(keyVaultUrl);
-        }
 
-        private void HelloWorldSync(string keyVaultUrl)
-        {
             #region Snippet:SecretsSample1SecretClient
             var client = new SecretClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
             #endregion
@@ -62,6 +58,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             #endregion
 
             #region Snippet:SecretsSample1PurgeSecret
+            // You only need to wait for completion if you want to purge or recover the secret.
             while (!operation.HasCompleted)
             {
                 Thread.Sleep(2000);

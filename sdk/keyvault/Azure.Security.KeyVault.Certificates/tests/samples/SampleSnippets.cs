@@ -30,12 +30,6 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             // Create a new certificate client using the default credential from Azure.Identity using environment variables previously set,
             // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
             var client = new CertificateClient(vaultUri: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
-
-            // Create a certificate using the certificate client.
-            CertificateOperation operation = client.StartCreateCertificate("MyCertificate", CertificatePolicy.Default);
-
-            // Retrieve a certificate using the certificate client.
-            KeyVaultCertificateWithPolicy certificate = client.GetCertificate("MyCertificate");
             #endregion
 
             this.client = client;
@@ -61,7 +55,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             #endregion
         }
 
-        [Test]
+        [Ignore("The certificate was already created in the synchronous method.")]
         public async Task CreateCertificateAsync()
         {
             #region Snippet:CreateCertificateAsync
@@ -145,7 +139,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             #region Snippet:DeleteAndPurgeCertificateAsync
             DeleteCertificateOperation operation = await client.StartDeleteCertificateAsync("MyCertificate");
 
-            // You only need to wait for completion if you want to purge or recover the secret.
+            // You only need to wait for completion if you want to purge or recover the certificate.
             await operation.WaitForCompletionAsync();
 
             DeletedCertificate secret = operation.Value;
@@ -159,7 +153,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             #region Snippet:DeleteAndPurgeCertificate
             DeleteCertificateOperation operation = client.StartDeleteCertificate("MyCertificate");
 
-            // You only need to wait for completion if you want to purge or recover the secret.
+            // You only need to wait for completion if you want to purge or recover the certificate.
             // You should call `UpdateStatus` in another thread or after doing additional work like pumping messages.
             while (!operation.HasCompleted)
             {
