@@ -709,17 +709,22 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 PartitionContexts.TryGetValue(partitionId, out var context);
 
-                var options = new EventHubConsumerClientOptions
+                var clientOptions = new EventHubConsumerClientOptions
                 {
-                    RetryOptions = retryOptions,
+                    RetryOptions = retryOptions
+                };
+
+                var readOptions = new ReadOptions
+                {
+                    MaximumWaitTime = maximumReceiveWaitTime,
                     TrackLastEnqueuedEventInformation = trackLastEnqueuedEventInformation
                 };
 
                 await using var connection = CreateConnection();
 
-                await using (var consumer = new EventHubConsumerClient(ConsumerGroup, connection, options))
+                await using (var consumer = new EventHubConsumerClient(ConsumerGroup, connection, clientOptions))
                 {
-                    await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partitionId, startingPosition, maximumReceiveWaitTime, taskCancellationToken))
+                    await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partitionId, startingPosition, readOptions, taskCancellationToken))
                     {
                         using DiagnosticScope diagnosticScope = EventDataInstrumentation.ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName);
                         diagnosticScope.AddAttribute("kind", "server");

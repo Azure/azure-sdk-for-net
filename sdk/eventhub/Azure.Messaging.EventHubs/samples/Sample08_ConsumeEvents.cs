@@ -78,15 +78,20 @@ namespace Azure.Messaging.EventHubs.Samples
                 // we're expecting only the one event, we will exit the loop when we receive it.  To be sure that we do not block forever
                 // waiting on an event that is not published, we will request cancellation after a fairly long interval.
 
-                PartitionEvent receivedEvent;
-
-                Stopwatch watch = Stopwatch.StartNew();
-                bool wereEventsPublished = false;
-
                 CancellationTokenSource cancellationSource = new CancellationTokenSource();
                 cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
 
-                await foreach (PartitionEvent currentEvent in consumerClient.ReadEventsFromPartitionAsync(firstPartition, EventPosition.Latest, TimeSpan.FromMilliseconds(150), cancellationSource.Token))
+                ReadOptions readOptions = new ReadOptions
+                {
+                    MaximumWaitTime = TimeSpan.FromMilliseconds(150)
+                };
+
+                PartitionEvent receivedEvent;
+                bool wereEventsPublished = false;
+
+                Stopwatch watch = Stopwatch.StartNew();
+
+                await foreach (PartitionEvent currentEvent in consumerClient.ReadEventsFromPartitionAsync(firstPartition, EventPosition.Latest, readOptions, cancellationSource.Token))
                 {
                     if (!wereEventsPublished)
                     {
@@ -98,6 +103,7 @@ namespace Azure.Messaging.EventHubs.Samples
                             await producerClient.SendAsync(eventBatch);
                             wereEventsPublished = true;
 
+                            await Task.Delay(250);
                             Console.WriteLine("The event batch has been published.");
                         }
                     }

@@ -88,13 +88,18 @@ namespace Azure.Messaging.EventHubs.Samples
 
                     // We will consume the events until all of the published events have been received.
 
-                    List<EventData> receivedEvents = new List<EventData>();
-                    bool wereEventsPublished = false;
-
                     CancellationTokenSource cancellationSource = new CancellationTokenSource();
                     cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
 
-                    await foreach (PartitionEvent currentEvent in initialConsumerClient.ReadEventsFromPartitionAsync(firstPartition, EventPosition.Latest, TimeSpan.FromMilliseconds(150), cancellationSource.Token))
+                    ReadOptions readOptions = new ReadOptions
+                    {
+                         MaximumWaitTime = TimeSpan.FromMilliseconds(150)
+                    };
+
+                    List<EventData> receivedEvents = new List<EventData>();
+                    bool wereEventsPublished = false;
+
+                    await foreach (PartitionEvent currentEvent in initialConsumerClient.ReadEventsFromPartitionAsync(firstPartition, EventPosition.Latest, readOptions, cancellationSource.Token))
                     {
                         if (!wereEventsPublished)
                         {
@@ -110,6 +115,7 @@ namespace Azure.Messaging.EventHubs.Samples
                                 await producerClient.SendAsync(eventBatch);
                                 wereEventsPublished = true;
 
+                                await Task.Delay(250);
                                 Console.WriteLine($"The event batch with { eventBatchSize } events has been published.");
                             }
                         }
