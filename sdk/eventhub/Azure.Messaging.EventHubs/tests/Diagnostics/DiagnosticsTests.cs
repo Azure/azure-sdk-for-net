@@ -13,9 +13,9 @@ using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
 using Azure.Messaging.EventHubs.Processor;
+using Azure.Messaging.EventHubs.Samples.Infrastructure;
 using Moq;
 using NUnit.Framework;
-using Azure.Messaging.EventHubs.Samples.Infrastructure;
 
 namespace Azure.Messaging.EventHubs.Tests
 {

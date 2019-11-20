@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Processor;
-using NUnit.Framework;
 using Azure.Messaging.EventHubs.Samples.Infrastructure;
+using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests
 {

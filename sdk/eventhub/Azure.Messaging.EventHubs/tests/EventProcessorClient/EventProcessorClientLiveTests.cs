@@ -9,9 +9,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Processor;
+using Azure.Messaging.EventHubs.Samples.Infrastructure;
 using Azure.Messaging.EventHubs.Tests.Infrastructure;
 using NUnit.Framework;
-using Azure.Messaging.EventHubs.Samples.Infrastructure;
 
 namespace Azure.Messaging.EventHubs.Tests
 {

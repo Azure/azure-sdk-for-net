@@ -5,7 +5,6 @@ using System;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.EventHubs.Processor;
 using Azure.Messaging.EventHubs.Samples.Infrastructure;
 
 namespace Azure.Messaging.EventHubs.Samples
@@ -51,7 +50,7 @@ namespace Azure.Messaging.EventHubs.Samples
             // own partition manager by creating a subclass from the PartitionManager abstract class.  Here we are creating
             // a new instance of a MockCheckPointStorage to get started with using the `EventProcessor` but in production,
             // you should choose an implementation of the PartitionManager interface that will
-            // store the checkpoints and partition ownerships to a persistent store instead.
+            // store the checkpoints and partition ownership to a persistent store instead.
             // This isn't relevant to understanding this sample, but is required by the event processor constructor.
 
             var partitionManager = new MockCheckPointStorage();

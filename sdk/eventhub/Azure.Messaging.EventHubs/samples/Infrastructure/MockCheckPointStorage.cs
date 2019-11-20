@@ -10,13 +10,13 @@ using Azure.Messaging.EventHubs.Processor;
 namespace Azure.Messaging.EventHubs.Samples.Infrastructure
 {
     /// <summary>
-    /// The EventProcessor relies on a <see cref="PartitionManager" /> to store checkpoints and handle partition
-    /// ownerships.  <see cref="MockCheckPointStorage"/> is simple partition manager that stores checkpoints and
-    /// partition ownerships in memory of your program.
+    ///   The EventProcessor relies on a <see cref="PartitionManager" /> to store checkpoints and handle partition
+    ///   ownership.  <see cref="MockCheckPointStorage"/> is simple partition manager that stores checkpoints and
+    ///   partition ownership in memory of your program.
     ///
-    /// You can use the <see cref="MockCheckPointStorage"/> to get started with using the `EventProcessor`.
-    /// But in production, you should choose an implementation of the <see cref="PartitionManager" /> interface that will
-    /// store the checkpoints and partition ownerships to a persistent store instead.
+    ///   You can use the <see cref="MockCheckPointStorage"/> to get started with using the `EventProcessor`.
+    ///   But in production, you should choose an implementation of the <see cref="PartitionManager" /> interface that will
+    ///   store the checkpoints and partition ownership to a persistent store instead.
     /// </summary>
     ///
     public sealed class MockCheckPointStorage : PartitionManager
