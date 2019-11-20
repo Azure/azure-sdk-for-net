@@ -456,3 +456,6 @@ directive:
     $.RetentionPolicy["x-ms-client-name"] = "QueueRetentionPolicy";
     $.RetentionPolicy.xml = { "name": "RetentionPolicy"};
 ```
+
+
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Queues%2Fswagger%2Freadme.png)

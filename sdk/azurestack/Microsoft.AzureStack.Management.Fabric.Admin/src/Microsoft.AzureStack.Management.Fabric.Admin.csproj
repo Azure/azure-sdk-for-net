@@ -7,7 +7,7 @@
     <PropertyGroup>
         <PackageId>Microsoft.AzureStack.Management.Fabric.Admin</PackageId>
         <Description>Provides developers with libraries for the fabric admin under AzureStack to manage fabric infrastructure.</Description>
-        <Version>2.9.0-preview</Version>
+        <Version>2.9.1-preview</Version>
         <AssemblyName>Microsoft.AzureStack.Management.Fabric.Admin</AssemblyName>
         <PackageTags>Microsoft Azure Stack;Fabric;REST HTTP client;azurestack;netcore452</PackageTags>
         <PackageReleaseNotes>
@@ -18,6 +18,7 @@
                   1. The value of Id, Name, HealthStatus and OperationalStatus have been changed.
                   2. We have supported new properties FirmwareVersion, IsIndicationEnabled, Manufacturer and StoragePool for Drive resources.
                   3. The properties CanPool and CannotPoolReason of Drive resources have been deprecated.
+                * Bug fixing for fabriclocation model
                 Please note that the features are supported by Azure Stack 1910+.
             ]]>
         </PackageReleaseNotes>

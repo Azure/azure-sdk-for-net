@@ -1,7 +1,7 @@
 $RepoRoot = Resolve-Path $PSScriptRoot\..\..\..
 $ObjDirectory = "$RepoRoot\artifacts\obj";
 $TempPath = [System.IO.Path]::GetTempPath() + "\Azure.Core.All"
-dotnet restore $RepoRoot\eng\data-plane.proj
+dotnet restore $RepoRoot\eng\service.proj
 
 $slnName = "Azure.Core.All.sln";
 if (Test-Path $slnName)

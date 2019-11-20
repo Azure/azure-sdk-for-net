@@ -161,7 +161,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         public AmqpConnectionScope(Uri serviceEndpoint,
                                    string eventHubName,
-                                   TokenCredential credential,
+                                   EventHubTokenCredential credential,
                                    TransportType transport,
                                    IWebProxy proxy,
                                    string identifier = default)
@@ -230,7 +230,9 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="consumerGroup">The name of the consumer group in the context of which events should be received.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition from which events should be received.</param>
         /// <param name="eventPosition">The position of the event in the partition where the link should be filtered to.</param>
-        /// <param name="consumerOptions">The set of active options for the consumer that will make use of the link.</param>
+        /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.</param>
+        /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
+        /// <param name="trackLastEnqueuedEventInformation">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
         /// <param name="timeout">The timeout to apply when creating the link.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
@@ -239,14 +241,14 @@ namespace Azure.Messaging.EventHubs.Amqp
         public virtual async Task<ReceivingAmqpLink> OpenConsumerLinkAsync(string consumerGroup,
                                                                            string partitionId,
                                                                            EventPosition eventPosition,
-                                                                           EventHubConsumerClientOptions consumerOptions,
                                                                            TimeSpan timeout,
+                                                                           uint prefetchCount,
+                                                                           long? ownerLevel,
+                                                                           bool trackLastEnqueuedEventInformation,
                                                                            CancellationToken cancellationToken)
         {
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
             Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
-            Argument.AssertNotNull(eventPosition, nameof(eventPosition));
-            Argument.AssertNotNull(consumerOptions, nameof(consumerOptions));
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
@@ -256,7 +258,17 @@ namespace Azure.Messaging.EventHubs.Amqp
             var connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            var link = await CreateReceivingLinkAsync(connection, consumerEndpoint, eventPosition, consumerOptions, timeout.CalculateRemaining(stopWatch.Elapsed), cancellationToken).ConfigureAwait(false);
+            var link = await CreateReceivingLinkAsync(
+                connection,
+                consumerEndpoint,
+                eventPosition,
+                timeout.CalculateRemaining(stopWatch.Elapsed),
+                prefetchCount,
+                ownerLevel,
+                trackLastEnqueuedEventInformation,
+                cancellationToken
+            ).ConfigureAwait(false);
+
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             await OpenAmqpObjectAsync(link, timeout.CalculateRemaining(stopWatch.Elapsed)).ConfigureAwait(false);
@@ -442,7 +454,9 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="connection">The active and opened AMQP connection to use for this link.</param>
         /// <param name="endpoint">The fully qualified endpoint to open the link for.</param>
         /// <param name="eventPosition">The position of the event in the partition where the link should be filtered to.</param>
-        /// <param name="consumerOptions">The set of active options for the consumer that will make use of the link.</param>
+        /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.</param>
+        /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
+        /// <param name="trackLastEnqueuedEventInformation">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
         /// <param name="timeout">The timeout to apply when creating the link.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
@@ -451,8 +465,10 @@ namespace Azure.Messaging.EventHubs.Amqp
         protected virtual async Task<ReceivingAmqpLink> CreateReceivingLinkAsync(AmqpConnection connection,
                                                                                  Uri endpoint,
                                                                                  EventPosition eventPosition,
-                                                                                 EventHubConsumerClientOptions consumerOptions,
                                                                                  TimeSpan timeout,
+                                                                                 uint prefetchCount,
+                                                                                 long? ownerLevel,
+                                                                                 bool trackLastEnqueuedEventInformation,
                                                                                  CancellationToken cancellationToken)
         {
             Argument.AssertNotDisposed(IsDisposed, nameof(AmqpConnectionScope));
@@ -485,8 +501,8 @@ namespace Azure.Messaging.EventHubs.Amqp
                 var linkSettings = new AmqpLinkSettings
                 {
                     Role = true,
-                    TotalLinkCredit = (uint)consumerOptions.PrefetchCount,
-                    AutoSendFlow = consumerOptions.PrefetchCount > 0,
+                    TotalLinkCredit = prefetchCount,
+                    AutoSendFlow = prefetchCount > 0,
                     SettleType = SettleMode.SettleOnSend,
                     Source = new Source { Address = endpoint.AbsolutePath, FilterSet = filters },
                     Target = new Target { Address = Guid.NewGuid().ToString() }
@@ -494,17 +510,12 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                 linkSettings.AddProperty(AmqpProperty.EntityType, (int)AmqpProperty.Entity.ConsumerGroup);
 
-                if (!string.IsNullOrEmpty(consumerOptions.Identifier))
+                if (ownerLevel.HasValue)
                 {
-                    linkSettings.AddProperty(AmqpProperty.ConsumerIdentifier, consumerOptions.Identifier);
+                    linkSettings.AddProperty(AmqpProperty.OwnerLevel, ownerLevel.Value);
                 }
 
-                if (consumerOptions.OwnerLevel.HasValue)
-                {
-                    linkSettings.AddProperty(AmqpProperty.OwnerLevel, consumerOptions.OwnerLevel.Value);
-                }
-
-                if (consumerOptions.TrackLastEnqueuedEventInformation)
+                if (trackLastEnqueuedEventInformation)
                 {
                     linkSettings.DesiredCapabilities = new Multiple<AmqpSymbol>(new List<AmqpSymbol>
                     {
@@ -796,17 +807,16 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// </remarks>
         ///
         protected virtual Task<DateTime> RequestAuthorizationUsingCbsAsync(AmqpConnection connection,
-                                                                          CbsTokenProvider tokenProvider,
-                                                                          Uri endpoint,
-                                                                          string audience,
-                                                                          string resource,
-                                                                          string[] requiredClaims,
-                                                                          TimeSpan timeout)
+                                                                           CbsTokenProvider tokenProvider,
+                                                                           Uri endpoint,
+                                                                           string audience,
+                                                                           string resource,
+                                                                           string[] requiredClaims,
+                                                                           TimeSpan timeout)
         {
             var authLink = connection.Extensions.Find<AmqpCbsLink>();
             return authLink.SendTokenAsync(TokenProvider, endpoint, audience, resource, requiredClaims, timeout);
         }
-
 
         /// <summary>
         ///   Creates the settings to use for AMQP communication.

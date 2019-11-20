@@ -39,7 +39,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///   <c>true</c> if the producer is closed; otherwise, <c>false</c>.
         /// </value>
         ///
-        public override bool Closed => _closed;
+        public override bool IsClosed => _closed;
 
         /// <summary>
         ///   The name of the Event Hub to which the producer is bound.
@@ -60,7 +60,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///   The policy to use for determining retry behavior for when an operation fails.
         /// </summary>
         ///
-        private EventHubRetryPolicy RetryPolicy { get; }
+        private EventHubsRetryPolicy RetryPolicy { get; }
 
         /// <summary>
         ///   The converter to use for translating between AMQP messages and client library
@@ -113,7 +113,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                             string partitionId,
                             AmqpConnectionScope connectionScope,
                             AmqpMessageConverter messageConverter,
-                            EventHubRetryPolicy retryPolicy)
+                            EventHubsRetryPolicy retryPolicy)
         {
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
             Argument.AssertNotNull(connectionScope, nameof(connectionScope));
@@ -189,7 +189,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <returns>An <see cref="EventDataBatch" /> with the requested <paramref name="options"/>.</returns>
         ///
-        public override async ValueTask<TransportEventBatch> CreateBatchAsync(BatchOptions options,
+        public override async ValueTask<TransportEventBatch> CreateBatchAsync(CreateBatchOptions options,
                                                                               CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(options, nameof(options));

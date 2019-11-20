@@ -25,6 +25,9 @@ namespace Azure.Messaging.EventHubs.Amqp
     ///
     internal class AmqpConsumer : TransportConsumer
     {
+        /// <summary>The default prefetch count to use for the consumer.</summary>
+        private const uint DefaultPrefetchCount = 300;
+
         /// <summary>Indicates whether or not this instance has been closed.</summary>
         private bool _closed = false;
 
@@ -36,7 +39,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///   <c>true</c> if the consumer is closed; otherwise, <c>false</c>.
         /// </value>
         ///
-        public override bool Closed => _closed;
+        public override bool IsClosed => _closed;
 
         /// <summary>
         ///   The name of the Event Hub to which the client is bound.
@@ -59,16 +62,19 @@ namespace Azure.Messaging.EventHubs.Amqp
         private string PartitionId { get; }
 
         /// <summary>
-        ///   The set of options which govern the behavior of this consumer instance.
+        ///   Indicates whether or not the consumer should request information on the last enqueued event on the partition
+        ///   associated with a given event, and track that information as events are received.
         /// </summary>
         ///
-        private EventHubConsumerClientOptions Options { get; }
+        /// <value><c>true</c> if information about a partition's last event should be requested and tracked; otherwise, <c>false</c>.</value>
+        ///
+        private bool TrackLastEnqueuedEventInformation { get; }
 
         /// <summary>
         ///   The policy to use for determining retry behavior for when an operation fails.
         /// </summary>
         ///
-        private EventHubRetryPolicy RetryPolicy { get; }
+        private EventHubsRetryPolicy RetryPolicy { get; }
 
         /// <summary>
         ///   The converter to use for translating between AMQP messages and client library
@@ -96,8 +102,10 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="eventHubName">The name of the Event Hub from which events will be consumed.</param>
         /// <param name="consumerGroup">The name of the consumer group this consumer is associated with.  Events are read in the context of this group.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
-        /// <param name="consumerOptions">The set of active options for the consumer that will make use of the link.</param>
         /// <param name="eventPosition">The position of the event in the partition where the consumer should begin reading.</param>
+        /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
+        /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
+        /// <param name="trackLastEnqueuedEventInformation">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
         /// <param name="connectionScope">The AMQP connection context for operations .</param>
         /// <param name="messageConverter">The converter to use for translating between AMQP messages and client types.</param>
         /// <param name="retryPolicy">The retry policy to consider when an operation fails.</param>
@@ -115,16 +123,16 @@ namespace Azure.Messaging.EventHubs.Amqp
                             string consumerGroup,
                             string partitionId,
                             EventPosition eventPosition,
-                            EventHubConsumerClientOptions consumerOptions,
+                            bool trackLastEnqueuedEventInformation,
+                            long? ownerLevel,
+                            uint? prefetchCount,
                             AmqpConnectionScope connectionScope,
                             AmqpMessageConverter messageConverter,
-                            EventHubRetryPolicy retryPolicy)
+                            EventHubsRetryPolicy retryPolicy)
         {
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
             Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
-            Argument.AssertNotNull(eventPosition, nameof(EventPosition));
-            Argument.AssertNotNull(consumerOptions, nameof(EventHubConsumerClientOptions));
             Argument.AssertNotNull(connectionScope, nameof(connectionScope));
             Argument.AssertNotNull(messageConverter, nameof(messageConverter));
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
@@ -132,11 +140,22 @@ namespace Azure.Messaging.EventHubs.Amqp
             EventHubName = eventHubName;
             ConsumerGroup = consumerGroup;
             PartitionId = partitionId;
-            Options = consumerOptions;
+            TrackLastEnqueuedEventInformation = trackLastEnqueuedEventInformation;
             ConnectionScope = connectionScope;
             RetryPolicy = retryPolicy;
             MessageConverter = messageConverter;
-            ReceiveLink = new FaultTolerantAmqpObject<ReceivingAmqpLink>(timeout => ConnectionScope.OpenConsumerLinkAsync(consumerGroup, partitionId, eventPosition, consumerOptions, timeout, CancellationToken.None), link => link.SafeClose());
+
+            ReceiveLink = new FaultTolerantAmqpObject<ReceivingAmqpLink>(timeout =>
+                ConnectionScope.OpenConsumerLinkAsync(
+                    consumerGroup,
+                    partitionId,
+                    eventPosition,
+                    timeout,
+                    prefetchCount ?? DefaultPrefetchCount,
+                    ownerLevel,
+                    trackLastEnqueuedEventInformation,
+                    CancellationToken.None),
+                link => link.SafeClose());
         }
 
         /// <summary>
@@ -144,7 +163,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// </summary>
         ///
         /// <param name="maximumMessageCount">The maximum number of messages to receive in this batch.</param>
-        /// <param name="maximumWaitTime">The maximum amount of time to wait to build up the requested message count for the batch; if not specified, the default wait time specified when the consumer was created will be used.</param>
+        /// <param name="maximumWaitTime">The maximum amount of time to wait to build up the requested message count for the batch; if not specified, the per-try timeout specified by the retry policy will be used.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>The batch of <see cref="EventData" /> from the Event Hub partition this consumer is associated with.  If no events are present, an empty enumerable is returned.</returns>
@@ -203,7 +222,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                             receivedEventCount = receivedEvents.Count;
 
-                            if ((Options.TrackLastEnqueuedEventInformation) && (receivedEventCount > 0))
+                            if ((TrackLastEnqueuedEventInformation) && (receivedEventCount > 0))
                             {
                                 LastReceivedEvent = receivedEvents[receivedEventCount - 1];
                             }

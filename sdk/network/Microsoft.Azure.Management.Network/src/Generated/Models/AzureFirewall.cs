@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// AzureFirewall.</param>
         /// <param name="sku">The Azure Firewall Resource SKU.</param>
         /// <param name="additionalProperties">The additional properties used
-        /// to further config this azure firewall </param>
+        /// to further config this azure firewall.</param>
         /// <param name="zones">A list of availability zones denoting where the
         /// resource needs to come from.</param>
         /// <param name="etag">A unique read-only string that changes whenever
@@ -159,7 +159,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets the additional properties used to further config this
-        /// azure firewall
+        /// azure firewall.
         /// </summary>
         [JsonProperty(PropertyName = "properties.additionalProperties")]
         public IDictionary<string, string> AdditionalProperties { get; set; }

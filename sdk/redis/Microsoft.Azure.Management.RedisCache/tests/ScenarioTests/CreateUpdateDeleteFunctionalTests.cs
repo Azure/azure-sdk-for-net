@@ -33,6 +33,13 @@ namespace AzureRedisCache.Tests
             { 
                 var _client = RedisCacheManagementTestUtilities.GetRedisManagementClient(this, context);
 
+                _client.Redis.CheckNameAvailability(
+                    parameters: new CheckNameAvailabilityParameters
+                    {
+                        Name = fixture.RedisCacheName,
+                        Type = "Microsoft.Cache/Redis"
+                    });
+
                 var responseCreate = _client.Redis.Create(resourceGroupName: fixture.ResourceGroupName, name: fixture.RedisCacheName,
                                         parameters: new RedisCreateParameters
                                         {

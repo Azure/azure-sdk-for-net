@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.Security.KeyVault.Secrets
 {
     /// <summary>
-    /// Options that allow you to configure the management of the request sent to Key Vault.
+    /// Options that allow you to configure the requests sent to Key Vault.
     /// </summary>
     public class SecretClientOptions : ClientOptions
     {

@@ -8,7 +8,7 @@ using System.Text.Json;
 namespace Azure.Security.KeyVault.Certificates
 {
     /// <summary>
-    /// Properties pertaining to the status of a certificate operation
+    /// Properties pertaining to the status of a certificate operation.
     /// </summary>
     public class CertificateOperationProperties : IJsonDeserializable
     {
@@ -23,60 +23,64 @@ namespace Azure.Security.KeyVault.Certificates
         private const string TargetPropertyName = "target";
         private const string ErrorPropertyName = "error";
 
-        /// <summary>
-        /// The Id of the certificate operation
-        /// </summary>
-        public Uri Id { get; private set; }
+        internal CertificateOperationProperties()
+        {
+        }
 
         /// <summary>
-        /// The name of the certificate to which the operation applies
+        /// Gets the identifier of the certificate operation.
         /// </summary>
-        public string Name { get; private set; }
+        public Uri Id { get; internal set; }
 
         /// <summary>
-        /// The Uri of the vault executing the certificate operation
+        /// Gets the name of the certificate to which the operation applies.
         /// </summary>
-        public Uri VaultUri { get; private set; }
+        public string Name { get; internal set; }
 
         /// <summary>
-        /// The name of the <see cref="Issuer"/> for the certificate to which the operation applies
+        /// Gets the <see cref="Uri"/> of the vault executing the certificate operation.
         /// </summary>
-        public string IssuerName { get; private set; }
+        public Uri VaultUri { get; internal set; }
 
         /// <summary>
-        /// The CSR which is pending signature for the certificate operation
+        /// Gets the name of the <see cref="CertificateIssuer"/> for the certificate to which the operation applies.
         /// </summary>
-        public string CertificateSigningRequest { get; private set; }
+        public string IssuerName { get; internal set; }
 
         /// <summary>
-        /// Specifies whether a cancellation has been requested for the operation
+        /// Gets the certificate signing request (CSR) which is pending signature for the certificate operation.
         /// </summary>
-        public bool CancellationRequested { get; private set; }
+        public string CertificateSigningRequest { get; internal set; }
 
         /// <summary>
-        /// The request id of the certificate operation
+        /// Gets a value indicating whether a cancellation has been requested for the operation.
         /// </summary>
-        public string RequestId { get; private set; }
+        public bool CancellationRequested { get; internal set; }
 
         /// <summary>
-        /// The current status of the operation
+        /// Gets the request identifier of the certificate operation.
         /// </summary>
-        public string Status { get; private set; }
+        public string RequestId { get; internal set; }
 
         /// <summary>
-        /// Extended details on the status of the operation
+        /// Gets the current status of the operation.
         /// </summary>
-        public string StatusDetails { get; private set; }
+        public string Status { get; internal set; }
 
         /// <summary>
-        /// The location which will contain the result of the certificate operation
+        /// Gets extended details on the status of the operation.
         /// </summary>
-        public string Target { get; private set; }
+        public string StatusDetails { get; internal set; }
 
         /// <summary>
-        /// Errors encountered, if any, during the processing of the certificate operation
+        /// Gets the location which will contain the result of the certificate operation.
         /// </summary>
-        public Error Error { get; private set; }
+        public string Target { get; internal set; }
+
+        /// <summary>
+        /// Gets any errors encountered during the processing of the certificate operation.
+        /// </summary>
+        public CertificateOperationError Error { get; internal set; }
 
         void IJsonDeserializable.ReadProperties(JsonElement json)
         {
@@ -119,7 +123,7 @@ namespace Azure.Security.KeyVault.Certificates
                         break;
 
                     case ErrorPropertyName:
-                        Error = new Error();
+                        Error = new CertificateOperationError();
                         ((IJsonDeserializable)Error).ReadProperties(prop.Value);
                         break;
                 }

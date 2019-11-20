@@ -3,8 +3,8 @@
   <PropertyGroup>
     <Description>This is the Microsoft Azure Application Configuration Service client library</Description>
     <AssemblyTitle>Microsoft Azure.Data.AppConfiguration client library</AssemblyTitle>
-    <Version>1.0.0-preview.4</Version>
-    <PackageTags>Microsoft Azure Application Configuration</PackageTags>
+    <Version>1.0.0-preview.5</Version>
+    <PackageTags>Microsoft Azure Application Configuration;$(PackageCommonTags)</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
       Refactored several classes based on feedback, including:

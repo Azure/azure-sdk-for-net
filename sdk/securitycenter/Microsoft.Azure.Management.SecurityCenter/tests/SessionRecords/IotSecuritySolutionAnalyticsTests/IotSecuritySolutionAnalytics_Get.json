@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "7a8f5639-3da4-4f50-a09e-9c8967a36f02"
+          "dfd1f1a9-8d43-4c36-b8e4-0b8a584d3187"
         ],
         "accept-language": [
           "en-US"
@@ -15,8 +15,8 @@
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.Management.Security.SecurityCenterClient/1.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/1.0.1.0"
         ]
       },
       "ResponseHeaders": {
@@ -24,7 +24,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 15 Sep 2019 09:09:47 GMT"
+          "Thu, 07 Nov 2019 14:20:51 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -36,13 +36,13 @@
           "749"
         ],
         "x-ms-request-id": [
-          "1e610bc0-b3e7-4e58-bd10-9ef8f1c1e878"
+          "74c4a17c-64dc-4254-8e7f-daa3324b02f2"
         ],
         "x-ms-correlation-request-id": [
-          "1e610bc0-b3e7-4e58-bd10-9ef8f1c1e878"
+          "74c4a17c-64dc-4254-8e7f-daa3324b02f2"
         ],
         "x-ms-routing-request-id": [
-          "UKSOUTH2:20190915T090947Z:1e610bc0-b3e7-4e58-bd10-9ef8f1c1e878"
+          "UKSOUTH2:20191107T142051Z:74c4a17c-64dc-4254-8e7f-daa3324b02f2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -51,7 +51,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "1053"
+          "723"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -60,10 +60,10 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/075423e9-7d33-4166-8bdf-3920b04e3735/resourceGroups/resourcegroup-cus/providers/Microsoft.Security/IoTSecuritySolutions/Locations/centralus/default\",\r\n  \"name\": \"/subscriptions/075423e9-7d33-4166-8bdf-3920b04e3735/resourceGroups/resourcegroup-cus/providers/Microsoft.Security/IoTSecuritySolutions/Locations/centralus/default\",\r\n  \"type\": \"Microsoft.Security/IoTSecuritySolutionAnalyticsModel\",\r\n  \"properties\": {\r\n    \"metrics\": {\r\n      \"high\": 0,\r\n      \"medium\": 1,\r\n      \"low\": 0\r\n    },\r\n    \"unhealthyDeviceCount\": 1,\r\n    \"devicesMetrics\": [\r\n      {\r\n        \"date\": \"2019-09-15\",\r\n        \"devicesMetrics\": {\r\n          \"high\": 0,\r\n          \"medium\": 1,\r\n          \"low\": 0\r\n        }\r\n      }\r\n    ],\r\n    \"topAlertedDevices\": [\r\n      {\r\n        \"deviceId\": \"vm-amamit-bagbash-A\",\r\n        \"alertsCount\": 3\r\n      }\r\n    ],\r\n    \"mostPrevalentDeviceAlerts\": [\r\n      {\r\n        \"alertDisplayName\": \"Detected suspicious use of the useradd command\",\r\n        \"alertsCount\": 2,\r\n        \"reportedSeverity\": \"Medium\"\r\n      }\r\n    ],\r\n    \"mostPrevalentDeviceRecommendations\": [\r\n      {\r\n        \"recommendationDisplayName\": \"Permissive firewall policy in one of the chains\",\r\n        \"devicesCount\": 1,\r\n        \"reportedSeverity\": \"Medium\"\r\n      },\r\n      {\r\n        \"recommendationDisplayName\": \"Device has open ports\",\r\n        \"devicesCount\": 1,\r\n        \"reportedSeverity\": \"Medium\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/075423e9-7d33-4166-8bdf-3920b04e3735/resourceGroups/resourcegroup-cus/providers/Microsoft.Security/IoTSecuritySolutions/Locations/centralus/default\",\r\n  \"name\": \"/subscriptions/075423e9-7d33-4166-8bdf-3920b04e3735/resourceGroups/resourcegroup-cus/providers/Microsoft.Security/IoTSecuritySolutions/Locations/centralus/default\",\r\n  \"type\": \"Microsoft.Security/IoTSecuritySolutionAnalyticsModel\",\r\n  \"properties\": {\r\n    \"metrics\": {\r\n      \"high\": 0,\r\n      \"medium\": 2,\r\n      \"low\": 0\r\n    },\r\n    \"unhealthyDeviceCount\": 2,\r\n    \"devicesMetrics\": [],\r\n    \"topAlertedDevices\": [],\r\n    \"mostPrevalentDeviceAlerts\": [],\r\n    \"mostPrevalentDeviceRecommendations\": [\r\n      {\r\n        \"recommendationDisplayName\": \"Permissive firewall policy in one of the chains\",\r\n        \"devicesCount\": 2,\r\n        \"reportedSeverity\": \"Medium\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {},
-  "Variables": { "SubscriptionId": "075423e9-7d33-4166-8bdf-3920b04e3735" }
+  "Variables": {}
 }

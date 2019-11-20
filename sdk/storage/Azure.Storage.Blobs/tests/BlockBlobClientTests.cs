@@ -146,7 +146,7 @@ namespace Azure.Storage.Blobs.Test
             BlockBlobClient httpBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
             CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
             httpBlob = InstrumentClient(new BlockBlobClient(
-                httpBlob.Uri,
+                httpBlob.Uri.ToHttp(),
                 httpBlob.Pipeline,
                 httpBlob.ClientDiagnostics,
                 customerProvidedKey));
@@ -238,7 +238,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8354")]
         public async Task StageBlockAsync_WithUnreliableConnection()
         {
             const int blobSize = 1 * Constants.MB;
@@ -325,7 +324,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8353")]
         public async Task StageBlockFromUriAsync_CPK()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -368,7 +366,7 @@ namespace Azure.Storage.Blobs.Test
             BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
             CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
             destBlob = InstrumentClient(new BlockBlobClient(
-                destBlob.Uri,
+                destBlob.Uri.ToHttp(),
                 destBlob.Pipeline,
                 destBlob.ClientDiagnostics,
                 customerProvidedKey));
@@ -1182,7 +1180,7 @@ namespace Azure.Storage.Blobs.Test
             BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
             CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
             blob = InstrumentClient(new BlockBlobClient(
-                blob.Uri,
+                blob.Uri.ToHttp(),
                 blob.Pipeline,
                 blob.ClientDiagnostics,
                 customerProvidedKey));
@@ -1318,7 +1316,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8354")]
         public async Task UploadAsync_WithUnreliableConnection()
         {
             const int blobSize = 1 * Constants.MB;

@@ -96,7 +96,6 @@ namespace Azure.Storage.Blobs.Test
 
         #region Secondary Storage
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8356")]
         public async Task DownloadAsync_ReadFromSecondaryStorage()
         {
             await using DisposingContainer test = await GetTestContainerAsync(GetServiceClient_SecondaryAccount_ReadEnabledOnRetry(1, out TestExceptionPolicy testExceptionPolicy));
@@ -187,7 +186,7 @@ namespace Azure.Storage.Blobs.Test
             BlockBlobClient httpBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
             CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
             httpBlob = InstrumentClient(new BlockBlobClient(
-                httpBlob.Uri,
+                httpBlob.Uri.ToHttp(),
                 httpBlob.Pipeline,
                 httpBlob.ClientDiagnostics,
                 customerProvidedKey));
@@ -313,7 +312,7 @@ namespace Azure.Storage.Blobs.Test
                 BlobRequestConditions accessConditions = BuildAccessConditions(parameters);
 
                 // Act
-                Assert.CatchAsync<Exception>(
+                await TestHelper.CatchAsync<Exception>(
                     async () =>
                     {
                         var _ = (await blob.DownloadAsync(
@@ -438,7 +437,6 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8356")]
         [Test]
         [TestCase(512)]
         [TestCase(1 * Constants.KB)]
@@ -543,6 +541,80 @@ namespace Azure.Storage.Blobs.Test
                             });
                 });
             Assert.IsTrue(ex.ErrorCode == BlobErrorCode.ConditionNotMet);
+        }
+
+        [Test]
+        public async Task DownloadToAsync_PathOverloads()
+        {
+            var path = Path.GetTempFileName();
+            try
+            {
+                await using DisposingContainer test = await GetTestContainerAsync();
+                var data = GetRandomBuffer(Constants.KB);
+
+                BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+                using (var stream = new MemoryStream(data))
+                {
+                    await blob.UploadAsync(stream);
+                }
+                await Verify(await blob.DownloadToAsync(path));
+                await Verify(await blob.DownloadToAsync(path, CancellationToken.None));
+                await Verify(await blob.DownloadToAsync(path,
+                    new BlobRequestConditions() { IfModifiedSince = default }));
+
+                async Task Verify(Response response)
+                {
+                    Assert.AreEqual(data.Length, File.ReadAllBytes(path).Length);
+                    using var actual = new MemoryStream();
+                    using (FileStream resultStream = File.OpenRead(path))
+                    {
+                        await resultStream.CopyToAsync(actual);
+                        TestHelper.AssertSequenceEqual(data, actual.ToArray());
+                    }
+                }
+            }
+            finally
+            {
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+            }
+        }
+
+        [Test]
+        public async Task DownloadToAsync_StreamOverloads()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            var data = GetRandomBuffer(Constants.KB);
+
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+            using (var resultStream = new MemoryStream(data))
+            {
+                await blob.DownloadToAsync(resultStream);
+                Verify(resultStream);
+            }
+            using (var resultStream = new MemoryStream())
+            {
+                await blob.DownloadToAsync(resultStream, CancellationToken.None);
+                Verify(resultStream);
+            }
+            using (var resultStream = new MemoryStream())
+            {
+                await blob.DownloadToAsync(resultStream,
+                    new BlobRequestConditions() { IfModifiedSince = default });
+                Verify(resultStream);
+            }
+
+            void Verify(MemoryStream resultStream)
+            {
+                Assert.AreEqual(data.Length, resultStream.Length);
+                TestHelper.AssertSequenceEqual(data, resultStream.ToArray());
+            }
         }
         #endregion Parallel Download
 
@@ -1262,7 +1334,7 @@ namespace Azure.Storage.Blobs.Test
             AppendBlobClient httpBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
             CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
             httpBlob = InstrumentClient(new AppendBlobClient(
-                httpBlob.Uri,
+                httpBlob.Uri.ToHttp(),
                 httpBlob.Pipeline,
                 httpBlob.ClientDiagnostics,
                 customerProvidedKey));
@@ -1420,6 +1492,33 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task GetPropertiesAsync_SnapshotSAS_Using_BlobClient()
+        {
+            var containerName = GetNewContainerName();
+            var blobName = GetNewBlobName();
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName);
+
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container, blobName);
+            Response<BlobSnapshotInfo> snapshotResponse = await blob.CreateSnapshotAsync();
+
+            BlobBaseClient sasBlob = InstrumentClient(
+                GetServiceClient_BlobServiceSas_Snapshot(
+                    containerName: containerName,
+                    blobName: blobName,
+                    snapshot: snapshotResponse.Value.Snapshot)
+                .GetBlobContainerClient(containerName)
+                .GetBlobClient(blobName)
+                .WithSnapshot(snapshotResponse.Value.Snapshot));
+
+            // Act
+            Response<BlobProperties> response = await sasBlob.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+        }
+
+        [Test]
         public async Task GetPropertiesAsync_SnapshotIdentitySAS()
         {
             BlobServiceClient oauthService = GetServiceClient_OauthAccount();
@@ -1483,6 +1582,7 @@ namespace Azure.Storage.Blobs.Test
             foreach (AccessConditionParameters parameters in GetAccessConditionsFail_Data(garbageLeaseId))
             {
                 await using DisposingContainer test = await GetTestContainerAsync();
+
                 // Arrange
                 BlobBaseClient blob = await GetNewBlobClient(test.Container);
 
@@ -1490,13 +1590,12 @@ namespace Azure.Storage.Blobs.Test
                 BlobRequestConditions accessConditions = BuildAccessConditions(parameters);
 
                 // Act
-                Assert.CatchAsync<Exception>(
+                await TestHelper.CatchAsync<Exception>(
                     async () =>
                     {
                         var _ = (await blob.GetPropertiesAsync(
                             conditions: accessConditions)).Value;
                     });
-
             }
         }
 
@@ -1663,7 +1762,7 @@ namespace Azure.Storage.Blobs.Test
             AppendBlobClient httpBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
             CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
             httpBlob = InstrumentClient(new AppendBlobClient(
-                httpBlob.Uri,
+                httpBlob.Uri.ToHttp(),
                 httpBlob.Pipeline,
                 httpBlob.ClientDiagnostics,
                 customerProvidedKey));
@@ -1783,7 +1882,7 @@ namespace Azure.Storage.Blobs.Test
             AppendBlobClient httpBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
             CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
             httpBlob = InstrumentClient(new AppendBlobClient(
-                httpBlob.Uri,
+                httpBlob.Uri.ToHttp(),
                 httpBlob.Pipeline,
                 httpBlob.ClientDiagnostics,
                 customerProvidedKey));

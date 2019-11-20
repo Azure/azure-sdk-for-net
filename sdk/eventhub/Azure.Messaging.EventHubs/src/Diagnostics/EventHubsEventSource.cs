@@ -191,14 +191,14 @@ namespace Azure.Messaging.EventHubs.Diagnostics
 
         /// <summary>
         ///   Indicates that a client is closing, which may correspond to an <see cref="EventHubConnection" />,
-        ///   <see cref="EventHubProducerClient" />, or <see cref="EventHubConsumerClient" />.
+        ///   <see cref="EventHubProducerClient" />, <see cref="EventHubConsumerClient" />, or <see cref="EventProcessorClient" />.
         /// </summary>
         ///
         /// <param name="clientType">The type of client being closed.</param>
         /// <param name="eventHubName">The name of the Event Hub associated with the client.</param>
         /// <param name="clientId">An identifier to associate with the client.</param>
         ///
-        [Event(9, Level = EventLevel.Verbose, Message = "Closing a {0} client (EventHub '{1}'; Identifier '{2}').")]
+        [Event(9, Level = EventLevel.Verbose, Message = "Closing an {0} (EventHub '{1}'; Identifier '{2}').")]
         public void ClientCloseStart(Type clientType,
                                      string eventHubName,
                                      string clientId)
@@ -211,14 +211,14 @@ namespace Azure.Messaging.EventHubs.Diagnostics
 
         /// <summary>
         ///   Indicates that a client has been closed, which may correspond to an <see cref="EventHubConnection" />,
-        ///   <see cref="EventHubProducerClient" />, or <see cref="EventHubConsumerClient" />.
+        ///   <see cref="EventHubProducerClient" />, <see cref="EventHubConsumerClient" />, or <see cref="EventProcessorClient" />.
         /// </summary>
         ///
         /// <param name="clientType">The type of client being closed.</param>
         /// <param name="eventHubName">The name of the Event Hub associated with the client.</param>
         /// <param name="clientId">An identifier to associate with the client.</param>
         ///
-        [Event(10, Level = EventLevel.Verbose, Message = "A {0} client has been closed (EventHub '{1}'; Identifier '{2}').")]
+        [Event(10, Level = EventLevel.Verbose, Message = "An {0} has been closed (EventHub '{1}'; Identifier '{2}').")]
         public void ClientCloseComplete(Type clientType,
                                         string eventHubName,
                                         string clientId)
@@ -230,7 +230,8 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that an exception was encountered while closing an <see cref="EventHubConnection" />.
+        ///   Indicates that an exception was encountered while closing an <see cref="EventHubConnection" />,
+        ///   <see cref="EventHubProducerClient" />, <see cref="EventHubConsumerClient" />, or <see cref="EventProcessorClient" />.
         /// </summary>
         ///
         /// <param name="clientType">The type of client being closed.</param>
@@ -238,7 +239,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="clientId">An identifier to associate with the client.</param>
         /// <param name="errorMessage">The message for the exception that occurred.</param>
         ///
-        [Event(11, Level = EventLevel.Error, Message = "An exception occurred while closing a {0} client (EventHub '{1}'; Identifier '{2}'). Error Message: '{3}'")]
+        [Event(11, Level = EventLevel.Error, Message = "An exception occurred while closing an {0} (EventHub '{1}'; Identifier '{2}'). Error Message: '{3}'")]
         public void ClientCloseError(Type clientType,
                                      string eventHubName,
                                      string clientId,
@@ -351,15 +352,15 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that subscribing to an Event Hub partition has started.
+        ///   Indicates that reading events from an Event Hub partition has started.
         /// </summary>
         ///
-        /// <param name="eventHubName">The name of the Event Hub that properties are being retrieved for.</param>
-        /// <param name="partitionId">The identifier of the partition that properties are being retrieved for.</param>
+        /// <param name="eventHubName">The name of the Event Hub that events are being read from.</param>
+        /// <param name="partitionId">The identifier of the partition that properties are being read from.</param>
         ///
-        [Event(18, Level = EventLevel.Informational, Message = "Subscribing to Event Hub: {0} (Partition Id: '{1}').")]
-        public void SubscribeToPartitionStart(string eventHubName,
-                                              string partitionId)
+        [Event(18, Level = EventLevel.Informational, Message = "Beginning to publish events to a background channel for Event Hub: {0} (Partition Id: '{1}').")]
+        public void PublishPartitionEventsToChannelStart(string eventHubName,
+                                                         string partitionId)
         {
             if (IsEnabled())
             {
@@ -368,15 +369,15 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that subscribing to an Event Hub partition has completed.
+        ///   Indicates that reading events from an Event Hub partition has completed.
         /// </summary>
         ///
-        /// <param name="eventHubName">The name of the Event Hub that properties are being retrieved for.</param>
-        /// <param name="partitionId">The identifier of the partition that properties are being retrieved for.</param>
+        /// <param name="eventHubName">The name of the Event Hub that events are being read from.</param>
+        /// <param name="partitionId">The identifier of the partition that properties are being read from.</param>
         ///
-        [Event(19, Level = EventLevel.Informational, Message = "Completed subscribing to Event Hub: {0} (Partition Id: '{1}').")]
-        public void SubscribeToPartitionComplete(string eventHubName,
-                                                 string partitionId)
+        [Event(19, Level = EventLevel.Informational, Message = "Completed publishing events to a background channel for Event Hub: {0} (Partition Id: '{1}').")]
+        public void PublishPartitionEventsToChannelComplete(string eventHubName,
+                                                            string partitionId)
         {
             if (IsEnabled())
             {
@@ -385,21 +386,120 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that an exception was encountered while subscribing to an Event Hub partition.
+        ///   Indicates that an exception was encountered while reading events from an Event Hub partition.
         /// </summary>
         ///
-        /// <param name="eventHubName">The name of the Event Hub that properties are being retrieved for.</param>
-        /// <param name="partitionId">The identifier of the partition that properties are being retrieved for.</param>
+        /// <param name="eventHubName">The name of the Event Hub that events are being read from.</param>
+        /// <param name="partitionId">The identifier of the partition that properties are being read from.</param>
         /// <param name="errorMessage">The message for the exception that occurred.</param>
         ///
-        [Event(20, Level = EventLevel.Error, Message = "An exception occurred while subscribing to Event Hub: {0} (Partition Id: '{1}'). Error Message: '{2}'")]
-        public void SubscribeToPartitionError(string eventHubName,
-                                              string partitionId,
-                                              string errorMessage)
+        [Event(20, Level = EventLevel.Error, Message = "An exception occurred while publishing events to a background channel for Event Hub: {0} (Partition Id: '{1}'). Error Message: '{2}'")]
+        public void PublishPartitionEventsToChannelError(string eventHubName,
+                                                         string partitionId,
+                                                         string errorMessage)
         {
             if (IsEnabled())
             {
                 WriteEvent(20, eventHubName ?? string.Empty, partitionId ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
+        /// <summary>
+        ///   Indicates that reading events from an Event Hub partition has started.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The name of the Event Hub that events are being read from.</param>
+        /// <param name="partitionId">The identifier of the partition that properties are being read from.</param>
+        ///
+        [Event(21, Level = EventLevel.Informational, Message = "Beginning to read events for Event Hub: {0} (Partition Id: '{1}').")]
+        public void ReadEventsFromPartitionStart(string eventHubName,
+                                                 string partitionId)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(21, eventHubName ?? string.Empty, partitionId ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that reading events from an Event Hub partition has completed.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The name of the Event Hub that events are being read from.</param>
+        /// <param name="partitionId">The identifier of the partition that properties are being read from.</param>
+        ///
+        [Event(22, Level = EventLevel.Informational, Message = "Completed reading events for Event Hub: {0} (Partition Id: '{1}').")]
+        public void ReadEventsFromPartitionComplete(string eventHubName,
+                                                    string partitionId)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(22, eventHubName ?? string.Empty, partitionId ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an exception was encountered while reading events from an Event Hub partition.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The name of the Event Hub that events are being read from.</param>
+        /// <param name="partitionId">The identifier of the partition that properties are being read from.</param>
+        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        ///
+        [Event(23, Level = EventLevel.Error, Message = "An exception occurred while reading events for Event Hub: {0} (Partition Id: '{1}'). Error Message: '{2}'")]
+        public void ReadEventsFromPartitionError(string eventHubName,
+                                                 string partitionId,
+                                                 string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(23, eventHubName ?? string.Empty, partitionId ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that reading events from all partitions of the Event Hub has started.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The name of the Event Hub that events are being read from.</param>
+        ///
+        [Event(24, Level = EventLevel.Informational, Message = "Beginning to read events for all partitions of Event Hub: {0}.")]
+        public void ReadAllEventsStart(string eventHubName)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(24, eventHubName ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that reading events from all partitions of the Event Hub has completed.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The name of the Event Hub that events are being read from.</param>
+        ///
+        [Event(25, Level = EventLevel.Informational, Message = "Completed reading events for all partitions of Event Hub: {0}.")]
+        public void ReadAllEventsComplete(string eventHubName)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(25, eventHubName ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an exception was encountered while reading events from all partitions of the Event Hub.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The name of the Event Hub that events are being read from.</param>
+        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        ///
+        [Event(26, Level = EventLevel.Error, Message = "An exception occurred while reading events for all partitions of Event Hub: {0}. Error Message: '{1}'")]
+        public void ReadAllEventsError(string eventHubName,
+                                       string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(26, eventHubName ?? string.Empty, errorMessage ?? string.Empty);
             }
         }
 
@@ -410,13 +510,13 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="eventHubName">The name of the Event Hub that the link is associated with.</param>
         /// <param name="endpoint">The service endpoint that the link is bound to for communication.</param>
         ///
-        [Event(21, Level = EventLevel.Informational, Message = "Beginning refresh of AMQP link authorization for Event Hub: {0} (Service Endpoint: '{1}').")]
+        [Event(27, Level = EventLevel.Informational, Message = "Beginning refresh of AMQP link authorization for Event Hub: {0} (Service Endpoint: '{1}').")]
         public void AmqpLinkAuthorizationRefreshStart(string eventHubName,
                                                       string endpoint)
         {
             if (IsEnabled())
             {
-                WriteEvent(21, eventHubName ?? string.Empty, endpoint ?? string.Empty);
+                WriteEvent(27, eventHubName ?? string.Empty, endpoint ?? string.Empty);
             }
         }
 
@@ -427,13 +527,13 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="eventHubName">The name of the Event Hub that the link is associated with.</param>
         /// <param name="endpoint">The service endpoint that the link is bound to for communication.</param>
         ///
-        [Event(22, Level = EventLevel.Informational, Message = "Completed refresh of AMQP link authorization for Event Hub: {0} (Service Endpoint: '{1}').")]
+        [Event(28, Level = EventLevel.Informational, Message = "Completed refresh of AMQP link authorization for Event Hub: {0} (Service Endpoint: '{1}').")]
         public void AmqpLinkAuthorizationRefreshComplete(string eventHubName,
                                                          string endpoint)
         {
             if (IsEnabled())
             {
-                WriteEvent(22, eventHubName ?? string.Empty, endpoint ?? string.Empty);
+                WriteEvent(28, eventHubName ?? string.Empty, endpoint ?? string.Empty);
             }
         }
 
@@ -445,14 +545,14 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="endpoint">The service endpoint that the link is bound to for communication.</param>
         /// <param name="errorMessage">The message for the exception that occurred.</param>
         ///
-        [Event(23, Level = EventLevel.Error, Message = "An exception occurred while refreshing AMQP link authorization for Event Hub: {0} (Service Endpoint: '{1}'). Error Message: '{2}'")]
+        [Event(29, Level = EventLevel.Error, Message = "An exception occurred while refreshing AMQP link authorization for Event Hub: {0} (Service Endpoint: '{1}'). Error Message: '{2}'")]
         public void AmqpLinkAuthorizationRefreshError(string eventHubName,
                                                       string endpoint,
                                                       string errorMessage)
         {
             if (IsEnabled())
             {
-                WriteEvent(23, eventHubName ?? string.Empty, endpoint ?? string.Empty, errorMessage ?? string.Empty);
+                WriteEvent(29, eventHubName ?? string.Empty, endpoint ?? string.Empty, errorMessage ?? string.Empty);
             }
         }
 

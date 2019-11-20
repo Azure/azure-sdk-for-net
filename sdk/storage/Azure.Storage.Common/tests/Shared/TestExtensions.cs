@@ -46,5 +46,20 @@ namespace Azure.Storage
             }
             throw new InvalidOperationException();
         }
+
+        /// <summary>
+        /// Returns a new Uri based on the supplied Uri, but with Http enabled.
+        /// </summary>
+        /// <param name="uri">Source Uri.</param>
+        /// <returns>Http Uri.</returns>
+        public static Uri ToHttp(this Uri uri)
+        {
+            var builder = new UriBuilder(uri)
+            {
+                Scheme = "http",
+                Port = 80
+            };
+            return builder.Uri;
+        }
     }
 }

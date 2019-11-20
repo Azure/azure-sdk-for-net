@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "67dccfe2-af1d-4b65-a5d0-06a17fa29a4b"
+          "8c1741ec-3238-4c17-b701-7ad38ce54ce8"
         ],
         "accept-language": [
           "en-US"
@@ -15,8 +15,8 @@
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.Management.Security.SecurityCenterClient/1.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/1.0.1.0"
         ]
       },
       "ResponseHeaders": {
@@ -24,7 +24,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 15 Sep 2019 09:08:04 GMT"
+          "Thu, 07 Nov 2019 14:21:15 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -36,13 +36,13 @@
           "749"
         ],
         "x-ms-request-id": [
-          "01c04b2e-0a0a-4d10-9314-b5ee51a35718"
+          "a741a661-24a2-4f8c-b85d-115654dd2b16"
         ],
         "x-ms-correlation-request-id": [
-          "01c04b2e-0a0a-4d10-9314-b5ee51a35718"
+          "a741a661-24a2-4f8c-b85d-115654dd2b16"
         ],
         "x-ms-routing-request-id": [
-          "UKSOUTH2:20190915T090805Z:01c04b2e-0a0a-4d10-9314-b5ee51a35718"
+          "UKSOUTH2:20191107T142115Z:a741a661-24a2-4f8c-b85d-115654dd2b16"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -65,5 +65,5 @@
     }
   ],
   "Names": {},
-  "Variables": { "SubscriptionId": "075423e9-7d33-4166-8bdf-3920b04e3735" }
+  "Variables": {}
 }

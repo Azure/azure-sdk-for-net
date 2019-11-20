@@ -5,11 +5,8 @@
     <!--
       Disable NU5105 NuGet Pack warning that the version is SemVer 2.0.
       SemVer 2.0 is supported by NuGet since 3.0.0 (July 2015) in some capacity, and fully since 3.5.0 (October 2016).
-
-      Disable NU5048 warning which is complaining about using a url for our package icon. Currently most packages still use
-      url's instead of embedded icons so sticking with that approach until there becomes a real reason not to.
     -->
-    <NoWarn>$(NoWarn);NU5105;NU5048</NoWarn>
+    <NoWarn>$(NoWarn);NU5105</NoWarn>
     <!--
       Disable some FxCop rules
      -->
@@ -32,7 +29,7 @@
 
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <SymbolPackageFormat>symbols.nupkg</SymbolPackageFormat>
     <!-- Avoid implicitly added preview feeds -->
     <AddDotnetfeedProjectSource>false</AddDotnetfeedProjectSource>
   </PropertyGroup>
@@ -41,9 +38,12 @@
     <IsTestProject Condition="$(MSBuildProjectName.EndsWith('.Tests'))">true</IsTestProject>
     <IsSamplesProject Condition="$(MSBuildProjectName.EndsWith('.Samples'))">true</IsSamplesProject>
     <IsTestSupportProject Condition="'$(IsTestProject)' != 'true' and ($(MSBuildProjectDirectory.Contains('/tests/')) or $(MSBuildProjectDirectory.Contains('\tests\')))">true</IsTestSupportProject>
-    <EnableClientSdkAnalyzers Condition="'$(IsClientLibrary)' == 'true' and '$(IsTestProject)' != 'true' and '$(IsTestSupportProject)' != 'true' and '$(IsSamplesProject)' != 'true'">true</EnableClientSdkAnalyzers>
-    <EnableFxCopAnalyzers Condition="'$(IsClientLibrary)' == 'true' and '$(IsTestProject)' != 'true' and '$(IsTestSupportProject)' != 'true' and '$(IsSamplesProject)' != 'true'">true</EnableFxCopAnalyzers>
+    <IsShippingClientLibrary Condition="'$(IsClientLibrary)' == 'true' and '$(IsTestProject)' != 'true' and '$(IsTestSupportProject)' != 'true' and '$(IsSamplesProject)' != 'true'">true</IsShippingClientLibrary>
+
+    <EnableClientSdkAnalyzers Condition="'$(IsShippingClientLibrary)' == 'true'">true</EnableClientSdkAnalyzers>
+    <EnableFxCopAnalyzers Condition="'$(IsShippingClientLibrary)' == 'true'">true</EnableFxCopAnalyzers>
     <EnableStyleCopAnalyzers Condition="'$(EnableStyleCopAnalyzers)' == '' and '$(IsClientLibrary)' == 'true'">true</EnableStyleCopAnalyzers>
+    <GenerateAPIListing Condition="'$(IsShippingClientLibrary)' == 'true'">true</GenerateAPIListing>
   </PropertyGroup>
 
   <!-- CodeAnalysis RuleSet -->
@@ -83,7 +83,7 @@
     <Copyright>© Microsoft Corporation. All rights reserved.</Copyright>
     <Authors>Microsoft</Authors>
     <Product>Azure .NET SDK</Product>
-    <PackageIconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</PackageIconUrl>
+    <PackageIcon>pkgicon.png</PackageIcon>
     <RepositoryUrl>https://github.com/Azure/azure-sdk-for-net</RepositoryUrl>
     <PackageProjectUrl>$(RepositoryUrl)</PackageProjectUrl>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
@@ -114,6 +114,9 @@
     <ImportDefaultReferences>false</ImportDefaultReferences>
     <LangVersion>preview</LangVersion>
     <DocumentationFile>$(IntermediateOutputPath)$(TargetFramework)\$(MSBuildProjectName).xml</DocumentationFile>
+
+    <!-- The set of tags that should be added to the packages -->
+    <PackageCommonTags>windowsazureofficial;azureofficial</PackageCommonTags>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true' or '$(IsSamplesProject)' == 'true'">

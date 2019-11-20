@@ -4,6 +4,7 @@ using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Xunit;
 
 namespace FaceSDK.Tests
@@ -75,6 +76,7 @@ namespace FaceSDK.Tests
                     Assert.False(face.FaceAttributes.Makeup.EyeMakeup);
                     Assert.False(face.FaceAttributes.Makeup.LipMakeup);
                     Assert.True(face.FaceAttributes.Emotion.Neutral > 0.5);
+                    Assert.Equal("Neutral", face.FaceAttributes.Emotion.ToRankedList().First().Key);
                     Assert.True(face.FaceAttributes.Occlusion.ForeheadOccluded);
                     Assert.False(face.FaceAttributes.Occlusion.EyeOccluded);
                     Assert.False(face.FaceAttributes.Occlusion.MouthOccluded);
@@ -163,6 +165,36 @@ namespace FaceSDK.Tests
                     Assert.Equal(0, faceList.Count);
                 }
             }
+        }
+
+        [Fact]
+        public void FaceDetectionEmotionsToRankedList()
+        {
+            // Arrange
+            var emotions = new Emotion()
+            {
+                Anger = 0,
+                Contempt = 0,
+                Disgust = 0.05,
+                Fear = 0.06,
+                Happiness = 0.65,
+                Neutral = 0.2,
+                Sadness = 0.03,
+                Surprise = 0.01
+            };
+            
+            // Act
+            var rankedList = emotions.ToRankedList().ToList();
+
+            // Ensure face emotions ranked list is sorted correctly.
+            Assert.Equal("Happiness", rankedList[0].Key);
+            Assert.Equal("Neutral", rankedList[1].Key);
+            Assert.Equal("Fear", rankedList[2].Key);
+            Assert.Equal("Disgust", rankedList[3].Key);
+            Assert.Equal("Sadness", rankedList[4].Key);
+            Assert.Equal("Surprise", rankedList[5].Key);
+            Assert.Equal("Anger", rankedList[6].Key);
+            Assert.Equal("Contempt", rankedList[7].Key);
         }
     }
 }

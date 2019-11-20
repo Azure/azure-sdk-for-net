@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -23,6 +24,12 @@ namespace Azure.Storage.Files.DataLake
         /// is accessed.
         /// </summary>
         private Uri _uri;
+
+        /// <summary>
+        /// Whether the Uri is an IP Uri as determined by
+        /// <see cref="UriExtensions.IsHostIPEndPointStyle(Uri)"/>.
+        /// </summary>
+        private readonly bool _isIPStyleUri;
 
         /// <summary>
         /// Gets or sets the scheme name of the URI.
@@ -91,7 +98,7 @@ namespace Azure.Storage.Files.DataLake
         public string DirectoryOrFilePath
         {
             get => _directoryOrFilePath;
-            set { ResetUri(); _directoryOrFilePath = value; }
+            set { ResetUri(); _directoryOrFilePath = value.TrimEnd('/'); }
         }
         private string _directoryOrFilePath;
 
@@ -158,17 +165,13 @@ namespace Azure.Storage.Files.DataLake
             // Find the share & directory/file path (if any)
             if (!string.IsNullOrEmpty(uri.AbsolutePath))
             {
-                // If path starts with a slash, remove it
-
-                var path =
-                    (uri.AbsolutePath[0] == '/')
-                    ? uri.AbsolutePath.Substring(1)
-                    : uri.AbsolutePath;
+                var path = uri.GetPath();
 
                 var startIndex = 0;
 
-                if (IsHostIPEndPointStyle(uri.Host))
+                if (uri.IsHostIPEndPointStyle())
                 {
+                    _isIPStyleUri = true;
                     var accountEndIndex = path.IndexOf("/", StringComparison.InvariantCulture);
 
                     // Slash not found; path has account name & no share name
@@ -182,6 +185,13 @@ namespace Azure.Storage.Files.DataLake
                         AccountName = path.Substring(0, accountEndIndex);
                         startIndex = accountEndIndex + 1;
                     }
+                }
+                else
+                {
+                    // DataLake Uris have two allowed subdomains
+                    AccountName = uri.GetAccountNameFromDomain(Constants.DataLake.BlobUriSuffix) ??
+                        uri.GetAccountNameFromDomain(Constants.DataLake.DfsUriSuffix) ??
+                        string.Empty;
                 }
 
                 // Find the next slash (if it exists)
@@ -233,6 +243,59 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
+        /// Gets the blob Uri.
+        /// </summary>
+        internal Uri ToBlobUri()
+        {
+            if (!_isIPStyleUri)
+            {
+                string account = UriExtensions.GetAccountNameFromDomain(Host, Constants.DataLake.DfsUriSuffix);
+
+                if (account != null)
+                {
+                    StringBuilder stringBuilder = new StringBuilder(Host);
+
+                    // Replace "dfs" with "blob"
+                    stringBuilder.Replace(
+                        Constants.DataLake.DfsUriSuffix,
+                        Constants.DataLake.BlobUriSuffix,
+                        AccountName.Length + 1,
+                        3);
+                    Host = stringBuilder.ToString();
+                }
+            }
+
+            return ToUri();
+        }
+
+        /// <summary>
+        /// Gets the dfs Uri.
+        /// </summary>
+        internal Uri ToDfsUri()
+        {
+            if (!_isIPStyleUri)
+            {
+                string account = UriExtensions.GetAccountNameFromDomain(Host, Constants.DataLake.BlobUriSuffix);
+
+                if (account != null)
+                {
+                    StringBuilder stringBuilder = new StringBuilder(Host);
+
+                    // Replace "blob" with "dfs"
+                    stringBuilder.Replace(
+                        Constants.DataLake.BlobUriSuffix,
+                        Constants.DataLake.DfsUriSuffix,
+                        AccountName.Length + 1,
+                        4);
+                    Host = stringBuilder.ToString();
+                }
+
+            }
+
+            return ToUri();
+        }
+
+        /// <summary>
         /// Returns the display string for the specified
         /// <see cref="DataLakeUriBuilder"/> instance.
         /// </summary>
@@ -259,7 +322,9 @@ namespace Azure.Storage.Files.DataLake
         {
             // Concatenate account, share & directory/file path (if they exist)
             var path = new StringBuilder("");
-            if (!string.IsNullOrWhiteSpace(AccountName))
+            // only append the account name to the path for Ip style Uri.
+            // regular style Uri will already have account name in domain
+            if (_isIPStyleUri && !string.IsNullOrWhiteSpace(AccountName))
             {
                 path.Append("/").Append(AccountName);
             }
@@ -298,10 +363,5 @@ namespace Azure.Storage.Files.DataLake
                 Query = query.Length > 0 ? "?" + query.ToString() : null
             };
         }
-
-        // TODO See remarks at https://docs.microsoft.com/en-us/dotnet/api/system.net.ipaddress.tryparse?view=netframework-4.7.2
-        // TODO refactor to shared method
-        private static bool IsHostIPEndPointStyle(string host)
-            => string.IsNullOrEmpty(host) ? false : IPAddress.TryParse(host, out _);
     }
 }

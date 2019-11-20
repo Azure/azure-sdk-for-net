@@ -116,7 +116,7 @@ tools/*.dll
 *.keys
 !Azure.Security.KeyVault.Keys
 *.pfx
-sdk/storage/Azure.Storage.Common/tests/Shared/TestConfigurations.xml
+TestConfigurations.xml
 
 # Backup & report files from converting an old project file to a newer
 # Visual Studio version. Backup files are not needed, because we have git ;-)

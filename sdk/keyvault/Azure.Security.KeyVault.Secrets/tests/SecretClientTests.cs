@@ -4,10 +4,9 @@
 using System;
 using Azure.Core.Testing;
 using Azure.Identity;
-using Azure.Security.KeyVault.Secrets;
 using NUnit.Framework;
 
-namespace Azure.Security.KeyVault.Test
+namespace Azure.Security.KeyVault.Secrets.Tests
 {
     public class SecretClientTests: ClientTestBase
     {

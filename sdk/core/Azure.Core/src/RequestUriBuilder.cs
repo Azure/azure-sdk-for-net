@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics;
 using System.Text;
 
 namespace Azure.Core
@@ -177,8 +178,8 @@ namespace Azure.Core
             ResetUri();
             if (!HasQuery)
             {
-                _pathAndQuery.Append(QuerySeparator);
                 _queryIndex = _pathAndQuery.Length;
+                _pathAndQuery.Append(QuerySeparator);
             }
             else if (!(QueryLength == 1 && _pathAndQuery[_queryIndex] == QuerySeparator))
             {
@@ -192,6 +193,8 @@ namespace Azure.Core
                 value = Uri.EscapeDataString(value);
             }
             _pathAndQuery.Append(value);
+
+            Debug.Assert(_pathAndQuery[_queryIndex] == QuerySeparator);
         }
 
         /// <summary>
@@ -228,7 +231,7 @@ namespace Azure.Core
                 {
                     substring = Uri.EscapeDataString(substring);
                 }
-                _pathAndQuery.Insert(_queryIndex - 1, substring);
+                _pathAndQuery.Insert(_queryIndex, substring);
                 _queryIndex += value.Length;
             }
             else

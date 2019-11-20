@@ -27,7 +27,7 @@ namespace Azure.Messaging.EventHubs.Samples
         ///   A short description of the sample.
         /// </summary>
         ///
-        public string Description { get; } = "An introduction to consuming events, using a simple Event Hub consumer.";
+        public string Description { get; } = "An introduction to consuming events, using a simple Event Hub consumer client.";
 
         /// <summary>
         ///   Runs the sample using the specified Event Hubs connection information.
@@ -56,61 +56,68 @@ namespace Azure.Messaging.EventHubs.Samples
             // Because events are not removed from the partition when consuming, a consumer must specify where in the partition it
             // would like to begin reading events.  For example, this may be starting from the very beginning of the stream, at an
             // offset from the beginning, the next event available after a specific point in time, or at a specific event.
+            //
+            // In this example, we will create our consumer client using the default consumer group that is created with an Event Hub.
+            // Our consumer will begin watching the partition at the very end, reading only new events that we will publish for it.
 
-            // We will start by creating a client to inspect the Event Hub and select a partition to operate against to ensure that
-            // events are being published and read from the same partition.
-
-            string firstPartition;
-
-            await using (var inspectionClient = new EventHubProducerClient(connectionString, eventHubName))
+            await using (var consumerClient = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString, eventHubName))
             {
-                // With our client, we can now inspect the partitions and find the identifier
-                // of the first.
+                // We will start by using the consumer client inspect the Event Hub and select a partition to operate against to ensure that events are being
+                // published and read from the same partition.
 
-                firstPartition = (await inspectionClient.GetPartitionIdsAsync()).First();
-            }
+                string firstPartition = (await consumerClient.GetPartitionIdsAsync()).First();
 
-            // In this example, we will create our consumer client for the first partition in the Event Hub, using the default consumer group
-            // that is created with an Event Hub.  Our consumer will begin watching the partition at the very end, reading only new events
-            // that we will publish for it.
-
-            await using (var consumerClient = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, firstPartition, EventPosition.Latest, connectionString, eventHubName))
-            await using (var producerClient = new EventHubProducerClient(connectionString, eventHubName, new EventHubProducerClientOptions { PartitionId = firstPartition }))
-            {
                 // Because our consumer is reading from the latest position, it won't see events that have previously
-                // been published.  Before we can publish the events, we will need to ask the consumer to perform an operation,
-                // because it opens its connection only when it needs to.  The first receive that we ask of it will not see
-                // any events, but will allow the consumer to start watching the partition.
+                // been published.  Before we can publish the events and have them observed, we will need to ask the consumer
+                // to perform an operation, because it opens its connection only when it needs to.
                 //
-                // Because the maximum wait time is specified as zero, this call will return immediately and will not
-                // have consumed any events.
-
-                await consumerClient.ReceiveAsync(1, TimeSpan.Zero);
-
-                // Now that the consumer is watching the partition, let's publish the event that we would like to
-                // receive.
-
-                await producerClient.SendAsync(new EventData(Encoding.UTF8.GetBytes("Hello, Event Hubs!")));
-                Console.WriteLine("The event batch has been published.");
-
-                // Because publishing and receiving events is asynchronous, the events that we published may not
-                // be immediately available for our consumer to see.
+                // We'll begin to iterate on the partition using a small wait time, so that control will return to our loop even when
+                // no event is available.  For the first call, we'll publish so that we can receive them.
                 //
                 // We will iterate over the available events in the partition, which should be just the event that we published.  Because
                 // we're expecting only the one event, we will exit the loop when we receive it.  To be sure that we do not block forever
-                // waiting on an event that is not published, we will specify a fairly long time to wait and then cancel waiting.
+                // waiting on an event that is not published, we will request cancellation after a fairly long interval.
 
                 CancellationTokenSource cancellationSource = new CancellationTokenSource();
                 cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
 
-                EventData receivedEvent = null;
+                ReadOptions readOptions = new ReadOptions
+                {
+                    MaximumWaitTime = TimeSpan.FromMilliseconds(150)
+                };
+
+                PartitionEvent receivedEvent;
+                bool wereEventsPublished = false;
+
                 Stopwatch watch = Stopwatch.StartNew();
 
-                await foreach (EventData currentEvent in consumerClient.SubscribeToEvents(cancellationSource.Token))
+                await foreach (PartitionEvent currentEvent in consumerClient.ReadEventsFromPartitionAsync(firstPartition, EventPosition.Latest, readOptions, cancellationSource.Token))
                 {
-                    receivedEvent = currentEvent;
-                    watch.Stop();
-                    break;
+                    if (!wereEventsPublished)
+                    {
+                        await using (var producerClient = new EventHubProducerClient(connectionString, eventHubName))
+                        {
+                            using EventDataBatch eventBatch = await producerClient.CreateBatchAsync(new CreateBatchOptions { PartitionId = firstPartition });
+                            eventBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes("Hello, Event Hubs!")));
+
+                            await producerClient.SendAsync(eventBatch);
+                            wereEventsPublished = true;
+
+                            await Task.Delay(250);
+                            Console.WriteLine("The event batch has been published.");
+                        }
+                    }
+
+                    // Because publishing and receiving events is asynchronous, the events that we published may not
+                    // be immediately available for our consumer to see, so we'll have to guard against an empty event being sent as
+                    // punctuation if our actual event is not available within the waiting time period.
+
+                    if (currentEvent.Data != null)
+                    {
+                       receivedEvent = currentEvent;
+                       watch.Stop();
+                       break;
+                    }
                 }
 
                 // Print out the events that we received.
@@ -120,7 +127,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
                 // The body of our event was an encoded string; we'll recover the message by reversing the encoding process.
 
-                string message = (receivedEvent == null) ? "No event was received." : Encoding.UTF8.GetString(receivedEvent.Body.ToArray());
+                string message = (receivedEvent.Data == null) ? "No event was received." : Encoding.UTF8.GetString(receivedEvent.Data.Body.ToArray());
                 Console.WriteLine($"\tMessage: \"{ message }\"");
             }
 

@@ -114,7 +114,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Batch", "Batch", "{610DBA57-60FD-4115-8D74-F13A8428973E}"
 	ProjectSection(SolutionItems) = preProject
 		Azure.Storage.Blobs.Batch\BreakingChanges.txt = Azure.Storage.Blobs.Batch\BreakingChanges.txt
-		Azure.Storage.Blobs.Batch\Changelog.txt = Azure.Storage.Blobs.Batch\Changelog.txt
+		Azure.Storage.Blobs.Batch\CHANGELOG.md = Azure.Storage.Blobs.Batch\CHANGELOG.md
 		Azure.Storage.Blobs.Batch\README.md = Azure.Storage.Blobs.Batch\README.md
 	EndProjectSection
 EndProject

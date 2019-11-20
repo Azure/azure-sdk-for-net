@@ -4,49 +4,91 @@
 using Azure.Core.Extensions;
 using Azure.Messaging.EventHubs;
 
-#pragma warning disable AZC0001 // https://github.com/Azure/azure-sdk-tools/issues/213
 namespace Microsoft.Extensions.Azure
-#pragma warning restore AZC0001
 {
     /// <summary>
-    /// Extension methods to add <see cref="EventHubConnection"/> client to clients builder
+    ///    The set of extensions to add the Event Hub client types to the clients builder
     /// </summary>
     public static class EventHubClientBuilderExtensions
     {
         /// <summary>
-        /// Registers a <see cref="EventHubConnection"/> instance with the provided <paramref name="connectionString"/>
+        ///   Registers a <see cref="EventHubProducerClient"/> instance with the provided <paramref name="connectionString"/>
         /// </summary>
-        public static IAzureClientBuilder<EventHubConnection, EventHubConnectionOptions> AddEventHubClient<TBuilder>(this TBuilder builder, string connectionString)
+        ///
+        public static IAzureClientBuilder<EventHubProducerClient, EventHubProducerClientOptions> AddEventHubProducerClient<TBuilder>(this TBuilder builder, string connectionString)
             where TBuilder : IAzureClientFactoryBuilder
         {
-            return builder.RegisterClientFactory<EventHubConnection, EventHubConnectionOptions>(options => new EventHubConnection(connectionString, options));
+            return builder.RegisterClientFactory<EventHubProducerClient, EventHubProducerClientOptions>(options => new EventHubProducerClient(connectionString, options));
         }
 
         /// <summary>
-        /// Registers a <see cref="EventHubConnection"/> instance with the provided <paramref name="connectionString"/> and <paramref name="eventHubName"/>
+        ///   Registers a <see cref="EventHubProducerClient"/> instance with the provided <paramref name="connectionString"/> and <paramref name="eventHubName"/>
         /// </summary>
-        public static IAzureClientBuilder<EventHubConnection, EventHubConnectionOptions> AddEventHubClient<TBuilder>(this TBuilder builder, string connectionString, string eventHubName)
+        ///
+        public static IAzureClientBuilder<EventHubProducerClient, EventHubProducerClientOptions> AddEventHubProducerClient<TBuilder>(this TBuilder builder, string connectionString, string eventHubName)
             where TBuilder : IAzureClientFactoryBuilder
         {
-            return builder.RegisterClientFactory<EventHubConnection, EventHubConnectionOptions>(options => new EventHubConnection(connectionString, eventHubName, options));
+            return builder.RegisterClientFactory<EventHubProducerClient, EventHubProducerClientOptions>(options => new EventHubProducerClient(connectionString, eventHubName, options));
         }
 
         /// <summary>
-        /// Registers a <see cref="EventHubConnection"/> instance with the provided <paramref name="host"/> and <paramref name="eventHubName"/>
+        ///   Registers a <see cref="EventHubProducerClient"/> instance with the provided <paramref name="fullyQualifiedNamespace"/> and <paramref name="eventHubName"/>
         /// </summary>
-        public static IAzureClientBuilder<EventHubConnection, EventHubConnectionOptions> AddEventHubClientWithHost<TBuilder>(this TBuilder builder, string host, string eventHubName)
+        ///
+        public static IAzureClientBuilder<EventHubProducerClient, EventHubProducerClientOptions> AddEventHubProducerClientWithNamespace<TBuilder>(this TBuilder builder, string fullyQualifiedNamespace, string eventHubName)
             where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<EventHubConnection, EventHubConnectionOptions>((options, token) => new EventHubConnection(host, eventHubName, token, options));
+            return builder.RegisterClientFactory<EventHubProducerClient, EventHubProducerClientOptions>((options, token) => new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, token, options));
         }
 
         /// <summary>
-        /// Registers a <see cref="EventHubConnection"/> instance with connection options loaded from the provided <paramref name="configuration"/> instance.
+        ///   Registers a <see cref="EventHubProducerClient"/> instance with connection options loaded from the provided <paramref name="configuration"/> instance.
         /// </summary>
-        public static IAzureClientBuilder<EventHubConnection, EventHubConnectionOptions> AddEventHubClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        ///
+        public static IAzureClientBuilder<EventHubProducerClient, EventHubProducerClientOptions> AddEventHubProducerClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClientFactory<EventHubConnection, EventHubConnectionOptions>(configuration);
+            return builder.RegisterClientFactory<EventHubProducerClient, EventHubProducerClientOptions>(configuration);
+        }
+
+        /// <summary>
+        ///   Registers a <see cref="EventHubConsumerClientOptions"/> instance with the provided <paramref name="connectionString"/>
+        /// </summary>
+        ///
+        public static IAzureClientBuilder<EventHubConsumerClient, EventHubConsumerClientOptions> AddEventHubConsumerClient<TBuilder>(this TBuilder builder, string consumerGroup, string connectionString)
+            where TBuilder : IAzureClientFactoryBuilder
+        {
+            return builder.RegisterClientFactory<EventHubConsumerClient, EventHubConsumerClientOptions>(options => new EventHubConsumerClient(consumerGroup, connectionString, options));
+        }
+
+        /// <summary>
+        ///   Registers a <see cref="EventHubConsumerClient"/> instance with the provided <paramref name="connectionString"/> and <paramref name="eventHubName"/>
+        /// </summary>
+        ///
+        public static IAzureClientBuilder<EventHubConsumerClient, EventHubConsumerClientOptions> AddEventHubConsumerClient<TBuilder>(this TBuilder builder, string consumerGroup, string connectionString, string eventHubName)
+            where TBuilder : IAzureClientFactoryBuilder
+        {
+            return builder.RegisterClientFactory<EventHubConsumerClient, EventHubConsumerClientOptions>(options => new EventHubConsumerClient(consumerGroup, connectionString, eventHubName, options));
+        }
+
+        /// <summary>
+        ///   Registers a <see cref="EventHubConsumerClient"/> instance with the provided <paramref name="fullyQualifiedNamespace"/> and <paramref name="eventHubName"/>
+        /// </summary>
+        ///
+        public static IAzureClientBuilder<EventHubConsumerClient, EventHubConsumerClientOptions> AddEventHubConsumerClientWithNamespace<TBuilder>(this TBuilder builder, string consumerGroup, string fullyQualifiedNamespace, string eventHubName)
+            where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            return builder.RegisterClientFactory<EventHubConsumerClient, EventHubConsumerClientOptions>((options, token) => new EventHubConsumerClient(consumerGroup, fullyQualifiedNamespace, eventHubName, token, options));
+        }
+
+        /// <summary>
+        ///   Registers a <see cref="EventHubConsumerClient"/> instance with connection options loaded from the provided <paramref name="configuration"/> instance.
+        /// </summary>
+        ///
+        public static IAzureClientBuilder<EventHubConsumerClient, EventHubConsumerClientOptions> AddEventHubConsumerClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+            where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
+        {
+            return builder.RegisterClientFactory<EventHubConsumerClient, EventHubConsumerClientOptions>(configuration);
         }
     }
 }

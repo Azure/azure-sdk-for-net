@@ -61,10 +61,9 @@ namespace NetApp.Tests.ResourceTests
 
                 // create the account
                 var resource = ResourceUtils.CreateAccount(netAppMgmtClient, tags: dict, activeDirectory: ResourceUtils.activeDirectory);
-                Assert.True(resource.Tags.ToString().Contains("Tag1") && resource.Tags.ToString().Contains("Value1"));
-                // cannot apply active directory due to current limitations (one per subscription)
-                // test omitted
-                //Assert.NotNull(resource.ActiveDirectories);
+                Assert.True(resource.Tags.ContainsKey("Tag1"));
+                Assert.Equal("Value1", resource.Tags["Tag1"]);
+                Assert.NotNull(resource.ActiveDirectories);
 
                 // remove the account
                 netAppMgmtClient.Accounts.Delete(ResourceUtils.resourceGroup, ResourceUtils.accountName1);
@@ -87,10 +86,11 @@ namespace NetApp.Tests.ResourceTests
                 // could equally do this with some property fields added
 
                 var dict = new Dictionary<string, string>();
-                dict.Add("Tag1", "Value1");
+                dict.Add("Tag1", "Value2");
 
                 var resource = ResourceUtils.CreateAccount(netAppMgmtClient, tags: dict);
-                Assert.True(resource.Tags.ToString().Contains("Tag1") && resource.Tags.ToString().Contains("Value1"));
+                Assert.True(resource.Tags.ContainsKey("Tag1"));
+                Assert.Equal("Value2", resource.Tags["Tag1"]);
             }
         }
 
@@ -169,10 +169,10 @@ namespace NetApp.Tests.ResourceTests
                 var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                 // create the account
-                ResourceUtils.CreateAccount(netAppMgmtClient);
+                ResourceUtils.CreateAccount(netAppMgmtClient, activeDirectory: ResourceUtils.activeDirectory);
 
                 var dict = new Dictionary<string, string>();
-                dict.Add("Tag1", "Value1");
+                dict.Add("Tag2", "Value1");
 
                 // Now try and modify it
                 var netAppAccountPatch = new NetAppAccountPatch()
@@ -180,8 +180,35 @@ namespace NetApp.Tests.ResourceTests
                     Tags = dict
                 };
 
+                // tag changes but active directory still present
                 var resource = netAppMgmtClient.Accounts.Update(netAppAccountPatch, ResourceUtils.resourceGroup, ResourceUtils.accountName1);
-                Assert.True(resource.Tags.ToString().Contains("Tag1") && resource.Tags.ToString().Contains("Value1"));
+                Assert.True(resource.Tags.ContainsKey("Tag2"));
+                Assert.Equal("Value1", resource.Tags["Tag2"]);
+                Assert.NotNull(resource.ActiveDirectories);
+                Assert.Equal("sdkuser", resource.ActiveDirectories.First().Username);
+
+                // so deleting the active directory requires the put operation
+                // but changing an active directory can be done but requires the id
+
+                ResourceUtils.activeDirectory2.ActiveDirectoryId = resource.ActiveDirectories.First().ActiveDirectoryId;
+                var activeDirectories = new List<ActiveDirectory> { ResourceUtils.activeDirectory2 };
+
+                dict.Add("Tag3", "Value3");
+
+                // Now try and modify it
+                var netAppAccountPatch2 = new NetAppAccountPatch()
+                {
+                    ActiveDirectories = activeDirectories,
+                    Tags = dict
+                };
+
+                var resource2 = netAppMgmtClient.Accounts.Update(netAppAccountPatch2, ResourceUtils.resourceGroup, ResourceUtils.accountName1);
+                Assert.True(resource2.Tags.ContainsKey("Tag2"));
+                Assert.Equal("Value1", resource2.Tags["Tag2"]);
+                Assert.True(resource2.Tags.ContainsKey("Tag3"));
+                Assert.Equal("Value3", resource2.Tags["Tag3"]);
+                Assert.NotNull(resource2.ActiveDirectories);
+                Assert.Equal("sdkuser1", resource2.ActiveDirectories.First().Username);
 
                 // cleanup - remove the account
                 ResourceUtils.DeleteAccount(netAppMgmtClient);

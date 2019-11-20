@@ -69,7 +69,7 @@ namespace Azure.Messaging.EventHubs.Samples
                 // If a size limit is not specified, the maximum size allowed by the transport is used.  In this example, we
                 // will set a custom partition key and otherwise use the default options.
 
-                BatchOptions options = new BatchOptions { PartitionKey = "This is a custom key!" };
+                CreateBatchOptions options = new CreateBatchOptions { PartitionKey = "This is a custom key!" };
                 EventDataBatch batch = await producerClient.CreateBatchAsync(options);
 
                 foreach (EventData eventData in events)
@@ -88,7 +88,7 @@ namespace Azure.Messaging.EventHubs.Samples
                 Console.WriteLine("The event batch has been published.");
             }
 
-            // At this point, our client has passed its "using" scope and have safely been disposed of.  We
+            // At this point, our client has passed its "using" scope and has safely been disposed of.  We
             // have no further obligations.
 
             Console.WriteLine();

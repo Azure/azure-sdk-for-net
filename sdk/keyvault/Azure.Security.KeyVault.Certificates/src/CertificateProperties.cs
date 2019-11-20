@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Security.KeyVault.Certificates
 {
     /// <summary>
-    /// <see cref="CertificateProperties"/> contains identity and other basic properties of a <see cref="Certificate"/>.
+    /// <see cref="CertificateProperties"/> contains identity and other basic properties of a <see cref="KeyVaultCertificate"/>.
     /// </summary>
     public class CertificateProperties : IJsonDeserializable
     {
@@ -43,7 +43,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Initializes a new instance of the <see cref="CertificateProperties"/> class.
         /// </summary>
-        /// <param name="id">The Id of the certificate.</param>
+        /// <param name="id">The identifier of the certificate.</param>
         /// <exception cref="ArgumentNullException"><paramref name="id"/> is null.</exception>
         public CertificateProperties(Uri id)
         {
@@ -54,70 +54,67 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// The Id of the certificate.
+        /// Gets the identifier of the certificate.
         /// </summary>
-        public Uri Id { get; private set; }
+        public Uri Id { get; internal set; }
 
         /// <summary>
-        /// The name of the certificate.
+        /// Gets the name of the certificate.
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; internal set; }
 
         /// <summary>
-        /// The Uri of the vault in which the certificate is stored.
+        /// Gets the <see cref="Uri"/> of the vault in which the certificate is stored.
         /// </summary>
-        public Uri VaultUri { get; private set; }
+        public Uri VaultUri { get; internal set; }
 
         /// <summary>
-        /// The version of the certificate.
+        /// Gets the version of the certificate.
         /// </summary>
-        public string Version { get; private set; }
+        public string Version { get; internal set; }
 
         /// <summary>
-        /// The digital thumbprint of the certificate which can be used to uniquely identify it.
+        /// Gets the digital thumbprint of the certificate which can be used to uniquely identify it.
         /// </summary>
-        public byte[] X509Thumbprint { get; private set; }
+        public byte[] X509Thumbprint { get; internal set; }
 
         /// <summary>
-        /// The tags applied to the certificate.
+        /// Gets the tags applied to the certificate.
         /// </summary>
         public IDictionary<string, string> Tags => LazyInitializer.EnsureInitialized(ref _tags);
 
         /// <summary>
-        /// Specifies if the certificate is currently enabled.
+        /// Gets or sets a value indicating whether the certificate is currently enabled. If null, the server default will be used.
         /// </summary>
         public bool? Enabled { get => _attributes.Enabled; set => _attributes.Enabled = value; }
 
         /// <summary>
-        /// Gets or sets not before date in UTC.
+        /// Gets a <see cref="DateTimeOffset"/> indicating when the certificate will be valid.
         /// </summary>
-        public DateTimeOffset? NotBefore => _attributes.NotBefore;
+        public DateTimeOffset? NotBefore { get => _attributes.NotBefore; internal set => _attributes.NotBefore = value; }
 
         /// <summary>
-        /// Gets or sets expiry date in UTC.
+        /// Gets a <see cref="DateTimeOffset"/> indicating when the certificate will expire.
         /// </summary>
-        public DateTimeOffset? Expires => _attributes.Expires;
+        public DateTimeOffset? ExpiresOn { get => _attributes.ExpiresOn; internal set => _attributes.ExpiresOn = value; }
 
         /// <summary>
-        /// Gets creation time in UTC.
+        /// Gets a <see cref="DateTimeOffset"/> indicating when the certificate was created.
         /// </summary>
-        public DateTimeOffset? Created => _attributes.Created;
+        public DateTimeOffset? CreatedOn { get => _attributes.CreatedOn; internal set => _attributes.CreatedOn = value; }
 
         /// <summary>
-        /// Gets last updated time in UTC.
+        /// Gets a <see cref="DateTimeOffset"/> indicating when the certificate was updated.
         /// </summary>
-        public DateTimeOffset? Updated => _attributes.Updated;
+        public DateTimeOffset? UpdatedOn { get => _attributes.UpdatedOn; internal set => _attributes.UpdatedOn = value; }
 
         /// <summary>
-        /// Gets reflects the deletion recovery level currently in effect for
-        /// secrets in the current vault. If it contains 'Purgeable', the
-        /// secret can be permanently deleted by a privileged user; otherwise,
-        /// only the system can purge the secret, at the end of the retention
-        /// interval. Possible values include: 'Purgeable',
-        /// 'Recoverable+Purgeable', 'Recoverable',
-        /// 'Recoverable+ProtectedSubscription'
+        /// Gets the recovery level currently in effect for certificates in the Key Vault.
+        /// If <c>Purgeable</c>, the certificates can be permanently deleted by an authorized user;
+        /// otherwise, only the service can purge the certificates at the end of the retention interval.
         /// </summary>
-        public string RecoveryLevel => _attributes.RecoveryLevel;
+        /// <value>Possible values include <c>Purgeable</c>, <c>Recoverable+Purgeable</c>, <c>Recoverable</c>, and <c>Recoverable+ProtectedSubscription</c>.</value>
+        public string RecoveryLevel { get => _attributes.RecoveryLevel; internal set => _attributes.RecoveryLevel = value; }
 
         internal bool HasTags => _tags != null;
 

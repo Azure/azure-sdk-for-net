@@ -1,21 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text.Json;
-using Azure.Core;
+using System.Threading;
 
 namespace Azure.Security.KeyVault.Certificates
 {
     /// <summary>
-    /// A collection of subject alternative names (SANs) for a x509 certificate. SANs can be DNS entries, emails, or unique prinicpal names.
+    /// A collection of subject alternative names (SANs) for a X.509 certificate. SANs can be DNS entries, emails, or unique principal names.
     /// </summary>
-    public class SubjectAlternativeNames : IEnumerable<string>, IJsonSerializable, IJsonDeserializable
+    public class SubjectAlternativeNames : IJsonSerializable, IJsonDeserializable
     {
-        private IEnumerable<string> _names;
-        private JsonEncodedText _nameType;
-
         private const string DnsPropertyName = "dns_names";
         private const string EmailsPropertyName = "emails";
         private const string UpnsPropertyName = "upns";
@@ -24,105 +21,33 @@ namespace Azure.Security.KeyVault.Certificates
         private static readonly JsonEncodedText s_emailsPropertyNameBytes = JsonEncodedText.Encode(EmailsPropertyName);
         private static readonly JsonEncodedText s_upnsPropertyNameBytes = JsonEncodedText.Encode(UpnsPropertyName);
 
-        internal SubjectAlternativeNames()
-        {
-        }
+        private Collection<string> _dnsNames;
+        private Collection<string> _emails;
+        private Collection<string> _userPrincipalNames;
 
-        private SubjectAlternativeNames(JsonEncodedText nameType, IEnumerable<string> names)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CertificateContact"/> class.
+        /// </summary>
+        public SubjectAlternativeNames()
         {
-            _nameType = nameType;
-            _names = names;
         }
 
         /// <summary>
-        /// Creates a collection of DNS subject alternative names (SANs)
+        /// Gets a collection of DNS names.
         /// </summary>
-        /// <param name="names">The SAN entries</param>
-        /// <returns>The created subject alternative name collection</returns>
-        public static SubjectAlternativeNames FromDns(params string[] names)
-        {
-            Argument.AssertNotNullOrEmpty(names, nameof(names));
-
-            return new SubjectAlternativeNames(s_dnsPropertyNameBytes, names);
-        }
+        public IList<string> DnsNames => LazyInitializer.EnsureInitialized(ref _dnsNames);
 
         /// <summary>
-        /// Creates a collection of DNS subject alternative names (SANs)
+        /// Gets a collection of email addresses.
         /// </summary>
-        /// <param name="names">The SAN entries</param>
-        /// <returns>The created subject alternative name collection</returns>
-        public static SubjectAlternativeNames FromDns(IEnumerable<string> names)
-        {
-            Argument.AssertNotNullOrEmpty(names, nameof(names));
-
-            return new SubjectAlternativeNames(s_dnsPropertyNameBytes, names);
-        }
+        public IList<string> Emails => LazyInitializer.EnsureInitialized(ref _emails);
 
         /// <summary>
-        /// Creates a collection of email subject alternative names (SANs)
+        /// Gets a collection of user principal names (UPNs).
         /// </summary>
-        /// <param name="names">The SAN entries</param>
-        /// <returns>The created subject alternative name collection</returns>
-        public static SubjectAlternativeNames FromEmail(params string[] names)
-        {
-            Argument.AssertNotNullOrEmpty(names, nameof(names));
+        public IList<string> UserPrincipalNames => LazyInitializer.EnsureInitialized(ref _userPrincipalNames);
 
-            return new SubjectAlternativeNames(s_emailsPropertyNameBytes, names);
-        }
-
-        /// <summary>
-        /// Creates a collection of email subject alternative names (SANs)
-        /// </summary>
-        /// <param name="names">The SAN entries</param>
-        /// <returns>The created subject alternative name collection</returns>
-        public static SubjectAlternativeNames FromEmail(IEnumerable<string> names)
-        {
-            Argument.AssertNotNullOrEmpty(names, nameof(names));
-
-            return new SubjectAlternativeNames(s_emailsPropertyNameBytes, names);
-        }
-
-        /// <summary>
-        /// Creates a collection of unique principal name (UPN) subject alternative names (SANs)
-        /// </summary>
-        /// <param name="names">The SAN entries</param>
-        /// <returns>The created subject alternative name collection</returns>
-        public static SubjectAlternativeNames FromUpn(params string[] names)
-        {
-            Argument.AssertNotNullOrEmpty(names, nameof(names));
-
-            return new SubjectAlternativeNames(s_upnsPropertyNameBytes, names);
-        }
-
-        /// <summary>
-        /// Creates a collection of unique principal name (UPN) subject alternative names (SANs)
-        /// </summary>
-        /// <param name="names">The SAN entries</param>
-        /// <returns>The created subject alternative name collection</returns>
-        public static SubjectAlternativeNames FromUpn(IEnumerable<string> names)
-        {
-            Argument.AssertNotNullOrEmpty(names, nameof(names));
-
-            return new SubjectAlternativeNames(s_upnsPropertyNameBytes, names);
-        }
-
-        /// <summary>
-        /// Gets an enumerator for the SAN collection
-        /// </summary>
-        /// <returns>The created enumerator</returns>
-        public IEnumerator<string> GetEnumerator()
-        {
-            return _names.GetEnumerator();
-        }
-
-        /// <summary>
-        /// Gets an enumerator for the SAN collection
-        /// </summary>
-        /// <returns>The created enumerator</returns>
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return _names.GetEnumerator();
-        }
+        internal bool IsEmpty => _dnsNames.IsNullOrEmpty() && _emails.IsNullOrEmpty() && _userPrincipalNames.IsNullOrEmpty();
 
         void IJsonDeserializable.ReadProperties(JsonElement json)
         {
@@ -131,44 +56,60 @@ namespace Azure.Security.KeyVault.Certificates
                 switch (prop.Name)
                 {
                     case DnsPropertyName:
-                        _nameType = s_dnsPropertyNameBytes;
+                        foreach (JsonElement element in prop.Value.EnumerateArray())
+                        {
+                            DnsNames.Add(element.ToString());
+                        }
                         break;
 
                     case EmailsPropertyName:
-                        _nameType = s_emailsPropertyNameBytes;
+                        foreach (JsonElement element in prop.Value.EnumerateArray())
+                        {
+                            Emails.Add(element.ToString());
+                        }
                         break;
 
                     case UpnsPropertyName:
-                        _nameType = s_upnsPropertyNameBytes;
+                        foreach (JsonElement element in prop.Value.EnumerateArray())
+                        {
+                            UserPrincipalNames.Add(element.ToString());
+                        }
                         break;
-
-                    default:
-                        continue;
                 }
-
-                List<string> altNames = new List<string>();
-
-                foreach (JsonElement element in prop.Value.EnumerateArray())
-                {
-                    altNames.Add(element.ToString());
-                }
-
-                _names = altNames;
-
-                break;
             }
         }
 
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {
-            json.WriteStartArray(_nameType);
-
-            foreach (string name in _names)
+            if (!_dnsNames.IsNullOrEmpty())
             {
-                json.WriteStringValue(name);
+                json.WriteStartArray(s_dnsPropertyNameBytes);
+                foreach (string dnsName in _dnsNames)
+                {
+                    json.WriteStringValue(dnsName);
+                }
+                json.WriteEndArray();
             }
 
-            json.WriteEndArray();
+            if (!_emails.IsNullOrEmpty())
+            {
+                json.WriteStartArray(s_emailsPropertyNameBytes);
+                foreach (string email in _emails)
+                {
+                    json.WriteStringValue(email);
+                }
+                json.WriteEndArray();
+            }
+
+            if (!_userPrincipalNames.IsNullOrEmpty())
+            {
+                json.WriteStartArray(s_upnsPropertyNameBytes);
+                foreach (string userPrincipalName in _userPrincipalNames)
+                {
+                    json.WriteStringValue(userPrincipalName);
+                }
+                json.WriteEndArray();
+            }
         }
     }
 }
