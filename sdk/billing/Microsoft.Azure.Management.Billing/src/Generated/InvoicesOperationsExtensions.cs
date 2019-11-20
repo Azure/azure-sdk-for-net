@@ -165,5 +165,143 @@ namespace Microsoft.Azure.Management.Billing
                 }
             }
 
+            /// <summary>
+            /// Lists invoices by billing subscriptions name.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// billing Account Id.
+            /// </param>
+            /// <param name='billingSubscriptionName'>
+            /// Billing Subscription Id.
+            /// </param>
+            /// <param name='periodStartDate'>
+            /// Invoice period start date.
+            /// </param>
+            /// <param name='periodEndDate'>
+            /// Invoice period end date.
+            /// </param>
+            public static IPage<Invoice> ListByBillingSubscription(this IInvoicesOperations operations, string billingAccountName, string billingSubscriptionName, string periodStartDate, string periodEndDate)
+            {
+                return operations.ListByBillingSubscriptionAsync(billingAccountName, billingSubscriptionName, periodStartDate, periodEndDate).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists invoices by billing subscriptions name.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// billing Account Id.
+            /// </param>
+            /// <param name='billingSubscriptionName'>
+            /// Billing Subscription Id.
+            /// </param>
+            /// <param name='periodStartDate'>
+            /// Invoice period start date.
+            /// </param>
+            /// <param name='periodEndDate'>
+            /// Invoice period end date.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Invoice>> ListByBillingSubscriptionAsync(this IInvoicesOperations operations, string billingAccountName, string billingSubscriptionName, string periodStartDate, string periodEndDate, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByBillingSubscriptionWithHttpMessagesAsync(billingAccountName, billingSubscriptionName, periodStartDate, periodEndDate, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the invoice by name.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// billing Account Id.
+            /// </param>
+            /// <param name='billingSubscriptionName'>
+            /// Billing Subscription Id.
+            /// </param>
+            /// <param name='invoiceName'>
+            /// Invoice Id.
+            /// </param>
+            public static Invoice GetById(this IInvoicesOperations operations, string billingAccountName, string billingSubscriptionName, string invoiceName)
+            {
+                return operations.GetByIdAsync(billingAccountName, billingSubscriptionName, invoiceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the invoice by name.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// billing Account Id.
+            /// </param>
+            /// <param name='billingSubscriptionName'>
+            /// Billing Subscription Id.
+            /// </param>
+            /// <param name='invoiceName'>
+            /// Invoice Id.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Invoice> GetByIdAsync(this IInvoicesOperations operations, string billingAccountName, string billingSubscriptionName, string invoiceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetByIdWithHttpMessagesAsync(billingAccountName, billingSubscriptionName, invoiceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists invoices by billing subscriptions name.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<Invoice> ListByBillingSubscriptionNext(this IInvoicesOperations operations, string nextPageLink)
+            {
+                return operations.ListByBillingSubscriptionNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists invoices by billing subscriptions name.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Invoice>> ListByBillingSubscriptionNextAsync(this IInvoicesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByBillingSubscriptionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
     }
 }

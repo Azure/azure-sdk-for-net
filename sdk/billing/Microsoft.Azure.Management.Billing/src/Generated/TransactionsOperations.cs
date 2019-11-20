@@ -60,10 +60,10 @@ namespace Microsoft.Azure.Management.Billing
         /// <param name='customerName'>
         /// Customer name.
         /// </param>
-        /// <param name='startDate'>
+        /// <param name='periodStartDate'>
         /// Start date
         /// </param>
-        /// <param name='endDate'>
+        /// <param name='periodEndDate'>
         /// End date
         /// </param>
         /// <param name='filter'>
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Transaction>>> ListByCustomerWithHttpMessagesAsync(string billingAccountName, string customerName, string startDate, string endDate, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<Transaction>>> ListByCustomerWithHttpMessagesAsync(string billingAccountName, string customerName, string periodStartDate, string periodEndDate, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (billingAccountName == null)
             {
@@ -107,13 +107,13 @@ namespace Microsoft.Azure.Management.Billing
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (startDate == null)
+            if (periodStartDate == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "startDate");
+                throw new ValidationException(ValidationRules.CannotBeNull, "periodStartDate");
             }
-            if (endDate == null)
+            if (periodEndDate == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "endDate");
+                throw new ValidationException(ValidationRules.CannotBeNull, "periodEndDate");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -124,8 +124,8 @@ namespace Microsoft.Azure.Management.Billing
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("billingAccountName", billingAccountName);
                 tracingParameters.Add("customerName", customerName);
-                tracingParameters.Add("startDate", startDate);
-                tracingParameters.Add("endDate", endDate);
+                tracingParameters.Add("periodStartDate", periodStartDate);
+                tracingParameters.Add("periodEndDate", periodEndDate);
                 tracingParameters.Add("filter", filter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListByCustomer", tracingParameters);
@@ -140,13 +140,13 @@ namespace Microsoft.Azure.Management.Billing
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
-            if (startDate != null)
+            if (periodStartDate != null)
             {
-                _queryParameters.Add(string.Format("startDate={0}", System.Uri.EscapeDataString(startDate)));
+                _queryParameters.Add(string.Format("periodStartDate={0}", System.Uri.EscapeDataString(periodStartDate)));
             }
-            if (endDate != null)
+            if (periodEndDate != null)
             {
-                _queryParameters.Add(string.Format("endDate={0}", System.Uri.EscapeDataString(endDate)));
+                _queryParameters.Add(string.Format("periodEndDate={0}", System.Uri.EscapeDataString(periodEndDate)));
             }
             if (filter != null)
             {
@@ -280,10 +280,10 @@ namespace Microsoft.Azure.Management.Billing
         /// <param name='billingAccountName'>
         /// billing Account Id.
         /// </param>
-        /// <param name='startDate'>
+        /// <param name='periodStartDate'>
         /// Start date
         /// </param>
-        /// <param name='endDate'>
+        /// <param name='periodEndDate'>
         /// End date
         /// </param>
         /// <param name='filter'>
@@ -313,7 +313,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Transaction>>> ListByBillingAccountWithHttpMessagesAsync(string billingAccountName, string startDate, string endDate, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<Transaction>>> ListByBillingAccountWithHttpMessagesAsync(string billingAccountName, string periodStartDate, string periodEndDate, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (billingAccountName == null)
             {
@@ -323,13 +323,13 @@ namespace Microsoft.Azure.Management.Billing
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (startDate == null)
+            if (periodStartDate == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "startDate");
+                throw new ValidationException(ValidationRules.CannotBeNull, "periodStartDate");
             }
-            if (endDate == null)
+            if (periodEndDate == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "endDate");
+                throw new ValidationException(ValidationRules.CannotBeNull, "periodEndDate");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -339,8 +339,8 @@ namespace Microsoft.Azure.Management.Billing
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("billingAccountName", billingAccountName);
-                tracingParameters.Add("startDate", startDate);
-                tracingParameters.Add("endDate", endDate);
+                tracingParameters.Add("periodStartDate", periodStartDate);
+                tracingParameters.Add("periodEndDate", periodEndDate);
                 tracingParameters.Add("filter", filter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListByBillingAccount", tracingParameters);
@@ -354,13 +354,13 @@ namespace Microsoft.Azure.Management.Billing
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
-            if (startDate != null)
+            if (periodStartDate != null)
             {
-                _queryParameters.Add(string.Format("startDate={0}", System.Uri.EscapeDataString(startDate)));
+                _queryParameters.Add(string.Format("periodStartDate={0}", System.Uri.EscapeDataString(periodStartDate)));
             }
-            if (endDate != null)
+            if (periodEndDate != null)
             {
-                _queryParameters.Add(string.Format("endDate={0}", System.Uri.EscapeDataString(endDate)));
+                _queryParameters.Add(string.Format("periodEndDate={0}", System.Uri.EscapeDataString(periodEndDate)));
             }
             if (filter != null)
             {
@@ -497,10 +497,10 @@ namespace Microsoft.Azure.Management.Billing
         /// <param name='billingProfileName'>
         /// Billing Profile Id.
         /// </param>
-        /// <param name='startDate'>
+        /// <param name='periodStartDate'>
         /// Start date
         /// </param>
-        /// <param name='endDate'>
+        /// <param name='periodEndDate'>
         /// End date
         /// </param>
         /// <param name='filter'>
@@ -530,7 +530,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<TransactionListResult>> ListByBillingProfileWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string startDate, string endDate, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<TransactionListResult>> ListByBillingProfileWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string periodStartDate, string periodEndDate, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (billingAccountName == null)
             {
@@ -544,13 +544,13 @@ namespace Microsoft.Azure.Management.Billing
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (startDate == null)
+            if (periodStartDate == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "startDate");
+                throw new ValidationException(ValidationRules.CannotBeNull, "periodStartDate");
             }
-            if (endDate == null)
+            if (periodEndDate == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "endDate");
+                throw new ValidationException(ValidationRules.CannotBeNull, "periodEndDate");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -561,8 +561,8 @@ namespace Microsoft.Azure.Management.Billing
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("billingAccountName", billingAccountName);
                 tracingParameters.Add("billingProfileName", billingProfileName);
-                tracingParameters.Add("startDate", startDate);
-                tracingParameters.Add("endDate", endDate);
+                tracingParameters.Add("periodStartDate", periodStartDate);
+                tracingParameters.Add("periodEndDate", periodEndDate);
                 tracingParameters.Add("filter", filter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListByBillingProfile", tracingParameters);
@@ -577,13 +577,13 @@ namespace Microsoft.Azure.Management.Billing
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
-            if (startDate != null)
+            if (periodStartDate != null)
             {
-                _queryParameters.Add(string.Format("startDate={0}", System.Uri.EscapeDataString(startDate)));
+                _queryParameters.Add(string.Format("periodStartDate={0}", System.Uri.EscapeDataString(periodStartDate)));
             }
-            if (endDate != null)
+            if (periodEndDate != null)
             {
-                _queryParameters.Add(string.Format("endDate={0}", System.Uri.EscapeDataString(endDate)));
+                _queryParameters.Add(string.Format("periodEndDate={0}", System.Uri.EscapeDataString(periodEndDate)));
             }
             if (filter != null)
             {
@@ -723,10 +723,10 @@ namespace Microsoft.Azure.Management.Billing
         /// <param name='invoiceSectionName'>
         /// InvoiceSection Id.
         /// </param>
-        /// <param name='startDate'>
+        /// <param name='periodStartDate'>
         /// Start date
         /// </param>
-        /// <param name='endDate'>
+        /// <param name='periodEndDate'>
         /// End date
         /// </param>
         /// <param name='filter'>
@@ -756,7 +756,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<TransactionListResult>> ListByInvoiceSectionWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string invoiceSectionName, string startDate, string endDate, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<TransactionListResult>> ListByInvoiceSectionWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string invoiceSectionName, string periodStartDate, string periodEndDate, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (billingAccountName == null)
             {
@@ -774,13 +774,13 @@ namespace Microsoft.Azure.Management.Billing
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (startDate == null)
+            if (periodStartDate == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "startDate");
+                throw new ValidationException(ValidationRules.CannotBeNull, "periodStartDate");
             }
-            if (endDate == null)
+            if (periodEndDate == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "endDate");
+                throw new ValidationException(ValidationRules.CannotBeNull, "periodEndDate");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -792,8 +792,8 @@ namespace Microsoft.Azure.Management.Billing
                 tracingParameters.Add("billingAccountName", billingAccountName);
                 tracingParameters.Add("billingProfileName", billingProfileName);
                 tracingParameters.Add("invoiceSectionName", invoiceSectionName);
-                tracingParameters.Add("startDate", startDate);
-                tracingParameters.Add("endDate", endDate);
+                tracingParameters.Add("periodStartDate", periodStartDate);
+                tracingParameters.Add("periodEndDate", periodEndDate);
                 tracingParameters.Add("filter", filter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListByInvoiceSection", tracingParameters);
@@ -809,13 +809,13 @@ namespace Microsoft.Azure.Management.Billing
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
-            if (startDate != null)
+            if (periodStartDate != null)
             {
-                _queryParameters.Add(string.Format("startDate={0}", System.Uri.EscapeDataString(startDate)));
+                _queryParameters.Add(string.Format("periodStartDate={0}", System.Uri.EscapeDataString(periodStartDate)));
             }
-            if (endDate != null)
+            if (periodEndDate != null)
             {
-                _queryParameters.Add(string.Format("endDate={0}", System.Uri.EscapeDataString(endDate)));
+                _queryParameters.Add(string.Format("periodEndDate={0}", System.Uri.EscapeDataString(periodEndDate)));
             }
             if (filter != null)
             {
@@ -954,10 +954,10 @@ namespace Microsoft.Azure.Management.Billing
         /// <param name='transactionName'>
         /// Transaction name.
         /// </param>
-        /// <param name='startDate'>
+        /// <param name='periodStartDate'>
         /// Start date
         /// </param>
-        /// <param name='endDate'>
+        /// <param name='periodEndDate'>
         /// End date
         /// </param>
         /// <param name='customHeaders'>
@@ -981,7 +981,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Transaction>> GetWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string transactionName, string startDate, string endDate, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Transaction>> GetWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string transactionName, string periodStartDate, string periodEndDate, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (billingAccountName == null)
             {
@@ -995,13 +995,13 @@ namespace Microsoft.Azure.Management.Billing
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "transactionName");
             }
-            if (startDate == null)
+            if (periodStartDate == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "startDate");
+                throw new ValidationException(ValidationRules.CannotBeNull, "periodStartDate");
             }
-            if (endDate == null)
+            if (periodEndDate == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "endDate");
+                throw new ValidationException(ValidationRules.CannotBeNull, "periodEndDate");
             }
             if (Client.ApiVersion == null)
             {
@@ -1017,8 +1017,8 @@ namespace Microsoft.Azure.Management.Billing
                 tracingParameters.Add("billingAccountName", billingAccountName);
                 tracingParameters.Add("billingProfileName", billingProfileName);
                 tracingParameters.Add("transactionName", transactionName);
-                tracingParameters.Add("startDate", startDate);
-                tracingParameters.Add("endDate", endDate);
+                tracingParameters.Add("periodStartDate", periodStartDate);
+                tracingParameters.Add("periodEndDate", periodEndDate);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
@@ -1029,13 +1029,13 @@ namespace Microsoft.Azure.Management.Billing
             _url = _url.Replace("{billingProfileName}", System.Uri.EscapeDataString(billingProfileName));
             _url = _url.Replace("{transactionName}", System.Uri.EscapeDataString(transactionName));
             List<string> _queryParameters = new List<string>();
-            if (startDate != null)
+            if (periodStartDate != null)
             {
-                _queryParameters.Add(string.Format("startDate={0}", System.Uri.EscapeDataString(startDate)));
+                _queryParameters.Add(string.Format("periodStartDate={0}", System.Uri.EscapeDataString(periodStartDate)));
             }
-            if (endDate != null)
+            if (periodEndDate != null)
             {
-                _queryParameters.Add(string.Format("endDate={0}", System.Uri.EscapeDataString(endDate)));
+                _queryParameters.Add(string.Format("periodEndDate={0}", System.Uri.EscapeDataString(periodEndDate)));
             }
             if (Client.ApiVersion != null)
             {

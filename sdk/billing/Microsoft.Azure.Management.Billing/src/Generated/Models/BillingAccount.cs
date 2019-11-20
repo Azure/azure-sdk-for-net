@@ -42,7 +42,8 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// account.</param>
         /// <param name="agreementType">The type of agreement. Possible values
         /// include: 'MicrosoftCustomerAgreement', 'EnterpriseAgreement',
-        /// 'MicrosoftOnlineServicesProgram'</param>
+        /// 'MicrosoftOnlineServicesProgram',
+        /// 'MicrosoftPartnerAgreement'</param>
         /// <param name="customerType">The type of customer. Possible values
         /// include: 'Enterprise', 'Individual', 'Partner'</param>
         /// <param name="billingProfiles">The billing profiles associated to
@@ -91,7 +92,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <summary>
         /// Gets the type of agreement. Possible values include:
         /// 'MicrosoftCustomerAgreement', 'EnterpriseAgreement',
-        /// 'MicrosoftOnlineServicesProgram'
+        /// 'MicrosoftOnlineServicesProgram', 'MicrosoftPartnerAgreement'
         /// </summary>
         [JsonProperty(PropertyName = "properties.agreementType")]
         public string AgreementType { get; private set; }

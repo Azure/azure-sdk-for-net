@@ -19,5 +19,6 @@ namespace Microsoft.Azure.Management.Billing.Models
         public const string MicrosoftCustomerAgreement = "MicrosoftCustomerAgreement";
         public const string EnterpriseAgreement = "EnterpriseAgreement";
         public const string MicrosoftOnlineServicesProgram = "MicrosoftOnlineServicesProgram";
+        public const string MicrosoftPartnerAgreement = "MicrosoftPartnerAgreement";
     }
 }

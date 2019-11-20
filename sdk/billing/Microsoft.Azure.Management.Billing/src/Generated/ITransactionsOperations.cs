@@ -34,10 +34,10 @@ namespace Microsoft.Azure.Management.Billing
         /// <param name='customerName'>
         /// Customer name.
         /// </param>
-        /// <param name='startDate'>
+        /// <param name='periodStartDate'>
         /// Start date
         /// </param>
-        /// <param name='endDate'>
+        /// <param name='periodEndDate'>
         /// End date
         /// </param>
         /// <param name='filter'>
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Transaction>>> ListByCustomerWithHttpMessagesAsync(string billingAccountName, string customerName, string startDate, string endDate, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Transaction>>> ListByCustomerWithHttpMessagesAsync(string billingAccountName, string customerName, string periodStartDate, string periodEndDate, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists the transactions by billing account name for given start and
         /// end date.
@@ -70,10 +70,10 @@ namespace Microsoft.Azure.Management.Billing
         /// <param name='billingAccountName'>
         /// billing Account Id.
         /// </param>
-        /// <param name='startDate'>
+        /// <param name='periodStartDate'>
         /// Start date
         /// </param>
-        /// <param name='endDate'>
+        /// <param name='periodEndDate'>
         /// End date
         /// </param>
         /// <param name='filter'>
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Transaction>>> ListByBillingAccountWithHttpMessagesAsync(string billingAccountName, string startDate, string endDate, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Transaction>>> ListByBillingAccountWithHttpMessagesAsync(string billingAccountName, string periodStartDate, string periodEndDate, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists the transactions by billing profile name for given start date
         /// and end date.
@@ -109,10 +109,10 @@ namespace Microsoft.Azure.Management.Billing
         /// <param name='billingProfileName'>
         /// Billing Profile Id.
         /// </param>
-        /// <param name='startDate'>
+        /// <param name='periodStartDate'>
         /// Start date
         /// </param>
-        /// <param name='endDate'>
+        /// <param name='periodEndDate'>
         /// End date
         /// </param>
         /// <param name='filter'>
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<TransactionListResult>> ListByBillingProfileWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string startDate, string endDate, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TransactionListResult>> ListByBillingProfileWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string periodStartDate, string periodEndDate, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists the transactions by invoice section name for given start date
         /// and end date.
@@ -151,10 +151,10 @@ namespace Microsoft.Azure.Management.Billing
         /// <param name='invoiceSectionName'>
         /// InvoiceSection Id.
         /// </param>
-        /// <param name='startDate'>
+        /// <param name='periodStartDate'>
         /// Start date
         /// </param>
-        /// <param name='endDate'>
+        /// <param name='periodEndDate'>
         /// End date
         /// </param>
         /// <param name='filter'>
@@ -178,7 +178,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<TransactionListResult>> ListByInvoiceSectionWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string invoiceSectionName, string startDate, string endDate, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TransactionListResult>> ListByInvoiceSectionWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string invoiceSectionName, string periodStartDate, string periodEndDate, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get the transaction.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
@@ -192,10 +192,10 @@ namespace Microsoft.Azure.Management.Billing
         /// <param name='transactionName'>
         /// Transaction name.
         /// </param>
-        /// <param name='startDate'>
+        /// <param name='periodStartDate'>
         /// Start date
         /// </param>
-        /// <param name='endDate'>
+        /// <param name='periodEndDate'>
         /// End date
         /// </param>
         /// <param name='customHeaders'>
@@ -213,7 +213,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Transaction>> GetWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string transactionName, string startDate, string endDate, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Transaction>> GetWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string transactionName, string periodStartDate, string periodEndDate, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists the transactions by customer id for given start date and end
         /// date.

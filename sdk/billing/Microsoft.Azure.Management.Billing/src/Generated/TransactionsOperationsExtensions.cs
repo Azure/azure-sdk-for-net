@@ -34,10 +34,10 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='customerName'>
             /// Customer name.
             /// </param>
-            /// <param name='startDate'>
+            /// <param name='periodStartDate'>
             /// Start date
             /// </param>
-            /// <param name='endDate'>
+            /// <param name='periodEndDate'>
             /// End date
             /// </param>
             /// <param name='filter'>
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.Billing
             /// 'not'. Tag filter is a key value pair string where key and value is
             /// separated by a colon (:).
             /// </param>
-            public static IPage<Transaction> ListByCustomer(this ITransactionsOperations operations, string billingAccountName, string customerName, string startDate, string endDate, string filter = default(string))
+            public static IPage<Transaction> ListByCustomer(this ITransactionsOperations operations, string billingAccountName, string customerName, string periodStartDate, string periodEndDate, string filter = default(string))
             {
-                return operations.ListByCustomerAsync(billingAccountName, customerName, startDate, endDate, filter).GetAwaiter().GetResult();
+                return operations.ListByCustomerAsync(billingAccountName, customerName, periodStartDate, periodEndDate, filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -64,10 +64,10 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='customerName'>
             /// Customer name.
             /// </param>
-            /// <param name='startDate'>
+            /// <param name='periodStartDate'>
             /// Start date
             /// </param>
-            /// <param name='endDate'>
+            /// <param name='periodEndDate'>
             /// End date
             /// </param>
             /// <param name='filter'>
@@ -79,9 +79,9 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Transaction>> ListByCustomerAsync(this ITransactionsOperations operations, string billingAccountName, string customerName, string startDate, string endDate, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Transaction>> ListByCustomerAsync(this ITransactionsOperations operations, string billingAccountName, string customerName, string periodStartDate, string periodEndDate, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByCustomerWithHttpMessagesAsync(billingAccountName, customerName, startDate, endDate, filter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByCustomerWithHttpMessagesAsync(billingAccountName, customerName, periodStartDate, periodEndDate, filter, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -98,10 +98,10 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
-            /// <param name='startDate'>
+            /// <param name='periodStartDate'>
             /// Start date
             /// </param>
-            /// <param name='endDate'>
+            /// <param name='periodEndDate'>
             /// End date
             /// </param>
             /// <param name='filter'>
@@ -110,9 +110,9 @@ namespace Microsoft.Azure.Management.Billing
             /// 'not'. Tag filter is a key value pair string where key and value is
             /// separated by a colon (:).
             /// </param>
-            public static IPage<Transaction> ListByBillingAccount(this ITransactionsOperations operations, string billingAccountName, string startDate, string endDate, string filter = default(string))
+            public static IPage<Transaction> ListByBillingAccount(this ITransactionsOperations operations, string billingAccountName, string periodStartDate, string periodEndDate, string filter = default(string))
             {
-                return operations.ListByBillingAccountAsync(billingAccountName, startDate, endDate, filter).GetAwaiter().GetResult();
+                return operations.ListByBillingAccountAsync(billingAccountName, periodStartDate, periodEndDate, filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -126,10 +126,10 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
-            /// <param name='startDate'>
+            /// <param name='periodStartDate'>
             /// Start date
             /// </param>
-            /// <param name='endDate'>
+            /// <param name='periodEndDate'>
             /// End date
             /// </param>
             /// <param name='filter'>
@@ -141,9 +141,9 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Transaction>> ListByBillingAccountAsync(this ITransactionsOperations operations, string billingAccountName, string startDate, string endDate, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Transaction>> ListByBillingAccountAsync(this ITransactionsOperations operations, string billingAccountName, string periodStartDate, string periodEndDate, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByBillingAccountWithHttpMessagesAsync(billingAccountName, startDate, endDate, filter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByBillingAccountWithHttpMessagesAsync(billingAccountName, periodStartDate, periodEndDate, filter, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -163,10 +163,10 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='billingProfileName'>
             /// Billing Profile Id.
             /// </param>
-            /// <param name='startDate'>
+            /// <param name='periodStartDate'>
             /// Start date
             /// </param>
-            /// <param name='endDate'>
+            /// <param name='periodEndDate'>
             /// End date
             /// </param>
             /// <param name='filter'>
@@ -175,9 +175,9 @@ namespace Microsoft.Azure.Management.Billing
             /// 'not'. Tag filter is a key value pair string where key and value is
             /// separated by a colon (:).
             /// </param>
-            public static TransactionListResult ListByBillingProfile(this ITransactionsOperations operations, string billingAccountName, string billingProfileName, string startDate, string endDate, string filter = default(string))
+            public static TransactionListResult ListByBillingProfile(this ITransactionsOperations operations, string billingAccountName, string billingProfileName, string periodStartDate, string periodEndDate, string filter = default(string))
             {
-                return operations.ListByBillingProfileAsync(billingAccountName, billingProfileName, startDate, endDate, filter).GetAwaiter().GetResult();
+                return operations.ListByBillingProfileAsync(billingAccountName, billingProfileName, periodStartDate, periodEndDate, filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -194,10 +194,10 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='billingProfileName'>
             /// Billing Profile Id.
             /// </param>
-            /// <param name='startDate'>
+            /// <param name='periodStartDate'>
             /// Start date
             /// </param>
-            /// <param name='endDate'>
+            /// <param name='periodEndDate'>
             /// End date
             /// </param>
             /// <param name='filter'>
@@ -209,9 +209,9 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TransactionListResult> ListByBillingProfileAsync(this ITransactionsOperations operations, string billingAccountName, string billingProfileName, string startDate, string endDate, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TransactionListResult> ListByBillingProfileAsync(this ITransactionsOperations operations, string billingAccountName, string billingProfileName, string periodStartDate, string periodEndDate, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByBillingProfileWithHttpMessagesAsync(billingAccountName, billingProfileName, startDate, endDate, filter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByBillingProfileWithHttpMessagesAsync(billingAccountName, billingProfileName, periodStartDate, periodEndDate, filter, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -234,10 +234,10 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='invoiceSectionName'>
             /// InvoiceSection Id.
             /// </param>
-            /// <param name='startDate'>
+            /// <param name='periodStartDate'>
             /// Start date
             /// </param>
-            /// <param name='endDate'>
+            /// <param name='periodEndDate'>
             /// End date
             /// </param>
             /// <param name='filter'>
@@ -246,9 +246,9 @@ namespace Microsoft.Azure.Management.Billing
             /// 'not'. Tag filter is a key value pair string where key and value is
             /// separated by a colon (:).
             /// </param>
-            public static TransactionListResult ListByInvoiceSection(this ITransactionsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, string startDate, string endDate, string filter = default(string))
+            public static TransactionListResult ListByInvoiceSection(this ITransactionsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, string periodStartDate, string periodEndDate, string filter = default(string))
             {
-                return operations.ListByInvoiceSectionAsync(billingAccountName, billingProfileName, invoiceSectionName, startDate, endDate, filter).GetAwaiter().GetResult();
+                return operations.ListByInvoiceSectionAsync(billingAccountName, billingProfileName, invoiceSectionName, periodStartDate, periodEndDate, filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -268,10 +268,10 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='invoiceSectionName'>
             /// InvoiceSection Id.
             /// </param>
-            /// <param name='startDate'>
+            /// <param name='periodStartDate'>
             /// Start date
             /// </param>
-            /// <param name='endDate'>
+            /// <param name='periodEndDate'>
             /// End date
             /// </param>
             /// <param name='filter'>
@@ -283,9 +283,9 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TransactionListResult> ListByInvoiceSectionAsync(this ITransactionsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, string startDate, string endDate, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TransactionListResult> ListByInvoiceSectionAsync(this ITransactionsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, string periodStartDate, string periodEndDate, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByInvoiceSectionWithHttpMessagesAsync(billingAccountName, billingProfileName, invoiceSectionName, startDate, endDate, filter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByInvoiceSectionWithHttpMessagesAsync(billingAccountName, billingProfileName, invoiceSectionName, periodStartDate, periodEndDate, filter, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -307,15 +307,15 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='transactionName'>
             /// Transaction name.
             /// </param>
-            /// <param name='startDate'>
+            /// <param name='periodStartDate'>
             /// Start date
             /// </param>
-            /// <param name='endDate'>
+            /// <param name='periodEndDate'>
             /// End date
             /// </param>
-            public static Transaction Get(this ITransactionsOperations operations, string billingAccountName, string billingProfileName, string transactionName, string startDate, string endDate)
+            public static Transaction Get(this ITransactionsOperations operations, string billingAccountName, string billingProfileName, string transactionName, string periodStartDate, string periodEndDate)
             {
-                return operations.GetAsync(billingAccountName, billingProfileName, transactionName, startDate, endDate).GetAwaiter().GetResult();
+                return operations.GetAsync(billingAccountName, billingProfileName, transactionName, periodStartDate, periodEndDate).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -334,18 +334,18 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='transactionName'>
             /// Transaction name.
             /// </param>
-            /// <param name='startDate'>
+            /// <param name='periodStartDate'>
             /// Start date
             /// </param>
-            /// <param name='endDate'>
+            /// <param name='periodEndDate'>
             /// End date
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Transaction> GetAsync(this ITransactionsOperations operations, string billingAccountName, string billingProfileName, string transactionName, string startDate, string endDate, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Transaction> GetAsync(this ITransactionsOperations operations, string billingAccountName, string billingProfileName, string transactionName, string periodStartDate, string periodEndDate, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(billingAccountName, billingProfileName, transactionName, startDate, endDate, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(billingAccountName, billingProfileName, transactionName, periodStartDate, periodEndDate, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -48,6 +48,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// period.</param>
         /// <param name="invoicePeriodEndDate">The end date of the billing
         /// period.</param>
+        /// <param name="invoiceType">Invoice type.</param>
         /// <param name="billingProfileId">The billing profile id this invoice
         /// belongs to.</param>
         /// <param name="billingProfileDisplayName">The billing profile display
@@ -57,7 +58,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="documents">List of documents available to download
         /// including invoice and tax documents.</param>
         /// <param name="payments">List of payments.</param>
-        public Invoice(string id = default(string), string name = default(string), string type = default(string), System.DateTime? dueDate = default(System.DateTime?), System.DateTime? invoiceDate = default(System.DateTime?), string status = default(string), Amount amountDue = default(Amount), Amount billedAmount = default(Amount), System.DateTime? invoicePeriodStartDate = default(System.DateTime?), System.DateTime? invoicePeriodEndDate = default(System.DateTime?), string billingProfileId = default(string), string billingProfileDisplayName = default(string), string purchaseOrderNumber = default(string), IList<Document> documents = default(IList<Document>), IList<PaymentProperties> payments = default(IList<PaymentProperties>))
+        public Invoice(string id = default(string), string name = default(string), string type = default(string), System.DateTime? dueDate = default(System.DateTime?), System.DateTime? invoiceDate = default(System.DateTime?), string status = default(string), Amount amountDue = default(Amount), Amount billedAmount = default(Amount), System.DateTime? invoicePeriodStartDate = default(System.DateTime?), System.DateTime? invoicePeriodEndDate = default(System.DateTime?), object invoiceType = default(object), string billingProfileId = default(string), string billingProfileDisplayName = default(string), string purchaseOrderNumber = default(string), IList<Document> documents = default(IList<Document>), IList<PaymentProperties> payments = default(IList<PaymentProperties>))
             : base(id, name, type)
         {
             DueDate = dueDate;
@@ -67,6 +68,7 @@ namespace Microsoft.Azure.Management.Billing.Models
             BilledAmount = billedAmount;
             InvoicePeriodStartDate = invoicePeriodStartDate;
             InvoicePeriodEndDate = invoicePeriodEndDate;
+            InvoiceType = invoiceType;
             BillingProfileId = billingProfileId;
             BillingProfileDisplayName = billingProfileDisplayName;
             PurchaseOrderNumber = purchaseOrderNumber;
@@ -122,6 +124,12 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.invoicePeriodEndDate")]
         public System.DateTime? InvoicePeriodEndDate { get; private set; }
+
+        /// <summary>
+        /// Gets invoice type.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.invoiceType")]
+        public object InvoiceType { get; private set; }
 
         /// <summary>
         /// Gets the billing profile id this invoice belongs to.
