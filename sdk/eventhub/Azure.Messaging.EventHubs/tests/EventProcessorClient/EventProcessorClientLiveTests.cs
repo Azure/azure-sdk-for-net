@@ -619,6 +619,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        [Ignore("Unstable test. (Tracked by: #7458)")]
         public async Task PartitionProcessorCanCreateACheckpoint()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
