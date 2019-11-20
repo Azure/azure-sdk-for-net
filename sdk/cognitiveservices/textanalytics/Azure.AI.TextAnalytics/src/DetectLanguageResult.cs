@@ -2,30 +2,30 @@
 // Licensed under the MIT License.
 
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// </summary>
-    public class TextSentimentResult : TextAnalysisResult
+    public class DetectLanguageResult : TextAnalysisResult
     {
-        internal TextSentimentResult(string id, TextDocumentStatistics statistics)
+        internal DetectLanguageResult(string id, TextDocumentStatistics statistics)
             : base(id, statistics)
         {
         }
 
-        internal TextSentimentResult(string id, string errorMessage)
+        internal DetectLanguageResult(string id, string errorMessage)
             : base(id, errorMessage)
         {
         }
 
-        // TODO: set DocumentSentiment.Length
         /// <summary>
         /// </summary>
-        public TextSentiment DocumentSentiment { get; }
+        public ReadOnlyCollection<DetectedLanguage> DetectedLanguages { get; }
 
         /// <summary>
         /// </summary>
-        public Collection<TextSentiment> SentenceSentiments { get; }
+        public DetectedLanguage PrimaryLanguage => DetectedLanguages.OrderBy(l => l.Score).First();
     }
 }

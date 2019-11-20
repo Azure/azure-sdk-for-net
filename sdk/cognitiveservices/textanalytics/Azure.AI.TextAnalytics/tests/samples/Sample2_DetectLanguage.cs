@@ -24,7 +24,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
             Debug.WriteLine($"Detecting language for input: \"{input}\"");
 
-            DetectedLanguageResult result = client.DetectLanguage(input).Value;
+            DetectLanguageResult result = client.DetectLanguage(input).Value;
             DetectedLanguage language = result.PrimaryLanguage;
 
             Debug.WriteLine($"Detected language {language.Name} with confidence {language.Score:0.00}.");

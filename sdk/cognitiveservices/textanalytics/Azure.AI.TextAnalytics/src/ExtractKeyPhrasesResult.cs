@@ -7,20 +7,20 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// </summary>
-    public class LinkedEntityResult : TextAnalysisResult
+    public class ExtractKeyPhrasesResult : TextAnalysisResult
     {
-        internal LinkedEntityResult(string id, TextDocumentStatistics statistics)
+        internal ExtractKeyPhrasesResult(string id, TextDocumentStatistics statistics)
             : base(id, statistics)
         {
         }
 
-        internal LinkedEntityResult(string id, string errorMessage)
+        internal ExtractKeyPhrasesResult(string id, string errorMessage)
             : base(id, errorMessage)
         {
         }
 
         /// <summary>
         /// </summary>
-        public ReadOnlyCollection<LinkedEntity> LinkedEntities { get; }
+        public ReadOnlyCollection<string> KeyPhrases { get; }
     }
 }

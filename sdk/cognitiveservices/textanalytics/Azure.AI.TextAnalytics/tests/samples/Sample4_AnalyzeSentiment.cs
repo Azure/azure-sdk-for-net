@@ -23,7 +23,7 @@ namespace Azure.AI.TextAnalytics.Samples
             string input = "That was the best day of my life!";
 
             Debug.WriteLine($"Analyzing sentiment for input: \"{input}\"");
-            TextSentimentResult result = client.AnalyzeSentiment(input).Value;
+            AnalyzeSentimentResult result = client.AnalyzeSentiment(input).Value;
             TextSentiment sentiment = result.DocumentSentiment;
 
             Debug.WriteLine($"Sentiment was {sentiment.SentimentClass.ToString()}, with scores: ");

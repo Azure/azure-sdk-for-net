@@ -9,16 +9,33 @@ namespace Azure.AI.TextAnalytics
     {
         internal TextAnalysisResult(string id, TextDocumentStatistics statistics)
         {
-            Details = new TextAnalysisResultDetails(id, statistics);
+            Id = id;
+            Statistics = statistics;
+            ErrorMessage = default;
         }
 
         internal TextAnalysisResult(string id, string errorMessage)
         {
-            Details = new TextAnalysisResultDetails(id, errorMessage);
+            Id = id;
+            ErrorMessage = errorMessage;
+            Statistics = default;
         }
 
         /// <summary>
+        /// Gets unique, non-empty document identifier.
         /// </summary>
-        public TextAnalysisResultDetails Details { get; }
+        public string Id { get; }
+
+        /// <summary>
+        /// Gets (Optional) if showStatistics=true was specified in the
+        /// request this field will contain information about the document
+        /// payload.
+        /// </summary>
+        public TextDocumentStatistics Statistics { get; }
+
+        /// <summary>
+        /// Errors and Warnings by document.
+        /// </summary>
+        public string ErrorMessage { get; }
     }
 }

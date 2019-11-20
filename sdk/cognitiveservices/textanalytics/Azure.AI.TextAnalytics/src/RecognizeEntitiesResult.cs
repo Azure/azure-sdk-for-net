@@ -7,20 +7,20 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// </summary>
-    public class KeyPhraseResult : TextAnalysisResult
+    public class RecognizeEntitiesResult : TextAnalysisResult
     {
-        internal KeyPhraseResult(string id, TextDocumentStatistics statistics)
+        internal RecognizeEntitiesResult(string id, TextDocumentStatistics statistics)
             : base(id, statistics)
         {
         }
 
-        internal KeyPhraseResult(string id, string errorMessage)
+        internal RecognizeEntitiesResult(string id, string errorMessage)
             : base(id, errorMessage)
         {
         }
 
         /// <summary>
         /// </summary>
-        public ReadOnlyCollection<string> KeyPhrases { get; }
+        public ReadOnlyCollection<NamedEntity> NamedEntities { get; }
     }
 }

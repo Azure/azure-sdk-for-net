@@ -5,12 +5,12 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// </summary>
-    public class UnknownLanguageInput
+    public class DetectLangaugeInput
     {
         /// <summary>
         /// </summary>
         /// <param name="id"></param>
-        public UnknownLanguageInput(string id)
+        public DetectLangaugeInput(string id)
         {
             Id = id;
         }

@@ -39,7 +39,7 @@ namespace Azure.AI.TextAnalytics.Samples
             var results = client.AnalyzeSentiment(inputs).Value;
 
             Debug.WriteLine($"Predicted sentiments are:");
-            foreach (TextSentimentResult result in results)
+            foreach (AnalyzeSentimentResult result in results)
             {
                 TextSentiment sentiment = result.DocumentSentiment;
                 Debug.WriteLine($"Document sentiment is {sentiment.SentimentClass.ToString()}, with scores: ");

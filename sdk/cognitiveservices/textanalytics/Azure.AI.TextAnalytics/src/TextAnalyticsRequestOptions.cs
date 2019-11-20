@@ -9,20 +9,16 @@ namespace Azure.AI.TextAnalytics
     {
         /// <summary>
         /// </summary>
-        /// <param name="includeStatistics"></param>
-        /// <param name="modelVersion"></param>
-        public TextAnalyticsRequestOptions(bool includeStatistics = false, string modelVersion = default)
+        public TextAnalyticsRequestOptions()
         {
-            IncludeStatistics = includeStatistics;
-            ModelVersion = modelVersion;
         }
 
         /// <summary>
         /// </summary>
-        public bool IncludeStatistics { get; }
+        public bool IncludeStatistics { get; set; }
 
         /// <summary>
         /// </summary>
-        public string ModelVersion { get; }
+        public string ModelVersion { get; set; }
     }
 }

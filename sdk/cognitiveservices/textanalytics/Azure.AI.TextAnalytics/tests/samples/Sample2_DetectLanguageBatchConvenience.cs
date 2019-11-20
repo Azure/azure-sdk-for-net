@@ -37,7 +37,7 @@ namespace Azure.AI.TextAnalytics.Samples
             var results = client.DetectLanguages(inputs).Value;
 
             Debug.WriteLine($"Detected languages are:");
-            foreach (DetectedLanguageResult result in results)
+            foreach (DetectLanguageResult result in results)
             {
                 Debug.WriteLine($"    {result.PrimaryLanguage.Name}, with confidence {result.PrimaryLanguage.Score:0.00}.");
             }
