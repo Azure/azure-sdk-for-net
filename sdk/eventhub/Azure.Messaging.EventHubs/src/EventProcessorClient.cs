@@ -25,7 +25,7 @@ namespace Azure.Messaging.EventHubs
     ///   through the provided handlers.
     /// </summary>
     ///
-    public class EventProcessorClient : IAsyncDisposable
+    public class EventProcessorClient
     {
         /// <summary>The random number generator to use for a specific thread.</summary>
         private static readonly ThreadLocal<Random> RandomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
@@ -565,30 +565,6 @@ namespace Azure.Messaging.EventHubs
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         public virtual void StopProcessing(CancellationToken cancellationToken = default) => StopProcessingAsync(cancellationToken).GetAwaiter().GetResult();
-
-        /// <summary>
-        ///   Closes the event processor.
-        /// </summary>
-        ///
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
-        public virtual async Task CloseAsync(CancellationToken cancellationToken = default)
-        {
-            IsClosed = true;
-
-            await StopProcessingAsync().ConfigureAwait(false);
-        }
-
-        /// <summary>
-        ///   Performs the task needed to clean up resources used by the <see cref="EventProcessorClient" />,
-        ///   including ensuring that the event client itself has been closed.
-        /// </summary>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
-        public async ValueTask DisposeAsync() => await CloseAsync().ConfigureAwait(false);
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.

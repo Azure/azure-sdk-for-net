@@ -371,39 +371,6 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessorClient.CloseAsync" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        [Ignore("Event Processor does not have a single connection anymore.")]
-        public async Task CloseAsyncClosesTheConnectionWhenOwned()
-        {
-            var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
-            var processor = new EventProcessorClient(Mock.Of<PartitionManager>(), EventHubConsumerClient.DefaultConsumerGroupName, connectionString);
-
-            await processor.CloseAsync();
-
-            var connection = GetConnection(processor);
-            Assert.That(connection.IsClosed, Is.True);
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessorClient.CloseAsync" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        public async Task CloseAsyncDoesNotCloseTheConnectionWhenNotOwned()
-        {
-            var connection = new MockConnection();
-            var processor = new EventProcessorClient(Mock.Of<PartitionManager>(), EventHubConsumerClient.DefaultConsumerGroupName, connection, default);
-
-            await processor.CloseAsync();
-            Assert.That(connection.IsClosed, Is.False);
-        }
-
-        /// <summary>
         ///   Retrieves the Connection for the processor client using its private accessor.
         /// </summary>
         ///
