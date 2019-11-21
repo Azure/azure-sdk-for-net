@@ -42,6 +42,8 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// <param name="consumerTenantName">Tenant name of the consumer who
         /// created the share subscription</param>
         /// <param name="createdAt">created at</param>
+        /// <param name="providerEmail">Email of the provider who created the
+        /// share</param>
         /// <param name="providerName">Name of the provider who created the
         /// share</param>
         /// <param name="sharedAt">Shared at</param>
@@ -50,13 +52,14 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// <param name="shareSubscriptionStatus">Gets the status of share
         /// subscription. Possible values include: 'Active', 'Revoked',
         /// 'SourceDeleted', 'Revoking'</param>
-        public ProviderShareSubscription(string id = default(string), string name = default(string), string type = default(string), string consumerEmail = default(string), string consumerName = default(string), string consumerTenantName = default(string), System.DateTime? createdAt = default(System.DateTime?), string providerName = default(string), System.DateTime? sharedAt = default(System.DateTime?), string shareSubscriptionObjectId = default(string), string shareSubscriptionStatus = default(string))
+        public ProviderShareSubscription(string id = default(string), string name = default(string), string type = default(string), string consumerEmail = default(string), string consumerName = default(string), string consumerTenantName = default(string), System.DateTime? createdAt = default(System.DateTime?), string providerEmail = default(string), string providerName = default(string), System.DateTime? sharedAt = default(System.DateTime?), string shareSubscriptionObjectId = default(string), string shareSubscriptionStatus = default(string))
             : base(id, name, type)
         {
             ConsumerEmail = consumerEmail;
             ConsumerName = consumerName;
             ConsumerTenantName = consumerTenantName;
             CreatedAt = createdAt;
+            ProviderEmail = providerEmail;
             ProviderName = providerName;
             SharedAt = sharedAt;
             ShareSubscriptionObjectId = shareSubscriptionObjectId;
@@ -92,6 +95,12 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.createdAt")]
         public System.DateTime? CreatedAt { get; private set; }
+
+        /// <summary>
+        /// Gets email of the provider who created the share
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.providerEmail")]
+        public string ProviderEmail { get; private set; }
 
         /// <summary>
         /// Gets name of the provider who created the share

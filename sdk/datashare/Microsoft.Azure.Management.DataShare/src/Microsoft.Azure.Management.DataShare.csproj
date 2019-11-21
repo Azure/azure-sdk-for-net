@@ -9,7 +9,7 @@
     <AssemblyName>Microsoft.Azure.Management.DataShare</AssemblyName>
     <PackageTags>Microsoft Azure resource management;Data Share;ADS;</PackageTags>
     <PackageReleaseNotes><![CDATA[
-- 2019-11-01 SDK release
+- update 2018-11-01-preview SDK release
             ]]></PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
