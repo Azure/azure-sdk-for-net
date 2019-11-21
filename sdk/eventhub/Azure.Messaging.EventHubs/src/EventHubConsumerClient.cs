@@ -329,7 +329,7 @@ namespace Azure.Messaging.EventHubs
         ///   process, rather than competing for them.
         /// </remarks>
         ///
-        /// <seealso cref="ReadEventsFromPartitionAsync(string, EventPosition, ReadOptions, CancellationToken)"/>
+        /// <seealso cref="ReadEventsFromPartitionAsync(string, EventPosition, ReadEventOptions, CancellationToken)"/>
         ///
         public virtual IAsyncEnumerable<PartitionEvent> ReadEventsFromPartitionAsync(string partitionId,
                                                                                      EventPosition startingPosition,
@@ -341,7 +341,7 @@ namespace Azure.Messaging.EventHubs
         ///
         ///   This enumerator may block for an indeterminate amount of time for an <c>await</c> if events are not available on the partition, requiring
         ///   cancellation via the <paramref name="cancellationToken"/> to be requested in order to return control.  It is recommended to set the
-        ///   <see cref="ReadOptions.MaximumWaitTime" /> for scenarios where a more deterministic maximum waiting period is desired.
+        ///   <see cref="ReadEventOptions.MaximumWaitTime" /> for scenarios where a more deterministic maximum waiting period is desired.
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
@@ -360,7 +360,7 @@ namespace Azure.Messaging.EventHubs
         ///
         public virtual async IAsyncEnumerable<PartitionEvent> ReadEventsFromPartitionAsync(string partitionId,
                                                                                            EventPosition startingPosition,
-                                                                                           ReadOptions readOptions,
+                                                                                           ReadEventOptions readOptions,
                                                                                            [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             Argument.AssertNotClosed(IsClosed, nameof(EventHubConsumerClient));
@@ -370,14 +370,14 @@ namespace Azure.Messaging.EventHubs
 
             var cancelPublishingAsync = default(Func<Task>);
             var eventChannel = default(Channel<PartitionEvent>);
-            var options = readOptions?.Clone() ?? new ReadOptions();
+            var options = readOptions?.Clone() ?? new ReadEventOptions();
 
             using var cancellationSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
 
             try
             {
                 eventChannel = CreateEventChannel((BackgroundPublishReceiveBatchSize * 4));
-                cancelPublishingAsync = await PublishPartitionEventsToChannelAsync(partitionId, startingPosition, options.TrackLastEnqueuedEventInformation, options.OwnerLevel, eventChannel, cancellationSource).ConfigureAwait(false);
+                cancelPublishingAsync = await PublishPartitionEventsToChannelAsync(partitionId, startingPosition, options.TrackLastEnqueuedEventProperties, options.OwnerLevel, eventChannel, cancellationSource).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -415,7 +415,7 @@ namespace Azure.Messaging.EventHubs
         ///
         ///   This enumerator may block for an indeterminate amount of time for an <c>await</c> if events are not available on the partition, requiring
         ///   cancellation via the <paramref name="cancellationToken"/> to be requested in order to return control.  It is recommended to set the
-        ///   <see cref="ReadOptions.MaximumWaitTime" /> for scenarios where a more deterministic maximum waiting period is desired.
+        ///   <see cref="ReadEventOptions.MaximumWaitTime" /> for scenarios where a more deterministic maximum waiting period is desired.
         /// </summary>
         ///
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
@@ -435,7 +435,7 @@ namespace Azure.Messaging.EventHubs
         /// </remarks>
         ///
         /// <seealso cref="EventProcessorClient" />
-        /// <seealso cref="ReadEventsAsync(ReadOptions, CancellationToken)"/>
+        /// <seealso cref="ReadEventsAsync(ReadEventOptions, CancellationToken)"/>
         ///
         public virtual IAsyncEnumerable<PartitionEvent> ReadEventsAsync(CancellationToken cancellationToken = default) => ReadEventsAsync(null, cancellationToken);
 
@@ -445,7 +445,7 @@ namespace Azure.Messaging.EventHubs
         ///
         ///   This enumerator may block for an indeterminate amount of time for an <c>await</c> if events are not available on the partition, requiring
         ///   cancellation via the <paramref name="cancellationToken"/> to be requested in order to return control.  It is recommended to set the
-        ///   <see cref="ReadOptions.MaximumWaitTime" /> for scenarios where a more deterministic maximum waiting period is desired.
+        ///   <see cref="ReadEventOptions.MaximumWaitTime" /> for scenarios where a more deterministic maximum waiting period is desired.
         /// </summary>
         ///
         /// <param name="readOptions">The set of options to use for configuring read behavior; if not specified the defaults will be used.</param>
@@ -468,7 +468,7 @@ namespace Azure.Messaging.EventHubs
         /// <seealso cref="EventProcessorClient" />
         /// <seealso cref="ReadEventsAsync(CancellationToken)"/>
         ///
-        public virtual IAsyncEnumerable<PartitionEvent> ReadEventsAsync(ReadOptions readOptions,
+        public virtual IAsyncEnumerable<PartitionEvent> ReadEventsAsync(ReadEventOptions readOptions,
                                                                         CancellationToken cancellationToken = default) => ReadEventsAsync(true, readOptions, cancellationToken);
 
         /// <summary>
@@ -477,7 +477,7 @@ namespace Azure.Messaging.EventHubs
         ///
         ///   This enumerator may block for an indeterminate amount of time for an <c>await</c> if events are not available on the partition, requiring
         ///   cancellation via the <paramref name="cancellationToken"/> to be requested in order to return control.  It is recommended to set the
-        ///   <see cref="ReadOptions.MaximumWaitTime" /> for scenarios where a more deterministic maximum waiting period is desired.
+        ///   <see cref="ReadEventOptions.MaximumWaitTime" /> for scenarios where a more deterministic maximum waiting period is desired.
         /// </summary>
         ///
         /// <param name="startReadingAtEarliestEvent"><c>true</c> to begin reading at the first events available in each partition; otherwise, reading will begin at the end of each partition seeing only new events as they are published.</param>
@@ -500,10 +500,10 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <seealso cref="EventProcessorClient" />
         /// <seealso cref="ReadEventsAsync(CancellationToken)"/>
-        /// <seealso cref="ReadEventsAsync(ReadOptions, CancellationToken)"/>
+        /// <seealso cref="ReadEventsAsync(ReadEventOptions, CancellationToken)"/>
         ///
         public virtual async IAsyncEnumerable<PartitionEvent> ReadEventsAsync(bool startReadingAtEarliestEvent,
-                                                                              ReadOptions readOptions = default,
+                                                                              ReadEventOptions readOptions = default,
                                                                               [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             Argument.AssertNotClosed(IsClosed, nameof(EventHubConsumerClient));
@@ -513,7 +513,7 @@ namespace Azure.Messaging.EventHubs
 
             var cancelPublishingAsync = default(Func<Task>);
             var eventChannel = default(Channel<PartitionEvent>);
-            var options = readOptions?.Clone() ?? new ReadOptions();
+            var options = readOptions?.Clone() ?? new ReadEventOptions();
             var startingPosition = startReadingAtEarliestEvent ? EventPosition.Earliest : EventPosition.Latest;
 
             using var cancellationSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
@@ -531,7 +531,7 @@ namespace Azure.Messaging.EventHubs
 
                 for (var index = 0; index < partitions.Length; ++index)
                 {
-                    publishingTasks[index] = PublishPartitionEventsToChannelAsync(partitions[index], startingPosition, options.TrackLastEnqueuedEventInformation, options.OwnerLevel, eventChannel, cancellationSource);
+                    publishingTasks[index] = PublishPartitionEventsToChannelAsync(partitions[index], startingPosition, options.TrackLastEnqueuedEventProperties, options.OwnerLevel, eventChannel, cancellationSource);
                 }
 
                 // Capture the callbacks to cancel publishing for all events.
@@ -689,7 +689,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="partitionId">The identifier of the partition from which events should be read.</param>
         /// <param name="startingPosition">The position within the partition's event stream that reading should begin from.</param>
-        /// <param name="trackLastEnqueuedEventInformation">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
+        /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
         /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
         /// <param name="channel">The channel to which events should be published.</param>
         /// <param name="publishingCancellationSource">A cancellation source which can be used for signaling publication to stop.</param>
@@ -703,7 +703,7 @@ namespace Azure.Messaging.EventHubs
         ///
         private async Task<Func<Task>> PublishPartitionEventsToChannelAsync(string partitionId,
                                                                             EventPosition startingPosition,
-                                                                            bool trackLastEnqueuedEventInformation,
+                                                                            bool trackLastEnqueuedEventProperties,
                                                                             long? ownerLevel,
                                                                             Channel<PartitionEvent> channel,
                                                                             CancellationTokenSource publishingCancellationSource)
@@ -766,7 +766,7 @@ namespace Azure.Messaging.EventHubs
 
             try
             {
-                transportConsumer = Connection.CreateTransportConsumer(ConsumerGroup, partitionId, startingPosition, RetryPolicy, trackLastEnqueuedEventInformation, ownerLevel);
+                transportConsumer = Connection.CreateTransportConsumer(ConsumerGroup, partitionId, startingPosition, RetryPolicy, trackLastEnqueuedEventProperties, ownerLevel);
 
                 if (!ActiveConsumers.TryAdd(publisherId, transportConsumer))
                 {

@@ -44,12 +44,12 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="PartitionContext.ReadLastEnqueuedEventInformation" />
+        ///   Verifies functionality of the <see cref="PartitionContext.ReadLastEnqueuedEventProperties" />
         ///   method.
         /// </summary>
         ///
         [Test]
-        public void ReadLastEnqueuedEventInformationDelegatesToTheConsumer()
+        public void ReadLastEnqueuedEventPropertiesDelegatesToTheConsumer()
         {
             var lastEvent = new EventData
             (
@@ -63,7 +63,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionId = "id-value";
             var mockConsumer = new LastEventConsumerMock(lastEvent);
             var context = new PartitionContext(partitionId, mockConsumer);
-            var information = context.ReadLastEnqueuedEventInformation();
+            var information = context.ReadLastEnqueuedEventProperties();
 
             Assert.That(information.SequenceNumber, Is.EqualTo(lastEvent.LastPartitionSequenceNumber), "The sequence number should match.");
             Assert.That(information.Offset, Is.EqualTo(lastEvent.LastPartitionOffset), "The offset should match.");
@@ -72,7 +72,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="PartitionContext.ReadLastEnqueuedEventInformation" />
+        ///   Verifies functionality of the <see cref="PartitionContext.ReadLastEnqueuedEventProperties" />
         ///   method.
         /// </summary>
         ///
@@ -102,7 +102,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 try
                 {
-                    Assert.That(() => context.ReadLastEnqueuedEventInformation(), Throws.TypeOf<EventHubsClientClosedException>());
+                    Assert.That(() => context.ReadLastEnqueuedEventProperties(), Throws.TypeOf<EventHubsClientClosedException>());
                 }
                 catch (AssertionException)
                 {

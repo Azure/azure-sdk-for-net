@@ -31,8 +31,8 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         public static IEnumerable<object[]> RetryOptionTestCases()
         {
-            yield return new object[] { new RetryOptions { MaximumRetries = 3, Delay = TimeSpan.FromMilliseconds(1), MaximumDelay = TimeSpan.FromMilliseconds(10), Mode = RetryMode.Fixed } };
-            yield return new object[] { new RetryOptions { MaximumRetries = 0, Delay = TimeSpan.FromMilliseconds(1), MaximumDelay = TimeSpan.FromMilliseconds(10), Mode = RetryMode.Fixed } };
+            yield return new object[] { new EventHubsRetryOptions { MaximumRetries = 3, Delay = TimeSpan.FromMilliseconds(1), MaximumDelay = TimeSpan.FromMilliseconds(10), Mode = EventHubsRetryMode.Fixed } };
+            yield return new object[] { new EventHubsRetryOptions { MaximumRetries = 0, Delay = TimeSpan.FromMilliseconds(1), MaximumDelay = TimeSpan.FromMilliseconds(10), Mode = EventHubsRetryMode.Fixed } };
         }
 
         /// <summary>
@@ -220,7 +220,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         [Test]
         [TestCaseSource(nameof(RetryOptionTestCases))]
-        public void GetPropertiesAsyncRespectsTheRetryPolicy(RetryOptions retryOptions)
+        public void GetPropertiesAsyncRespectsTheRetryPolicy(EventHubsRetryOptions retryOptions)
         {
             var eventHubName = "myName";
             var tokenValue = "123ABC";
@@ -358,7 +358,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         [Test]
         [TestCaseSource(nameof(RetryOptionTestCases))]
-        public void GetPartitionPropertiesAsyncRespectsTheRetryPolicy(RetryOptions retryOptions)
+        public void GetPartitionPropertiesAsyncRespectsTheRetryPolicy(EventHubsRetryOptions retryOptions)
         {
             var eventHubName = "myName";
             var partitionId = "Barney";

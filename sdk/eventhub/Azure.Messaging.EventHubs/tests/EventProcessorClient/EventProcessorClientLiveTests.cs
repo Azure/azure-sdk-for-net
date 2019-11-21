@@ -34,7 +34,7 @@ namespace Azure.Messaging.EventHubs.Tests
         private const int ReceiveRetryLimit = 10;
 
         /// <summary>The default retry policy to use for test operations.</summary>
-        private static readonly EventHubsRetryPolicy DefaultRetryPolicy = new RetryOptions().ToRetryPolicy();
+        private static readonly EventHubsRetryPolicy DefaultRetryPolicy = new EventHubsRetryOptions().ToRetryPolicy();
 
         /// <summary>
         ///   Verifies that the <see cref="EventProcessorClient" /> is able to
@@ -226,7 +226,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         await using (var producer = new EventHubProducerClient(connection))
                         {
-                            await producer.SendAsync(expectedEvents[partitionId], new SendOptions { PartitionId = partitionId });
+                            await producer.SendAsync(expectedEvents[partitionId], new SendEventOptions { PartitionId = partitionId });
                         }
                     }
 

@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
-    ///   The suite of tests for the <see cref="ReadOptions" />
+    ///   The suite of tests for the <see cref="ReadEventOptions" />
     ///   class.
     /// </summary>
     ///
@@ -15,37 +15,37 @@ namespace Azure.Messaging.EventHubs.Tests
     public class ReadOptionsTests
     {
         /// <summary>
-        ///   Verifies functionality of the <see cref="ReadOptions.Clone" />
+        ///   Verifies functionality of the <see cref="ReadEventOptions.Clone" />
         ///   method.
         /// </summary>
         ///
         [Test]
         public void CloneProducesACopy()
         {
-            var options = new ReadOptions
+            var options = new ReadEventOptions
             {
                 OwnerLevel = 99,
-                TrackLastEnqueuedEventInformation = false,
+                TrackLastEnqueuedEventProperties = false,
                 MaximumWaitTime = TimeSpan.FromMinutes(65)
             };
 
-            ReadOptions clone = options.Clone();
+            ReadEventOptions clone = options.Clone();
             Assert.That(clone, Is.Not.Null, "The clone should not be null.");
 
             Assert.That(clone.OwnerLevel, Is.EqualTo(options.OwnerLevel), "The owner level of the clone should match.");
-            Assert.That(clone.TrackLastEnqueuedEventInformation, Is.EqualTo(options.TrackLastEnqueuedEventInformation), "The tracking of last event information of the clone should match.");
+            Assert.That(clone.TrackLastEnqueuedEventProperties, Is.EqualTo(options.TrackLastEnqueuedEventProperties), "The tracking of last event information of the clone should match.");
             Assert.That(clone.MaximumWaitTime, Is.EqualTo(options.MaximumWaitTime), "The default maximum wait time of the clone should match.");
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="ReadOptions.MaximumWaitTime" />
+        ///   Verifies functionality of the <see cref="ReadEventOptions.MaximumWaitTime" />
         ///   property.
         /// </summary>
         ///
         [Test]
         public void MaximumWaitTimeIsValidated()
         {
-            Assert.That(() => new ReadOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(-1) }, Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new ReadEventOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(-1) }, Throws.InstanceOf<ArgumentException>());
         }
     }
 }

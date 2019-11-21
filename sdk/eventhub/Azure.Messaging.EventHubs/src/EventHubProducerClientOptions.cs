@@ -17,7 +17,7 @@ namespace Azure.Messaging.EventHubs
         private EventHubConnectionOptions _connectionOptions = new EventHubConnectionOptions();
 
         /// <summary>The set of options to govern retry behavior and try timeouts.</summary>
-        private RetryOptions _retryOptions = new RetryOptions();
+        private EventHubsRetryOptions _retryOptions = new EventHubsRetryOptions();
 
         /// <summary>
         ///   Gets or sets the options used for configuring the connection to the Event Hubs service.
@@ -39,7 +39,7 @@ namespace Azure.Messaging.EventHubs
         ///   amount of time allowed for publishing events and other interactions with the Event Hubs service.
         /// </summary>
         ///
-        public RetryOptions RetryOptions
+        public EventHubsRetryOptions RetryOptions
         {
             get => _retryOptions;
             set

@@ -15,14 +15,14 @@ namespace Azure.Messaging.EventHubs.Authorization
     ///
     /// <seealso cref="Azure.Core.TokenCredential" />
     ///
-    public sealed class EventHubSharedKeyCredential : TokenCredential
+    internal sealed class EventHubSharedKeyCredential : TokenCredential
     {
         /// <summary>
         ///   The name of the shared access key to be used for authorization, as
         ///   reported by the Azure portal.
         /// </summary>
         ///
-        public string SharedAccessKeyName { get; }
+        private string SharedAccessKeyName { get; }
 
         /// <summary>
         ///   The value of the shared access key to be used for authorization, as

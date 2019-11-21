@@ -9,99 +9,99 @@ using NUnit.Framework;
 namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
-    ///   The suite of tests for the <see cref="RetryOptionsExtensions" />
+    ///   The suite of tests for the <see cref="EventHubsRetryOptionsExtensions" />
     ///   class.
     /// </summary>
     ///
     [TestFixture]
-    public class RetryOptionsExtensionsTests
+    public class EventHubsRetryOptionsExtensionsTests
     {
         /// <summary>
-        ///   Verifies functionality of the <see cref="RetryOptionsExtensions.IsEquivalentTo" /> test
+        ///   Verifies functionality of the <see cref="EventHubsRetryOptionsExtensions.IsEquivalentTo" /> test
         ///   helper.
         /// </summary>
         ///
         [Test]
         public void IsEquivalentToDetectsModes()
         {
-            var first = new RetryOptions { Mode = RetryMode.Exponential };
-            var second = new RetryOptions { Mode = RetryMode.Fixed };
+            var first = new EventHubsRetryOptions { Mode = EventHubsRetryMode.Exponential };
+            var second = new EventHubsRetryOptions { Mode = EventHubsRetryMode.Fixed };
 
             Assert.That(first.IsEquivalentTo(second), Is.False);
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="RetryOptionsExtensions.IsEquivalentTo" /> test
+        ///   Verifies functionality of the <see cref="EventHubsRetryOptionsExtensions.IsEquivalentTo" /> test
         ///   helper.
         /// </summary>
         ///
         [Test]
         public void IsEquivalentToDetectsMaximumRetries()
         {
-            var first = new RetryOptions { MaximumRetries = 7 };
-            var second = new RetryOptions { MaximumRetries = 99 };
+            var first = new EventHubsRetryOptions { MaximumRetries = 7 };
+            var second = new EventHubsRetryOptions { MaximumRetries = 99 };
 
             Assert.That(first.IsEquivalentTo(second), Is.False);
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="RetryOptionsExtensions.IsEquivalentTo" /> test
+        ///   Verifies functionality of the <see cref="EventHubsRetryOptionsExtensions.IsEquivalentTo" /> test
         ///   helper.
         /// </summary>
         ///
         [Test]
         public void IsEquivalentToDetectsMaximumDelay()
         {
-            var first = new RetryOptions { MaximumDelay = TimeSpan.FromSeconds(7) };
-            var second = new RetryOptions { MaximumDelay = TimeSpan.FromSeconds(8) };
+            var first = new EventHubsRetryOptions { MaximumDelay = TimeSpan.FromSeconds(7) };
+            var second = new EventHubsRetryOptions { MaximumDelay = TimeSpan.FromSeconds(8) };
 
             Assert.That(first.IsEquivalentTo(second), Is.False);
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="RetryOptionsExtensions.IsEquivalentTo" /> test
+        ///   Verifies functionality of the <see cref="EventHubsRetryOptionsExtensions.IsEquivalentTo" /> test
         ///   helper.
         /// </summary>
         ///
         [Test]
         public void IsEquivalentToDetectsDelay()
         {
-            var first = new RetryOptions { Delay = TimeSpan.FromSeconds(7) };
-            var second = new RetryOptions { Delay = TimeSpan.FromMinutes(1) };
+            var first = new EventHubsRetryOptions { Delay = TimeSpan.FromSeconds(7) };
+            var second = new EventHubsRetryOptions { Delay = TimeSpan.FromMinutes(1) };
 
             Assert.That(first.IsEquivalentTo(second), Is.False);
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="RetryOptionsExtensions.IsEquivalentTo" /> test
+        ///   Verifies functionality of the <see cref="EventHubsRetryOptionsExtensions.IsEquivalentTo" /> test
         ///   helper.
         /// </summary>
         ///
         [Test]
         public void IsEquivalentToDetectsTryTimeout()
         {
-            var first = new RetryOptions { TryTimeout = TimeSpan.FromSeconds(9) };
-            var second = new RetryOptions { TryTimeout = TimeSpan.FromSeconds(8) };
+            var first = new EventHubsRetryOptions { TryTimeout = TimeSpan.FromSeconds(9) };
+            var second = new EventHubsRetryOptions { TryTimeout = TimeSpan.FromSeconds(8) };
 
             Assert.That(first.IsEquivalentTo(second), Is.False);
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="RetryOptionsExtensions.IsEquivalentTo" /> test
+        ///   Verifies functionality of the <see cref="EventHubsRetryOptionsExtensions.IsEquivalentTo" /> test
         ///   helper.
         /// </summary>
         ///
         [Test]
         public void IsEquivalentToDetectsCustomPolicy()
         {
-            var first = new RetryOptions { CustomRetryPolicy = Mock.Of<EventHubsRetryPolicy>() };
-            var second = new RetryOptions { CustomRetryPolicy = new BasicRetryPolicy(new RetryOptions()) };
+            var first = new EventHubsRetryOptions { CustomRetryPolicy = Mock.Of<EventHubsRetryPolicy>() };
+            var second = new EventHubsRetryOptions { CustomRetryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions()) };
 
             Assert.That(first.IsEquivalentTo(second), Is.False);
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="RetryOptionsExtensions.IsEquivalentTo" /> test
+        ///   Verifies functionality of the <see cref="EventHubsRetryOptionsExtensions.IsEquivalentTo" /> test
         ///   helper.
         /// </summary>
         ///
@@ -109,23 +109,23 @@ namespace Azure.Messaging.EventHubs.Tests
         public void IsEquivalentToDetectsEqualOptionSets()
         {
             var customPolicy = Mock.Of<EventHubsRetryPolicy>();
-            var first = new RetryOptions { CustomRetryPolicy = customPolicy };
-            var second = new RetryOptions { CustomRetryPolicy = customPolicy };
+            var first = new EventHubsRetryOptions { CustomRetryPolicy = customPolicy };
+            var second = new EventHubsRetryOptions { CustomRetryPolicy = customPolicy };
 
             Assert.That(first.IsEquivalentTo(second), Is.True);
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="RetryOptionsExtensions.IsEquivalentTo" /> test
+        ///   Verifies functionality of the <see cref="EventHubsRetryOptionsExtensions.IsEquivalentTo" /> test
         ///   helper.
         /// </summary>
         ///
         [Test]
         public void IsEquivalentToDetectsSameInstance()
         {
-            var first = new RetryOptions
+            var first = new EventHubsRetryOptions
             {
-                Mode = RetryMode.Fixed,
+                Mode = EventHubsRetryMode.Fixed,
                 MaximumRetries = 99,
                 MaximumDelay = TimeSpan.FromMinutes(3),
                 Delay = TimeSpan.FromSeconds(4),
@@ -136,54 +136,54 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="RetryOptionsExtensions.IsEquivalentTo" /> test
+        ///   Verifies functionality of the <see cref="EventHubsRetryOptionsExtensions.IsEquivalentTo" /> test
         ///   helper.
         /// </summary>
         ///
         [Test]
         public void IsEquivalentToDetectsTwoNulls()
         {
-            Assert.That(((RetryOptions)null).IsEquivalentTo(null), Is.True);
+            Assert.That(((EventHubsRetryOptions)null).IsEquivalentTo(null), Is.True);
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="RetryOptionsExtensions.IsEquivalentTo" /> test
+        ///   Verifies functionality of the <see cref="EventHubsRetryOptionsExtensions.IsEquivalentTo" /> test
         ///   helper.
         /// </summary>
         ///
         [Test]
         public void IsEquivalentToDetectsNullInstance()
         {
-            var first = new RetryOptions
+            var first = new EventHubsRetryOptions
             {
-                Mode = RetryMode.Fixed,
+                Mode = EventHubsRetryMode.Fixed,
                 MaximumRetries = 99,
                 MaximumDelay = TimeSpan.FromMinutes(3),
                 Delay = TimeSpan.FromSeconds(4),
                 TryTimeout = TimeSpan.Zero
             };
 
-            Assert.That(((RetryOptions)null).IsEquivalentTo(first), Is.False);
+            Assert.That(((EventHubsRetryOptions)null).IsEquivalentTo(first), Is.False);
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="RetryOptionsExtensions.IsEquivalentTo" /> test
+        ///   Verifies functionality of the <see cref="EventHubsRetryOptionsExtensions.IsEquivalentTo" /> test
         ///   helper.
         /// </summary>
         ///
         [Test]
         public void IsEquivalentToDetectsNullArgument()
         {
-            var first = new RetryOptions
+            var first = new EventHubsRetryOptions
             {
-                Mode = RetryMode.Fixed,
+                Mode = EventHubsRetryMode.Fixed,
                 MaximumRetries = 99,
                 MaximumDelay = TimeSpan.FromMinutes(3),
                 Delay = TimeSpan.FromSeconds(4),
                 TryTimeout = TimeSpan.Zero
             };
 
-            Assert.That(first.IsEquivalentTo((RetryOptions)null), Is.False);
+            Assert.That(first.IsEquivalentTo((EventHubsRetryOptions)null), Is.False);
         }
     }
 }
