@@ -2578,6 +2578,28 @@ namespace Azure.Storage.Queues.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.QueueAccessPolicy value);
     }
+
+    /// <summary>
+    /// QueuesModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class QueuesModelFactory
+    {
+        /// <summary>
+        /// Creates a new QueueAccessPolicy instance for mocking.
+        /// </summary>
+        public static QueueAccessPolicy QueueAccessPolicy(
+            System.DateTimeOffset? startsOn = default,
+            System.DateTimeOffset? expiresOn = default,
+            string permissions = default)
+        {
+            return new QueueAccessPolicy()
+            {
+                StartsOn = startsOn,
+                ExpiresOn = expiresOn,
+                Permissions = permissions,
+            };
+        }
+    }
 }
 #endregion class QueueAccessPolicy
 
@@ -2819,6 +2841,32 @@ namespace Azure.Storage.Queues.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.QueueCorsRule value);
+    }
+
+    /// <summary>
+    /// QueuesModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class QueuesModelFactory
+    {
+        /// <summary>
+        /// Creates a new QueueCorsRule instance for mocking.
+        /// </summary>
+        public static QueueCorsRule QueueCorsRule(
+            string allowedOrigins,
+            string allowedMethods,
+            string allowedHeaders,
+            string exposedHeaders,
+            int maxAgeInSeconds)
+        {
+            return new QueueCorsRule()
+            {
+                AllowedOrigins = allowedOrigins,
+                AllowedMethods = allowedMethods,
+                AllowedHeaders = allowedHeaders,
+                ExposedHeaders = exposedHeaders,
+                MaxAgeInSeconds = maxAgeInSeconds,
+            };
+        }
     }
 }
 #endregion class QueueCorsRule
@@ -3784,6 +3832,26 @@ namespace Azure.Storage.Queues.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.QueueRetentionPolicy value);
+    }
+
+    /// <summary>
+    /// QueuesModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class QueuesModelFactory
+    {
+        /// <summary>
+        /// Creates a new QueueRetentionPolicy instance for mocking.
+        /// </summary>
+        public static QueueRetentionPolicy QueueRetentionPolicy(
+            bool enabled,
+            int? days = default)
+        {
+            return new QueueRetentionPolicy()
+            {
+                Enabled = enabled,
+                Days = days,
+            };
+        }
     }
 }
 #endregion class QueueRetentionPolicy

@@ -12820,6 +12820,28 @@ namespace Azure.Storage.Blobs.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobAccessPolicy value);
     }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlobAccessPolicy instance for mocking.
+        /// </summary>
+        public static BlobAccessPolicy BlobAccessPolicy(
+            System.DateTimeOffset startsOn,
+            System.DateTimeOffset expiresOn,
+            string permissions)
+        {
+            return new BlobAccessPolicy()
+            {
+                StartsOn = startsOn,
+                ExpiresOn = expiresOn,
+                Permissions = permissions,
+            };
+        }
+    }
 }
 #endregion class BlobAccessPolicy
 
@@ -13920,6 +13942,32 @@ namespace Azure.Storage.Blobs.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobCorsRule value);
+    }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlobCorsRule instance for mocking.
+        /// </summary>
+        public static BlobCorsRule BlobCorsRule(
+            string allowedOrigins,
+            string allowedMethods,
+            string allowedHeaders,
+            string exposedHeaders,
+            int maxAgeInSeconds)
+        {
+            return new BlobCorsRule()
+            {
+                AllowedOrigins = allowedOrigins,
+                AllowedMethods = allowedMethods,
+                AllowedHeaders = allowedHeaders,
+                ExposedHeaders = exposedHeaders,
+                MaxAgeInSeconds = maxAgeInSeconds,
+            };
+        }
     }
 }
 #endregion class BlobCorsRule
@@ -15834,6 +15882,26 @@ namespace Azure.Storage.Blobs.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobRetentionPolicy value);
     }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlobRetentionPolicy instance for mocking.
+        /// </summary>
+        public static BlobRetentionPolicy BlobRetentionPolicy(
+            bool enabled,
+            int? days = default)
+        {
+            return new BlobRetentionPolicy()
+            {
+                Enabled = enabled,
+                Days = days,
+            };
+        }
+    }
 }
 #endregion class BlobRetentionPolicy
 
@@ -16325,6 +16393,28 @@ namespace Azure.Storage.Blobs.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobStaticWebsite value);
+    }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlobStaticWebsite instance for mocking.
+        /// </summary>
+        public static BlobStaticWebsite BlobStaticWebsite(
+            bool enabled,
+            string indexDocument = default,
+            string errorDocument404Path = default)
+        {
+            return new BlobStaticWebsite()
+            {
+                Enabled = enabled,
+                IndexDocument = indexDocument,
+                ErrorDocument404Path = errorDocument404Path,
+            };
+        }
     }
 }
 #endregion class BlobStaticWebsite

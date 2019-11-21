@@ -278,10 +278,13 @@ namespace Azure.Storage.Queues.Models
     public static partial class QueuesModelFactory
     {
         public static Azure.Storage.Queues.Models.PeekedMessage PeekedMessage(string messageId, string messageText, long dequeueCount, System.DateTimeOffset? insertedOn = default(System.DateTimeOffset?), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.Storage.Queues.Models.QueueAccessPolicy QueueAccessPolicy(System.DateTimeOffset? startsOn = default(System.DateTimeOffset?), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), string permissions = null) { throw null; }
+        public static Azure.Storage.Queues.Models.QueueCorsRule QueueCorsRule(string allowedOrigins, string allowedMethods, string allowedHeaders, string exposedHeaders, int maxAgeInSeconds) { throw null; }
         public static Azure.Storage.Queues.Models.QueueGeoReplication QueueGeoReplication(Azure.Storage.Queues.Models.QueueGeoReplicationStatus status, System.DateTimeOffset? lastSyncedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.Storage.Queues.Models.QueueItem QueueItem(string name, System.Collections.Generic.IDictionary<string, string> metadata = null) { throw null; }
         public static Azure.Storage.Queues.Models.QueueMessage QueueMessage(string messageId, string popReceipt, string messageText, long dequeueCount, System.DateTimeOffset? nextVisibleOn = default(System.DateTimeOffset?), System.DateTimeOffset? insertedOn = default(System.DateTimeOffset?), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.Storage.Queues.Models.QueueProperties QueueProperties(System.Collections.Generic.IDictionary<string, string> metadata, int approximateMessagesCount) { throw null; }
+        public static Azure.Storage.Queues.Models.QueueRetentionPolicy QueueRetentionPolicy(bool enabled, int? days = default(int?)) { throw null; }
         public static Azure.Storage.Queues.Models.QueueServiceStatistics QueueServiceStatistics(Azure.Storage.Queues.Models.QueueGeoReplication geoReplication = null) { throw null; }
         public static Azure.Storage.Queues.Models.SendReceipt SendReceipt(string messageId, System.DateTimeOffset insertionTime, System.DateTimeOffset expirationTime, string popReceipt, System.DateTimeOffset timeNextVisible) { throw null; }
         public static Azure.Storage.Queues.Models.UpdateReceipt UpdateReceipt(string popReceipt, System.DateTimeOffset nextVisibleOn) { throw null; }

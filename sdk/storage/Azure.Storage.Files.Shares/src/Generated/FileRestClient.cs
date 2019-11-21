@@ -7163,6 +7163,28 @@ namespace Azure.Storage.Files.Shares.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Shares.Models.ShareAccessPolicy value);
     }
+
+    /// <summary>
+    /// ShareModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class ShareModelFactory
+    {
+        /// <summary>
+        /// Creates a new ShareAccessPolicy instance for mocking.
+        /// </summary>
+        public static ShareAccessPolicy ShareAccessPolicy(
+            System.DateTimeOffset startsOn,
+            System.DateTimeOffset expiresOn,
+            string permissions)
+        {
+            return new ShareAccessPolicy()
+            {
+                StartsOn = startsOn,
+                ExpiresOn = expiresOn,
+                Permissions = permissions,
+            };
+        }
+    }
 }
 #endregion class ShareAccessPolicy
 
@@ -7274,6 +7296,32 @@ namespace Azure.Storage.Files.Shares.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Shares.Models.ShareCorsRule value);
+    }
+
+    /// <summary>
+    /// ShareModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class ShareModelFactory
+    {
+        /// <summary>
+        /// Creates a new ShareCorsRule instance for mocking.
+        /// </summary>
+        public static ShareCorsRule ShareCorsRule(
+            string allowedOrigins,
+            string allowedMethods,
+            string allowedHeaders,
+            string exposedHeaders,
+            int maxAgeInSeconds)
+        {
+            return new ShareCorsRule()
+            {
+                AllowedOrigins = allowedOrigins,
+                AllowedMethods = allowedMethods,
+                AllowedHeaders = allowedHeaders,
+                ExposedHeaders = exposedHeaders,
+                MaxAgeInSeconds = maxAgeInSeconds,
+            };
+        }
     }
 }
 #endregion class ShareCorsRule
@@ -8495,6 +8543,26 @@ namespace Azure.Storage.Files.Shares.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Shares.Models.ShareRetentionPolicy value);
+    }
+
+    /// <summary>
+    /// ShareModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class ShareModelFactory
+    {
+        /// <summary>
+        /// Creates a new ShareRetentionPolicy instance for mocking.
+        /// </summary>
+        public static ShareRetentionPolicy ShareRetentionPolicy(
+            bool enabled,
+            int? days = default)
+        {
+            return new ShareRetentionPolicy()
+            {
+                Enabled = enabled,
+                Days = days,
+            };
+        }
     }
 }
 #endregion class ShareRetentionPolicy

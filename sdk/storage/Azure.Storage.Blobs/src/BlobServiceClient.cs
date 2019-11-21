@@ -51,12 +51,6 @@ namespace Azure.Storage.Blobs
         internal virtual HttpPipelinePolicy AuthenticationPolicy => _authenticationPolicy;
 
         /// <summary>
-        /// The <see cref="HttpPipeline"/> transport pipeline used to prepare
-        /// requests for batching without actually sending them.
-        /// </summary>
-        internal virtual HttpPipeline BatchOperationPipeline { get; set; }
-
-        /// <summary>
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
         /// every request.
         /// </summary>
@@ -300,6 +294,43 @@ namespace Azure.Storage.Blobs
         /// </returns>
         public virtual BlobContainerClient GetBlobContainerClient(string blobContainerName) =>
             new BlobContainerClient(Uri.AppendToPath(blobContainerName), Pipeline, ClientDiagnostics, CustomerProvidedKey);
+
+        #region protected static accessors for Azure.Storage.Blobs.Batch
+        /// <summary>
+        /// Get a <see cref="BlobServiceClient"/>'s <see cref="HttpPipeline"/>
+        /// for creating child clients.
+        /// </summary>
+        /// <param name="client">The BlobServiceClient.</param>
+        /// <returns>The BlobServiceClient's HttpPipeline.</returns>
+        protected static HttpPipeline GetHttpPipeline(BlobServiceClient client) =>
+            client.Pipeline;
+
+        /// <summary>
+        /// Get a <see cref="BlobServiceClient"/>'s authentication
+        /// <see cref="HttpPipelinePolicy"/> for creating child clients.
+        /// </summary>
+        /// <param name="client">The BlobServiceClient.</param>
+        /// <returns>The BlobServiceClient's authentication policy.</returns>
+        protected static HttpPipelinePolicy GetAuthenticationPolicy(BlobServiceClient client) =>
+            client.AuthenticationPolicy;
+
+        /// <summary>
+        /// Get a <see cref="BlobServiceClient"/>'s <see cref="BlobClientOptions"/>
+        /// for creating child clients.
+        /// </summary>
+        /// <param name="client">The BlobServiceClient.</param>
+        /// <returns>The BlobServiceClient's BlobClientOptions.</returns>
+        protected static BlobClientOptions GetClientOptions(BlobServiceClient client) =>
+            // TODO: Replace this with the client's version once that's relevant
+            new BlobClientOptions(BlobClientOptions.LatestVersion)
+            {
+                // We only use this for communicating diagnostics, at the moment
+                Diagnostics =
+                {
+                    IsDistributedTracingEnabled = client.ClientDiagnostics.IsActivityEnabled
+                }
+            };
+        #endregion protected static accessors for Azure.Storage.Blobs.Batch
 
         #region GetBlobContainers
         /// <summary>
