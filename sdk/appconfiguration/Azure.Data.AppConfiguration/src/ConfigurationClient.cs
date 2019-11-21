@@ -658,7 +658,7 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary>
-        /// Retrieves one or more <see cref="ConfigurationSetting"/> that satisfy the options set in the <see cref="SettingSelector"/>.
+        /// Retrieves one or more <see cref="ConfigurationSetting"/> entities that match the options specified in the passed-in <see cref="SettingSelector"/>.
         /// </summary>
         /// <param name="selector">Options used to select a set of <see cref="ConfigurationSetting"/> entities from the configuration store.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -670,7 +670,7 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary>
-        /// Retrieves one or more <see cref="ConfigurationSetting"/> that satisfy the options of the <see cref="SettingSelector"/>.
+        /// Retrieves one or more <see cref="ConfigurationSetting"/> entities that match the options specified in the passed-in <see cref="SettingSelector"/>.
         /// </summary>
         /// <param name="selector">Set of options for selecting <see cref="ConfigurationSetting"/> from the configuration store.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
