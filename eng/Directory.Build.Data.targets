@@ -106,11 +106,11 @@
     </ItemGroup>
 
     <ItemGroup Condition="'$(UseProjectReferenceToAzureClients)' == 'true'">
-      <ShouldBeProjectReference Include="@(AzureReferences)" Condition="!Exists('%(MSBuildSourceProjectFile)')" />
+      <ShouldBeProjectReference Include="@(AzureReferences)" Exclude="@(AzureReferences->HasMetadata('MSBuildSourceProjectFile'))" />
     </ItemGroup>
 
     <Error Condition="'$(UseProjectReferenceToAzureClients)' == 'true' and '@(ShouldBeProjectReference)' != ''"
-           Text="Expected to have all Azure references to be Project References, but found [@(ShouldBeProjectReference)] are not." />
+           Text="When UseProjectReferenceToAzureClients=true all Azure.* references should be Project References, but the following are not [@(ShouldBeProjectReference)]" />
   </Target>
 
   <Import Project="$(CentralPackageVersionPackagePath)\Sdk.targets" />
