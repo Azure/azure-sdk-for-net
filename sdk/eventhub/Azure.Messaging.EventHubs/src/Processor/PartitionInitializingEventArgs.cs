@@ -34,8 +34,8 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="partition">The context of the Event Hub partition this instance is associated with.</param>
         /// <param name="defaultStartingPosition">The position within a partition where the associated <see cref="EventProcessorClient" /> should begin reading events when no checkpoint can be found.</param>
         ///
-        protected internal PartitionInitializingEventArgs(PartitionContext partition,
-                                                          EventPosition defaultStartingPosition)
+        public PartitionInitializingEventArgs(PartitionContext partition,
+                                              EventPosition defaultStartingPosition)
         {
             Argument.AssertNotNull(partition, nameof(partition));
 

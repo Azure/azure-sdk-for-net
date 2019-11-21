@@ -30,8 +30,8 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="partition">The context of the Event Hub partition this instance is associated with.</param>
         /// <param name="reason">The reason why the processing for the associated partition is being stopped.</param>
         ///
-        protected internal PartitionClosingEventArgs(PartitionContext partition,
-                                                     ProcessingStoppedReason reason)
+        public PartitionClosingEventArgs(PartitionContext partition,
+                                         ProcessingStoppedReason reason)
         {
             Argument.AssertNotNull(partition, nameof(partition));
 
