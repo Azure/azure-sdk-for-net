@@ -70,32 +70,32 @@ namespace Azure.Messaging.EventHubs.Samples
             int totalEventsCount = 0;
             int partitionsBeingProcessedCount = 0;
 
-            eventProcessor.PartitionInitializingAsync = (initializingArgs) =>
+            eventProcessor.PartitionInitializingAsync = (eventArgs) =>
             {
                 // This is the last piece of code guaranteed to run before event processing, so all initialization
                 // must be done by the moment this method returns.
 
                 // We want to receive events from the latest available position so older events don't interfere with our sample.
 
-                initializingArgs.DefaultStartingPosition = EventPosition.Latest;
+                eventArgs.DefaultStartingPosition = EventPosition.Latest;
 
                 Interlocked.Increment(ref partitionsBeingProcessedCount);
 
-                Console.WriteLine($"\tPartition '{ initializingArgs.Partition.PartitionId }': partition processing has started.");
+                Console.WriteLine($"\tPartition '{ eventArgs.Partition.PartitionId }': partition processing has started.");
 
                 // This method is asynchronous, which means it's expected to return a Task.
 
                 return new ValueTask();
             };
 
-            eventProcessor.PartitionClosingAsync = (closingArgs) =>
+            eventProcessor.PartitionClosingAsync = (eventArgs) =>
             {
                 // The code to be run just before stopping processing events for a partition.  This is the right place to dispose
                 // of objects that will no longer be used.
 
                 Interlocked.Decrement(ref partitionsBeingProcessedCount);
 
-                Console.WriteLine($"\tPartition '{ closingArgs.Partition.PartitionId }': partition processing has stopped. Reason: { closingArgs.Reason }.");
+                Console.WriteLine($"\tPartition '{ eventArgs.Partition.PartitionId }': partition processing has stopped. Reason: { eventArgs.Reason }.");
 
                 // This method is asynchronous, which means it's expected to return a Task.
 
@@ -121,7 +121,7 @@ namespace Azure.Messaging.EventHubs.Samples
                 return new ValueTask();
             };
 
-            eventProcessor.ProcessErrorAsyncHandler = (errorArgs) =>
+            eventProcessor.ProcessErrorAsyncHandler = (eventArgs) =>
             {
                 // Any exception which occurs as a result of the event processor itself will be passed to
                 // this delegate so it may be handled.  The processor will continue to process events if
@@ -135,7 +135,7 @@ namespace Azure.Messaging.EventHubs.Samples
                 // This piece of code is not supposed to be reached by this sample.  If the following message has been printed
                 // to the Console, then something unexpected has happened.
 
-                Console.WriteLine($"\tPartition '{ errorArgs.PartitionId }': an unhandled exception was encountered. This was not expected to happen.");
+                Console.WriteLine($"\tPartition '{ eventArgs.PartitionId }': an unhandled exception was encountered. This was not expected to happen.");
 
                 // This method is asynchronous, which means it's expected to return a Task.
 

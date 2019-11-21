@@ -1100,10 +1100,10 @@ namespace Azure.Messaging.EventHubs
 
                 if (PartitionInitializingAsync != null)
                 {
-                    var initializingArgs = new PartitionInitializingEventArgs(context, startingPosition);
-                    await PartitionInitializingAsync(initializingArgs).ConfigureAwait(false);
+                    var eventArgs = new PartitionInitializingEventArgs(context, startingPosition);
+                    await PartitionInitializingAsync(eventArgs).ConfigureAwait(false);
 
-                    startingPosition = initializingArgs.DefaultStartingPosition;
+                    startingPosition = eventArgs.DefaultStartingPosition;
                 }
 
                 var ownership = InstanceOwnership[context.PartitionId];
@@ -1147,8 +1147,8 @@ namespace Azure.Messaging.EventHubs
             {
                 try
                 {
-                    var closingArgs = new PartitionClosingEventArgs(context, reason);
-                    await PartitionClosingAsync(closingArgs);
+                    var eventArgs = new PartitionClosingEventArgs(context, reason);
+                    await PartitionClosingAsync(eventArgs);
                 }
                 catch (Exception)
                 {
@@ -1186,8 +1186,8 @@ namespace Azure.Messaging.EventHubs
         protected ValueTask ProcessErrorAsync(Exception exception,
                                               PartitionContext context)
         {
-            var errorArgs = new ProcessErrorEventArgs(context?.PartitionId, "TODO", exception);
-            return ProcessErrorAsyncHandler(errorArgs);
+            var eventArgs = new ProcessErrorEventArgs(context?.PartitionId, "TODO", exception);
+            return ProcessErrorAsyncHandler(eventArgs);
         }
     }
 }

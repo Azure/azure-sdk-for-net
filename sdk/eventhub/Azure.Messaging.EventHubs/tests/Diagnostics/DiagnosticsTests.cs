@@ -305,7 +305,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var connectionMock = new Mock<EventHubConnection>("namespace", "eventHubName", Mock.Of<TokenCredential>(), new EventHubConnectionOptions());
             connectionMock.Setup(c => c.CreateTransportConsumer("cg", "pid", It.IsAny<EventPosition>(), It.IsAny<EventHubsRetryPolicy>(), It.IsAny<bool>(), It.IsAny<long?>(), It.IsAny<uint?>())).Returns(consumerMock.Object);
 
-            Func<ProcessEventArgs, ValueTask> processEventAsync = processorEvent =>
+            Func<ProcessEventArgs, ValueTask> processEventAsync = eventArgs =>
             {
                 processorCalledSource.SetResult(null);
                 return new ValueTask();

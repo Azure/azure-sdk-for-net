@@ -290,7 +290,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void StartAsyncValidatesProcessEventsAsync()
         {
             var processor = new EventProcessorClient(Mock.Of<PartitionManager>(), "consumerGroup", new MockConnection(), default);
-            processor.ProcessErrorAsyncHandler = errorArgs => new ValueTask();
+            processor.ProcessErrorAsyncHandler = eventArgs => new ValueTask();
 
             Assert.That(async () => await processor.StartProcessingAsync(), Throws.InstanceOf<InvalidOperationException>().And.Message.Contains(nameof(EventProcessorClient.ProcessEventAsyncHandler)));
         }
@@ -320,7 +320,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var processor = new EventProcessorClient(Mock.Of<PartitionManager>(), "consumerGroup", new MockConnection(), default);
 
             processor.ProcessEventAsyncHandler = eventArgs => new ValueTask();
-            processor.ProcessErrorAsyncHandler = errorArgs => new ValueTask();
+            processor.ProcessErrorAsyncHandler = eventArgs => new ValueTask();
 
             Assert.That(async () => await processor.StartProcessingAsync(), Throws.Nothing);
 
@@ -337,14 +337,14 @@ namespace Azure.Messaging.EventHubs.Tests
             var processor = new EventProcessorClient(Mock.Of<PartitionManager>(), "consumerGroup", new MockConnection(), default);
 
             processor.ProcessEventAsyncHandler = eventArgs => new ValueTask();
-            processor.ProcessErrorAsyncHandler = errorArgs => new ValueTask();
+            processor.ProcessErrorAsyncHandler = eventArgs => new ValueTask();
 
             await processor.StartProcessingAsync();
 
-            Assert.That(() => processor.PartitionInitializingAsync = initializingArgs => new ValueTask(), Throws.InstanceOf<InvalidOperationException>());
-            Assert.That(() => processor.PartitionClosingAsync = closingArgs => new ValueTask(), Throws.InstanceOf<InvalidOperationException>());
+            Assert.That(() => processor.PartitionInitializingAsync = eventArgs => new ValueTask(), Throws.InstanceOf<InvalidOperationException>());
+            Assert.That(() => processor.PartitionClosingAsync = eventArgs => new ValueTask(), Throws.InstanceOf<InvalidOperationException>());
             Assert.That(() => processor.ProcessEventAsyncHandler = eventArgs => new ValueTask(), Throws.InstanceOf<InvalidOperationException>());
-            Assert.That(() => processor.ProcessErrorAsyncHandler = errorArgs => new ValueTask(), Throws.InstanceOf<InvalidOperationException>());
+            Assert.That(() => processor.ProcessErrorAsyncHandler = eventArgs => new ValueTask(), Throws.InstanceOf<InvalidOperationException>());
 
             await processor.StopProcessingAsync();
         }
@@ -359,15 +359,15 @@ namespace Azure.Messaging.EventHubs.Tests
             var processor = new EventProcessorClient(Mock.Of<PartitionManager>(), "consumerGroup", new MockConnection(), default);
 
             processor.ProcessEventAsyncHandler = eventArgs => new ValueTask();
-            processor.ProcessErrorAsyncHandler = errorArgs => new ValueTask();
+            processor.ProcessErrorAsyncHandler = eventArgs => new ValueTask();
 
             await processor.StartProcessingAsync();
             await processor.StopProcessingAsync();
 
-            Assert.That(() => processor.PartitionInitializingAsync = initializingArgs => new ValueTask(), Throws.Nothing);
-            Assert.That(() => processor.PartitionClosingAsync = closingArgs => new ValueTask(), Throws.Nothing);
+            Assert.That(() => processor.PartitionInitializingAsync = eventArgs => new ValueTask(), Throws.Nothing);
+            Assert.That(() => processor.PartitionClosingAsync = eventArgs => new ValueTask(), Throws.Nothing);
             Assert.That(() => processor.ProcessEventAsyncHandler = eventArgs => new ValueTask(), Throws.Nothing);
-            Assert.That(() => processor.ProcessErrorAsyncHandler = errorArgs => new ValueTask(), Throws.Nothing);
+            Assert.That(() => processor.ProcessErrorAsyncHandler = eventArgs => new ValueTask(), Throws.Nothing);
         }
 
         /// <summary>

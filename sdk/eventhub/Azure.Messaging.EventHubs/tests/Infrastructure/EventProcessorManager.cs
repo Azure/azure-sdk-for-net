@@ -136,18 +136,18 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 if (OnInitialize != null)
                 {
-                    eventProcessor.PartitionInitializingAsync = initializingArgs =>
+                    eventProcessor.PartitionInitializingAsync = eventArgs =>
                     {
-                        OnInitialize(initializingArgs);
+                        OnInitialize(eventArgs);
                         return new ValueTask();
                     };
                 }
 
                 if (OnStop != null)
                 {
-                    eventProcessor.PartitionClosingAsync = closingArgs =>
+                    eventProcessor.PartitionClosingAsync = eventArgs =>
                     {
-                        OnStop(closingArgs);
+                        OnStop(eventArgs);
                         return new ValueTask();
                     };
                 }
@@ -158,9 +158,9 @@ namespace Azure.Messaging.EventHubs.Tests
                     return new ValueTask();
                 };
 
-                eventProcessor.ProcessErrorAsyncHandler = errorArgs =>
+                eventProcessor.ProcessErrorAsyncHandler = eventArgs =>
                 {
-                    OnProcessException?.Invoke(errorArgs);
+                    OnProcessException?.Invoke(eventArgs);
                     return new ValueTask();
                 };
 
