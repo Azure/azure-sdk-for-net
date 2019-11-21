@@ -68,20 +68,31 @@ namespace Azure.Storage
         /// <param name="serviceSubDomain">The service subdomain used to validate that the
         /// domain is in the expected format. This should be "blob" for blobs, "file" for files,
         /// "queue" for queues, "blob" and "dfs" for datalake.</param>
-        /// <returns>Account name or null if not able to be parsed</returns>
-        public static string GetAccountNameFromDomain(this Uri uri, string serviceSubDomain)
+        /// <returns>Account name or null if not able to be parsed.</returns>
+        public static string GetAccountNameFromDomain(this Uri uri, string serviceSubDomain) =>
+            GetAccountNameFromDomain(uri.Host, serviceSubDomain);
+
+        /// <summary>
+        /// Get the account name from the host.
+        /// </summary>
+        /// <param name="host">Host.</param>
+        /// <param name="serviceSubDomain">The service subdomain used to validate that the
+        /// domain is in the expected format. This should be "blob" for blobs, "file" for files,
+        /// "queue" for queues, "blob" and "dfs" for datalake.</param>
+        /// <returns>Account name or null if not able to be parsed.</returns>
+        public static string GetAccountNameFromDomain(string host, string serviceSubDomain)
         {
-            var accountEndIndex = uri.Host.IndexOf(".", StringComparison.InvariantCulture);
+            var accountEndIndex = host.IndexOf(".", StringComparison.InvariantCulture);
             if (accountEndIndex >= 0)
             {
                 var serviceStartIndex = accountEndIndex + 1;
-                var serviceEndIndex = uri.Host.IndexOf(".", serviceStartIndex, StringComparison.InvariantCulture);
+                var serviceEndIndex = host.IndexOf(".", serviceStartIndex, StringComparison.InvariantCulture);
                 if (serviceEndIndex > serviceStartIndex)
                 {
-                    var service = uri.Host.Substring(serviceStartIndex, serviceEndIndex - serviceStartIndex);
+                    var service = host.Substring(serviceStartIndex, serviceEndIndex - serviceStartIndex);
                     if (service == serviceSubDomain)
                     {
-                        return uri.Host.Substring(0, accountEndIndex);
+                        return host.Substring(0, accountEndIndex);
                     }
                 }
             }

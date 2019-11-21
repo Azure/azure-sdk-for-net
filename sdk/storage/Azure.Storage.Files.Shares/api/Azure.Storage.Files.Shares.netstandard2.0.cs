@@ -486,7 +486,6 @@ namespace Azure.Storage.Files.Shares.Models
     public static partial class ShareModelFactory
     {
         public static Azure.Storage.Files.Shares.Models.PermissionInfo PermissionInfo(string filePermissionKey) { throw null; }
-        public static Azure.Storage.Files.Shares.Models.Range Range(long start, long end) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareAccessPolicy ShareAccessPolicy(System.DateTimeOffset startsOn, System.DateTimeOffset expiresOn, string permissions) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareCorsRule ShareCorsRule(string allowedOrigins, string allowedMethods, string allowedHeaders, string exposedHeaders, int maxAgeInSeconds) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareFileCopyInfo ShareFileCopyInfo(Azure.ETag eTag, System.DateTimeOffset lastModified, string copyId, Azure.Storage.Files.Shares.Models.CopyStatus copyStatus) { throw null; }
