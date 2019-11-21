@@ -15,56 +15,56 @@ namespace Azure.Storage.Sas
     internal class UserDelegationKeyProperties
     {
         // skoid
-        internal string _objectId { get; set; }
+        internal string ObjectId { get; set; }
 
         // sktid
-        internal string _tenantId { get; set; }
+        internal string TenantId { get; set; }
 
         // skt
-        internal DateTimeOffset _startsOn { get; set; }
+        internal DateTimeOffset StartsOn { get; set; }
 
         // ske
-        internal DateTimeOffset _expiresOn { get; set; }
+        internal DateTimeOffset ExpiresOn { get; set; }
 
         // sks
-        internal string _service { get; set; }
+        internal string Service { get; set; }
 
         // skv
-        internal string _version { get; set; }
+        internal string Version { get; set; }
 
         /// <summary>
         /// Builds up the UserDelegationKey portion of the SAS query parameter string.
         /// </summary>
         public void AppendProperties(StringBuilder stringBuilder)
         {
-            if (!string.IsNullOrWhiteSpace(_objectId))
+            if (!string.IsNullOrWhiteSpace(ObjectId))
             {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.KeyObjectId, _objectId);
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.KeyObjectId, ObjectId);
             }
 
-            if (!string.IsNullOrWhiteSpace(_tenantId))
+            if (!string.IsNullOrWhiteSpace(TenantId))
             {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.KeyTenantId, _tenantId);
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.KeyTenantId, TenantId);
             }
 
-            if (_startsOn != DateTimeOffset.MinValue)
+            if (StartsOn != DateTimeOffset.MinValue)
             {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.KeyStart, WebUtility.UrlEncode(_startsOn.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.KeyStart, WebUtility.UrlEncode(StartsOn.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
             }
 
-            if (_expiresOn != DateTimeOffset.MinValue)
+            if (ExpiresOn != DateTimeOffset.MinValue)
             {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.KeyExpiry, WebUtility.UrlEncode(_expiresOn.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.KeyExpiry, WebUtility.UrlEncode(ExpiresOn.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
             }
 
-            if (!string.IsNullOrWhiteSpace(_service))
+            if (!string.IsNullOrWhiteSpace(Service))
             {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.KeyService, _service);
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.KeyService, Service);
             }
 
-            if (!string.IsNullOrWhiteSpace(_version))
+            if (!string.IsNullOrWhiteSpace(Version))
             {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.KeyVersion, _version);
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.KeyVersion, Version);
             }
         }
     }

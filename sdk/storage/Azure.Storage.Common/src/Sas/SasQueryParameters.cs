@@ -192,8 +192,7 @@ namespace Azure.Storage.Sas
         /// <paramref name="values"/>.
         /// </summary>
         /// <param name="values">URI query parameters</param>
-        public SasQueryParameters(
-            Dictionary<string, string> values)
+        protected SasQueryParameters(IDictionary<string, string> values)
         {
             // make copy, otherwise we'll get an exception when we remove
             IEnumerable<KeyValuePair<string, string>> kvps = values.ToArray();
@@ -269,7 +268,7 @@ namespace Azure.Storage.Sas
         /// <summary>
         /// Creates a new SasQueryParameters instance.
         /// </summary>
-        public SasQueryParameters(
+        protected SasQueryParameters(
             string version,
             AccountSasServices? services,
             AccountSasResourceTypes? resourceTypes,
@@ -306,6 +305,54 @@ namespace Azure.Storage.Sas
         }
 
         /// <summary>
+        /// Creates a new instance of the <see cref="SasQueryParameters"/> type
+        /// based on the supplied query parameters <paramref name="values"/>.
+        /// All SAS-related query parameters will be removed from
+        /// <paramref name="values"/>.
+        /// </summary>
+        /// <param name="values">URI query parameters</param>
+        protected static SasQueryParameters Create(IDictionary<string, string> values) =>
+            new SasQueryParameters(values);
+
+        /// <summary>
+        /// Creates a new SasQueryParameters instance.
+        /// </summary>
+        protected static SasQueryParameters Create(
+            string version,
+            AccountSasServices? services,
+            AccountSasResourceTypes? resourceTypes,
+            SasProtocol protocol,
+            DateTimeOffset startsOn,
+            DateTimeOffset expiresOn,
+            SasIPRange ipRange,
+            string identifier,
+            string resource,
+            string permissions,
+            string signature,
+            string cacheControl = default,
+            string contentDisposition = default,
+            string contentEncoding = default,
+            string contentLanguage = default,
+            string contentType = default) =>
+            new SasQueryParameters(
+                version,
+                services,
+                resourceTypes,
+                protocol,
+                startsOn,
+                expiresOn,
+                ipRange,
+                identifier,
+                resource,
+                permissions,
+                signature,
+                cacheControl,
+                contentDisposition,
+                contentEncoding,
+                contentLanguage,
+                contentType);
+
+        /// <summary>
         /// Convert the SAS query parameters into a URL encoded query string.
         /// </summary>
         /// <returns>
@@ -314,7 +361,7 @@ namespace Azure.Storage.Sas
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            this.BuildParameterString(sb);
+            this.AppendProperties(sb);
             return sb.ToString();
         }
     }

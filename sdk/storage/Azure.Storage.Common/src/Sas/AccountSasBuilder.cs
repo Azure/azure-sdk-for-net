@@ -137,7 +137,7 @@ namespace Azure.Storage.Sas
                 "");  // That's right, the account SAS requires a terminating extra newline
 
             var signature = sharedKeyCredential.ComputeHMACSHA256(stringToSign);
-            var p = new SasQueryParameters(
+            var p = SasQueryParametersInternals.Create(
                 Version,
                 Services,
                 ResourceTypes,

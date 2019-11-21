@@ -17,37 +17,37 @@ namespace Azure.Storage.Sas
     /// </summary>
     public sealed class DataLakeSasQueryParameters : SasQueryParameters
     {
-        internal UserDelegationKeyProperties _keyProperties;
+        internal UserDelegationKeyProperties KeyProperties { get; set; }
 
         /// <summary>
         /// Gets the Azure Active Directory object ID in GUID format.
         /// </summary>
-        public string KeyObjectId => _keyProperties?._objectId;
+        public string KeyObjectId => KeyProperties?.ObjectId;
 
         /// <summary>
         /// Gets the Azure Active Directory tenant ID in GUID format
         /// </summary>
-        public string KeyTenantId => _keyProperties?._tenantId;
+        public string KeyTenantId => KeyProperties?.TenantId;
 
         /// <summary>
         /// Gets the time at which the key becomes valid.
         /// </summary>
-        public DateTimeOffset KeyStartsOn => (DateTimeOffset)_keyProperties?._startsOn;
+        public DateTimeOffset KeyStartsOn => (DateTimeOffset)KeyProperties?.StartsOn;
 
         /// <summary>
         /// Gets the time at which the key becomes expires.
         /// </summary>
-        public DateTimeOffset KeyExpiresOn => (DateTimeOffset)_keyProperties?._expiresOn;
+        public DateTimeOffset KeyExpiresOn => (DateTimeOffset)KeyProperties?.ExpiresOn;
 
         /// <summary>
         /// Gets the Storage service that accepts the key.
         /// </summary>
-        public string KeyService => _keyProperties?._service;
+        public string KeyService => KeyProperties?.Service;
 
         /// <summary>
         /// Gets the Storage service version that created the key.
         /// </summary>
-        public string KeyVersion => _keyProperties?._version;
+        public string KeyVersion => KeyProperties?.Version;
 
         /// <summary>
         /// Gets empty shared access signature query parameters.
@@ -103,14 +103,14 @@ namespace Azure.Storage.Sas
                 contentLanguage,
                 contentType)
         {
-            _keyProperties = new UserDelegationKeyProperties
+            KeyProperties = new UserDelegationKeyProperties
             {
-                _objectId = keyOid,
-                _tenantId = keyTid,
-                _startsOn = keyStart,
-                _expiresOn = keyExpiry,
-                _service = keyService,
-                _version = keyVersion
+                ObjectId = keyOid,
+                TenantId = keyTid,
+                StartsOn = keyStart,
+                ExpiresOn = keyExpiry,
+                Service = keyService,
+                Version = keyVersion
             };
         }
 
@@ -137,8 +137,8 @@ namespace Azure.Storage.Sas
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            _keyProperties.AppendProperties(sb);
-            this.BuildParameterString(sb);
+            KeyProperties.AppendProperties(sb);
+            this.AppendProperties(sb);
             return sb.ToString();
         }
     }

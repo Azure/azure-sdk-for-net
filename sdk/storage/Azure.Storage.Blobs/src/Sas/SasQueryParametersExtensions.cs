@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Azure.Storage.Sas
 {
-    internal static class KeySasQueryParametersExtensions
+    internal static class SasQueryParametersExtensions
     {
         /// <summary>
         /// Parses the key properties into the QueryParameters instance.
@@ -28,34 +28,34 @@ namespace Azure.Storage.Sas
             DataLakeSasQueryParameters
 #endif
             parameters,
-            Dictionary<string, string> values)
+            IDictionary<string, string> values)
         {
             // make copy, otherwise we'll get an exception when we remove
             IEnumerable<KeyValuePair<string, string>> kvps = values.ToArray();
-            var isSasKey = true;
-            parameters._keyProperties = new UserDelegationKeyProperties();
+            parameters.KeyProperties = new UserDelegationKeyProperties();
             foreach (KeyValuePair<string, string> kv in kvps)
             {
+                var isSasKey = true;
                 // these are already decoded
                 switch (kv.Key.ToUpperInvariant())
                 {
                     case Constants.Sas.Parameters.KeyObjectIdUpper:
-                        parameters._keyProperties._objectId = kv.Value;
+                        parameters.KeyProperties.ObjectId = kv.Value;
                         break;
                     case Constants.Sas.Parameters.KeyTenantIdUpper:
-                        parameters._keyProperties._tenantId = kv.Value;
+                        parameters.KeyProperties.TenantId = kv.Value;
                         break;
                     case Constants.Sas.Parameters.KeyStartUpper:
-                        parameters._keyProperties._startsOn = DateTimeOffset.ParseExact(kv.Value, Constants.SasTimeFormat, CultureInfo.InvariantCulture);
+                        parameters.KeyProperties.StartsOn = DateTimeOffset.ParseExact(kv.Value, Constants.SasTimeFormat, CultureInfo.InvariantCulture);
                         break;
                     case Constants.Sas.Parameters.KeyExpiryUpper:
-                        parameters._keyProperties._expiresOn = DateTimeOffset.ParseExact(kv.Value, Constants.SasTimeFormat, CultureInfo.InvariantCulture);
+                        parameters.KeyProperties.ExpiresOn = DateTimeOffset.ParseExact(kv.Value, Constants.SasTimeFormat, CultureInfo.InvariantCulture);
                         break;
                     case Constants.Sas.Parameters.KeyServiceUpper:
-                        parameters._keyProperties._service = kv.Value;
+                        parameters.KeyProperties.Service = kv.Value;
                         break;
                     case Constants.Sas.Parameters.KeyVersionUpper:
-                        parameters._keyProperties._version = kv.Value;
+                        parameters.KeyProperties.Version = kv.Value;
                         break;
 
                     default:
