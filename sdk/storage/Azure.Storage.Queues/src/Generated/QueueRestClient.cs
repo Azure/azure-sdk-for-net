@@ -2510,10 +2510,9 @@ namespace Azure.Storage.Queues.Models
         public string Permissions { get; set; }
 
         /// <summary>
-        /// Prevent direct instantiation of QueueAccessPolicy instances.
-        /// You can use QueuesModelFactory.QueueAccessPolicy instead.
+        /// Creates a new QueueAccessPolicy instance
         /// </summary>
-        internal QueueAccessPolicy() { }
+        public QueueAccessPolicy() { }
 
         /// <summary>
         /// Serialize a QueueAccessPolicy instance as XML.
@@ -2577,28 +2576,6 @@ namespace Azure.Storage.Queues.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.QueueAccessPolicy value);
-    }
-
-    /// <summary>
-    /// QueuesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class QueuesModelFactory
-    {
-        /// <summary>
-        /// Creates a new QueueAccessPolicy instance for mocking.
-        /// </summary>
-        public static QueueAccessPolicy QueueAccessPolicy(
-            System.DateTimeOffset? startsOn = default,
-            System.DateTimeOffset? expiresOn = default,
-            string permissions = default)
-        {
-            return new QueueAccessPolicy()
-            {
-                StartsOn = startsOn,
-                ExpiresOn = expiresOn,
-                Permissions = permissions,
-            };
-        }
     }
 }
 #endregion class QueueAccessPolicy
@@ -2767,10 +2744,9 @@ namespace Azure.Storage.Queues.Models
         public int MaxAgeInSeconds { get; set; }
 
         /// <summary>
-        /// Prevent direct instantiation of QueueCorsRule instances.
-        /// You can use QueuesModelFactory.QueueCorsRule instead.
+        /// Creates a new QueueCorsRule instance
         /// </summary>
-        internal QueueCorsRule() { }
+        public QueueCorsRule() { }
 
         /// <summary>
         /// Serialize a QueueCorsRule instance as XML.
@@ -2841,32 +2817,6 @@ namespace Azure.Storage.Queues.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.QueueCorsRule value);
-    }
-
-    /// <summary>
-    /// QueuesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class QueuesModelFactory
-    {
-        /// <summary>
-        /// Creates a new QueueCorsRule instance for mocking.
-        /// </summary>
-        public static QueueCorsRule QueueCorsRule(
-            string allowedOrigins,
-            string allowedMethods,
-            string allowedHeaders,
-            string exposedHeaders,
-            int maxAgeInSeconds)
-        {
-            return new QueueCorsRule()
-            {
-                AllowedOrigins = allowedOrigins,
-                AllowedMethods = allowedMethods,
-                AllowedHeaders = allowedHeaders,
-                ExposedHeaders = exposedHeaders,
-                MaxAgeInSeconds = maxAgeInSeconds,
-            };
-        }
     }
 }
 #endregion class QueueCorsRule
@@ -3777,10 +3727,9 @@ namespace Azure.Storage.Queues.Models
         public int? Days { get; set; }
 
         /// <summary>
-        /// Prevent direct instantiation of QueueRetentionPolicy instances.
-        /// You can use QueuesModelFactory.QueueRetentionPolicy instead.
+        /// Creates a new QueueRetentionPolicy instance
         /// </summary>
-        internal QueueRetentionPolicy() { }
+        public QueueRetentionPolicy() { }
 
         /// <summary>
         /// Serialize a QueueRetentionPolicy instance as XML.
@@ -3833,26 +3782,6 @@ namespace Azure.Storage.Queues.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.QueueRetentionPolicy value);
     }
-
-    /// <summary>
-    /// QueuesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class QueuesModelFactory
-    {
-        /// <summary>
-        /// Creates a new QueueRetentionPolicy instance for mocking.
-        /// </summary>
-        public static QueueRetentionPolicy QueueRetentionPolicy(
-            bool enabled,
-            int? days = default)
-        {
-            return new QueueRetentionPolicy()
-            {
-                Enabled = enabled,
-                Days = days,
-            };
-        }
-    }
 }
 #endregion class QueueRetentionPolicy
 
@@ -3870,10 +3799,9 @@ namespace Azure.Storage.Queues.Models
         public string MessageText { get; set; }
 
         /// <summary>
-        /// Prevent direct instantiation of QueueSendMessage instances.
-        /// You can use QueuesModelFactory.QueueSendMessage instead.
+        /// Creates a new QueueSendMessage instance
         /// </summary>
-        internal QueueSendMessage() { }
+        public QueueSendMessage() { }
 
         /// <summary>
         /// Serialize a QueueSendMessage instance as XML.

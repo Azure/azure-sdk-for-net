@@ -12761,10 +12761,9 @@ namespace Azure.Storage.Blobs.Models
         public string Permissions { get; set; }
 
         /// <summary>
-        /// Prevent direct instantiation of BlobAccessPolicy instances.
-        /// You can use BlobsModelFactory.BlobAccessPolicy instead.
+        /// Creates a new BlobAccessPolicy instance
         /// </summary>
-        internal BlobAccessPolicy() { }
+        public BlobAccessPolicy() { }
 
         /// <summary>
         /// Serialize a BlobAccessPolicy instance as XML.
@@ -12819,28 +12818,6 @@ namespace Azure.Storage.Blobs.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobAccessPolicy value);
-    }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new BlobAccessPolicy instance for mocking.
-        /// </summary>
-        public static BlobAccessPolicy BlobAccessPolicy(
-            System.DateTimeOffset startsOn,
-            System.DateTimeOffset expiresOn,
-            string permissions)
-        {
-            return new BlobAccessPolicy()
-            {
-                StartsOn = startsOn,
-                ExpiresOn = expiresOn,
-                Permissions = permissions,
-            };
-        }
     }
 }
 #endregion class BlobAccessPolicy
@@ -13868,10 +13845,9 @@ namespace Azure.Storage.Blobs.Models
         public int MaxAgeInSeconds { get; set; }
 
         /// <summary>
-        /// Prevent direct instantiation of BlobCorsRule instances.
-        /// You can use BlobsModelFactory.BlobCorsRule instead.
+        /// Creates a new BlobCorsRule instance
         /// </summary>
-        internal BlobCorsRule() { }
+        public BlobCorsRule() { }
 
         /// <summary>
         /// Serialize a BlobCorsRule instance as XML.
@@ -13942,32 +13918,6 @@ namespace Azure.Storage.Blobs.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobCorsRule value);
-    }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new BlobCorsRule instance for mocking.
-        /// </summary>
-        public static BlobCorsRule BlobCorsRule(
-            string allowedOrigins,
-            string allowedMethods,
-            string allowedHeaders,
-            string exposedHeaders,
-            int maxAgeInSeconds)
-        {
-            return new BlobCorsRule()
-            {
-                AllowedOrigins = allowedOrigins,
-                AllowedMethods = allowedMethods,
-                AllowedHeaders = allowedHeaders,
-                ExposedHeaders = exposedHeaders,
-                MaxAgeInSeconds = maxAgeInSeconds,
-            };
-        }
     }
 }
 #endregion class BlobCorsRule
@@ -15826,10 +15776,9 @@ namespace Azure.Storage.Blobs.Models
         public int? Days { get; set; }
 
         /// <summary>
-        /// Prevent direct instantiation of BlobRetentionPolicy instances.
-        /// You can use BlobsModelFactory.BlobRetentionPolicy instead.
+        /// Creates a new BlobRetentionPolicy instance
         /// </summary>
-        internal BlobRetentionPolicy() { }
+        public BlobRetentionPolicy() { }
 
         /// <summary>
         /// Serialize a BlobRetentionPolicy instance as XML.
@@ -15881,26 +15830,6 @@ namespace Azure.Storage.Blobs.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobRetentionPolicy value);
-    }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new BlobRetentionPolicy instance for mocking.
-        /// </summary>
-        public static BlobRetentionPolicy BlobRetentionPolicy(
-            bool enabled,
-            int? days = default)
-        {
-            return new BlobRetentionPolicy()
-            {
-                Enabled = enabled,
-                Days = days,
-            };
-        }
     }
 }
 #endregion class BlobRetentionPolicy
@@ -16327,10 +16256,9 @@ namespace Azure.Storage.Blobs.Models
         public string ErrorDocument404Path { get; set; }
 
         /// <summary>
-        /// Prevent direct instantiation of BlobStaticWebsite instances.
-        /// You can use BlobsModelFactory.BlobStaticWebsite instead.
+        /// Creates a new BlobStaticWebsite instance
         /// </summary>
-        internal BlobStaticWebsite() { }
+        public BlobStaticWebsite() { }
 
         /// <summary>
         /// Serialize a BlobStaticWebsite instance as XML.
@@ -16393,28 +16321,6 @@ namespace Azure.Storage.Blobs.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobStaticWebsite value);
-    }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new BlobStaticWebsite instance for mocking.
-        /// </summary>
-        public static BlobStaticWebsite BlobStaticWebsite(
-            bool enabled,
-            string indexDocument = default,
-            string errorDocument404Path = default)
-        {
-            return new BlobStaticWebsite()
-            {
-                Enabled = enabled,
-                IndexDocument = indexDocument,
-                ErrorDocument404Path = errorDocument404Path,
-            };
-        }
     }
 }
 #endregion class BlobStaticWebsite
@@ -17834,10 +17740,9 @@ namespace Azure.Storage.Blobs.Models
         public System.DateTimeOffset ExpiresOn { get; set; }
 
         /// <summary>
-        /// Prevent direct instantiation of KeyInfo instances.
-        /// You can use BlobsModelFactory.KeyInfo instead.
+        /// Creates a new KeyInfo instance
         /// </summary>
-        internal KeyInfo() { }
+        public KeyInfo() { }
 
         /// <summary>
         /// Serialize a KeyInfo instance as XML.

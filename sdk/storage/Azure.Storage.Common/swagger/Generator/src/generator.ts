@@ -954,7 +954,7 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                         w.popScope(`}`);
                     }
                 });
-            } else {
+            } else if (readonlyModel) {
                 needsModelFactory = true;
                 const factoryName = naming.type(model.info.modelFactoryName);
                 w.line();
@@ -1037,6 +1037,12 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                     });
                 }
                 else { w.line(`internal ${naming.type(type.name)}() { }`); }
+            } else {
+                w.line();
+                w.line(`/// <summary>`);
+                w.line(`/// Creates a new ${naming.type(type.name)} instance`);
+                w.line(`/// </summary>`);
+                w.line(`public ${naming.type(type.name)}() { }`);
             }
 
             // Create serializers if necessary

@@ -319,11 +319,12 @@ namespace Azure.Storage.Files.DataLake
                 return null;
             }
 
-            return BlobsModelFactory.BlobAccessPolicy(
-                startsOn: dataLakeAccessPolicy.StartsOn,
-                expiresOn: dataLakeAccessPolicy.ExpiresOn,
-                permissions: dataLakeAccessPolicy.Permissions
-            );
+            return new BlobAccessPolicy()
+            {
+                StartsOn = dataLakeAccessPolicy.StartsOn,
+                ExpiresOn = dataLakeAccessPolicy.ExpiresOn,
+                Permissions = dataLakeAccessPolicy.Permissions
+            };
         }
     }
 }

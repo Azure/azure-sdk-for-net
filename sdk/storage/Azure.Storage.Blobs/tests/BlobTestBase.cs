@@ -420,10 +420,12 @@ namespace Azure.Storage.Test.Shared
                 new BlobSignedIdentifier
                 {
                     Id = GetNewString(),
-                    AccessPolicy = BlobsModelFactory.BlobAccessPolicy(
-                        Recording.UtcNow.AddHours(-1),
-                        Recording.UtcNow.AddHours(1),
-                        "rw")
+                    AccessPolicy = new BlobAccessPolicy()
+                    {
+                        StartsOn = Recording.UtcNow.AddHours(-1),
+                        ExpiresOn = Recording.UtcNow.AddHours(1),
+                        Permissions = "rw"
+                    }
                 }
             };
 
@@ -431,7 +433,11 @@ namespace Azure.Storage.Test.Shared
         {
             BlobServiceClient service = GetServiceClient_SharedKey();
             Response<BlobServiceProperties> properties = await service.GetPropertiesAsync();
-            properties.Value.DeleteRetentionPolicy = BlobsModelFactory.BlobRetentionPolicy(true, 2);
+            properties.Value.DeleteRetentionPolicy = new BlobRetentionPolicy()
+            {
+                Enabled = true,
+                Days = 2
+            };
             await service.SetPropertiesAsync(properties);
 
             do
@@ -445,7 +451,7 @@ namespace Azure.Storage.Test.Shared
         {
             BlobServiceClient service = GetServiceClient_SharedKey();
             Response<BlobServiceProperties> properties = await service.GetPropertiesAsync();
-            properties.Value.DeleteRetentionPolicy = BlobsModelFactory.BlobRetentionPolicy(false);
+            properties.Value.DeleteRetentionPolicy = new BlobRetentionPolicy() { Enabled = false };
             await service.SetPropertiesAsync(properties);
 
             do
