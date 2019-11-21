@@ -769,47 +769,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 return new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net").Object;
             }
 
-            internal override TransportProducer CreateTransportProducer(string partitionID, EventHubProducerClientOptions producerOptions = null)
-            {
-                var transportProducer = new Mock<TransportProducer>();
-
-                transportProducer
-                    .Setup(producer => producer.SendAsync(It.IsAny<IEnumerable<EventData>>(), It.IsAny<SendOptions>(), It.IsAny<System.Threading.CancellationToken>()))
-                    .Returns(Task.CompletedTask)
-                    .Callback<IEnumerable<EventData>, SendOptions, System.Threading.CancellationToken>((events, options, token) =>
-                    {
-                        foreach (var eventData in events)
-                        {
-                            eventPipeline[options.PartitionKey].Enqueue(eventData);
-                        }
-                    });
-
-                return transportProducer.Object;
-            }
-
-            internal override TransportConsumer CreateTransportConsumer(string consumerGroup,
-                                                                        string partitionId,
-                                                                        EventPosition eventPosition,
-                                                                        EventHubConsumerClientOptions consumerOptions = default)
-            {
-                var transportConsumer = new Mock<TransportConsumer>();
-
-                transportConsumer
-                    .Setup(consumer => consumer.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), It.IsAny<System.Threading.CancellationToken>()))
-                    .Returns<int, TimeSpan, System.Threading.CancellationToken>((maxCount, wait, token) =>
-                     {
-                         int receiveCount = 0;
-                         var events = new List<EventData>();
-                         while (eventPipeline[partitionId].TryDequeue(out var eventData) && receiveCount < maxCount)
-                         {
-                             events.Add(eventData);
-                             receiveCount++;
-                         }
-                         return Task.FromResult((IEnumerable<EventData>)events);
-                     });
-
-                return transportConsumer.Object;
-            }
             internal override TransportClient CreateTransportClient(string fullyQualifiedNamespace, string eventHubName, EventHubTokenCredential credential, EventHubConnectionOptions options)
             {
                 client
