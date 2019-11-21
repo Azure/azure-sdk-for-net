@@ -585,9 +585,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task ProducerCannotSendWhenClosed(bool sync)
+        public async Task ProducerCannotSendWhenClosed()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
@@ -598,15 +596,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     EventData[] events = new[] { new EventData(Encoding.UTF8.GetBytes("Dummy event")) };
                     Assert.That(async () => await producer.SendAsync(events), Throws.Nothing);
 
-                    if (sync)
-                    {
-                        producer.Close();
-                    }
-                    else
-                    {
-                        await producer.CloseAsync();
-                    }
-
+                    await producer.CloseAsync();
                     Assert.That(async () => await producer.SendAsync(events), Throws.TypeOf<EventHubsClientClosedException>());
                 }
             }
@@ -1127,9 +1117,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task ProducerCannotRetrieveMetadataWhenClosed(bool sync)
+        public async Task ProducerCannotRetrieveMetadataWhenClosed()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
@@ -1142,15 +1130,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     Assert.That(async () => await producer.GetEventHubPropertiesAsync(), Throws.Nothing);
                     Assert.That(async () => await producer.GetPartitionPropertiesAsync(partition), Throws.Nothing);
 
-                    if (sync)
-                    {
-                        producer.Close();
-                    }
-                    else
-                    {
-                        await producer.CloseAsync();
-                    }
-
+                    await producer.CloseAsync();
                     await Task.Delay(TimeSpan.FromSeconds(5));
 
                     Assert.That(async () => await producer.GetPartitionIdsAsync(), Throws.TypeOf<EventHubsClientClosedException>());
