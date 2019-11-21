@@ -11,6 +11,8 @@ namespace Azure.Messaging.EventHubs.Processor
     ///   <see cref="PartitionManager" /> to claim ownership of a partition and to list existing ownership.
     /// </summary>
     ///
+    /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor" />
+    ///
     public class PartitionOwnership
     {
         /// <summary>
@@ -34,7 +36,7 @@ namespace Azure.Messaging.EventHubs.Processor
         public string ConsumerGroup { get; }
 
         /// <summary>
-        ///   The identifier of the associated <see cref="EventProcessorClient" /> instance.
+        ///   The identifier of the associated <c>EventProcessorClient</c> instance.
         /// </summary>
         ///
         public string OwnerIdentifier { get; }
@@ -52,14 +54,14 @@ namespace Azure.Messaging.EventHubs.Processor
         internal long OwnerLevel { get; }
 
         /// <summary>
-        ///   The offset of the last <see cref="EventData" /> received by the associated <see cref="EventProcessorClient" />
+        ///   The offset of the last <see cref="EventData" /> received by the associated <c>EventProcessorClient</c>
         ///   upon ownership update.
         /// </summary>
         ///
         public long? Offset { get; set; }
 
         /// <summary>
-        ///   The sequence number of the last <see cref="EventData" /> received by the associated <see cref="EventProcessorClient" />
+        ///   The sequence number of the last <see cref="EventData" /> received by the associated <c>EventProcessorClient</c>
         ///   upon ownership update.
         /// </summary>
         ///
@@ -84,10 +86,10 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace this partition ownership is associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub this partition ownership is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group this partition ownership is associated with.</param>
-        /// <param name="ownerIdentifier">The identifier of the associated <see cref="EventProcessorClient" /> instance.</param>
+        /// <param name="ownerIdentifier">The identifier of the associated <c>EventProcessorClient</c> instance.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition this partition ownership is associated with.</param>
-        /// <param name="offset">The offset of the last <see cref="EventData" /> received by the associated <see cref="EventProcessorClient" />.</param>
-        /// <param name="sequenceNumber">The sequence number of the last <see cref="EventData" /> received by the associated <see cref="EventProcessorClient" />.</param>
+        /// <param name="offset">The offset of the last <see cref="EventData" /> received by the associated <c>EventProcessorClient</c>.</param>
+        /// <param name="sequenceNumber">The sequence number of the last <see cref="EventData" /> received by the associated <c>EventProcessorClient</c>.</param>
         /// <param name="lastModifiedTime">The date and time, in UTC, that the last update was made to this ownership.</param>
         /// <param name="eTag">The entity tag needed to update this ownership.</param>
         ///

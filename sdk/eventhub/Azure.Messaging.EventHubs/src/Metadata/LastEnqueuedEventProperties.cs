@@ -65,7 +65,7 @@ namespace Azure.Messaging.EventHubs.Metadata
             this(sourceEvent?.LastPartitionSequenceNumber,
                  sourceEvent?.LastPartitionOffset,
                  sourceEvent?.LastPartitionEnqueuedTime,
-                 sourceEvent?.LastPartitionInformationRetrievalTime)
+                 sourceEvent?.LastPartitionPropertiesRetrievalTime)
         {
         }
     }
