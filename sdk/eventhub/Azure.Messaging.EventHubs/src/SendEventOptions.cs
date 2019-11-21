@@ -10,7 +10,7 @@ namespace Azure.Messaging.EventHubs
     ///   are sent to the Event Hubs service.
     /// </summary>
     ///
-    internal class SendOptions
+    internal class SendEventOptions
     {
         /// <summary>
         ///   Allows a hashing key to be provided for the batch of events, which instructs the Event Hubs
@@ -33,7 +33,7 @@ namespace Azure.Messaging.EventHubs
         /// </value>
         ///
         /// <remarks>
-        ///   If the <see cref="SendOptions.PartitionKey" /> is specified, then no <see cref="SendOptions.PartitionId" />
+        ///   If the <see cref="SendEventOptions.PartitionKey" /> is specified, then no <see cref="SendEventOptions.PartitionId" />
         ///   may be set when sending.
         /// </remarks>
         ///
@@ -50,7 +50,7 @@ namespace Azure.Messaging.EventHubs
         /// </value>
         ///
         /// <remarks>
-        ///   If the <see cref="SendOptions.PartitionId" /> is specified, then no <see cref="SendOptions.PartitionKey" />
+        ///   If the <see cref="SendEventOptions.PartitionId" /> is specified, then no <see cref="SendEventOptions.PartitionKey" />
         ///   may be set when sending.
         ///
         ///   <para>Allowing automatic routing of partitions is recommended when:</para>
@@ -65,21 +65,21 @@ namespace Azure.Messaging.EventHubs
         public string PartitionId { get; set; }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="SendOptions"/> class.
+        ///   Initializes a new instance of the <see cref="SendEventOptions"/> class.
         /// </summary>
         ///
-        public SendOptions()
+        public SendEventOptions()
         {
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="SendOptions"/> class.
+        ///   Initializes a new instance of the <see cref="SendEventOptions"/> class.
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the partition to which events should be sent.</param>
         /// <param name="partitionKey">The hashing key to use for influencing the partition to which the events are routed.</param>
         ///
-        internal SendOptions(string partitionId,
+        internal SendEventOptions(string partitionId,
                              string partitionKey)
         {
             PartitionId = partitionId;

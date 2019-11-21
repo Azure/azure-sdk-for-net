@@ -95,7 +95,7 @@ namespace Azure.Messaging.EventHubs.Core
         /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
         /// <param name="eventPosition">The position within the partition where the consumer should begin reading events.</param>
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
-        /// <param name="trackLastEnqueuedEventInformation">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
+        /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
         /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
         ///
@@ -105,7 +105,7 @@ namespace Azure.Messaging.EventHubs.Core
                                                          string partitionId,
                                                          EventPosition eventPosition,
                                                          EventHubsRetryPolicy retryPolicy,
-                                                         bool trackLastEnqueuedEventInformation,
+                                                         bool trackLastEnqueuedEventProperties,
                                                          long? ownerLevel,
                                                          uint? prefetchCount);
 

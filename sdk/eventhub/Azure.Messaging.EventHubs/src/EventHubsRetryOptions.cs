@@ -12,7 +12,7 @@ namespace Azure.Messaging.EventHubs
     ///    retry attempts are made, and a failure is eligible to be retried.
     /// </summary>
     ///
-    public class RetryOptions
+    public class EventHubsRetryOptions
     {
         /// <summary>The maximum number of retry attempts before considering the associated operation to have failed.</summary>
         private int _maximumRetries = 3;
@@ -30,7 +30,7 @@ namespace Azure.Messaging.EventHubs
         ///   The approach to use for calculating retry delays.
         /// </summary>
         ///
-        public RetryMode Mode { get; set; } = RetryMode.Exponential;
+        public EventHubsRetryMode Mode { get; set; } = EventHubsRetryMode.Exponential;
 
         /// <summary>
         ///   The maximum number of retry attempts before considering the associated operation
@@ -112,13 +112,13 @@ namespace Azure.Messaging.EventHubs
         public EventHubsRetryPolicy CustomRetryPolicy { get; set; }
 
         /// <summary>
-        ///   Creates a new copy of the current <see cref="RetryOptions" />, cloning its attributes into a new instance.
+        ///   Creates a new copy of the current <see cref="EventHubsRetryOptions" />, cloning its attributes into a new instance.
         /// </summary>
         ///
-        /// <returns>A new copy of <see cref="RetryOptions" />.</returns>
+        /// <returns>A new copy of <see cref="EventHubsRetryOptions" />.</returns>
         ///
-        internal RetryOptions Clone() =>
-            new RetryOptions
+        internal EventHubsRetryOptions Clone() =>
+            new EventHubsRetryOptions
             {
                 Mode = Mode,
                 CustomRetryPolicy = CustomRetryPolicy,

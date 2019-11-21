@@ -108,12 +108,12 @@ namespace Azure.Messaging.EventHubs
 
         /// <summary>
         ///   Converts the <see cref="CreateBatchOptions" /> into an equivalent
-        ///   <see cref="SendOptions" /> instance.
+        ///   <see cref="SendEventOptions" /> instance.
         /// </summary>
         ///
         /// <returns>A set of sending options equivalent to those represented by the batch options.</returns>
         ///
-        internal SendOptions ToSendOptions() => new SendOptions(PartitionId, PartitionKey);
+        internal SendEventOptions ToSendOptions() => new SendEventOptions(PartitionId, PartitionKey);
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.

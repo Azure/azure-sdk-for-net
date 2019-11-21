@@ -8,7 +8,7 @@ namespace Azure.Messaging.EventHubs
     ///   between retry attempts.
     /// </summary>
     ///
-    public enum RetryMode
+    public enum EventHubsRetryMode
     {
         /// <summary>Retry attempts happen at fixed intervals; each delay is a consistent duration.</summary>
         Fixed,

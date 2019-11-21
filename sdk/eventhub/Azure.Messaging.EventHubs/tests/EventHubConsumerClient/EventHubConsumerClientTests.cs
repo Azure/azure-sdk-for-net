@@ -137,7 +137,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ConnectionStringConstructorSetsTheRetryPolicy()
         {
             var expected = Mock.Of<EventHubsRetryPolicy>();
-            var options = new EventHubConsumerClientOptions { RetryOptions = new RetryOptions { CustomRetryPolicy = expected } };
+            var options = new EventHubConsumerClientOptions { RetryOptions = new EventHubsRetryOptions { CustomRetryPolicy = expected } };
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString, options);
 
@@ -153,7 +153,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var expected = Mock.Of<EventHubsRetryPolicy>();
             var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
-            var options = new EventHubConsumerClientOptions { RetryOptions = new RetryOptions { CustomRetryPolicy = expected } };
+            var options = new EventHubConsumerClientOptions { RetryOptions = new EventHubsRetryOptions { CustomRetryPolicy = expected } };
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "namespace", "hub", credential.Object, options);
 
             Assert.That(GetRetryPolicy(consumer), Is.SameAs(expected));
@@ -167,7 +167,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ConnectionConstructorSetsTheRetryPolicy()
         {
             var expected = Mock.Of<EventHubsRetryPolicy>();
-            var options = new EventHubConsumerClientOptions { RetryOptions = new RetryOptions { CustomRetryPolicy = expected } };
+            var options = new EventHubConsumerClientOptions { RetryOptions = new EventHubsRetryOptions { CustomRetryPolicy = expected } };
             var mockConnection = new MockConnection();
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, mockConnection, options);
 
@@ -313,7 +313,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var mockConnection = new MockConnection();
             var retryPolicy = Mock.Of<EventHubsRetryPolicy>();
-            var options = new EventHubConsumerClientOptions { RetryOptions = new RetryOptions { CustomRetryPolicy = retryPolicy } };
+            var options = new EventHubConsumerClientOptions { RetryOptions = new EventHubsRetryOptions { CustomRetryPolicy = retryPolicy } };
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, mockConnection, options);
 
             await consumer.GetEventHubPropertiesAsync();
@@ -330,7 +330,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var mockConnection = new MockConnection();
             var retryPolicy = Mock.Of<EventHubsRetryPolicy>();
-            var options = new EventHubConsumerClientOptions { RetryOptions = new RetryOptions { CustomRetryPolicy = retryPolicy } };
+            var options = new EventHubConsumerClientOptions { RetryOptions = new EventHubsRetryOptions { CustomRetryPolicy = retryPolicy } };
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, mockConnection, options);
 
             await consumer.GetPartitionIdsAsync();
@@ -347,7 +347,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var mockConnection = new MockConnection();
             var retryPolicy = Mock.Of<EventHubsRetryPolicy>();
-            var options = new EventHubConsumerClientOptions { RetryOptions = new RetryOptions { CustomRetryPolicy = retryPolicy } };
+            var options = new EventHubConsumerClientOptions { RetryOptions = new EventHubsRetryOptions { CustomRetryPolicy = retryPolicy } };
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, mockConnection, options);
 
             await consumer.GetPartitionPropertiesAsync("1");
@@ -365,7 +365,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var transportConsumer = new ObservableTransportConsumerMock();
             var mockConnection = new MockConnection(() => transportConsumer);
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, mockConnection);
-            var options = new ReadOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(25) };
+            var options = new ReadEventOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(25) };
 
             await using var firstIterator = consumer.ReadEventsFromPartitionAsync("0", EventPosition.FromOffset(23), options).GetAsyncEnumerator();
             await using var secondIterator = consumer.ReadEventsFromPartitionAsync("0", EventPosition.FromOffset(23), options).GetAsyncEnumerator();
@@ -395,7 +395,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             try
             {
-                var options = new ReadOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(25) };
+                var options = new ReadEventOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(25) };
 
                 await using var iterator = consumer.ReadEventsFromPartitionAsync("0", EventPosition.FromOffset(23), options).GetAsyncEnumerator();
                 await iterator.MoveNextAsync();
@@ -443,7 +443,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockConnection = new MockConnection(() => transportConsumer);
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, mockConnection);
 
-            var options = new ReadOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(25) };
+            var options = new ReadEventOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(25) };
             var enumerable = consumer.ReadEventsFromPartitionAsync("0", EventPosition.FromOffset(12), options);
 
             Assert.That(enumerable, Is.Not.Null, "An enumerable should have been returned.");
@@ -827,7 +827,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 new EventData(Encoding.UTF8.GetBytes("Five"))
             };
 
-            var options = new ReadOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(5) };
+            var options = new ReadEventOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(5) };
             var partition = "0";
             var position = EventPosition.FromOffset(22);
             var mockConnection = new MockConnection(() => new PublishingTransportConsumerMock(events));
@@ -926,7 +926,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task ReadEventsFromPartitionAsyncPublishesEventsWithMultipleIteratorsAndMultipleBatches()
         {
-            var options = new ReadOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(5) };
+            var options = new ReadEventOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(5) };
             var events = new List<EventData>();
             var partition = "0";
             var position = EventPosition.FromSequenceNumber(453);
@@ -1007,7 +1007,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var maxWaitTime = TimeSpan.FromMilliseconds(50);
             var publishDelay = maxWaitTime.Add(TimeSpan.FromMilliseconds(15));
-            var options = new ReadOptions { MaximumWaitTime = maxWaitTime };
+            var options = new ReadEventOptions { MaximumWaitTime = maxWaitTime };
             var transportConsumer = new PublishingTransportConsumerMock(events, () => publishDelay);
             var mockConnection = new MockConnection(() => transportConsumer);
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, mockConnection);
@@ -1147,7 +1147,7 @@ namespace Azure.Messaging.EventHubs.Tests
             };
 
             var mockRetryPolicy = new Mock<EventHubsRetryPolicy>();
-            var options = new EventHubConsumerClientOptions { RetryOptions = new RetryOptions { CustomRetryPolicy = mockRetryPolicy.Object } };
+            var options = new EventHubConsumerClientOptions { RetryOptions = new EventHubsRetryOptions { CustomRetryPolicy = mockRetryPolicy.Object } };
             var transportConsumer = new ReceiveCallbackTransportConsumerMock(receiveCallback);
             var mockConnection = new MockConnection(() => transportConsumer);
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, mockConnection, options);
@@ -1192,7 +1192,7 @@ namespace Azure.Messaging.EventHubs.Tests
             };
 
             var mockRetryPolicy = new Mock<EventHubsRetryPolicy>();
-            var options = new EventHubConsumerClientOptions { RetryOptions = new RetryOptions { CustomRetryPolicy = mockRetryPolicy.Object } };
+            var options = new EventHubConsumerClientOptions { RetryOptions = new EventHubsRetryOptions { CustomRetryPolicy = mockRetryPolicy.Object } };
             var transportConsumer = new ReceiveCallbackTransportConsumerMock(receiveCallback);
             var mockConnection = new MockConnection(() => transportConsumer);
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, mockConnection, options);
@@ -1255,7 +1255,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockConnection = new MockConnection(() => transportConsumer);
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, mockConnection);
 
-            var options = new ReadOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(25) };
+            var options = new ReadEventOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(25) };
             IAsyncEnumerable<PartitionEvent> enumerable = consumer.ReadEventsAsync(options);
 
             Assert.That(enumerable, Is.Not.Null, "An enumerable should have been returned.");
@@ -1751,7 +1751,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var maxWaitTime = TimeSpan.FromMilliseconds(50);
             var publishDelay = maxWaitTime.Add(TimeSpan.FromMilliseconds(15));
-            var options = new ReadOptions { MaximumWaitTime = maxWaitTime };
+            var options = new ReadEventOptions { MaximumWaitTime = maxWaitTime };
             var transportConsumer = new PublishingTransportConsumerMock(events, () => publishDelay);
             var mockConnection = new MockConnection(() => transportConsumer);
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, mockConnection);
@@ -1941,7 +1941,7 @@ namespace Azure.Messaging.EventHubs.Tests
             };
 
             var mockRetryPolicy = new Mock<EventHubsRetryPolicy>();
-            var options = new EventHubConsumerClientOptions { RetryOptions = new RetryOptions { CustomRetryPolicy = mockRetryPolicy.Object } };
+            var options = new EventHubConsumerClientOptions { RetryOptions = new EventHubsRetryOptions { CustomRetryPolicy = mockRetryPolicy.Object } };
             var mockConnection = new MockConnection(() => new ReceiveCallbackTransportConsumerMock(receiveCallback));
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, mockConnection, options);
             var partitions = await consumer.GetPartitionIdsAsync();
@@ -1987,7 +1987,7 @@ namespace Azure.Messaging.EventHubs.Tests
             };
 
             var mockRetryPolicy = new Mock<EventHubsRetryPolicy>();
-            var options = new EventHubConsumerClientOptions { RetryOptions = new RetryOptions { CustomRetryPolicy = mockRetryPolicy.Object } };
+            var options = new EventHubConsumerClientOptions { RetryOptions = new EventHubsRetryOptions { CustomRetryPolicy = mockRetryPolicy.Object } };
             var transportConsumer = new ReceiveCallbackTransportConsumerMock(receiveCallback);
             var mockConnection = new MockConnection(() => transportConsumer);
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, mockConnection, options);
@@ -2247,7 +2247,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 return Task.FromResult(default(PartitionProperties));
             }
 
-            internal override TransportConsumer CreateTransportConsumer(string consumerGroup, string partitionId, EventPosition eventPosition, EventHubsRetryPolicy retryPolicy, bool trackLastEnqueuedEventInformation = true, long? ownerLevel = default, uint? prefetchCount = default) => TransportConsumerFactory();
+            internal override TransportConsumer CreateTransportConsumer(string consumerGroup, string partitionId, EventPosition eventPosition, EventHubsRetryPolicy retryPolicy, bool trackLastEnqueuedEventProperties = true, long? ownerLevel = default, uint? prefetchCount = default) => TransportConsumerFactory();
 
             internal override TransportClient CreateTransportClient(string fullyQualifiedNamespace, string eventHubName, EventHubTokenCredential credential, EventHubConnectionOptions options)
             {

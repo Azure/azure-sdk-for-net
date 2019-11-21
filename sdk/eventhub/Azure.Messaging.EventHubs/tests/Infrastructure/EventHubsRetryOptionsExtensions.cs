@@ -6,11 +6,11 @@ using System;
 namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
-    ///   The set of extension methods for the <see cref="RetryOptions" />
+    ///   The set of extension methods for the <see cref="EventHubsRetryOptions" />
     ///   class.
     /// </summary>
     ///
-    internal static class RetryOptionsExtensions
+    internal static class EventHubsRetryOptionsExtensions
     {
         /// <summary>
         ///   Compares retry options between two instances to determine if the
@@ -22,8 +22,8 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         /// <returns><c>true</c>, if the two sets of options are structurally equivalent; otherwise, <c>false</c>.</returns>
         ///
-        public static bool IsEquivalentTo(this RetryOptions instance,
-                                          RetryOptions other)
+        public static bool IsEquivalentTo(this EventHubsRetryOptions instance,
+                                          EventHubsRetryOptions other)
         {
             // If the events are the same instance, they're equal.  This should only happen
             // if both are null or they are the exact same instance.

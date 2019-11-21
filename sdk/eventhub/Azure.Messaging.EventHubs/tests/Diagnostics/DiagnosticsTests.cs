@@ -54,7 +54,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var transportMock = new Mock<TransportProducer>();
 
             transportMock
-                .Setup(m => m.SendAsync(It.IsAny<IEnumerable<EventData>>(), It.IsAny<SendOptions>(), It.IsAny<CancellationToken>()))
+                .Setup(m => m.SendAsync(It.IsAny<IEnumerable<EventData>>(), It.IsAny<SendEventOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             var producer = new EventHubProducerClient(fakeConnection, transportMock.Object);
@@ -102,7 +102,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var transportMock = new Mock<TransportProducer>();
 
             transportMock
-                .Setup(m => m.SendAsync(It.IsAny<IEnumerable<EventData>>(), It.IsAny<SendOptions>(), It.IsAny<CancellationToken>()))
+                .Setup(m => m.SendAsync(It.IsAny<IEnumerable<EventData>>(), It.IsAny<SendEventOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             transportMock
@@ -147,8 +147,8 @@ namespace Azure.Messaging.EventHubs.Tests
             EventData[] writtenEventsData = null;
 
             transportMock
-                .Setup(m => m.SendAsync(It.IsAny<IEnumerable<EventData>>(), It.IsAny<SendOptions>(), It.IsAny<CancellationToken>()))
-                .Callback<IEnumerable<EventData>, SendOptions, CancellationToken>((e, _, __) => writtenEventsData = e.ToArray())
+                .Setup(m => m.SendAsync(It.IsAny<IEnumerable<EventData>>(), It.IsAny<SendEventOptions>(), It.IsAny<CancellationToken>()))
+                .Callback<IEnumerable<EventData>, SendEventOptions, CancellationToken>((e, _, __) => writtenEventsData = e.ToArray())
                 .Returns(Task.CompletedTask);
 
             var producer = new EventHubProducerClient(fakeConnection, transportMock.Object);
@@ -199,7 +199,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 });
 
             transportMock
-                .Setup(m => m.SendAsync(It.IsAny<IEnumerable<EventData>>(), It.IsAny<SendOptions>(), It.IsAny<CancellationToken>()))
+                .Setup(m => m.SendAsync(It.IsAny<IEnumerable<EventData>>(), It.IsAny<SendEventOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             transportMock
