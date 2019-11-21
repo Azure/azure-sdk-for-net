@@ -21,37 +21,37 @@ namespace Azure.AI.TextAnalytics.Samples
             // Instantiate a client that will be used to call the service.
             var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
 
-            var inputs = new List<DetectLangaugeInput>
+            var inputs = new List<DetectLanguageInput>
             {
-                new DetectLangaugeInput("1")
+                new DetectLanguageInput("1")
                 {
                      CountryHint = "us",
                      Text = "Hello world"
                 },
-                new DetectLangaugeInput("2")
+                new DetectLanguageInput("2")
                 {
                      CountryHint = "fr",
                      Text = "Bonjour tout le monde",
                 },
-                new DetectLangaugeInput("3")
+                new DetectLanguageInput("3")
                 {
                      CountryHint = "es",
                      Text = "Hola mundo",
                 },
-                new DetectLangaugeInput("4")
+                new DetectLanguageInput("4")
                 {
                      CountryHint = "us",
                      Text = ":) :( :D"
                 }
             };
 
-            TextBatchResponse<DetectLanguageResult> response = client.DetectLanguages(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            var results = client.DetectLanguages(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true }).Value;
 
             int i = 0;
-            Debug.WriteLine($"Results of Azure Text Analytics \"Detect Language\" Model, version: \"{response.ModelVersion}\"");
+            Debug.WriteLine($"Results of Azure Text Analytics \"Detect Language\" Model, version: \"{results.ModelVersion}\"");
             Debug.WriteLine("");
 
-            foreach (var result in response.Value)
+            foreach (var result in results)
             {
                 var document = inputs[i++];
 
@@ -73,10 +73,10 @@ namespace Azure.AI.TextAnalytics.Samples
             }
 
             Debug.WriteLine($"Batch operation statistics:");
-            Debug.WriteLine($"    Document count: {response.Statistics.DocumentCount}");
-            Debug.WriteLine($"    Valid document count: {response.Statistics.ValidDocumentCount}");
-            Debug.WriteLine($"    Invalid document count:{response.Statistics.InvalidDocumentCount}");
-            Debug.WriteLine($"    Transaction count:{response.Statistics.TransactionCount}");
+            Debug.WriteLine($"    Document count: {results.Statistics.DocumentCount}");
+            Debug.WriteLine($"    Valid document count: {results.Statistics.ValidDocumentCount}");
+            Debug.WriteLine($"    Invalid document count:{results.Statistics.InvalidDocumentCount}");
+            Debug.WriteLine($"    Transaction count:{results.Statistics.TransactionCount}");
             Debug.WriteLine("");
         }
     }

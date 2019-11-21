@@ -175,7 +175,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="countryHint"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<TextBatchResponse<DetectLanguageResult>> DetectLanguagesAsync(IEnumerable<string> inputs, string countryHint = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DetectLanguageResultCollection>> DetectLanguagesAsync(IEnumerable<string> inputs, string countryHint = default, CancellationToken cancellationToken = default)
         {
             await Task.Run(() => { }).ConfigureAwait(false);
             throw new NotImplementedException();
@@ -214,7 +214,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="countryHint"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual TextBatchResponse<DetectLanguageResult> DetectLanguages(IEnumerable<string> inputs, string countryHint = default, CancellationToken cancellationToken = default)
+        public virtual Response<DetectLanguageResultCollection> DetectLanguages(IEnumerable<string> inputs, string countryHint = default, CancellationToken cancellationToken = default)
         {
 
             throw new NotImplementedException();
@@ -249,7 +249,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<TextBatchResponse<DetectLanguageResult>> DetectLanguagesAsync(IEnumerable<DetectLangaugeInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DetectLanguageResultCollection>> DetectLanguagesAsync(IEnumerable<DetectLanguageInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
         {
             await Task.Run(() => { }).ConfigureAwait(false);
             throw new NotImplementedException();
@@ -283,7 +283,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual TextBatchResponse<DetectLanguageResult> DetectLanguages(IEnumerable<DetectLangaugeInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<DetectLanguageResultCollection> DetectLanguages(IEnumerable<DetectLanguageInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
 
@@ -327,7 +327,7 @@ namespace Azure.AI.TextAnalytics
             return request;
         }
 
-        private Request CreateDetectLanguageRequest(IEnumerable<DetectLangaugeInput> inputs, TextAnalyticsRequestOptions options)
+        private Request CreateDetectLanguageRequest(IEnumerable<DetectLanguageInput> inputs, TextAnalyticsRequestOptions options)
         {
             Request request = _pipeline.CreateRequest();
 
@@ -442,7 +442,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="language"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<TextBatchResponse<RecognizeEntitiesResult>> RecognizeEntitiesAsync(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RecognizeEntitiesResultCollection>> RecognizeEntitiesAsync(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
         {
 
             await Task.Run(() => { }).ConfigureAwait(false);
@@ -479,7 +479,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="language"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual TextBatchResponse<RecognizeEntitiesResult> RecognizeEntities(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
+        public virtual Response<RecognizeEntitiesResultCollection> RecognizeEntities(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
         {
 
             throw new NotImplementedException();
@@ -514,7 +514,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<TextBatchResponse<RecognizeEntitiesResult>> RecognizeEntitiesAsync(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RecognizeEntitiesResultCollection>> RecognizeEntitiesAsync(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
         {
             await Task.Run(() => { }).ConfigureAwait(false);
             throw new NotImplementedException();
@@ -549,7 +549,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual TextBatchResponse<RecognizeEntitiesResult> RecognizeEntities(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<RecognizeEntitiesResultCollection> RecognizeEntities(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
 
@@ -673,7 +673,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="language"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<TextBatchResponse<AnalyzeSentimentResult>> AnalyzeSentimentAsync(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AnalyzeSentimentResultCollection>> AnalyzeSentimentAsync(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
         {
 
             await Task.Run(() => { }).ConfigureAwait(false);
@@ -709,7 +709,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="language"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual TextBatchResponse<AnalyzeSentimentResult> AnalyzeSentiment(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
+        public virtual Response<AnalyzeSentimentResultCollection> AnalyzeSentiment(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
         {
 
             throw new NotImplementedException();
@@ -744,7 +744,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<TextBatchResponse<AnalyzeSentimentResult>> AnalyzeSentimentAsync(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AnalyzeSentimentResultCollection>> AnalyzeSentimentAsync(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
         {
             await Task.Run(() => { }).ConfigureAwait(false);
             throw new NotImplementedException();
@@ -779,7 +779,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual TextBatchResponse<AnalyzeSentimentResult> AnalyzeSentiment(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<AnalyzeSentimentResultCollection> AnalyzeSentiment(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
         {
 
             throw new NotImplementedException();
@@ -904,7 +904,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="language"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<TextBatchResponse<ExtractKeyPhrasesResult>> ExtractKeyPhrasesAsync(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExtractKeyPhrasesResultCollection>> ExtractKeyPhrasesAsync(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
         {
 
             await Task.Run(() => { }).ConfigureAwait(false);
@@ -941,7 +941,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="language"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual TextBatchResponse<ExtractKeyPhrasesResult> ExtractKeyPhrases(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
+        public virtual Response<ExtractKeyPhrasesResultCollection> ExtractKeyPhrases(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
         {
 
             throw new NotImplementedException();
@@ -976,7 +976,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<TextBatchResponse<ExtractKeyPhrasesResult>> ExtractKeyPhrasesAsync(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExtractKeyPhrasesResultCollection>> ExtractKeyPhrasesAsync(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
         {
 
             await Task.Run(() => { }).ConfigureAwait(false);
@@ -1011,7 +1011,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual TextBatchResponse<ExtractKeyPhrasesResult> ExtractKeyPhrases(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<ExtractKeyPhrasesResultCollection> ExtractKeyPhrases(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
         {
 
             throw new NotImplementedException();
@@ -1136,7 +1136,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="language"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<TextBatchResponse<RecognizeEntitiesResult>> RecognizePiiEntitiesAsync(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RecognizeEntitiesResultCollection>> RecognizePiiEntitiesAsync(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
         {
 
             await Task.Run(() => { }).ConfigureAwait(false);
@@ -1173,7 +1173,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="language"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual TextBatchResponse<RecognizeEntitiesResult> RecognizePiiEntities(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
+        public virtual Response<RecognizeEntitiesResultCollection> RecognizePiiEntities(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
         {
 
             throw new NotImplementedException();
@@ -1208,7 +1208,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<TextBatchResponse<RecognizeEntitiesResult>> RecognizePiiEntitiesAsync(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RecognizeEntitiesResultCollection>> RecognizePiiEntitiesAsync(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
         {
 
             await Task.Run(() => { }).ConfigureAwait(false);
@@ -1243,7 +1243,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual TextBatchResponse<RecognizeEntitiesResult> RecognizePiiEntities(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<RecognizeEntitiesResultCollection> RecognizePiiEntities(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
 
@@ -1280,7 +1280,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="language"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response<ExtractEntityLinkingResult>> ExtractEntityLinkingAsync(string inputText, string language = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExtractLinkedEntitiesResult>> ExtractEntityLinkingAsync(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
 
             await Task.Run(() => { }).ConfigureAwait(false);
@@ -1324,7 +1324,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="language"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response<ExtractEntityLinkingResult> ExtractEntityLinking(string inputText, string language = default, CancellationToken cancellationToken = default)
+        public virtual Response<ExtractLinkedEntitiesResult> ExtractEntityLinking(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
 
             throw new NotImplementedException();
@@ -1367,7 +1367,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="language"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<TextBatchResponse<ExtractEntityLinkingResult>> ExtractEntityLinkingAsync(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExtractLinkedEntitiesResultCollection>> ExtractEntityLinkingAsync(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
         {
 
             await Task.Run(() => { }).ConfigureAwait(false);
@@ -1404,7 +1404,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="language"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual TextBatchResponse<ExtractEntityLinkingResult> ExtractEntityLinking(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
+        public virtual Response<ExtractLinkedEntitiesResultCollection> ExtractEntityLinking(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
         {
 
             throw new NotImplementedException();
@@ -1439,7 +1439,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<TextBatchResponse<ExtractEntityLinkingResult>> ExtractEntityLinkingAsync(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExtractLinkedEntitiesResultCollection>> ExtractEntityLinkingAsync(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
         {
 
             await Task.Run(() => { }).ConfigureAwait(false);
@@ -1475,7 +1475,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual TextBatchResponse<ExtractEntityLinkingResult> ExtractEntityLinking(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<ExtractLinkedEntitiesResultCollection> ExtractEntityLinking(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
         {
 
             throw new NotImplementedException();

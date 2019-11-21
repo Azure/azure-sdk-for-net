@@ -39,7 +39,7 @@ namespace Azure.AI.TextAnalytics
             return writer.WrittenMemory;
         }
 
-        public static ReadOnlyMemory<byte> SerializeDetectLanguageInputs(IEnumerable<DetectLangaugeInput> inputs)
+        public static ReadOnlyMemory<byte> SerializeDetectLanguageInputs(IEnumerable<DetectLanguageInput> inputs)
         {
             var writer = new ArrayBufferWriter<byte>();
             var json = new Utf8JsonWriter(writer);

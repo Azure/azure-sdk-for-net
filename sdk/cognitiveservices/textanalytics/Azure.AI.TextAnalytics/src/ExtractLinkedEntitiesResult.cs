@@ -7,14 +7,14 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// </summary>
-    public class ExtractEntityLinkingResult : TextAnalysisResult
+    public class ExtractLinkedEntitiesResult : TextAnalysisResult
     {
-        internal ExtractEntityLinkingResult(string id, TextDocumentStatistics statistics)
+        internal ExtractLinkedEntitiesResult(string id, TextDocumentStatistics statistics)
             : base(id, statistics)
         {
         }
 
-        internal ExtractEntityLinkingResult(string id, string errorMessage)
+        internal ExtractLinkedEntitiesResult(string id, string errorMessage)
             : base(id, errorMessage)
         {
         }

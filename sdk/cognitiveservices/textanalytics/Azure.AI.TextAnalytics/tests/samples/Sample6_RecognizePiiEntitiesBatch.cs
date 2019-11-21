@@ -41,13 +41,13 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
             };
 
-            var response = client.RecognizePiiEntities(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            var results = client.RecognizePiiEntities(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true }).Value;
 
             int i = 0;
-            Debug.WriteLine($"Results of Azure Text Analytics \"Pii Entity Recognition\" Model, version: \"{response.ModelVersion}\"");
+            Debug.WriteLine($"Results of Azure Text Analytics \"Pii Entity Recognition\" Model, version: \"{results.ModelVersion}\"");
             Debug.WriteLine("");
 
-            foreach (var result in response.Value)
+            foreach (var result in results)
             {
                 var document = inputs[i++];
 
@@ -74,10 +74,10 @@ namespace Azure.AI.TextAnalytics.Samples
             }
 
             Debug.WriteLine($"Batch operation statistics:");
-            Debug.WriteLine($"    Document count: {response.Statistics.DocumentCount}");
-            Debug.WriteLine($"    Valid document count: {response.Statistics.ValidDocumentCount}");
-            Debug.WriteLine($"    Invalid document count:{response.Statistics.InvalidDocumentCount}");
-            Debug.WriteLine($"    Transaction count:{response.Statistics.TransactionCount}");
+            Debug.WriteLine($"    Document count: {results.Statistics.DocumentCount}");
+            Debug.WriteLine($"    Valid document count: {results.Statistics.ValidDocumentCount}");
+            Debug.WriteLine($"    Invalid document count:{results.Statistics.InvalidDocumentCount}");
+            Debug.WriteLine($"    Transaction count:{results.Statistics.TransactionCount}");
             Debug.WriteLine("");
         }
     }
