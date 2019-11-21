@@ -130,9 +130,9 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [TestCase(TransportType.AmqpTcp)]
-        [TestCase(TransportType.AmqpWebSockets)]
-        public async Task ConnectionTransportCanRetrieveProperties(TransportType transportType)
+        [TestCase(EventHubsTransportType.AmqpTcp)]
+        [TestCase(EventHubsTransportType.AmqpWebSockets)]
+        public async Task ConnectionTransportCanRetrieveProperties(EventHubsTransportType transportType)
         {
             var partitionCount = 4;
 
@@ -158,9 +158,9 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [TestCase(TransportType.AmqpTcp)]
-        [TestCase(TransportType.AmqpWebSockets)]
-        public async Task ConnectionTransportCanRetrievePartitionProperties(TransportType transportType)
+        [TestCase(EventHubsTransportType.AmqpTcp)]
+        [TestCase(EventHubsTransportType.AmqpWebSockets)]
+        public async Task ConnectionTransportCanRetrievePartitionProperties(EventHubsTransportType transportType)
         {
             var partitionCount = 4;
 
@@ -296,12 +296,12 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
-                var retryOptions = new RetryOptions { TryTimeout = TimeSpan.FromMinutes(2) };
+                var retryOptions = new EventHubsRetryOptions { TryTimeout = TimeSpan.FromMinutes(2) };
 
                 var clientOptions = new EventHubConnectionOptions
                 {
                     Proxy = new WebProxy("http://1.2.3.4:9999"),
-                    TransportType = TransportType.AmqpWebSockets
+                    TransportType = EventHubsTransportType.AmqpWebSockets
                 };
 
                 await using (var connection = new TestConnectionWithTransport(connectionString))
@@ -326,7 +326,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         private class TestConnectionWithTransport : EventHubConnection
         {
-            public EventHubsRetryPolicy RetryPolicy { get; set; } = new BasicRetryPolicy(new RetryOptions());
+            public EventHubsRetryPolicy RetryPolicy { get; set; } = new BasicRetryPolicy(new EventHubsRetryOptions());
 
             public TestConnectionWithTransport(string connectionString,
                                                EventHubConnectionOptions connectionOptions = default) : base(connectionString, connectionOptions)

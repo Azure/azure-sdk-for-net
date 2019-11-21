@@ -9,24 +9,24 @@ using NUnit.Framework;
 namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
-    ///   The suite of tests for the <see cref="RetryOptions" />
+    ///   The suite of tests for the <see cref="EventHubsRetryOptions" />
     ///   class.
     /// </summary>
     ///
     [TestFixture]
-    public class RetryOptionsTests
+    public class EventHubsRetryOptionsTests
     {
         /// <summary>
-        ///   Verifies functionality of the <see cref="RetryOptions.Clone" />
+        ///   Verifies functionality of the <see cref="EventHubsRetryOptions.Clone" />
         ///   method.
         /// </summary>
         ///
         [Test]
         public void CloneProducesACopy()
         {
-            var options = new RetryOptions
+            var options = new EventHubsRetryOptions
             {
-                Mode = RetryMode.Fixed,
+                Mode = EventHubsRetryMode.Fixed,
                 MaximumRetries = 65,
                 Delay = TimeSpan.FromSeconds(1),
                 MaximumDelay = TimeSpan.FromSeconds(2),
@@ -34,7 +34,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 CustomRetryPolicy = Mock.Of<EventHubsRetryPolicy>()
             };
 
-            RetryOptions clone = options.Clone();
+            EventHubsRetryOptions clone = options.Clone();
             Assert.That(clone, Is.Not.Null, "The clone should not be null.");
 
             Assert.That(clone.Mode, Is.EqualTo(options.Mode), "The mode of the clone should match.");
@@ -46,7 +46,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///  Verifies that setting the <see cref="RetryOptions.MaximumRetries" /> is
+        ///  Verifies that setting the <see cref="EventHubsRetryOptions.MaximumRetries" /> is
         ///  validated.
         /// </summary>
         ///
@@ -59,12 +59,12 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(1000)]
         public void MaximumRetriesIsValidated(int invalidValue)
         {
-            var options = new RetryOptions();
+            var options = new EventHubsRetryOptions();
             Assert.That(() => options.MaximumRetries = invalidValue, Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
-        ///  Verifies that setting the <see cref="RetryOptions.Delay" /> is
+        ///  Verifies that setting the <see cref="EventHubsRetryOptions.Delay" /> is
         ///  validated.
         /// </summary>
         ///
@@ -78,13 +78,13 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(500)]
         public void DelayIsValidated(int seconds)
         {
-            var options = new RetryOptions();
+            var options = new EventHubsRetryOptions();
             var invalidValue = TimeSpan.FromSeconds(seconds);
             Assert.That(() => options.Delay = invalidValue, Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
-        ///  Verifies that setting the <see cref="RetryOptions.MaximumDelay" /> is
+        ///  Verifies that setting the <see cref="EventHubsRetryOptions.MaximumDelay" /> is
         ///  validated.
         /// </summary>
         ///
@@ -94,13 +94,13 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(-9999)]
         public void MaximumDelayIsValidated(int seconds)
         {
-            var options = new RetryOptions();
+            var options = new EventHubsRetryOptions();
             var invalidValue = TimeSpan.FromSeconds(seconds);
             Assert.That(() => options.MaximumDelay = invalidValue, Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
-        ///  Verifies that setting the <see cref="RetryOptions.TryTimeout" /> is
+        ///  Verifies that setting the <see cref="EventHubsRetryOptions.TryTimeout" /> is
         ///  validated.
         /// </summary>
         ///
@@ -113,22 +113,22 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(5000)]
         public void TryTimeoutIsValidated(int seconds)
         {
-            var options = new RetryOptions();
+            var options = new EventHubsRetryOptions();
             var invalidValue = TimeSpan.FromSeconds(seconds);
             Assert.That(() => options.TryTimeout = invalidValue, Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="RetryOptions.Clone" />
+        ///   Verifies functionality of the <see cref="EventHubsRetryOptions.Clone" />
         ///   method.
         /// </summary>
         ///
         [Test]
         public void ToRetryPolicyWithoutCustomPolicyCreatesThePolicy()
         {
-            var options = new RetryOptions
+            var options = new EventHubsRetryOptions
             {
-                Mode = RetryMode.Fixed,
+                Mode = EventHubsRetryMode.Fixed,
                 MaximumRetries = 65,
                 Delay = TimeSpan.FromSeconds(1),
                 MaximumDelay = TimeSpan.FromSeconds(2),
@@ -144,16 +144,16 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="RetryOptions.Clone" />
+        ///   Verifies functionality of the <see cref="EventHubsRetryOptions.Clone" />
         ///   method.
         /// </summary>
         ///
         [Test]
         public void ToRetryPolicyWithCustomPolicyUsesTheCustomPolicy()
         {
-            var options = new RetryOptions
+            var options = new EventHubsRetryOptions
             {
-                Mode = RetryMode.Fixed,
+                Mode = EventHubsRetryMode.Fixed,
                 MaximumRetries = 65,
                 Delay = TimeSpan.FromSeconds(1),
                 MaximumDelay = TimeSpan.FromSeconds(2),

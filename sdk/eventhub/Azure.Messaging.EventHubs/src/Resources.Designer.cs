@@ -322,11 +322,11 @@ namespace Azure.Messaging.EventHubs {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This information is only available when TrackLastEnqueuedEventInformation is set on the Event Hub consumer options..
+        ///   Looks up a localized string similar to This information is only available when TrackLastEnqueuedEventProperties is set on the Event Hub consumer options..
         /// </summary>
-        internal static string TrackLastEnqueuedEventInformationNotSet {
+        internal static string TrackLastEnqueuedEventPropertiesNotSet {
             get {
-                return ResourceManager.GetString("TrackLastEnqueuedEventInformationNotSet", resourceCulture);
+                return ResourceManager.GetString("TrackLastEnqueuedEventPropertiesNotSet", resourceCulture);
             }
         }
         

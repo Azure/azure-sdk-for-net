@@ -21,7 +21,7 @@ namespace Azure.Messaging.EventHubs
         private EventHubConnectionOptions _connectionOptions = new EventHubConnectionOptions();
 
         /// <summary>The set of options to govern retry behavior and try timeouts.</summary>
-        private RetryOptions _retryOptions = new RetryOptions();
+        private EventHubsRetryOptions _retryOptions = new EventHubsRetryOptions();
 
         /// <summary>
         ///   The maximum amount of time to wait for an event to become available for a given partition before emitting
@@ -62,7 +62,7 @@ namespace Azure.Messaging.EventHubs
         ///   against periodically making requests for partition properties using one of the Event Hub clients.
         /// </remarks>
         ///
-        public bool TrackLastEnqueuedEventInformation { get; set; } = true;
+        public bool TrackLastEnqueuedEventProperties { get; set; } = true;
 
         /// <summary>
         ///   Gets or sets the options used for configuring the connection to the Event Hubs service.
@@ -84,7 +84,7 @@ namespace Azure.Messaging.EventHubs
         ///   amount of time allowed for publishing events and other interactions with the Event Hubs service.
         /// </summary>
         ///
-        public RetryOptions RetryOptions
+        public EventHubsRetryOptions RetryOptions
         {
             get => _retryOptions;
             set
@@ -137,7 +137,7 @@ namespace Azure.Messaging.EventHubs
         internal EventProcessorClientOptions Clone() =>
             new EventProcessorClientOptions
             {
-                TrackLastEnqueuedEventInformation = TrackLastEnqueuedEventInformation,
+                TrackLastEnqueuedEventProperties = TrackLastEnqueuedEventProperties,
                 _maximumReceiveWaitTime = _maximumReceiveWaitTime,
                 _connectionOptions = ConnectionOptions.Clone(),
                 _retryOptions = RetryOptions.Clone()

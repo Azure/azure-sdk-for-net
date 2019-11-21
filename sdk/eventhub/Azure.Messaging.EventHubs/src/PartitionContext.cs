@@ -31,7 +31,7 @@ namespace Azure.Messaging.EventHubs
         /// <summary>
         ///   A set of information about the last enqueued event of a partition, as observed by the associated EventHubs client
         ///   associated with this context as events are received from the Event Hubs service.  This is only available if the consumer was
-        ///   created with <see cref="ReadOptions.TrackLastEnqueuedEventInformation" /> set.
+        ///   created with <see cref="ReadEventOptions.TrackLastEnqueuedEventProperties" /> set.
         /// </summary>
         ///
         /// <remarks>
@@ -42,9 +42,9 @@ namespace Azure.Messaging.EventHubs
         /// </remarks>
         ///
         /// <exception cref="EventHubsClientClosedException">Occurs when the Event Hubs client needed to read this information is no longer available.</exception>
-        /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="ReadOptions.TrackLastEnqueuedEventInformation" /> set.</exception>
+        /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="ReadEventOptions.TrackLastEnqueuedEventProperties" /> set.</exception>
         ///
-        public virtual LastEnqueuedEventProperties ReadLastEnqueuedEventInformation()
+        public virtual LastEnqueuedEventProperties ReadLastEnqueuedEventProperties()
         {
             var consumer = default(TransportConsumer);
 

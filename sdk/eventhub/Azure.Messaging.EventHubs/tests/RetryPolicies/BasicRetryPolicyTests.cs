@@ -95,7 +95,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void CalulateTryTimeoutRespectsOptions(int attemptCount)
         {
             var timeout = TimeSpan.FromSeconds(5);
-            var options = new RetryOptions { TryTimeout = timeout };
+            var options = new EventHubsRetryOptions { TryTimeout = timeout };
             var policy = new BasicRetryPolicy(options);
 
             Assert.That(policy.CalculateTryTimeout(attemptCount), Is.EqualTo(options.TryTimeout));
@@ -109,12 +109,12 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void CalculateRetryDelayDoesNotRetryWhenThereIsNoMaximumRetries()
         {
-            var policy = new BasicRetryPolicy(new RetryOptions
+            var policy = new BasicRetryPolicy(new EventHubsRetryOptions
             {
                 MaximumRetries = 0,
                 Delay = TimeSpan.FromSeconds(1),
                 MaximumDelay = TimeSpan.FromHours(1),
-                Mode = RetryMode.Fixed
+                Mode = EventHubsRetryMode.Fixed
             });
 
             Assert.That(policy.CalculateRetryDelay(Mock.Of<TimeoutException>(), -1), Is.Null);
@@ -128,12 +128,12 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void CalculateRetryDelayDoesNotRetryWhenThereIsNoMaximumDelay()
         {
-            var policy = new BasicRetryPolicy(new RetryOptions
+            var policy = new BasicRetryPolicy(new EventHubsRetryOptions
             {
                 MaximumRetries = 99,
                 Delay = TimeSpan.FromSeconds(1),
                 MaximumDelay = TimeSpan.Zero,
-                Mode = RetryMode.Fixed
+                Mode = EventHubsRetryMode.Fixed
             });
 
             Assert.That(policy.CalculateRetryDelay(Mock.Of<TimeoutException>(), 88), Is.Null);
@@ -151,12 +151,12 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(200)]
         public void CalculateRetryDelayDoesNotRetryWhenAttemptsExceedTheMaximum(int retryAttempt)
         {
-            var policy = new BasicRetryPolicy(new RetryOptions
+            var policy = new BasicRetryPolicy(new EventHubsRetryOptions
             {
                 MaximumRetries = 5,
                 Delay = TimeSpan.FromSeconds(1),
                 MaximumDelay = TimeSpan.FromHours(1),
-                Mode = RetryMode.Fixed
+                Mode = EventHubsRetryMode.Fixed
             });
 
             Assert.That(policy.CalculateRetryDelay(Mock.Of<TimeoutException>(), retryAttempt), Is.Null);
@@ -170,12 +170,12 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void CalculateRetryDelayAllowsRetryForTransientExceptions()
         {
-            var policy = new BasicRetryPolicy(new RetryOptions
+            var policy = new BasicRetryPolicy(new EventHubsRetryOptions
             {
                 MaximumRetries = 99,
                 Delay = TimeSpan.FromSeconds(1),
                 MaximumDelay = TimeSpan.FromSeconds(100),
-                Mode = RetryMode.Fixed
+                Mode = EventHubsRetryMode.Fixed
             });
 
             Assert.That(policy.CalculateRetryDelay(new EventHubsException(true, null, null), 88), Is.Not.Null);
@@ -190,12 +190,12 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCaseSource(nameof(RetriableExceptionTestCases))]
         public void CalculateRetryDelayAllowsRetryForKnownRetriableExceptions(Exception exception)
         {
-            var policy = new BasicRetryPolicy(new RetryOptions
+            var policy = new BasicRetryPolicy(new EventHubsRetryOptions
             {
                 MaximumRetries = 99,
                 Delay = TimeSpan.FromSeconds(1),
                 MaximumDelay = TimeSpan.FromSeconds(100),
-                Mode = RetryMode.Fixed
+                Mode = EventHubsRetryMode.Fixed
             });
 
             Assert.That(policy.CalculateRetryDelay(exception, 88), Is.Not.Null);
@@ -210,12 +210,12 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCaseSource(nameof(NonRetriableExceptionTestCases))]
         public void CalculateRetryDelayDoesNotRetryForNotKnownRetriableExceptions(Exception exception)
         {
-            var policy = new BasicRetryPolicy(new RetryOptions
+            var policy = new BasicRetryPolicy(new EventHubsRetryOptions
             {
                 MaximumRetries = 99,
                 Delay = TimeSpan.FromSeconds(1),
                 MaximumDelay = TimeSpan.FromSeconds(100),
-                Mode = RetryMode.Fixed
+                Mode = EventHubsRetryMode.Fixed
             });
 
             Assert.That(policy.CalculateRetryDelay(exception, 88), Is.Null);
@@ -234,12 +234,12 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(240)]
         public void CalculateRetryDelayRespectsMaximumDuration(int delaySeconds)
         {
-            var policy = new BasicRetryPolicy(new RetryOptions
+            var policy = new BasicRetryPolicy(new EventHubsRetryOptions
             {
                 MaximumRetries = 99,
                 Delay = TimeSpan.FromSeconds(delaySeconds),
                 MaximumDelay = TimeSpan.FromSeconds(1),
-                Mode = RetryMode.Fixed
+                Mode = EventHubsRetryMode.Fixed
             });
 
             Assert.That(policy.CalculateRetryDelay(Mock.Of<TimeoutException>(), 88), Is.EqualTo(policy.Options.MaximumDelay));
@@ -258,12 +258,12 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(120)]
         public void CalculateRetryDelayUsesFixedMode(int iterations)
         {
-            var policy = new BasicRetryPolicy(new RetryOptions
+            var policy = new BasicRetryPolicy(new EventHubsRetryOptions
             {
                 MaximumRetries = 99,
                 Delay = TimeSpan.FromSeconds(iterations),
                 MaximumDelay = TimeSpan.FromHours(72),
-                Mode = RetryMode.Fixed
+                Mode = EventHubsRetryMode.Fixed
             });
 
             var variance = TimeSpan.FromSeconds(policy.Options.Delay.TotalSeconds * policy.JitterFactor);
@@ -287,12 +287,12 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(25)]
         public void CalculateRetryDelayUsesExponentialMode(int iterations)
         {
-            var policy = new BasicRetryPolicy(new RetryOptions
+            var policy = new BasicRetryPolicy(new EventHubsRetryOptions
             {
                 MaximumRetries = 99,
                 Delay = TimeSpan.FromMilliseconds(15),
                 MaximumDelay = TimeSpan.FromHours(50000),
-                Mode = RetryMode.Exponential
+                Mode = EventHubsRetryMode.Exponential
             });
 
             TimeSpan previousDelay = TimeSpan.Zero;

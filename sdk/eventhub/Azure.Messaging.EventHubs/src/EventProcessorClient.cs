@@ -383,7 +383,7 @@ namespace Azure.Messaging.EventHubs
                 // processing task that's not RunPartitionProcessingAsync, how would the base stop it?  It would not have a cancellation
                 // token to do so.
 
-                ActivePartitionProcessors[context.PartitionId] = RunPartitionProcessingAsync(context.PartitionId, startingPosition, Options.MaximumReceiveWaitTime, Options.RetryOptions, Options.TrackLastEnqueuedEventInformation);
+                ActivePartitionProcessors[context.PartitionId] = RunPartitionProcessingAsync(context.PartitionId, startingPosition, Options.MaximumReceiveWaitTime, Options.RetryOptions, Options.TrackLastEnqueuedEventProperties);
             }
             catch (Exception)
             {

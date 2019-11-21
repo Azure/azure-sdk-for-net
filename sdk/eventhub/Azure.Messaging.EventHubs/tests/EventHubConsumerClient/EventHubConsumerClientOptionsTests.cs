@@ -24,8 +24,8 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var options = new EventHubConsumerClientOptions
             {
-                RetryOptions = new RetryOptions { Mode = RetryMode.Fixed },
-                ConnectionOptions = new EventHubConnectionOptions { TransportType = TransportType.AmqpWebSockets }
+                RetryOptions = new EventHubsRetryOptions { Mode = EventHubsRetryMode.Fixed },
+                ConnectionOptions = new EventHubConnectionOptions { TransportType = EventHubsTransportType.AmqpWebSockets }
             };
 
             EventHubConsumerClientOptions clone = options.Clone();

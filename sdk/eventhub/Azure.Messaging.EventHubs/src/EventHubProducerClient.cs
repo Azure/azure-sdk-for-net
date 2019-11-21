@@ -39,7 +39,7 @@ namespace Azure.Messaging.EventHubs
         internal const int MinimumBatchSizeLimit = 24;
 
         /// <summary>The set of default publishing options to use when no specific options are requested.</summary>
-        private static readonly SendOptions DefaultSendOptions = new SendOptions();
+        private static readonly SendEventOptions DefaultSendOptions = new SendEventOptions();
 
         /// <summary>
         ///   The fully qualified Event Hubs namespace that the producer is associated with.  This is likely
@@ -325,9 +325,9 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        /// <seealso cref="SendAsync(EventData, SendOptions, CancellationToken)" />
+        /// <seealso cref="SendAsync(EventData, SendEventOptions, CancellationToken)" />
         /// <seealso cref="SendAsync(IEnumerable{EventData}, CancellationToken)" />
-        /// <seealso cref="SendAsync(IEnumerable{EventData}, SendOptions, CancellationToken)" />
+        /// <seealso cref="SendAsync(IEnumerable{EventData}, SendEventOptions, CancellationToken)" />
         /// <seealso cref="SendAsync(EventDataBatch, CancellationToken)" />
         ///
         internal virtual Task SendAsync(EventData eventData,
@@ -350,11 +350,11 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <seealso cref="SendAsync(EventData, CancellationToken)" />
         /// <seealso cref="SendAsync(IEnumerable{EventData}, CancellationToken)" />
-        /// <seealso cref="SendAsync(IEnumerable{EventData}, SendOptions, CancellationToken)" />
+        /// <seealso cref="SendAsync(IEnumerable{EventData}, SendEventOptions, CancellationToken)" />
         /// <seealso cref="SendAsync(EventDataBatch, CancellationToken)" />
         ///
         internal virtual Task SendAsync(EventData eventData,
-                                        SendOptions options,
+                                        SendEventOptions options,
                                         CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(eventData, nameof(eventData));
@@ -371,7 +371,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        /// <seealso cref="SendAsync(IEnumerable{EventData}, SendOptions, CancellationToken)"/>
+        /// <seealso cref="SendAsync(IEnumerable{EventData}, SendEventOptions, CancellationToken)"/>
         ///
         internal virtual Task SendAsync(IEnumerable<EventData> events,
                                         CancellationToken cancellationToken = default) => SendAsync(events, null, cancellationToken);
@@ -388,12 +388,12 @@ namespace Azure.Messaging.EventHubs
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         /// <seealso cref="SendAsync(EventData, CancellationToken)" />
-        /// <seealso cref="SendAsync(EventData, SendOptions, CancellationToken)" />
+        /// <seealso cref="SendAsync(EventData, SendEventOptions, CancellationToken)" />
         /// <seealso cref="SendAsync(IEnumerable{EventData}, CancellationToken)" />
         /// <seealso cref="SendAsync(EventDataBatch, CancellationToken)" />
         ///
         internal virtual async Task SendAsync(IEnumerable<EventData> events,
-                                              SendOptions options,
+                                              SendEventOptions options,
                                               CancellationToken cancellationToken = default)
         {
             options ??= DefaultSendOptions;
@@ -442,9 +442,9 @@ namespace Azure.Messaging.EventHubs
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         /// <seealso cref="SendAsync(EventData, CancellationToken)" />
-        /// <seealso cref="SendAsync(EventData, SendOptions, CancellationToken)" />
+        /// <seealso cref="SendAsync(EventData, SendEventOptions, CancellationToken)" />
         /// <seealso cref="SendAsync(IEnumerable{EventData}, CancellationToken)" />
-        /// <seealso cref="SendAsync(IEnumerable{EventData}, SendOptions, CancellationToken)" />
+        /// <seealso cref="SendAsync(IEnumerable{EventData}, SendEventOptions, CancellationToken)" />
         ///
         public virtual async Task SendAsync(EventDataBatch eventBatch,
                                             CancellationToken cancellationToken = default)
