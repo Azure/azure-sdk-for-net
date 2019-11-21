@@ -325,13 +325,13 @@ namespace Azure.Messaging.EventHubs.Tests
             ///   The minimum amount of time to be elapsed between two load balancing verifications.
             /// </summary>
             ///
-            protected override TimeSpan LoadBalanceUpdate => ShortLoadBalanceUpdate;
+            internal override TimeSpan LoadBalanceUpdate => ShortLoadBalanceUpdate;
 
             /// <summary>
             ///   The minimum amount of time for an ownership to be considered expired without further updates.
             /// </summary>
             ///
-            protected override TimeSpan OwnershipExpiration => ShortOwnershipExpiration;
+            internal override TimeSpan OwnershipExpiration => ShortOwnershipExpiration;
 
             /// <summary>
             ///   Initializes a new instance of the <see cref="ShortWaitTimeMock"/> class.

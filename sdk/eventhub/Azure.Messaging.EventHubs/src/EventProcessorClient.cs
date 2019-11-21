@@ -143,13 +143,13 @@ namespace Azure.Messaging.EventHubs
         ///   The minimum amount of time to be elapsed between two load balancing verifications.
         /// </summary>
         ///
-        protected virtual TimeSpan LoadBalanceUpdate => TimeSpan.FromSeconds(10);
+        internal virtual TimeSpan LoadBalanceUpdate => TimeSpan.FromSeconds(10);
 
         /// <summary>
         ///   The minimum amount of time for an ownership to be considered expired without further updates.
         /// </summary>
         ///
-        protected virtual TimeSpan OwnershipExpiration => TimeSpan.FromSeconds(30);
+        internal virtual TimeSpan OwnershipExpiration => TimeSpan.FromSeconds(30);
 
         /// <summary>
         ///   Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.
