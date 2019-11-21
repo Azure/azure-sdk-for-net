@@ -49,28 +49,28 @@ namespace Azure.Messaging.EventHubs.Tests
         private List<EventProcessorClient> EventProcessors { get; }
 
         /// <summary>
-        ///   A callback action to be called on <see cref="EventProcessorClient.InitializingPartitionAsync" />.
+        ///   A callback action to be called on <see cref="EventProcessorClient.PartitionInitializingAsync" />.
         /// </summary>
         ///
-        private Action<InitializingPartitionEventArgs> OnInitialize { get; }
+        private Action<PartitionInitializingEventArgs> OnInitialize { get; }
 
         /// <summary>
-        ///   A callback action to be called on <see cref="EventProcessorClient.ClosingPartitionAsync" />.
+        ///   A callback action to be called on <see cref="EventProcessorClient.PartitionClosingAsync" />.
         /// </summary>
         ///
-        private Action<ClosingPartitionEventArgs> OnStop { get; }
+        private Action<PartitionClosingEventArgs> OnStop { get; }
 
         /// <summary>
         ///   A callback action to be called on <see cref="EventProcessorClient.ProcessEventAsyncHandler" />.
         /// </summary>
         ///
-        private Action<ProcessingEventArgs> OnProcessEvent { get; }
+        private Action<ProcessEventArgs> OnProcessEvent { get; }
 
         /// <summary>
         ///   A callback action to be called on <see cref="EventProcessorClient.ProcessErrorAsyncHandler" />.
         /// </summary>
         ///
-        private Action<ProcessingErrorEventArgs> OnProcessException { get; }
+        private Action<ProcessErrorEventArgs> OnProcessException { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventProcessorManager"/> class.
@@ -80,8 +80,8 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <param name="connectionString">TODO.</param>
         /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.</param>
         /// <param name="options">The set of options to use for the event processors.</param>
-        /// <param name="onInitialize">A callback action to be called on <see cref="EventProcessorClient.InitializingPartitionAsync" />.</param>
-        /// <param name="onStop">A callback action to be called on <see cref="EventProcessorClient.ClosingPartitionAsync" />.</param>
+        /// <param name="onInitialize">A callback action to be called on <see cref="EventProcessorClient.PartitionInitializingAsync" />.</param>
+        /// <param name="onStop">A callback action to be called on <see cref="EventProcessorClient.PartitionClosingAsync" />.</param>
         /// <param name="onProcessEvent">A callback action to be called on <see cref="EventProcessorClient.ProcessEventAsyncHandler" />.</param>
         /// <param name="onProcessException">A callback action to be called on <see cref="EventProcessorClient.ProcessErrorAsyncHandler" />.</param>
         ///
@@ -89,10 +89,10 @@ namespace Azure.Messaging.EventHubs.Tests
                                      string connectionString,
                                      PartitionManager partitionManager = null,
                                      EventProcessorClientOptions clientOptions = null,
-                                     Action<InitializingPartitionEventArgs> onInitialize = null,
-                                     Action<ClosingPartitionEventArgs> onStop = null,
-                                     Action<ProcessingEventArgs> onProcessEvent = null,
-                                     Action<ProcessingErrorEventArgs> onProcessException = null)
+                                     Action<PartitionInitializingEventArgs> onInitialize = null,
+                                     Action<PartitionClosingEventArgs> onStop = null,
+                                     Action<ProcessEventArgs> onProcessEvent = null,
+                                     Action<ProcessErrorEventArgs> onProcessException = null)
         {
             ConsumerGroup = consumerGroup;
             Connection = new EventHubConnection(connectionString);
@@ -136,7 +136,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 if (OnInitialize != null)
                 {
-                    eventProcessor.InitializingPartitionAsync = initializingArgs =>
+                    eventProcessor.PartitionInitializingAsync = initializingArgs =>
                     {
                         OnInitialize(initializingArgs);
                         return new ValueTask();
@@ -145,7 +145,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 if (OnStop != null)
                 {
-                    eventProcessor.ClosingPartitionAsync = closingArgs =>
+                    eventProcessor.PartitionClosingAsync = closingArgs =>
                     {
                         OnStop(closingArgs);
                         return new ValueTask();

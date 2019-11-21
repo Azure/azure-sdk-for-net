@@ -14,7 +14,7 @@ namespace Azure.Messaging.EventHubs.Processor
     ///   also provides a way of creating a checkpoint based on the information contained in the associated event.
     /// </summary>
     ///
-    public struct ProcessingEventArgs
+    public struct ProcessEventArgs
     {
         /// <summary>
         ///   The context of the Event Hub partition this instance is associated with.
@@ -41,16 +41,16 @@ namespace Azure.Messaging.EventHubs.Processor
         private Func<EventData, PartitionContext, Task> UpdateCheckpointDelegate { get; }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ProcessingEventArgs"/> structure.
+        ///   Initializes a new instance of the <see cref="ProcessEventArgs"/> structure.
         /// </summary>
         ///
         /// <param name="partitionContext">The context of the Event Hub partition this instance is associated with.</param>
         /// <param name="eventData">The received event to be processed.  Expected to be <c>null</c> if the receive call has timed out.</param>
         /// <param name="processor">The <see cref="EventProcessorClient" /> for this instance to use as a way of checkpoiting.</param>
         ///
-        internal ProcessingEventArgs(PartitionContext partitionContext,
-                                     EventData eventData,
-                                     EventProcessorClient processor)
+        internal ProcessEventArgs(PartitionContext partitionContext,
+                                  EventData eventData,
+                                  EventProcessorClient processor)
         {
             Argument.AssertNotNull(partitionContext, nameof(partitionContext));
             Argument.AssertNotNull(processor, nameof(processor));
@@ -62,16 +62,16 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ProcessingEventArgs"/> structure.
+        ///   Initializes a new instance of the <see cref="ProcessEventArgs"/> structure.
         /// </summary>
         ///
         /// <param name="partitionContext">The context of the Event Hub partition this instance is associated with.</param>
         /// <param name="eventData">The received event to be processed.  Expected to be <c>null</c> if the receive call has timed out.</param>
         /// <param name="updateCheckpointImplementation">The callback to be called upon <see cref="UpdateCheckpointAsync" /> call.</param>
         ///
-        public ProcessingEventArgs(PartitionContext partitionContext,
-                                   EventData eventData,
-                                   Func<EventData, PartitionContext, Task> updateCheckpointImplementation)
+        public ProcessEventArgs(PartitionContext partitionContext,
+                                EventData eventData,
+                                Func<EventData, PartitionContext, Task> updateCheckpointImplementation)
         {
             Argument.AssertNotNull(partitionContext, nameof(partitionContext));
             Argument.AssertNotNull(updateCheckpointImplementation, nameof(updateCheckpointImplementation));

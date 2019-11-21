@@ -341,8 +341,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await processor.StartProcessingAsync();
 
-            Assert.That(() => processor.InitializingPartitionAsync = initializingArgs => new ValueTask(), Throws.InstanceOf<InvalidOperationException>());
-            Assert.That(() => processor.ClosingPartitionAsync = closingArgs => new ValueTask(), Throws.InstanceOf<InvalidOperationException>());
+            Assert.That(() => processor.PartitionInitializingAsync = initializingArgs => new ValueTask(), Throws.InstanceOf<InvalidOperationException>());
+            Assert.That(() => processor.PartitionClosingAsync = closingArgs => new ValueTask(), Throws.InstanceOf<InvalidOperationException>());
             Assert.That(() => processor.ProcessEventAsyncHandler = eventArgs => new ValueTask(), Throws.InstanceOf<InvalidOperationException>());
             Assert.That(() => processor.ProcessErrorAsyncHandler = errorArgs => new ValueTask(), Throws.InstanceOf<InvalidOperationException>());
 
@@ -364,8 +364,8 @@ namespace Azure.Messaging.EventHubs.Tests
             await processor.StartProcessingAsync();
             await processor.StopProcessingAsync();
 
-            Assert.That(() => processor.InitializingPartitionAsync = initializingArgs => new ValueTask(), Throws.Nothing);
-            Assert.That(() => processor.ClosingPartitionAsync = closingArgs => new ValueTask(), Throws.Nothing);
+            Assert.That(() => processor.PartitionInitializingAsync = initializingArgs => new ValueTask(), Throws.Nothing);
+            Assert.That(() => processor.PartitionClosingAsync = closingArgs => new ValueTask(), Throws.Nothing);
             Assert.That(() => processor.ProcessEventAsyncHandler = eventArgs => new ValueTask(), Throws.Nothing);
             Assert.That(() => processor.ProcessErrorAsyncHandler = errorArgs => new ValueTask(), Throws.Nothing);
         }
