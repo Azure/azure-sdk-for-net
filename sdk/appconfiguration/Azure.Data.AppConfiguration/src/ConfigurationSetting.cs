@@ -92,7 +92,7 @@ namespace Azure.Data.AppConfiguration
         public override bool Equals(object obj) => base.Equals(obj);
 
         /// <summary>
-        /// Get a hash code for the ConfigurationSetting
+        /// Get a hash code for the ConfigurationSetting.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();
