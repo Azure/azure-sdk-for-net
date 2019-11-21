@@ -59,7 +59,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             EventHubConsumerClient.DefaultConsumerGroupName,
                             connectionString,
                             onInitialize: initializingArgs =>
-                                initializeCalls.AddOrUpdate(initializingArgs.Context.PartitionId, 1, (partitionId, value) => value + 1)
+                                initializeCalls.AddOrUpdate(initializingArgs.Partition.PartitionId, 1, (partitionId, value) => value + 1)
                         );
 
                     eventProcessorManager.AddEventProcessors(1);
@@ -121,8 +121,8 @@ namespace Azure.Messaging.EventHubs.Tests
                             connectionString,
                             onStop: closingArgs =>
                             {
-                                closeCalls.AddOrUpdate(closingArgs.Context.PartitionId, 1, (partitionId, value) => value + 1);
-                                stopReasons[closingArgs.Context.PartitionId] = closingArgs.Reason;
+                                closeCalls.AddOrUpdate(closingArgs.Partition.PartitionId, 1, (partitionId, value) => value + 1);
+                                stopReasons[closingArgs.Partition.PartitionId] = closingArgs.Reason;
                             }
                         );
 
@@ -190,7 +190,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                 {
                                     allReceivedEvents.AddOrUpdate
                                     (
-                                        eventArgs.Context.PartitionId,
+                                        eventArgs.Partition.PartitionId,
                                         partitionId => new List<EventData>() { eventArgs.Data },
                                         (partitionId, list) =>
                                         {
@@ -829,13 +829,13 @@ namespace Azure.Messaging.EventHubs.Tests
                             connectionString,
                             clientOptions: new EventProcessorClientOptions { MaximumReceiveWaitTime = TimeSpan.FromSeconds(maximumWaitTimeInSecs) },
                             onInitialize: initializingArgs =>
-                                timestamps.TryAdd(initializingArgs.Context.PartitionId, new List<DateTimeOffset> { DateTimeOffset.UtcNow }),
+                                timestamps.TryAdd(initializingArgs.Partition.PartitionId, new List<DateTimeOffset> { DateTimeOffset.UtcNow }),
                             onProcessEvent: eventArgs =>
                                 timestamps.AddOrUpdate
                                     (
                                         // The key already exists, so the 'addValue' factory will never be called.
 
-                                        eventArgs.Context.PartitionId,
+                                        eventArgs.Partition.PartitionId,
                                         partitionId => null,
                                         (partitionId, list) =>
                                         {

@@ -1100,7 +1100,7 @@ namespace Azure.Messaging.EventHubs
 
                 if (PartitionInitializingAsync != null)
                 {
-                    var initializingArgs = new PartitionInitializingEventArgs(context);
+                    var initializingArgs = new PartitionInitializingEventArgs(context, startingPosition);
                     await PartitionInitializingAsync(initializingArgs).ConfigureAwait(false);
 
                     startingPosition = initializingArgs.DefaultStartingPosition;

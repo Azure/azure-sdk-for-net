@@ -20,7 +20,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   The context of the Event Hub partition this instance is associated with.
         /// </summary>
         ///
-        public PartitionContext Context { get; }
+        public PartitionContext Partition { get; }
 
         /// <summary>
         ///   The received event to be processed.  Expected to be <c>null</c> if the receive call has timed out.
@@ -38,25 +38,25 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   The callback to be called upon <see cref="UpdateCheckpointAsync" /> call.
         /// </summary>
         ///
-        private Func<EventData, PartitionContext, Task> UpdateCheckpointDelegate { get; }
+        private Func<Task> UpdateCheckpointDelegate { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ProcessEventArgs"/> structure.
         /// </summary>
         ///
-        /// <param name="partitionContext">The context of the Event Hub partition this instance is associated with.</param>
-        /// <param name="eventData">The received event to be processed.  Expected to be <c>null</c> if the receive call has timed out.</param>
+        /// <param name="partition">The context of the Event Hub partition this instance is associated with.</param>
+        /// <param name="data">The received event to be processed.  Expected to be <c>null</c> if the receive call has timed out.</param>
         /// <param name="processor">The <see cref="EventProcessorClient" /> for this instance to use as a way of checkpoiting.</param>
         ///
-        internal ProcessEventArgs(PartitionContext partitionContext,
-                                  EventData eventData,
+        internal ProcessEventArgs(PartitionContext partition,
+                                  EventData data,
                                   EventProcessorClient processor)
         {
-            Argument.AssertNotNull(partitionContext, nameof(partitionContext));
+            Argument.AssertNotNull(partition, nameof(partition));
             Argument.AssertNotNull(processor, nameof(processor));
 
-            Context = partitionContext;
-            Data = eventData;
+            Partition = partition;
+            Data = data;
             Processor = new WeakReference<EventProcessorClient>(processor);
             UpdateCheckpointDelegate = default;
         }
@@ -65,19 +65,19 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Initializes a new instance of the <see cref="ProcessEventArgs"/> structure.
         /// </summary>
         ///
-        /// <param name="partitionContext">The context of the Event Hub partition this instance is associated with.</param>
-        /// <param name="eventData">The received event to be processed.  Expected to be <c>null</c> if the receive call has timed out.</param>
+        /// <param name="partition">The context of the Event Hub partition this instance is associated with.</param>
+        /// <param name="data">The received event to be processed.  Expected to be <c>null</c> if the receive call has timed out.</param>
         /// <param name="updateCheckpointImplementation">The callback to be called upon <see cref="UpdateCheckpointAsync" /> call.</param>
         ///
-        public ProcessEventArgs(PartitionContext partitionContext,
-                                EventData eventData,
-                                Func<EventData, PartitionContext, Task> updateCheckpointImplementation)
+        public ProcessEventArgs(PartitionContext partition,
+                                EventData data,
+                                Func<Task> updateCheckpointImplementation)
         {
-            Argument.AssertNotNull(partitionContext, nameof(partitionContext));
+            Argument.AssertNotNull(partition, nameof(partition));
             Argument.AssertNotNull(updateCheckpointImplementation, nameof(updateCheckpointImplementation));
 
-            Context = partitionContext;
-            Data = eventData;
+            Partition = partition;
+            Data = data;
             Processor = default;
             UpdateCheckpointDelegate = updateCheckpointImplementation;
         }
@@ -96,7 +96,7 @@ namespace Azure.Messaging.EventHubs.Processor
         {
             if (UpdateCheckpointDelegate != default)
             {
-                return UpdateCheckpointDelegate(Data, Context);
+                return UpdateCheckpointDelegate();
             }
 
             var processor = default(EventProcessorClient);
@@ -111,7 +111,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
             // Data validation is done by the event processor.
 
-            return processor.InternalUpdateCheckpointAsync(Data, Context);
+            return processor.InternalUpdateCheckpointAsync(Data, Partition);
         }
     }
 }

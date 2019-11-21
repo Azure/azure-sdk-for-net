@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   The context of the Event Hub partition this instance is associated with.
         /// </summary>
         ///
-        public PartitionContext Context { get; }
+        public PartitionContext Partition { get; }
 
         /// <summary>
         ///   The reason why the processing for the associated partition is being stopped.
@@ -27,15 +27,15 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Initializes a new instance of the <see cref="PartitionClosingEventArgs"/> class.
         /// </summary>
         ///
-        /// <param name="partitionContext">The context of the Event Hub partition this instance is associated with.</param>
+        /// <param name="partition">The context of the Event Hub partition this instance is associated with.</param>
         /// <param name="reason">The reason why the processing for the associated partition is being stopped.</param>
         ///
-        protected internal PartitionClosingEventArgs(PartitionContext partitionContext,
+        protected internal PartitionClosingEventArgs(PartitionContext partition,
                                                      ProcessingStoppedReason reason)
         {
-            Argument.AssertNotNull(partitionContext, nameof(partitionContext));
+            Argument.AssertNotNull(partition, nameof(partition));
 
-            Context = partitionContext;
+            Partition = partition;
             Reason = reason;
         }
     }

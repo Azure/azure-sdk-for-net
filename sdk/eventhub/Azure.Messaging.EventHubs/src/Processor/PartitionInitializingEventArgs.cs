@@ -18,26 +18,29 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   The context of the Event Hub partition this instance is associated with.
         /// </summary>
         ///
-        public PartitionContext Context { get; }
+        public PartitionContext Partition { get; }
 
         /// <summary>
         ///   The position within a partition where the associated <see cref="EventProcessorClient" /> should
         ///   begin reading events when no checkpoint can be found.
         /// </summary>
         ///
-        public EventPosition DefaultStartingPosition { get; set; } = EventPosition.Earliest;
+        public EventPosition DefaultStartingPosition { get; set; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="PartitionInitializingEventArgs"/> class.
         /// </summary>
         ///
-        /// <param name="partitionContext">The context of the Event Hub partition this instance is associated with.</param>
+        /// <param name="partition">The context of the Event Hub partition this instance is associated with.</param>
+        /// <param name="defaultStartingPosition">The position within a partition where the associated <see cref="EventProcessorClient" /> should begin reading events when no checkpoint can be found.</param>
         ///
-        protected internal PartitionInitializingEventArgs(PartitionContext partitionContext)
+        protected internal PartitionInitializingEventArgs(PartitionContext partition,
+                                                          EventPosition defaultStartingPosition)
         {
-            Argument.AssertNotNull(partitionContext, nameof(partitionContext));
+            Argument.AssertNotNull(partition, nameof(partition));
 
-            Context = partitionContext;
+            Partition = partition;
+            DefaultStartingPosition = defaultStartingPosition;
         }
     }
 }

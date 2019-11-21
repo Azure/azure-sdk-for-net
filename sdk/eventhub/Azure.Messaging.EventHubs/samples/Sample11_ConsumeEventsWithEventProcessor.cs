@@ -81,7 +81,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
                 Interlocked.Increment(ref partitionsBeingProcessedCount);
 
-                Console.WriteLine($"\tPartition '{ initializingArgs.Context.PartitionId }': partition processing has started.");
+                Console.WriteLine($"\tPartition '{ initializingArgs.Partition.PartitionId }': partition processing has started.");
 
                 // This method is asynchronous, which means it's expected to return a Task.
 
@@ -95,7 +95,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
                 Interlocked.Decrement(ref partitionsBeingProcessedCount);
 
-                Console.WriteLine($"\tPartition '{ closingArgs.Context.PartitionId }': partition processing has stopped. Reason: { closingArgs.Reason }.");
+                Console.WriteLine($"\tPartition '{ closingArgs.Partition.PartitionId }': partition processing has stopped. Reason: { closingArgs.Reason }.");
 
                 // This method is asynchronous, which means it's expected to return a Task.
 
@@ -113,7 +113,7 @@ namespace Azure.Messaging.EventHubs.Samples
                 if (eventArgs.Data != null)
                 {
                     Interlocked.Increment(ref totalEventsCount);
-                    Console.WriteLine($"\tPartition '{ eventArgs.Context.PartitionId }': event received.");
+                    Console.WriteLine($"\tPartition '{ eventArgs.Partition.PartitionId }': event received.");
                 }
 
                 // This method is asynchronous, which means it's expected to return a Task.

@@ -29,7 +29,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   The exception that was thrown by the <see cref="EventProcessorClient" />.
         /// </summary>
         ///
-        public Exception ProcessorException { get; }
+        public Exception Exception { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ProcessErrorEventArgs"/> class.
@@ -48,7 +48,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
             PartitionId = partitionId;
             Operation = operation;
-            ProcessorException = exception;
+            Exception = exception;
         }
     }
 }
