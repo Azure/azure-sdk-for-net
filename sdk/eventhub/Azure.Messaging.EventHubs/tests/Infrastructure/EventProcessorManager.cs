@@ -70,7 +70,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   A callback action to be called on <see cref="EventProcessorClient.ProcessErrorAsyncHandler" />.
         /// </summary>
         ///
-        private Action<ProcessErrorEventArgs> OnProcessException { get; }
+        private Action<ProcessErrorEventArgs> OnProcessError { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventProcessorManager"/> class.
@@ -79,11 +79,11 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <param name="consumerGroup">The name of the consumer group the event processors are associated with.  Events are read in the context of this group.</param>
         /// <param name="connectionString">TODO.</param>
         /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.</param>
-        /// <param name="options">The set of options to use for the event processors.</param>
+        /// <param name="clientOptions">The set of options to use for the event processors.</param>
         /// <param name="onInitialize">A callback action to be called on <see cref="EventProcessorClient.PartitionInitializingAsync" />.</param>
         /// <param name="onStop">A callback action to be called on <see cref="EventProcessorClient.PartitionClosingAsync" />.</param>
         /// <param name="onProcessEvent">A callback action to be called on <see cref="EventProcessorClient.ProcessEventAsyncHandler" />.</param>
-        /// <param name="onProcessException">A callback action to be called on <see cref="EventProcessorClient.ProcessErrorAsyncHandler" />.</param>
+        /// <param name="onProcessError">A callback action to be called on <see cref="EventProcessorClient.ProcessErrorAsyncHandler" />.</param>
         ///
         public EventProcessorManager(string consumerGroup,
                                      string connectionString,
@@ -92,7 +92,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                      Action<PartitionInitializingEventArgs> onInitialize = null,
                                      Action<PartitionClosingEventArgs> onStop = null,
                                      Action<ProcessEventArgs> onProcessEvent = null,
-                                     Action<ProcessErrorEventArgs> onProcessException = null)
+                                     Action<ProcessErrorEventArgs> onProcessError = null)
         {
             ConsumerGroup = consumerGroup;
             Connection = new EventHubConnection(connectionString);
@@ -111,7 +111,7 @@ namespace Azure.Messaging.EventHubs.Tests
             OnInitialize = onInitialize;
             OnStop = onStop;
             OnProcessEvent = onProcessEvent;
-            OnProcessException = onProcessException;
+            OnProcessError = onProcessError;
 
             EventProcessors = new List<EventProcessorClient>();
         }
@@ -160,7 +160,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 eventProcessor.ProcessErrorAsyncHandler = eventArgs =>
                 {
-                    OnProcessException?.Invoke(eventArgs);
+                    OnProcessError?.Invoke(eventArgs);
                     return new ValueTask();
                 };
 
