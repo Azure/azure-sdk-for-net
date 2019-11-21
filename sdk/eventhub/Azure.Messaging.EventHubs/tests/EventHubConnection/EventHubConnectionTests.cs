@@ -412,90 +412,6 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="EventHubConnection.CreateTransportProducer" />
-        ///    method.
-        /// </summary>
-        ///
-        [Test]
-        public void CreateProducerCreatesDefaultWhenNoOptionsArePassed()
-        {
-            var expected = new EventHubProducerClientOptions();
-            var connectionString = "Endpoint=value.com;SharedAccessKeyName=[value];SharedAccessKey=[value];EntityPath=[value]";
-            var mockClient = new ReadableOptionsMock(connectionString, new EventHubConnectionOptions());
-
-            mockClient.CreateTransportProducer(null);
-
-            Assert.That(mockClient.ProducerOptions, Is.Not.Null, "The producer options should have been set.");
-            Assert.That(mockClient.ProducerOptions.RetryOptions.IsEquivalentTo(expected.RetryOptions), Is.True, "The retries should match.");
-        }
-
-        /// <summary>
-        ///    Verifies functionality of the <see cref="EventHubConnection.CreateTransportConsumer" />
-        ///    method.
-        /// </summary>
-        ///
-        [Test]
-        public void CreateConsumerCreatesDefaultWhenNoOptionsArePassed()
-        {
-            var expectedOptions = new EventHubConsumerClientOptions();
-            var expectedConsumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
-            var expectedPartition = "56767";
-            var expectedPosition = EventPosition.FromEnqueuedTime(DateTimeOffset.Parse("2015-10-27T12:00:00Z"));
-            var connectionString = "Endpoint=value.com;SharedAccessKeyName=[value];SharedAccessKey=[value];EntityPath=[value]";
-            var mockClient = new ReadableOptionsMock(connectionString, new EventHubConnectionOptions());
-
-            mockClient.CreateTransportConsumer(expectedConsumerGroup, expectedPartition, expectedPosition);
-            EventHubConsumerClientOptions actualOptions = mockClient.ConsumerOptions;
-
-            Assert.That(actualOptions, Is.Not.Null, "The consumer options should have been set.");
-            Assert.That(actualOptions.OwnerLevel, Is.EqualTo(expectedOptions.OwnerLevel), "The owner levels should match.");
-            Assert.That(actualOptions.PrefetchCount, Is.EqualTo(expectedOptions.PrefetchCount), "The prefetch counts should match.");
-            Assert.That(actualOptions.RetryOptions.IsEquivalentTo(expectedOptions.RetryOptions), Is.True, "The retries should match.");
-            Assert.That(actualOptions.MaximumReceiveWaitTimeOrDefault, Is.EqualTo(expectedOptions.MaximumReceiveWaitTimeOrDefault), "The wait times should match.");
-        }
-
-        /// <summary>
-        ///    Verifies functionality of the <see cref="EventHubConnection.CreateTransportConsumer" />
-        ///    method.
-        /// </summary>
-        ///
-        [Test]
-        public void CreateConsumerCreatesDefaultWhenOptionsAreNotSet()
-        {
-            var retryOptions = new RetryOptions
-            {
-                MaximumRetries = 99,
-                MaximumDelay = TimeSpan.FromHours(72),
-                Delay = TimeSpan.FromSeconds(27)
-            };
-
-            var expectedOptions = new EventHubConsumerClientOptions
-            {
-                OwnerLevel = 251,
-                PrefetchCount = 600,
-                RetryOptions = retryOptions,
-                DefaultMaximumReceiveWaitTime = TimeSpan.FromSeconds(123)
-            };
-
-            var clientOptions = new EventHubConnectionOptions();
-            var expectedConsumerGroup = "SomeGroup";
-            var expectedPartition = "56767";
-            var expectedPosition = EventPosition.FromSequenceNumber(123);
-            var connectionString = "Endpoint=value.com;SharedAccessKeyName=[value];SharedAccessKey=[value];EntityPath=[value]";
-            var mockClient = new ReadableOptionsMock(connectionString, clientOptions);
-
-            mockClient.CreateTransportConsumer(expectedConsumerGroup, expectedPartition, expectedPosition, expectedOptions);
-            EventHubConsumerClientOptions actualOptions = mockClient.ConsumerOptions;
-
-            Assert.That(actualOptions, Is.Not.Null, "The consumer options should have been set.");
-            Assert.That(actualOptions, Is.Not.SameAs(expectedOptions), "A clone of the options should have been made.");
-            Assert.That(actualOptions.OwnerLevel, Is.EqualTo(expectedOptions.OwnerLevel), "The owner levels should match.");
-            Assert.That(actualOptions.PrefetchCount, Is.EqualTo(expectedOptions.PrefetchCount), "The prefetch counts should match.");
-            Assert.That(actualOptions.RetryOptions.IsEquivalentTo(expectedOptions.RetryOptions), Is.True, "The retries should match.");
-            Assert.That(actualOptions.MaximumReceiveWaitTimeOrDefault, Is.EqualTo(expectedOptions.MaximumReceiveWaitTimeOrDefault), "The wait times should match.");
-        }
-
-        /// <summary>
         ///    Verifies functionality of the <see cref="EventHubConnection.CreateTransportConsumer" />
         ///    method.
         /// </summary>
@@ -506,7 +422,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void CreateConsumerRequiresConsumerGroup(string consumerGroup)
         {
             var client = new EventHubConnection("Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real]", "fake", new EventHubConnectionOptions());
-            Assert.That(() => client.CreateTransportConsumer(consumerGroup, "partition1", EventPosition.Earliest), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.CreateTransportConsumer(consumerGroup, "partition1", EventPosition.Earliest, Mock.Of<EventHubsRetryPolicy>()), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -520,7 +436,19 @@ namespace Azure.Messaging.EventHubs.Tests
         public void CreateConsumerRequiresPartition(string partition)
         {
             var client = new EventHubConnection("Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real]", "fake", new EventHubConnectionOptions());
-            Assert.That(() => client.CreateTransportConsumer("someGroup", partition, EventPosition.Earliest), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.CreateTransportConsumer("someGroup", partition, EventPosition.Earliest, Mock.Of<EventHubsRetryPolicy>()), Throws.InstanceOf<ArgumentException>());
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="EventHubConnection.CreateTransportConsumer" />
+        ///    method.
+        /// </summary>
+        ///
+        [Test]
+        public void CreateConsumerRequiresRetryPolicy()
+        {
+            var client = new EventHubConnection("Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real]", "fake", new EventHubConnectionOptions());
+            Assert.That(() => client.CreateTransportConsumer("someGroup", "0", EventPosition.Earliest, null), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -626,13 +554,15 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var transportClient = new ObservableTransportClientMock();
             var client = new InjectableTransportClientMock(transportClient, "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake");
-            var expectedOptions = new EventHubProducerClientOptions { RetryOptions = new RetryOptions { MaximumRetries = 6, TryTimeout = TimeSpan.FromMinutes(4) } };
+            var options = new EventHubProducerClientOptions { RetryOptions = new RetryOptions { MaximumRetries = 6, TryTimeout = TimeSpan.FromMinutes(4) } };
+            var expectedRetry = options.RetryOptions.ToRetryPolicy();
 
-            client.CreateTransportProducer(null, expectedOptions);
+            client.CreateTransportProducer(null, expectedRetry);
 
             Assert.That(transportClient.CreateProducerCalledWith, Is.Not.Null, "The producer options should have been set.");
             Assert.That(transportClient.CreateProducerCalledWith.PartitionId, Is.Null, "There should have been no partition specified.");
-            Assert.That(transportClient.CreateProducerCalledWith.Options.RetryOptions.IsEquivalentTo(expectedOptions.RetryOptions), Is.True, "The retry options should match.");
+            Assert.That(transportClient.CreateProducerCalledWith.RetryPolicy, Is.Not.Null, "The retry policy should have been specified.");
+            Assert.That(transportClient.CreateProducerCalledWith.RetryPolicy, Is.SameAs(expectedRetry), "The retry policies should match.");
         }
 
         /// <summary>
@@ -645,22 +575,24 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var transportClient = new ObservableTransportClientMock();
             var client = new InjectableTransportClientMock(transportClient, "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake");
-            var expectedOptions = new EventHubConsumerClientOptions { RetryOptions = new RetryOptions { MaximumRetries = 67 } };
             var expectedPosition = EventPosition.FromOffset(65);
             var expectedPartition = "2123";
             var expectedConsumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
+            var expectedRetryPolicy = new RetryOptions { MaximumRetries = 67 }.ToRetryPolicy();
+            var expectedTrackLastEnqueued = false;
+            var expectedPrefetch = 99U;
+            var expectedOwnerLevel = 123L;
 
-            client.CreateTransportConsumer(expectedConsumerGroup, expectedPartition, expectedPosition, expectedOptions);
-            (var actualConsumerGroup, var actualPartition, EventPosition actualPosition, EventHubConsumerClientOptions actualOptions) = transportClient.CreateConsumerCalledWith;
+            client.CreateTransportConsumer(expectedConsumerGroup, expectedPartition, expectedPosition, expectedRetryPolicy, expectedTrackLastEnqueued, expectedOwnerLevel, expectedPrefetch);
+            (var actualConsumerGroup, var actualPartition, EventPosition actualPosition, var actualRetry, var actualTrackLastEnqueued, var actualOwnerLevel, var actualPrefetch) = transportClient.CreateConsumerCalledWith;
 
             Assert.That(actualPartition, Is.EqualTo(expectedPartition), "The partition should have been passed.");
             Assert.That(actualConsumerGroup, Is.EqualTo(expectedConsumerGroup), "The consumer groups should match.");
             Assert.That(actualPosition.Offset, Is.EqualTo(expectedPosition.Offset), "The event position to receive should match.");
-            Assert.That(actualOptions, Is.Not.Null, "The consumer options should have been set.");
-            Assert.That(actualPosition.Offset, Is.EqualTo(expectedPosition.Offset), "The event position to receive should match.");
-            Assert.That(actualOptions.OwnerLevel, Is.EqualTo(expectedOptions.OwnerLevel), "The owner levels should match.");
-            Assert.That(actualOptions.PrefetchCount, Is.EqualTo(expectedOptions.PrefetchCount), "The prefetch counts should match.");
-            Assert.That(actualOptions.MaximumReceiveWaitTimeOrDefault, Is.EqualTo(expectedOptions.MaximumReceiveWaitTimeOrDefault), "The wait times should match.");
+            Assert.That(actualRetry, Is.SameAs(expectedRetryPolicy), "The retryPolicy should match.");
+            Assert.That(actualOwnerLevel, Is.EqualTo(expectedOwnerLevel), "The owner levels should match.");
+            Assert.That(actualPrefetch, Is.EqualTo(expectedPrefetch), "The prefetch counts should match.");
+            Assert.That(actualTrackLastEnqueued, Is.EqualTo(expectedTrackLastEnqueued), "The flag for tracking the last enqueued event should match.");
         }
 
         /// <summary>
@@ -784,8 +716,6 @@ namespace Azure.Messaging.EventHubs.Tests
                    .GetValue(this) as EventHubConnectionOptions;
 
             public EventHubConnectionOptions TransportClientOptions;
-            public EventHubProducerClientOptions ProducerOptions => _transportClient.CreateProducerCalledWith.Options;
-            public EventHubConsumerClientOptions ConsumerOptions => _transportClient.CreateConsumerCalledWith.Options;
 
             private ObservableTransportClientMock _transportClient;
 
@@ -882,8 +812,8 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         private class ObservableTransportClientMock : TransportClient
         {
-            public (string ConsumerGroup, string Partition, EventPosition Position, EventHubConsumerClientOptions Options) CreateConsumerCalledWith;
-            public (string PartitionId, EventHubProducerClientOptions Options) CreateProducerCalledWith;
+            public (string ConsumerGroup, string Partition, EventPosition Position, EventHubsRetryPolicy RetryPolicy, bool TrackLastEnqueued, long? OwnerLevel, uint? Prefetch) CreateConsumerCalledWith;
+            public (string PartitionId, EventHubsRetryPolicy RetryPolicy) CreateProducerCalledWith;
             public string GetPartitionPropertiesCalledForId;
             public bool WasGetPropertiesCalled;
             public bool WasCloseCalled;
@@ -904,18 +834,21 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             public override TransportProducer CreateProducer(string partitionId,
-                                                             EventHubProducerClientOptions producerOptions)
+                                                             EventHubsRetryPolicy retryPolicy)
             {
-                CreateProducerCalledWith = (partitionId, producerOptions);
+                CreateProducerCalledWith = (partitionId, retryPolicy);
                 return default;
             }
 
             public override TransportConsumer CreateConsumer(string consumerGroup,
                                                              string partitionId,
                                                              EventPosition eventPosition,
-                                                             EventHubConsumerClientOptions consumerOptions)
+                                                             EventHubsRetryPolicy retryPolicy,
+                                                             bool trackLastEnqueuedEventInformation = true,
+                                                             long? ownerLevel = default,
+                                                             uint? prefetchCount = default)
             {
-                CreateConsumerCalledWith = (consumerGroup, partitionId, eventPosition, consumerOptions);
+                CreateConsumerCalledWith = (consumerGroup, partitionId, eventPosition, retryPolicy, trackLastEnqueuedEventInformation, ownerLevel, prefetchCount);
                 return default;
             }
 

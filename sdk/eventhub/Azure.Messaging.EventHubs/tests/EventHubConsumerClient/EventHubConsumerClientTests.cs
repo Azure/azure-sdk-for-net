@@ -237,68 +237,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [TestCase(null)]
-        [TestCase(1)]
-        [TestCase(32769)]
-        public void ConnectionStringConstructorSetsTheOwnerLevel(long? priority)
-        {
-            var options = new EventHubConsumerClientOptions
-            {
-                OwnerLevel = priority
-            };
-
-            var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
-            var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString, options);
-
-            Assert.That(consumer.OwnerLevel, Is.EqualTo(priority));
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the constructor.
-        /// </summary>
-        ///
-        [Test]
-        [TestCase(null)]
-        [TestCase(1)]
-        [TestCase(32769)]
-        public void ExpandedConstructorSetsTheOwnerLevel(long? priority)
-        {
-            var options = new EventHubConsumerClientOptions
-            {
-                OwnerLevel = priority
-            };
-
-            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
-            var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "namespace-name", "hub-name", credential.Object, options);
-            Assert.That(consumer.OwnerLevel, Is.EqualTo(priority));
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the constructor.
-        /// </summary>
-        ///
-        [Test]
-        [TestCase(null)]
-        [TestCase(1)]
-        [TestCase(32769)]
-        public void ConnectionConstructorSetsTheOwnerLevel(long? priority)
-        {
-            var options = new EventHubConsumerClientOptions
-            {
-                OwnerLevel = priority
-            };
-
-            var mockConnection = new MockConnection();
-            var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, mockConnection, options);
-
-            Assert.That(consumer.OwnerLevel, Is.EqualTo(priority));
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the constructor.
-        /// </summary>
-        ///
-        [Test]
         public void ConnectionStringConstructorSetsTheConsumerGroup()
         {
             var consumerGroup = "SomeGroup";
@@ -428,9 +366,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var transportConsumer = new ObservableTransportConsumerMock();
             var mockConnection = new MockConnection(() => transportConsumer);
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, mockConnection);
+            var options = new ReadOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(25) };
 
-            await using var firstIterator = consumer.ReadEventsFromPartitionAsync("0", EventPosition.FromOffset(23), TimeSpan.FromMilliseconds(25)).GetAsyncEnumerator();
-            await using var secondIterator = consumer.ReadEventsFromPartitionAsync("0", EventPosition.FromOffset(23), TimeSpan.FromMilliseconds(25)).GetAsyncEnumerator();
+            await using var firstIterator = consumer.ReadEventsFromPartitionAsync("0", EventPosition.FromOffset(23), options).GetAsyncEnumerator();
+            await using var secondIterator = consumer.ReadEventsFromPartitionAsync("0", EventPosition.FromOffset(23), options).GetAsyncEnumerator();
 
             await firstIterator.MoveNextAsync();
             await secondIterator.MoveNextAsync();
@@ -455,12 +394,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(consumer => consumer.CloseAsync(It.IsAny<CancellationToken>()))
                 .Returns(Task.FromException(new InvalidCastException()));
 
-
-
-
             try
             {
-                await using var iterator = consumer.ReadEventsFromPartitionAsync("0", EventPosition.FromOffset(23), TimeSpan.FromMilliseconds(25)).GetAsyncEnumerator();
+                var options = new ReadOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(25) };
+
+                await using var iterator = consumer.ReadEventsFromPartitionAsync("0", EventPosition.FromOffset(23), options).GetAsyncEnumerator();
                 await iterator.MoveNextAsync();
             }
             catch
@@ -481,9 +419,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var transportConsumer = new ObservableTransportConsumerMock();
             var mockConnection = new MockConnection(() => transportConsumer);
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, mockConnection);
+            var options = new ReadOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(25) };
 
-            await using var firstIterator = consumer.ReadEventsFromPartitionAsync("0", EventPosition.FromOffset(23), TimeSpan.FromMilliseconds(25)).GetAsyncEnumerator();
-            await using var secondIterator = consumer.ReadEventsFromPartitionAsync("0", EventPosition.FromOffset(23), TimeSpan.FromMilliseconds(25)).GetAsyncEnumerator();
+            await using var firstIterator = consumer.ReadEventsFromPartitionAsync("0", EventPosition.FromOffset(23), options).GetAsyncEnumerator();
+            await using var secondIterator = consumer.ReadEventsFromPartitionAsync("0", EventPosition.FromOffset(23), options).GetAsyncEnumerator();
 
             await firstIterator.MoveNextAsync();
             await secondIterator.MoveNextAsync();
@@ -510,7 +449,9 @@ namespace Azure.Messaging.EventHubs.Tests
 
             try
             {
-                await using var iterator = consumer.ReadEventsFromPartitionAsync("0", EventPosition.FromOffset(23), TimeSpan.FromMilliseconds(25)).GetAsyncEnumerator();
+                var options = new ReadOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(25) };
+
+                await using var iterator = consumer.ReadEventsFromPartitionAsync("0", EventPosition.FromOffset(23), options).GetAsyncEnumerator();
                 await iterator.MoveNextAsync();
             }
             catch
@@ -556,7 +497,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockConnection = new MockConnection(() => transportConsumer);
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, mockConnection);
 
-            IAsyncEnumerable<PartitionEvent> enumerable = consumer.ReadEventsFromPartitionAsync("0", EventPosition.FromOffset(12), TimeSpan.FromSeconds(15));
+            var options = new ReadOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(25) };
+            var enumerable = consumer.ReadEventsFromPartitionAsync("0", EventPosition.FromOffset(12), options);
 
             Assert.That(enumerable, Is.Not.Null, "An enumerable should have been returned.");
             Assert.That(enumerable, Is.InstanceOf<IAsyncEnumerable<PartitionEvent>>(), "The enumerable should be of the correct type.");
@@ -774,13 +716,13 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             // There is a fair amount of non-determinism during background processing.  Pause a moment to allow additional events to build if publishing
-            // has not stopped.  Allow for a fairly wide buffer for range checking to combat the potential that an additional receive pump took place
-            // while cancellation was communicated.
+            // has not stopped.  Allow for a fairly wide buffer for range checking to combat buffering and the potential that additional receive pumps
+            // took place while cancellation was communicated.
 
             await Task.Delay(250);
 
             Assert.That(receivedEvents, Is.EqualTo(expectedEvents), "There should have been the expected number events received.");
-            Assert.That(transportConsumer.PublishIndex, Is.EqualTo(expectedEvents).Within(transportConsumer.LastMaximumMessageCount * 2), "Publishing should have stopped when the iterator was canceled.");
+            Assert.That(transportConsumer.PublishIndex, Is.EqualTo(expectedEvents).Within(transportConsumer.LastMaximumMessageCount * 5), "Publishing should have stopped when the iterator was canceled.");
         }
 
         /// <summary>
@@ -821,13 +763,13 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             // There is a fair amount of non-determinism during background processing.  Pause a moment to allow additional events to build if publishing
-            // has not stopped.  Allow for a fairly wide buffer for range checking to combat the potential that an additional receive pump took place
-            // while cancellation was communicated.
+            // has not stopped.  Allow for a fairly wide buffer for range checking to combat buffering and the potential that additional receive pumps
+            // took place while cancellation was communicated.
 
             await Task.Delay(250);
 
             Assert.That(receivedEvents, Is.EqualTo(expectedEvents), "There should have been the expected number events received.");
-            Assert.That(transportConsumer.PublishIndex, Is.EqualTo(expectedEvents).Within(transportConsumer.LastMaximumMessageCount * 2), "Publishing should have stopped when the iterator was canceled.");
+            Assert.That(transportConsumer.PublishIndex, Is.EqualTo(expectedEvents).Within(transportConsumer.LastMaximumMessageCount * 5), "Publishing should have stopped when the iterator was canceled.");
         }
 
         /// <summary>
@@ -939,7 +881,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 new EventData(Encoding.UTF8.GetBytes("Five"))
             };
 
-            var waitTime = TimeSpan.FromMilliseconds(5);
+            var options = new ReadOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(5) };
             var partition = "0";
             var position = EventPosition.FromOffset(22);
             var mockConnection = new MockConnection(() => new PublishingTransportConsumerMock(events));
@@ -953,7 +895,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var firstSubscriberTask = Task.Run(async () =>
             {
-                await foreach (PartitionEvent partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, position, waitTime, cancellation.Token).ConfigureAwait(false))
+                await foreach (PartitionEvent partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, position, options, cancellation.Token).ConfigureAwait(false))
                 {
                     if (partitionEvent.Data != null)
                     {
@@ -972,7 +914,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var secondSubscriberTask = Task.Run(async () =>
             {
-                await foreach (PartitionEvent partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, position, waitTime, cancellation.Token).ConfigureAwait(false))
+                await foreach (PartitionEvent partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, position, options, cancellation.Token).ConfigureAwait(false))
                 {
                     if (partitionEvent.Data != null)
                     {
@@ -1038,7 +980,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task ReadEventsFromPartitionAsyncPublishesEventsWithMultipleIteratorsAndMultipleBatches()
         {
-            var waitTime = TimeSpan.FromMilliseconds(5);
+            var options = new ReadOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(5) };
             var events = new List<EventData>();
             var partition = "0";
             var position = EventPosition.FromSequenceNumber(453);
@@ -1058,7 +1000,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var firstSubscriberTask = Task.Run(async () =>
             {
-                await foreach (PartitionEvent partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, position, waitTime, cancellation.Token).ConfigureAwait(false))
+                await foreach (PartitionEvent partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, position, options, cancellation.Token).ConfigureAwait(false))
                 {
                     if (partitionEvent.Data != null)
                     {
@@ -1077,7 +1019,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var secondSubscriberTask = Task.Run(async () =>
             {
-                await foreach (PartitionEvent partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, position, waitTime, cancellation.Token).ConfigureAwait(false))
+                await foreach (PartitionEvent partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, position, options, cancellation.Token).ConfigureAwait(false))
                 {
                     if (partitionEvent.Data != null)
                     {
@@ -1119,6 +1061,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var maxWaitTime = TimeSpan.FromMilliseconds(50);
             var publishDelay = maxWaitTime.Add(TimeSpan.FromMilliseconds(15));
+            var options = new ReadOptions { MaximumWaitTime = maxWaitTime };
             var transportConsumer = new PublishingTransportConsumerMock(events, () => publishDelay);
             var mockConnection = new MockConnection(() => transportConsumer);
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, mockConnection);
@@ -1127,7 +1070,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(100));
 
-            await foreach (PartitionEvent partitionEvent in consumer.ReadEventsFromPartitionAsync("0", EventPosition.FromOffset(12), maxWaitTime, cancellation.Token))
+            await foreach (PartitionEvent partitionEvent in consumer.ReadEventsFromPartitionAsync("0", EventPosition.FromOffset(12), options, cancellation.Token))
             {
                 receivedEvents.Add(partitionEvent.Data);
                 consecutiveEmptyCount = (partitionEvent.Data == null) ? consecutiveEmptyCount + 1 : 0;
@@ -1595,7 +1538,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 return Task.FromResult(default(PartitionProperties));
             }
 
-            internal override TransportConsumer CreateTransportConsumer(string consumerGroup, string partitionId, EventPosition eventPosition, EventHubConsumerClientOptions consumerOptions) => TransportConsumerFactory();
+            internal override TransportConsumer CreateTransportConsumer(string consumerGroup, string partitionId, EventPosition eventPosition, EventHubsRetryPolicy retryPolicy, bool trackLastEnqueuedEventInformation = true, long? ownerLevel = default, uint? prefetchCount = default) => TransportConsumerFactory();
 
             internal override TransportClient CreateTransportClient(string fullyQualifiedNamespace, string eventHubName, EventHubTokenCredential credential, EventHubConnectionOptions options)
             {
