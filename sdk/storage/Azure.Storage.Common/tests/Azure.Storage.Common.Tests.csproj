@@ -6,7 +6,6 @@
     <AssemblyTitle>Microsoft Azure.Storage.Common client library tests</AssemblyTitle>
     <IsPackable>false</IsPackable>
     <RootNamespace>Azure.Storage.Tests</RootNamespace>
-    <DefineConstants>StorageTestsK;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />

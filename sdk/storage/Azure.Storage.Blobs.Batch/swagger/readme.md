@@ -126,7 +126,7 @@ directive:
 - from: swagger-document
   where: $["x-ms-paths"]
   transform: >
-    $ = {
+    return {
         "/?comp=batch": $["/?comp=batch"],
         "/{containerName}/{blob}?comp=tier": {
             "put": {
@@ -137,7 +137,6 @@ directive:
         },
         "/{containerName}/{blob}": { "delete": $["/{containerName}/{blob}"].delete }
     };
-    return $;
 ```
 
 ### Delete all definitions except those for SubmitBatch and operations
@@ -146,7 +145,7 @@ directive:
 - from: swagger-document
   where: $.definitions
   transform: >
-    $ = {
+    return {
         "StorageError": {
             ...$.StorageError,
             "x-az-public": false,
@@ -156,10 +155,6 @@ directive:
             }
         }
     };
-    // Hide Error models
-    // $.StorageError["x-az-public"] = false;
-    // $.StorageError.properties.Code = { "type": "string" };
-    return $;
 ```
 
 ### Delete all parameters except those for SubmitBatch and operations
