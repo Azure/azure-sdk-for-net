@@ -227,8 +227,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [azconfig_contrib]: ../CONTRIBUTING.md
 [azconfig_setting_concepts]: https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-key-value
 [azconfig_asof_snapshot]: https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-point-time-snapshot
-[source_root]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/appconfiguration/Azure.Data.AppConfiguration
-[source_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/appconfiguration/Azure.Data.AppConfiguration/samples
+[source_root]: ./
+[source_samples]: ./samples
 [reference_docs]: https://azure.github.io/azure-sdk-for-net/appconfiguration.html
 [azconfig_rest]: https://github.com/Azure/AppConfiguration#rest-api-reference
 [azure_cli]: https://docs.microsoft.com/cli/azure
@@ -238,7 +238,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [label_concept]: https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-key-value#label-keys
 [nuget]: https://www.nuget.org/
 [package]: https://www.nuget.org/packages/Azure.ApplicationModel.Configuration/
-[samples_readme]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/README.md
+[samples_readme]: ./samples/README.md
 [moq]: https://github.com/Moq/moq4/
 [cla]: https://cla.microsoft.com
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
