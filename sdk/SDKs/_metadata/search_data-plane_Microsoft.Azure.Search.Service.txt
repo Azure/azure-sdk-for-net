@@ -1,0 +1,14 @@
+﻿Installing AutoRest version: latest
+AutoRest installed successfully.
+Commencing code generation
+Generating CSharp code
+Executing AutoRest command
+cmd.exe /c autorest.cmd https://github.com/jadrefke/azure-rest-api-specs/blob/newFeatures/specification/search/data-plane/Microsoft.Azure.Search.Service/readme.md --csharp --version=latest --reflect-api-versions --tag=track1-package-2019-05-preview --csharp-sdks-folder=C:\src\azure-sdk-for-net\sdk\
+2019-11-21 19:04:33 UTC
+Azure-rest-api-specs repository information
+GitHub fork: jadrefke
+Branch:      newFeatures
+Commit:      0ea3a3453a9d0ec332bf993013383e610b4fb45a
+AutoRest information
+Requested version: latest
+Bootstrapper version:    autorest@2.0.4407

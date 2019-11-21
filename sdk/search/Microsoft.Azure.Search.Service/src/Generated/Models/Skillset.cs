@@ -40,13 +40,16 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="skills">A list of skills in the skillset.</param>
         /// <param name="cognitiveServices">Details about cognitive services to
         /// be used when running skills.</param>
+        /// <param name="knowledgeStore">Definition of additional projections
+        /// to azure blob, table, or files, of enriched data.</param>
         /// <param name="eTag">The ETag of the skillset.</param>
-        public Skillset(string name, string description, IList<Skill> skills, CognitiveServices cognitiveServices = default(CognitiveServices), string eTag = default(string))
+        public Skillset(string name, string description, IList<Skill> skills, CognitiveServices cognitiveServices = default(CognitiveServices), KnowledgeStore knowledgeStore = default(KnowledgeStore), string eTag = default(string))
         {
             Name = name;
             Description = description;
             Skills = skills;
             CognitiveServices = cognitiveServices;
+            KnowledgeStore = knowledgeStore;
             ETag = eTag;
             CustomInit();
         }
@@ -80,6 +83,13 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         [JsonProperty(PropertyName = "cognitiveServices")]
         public CognitiveServices CognitiveServices { get; set; }
+
+        /// <summary>
+        /// Gets or sets definition of additional projections to azure blob,
+        /// table, or files, of enriched data.
+        /// </summary>
+        [JsonProperty(PropertyName = "knowledgeStore")]
+        public KnowledgeStore KnowledgeStore { get; set; }
 
         /// <summary>
         /// Gets or sets the ETag of the skillset.
@@ -116,6 +126,10 @@ namespace Microsoft.Azure.Search.Models
                         element.Validate();
                     }
                 }
+            }
+            if (KnowledgeStore != null)
+            {
+                KnowledgeStore.Validate();
             }
         }
     }

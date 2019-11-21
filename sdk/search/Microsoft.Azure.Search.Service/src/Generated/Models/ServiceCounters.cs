@@ -33,17 +33,19 @@ namespace Microsoft.Azure.Search.Models
         /// indexes in the service.</param>
         /// <param name="indexCounter">Total number of indexes.</param>
         /// <param name="indexerCounter">Total number of indexers.</param>
+        /// <param name="skillsetCounter">Total number of skillsets.</param>
         /// <param name="dataSourceCounter">Total number of data
         /// sources.</param>
         /// <param name="storageSizeCounter">Total size of used storage in
         /// bytes.</param>
         /// <param name="synonymMapCounter">Total number of synonym
         /// maps.</param>
-        public ServiceCounters(ResourceCounter documentCounter = default(ResourceCounter), ResourceCounter indexCounter = default(ResourceCounter), ResourceCounter indexerCounter = default(ResourceCounter), ResourceCounter dataSourceCounter = default(ResourceCounter), ResourceCounter storageSizeCounter = default(ResourceCounter), ResourceCounter synonymMapCounter = default(ResourceCounter))
+        public ServiceCounters(ResourceCounter documentCounter = default(ResourceCounter), ResourceCounter indexCounter = default(ResourceCounter), ResourceCounter indexerCounter = default(ResourceCounter), ResourceCounter skillsetCounter = default(ResourceCounter), ResourceCounter dataSourceCounter = default(ResourceCounter), ResourceCounter storageSizeCounter = default(ResourceCounter), ResourceCounter synonymMapCounter = default(ResourceCounter))
         {
             DocumentCounter = documentCounter;
             IndexCounter = indexCounter;
             IndexerCounter = indexerCounter;
+            SkillsetCounter = skillsetCounter;
             DataSourceCounter = dataSourceCounter;
             StorageSizeCounter = storageSizeCounter;
             SynonymMapCounter = synonymMapCounter;
@@ -73,6 +75,12 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         [JsonProperty(PropertyName = "indexersCount")]
         public ResourceCounter IndexerCounter { get; set; }
+
+        /// <summary>
+        /// Gets or sets total number of skillsets.
+        /// </summary>
+        [JsonProperty(PropertyName = "skillsetCount")]
+        public ResourceCounter SkillsetCounter { get; set; }
 
         /// <summary>
         /// Gets or sets total number of data sources.
