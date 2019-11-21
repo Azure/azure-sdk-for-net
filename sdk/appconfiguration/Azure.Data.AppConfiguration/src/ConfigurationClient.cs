@@ -392,9 +392,12 @@ namespace Azure.Data.AppConfiguration
             return DeleteConfigurationSetting(key, label, default, cancellationToken);
         }
 
+        /// <summary>
+        /// Delete a <see cref="ConfigurationSetting"/> from the configuration store.
+        /// </summary>
         /// <param name="setting">The <see cref="ConfigurationSetting"/> to delete.</param>
         /// <param name="onlyIfUnchanged">If set to true and the configuration setting exists in the configuration store, delete the setting
-        /// if the passed-in <see cref="ConfigurationSetting"/> is the same version as the one in the configuration store.  The setting versions
+        /// if the passed-in <see cref="ConfigurationSetting"/> is the same version as the one in the configuration store. The setting versions
         /// are the same if their ETag fields match.  If the two settings are different versions, this method will throw an exception to indicate
         /// that the setting in the configuration store was modified since it was last obtained by the client.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -414,9 +417,12 @@ namespace Azure.Data.AppConfiguration
             return await DeleteConfigurationSettingAsync(setting.Key, setting.Label, requestOptions, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// Delete a <see cref="ConfigurationSetting"/> from the configuration store.
+        /// </summary>
         /// <param name="setting">The <see cref="ConfigurationSetting"/> to delete.</param>
         /// <param name="onlyIfUnchanged">If set to true and the configuration setting exists in the configuration store, delete the setting
-        /// if the passed-in <see cref="ConfigurationSetting"/> is the same version as the one in the configuration store.  The setting versions
+        /// if the passed-in <see cref="ConfigurationSetting"/> is the same version as the one in the configuration store. The setting versions
         /// are the same if their ETag fields match.  If the two settings are different versions, this method will throw an exception to indicate
         /// that the setting in the configuration store was modified since it was last obtained by the client.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -664,7 +670,7 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary>
-        /// Retrieves one or more <see cref="ConfigurationSetting"/> that satisfies the options of the <see cref="SettingSelector"/>
+        /// Retrieves one or more <see cref="ConfigurationSetting"/> that satisfy the options of the <see cref="SettingSelector"/>.
         /// </summary>
         /// <param name="selector">Set of options for selecting <see cref="ConfigurationSetting"/> from the configuration store.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -699,7 +705,7 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary>
-        /// Retrieves the different revisions of a specific <see cref="ConfigurationSetting"/> that satisfies the options of the <see cref="SettingSelector"/>
+        /// Retrieves the different revisions of a specific <see cref="ConfigurationSetting"/> that satisfy the options of the <see cref="SettingSelector"/>.
         /// </summary>
         /// <param name="selector">Set of options for selecting <see cref="ConfigurationSetting"/> from the configuration store.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -710,7 +716,7 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary>
-        /// Retrieves the different revisions of a specific <see cref="ConfigurationSetting"/> that satisfies the options of the <see cref="SettingSelector"/>
+        /// Retrieves the different revisions of a specific <see cref="ConfigurationSetting"/> that satisfy the options of the <see cref="SettingSelector"/>.
         /// </summary>
         /// <param name="selector">Set of options for selecting <see cref="ConfigurationSetting"/> from the configuration store.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
