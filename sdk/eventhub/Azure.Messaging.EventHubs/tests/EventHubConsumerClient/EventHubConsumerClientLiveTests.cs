@@ -1111,9 +1111,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task ConsumerCannotReadWhenClosed(bool sync)
+        public async Task ConsumerCannotReadWhenClosed()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
@@ -1138,14 +1136,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                                 if ((count == countBeforeClose) && (!closeCalled))
                                 {
-                                    if (sync)
-                                    {
-                                        consumer.Close();
-                                    }
-                                    else
-                                    {
-                                        await consumer.CloseAsync();
-                                    }
+                                    await consumer.CloseAsync();
                                 }
 
                                 if (count >= maximumCount)
@@ -2130,9 +2121,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task ConsumerCannotRetrieveMetadataWhenClosed(bool sync)
+        public async Task ConsumerCannotRetrieveMetadataWhenClosed()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
@@ -2145,15 +2134,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     Assert.That(async () => await consumer.GetEventHubPropertiesAsync(), Throws.Nothing);
                     Assert.That(async () => await consumer.GetPartitionPropertiesAsync(partition), Throws.Nothing);
 
-                    if (sync)
-                    {
-                        consumer.Close();
-                    }
-                    else
-                    {
-                        await consumer.CloseAsync();
-                    }
-
+                    await consumer.CloseAsync();
                     await Task.Delay(TimeSpan.FromSeconds(5));
 
                     Assert.That(async () => await consumer.GetPartitionIdsAsync(), Throws.TypeOf<EventHubsClientClosedException>());

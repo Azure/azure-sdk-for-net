@@ -180,7 +180,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  Events are read in the context of this group.</param>
         /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.</param>
         /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub name and SAS token are contained in this connection string.</param>
-        /// <param name="processorOptions">The set of options to use for this processor.</param>
+        /// <param name="clientOptions">The set of options to use for this processor.</param>
         ///
         /// <remarks>
         ///   If the connection string is copied from the Event Hubs namespace, it will likely not contain the name of the desired Event Hub,
@@ -194,7 +194,7 @@ namespace Azure.Messaging.EventHubs
         public EventProcessorClient(string consumerGroup,
                                     PartitionManager partitionManager,
                                     string connectionString,
-                                    EventProcessorClientOptions processorOptions) : this(consumerGroup, partitionManager, connectionString, null, processorOptions)
+                                    EventProcessorClientOptions clientOptions) : this(consumerGroup, partitionManager, connectionString, null, clientOptions)
         {
         }
 
@@ -228,7 +228,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.</param>
         /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub name and SAS token are contained in this connection string.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
-        /// <param name="processorOptions">The set of options to use for this processor.</param>
+        /// <param name="clientOptions">The set of options to use for this processor.</param>
         ///
         /// <remarks>
         ///   If the connection string is copied from the Event Hub itself, it will contain the name of the desired Event Hub,
@@ -240,24 +240,24 @@ namespace Azure.Messaging.EventHubs
                                     PartitionManager partitionManager,
                                     string connectionString,
                                     string eventHubName,
-                                    EventProcessorClientOptions processorOptions)
+                                    EventProcessorClientOptions clientOptions)
         {
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
             Argument.AssertNotNull(partitionManager, nameof(partitionManager));
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
 
-            processorOptions = processorOptions?.Clone() ?? new EventProcessorClientOptions();
+            clientOptions = clientOptions?.Clone() ?? new EventProcessorClientOptions();
 
             ConnectionStringProperties connectionStringProperties = ConnectionStringParser.Parse(connectionString);
 
             OwnsConnection = true;
-            ConnectionFactory = () => new EventHubConnection(connectionString, eventHubName, processorOptions.ConnectionOptions);
+            ConnectionFactory = () => new EventHubConnection(connectionString, eventHubName, clientOptions.ConnectionOptions);
             FullyQualifiedNamespace = connectionStringProperties.Endpoint.Host;
             EventHubName = string.IsNullOrEmpty(eventHubName) ? connectionStringProperties.EventHubName : eventHubName;
             ConsumerGroup = consumerGroup;
             Manager = partitionManager;
-            Options = processorOptions;
-            RetryPolicy = processorOptions.RetryOptions.ToRetryPolicy();
+            Options = clientOptions;
+            RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
             Identifier = Guid.NewGuid().ToString();
         }
 
@@ -270,14 +270,14 @@ namespace Azure.Messaging.EventHubs
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
-        /// <param name="processorOptions">The set of options to use for this processor.</param>
+        /// <param name="clientOptions">The set of options to use for this processor.</param>
         ///
         public EventProcessorClient(string consumerGroup,
                                     PartitionManager partitionManager,
                                     string fullyQualifiedNamespace,
                                     string eventHubName,
                                     TokenCredential credential,
-                                    EventProcessorClientOptions processorOptions = default)
+                                    EventProcessorClientOptions clientOptions = default)
         {
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
             Argument.AssertNotNull(partitionManager, nameof(partitionManager));
@@ -285,16 +285,16 @@ namespace Azure.Messaging.EventHubs
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
             Argument.AssertNotNull(credential, nameof(credential));
 
-            processorOptions = processorOptions?.Clone() ?? new EventProcessorClientOptions();
+            clientOptions = clientOptions?.Clone() ?? new EventProcessorClientOptions();
 
             OwnsConnection = true;
-            ConnectionFactory = () => new EventHubConnection(fullyQualifiedNamespace, eventHubName, credential, processorOptions.ConnectionOptions);
+            ConnectionFactory = () => new EventHubConnection(fullyQualifiedNamespace, eventHubName, credential, clientOptions.ConnectionOptions);
             FullyQualifiedNamespace = fullyQualifiedNamespace;
             EventHubName = eventHubName;
             ConsumerGroup = consumerGroup;
             Manager = partitionManager;
-            Options = processorOptions;
-            RetryPolicy = processorOptions.RetryOptions.ToRetryPolicy();
+            Options = clientOptions;
+            RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
             Identifier = Guid.NewGuid().ToString();
         }
 
@@ -305,7 +305,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  Events are read in the context of this group.</param>
         /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.</param>
         /// <param name="connection">The <see cref="EventHubConnection" /> connection to use for communication with the Event Hubs service.</param>
-        /// <param name="processorOptions">The set of options to use for this processor.</param>
+        /// <param name="clientOptions">The set of options to use for this processor.</param>
         ///
         /// <remarks>
         ///   This constructor is intended only to support functional testing and mocking; it should not be used for production scenarios.
@@ -314,7 +314,7 @@ namespace Azure.Messaging.EventHubs
         protected internal EventProcessorClient(string consumerGroup,
                                                 PartitionManager partitionManager,
                                                 EventHubConnection connection,
-                                                EventProcessorClientOptions processorOptions)
+                                                EventProcessorClientOptions clientOptions)
         {
             // TODO: we probably can remove this constructor and OwnsConnection property because the processor does not have
             // a single connection anymore.  In fact, returning the same connection from the factory might result in undefined
@@ -324,7 +324,7 @@ namespace Azure.Messaging.EventHubs
             Argument.AssertNotNull(partitionManager, nameof(partitionManager));
             Argument.AssertNotNull(connection, nameof(connection));
 
-            processorOptions = processorOptions?.Clone() ?? new EventProcessorClientOptions();
+            clientOptions = clientOptions?.Clone() ?? new EventProcessorClientOptions();
 
             OwnsConnection = false;
             ConnectionFactory = () => connection;
@@ -332,8 +332,8 @@ namespace Azure.Messaging.EventHubs
             EventHubName = connection.EventHubName;
             ConsumerGroup = consumerGroup;
             Manager = partitionManager;
-            Options = processorOptions;
-            RetryPolicy = processorOptions.RetryOptions.ToRetryPolicy();
+            Options = clientOptions;
+            RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
             Identifier = Guid.NewGuid().ToString();
         }
 
@@ -590,14 +590,6 @@ namespace Azure.Messaging.EventHubs
 
             await StopAsync().ConfigureAwait(false);
         }
-
-        /// <summary>
-        ///   Closes the event processor.
-        /// </summary>
-        ///
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        public virtual void Close(CancellationToken cancellationToken = default) => CloseAsync(cancellationToken).GetAwaiter().GetResult();
 
         /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="EventProcessorClient" />,

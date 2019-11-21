@@ -607,50 +607,6 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubProducerClient.Close" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        public async Task CloseClosesTheTransportProducers()
-        {
-            var transportProducer = new ObservableTransportProducerMock();
-            var mockFirstBatch = new EventDataBatch(new MockTransportBatch(), new SendOptions { PartitionId = "1" });
-            var mockSecondBatch = new EventDataBatch(new MockTransportBatch(), new SendOptions { PartitionId = "2" });
-            var producer = new EventHubProducerClient(new MockConnection(() => transportProducer));
-
-            try { await producer.SendAsync(mockFirstBatch); } catch {}
-            try { await producer.SendAsync(mockSecondBatch); } catch {}
-
-            producer.Close();
-
-            Assert.That(transportProducer.WasCloseCalled, Is.True);
-            Assert.That(transportProducer.CloseCallCount, Is.EqualTo(3));
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubProducerClient.Close" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        public async Task CloseSurfacesExceptionsForTransportConsumers()
-        {
-            var mockTransportProducer = new Mock<TransportProducer>();
-            var mockConnection = new MockConnection(() => mockTransportProducer.Object);
-            var mockBatch = new EventDataBatch(new MockTransportBatch(), new SendOptions { PartitionId = "1" });;
-            var producer = new EventHubProducerClient(mockConnection);
-
-            mockTransportProducer
-                .Setup(producer => producer.CloseAsync(It.IsAny<CancellationToken>()))
-                .Returns(Task.FromException(new InvalidCastException()));
-
-            try { await producer.SendAsync(mockBatch); } catch {}
-
-            Assert.That(() => producer.Close(), Throws.InstanceOf<Exception>());
-        }
-
-        /// <summary>
         ///   Verifies functionality of the <see cref="EventHubProducerClient.CloseAsync" />
         ///   method.
         /// </summary>
@@ -662,23 +618,6 @@ namespace Azure.Messaging.EventHubs.Tests
             var producer = new EventHubProducerClient(connectionString);
 
             await producer.CloseAsync();
-
-            var connection = GetConnection(producer);
-            Assert.That(connection.IsClosed, Is.True);
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubProducerClient.Close" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        public void CloseClosesTheConnectionWhenOwned()
-        {
-            var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
-            var producer = new EventHubProducerClient(connectionString);
-
-            producer.Close();
 
             var connection = GetConnection(producer);
             Assert.That(connection.IsClosed, Is.True);
@@ -697,22 +636,6 @@ namespace Azure.Messaging.EventHubs.Tests
             var producer = new EventHubProducerClient(connection);
 
             await producer.CloseAsync();
-            Assert.That(connection.IsClosed, Is.False);
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubProducerClient.Close" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        public void CloseDoesNotCloseTheConnectionWhenNotOwned()
-        {
-            var transportProducer = new ObservableTransportProducerMock();
-            var connection = new MockConnection(() => transportProducer);
-            var producer = new EventHubProducerClient(connection);
-
-            producer.Close();
             Assert.That(connection.IsClosed, Is.False);
         }
 

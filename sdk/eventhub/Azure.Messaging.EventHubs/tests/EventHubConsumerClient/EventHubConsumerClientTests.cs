@@ -408,59 +408,6 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubConsumerClient.CloseAsync" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        public async Task CloseClosesActiveTransportConsumers()
-        {
-            var transportConsumer = new ObservableTransportConsumerMock();
-            var mockConnection = new MockConnection(() => transportConsumer);
-            var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, mockConnection);
-            var options = new ReadOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(25) };
-
-            await using var firstIterator = consumer.ReadEventsFromPartitionAsync("0", EventPosition.FromOffset(23), options).GetAsyncEnumerator();
-            await using var secondIterator = consumer.ReadEventsFromPartitionAsync("0", EventPosition.FromOffset(23), options).GetAsyncEnumerator();
-
-            await firstIterator.MoveNextAsync();
-            await secondIterator.MoveNextAsync();
-
-            consumer.Close();
-            Assert.That(transportConsumer.WasCloseCalled, Is.True);
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubConsumerClient.CloseAsync" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        public async Task CloseSurfacesExceptionsForActiveTransportConsumers()
-        {
-            var mockTransportConsumer = new Mock<TransportConsumer>();
-            var mockConnection = new MockConnection(() => mockTransportConsumer.Object);
-            var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, mockConnection);
-
-            mockTransportConsumer
-                .Setup(consumer => consumer.CloseAsync(It.IsAny<CancellationToken>()))
-                .Returns(Task.FromException(new InvalidCastException()));
-
-            try
-            {
-                var options = new ReadOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(25) };
-
-                await using var iterator = consumer.ReadEventsFromPartitionAsync("0", EventPosition.FromOffset(23), options).GetAsyncEnumerator();
-                await iterator.MoveNextAsync();
-            }
-            catch
-            {
-            }
-
-            Assert.That(() => consumer.Close(), Throws.InstanceOf<InvalidCastException>());
-        }
-
-        /// <summary>
         ///   Verifies functionality of the <see cref="EventHubConsumerClient.ReadEventsFromPartitionAsync" />
         ///   method.
         /// </summary>
@@ -1821,7 +1768,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 receivedEvents.Add(partitionEvent.Data);
                 consecutiveEmptyCount = (partitionEvent.Data == null) ? consecutiveEmptyCount + 1 : 0;
 
-                if (consecutiveEmptyCount > 1)
+                if (consecutiveEmptyCount > 5)
                 {
                     break;
                 }
@@ -2086,23 +2033,6 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubConsumerClient.Close" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        public void CloseClosesTheConnectionWhenOwned()
-        {
-            var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
-            var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString);
-
-            consumer.Close();
-
-            var connection = GetConnection(consumer);
-            Assert.That(connection.IsClosed, Is.True);
-        }
-
-        /// <summary>
         ///   Verifies functionality of the <see cref="EventHubConsumerClient.CloseAsync" />
         ///   method.
         /// </summary>
@@ -2115,22 +2045,6 @@ namespace Azure.Messaging.EventHubs.Tests
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection);
 
             await consumer.CloseAsync();
-            Assert.That(connection.IsClosed, Is.False);
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubProducer.Close" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        public void CloseDoesNotCloseTheConnectionWhenNotOwned()
-        {
-            var transportConsumer = new ObservableTransportConsumerMock();
-            var connection = new MockConnection(() => transportConsumer);
-            var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection);
-
-            consumer.Close();
             Assert.That(connection.IsClosed, Is.False);
         }
 
