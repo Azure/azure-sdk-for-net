@@ -208,6 +208,7 @@ namespace Azure.Storage.Blobs
         public BlobServiceClient(Uri serviceUri, TokenCredential credential, BlobClientOptions options = default)
             : this(serviceUri, credential.AsPolicy(), options ?? new BlobClientOptions())
         {
+            Errors.VerifyHttpsTokenAuth(serviceUri);
         }
 
         /// <summary>
@@ -253,6 +254,7 @@ namespace Azure.Storage.Blobs
             _pipeline = pipeline;
             _clientDiagnostics = clientDiagnostics;
             _customerProvidedKey = customerProvidedKey;
+            BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
         }
         #endregion ctors
 

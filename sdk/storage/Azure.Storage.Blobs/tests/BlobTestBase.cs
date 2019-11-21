@@ -32,7 +32,7 @@ namespace Azure.Storage.Test.Shared
         public BlobTestBase(bool async) : this(async, null) { }
 
         public BlobTestBase(bool async, RecordedTestMode? mode = null)
-            : base(async, mode)
+            : base(async, null)
         {
         }
 

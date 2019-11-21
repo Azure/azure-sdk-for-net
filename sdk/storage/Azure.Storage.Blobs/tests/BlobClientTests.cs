@@ -57,7 +57,7 @@ namespace Azure.Storage.Blobs.Test
         public void Ctor_Uri()
         {
             var accountName = "accountName";
-            var blobEndpoint = new Uri("http://127.0.0.1/" + accountName);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + accountName);
             BlobClient blob1 = InstrumentClient(new BlobClient(blobEndpoint));
             BlobClient blob2 = InstrumentClient(new BlobClient(blobEndpoint, new SharedTokenCacheCredential()));
 
@@ -66,7 +66,35 @@ namespace Azure.Storage.Blobs.Test
 
             Assert.AreEqual(accountName, builder1.AccountName);
             Assert.AreEqual(accountName, builder2.AccountName);
+        }
 
+        [Test]
+        public void Ctor_TokenAuth_Http()
+        {
+            // Arrange
+            Uri httpUri = new Uri(TestConfigOAuth.BlobServiceEndpoint).ToHttp();
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new BlobClient(httpUri, GetOAuthCredential()),
+                 new ArgumentException("Cannot use TokenCredential without HTTPS."));
+        }
+
+        [Test]
+        public void Ctor_CPK_Http()
+        {
+            // Arrange
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            BlobClientOptions blobClientOptions = new BlobClientOptions()
+            {
+                CustomerProvidedKey = customerProvidedKey
+            };
+            Uri httpUri = new Uri(TestConfigDefault.BlobServiceEndpoint).ToHttp();
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new BlobClient(httpUri, blobClientOptions),
+                new ArgumentException("Cannot use client-provided key without HTTPS."));
         }
 
         #region Upload

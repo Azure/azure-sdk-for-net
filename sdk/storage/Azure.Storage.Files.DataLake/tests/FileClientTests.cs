@@ -107,7 +107,23 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(fileSystemName, fileClient.FileSystemName);
             Assert.AreEqual($"{directoryName}/{fileName}", fileClient.Path);
             Assert.AreEqual(uri, fileClient.Uri);
+        }
 
+        [Test]
+        public void Ctor_TokenCredential_Http()
+        {
+            // Arrange
+            TokenCredential tokenCredential = GetOAuthCredential(TestConfigHierarchicalNamespace);
+            Uri uri = new Uri(TestConfigHierarchicalNamespace.BlobServiceEndpoint).ToHttp();
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new DataLakeFileClient(uri, tokenCredential),
+                new ArgumentException("Cannot use TokenCredential without HTTPS."));
+
+            TestHelper.AssertExpectedException(
+                () => new DataLakeFileClient(uri, tokenCredential, new DataLakeClientOptions()),
+                new ArgumentException("Cannot use TokenCredential without HTTPS."));
         }
 
         [Test]
