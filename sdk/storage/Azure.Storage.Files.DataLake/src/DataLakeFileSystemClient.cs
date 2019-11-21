@@ -251,7 +251,7 @@ namespace Azure.Storage.Files.DataLake
             _dfsUri = uriBuilder.ToDfsUri();
             _pipeline = options.Build(authentication);
             _clientDiagnostics = new ClientDiagnostics(options);
-            _containerClient = BlobContainerInternals.Create(_blobUri, _pipeline, _clientDiagnostics);
+            _containerClient = BlobContainerClientInternals.Create(_blobUri, _pipeline, _clientDiagnostics);
         }
 
         /// <summary>
@@ -274,10 +274,10 @@ namespace Azure.Storage.Files.DataLake
             _dfsUri = uriBuilder.ToDfsUri();
             _pipeline = pipeline;
             _clientDiagnostics = clientDiagnostics;
-            _containerClient = BlobContainerInternals.Create(_blobUri, pipeline, _clientDiagnostics);
+            _containerClient = BlobContainerClientInternals.Create(_blobUri, pipeline, _clientDiagnostics);
         }
 
-        private class BlobContainerInternals : BlobContainerClient
+        private class BlobContainerClientInternals : BlobContainerClient
         {
             public static BlobContainerClient Create(Uri uri, HttpPipeline pipeline, ClientDiagnostics diagnostics)
             {

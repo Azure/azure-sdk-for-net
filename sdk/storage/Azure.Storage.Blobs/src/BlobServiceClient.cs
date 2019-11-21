@@ -228,7 +228,7 @@ namespace Azure.Storage.Blobs
         /// every request.
         /// </param>
         internal BlobServiceClient(Uri serviceUri, HttpPipelinePolicy authentication, BlobClientOptions options)
-            : this(serviceUri, options.Build(authentication), authentication, new ClientDiagnostics(options), options?.CustomerProvidedKey)
+            : this(serviceUri, authentication, new ClientDiagnostics(options), options?.CustomerProvidedKey, options.Build(authentication))
         {
 
         }
@@ -241,13 +241,13 @@ namespace Azure.Storage.Blobs
         /// A <see cref="Uri"/> referencing the blob service.
         /// This is likely to be similar to "https://{account_name}.blob.core.windows.net".
         /// </param>
-        /// <param name="pipeline">
-        /// The transport pipeline used to send every request.
-        /// </param>
         /// <param name="authentication"></param>
         /// <param name="clientDiagnostics"></param>
         /// <param name="customerProvidedKey">Customer provided key.</param>
-        internal BlobServiceClient(Uri serviceUri, HttpPipeline pipeline, HttpPipelinePolicy authentication, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
+        /// <param name="pipeline">
+        /// The transport pipeline used to send every request.
+        /// </param>
+        internal BlobServiceClient(Uri serviceUri, HttpPipelinePolicy authentication, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey, HttpPipeline pipeline)
         {
             _uri = serviceUri;
             _authenticationPolicy = authentication;
@@ -282,7 +282,7 @@ namespace Azure.Storage.Blobs
         /// </returns>
         protected static BlobServiceClient CreateClient(Uri serviceUri, BlobClientOptions options, HttpPipelinePolicy authentication, HttpPipeline pipeline)
         {
-            return new BlobServiceClient(serviceUri, pipeline, authentication, new ClientDiagnostics(options), null);
+            return new BlobServiceClient(serviceUri, authentication, new ClientDiagnostics(options), null, pipeline);
         }
         #endregion ctors
 
