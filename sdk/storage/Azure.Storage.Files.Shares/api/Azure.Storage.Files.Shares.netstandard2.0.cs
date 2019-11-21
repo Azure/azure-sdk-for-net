@@ -224,12 +224,6 @@ namespace Azure.Storage.Files.Shares.Models
         internal PermissionInfo() { }
         public string FilePermissionKey { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
     }
-    public partial class Range
-    {
-        internal Range() { }
-        public long End { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public long Start { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-    }
     public partial class ShareAccessPolicy
     {
         internal ShareAccessPolicy() { }
@@ -449,11 +443,11 @@ namespace Azure.Storage.Files.Shares.Models
     }
     public partial class ShareFileRangeInfo
     {
-        public ShareFileRangeInfo() { }
-        public Azure.ETag ETag { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public long FileContentLength { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset LastModified { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.Collections.Generic.IEnumerable<Azure.Storage.Files.Shares.Models.Range> Ranges { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        internal ShareFileRangeInfo() { }
+        public Azure.ETag ETag { get { throw null; } }
+        public long FileContentLength { get { throw null; } }
+        public System.DateTimeOffset LastModified { get { throw null; } }
+        public System.Collections.Generic.IEnumerable<Azure.HttpRange> Ranges { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
     }
     public enum ShareFileRangeWriteType
     {
@@ -492,10 +486,9 @@ namespace Azure.Storage.Files.Shares.Models
     public static partial class ShareModelFactory
     {
         public static Azure.Storage.Files.Shares.Models.PermissionInfo PermissionInfo(string filePermissionKey) { throw null; }
-        public static Azure.Storage.Files.Shares.Models.Range Range(long start, long end) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareFileCopyInfo ShareFileCopyInfo(Azure.ETag eTag, System.DateTimeOffset lastModified, string copyId, Azure.Storage.Files.Shares.Models.CopyStatus copyStatus) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareFileHandle ShareFileHandle(string handleId, string path, string fileId, string sessionId, string clientIp, string parentId = null, System.DateTimeOffset? openedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastReconnectedOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.Storage.Files.Shares.Models.ShareFileRangeInfo ShareFileRangeInfo(System.DateTimeOffset lastModified, Azure.ETag eTag, long fileContentLength, System.Collections.Generic.IEnumerable<Azure.Storage.Files.Shares.Models.Range> ranges) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.ShareFileRangeInfo ShareFileRangeInfo(System.DateTimeOffset lastModified, Azure.ETag eTag, long fileContentLength, System.Collections.Generic.IEnumerable<Azure.HttpRange> ranges) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareFileUploadInfo ShareFileUploadInfo(Azure.ETag eTag, System.DateTimeOffset lastModified, byte[] contentHash, bool isServerEncrypted) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareInfo ShareInfo(Azure.ETag eTag, System.DateTimeOffset lastModified) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareItem ShareItem(string name, Azure.Storage.Files.Shares.Models.ShareProperties properties, string snapshot = null) { throw null; }

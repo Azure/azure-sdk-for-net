@@ -5193,8 +5193,8 @@ namespace Azure.Storage.Files.Shares
             /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.ShareFileRangeInfo}</returns>
-            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileRangeInfo>> GetRangeListAsync(
+            /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.ShareFileRangeInfoInternal}</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileRangeInfoInternal>> GetRangeListAsync(
                 Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -5288,8 +5288,8 @@ namespace Azure.Storage.Files.Shares
             /// Create the File.GetRangeListAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The File.GetRangeListAsync Azure.Response{Azure.Storage.Files.Shares.Models.ShareFileRangeInfo}.</returns>
-            internal static Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileRangeInfo> GetRangeListAsync_CreateResponse(
+            /// <returns>The File.GetRangeListAsync Azure.Response{Azure.Storage.Files.Shares.Models.ShareFileRangeInfoInternal}.</returns>
+            internal static Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileRangeInfoInternal> GetRangeListAsync_CreateResponse(
                 Azure.Response response)
             {
                 // Process the response
@@ -5299,7 +5299,7 @@ namespace Azure.Storage.Files.Shares
                     {
                         // Create the result
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
-                        Azure.Storage.Files.Shares.Models.ShareFileRangeInfo _value = new Azure.Storage.Files.Shares.Models.ShareFileRangeInfo();
+                        Azure.Storage.Files.Shares.Models.ShareFileRangeInfoInternal _value = new Azure.Storage.Files.Shares.Models.ShareFileRangeInfoInternal();
                         _value.Ranges =
                             System.Linq.Enumerable.ToList(
                                 System.Linq.Enumerable.Select(
@@ -5326,7 +5326,7 @@ namespace Azure.Storage.Files.Shares
                     }
                     case 304:
                     {
-                        return new Azure.NoBodyResponse<Azure.Storage.Files.Shares.Models.ShareFileRangeInfo>(response);
+                        return new Azure.NoBodyResponse<Azure.Storage.Files.Shares.Models.ShareFileRangeInfoInternal>(response);
                     }
                     default:
                     {
@@ -6687,7 +6687,7 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary>
     /// An Azure Storage file range.
     /// </summary>
-    public partial class Range
+    internal partial class Range
     {
         /// <summary>
         /// Start of the range.
@@ -6730,26 +6730,6 @@ namespace Azure.Storage.Files.Shares.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Shares.Models.Range value);
-    }
-
-    /// <summary>
-    /// ShareModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class ShareModelFactory
-    {
-        /// <summary>
-        /// Creates a new Range instance for mocking.
-        /// </summary>
-        public static Range Range(
-            long start,
-            long end)
-        {
-            return new Range()
-            {
-                Start = start,
-                End = end,
-            };
-        }
     }
 }
 #endregion class Range
@@ -7907,13 +7887,13 @@ namespace Azure.Storage.Files.Shares.Models
 }
 #endregion class ShareFileHandle
 
-#region class ShareFileRangeInfo
+#region class ShareFileRangeInfoInternal
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary>
-    /// ShareFileRangeInfo
+    /// ShareFileRangeInfoInternal
     /// </summary>
-    public partial class ShareFileRangeInfo
+    internal partial class ShareFileRangeInfoInternal
     {
         /// <summary>
         /// The date/time that the file was last modified. Any operation that modifies the file, including an update of the file's metadata or properties, changes the file's last modified time.
@@ -7936,39 +7916,15 @@ namespace Azure.Storage.Files.Shares.Models
         public System.Collections.Generic.IEnumerable<Azure.Storage.Files.Shares.Models.Range> Ranges { get; internal set; }
 
         /// <summary>
-        /// Creates a new ShareFileRangeInfo instance
+        /// Creates a new ShareFileRangeInfoInternal instance
         /// </summary>
-        public ShareFileRangeInfo()
+        public ShareFileRangeInfoInternal()
         {
             Ranges = new System.Collections.Generic.List<Azure.Storage.Files.Shares.Models.Range>();
         }
     }
-
-    /// <summary>
-    /// ShareModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class ShareModelFactory
-    {
-        /// <summary>
-        /// Creates a new ShareFileRangeInfo instance for mocking.
-        /// </summary>
-        public static ShareFileRangeInfo ShareFileRangeInfo(
-            System.DateTimeOffset lastModified,
-            Azure.ETag eTag,
-            long fileContentLength,
-            System.Collections.Generic.IEnumerable<Azure.Storage.Files.Shares.Models.Range> ranges)
-        {
-            return new ShareFileRangeInfo()
-            {
-                LastModified = lastModified,
-                ETag = eTag,
-                FileContentLength = fileContentLength,
-                Ranges = ranges,
-            };
-        }
-    }
 }
-#endregion class ShareFileRangeInfo
+#endregion class ShareFileRangeInfoInternal
 
 #region enum ShareFileRangeWriteType
 namespace Azure.Storage.Files.Shares.Models
