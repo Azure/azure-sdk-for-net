@@ -206,6 +206,7 @@ namespace Azure.Messaging.EventHubs
                                       EventHubProducerClientOptions producerOptions = default)
         {
             Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
+            Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
             Argument.AssertNotNull(credential, nameof(credential));
 
@@ -415,7 +416,7 @@ namespace Azure.Messaging.EventHubs
 
             TransportProducer activeProducer;
 
-            if (String.IsNullOrEmpty(options.PartitionId))
+            if (string.IsNullOrEmpty(options.PartitionId))
             {
                 activeProducer = GatewayProducer;
             }

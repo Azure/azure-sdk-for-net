@@ -6,6 +6,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Channels;
@@ -418,6 +419,171 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   Reads events from all partitions of the event hub as an asynchronous enumerable, allowing events to be iterated as they
+        ///   become available on the partition, waiting as necessary should there be no events available.
+        ///
+        ///   This enumerator may block for an indeterminate amount of time for an <c>await</c> if events are not available on the partition, requiring
+        ///   cancellation via the <paramref name="cancellationToken"/> to be requested in order to return control.  It is recommended to set the
+        ///   <see cref="ReadOptions.MaximumWaitTime" /> for scenarios where a more deterministic maximum waiting period is desired.
+        /// </summary>
+        ///
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>An <see cref="IAsyncEnumerable{T}"/> to be used for iterating over events in the partition.</returns>
+        ///
+        /// <remarks>
+        ///   This method is not recommended for production use; the <see cref="EventProcessorClient" /> should be used for reading events from all partitions in a
+        ///   production scenario, as it offers a much more robust experience with higher throughput.
+        ///
+        ///   It is important to note that this method does not guarantee fairness amongst the partitions during iteration; each of the partitions competes to publish
+        ///   events to be read by the enumerator.  Depending on service communication, there may be a clustering of events per partition and/or there may be a noticeable
+        ///   bias for a given partition or subset of partitions.
+        ///
+        ///   Each reader of events is presented with an independent iterator; if there are multiple readers, each receive their own copy of an event to
+        ///   process, rather than competing for them.
+        /// </remarks>
+        ///
+        /// <seealso cref="EventProcessorClient" />
+        /// <seealso cref="ReadEventsAsync(ReadOptions, CancellationToken)"/>
+        ///
+        public virtual IAsyncEnumerable<PartitionEvent> ReadEventsAsync(CancellationToken cancellationToken = default) => ReadEventsAsync(null, cancellationToken);
+
+        /// <summary>
+        ///   Reads events from all partitions of the event hub as an asynchronous enumerable, allowing events to be iterated as they
+        ///   become available on the partition, waiting as necessary should there be no events available.
+        ///
+        ///   This enumerator may block for an indeterminate amount of time for an <c>await</c> if events are not available on the partition, requiring
+        ///   cancellation via the <paramref name="cancellationToken"/> to be requested in order to return control.  It is recommended to set the
+        ///   <see cref="ReadOptions.MaximumWaitTime" /> for scenarios where a more deterministic maximum waiting period is desired.
+        /// </summary>
+        ///
+        /// <param name="readOptions">The set of options to use for configuring read behavior; if not specified the defaults will be used.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>An <see cref="IAsyncEnumerable{T}"/> to be used for iterating over events in the partition.</returns>
+        ///
+        /// <remarks>
+        ///   This method is not recommended for production use; the <see cref="EventProcessorClient" /> should be used for reading events from all partitions in a
+        ///   production scenario, as it offers a much more robust experience with higher throughput.
+        ///
+        ///   It is important to note that this method does not guarantee fairness amongst the partitions during iteration; each of the partitions competes to publish
+        ///   events to be read by the enumerator.  Depending on service communication, there may be a clustering of events per partition and/or there may be a noticeable
+        ///   bias for a given partition or subset of partitions.
+        ///
+        ///   Each reader of events is presented with an independent iterator; if there are multiple readers, each receive their own copy of an event to
+        ///   process, rather than competing for them.
+        /// </remarks>
+        ///
+        /// <seealso cref="EventProcessorClient" />
+        /// <seealso cref="ReadEventsAsync(CancellationToken)"/>
+        ///
+        public virtual IAsyncEnumerable<PartitionEvent> ReadEventsAsync(ReadOptions readOptions,
+                                                                        CancellationToken cancellationToken = default) => ReadEventsAsync(true, readOptions, cancellationToken);
+
+        /// <summary>
+        ///   Reads events from all partitions of the event hub as an asynchronous enumerable, allowing events to be iterated as they
+        ///   become available on the partition, waiting as necessary should there be no events available.
+        ///
+        ///   This enumerator may block for an indeterminate amount of time for an <c>await</c> if events are not available on the partition, requiring
+        ///   cancellation via the <paramref name="cancellationToken"/> to be requested in order to return control.  It is recommended to set the
+        ///   <see cref="ReadOptions.MaximumWaitTime" /> for scenarios where a more deterministic maximum waiting period is desired.
+        /// </summary>
+        ///
+        /// <param name="startReadingAtEarliestEvent"><c>true</c> to begin reading at the first events available in each partition; otherwise, reading will begin at the end of each partition seeing only new events as they are published.</param>
+        /// <param name="readOptions">The set of options to use for configuring read behavior; if not specified the defaults will be used.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>An <see cref="IAsyncEnumerable{T}"/> to be used for iterating over events in the partition.</returns>
+        ///
+        /// <remarks>
+        ///   This method is not recommended for production use; the <see cref="EventProcessorClient" /> should be used for reading events from all partitions in a
+        ///   production scenario, as it offers a much more robust experience with higher throughput.
+        ///
+        ///   It is important to note that this method does not guarantee fairness amongst the partitions during iteration; each of the partitions competes to publish
+        ///   events to be read by the enumerator.  Depending on service communication, there may be a clustering of events per partition and/or there may be a noticeable
+        ///   bias for a given partition or subset of partitions.
+        ///
+        ///   Each reader of events is presented with an independent iterator; if there are multiple readers, each receive their own copy of an event to
+        ///   process, rather than competing for them.
+        /// </remarks>
+        ///
+        /// <seealso cref="EventProcessorClient" />
+        /// <seealso cref="ReadEventsAsync(CancellationToken)"/>
+        /// <seealso cref="ReadEventsAsync(ReadOptions, CancellationToken)"/>
+        ///
+        public virtual async IAsyncEnumerable<PartitionEvent> ReadEventsAsync(bool startReadingAtEarliestEvent,
+                                                                              ReadOptions readOptions = default,
+                                                                              [EnumeratorCancellation] CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotClosed(IsClosed, nameof(EventHubConsumerClient));
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+            EventHubsEventSource.Log.ReadAllEventsStart(EventHubName);
+
+            var cancelPublishingAsync = default(Func<Task>);
+            var eventChannel = default(Channel<PartitionEvent>);
+            var options = readOptions?.Clone() ?? new ReadOptions();
+            var startingPosition = startReadingAtEarliestEvent ? EventPosition.Earliest : EventPosition.Latest;
+
+            using var cancellationSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+
+            try
+            {
+                // Determine the partitions for the Event Hub and create the shared channel.
+
+                var partitions = await GetPartitionIdsAsync(cancellationToken).ConfigureAwait(false);
+                eventChannel = CreateEventChannel((BackgroundPublishReceiveBatchSize * partitions.Length * 2));
+
+                // Start publishing for all partitions.
+
+                var publishingTasks = new Task<Func<Task>>[partitions.Length];
+
+                for (var index = 0; index < partitions.Length; ++index)
+                {
+                    publishingTasks[index] = PublishPartitionEventsToChannelAsync(partitions[index], startingPosition, options.TrackLastEnqueuedEventInformation, options.OwnerLevel, eventChannel, cancellationSource);
+                }
+
+                // Capture the callbacks to cancel publishing for all events.
+
+                var cancelPublishingCallbacks = await Task.WhenAll(publishingTasks).ConfigureAwait(false);
+                cancelPublishingAsync = () => Task.WhenAll(cancelPublishingCallbacks.Select(cancelCallback => cancelCallback()));
+            }
+            catch (Exception ex)
+            {
+                EventHubsEventSource.Log.ReadAllEventsError(EventHubName, ex.Message);
+                cancellationSource?.Cancel();
+
+                if (cancelPublishingAsync != null)
+                {
+                    await cancelPublishingAsync().ConfigureAwait(false);
+                }
+
+                EventHubsEventSource.Log.ReadAllEventsComplete(EventHubName);
+                throw;
+            }
+
+            // Iterate the events from the channel.
+
+            try
+            {
+                await foreach (var partitionEvent in eventChannel.Reader.EnumerateChannel(options.MaximumWaitTime, cancellationToken).ConfigureAwait(false))
+                {
+                    yield return partitionEvent;
+                }
+            }
+            finally
+            {
+                cancellationSource?.Cancel();
+                await cancelPublishingAsync().ConfigureAwait(false);
+                EventHubsEventSource.Log.ReadAllEventsComplete(EventHubName);
+            }
+
+            // If cancellation was requested, then surface the expected exception.
+
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+        }
+
+        /// <summary>
         ///   Closes the consumer.
         /// </summary>
         ///
@@ -550,9 +716,6 @@ namespace Azure.Messaging.EventHubs
         /// <remarks>
         ///   This method assumes co-ownership of the <paramref name="channel" />, marking its writer as completed
         ///   when publishing is complete or when an exception is encountered.
-        ///
-        ///   This method also assumes co-ownership of the <paramref name="publishingCancellationSource" /> and will request cancellation
-        ///   from it when publishing is complete or when an exception is encountered.
         /// </remarks>
         ///
         private async Task<Func<Task>> PublishPartitionEventsToChannelAsync(string partitionId,
@@ -583,10 +746,16 @@ namespace Azure.Messaging.EventHubs
                     try
                     {
                         await publishingTask.ConfigureAwait(false);
+                        channel.Writer.TryComplete();
                     }
-                    catch (TaskCanceledException)
+                    catch (Exception ex) when ((ex is TaskCanceledException) || (ex is ChannelClosedException))
                     {
-                        // This is an expected scenario; no action is needed.
+                        // Due to the non-determinism when requesting cancellation of the background
+                        // publishing, it may surface as the expected cancellation or may result in
+                        // an attempt to write to the shared channel after another publisher has
+                        // marked it as final.
+                        //
+                        // These are expected scenarios; no action is needed.
                     }
                 }
 
@@ -595,9 +764,6 @@ namespace Azure.Messaging.EventHubs
                     await transportConsumer.CloseAsync(CancellationToken.None).ConfigureAwait(false);
                     ActiveConsumers.TryRemove(publisherId, out var _);
                 }
-
-                publishingCancellationSource?.Dispose();
-                channel.Writer.TryComplete();
 
                 try
                 {
