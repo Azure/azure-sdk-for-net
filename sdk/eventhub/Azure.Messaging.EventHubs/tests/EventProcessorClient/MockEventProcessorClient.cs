@@ -52,10 +52,6 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         protected override TimeSpan OwnershipExpiration => ShortOwnershipExpiration;
 
-        protected override Func<EventHubConnection> ConnectionFactory { get; }
-
-        protected override EventHubConnection CreateConnection() => ConnectionFactory();
-
         private readonly PartitionManager Manager;
         private readonly bool fakeRunPartitionProcessingAsync;
 
@@ -70,14 +66,12 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         public MockEventProcessorClient(string consumerGroup,
                                  PartitionManager partitionManager,
-                                 EventHubConnection connection,
-                                 Func<EventHubConnection> createConnection,
+                                 EventHubConnectionFactory connectionFactory,
                                  EventProcessorClientOptions options,
-                                 bool fakeRunPartitionProcessingAsync = true) : base(consumerGroup, partitionManager, connection, options)
+                                 bool fakeRunPartitionProcessingAsync = true) : base(consumerGroup, partitionManager, connectionFactory, options)
         {
             this.fakeRunPartitionProcessingAsync = fakeRunPartitionProcessingAsync;
             Manager = partitionManager;
-            ConnectionFactory = () => createConnection();
 
             ProcessErrorAsyncHandler = async errorContext =>
             {
@@ -153,7 +147,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     previousActiveOwnership = activeOwnership;
 
-                    if (consecutiveStabilizedStatus < 10)
+                    if (consecutiveStabilizedStatus < 3)
                     {
                         // Wait a load balance update cycle before the next verification.  Give up if the whole process takes more than 1 minute.
 
@@ -177,7 +171,8 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             if (fakeRunPartitionProcessingAsync)
             {
-                return Task.CompletedTask;
+                // return a task that will only reasonably return when cancelled
+                return Task.Delay(TimeSpan.FromMinutes(1), cancellationToken);
             }
             else
             {

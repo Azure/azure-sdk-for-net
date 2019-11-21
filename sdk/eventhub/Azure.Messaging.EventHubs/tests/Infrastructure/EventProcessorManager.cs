@@ -25,10 +25,10 @@ namespace Azure.Messaging.EventHubs.Tests
         private string ConsumerGroup { get; }
 
         /// <summary>
-        ///   The <see cref="EventHubConnection" /> to use for communication with the Event Hubs service.
+        ///   The <see cref="EventHubConnectionFactory" /> to use for communication with the Event Hubs service.
         /// </summary>
         ///
-        private EventHubConnection Connection { get; }
+        private EventHubConnectionFactory ConnectionFactory { get; }
 
         /// <summary>
         ///   The partition manager shared by all event processors in this hub.
@@ -95,7 +95,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                      Action<ProcessorErrorContext> onProcessException = null)
         {
             ConsumerGroup = consumerGroup;
-            Connection = new EventHubConnection(connectionString);
+            ConnectionFactory = new EventHubConnectionFactory(connectionString);
             InnerPartitionManager = partitionManager ?? new MockCheckPointStorage();
 
             // In case it has not been specified, set the maximum receive wait time to 2 seconds because the default
@@ -130,7 +130,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     (
                         ConsumerGroup,
                         InnerPartitionManager,
-                        Connection,
+                        ConnectionFactory,
                         Options
                     );
 
@@ -212,7 +212,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 // Remember to filter expired ownership.
 
                 var activeOwnership = (await InnerPartitionManager
-                    .ListOwnershipAsync(Connection.FullyQualifiedNamespace, Connection.EventHubName, ConsumerGroup)
+                    .ListOwnershipAsync(ConnectionFactory.FullyQualifiedNamespace, ConnectionFactory.EventHubName, ConsumerGroup)
                     .ConfigureAwait(false))
                     .Where(ownership => DateTimeOffset.UtcNow.Subtract(ownership.LastModifiedTime.Value) < ShortWaitTimeMock.ShortOwnershipExpiration)
                     .ToList();
@@ -339,13 +339,13 @@ namespace Azure.Messaging.EventHubs.Tests
             ///
             /// <param name="consumerGroup">The name of the consumer group this event processor is associated with.  Events are read in the context of this group.</param>
             /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.</param>
-            /// <param name="connection">The client used to interact with the Azure Event Hubs service.</param>
+            /// <param name="connectionFactory">The client used to interact with the Azure Event Hubs service.</param>
             /// <param name="options">The set of options to use for this event processor.</param>
             ///
             public ShortWaitTimeMock(string consumerGroup,
                                      PartitionManager partitionManager,
-                                     EventHubConnection connection,
-                                     EventProcessorClientOptions options) : base(consumerGroup, partitionManager, connection, options)
+                                     EventHubConnectionFactory connectionFactory,
+                                     EventProcessorClientOptions options) : base(consumerGroup, partitionManager, connectionFactory, options)
             {
             }
         }

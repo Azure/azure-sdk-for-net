@@ -222,9 +222,10 @@ namespace Azure.Messaging.EventHubs.Processor
                                                                        DateTimeOffset? lastModifiedTime,
                                                                        string eTag);
 
+
         /// <summary>
         ///   Creates an <see cref="EventHubConnection" /> instance.  The returned instance must not be returned again by other
-        ///   <see cref="CreateConnection" /> calls.
+        ///   <see cref="EventHubConnectionFactory.CreateConnection" /> calls.
         /// </summary>
         ///
         /// <returns>A new <see cref="EventHubConnection" /> instance.</returns>
@@ -234,7 +235,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   responsible for closing it.  Attempting to close the connection in the derived class may result in undefined behavior.
         /// </remarks>
         ///
-        protected abstract EventHubConnection CreateConnection();
+        protected abstract EventHubConnectionFactory ConnectionFactory { get; }
 
         /// <summary>
         ///   Creates a context associated with a specific partition.  It will be passed to partition processing related methods,
@@ -366,7 +367,7 @@ namespace Azure.Messaging.EventHubs.Processor
         {
             // We'll use this connection to retrieve an updated list of partition ids from the service.
 
-            await using var connection = CreateConnection();
+            await using var connection = ConnectionFactory.CreateConnection();
 
             while (!cancellationToken.IsCancellationRequested)
             {
@@ -753,7 +754,7 @@ namespace Azure.Messaging.EventHubs.Processor
                     TrackLastEnqueuedEventInformation = trackLastEnqueuedEventInformation
                 };
 
-                await using var connection = CreateConnection();
+                await using var connection = ConnectionFactory.CreateConnection();
 
                 await using (var consumer = new EventHubConsumerClient(ConsumerGroup, connection, options))
                 {

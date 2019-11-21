@@ -108,11 +108,11 @@ namespace Azure.Messaging.EventHubs
         public override string Identifier { get; }
 
         /// <summary>
-        ///   A factory used to provide new <see cref="EventHubConnection" /> instances upon <see cref="CreateConnection"/>
+        ///   A factory used to provide new <see cref="EventHubConnection" /> instances upon <see cref="EventHubConnectionFactory.CreateConnection"/>
         ///   call.
         /// </summary>
         ///
-        protected virtual Func<EventHubConnection> ConnectionFactory { get; }
+        protected override EventHubConnectionFactory ConnectionFactory { get; }
 
         /// <summary>
         ///   Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.
@@ -251,7 +251,7 @@ namespace Azure.Messaging.EventHubs
             ConnectionStringProperties connectionStringProperties = ConnectionStringParser.Parse(connectionString);
 
             OwnsConnection = true;
-            ConnectionFactory = () => new EventHubConnection(connectionString, eventHubName, processorOptions.ConnectionOptions);
+            ConnectionFactory = new EventHubConnectionFactory(connectionString, eventHubName, processorOptions.ConnectionOptions);
             FullyQualifiedNamespace = connectionStringProperties.Endpoint.Host;
             EventHubName = string.IsNullOrEmpty(eventHubName) ? connectionStringProperties.EventHubName : eventHubName;
             ConsumerGroup = consumerGroup;
@@ -288,7 +288,7 @@ namespace Azure.Messaging.EventHubs
             processorOptions = processorOptions?.Clone() ?? new EventProcessorClientOptions();
 
             OwnsConnection = true;
-            ConnectionFactory = () => new EventHubConnection(fullyQualifiedNamespace, eventHubName, credential, processorOptions.ConnectionOptions);
+            ConnectionFactory = new EventHubConnectionFactory(fullyQualifiedNamespace, eventHubName, credential, processorOptions.ConnectionOptions);
             FullyQualifiedNamespace = fullyQualifiedNamespace;
             EventHubName = eventHubName;
             ConsumerGroup = consumerGroup;
@@ -304,7 +304,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  Events are read in the context of this group.</param>
         /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.</param>
-        /// <param name="connection">The <see cref="EventHubConnection" /> connection to use for communication with the Event Hubs service.</param>
+        /// <param name="connectionFactory">The <see cref="EventHubConnection" /> connection to use for communication with the Event Hubs service.</param>
         /// <param name="processorOptions">The set of options to use for this processor.</param>
         ///
         /// <remarks>
@@ -313,7 +313,7 @@ namespace Azure.Messaging.EventHubs
         ///
         protected internal EventProcessorClient(string consumerGroup,
                                                 PartitionManager partitionManager,
-                                                EventHubConnection connection,
+                                                EventHubConnectionFactory connectionFactory,
                                                 EventProcessorClientOptions processorOptions)
         {
             // TODO: we probably can remove this constructor and OwnsConnection property because the processor does not have
@@ -322,14 +322,14 @@ namespace Azure.Messaging.EventHubs
 
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
             Argument.AssertNotNull(partitionManager, nameof(partitionManager));
-            Argument.AssertNotNull(connection, nameof(connection));
+            Argument.AssertNotNull(connectionFactory, nameof(connectionFactory));
 
             processorOptions = processorOptions?.Clone() ?? new EventProcessorClientOptions();
 
             OwnsConnection = false;
-            ConnectionFactory = () => connection;
-            FullyQualifiedNamespace = connection.FullyQualifiedNamespace;
-            EventHubName = connection.EventHubName;
+            ConnectionFactory = connectionFactory;
+            FullyQualifiedNamespace = connectionFactory.FullyQualifiedNamespace;
+            EventHubName = connectionFactory.EventHubName;
             ConsumerGroup = consumerGroup;
             Manager = partitionManager;
             Options = processorOptions;
@@ -550,20 +550,6 @@ namespace Azure.Messaging.EventHubs
                                                                        long? sequenceNumber,
                                                                        DateTimeOffset? lastModifiedTime,
                                                                        string eTag) => new PartitionOwnership(FullyQualifiedNamespace, EventHubName, ConsumerGroup, Identifier, partitionId, offset, sequenceNumber, lastModifiedTime, eTag);
-
-        /// <summary>
-        ///   Creates an <see cref="EventHubConnection" /> instance.  The returned instance must not be returned again by other
-        ///   <see cref="CreateConnection" /> calls.
-        /// </summary>
-        ///
-        /// <returns>A new <see cref="EventHubConnection" /> instance.</returns>
-        ///
-        /// <remarks>
-        ///   The abstract <see cref="EventProcessorBase{T}" /> class has ownership of the returned connection and, therefore, is
-        ///   responsible for closing it.  Attempting to close the connection in the derived class may result in undefined behavior.
-        /// </remarks>
-        ///
-        protected override EventHubConnection CreateConnection() => ConnectionFactory();
 
         /// <summary>
         ///   Creates a context associated with a specific partition.  It will be passed to partition processing related methods,
