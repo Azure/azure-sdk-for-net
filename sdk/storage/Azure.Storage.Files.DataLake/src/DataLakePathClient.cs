@@ -325,6 +325,10 @@ namespace Azure.Storage.Files.DataLake
             _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _pipeline, _clientDiagnostics);
         }
 
+        /// <summary>
+        /// Helper to access protected static members of BlockBlobClient
+        /// that should not be exposed directly to customers.
+        /// </summary>
         private class BlockBlobClientInternals : BlockBlobClient
         {
             public static BlockBlobClient Create(Uri uri, HttpPipeline pipeline, ClientDiagnostics diagnostics)

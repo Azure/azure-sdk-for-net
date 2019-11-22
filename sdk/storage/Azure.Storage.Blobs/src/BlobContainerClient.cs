@@ -305,7 +305,7 @@ namespace Azure.Storage.Blobs
         /// The transport pipeline used to send every request.
         /// </param>
         /// <returns>
-        /// New instanc of the <see cref="BlobContainerClient"/> class.
+        /// New instance of the <see cref="BlobContainerClient"/> class.
         /// </returns>
         protected static BlobContainerClient CreateClient(Uri containerUri, BlobClientOptions options, HttpPipeline pipeline)
         {

@@ -250,6 +250,10 @@ namespace Azure.Storage.Files.DataLake
                 _clientDiagnostics);
         }
 
+        /// <summary>
+        /// Helper to access protected static members of BlobServiceClient
+        /// that should not be exposed directly to customers.
+        /// </summary>
         private class BlobServiceClientInternals : BlobServiceClient
         {
             public static BlobServiceClient Create(Uri uri, HttpPipeline pipeline, HttpPipelinePolicy authentication, ClientDiagnostics diagnostics)
