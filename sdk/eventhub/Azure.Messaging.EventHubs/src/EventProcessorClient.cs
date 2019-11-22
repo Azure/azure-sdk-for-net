@@ -370,13 +370,14 @@ namespace Azure.Messaging.EventHubs
 
                 var ownership = InstanceOwnership[context.PartitionId];
 
-                if (ownership.Offset.HasValue)
+                var availableCheckpoints = await ListCheckpointsAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup);
+                foreach (Checkpoint checkpoint in availableCheckpoints)
                 {
-                    startingPosition = EventPosition.FromOffset(ownership.Offset.Value);
-                }
-                else if (ownership.SequenceNumber.HasValue)
-                {
-                    startingPosition = EventPosition.FromSequenceNumber(ownership.SequenceNumber.Value);
+                    if (checkpoint.PartitionId == context.PartitionId)
+                    {
+                        startingPosition = EventPosition.FromOffset(checkpoint.Offset);
+                        break;
+                    }
                 }
 
                 // TODO: it might be troublesome to let the users add running tasks by themselves.  If the user adds a custom
@@ -477,6 +478,20 @@ namespace Azure.Messaging.EventHubs
         protected override Task<IEnumerable<PartitionOwnership>> ClaimOwnershipAsync(IEnumerable<PartitionOwnership> partitionOwnership) => Manager.ClaimOwnershipAsync(partitionOwnership);
 
         /// <summary>
+        ///   Retrieves a complete checkpoints list from the chosen storage service.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the ownership are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
+        /// <param name="consumerGroup">The name of the consumer group the ownership are associated with.</param>
+        ///
+        /// <returns>An enumerable containing all the existing checkpoints for the associated Event Hub and consumer group.</returns>
+        ///
+        protected override Task<IEnumerable<Checkpoint>> ListCheckpointsAsync(string fullyQualifiedNamespace,
+                                                                                 string eventHubName,
+                                                                                 string consumerGroup) => Manager.ListCheckpointsAsync(fullyQualifiedNamespace, eventHubName, consumerGroup);
+
+        /// <summary>
         ///   Updates the checkpoint using the given information for the associated partition and consumer group in the chosen storage service.
         /// </summary>
         ///
@@ -500,7 +515,6 @@ namespace Azure.Messaging.EventHubs
                 FullyQualifiedNamespace,
                 EventHubName,
                 ConsumerGroup,
-                Identifier,
                 context.PartitionId,
                 eventData.Offset.Value,
                 eventData.SequenceNumber.Value
@@ -538,18 +552,14 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the Event Hub partition the partition ownership is associated with.</param>
-        /// <param name="offset">The offset of the last <see cref="EventData" /> checkpointed by the previous owner of the ownership.</param>
-        /// <param name="sequenceNumber">The sequence number of the last <see cref="EventData" /> checkpointed by the previous owner of the ownership.</param>
         /// <param name="lastModifiedTime">The date and time, in UTC, that the last update was made to the ownership.</param>
         /// <param name="eTag">The entity tag needed to update the ownership.</param>
         ///
         /// <returns>A <see cref="PartitionOwnership" /> instance based on the provided information.</returns>
         ///
         protected override PartitionOwnership CreatePartitionOwnership(string partitionId,
-                                                                       long? offset,
-                                                                       long? sequenceNumber,
                                                                        DateTimeOffset? lastModifiedTime,
-                                                                       string eTag) => new PartitionOwnership(FullyQualifiedNamespace, EventHubName, ConsumerGroup, Identifier, partitionId, offset, sequenceNumber, lastModifiedTime, eTag);
+                                                                       string eTag) => new PartitionOwnership(FullyQualifiedNamespace, EventHubName, ConsumerGroup, Identifier, partitionId, lastModifiedTime, eTag);
 
         /// <summary>
         ///   Creates an <see cref="EventHubConnection" /> instance.  The returned instance must not be returned again by other

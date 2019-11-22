@@ -9,6 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.P
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.Processor.Samples", "samples\Azure.Messaging.EventHubs.Processor.Samples.csproj", "{89C3D506-E47C-4034-A3AA-2BD05D8B1EA5}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs", "..\Azure.Messaging.EventHubs\src\Azure.Messaging.EventHubs.csproj", "{FAA3893D-4A47-450F-ABE3-2751C0587C78}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs", "..\..\storage\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj", "{A3948834-DB25-4404-A6EA-4FC7ACF16A78}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Common", "..\..\storage\Azure.Storage.Common\src\Azure.Storage.Common.csproj", "{F977C49E-C4CA-4742-9F55-46DA5D890020}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +33,18 @@ Global
 		{89C3D506-E47C-4034-A3AA-2BD05D8B1EA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89C3D506-E47C-4034-A3AA-2BD05D8B1EA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89C3D506-E47C-4034-A3AA-2BD05D8B1EA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAA3893D-4A47-450F-ABE3-2751C0587C78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAA3893D-4A47-450F-ABE3-2751C0587C78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAA3893D-4A47-450F-ABE3-2751C0587C78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAA3893D-4A47-450F-ABE3-2751C0587C78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3948834-DB25-4404-A6EA-4FC7ACF16A78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3948834-DB25-4404-A6EA-4FC7ACF16A78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3948834-DB25-4404-A6EA-4FC7ACF16A78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3948834-DB25-4404-A6EA-4FC7ACF16A78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F977C49E-C4CA-4742-9F55-46DA5D890020}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F977C49E-C4CA-4742-9F55-46DA5D890020}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F977C49E-C4CA-4742-9F55-46DA5D890020}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F977C49E-C4CA-4742-9F55-46DA5D890020}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

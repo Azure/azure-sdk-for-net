@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Azure.Messaging.EventHubs.Processor;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 
@@ -24,23 +23,17 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <summary>The client used to interact with the Azure Blob Storage service.</summary>
         private readonly BlobContainerClient _containerClient;
 
-        /// <summary>Logs activities performed by this partition manager.</summary>
-        private readonly Action<string> _logger;
-
         /// <summary>
         ///   Initializes a new instance of the <see cref="BlobPartitionManager"/> class.
         /// </summary>
         ///
         /// <param name="blobContainerClient">The client used to interact with the Azure Blob Storage service.</param>
-        /// <param name="logger">Logs activities performed by this partition manager.</param>
         ///
-        public BlobPartitionManager(BlobContainerClient blobContainerClient,
-                                    Action<string> logger = null)
+        public BlobPartitionManager(BlobContainerClient blobContainerClient)
         {
             // TODO: instead of manually checking the instance, make use of the Guard class once it's available.
 
             _containerClient = blobContainerClient ?? throw new ArgumentNullException(nameof(blobContainerClient));
-            _logger = logger;
         }
 
         /// <summary>
@@ -58,42 +51,34 @@ namespace Azure.Messaging.EventHubs.Processor
                                                                                        string consumerGroup)
         {
             List<PartitionOwnership> ownershipList = new List<PartitionOwnership>();
-
-            var prefix = $"{ fullyQualifiedNamespace }/{ eventHubName }/{ consumerGroup }/";
-            await foreach (BlobItem blob in _containerClient.GetBlobsAsync(traits: BlobTraits.Metadata, prefix: prefix).ConfigureAwait(false))
+            try
             {
-                // In case this key does not exist, ownerIdentifier is set to null.  This will force the PartitionOwnership constructor
-                // to throw an exception.
-
-                blob.Metadata.TryGetValue(BlobMetadataKey.OwnerIdentifier, out var ownerIdentifier);
-
-                long? offset = null;
-                long? sequenceNumber = null;
-
-                if (blob.Metadata.TryGetValue(BlobMetadataKey.Offset, out var str) && long.TryParse(str, out var result))
+                var prefix = $"{ fullyQualifiedNamespace }/{ eventHubName }/{ consumerGroup }/ownership/";
+                await foreach (BlobItem blob in _containerClient.GetBlobsAsync(traits: BlobTraits.Metadata, prefix: prefix).ConfigureAwait(false))
                 {
-                    offset = result;
+                    // In case this key does not exist, ownerIdentifier is set to null.  This will force the PartitionOwnership constructor
+                    // to throw an exception.
+
+                    blob.Metadata.TryGetValue(BlobMetadataKey.OwnerIdentifier, out var ownerIdentifier);
+
+                    ownershipList.Add(new InnerPartitionOwnership(
+                        fullyQualifiedNamespace,
+                        eventHubName,
+                        consumerGroup,
+                        ownerIdentifier,
+                        blob.Name.Substring(prefix.Length),
+                        blob.Properties.LastModified,
+                        blob.Properties.ETag.ToString()
+                    ));
                 }
 
-                if (blob.Metadata.TryGetValue(BlobMetadataKey.SequenceNumber, out str) && long.TryParse(str, out result))
-                {
-                    sequenceNumber = result;
-                }
-
-                ownershipList.Add(new InnerPartitionOwnership(
-                    fullyQualifiedNamespace,
-                    eventHubName,
-                    consumerGroup,
-                    ownerIdentifier,
-                    blob.Name.Substring(prefix.Length),
-                    offset,
-                    sequenceNumber,
-                    blob.Properties.LastModified,
-                    blob.Properties.ETag.ToString()
-                ));
+                return ownershipList;
+            }
+            catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound || ex.ErrorCode == BlobErrorCode.BlobNotFound)
+            {
+                throw new RequestFailedException("The specified container or blob does not exist: ", ex);
             }
 
-            return ownershipList;
         }
 
         /// <summary>
@@ -115,12 +100,10 @@ namespace Azure.Messaging.EventHubs.Processor
             foreach (PartitionOwnership ownership in partitionOwnership)
             {
                 metadata[BlobMetadataKey.OwnerIdentifier] = ownership.OwnerIdentifier;
-                metadata[BlobMetadataKey.Offset] = ownership.Offset?.ToString() ?? string.Empty;
-                metadata[BlobMetadataKey.SequenceNumber] = ownership.SequenceNumber?.ToString() ?? string.Empty;
 
                 var blobRequestConditions = new BlobRequestConditions();
 
-                var blobName = $"{ ownership.FullyQualifiedNamespace }/{ ownership.EventHubName }/{ ownership.ConsumerGroup }/{ ownership.PartitionId }";
+                var blobName = $"{ ownership.FullyQualifiedNamespace }/{ ownership.EventHubName }/{ ownership.ConsumerGroup }/ownership/{ ownership.PartitionId }";
                 BlobClient blobClient = _containerClient.GetBlobClient(blobName);
 
                 try
@@ -145,7 +128,7 @@ namespace Azure.Messaging.EventHubs.Processor
                             // A blob could have just been created by another Event Processor that claimed ownership of this
                             // partition.  In this case, there's no point in retrying because we don't have the correct ETag.
 
-                            Log($"Ownership with partition id = '{ ownership.PartitionId }' is not claimable.");
+                            // TODO: Add log  - "Ownership with partition id = '{ ownership.PartitionId }' is not claimable."
                             continue;
                         }
                         finally
@@ -164,12 +147,12 @@ namespace Azure.Messaging.EventHubs.Processor
                         {
                             infoResponse = await blobClient.SetMetadataAsync(metadata, blobRequestConditions).ConfigureAwait(false);
                         }
-                        catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.BlobNotFound)
+                        catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound || ex.ErrorCode == BlobErrorCode.BlobNotFound)
                         {
                             // No ownership was found, which means the ETag should have been set to null in order to
                             // claim this ownership.  For this reason, we consider it a failure and don't try again.
 
-                            Log($"Ownership with partition id = '{ ownership.PartitionId }' is not claimable.");
+                            // TODO: Add log  - "Ownership with partition id = '{ ownership.PartitionId }' is not claimable."
                             continue;
                         }
 
@@ -189,15 +172,67 @@ namespace Azure.Messaging.EventHubs.Processor
 
                     claimedOwnership.Add(ownership);
 
-                    Log($"Ownership with partition id = '{ ownership.PartitionId }' claimed.");
+                    // TODO: Add log  - "Ownership with partition id = '{ ownership.PartitionId }' claimed."
                 }
                 catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ConditionNotMet)
                 {
-                    Log($"Ownership with partition id = '{ ownership.PartitionId }' is not claimable.");
+                    // TODO: Add log  - "Ownership with partition id = '{ ownership.PartitionId }' is not claimable."
                 }
             }
 
             return claimedOwnership;
+        }
+
+        /// <summary>
+        ///    List of all the checkpoints in a data store for a given namespace, eventhub and consumer group.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the ownership are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
+        /// <param name="consumerGroup">The name of the consumer group the ownership are associated with.</param>
+        ///
+        /// <returns>An enumerable containing all the existing checkpoints for the associated Event Hub and consumer group.</returns>
+        ///
+        public override async Task<IEnumerable<Checkpoint>> ListCheckpointsAsync(string fullyQualifiedNamespace,
+                                                                                       string eventHubName,
+                                                                                       string consumerGroup)
+        {
+            List<Checkpoint> checkpoints = new List<Checkpoint>();
+            try
+            {
+                var prefix = $"{ fullyQualifiedNamespace }/{ eventHubName }/{ consumerGroup }/checkpoint/";
+                await foreach (BlobItem blob in _containerClient.GetBlobsAsync(traits: BlobTraits.Metadata, prefix: prefix).ConfigureAwait(false))
+                {
+                    long offset = 0;
+                    long sequenceNumber = 0;
+
+                    if (blob.Metadata.TryGetValue(BlobMetadataKey.Offset, out var str) && long.TryParse(str, out var result))
+                    {
+                        offset = result;
+                    }
+
+                    if (blob.Metadata.TryGetValue(BlobMetadataKey.SequenceNumber, out str) && long.TryParse(str, out result))
+                    {
+                        sequenceNumber = result;
+                    }
+
+                    checkpoints.Add(new InnerCheckpoint(
+                        fullyQualifiedNamespace,
+                        eventHubName,
+                        consumerGroup,
+                        blob.Name.Substring(prefix.Length),
+                        offset,
+                        sequenceNumber
+                    ));
+                }
+
+                return checkpoints;
+            }
+            catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound || ex.ErrorCode == BlobErrorCode.BlobNotFound)
+            {
+                throw new RequestFailedException("The specified container or blob does not exist: ", ex);
+            }
+
         }
 
         /// <summary>
@@ -210,61 +245,32 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         public override async Task UpdateCheckpointAsync(Checkpoint checkpoint)
         {
-            var blobName = $"{ checkpoint.FullyQualifiedNamespace }/{ checkpoint.EventHubName }/{ checkpoint.ConsumerGroup }/{ checkpoint.PartitionId }";
+            var blobName = $"{ checkpoint.FullyQualifiedNamespace }/{ checkpoint.EventHubName }/{ checkpoint.ConsumerGroup }/checkpoint/{ checkpoint.PartitionId }";
             BlobClient blobClient = _containerClient.GetBlobClient(blobName);
 
-            BlobProperties currentBlob;
-
-            try
-            {
-                currentBlob = (await blobClient.GetPropertiesAsync().ConfigureAwait(false)).Value;
-            }
-            catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.BlobNotFound)
-            {
-                Log($"Checkpoint with partition id = '{ checkpoint.PartitionId }' could not be updated because no associated ownership was found.");
-                return;
-            }
-
-            // In case this key does not exist, ownerIdentifier is set to null.  The OwnerIdentifier in Checkpoint cannot
-            // be null as well, so we won't be able to update the associated ownership.
-
-            currentBlob.Metadata.TryGetValue(BlobMetadataKey.OwnerIdentifier, out var ownerIdentifier);
-
-            if (ownerIdentifier == checkpoint.OwnerIdentifier)
-            {
-                var metadata = new Dictionary<string, string>()
+            var metadata = new Dictionary<string, string>()
                 {
-                    { BlobMetadataKey.OwnerIdentifier, checkpoint.OwnerIdentifier },
                     { BlobMetadataKey.Offset, checkpoint.Offset.ToString() },
                     { BlobMetadataKey.SequenceNumber, checkpoint.SequenceNumber.ToString() }
                 };
 
-                var requestConditions = new BlobRequestConditions { IfMatch = currentBlob.ETag };
-
-                try
-                {
-                    await blobClient.SetMetadataAsync(metadata, requestConditions).ConfigureAwait(false);
-
-                    Log($"Checkpoint with partition id = '{ checkpoint.PartitionId }' updated.");
-                }
-                catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ConditionNotMet)
-                {
-                    Log($"Checkpoint with partition id = '{ checkpoint.PartitionId }' could not be updated because eTag has changed.");
-                }
-            }
-            else
+            MemoryStream blobContent = null;
+            try
             {
-                Log($"Checkpoint with partition id = '{ checkpoint.PartitionId }' could not be updated because owner has changed.");
+                blobContent = new MemoryStream(new byte[0]);
+                await blobClient.UploadAsync(blobContent, metadata: metadata).ConfigureAwait(false);
+                // TODO: Add log  - "Checkpoint with partition id = '{ checkpoint.PartitionId }' updated."
+            }
+            catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound)
+            {
+                // TODO: Add log  - "Checkpoint with partition id = '{ checkpoint.PartitionId }' could not be updated because specified container does not exist."
+                throw new RequestFailedException($"Checkpoint with partition id = '{ checkpoint.PartitionId }' could not be updated because specified container does not exist.", ex);
+            }
+            finally
+            {
+                blobContent?.Dispose();
             }
         }
-
-        /// <summary>
-        ///   Sends a log message to the current logger, if provided by the user.
-        /// </summary>
-        ///
-        /// <param name="message">The log message to send.</param>
-        ///
-        private void Log(string message) => _logger?.Invoke(message);
 
         /// <summary>
         ///   A workaround so we can create <see cref="PartitionOwnership"/> instances.
@@ -282,8 +288,6 @@ namespace Azure.Messaging.EventHubs.Processor
             /// <param name="consumerGroup">The name of the consumer group this partition ownership is associated with.</param>
             /// <param name="ownerIdentifier">The identifier of the associated <see cref="EventProcessorClient" /> instance.</param>
             /// <param name="partitionId">The identifier of the Event Hub partition this partition ownership is associated with.</param>
-            /// <param name="offset">The offset of the last <see cref="EventData" /> received by the associated partition processor.</param>
-            /// <param name="sequenceNumber">The sequence number of the last <see cref="EventData" /> received by the associated partition processor.</param>
             /// <param name="lastModifiedTime">The date and time, in UTC, that the last update was made to this ownership.</param>
             /// <param name="eTag">The entity tag needed to update this ownership.</param>
             ///
@@ -292,10 +296,35 @@ namespace Azure.Messaging.EventHubs.Processor
                                            string consumerGroup,
                                            string ownerIdentifier,
                                            string partitionId,
-                                           long? offset = null,
-                                           long? sequenceNumber = null,
                                            DateTimeOffset? lastModifiedTime = null,
-                                           string eTag = null) : base(fullyQualifiedNamespace, eventHubName, consumerGroup, ownerIdentifier, partitionId, offset, sequenceNumber, lastModifiedTime, eTag)
+                                           string eTag = null) : base(fullyQualifiedNamespace, eventHubName, consumerGroup, ownerIdentifier, partitionId, lastModifiedTime, eTag)
+            {
+            }
+        }
+
+        /// <summary>
+        ///   A workaround so we can create <see cref="Checkpoint"/> instances.
+        /// </summary>
+        ///
+        private class InnerCheckpoint : Checkpoint
+        {
+            /// <summary>
+            ///   Initializes a new instance of the <see cref="Checkpoint"/> class.
+            /// </summary>
+            ///
+            /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace this partition ownership is associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+            /// <param name="eventHubName">The name of the specific Event Hub this partition ownership is associated with, relative to the Event Hubs namespace that contains it.</param>
+            /// <param name="consumerGroup">The name of the consumer group this partition ownership is associated with.</param>
+            /// <param name="partitionId">The identifier of the Event Hub partition this partition ownership is associated with.</param>
+            /// <param name="offset">The offset of the last <see cref="EventData" /> received by the associated partition processor.</param>
+            /// <param name="sequenceNumber">The sequence number of the last <see cref="EventData" /> received by the associated partition processor.</param>
+            ///
+            public InnerCheckpoint(string fullyQualifiedNamespace,
+                                           string eventHubName,
+                                           string consumerGroup,
+                                           string partitionId,
+                                           long offset,
+                                           long sequenceNumber) : base(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, offset, sequenceNumber)
             {
             }
         }
