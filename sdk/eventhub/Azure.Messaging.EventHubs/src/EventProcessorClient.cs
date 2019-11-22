@@ -1003,7 +1003,7 @@ namespace Azure.Messaging.EventHubs
 
             try
             {
-                var eventArgs = new PartitionInitializingEventArgs(context, EventPosition.Earliest);
+                var eventArgs = new PartitionInitializingEventArgs(context, EventPosition.Earliest, RunningTaskTokenSource.Token);
                 await OnPartitionInitializingAsync(eventArgs).ConfigureAwait(false);
 
                 var startingPosition = eventArgs.DefaultStartingPosition;
@@ -1067,7 +1067,7 @@ namespace Azure.Messaging.EventHubs
 
             PartitionContexts.TryRemove(partitionId, out var context);
 
-            var eventArgs = new PartitionClosingEventArgs(context, reason);
+            var eventArgs = new PartitionClosingEventArgs(context, reason, RunningTaskTokenSource.Token);
             await OnPartitionClosingAsync(eventArgs).ConfigureAwait(false);
         }
 
@@ -1197,7 +1197,7 @@ namespace Azure.Messaging.EventHubs
 
                         try
                         {
-                            var eventArgs = new ProcessEventArgs(context, partitionEvent.Data, this);
+                            var eventArgs = new ProcessEventArgs(context, partitionEvent.Data, this, RunningTaskTokenSource.Token);
                             await OnProcessEventAsync(eventArgs).ConfigureAwait(false);
                         }
                         catch (Exception eventProcessingException)
