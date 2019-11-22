@@ -20,7 +20,8 @@ namespace Billing.Tests.ScenarioTests
         private const string BillingProfileName = "H6RI-TXWC-BG7-PGB";
         private const string InvoiceSectionDisplayName = "Canary Test EA Transition 2";
         private const string InvoiceSectionName = "ICYS-ZE5B-PJA-PGB";
-
+        private const string NewInvoiceSectionDisplayName = "SDK Test";
+        
         [Fact]
         public void GetInvoiceSectionTest()
         {
