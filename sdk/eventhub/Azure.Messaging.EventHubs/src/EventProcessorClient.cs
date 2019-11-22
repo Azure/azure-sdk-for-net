@@ -52,7 +52,7 @@ namespace Azure.Messaging.EventHubs
         private Func<ProcessErrorEventArgs, Task> _processErrorAsync;
 
         /// <summary>
-        ///   The handler to be called just before event processing starts for a given partition. TODO.
+        ///   The event to be raised just before event processing starts for a given partition.
         /// </summary>
         ///
         public event Func<PartitionInitializingEventArgs, Task> PartitionInitializingAsync
@@ -79,7 +79,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   The handler to be called once event processing stops for a given partition. TODO.
+        ///   The event to be raised once event processing stops for a given partition.
         /// </summary>
         ///
         public event Func<PartitionClosingEventArgs, Task> PartitionClosingAsync
@@ -106,7 +106,8 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Responsible for processing events received from the Event Hubs service.  Implementation is mandatory. TODO.
+        ///   The event responsible for processing events received from the Event Hubs service.  Implementation
+        ///   is mandatory.
         /// </summary>
         ///
         public event Func<ProcessEventArgs, Task> ProcessEventAsync
@@ -133,8 +134,8 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Responsible for processing unhandled exceptions thrown while this processor is running.
-        ///   Implementation is mandatory. TODO.
+        ///   The event responsible for processing unhandled exceptions thrown while this processor is running.
+        ///   Implementation is mandatory.
         /// </summary>
         ///
         public event Func<ProcessErrorEventArgs, Task> ProcessErrorAsync
@@ -238,13 +239,6 @@ namespace Azure.Messaging.EventHubs
         private Func<EventHubConnection> ConnectionFactory { get; }
 
         /// <summary>
-        ///   Indicates whether the client has ownership of the associated <see cref="EventHubConnection" />
-        ///   and should take responsibility for managing its lifespan.
-        /// </summary>
-        ///
-        private bool OwnsConnection { get; } = true;
-
-        /// <summary>
         ///   The active policy which governs retry attempts for the
         ///   processor.
         /// </summary>
@@ -287,7 +281,6 @@ namespace Azure.Messaging.EventHubs
 
         /// <summary>
         ///   The set of partition ownership this event processor owns.  Partition ids are used as keys.
-        ///   TODO: create on constructor, destroy on close.
         /// </summary>
         ///
         private Dictionary<string, PartitionOwnership> InstanceOwnership { get; set; } = new Dictionary<string, PartitionOwnership>();
@@ -392,7 +385,6 @@ namespace Azure.Messaging.EventHubs
 
             ConnectionStringProperties connectionStringProperties = ConnectionStringParser.Parse(connectionString);
 
-            OwnsConnection = true;
             ConnectionFactory = () => new EventHubConnection(connectionString, eventHubName, clientOptions.ConnectionOptions);
             FullyQualifiedNamespace = connectionStringProperties.Endpoint.Host;
             EventHubName = string.IsNullOrEmpty(eventHubName) ? connectionStringProperties.EventHubName : eventHubName;
@@ -429,7 +421,6 @@ namespace Azure.Messaging.EventHubs
 
             clientOptions = clientOptions?.Clone() ?? new EventProcessorClientOptions();
 
-            OwnsConnection = true;
             ConnectionFactory = () => new EventHubConnection(fullyQualifiedNamespace, eventHubName, credential, clientOptions.ConnectionOptions);
             FullyQualifiedNamespace = fullyQualifiedNamespace;
             EventHubName = eventHubName;
@@ -446,7 +437,6 @@ namespace Azure.Messaging.EventHubs
         ///
         protected EventProcessorClient()
         {
-            OwnsConnection = false;
         }
 
         /// <summary>
@@ -467,9 +457,9 @@ namespace Azure.Messaging.EventHubs
                                       EventHubConnection connection,
                                       EventProcessorClientOptions clientOptions)
         {
-            // TODO: we probably can remove this constructor and OwnsConnection property because the processor does not have
-            // a single connection anymore.  In fact, returning the same connection from the factory might result in undefined
-            // behavior.  We could take a connection factory here instead of a single connection.
+            // TODO: we probably can remove this constructor because the processor does not have a single connection anymore.
+            // In fact, returning the same connection from the factory might result in undefined behavior.  We could take a
+            // connection factory here instead of a single connection.
 
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
             Argument.AssertNotNull(partitionManager, nameof(partitionManager));
@@ -477,7 +467,6 @@ namespace Azure.Messaging.EventHubs
 
             clientOptions = clientOptions?.Clone() ?? new EventProcessorClientOptions();
 
-            OwnsConnection = false;
             ConnectionFactory = () => connection;
             FullyQualifiedNamespace = connection.FullyQualifiedNamespace;
             EventHubName = connection.EventHubName;
@@ -676,10 +665,10 @@ namespace Azure.Messaging.EventHubs
                                                     PartitionContext context) => UpdateCheckpointAsync(eventData, context);
 
         /// <summary>
-        ///   TODO.
+        ///   Called when a 'partition initializing' event is triggered.
         /// </summary>
         ///
-        /// <param name="eventArgs">TODO.</param>
+        /// <param name="eventArgs">The set of arguments to identify the context of the partition that will be processed.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
@@ -694,10 +683,10 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   TODO.
+        ///   Called when a 'partition closing' event is triggered.
         /// </summary>
         ///
-        /// <param name="eventArgs">TODO.</param>
+        /// <param name="eventArgs">The set of arguments to identify the context of the partition that was being processed.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
@@ -712,20 +701,20 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   TODO.
+        ///   Called when a 'process event' event is triggered.
         /// </summary>
         ///
-        /// <param name="eventArgs">TODO.</param>
+        /// <param name="eventArgs">The set of arguments to identify the context of the event to be processed.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         protected virtual Task OnProcessEventAsync(ProcessEventArgs eventArgs) => _processEventAsync(eventArgs);
 
         /// <summary>
-        ///   TODO.
+        ///   Called when a 'process error' event is triggered.
         /// </summary>
         ///
-        /// <param name="eventArgs">TODO.</param>
+        /// <param name="eventArgs">The set of arguments to identify the context of the error to be processed.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
@@ -989,7 +978,8 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   TODO.
+        ///   Creates and starts running a new partition processing task.  Another task might be overwritten by the creation
+        ///   of the new one and, for this reason, it needs to be stopped prior to this method call.
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the Event Hub partition whose processing is starting.</param>
