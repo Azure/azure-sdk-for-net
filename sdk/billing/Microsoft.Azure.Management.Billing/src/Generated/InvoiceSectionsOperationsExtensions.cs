@@ -158,59 +158,7 @@ namespace Microsoft.Azure.Management.Billing
                     return _result.Body;
                 }
             }
-
-            /// <summary>
-            /// The operation to update a InvoiceSection.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='billingAccountName'>
-            /// billing Account Id.
-            /// </param>
-            /// <param name='billingProfileName'>
-            /// Billing Profile Id.
-            /// </param>
-            /// <param name='invoiceSectionName'>
-            /// InvoiceSection Id.
-            /// </param>
-            /// <param name='parameters'>
-            /// Request parameters supplied to the Create InvoiceSection operation.
-            /// </param>
-            public static InvoiceSection Update(this IInvoiceSectionsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, InvoiceSection parameters)
-            {
-                return operations.UpdateAsync(billingAccountName, billingProfileName, invoiceSectionName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// The operation to update a InvoiceSection.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='billingAccountName'>
-            /// billing Account Id.
-            /// </param>
-            /// <param name='billingProfileName'>
-            /// Billing Profile Id.
-            /// </param>
-            /// <param name='invoiceSectionName'>
-            /// InvoiceSection Id.
-            /// </param>
-            /// <param name='parameters'>
-            /// Request parameters supplied to the Create InvoiceSection operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<InvoiceSection> UpdateAsync(this IInvoiceSectionsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, InvoiceSection parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(billingAccountName, billingProfileName, invoiceSectionName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
+        
             /// <summary>
             /// Elevates the caller's access to match their billing profile access.
             /// </summary>
@@ -305,58 +253,5 @@ namespace Microsoft.Azure.Management.Billing
                     return _result.Body;
                 }
             }
-
-            /// <summary>
-            /// The operation to update a InvoiceSection.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='billingAccountName'>
-            /// billing Account Id.
-            /// </param>
-            /// <param name='billingProfileName'>
-            /// Billing Profile Id.
-            /// </param>
-            /// <param name='invoiceSectionName'>
-            /// InvoiceSection Id.
-            /// </param>
-            /// <param name='parameters'>
-            /// Request parameters supplied to the Create InvoiceSection operation.
-            /// </param>
-            public static InvoiceSection BeginUpdate(this IInvoiceSectionsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, InvoiceSection parameters)
-            {
-                return operations.BeginUpdateAsync(billingAccountName, billingProfileName, invoiceSectionName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// The operation to update a InvoiceSection.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='billingAccountName'>
-            /// billing Account Id.
-            /// </param>
-            /// <param name='billingProfileName'>
-            /// Billing Profile Id.
-            /// </param>
-            /// <param name='invoiceSectionName'>
-            /// InvoiceSection Id.
-            /// </param>
-            /// <param name='parameters'>
-            /// Request parameters supplied to the Create InvoiceSection operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<InvoiceSection> BeginUpdateAsync(this IInvoiceSectionsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, InvoiceSection parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(billingAccountName, billingProfileName, invoiceSectionName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
     }
 }

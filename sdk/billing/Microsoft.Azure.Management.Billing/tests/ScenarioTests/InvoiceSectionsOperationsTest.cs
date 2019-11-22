@@ -64,32 +64,5 @@ namespace Billing.Tests.ScenarioTests
                 Assert.Equal(InvoiceSectionDisplayName, invoiceSection.DisplayName);
             }
         }
-
-        [Fact]
-        public void UpdateInvoiceSectionTest()
-        {
-            var something = typeof(Billing.Tests.ScenarioTests.OperationsTests);
-            string executingAssemblyPath = something.GetTypeInfo().Assembly.Location;
-            HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
-
-            using (MockContext context = MockContext.Start(this.GetType()))
-            {
-                // Create client
-                var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-
-                var invoiceSectionUpdateRequest = new InvoiceSection
-                {
-                    DisplayName = InvoiceSectionDisplayName
-                };
-
-                // Update the invoice section
-                var invoiceSection = billingMgmtClient.InvoiceSections.Update(BillingAccountName, BillingProfileName, InvoiceSectionName, invoiceSectionUpdateRequest);
-
-                // Verify the response
-                Assert.NotNull(invoiceSection); 
-                Assert.Equal(InvoiceSectionDisplayName, invoiceSection.DisplayName);
-            }
-        }
-
     }
 }
