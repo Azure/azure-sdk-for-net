@@ -51,6 +51,9 @@ namespace Azure.Messaging.EventHubs
         /// <summary>Responsible for processing unhandled exceptions thrown while this processor is running.</summary>
         private Func<ProcessErrorEventArgs, Task> _processErrorAsync;
 
+        /// <summary>Indicates whether or not this event processor is currently running.  Used only for mocking purposes.</summary>
+        private bool? _isRunning;
+
         /// <summary>
         ///   The event to be raised just before event processing starts for a given partition.
         /// </summary>
@@ -188,8 +191,21 @@ namespace Azure.Messaging.EventHubs
         ///
         public bool IsRunning
         {
-            get => throw new NotImplementedException();
-            protected set => throw new NotImplementedException();
+            get
+            {
+                if (_isRunning.HasValue)
+                {
+                    return _isRunning.Value;
+                }
+
+                // Capture the load balancing task so we don't end up with a race condition.
+
+                var loadBalancingTask = ActiveLoadBalancingTask;
+
+                return loadBalancingTask != null && !loadBalancingTask.IsCompleted;
+            }
+
+            protected set => _isRunning = value;
         }
 
         /// <summary>
@@ -601,7 +617,6 @@ namespace Azure.Messaging.EventHubs
 
                         InstanceOwnership.Clear();
 
-                        // TODO: once IsRunning is implemented, update the following comment.
                         // We need to wait until all tasks have stopped before making the load balancing task null.  If we did it sooner, we
                         // would have a race condition where the user could update the processing handlers while some pumps are still running.
 
