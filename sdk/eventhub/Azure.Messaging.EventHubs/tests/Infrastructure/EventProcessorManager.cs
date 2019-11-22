@@ -61,13 +61,13 @@ namespace Azure.Messaging.EventHubs.Tests
         private Action<PartitionClosingEventArgs> OnStop { get; }
 
         /// <summary>
-        ///   A callback action to be called on <see cref="EventProcessorClient.ProcessEventAsyncHandler" />.
+        ///   A callback action to be called on <see cref="EventProcessorClient.ProcessEventAsync" />.
         /// </summary>
         ///
         private Action<ProcessEventArgs> OnProcessEvent { get; }
 
         /// <summary>
-        ///   A callback action to be called on <see cref="EventProcessorClient.ProcessErrorAsyncHandler" />.
+        ///   A callback action to be called on <see cref="EventProcessorClient.ProcessErrorAsync" />.
         /// </summary>
         ///
         private Action<ProcessErrorEventArgs> OnProcessError { get; }
@@ -82,8 +82,8 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <param name="clientOptions">The set of options to use for the event processors.</param>
         /// <param name="onInitialize">A callback action to be called on <see cref="EventProcessorClient.PartitionInitializingAsync" />.</param>
         /// <param name="onStop">A callback action to be called on <see cref="EventProcessorClient.PartitionClosingAsync" />.</param>
-        /// <param name="onProcessEvent">A callback action to be called on <see cref="EventProcessorClient.ProcessEventAsyncHandler" />.</param>
-        /// <param name="onProcessError">A callback action to be called on <see cref="EventProcessorClient.ProcessErrorAsyncHandler" />.</param>
+        /// <param name="onProcessEvent">A callback action to be called on <see cref="EventProcessorClient.ProcessEventAsync" />.</param>
+        /// <param name="onProcessError">A callback action to be called on <see cref="EventProcessorClient.ProcessErrorAsync" />.</param>
         ///
         public EventProcessorManager(string consumerGroup,
                                      string connectionString,
@@ -152,13 +152,13 @@ namespace Azure.Messaging.EventHubs.Tests
                     };
                 }
 
-                eventProcessor.ProcessEventAsyncHandler += eventArgs =>
+                eventProcessor.ProcessEventAsync += eventArgs =>
                 {
                     OnProcessEvent?.Invoke(eventArgs);
                     return Task.CompletedTask;
                 };
 
-                eventProcessor.ProcessErrorAsyncHandler += eventArgs =>
+                eventProcessor.ProcessErrorAsync += eventArgs =>
                 {
                     OnProcessError?.Invoke(eventArgs);
                     return Task.CompletedTask;

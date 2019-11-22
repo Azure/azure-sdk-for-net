@@ -109,7 +109,7 @@ namespace Azure.Messaging.EventHubs
         ///   Responsible for processing events received from the Event Hubs service.  Implementation is mandatory. TODO.
         /// </summary>
         ///
-        public event Func<ProcessEventArgs, Task> ProcessEventAsyncHandler
+        public event Func<ProcessEventArgs, Task> ProcessEventAsync
         {
             add
             {
@@ -137,7 +137,7 @@ namespace Azure.Messaging.EventHubs
         ///   Implementation is mandatory. TODO.
         /// </summary>
         ///
-        public event Func<ProcessErrorEventArgs, Task> ProcessErrorAsyncHandler
+        public event Func<ProcessErrorEventArgs, Task> ProcessErrorAsync
         {
             add
             {
@@ -497,7 +497,7 @@ namespace Azure.Messaging.EventHubs
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         /// <exception cref="EventHubsClientClosedException">Occurs when this <see cref="EventProcessorClient" /> instance is already closed.</exception>
-        /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="ProcessEventAsyncHandler" /> or <see cref="ProcessErrorAsyncHandler" /> set.</exception>
+        /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="ProcessEventAsync" /> or <see cref="ProcessErrorAsync" /> set.</exception>
         ///
         public virtual async Task StartProcessingAsync(CancellationToken cancellationToken = default)
         {
@@ -520,12 +520,12 @@ namespace Azure.Messaging.EventHubs
                         {
                             if (_processEventAsync == null)
                             {
-                                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotStartEventProcessorWithoutHandler, nameof(ProcessEventAsyncHandler)));
+                                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotStartEventProcessorWithoutHandler, nameof(ProcessEventAsync)));
                             }
 
                             if (_processErrorAsync == null)
                             {
-                                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotStartEventProcessorWithoutHandler, nameof(ProcessErrorAsyncHandler)));
+                                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotStartEventProcessorWithoutHandler, nameof(ProcessErrorAsync)));
                             }
 
                             // We expect the token source to be null, but we are playing safe.
@@ -554,7 +554,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <exception cref="EventHubsClientClosedException">Occurs when this <see cref="EventProcessorClient" /> instance is already closed.</exception>
-        /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="ProcessEventAsyncHandler" /> or <see cref="ProcessErrorAsyncHandler" /> set.</exception>
+        /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="ProcessEventAsync" /> or <see cref="ProcessErrorAsync" /> set.</exception>
         ///
         public virtual void StartProcessing(CancellationToken cancellationToken = default) => StartProcessingAsync(cancellationToken).GetAwaiter().GetResult();
 

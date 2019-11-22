@@ -102,7 +102,7 @@ namespace Azure.Messaging.EventHubs.Samples
                 return Task.CompletedTask;
             };
 
-            eventProcessor.ProcessEventAsyncHandler += (eventArgs) =>
+            eventProcessor.ProcessEventAsync += (eventArgs) =>
             {
                 // Here the user can specify what to do with the event received from the event processor.  We are counting how
                 // many events were received across all partitions so we can check whether all sent events were received.
@@ -121,7 +121,7 @@ namespace Azure.Messaging.EventHubs.Samples
                 return Task.CompletedTask;
             };
 
-            eventProcessor.ProcessErrorAsyncHandler += (eventArgs) =>
+            eventProcessor.ProcessErrorAsync += (eventArgs) =>
             {
                 // Any exception which occurs as a result of the event processor itself will be passed to
                 // this delegate so it may be handled.  The processor will continue to process events if
