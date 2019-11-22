@@ -169,7 +169,7 @@ namespace Azure.Messaging.EventHubs.Samples.Infrastructure
                 var key = (checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId);
                 _checkpoints[key] = checkpoint;
 
-                Log($"Checkpoint with partition id = '{checkpoint.PartitionId}' could not be updated because owner has changed.");
+                Log($"Checkpoint with partition id = '{checkpoint.PartitionId}' updated successfully.");
             }
 
             return Task.CompletedTask;
