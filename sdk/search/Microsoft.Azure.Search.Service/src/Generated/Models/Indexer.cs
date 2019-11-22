@@ -51,8 +51,10 @@ namespace Microsoft.Azure.Search.Models
         /// after enrichment and immediately before indexing.</param>
         /// <param name="isDisabled">A value indicating whether the indexer is
         /// disabled. Default is false.</param>
+        /// <param name="cache">An optional cache to store intermediate skill
+        /// outputs for incremental enrichment.</param>
         /// <param name="eTag">The ETag of the Indexer.</param>
-        public Indexer(string name, string dataSourceName, string targetIndexName, string description = default(string), string skillsetName = default(string), IndexingSchedule schedule = default(IndexingSchedule), IndexingParameters parameters = default(IndexingParameters), IList<FieldMapping> fieldMappings = default(IList<FieldMapping>), IList<FieldMapping> outputFieldMappings = default(IList<FieldMapping>), bool? isDisabled = default(bool?), string eTag = default(string))
+        public Indexer(string name, string dataSourceName, string targetIndexName, string description = default(string), string skillsetName = default(string), IndexingSchedule schedule = default(IndexingSchedule), IndexingParameters parameters = default(IndexingParameters), IList<FieldMapping> fieldMappings = default(IList<FieldMapping>), IList<FieldMapping> outputFieldMappings = default(IList<FieldMapping>), bool? isDisabled = default(bool?), IndexerCache cache = default(IndexerCache), string eTag = default(string))
         {
             Name = name;
             Description = description;
@@ -64,6 +66,7 @@ namespace Microsoft.Azure.Search.Models
             FieldMappings = fieldMappings;
             OutputFieldMappings = outputFieldMappings;
             IsDisabled = isDisabled;
+            Cache = cache;
             ETag = eTag;
             CustomInit();
         }
@@ -139,6 +142,13 @@ namespace Microsoft.Azure.Search.Models
         public bool? IsDisabled { get; set; }
 
         /// <summary>
+        /// Gets or sets an optional cache to store intermediate skill outputs
+        /// for incremental enrichment.
+        /// </summary>
+        [JsonProperty(PropertyName = "cache")]
+        public IndexerCache Cache { get; set; }
+
+        /// <summary>
         /// Gets or sets the ETag of the Indexer.
         /// </summary>
         [JsonProperty(PropertyName = "@odata.etag")]
@@ -187,6 +197,10 @@ namespace Microsoft.Azure.Search.Models
                         element1.Validate();
                     }
                 }
+            }
+            if (Cache != null)
+            {
+                Cache.Validate();
             }
         }
     }
