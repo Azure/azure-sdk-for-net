@@ -36,6 +36,10 @@ jobs:
         inputs:
           artifactName: packages
           path: $(Build.ArtifactStagingDirectory)
+      - template: ../steps/archetype-sdk-docs.yml
+        parameters:
+          ServiceDirectory: ${{parameters.ServiceDirectory}}
+          Artifacts: ${{parameters.Artifacts}}
   - job: "Analyze"
     condition: ne(variables['Skip.Analyze'], true)
     variables:
@@ -79,6 +83,21 @@ jobs:
         inputs:
           ignoreDirectories: "sdk/storage/Azure.Storage.Common/swagger/Generator"
         condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '12.x'
+        displayName: 'Install NodeJS'
+      - task: PowerShell@2
+        displayName: "Verify generated code"
+        env:
+          DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+          DOTNET_CLI_TELEMETRY_OPTOUT: 1
+          DOTNET_MULTILEVEL_LOOKUP: 0
+          NODE_OPTIONS: "--max-old-space-size=4096" 
+        inputs:
+          filePath: "eng/CodeChecks.ps1"
+          pwsh: true
+          failOnStderr:  false
       - task: PublishPipelineArtifact@1
         condition: succeeded()
         displayName: "Publish Report Artifacts"

@@ -177,7 +177,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <returns>The set of information for the Event Hub that this client is associated with.</returns>
         ///
-        public override async Task<EventHubProperties> GetPropertiesAsync(EventHubRetryPolicy retryPolicy,
+        public override async Task<EventHubProperties> GetPropertiesAsync(EventHubsRetryPolicy retryPolicy,
                                                                           CancellationToken cancellationToken)
         {
             Argument.AssertNotClosed(_closed, nameof(AmqpClient));
@@ -270,7 +270,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <returns>The set of information for the requested partition under the Event Hub this client is associated with.</returns>
         ///
         public override async Task<PartitionProperties> GetPartitionPropertiesAsync(string partitionId,
-                                                                                    EventHubRetryPolicy retryPolicy,
+                                                                                    EventHubsRetryPolicy retryPolicy,
                                                                                     CancellationToken cancellationToken)
         {
             Argument.AssertNotClosed(_closed, nameof(AmqpClient));

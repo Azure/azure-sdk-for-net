@@ -30,6 +30,10 @@
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>
 		<PackageReleaseNotes>
 		<![CDATA[
+		<Version>20.0.0-preview</Version>
+		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>
+		<PackageReleaseNotes>
+		<![CDATA[
             - Bugfix in PrivateLinkServiceConnectionState: property "ActionRequired" renamed to "ActionsRequired"
 		]]></PackageReleaseNotes>
 	</PropertyGroup>

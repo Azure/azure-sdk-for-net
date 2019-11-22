@@ -41,4 +41,3 @@ stages:
     Artifacts:
     - name: Azure.Identity
       safeName: AzureIdentity
-      

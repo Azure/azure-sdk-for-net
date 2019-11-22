@@ -420,6 +420,11 @@ namespace Azure.Storage
             /// The key of the error message returned for errors.
             /// </summary>
             public const string ErrorMessageKey = "message";
+
+            /// <summary>
+            /// The Azure Storage error codes for Datalake Client.
+            /// </summary>
+            public const string AlreadyExists = "ContainerAlreadyExists";
         }
 
         /// <summary>

@@ -7,6 +7,7 @@ omitted_paths:
   - sdk/*mgmt*/*
   - sdk/*/*.Management.*/*
   - samples/*
+  - common/SmokeTests/*
 language: net
 root_check_enabled: True
 required_readme_sections:
@@ -25,7 +26,7 @@ known_presence_issues:
   - ['sdk/operationalinsights/Microsoft.Azure.OperationalInsights','#5499']
   - ['sdk/hdinsight/Microsoft.Azure.HDInsight.Job','#5499']
   - ['sdk/alertsmanagement/Microsoft.Azure.Management.AlertsManagement','#5499']
-  - ['sdk/applicationinsights/Microsoft.Azure.ApplicationInsights','#5499']
+  - ['sdk/applicationinsights/Microsoft.Azure.ApplicationInsights.Query','#5499']
   - ['sdk/containerregistry/Microsoft.Azure.ContainerRegistry','#5499']
   - ['sdk/cognitiveservices/Language.LUIS.Runtime','#5499']
   - ['sdk/cognitiveservices/Search.BingEntitySearch','#5499']
@@ -59,6 +60,7 @@ known_presence_issues:
 known_content_issues:
   - ['README.md','Root readme']
   - ['doc/README.md','Doc readme']
+  - ['sdk/core/Microsoft.Extensions.Azure/README.md','#5499']
   - ['sdk/keyvault/Microsoft.Azure.KeyVault/README.md','#5499']
   - ['sdk/servicebus/Microsoft.Azure.ServiceBus/README.md','#5499']
   - ['sdk/eventhub/Microsoft.Azure.EventHubs/README.md','#5499']

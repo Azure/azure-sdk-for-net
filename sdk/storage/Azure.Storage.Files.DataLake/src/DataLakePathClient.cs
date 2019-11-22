@@ -726,7 +726,7 @@ namespace Azure.Storage.Files.DataLake
             using (Pipeline.BeginLoggingScope(nameof(DataLakePathClient)))
             {
                 Pipeline.LogMethodEnter(
-                    nameof(BlobBaseClient),
+                    nameof(DataLakePathClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(recursive)}: {recursive}\n" +
@@ -946,7 +946,7 @@ namespace Azure.Storage.Files.DataLake
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/getproperties" />.
         /// </summary>
-        /// <param name="upn">
+        /// <param name="userPrincipalName">
         /// Optional.Valid only when Hierarchical Namespace is enabled for the account.If "true",
         /// the user identity values returned in the x-ms-owner, x-ms-group, and x-ms-acl response
         /// headers will be transformed from Azure Active Directory Object IDs to User Principal Names.
@@ -972,11 +972,11 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         [ForwardsClientCalls]
         public virtual Response<PathAccessControl> GetAccessControl(
-            bool? upn = default,
+            bool? userPrincipalName = default,
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             GetAccessControlInternal(
-                upn,
+                userPrincipalName,
                 conditions,
                 false, // async
                 cancellationToken)
@@ -988,7 +988,7 @@ namespace Azure.Storage.Files.DataLake
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/getproperties" />.
         /// </summary>
-        /// <param name="upn">
+        /// <param name="userPrincipalName">
         /// Optional.Valid only when Hierarchical Namespace is enabled for the account.If "true",
         /// the user identity values returned in the x-ms-owner, x-ms-group, and x-ms-acl response
         /// headers will be transformed from Azure Active Directory Object IDs to User Principal Names.
@@ -1014,11 +1014,11 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<PathAccessControl>> GetAccessControlAsync(
-            bool? upn = default,
+            bool? userPrincipalName = default,
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await GetAccessControlInternal(
-                upn,
+                userPrincipalName,
                 conditions,
                 true, // async
                 cancellationToken)
@@ -1030,7 +1030,7 @@ namespace Azure.Storage.Files.DataLake
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/getproperties" />.
         /// </summary>
-        /// <param name="upn">
+        /// <param name="userPrincipalName">
         /// Optional.Valid only when Hierarchical Namespace is enabled for the account.If "true",
         /// the user identity values returned in the x-ms-owner, x-ms-group, and x-ms-acl response
         /// headers will be transformed from Azure Active Directory Object IDs to User Principal Names.
@@ -1058,7 +1058,7 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<PathAccessControl>> GetAccessControlInternal(
-            bool? upn,
+            bool? userPrincipalName,
             DataLakeRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
@@ -1076,7 +1076,7 @@ namespace Azure.Storage.Files.DataLake
                         pipeline: Pipeline,
                         resourceUri: _dfsUri,
                         action: PathGetPropertiesAction.GetAccessControl,
-                        upn: upn,
+                        upn: userPrincipalName,
                         leaseId: conditions?.LeaseId,
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
@@ -1116,8 +1116,14 @@ namespace Azure.Storage.Files.DataLake
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
         /// </summary>
-        /// <param name="accessControl">
-        /// The access control to set.
+        /// <param name="acl">
+        /// The POSIX access control list for the file or directory.
+        /// </param>
+        /// <param name="owner">
+        /// The owner of the file or directory.
+        /// </param>
+        /// <param name="group">
+        /// The owning group of the file or directory.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
@@ -1137,11 +1143,15 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         [ForwardsClientCalls]
         public virtual Response<PathInfo> SetAccessControl(
-            PathAccessControl accessControl,
+            string acl,
+            string owner = default,
+            string group = default,
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             SetAccessControlInternal(
-                accessControl,
+                acl,
+                owner,
+                group,
                 conditions,
                 false, // async
                 cancellationToken)
@@ -1153,8 +1163,14 @@ namespace Azure.Storage.Files.DataLake
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
         /// </summary>
-        /// <param name="accessControl">
-        /// The access control to set.
+        /// <param name="acl">
+        /// The POSIX access control list for the file or directory.
+        /// </param>
+        /// <param name="owner">
+        /// The owner of the file or directory.
+        /// </param>
+        /// <param name="group">
+        /// The owning group of the file or directory.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
@@ -1174,11 +1190,15 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<PathInfo>> SetAccessControlAsync(
-            PathAccessControl accessControl,
+            string acl,
+            string owner = default,
+            string group = default,
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await SetAccessControlInternal(
-                accessControl,
+                acl,
+                owner,
+                group,
                 conditions,
                 true, // async
                 cancellationToken)
@@ -1190,8 +1210,14 @@ namespace Azure.Storage.Files.DataLake
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
         /// </summary>
-        /// <param name="accessControl">
-        /// The access control to set.
+        /// <param name="acl">
+        /// The POSIX access control list for the file or directory.
+        /// </param>
+        /// <param name="owner">
+        /// The owner of the file or directory.
+        /// </param>
+        /// <param name="group">
+        /// The owning group of the file or directory.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
@@ -1213,7 +1239,9 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<PathInfo>> SetAccessControlInternal(
-            PathAccessControl accessControl,
+            string acl,
+            string owner,
+            string group,
             DataLakeRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
@@ -1224,7 +1252,9 @@ namespace Azure.Storage.Files.DataLake
                     nameof(DataLakePathClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(accessControl)}: {accessControl}\n" +
+                    $"{nameof(acl)}: {acl}\n" +
+                    $"{nameof(owner)}: {owner}\n" +
+                    $"{nameof(group)}: {group}\n" +
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
@@ -1234,10 +1264,9 @@ namespace Azure.Storage.Files.DataLake
                             pipeline: Pipeline,
                             resourceUri: _dfsUri,
                             leaseId: conditions?.LeaseId,
-                            owner: accessControl.Owner,
-                            group: accessControl.Group,
-                            permissions: accessControl.Permissions,
-                            acl: accessControl.Acl,
+                            owner: owner,
+                            group: group,
+                            acl: acl,
                             ifMatch: conditions?.IfMatch,
                             ifNoneMatch: conditions?.IfNoneMatch,
                             ifModifiedSince: conditions?.IfModifiedSince,
@@ -1266,6 +1295,193 @@ namespace Azure.Storage.Files.DataLake
             }
         }
         #endregion Set Access Control
+
+        #region Set Permissions
+        /// <summary>
+        /// The <see cref="SetPermissions"/> operation sets the
+        /// file permissions on a path.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="permissions">
+        ///  The POSIX access permissions for the file owner, the file owning group, and others.
+        /// </param>
+        /// <param name="owner">
+        /// The owner of the file or directory.
+        /// </param>
+        /// <param name="group">
+        /// The owning group of the file or directory.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
+        /// setting the the path's access control.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the updated
+        /// path.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [ForwardsClientCalls]
+        public virtual Response<PathInfo> SetPermissions(
+            string permissions,
+            string owner = default,
+            string group = default,
+            DataLakeRequestConditions conditions = default,
+            CancellationToken cancellationToken = default) =>
+            SetPermissionsInternal(
+                permissions,
+                owner,
+                group,
+                conditions,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="SetPermissionsAsync"/> operation sets the
+        /// file permissions on a path.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="permissions">
+        ///  The POSIX access permissions for the file owner, the file owning group, and others.
+        /// </param>
+        /// <param name="owner">
+        /// The owner of the file or directory.
+        /// </param>
+        /// <param name="group">
+        /// The owning group of the file or directory.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
+        /// setting the the path's access control.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the updated
+        /// path.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PathInfo>> SetPermissionsAsync(
+            string permissions,
+            string owner = default,
+            string group = default,
+            DataLakeRequestConditions conditions = default,
+            CancellationToken cancellationToken = default) =>
+            await SetPermissionsInternal(
+                permissions,
+                owner,
+                group,
+                conditions,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="SetPermissionsInternal"/> operation sets the
+        /// file permissions on a path.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="permissions">
+        ///  The POSIX access permissions for the file owner, the file owning group, and others.
+        /// </param>
+        /// <param name="owner">
+        /// The owner of the file or directory.
+        /// </param>
+        /// <param name="group">
+        /// The owning group of the file or directory.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
+        /// setting the the path's access control.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the updated
+        /// path.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<PathInfo>> SetPermissionsInternal(
+            string permissions,
+            string owner,
+            string group,
+            DataLakeRequestConditions conditions,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (Pipeline.BeginLoggingScope(nameof(DataLakePathClient)))
+            {
+                Pipeline.LogMethodEnter(
+                    nameof(DataLakePathClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(permissions)}: {permissions}\n" +
+                    $"{nameof(owner)}: {owner}\n" +
+                    $"{nameof(group)}: {group}\n" +
+                    $"{nameof(conditions)}: {conditions}");
+                try
+                {
+                    Response<PathSetAccessControlResult> response =
+                        await DataLakeRestClient.Path.SetAccessControlAsync(
+                            clientDiagnostics: _clientDiagnostics,
+                            pipeline: Pipeline,
+                            resourceUri: _dfsUri,
+                            leaseId: conditions?.LeaseId,
+                            owner: owner,
+                            group: group,
+                            permissions: permissions,
+                            ifMatch: conditions?.IfMatch,
+                            ifNoneMatch: conditions?.IfNoneMatch,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            async: async,
+                            cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+
+                    return Response.FromValue(
+                        new PathInfo()
+                        {
+                            ETag = response.Value.ETag,
+                            LastModified = response.Value.LastModified
+                        },
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(DataLakePathClient));
+                }
+            }
+        }
+        #endregion Set Permission
 
         #region Get Properties
         /// <summary>

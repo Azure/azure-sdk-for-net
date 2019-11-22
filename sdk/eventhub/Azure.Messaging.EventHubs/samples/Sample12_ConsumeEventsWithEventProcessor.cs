@@ -28,7 +28,7 @@ namespace Azure.Messaging.EventHubs.Samples
         ///   A short description of the sample.
         /// </summary>
         ///
-        public string Description { get; } = "An example of consuming events from all Event Hub partitions at once, using the Event Processor.";
+        public string Description { get; } = "An example of consuming events from all Event Hub partitions at once, using the Event Processor client.";
 
         /// <summary>
         ///   Runs the sample using the specified Event Hubs connection information.
@@ -73,51 +73,50 @@ namespace Azure.Messaging.EventHubs.Samples
 
                 // TODO: explain callbacks setup once the public API is finished for the next preview.
 
-                eventProcessor.InitializeProcessingForPartitionAsync = (PartitionContext partitionContext) =>
+                eventProcessor.InitializeProcessingForPartitionAsync = (initializationContext) =>
                 {
-                    // TODO: Set the default initial position to "Latest" here.
-
-
                     // This is the last piece of code guaranteed to run before event processing, so all initialization
                     // must be done by the moment this method returns.
 
+                    // We want to receive events from the latest available position so older events don't interefere with our sample.
+
+                    initializationContext.DefaultStartingPosition = EventPosition.Latest;
+
                     Interlocked.Increment(ref partitionsBeingProcessedCount);
 
-                    Console.WriteLine($"\tPartition '{ partitionContext.PartitionId }': partition processing has started.");
+                    Console.WriteLine($"\tPartition '{ initializationContext.Context.PartitionId }': partition processing has started.");
 
                     // This method is asynchronous, which means it's expected to return a Task.
 
                     return Task.CompletedTask;
                 };
 
-                eventProcessor.ProcessingForPartitionStoppedAsync = (PartitionContext partitionContext, PartitionProcessorCloseReason reason) =>
+                eventProcessor.ProcessingForPartitionStoppedAsync = (stopContext) =>
                 {
                     // The code to be run just before stopping processing events for a partition.  This is the right place to dispose
                     // of objects that will no longer be used.
 
                     Interlocked.Decrement(ref partitionsBeingProcessedCount);
 
-                    Console.WriteLine($"\tPartition '{ partitionContext.PartitionId }': partition processing has stopped. Reason: { reason }.");
+                    Console.WriteLine($"\tPartition '{ stopContext.Context.PartitionId }': partition processing has stopped. Reason: { stopContext.Reason }.");
 
                     // This method is asynchronous, which means it's expected to return a Task.
 
                     return Task.CompletedTask;
                 };
 
-                eventProcessor.ProcessEventsAsync = (PartitionContext partitionContext, IEnumerable<EventData> events) =>
+                eventProcessor.ProcessEventAsync = (processorEvent) =>
                 {
-                    // Here the user can specify what to do with the events received from the event processor.  We are counting how
+                    // Here the user can specify what to do with the event received from the event processor.  We are counting how
                     // many events were received across all partitions so we can check whether all sent events were received.
                     //
-                    // It's important to notice that this method is called even when no events are received after the maximum wait time, which
-                    // can be specified by the user in the event processor options.  In this case, the IEnumerable events is empty, but not null.
+                    // It's important to notice that this method is called even when no event is received after the maximum wait time, which
+                    // can be specified by the user in the event processor options.  In this case, the received event is null.
 
-                    int eventsCount = events.Count();
-
-                    if (eventsCount > 0)
+                    if (processorEvent.Data != null)
                     {
-                        Interlocked.Add(ref totalEventsCount, eventsCount);
-                        Console.WriteLine($"\tPartition '{ partitionContext.PartitionId }': { eventsCount } event(s) received.");
+                        Interlocked.Increment(ref totalEventsCount);
+                        Console.WriteLine($"\tPartition '{ processorEvent.Context.PartitionId }': event received.");
                     }
 
                     // This method is asynchronous, which means it's expected to return a Task.
@@ -125,17 +124,21 @@ namespace Azure.Messaging.EventHubs.Samples
                     return Task.CompletedTask;
                 };
 
-                eventProcessor.ProcessExceptionAsync = (PartitionContext partitionContext, Exception exception) =>
+                eventProcessor.ProcessExceptionAsync = (errorContext) =>
                 {
-                    // Any exception which occurs within the event processor itself will be passed to this delegate so that they may be
-                    // handled.  Note that this does not include exceptions which occur in the event processing handler or the other delegate properties.
-                    // It is considered responsibility of the developer writing the handler code to ensure that proper exception handling practices are
-                    // followed.
+                    // Any exception which occurs as a result of the event processor itself will be passed to
+                    // this delegate so it may be handled.  The processor will continue to process events if
+                    // it is able to unless this handler explicitly requests that it stop doing so.
+                    //
+                    // It is important to note that this does not include exceptions during event processing; those
+                    // are considered responsibility of the developer implementing the event processing handler.  It
+                    // is, therefore, highly encouraged that best practices for exception handling practices are
+                    // followed with that delegate.
                     //
                     // This piece of code is not supposed to be reached by this sample.  If the following message has been printed
                     // to the Console, then something unexpected has happened.
 
-                    Console.WriteLine($"\tPartition '{ partitionContext.PartitionId }': an unhandled exception was encountered. This was not expected to happen.");
+                    Console.WriteLine($"\tPartition '{ errorContext.PartitionId }': an unhandled exception was encountered. This was not expected to happen.");
 
                     // This method is asynchronous, which means it's expected to return a Task.
 
@@ -180,6 +183,7 @@ namespace Azure.Messaging.EventHubs.Samples
                     int amountOfSets = 10;
                     int expectedAmountOfEvents = amountOfSets * eventsToPublish.Length;
 
+                    Console.WriteLine();
                     Console.WriteLine("Sending events to the Event Hub.");
                     Console.WriteLine();
 

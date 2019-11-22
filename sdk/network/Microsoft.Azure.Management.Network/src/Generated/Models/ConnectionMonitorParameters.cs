@@ -10,8 +10,9 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -40,12 +41,23 @@ namespace Microsoft.Azure.Management.Network.Models
         /// start automatically once created.</param>
         /// <param name="monitoringIntervalInSeconds">Monitoring interval in
         /// seconds.</param>
-        public ConnectionMonitorParameters(ConnectionMonitorSource source, ConnectionMonitorDestination destination, bool? autoStart = default(bool?), int? monitoringIntervalInSeconds = default(int?))
+        /// <param name="endpoints">List of connection monitor
+        /// endpoints.</param>
+        /// <param name="testConfigurations">List of connection monitor test
+        /// configurations.</param>
+        /// <param name="testGroups">List of connection monitor test
+        /// groups.</param>
+        /// <param name="outputs">List of connection monitor outputs.</param>
+        public ConnectionMonitorParameters(ConnectionMonitorSource source = default(ConnectionMonitorSource), ConnectionMonitorDestination destination = default(ConnectionMonitorDestination), bool? autoStart = default(bool?), int? monitoringIntervalInSeconds = default(int?), IList<ConnectionMonitorEndpoint> endpoints = default(IList<ConnectionMonitorEndpoint>), IList<ConnectionMonitorTestConfiguration> testConfigurations = default(IList<ConnectionMonitorTestConfiguration>), IList<ConnectionMonitorTestGroup> testGroups = default(IList<ConnectionMonitorTestGroup>), IList<ConnectionMonitorOutput> outputs = default(IList<ConnectionMonitorOutput>))
         {
             Source = source;
             Destination = destination;
             AutoStart = autoStart;
             MonitoringIntervalInSeconds = monitoringIntervalInSeconds;
+            Endpoints = endpoints;
+            TestConfigurations = testConfigurations;
+            TestGroups = testGroups;
+            Outputs = outputs;
             CustomInit();
         }
 
@@ -80,21 +92,37 @@ namespace Microsoft.Azure.Management.Network.Models
         public int? MonitoringIntervalInSeconds { get; set; }
 
         /// <summary>
+        /// Gets or sets list of connection monitor endpoints.
+        /// </summary>
+        [JsonProperty(PropertyName = "endpoints")]
+        public IList<ConnectionMonitorEndpoint> Endpoints { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of connection monitor test configurations.
+        /// </summary>
+        [JsonProperty(PropertyName = "testConfigurations")]
+        public IList<ConnectionMonitorTestConfiguration> TestConfigurations { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of connection monitor test groups.
+        /// </summary>
+        [JsonProperty(PropertyName = "testGroups")]
+        public IList<ConnectionMonitorTestGroup> TestGroups { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of connection monitor outputs.
+        /// </summary>
+        [JsonProperty(PropertyName = "outputs")]
+        public IList<ConnectionMonitorOutput> Outputs { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (Source == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Source");
-            }
-            if (Destination == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Destination");
-            }
             if (Source != null)
             {
                 Source.Validate();

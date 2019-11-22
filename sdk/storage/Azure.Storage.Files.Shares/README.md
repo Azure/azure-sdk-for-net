@@ -1,8 +1,8 @@
-# Azure Storage Files client library for .NET
+# Azure Storage File Shares client library for .NET
 
 > Server Version: 2019-02-02
 
-Azure Files offers fully managed file shares in the cloud that are accessible
+Azure File Shares offers fully managed file shares in the cloud that are accessible
 via the industry standard Server Message Block (SMB) protocol. Azure file
 shares can be mounted concurrently by cloud or on-premises deployments of
 Windows, Linux, and macOS. Additionally, Azure file shares can be cached on
@@ -15,10 +15,10 @@ being used.
 
 ### Install the package
 
-Install the Azure Storage Files client library for .NET with [NuGet][nuget]:
+Install the Azure Storage File Shares client library for .NET with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Storage.Files.Shares --version 12.0.0-preview.4
+dotnet add package Azure.Storage.Files.Shares --version 12.0.0-preview.5
 ```
 
 ### Prerequisites
@@ -46,11 +46,7 @@ Azure file shares can be used to:
 
 ### Create a share and upload a file
 
-```c#
-using Azure.Storage;
-using Azure.Storage.Files.Shares;
-using Azure.Storage.Files.Shares.Models;
-
+```C# Snippet:Azure_Storage_Files_Shares_Samples_Sample01a_HelloWorld_Upload
 // Get a connection string to our Azure Storage account.  You can
 // obtain your connection string from the Azure Portal (click
 // Access Keys under Settings in the Portal Storage account blade)
@@ -62,19 +58,25 @@ using Azure.Storage.Files.Shares.Models;
 // using an environment variable.
 string connectionString = "<connection_string>";
 
-// Get a reference to a share named "sample-share" and then create it
-ShareClient share = new ShareClient(connectionString, "sample-share");
+// Name of the share, directory, and file we'll create
+string shareName = "sample-share";
+string dirName = "sample-dir";
+string fileName = "sample-file";
+
+// Path to the local file to upload
+string localFilePath = @"<path_to_local_file>";
+
+// Get a reference to a share and then create it
+ShareClient share = new ShareClient(connectionString, shareName);
 share.Create();
 
-// Get a reference to a directory named "sample-dir" and then create it
-ShareDirectoryClient directory = share.GetDirectoryClient("sample-dir");
+// Get a reference to a directory and create it
+ShareDirectoryClient directory = share.GetDirectoryClient(dirName);
 directory.Create();
 
-// Get a reference to a file named "sample-file" in directory "sample-dir"
-ShareFileClient file = directory.GetFileClient("sample-file");
-
-// Upload the file
-using (FileStream stream = File.OpenRead("local-file.txt"))
+// Get a reference to a file and upload it
+ShareFileClient file = directory.GetFileClient(fileName);
+using (FileStream stream = File.OpenRead(localFilePath))
 {
     file.Create(stream.Length);
     file.UploadRange(
@@ -86,22 +88,25 @@ using (FileStream stream = File.OpenRead("local-file.txt"))
 
 ### Download a file
 
-```c#
-// Get a connection string to our Azure Storage account.
+```C# Snippet:Azure_Storage_Files_Shares_Samples_Sample01a_HelloWorld_Download
 string connectionString = "<connection_string>";
 
-// Get a reference to a share named "sample-share"
-ShareClient share = new ShareClient(connectionString, "sample-share");
+// Name of the share, directory, and file we'll download from
+string shareName = "sample-share";
+string dirName = "sample-dir";
+string fileName = "sample-file";
 
-// Get a reference to a directory named "sample-dir"
-ShareDirectoryClient directory = share.GetDirectoryClient("sample-dir");
+// Path to the save the downloaded file
+string localFilePath = @"<path_to_local_file>";
 
-// Get a reference to a file named "sample-file" in directory "sample-dir"
-ShareFileClient file = directory.GetFileClient("sample-file");
+// Get a reference to the file
+ShareClient share = new ShareClient(connectionString, shareName);
+ShareDirectoryClient directory = share.GetDirectoryClient(dirName);
+ShareFileClient file = directory.GetFileClient(fileName);
 
 // Download the file
 ShareFileDownloadInfo download = file.Download();
-using (FileStream stream = File.OpenWrite("downloaded-file.txt"))
+using (FileStream stream = File.OpenWrite(localFilePath))
 {
     download.Content.CopyTo(stream);
 }
@@ -109,15 +114,14 @@ using (FileStream stream = File.OpenWrite("downloaded-file.txt"))
 
 ### Traverse a share
 
-```c#
-// Get a connection string to our Azure Storage account.
+```C# Snippet:Azure_Storage_Files_Shares_Samples_Sample01a_HelloWorld_Traverse
+// Connect to the share
 string connectionString = "<connection_string>";
-
-// Get a reference to a share named "sample-share"
-ShareClient share = new ShareClient(connectionString, "sample-share");
+string shareName = "sample-share";
+ShareClient share = new ShareClient(connectionString, shareName);
 
 // Track the remaining directories to walk, starting from the root
-Queue<ShareDirectoryClient> remaining = new Queue<ShareDirectoryClient>();
+var remaining = new Queue<ShareDirectoryClient>();
 remaining.Enqueue(share.GetRootDirectoryClient());
 while (remaining.Count > 0)
 {
@@ -125,6 +129,7 @@ while (remaining.Count > 0)
     ShareDirectoryClient dir = remaining.Dequeue();
     foreach (ShareFileItem item in dir.GetFilesAndDirectories())
     {
+        // Print the name of the item
         Console.WriteLine(item.Name);
 
         // Keep walking down directories
@@ -140,15 +145,25 @@ while (remaining.Count > 0)
 
 We fully support both synchronous and asynchronous APIs.
 
-```c#
+```C# Snippet:Azure_Storage_Files_Shares_Samples_Sample01b_HelloWorldAsync_DownloadAsync
 string connectionString = "<connection_string>";
-ShareClient share = new ShareClient(connectionString, "sample-share");
-ShareDirectoryClient directory = share.GetDirectoryClient("sample-dir");
-ShareFileClient file = directory.GetFileClient("sample-file");
+
+// Name of the share, directory, and file we'll download from
+string shareName = "sample-share";
+string dirName = "sample-dir";
+string fileName = "sample-file";
+
+// Path to the save the downloaded file
+string localFilePath = @"<path_to_local_file>";
+
+// Get a reference to the file
+ShareClient share = new ShareClient(connectionString, shareName);
+ShareDirectoryClient directory = share.GetDirectoryClient(dirName);
+ShareFileClient file = directory.GetFileClient(fileName);
 
 // Download the file
 ShareFileDownloadInfo download = await file.DownloadAsync();
-using (FileStream stream = File.OpenWrite("downloaded-file.txt"))
+using (FileStream stream = File.OpenWrite(localFilePath))
 {
     await download.Content.CopyToAsync(stream);
 }
@@ -156,23 +171,23 @@ using (FileStream stream = File.OpenWrite("downloaded-file.txt"))
 
 ## Troubleshooting
 
-All Azure Storage File service operations will throw a
+All Azure Storage File Shares service operations will throw a
 [RequestFailedException][RequestFailedException] on failure with
 helpful [`ErrorCode`s][error_codes].  Many of these errors are recoverable.
 
-```c#
-// Get a connection string to our Azure Storage account
+```C# Snippet:Azure_Storage_Files_Shares_Samples_Sample01a_HelloWorld_Errors
+// Connect to the existing share
 string connectionString = "<connection_string>";
+string shareName = "sample-share";
+ShareClient share = new ShareClient(connectionString, shareName);
 
-// Try to create a share named "sample-share" and avoid any potential race
-// conditions that might arise by checking if the share exists before creating
-ShareClient share = new ShareClient(connectionString, "sample-share");
 try
 {
+    // Try to create the share again
     share.Create();
 }
 catch (RequestFailedException ex)
-    when (ex.ErrorCode == FileErrorCode.ShareAlreadyExists)
+    when (ex.ErrorCode == ShareErrorCode.ShareAlreadyExists)
 {
     // Ignore any errors if the share already exists
 }

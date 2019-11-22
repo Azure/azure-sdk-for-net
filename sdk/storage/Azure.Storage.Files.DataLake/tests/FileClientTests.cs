@@ -558,8 +558,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 DataLakeFileClient file = await directoryClient.CreateFileAsync(fileName);
 
                 Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                    start: null,
-                    expiry: Recording.UtcNow.AddHours(1));
+                    startsOn: null,
+                    expiresOn: Recording.UtcNow.AddHours(1));
 
                 DataLakeFileClient identitySasFile = InstrumentClient(
                     GetServiceClient_DataLakeServiceIdentitySas_FileSystem(
@@ -623,8 +623,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 DataLakeFileClient file = await directoryClient.CreateFileAsync(fileName);
 
                 Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                    start: null,
-                    expiry: Recording.UtcNow.AddHours(1));
+                    startsOn: null,
+                    expiresOn: Recording.UtcNow.AddHours(1));
 
                 DataLakeFileClient identitySasFile = InstrumentClient(
                     GetServiceClient_DataLakeServiceIdentitySas_Path(
@@ -732,14 +732,8 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             using (GetNewFile(out DataLakeFileClient fileClient))
             {
-                // Arrange
-                PathAccessControl accessControl = new PathAccessControl()
-                {
-                    Permissions = "0777"
-                };
-
                 // Act
-                Response<PathInfo> response = await fileClient.SetAccessControlAsync(accessControl);
+                Response<PathInfo> response = await fileClient.SetAccessControlAsync(acl: AccessControl);
 
                 // Assert
                 AssertValidStoragePathInfo(response);
@@ -751,19 +745,13 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             using (GetNewFile(out DataLakeFileClient fileClient))
             {
-                // Arrange
-                PathAccessControl accessControl = new PathAccessControl()
-                {
-                    Permissions = "asdf"
-                };
-
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                    fileClient.SetAccessControlAsync(accessControl),
+                    fileClient.SetAccessControlAsync(acl: "asdf"),
                     e =>
                     {
-                        Assert.AreEqual("InvalidPermission", e.ErrorCode);
-                        Assert.AreEqual("The permission value is invalid.", e.Message.Split('\n')[0]);
+                        Assert.AreEqual("InvaldAccessControlList", e.ErrorCode);
+                        Assert.AreEqual("The access control list value is invalid.", e.Message.Split('\n')[0]);
                     });
             }
         }
@@ -787,10 +775,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
                     // Act
                     Response<PathInfo> response = await file.SetAccessControlAsync(
-                        accessControl: new PathAccessControl()
-                        {
-                            Permissions = "0777"
-                        },
+                        acl: AccessControl,
                         conditions: conditions);
 
                     // Assert
@@ -816,10 +801,88 @@ namespace Azure.Storage.Files.DataLake.Tests
                     // Act
                     await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         file.SetAccessControlAsync(
-                            accessControl: new PathAccessControl()
-                            {
-                                Permissions = "0777"
-                            },
+                            acl: AccessControl,
+                            conditions: conditions),
+                        e => { });
+                }
+            }
+        }
+
+        [Test]
+        public async Task SetPermissionsAsync()
+        {
+            using (GetNewFile(out DataLakeFileClient fileClient))
+            {
+                // Act
+                Response<PathInfo> response = await fileClient.SetPermissionsAsync(permissions: "0777");
+
+                // Assert
+                AssertValidStoragePathInfo(response);
+            }
+        }
+
+        [Test]
+        public async Task SetPermissionsAsync_Error()
+        {
+            using (GetNewFile(out DataLakeFileClient fileClient))
+            {
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    fileClient.SetPermissionsAsync(permissions: "asdf"),
+                    e =>
+                    {
+                        Assert.AreEqual("InvalidPermission", e.ErrorCode);
+                        Assert.AreEqual("The permission value is invalid.", e.Message.Split('\n')[0]);
+                    });
+            }
+        }
+
+        [Test]
+        public async Task SetPermissionAsync_Conditions()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            foreach (AccessConditionParameters parameters in Conditions_Data)
+            {
+                using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
+                {
+                    // Arrange
+                    DataLakeFileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
+
+                    parameters.Match = await SetupPathMatchCondition(file, parameters.Match);
+                    parameters.LeaseId = await SetupPathLeaseCondition(file, parameters.LeaseId, garbageLeaseId);
+                    DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(
+                        parameters: parameters,
+                        lease: true);
+
+                    // Act
+                    Response<PathInfo> response = await file.SetPermissionsAsync(
+                        permissions: "0777",
+                        conditions: conditions);
+
+                    // Assert
+                    Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                }
+            }
+        }
+
+        [Test]
+        public async Task SetPermissionsAsync_ConditionsFail()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            foreach (AccessConditionParameters parameters in GetConditionsFail_Data(garbageLeaseId))
+            {
+                using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem))
+                {
+                    // Arrange
+                    DataLakeFileClient file = await fileSystem.CreateFileAsync(GetNewFileName());
+
+                    parameters.NoneMatch = await SetupPathMatchCondition(file, parameters.NoneMatch);
+                    DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(parameters);
+
+                    // Act
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                        file.SetPermissionsAsync(
+                            permissions: "0777",
                             conditions: conditions),
                         e => { });
                 }
@@ -902,8 +965,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 DataLakeFileClient file = await directoryClient.CreateFileAsync(fileName);
 
                 Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                    start: null,
-                    expiry: Recording.UtcNow.AddHours(1));
+                    startsOn: null,
+                    expiresOn: Recording.UtcNow.AddHours(1));
 
                 DataLakeFileClient identitySasFile = InstrumentClient(
                     GetServiceClient_DataLakeServiceIdentitySas_FileSystem(
@@ -961,8 +1024,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 DataLakeFileClient file = await directoryClient.CreateFileAsync(fileName);
 
                 Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                    start: null,
-                    expiry: Recording.UtcNow.AddHours(1));
+                    startsOn: null,
+                    expiresOn: Recording.UtcNow.AddHours(1));
 
                 DataLakeFileClient identitySasFile = InstrumentClient(
                     GetServiceClient_DataLakeServiceIdentitySas_Path(
@@ -1018,7 +1081,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(parameters);
 
                     // Act
-                    Assert.CatchAsync<Exception>(
+                    await TestHelper.CatchAsync<Exception>(
                         async () =>
                         {
                             var _ = (await file.GetPropertiesAsync(
@@ -1729,7 +1792,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(parameters);
 
                     // Act
-                    Assert.CatchAsync<Exception>(
+                    await TestHelper.CatchAsync<Exception>(
                         async () =>
                         {
                             var _ = (await file.ReadAsync(

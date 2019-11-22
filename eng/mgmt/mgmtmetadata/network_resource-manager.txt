@@ -3,12 +3,34 @@ AutoRest installed successfully.
 Commencing code generation
 Generating CSharp code
 Executing AutoRest command
-cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/network/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=D:\Projects\azure-sdk-for-net\sdk
-2019-10-22 02:09:10 UTC
-Azure-rest-api-specs repository information
-GitHub fork: Azure
-Branch:      master
-Commit:      6405fdd6023e04e54fb5c834c6f658ee10d59ca4
-AutoRest information
-Requested version: latest
-Bootstrapper version:    autorest@2.0.4283
+cmd.exe /c autorest.cmd https://github.com/irrogozh/azure-rest-api-specs/blob/network-december-release/specification/network/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\git\azure-sdk-for-net\sdk
+ERROR: Referenced file 'https://github.com/irrogozh/azure-rest-api-specs/blob/network-december-release/specification/network/resource-manager/Microsoft.Network/stable/2019-11-01/examples/NetworkWatcherConnectionMonitorUpdateTags.json' not found
+    - https://raw.githubusercontent.com/irrogozh/azure-rest-api-specs/network-december-release/specification/network/resource-manager/Microsoft.Network/stable/2019-11-01/networkWatcher.json:1778:12 ($.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}"].patch["x-ms-examples"]["Update connection monitor tags"]["$ref"])
+FATAL: swagger-document/loader - FAILED
+FATAL: Error: [OperationAbortedException] Error occurred. Exiting.
+Process() cancelled due to exception : [OperationAbortedException] Error occurred. Exiting.
+
+System.Management.Automation.RuntimeException: Cannot convert value to type System.String. ---> System.Management.Automation.PSInvalidCastException: Cannot convert value to type System.String. ---> System.InvalidOperationException: Process has exited, so the requested information is not available.
+   at System.Diagnostics.Process.EnsureState(State state)
+   at System.Diagnostics.Process.get_ProcessName()
+   at System.Diagnostics.Process.ToString()
+   at System.Management.Automation.PSObject.ToString(ExecutionContext context, Object obj, String separator, String format, IFormatProvider formatProvider, Boolean recurse, Boolean unravelEnumeratorOnRecurse)
+   --- End of inner exception stack trace ---
+   at System.Management.Automation.PSObject.ToStringParser(ExecutionContext context, Object obj)
+   at System.Dynamic.UpdateDelegates.UpdateAndExecute2[T0,T1,TRet](CallSite site, T0 arg0, T1 arg1)
+   at CallSite.Target(Closure , CallSite , Object , ExecutionContext )
+   at CallSite.Target(Closure , CallSite , Object , ExecutionContext )
+   at System.Dynamic.UpdateDelegates.UpdateAndExecute2[T0,T1,TRet](CallSite site, T0 arg0, T1 arg1)
+   at System.Management.Automation.Interpreter.DynamicInstruction`3.Run(InterpretedFrame frame)
+   at System.Management.Automation.Interpreter.EnterTryCatchFinallyInstruction.Run(InterpretedFrame frame)
+   --- End of inner exception stack trace ---
+   at System.Management.Automation.ExceptionHandlingOps.CheckActionPreference(FunctionContext funcContext, Exception exception)
+   at System.Management.Automation.Interpreter.ActionCallInstruction`2.Run(InterpretedFrame frame)
+   at System.Management.Automation.Interpreter.EnterTryCatchFinallyInstruction.Run(InterpretedFrame frame)
+   at System.Management.Automation.Interpreter.EnterTryCatchFinallyInstruction.Run(InterpretedFrame frame)
+   at System.Management.Automation.Interpreter.Interpreter.Run(InterpretedFrame frame)
+   at System.Management.Automation.Interpreter.LightLambda.RunVoid1[T0](T0 arg0)
+   at System.Management.Automation.PSScriptCmdlet.RunClause(Action`1 clause, Object dollarUnderbar, Object inputToProcess)
+   at System.Management.Automation.PSScriptCmdlet.DoEndProcessing()
+   at System.Management.Automation.CommandProcessorBase.Complete()
+AutoRest code generation for https://github.com/irrogozh/azure-rest-api-specs/blob/network-december-release/specification/network/resource-manager/readme.md failed. Please try again

@@ -34,19 +34,21 @@ namespace AzureRedisCache.Tests
                                                 Name = SkuName.Premium,
                                                 Family = SkuFamily.P,
                                                 Capacity = 1
-                                            }
+                                            },
+                                            MinimumTlsVersion = TlsVersion.OneFullStopTwo
                                         });
 
                 Assert.Contains(redisCacheName, response.Id);
                 Assert.Equal(redisCacheName, response.Name);
-                Assert.Equal("creating", response.ProvisioningState, ignoreCase: true);
+                Assert.Equal(ProvisioningState.Creating, response.ProvisioningState, ignoreCase: true);
                 Assert.Equal(SkuName.Premium, response.Sku.Name);
                 Assert.Equal(SkuFamily.P, response.Sku.Family);
+                Assert.Equal(TlsVersion.OneFullStopTwo, response.MinimumTlsVersion);
 
                 for (int i = 0; i < 60; i++)
                 {
                     response = _client.Redis.Get(resourceGroupName, redisCacheName);
-                    if ("succeeded".Equals(response.ProvisioningState, StringComparison.OrdinalIgnoreCase))
+                    if (ProvisioningState.Succeeded.Equals(response.ProvisioningState, StringComparison.OrdinalIgnoreCase))
                     {
                         break;
                     }

@@ -115,7 +115,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConnectionStringConstructorSetsTheRetryPolicy()
         {
-            var expected = Mock.Of<EventHubRetryPolicy>();
+            var expected = Mock.Of<EventHubsRetryPolicy>();
             var options = new EventProcessorClientOptions { RetryOptions = new RetryOptions { CustomRetryPolicy = expected } };
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
             var processor = new EventProcessorClient(EventHubConsumerClient.DefaultConsumerGroupName, Mock.Of<PartitionManager>(), connectionString, options);
@@ -130,7 +130,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void NamespaceConstructorSetsTheRetryPolicy()
         {
-            var expected = Mock.Of<EventHubRetryPolicy>();
+            var expected = Mock.Of<EventHubsRetryPolicy>();
             var options = new EventProcessorClientOptions { RetryOptions = new RetryOptions { CustomRetryPolicy = expected } };
             var processor = new EventProcessorClient(EventHubConsumerClient.DefaultConsumerGroupName, Mock.Of<PartitionManager>(), "namespace", "hubName", Mock.Of<TokenCredential>(), options);
 
@@ -281,9 +281,9 @@ namespace Azure.Messaging.EventHubs.Tests
         public void StartAsyncValidatesProcessEventsAsync()
         {
             var processor = new EventProcessorClient("consumerGroup", Mock.Of<PartitionManager>(), new MockConnection(), default);
-            processor.ProcessExceptionAsync = (context, exception) => Task.CompletedTask;
+            processor.ProcessExceptionAsync = errorContext => Task.CompletedTask;
 
-            Assert.That(async () => await processor.StartAsync(), Throws.InstanceOf<InvalidOperationException>().And.Message.Contains(nameof(EventProcessorClient.ProcessEventsAsync)));
+            Assert.That(async () => await processor.StartAsync(), Throws.InstanceOf<InvalidOperationException>().And.Message.Contains(nameof(EventProcessorClient.ProcessEventAsync)));
         }
 
         /// <summary>
@@ -295,7 +295,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void StartAsyncValidatesProcessExceptionAsync()
         {
             var processor = new EventProcessorClient("consumerGroup", Mock.Of<PartitionManager>(), new MockConnection(), default);
-            processor.ProcessEventsAsync = (context, events) => Task.CompletedTask;
+            processor.ProcessEventAsync = processorEvent => Task.CompletedTask;
 
             Assert.That(async () => await processor.StartAsync(), Throws.InstanceOf<InvalidOperationException>().And.Message.Contains(nameof(EventProcessorClient.ProcessExceptionAsync)));
         }
@@ -310,8 +310,8 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var processor = new EventProcessorClient("consumerGroup", Mock.Of<PartitionManager>(), new MockConnection(), default);
 
-            processor.ProcessEventsAsync = (context, events) => Task.CompletedTask;
-            processor.ProcessExceptionAsync = (context, exception) => Task.CompletedTask;
+            processor.ProcessEventAsync = processorEvent => Task.CompletedTask;
+            processor.ProcessExceptionAsync = errorContext => Task.CompletedTask;
 
             Assert.That(async () => await processor.StartAsync(), Throws.Nothing);
 
@@ -327,15 +327,15 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var processor = new EventProcessorClient("consumerGroup", Mock.Of<PartitionManager>(), new MockConnection(), default);
 
-            processor.ProcessEventsAsync = (context, events) => Task.CompletedTask;
-            processor.ProcessExceptionAsync = (context, exception) => Task.CompletedTask;
+            processor.ProcessEventAsync = processorEvent => Task.CompletedTask;
+            processor.ProcessExceptionAsync = errorContext => Task.CompletedTask;
 
             await processor.StartAsync();
 
-            Assert.That(() => processor.InitializeProcessingForPartitionAsync = ((context) => Task.CompletedTask), Throws.InstanceOf<InvalidOperationException>());
-            Assert.That(() => processor.ProcessingForPartitionStoppedAsync = ((context, reason) => Task.CompletedTask), Throws.InstanceOf<InvalidOperationException>());
-            Assert.That(() => processor.ProcessEventsAsync = ((context, events) => Task.CompletedTask), Throws.InstanceOf<InvalidOperationException>());
-            Assert.That(() => processor.ProcessExceptionAsync = ((context, exception) => Task.CompletedTask), Throws.InstanceOf<InvalidOperationException>());
+            Assert.That(() => processor.InitializeProcessingForPartitionAsync = initializationContext => Task.CompletedTask, Throws.InstanceOf<InvalidOperationException>());
+            Assert.That(() => processor.ProcessingForPartitionStoppedAsync = stopContext => Task.CompletedTask, Throws.InstanceOf<InvalidOperationException>());
+            Assert.That(() => processor.ProcessEventAsync = processorEvent => Task.CompletedTask, Throws.InstanceOf<InvalidOperationException>());
+            Assert.That(() => processor.ProcessExceptionAsync = errorContext => Task.CompletedTask, Throws.InstanceOf<InvalidOperationException>());
 
             await processor.StopAsync();
         }
@@ -349,16 +349,16 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var processor = new EventProcessorClient("consumerGroup", Mock.Of<PartitionManager>(), new MockConnection(), default);
 
-            processor.ProcessEventsAsync = (context, events) => Task.CompletedTask;
-            processor.ProcessExceptionAsync = (context, exception) => Task.CompletedTask;
+            processor.ProcessEventAsync = processorEvent => Task.CompletedTask;
+            processor.ProcessExceptionAsync = errorContext => Task.CompletedTask;
 
             await processor.StartAsync();
             await processor.StopAsync();
 
-            Assert.That(() => processor.InitializeProcessingForPartitionAsync = ((context) => Task.CompletedTask), Throws.Nothing);
-            Assert.That(() => processor.ProcessingForPartitionStoppedAsync = ((context, reason) => Task.CompletedTask), Throws.Nothing);
-            Assert.That(() => processor.ProcessEventsAsync = ((context, events) => Task.CompletedTask), Throws.Nothing);
-            Assert.That(() => processor.ProcessExceptionAsync = ((context, exception) => Task.CompletedTask), Throws.Nothing);
+            Assert.That(() => processor.InitializeProcessingForPartitionAsync = initializationContext => Task.CompletedTask, Throws.Nothing);
+            Assert.That(() => processor.ProcessingForPartitionStoppedAsync = stopContext => Task.CompletedTask, Throws.Nothing);
+            Assert.That(() => processor.ProcessEventAsync = processorEvent => Task.CompletedTask, Throws.Nothing);
+            Assert.That(() => processor.ProcessExceptionAsync = errorContext => Task.CompletedTask, Throws.Nothing);
         }
 
         /// <summary>
@@ -439,8 +439,8 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   Retrieves the RetryPolicy for the processor client using its private accessor.
         /// </summary>
         ///
-        private static EventHubRetryPolicy GetRetryPolicy(EventProcessorClient client) =>
-            (EventHubRetryPolicy)
+        private static EventHubsRetryPolicy GetRetryPolicy(EventProcessorClient client) =>
+            (EventHubsRetryPolicy)
                 typeof(EventProcessorClient)
                     .GetProperty("RetryPolicy", BindingFlags.Instance | BindingFlags.NonPublic)
                     .GetValue(client);
@@ -482,8 +482,6 @@ namespace Azure.Messaging.EventHubs.Tests
             public MockConnection(string namespaceName = "fakeNamespace",
                                   string eventHubName = "fakeEventHub") : base(namespaceName, eventHubName, Mock.Of<TokenCredential>())
             {
-                FullyQualifiedNamespace = namespaceName;
-                EventHubName = eventHubName;
             }
 
             internal override TransportClient CreateTransportClient(string fullyQualifiedNamespace, string eventHubName, TokenCredential credential, EventHubConnectionOptions options)

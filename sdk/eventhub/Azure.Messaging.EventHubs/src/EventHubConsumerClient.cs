@@ -138,7 +138,7 @@ namespace Azure.Messaging.EventHubs
         ///   The policy to use for determining retry behavior for when an operation fails.
         /// </summary>
         ///
-        private EventHubRetryPolicy RetryPolicy { get; }
+        private EventHubsRetryPolicy RetryPolicy { get; }
 
         /// <summary>
         ///   The active connection to the Azure Event Hubs service, enabling client communications for metadata

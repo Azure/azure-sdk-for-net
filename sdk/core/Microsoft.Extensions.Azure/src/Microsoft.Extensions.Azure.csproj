@@ -4,7 +4,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <Description>Azure Client SDK integration with Microsoft.Extensions libraries</Description>
     <AssemblyTitle>Azure Client SDK integration Microsoft.Extensions</AssemblyTitle>
-    <VersionPrefix>1.0.0</VersionPrefix>
+    <Version>1.1.0-preview.1</Version>
     <PackageTags>Microsoft Azure Client Pipeline AspNetCore Extensions</PackageTags>
     <PackageReleaseNotes>
       - Updated Azure.Identity dependency version
@@ -15,9 +15,6 @@
 
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
-
-    <!-- Disable warning for missing xml doc comments until we can add all the missing ones -->
-    <NoWarn>$(NoWarn);1591</NoWarn>
  </PropertyGroup>
 
   <ItemGroup>
