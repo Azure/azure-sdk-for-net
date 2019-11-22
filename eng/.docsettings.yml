@@ -55,7 +55,6 @@ known_presence_issues:
   - ['sdk/batch/Microsoft.Azure.Batch.FileStaging','#5499']
   - ['sdk/graphrbac/Microsoft.Azure.Graph.RBAC','#5499']
   - ['sdk/search','#5499']
-  - ['sdk/cognitiveservices/InkRecognizer','#5499']
 
 known_content_issues:
   - ['README.md','Root readme']
@@ -65,6 +64,7 @@ known_content_issues:
   - ['sdk/servicebus/Microsoft.Azure.ServiceBus/README.md','#5499']
   - ['sdk/eventhub/Microsoft.Azure.EventHubs/README.md','#5499']
   - ['sdk/alertsmanagement/Microsoft.Azure.Management.AlertsManagement/README.md','#5499']
+  - ['sdk/appconfiguration/README.md','azure-sdk-tools/issues/42']
   - ['sdk/appconfiguration/Azure.Data.AppConfiguration/tests/Readme.md','#5499']
   - ['sdk/appconfiguration/Azure.Data.AppConfiguration/samples/README.md','#5499']
   - ['sdk/core/Azure.Core/README.md','#5499']
@@ -76,6 +76,7 @@ known_content_issues:
   - ['sdk/storage/Azure.Storage.Common/swagger/Generator/readme.md','azure-sdk-tools/issues/42']
   - ['sdk/cognitiveservices/Language.TextAnalytics/src/Readme.md','#5499']
   - ['sdk/cognitiveservices/Personalizer/src/Readme.md','#5499']
+  - ['sdk/cognitiveservices/textanalytics/Azure.AI.TextAnalytics/README.md','#5499']
   - ['sdk/batch/Microsoft.Azure.Batch/README.md','#5499']
   - ['sdk/batch/Microsoft.Azure.Batch.Conventions.Files/README.md','#5499']
 
@@ -98,6 +99,8 @@ package_indexing_exclusion_list:
   - 'Gallery'
   - 'Intune'
   - 'Common'
+  - 'SnippetGenerator'
+  - 'docgen'
 package_indexing_traversal_stops:
   - 'sdk/'
   - 'src/SDKs/'

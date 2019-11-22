@@ -6,11 +6,13 @@ using Azure.Core;
 namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
-    ///   Contains information about a partition that an <see cref="EventProcessorClient" /> will be
+    ///   Contains information about a partition that an <c>EventProcessorClient</c> will be
     ///   processing events from.  It can also be used to specify the position within a partition
-    ///   where the associated <see cref="EventProcessorClient" /> should begin reading events in case
+    ///   where the associated <c>EventProcessorClient</c> should begin reading events in case
     ///   it cannot find a checkpoint.
     /// </summary>
+    ///
+    /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor" />
     ///
     public class InitializePartitionProcessingContext
     {
@@ -21,7 +23,7 @@ namespace Azure.Messaging.EventHubs.Processor
         public PartitionContext Context { get; }
 
         /// <summary>
-        ///   The position within a partition where the associated <see cref="EventProcessorClient" /> should
+        ///   The position within a partition where the associated <c>EventProcessorClient</c> should
         ///   begin reading events when no checkpoint can be found.
         /// </summary>
         ///

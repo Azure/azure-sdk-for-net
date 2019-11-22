@@ -198,6 +198,7 @@ You will need to wait for the long-running operation to complete before trying t
 ```C# Snippet:DeleteAndPurgeKey
 DeleteKeyOperation operation = client.StartDeleteKey("key-name");
 
+// You only need to wait for completion if you want to purge or recover the key.
 while (!operation.HasCompleted)
 {
     Thread.Sleep(2000);

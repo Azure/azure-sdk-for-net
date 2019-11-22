@@ -332,7 +332,7 @@ namespace Azure.Identity
 
             if (!string.IsNullOrEmpty(clientId))
             {
-                request.Uri.AppendQuery("client_id", clientId);
+                request.Uri.AppendQuery("clientid", clientId);
             }
 
             return request;

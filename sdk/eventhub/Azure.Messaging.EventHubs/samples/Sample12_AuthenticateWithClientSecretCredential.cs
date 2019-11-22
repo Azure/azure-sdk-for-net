@@ -96,13 +96,18 @@ namespace Azure.Messaging.EventHubs.Samples
 
                 PartitionEvent receivedEvent;
 
+                ReadEventOptions readOptions = new ReadEventOptions
+                {
+                    MaximumWaitTime = TimeSpan.FromMilliseconds(150)
+                };
+
                 Stopwatch watch = Stopwatch.StartNew();
                 bool wereEventsPublished = false;
 
                 CancellationTokenSource cancellationSource = new CancellationTokenSource();
                 cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
 
-                await foreach (PartitionEvent currentEvent in consumerClient.ReadEventsFromPartitionAsync(firstPartition, EventPosition.Latest, TimeSpan.FromMilliseconds(150), cancellationSource.Token))
+                await foreach (PartitionEvent currentEvent in consumerClient.ReadEventsFromPartitionAsync(firstPartition, EventPosition.Latest, readOptions, cancellationSource.Token))
                 {
                     if (!wereEventsPublished)
                     {

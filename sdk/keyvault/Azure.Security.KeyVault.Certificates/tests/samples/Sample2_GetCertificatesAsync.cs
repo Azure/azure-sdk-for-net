@@ -36,7 +36,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
 
             string certName2 = $"defaultCert-{Guid.NewGuid()}";
 
-            CertificateOperation certOp2 = await client.StartCreateCertificateAsync(certName1, CertificatePolicy.Default);
+            CertificateOperation certOp2 = await client.StartCreateCertificateAsync(certName2, CertificatePolicy.Default);
 
             // Next, let's wait on the certificate operation to complete. Note that certificate creation can last an indeterministic
             // amount of time, so applications should only wait on the operation to complete in the case the issuance time is well
@@ -67,8 +67,8 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             DeleteCertificateOperation operation1 = await client.StartDeleteCertificateAsync(certName1);
             DeleteCertificateOperation operation2 = await client.StartDeleteCertificateAsync(certName2);
 
-            // To ensure certificates are deleted on server side.
-            Task.WaitAll(
+            // You only need to wait for completion if you want to purge or recover the certificate.
+            await Task.WhenAll(
                 operation1.WaitForCompletionAsync().AsTask(),
                 operation2.WaitForCompletionAsync().AsTask());
 
@@ -79,7 +79,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             }
 
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted keys needs to be purged.
-            Task.WaitAll(
+            await Task.WhenAll(
                 client.PurgeDeletedCertificateAsync(certName1),
                 client.PurgeDeletedCertificateAsync(certName2));
         }

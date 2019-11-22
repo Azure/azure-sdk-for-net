@@ -77,10 +77,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
             {
-                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
-                ConnectionStringProperties properties = ConnectionStringParser.Parse(connectionString);
-
-                Assert.That(async () => await sample.RunAsync(properties.Endpoint.Host,
+                Assert.That(async () => await sample.RunAsync(TestEnvironment.FullyQualifiedNamespace,
                                                               scope.EventHubName,
                                                               TestEnvironment.EventHubsTenant,
                                                               TestEnvironment.EventHubsClient,

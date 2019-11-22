@@ -23,7 +23,7 @@ string certName1 = $"defaultCert-{Guid.NewGuid()}";
 CertificateOperation certOp1 = client.StartCreateCertificate(certName1, CertificatePolicy.Default);
 
 string certName2 = $"defaultCert-{Guid.NewGuid()}";
-CertificateOperation certOp2 = client.StartCreateCertificate(certName1, CertificatePolicy.Default);
+CertificateOperation certOp2 = client.StartCreateCertificate(certName2, CertificatePolicy.Default);
 
 while (!certOp1.HasCompleted)
 {
@@ -87,6 +87,7 @@ DeleteCertificateOperation operation1 = client.StartDeleteCertificate(certName1)
 DeleteCertificateOperation operation2 = client.StartDeleteCertificate(certName2);
 
 // To ensure certificates are deleted on server side.
+// You only need to wait for completion if you want to purge or recover the certificate.
 while (!operation1.HasCompleted || !operation2.HasCompleted)
 {
     Thread.Sleep(2000);

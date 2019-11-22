@@ -350,13 +350,16 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the partition to which the transport producer should be bound; if <c>null</c>, the producer is unbound.</param>
-        /// <param name="producerOptions">The set of options to apply when creating the producer.</param>
+        /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
         ///
         /// <returns>A <see cref="TransportProducer"/> configured in the requested manner.</returns>
         ///
         internal virtual TransportProducer CreateTransportProducer(string partitionId,
-                                                                   EventHubProducerClientOptions producerOptions = default) =>
-            InnerClient.CreateProducer(partitionId, producerOptions?.Clone() ?? new EventHubProducerClientOptions());
+                                                                   EventHubsRetryPolicy retryPolicy)
+        {
+            Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
+            return InnerClient.CreateProducer(partitionId, retryPolicy);
+        }
 
         /// <summary>
         ///   Creates a consumer strongly aligned with the active protocol and transport, responsible
@@ -371,26 +374,33 @@ namespace Azure.Messaging.EventHubs
         ///   group to be actively reading events from the partition.  These non-exclusive consumers are
         ///   sometimes referred to as "Non-epoch Consumers."
         ///
-        ///   Designating a consumer as exclusive may be specified in the <paramref name="consumerOptions" />.
-        ///   By default, consumers are created as non-exclusive.
+        ///   Designating a consumer as exclusive may be specified by setting the <paramref name="ownerLevel" />.
+        ///   When <c>null</c>, consumers are created as non-exclusive.
         /// </summary>
         ///
         /// <param name="consumerGroup">The name of the consumer group this consumer is associated with.  Events are read in the context of this group.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
         /// <param name="eventPosition">The position within the partition where the consumer should begin reading events.</param>
-        /// <param name="consumerOptions">The set of options to apply when creating the consumer.</param>
+        /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
+        /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
+        /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
+        /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
         ///
-        /// <returns>A <see cref="TransportConsumer"/> configured in the requested manner.</returns>
+        /// <returns>A <see cref="TransportConsumer" /> configured in the requested manner.</returns>
         ///
         internal virtual TransportConsumer CreateTransportConsumer(string consumerGroup,
                                                                    string partitionId,
                                                                    EventPosition eventPosition,
-                                                                   EventHubConsumerClientOptions consumerOptions = default)
+                                                                   EventHubsRetryPolicy retryPolicy,
+                                                                   bool trackLastEnqueuedEventProperties = true,
+                                                                   long? ownerLevel = default,
+                                                                   uint? prefetchCount = default)
         {
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
             Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
+            Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
 
-            return InnerClient.CreateConsumer(consumerGroup, partitionId, eventPosition, consumerOptions?.Clone() ?? new EventHubConsumerClientOptions());
+            return InnerClient.CreateConsumer(consumerGroup, partitionId, eventPosition, retryPolicy, trackLastEnqueuedEventProperties, ownerLevel, prefetchCount);
         }
 
         /// <summary>
@@ -420,8 +430,8 @@ namespace Azure.Messaging.EventHubs
         {
             switch (options.TransportType)
             {
-                case TransportType.AmqpTcp:
-                case TransportType.AmqpWebSockets:
+                case EventHubsTransportType.AmqpTcp:
+                case EventHubsTransportType.AmqpWebSockets:
                     return new AmqpClient(fullyQualifiedNamespace, eventHubName, credential, options);
 
                 default:
@@ -439,7 +449,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>The value to use as the audience of the signature.</returns>
         ///
-        private static string BuildAudienceResource(TransportType transportType,
+        private static string BuildAudienceResource(EventHubsTransportType transportType,
                                                     string fullyQualifiedNamespace,
                                                     string eventHubName)
         {

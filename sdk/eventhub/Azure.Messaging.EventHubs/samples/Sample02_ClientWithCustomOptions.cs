@@ -57,11 +57,11 @@ namespace Azure.Messaging.EventHubs.Samples
             {
                ConnectionOptions = new EventHubConnectionOptions
                 {
-                    TransportType = TransportType.AmqpWebSockets,
+                    TransportType = EventHubsTransportType.AmqpWebSockets,
                     Proxy = (IWebProxy)null
                 },
 
-                RetryOptions = new RetryOptions
+                RetryOptions = new EventHubsRetryOptions
                 {
                    MaximumRetries = 5,
                    TryTimeout = TimeSpan.FromMinutes(1)

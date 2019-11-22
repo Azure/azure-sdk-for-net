@@ -3,15 +3,19 @@
 
 using System;
 using System.Net;
-using Azure.Core.Testing;
-using Azure.Storage.Files.DataLake;
-using Azure.Storage.Files.DataLake.Tests;
 using NUnit.Framework;
 
-namespace Azure.Storage.Files.Shares.Test
+namespace Azure.Storage.Files.DataLake.Tests
 {
     public class DataLakeUriBuilderTests : DataLakeTestBase
     {
+        private readonly Uri _customUri = new Uri("https://www.customstorageurl.com");
+        private readonly Uri _shortHostUri = new Uri("https://account.core.windows.net");
+        private readonly Uri _ipStyleUri = new Uri("https://0.0.0.0/account");
+        private readonly Uri _invalidServiceUri = new Uri("https://account.file.core.windows.net");
+        private readonly Uri _blobUri = new Uri("https://account.blob.core.windows.net");
+        private readonly Uri _dfsUri = new Uri("https://account.dfs.core.windows.net");
+
         public DataLakeUriBuilderTests(bool async)
             : base(async, null /* RecordedTestMode.Record /* to re-record */)
         {
@@ -107,6 +111,162 @@ namespace Azure.Storage.Files.Shares.Test
             Assert.AreEqual(string.Empty, datalakeUriBuilder2.AccountName);
             Assert.AreEqual(string.Empty, datalakeUriBuilder3.AccountName);
             Assert.AreEqual(string.Empty, datalakeUriBuilder4.AccountName);
+        }
+
+        [Test]
+        public void DataLakeUriBuilder_ToBlobUri_CustomUri()
+        {
+            // Arrange
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(_customUri);
+
+            // Act
+            Uri result = uriBuilder.ToBlobUri();
+
+            // Assert
+            Assert.AreEqual(_customUri, result);
+        }
+
+        [Test]
+        public void DataLakeUriBuilder_ToBlobUri_ShortHost()
+        {
+            // Arrange
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(_shortHostUri);
+
+            // Act
+            Uri result = uriBuilder.ToBlobUri();
+
+            // Assert
+            Assert.AreEqual(_shortHostUri, result);
+        }
+
+        [Test]
+        public void DataLakeUriBuilder_ToBlobUri_IpStyleUri()
+        {
+            // Arrange
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(_ipStyleUri);
+
+            // Act
+            Uri result = uriBuilder.ToBlobUri();
+
+            // Assert
+            Assert.AreEqual(_ipStyleUri, result);
+        }
+
+        [Test]
+        public void DataLakeUriBuilder_ToBlobUri_InvalidServiceUri()
+        {
+            // Arrange
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(_invalidServiceUri);
+
+            // Act
+            Uri result = uriBuilder.ToBlobUri();
+
+            // Assert
+            Assert.AreEqual(_invalidServiceUri, result);
+        }
+
+        [Test]
+        public void DataLakeUriBuilder_ToBlobUri_BlobUri()
+        {
+            // Arrange
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(_blobUri);
+
+            // Act
+            Uri result = uriBuilder.ToBlobUri();
+
+            // Assert
+            Assert.AreEqual(_blobUri, result);
+        }
+
+        [Test]
+        public void DataLakeUriBuilder_ToBlobUri_DfsUri()
+        {
+            // Arrange
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(_dfsUri);
+
+            // Act
+            Uri result = uriBuilder.ToBlobUri();
+
+            // Assert
+            Assert.AreEqual(_blobUri, result);
+        }
+
+        [Test]
+        public void DataLakeUriBuilder_ToDfsUri_CustomUri()
+        {
+            // Arrange
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(_customUri);
+
+            // Act
+            Uri result = uriBuilder.ToDfsUri();
+
+            // Assert
+            Assert.AreEqual(_customUri, result);
+        }
+
+        [Test]
+        public void DataLakeUriBuilder_ToDfsUri_ShortHost()
+        {
+            // Arrange
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(_shortHostUri);
+
+            // Act
+            Uri result = uriBuilder.ToDfsUri();
+
+            // Assert
+            Assert.AreEqual(_shortHostUri, result);
+        }
+
+        [Test]
+        public void DataLakeUriBuilder_ToDfsUri_IpStyleUri()
+        {
+            // Arrange
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(_ipStyleUri);
+
+            // Act
+            Uri result = uriBuilder.ToDfsUri();
+
+            // Assert
+            Assert.AreEqual(_ipStyleUri, result);
+        }
+
+        [Test]
+        public void DataLakeUriBuilder_ToDfsUri_InvalidServiceUri()
+        {
+            // Arrange
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(_invalidServiceUri);
+
+            // Act
+            Uri result = uriBuilder.ToDfsUri();
+
+            // Assert
+            Assert.AreEqual(_invalidServiceUri, result);
+        }
+
+        [Test]
+        public void DataLakeUriBuilder_ToDfsUri_DfsUri()
+        {
+            // Arrange
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(_dfsUri);
+
+            // Act
+            Uri result = uriBuilder.ToDfsUri();
+
+            // Assert
+            Assert.AreEqual(_dfsUri, result);
+        }
+
+        [Test]
+        public void DataLakeUriBuilder_ToDfsUri_BlobUri()
+        {
+            // Arrange
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(_blobUri);
+
+            // Act
+            Uri result = uriBuilder.ToDfsUri();
+
+            // Assert
+            Assert.AreEqual(_dfsUri, result);
         }
     }
 }

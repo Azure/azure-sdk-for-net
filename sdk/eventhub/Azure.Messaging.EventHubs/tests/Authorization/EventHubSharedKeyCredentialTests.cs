@@ -53,7 +53,6 @@ namespace Azure.Messaging.EventHubs.Tests
             var credential = new EventHubSharedKeyCredential(name, value);
             var initializedValue = GetSharedAccessKey(credential);
 
-            Assert.That(credential.SharedAccessKeyName, Is.EqualTo(name), "The shared key name should have been set.");
             Assert.That(initializedValue, Is.EqualTo(value), "The shared key should have been set.");
         }
 

@@ -58,7 +58,7 @@ namespace Azure.Data.AppConfiguration
         /// the passed-in keys and labels.
         /// </summary>
         /// <param name="key">A key or key filter indicating which <see cref="ConfigurationSetting"/> entities to select.</param>
-        /// <param name="label">A label or label filter indicating which <see cref="ConfigurationSetting"/> entities to select</param>
+        /// <param name="label">A label or label filter indicating which <see cref="ConfigurationSetting"/> entities to select.</param>
         public SettingSelector(string key, string label = default)
         {
             Keys = new List<string>
@@ -80,7 +80,7 @@ namespace Azure.Data.AppConfiguration
         public override bool Equals(object obj) => base.Equals(obj);
 
         /// <summary>
-        /// Get a hash code for the SettingSelector
+        /// Get a hash code for the SettingSelector.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();
