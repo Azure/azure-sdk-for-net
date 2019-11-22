@@ -37,9 +37,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="id">Resource ID.</param>
         /// <param name="privateIPAddress">The Firewall Internal Load Balancer
         /// IP to be used as the next hop in User Defined Routes.</param>
-        /// <param name="subnet">Reference of the subnet resource. This
+        /// <param name="subnet">Reference to the subnet resource. This
         /// resource must be named 'AzureFirewallSubnet'.</param>
-        /// <param name="publicIPAddress">Reference of the PublicIP resource.
+        /// <param name="publicIPAddress">Reference to the PublicIP resource.
         /// This field is a mandatory input if subnet is not null.</param>
         /// <param name="provisioningState">The provisioning state of the Azure
         /// firewall IP configuration resource. Possible values include:
@@ -74,14 +74,14 @@ namespace Microsoft.Azure.Management.Network.Models
         public string PrivateIPAddress { get; private set; }
 
         /// <summary>
-        /// Gets or sets reference of the subnet resource. This resource must
+        /// Gets or sets reference to the subnet resource. This resource must
         /// be named 'AzureFirewallSubnet'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.subnet")]
         public SubResource Subnet { get; set; }
 
         /// <summary>
-        /// Gets or sets reference of the PublicIP resource. This field is a
+        /// Gets or sets reference to the PublicIP resource. This field is a
         /// mandatory input if subnet is not null.
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicIPAddress")]

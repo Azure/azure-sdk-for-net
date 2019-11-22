@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits).</param>
         /// <param name="webApplicationFirewallConfiguration">Web application
         /// firewall configuration.</param>
-        /// <param name="firewallPolicy">Reference of the FirewallPolicy
+        /// <param name="firewallPolicy">Reference to the FirewallPolicy
         /// resource.</param>
         /// <param name="enableHttp2">Whether HTTP2 is enabled on the
         /// application gateway resource.</param>
@@ -286,7 +286,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public ApplicationGatewayWebApplicationFirewallConfiguration WebApplicationFirewallConfiguration { get; set; }
 
         /// <summary>
-        /// Gets or sets reference of the FirewallPolicy resource.
+        /// Gets or sets reference to the FirewallPolicy resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.firewallPolicy")]
         public SubResource FirewallPolicy { get; set; }
