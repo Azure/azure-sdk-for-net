@@ -1165,7 +1165,8 @@ namespace Azure.Messaging.EventHubs
 
                         try
                         {
-                            await ProcessEventAsync(partitionEvent, context).ConfigureAwait(false);
+                            var eventArgs = new ProcessEventArgs(context, partitionEvent.Data, this);
+                            await OnProcessEventAsync(eventArgs).ConfigureAwait(false);
                         }
                         catch (Exception eventProcessingException)
                         {
@@ -1263,22 +1264,6 @@ namespace Azure.Messaging.EventHubs
         {
             var eventArgs = new PartitionClosingEventArgs(context, reason);
             return OnPartitionClosingAsync(eventArgs);
-        }
-
-        /// <summary>
-        ///   Responsible for processing events received from the Event Hubs service.
-        /// </summary>
-        ///
-        /// <param name="partitionEvent">The partition event to be processed.</param>
-        /// <param name="context">The context in which the associated partition is being processed.</param>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
-        protected Task ProcessEventAsync(PartitionEvent partitionEvent,
-                                         PartitionContext context)
-        {
-            var eventArgs = new ProcessEventArgs(context, partitionEvent.Data, this);
-            return OnProcessEventAsync(eventArgs);
         }
     }
 }
