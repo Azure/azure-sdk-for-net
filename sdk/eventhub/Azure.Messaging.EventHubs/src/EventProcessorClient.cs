@@ -1161,8 +1161,8 @@ namespace Azure.Messaging.EventHubs
 
                 ActivePartitionProcessorTokenSources[partitionId] = cancellationSource;
 
-                // Context is set to default if operation fails.  This shouldn't fail unless the user tries processing
-                // a partition they don't own.
+                // Context is set to default if operation fails.  This shouldn't fail unless the processor tries processing
+                // a partition it doesn't own.
 
                 PartitionContexts.TryGetValue(partitionId, out var context);
 

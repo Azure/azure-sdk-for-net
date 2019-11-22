@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Threading;
 using Azure.Core;
 
 namespace Azure.Messaging.EventHubs.Processor
@@ -28,19 +29,28 @@ namespace Azure.Messaging.EventHubs.Processor
         public EventPosition DefaultStartingPosition { get; set; }
 
         /// <summary>
+        ///   A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.
+        /// </summary>
+        ///
+        public CancellationToken CancellationToken { get; }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="PartitionInitializingEventArgs"/> class.
         /// </summary>
         ///
         /// <param name="partition">The context of the Event Hub partition this instance is associated with.</param>
         /// <param name="defaultStartingPosition">The position within a partition where the associated <see cref="EventProcessorClient" /> should begin reading events when no checkpoint can be found.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         public PartitionInitializingEventArgs(PartitionContext partition,
-                                              EventPosition defaultStartingPosition)
+                                              EventPosition defaultStartingPosition,
+                                              CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(partition, nameof(partition));
 
             Partition = partition;
             DefaultStartingPosition = defaultStartingPosition;
+            CancellationToken = cancellationToken;
         }
     }
 }

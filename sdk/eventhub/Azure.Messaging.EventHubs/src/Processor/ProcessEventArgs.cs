@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Errors;
@@ -29,6 +30,12 @@ namespace Azure.Messaging.EventHubs.Processor
         public EventData Data { get; }
 
         /// <summary>
+        ///   A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.
+        /// </summary>
+        ///
+        public CancellationToken CancellationToken { get; }
+
+        /// <summary>
         ///   The <see cref="EventProcessorClient" /> for this instance to use as a way of checkpoiting.
         /// </summary>
         ///
@@ -47,10 +54,12 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="partition">The context of the Event Hub partition this instance is associated with.</param>
         /// <param name="data">The received event to be processed.  Expected to be <c>null</c> if the receive call has timed out.</param>
         /// <param name="processor">The <see cref="EventProcessorClient" /> for this instance to use as a way of checkpoiting.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         internal ProcessEventArgs(PartitionContext partition,
                                   EventData data,
-                                  EventProcessorClient processor)
+                                  EventProcessorClient processor,
+                                  CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(partition, nameof(partition));
             Argument.AssertNotNull(processor, nameof(processor));
@@ -59,6 +68,7 @@ namespace Azure.Messaging.EventHubs.Processor
             Data = data;
             Processor = new WeakReference<EventProcessorClient>(processor);
             UpdateCheckpointDelegate = default;
+            CancellationToken = cancellationToken;
         }
 
         /// <summary>
@@ -68,10 +78,12 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="partition">The context of the Event Hub partition this instance is associated with.</param>
         /// <param name="data">The received event to be processed.  Expected to be <c>null</c> if the receive call has timed out.</param>
         /// <param name="updateCheckpointImplementation">The callback to be called upon <see cref="UpdateCheckpointAsync" /> call.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         public ProcessEventArgs(PartitionContext partition,
                                 EventData data,
-                                Func<Task> updateCheckpointImplementation)
+                                Func<Task> updateCheckpointImplementation,
+                                CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(partition, nameof(partition));
             Argument.AssertNotNull(updateCheckpointImplementation, nameof(updateCheckpointImplementation));
@@ -80,6 +92,7 @@ namespace Azure.Messaging.EventHubs.Processor
             Data = data;
             Processor = default;
             UpdateCheckpointDelegate = updateCheckpointImplementation;
+            CancellationToken = cancellationToken;
         }
 
         /// <summary>

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using Azure.Core;
 
 namespace Azure.Messaging.EventHubs.Processor
@@ -32,16 +33,24 @@ namespace Azure.Messaging.EventHubs.Processor
         public Exception Exception { get; }
 
         /// <summary>
+        ///   A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.
+        /// </summary>
+        ///
+        public CancellationToken CancellationToken { get; }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="ProcessErrorEventArgs"/> structure.
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the partition whose processing threw an exception.</param>
         /// <param name="operation">A short description of the operation that was being performed when the exception was thrown.</param>
         /// <param name="exception">The exception that was thrown by the <see cref="EventProcessorClient" />.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         public ProcessErrorEventArgs(string partitionId,
                                      string operation,
-                                     Exception exception)
+                                     Exception exception,
+                                     CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operation, nameof(operation));
             Argument.AssertNotNull(exception, nameof(exception));
@@ -49,6 +58,7 @@ namespace Azure.Messaging.EventHubs.Processor
             PartitionId = partitionId;
             Operation = operation;
             Exception = exception;
+            CancellationToken = cancellationToken;
         }
     }
 }
