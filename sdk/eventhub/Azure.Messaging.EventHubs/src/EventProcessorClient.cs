@@ -1072,7 +1072,9 @@ namespace Azure.Messaging.EventHubs
 
             PartitionContexts.TryRemove(partitionId, out var context);
 
-            var eventArgs = new PartitionClosingEventArgs(context, reason, RunningTaskTokenSource.Token);
+            // The RunningTaskTokenSource may be null if we are cleaning tasks after shutting down.
+
+            var eventArgs = new PartitionClosingEventArgs(context, reason, RunningTaskTokenSource?.Token ?? default);
             await OnPartitionClosingAsync(eventArgs).ConfigureAwait(false);
         }
 
