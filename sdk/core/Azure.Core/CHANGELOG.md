@@ -1,5 +1,7 @@
 # Release History
 
+## 1.1.0-preview1
+
 ## 1.0.1
 
 - Fix issues with log redaction where first query character was replaced with '?' character.

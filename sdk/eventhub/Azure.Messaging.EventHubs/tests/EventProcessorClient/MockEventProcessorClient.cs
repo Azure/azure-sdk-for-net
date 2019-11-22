@@ -167,7 +167,7 @@ namespace Azure.Messaging.EventHubs.Tests
             }
         }
 
-        protected override Task RunPartitionProcessingAsync(string partitionId, EventPosition startingPosition, TimeSpan? maximumReceiveWaitTime, RetryOptions retryOptions, bool trackLastEnqueuedEventInformation, CancellationToken cancellationToken = default)
+        protected override Task RunPartitionProcessingAsync(string partitionId, EventPosition startingPosition, TimeSpan? maximumReceiveWaitTime, EventHubsRetryOptions retryOptions, bool trackLastEnqueuedEventInformation, CancellationToken cancellationToken = default)
         {
             if (fakeRunPartitionProcessingAsync)
             {

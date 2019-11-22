@@ -29,7 +29,7 @@ namespace Azure.Messaging.EventHubs
         ///   The capability for tracking the last event enqueued in a partition, to associate with a link.
         /// </summary>
         ///
-        public static AmqpSymbol TrackLastEnqueuedEventInformation { get; } = AmqpConstants.Vendor + ":enable-receiver-runtime-metric";
+        public static AmqpSymbol TrackLastEnqueuedEventProperties { get; } = AmqpConstants.Vendor + ":enable-receiver-runtime-metric";
 
         /// <summary>
         ///   The timeout to associate with a link.

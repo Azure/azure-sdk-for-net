@@ -717,7 +717,7 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="startingPosition">The position within the partition where the task should begin reading events.</param>
         /// <param name="maximumReceiveWaitTime">The maximum amount of time to wait to for an event to be available before emitting an empty item; if <c>null</c>, empty items will not be published.</param>
         /// <param name="retryOptions">The set of options to use for determining whether a failed operation should be retried and, if so, the amount of time to wait between retry attempts.</param>
-        /// <param name="trackLastEnqueuedEventInformation">Indicates whether or not the task should request information on the last enqueued event on the partition associated with a given event, and track that information as events are received.</param>
+        /// <param name="trackLastEnqueuedEventProperties">Indicates whether or not the task should request information on the last enqueued event on the partition associated with a given event, and track that information as events are received.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>The running task that is currently receiving and processing events in the context of the specified partition.</returns>
@@ -725,8 +725,8 @@ namespace Azure.Messaging.EventHubs.Processor
         protected virtual Task RunPartitionProcessingAsync(string partitionId,
                                                            EventPosition startingPosition,
                                                            TimeSpan? maximumReceiveWaitTime,
-                                                           RetryOptions retryOptions,
-                                                           bool trackLastEnqueuedEventInformation,
+                                                           EventHubsRetryOptions retryOptions,
+                                                           bool trackLastEnqueuedEventProperties,
                                                            CancellationToken cancellationToken = default)
         {
             // TODO: should the retry options used here be the same for the abstract RetryPolicy property?
@@ -753,10 +753,10 @@ namespace Azure.Messaging.EventHubs.Processor
                     RetryOptions = retryOptions
                 };
 
-                var readOptions = new ReadOptions
+                var readOptions = new ReadEventOptions
                 {
                     MaximumWaitTime = maximumReceiveWaitTime,
-                    TrackLastEnqueuedEventInformation = trackLastEnqueuedEventInformation
+                    TrackLastEnqueuedEventProperties = trackLastEnqueuedEventProperties
                 };
 
                 await using var connection = ConnectionFactory.CreateConnection();

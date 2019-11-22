@@ -36,7 +36,7 @@ namespace Azure.Messaging.EventHubs.Core
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         public abstract Task SendAsync(IEnumerable<EventData> events,
-                                       SendOptions sendOptions,
+                                       SendEventOptions sendOptions,
                                        CancellationToken cancellationToken);
 
         /// <summary>

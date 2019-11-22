@@ -130,7 +130,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <remarks>
         ///   This property is only populated for events received using an reader specifying
-        ///   <see cref="ReadOptions.TrackLastEnqueuedEventInformation" /> as enabled.
+        ///   <see cref="ReadEventOptions.TrackLastEnqueuedEventProperties" /> as enabled.
         /// </remarks>
         ///
         internal long? LastPartitionSequenceNumber { get; }
@@ -142,7 +142,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <remarks>
         ///   This property is only populated for events received using an reader specifying
-        ///   <see cref="ReadOptions.TrackLastEnqueuedEventInformation" /> as enabled.
+        ///   <see cref="ReadEventOptions.TrackLastEnqueuedEventProperties" /> as enabled.
         /// </remarks>
         ///
         internal long? LastPartitionOffset { get; }
@@ -154,7 +154,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <remarks>
         ///   This property is only populated for events received using an reader specifying
-        ///   <see cref="ReadOptions.TrackLastEnqueuedEventInformation" /> as enabled.
+        ///   <see cref="ReadEventOptions.TrackLastEnqueuedEventProperties" /> as enabled.
         /// </remarks>
         ///
         internal DateTimeOffset? LastPartitionEnqueuedTime { get; }
@@ -166,7 +166,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <remarks>
         ///   This property is only populated for events received using an reader specifying
-        ///   <see cref="ReadOptions.TrackLastEnqueuedEventInformation" /> as enabled.
+        ///   <see cref="ReadEventOptions.TrackLastEnqueuedEventProperties" /> as enabled.
         /// </remarks>
         ///
         internal DateTimeOffset? LastPartitionInformationRetrievalTime { get; }

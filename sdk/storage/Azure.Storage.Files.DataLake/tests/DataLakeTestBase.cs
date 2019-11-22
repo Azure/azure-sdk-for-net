@@ -87,47 +87,24 @@ namespace Azure.Storage.Files.DataLake.Tests
             => GetServiceClientFromOauthConfig(TestConfigHierarchicalNamespace);
 
 
-        public IDisposable GetNewFileSystem(
-            out DataLakeFileSystemClient fileSystem,
+        public async Task<DisposingFileSystem> GetNewFileSystem(
             DataLakeServiceClient service = default,
             string fileSystemName = default,
             IDictionary<string, string> metadata = default,
-            Models.PublicAccessType publicAccessType = Models.PublicAccessType.None,
+            PublicAccessType publicAccessType = PublicAccessType.None,
             bool premium = default)
         {
             fileSystemName ??= GetNewFileSystemName();
             service ??= GetServiceClient_SharedKey();
-            fileSystem = InstrumentClient(service.GetFileSystemClient(fileSystemName));
 
-            if (publicAccessType == Models.PublicAccessType.None)
+            if (publicAccessType == PublicAccessType.None)
             {
-                publicAccessType = premium ? Models.PublicAccessType.None : Models.PublicAccessType.FileSystem;
+                publicAccessType = premium ? PublicAccessType.None : PublicAccessType.FileSystem;
             }
 
-            return new DisposingFileSystem(
-                fileSystem,
-                metadata ?? new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase),
-                publicAccessType);
-        }
-
-        public IDisposable GetNewDirectory(out DataLakeDirectoryClient directory, DataLakeServiceClient service = default, string fileSystemName = default, string directoryName = default)
-        {
-            IDisposable disposingFileSystem = GetNewFileSystem(out DataLakeFileSystemClient fileSystem, service, fileSystemName);
-            directory = InstrumentClient(fileSystem.GetDirectoryClient(directoryName ?? GetNewDirectoryName()));
-            _ = directory.CreateAsync().Result;
-            return disposingFileSystem;
-        }
-
-        public IDisposable GetNewFile(out DataLakeFileClient file, DataLakeServiceClient service = default, string fileSystemName = default, string directoryName = default, string fileName = default)
-        {
-            IDisposable disposingFileSystem = GetNewFileSystem(out DataLakeFileSystemClient fileSystem, service, fileSystemName);
-            DataLakeDirectoryClient directory = InstrumentClient(fileSystem.GetDirectoryClient(directoryName ?? GetNewDirectoryName()));
-            _ = directory.CreateAsync().Result;
-
-            file = InstrumentClient(directory.GetFileClient(fileName ?? GetNewFileName()));
-            _ = file.CreateAsync().Result;
-
-            return disposingFileSystem;
+            DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(fileSystemName));
+            await fileSystem.CreateAsync(metadata: metadata, publicAccessType: publicAccessType);
+            return new DisposingFileSystem(fileSystem);
         }
 
         public static void AssertValidStoragePathInfo(PathInfo pathInfo)
@@ -366,24 +343,23 @@ namespace Azure.Storage.Files.DataLake.Tests
                 }
             };
 
-        private class DisposingFileSystem : IDisposable
+        public class DisposingFileSystem : IAsyncDisposable
         {
-            public DataLakeFileSystemClient FileSystemClient { get; }
+            public DataLakeFileSystemClient FileSystem;
 
-            public DisposingFileSystem(DataLakeFileSystemClient fileSystem, IDictionary<string, string> metadata, Models.PublicAccessType publicAccessType = default)
+            public DisposingFileSystem(DataLakeFileSystemClient fileSystem)
             {
-                fileSystem.CreateAsync(metadata: metadata, publicAccessType: publicAccessType).Wait();
-
-                FileSystemClient = fileSystem;
+                FileSystem = fileSystem;
             }
 
-            public void Dispose()
+            public async ValueTask DisposeAsync()
             {
-                if (FileSystemClient != null)
+                if (FileSystem != null)
                 {
                     try
                     {
-                        FileSystemClient.DeleteAsync().Wait();
+                        await FileSystem.DeleteAsync();
+                        FileSystem = null;
                     }
                     catch
                     {

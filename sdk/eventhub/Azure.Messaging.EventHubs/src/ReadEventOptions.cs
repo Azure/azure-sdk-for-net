@@ -12,7 +12,7 @@ namespace Azure.Messaging.EventHubs
     ///   <see cref="EventHubConsumerClient" />.
     /// </summary>
     ///
-    public class ReadOptions
+    public class ReadEventOptions
     {
         /// <summary>The maximum amount of time to wait to for an event to be available before emitting an empty item; if <c>null</c>, empty items will not be emitted.</summary>
         private TimeSpan? _maximumWaitTime = null;
@@ -45,7 +45,7 @@ namespace Azure.Messaging.EventHubs
         ///   against periodically making requests for partition properties using one of the Event Hub clients.
         /// </remarks>
         ///
-        public bool TrackLastEnqueuedEventInformation { get; set; } = true;
+        public bool TrackLastEnqueuedEventProperties { get; set; } = true;
 
         /// <summary>
         ///   The maximum amount of time to wait to for an event to be available when reading before reading an empty
@@ -105,16 +105,16 @@ namespace Azure.Messaging.EventHubs
         public override string ToString() => base.ToString();
 
         /// <summary>
-        ///   Creates a new copy of the current <see cref="ReadOptions" />, cloning its attributes into a new instance.
+        ///   Creates a new copy of the current <see cref="ReadEventOptions" />, cloning its attributes into a new instance.
         /// </summary>
         ///
-        /// <returns>A new copy of <see cref="ReadOptions" />.</returns>
+        /// <returns>A new copy of <see cref="ReadEventOptions" />.</returns>
         ///
-        internal ReadOptions Clone() =>
-            new ReadOptions
+        internal ReadEventOptions Clone() =>
+            new ReadEventOptions
             {
                 OwnerLevel = OwnerLevel,
-                TrackLastEnqueuedEventInformation = TrackLastEnqueuedEventInformation,
+                TrackLastEnqueuedEventProperties = TrackLastEnqueuedEventProperties,
                 MaximumWaitTime = MaximumWaitTime
             };
     }
