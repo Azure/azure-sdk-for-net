@@ -794,14 +794,8 @@ namespace Azure.Messaging.EventHubs
                     {
                         if (!ActivePartitionProcessors.TryGetValue(kvp.Key, out Task processingTask) || processingTask.IsCompleted)
                         {
-                            // TODO: if the task fails, what's the expected reason?
-
                             await StopPartitionProcessingIfRunningAsync(kvp.Key, ProcessingStoppedReason.Shutdown).ConfigureAwait(false);
-
-                            var context = new PartitionContext(kvp.Key);
-                            PartitionContexts[kvp.Key] = context;
-
-                            await InitializeProcessingForPartitionAsync(context).ConfigureAwait(false);
+                            await StartPartitionProcessingAsync(kvp.Key).ConfigureAwait(false);
                         }
                     }))
                     .ConfigureAwait(false);
@@ -819,11 +813,7 @@ namespace Azure.Messaging.EventHubs
                 if (claimedOwnership != null)
                 {
                     InstanceOwnership[claimedOwnership.PartitionId] = claimedOwnership;
-
-                    var context = new PartitionContext(claimedOwnership.PartitionId);
-                    PartitionContexts[claimedOwnership.PartitionId] = context;
-
-                    await InitializeProcessingForPartitionAsync(context).ConfigureAwait(false);
+                    await StartPartitionProcessingAsync(claimedOwnership.PartitionId).ConfigureAwait(false);
                 }
 
                 // Wait the remaining time, if any, to start the next cycle.  The total time of a cycle defaults to 10 seconds,
@@ -996,6 +986,46 @@ namespace Azure.Messaging.EventHubs
             // No ownership has been claimed.
 
             return new ValueTask<PartitionOwnership>(default(PartitionOwnership));
+        }
+
+        /// <summary>
+        ///   TODO.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the Event Hub partition whose processing is starting.</param>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        ///
+        private async Task StartPartitionProcessingAsync(string partitionId)
+        {
+            var context = new PartitionContext(partitionId);
+            PartitionContexts[partitionId] = context;
+
+            try
+            {
+                var eventArgs = new PartitionInitializingEventArgs(context, EventPosition.Earliest);
+                await OnPartitionInitializingAsync(eventArgs).ConfigureAwait(false);
+
+                var startingPosition = eventArgs.DefaultStartingPosition;
+                var ownership = InstanceOwnership[partitionId];
+
+                if (ownership.Offset.HasValue)
+                {
+                    startingPosition = EventPosition.FromOffset(ownership.Offset.Value);
+                }
+                else if (ownership.SequenceNumber.HasValue)
+                {
+                    startingPosition = EventPosition.FromSequenceNumber(ownership.SequenceNumber.Value);
+                }
+
+                ActivePartitionProcessors[partitionId] = RunPartitionProcessingAsync(partitionId, startingPosition, ClientOptions.MaximumWaitTime, ClientOptions.RetryOptions, ClientOptions.TrackLastEnqueuedEventProperties);
+            }
+            catch (Exception)
+            {
+                // If processing task creation fails, we'll try again on the next time this method is called.  This should happen
+                // on the next load balancing loop as long as this instance still owns the partition.
+                // TODO: delegate the exception handling to an Exception Callback.  Do we really need a try-catch here?
+            }
         }
 
         /// <summary>
@@ -1206,49 +1236,6 @@ namespace Azure.Messaging.EventHubs
             else
             {
                 throw new InvalidOperationException(Resources.RunningEventProcessorCannotPerformOperation);
-            }
-        }
-
-        // TODO: remove the following methods.
-
-        /// <summary>
-        ///   The function to be called just before event processing starts for a given partition.
-        /// </summary>
-        ///
-        /// <param name="context">The context in which the associated partition will be processed.</param>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
-        protected async Task InitializeProcessingForPartitionAsync(PartitionContext context)
-        {
-            try
-            {
-                var eventArgs = new PartitionInitializingEventArgs(context, EventPosition.Earliest);
-                await OnPartitionInitializingAsync(eventArgs).ConfigureAwait(false);
-
-                var startingPosition = eventArgs.DefaultStartingPosition;
-                var ownership = InstanceOwnership[context.PartitionId];
-
-                if (ownership.Offset.HasValue)
-                {
-                    startingPosition = EventPosition.FromOffset(ownership.Offset.Value);
-                }
-                else if (ownership.SequenceNumber.HasValue)
-                {
-                    startingPosition = EventPosition.FromSequenceNumber(ownership.SequenceNumber.Value);
-                }
-
-                // TODO: it might be troublesome to let the users add running tasks by themselves.  If the user adds a custom
-                // processing task that's not RunPartitionProcessingAsync, how would the base stop it?  It would not have a cancellation
-                // token to do so.
-
-                ActivePartitionProcessors[context.PartitionId] = RunPartitionProcessingAsync(context.PartitionId, startingPosition, ClientOptions.MaximumWaitTime, ClientOptions.RetryOptions, ClientOptions.TrackLastEnqueuedEventProperties);
-            }
-            catch (Exception)
-            {
-                // If processing task creation fails, we'll try again on the next time this method is called.  This should happen
-                // on the next load balancing loop as long as this instance still owns the partition.
-                // TODO: delegate the exception handling to an Exception Callback.  Do we really need a try-catch here?
             }
         }
     }
