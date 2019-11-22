@@ -65,10 +65,10 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <param name="options">The set of options to use for this event processor.</param>
         ///
         public MockEventProcessorClient(string consumerGroup,
-                                 PartitionManager partitionManager,
-                                 EventHubConnectionFactory connectionFactory,
-                                 EventProcessorClientOptions options,
-                                 bool fakeRunPartitionProcessingAsync = true) : base(consumerGroup, partitionManager, connectionFactory, options)
+                                        PartitionManager partitionManager,
+                                        EventHubConnectionFactory connectionFactory,
+                                        EventProcessorClientOptions options,
+                                        bool fakeRunPartitionProcessingAsync = true) : base(consumerGroup, partitionManager, connectionFactory, options)
         {
             this.fakeRunPartitionProcessingAsync = fakeRunPartitionProcessingAsync;
             Manager = partitionManager;

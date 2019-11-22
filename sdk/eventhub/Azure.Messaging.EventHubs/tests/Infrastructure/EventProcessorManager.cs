@@ -247,8 +247,8 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Compares two ownership distributions among event processors to determine if they represent the same
-        ///   distribution.
+        /// Compares two ownership distributions among event processors to determine if they represent the same
+        /// distribution.
         /// </summary>
         ///
         /// <param name="first">The first distribution to consider.</param>

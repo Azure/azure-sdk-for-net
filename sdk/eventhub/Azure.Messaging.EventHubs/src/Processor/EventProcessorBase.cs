@@ -397,7 +397,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 // by others.
 
                 var utcNow = DateTimeOffset.UtcNow;
-                var activeOwnershipWithDistribution = new Dictionary<string, List<PartitionOwnership>>();
+                var activeOwnershipWithDistribution = new Dictionary<string, List<PartitionOwnership>> { { Identifier, new List<PartitionOwnership>() } };
                 foreach (PartitionOwnership ownership in completeOwnershipList)
                 {
                     if (utcNow.Subtract(ownership.LastModifiedTime.Value) < OwnershipExpiration)
