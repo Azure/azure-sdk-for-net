@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.DataShare
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -79,35 +77,6 @@ namespace Microsoft.Azure.Management.DataShare
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get synchronizationSetting in a share.
-            /// </summary>
-            /// <remarks>
-            /// Get a synchronizationSetting in a share
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the share account.
-            /// </param>
-            /// <param name='shareName'>
-            /// The name of the share.
-            /// </param>
-            /// <param name='synchronizationSettingName'>
-            /// The name of the synchronizationSetting.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse<SynchronizationSetting> GetWithHttpMessages(this ISynchronizationSettingsOperations operations, string resourceGroupName, string accountName, string shareName, string synchronizationSettingName, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.GetWithHttpMessagesAsync(resourceGroupName, accountName, shareName, synchronizationSettingName, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -177,39 +146,6 @@ namespace Microsoft.Azure.Management.DataShare
             }
 
             /// <summary>
-            /// Adds a new synchronization setting to an existing share or updates it if
-            /// existing.
-            /// </summary>
-            /// <remarks>
-            /// Create or update a synchronizationSetting
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the share account.
-            /// </param>
-            /// <param name='shareName'>
-            /// The name of the share to add the synchronization setting to.
-            /// </param>
-            /// <param name='synchronizationSettingName'>
-            /// The name of the synchronizationSetting.
-            /// </param>
-            /// <param name='synchronizationSetting'>
-            /// The new synchronization setting information.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse<SynchronizationSetting> CreateWithHttpMessages(this ISynchronizationSettingsOperations operations, string resourceGroupName, string accountName, string shareName, string synchronizationSettingName, SynchronizationSetting synchronizationSetting, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.CreateWithHttpMessagesAsync(resourceGroupName, accountName, shareName, synchronizationSettingName, synchronizationSetting, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
             /// Delete synchronizationSetting in a share.
             /// </summary>
             /// <remarks>
@@ -265,35 +201,6 @@ namespace Microsoft.Azure.Management.DataShare
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Delete synchronizationSetting in a share.
-            /// </summary>
-            /// <remarks>
-            /// Delete a synchronizationSetting in a share
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the share account.
-            /// </param>
-            /// <param name='shareName'>
-            /// The name of the share.
-            /// </param>
-            /// <param name='synchronizationSettingName'>
-            /// The name of the synchronizationSetting .
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse<OperationResponse> DeleteWithHttpMessages(this ISynchronizationSettingsOperations operations, string resourceGroupName, string accountName, string shareName, string synchronizationSettingName, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.DeleteWithHttpMessagesAsync(resourceGroupName, accountName, shareName, synchronizationSettingName, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -355,35 +262,6 @@ namespace Microsoft.Azure.Management.DataShare
             }
 
             /// <summary>
-            /// List synchronizationSettings in a share.
-            /// </summary>
-            /// <remarks>
-            /// List synchronizationSettings in a share
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the share account.
-            /// </param>
-            /// <param name='shareName'>
-            /// The name of the share.
-            /// </param>
-            /// <param name='skipToken'>
-            /// continuation token
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse<IPage<SynchronizationSetting>> ListByShareWithHttpMessages(this ISynchronizationSettingsOperations operations, string resourceGroupName, string accountName, string shareName, string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.ListByShareWithHttpMessagesAsync(resourceGroupName, accountName, shareName, skipToken, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
             /// Delete synchronizationSetting in a share.
             /// </summary>
             /// <remarks>
@@ -442,35 +320,6 @@ namespace Microsoft.Azure.Management.DataShare
             }
 
             /// <summary>
-            /// Delete synchronizationSetting in a share.
-            /// </summary>
-            /// <remarks>
-            /// Delete a synchronizationSetting in a share
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the share account.
-            /// </param>
-            /// <param name='shareName'>
-            /// The name of the share.
-            /// </param>
-            /// <param name='synchronizationSettingName'>
-            /// The name of the synchronizationSetting .
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse<OperationResponse> BeginDeleteWithHttpMessages(this ISynchronizationSettingsOperations operations, string resourceGroupName, string accountName, string shareName, string synchronizationSettingName, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, accountName, shareName, synchronizationSettingName, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
             /// List synchronizationSettings in a share.
             /// </summary>
             /// <remarks>
@@ -508,26 +357,6 @@ namespace Microsoft.Azure.Management.DataShare
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// List synchronizationSettings in a share.
-            /// </summary>
-            /// <remarks>
-            /// List synchronizationSettings in a share
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse<IPage<SynchronizationSetting>> ListByShareNextWithHttpMessages(this ISynchronizationSettingsOperations operations, string nextPageLink, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.ListByShareNextWithHttpMessagesAsync(nextPageLink, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
     }

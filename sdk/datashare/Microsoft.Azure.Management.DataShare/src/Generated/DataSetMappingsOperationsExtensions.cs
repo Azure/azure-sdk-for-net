@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.DataShare
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -79,35 +77,6 @@ namespace Microsoft.Azure.Management.DataShare
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get DataSetMapping in a shareSubscription.
-            /// </summary>
-            /// <remarks>
-            /// Get a DataSetMapping in a shareSubscription
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the share account.
-            /// </param>
-            /// <param name='shareSubscriptionName'>
-            /// The name of the shareSubscription.
-            /// </param>
-            /// <param name='dataSetMappingName'>
-            /// The name of the dataSetMapping.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse<DataSetMapping> GetWithHttpMessages(this IDataSetMappingsOperations operations, string resourceGroupName, string accountName, string shareSubscriptionName, string dataSetMappingName, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.GetWithHttpMessagesAsync(resourceGroupName, accountName, shareSubscriptionName, dataSetMappingName, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -179,40 +148,6 @@ namespace Microsoft.Azure.Management.DataShare
             }
 
             /// <summary>
-            /// Maps a source data set in the source share to a sink data set in the share
-            /// subscription.
-            /// Enables copying the data set from source to destination.
-            /// </summary>
-            /// <remarks>
-            /// Create a DataSetMapping
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the share account.
-            /// </param>
-            /// <param name='shareSubscriptionName'>
-            /// The name of the share subscription which will hold the data set sink.
-            /// </param>
-            /// <param name='dataSetMappingName'>
-            /// The name of the data set mapping to be created.
-            /// </param>
-            /// <param name='dataSetMapping'>
-            /// Destination data set configuration details.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse<DataSetMapping> CreateWithHttpMessages(this IDataSetMappingsOperations operations, string resourceGroupName, string accountName, string shareSubscriptionName, string dataSetMappingName, DataSetMapping dataSetMapping, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.CreateWithHttpMessagesAsync(resourceGroupName, accountName, shareSubscriptionName, dataSetMappingName, dataSetMapping, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
             /// Delete DataSetMapping in a shareSubscription.
             /// </summary>
             /// <remarks>
@@ -265,35 +200,6 @@ namespace Microsoft.Azure.Management.DataShare
             public static async Task DeleteAsync(this IDataSetMappingsOperations operations, string resourceGroupName, string accountName, string shareSubscriptionName, string dataSetMappingName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, accountName, shareSubscriptionName, dataSetMappingName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Delete DataSetMapping in a shareSubscription.
-            /// </summary>
-            /// <remarks>
-            /// Delete a DataSetMapping in a shareSubscription
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the share account.
-            /// </param>
-            /// <param name='shareSubscriptionName'>
-            /// The name of the shareSubscription.
-            /// </param>
-            /// <param name='dataSetMappingName'>
-            /// The name of the dataSetMapping.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse DeleteWithHttpMessages(this IDataSetMappingsOperations operations, string resourceGroupName, string accountName, string shareSubscriptionName, string dataSetMappingName, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.DeleteWithHttpMessagesAsync(resourceGroupName, accountName, shareSubscriptionName, dataSetMappingName, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -363,35 +269,6 @@ namespace Microsoft.Azure.Management.DataShare
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the share account.
-            /// </param>
-            /// <param name='shareSubscriptionName'>
-            /// The name of the share subscription.
-            /// </param>
-            /// <param name='skipToken'>
-            /// Continuation token
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse<IPage<DataSetMapping>> ListByShareSubscriptionWithHttpMessages(this IDataSetMappingsOperations operations, string resourceGroupName, string accountName, string shareSubscriptionName, string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.ListByShareSubscriptionWithHttpMessagesAsync(resourceGroupName, accountName, shareSubscriptionName, skipToken, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List DataSetMappings in a share subscription.
-            /// </summary>
-            /// <remarks>
-            /// List DataSetMappings in a share subscription
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
@@ -421,26 +298,6 @@ namespace Microsoft.Azure.Management.DataShare
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// List DataSetMappings in a share subscription.
-            /// </summary>
-            /// <remarks>
-            /// List DataSetMappings in a share subscription
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse<IPage<DataSetMapping>> ListByShareSubscriptionNextWithHttpMessages(this IDataSetMappingsOperations operations, string nextPageLink, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.ListByShareSubscriptionNextWithHttpMessagesAsync(nextPageLink, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
     }

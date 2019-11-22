@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.DataShare
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -82,35 +80,6 @@ namespace Microsoft.Azure.Management.DataShare
             }
 
             /// <summary>
-            /// Get DataSet in a share.
-            /// </summary>
-            /// <remarks>
-            /// Get a DataSet in a share
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the share account.
-            /// </param>
-            /// <param name='shareName'>
-            /// The name of the share.
-            /// </param>
-            /// <param name='dataSetName'>
-            /// The name of the dataSet.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse<DataSet> GetWithHttpMessages(this IDataSetsOperations operations, string resourceGroupName, string accountName, string shareName, string dataSetName, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.GetWithHttpMessagesAsync(resourceGroupName, accountName, shareName, dataSetName, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
             /// Adds a new data set to an existing share or updates it if existing.
             /// </summary>
             /// <remarks>
@@ -175,38 +144,6 @@ namespace Microsoft.Azure.Management.DataShare
             }
 
             /// <summary>
-            /// Adds a new data set to an existing share or updates it if existing.
-            /// </summary>
-            /// <remarks>
-            /// Create a DataSet
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the share account.
-            /// </param>
-            /// <param name='shareName'>
-            /// The name of the share to add the data set to.
-            /// </param>
-            /// <param name='dataSetName'>
-            /// The name of the dataSet.
-            /// </param>
-            /// <param name='dataSet'>
-            /// The new data set information.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse<DataSet> CreateWithHttpMessages(this IDataSetsOperations operations, string resourceGroupName, string accountName, string shareName, string dataSetName, DataSet dataSet, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.CreateWithHttpMessagesAsync(resourceGroupName, accountName, shareName, dataSetName, dataSet, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
             /// Delete DataSet in a share.
             /// </summary>
             /// <remarks>
@@ -259,35 +196,6 @@ namespace Microsoft.Azure.Management.DataShare
             public static async Task DeleteAsync(this IDataSetsOperations operations, string resourceGroupName, string accountName, string shareName, string dataSetName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, accountName, shareName, dataSetName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Delete DataSet in a share.
-            /// </summary>
-            /// <remarks>
-            /// Delete a DataSet in a share
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the share account.
-            /// </param>
-            /// <param name='shareName'>
-            /// The name of the share.
-            /// </param>
-            /// <param name='dataSetName'>
-            /// The name of the dataSet.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse DeleteWithHttpMessages(this IDataSetsOperations operations, string resourceGroupName, string accountName, string shareName, string dataSetName, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.DeleteWithHttpMessagesAsync(resourceGroupName, accountName, shareName, dataSetName, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -349,35 +257,6 @@ namespace Microsoft.Azure.Management.DataShare
             }
 
             /// <summary>
-            /// List DataSets in a share.
-            /// </summary>
-            /// <remarks>
-            /// List DataSets in a share
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the share account.
-            /// </param>
-            /// <param name='shareName'>
-            /// The name of the share.
-            /// </param>
-            /// <param name='skipToken'>
-            /// continuation token
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse<IPage<DataSet>> ListByShareWithHttpMessages(this IDataSetsOperations operations, string resourceGroupName, string accountName, string shareName, string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.ListByShareWithHttpMessagesAsync(resourceGroupName, accountName, shareName, skipToken, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
             /// Delete DataSet in a share.
             /// </summary>
             /// <remarks>
@@ -433,35 +312,6 @@ namespace Microsoft.Azure.Management.DataShare
             }
 
             /// <summary>
-            /// Delete DataSet in a share.
-            /// </summary>
-            /// <remarks>
-            /// Delete a DataSet in a share
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the share account.
-            /// </param>
-            /// <param name='shareName'>
-            /// The name of the share.
-            /// </param>
-            /// <param name='dataSetName'>
-            /// The name of the dataSet.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse BeginDeleteWithHttpMessages(this IDataSetsOperations operations, string resourceGroupName, string accountName, string shareName, string dataSetName, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, accountName, shareName, dataSetName, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
             /// List DataSets in a share.
             /// </summary>
             /// <remarks>
@@ -499,26 +349,6 @@ namespace Microsoft.Azure.Management.DataShare
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// List DataSets in a share.
-            /// </summary>
-            /// <remarks>
-            /// List DataSets in a share
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse<IPage<DataSet>> ListByShareNextWithHttpMessages(this IDataSetsOperations operations, string nextPageLink, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.ListByShareNextWithHttpMessagesAsync(nextPageLink, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
     }

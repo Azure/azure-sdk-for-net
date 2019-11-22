@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.DataShare
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -76,32 +74,6 @@ namespace Microsoft.Azure.Management.DataShare
             }
 
             /// <summary>
-            /// Get shareSubscription in an account.
-            /// </summary>
-            /// <remarks>
-            /// Get a shareSubscription in an account
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the share account.
-            /// </param>
-            /// <param name='shareSubscriptionName'>
-            /// The name of the shareSubscription.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse<ShareSubscription> GetWithHttpMessages(this IShareSubscriptionsOperations operations, string resourceGroupName, string accountName, string shareSubscriptionName, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.GetWithHttpMessagesAsync(resourceGroupName, accountName, shareSubscriptionName, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
             /// Create shareSubscription in an account.
             /// </summary>
             /// <remarks>
@@ -160,35 +132,6 @@ namespace Microsoft.Azure.Management.DataShare
             }
 
             /// <summary>
-            /// Create shareSubscription in an account.
-            /// </summary>
-            /// <remarks>
-            /// Create a shareSubscription in an account
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the share account.
-            /// </param>
-            /// <param name='shareSubscriptionName'>
-            /// The name of the shareSubscription.
-            /// </param>
-            /// <param name='shareSubscription'>
-            /// create parameters for shareSubscription
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse<ShareSubscription> CreateWithHttpMessages(this IShareSubscriptionsOperations operations, string resourceGroupName, string accountName, string shareSubscriptionName, ShareSubscription shareSubscription, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.CreateWithHttpMessagesAsync(resourceGroupName, accountName, shareSubscriptionName, shareSubscription, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
             /// Delete shareSubscription in an account.
             /// </summary>
             /// <remarks>
@@ -238,32 +181,6 @@ namespace Microsoft.Azure.Management.DataShare
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Delete shareSubscription in an account.
-            /// </summary>
-            /// <remarks>
-            /// Delete a shareSubscription in an account
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the share account.
-            /// </param>
-            /// <param name='shareSubscriptionName'>
-            /// The name of the shareSubscription.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse<OperationResponse> DeleteWithHttpMessages(this IShareSubscriptionsOperations operations, string resourceGroupName, string accountName, string shareSubscriptionName, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.DeleteWithHttpMessagesAsync(resourceGroupName, accountName, shareSubscriptionName, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -325,35 +242,6 @@ namespace Microsoft.Azure.Management.DataShare
             }
 
             /// <summary>
-            /// Get source share synchronization settings for a shareSubscription.
-            /// </summary>
-            /// <remarks>
-            /// Get synchronization settings set on a share
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the share account.
-            /// </param>
-            /// <param name='shareSubscriptionName'>
-            /// The name of the shareSubscription.
-            /// </param>
-            /// <param name='skipToken'>
-            /// Continuation token
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse<IPage<SourceShareSynchronizationSetting>> ListSourceShareSynchronizationSettingsWithHttpMessages(this IShareSubscriptionsOperations operations, string resourceGroupName, string accountName, string shareSubscriptionName, string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.ListSourceShareSynchronizationSettingsWithHttpMessagesAsync(resourceGroupName, accountName, shareSubscriptionName, skipToken, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
             /// List Synchronizations in a share subscription.
             /// </summary>
             /// <remarks>
@@ -409,35 +297,6 @@ namespace Microsoft.Azure.Management.DataShare
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// List Synchronizations in a share subscription.
-            /// </summary>
-            /// <remarks>
-            /// List synchronizations of a share subscription
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the share account.
-            /// </param>
-            /// <param name='shareSubscriptionName'>
-            /// The name of the share subscription.
-            /// </param>
-            /// <param name='skipToken'>
-            /// Continuation token
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse<IPage<ShareSubscriptionSynchronization>> ListSynchronizationsWithHttpMessages(this IShareSubscriptionsOperations operations, string resourceGroupName, string accountName, string shareSubscriptionName, string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.ListSynchronizationsWithHttpMessagesAsync(resourceGroupName, accountName, shareSubscriptionName, skipToken, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -505,38 +364,6 @@ namespace Microsoft.Azure.Management.DataShare
             }
 
             /// <summary>
-            /// List data set level details for a share subscription synchronization
-            /// </summary>
-            /// <remarks>
-            /// List synchronization details
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the share account.
-            /// </param>
-            /// <param name='shareSubscriptionName'>
-            /// The name of the share subscription.
-            /// </param>
-            /// <param name='shareSubscriptionSynchronization'>
-            /// Share Subscription Synchronization payload.
-            /// </param>
-            /// <param name='skipToken'>
-            /// Continuation token
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse<IPage<SynchronizationDetails>> ListSynchronizationDetailsWithHttpMessages(this IShareSubscriptionsOperations operations, string resourceGroupName, string accountName, string shareSubscriptionName, ShareSubscriptionSynchronization shareSubscriptionSynchronization, string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.ListSynchronizationDetailsWithHttpMessagesAsync(resourceGroupName, accountName, shareSubscriptionName, shareSubscriptionSynchronization, skipToken, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
             /// Initiate an asynchronous data share job
             /// </summary>
             /// <remarks>
@@ -592,35 +419,6 @@ namespace Microsoft.Azure.Management.DataShare
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Initiate an asynchronous data share job
-            /// </summary>
-            /// <remarks>
-            /// Initiate a copy
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the share account.
-            /// </param>
-            /// <param name='shareSubscriptionName'>
-            /// The name of share subscription
-            /// </param>
-            /// <param name='synchronize'>
-            /// Synchronize payload
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse<ShareSubscriptionSynchronization> SynchronizeMethodWithHttpMessages(this IShareSubscriptionsOperations operations, string resourceGroupName, string accountName, string shareSubscriptionName, Synchronize synchronize, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.SynchronizeMethodWithHttpMessagesAsync(resourceGroupName, accountName, shareSubscriptionName, synchronize, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -682,35 +480,6 @@ namespace Microsoft.Azure.Management.DataShare
             }
 
             /// <summary>
-            /// Request cancellation of a data share snapshot
-            /// </summary>
-            /// <remarks>
-            /// Request to cancel a synchronization.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the share account.
-            /// </param>
-            /// <param name='shareSubscriptionName'>
-            /// The name of the shareSubscription.
-            /// </param>
-            /// <param name='shareSubscriptionSynchronization'>
-            /// Share Subscription Synchronization payload.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse<ShareSubscriptionSynchronization> CancelSynchronizationWithHttpMessages(this IShareSubscriptionsOperations operations, string resourceGroupName, string accountName, string shareSubscriptionName, ShareSubscriptionSynchronization shareSubscriptionSynchronization, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.CancelSynchronizationWithHttpMessagesAsync(resourceGroupName, accountName, shareSubscriptionName, shareSubscriptionSynchronization, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
             /// List of available share subscriptions under an account.
             /// </summary>
             /// <remarks>
@@ -763,32 +532,6 @@ namespace Microsoft.Azure.Management.DataShare
             }
 
             /// <summary>
-            /// List of available share subscriptions under an account.
-            /// </summary>
-            /// <remarks>
-            /// List share subscriptions in an account
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the share account.
-            /// </param>
-            /// <param name='skipToken'>
-            /// Continuation Token
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse<IPage<ShareSubscription>> ListByAccountWithHttpMessages(this IShareSubscriptionsOperations operations, string resourceGroupName, string accountName, string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.ListByAccountWithHttpMessagesAsync(resourceGroupName, accountName, skipToken, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
             /// Delete shareSubscription in an account.
             /// </summary>
             /// <remarks>
@@ -838,32 +581,6 @@ namespace Microsoft.Azure.Management.DataShare
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Delete shareSubscription in an account.
-            /// </summary>
-            /// <remarks>
-            /// Delete a shareSubscription in an account
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the share account.
-            /// </param>
-            /// <param name='shareSubscriptionName'>
-            /// The name of the shareSubscription.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse<OperationResponse> BeginDeleteWithHttpMessages(this IShareSubscriptionsOperations operations, string resourceGroupName, string accountName, string shareSubscriptionName, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, accountName, shareSubscriptionName, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -925,35 +642,6 @@ namespace Microsoft.Azure.Management.DataShare
             }
 
             /// <summary>
-            /// Initiate an asynchronous data share job
-            /// </summary>
-            /// <remarks>
-            /// Initiate a copy
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the share account.
-            /// </param>
-            /// <param name='shareSubscriptionName'>
-            /// The name of share subscription
-            /// </param>
-            /// <param name='synchronize'>
-            /// Synchronize payload
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse<ShareSubscriptionSynchronization> BeginSynchronizeMethodWithHttpMessages(this IShareSubscriptionsOperations operations, string resourceGroupName, string accountName, string shareSubscriptionName, Synchronize synchronize, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.BeginSynchronizeMethodWithHttpMessagesAsync(resourceGroupName, accountName, shareSubscriptionName, synchronize, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
             /// Request cancellation of a data share snapshot
             /// </summary>
             /// <remarks>
@@ -1012,35 +700,6 @@ namespace Microsoft.Azure.Management.DataShare
             }
 
             /// <summary>
-            /// Request cancellation of a data share snapshot
-            /// </summary>
-            /// <remarks>
-            /// Request to cancel a synchronization.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the share account.
-            /// </param>
-            /// <param name='shareSubscriptionName'>
-            /// The name of the shareSubscription.
-            /// </param>
-            /// <param name='shareSubscriptionSynchronization'>
-            /// Share Subscription Synchronization payload.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse<ShareSubscriptionSynchronization> BeginCancelSynchronizationWithHttpMessages(this IShareSubscriptionsOperations operations, string resourceGroupName, string accountName, string shareSubscriptionName, ShareSubscriptionSynchronization shareSubscriptionSynchronization, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.BeginCancelSynchronizationWithHttpMessagesAsync(resourceGroupName, accountName, shareSubscriptionName, shareSubscriptionSynchronization, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
             /// Get source share synchronization settings for a shareSubscription.
             /// </summary>
             /// <remarks>
@@ -1078,26 +737,6 @@ namespace Microsoft.Azure.Management.DataShare
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get source share synchronization settings for a shareSubscription.
-            /// </summary>
-            /// <remarks>
-            /// Get synchronization settings set on a share
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse<IPage<SourceShareSynchronizationSetting>> ListSourceShareSynchronizationSettingsNextWithHttpMessages(this IShareSubscriptionsOperations operations, string nextPageLink, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.ListSourceShareSynchronizationSettingsNextWithHttpMessagesAsync(nextPageLink, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1141,26 +780,6 @@ namespace Microsoft.Azure.Management.DataShare
             }
 
             /// <summary>
-            /// List Synchronizations in a share subscription.
-            /// </summary>
-            /// <remarks>
-            /// List synchronizations of a share subscription
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse<IPage<ShareSubscriptionSynchronization>> ListSynchronizationsNextWithHttpMessages(this IShareSubscriptionsOperations operations, string nextPageLink, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.ListSynchronizationsNextWithHttpMessagesAsync(nextPageLink, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
             /// List data set level details for a share subscription synchronization
             /// </summary>
             /// <remarks>
@@ -1201,26 +820,6 @@ namespace Microsoft.Azure.Management.DataShare
             }
 
             /// <summary>
-            /// List data set level details for a share subscription synchronization
-            /// </summary>
-            /// <remarks>
-            /// List synchronization details
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse<IPage<SynchronizationDetails>> ListSynchronizationDetailsNextWithHttpMessages(this IShareSubscriptionsOperations operations, string nextPageLink, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.ListSynchronizationDetailsNextWithHttpMessagesAsync(nextPageLink, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
             /// List of available share subscriptions under an account.
             /// </summary>
             /// <remarks>
@@ -1258,26 +857,6 @@ namespace Microsoft.Azure.Management.DataShare
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// List of available share subscriptions under an account.
-            /// </summary>
-            /// <remarks>
-            /// List share subscriptions in an account
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse<IPage<ShareSubscription>> ListByAccountNextWithHttpMessages(this IShareSubscriptionsOperations operations, string nextPageLink, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.ListByAccountNextWithHttpMessagesAsync(nextPageLink, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
     }

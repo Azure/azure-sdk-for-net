@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.DataShare
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -66,23 +64,6 @@ namespace Microsoft.Azure.Management.DataShare
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse<IPage<OperationModel>> ListWithHttpMessages(this IOperations operations, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.ListWithHttpMessagesAsync(customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists the available operations
-            /// </summary>
-            /// <remarks>
-            /// List of available operations
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
@@ -112,26 +93,6 @@ namespace Microsoft.Azure.Management.DataShare
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Lists the available operations
-            /// </summary>
-            /// <remarks>
-            /// List of available operations
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse<IPage<OperationModel>> ListNextWithHttpMessages(this IOperations operations, string nextPageLink, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.ListNextWithHttpMessagesAsync(nextPageLink, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
     }

@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.DataShare
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -82,35 +80,6 @@ namespace Microsoft.Azure.Management.DataShare
             }
 
             /// <summary>
-            /// Get Trigger in a shareSubscription.
-            /// </summary>
-            /// <remarks>
-            /// Get a Trigger in a shareSubscription
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the share account.
-            /// </param>
-            /// <param name='shareSubscriptionName'>
-            /// The name of the shareSubscription.
-            /// </param>
-            /// <param name='triggerName'>
-            /// The name of the trigger.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse<Trigger> GetWithHttpMessages(this ITriggersOperations operations, string resourceGroupName, string accountName, string shareSubscriptionName, string triggerName, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.GetWithHttpMessagesAsync(resourceGroupName, accountName, shareSubscriptionName, triggerName, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
             /// This method creates a trigger for a share subscription
             /// </summary>
             /// <remarks>
@@ -175,38 +144,6 @@ namespace Microsoft.Azure.Management.DataShare
             }
 
             /// <summary>
-            /// This method creates a trigger for a share subscription
-            /// </summary>
-            /// <remarks>
-            /// Create a Trigger
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the share account.
-            /// </param>
-            /// <param name='shareSubscriptionName'>
-            /// The name of the share subscription which will hold the data set sink.
-            /// </param>
-            /// <param name='triggerName'>
-            /// The name of the trigger.
-            /// </param>
-            /// <param name='trigger'>
-            /// Trigger details.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse<Trigger> CreateWithHttpMessages(this ITriggersOperations operations, string resourceGroupName, string accountName, string shareSubscriptionName, string triggerName, Trigger trigger, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.CreateWithHttpMessagesAsync(resourceGroupName, accountName, shareSubscriptionName, triggerName, trigger, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
             /// Delete Trigger in a shareSubscription.
             /// </summary>
             /// <remarks>
@@ -265,35 +202,6 @@ namespace Microsoft.Azure.Management.DataShare
             }
 
             /// <summary>
-            /// Delete Trigger in a shareSubscription.
-            /// </summary>
-            /// <remarks>
-            /// Delete a Trigger in a shareSubscription
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the share account.
-            /// </param>
-            /// <param name='shareSubscriptionName'>
-            /// The name of the shareSubscription.
-            /// </param>
-            /// <param name='triggerName'>
-            /// The name of the trigger.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse<OperationResponse> DeleteWithHttpMessages(this ITriggersOperations operations, string resourceGroupName, string accountName, string shareSubscriptionName, string triggerName, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.DeleteWithHttpMessagesAsync(resourceGroupName, accountName, shareSubscriptionName, triggerName, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
             /// List Triggers in a share subscription.
             /// </summary>
             /// <remarks>
@@ -349,35 +257,6 @@ namespace Microsoft.Azure.Management.DataShare
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// List Triggers in a share subscription.
-            /// </summary>
-            /// <remarks>
-            /// List Triggers in a share subscription
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the share account.
-            /// </param>
-            /// <param name='shareSubscriptionName'>
-            /// The name of the share subscription.
-            /// </param>
-            /// <param name='skipToken'>
-            /// Continuation token
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse<IPage<Trigger>> ListByShareSubscriptionWithHttpMessages(this ITriggersOperations operations, string resourceGroupName, string accountName, string shareSubscriptionName, string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.ListByShareSubscriptionWithHttpMessagesAsync(resourceGroupName, accountName, shareSubscriptionName, skipToken, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -445,38 +324,6 @@ namespace Microsoft.Azure.Management.DataShare
             }
 
             /// <summary>
-            /// This method creates a trigger for a share subscription
-            /// </summary>
-            /// <remarks>
-            /// Create a Trigger
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the share account.
-            /// </param>
-            /// <param name='shareSubscriptionName'>
-            /// The name of the share subscription which will hold the data set sink.
-            /// </param>
-            /// <param name='triggerName'>
-            /// The name of the trigger.
-            /// </param>
-            /// <param name='trigger'>
-            /// Trigger details.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse<Trigger> BeginCreateWithHttpMessages(this ITriggersOperations operations, string resourceGroupName, string accountName, string shareSubscriptionName, string triggerName, Trigger trigger, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, accountName, shareSubscriptionName, triggerName, trigger, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
             /// Delete Trigger in a shareSubscription.
             /// </summary>
             /// <remarks>
@@ -535,35 +382,6 @@ namespace Microsoft.Azure.Management.DataShare
             }
 
             /// <summary>
-            /// Delete Trigger in a shareSubscription.
-            /// </summary>
-            /// <remarks>
-            /// Delete a Trigger in a shareSubscription
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the share account.
-            /// </param>
-            /// <param name='shareSubscriptionName'>
-            /// The name of the shareSubscription.
-            /// </param>
-            /// <param name='triggerName'>
-            /// The name of the trigger.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse<OperationResponse> BeginDeleteWithHttpMessages(this ITriggersOperations operations, string resourceGroupName, string accountName, string shareSubscriptionName, string triggerName, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, accountName, shareSubscriptionName, triggerName, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
             /// List Triggers in a share subscription.
             /// </summary>
             /// <remarks>
@@ -601,26 +419,6 @@ namespace Microsoft.Azure.Management.DataShare
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// List Triggers in a share subscription.
-            /// </summary>
-            /// <remarks>
-            /// List Triggers in a share subscription
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static AzureOperationResponse<IPage<Trigger>> ListByShareSubscriptionNextWithHttpMessages(this ITriggersOperations operations, string nextPageLink, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.ListByShareSubscriptionNextWithHttpMessagesAsync(nextPageLink, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
     }
