@@ -159,8 +159,9 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(options, Is.Not.Null, $"The { constructorDescription } constructor should have set default options.");
             Assert.That(options, Is.Not.SameAs(defaultOptions), $"The { constructorDescription } constructor should not have the same options instance.");
-            Assert.That(options.MaximumWaitTime, Is.EqualTo(defaultOptions.MaximumWaitTime), $"The { constructorDescription } constructor should have the correct maximum wait time.");
+            Assert.That(options.Identifier, Is.EqualTo(defaultOptions.Identifier), $"The { constructorDescription } constructor should have the correct identifier.");
             Assert.That(options.TrackLastEnqueuedEventProperties, Is.EqualTo(defaultOptions.TrackLastEnqueuedEventProperties), $"The { constructorDescription } constructor should default tracking of last event information.");
+            Assert.That(options.MaximumWaitTime, Is.EqualTo(defaultOptions.MaximumWaitTime), $"The { constructorDescription } constructor should have the correct maximum wait time.");
             Assert.That(options.ConnectionOptions.TransportType, Is.EqualTo(defaultOptions.ConnectionOptions.TransportType), $"The { constructorDescription } constructor should have a default set of connection options.");
             Assert.That(options.RetryOptions.IsEquivalentTo(defaultOptions.RetryOptions), Is.True, $"The { constructorDescription } constructor should have a default set of retry options.");
         }
@@ -175,6 +176,8 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var options = new EventProcessorClientOptions
             {
+                Identifier = Guid.NewGuid().ToString(),
+                TrackLastEnqueuedEventProperties = false,
                 MaximumWaitTime = TimeSpan.FromMinutes(65),
                 RetryOptions = new EventHubsRetryOptions { TryTimeout = TimeSpan.FromMinutes(1), Delay = TimeSpan.FromMinutes(4) },
                 ConnectionOptions = new EventHubConnectionOptions { TransportType = EventHubsTransportType.AmqpWebSockets }
@@ -185,8 +188,9 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(clonedOptions, Is.Not.Null, "The constructor should have set the options.");
             Assert.That(clonedOptions, Is.Not.SameAs(options), "The constructor should have cloned the options.");
-            Assert.That(clonedOptions.MaximumWaitTime, Is.EqualTo(options.MaximumWaitTime), "The constructor should have the correct maximum wait time.");
+            Assert.That(clonedOptions.Identifier, Is.EqualTo(options.Identifier), "The constructor should have the correct identifier.");
             Assert.That(clonedOptions.TrackLastEnqueuedEventProperties, Is.EqualTo(options.TrackLastEnqueuedEventProperties), "The tracking of last event information of the clone should match.");
+            Assert.That(clonedOptions.MaximumWaitTime, Is.EqualTo(options.MaximumWaitTime), "The constructor should have the correct maximum wait time.");
             Assert.That(clonedOptions.ConnectionOptions.TransportType, Is.EqualTo(options.ConnectionOptions.TransportType), "The connection options of the clone should copy properties.");
             Assert.That(clonedOptions.ConnectionOptions, Is.Not.SameAs(options.ConnectionOptions), "The connection options of the clone should be a copy, not the same instance.");
             Assert.That(clonedOptions.RetryOptions.IsEquivalentTo(options.RetryOptions), Is.True, "The retry options of the clone should be considered equal.");
@@ -203,6 +207,8 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var options = new EventProcessorClientOptions
             {
+                Identifier = Guid.NewGuid().ToString(),
+                TrackLastEnqueuedEventProperties = false,
                 MaximumWaitTime = TimeSpan.FromMinutes(65),
                 RetryOptions = new EventHubsRetryOptions { TryTimeout = TimeSpan.FromMinutes(1), Delay = TimeSpan.FromMinutes(4) },
                 ConnectionOptions = new EventHubConnectionOptions { TransportType = EventHubsTransportType.AmqpWebSockets }
@@ -214,8 +220,9 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(clonedOptions, Is.Not.Null, "The constructor should have set the options.");
             Assert.That(clonedOptions, Is.Not.SameAs(options), "The constructor should have cloned the options.");
-            Assert.That(clonedOptions.MaximumWaitTime, Is.EqualTo(options.MaximumWaitTime), "The constructor should have the correct maximum wait time.");
+            Assert.That(clonedOptions.Identifier, Is.EqualTo(options.Identifier), "The constructor should have the correct identifier.");
             Assert.That(clonedOptions.TrackLastEnqueuedEventProperties, Is.EqualTo(options.TrackLastEnqueuedEventProperties), "The tracking of last event information of the clone should match.");
+            Assert.That(clonedOptions.MaximumWaitTime, Is.EqualTo(options.MaximumWaitTime), "The constructor should have the correct maximum wait time.");
             Assert.That(clonedOptions.ConnectionOptions.TransportType, Is.EqualTo(options.ConnectionOptions.TransportType), "The connection options of the clone should copy properties.");
             Assert.That(clonedOptions.ConnectionOptions, Is.Not.SameAs(options.ConnectionOptions), "The connection options of the clone should be a copy, not the same instance.");
             Assert.That(clonedOptions.RetryOptions.IsEquivalentTo(options.RetryOptions), Is.True, "The retry options of the clone should be considered equal.");
@@ -249,6 +256,35 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(eventProcessor.Identifier, Is.Not.Null);
             Assert.That(eventProcessor.Identifier, Is.Not.Empty);
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="EventProcessorClient" />
+        ///    constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void ConnectionStringConstructorCopiesTheIdentifier()
+        {
+            var clientOptions = new EventProcessorClientOptions { Identifier = Guid.NewGuid().ToString() };
+            var eventProcessor = new EventProcessorClient(Mock.Of<PartitionManager>(), "consumerGroup", "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub", clientOptions);
+
+            Assert.That(eventProcessor.Identifier, Is.EqualTo(clientOptions.Identifier));
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="EventProcessorClient" />
+        ///    constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void NamespaceConstructorCopiesTheIdentifier()
+        {
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var clientOptions = new EventProcessorClientOptions { Identifier = Guid.NewGuid().ToString() };
+            var eventProcessor = new EventProcessorClient(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "hub", credential.Object, clientOptions);
+
+            Assert.That(eventProcessor.Identifier, Is.EqualTo(clientOptions.Identifier));
         }
 
         /// <summary>

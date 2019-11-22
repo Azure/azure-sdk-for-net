@@ -400,7 +400,7 @@ namespace Azure.Messaging.EventHubs
             Manager = partitionManager;
             ClientOptions = clientOptions;
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
-            Identifier = Guid.NewGuid().ToString();
+            Identifier = string.IsNullOrEmpty(clientOptions.Identifier) ? Guid.NewGuid().ToString() : clientOptions.Identifier;
         }
 
         /// <summary>
@@ -437,7 +437,7 @@ namespace Azure.Messaging.EventHubs
             Manager = partitionManager;
             ClientOptions = clientOptions;
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
-            Identifier = Guid.NewGuid().ToString();
+            Identifier = string.IsNullOrEmpty(clientOptions.Identifier) ? Guid.NewGuid().ToString() : clientOptions.Identifier;
         }
 
         /// <summary>
@@ -485,7 +485,7 @@ namespace Azure.Messaging.EventHubs
             Manager = partitionManager;
             ClientOptions = clientOptions;
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
-            Identifier = Guid.NewGuid().ToString();
+            Identifier = string.IsNullOrEmpty(clientOptions.Identifier) ? Guid.NewGuid().ToString() : clientOptions.Identifier;
         }
 
         /// <summary>
