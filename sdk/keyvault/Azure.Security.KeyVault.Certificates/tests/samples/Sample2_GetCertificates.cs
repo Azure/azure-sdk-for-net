@@ -16,6 +16,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
     /// using the synchronous methods of the CertificateClient.
     /// </summary>
     [LiveOnly]
+    [NonParallelizable]
     public partial class GetCertificates
     {
         [Test]
@@ -23,11 +24,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
         {
             // Environment variable with the Key Vault endpoint.
             string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
-            GetCertificatesSync(keyVaultUrl);
-        }
 
-        private void GetCertificatesSync(string keyVaultUrl)
-        {
             #region Snippet:CertificatesSample2CertificateClient
             var client = new CertificateClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
             #endregion
@@ -37,7 +34,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             CertificateOperation certOp1 = client.StartCreateCertificate(certName1, CertificatePolicy.Default);
 
             string certName2 = $"defaultCert-{Guid.NewGuid()}";
-            CertificateOperation certOp2 = client.StartCreateCertificate(certName1, CertificatePolicy.Default);
+            CertificateOperation certOp2 = client.StartCreateCertificate(certName2, CertificatePolicy.Default);
 
             while (!certOp1.HasCompleted)
             {
@@ -84,6 +81,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             DeleteCertificateOperation operation2 = client.StartDeleteCertificate(certName2);
 
             // To ensure certificates are deleted on server side.
+            // You only need to wait for completion if you want to purge or recover the certificate.
             while (!operation1.HasCompleted || !operation2.HasCompleted)
             {
                 Thread.Sleep(2000);

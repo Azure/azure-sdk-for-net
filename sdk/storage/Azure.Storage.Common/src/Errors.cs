@@ -58,6 +58,9 @@ namespace Azure.Storage
         public static InvalidOperationException SasMissingData(string paramName)
             => new InvalidOperationException($"SAS is missing required parameter: {paramName}");
 
+        public static InvalidOperationException SasDataNotAllowed(string paramName, string paramNameNotAllowed)
+            => new InvalidOperationException($"SAS cannot have the {paramNameNotAllowed} parameter when the {paramName} parameter is present");
+
         public static InvalidOperationException TaskIncomplete()
             => new InvalidOperationException("Task is not completed");
 

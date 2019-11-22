@@ -4,7 +4,7 @@
     <Description>This is the implementation of the Azure SDK Client Library for Azure Identity</Description>
     <AssemblyTitle>Microsoft Azure.Identity Component</AssemblyTitle>
     <Version>1.1.0-preview.1</Version>
-    <PackageTags>Microsoft Azure Identity</PackageTags>
+    <PackageTags>Microsoft Azure Identity;$(PackageCommonTags)</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
       GA release of Azure.Identity package.

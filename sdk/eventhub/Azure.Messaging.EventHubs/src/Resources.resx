@@ -219,8 +219,8 @@
   <data name="ClosedConnectionCannotPerformOperation" xml:space="preserve">
     <value>{0} has already been closed and cannot perform the requested operation.</value>
   </data>
-  <data name="TrackLastEnqueuedEventInformationNotSet" xml:space="preserve">
-    <value>This information is only available when TrackLastEnqueuedEventInformation is set on the Event Hub consumer options.</value>
+  <data name="TrackLastEnqueuedEventPropertiesNotSet" xml:space="preserve">
+    <value>This information is only available when TrackLastEnqueuedEventProperties is set on the Event Hub consumer options.</value>
   </data>
   <data name="CannotStartEventProcessorWithoutHandler" xml:space="preserve">
     <value>Cannot begin processing without {0} handler set.</value>

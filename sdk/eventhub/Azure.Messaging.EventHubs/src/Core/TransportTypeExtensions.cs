@@ -7,7 +7,7 @@ using System.Globalization;
 namespace Azure.Messaging.EventHubs.Core
 {
     /// <summary>
-    ///   The set of extension methods for the <see cref="TransportType" /> enumeration.
+    ///   The set of extension methods for the <see cref="EventHubsTransportType" /> enumeration.
     /// </summary>
     ///
     internal static class TransportTypeExtensions
@@ -23,12 +23,12 @@ namespace Azure.Messaging.EventHubs.Core
         ///
         /// <returns>The scheme that should be used for the given connection type when forming an associated URI.</returns>
         ///
-        public static string GetUriScheme(this TransportType instance)
+        public static string GetUriScheme(this EventHubsTransportType instance)
         {
             switch (instance)
             {
-                case TransportType.AmqpTcp:
-                case TransportType.AmqpWebSockets:
+                case EventHubsTransportType.AmqpTcp:
+                case EventHubsTransportType.AmqpWebSockets:
                     return AmqpUriScheme;
 
                 default:
@@ -44,6 +44,6 @@ namespace Azure.Messaging.EventHubs.Core
         ///
         /// <returns><c>true</c> if the transport uses web sockets; otherwise, <c>false</c>.</returns>
         ///
-        public static bool IsWebSocketTransport(this TransportType instance) => (instance == TransportType.AmqpWebSockets);
+        public static bool IsWebSocketTransport(this EventHubsTransportType instance) => (instance == EventHubsTransportType.AmqpWebSockets);
     }
 }

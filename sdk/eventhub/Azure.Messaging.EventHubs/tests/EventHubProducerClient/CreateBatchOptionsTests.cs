@@ -55,7 +55,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var sendOptions = options.ToSendOptions();
             Assert.That(sendOptions, Is.Not.Null, "The send options should not be null.");
-            Assert.That(sendOptions, Is.TypeOf<SendOptions>(), "The send options should be a SendOptions instance.");
+            Assert.That(sendOptions, Is.TypeOf<SendEventOptions>(), "The send options should be a SendOptions instance.");
             Assert.That(sendOptions, Is.Not.SameAs(options), "The send options should not the same reference as the options.");
             Assert.That(sendOptions.PartitionId, Is.EqualTo(options.PartitionId), "The partition identifier of the send options should match.");
             Assert.That(sendOptions.PartitionKey, Is.EqualTo(options.PartitionKey), "The partition key of the send options should match.");

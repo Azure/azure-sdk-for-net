@@ -47,7 +47,7 @@ namespace Azure.Storage.Files.DataLake.Samples
             #endregion Snippet:SampleSnippetDataLakeFileClient_Create
 
             // Verify we created one file
-            Assert.AreEqual(1, filesystem.ListPaths().Count());
+            Assert.AreEqual(1, filesystem.GetPaths().Count());
 
             // Cleanup
             filesystem.Delete();
@@ -85,7 +85,7 @@ namespace Azure.Storage.Files.DataLake.Samples
             #endregion Snippet:SampleSnippetDataLakeFileClient_Create_Directory
 
             // Verify we created one file
-            Assert.AreEqual(1, filesystem.ListPaths().Count());
+            Assert.AreEqual(1, filesystem.GetPaths().Count());
 
             // Cleanup
             filesystem.Delete();
@@ -118,7 +118,7 @@ namespace Azure.Storage.Files.DataLake.Samples
             #endregion Snippet:SampleSnippetDataLakeDirectoryClient_Create
 
             // Verify we created one directory
-            Assert.AreEqual(1, filesystem.ListPaths().Count());
+            Assert.AreEqual(1, filesystem.GetPaths().Count());
 
             // Cleanup
             filesystem.Delete();
@@ -203,7 +203,7 @@ namespace Azure.Storage.Files.DataLake.Samples
                 file.Create();
 
                 // Verify we created one file
-                Assert.AreEqual(1, filesystem.ListPaths().Count());
+                Assert.AreEqual(1, filesystem.GetPaths().Count());
 
                 // Append data to the DataLake File
                 file.Append(File.OpenRead(sampleFileContentPart1), 0);
@@ -303,7 +303,7 @@ namespace Azure.Storage.Files.DataLake.Samples
                 // List all the directories
                 List<string> names = new List<string>();
                 #region Snippet:SampleSnippetDataLakeFileClient_List
-                foreach (PathItem pathItem in filesystem.ListPaths())
+                foreach (PathItem pathItem in filesystem.GetPaths())
                 {
                     names.Add(pathItem.Name);
                 }
@@ -365,7 +365,7 @@ namespace Azure.Storage.Files.DataLake.Samples
 
                 // Keep track of all the names we encounter
                 List<string> names = new List<string>();
-                foreach (PathItem pathItem in filesystem.ListPaths(recursive: true))
+                foreach (PathItem pathItem in filesystem.GetPaths(recursive: true))
                 {
                     names.Add(pathItem.Name);
                 }

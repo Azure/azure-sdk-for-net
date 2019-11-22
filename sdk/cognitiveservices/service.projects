@@ -1,6 +1,0 @@
-<Project>
-  <ItemGroup>
-  	<ProjectReference Remove="$(MSBuildThisFileDirectory)InkRecognizer.WPF.Stroke\**\*.csproj" />
-  	<ProjectReference Remove="$(MSBuildThisFileDirectory)InkRecognizer.UWP.Stroke\**\*.csproj" />
-  </ItemGroup>
-</Project>

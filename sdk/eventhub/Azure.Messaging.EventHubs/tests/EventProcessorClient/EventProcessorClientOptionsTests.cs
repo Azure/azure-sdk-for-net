@@ -25,9 +25,9 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new EventProcessorClientOptions
             {
                 MaximumReceiveWaitTime = TimeSpan.FromMinutes(65),
-                TrackLastEnqueuedEventInformation = false,
-                RetryOptions = new RetryOptions { TryTimeout = TimeSpan.FromMinutes(1), Delay = TimeSpan.FromMinutes(4) },
-                ConnectionOptions = new EventHubConnectionOptions { TransportType = TransportType.AmqpWebSockets }
+                TrackLastEnqueuedEventProperties = false,
+                RetryOptions = new EventHubsRetryOptions { TryTimeout = TimeSpan.FromMinutes(1), Delay = TimeSpan.FromMinutes(4) },
+                ConnectionOptions = new EventHubConnectionOptions { TransportType = EventHubsTransportType.AmqpWebSockets }
             };
 
             EventProcessorClientOptions clone = options.Clone();
@@ -35,7 +35,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(clone, Is.Not.SameAs(options), "The clone should be a different instance.");
 
             Assert.That(clone.MaximumReceiveWaitTime, Is.EqualTo(options.MaximumReceiveWaitTime), "The maximum receive wait time of the clone should match.");
-            Assert.That(clone.TrackLastEnqueuedEventInformation, Is.EqualTo(options.TrackLastEnqueuedEventInformation), "The tracking of last event information of the clone should match.");
+            Assert.That(clone.TrackLastEnqueuedEventProperties, Is.EqualTo(options.TrackLastEnqueuedEventProperties), "The tracking of last event information of the clone should match.");
             Assert.That(clone.ConnectionOptions.TransportType, Is.EqualTo(options.ConnectionOptions.TransportType), "The connection options of the clone should copy properties.");
             Assert.That(clone.ConnectionOptions, Is.Not.SameAs(options.ConnectionOptions), "The connection options of the clone should be a copy, not the same instance.");
             Assert.That(clone.RetryOptions.IsEquivalentTo(options.RetryOptions), Is.True, "The retry options of the clone should be considered equal.");

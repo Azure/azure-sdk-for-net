@@ -39,7 +39,7 @@ namespace Azure.Messaging.EventHubs
         internal const int MinimumBatchSizeLimit = 24;
 
         /// <summary>The set of default publishing options to use when no specific options are requested.</summary>
-        private static readonly SendOptions DefaultSendOptions = new SendOptions();
+        private static readonly SendEventOptions DefaultSendOptions = new SendEventOptions();
 
         /// <summary>
         ///   The fully qualified Event Hubs namespace that the producer is associated with.  This is likely
@@ -71,12 +71,6 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         private bool OwnsConnection { get; } = true;
-
-        /// <summary>
-        ///   The set of options used for creation of this producer.
-        /// </summary>
-        ///
-        private EventHubProducerClientOptions Options { get; }
 
         /// <summary>
         ///   The policy to use for determining retry behavior for when an operation fails.
@@ -129,7 +123,7 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub name and SAS token are contained in this connection string.</param>
-        /// <param name="producerOptions">The set of options to use for this consumer.</param>
+        /// <param name="clientOptions">The set of options to use for this consumer.</param>
         ///
         /// <remarks>
         ///   If the connection string is copied from the Event Hubs namespace, it will likely not contain the name of the desired Event Hub,
@@ -141,7 +135,7 @@ namespace Azure.Messaging.EventHubs
         /// </remarks>
         ///
         public EventHubProducerClient(string connectionString,
-                                      EventHubProducerClientOptions producerOptions) : this(connectionString, null, producerOptions)
+                                      EventHubProducerClientOptions clientOptions) : this(connectionString, null, clientOptions)
         {
         }
 
@@ -169,7 +163,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub name and SAS token are contained in this connection string.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the producer with.</param>
-        /// <param name="producerOptions">A set of options to apply when configuring the producer.</param>
+        /// <param name="clientOptions">A set of options to apply when configuring the producer.</param>
         ///
         /// <remarks>
         ///   If the connection string is copied from the Event Hub itself, it will contain the name of the desired Event Hub,
@@ -179,16 +173,15 @@ namespace Azure.Messaging.EventHubs
         ///
         public EventHubProducerClient(string connectionString,
                                       string eventHubName,
-                                      EventHubProducerClientOptions producerOptions)
+                                      EventHubProducerClientOptions clientOptions)
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
-            producerOptions = producerOptions?.Clone() ?? new EventHubProducerClientOptions();
+            clientOptions = clientOptions?.Clone() ?? new EventHubProducerClientOptions();
 
             OwnsConnection = true;
-            Connection = new EventHubConnection(connectionString, eventHubName, producerOptions.ConnectionOptions);
-            Options = producerOptions;
-            RetryPolicy = producerOptions.RetryOptions.ToRetryPolicy();
-            GatewayProducer = Connection.CreateTransportProducer(null, producerOptions);
+            Connection = new EventHubConnection(connectionString, eventHubName, clientOptions.ConnectionOptions);
+            RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
+            GatewayProducer = Connection.CreateTransportProducer(null, RetryPolicy);
         }
 
         /// <summary>
@@ -198,24 +191,24 @@ namespace Azure.Messaging.EventHubs
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associated the producer with.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
-        /// <param name="producerOptions">A set of options to apply when configuring the producer.</param>
+        /// <param name="clientOptions">A set of options to apply when configuring the producer.</param>
         ///
         public EventHubProducerClient(string fullyQualifiedNamespace,
                                       string eventHubName,
                                       TokenCredential credential,
-                                      EventHubProducerClientOptions producerOptions = default)
+                                      EventHubProducerClientOptions clientOptions = default)
         {
+            Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
             Argument.AssertNotNull(credential, nameof(credential));
 
-            producerOptions = producerOptions?.Clone() ?? new EventHubProducerClientOptions();
+            clientOptions = clientOptions?.Clone() ?? new EventHubProducerClientOptions();
 
             OwnsConnection = true;
-            Connection = new EventHubConnection(fullyQualifiedNamespace, eventHubName, credential, producerOptions.ConnectionOptions);
-            Options = producerOptions;
-            RetryPolicy = producerOptions.RetryOptions.ToRetryPolicy();
-            GatewayProducer = Connection.CreateTransportProducer(null, producerOptions);
+            Connection = new EventHubConnection(fullyQualifiedNamespace, eventHubName, credential, clientOptions.ConnectionOptions);
+            RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
+            GatewayProducer = Connection.CreateTransportProducer(null, RetryPolicy);
         }
 
         /// <summary>
@@ -223,19 +216,18 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <param name="connection">The <see cref="EventHubConnection" /> connection to use for communication with the Event Hubs service.</param>
-        /// <param name="producerOptions">A set of options to apply when configuring the producer.</param>
+        /// <param name="clientOptions">A set of options to apply when configuring the producer.</param>
         ///
         public EventHubProducerClient(EventHubConnection connection,
-                                      EventHubProducerClientOptions producerOptions = default)
+                                      EventHubProducerClientOptions clientOptions = default)
         {
             Argument.AssertNotNull(connection, nameof(connection));
-            producerOptions = producerOptions?.Clone() ?? new EventHubProducerClientOptions();
+            clientOptions = clientOptions?.Clone() ?? new EventHubProducerClientOptions();
 
             OwnsConnection = false;
             Connection = connection;
-            Options = producerOptions;
-            RetryPolicy = producerOptions.RetryOptions.ToRetryPolicy();
-            GatewayProducer = Connection.CreateTransportProducer(null, producerOptions);
+            RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
+            GatewayProducer = Connection.CreateTransportProducer(null, RetryPolicy);
         }
 
         /// <summary>
@@ -333,9 +325,9 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        /// <seealso cref="SendAsync(EventData, SendOptions, CancellationToken)" />
+        /// <seealso cref="SendAsync(EventData, SendEventOptions, CancellationToken)" />
         /// <seealso cref="SendAsync(IEnumerable{EventData}, CancellationToken)" />
-        /// <seealso cref="SendAsync(IEnumerable{EventData}, SendOptions, CancellationToken)" />
+        /// <seealso cref="SendAsync(IEnumerable{EventData}, SendEventOptions, CancellationToken)" />
         /// <seealso cref="SendAsync(EventDataBatch, CancellationToken)" />
         ///
         internal virtual Task SendAsync(EventData eventData,
@@ -358,11 +350,11 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <seealso cref="SendAsync(EventData, CancellationToken)" />
         /// <seealso cref="SendAsync(IEnumerable{EventData}, CancellationToken)" />
-        /// <seealso cref="SendAsync(IEnumerable{EventData}, SendOptions, CancellationToken)" />
+        /// <seealso cref="SendAsync(IEnumerable{EventData}, SendEventOptions, CancellationToken)" />
         /// <seealso cref="SendAsync(EventDataBatch, CancellationToken)" />
         ///
         internal virtual Task SendAsync(EventData eventData,
-                                        SendOptions options,
+                                        SendEventOptions options,
                                         CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(eventData, nameof(eventData));
@@ -379,7 +371,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        /// <seealso cref="SendAsync(IEnumerable{EventData}, SendOptions, CancellationToken)"/>
+        /// <seealso cref="SendAsync(IEnumerable{EventData}, SendEventOptions, CancellationToken)"/>
         ///
         internal virtual Task SendAsync(IEnumerable<EventData> events,
                                         CancellationToken cancellationToken = default) => SendAsync(events, null, cancellationToken);
@@ -396,12 +388,12 @@ namespace Azure.Messaging.EventHubs
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         /// <seealso cref="SendAsync(EventData, CancellationToken)" />
-        /// <seealso cref="SendAsync(EventData, SendOptions, CancellationToken)" />
+        /// <seealso cref="SendAsync(EventData, SendEventOptions, CancellationToken)" />
         /// <seealso cref="SendAsync(IEnumerable{EventData}, CancellationToken)" />
         /// <seealso cref="SendAsync(EventDataBatch, CancellationToken)" />
         ///
         internal virtual async Task SendAsync(IEnumerable<EventData> events,
-                                              SendOptions options,
+                                              SendEventOptions options,
                                               CancellationToken cancellationToken = default)
         {
             options ??= DefaultSendOptions;
@@ -415,13 +407,13 @@ namespace Azure.Messaging.EventHubs
 
             TransportProducer activeProducer;
 
-            if (String.IsNullOrEmpty(options.PartitionId))
+            if (string.IsNullOrEmpty(options.PartitionId))
             {
                 activeProducer = GatewayProducer;
             }
             else
             {
-                activeProducer = PartitionProducers.GetOrAdd(options.PartitionId, id => Connection.CreateTransportProducer(id, Options));
+                activeProducer = PartitionProducers.GetOrAdd(options.PartitionId, id => Connection.CreateTransportProducer(id, RetryPolicy));
             }
 
             using DiagnosticScope scope = CreateDiagnosticScope();
@@ -450,9 +442,9 @@ namespace Azure.Messaging.EventHubs
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         /// <seealso cref="SendAsync(EventData, CancellationToken)" />
-        /// <seealso cref="SendAsync(EventData, SendOptions, CancellationToken)" />
+        /// <seealso cref="SendAsync(EventData, SendEventOptions, CancellationToken)" />
         /// <seealso cref="SendAsync(IEnumerable{EventData}, CancellationToken)" />
-        /// <seealso cref="SendAsync(IEnumerable{EventData}, SendOptions, CancellationToken)" />
+        /// <seealso cref="SendAsync(IEnumerable{EventData}, SendEventOptions, CancellationToken)" />
         ///
         public virtual async Task SendAsync(EventDataBatch eventBatch,
                                             CancellationToken cancellationToken = default)
@@ -472,7 +464,7 @@ namespace Azure.Messaging.EventHubs
             }
             else
             {
-                activeProducer = PartitionProducers.GetOrAdd(eventBatch.SendOptions.PartitionId, id => Connection.CreateTransportProducer(id, Options));
+                activeProducer = PartitionProducers.GetOrAdd(eventBatch.SendOptions.PartitionId, id => Connection.CreateTransportProducer(id, RetryPolicy));
             }
 
             using DiagnosticScope scope = CreateDiagnosticScope();
@@ -600,14 +592,6 @@ namespace Azure.Messaging.EventHubs
                 throw transportProducerException;
             }
         }
-
-        /// <summary>
-        ///   Closes the producer.
-        /// </summary>
-        ///
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        public virtual void Close(CancellationToken cancellationToken = default) => CloseAsync(cancellationToken).GetAwaiter().GetResult();
 
         /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="EventHubProducerClient" />,

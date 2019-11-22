@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Processor;
+using Azure.Messaging.EventHubs.Samples.Infrastructure;
 using Azure.Messaging.EventHubs.Tests.Infrastructure;
 using NUnit.Framework;
 
@@ -33,7 +34,7 @@ namespace Azure.Messaging.EventHubs.Tests
         private const int ReceiveRetryLimit = 10;
 
         /// <summary>The default retry policy to use for test operations.</summary>
-        private static readonly EventHubsRetryPolicy DefaultRetryPolicy = new RetryOptions().ToRetryPolicy();
+        private static readonly EventHubsRetryPolicy DefaultRetryPolicy = new EventHubsRetryOptions().ToRetryPolicy();
 
         /// <summary>
         ///   Verifies that the <see cref="EventProcessorClient" /> is able to
@@ -56,7 +57,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     var eventProcessorManager = new EventProcessorManager
                         (
                             EventHubConsumerClient.DefaultConsumerGroupName,
-                            connection,
+                            connectionString,
                             onInitialize: initializationContext =>
                                 initializeCalls.AddOrUpdate(initializationContext.Context.PartitionId, 1, (partitionId, value) => value + 1)
                         );
@@ -117,7 +118,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     var eventProcessorManager = new EventProcessorManager
                         (
                             EventHubConsumerClient.DefaultConsumerGroupName,
-                            connection,
+                            connectionString,
                             onStop: stopContext =>
                             {
                                 closeCalls.AddOrUpdate(stopContext.Context.PartitionId, 1, (partitionId, value) => value + 1);
@@ -167,7 +168,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [Ignore("Unstable test. (Undergoing rewrites; addressed in that scope)")]
         public async Task PartitionProcessorProcessEventsAsyncReceivesAllEvents()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
@@ -183,7 +183,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     var eventProcessorManager = new EventProcessorManager
                         (
                             EventHubConsumerClient.DefaultConsumerGroupName,
-                            connection,
+                            connectionString,
                             onProcessEvent: processorEvent =>
                             {
                                 if (processorEvent.Data != null)
@@ -226,7 +226,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         await using (var producer = new EventHubProducerClient(connection))
                         {
-                            await producer.SendAsync(expectedEvents[partitionId], new SendOptions { PartitionId = partitionId });
+                            await producer.SendAsync(expectedEvents[partitionId], new SendEventOptions { PartitionId = partitionId });
                         }
                     }
 
@@ -285,7 +285,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     var eventProcessorManager = new EventProcessorManager
                         (
                             EventHubConsumerClient.DefaultConsumerGroupName,
-                            connection,
+                            connectionString,
                             onProcessEvent: processorEvent =>
                                 receivedEvents.Add(processorEvent.Data)
                         );
@@ -335,7 +335,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     var eventProcessorManager = new EventProcessorManager
                         (
                             EventHubConsumerClient.DefaultConsumerGroupName,
-                            connection,
+                            connectionString,
                             onInitialize: initializationContext =>
                                 Interlocked.Increment(ref initializeCallsCount)
                         );
@@ -392,7 +392,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     var eventProcessorManager = new EventProcessorManager
                         (
                             EventHubConsumerClient.DefaultConsumerGroupName,
-                            connection,
+                            connectionString,
                             onStop: stopContext =>
                                 Interlocked.Increment(ref closeCallsCount)
                         );
@@ -450,7 +450,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     var eventProcessorManager = new EventProcessorManager
                         (
                             EventHubConsumerClient.DefaultConsumerGroupName,
-                            connection,
+                            connectionString,
                             onProcessEvent: processorEvent =>
                             {
                                 if (processorEvent.Data != null)
@@ -567,7 +567,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // Create a partition manager and add an ownership with a checkpoint in it.
 
-                    var partitionManager = new InMemoryPartitionManager();
+                    var partitionManager = new MockCheckPointStorage();
 
                     await partitionManager.ClaimOwnershipAsync(new List<PartitionOwnership>()
                     {
@@ -581,7 +581,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     var eventProcessorManager = new EventProcessorManager
                         (
                             EventHubConsumerClient.DefaultConsumerGroupName,
-                            connection,
+                            connectionString,
                             partitionManager,
                             onProcessEvent: processorEvent =>
                             {
@@ -619,7 +619,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [Ignore("Unstable test. (Undergoing rewrites; addressed in that scope)")]
+        [Ignore("Unstable test. (Tracked by: #7458)")]
         public async Task PartitionProcessorCanCreateACheckpoint()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
@@ -667,14 +667,14 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // Create a partition manager so we can retrieve the created checkpoint from it.
 
-                    var partitionManager = new InMemoryPartitionManager();
+                    var partitionManager = new MockCheckPointStorage();
 
                     // Create the event processor manager to manage our event processors.
 
                     var eventProcessorManager = new EventProcessorManager
                         (
                             EventHubConsumerClient.DefaultConsumerGroupName,
-                            connection,
+                            connectionString,
                             partitionManager,
                             onProcessEvent: processorEvent =>
                             {
@@ -768,7 +768,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     var eventProcessorManager = new EventProcessorManager
                         (
                             EventHubConsumerClient.DefaultConsumerGroupName,
-                            connection,
+                            connectionString,
                             onInitialize: initializationContext =>
                                 initializationContext.DefaultStartingPosition = EventPosition.FromEnqueuedTime(enqueuedTime),
                             onProcessEvent: processorEvent =>
@@ -826,7 +826,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     var eventProcessorManager = new EventProcessorManager
                         (
                             EventHubConsumerClient.DefaultConsumerGroupName,
-                            connection,
+                            connectionString,
                             options: new EventProcessorClientOptions { MaximumReceiveWaitTime = TimeSpan.FromSeconds(maximumWaitTimeInSecs) },
                             onInitialize: initializationContext =>
                                 timestamps.TryAdd(initializationContext.Context.PartitionId, new List<DateTimeOffset> { DateTimeOffset.UtcNow }),
@@ -910,7 +910,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     var eventProcessorManager = new EventProcessorManager
                         (
                             EventHubConsumerClient.DefaultConsumerGroupName,
-                            connection
+                            connectionString
                             // TODO: fix test. OwnerIdentifier is not accessible anymore.
                             // onInitialize: initializationContext =>
                             //     ownedPartitionsCount.AddOrUpdate(initializationContext.Context.OwnerIdentifier, 1, (ownerId, value) => value + 1),
@@ -975,7 +975,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     var eventProcessorManager = new EventProcessorManager
                         (
                             EventHubConsumerClient.DefaultConsumerGroupName,
-                            connection
+                            connectionString
                             // TODO: fix test. OwnerIdentifier is not accessible anymore.
                             // onInitialize: initializationContext =>
                             //     ownedPartitionsCount.AddOrUpdate(initializationContext.Context.OwnerIdentifier, 1, (ownerId, value) => value + 1),

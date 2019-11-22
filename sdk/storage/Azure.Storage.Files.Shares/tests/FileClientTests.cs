@@ -846,6 +846,9 @@ namespace Azure.Storage.Files.Shares.Test
             Response<ShareFileRangeInfo> response = await file.GetRangeListAsync(range: new HttpRange(0, Constants.MB));
 
             Assert.IsNotNull(response);
+            Assert.AreNotEqual("<null>", response.Value.ETag.ToString());
+            Assert.AreNotEqual(default(DateTimeOffset), response.Value.LastModified);
+            Assert.IsTrue(response.Value.FileContentLength > 0);
         }
 
         [Test]

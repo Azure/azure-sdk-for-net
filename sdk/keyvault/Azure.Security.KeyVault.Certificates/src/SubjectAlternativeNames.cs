@@ -35,17 +35,17 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Gets a collection of DNS names.
         /// </summary>
-        public ICollection<string> DnsNames => LazyInitializer.EnsureInitialized(ref _dnsNames);
+        public IList<string> DnsNames => LazyInitializer.EnsureInitialized(ref _dnsNames);
 
         /// <summary>
         /// Gets a collection of email addresses.
         /// </summary>
-        public ICollection<string> Emails => LazyInitializer.EnsureInitialized(ref _emails);
+        public IList<string> Emails => LazyInitializer.EnsureInitialized(ref _emails);
 
         /// <summary>
         /// Gets a collection of user principal names (UPNs).
         /// </summary>
-        public ICollection<string> UserPrincipalNames => LazyInitializer.EnsureInitialized(ref _userPrincipalNames);
+        public IList<string> UserPrincipalNames => LazyInitializer.EnsureInitialized(ref _userPrincipalNames);
 
         internal bool IsEmpty => _dnsNames.IsNullOrEmpty() && _emails.IsNullOrEmpty() && _userPrincipalNames.IsNullOrEmpty();
 
