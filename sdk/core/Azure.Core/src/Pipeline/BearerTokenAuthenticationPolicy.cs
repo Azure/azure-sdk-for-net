@@ -59,9 +59,9 @@ namespace Azure.Core.Pipeline
         /// <inheritdoc />
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
-            if (message.Request.Uri.Scheme != Uri.UriSchemeHttps)
+            if ((message.Request.Uri.Scheme != Uri.UriSchemeHttps) && (!_credential.AllowInsecureTransport))
             {
-                throw new InvalidOperationException("Bearer token authentication is not permitted for non TLS protected (https) endpoints.");
+                throw new InvalidOperationException("The specified TokenCredential does not permit authentication on non TLS protected (https) endpoints.");
             }
 
             if (DateTimeOffset.UtcNow >= _refreshOn)

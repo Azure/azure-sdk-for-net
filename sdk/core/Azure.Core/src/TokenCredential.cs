@@ -12,6 +12,11 @@ namespace Azure.Core
     public abstract class TokenCredential
     {
         /// <summary>
+        /// Gets a value indicating whether the tokens provided by the <see cref="TokenCredential"/> should be sent over non TLS protected connections. The default is false.
+        /// </summary>
+        public virtual bool AllowInsecureTransport { get { return false; } }
+
+        /// <summary>
         /// Gets an <see cref="AccessToken"/> for the specified set of scopes.
         /// </summary>
         /// <param name="requestContext">The <see cref="TokenRequestContext"/> with authentication information.</param>
