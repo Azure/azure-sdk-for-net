@@ -811,7 +811,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(4)]
         [TestCase(15)]
         [Ignore("Failing test: needs debugging (Tracked by: #7458)")]
-        public async Task EventProcessorWaitsMaximumReceiveWaitTimeForEvents(int maximumWaitTimeInSecs)
+        public async Task EventProcessorWaitsMaximumWaitTimeForEvents(int maximumWaitTimeInSecs)
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
             {
@@ -827,7 +827,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             EventHubConsumerClient.DefaultConsumerGroupName,
                             connectionString,
-                            clientOptions: new EventProcessorClientOptions { MaximumReceiveWaitTime = TimeSpan.FromSeconds(maximumWaitTimeInSecs) },
+                            clientOptions: new EventProcessorClientOptions { MaximumWaitTime = TimeSpan.FromSeconds(maximumWaitTimeInSecs) },
                             onInitialize: eventArgs =>
                                 timestamps.TryAdd(eventArgs.Partition.PartitionId, new List<DateTimeOffset> { DateTimeOffset.UtcNow }),
                             onProcessEvent: eventArgs =>

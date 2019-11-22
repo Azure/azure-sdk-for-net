@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventHubs
     public class EventProcessorClientOptions
     {
         /// <summary>The maximum amount of time to wait for an event to become available before emitting an <c>null</c> value.</summary>
-        private TimeSpan? _maximumReceiveWaitTime = null;
+        private TimeSpan? _maximumWaitTime = null;
 
         /// <summary>The set of options to use for configuring the connection to the Event Hubs service.</summary>
         private EventHubConnectionOptions _connectionOptions = new EventHubConnectionOptions();
@@ -29,28 +29,28 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <value>
-        ///     If <c>null</c>, the processor will wait indefinitely for an event to become available; otherwise, a value will
-        ///     always be emitted within this interval, whether an event was available or not.
+        ///   If <c>null</c>, the processor will wait indefinitely for an event to become available; otherwise, a value will
+        ///   always be emitted within this interval, whether an event was available or not.
         /// </value>
         ///
-        public TimeSpan? MaximumReceiveWaitTime
+        public TimeSpan? MaximumWaitTime
         {
-            get => _maximumReceiveWaitTime;
+            get => _maximumWaitTime;
 
             set
             {
                 if (value.HasValue)
                 {
-                    Argument.AssertNotNegative(value.Value, nameof(MaximumReceiveWaitTime));
+                    Argument.AssertNotNegative(value.Value, nameof(MaximumWaitTime));
                 }
 
-                _maximumReceiveWaitTime = value;
+                _maximumWaitTime = value;
             }
         }
 
         /// <summary>
-        ///     Indicates whether or not the consumer should request information on the last enqueued event on the partition
-        ///     associated with a given event, and track that information as events are received.
+        ///   Indicates whether or not the consumer should request information on the last enqueued event on the partition
+        ///   associated with a given event, and track that information as events are received.
         /// </summary>
         ///
         /// <value><c>true</c> if information about a partition's last event should be requested and tracked; otherwise, <c>false</c>.</value>
@@ -138,7 +138,7 @@ namespace Azure.Messaging.EventHubs
             new EventProcessorClientOptions
             {
                 TrackLastEnqueuedEventProperties = TrackLastEnqueuedEventProperties,
-                _maximumReceiveWaitTime = _maximumReceiveWaitTime,
+                _maximumWaitTime = _maximumWaitTime,
                 _connectionOptions = ConnectionOptions.Clone(),
                 _retryOptions = RetryOptions.Clone()
             };

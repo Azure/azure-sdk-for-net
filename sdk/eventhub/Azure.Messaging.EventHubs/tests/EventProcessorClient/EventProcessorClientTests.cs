@@ -159,7 +159,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(options, Is.Not.Null, $"The { constructorDescription } constructor should have set default options.");
             Assert.That(options, Is.Not.SameAs(defaultOptions), $"The { constructorDescription } constructor should not have the same options instance.");
-            Assert.That(options.MaximumReceiveWaitTime, Is.EqualTo(defaultOptions.MaximumReceiveWaitTime), $"The { constructorDescription } constructor should have the correct maximum receive wait time.");
+            Assert.That(options.MaximumWaitTime, Is.EqualTo(defaultOptions.MaximumWaitTime), $"The { constructorDescription } constructor should have the correct maximum wait time.");
             Assert.That(options.TrackLastEnqueuedEventProperties, Is.EqualTo(defaultOptions.TrackLastEnqueuedEventProperties), $"The { constructorDescription } constructor should default tracking of last event information.");
             Assert.That(options.ConnectionOptions.TransportType, Is.EqualTo(defaultOptions.ConnectionOptions.TransportType), $"The { constructorDescription } constructor should have a default set of connection options.");
             Assert.That(options.RetryOptions.IsEquivalentTo(defaultOptions.RetryOptions), Is.True, $"The { constructorDescription } constructor should have a default set of retry options.");
@@ -175,7 +175,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var options = new EventProcessorClientOptions
             {
-                MaximumReceiveWaitTime = TimeSpan.FromMinutes(65),
+                MaximumWaitTime = TimeSpan.FromMinutes(65),
                 RetryOptions = new EventHubsRetryOptions { TryTimeout = TimeSpan.FromMinutes(1), Delay = TimeSpan.FromMinutes(4) },
                 ConnectionOptions = new EventHubConnectionOptions { TransportType = EventHubsTransportType.AmqpWebSockets }
             };
@@ -185,7 +185,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(clonedOptions, Is.Not.Null, "The constructor should have set the options.");
             Assert.That(clonedOptions, Is.Not.SameAs(options), "The constructor should have cloned the options.");
-            Assert.That(clonedOptions.MaximumReceiveWaitTime, Is.EqualTo(options.MaximumReceiveWaitTime), "The constructor should have the correct maximum receive wait time.");
+            Assert.That(clonedOptions.MaximumWaitTime, Is.EqualTo(options.MaximumWaitTime), "The constructor should have the correct maximum wait time.");
             Assert.That(clonedOptions.TrackLastEnqueuedEventProperties, Is.EqualTo(options.TrackLastEnqueuedEventProperties), "The tracking of last event information of the clone should match.");
             Assert.That(clonedOptions.ConnectionOptions.TransportType, Is.EqualTo(options.ConnectionOptions.TransportType), "The connection options of the clone should copy properties.");
             Assert.That(clonedOptions.ConnectionOptions, Is.Not.SameAs(options.ConnectionOptions), "The connection options of the clone should be a copy, not the same instance.");
@@ -203,7 +203,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var options = new EventProcessorClientOptions
             {
-                MaximumReceiveWaitTime = TimeSpan.FromMinutes(65),
+                MaximumWaitTime = TimeSpan.FromMinutes(65),
                 RetryOptions = new EventHubsRetryOptions { TryTimeout = TimeSpan.FromMinutes(1), Delay = TimeSpan.FromMinutes(4) },
                 ConnectionOptions = new EventHubConnectionOptions { TransportType = EventHubsTransportType.AmqpWebSockets }
             };
@@ -214,7 +214,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(clonedOptions, Is.Not.Null, "The constructor should have set the options.");
             Assert.That(clonedOptions, Is.Not.SameAs(options), "The constructor should have cloned the options.");
-            Assert.That(clonedOptions.MaximumReceiveWaitTime, Is.EqualTo(options.MaximumReceiveWaitTime), "The constructor should have the correct maximum receive wait time.");
+            Assert.That(clonedOptions.MaximumWaitTime, Is.EqualTo(options.MaximumWaitTime), "The constructor should have the correct maximum wait time.");
             Assert.That(clonedOptions.TrackLastEnqueuedEventProperties, Is.EqualTo(options.TrackLastEnqueuedEventProperties), "The tracking of last event information of the clone should match.");
             Assert.That(clonedOptions.ConnectionOptions.TransportType, Is.EqualTo(options.ConnectionOptions.TransportType), "The connection options of the clone should copy properties.");
             Assert.That(clonedOptions.ConnectionOptions, Is.Not.SameAs(options.ConnectionOptions), "The connection options of the clone should be a copy, not the same instance.");

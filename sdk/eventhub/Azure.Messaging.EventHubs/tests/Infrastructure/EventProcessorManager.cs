@@ -98,14 +98,14 @@ namespace Azure.Messaging.EventHubs.Tests
             Connection = new EventHubConnection(connectionString);
             InnerPartitionManager = partitionManager ?? new MockCheckPointStorage();
 
-            // In case it has not been specified, set the maximum receive wait time to 2 seconds because the default
+            // In case it has not been specified, set the maximum wait time to 2 seconds because the default
             // value (1 minute) would take too much time.
 
             ClientOptions = clientOptions?.Clone() ?? new EventProcessorClientOptions();
 
-            if (ClientOptions.MaximumReceiveWaitTime == null)
+            if (ClientOptions.MaximumWaitTime == null)
             {
-                ClientOptions.MaximumReceiveWaitTime = TimeSpan.FromSeconds(2);
+                ClientOptions.MaximumWaitTime = TimeSpan.FromSeconds(2);
             }
 
             OnInitialize = onInitialize;

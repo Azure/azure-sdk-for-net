@@ -1110,7 +1110,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="partitionId">The identifier of the Event Hub partition the task is associated with.  Events will be read only from this partition.</param>
         /// <param name="startingPosition">The position within the partition where the task should begin reading events.</param>
-        /// <param name="maximumReceiveWaitTime">The maximum amount of time to wait to for an event to be available before emitting an empty item; if <c>null</c>, empty items will not be published.</param>
+        /// <param name="maximumWaitTime">The maximum amount of time to wait to for an event to be available before emitting an empty item; if <c>null</c>, empty items will not be published.</param>
         /// <param name="retryOptions">The set of options to use for determining whether a failed operation should be retried and, if so, the amount of time to wait between retry attempts.</param>
         /// <param name="trackLastEnqueuedEventProperties">Indicates whether or not the task should request information on the last enqueued event on the partition associated with a given event, and track that information as events are received.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
@@ -1119,7 +1119,7 @@ namespace Azure.Messaging.EventHubs
         ///
         private Task RunPartitionProcessingAsync(string partitionId,
                                                  EventPosition startingPosition,
-                                                 TimeSpan? maximumReceiveWaitTime,
+                                                 TimeSpan? maximumWaitTime,
                                                  EventHubsRetryOptions retryOptions,
                                                  bool trackLastEnqueuedEventProperties,
                                                  CancellationToken cancellationToken = default) => Task.Run(async () =>
@@ -1141,7 +1141,7 @@ namespace Azure.Messaging.EventHubs
 
                 var readOptions = new ReadEventOptions
                 {
-                    MaximumWaitTime = maximumReceiveWaitTime,
+                    MaximumWaitTime = maximumWaitTime,
                     TrackLastEnqueuedEventProperties = trackLastEnqueuedEventProperties
                 };
 
@@ -1239,7 +1239,7 @@ namespace Azure.Messaging.EventHubs
                 // processing task that's not RunPartitionProcessingAsync, how would the base stop it?  It would not have a cancellation
                 // token to do so.
 
-                ActivePartitionProcessors[context.PartitionId] = RunPartitionProcessingAsync(context.PartitionId, startingPosition, ClientOptions.MaximumReceiveWaitTime, ClientOptions.RetryOptions, ClientOptions.TrackLastEnqueuedEventProperties);
+                ActivePartitionProcessors[context.PartitionId] = RunPartitionProcessingAsync(context.PartitionId, startingPosition, ClientOptions.MaximumWaitTime, ClientOptions.RetryOptions, ClientOptions.TrackLastEnqueuedEventProperties);
             }
             catch (Exception)
             {

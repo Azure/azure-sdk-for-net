@@ -60,7 +60,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
             var eventProcessorOptions = new EventProcessorClientOptions
             {
-                MaximumReceiveWaitTime = TimeSpan.FromSeconds(1)
+                MaximumWaitTime = TimeSpan.FromSeconds(1)
             };
 
             // Let's finally create our event processor.  We're using the default consumer group that was created with the Event Hub.
