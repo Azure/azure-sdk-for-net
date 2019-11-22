@@ -44,6 +44,7 @@ namespace Azure.Identity
         public ManagedIdentityCredential(string clientId = null, TokenCredentialOptions options = null)
             : this(clientId, CredentialPipeline.GetInstance(options))
         {
+            AllowInsecureTransport = options != null ? options.AllowInsecureTransport : false;
         }
 
         internal ManagedIdentityCredential(string clientId, CredentialPipeline pipeline)
@@ -59,6 +60,9 @@ namespace Azure.Identity
 
             _client = client;
         }
+
+        /// <inheritdoc/>
+        public override bool AllowInsecureTransport { get; } = false;
 
         /// <summary>
         /// Obtains an <see cref="AccessToken"/> from the Managed Identity service if available. This method is called by Azure SDK clients. It isn't intended for use in application code.

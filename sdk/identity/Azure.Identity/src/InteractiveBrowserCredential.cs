@@ -49,6 +49,7 @@ namespace Azure.Identity
         public InteractiveBrowserCredential(string tenantId, string clientId, TokenCredentialOptions options = default)
             : this(tenantId, clientId, CredentialPipeline.GetInstance(options))
         {
+            AllowInsecureTransport = options != null ? options.AllowInsecureTransport : false;
         }
 
         internal InteractiveBrowserCredential(string tenantId, string clientId, CredentialPipeline pipeline)
@@ -66,6 +67,10 @@ namespace Azure.Identity
 
             _client = client;
         }
+
+        /// <inheritdoc/>
+        public override bool AllowInsecureTransport { get; } = false;
+
 
         /// <summary>
         /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated, otherwise the default browser is launched to authenticate the user. This method is called by Azure SDK clients. It isn't intended for use in application code.

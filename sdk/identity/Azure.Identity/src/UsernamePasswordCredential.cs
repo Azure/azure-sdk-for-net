@@ -57,6 +57,7 @@ namespace Azure.Identity
         public UsernamePasswordCredential(string username, string password, string tenantId, string clientId, TokenCredentialOptions options)
             : this(username, password, tenantId, clientId, CredentialPipeline.GetInstance(options))
         {
+            AllowInsecureTransport = options != null ? options.AllowInsecureTransport : false;
         }
 
         internal UsernamePasswordCredential(string username, string password, string tenantId, string clientId, CredentialPipeline pipeline)
@@ -74,6 +75,9 @@ namespace Azure.Identity
 
             _client = client;
         }
+
+        /// <inheritdoc/>
+        public override bool AllowInsecureTransport { get; } = false;
 
         /// <summary>
         /// Obtains a token for a user account, authenticating them using the given username and password.  Note: This will fail with

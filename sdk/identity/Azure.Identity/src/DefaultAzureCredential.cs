@@ -58,7 +58,12 @@ namespace Azure.Identity
             _pipeline = factory.Pipeline;
 
             _sources = GetDefaultAzureCredentialChain(factory, options);
+
+            AllowInsecureTransport = options != null ? options.AllowInsecureTransport : false;
         }
+
+        /// <inheritdoc/>
+        public override bool AllowInsecureTransport { get; } = false;
 
         /// <summary>
         /// Sequentially calls <see cref="TokenCredential.GetToken"/> on all the included credentials in the order <see cref="EnvironmentCredential"/>, <see cref="ManagedIdentityCredential"/>, <see cref="SharedTokenCacheCredential"/>,

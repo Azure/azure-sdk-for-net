@@ -68,7 +68,12 @@ namespace Azure.Identity
             _confidentialClient = ConfidentialClientApplicationBuilder.Create(clientId).WithHttpClientFactory(new HttpPipelineClientFactory(_pipeline)).WithTenantId(tenantId).WithClientSecret(clientSecret).Build();
 
             _clientDiagnostics = new ClientDiagnostics(options);
+
+            AllowInsecureTransport = options != null ? options.AllowInsecureTransport : false;
         }
+
+        /// <inheritdoc/>
+        public override bool AllowInsecureTransport { get; } = false;
 
         /// <summary>
         /// Obtains a token from the Azure Active Directory service, using the specified authorization code authenticate. This method is called by Azure SDK clients. It isn't intended for use in application code.

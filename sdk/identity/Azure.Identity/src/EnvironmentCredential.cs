@@ -47,7 +47,11 @@ namespace Azure.Identity
         public EnvironmentCredential(TokenCredentialOptions options)
             : this(CredentialPipeline.GetInstance(options))
         {
+            AllowInsecureTransport = options != null ? options.AllowInsecureTransport : false;
         }
+
+        /// <inheritdoc/>
+        public override bool AllowInsecureTransport { get; } = false;
 
         internal EnvironmentCredential(CredentialPipeline pipeline)
         {

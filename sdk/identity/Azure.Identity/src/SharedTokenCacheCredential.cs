@@ -56,6 +56,7 @@ namespace Azure.Identity
         public SharedTokenCacheCredential(string username, TokenCredentialOptions options = default)
             : this(tenantId: null, username: username, pipeline: CredentialPipeline.GetInstance(options))
         {
+            AllowInsecureTransport = options != null ? options.AllowInsecureTransport : false;
         }
 
         internal SharedTokenCacheCredential(string tenantId, string username, CredentialPipeline pipeline)
@@ -75,6 +76,9 @@ namespace Azure.Identity
 
             _account = new Lazy<Task<(IAccount, Exception)>>(GetAccountAsync);
         }
+
+        /// <inheritdoc/>
+        public override bool AllowInsecureTransport { get; } = false;
 
         /// <summary>
         /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated to another Microsoft application participating in SSO through a shared MSAL cache. This method is called by Azure SDK clients. It isn't intended for use in application code.

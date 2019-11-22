@@ -64,6 +64,7 @@ namespace Azure.Identity
             : this(tenantId, clientId, clientCertificate, CredentialPipeline.GetInstance(options))
 
         {
+            AllowInsecureTransport = options != null ? options.AllowInsecureTransport : false;
         }
 
         internal ClientCertificateCredential(string tenantId, string clientId, X509Certificate2 clientCertificate, CredentialPipeline pipeline)
@@ -83,6 +84,9 @@ namespace Azure.Identity
 
             _client = client;
         }
+
+        /// <inheritdoc/>
+        public override bool AllowInsecureTransport { get; } = false;
 
         /// <summary>
         /// Obtains a token from the Azure Active Directory service, using the specified X509 certificate to authenticate. This method is called by Azure SDK clients. It isn't intended for use in application code.

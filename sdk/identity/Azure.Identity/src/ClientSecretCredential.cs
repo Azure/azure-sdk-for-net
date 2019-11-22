@@ -61,6 +61,7 @@ namespace Azure.Identity
         public ClientSecretCredential(string tenantId, string clientId, string clientSecret, TokenCredentialOptions options)
             : this (tenantId, clientId, clientSecret, CredentialPipeline.GetInstance(options))
         {
+            AllowInsecureTransport = options != null ? options.AllowInsecureTransport : false;
         }
 
         internal ClientSecretCredential(string tenantId, string clientId, string clientSecret, CredentialPipeline pipeline)
@@ -80,6 +81,9 @@ namespace Azure.Identity
 
             _client = client;
         }
+
+        /// <inheritdoc/>
+        public override bool AllowInsecureTransport { get; } = false;
 
         /// <summary>
         /// Obtains a token from the Azure Active Directory service, using the specified client secret to authenticate. This method is called by Azure SDK clients. It isn't intended for use in application code.
