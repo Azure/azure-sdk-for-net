@@ -18,7 +18,7 @@ namespace Azure.Messaging.EventHubs
         ///   service.
         /// </summary>
         ///
-        public TransportType TransportType { get; set; } = TransportType.AmqpTcp;
+        public EventHubsTransportType TransportType { get; set; } = EventHubsTransportType.AmqpTcp;
 
         /// <summary>
         ///   The proxy to use for communication over web sockets.

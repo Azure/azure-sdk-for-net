@@ -20,9 +20,9 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [TestCase(TransportType.AmqpTcp)]
-        [TestCase(TransportType.AmqpWebSockets)]
-        public void GetUriSchemeUnderstandsAmqpConnectionTypes(TransportType transportType)
+        [TestCase(EventHubsTransportType.AmqpTcp)]
+        [TestCase(EventHubsTransportType.AmqpWebSockets)]
+        public void GetUriSchemeUnderstandsAmqpConnectionTypes(EventHubsTransportType transportType)
         {
             var scheme = transportType.GetUriScheme();
 
@@ -38,7 +38,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void GetUriSchemeUDisallowsUnknownConnectionTypes()
         {
-            var invalidConnectionType = (TransportType)int.MinValue;
+            var invalidConnectionType = (EventHubsTransportType)int.MinValue;
             Assert.That(() => invalidConnectionType.GetUriScheme(), Throws.ArgumentException);
         }
 
@@ -48,9 +48,9 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [TestCase(TransportType.AmqpTcp, false)]
-        [TestCase(TransportType.AmqpWebSockets, true)]
-        public void IsWebSocketTransportRecognizesSocketTransports(TransportType transportType,
+        [TestCase(EventHubsTransportType.AmqpTcp, false)]
+        [TestCase(EventHubsTransportType.AmqpWebSockets, true)]
+        public void IsWebSocketTransportRecognizesSocketTransports(EventHubsTransportType transportType,
                                                                    bool expectedResult)
         {
             Assert.That(transportType.IsWebSocketTransport(), Is.EqualTo(expectedResult));

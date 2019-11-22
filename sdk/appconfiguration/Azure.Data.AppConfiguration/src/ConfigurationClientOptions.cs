@@ -8,7 +8,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary>
-    /// Options that allow to configure the management of the request sent to the service
+    /// Options that allow users to configure the requests sent to the App Configuration service.
     /// </summary>
     public class ConfigurationClientOptions : ClientOptions
     {

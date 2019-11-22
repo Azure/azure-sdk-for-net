@@ -13,10 +13,10 @@ namespace Azure.Messaging.EventHubs.Core
 {
     /// <summary>
     ///   The default retry policy for the Event Hubs client library, respecting the
-    ///   configuration specified as a set of <see cref="RetryOptions" />.
+    ///   configuration specified as a set of <see cref="EventHubsRetryOptions" />.
     /// </summary>
     ///
-    /// <seealso cref="RetryOptions"/>
+    /// <seealso cref="EventHubsRetryOptions"/>
     ///
     internal class BasicRetryPolicy : EventHubsRetryPolicy
     {
@@ -31,7 +31,7 @@ namespace Azure.Messaging.EventHubs.Core
         ///   behavior.
         /// </summary>
         ///
-        public RetryOptions Options { get; }
+        public EventHubsRetryOptions Options { get; }
 
         /// <summary>
         ///   The factor to apply to the base delay for use as a base jitter value.
@@ -47,7 +47,7 @@ namespace Azure.Messaging.EventHubs.Core
         ///
         /// <param name="retryOptions">The options which control the retry approach.</param>
         ///
-        public BasicRetryPolicy(RetryOptions retryOptions)
+        public BasicRetryPolicy(EventHubsRetryOptions retryOptions)
         {
             Argument.AssertNotNull(retryOptions, nameof(retryOptions));
             Options = retryOptions;
@@ -89,8 +89,8 @@ namespace Azure.Messaging.EventHubs.Core
 
             TimeSpan retryDelay = Options.Mode switch
             {
-                RetryMode.Fixed => CalculateFixedDelay(Options.Delay.TotalSeconds, baseJitterSeconds, RandomNumberGenerator.Value),
-                RetryMode.Exponential => CalculateExponentialDelay(attemptCount, Options.Delay.TotalSeconds, baseJitterSeconds, RandomNumberGenerator.Value),
+                EventHubsRetryMode.Fixed => CalculateFixedDelay(Options.Delay.TotalSeconds, baseJitterSeconds, RandomNumberGenerator.Value),
+                EventHubsRetryMode.Exponential => CalculateExponentialDelay(attemptCount, Options.Delay.TotalSeconds, baseJitterSeconds, RandomNumberGenerator.Value),
                 _ => throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, Resources.UnknownRetryMode, Options.Mode.ToString())),
             };
 

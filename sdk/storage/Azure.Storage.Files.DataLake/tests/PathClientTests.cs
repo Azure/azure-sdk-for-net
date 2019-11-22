@@ -20,71 +20,68 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task Ctor_Uri()
         {
             string fileSystemName = GetNewFileSystemName();
-            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem, fileSystemName: fileSystemName))
-            {
-                // Arrange
-                string directoryName = GetNewDirectoryName();
-                await fileSystem.CreateDirectoryAsync(directoryName);
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
 
-                SasQueryParameters sasQueryParameters = GetNewAccountSasCredentials();
-                Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{directoryName}?{sasQueryParameters}");
-                DataLakePathClient pathClient = InstrumentClient(new DataLakePathClient(uri, GetOptions()));
+            // Arrange
+            string directoryName = GetNewDirectoryName();
+            await test.FileSystem.CreateDirectoryAsync(directoryName);
 
-                // Act
-                await pathClient.GetPropertiesAsync();
+            SasQueryParameters sasQueryParameters = GetNewAccountSasCredentials();
+            Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{directoryName}?{sasQueryParameters}");
+            DataLakePathClient pathClient = InstrumentClient(new DataLakePathClient(uri, GetOptions()));
 
-                // Assert
-                Assert.AreEqual(fileSystemName, pathClient.FileSystemName);
-                Assert.AreEqual(uri, pathClient.Uri);
-            }
+            // Act
+            await pathClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(fileSystemName, pathClient.FileSystemName);
+            Assert.AreEqual(uri, pathClient.Uri);
         }
 
         [Test]
         public async Task Ctor_SharedKey()
         {
             string fileSystemName = GetNewFileSystemName();
-            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem, fileSystemName: fileSystemName))
-            {
-                // Arrange
-                string directoryName = GetNewDirectoryName();
-                await fileSystem.CreateDirectoryAsync(directoryName);
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
 
-                StorageSharedKeyCredential sharedKey = new StorageSharedKeyCredential(
-                    TestConfigHierarchicalNamespace.AccountName,
-                    TestConfigHierarchicalNamespace.AccountKey);
-                Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{directoryName}");
-                DataLakePathClient pathClient = InstrumentClient(new DataLakePathClient(uri, sharedKey, GetOptions()));
+            // Arrange
+            string directoryName = GetNewDirectoryName();
+            await test.FileSystem.CreateDirectoryAsync(directoryName);
 
-                // Act
-                await pathClient.GetPropertiesAsync();
+            StorageSharedKeyCredential sharedKey = new StorageSharedKeyCredential(
+                TestConfigHierarchicalNamespace.AccountName,
+                TestConfigHierarchicalNamespace.AccountKey);
+            Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{directoryName}");
+            DataLakePathClient pathClient = InstrumentClient(new DataLakePathClient(uri, sharedKey, GetOptions()));
 
-                // Assert
-                Assert.AreEqual(fileSystemName, pathClient.FileSystemName);
-                Assert.AreEqual(uri, pathClient.Uri);
-            }
+            // Act
+            await pathClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(fileSystemName, pathClient.FileSystemName);
+            Assert.AreEqual(uri, pathClient.Uri);
         }
 
         [Test]
         public async Task Ctor_TokenCredential()
         {
             string fileSystemName = GetNewFileSystemName();
-            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem, fileSystemName: fileSystemName))
-            {
-                // Arrange
-                string directoryName = GetNewDirectoryName();
-                await fileSystem.CreateDirectoryAsync(directoryName);
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
 
-                TokenCredential tokenCredential = GetOAuthCredential(TestConfigHierarchicalNamespace);
-                Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{directoryName}").ToHttps();
-                DataLakePathClient pathClient = InstrumentClient(new DataLakePathClient(uri, tokenCredential, GetOptions()));
+            // Arrange
+            string directoryName = GetNewDirectoryName();
+            await test.FileSystem.CreateDirectoryAsync(directoryName);
 
-                // Act
-                await pathClient.GetPropertiesAsync();
+            TokenCredential tokenCredential = GetOAuthCredential(TestConfigHierarchicalNamespace);
+            Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{directoryName}").ToHttps();
+            DataLakePathClient pathClient = InstrumentClient(new DataLakePathClient(uri, tokenCredential, GetOptions()));
 
-                // Assert
-                Assert.AreEqual(fileSystemName, pathClient.FileSystemName);
-                Assert.AreEqual(uri, pathClient.Uri);
-            }
+            // Act
+            await pathClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(fileSystemName, pathClient.FileSystemName);
+            Assert.AreEqual(uri, pathClient.Uri);
         }
     }
 }

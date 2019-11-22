@@ -60,6 +60,8 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="offset">The offset of the <see cref="EventData" /> this checkpoint is associated with.</param>
         /// <param name="sequenceNumber">The sequence number assigned to the <see cref="EventData" /> this checkpoint is associated with.</param>
         ///
+        /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor" />
+        ///
         protected internal Checkpoint(string fullyQualifiedNamespace,
                                       string eventHubName,
                                       string consumerGroup,

@@ -83,7 +83,7 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Notifies <see cref="IBufferWriter{T}"/> that <paramref name="count"/> amount of data was written to the output <see cref="Span{T}"/>/<see cref="Memory{T}"/>
+        /// Notifies <see cref="IBufferWriter{T}"/> that <paramref name="count"/> amount of data was written to the output <see cref="Span{T}"/>/<see cref="Memory{T}"/>.
         /// </summary>
         /// <exception cref="ArgumentException">
         /// Thrown when <paramref name="count"/> is negative.

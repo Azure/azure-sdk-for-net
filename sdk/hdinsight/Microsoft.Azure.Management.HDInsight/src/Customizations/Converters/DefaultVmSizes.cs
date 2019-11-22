@@ -19,8 +19,8 @@ namespace Microsoft.Azure.Management.HDInsight
 
             private static readonly Dictionary<string, string> DefaultSizes = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
             {
-                {"hadoop", "Standard_D3"},
-                {"spark", "Standard_D12"},
+                {"hadoop", "Standard_D3_v2"},
+                {"spark", "Standard_D12_v2"},
                 {"rserver", "Standard_D12_v2"},
                 {"mlservices", "Standard_D12_v2"},
                 {"InteractiveHive", "Standard_D13_v2"},
@@ -40,11 +40,11 @@ namespace Microsoft.Azure.Management.HDInsight
 
         public static class WorkerNode
         {
-            private const string DefaultSizeIfNotSpecified = "Standard_D3";
+            private const string DefaultSizeIfNotSpecified = "Standard_D3_v2";
 
             private static readonly Dictionary<string, string> DefaultSizes = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
             {
-                {"spark", "Standard_D12"},
+                {"spark", "Standard_D12_v2"},
                 {"rserver", "Standard_D4_v2"},
                 {"mlservices", "Standard_D4_v2"},
                 {"InteractiveHive", "Standard_D13_v2"},

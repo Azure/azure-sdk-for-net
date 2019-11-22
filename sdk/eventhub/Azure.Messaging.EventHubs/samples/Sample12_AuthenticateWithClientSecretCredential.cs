@@ -96,7 +96,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
                 PartitionEvent receivedEvent;
 
-                ReadOptions readOptions = new ReadOptions
+                ReadEventOptions readOptions = new ReadEventOptions
                 {
                     MaximumWaitTime = TimeSpan.FromMilliseconds(150)
                 };
