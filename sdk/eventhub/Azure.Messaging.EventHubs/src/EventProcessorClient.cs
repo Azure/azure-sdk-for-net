@@ -1036,7 +1036,9 @@ namespace Azure.Messaging.EventHubs
             // TODO: if reason = Shutdown or OwnershipLost and we got an exception when closing, what should the final reason be?
 
             PartitionContexts.TryRemove(partitionId, out var context);
-            await ProcessingForPartitionStoppedAsync(reason, context);
+
+            var eventArgs = new PartitionClosingEventArgs(context, reason);
+            await OnPartitionClosingAsync(eventArgs).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1248,22 +1250,6 @@ namespace Azure.Messaging.EventHubs
                 // on the next load balancing loop as long as this instance still owns the partition.
                 // TODO: delegate the exception handling to an Exception Callback.  Do we really need a try-catch here?
             }
-        }
-
-        /// <summary>
-        ///   The handler to be called once event processing stops for a given partition.
-        /// </summary>
-        ///
-        /// <param name="reason">The reason why the processing for the associated partition is being stopped.</param>
-        /// <param name="context">The context in which the associated partition was being processed.</param>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
-        protected Task ProcessingForPartitionStoppedAsync(ProcessingStoppedReason reason,
-                                                          PartitionContext context)
-        {
-            var eventArgs = new PartitionClosingEventArgs(context, reason);
-            return OnPartitionClosingAsync(eventArgs);
         }
     }
 }
