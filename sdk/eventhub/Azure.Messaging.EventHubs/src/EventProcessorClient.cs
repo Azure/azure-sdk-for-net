@@ -40,22 +40,22 @@ namespace Azure.Messaging.EventHubs
         private readonly object StartProcessorGuard = new object();
 
         /// <summary>The handler to be called just before event processing starts for a given partition.</summary>
-        private Func<PartitionInitializingEventArgs, ValueTask> _partitionInitializingAsync;
+        private Func<PartitionInitializingEventArgs, Task> _partitionInitializingAsync;
 
         /// <summary>The handler to be called once event processing stops for a given partition.</summary>
-        private Func<PartitionClosingEventArgs, ValueTask> _partitionClosingAsync;
+        private Func<PartitionClosingEventArgs, Task> _partitionClosingAsync;
 
         /// <summary>Responsible for processing events received from the Event Hubs service.</summary>
-        private Func<ProcessEventArgs, ValueTask> _processEventAsync;
+        private Func<ProcessEventArgs, Task> _processEventAsync;
 
         /// <summary>Responsible for processing unhandled exceptions thrown while this processor is running.</summary>
-        private Func<ProcessErrorEventArgs, ValueTask> _processErrorAsync;
+        private Func<ProcessErrorEventArgs, Task> _processErrorAsync;
 
         /// <summary>
         ///   The handler to be called just before event processing starts for a given partition.
         /// </summary>
         ///
-        public Func<PartitionInitializingEventArgs, ValueTask> PartitionInitializingAsync
+        public Func<PartitionInitializingEventArgs, Task> PartitionInitializingAsync
         {
             get => _partitionInitializingAsync;
             set => EnsureNotRunningAndInvoke(() => _partitionInitializingAsync = value);
@@ -65,7 +65,7 @@ namespace Azure.Messaging.EventHubs
         ///   The handler to be called once event processing stops for a given partition.
         /// </summary>
         ///
-        public Func<PartitionClosingEventArgs, ValueTask> PartitionClosingAsync
+        public Func<PartitionClosingEventArgs, Task> PartitionClosingAsync
         {
             get => _partitionClosingAsync;
             set => EnsureNotRunningAndInvoke(() => _partitionClosingAsync = value);
@@ -75,7 +75,7 @@ namespace Azure.Messaging.EventHubs
         ///   Responsible for processing events received from the Event Hubs service.  Implementation is mandatory.
         /// </summary>
         ///
-        public Func<ProcessEventArgs, ValueTask> ProcessEventAsyncHandler
+        public Func<ProcessEventArgs, Task> ProcessEventAsyncHandler
         {
             get => _processEventAsync;
             set => EnsureNotRunningAndInvoke(() => _processEventAsync = value);
@@ -86,7 +86,7 @@ namespace Azure.Messaging.EventHubs
         ///   Implementation is mandatory.
         /// </summary>
         ///
-        public Func<ProcessErrorEventArgs, ValueTask> ProcessErrorAsyncHandler
+        public Func<ProcessErrorEventArgs, Task> ProcessErrorAsyncHandler
         {
             get => _processErrorAsync;
             set => EnsureNotRunningAndInvoke(() => _processErrorAsync = value);
@@ -431,7 +431,7 @@ namespace Azure.Messaging.EventHubs
         /// <exception cref="EventHubsClientClosedException">Occurs when this <see cref="EventProcessorClient" /> instance is already closed.</exception>
         /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="ProcessEventAsyncHandler" /> or <see cref="ProcessErrorAsyncHandler" /> set.</exception>
         ///
-        public virtual async ValueTask StartProcessingAsync(CancellationToken cancellationToken = default)
+        public virtual async Task StartProcessingAsync(CancellationToken cancellationToken = default)
         {
             Argument.AssertNotClosed(IsClosed, nameof(EventProcessorClient));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -498,7 +498,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public virtual async ValueTask StopProcessingAsync(CancellationToken cancellationToken = default)
+        public virtual async Task StopProcessingAsync(CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
@@ -1092,7 +1092,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        protected async ValueTask InitializeProcessingForPartitionAsync(PartitionContext context)
+        protected async Task InitializeProcessingForPartitionAsync(PartitionContext context)
         {
             try
             {
@@ -1140,8 +1140,8 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        protected async ValueTask ProcessingForPartitionStoppedAsync(ProcessingStoppedReason reason,
-                                                                     PartitionContext context)
+        protected async Task ProcessingForPartitionStoppedAsync(ProcessingStoppedReason reason,
+                                                                PartitionContext context)
         {
             if (PartitionClosingAsync != null)
             {
@@ -1167,8 +1167,8 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        protected ValueTask ProcessEventAsync(PartitionEvent partitionEvent,
-                                              PartitionContext context)
+        protected Task ProcessEventAsync(PartitionEvent partitionEvent,
+                                         PartitionContext context)
         {
             var eventArgs = new ProcessEventArgs(context, partitionEvent.Data, this);
             return ProcessEventAsyncHandler(eventArgs);
@@ -1183,8 +1183,8 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        protected ValueTask ProcessErrorAsync(Exception exception,
-                                              PartitionContext context)
+        protected Task ProcessErrorAsync(Exception exception,
+                                         PartitionContext context)
         {
             var eventArgs = new ProcessErrorEventArgs(context?.PartitionId, "TODO", exception);
             return ProcessErrorAsyncHandler(eventArgs);
