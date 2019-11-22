@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <!-- Please do not move/edit code below this line -->
   <Import Project="$(RepoEngPath)/mgmt/AzSdk.test.reference.props" />
-  <Import Project="..\..\..\core\Azure.Core\tests\TestFramework.props" />
   <!-- Please do not move/edit code below this line -->
   <PropertyGroup>
     <PackageId>DataShare.Tests</PackageId>
