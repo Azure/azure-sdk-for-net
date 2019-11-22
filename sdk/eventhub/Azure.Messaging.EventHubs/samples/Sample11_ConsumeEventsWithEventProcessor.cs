@@ -70,7 +70,7 @@ namespace Azure.Messaging.EventHubs.Samples
             int totalEventsCount = 0;
             int partitionsBeingProcessedCount = 0;
 
-            eventProcessor.PartitionInitializingAsync = (eventArgs) =>
+            eventProcessor.PartitionInitializingAsync += (eventArgs) =>
             {
                 // This is the last piece of code guaranteed to run before event processing, so all initialization
                 // must be done by the moment this method returns.

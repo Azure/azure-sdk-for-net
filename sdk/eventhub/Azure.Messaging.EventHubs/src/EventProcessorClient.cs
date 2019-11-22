@@ -52,13 +52,30 @@ namespace Azure.Messaging.EventHubs
         private Func<ProcessErrorEventArgs, Task> _processErrorAsync;
 
         /// <summary>
-        ///   The handler to be called just before event processing starts for a given partition.
+        ///   The handler to be called just before event processing starts for a given partition. TODO.
         /// </summary>
         ///
-        public Func<PartitionInitializingEventArgs, Task> PartitionInitializingAsync
+        public event Func<PartitionInitializingEventArgs, Task> PartitionInitializingAsync
         {
-            get => _partitionInitializingAsync;
-            set => EnsureNotRunningAndInvoke(() => _partitionInitializingAsync = value);
+            add
+            {
+                if (_partitionInitializingAsync != default)
+                {
+                    throw new NotSupportedException("TODO: no more than one event.");
+                }
+
+                EnsureNotRunningAndInvoke(() => _partitionInitializingAsync = value);
+            }
+
+            remove
+            {
+                if (_partitionInitializingAsync != value)
+                {
+                    throw new ArgumentException("TODO: value does not exist.");
+                }
+
+                EnsureNotRunningAndInvoke(() => _partitionInitializingAsync = default);
+            }
         }
 
         /// <summary>
@@ -608,6 +625,24 @@ namespace Azure.Messaging.EventHubs
                                                     PartitionContext context) => UpdateCheckpointAsync(eventData, context);
 
         /// <summary>
+        ///   TODO.
+        /// </summary>
+        ///
+        /// <param name="eventArgs">TODO.</param>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        ///
+        protected virtual Task OnPartitionInitializingAsync(PartitionInitializingEventArgs eventArgs)
+        {
+            if (_partitionInitializingAsync != null)
+            {
+                return _partitionInitializingAsync(eventArgs);
+            }
+
+            return Task.CompletedTask;
+        }
+
+        /// <summary>
         ///   Performs load balancing between multiple <see cref="EventProcessorClient" /> instances, claiming others' partitions to enforce
         ///   a more equal distribution when necessary.  It also manages its own partition processing tasks and ownership.
         /// </summary>
@@ -1096,16 +1131,10 @@ namespace Azure.Messaging.EventHubs
         {
             try
             {
-                var startingPosition = EventPosition.Earliest;
+                var eventArgs = new PartitionInitializingEventArgs(context, EventPosition.Earliest);
+                await OnPartitionInitializingAsync(eventArgs).ConfigureAwait(false);
 
-                if (PartitionInitializingAsync != null)
-                {
-                    var eventArgs = new PartitionInitializingEventArgs(context, startingPosition);
-                    await PartitionInitializingAsync(eventArgs).ConfigureAwait(false);
-
-                    startingPosition = eventArgs.DefaultStartingPosition;
-                }
-
+                var startingPosition = eventArgs.DefaultStartingPosition;
                 var ownership = InstanceOwnership[context.PartitionId];
 
                 if (ownership.Offset.HasValue)

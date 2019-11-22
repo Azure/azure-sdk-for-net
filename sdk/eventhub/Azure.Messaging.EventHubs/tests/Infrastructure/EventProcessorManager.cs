@@ -136,7 +136,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 if (OnInitialize != null)
                 {
-                    eventProcessor.PartitionInitializingAsync = eventArgs =>
+                    eventProcessor.PartitionInitializingAsync += eventArgs =>
                     {
                         OnInitialize(eventArgs);
                         return Task.CompletedTask;
