@@ -9,6 +9,7 @@ using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Identity;
 using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Errors;
@@ -118,6 +119,26 @@ namespace Azure.Messaging.EventHubs.Tests
                 );
 
                 await using (var connection = new TestConnectionWithTransport(connectionProperties.Endpoint.Host, connectionProperties.EventHubName, credential))
+                {
+                    Assert.That(() => connection.GetPropertiesAsync(), Throws.Nothing);
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConnection" /> is able to
+        ///   connect to the Event Hubs service.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ConnectionCanConnectToEventHubsUsingAnIdentityCredential()
+        {
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
+            {
+                var options = new EventHubConnectionOptions();
+                var credential = new ClientSecretCredential(TestEnvironment.EventHubsTenant, TestEnvironment.EventHubsClient, TestEnvironment.EventHubsSecret);
+
+                await using (var connection = new TestConnectionWithTransport(TestEnvironment.FullyQualifiedNamespace, scope.EventHubName, credential))
                 {
                     Assert.That(() => connection.GetPropertiesAsync(), Throws.Nothing);
                 }

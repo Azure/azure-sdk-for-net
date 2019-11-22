@@ -9,6 +9,7 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Identity;
 using Azure.Messaging.EventHubs.Errors;
 using Azure.Messaging.EventHubs.Metadata;
 using Azure.Messaging.EventHubs.Tests.Infrastructure;
@@ -417,6 +418,34 @@ namespace Azure.Messaging.EventHubs.Tests
                     batch.TryAdd(new EventData(Encoding.UTF8.GetBytes("So many messages")));
 
                     Assert.That(batch.Count, Is.EqualTo(3), "The batch should contain all 3 events.");
+                    Assert.That(async () => await producer.SendAsync(batch), Throws.Nothing);
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubProducerClient" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProducerCanSendAnEventBatchUsingAnIdentityCredential()
+        {
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
+            {
+                var credential = new ClientSecretCredential(TestEnvironment.EventHubsTenant, TestEnvironment.EventHubsClient, TestEnvironment.EventHubsSecret);
+
+                await using (var producer = new EventHubProducerClient(TestEnvironment.FullyQualifiedNamespace, scope.EventHubName, credential))
+                {
+                    using EventDataBatch batch = await producer.CreateBatchAsync();
+
+                    batch.TryAdd(new EventData(Encoding.UTF8.GetBytes("This is a message")));
+                    batch.TryAdd(new EventData(Encoding.UTF8.GetBytes("This is another message")));
+                    batch.TryAdd(new EventData(Encoding.UTF8.GetBytes("So many messages")));
+                    batch.TryAdd(new EventData(Encoding.UTF8.GetBytes("Event more messages")));
+                    batch.TryAdd(new EventData(Encoding.UTF8.GetBytes("Will it ever stop?")));
+
+                    Assert.That(batch.Count, Is.EqualTo(5), "The batch should contain all 5 events.");
                     Assert.That(async () => await producer.SendAsync(batch), Throws.Nothing);
                 }
             }
