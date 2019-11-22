@@ -1280,21 +1280,5 @@ namespace Azure.Messaging.EventHubs
             var eventArgs = new ProcessEventArgs(context, partitionEvent.Data, this);
             return OnProcessEventAsync(eventArgs);
         }
-
-        /// <summary>
-        ///   Responsible for processing unhandled exceptions thrown while this processor is running.
-        /// </summary>
-        ///
-        /// <param name="exception">The exception to be processed.</param>
-        /// <param name="context">The context in which the associated partition was being processed when the exception was thrown.</param>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
-        protected Task ProcessErrorAsync(Exception exception,
-                                         PartitionContext context)
-        {
-            var eventArgs = new ProcessErrorEventArgs(context?.PartitionId, "TODO", exception);
-            return OnProcessErrorAsync(eventArgs);
-        }
     }
 }
