@@ -79,34 +79,85 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   The handler to be called once event processing stops for a given partition.
+        ///   The handler to be called once event processing stops for a given partition. TODO.
         /// </summary>
         ///
-        public Func<PartitionClosingEventArgs, Task> PartitionClosingAsync
+        public event Func<PartitionClosingEventArgs, Task> PartitionClosingAsync
         {
-            get => _partitionClosingAsync;
-            set => EnsureNotRunningAndInvoke(() => _partitionClosingAsync = value);
+            add
+            {
+                if (_partitionClosingAsync != default)
+                {
+                    throw new NotSupportedException("TODO: no more than one event.");
+                }
+
+                EnsureNotRunningAndInvoke(() => _partitionClosingAsync = value);
+            }
+
+            remove
+            {
+                if (_partitionClosingAsync != value)
+                {
+                    throw new ArgumentException("TODO: value does not exist.");
+                }
+
+                EnsureNotRunningAndInvoke(() => _partitionClosingAsync = default);
+            }
         }
 
         /// <summary>
-        ///   Responsible for processing events received from the Event Hubs service.  Implementation is mandatory.
+        ///   Responsible for processing events received from the Event Hubs service.  Implementation is mandatory. TODO.
         /// </summary>
         ///
-        public Func<ProcessEventArgs, Task> ProcessEventAsyncHandler
+        public event Func<ProcessEventArgs, Task> ProcessEventAsyncHandler
         {
-            get => _processEventAsync;
-            set => EnsureNotRunningAndInvoke(() => _processEventAsync = value);
+            add
+            {
+                if (_processEventAsync != default)
+                {
+                    throw new NotSupportedException("TODO: no more than one event.");
+                }
+
+                EnsureNotRunningAndInvoke(() => _processEventAsync = value);
+            }
+
+            remove
+            {
+                if (_processEventAsync != value)
+                {
+                    throw new ArgumentException("TODO: value does not exist.");
+                }
+
+                EnsureNotRunningAndInvoke(() => _processEventAsync = default);
+            }
         }
 
         /// <summary>
         ///   Responsible for processing unhandled exceptions thrown while this processor is running.
-        ///   Implementation is mandatory.
+        ///   Implementation is mandatory. TODO.
         /// </summary>
         ///
-        public Func<ProcessErrorEventArgs, Task> ProcessErrorAsyncHandler
+        public event Func<ProcessErrorEventArgs, Task> ProcessErrorAsyncHandler
         {
-            get => _processErrorAsync;
-            set => EnsureNotRunningAndInvoke(() => _processErrorAsync = value);
+            add
+            {
+                if (_processErrorAsync != default)
+                {
+                    throw new NotSupportedException("TODO: no more than one event.");
+                }
+
+                EnsureNotRunningAndInvoke(() => _processErrorAsync = value);
+            }
+
+            remove
+            {
+                if (_processErrorAsync != value)
+                {
+                    throw new ArgumentException("TODO: value does not exist.");
+                }
+
+                EnsureNotRunningAndInvoke(() => _processErrorAsync = default);
+            }
         }
 
         /// <summary>
@@ -643,6 +694,44 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   TODO.
+        /// </summary>
+        ///
+        /// <param name="eventArgs">TODO.</param>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        ///
+        protected virtual Task OnPartitionClosingAsync(PartitionClosingEventArgs eventArgs)
+        {
+            if (_partitionClosingAsync != null)
+            {
+                return _partitionClosingAsync(eventArgs);
+            }
+
+            return Task.CompletedTask;
+        }
+
+        /// <summary>
+        ///   TODO.
+        /// </summary>
+        ///
+        /// <param name="eventArgs">TODO.</param>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        ///
+        protected virtual Task OnProcessEventAsync(ProcessEventArgs eventArgs) => _processEventAsync(eventArgs);
+
+        /// <summary>
+        ///   TODO.
+        /// </summary>
+        ///
+        /// <param name="eventArgs">TODO.</param>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        ///
+        protected virtual Task OnProcessErrorAsync(ProcessErrorEventArgs eventArgs) => _processErrorAsync(eventArgs);
+
+        /// <summary>
         ///   Performs load balancing between multiple <see cref="EventProcessorClient" /> instances, claiming others' partitions to enforce
         ///   a more equal distribution when necessary.  It also manages its own partition processing tasks and ownership.
         /// </summary>
@@ -1169,22 +1258,11 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        protected async Task ProcessingForPartitionStoppedAsync(ProcessingStoppedReason reason,
-                                                                PartitionContext context)
+        protected Task ProcessingForPartitionStoppedAsync(ProcessingStoppedReason reason,
+                                                          PartitionContext context)
         {
-            if (PartitionClosingAsync != null)
-            {
-                try
-                {
-                    var eventArgs = new PartitionClosingEventArgs(context, reason);
-                    await PartitionClosingAsync(eventArgs);
-                }
-                catch (Exception)
-                {
-                    // TODO: delegate the exception handling to an Exception Callback.
-                    // Maybe we should just surface the exception.
-                }
-            }
+            var eventArgs = new PartitionClosingEventArgs(context, reason);
+            return OnPartitionClosingAsync(eventArgs);
         }
 
         /// <summary>
@@ -1200,7 +1278,7 @@ namespace Azure.Messaging.EventHubs
                                          PartitionContext context)
         {
             var eventArgs = new ProcessEventArgs(context, partitionEvent.Data, this);
-            return ProcessEventAsyncHandler(eventArgs);
+            return OnProcessEventAsync(eventArgs);
         }
 
         /// <summary>
@@ -1216,7 +1294,7 @@ namespace Azure.Messaging.EventHubs
                                          PartitionContext context)
         {
             var eventArgs = new ProcessErrorEventArgs(context?.PartitionId, "TODO", exception);
-            return ProcessErrorAsyncHandler(eventArgs);
+            return OnProcessErrorAsync(eventArgs);
         }
     }
 }

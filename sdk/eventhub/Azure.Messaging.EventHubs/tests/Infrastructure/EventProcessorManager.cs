@@ -145,20 +145,20 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 if (OnStop != null)
                 {
-                    eventProcessor.PartitionClosingAsync = eventArgs =>
+                    eventProcessor.PartitionClosingAsync += eventArgs =>
                     {
                         OnStop(eventArgs);
                         return Task.CompletedTask;
                     };
                 }
 
-                eventProcessor.ProcessEventAsyncHandler = eventArgs =>
+                eventProcessor.ProcessEventAsyncHandler += eventArgs =>
                 {
                     OnProcessEvent?.Invoke(eventArgs);
                     return Task.CompletedTask;
                 };
 
-                eventProcessor.ProcessErrorAsyncHandler = eventArgs =>
+                eventProcessor.ProcessErrorAsyncHandler += eventArgs =>
                 {
                     OnProcessError?.Invoke(eventArgs);
                     return Task.CompletedTask;
