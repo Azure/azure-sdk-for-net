@@ -82,6 +82,7 @@ package_indexing_exclusion_list:
   - 'AutoRest-AzureDotNetSDK'
   - 'NetCoreTestPublish'
   - 'ObjectModelCodeGenerator'
+  - 'CodeGenerationLibrary'
   - 'ProxyLayerParser'
   - 'IntegrationTestCommon'
   - 'Azure.Template'
