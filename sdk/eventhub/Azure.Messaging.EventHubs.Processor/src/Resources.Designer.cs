@@ -65,5 +65,17 @@ namespace Azure.Messaging.EventHubs.Processor
                 resourceCulture = value;
             }
         }
+
+        /// <summary>
+        ///   The specified container or blob does not exist
+        /// </summary>
+        internal static string ResourceNotFound
+        {
+            get
+            {
+                return ResourceManager.GetString("ResourceNotFound", resourceCulture);
+            }
+        }
+
     }
 }

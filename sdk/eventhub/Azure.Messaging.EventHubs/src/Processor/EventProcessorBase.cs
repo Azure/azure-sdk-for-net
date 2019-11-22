@@ -203,8 +203,8 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <returns>An enumerable containing all the existing checkpoints for the associated Event Hub and consumer group.</returns>
         ///
         protected abstract Task<IEnumerable<Checkpoint>> ListCheckpointsAsync(string fullyQualifiedNamespace,
-                                                                                 string eventHubName,
-                                                                                 string consumerGroup);
+                                                                              string eventHubName,
+                                                                              string consumerGroup);
 
         /// <summary>
         ///   Updates the checkpoint using the given information for the associated partition and consumer group in the chosen storage service.

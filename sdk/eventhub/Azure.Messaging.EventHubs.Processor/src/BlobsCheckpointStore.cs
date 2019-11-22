@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventHubs.Processor
     ///   A storage blob service that keeps track of checkpoints and ownership.
     /// </summary>
     ///
-    public sealed class BlobPartitionManager : PartitionManager
+    public sealed class BlobsCheckpointStore : PartitionManager
     {
         /// <summary>A regular expression used to capture strings enclosed in double quotes.</summary>
         private static readonly Regex s_doubleQuotesExpression = new Regex("\"(.*)\"", RegexOptions.Compiled);
@@ -24,12 +24,24 @@ namespace Azure.Messaging.EventHubs.Processor
         private readonly BlobContainerClient _containerClient;
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="BlobPartitionManager"/> class.
+        ///   Specifies a string that filters the results to return only checkpoint blobs whose name begins
+        ///   with the specified prefix.
+        /// </summary>
+        private const string CheckpointPrefix = "{0}/{1}/{2}/checkpoint/";
+
+        /// <summary>
+        ///   Specifies a string that filters the results to return only ownership blobs whose name begins
+        ///   with the specified prefix.
+        /// </summary>
+        private const string OwnershipPrefix = "{0}/{1}/{2}/ownership/";
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="BlobsCheckpointStore"/> class.
         /// </summary>
         ///
         /// <param name="blobContainerClient">The client used to interact with the Azure Blob Storage service.</param>
         ///
-        public BlobPartitionManager(BlobContainerClient blobContainerClient)
+        public BlobsCheckpointStore(BlobContainerClient blobContainerClient)
         {
             // TODO: instead of manually checking the instance, make use of the Guard class once it's available.
 
@@ -53,7 +65,7 @@ namespace Azure.Messaging.EventHubs.Processor
             List<PartitionOwnership> ownershipList = new List<PartitionOwnership>();
             try
             {
-                var prefix = $"{ fullyQualifiedNamespace }/{ eventHubName }/{ consumerGroup }/ownership/";
+                var prefix = string.Format(OwnershipPrefix, fullyQualifiedNamespace.ToLower(), eventHubName.ToLower(), consumerGroup.ToLower());
                 await foreach (BlobItem blob in _containerClient.GetBlobsAsync(traits: BlobTraits.Metadata, prefix: prefix).ConfigureAwait(false))
                 {
                     // In case this key does not exist, ownerIdentifier is set to null.  This will force the PartitionOwnership constructor
@@ -74,9 +86,9 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 return ownershipList;
             }
-            catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound || ex.ErrorCode == BlobErrorCode.BlobNotFound)
+            catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound)
             {
-                throw new RequestFailedException("The specified container or blob does not exist: ", ex);
+                throw new RequestFailedException(Resources.ResourceNotFound);
             }
 
         }
@@ -103,7 +115,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 var blobRequestConditions = new BlobRequestConditions();
 
-                var blobName = $"{ ownership.FullyQualifiedNamespace }/{ ownership.EventHubName }/{ ownership.ConsumerGroup }/ownership/{ ownership.PartitionId }";
+                var blobName = string.Format(OwnershipPrefix + ownership.PartitionId, ownership.FullyQualifiedNamespace.ToLower(), ownership.EventHubName.ToLower(), ownership.ConsumerGroup.ToLower());
                 BlobClient blobClient = _containerClient.GetBlobClient(blobName);
 
                 try
@@ -116,11 +128,9 @@ namespace Azure.Messaging.EventHubs.Processor
                     {
                         blobRequestConditions.IfNoneMatch = new ETag("*");
 
-                        MemoryStream blobContent = null;
-
+                        using var blobContent = new MemoryStream(Array.Empty<byte>());
                         try
                         {
-                            blobContent = new MemoryStream(new byte[0]);
                             contentInfoResponse = await blobClient.UploadAsync(blobContent, metadata: metadata, conditions: blobRequestConditions).ConfigureAwait(false);
                         }
                         catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.BlobAlreadyExists)
@@ -130,10 +140,6 @@ namespace Azure.Messaging.EventHubs.Processor
 
                             // TODO: Add log  - "Ownership with partition id = '{ ownership.PartitionId }' is not claimable."
                             continue;
-                        }
-                        finally
-                        {
-                            blobContent?.Dispose();
                         }
 
                         ownership.LastModifiedTime = contentInfoResponse.Value.LastModified;
@@ -184,7 +190,7 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
-        ///    List of all the checkpoints in a data store for a given namespace, eventhub and consumer group.
+        ///   List of all the checkpoints in a data store for a given namespace, eventhub and consumer group.
         /// </summary>
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the ownership are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
@@ -194,13 +200,13 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <returns>An enumerable containing all the existing checkpoints for the associated Event Hub and consumer group.</returns>
         ///
         public override async Task<IEnumerable<Checkpoint>> ListCheckpointsAsync(string fullyQualifiedNamespace,
-                                                                                       string eventHubName,
-                                                                                       string consumerGroup)
+                                                                                 string eventHubName,
+                                                                                 string consumerGroup)
         {
             List<Checkpoint> checkpoints = new List<Checkpoint>();
             try
             {
-                var prefix = $"{ fullyQualifiedNamespace }/{ eventHubName }/{ consumerGroup }/checkpoint/";
+                var prefix = string.Format(CheckpointPrefix, fullyQualifiedNamespace.ToLower(), eventHubName.ToLower(), consumerGroup.ToLower());
                 await foreach (BlobItem blob in _containerClient.GetBlobsAsync(traits: BlobTraits.Metadata, prefix: prefix).ConfigureAwait(false))
                 {
                     long offset = 0;
@@ -228,11 +234,10 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 return checkpoints;
             }
-            catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound || ex.ErrorCode == BlobErrorCode.BlobNotFound)
+            catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound)
             {
-                throw new RequestFailedException("The specified container or blob does not exist: ", ex);
+                throw new RequestFailedException(Resources.ResourceNotFound);
             }
-
         }
 
         /// <summary>
@@ -245,7 +250,8 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         public override async Task UpdateCheckpointAsync(Checkpoint checkpoint)
         {
-            var blobName = $"{ checkpoint.FullyQualifiedNamespace }/{ checkpoint.EventHubName }/{ checkpoint.ConsumerGroup }/checkpoint/{ checkpoint.PartitionId }";
+            var blobName = string.Format(CheckpointPrefix + checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace.ToLower(), checkpoint.EventHubName.ToLower(), checkpoint.ConsumerGroup.ToLower());
+
             BlobClient blobClient = _containerClient.GetBlobClient(blobName);
 
             var metadata = new Dictionary<string, string>()
@@ -264,7 +270,7 @@ namespace Azure.Messaging.EventHubs.Processor
             catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound)
             {
                 // TODO: Add log  - "Checkpoint with partition id = '{ checkpoint.PartitionId }' could not be updated because specified container does not exist."
-                throw new RequestFailedException($"Checkpoint with partition id = '{ checkpoint.PartitionId }' could not be updated because specified container does not exist.", ex);
+                throw new RequestFailedException(Resources.ResourceNotFound);
             }
             finally
             {

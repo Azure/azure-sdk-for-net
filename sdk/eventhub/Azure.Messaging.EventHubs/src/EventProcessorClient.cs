@@ -488,8 +488,8 @@ namespace Azure.Messaging.EventHubs
         /// <returns>An enumerable containing all the existing checkpoints for the associated Event Hub and consumer group.</returns>
         ///
         protected override Task<IEnumerable<Checkpoint>> ListCheckpointsAsync(string fullyQualifiedNamespace,
-                                                                                 string eventHubName,
-                                                                                 string consumerGroup) => Manager.ListCheckpointsAsync(fullyQualifiedNamespace, eventHubName, consumerGroup);
+                                                                              string eventHubName,
+                                                                              string consumerGroup) => Manager.ListCheckpointsAsync(fullyQualifiedNamespace, eventHubName, consumerGroup);
 
         /// <summary>
         ///   Updates the checkpoint using the given information for the associated partition and consumer group in the chosen storage service.

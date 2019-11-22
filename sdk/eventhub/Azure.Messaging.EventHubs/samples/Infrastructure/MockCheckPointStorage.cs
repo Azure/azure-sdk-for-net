@@ -137,17 +137,17 @@ namespace Azure.Messaging.EventHubs.Samples.Infrastructure
         /// <returns>An enumerable containing all the existing ownership for the associated Event Hub and consumer group.</returns>
         ///
         public override Task<IEnumerable<Checkpoint>> ListCheckpointsAsync(string fullyQualifiedNamespace,
-                                                                                 string eventHubName,
-                                                                                 string consumerGroup)
+                                                                           string eventHubName,
+                                                                           string consumerGroup)
         {
             List<Checkpoint> checkpointList;
 
             lock (_checkpointLock)
             {
                 checkpointList = _checkpoints.Values
-                    .Where(ownership => ownership.FullyQualifiedNamespace == fullyQualifiedNamespace
-                        && ownership.EventHubName == eventHubName
-                        && ownership.ConsumerGroup == consumerGroup)
+                    .Where(checkpoint => checkpoint.FullyQualifiedNamespace == fullyQualifiedNamespace
+                        && checkpoint.EventHubName == eventHubName
+                        && checkpoint.ConsumerGroup == consumerGroup)
                     .ToList();
             }
 
@@ -164,7 +164,7 @@ namespace Azure.Messaging.EventHubs.Samples.Infrastructure
         ///
         public override Task UpdateCheckpointAsync(Checkpoint checkpoint)
         {
-            lock (_ownershipLock)
+            lock (_checkpointLock)
             {
                 var key = (checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId);
                 _checkpoints[key] = checkpoint;
