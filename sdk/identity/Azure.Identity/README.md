@@ -1,7 +1,7 @@
 # Azure Identity client library for .NET
  The Azure Identity library provides Azure Active Directory token authentication support across the Azure SDK. It provides a set of TokenCredential implementations which can be used to construct Azure SDK clients which support AAD token authentication.  
  
- This library is in preview and currently supports:
+ This library currently supports:
   - [Service principal authentication](https://docs.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals)
   - [Managed identity authentication](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/overview)
   - [User principal authentication](https://docs.microsoft.com/en-us/azure/active-directory/develop/scenario-web-app-sign-user-overview)
@@ -17,7 +17,7 @@
 Install the Azure Identity client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-Install-Package Azure.Identity -IncludePrerelease
+Install-Package Azure.Identity
 ```
 
 ### Prerequisites
