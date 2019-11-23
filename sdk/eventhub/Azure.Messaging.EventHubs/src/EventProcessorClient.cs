@@ -52,7 +52,7 @@ namespace Azure.Messaging.EventHubs
         private Func<ProcessErrorEventArgs, Task> _processErrorAsync;
 
         /// <summary>Indicates whether or not this event processor is currently running.  Used only for mocking purposes.</summary>
-        private bool? _isRunning;
+        private bool? _isRunningMock;
 
         /// <summary>
         ///   The event to be raised just before event processing starts for a given partition.
@@ -209,9 +209,9 @@ namespace Azure.Messaging.EventHubs
         {
             get
             {
-                if (_isRunning.HasValue)
+                if (_isRunningMock.HasValue)
                 {
-                    return _isRunning.Value;
+                    return _isRunningMock.Value;
                 }
 
                 // Capture the load balancing task so we don't end up with a race condition.
@@ -221,7 +221,7 @@ namespace Azure.Messaging.EventHubs
                 return loadBalancingTask != null && !loadBalancingTask.IsCompleted;
             }
 
-            protected set => _isRunning = value;
+            protected set => _isRunningMock = value;
         }
 
         /// <summary>
