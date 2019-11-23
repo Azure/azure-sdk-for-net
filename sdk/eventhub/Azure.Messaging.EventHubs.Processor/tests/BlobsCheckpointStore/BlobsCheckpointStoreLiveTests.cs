@@ -845,7 +845,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 var partitionManager = new Processor.BlobsCheckpointStore(containerClient);
 
                 await partitionManager.UpdateCheckpointAsync(new MockCheckpoint
-                   ("namespace", "eventHubName1", "consumerGroup", "partitionId", 10, 20));
+                    ("namespace", "eventHubName1", "consumerGroup", "partitionId", 10, 20));
 
                 await partitionManager.UpdateCheckpointAsync(new MockCheckpoint
                     ("namespace", "eventHubName2", "consumerGroup", "partitionId", 10, 20));
@@ -877,7 +877,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 var partitionManager = new Processor.BlobsCheckpointStore(containerClient);
 
                 await partitionManager.UpdateCheckpointAsync(new MockCheckpoint
-                  ("namespace1", "eventHubName", "consumerGroup", "partitionId", 10, 20));
+                    ("namespace1", "eventHubName", "consumerGroup", "partitionId", 10, 20));
 
                 await partitionManager.UpdateCheckpointAsync(new MockCheckpoint
                     ("namespace2", "eventHubName", "consumerGroup", "partitionId", 10, 20));

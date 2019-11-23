@@ -441,10 +441,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionManager = new MockCheckPointStorage();
 
             await partitionManager.UpdateCheckpointAsync(new Checkpoint
-                   ("namespace", "eventHubName", "consumerGroup1", "partitionId", 10, 20));
+                ("namespace", "eventHubName", "consumerGroup1", "partitionId", 10, 20));
 
             await partitionManager.UpdateCheckpointAsync(new Checkpoint
-                   ("namespace", "eventHubName", "consumerGroup2", "partitionId", 10, 20));
+                ("namespace", "eventHubName", "consumerGroup2", "partitionId", 10, 20));
 
             IEnumerable<Checkpoint> storedCheckpointsList1 = await partitionManager.ListCheckpointsAsync("namespace", "eventHubName", "consumerGroup1");
             IEnumerable<Checkpoint> storedCheckpointsList2 = await partitionManager.ListCheckpointsAsync("namespace", "eventHubName", "consumerGroup2");
@@ -467,10 +467,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionManager = new MockCheckPointStorage();
 
             await partitionManager.UpdateCheckpointAsync(new Checkpoint
-               ("namespace", "eventHubName1", "consumerGroup", "partitionId", 10, 20));
+                ("namespace", "eventHubName1", "consumerGroup", "partitionId", 10, 20));
 
             await partitionManager.UpdateCheckpointAsync(new Checkpoint
-               ("namespace", "eventHubName2", "consumerGroup", "partitionId", 10, 20));
+                ("namespace", "eventHubName2", "consumerGroup", "partitionId", 10, 20));
 
             IEnumerable<Checkpoint> storedCheckpointsList1 = await partitionManager.ListCheckpointsAsync("namespace", "eventHubName1", "consumerGroup");
             IEnumerable<Checkpoint> storedCheckpointsList2 = await partitionManager.ListCheckpointsAsync("namespace", "eventHubName2", "consumerGroup");
