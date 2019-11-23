@@ -88,6 +88,15 @@ principal authentication with these environment variables:
 
 ## Examples
 
+Following examples are provided below:
+
+* Authenticating with `DefaultAzureCredential`
+* Chaining Credentials
+* Authenticating a service principal with a client secret
+* Authenticating a service principal with a certificate
+* Authenticating a user with the default browser
+* Authenticating a user with the device code flow
+
 ### Authenticating with `DefaultAzureCredential`
 
 This example demonstrates authenticating the `SecretClient` from the [Azure.Security.KeyVault.Secrets][secrets_client_library] client library using the `DefaultAzureCredential`.
