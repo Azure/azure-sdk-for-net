@@ -231,16 +231,6 @@ namespace Azure.Messaging.EventHubs
         public string Identifier { get; }
 
         /// <summary>
-        ///   Indicates whether or not this <see cref="EventProcessorClient"/> has been closed.
-        /// </summary>
-        ///
-        /// <value>
-        ///   <c>true</c> if the client is closed; otherwise, <c>false</c>.
-        /// </value>
-        ///
-        public bool IsClosed { get; protected set; } = false;
-
-        /// <summary>
         ///   The minimum amount of time to be elapsed between two load balancing verifications.
         /// </summary>
         ///
@@ -522,7 +512,6 @@ namespace Azure.Messaging.EventHubs
         ///
         public virtual async Task StartProcessingAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotClosed(IsClosed, nameof(EventProcessorClient));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             if (ActiveLoadBalancingTask == null)
