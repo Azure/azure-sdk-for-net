@@ -194,8 +194,6 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   Starts the event processors.
         /// </summary>
         ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
         public Task StartAllAsync()
         {
             return Task.WhenAll(EventProcessors
@@ -205,8 +203,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <summary>
         ///   Stops the event processors.
         /// </summary>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         public Task StopAllAsync()
         {
@@ -218,8 +214,6 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   Waits until the partition load distribution is stabilized.  Throws an <see cref="OperationCanceledException"/>
         ///   if the load takes too long to stabilize.
         /// </summary>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         public async Task WaitStabilization()
         {

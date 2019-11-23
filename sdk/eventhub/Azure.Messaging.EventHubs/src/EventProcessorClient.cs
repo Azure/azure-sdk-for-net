@@ -499,8 +499,6 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the start operation.  This won't affect the <see cref="EventProcessorClient" /> once it starts running.</param>
         ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
         /// <exception cref="EventHubsClientClosedException">Occurs when this <see cref="EventProcessorClient" /> instance is already closed.</exception>
         /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="ProcessEventAsync" /> or <see cref="ProcessErrorAsync" /> set.</exception>
         ///
@@ -570,8 +568,6 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the stop operation.  If the operation is successfully canceled, the <see cref="EventProcessorClient" /> will keep running.</param>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         public virtual async Task StopProcessingAsync(CancellationToken cancellationToken = default)
         {
@@ -678,8 +674,6 @@ namespace Azure.Messaging.EventHubs
         /// <param name="eventData">The event containing the information to be stored in the checkpoint.</param>
         /// <param name="context">The context of the partition the checkpoint is associated with.</param>
         ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
         internal Task InternalUpdateCheckpointAsync(EventData eventData,
                                                     PartitionContext context) => UpdateCheckpointAsync(eventData, context);
 
@@ -688,8 +682,6 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <param name="eventArgs">The set of arguments to identify the context of the partition that will be processed.</param>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         protected virtual Task OnPartitionInitializingAsync(PartitionInitializingEventArgs eventArgs)
         {
@@ -707,8 +699,6 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="eventArgs">The set of arguments to identify the context of the partition that was being processed.</param>
         ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
         protected virtual Task OnPartitionClosingAsync(PartitionClosingEventArgs eventArgs)
         {
             if (_partitionClosingAsync != null)
@@ -725,8 +715,6 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="eventArgs">The set of arguments to identify the context of the event to be processed.</param>
         ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
         protected virtual Task OnProcessEventAsync(ProcessEventArgs eventArgs) => _processEventAsync(eventArgs);
 
         /// <summary>
@@ -734,8 +722,6 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <param name="eventArgs">The set of arguments to identify the context of the error to be processed.</param>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         protected virtual Task OnProcessErrorAsync(ProcessErrorEventArgs eventArgs) => _processErrorAsync(eventArgs);
 
@@ -745,8 +731,6 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         private async Task RunAsync(CancellationToken cancellationToken)
         {
@@ -846,8 +830,6 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="eventData">The event containing the information to be stored in the checkpoint.</param>
         /// <param name="context">The context of the partition the checkpoint is associated with.</param>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         private async Task UpdateCheckpointAsync(EventData eventData,
                                                  PartitionContext context)
@@ -1003,8 +985,6 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="partitionId">The identifier of the Event Hub partition whose processing is starting.</param>
         ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
         private async Task StartPartitionProcessingAsync(string partitionId)
         {
             var context = new PartitionContext(partitionId);
@@ -1047,8 +1027,6 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="partitionId">The identifier of the Event Hub partition whose processing is being stopped.</param>
         /// <param name="reason">The reason why the processing for the specified partition is being stopped.</param>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         private async Task StopPartitionProcessingIfRunningAsync(string partitionId,
                                                                  ProcessingStoppedReason reason)
@@ -1125,8 +1103,6 @@ namespace Azure.Messaging.EventHubs
         /// <summary>
         ///   Renews this instance's ownership so they don't expire.
         /// </summary>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         private Task RenewOwnershipAsync()
         {

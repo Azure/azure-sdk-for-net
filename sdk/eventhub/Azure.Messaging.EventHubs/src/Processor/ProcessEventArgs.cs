@@ -100,8 +100,6 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   this event.
         /// </summary>
         ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
         /// <exception cref="ArgumentNullException">Occurs when <see cref="Data" /> is <c>null</c>.</exception>
         /// <exception cref="EventHubsClientClosedException">Occurs when the <see cref="EventProcessorClient" /> needed to perform this operation is no longer available.</exception>
         ///
