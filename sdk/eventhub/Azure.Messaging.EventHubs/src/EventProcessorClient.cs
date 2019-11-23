@@ -1155,11 +1155,6 @@ namespace Azure.Messaging.EventHubs
                                                  bool trackLastEnqueuedEventProperties,
                                                  CancellationToken cancellationToken) => Task.Run(async () =>
             {
-                // Context is set to default if operation fails.  This shouldn't fail unless the processor tries processing
-                // a partition it doesn't own.
-
-                PartitionContexts.TryGetValue(partitionId, out var context);
-
                 var clientOptions = new EventHubConsumerClientOptions
                 {
                     RetryOptions = new EventHubsRetryOptions { CustomRetryPolicy = retryPolicy }
@@ -1191,7 +1186,7 @@ namespace Azure.Messaging.EventHubs
 
                         try
                         {
-                            var eventArgs = new ProcessEventArgs(context, partitionEvent.Data, this, RunningTaskTokenSource.Token);
+                            var eventArgs = new ProcessEventArgs(partitionEvent.Context, partitionEvent.Data, this, RunningTaskTokenSource.Token);
                             await OnProcessEventAsync(eventArgs).ConfigureAwait(false);
                         }
                         catch (Exception eventProcessingException)
