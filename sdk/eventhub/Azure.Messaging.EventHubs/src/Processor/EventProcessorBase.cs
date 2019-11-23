@@ -348,6 +348,9 @@ namespace Azure.Messaging.EventHubs.Processor
                             .Select(partitionId => StopPartitionProcessingIfRunningAsync(partitionId, ProcessingStoppedReason.Shutdown)))
                             .ConfigureAwait(false);
 
+                        // Relinquish ownership of all owned partitions
+                        await RelinquishOwnershipAsync();
+
                         InstanceOwnership.Clear();
 
                         // TODO: once IsRunning is implemented, update the following comment.
@@ -410,7 +413,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 var activeOwnershipWithDistribution = new Dictionary<string, List<PartitionOwnership>> { { Identifier, new List<PartitionOwnership>() } };
                 foreach (PartitionOwnership ownership in completeOwnershipList)
                 {
-                    if (utcNow.Subtract(ownership.LastModifiedTime.Value) < OwnershipExpiration)
+                    if (utcNow.Subtract(ownership.LastModifiedTime.Value) < OwnershipExpiration && !string.IsNullOrWhiteSpace(ownership.OwnerIdentifier))
                     {
                         if (activeOwnershipWithDistribution.ContainsKey(ownership.OwnerIdentifier))
                         {
@@ -715,6 +718,31 @@ namespace Azure.Messaging.EventHubs.Processor
             // will fail in claiming it here, but this instance still owns it.
 
             return ClaimOwnershipAsync(ownershipToRenew);
+        }
+
+        /// <summary>
+        ///   Relinquishes this instance's ownership so they can be claimed by other processors
+        /// </summary>
+        ///
+        private Task RelinquishOwnershipAsync()
+        {
+            IEnumerable<PartitionOwnership> ownershipToRelinquish = InstanceOwnership.Values
+                .Select(ownership => new PartitionOwnership
+                (
+                    ownership.FullyQualifiedNamespace,
+                    ownership.EventHubName,
+                    ownership.ConsumerGroup,
+                    string.Empty,
+                    ownership.PartitionId,
+                    ownership.LastModifiedTime,
+                    ownership.ETag
+                ));
+
+            // We cannot rely on the ownership returned by ClaimOwnershipAsync to update our InstanceOwnership dictionary.
+            // If the user issues a checkpoint update, the associated ownership will have its eTag updated as well, so we
+            // will fail in claiming it here, but this instance still owns it.
+
+            return ClaimOwnershipAsync(ownershipToRelinquish);
         }
 
         /// <summary>

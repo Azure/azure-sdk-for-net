@@ -20,10 +20,10 @@ namespace Azure.Messaging.EventHubs.Tests
     public class MockEventProcessorClient : EventProcessorClient
     {
         /// <summary>A value used to override event processors' load balance update time span.</summary>
-        public static readonly TimeSpan ShortLoadBalanceUpdate = TimeSpan.FromMilliseconds(100);
+        public TimeSpan ShortLoadBalanceUpdate = TimeSpan.FromMilliseconds(100);
 
         /// <summary>A value used to override event processors' ownership expiration time span.</summary>
-        public static readonly TimeSpan ShortOwnershipExpiration = TimeSpan.FromSeconds(3);
+        public TimeSpan ShortOwnershipExpiration = TimeSpan.FromSeconds(3);
 
         /// <summary>A dictionary used to track calls to InitializeProcessingForPartitionAsync.</summary>
         public ConcurrentDictionary<string, int> initializeCalls = new ConcurrentDictionary<string, int>();

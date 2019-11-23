@@ -419,6 +419,60 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         [Test]
+        public async Task StoppedClient_RelinquishesPartitionOwnerships_OtherClients_ConsiderThemClaimableImmediately()
+        {
+            const int partitionCount = 3;
+            var connectionFactory = new MockConnectionFactory(numberOfPartitions: partitionCount);
+            var connection = connectionFactory.CreateMockConnection();
+            var partitionManager = new MockCheckPointStorage();
+            var processor1 = new MockEventProcessorClient(
+                "consumerGroup",
+                partitionManager,
+                connectionFactory.MockFactory,
+                default)
+            { ShortOwnershipExpiration = TimeSpan.FromSeconds(30) };
+            var processor2 = new MockEventProcessorClient(
+                "consumerGroup",
+                partitionManager,
+                connectionFactory.MockFactory,
+                default)
+            { ShortOwnershipExpiration = TimeSpan.FromSeconds(30) };
+
+            // ownership should start empty
+            var completeOwnership = await partitionManager.ListOwnershipAsync(connection.FullyQualifiedNamespace, connection.EventHubName, processor1.ConsumerGroup);
+            Assert.AreEqual(0, completeOwnership.Count());
+
+            // start the processor so that the processor claims a random partition until none are left
+            await processor1.StartAsync();
+            await processor1.WaitStabilization();
+
+            completeOwnership = await partitionManager.ListOwnershipAsync(connection.FullyQualifiedNamespace, connection.EventHubName, processor1.ConsumerGroup);
+
+            // All partitions are owned by Processor1
+            Assert.AreEqual(partitionCount, completeOwnership.Count(p => p.OwnerIdentifier.Equals(processor1.Identifier)));
+
+            // Stopping the processor should relinquish all partition ownerships
+            await processor1.StopAsync();
+
+            completeOwnership = await partitionManager.ListOwnershipAsync(connection.FullyQualifiedNamespace, connection.EventHubName, processor1.ConsumerGroup);
+
+            // No partitions are owned by Processor1
+            Assert.AreEqual(0, completeOwnership.Count(p => p.OwnerIdentifier.Equals(processor1.Identifier)));
+
+            // start Processor2 so that the processor claims a random partition until none are left
+            // All partitions should be immediately claimable even though they were just claimed by the Processor1
+            await processor2.StartAsync();
+            await processor2.WaitStabilization();
+
+            completeOwnership = await partitionManager.ListOwnershipAsync(connection.FullyQualifiedNamespace, connection.EventHubName, processor1.ConsumerGroup);
+
+            // All partitions are owned by Processor2
+            Assert.AreEqual(partitionCount, completeOwnership.Count(p => p.OwnerIdentifier.Equals(processor2.Identifier)));
+
+            await processor2.StopAsync();
+        }
+
+        [Test]
         public async Task FindAndClaimOwnershipAsync_ClaimsAllClaimablePartitions()
         {
             const int partitionCount = 3;
@@ -432,17 +486,17 @@ namespace Azure.Messaging.EventHubs.Tests
                 default);
 
             // ownership should start empty
-            var activeOwnership = await partitionManager.ListOwnershipAsync(connection.FullyQualifiedNamespace, connection.EventHubName, processor.ConsumerGroup);
-            Assert.AreEqual(0, activeOwnership.Count());
+            var completeOwnership = await partitionManager.ListOwnershipAsync(connection.FullyQualifiedNamespace, connection.EventHubName, processor.ConsumerGroup);
+            Assert.AreEqual(0, completeOwnership.Count());
 
             // start the processor so that the processor claims a random partition until none are left
             await processor.StartAsync();
             await processor.WaitStabilization();
             await processor.StopAsync();
 
-            activeOwnership = await partitionManager.ListOwnershipAsync(connection.FullyQualifiedNamespace, connection.EventHubName, processor.ConsumerGroup);
+            completeOwnership = await partitionManager.ListOwnershipAsync(connection.FullyQualifiedNamespace, connection.EventHubName, processor.ConsumerGroup);
 
-            Assert.AreEqual(partitionCount, activeOwnership.Count());
+            Assert.AreEqual(partitionCount, completeOwnership.Count());
         }
 
         [Test]
@@ -493,7 +547,6 @@ namespace Azure.Messaging.EventHubs.Tests
             // start the processor to claim owership from of a Partition even though ownedPartitionCount == minimumOwnedPartitionsCount
             await processor.StartAsync();
             await processor.WaitStabilization();
-            await processor.StopAsync();
 
             // get owned partitions
             totalOwnedPartitions = await partitionManager.ListOwnershipAsync(connection.FullyQualifiedNamespace, connection.EventHubName, processor.ConsumerGroup);
@@ -503,6 +556,8 @@ namespace Azure.Messaging.EventHubs.Tests
             //verify that we took ownership of the additional partition
             Assert.Greater(ownedByProcessor1.Count(), minimumParitionCount);
             Assert.IsTrue(ownedByProcessor1.Any(owned => claimablePartitionIds.Contains(owned.PartitionId)));
+
+            await processor.StopAsync();
         }
 
         [Test]
@@ -555,7 +610,6 @@ namespace Azure.Messaging.EventHubs.Tests
             // start the processor to steal owership from of a when ownedPartitionCount == minimumOwnedPartitionsCount but a processor owns > maximumPartitionCount
             await processor.StartAsync();
             await processor.WaitStabilization();
-            await processor.StopAsync();
 
             // get owned partitions
             totalOwnedPartitions = await partitionManager.ListOwnershipAsync(connection.FullyQualifiedNamespace, connection.EventHubName, processor.ConsumerGroup);
@@ -569,6 +623,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             //verify processor 3 now does not own > maximumPartitionCount
             Assert.AreEqual(maximumParitionCount, ownedByProcessor3.Count());
+
+            await processor.StopAsync();
         }
 
         [Test]
@@ -621,7 +677,6 @@ namespace Azure.Messaging.EventHubs.Tests
             // start the processor to steal owership from of a when ownedPartitionCount == minimumOwnedPartitionsCount but a processor owns > maximumPartitionCount
             await processor.StartAsync();
             await processor.WaitStabilization();
-            await processor.StopAsync();
 
             // get owned partitions
             totalOwnedPartitions = await partitionManager.ListOwnershipAsync(connection.FullyQualifiedNamespace, connection.EventHubName, processor.ConsumerGroup);
@@ -635,6 +690,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             //verify processor 3 now does not own > maximumPartitionCount
             Assert.Less(ownedByProcessor3.Count(), maximumParitionCount);
+
+            await processor.StopAsync();
         }
 
         /// <summary>

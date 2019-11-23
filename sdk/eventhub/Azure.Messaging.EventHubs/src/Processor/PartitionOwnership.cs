@@ -88,7 +88,7 @@ namespace Azure.Messaging.EventHubs.Processor
             Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
-            Argument.AssertNotNullOrEmpty(ownerIdentifier, nameof(ownerIdentifier));
+            Argument.AssertNotNull(ownerIdentifier, nameof(ownerIdentifier));
             Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
 
             FullyQualifiedNamespace = fullyQualifiedNamespace;
