@@ -23,8 +23,12 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
     public static partial class EventsExtensions
     {
             /// <summary>
-            /// Report reward to allocate to the top ranked action for the specified event.
+            /// Post Reward.
             /// </summary>
+            /// <remarks>
+            /// Report reward that resulted from using the action specified in
+            /// rewardActionId for the specified event.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -32,7 +36,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
             /// The event id this reward applies to.
             /// </param>
             /// <param name='reward'>
-            /// The reward should be a floating point number.
+            /// The reward should be a floating point number, typically between 0 and 1.
             /// </param>
             public static void Reward(this IEvents operations, string eventId, RewardRequest reward)
             {
@@ -40,8 +44,12 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
             }
 
             /// <summary>
-            /// Report reward to allocate to the top ranked action for the specified event.
+            /// Post Reward.
             /// </summary>
+            /// <remarks>
+            /// Report reward that resulted from using the action specified in
+            /// rewardActionId for the specified event.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -49,7 +57,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
             /// The event id this reward applies to.
             /// </param>
             /// <param name='reward'>
-            /// The reward should be a floating point number.
+            /// The reward should be a floating point number, typically between 0 and 1.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -60,8 +68,12 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
             }
 
             /// <summary>
-            /// Report reward to allocate to the top ranked action for the specified event.
+            /// Post Reward.
             /// </summary>
+            /// <remarks>
+            /// Report reward that resulted from using the action specified in
+            /// rewardActionId for the specified event.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -69,7 +81,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
             /// The event id this reward applies to.
             /// </param>
             /// <param name='reward'>
-            /// The reward should be a floating point number.
+            /// The reward should be a floating point number, typically between 0 and 1.
             /// </param>
             /// <param name='customHeaders'>
             /// Headers that will be added to request.
@@ -80,9 +92,12 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
             }
 
             /// <summary>
-            /// Report that the specified event was actually displayed to the user and a
-            /// reward should be expected for it.
+            /// Activate Event.
             /// </summary>
+            /// <remarks>
+            /// Report that the specified event was actually displayed to the user and a
+            /// reward should be expected for it
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -95,9 +110,12 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
             }
 
             /// <summary>
-            /// Report that the specified event was actually displayed to the user and a
-            /// reward should be expected for it.
+            /// Activate Event.
             /// </summary>
+            /// <remarks>
+            /// Report that the specified event was actually displayed to the user and a
+            /// reward should be expected for it
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -113,9 +131,12 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
             }
 
             /// <summary>
-            /// Report that the specified event was actually displayed to the user and a
-            /// reward should be expected for it.
+            /// Activate Event.
             /// </summary>
+            /// <remarks>
+            /// Report that the specified event was actually displayed to the user and a
+            /// reward should be expected for it
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -128,57 +149,6 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
             public static HttpOperationResponse ActivateWithHttpMessages(this IEvents operations, string eventId, Dictionary<string, List<string>> customHeaders = null)
             {
                 return operations.ActivateWithHttpMessagesAsync(eventId, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// A Personalizer rank request.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='rankRequest'>
-            /// A Personalizer request.
-            /// </param>
-            public static RankResponse Rank(this IEvents operations, RankRequest rankRequest)
-            {
-                return operations.RankAsync(rankRequest).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// A Personalizer rank request.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='rankRequest'>
-            /// A Personalizer request.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<RankResponse> RankAsync(this IEvents operations, RankRequest rankRequest, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.RankWithHttpMessagesAsync(rankRequest, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// A Personalizer rank request.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='rankRequest'>
-            /// A Personalizer request.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static HttpOperationResponse<RankResponse> RankWithHttpMessages(this IEvents operations, RankRequest rankRequest, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.RankWithHttpMessagesAsync(rankRequest, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
     }

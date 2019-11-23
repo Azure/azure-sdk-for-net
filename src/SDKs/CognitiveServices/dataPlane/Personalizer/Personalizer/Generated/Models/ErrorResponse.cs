@@ -10,30 +10,30 @@
 
 namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Reward given to a rank response.
+    /// Used to return an error to the client
     /// </summary>
-    public partial class RewardRequest
+    public partial class ErrorResponse
     {
         /// <summary>
-        /// Initializes a new instance of the RewardRequest class.
+        /// Initializes a new instance of the ErrorResponse class.
         /// </summary>
-        public RewardRequest()
+        public ErrorResponse()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the RewardRequest class.
+        /// Initializes a new instance of the ErrorResponse class.
         /// </summary>
-        /// <param name="value">Reward to be assigned to an action. Value
-        /// should be between -1 and 1 inclusive.</param>
-        public RewardRequest(double value)
+        /// <param name="error">The error object.</param>
+        public ErrorResponse(PersonalizerError error)
         {
-            Value = value;
+            Error = error;
             CustomInit();
         }
 
@@ -43,21 +43,27 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets reward to be assigned to an action. Value should be
-        /// between -1 and 1 inclusive.
+        /// Gets or sets the error object.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public double Value { get; set; }
+        [JsonProperty(PropertyName = "error")]
+        public PersonalizerError Error { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            //Nothing to validate
+            if (Error == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Error");
+            }
+            if (Error != null)
+            {
+                Error.Validate();
+            }
         }
     }
 }

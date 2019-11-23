@@ -14,26 +14,28 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
     using System.Linq;
 
     /// <summary>
-    /// Reward given to a rank response.
+    /// An object containing more specific information than the parent object
+    /// about the error.
     /// </summary>
-    public partial class RewardRequest
+    public partial class InternalError
     {
         /// <summary>
-        /// Initializes a new instance of the RewardRequest class.
+        /// Initializes a new instance of the InternalError class.
         /// </summary>
-        public RewardRequest()
+        public InternalError()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the RewardRequest class.
+        /// Initializes a new instance of the InternalError class.
         /// </summary>
-        /// <param name="value">Reward to be assigned to an action. Value
-        /// should be between -1 and 1 inclusive.</param>
-        public RewardRequest(double value)
+        /// <param name="code">Detailed error code.</param>
+        /// <param name="innererror">The error object.</param>
+        public InternalError(string code = default(string), InternalError innererror = default(InternalError))
         {
-            Value = value;
+            Code = code;
+            Innererror = innererror;
             CustomInit();
         }
 
@@ -43,21 +45,16 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets reward to be assigned to an action. Value should be
-        /// between -1 and 1 inclusive.
+        /// Gets or sets detailed error code.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public double Value { get; set; }
+        [JsonProperty(PropertyName = "code")]
+        public string Code { get; set; }
 
         /// <summary>
-        /// Validate the object.
+        /// Gets or sets the error object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            //Nothing to validate
-        }
+        [JsonProperty(PropertyName = "innererror")]
+        public InternalError Innererror { get; set; }
+
     }
 }

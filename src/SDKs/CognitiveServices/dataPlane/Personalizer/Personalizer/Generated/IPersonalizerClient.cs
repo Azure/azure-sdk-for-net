@@ -13,15 +13,19 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
     using Microsoft.Rest;
     using Models;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Personalizer Service is an Azure Cognitive Service that makes it easy
     /// to target content and experiences without complex pre-analysis or
     /// cleanup of past data. Given a context and featurized content, the
-    /// Personalizer Service returns your content in a ranked list. As rewards
-    /// are sent in response to the ranked list, the reinforcement learning
-    /// algorithm will improve the model and improve performance of future rank
-    /// calls.
+    /// Personalizer Service returns which content item to show to users in
+    /// rewardActionId. As rewards are sent in response to the use of
+    /// rewardActionId, the reinforcement learning algorithm will improve the
+    /// model and improve performance of future rank calls.
     /// </summary>
     public partial interface IPersonalizerClient : System.IDisposable
     {
@@ -52,9 +56,52 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
 
 
         /// <summary>
+        /// Gets the IServiceConfigurationOperations.
+        /// </summary>
+        IServiceConfigurationOperations ServiceConfiguration { get; }
+
+        /// <summary>
+        /// Gets the IPolicy.
+        /// </summary>
+        IPolicy Policy { get; }
+
+        /// <summary>
+        /// Gets the IEvaluations.
+        /// </summary>
+        IEvaluations Evaluations { get; }
+
+        /// <summary>
         /// Gets the IEvents.
         /// </summary>
         IEvents Events { get; }
+
+        /// <summary>
+        /// Gets the ILog.
+        /// </summary>
+        ILog Log { get; }
+
+        /// <summary>
+        /// Gets the IModel.
+        /// </summary>
+        IModel Model { get; }
+
+        /// <summary>
+        /// Post Rank.
+        /// </summary>
+        /// <remarks>
+        /// Submit a Personalizer rank request, to get which of the provided
+        /// actions should be used in the provided context.
+        /// </remarks>
+        /// <param name='rankRequest'>
+        /// A Personalizer request.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<RankResponse>> RankWithHttpMessagesAsync(RankRequest rankRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

@@ -18,47 +18,35 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Events operations.
+    /// Log operations.
     /// </summary>
-    public partial interface IEvents
+    public partial interface ILog
     {
         /// <summary>
-        /// Post Reward.
+        /// Deletes Logs.
         /// </summary>
         /// <remarks>
-        /// Report reward that resulted from using the action specified in
-        /// rewardActionId for the specified event.
+        /// Delete all generated logs.
         /// </remarks>
-        /// <param name='eventId'>
-        /// The event id this reward applies to.
-        /// </param>
-        /// <param name='reward'>
-        /// The reward should be a floating point number, typically between 0
-        /// and 1.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="Microsoft.Rest.HttpOperationException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> RewardWithHttpMessagesAsync(string eventId, RewardRequest reward, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> DeleteWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Activate Event.
+        /// Get Log Properties.
         /// </summary>
         /// <remarks>
-        /// Report that the specified event was actually displayed to the user
-        /// and a reward should be expected for it
+        /// Get properties of generated logs.
         /// </remarks>
-        /// <param name='eventId'>
-        /// The event ID this activation applies to.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -68,9 +56,12 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> ActivateWithHttpMessagesAsync(string eventId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<LogsProperties>> GetPropertiesWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
