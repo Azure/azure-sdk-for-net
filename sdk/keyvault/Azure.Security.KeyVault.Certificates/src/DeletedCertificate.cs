@@ -7,30 +7,38 @@ using System.Text.Json;
 namespace Azure.Security.KeyVault.Certificates
 {
     /// <summary>
-    /// A certificate which has been deleted from the vault
+    /// A deleted <see cref="KeyVaultCertificateWithPolicy"/>.
     /// </summary>
-    public class DeletedCertificate : CertificateWithPolicy
+    public class DeletedCertificate : KeyVaultCertificateWithPolicy
     {
         private const string RecoveryIdPropertyName = "recoveryId";
         private const string ScheduledPurgeDatePropertyName = "scheduledPurgeDate";
-        private const string DeletedDatePropertyName = "deletedDate";
+        private const string DeletedOnPropertyName = "deletedDate";
 
         private string _recoveryId;
 
-        /// <summary>
-        /// Id identifying the deleted certificate
-        /// </summary>
-        public Uri RecoveryId => new Uri(_recoveryId);
+        internal DeletedCertificate(CertificateProperties properties = null) : base(properties)
+        {
+        }
 
         /// <summary>
-        /// The time the certificate was deleted in UTC
+        /// Gets the identifier of the deleted certificate.
         /// </summary>
-        public DateTimeOffset? DeletedDate { get; private set; }
+        public Uri RecoveryId
+        {
+            get => new Uri(_recoveryId);
+            internal set => _recoveryId = value?.ToString();
+        }
 
         /// <summary>
-        /// The time the certificate is scheduled to be permanently deleted in UTC
+        /// Gets a <see cref="DateTimeOffset"/> indicating when the certificate was deleted.
         /// </summary>
-        public DateTimeOffset? ScheduledPurgeDate { get; private set; }
+        public DateTimeOffset? DeletedOn { get; internal set; }
+
+        /// <summary>
+        /// Gets a <see cref="DateTimeOffset"/> for when the deleted certificate will be purged.
+        /// </summary>
+        public DateTimeOffset? ScheduledPurgeDate { get; internal set; }
 
         internal override void ReadProperty(JsonProperty prop)
         {
@@ -40,8 +48,8 @@ namespace Azure.Security.KeyVault.Certificates
                     _recoveryId = prop.Value.GetString();
                     break;
 
-                case DeletedDatePropertyName:
-                    DeletedDate = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                case DeletedOnPropertyName:
+                    DeletedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     break;
 
                 case ScheduledPurgeDatePropertyName:

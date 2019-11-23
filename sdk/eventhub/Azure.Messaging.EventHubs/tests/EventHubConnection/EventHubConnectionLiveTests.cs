@@ -9,6 +9,7 @@ using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Identity;
 using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Errors;
@@ -130,9 +131,29 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [TestCase(TransportType.AmqpTcp)]
-        [TestCase(TransportType.AmqpWebSockets)]
-        public async Task ConnectionTransportCanRetrieveProperties(TransportType transportType)
+        public async Task ConnectionCanConnectToEventHubsUsingAnIdentityCredential()
+        {
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
+            {
+                var options = new EventHubConnectionOptions();
+                var credential = new ClientSecretCredential(TestEnvironment.EventHubsTenant, TestEnvironment.EventHubsClient, TestEnvironment.EventHubsSecret);
+
+                await using (var connection = new TestConnectionWithTransport(TestEnvironment.FullyQualifiedNamespace, scope.EventHubName, credential))
+                {
+                    Assert.That(() => connection.GetPropertiesAsync(), Throws.Nothing);
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConnection" /> is able to
+        ///   connect to the Event Hubs service.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(EventHubsTransportType.AmqpTcp)]
+        [TestCase(EventHubsTransportType.AmqpWebSockets)]
+        public async Task ConnectionTransportCanRetrieveProperties(EventHubsTransportType transportType)
         {
             var partitionCount = 4;
 
@@ -147,7 +168,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     Assert.That(properties, Is.Not.Null, "A set of properties should have been returned.");
                     Assert.That(properties.Name, Is.EqualTo(scope.EventHubName), "The property Event Hub name should match the scope.");
                     Assert.That(properties.PartitionIds.Length, Is.EqualTo(partitionCount), "The properties should have the requested number of partitions.");
-                    Assert.That(properties.CreatedAt, Is.EqualTo(DateTimeOffset.UtcNow).Within(TimeSpan.FromSeconds(60)), "The Event Hub should have been created just about now.");
+                    Assert.That(properties.CreatedOn, Is.EqualTo(DateTimeOffset.UtcNow).Within(TimeSpan.FromSeconds(60)), "The Event Hub should have been created just about now.");
                 }
             }
         }
@@ -158,9 +179,9 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [TestCase(TransportType.AmqpTcp)]
-        [TestCase(TransportType.AmqpWebSockets)]
-        public async Task ConnectionTransportCanRetrievePartitionProperties(TransportType transportType)
+        [TestCase(EventHubsTransportType.AmqpTcp)]
+        [TestCase(EventHubsTransportType.AmqpWebSockets)]
+        public async Task ConnectionTransportCanRetrievePartitionProperties(EventHubsTransportType transportType)
         {
             var partitionCount = 4;
 
@@ -296,12 +317,12 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
-                var retryOptions = new RetryOptions { TryTimeout = TimeSpan.FromMinutes(2) };
+                var retryOptions = new EventHubsRetryOptions { TryTimeout = TimeSpan.FromMinutes(2) };
 
                 var clientOptions = new EventHubConnectionOptions
                 {
                     Proxy = new WebProxy("http://1.2.3.4:9999"),
-                    TransportType = TransportType.AmqpWebSockets
+                    TransportType = EventHubsTransportType.AmqpWebSockets
                 };
 
                 await using (var connection = new TestConnectionWithTransport(connectionString))
@@ -326,7 +347,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         private class TestConnectionWithTransport : EventHubConnection
         {
-            public EventHubRetryPolicy RetryPolicy { get; set; } = new BasicRetryPolicy(new RetryOptions());
+            public EventHubsRetryPolicy RetryPolicy { get; set; } = new BasicRetryPolicy(new EventHubsRetryOptions());
 
             public TestConnectionWithTransport(string connectionString,
                                                EventHubConnectionOptions connectionOptions = default) : base(connectionString, connectionOptions)

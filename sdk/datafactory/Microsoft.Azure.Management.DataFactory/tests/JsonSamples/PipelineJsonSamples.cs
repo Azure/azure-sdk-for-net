@@ -1761,6 +1761,145 @@ namespace DataFactory.Tests.JsonSamples
 }
 ";
 
+        [JsonSample]
+        public const string WebActivityCertAuth = @"
+{
+    name: ""MyWebPipeline"",
+    properties: {
+        activities: [
+            {
+                name: ""MyAnonymousWebActivity"",
+                type: ""WebActivity"",
+                typeProperties: {
+                    method: ""get"",
+                    url: ""http://www.test.com"",
+                    headers: { 
+                        ""Content-Type"": ""application/json"",
+                        ""activityName"": ""activityName""
+                    },
+                    authentication : {
+                        type: ""ClientCertificate"",
+                        pfx: {
+                            type: ""SecureString"",
+                            value: ""testcertpfx""
+                        },
+                        password: {
+                            type: ""SecureString"",
+                            value: ""testpwd""
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample]
+        public const string WebActivityBasicAuth = @"
+{
+    name: ""MyWebPipeline"",
+    properties: {
+        activities: [
+            {
+                name: ""MyAnonymousWebActivity"",
+                type: ""WebActivity"",
+                typeProperties: {
+                    method: ""get"",
+                    url: ""http://www.bing.com"",
+                    headers: { 
+                        ""Content-Type"": ""application/json"",
+                        ""activityName"": ""activityName""
+                    },
+                    authentication : {
+                        type: ""Basic"",
+                        username: ""user"",
+                        password: {
+                            type: ""SecureString"",
+                            value: ""testpwd""
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample]
+        public const string WebActivityAKVBasicAuth = @"
+{
+    name: ""MyWebPipeline"",
+    properties: {
+        activities: [
+            {
+                name: ""MyAnonymousWebActivity"",
+                type: ""WebActivity"",
+                typeProperties: {
+                    method: ""get"",
+                    url: ""http://www.bing.com"",
+                    linkedServices: [],
+                    datasets: [],
+                    authentication: {
+                        type: ""Basic"",
+                        username: ""testuser"",
+                        password: {
+                            type: ""AzureKeyVaultSecret"",
+                            store: {
+                                referenceName: ""AKVCredens"",
+                                type: ""LinkedServiceReference""
+                              },
+                            secretName: ""pfxpwd""
+                      }
+                   }
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample]
+        public const string WebActivityAKVCertAuth = @"
+{
+    name: ""MyWebPipeline"",
+    properties: {
+        activities: [
+            {
+                name: ""MyAnonymousWebActivity"",
+                type: ""WebActivity"",
+                typeProperties: {
+                    method: ""POST"",
+                    url: ""https://testwebactivitynnara.azurewebsites.net/api/readpayload"",
+                    headers: { 
+                        ""Content-Type"": ""application/json"",
+                    },
+                    authentication : {
+                        type: ""ClientCertificate"",
+                        pfx: {
+                            type: ""AzureKeyVaultSecret"",
+                            store: {
+                                referenceName: ""AKVCredens"",
+                                type: ""LinkedServiceReference""
+                            },
+                            secretName: ""FrontEndCert""
+                        },
+                        password: {
+                            type: ""AzureKeyVaultSecret"",
+                            store: {
+                                referenceName: ""AKVCredens"",
+                                type: ""LinkedServiceReference""
+                            },
+                            secretName: ""FrontEndCertPwd""
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}
+";
+
         [JsonSample(version: "Custom")]
         public const string CustomActivity = @"
 {
@@ -1842,6 +1981,47 @@ namespace DataFactory.Tests.JsonSamples
                         ""type"": ""LinkedServiceReference"" 
                     }
                 ]
+            }
+      }
+    ]
+  }
+}
+";
+
+        [JsonSample]
+        public const string WebActivityWithIR = @"
+{
+  ""name"": ""MyWebPipelineWithIR"",
+  ""properties"": {
+    ""activities"": [
+      {
+        ""name"": ""MyWebActivityIR"",
+        ""type"": ""WebActivity"",
+        ""typeProperties"": 
+            {	
+                ""method"": ""get"",
+                ""url"": ""http://www.bing.com"",
+                ""headers"": 
+                    { 
+                        ""Content-Type"": ""application/json"",
+                        ""activityName"": ""activityName""
+                    },
+                ""datasets"":[                
+                    {
+                        ""referenceName"": ""MyDataset"", 
+                        ""type"": ""DatasetReference""
+                    }
+                ],
+                ""linkedServices"":[         
+                    {
+                        ""referenceName"": ""MyStagingBlob"", 
+                        ""type"": ""LinkedServiceReference"" 
+                    }
+                ],
+                ""connectVia"": {
+                    referenceName : ""TestIR"",
+                    type : ""IntegrationRuntimeReference""
+                }
             }
       }
     ]
@@ -3686,6 +3866,141 @@ namespace DataFactory.Tests.JsonSamples
     }
 }";
 
+        [JsonSample]
+        public const string WebhookActivityCertAuth = @"
+{
+    name: ""MyWebPipeline"",
+    properties: {
+        activities: [
+            {
+                name: ""Webhook1"",
+                type: ""WebHook"",
+                typeProperties: {
+                    ""url"": ""http://samplesample.azurewebsites.net/api/execute/webhook"",
+                    ""method"": ""POST"",
+                    ""headers"": {
+                        ""Content-Type"": ""application/json""
+                    },
+                    authentication : {
+                        type: ""ClientCertificate"",
+                        pfx: {
+                            type: ""SecureString"",
+                            value: ""testcertpfx""
+                        },
+                        password: {
+                            type: ""SecureString"",
+                            value: ""testpwd""
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample]
+        public const string WebhookActivityBasicAuth = @"
+{
+    name: ""MyWebPipeline"",
+    properties: {
+        activities: [
+            {
+                name: ""Webhook1"",
+                type: ""WebHook"",
+                typeProperties: {
+                    ""url"": ""http://samplesample.azurewebsites.net/api/execute/webhook"",
+                    ""method"": ""POST"",
+                    ""headers"": {
+                        ""Content-Type"": ""application/json""
+                    },
+                    authentication : {
+                        type: ""Basic"",
+                        username: ""user"",
+                        password: {
+                            type: ""SecureString"",
+                            value: ""testpwd""
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample]
+        public const string WebhookActivityAKVBasicAuth = @"
+{
+    name: ""MyWebPipeline"",
+    properties: {
+        activities: [
+            {
+                name: ""MyAnonymousWebActivity"",
+                type: ""WebHook"",
+                typeProperties: {
+                    method: ""get"",
+                    url: ""http://www.bing.com"",
+                    authentication: {
+                        type: ""Basic"",
+                        username: ""testuser"",
+                        password: {
+                            type: ""AzureKeyVaultSecret"",
+                            store: {
+                                referenceName: ""AKVCredens"",
+                                type: ""LinkedServiceReference""
+                              },
+                            secretName: ""pfxpwd""
+                      }
+                   }
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample]
+        public const string WebhookActivityAKVCertAuth = @"
+{
+    name: ""MyWebPipeline"",
+    properties: {
+        activities: [
+            {
+                name: ""MyAnonymousWebActivity"",
+                type: ""WebHook"",
+                typeProperties: {
+                    method: ""POST"",
+                    url: ""https://testwebactivitynnara.azurewebsites.net/api/readpayload"",
+                    headers: { 
+                        ""Content-Type"": ""application/json"",
+                    },
+                    authentication : {
+                        type: ""ClientCertificate"",
+                        pfx: {
+                            type: ""AzureKeyVaultSecret"",
+                            store: {
+                                referenceName: ""AKVCredens"",
+                                type: ""LinkedServiceReference""
+                            },
+                            secretName: ""FrontEndCert""
+                        },
+                        password: {
+                            type: ""AzureKeyVaultSecret"",
+                            store: {
+                                referenceName: ""AKVCredens"",
+                                type: ""LinkedServiceReference""
+                            },
+                            secretName: ""FrontEndCertPwd""
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}
+";
+
         [JsonSample(version: "ValidationActivity")]
         public const string Validation = @"
 {
@@ -3693,20 +4008,20 @@ namespace DataFactory.Tests.JsonSamples
     properties: {
         activities: [
             {
-                ""type"": ""Validation"",
-                ""name"": ""ValidationActivity"",
-                ""description"": ""Test activity description"",
-                ""typeProperties"": {
-                    ""timeout"": ""00:03:00"",
-                    ""sleep"": 10,
-                    ""minimumSize"": {
-                        ""type"": ""Expression"",
-                        ""value"": ""@add(0,1)""
+                ""type"": ""Validation"",
+                ""name"": ""ValidationActivity"",
+                ""description"": ""Test activity description"",
+                ""typeProperties"": {
+                    ""timeout"": ""00:03:00"",
+                    ""sleep"": 10,
+                    ""minimumSize"": {
+                        ""type"": ""Expression"",
+                        ""value"": ""@add(0,1)""
                     },
-                    ""dataset"": {
-                        ""referenceName"": ""FileDataset"",
-                        ""type"": ""DatasetReference""
-                    }
+                    ""dataset"": {
+                        ""referenceName"": ""FileDataset"",
+                        ""type"": ""DatasetReference""
+                    }
                 }
             }
         ]
@@ -5487,5 +5802,124 @@ namespace DataFactory.Tests.JsonSamples
     ]
   }
 }";
+
+        [JsonSample]
+        public const string ExecuteSSISPackageEmbeddedPackagePipeline = @"{
+    ""name"": ""SSISEmbeddPackage"",
+    ""properties"": {
+        ""activities"": [
+            {
+                ""name"": ""Execute SSIS package1"",
+                ""type"": ""ExecuteSSISPackage"",
+                ""typeProperties"": {
+                    ""packageLocation"": {
+                        ""type"": ""InlinePackage"",
+                        ""typeProperties"": {
+                            ""packagePassword"": {
+                                type: ""SecureString"",
+                                value: ""microsoft123!""
+                            },
+                            ""packageName"": ""funcInlinePackage.dtsx"",
+                            ""packageContent"": ""VER001_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"",
+                            ""packageLastModifiedDate"": ""2019-04-26T18:32:46.260Z UTC+08:00""
+                        }
+                    },
+                    ""connectVia"": {
+                        ""referenceName"": ""integrationRuntime1"",
+                        ""type"": ""IntegrationRuntimeReference""
+                    }
+                }
+            }
+        ]
+    }
+}";
+
+        [JsonSample(version: "Copy")]
+        public const string CopyCsvToSqlDW_WithCopyCommand = @"
+{
+  ""name"": ""MyPipelineName"",
+  ""properties"": {
+    ""description"" : ""Copy from CSV to SQL DW with Copy Command"",
+    ""activities"": [
+      {
+        ""type"": ""Copy"",
+        ""name"": ""TestActivity"",
+        ""description"": ""Test activity description"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""DelimitedTextSource"",
+            ""storeSettings"": {
+              ""type"": ""AzureBlobStorageReadSettings"",
+              ""recursive"": true
+            },
+            ""formatSettings"": {
+              ""type"": ""DelimitedTextReadSettings"",
+              ""rowDelimiter"": ""\n"",
+              ""quoteChar"": ""\"""",
+              ""escapeChar"": ""\""""
+            }
+          },
+          ""sink"": {
+            ""type"": ""SqlDWSink"",
+            ""allowCopyCommand"": true,
+            ""copyCommandSettings"": {
+              ""defaultValues"": [
+                {
+                  ""columnName"": ""col_string"",
+                  ""defaultValue"": ""Cincinnati""
+                },
+                {
+                  ""columnName"": ""col_binary"",
+                  ""defaultValue"": ""0xAE""
+                },
+                {
+                  ""columnName"": ""col_datetime"",
+                  ""defaultValue"": ""December 5, 1985""
+                },
+                {
+                  ""columnName"": ""col_integer"",
+                  ""defaultValue"": ""1894""
+                },
+                {
+                  ""columnName"": ""col_decimal"",
+                  ""defaultValue"": ""12.345000000""
+                },
+                {
+                  ""columnName"": ""col_float"",
+                  ""defaultValue"": ""0.5E-2""
+                },
+                {
+                  ""columnName"": ""col_money"",
+                  ""defaultValue"": ""$542023.14""
+                },
+                {
+                  ""columnName"": ""col_uniqueidentifier1"",
+                  ""defaultValue"": ""6F9619FF-8B86-D011-B42D-00C04FC964FF""
+                }
+              ],
+              ""additionalOptions"": {
+                ""MAXERRORS"": ""10000"",
+                ""DATEFORMAT"": ""'ymd'""
+              }
+            }
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ]
+      }
+    ]
+  }
+}
+";
     }
 }

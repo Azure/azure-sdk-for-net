@@ -182,7 +182,7 @@ namespace Azure.Storage.Blobs.Specialized
             _uri = builder.ToUri();
             _pipeline = options.Build(conn.Credentials);
             _clientDiagnostics = new ClientDiagnostics(options);
-            _customerProvidedKey = options?.CustomerProvidedKey;
+            _customerProvidedKey = options.CustomerProvidedKey;
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
         }
 
@@ -194,6 +194,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Uri"/> referencing the blob that includes the
         /// name of the account, the name of the container, and the name of
         /// the blob.
+        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net/{container_name}/{blob_name}".
         /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline
@@ -213,6 +214,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Uri"/> referencing the blob that includes the
         /// name of the account, the name of the container, and the name of
         /// the blob.
+        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net/{container_name}/{blob_name}".
         /// </param>
         /// <param name="credential">
         /// The shared key credential used to sign requests.
@@ -235,6 +237,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Uri"/> referencing the blob that includes the
         /// name of the account, the name of the container, and the name of
         /// the blob.
+        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net/{container_name}/{blob_name}".
         /// </param>
         /// <param name="credential">
         /// The token credential used to sign requests.
@@ -257,6 +260,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Uri"/> referencing the blob that includes the
         /// name of the account, the name of the container, and the name of
         /// the blob.
+        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net/{container_name}/{blob_name}".
         /// </param>
         /// <param name="authentication">
         /// An optional authentication policy used to sign requests.
@@ -272,7 +276,7 @@ namespace Azure.Storage.Blobs.Specialized
             _uri = blobUri;
             _pipeline = options.Build(authentication);
             _clientDiagnostics = new ClientDiagnostics(options);
-            _customerProvidedKey = options?.CustomerProvidedKey;
+            _customerProvidedKey = options.CustomerProvidedKey;
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
         }
 
@@ -284,6 +288,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Uri"/> referencing the blob that includes the
         /// name of the account, the name of the container, and the name of
         /// the blob.
+        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net/{container_name}/{blob_name}".
         /// </param>
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.

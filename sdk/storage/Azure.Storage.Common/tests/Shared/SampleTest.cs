@@ -77,6 +77,21 @@ namespace Azure.Storage
         public Uri ActiveDirectoryQueueUri => new Uri(TestConfigurations.DefaultTargetOAuthTenant.BlobServiceEndpoint);
 
         /// <summary>
+        /// Get a namespace account name to use from our test settings.
+        /// </summary>
+        public string NamespaceStorageAccountName => TestConfigurations.DefaultTargetHierarchicalNamespaceTenant.AccountName;
+
+        /// <summary>
+        /// Get an namespace account key to use from our test settings.
+        /// </summary>
+        public string NamespaceStorageAccountKey => TestConfigurations.DefaultTargetHierarchicalNamespaceTenant.AccountKey;
+
+        /// <summary>
+        /// Get a namespace endpoint to use from our test settings.
+        /// </summary>
+        public Uri NamespaceBlobUri => new Uri(TestConfigurations.DefaultTargetHierarchicalNamespaceTenant.BlobServiceEndpoint);
+
+        /// <summary>
         /// Get a random name so we won't have any conflicts when creating
         /// resources.
         /// </summary>
@@ -106,7 +121,7 @@ namespace Azure.Storage
         public string CreateTempFile(string content = SampleFileContent)
         {
             string path = CreateTempPath();
-            File.WriteAllText(path, SampleFileContent);
+            File.WriteAllText(path, content);
             return path;
         }
     }

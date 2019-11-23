@@ -24,13 +24,12 @@ namespace Azure.Messaging.EventHubs.Errors
         public bool IsTransient { get; }
 
         /// <summary>
-        ///   The name of the Event Hubs resource, such as an Event Hub, consumer group, or partition,
-        ///   to which the exception is associated.
+        ///   The name of the Event Hubs to which the exception is associated.
         /// </summary>
         ///
-        /// <value>The name of the resource, if available; otherwise, <c>null</c>.</value>
+        /// <value>The name of the Event Hub, if available; otherwise, <c>null</c>.</value>
         ///
-        public string ResourceName { get; }
+        public string EventHubName { get; }
 
         /// <summary>
         ///   Gets a message that describes the current exception.
@@ -40,12 +39,12 @@ namespace Azure.Messaging.EventHubs.Errors
         {
             get
             {
-                if (string.IsNullOrEmpty(ResourceName))
+                if (string.IsNullOrEmpty(EventHubName))
                 {
                     return base.Message;
                 }
 
-                return string.Format(CultureInfo.InvariantCulture, "{0} ({1})", base.Message, ResourceName);
+                return string.Format(CultureInfo.InvariantCulture, "{0} ({1})", base.Message, EventHubName);
             }
         }
 
@@ -54,10 +53,10 @@ namespace Azure.Messaging.EventHubs.Errors
         /// </summary>
         ///
         /// <param name="isTransient"><c>true</c> if the exception should be considered transient; otherwise, <c>false</c>.</param>
-        /// <param name="resourceName">The name of the Event Hubs resource, such as an Event Hub, consumer group, or partition, to which the exception is associated.</param>
+        /// <param name="eventHubName">The name of the Event Hub to which the exception is associated.</param>
         ///
         internal EventHubsException(bool isTransient,
-                                    string resourceName) : this(isTransient, resourceName, null, null)
+                                    string eventHubName) : this(isTransient, eventHubName, null, null)
         {
         }
 
@@ -66,12 +65,12 @@ namespace Azure.Messaging.EventHubs.Errors
         /// </summary>
         ///
         /// <param name="isTransient"><c>true</c> if the exception should be considered transient; otherwise, <c>false</c>.</param>
-        /// <param name="resourceName">The name of the Event Hubs resource, such as an Event Hub, consumer group, or partition, to which the exception is associated.</param>
+        /// <param name="eventHubName">The name of the Event Hub to which the exception is associated.</param>
         /// <param name="message">The error message that explains the reason for the exception.</param>
         ///
         internal EventHubsException(bool isTransient,
-                                    string resourceName,
-                                    string message) : this(isTransient, resourceName, message, null)
+                                    string eventHubName,
+                                    string message) : this(isTransient, eventHubName, message, null)
         {
         }
 
@@ -80,17 +79,17 @@ namespace Azure.Messaging.EventHubs.Errors
         /// </summary>
         ///
         /// <param name="isTransient"><c>true</c> if the exception should be considered transient; otherwise, <c>false</c>.</param>
-        /// <param name="resourceName">The name of the Event Hubs resource, such as an Event Hub, consumer group, or partition, to which the exception is associated.</param>
+        /// <param name="eventHubName">The name of the Event Hub to which the exception is associated.</param>
         /// <param name="message">The error message that explains the reason for the exception.</param>
         /// <param name="innerException">The exception that is the cause of the current exception, or a null reference if no inner exception is specified.</param>
         ///
         internal EventHubsException(bool isTransient,
-                                    string resourceName,
+                                    string eventHubName,
                                     string message,
                                     Exception innerException) : base(message, innerException)
         {
             IsTransient = isTransient;
-            ResourceName = resourceName;
+            EventHubName = eventHubName;
         }
     }
 }

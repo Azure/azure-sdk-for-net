@@ -31,44 +31,46 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         public static IEnumerable<object[]> ConstructorExpandedArgumentInvalidCases()
         {
-            TokenCredential credential = Mock.Of<TokenCredential>();
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
 
-            yield return new object[] { null, "fakePath", credential };
-            yield return new object[] { "", "fakePath", credential };
-            yield return new object[] { "FakeNamespace", null, credential };
-            yield return new object[] { "FakNamespace", "", credential };
+            yield return new object[] { null, "fakePath", credential.Object };
+            yield return new object[] { "", "fakePath", credential.Object };
+            yield return new object[] { "FakeNamespace", null, credential.Object };
+            yield return new object[] { "FakNamespace", "", credential.Object };
             yield return new object[] { "FakeNamespace", "FakePath", null };
         }
 
         /// <summary>
-        ///   Provides the invalid test cases for the constructor tests.
+        ///   Provides test cases for the constructor tests.
         /// </summary>
         ///
         public static IEnumerable<object[]> ConstructorCreatesDefaultOptionsCases()
         {
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
             var fakeConnection = "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake";
 
             yield return new object[] { new ReadableOptionsMock(fakeConnection), "simple connection string" };
             yield return new object[] { new ReadableOptionsMock(fakeConnection), "connection string with null options" };
-            yield return new object[] { new ReadableOptionsMock("fullyQualifiedNamespace", "path", Mock.Of<TokenCredential>()), "expanded argument" };
+            yield return new object[] { new ReadableOptionsMock("fullyQualifiedNamespace", "path", credential.Object), "expanded argument" };
         }
 
         /// <summary>
-        ///   Provides the invalid test cases for the constructor tests.
+        ///   Provides test cases for the constructor tests.
         /// </summary>
         ///
         public static IEnumerable<object[]> ConstructorClonesOptionsCases()
         {
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
             var fakeConnection = "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake";
 
             var options = new EventHubConnectionOptions
             {
-                TransportType = TransportType.AmqpWebSockets,
+                TransportType = EventHubsTransportType.AmqpWebSockets,
                 Proxy = Mock.Of<IWebProxy>()
             };
 
             yield return new object[] { new ReadableOptionsMock(fakeConnection, options), options, "connection string" };
-            yield return new object[] { new ReadableOptionsMock("fullyQualifiedNamespace", "path", Mock.Of<TokenCredential>(), options), options, "expanded argument" };
+            yield return new object[] { new ReadableOptionsMock("fullyQualifiedNamespace", "path", credential.Object, options), options, "expanded argument" };
         }
 
         /// <summary>
@@ -77,8 +79,8 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         public static IEnumerable<object[]> ValidConnectionTypeCases()
         {
-            yield return new object[] { TransportType.AmqpTcp };
-            yield return new object[] { TransportType.AmqpWebSockets };
+            yield return new object[] { EventHubsTransportType.AmqpTcp };
+            yield return new object[] { EventHubsTransportType.AmqpWebSockets };
         }
 
         /// <summary>
@@ -260,8 +262,8 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var fullyQualifiedNamespace = "host.windows.servicebus.net";
             var entityPath = "somePath";
-            TokenCredential credential = Mock.Of<TokenCredential>();
-            var client = new EventHubConnection(fullyQualifiedNamespace, entityPath, credential);
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var client = new EventHubConnection(fullyQualifiedNamespace, entityPath, credential.Object);
 
             Assert.That(client.EventHubName, Is.EqualTo(entityPath));
         }
@@ -275,7 +277,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ConstructorWithConnectionStringValidatesOptions()
         {
             var fakeConnection = "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake";
-            var invalidOptions = new EventHubConnectionOptions { TransportType = TransportType.AmqpTcp, Proxy = Mock.Of<IWebProxy>() };
+            var invalidOptions = new EventHubConnectionOptions { TransportType = EventHubsTransportType.AmqpTcp, Proxy = Mock.Of<IWebProxy>() };
 
             Assert.That(() => new EventHubConnection(fakeConnection, invalidOptions), Throws.ArgumentException, "The connection string constructor should validate client options");
         }
@@ -288,7 +290,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorWithExpandedArgumentsValidatesOptions()
         {
-            var invalidOptions = new EventHubConnectionOptions { TransportType = TransportType.AmqpTcp, Proxy = Mock.Of<IWebProxy>() };
+            var token = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var invalidOptions = new EventHubConnectionOptions { TransportType = EventHubsTransportType.AmqpTcp, Proxy = Mock.Of<IWebProxy>() };
             Assert.That(() => new EventHubConnection("fullyQualifiedNamespace", "path", Mock.Of<TokenCredential>(), invalidOptions), Throws.ArgumentException, "The expanded argument constructor should validate client options");
         }
 
@@ -317,7 +320,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var keyName = "aWonderfulKey";
             var key = "ABC4223";
             var resource = $"amqps://{ fullyQualifiedNamespace }/{ path }";
-            var options = new EventHubConnectionOptions { TransportType = TransportType.AmqpTcp };
+            var options = new EventHubConnectionOptions { TransportType = EventHubsTransportType.AmqpTcp };
             var signature = new SharedAccessSignature(resource, keyName, key);
             var client = new EventHubConnection(fullyQualifiedNamespace, path, new SharedAccessSignatureCredential(signature), options);
 
@@ -369,7 +372,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         [Test]
         [TestCaseSource(nameof(ValidConnectionTypeCases))]
-        public void BuildTransportClientAllowsLegalConnectionTypes(TransportType connectionType)
+        public void BuildTransportClientAllowsLegalConnectionTypes(EventHubsTransportType connectionType)
         {
             var fullyQualifiedNamespace = "my.eventhubs.com";
             var path = "some-hub";
@@ -379,9 +382,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new EventHubConnectionOptions { TransportType = connectionType };
             var signature = new SharedAccessSignature(resource, keyName, key);
             var credential = new SharedAccessSignatureCredential(signature);
+            var eventHubCredential = new EventHubTokenCredential(credential, resource);
             var client = new EventHubConnection(fullyQualifiedNamespace, path, credential);
 
-            Assert.That(() => client.CreateTransportClient(fullyQualifiedNamespace, path, credential, options), Throws.Nothing);
+            Assert.That(() => client.CreateTransportClient(fullyQualifiedNamespace, path, eventHubCredential, options), Throws.Nothing);
         }
 
         /// <summary>
@@ -397,101 +401,14 @@ namespace Azure.Messaging.EventHubs.Tests
             var keyName = "aWonderfulKey";
             var key = "ABC4223";
             var resource = $"amqps://{ fullyQualifiedNamespace }/{ path }";
-            var connectionType = (TransportType)int.MinValue;
+            var connectionType = (EventHubsTransportType)int.MinValue;
             var options = new EventHubConnectionOptions { TransportType = connectionType };
             var signature = new SharedAccessSignature(resource, keyName, key);
             var credential = new SharedAccessSignatureCredential(signature);
+            var eventHubCredential = new EventHubTokenCredential(credential, resource);
             var client = new EventHubConnection(fullyQualifiedNamespace, path, credential);
 
-            Assert.That(() => client.CreateTransportClient(fullyQualifiedNamespace, path, credential, options), Throws.InstanceOf<ArgumentException>());
-        }
-
-        /// <summary>
-        ///    Verifies functionality of the <see cref="EventHubConnection.CreateTransportProducer" />
-        ///    method.
-        /// </summary>
-        ///
-        [Test]
-        public void CreateProducerCreatesDefaultWhenNoOptionsArePassed()
-        {
-            var expected = new EventHubProducerClientOptions();
-            var connectionString = "Endpoint=value.com;SharedAccessKeyName=[value];SharedAccessKey=[value];EntityPath=[value]";
-            var mockClient = new ReadableOptionsMock(connectionString, new EventHubConnectionOptions());
-
-            mockClient.CreateTransportProducer();
-
-            Assert.That(mockClient.ProducerOptions, Is.Not.Null, "The producer options should have been set.");
-            Assert.That(mockClient.ProducerOptions.PartitionId, Is.EqualTo(expected.PartitionId), "The partition identifiers should match.");
-            Assert.That(mockClient.ProducerOptions.RetryOptions.IsEquivalentTo(expected.RetryOptions), Is.True, "The retries should match.");
-        }
-
-        /// <summary>
-        ///    Verifies functionality of the <see cref="EventHubConnection.CreateTransportConsumer" />
-        ///    method.
-        /// </summary>
-        ///
-        [Test]
-        public void CreateConsumerCreatesDefaultWhenNoOptionsArePassed()
-        {
-            var expectedOptions = new EventHubConsumerClientOptions();
-            var expectedConsumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
-            var expectedPartition = "56767";
-            var expectedPosition = EventPosition.FromEnqueuedTime(DateTimeOffset.Parse("2015-10-27T12:00:00Z"));
-            var connectionString = "Endpoint=value.com;SharedAccessKeyName=[value];SharedAccessKey=[value];EntityPath=[value]";
-            var mockClient = new ReadableOptionsMock(connectionString, new EventHubConnectionOptions());
-
-            mockClient.CreateTransportConsumer(expectedConsumerGroup, expectedPartition, expectedPosition);
-            EventHubConsumerClientOptions actualOptions = mockClient.ConsumerOptions;
-
-            Assert.That(actualOptions, Is.Not.Null, "The consumer options should have been set.");
-            Assert.That(actualOptions.OwnerLevel, Is.EqualTo(expectedOptions.OwnerLevel), "The owner levels should match.");
-            Assert.That(actualOptions.Identifier, Is.EqualTo(expectedOptions.Identifier), "The identifiers should match.");
-            Assert.That(actualOptions.PrefetchCount, Is.EqualTo(expectedOptions.PrefetchCount), "The prefetch counts should match.");
-            Assert.That(actualOptions.RetryOptions.IsEquivalentTo(expectedOptions.RetryOptions), Is.True, "The retries should match.");
-            Assert.That(actualOptions.MaximumReceiveWaitTimeOrDefault, Is.EqualTo(expectedOptions.MaximumReceiveWaitTimeOrDefault), "The wait times should match.");
-        }
-
-        /// <summary>
-        ///    Verifies functionality of the <see cref="EventHubConnection.CreateTransportConsumer" />
-        ///    method.
-        /// </summary>
-        ///
-        [Test]
-        public void CreateConsumerCreatesDefaultWhenOptionsAreNotSet()
-        {
-            var retryOptions = new RetryOptions
-            {
-                MaximumRetries = 99,
-                MaximumDelay = TimeSpan.FromHours(72),
-                Delay = TimeSpan.FromSeconds(27)
-            };
-
-            var expectedOptions = new EventHubConsumerClientOptions
-            {
-                OwnerLevel = 251,
-                Identifier = "Bob",
-                PrefetchCount = 600,
-                RetryOptions = retryOptions,
-                DefaultMaximumReceiveWaitTime = TimeSpan.FromSeconds(123)
-            };
-
-            var clientOptions = new EventHubConnectionOptions();
-            var expectedConsumerGroup = "SomeGroup";
-            var expectedPartition = "56767";
-            var expectedPosition = EventPosition.FromSequenceNumber(123);
-            var connectionString = "Endpoint=value.com;SharedAccessKeyName=[value];SharedAccessKey=[value];EntityPath=[value]";
-            var mockClient = new ReadableOptionsMock(connectionString, clientOptions);
-
-            mockClient.CreateTransportConsumer(expectedConsumerGroup, expectedPartition, expectedPosition, expectedOptions);
-            EventHubConsumerClientOptions actualOptions = mockClient.ConsumerOptions;
-
-            Assert.That(actualOptions, Is.Not.Null, "The consumer options should have been set.");
-            Assert.That(actualOptions, Is.Not.SameAs(expectedOptions), "A clone of the options should have been made.");
-            Assert.That(actualOptions.OwnerLevel, Is.EqualTo(expectedOptions.OwnerLevel), "The owner levels should match.");
-            Assert.That(actualOptions.Identifier, Is.EqualTo(expectedOptions.Identifier), "The identifiers should match.");
-            Assert.That(actualOptions.PrefetchCount, Is.EqualTo(expectedOptions.PrefetchCount), "The prefetch counts should match.");
-            Assert.That(actualOptions.RetryOptions.IsEquivalentTo(expectedOptions.RetryOptions), Is.True, "The retries should match.");
-            Assert.That(actualOptions.MaximumReceiveWaitTimeOrDefault, Is.EqualTo(expectedOptions.MaximumReceiveWaitTimeOrDefault), "The wait times should match.");
+            Assert.That(() => client.CreateTransportClient(fullyQualifiedNamespace, path, eventHubCredential, options), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -505,7 +422,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void CreateConsumerRequiresConsumerGroup(string consumerGroup)
         {
             var client = new EventHubConnection("Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real]", "fake", new EventHubConnectionOptions());
-            Assert.That(() => client.CreateTransportConsumer(consumerGroup, "partition1", EventPosition.Earliest), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.CreateTransportConsumer(consumerGroup, "partition1", EventPosition.Earliest, Mock.Of<EventHubsRetryPolicy>()), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -519,7 +436,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void CreateConsumerRequiresPartition(string partition)
         {
             var client = new EventHubConnection("Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real]", "fake", new EventHubConnectionOptions());
-            Assert.That(() => client.CreateTransportConsumer("someGroup", partition, EventPosition.Earliest), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.CreateTransportConsumer("someGroup", partition, EventPosition.Earliest, Mock.Of<EventHubsRetryPolicy>()), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -528,10 +445,10 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void CreateConsumerRequiresEventPosition()
+        public void CreateConsumerRequiresRetryPolicy()
         {
             var client = new EventHubConnection("Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real]", "fake", new EventHubConnectionOptions());
-            Assert.That(() => client.CreateTransportConsumer(EventHubConsumerClient.DefaultConsumerGroupName, "123", null), Throws.ArgumentNullException);
+            Assert.That(() => client.CreateTransportConsumer("someGroup", "0", EventPosition.Earliest, null), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -581,12 +498,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockClient
                 .Setup(client => client.GetPropertiesAsync(
-                    It.IsAny<EventHubRetryPolicy>(),
+                    It.IsAny<EventHubsRetryPolicy>(),
                     It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(properties))
                 .Verifiable("GetPropertiesAcync should have been delegated to.");
 
-            var actual = await mockClient.Object.GetPartitionIdsAsync(Mock.Of<EventHubRetryPolicy>(), CancellationToken.None);
+            var actual = await mockClient.Object.GetPartitionIdsAsync(Mock.Of<EventHubsRetryPolicy>(), CancellationToken.None);
 
             Assert.That(actual, Is.Not.Null);
             Assert.That(actual, Is.EqualTo(partitionIds));
@@ -605,7 +522,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var transportClient = new ObservableTransportClientMock();
             var client = new InjectableTransportClientMock(transportClient, "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake");
 
-            await client.GetPropertiesAsync(Mock.Of<EventHubRetryPolicy>(), CancellationToken.None);
+            await client.GetPropertiesAsync(Mock.Of<EventHubsRetryPolicy>(), CancellationToken.None);
 
             Assert.That(transportClient.WasGetPropertiesCalled, Is.True);
         }
@@ -622,7 +539,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var client = new InjectableTransportClientMock(transportClient, "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake");
             var expectedId = "BB33";
 
-            await client.GetPartitionPropertiesAsync(expectedId, Mock.Of<EventHubRetryPolicy>());
+            await client.GetPartitionPropertiesAsync(expectedId, Mock.Of<EventHubsRetryPolicy>());
 
             Assert.That(transportClient.GetPartitionPropertiesCalledForId, Is.EqualTo(expectedId));
         }
@@ -637,13 +554,15 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var transportClient = new ObservableTransportClientMock();
             var client = new InjectableTransportClientMock(transportClient, "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake");
-            var expectedOptions = new EventHubProducerClientOptions { RetryOptions = new RetryOptions { MaximumRetries = 6, TryTimeout = TimeSpan.FromMinutes(4) } };
+            var options = new EventHubProducerClientOptions { RetryOptions = new EventHubsRetryOptions { MaximumRetries = 6, TryTimeout = TimeSpan.FromMinutes(4) } };
+            var expectedRetry = options.RetryOptions.ToRetryPolicy();
 
-            client.CreateTransportProducer(expectedOptions);
+            client.CreateTransportProducer(null, expectedRetry);
 
             Assert.That(transportClient.CreateProducerCalledWith, Is.Not.Null, "The producer options should have been set.");
-            Assert.That(transportClient.CreateProducerCalledWith.PartitionId, Is.EqualTo(expectedOptions.PartitionId), "The partition identifiers should match.");
-            Assert.That(transportClient.CreateProducerCalledWith.RetryOptions.IsEquivalentTo(expectedOptions.RetryOptions), Is.True, "The retry options should match.");
+            Assert.That(transportClient.CreateProducerCalledWith.PartitionId, Is.Null, "There should have been no partition specified.");
+            Assert.That(transportClient.CreateProducerCalledWith.RetryPolicy, Is.Not.Null, "The retry policy should have been specified.");
+            Assert.That(transportClient.CreateProducerCalledWith.RetryPolicy, Is.SameAs(expectedRetry), "The retry policies should match.");
         }
 
         /// <summary>
@@ -656,23 +575,24 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var transportClient = new ObservableTransportClientMock();
             var client = new InjectableTransportClientMock(transportClient, "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake");
-            var expectedOptions = new EventHubConsumerClientOptions { RetryOptions = new RetryOptions { MaximumRetries = 67 } };
             var expectedPosition = EventPosition.FromOffset(65);
             var expectedPartition = "2123";
             var expectedConsumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
+            var expectedRetryPolicy = new EventHubsRetryOptions { MaximumRetries = 67 }.ToRetryPolicy();
+            var expectedTrackLastEnqueued = false;
+            var expectedPrefetch = 99U;
+            var expectedOwnerLevel = 123L;
 
-            client.CreateTransportConsumer(expectedConsumerGroup, expectedPartition, expectedPosition, expectedOptions);
-            (var actualConsumerGroup, var actualPartition, EventPosition actualPosition, EventHubConsumerClientOptions actualOptions) = transportClient.CreateConsumerCalledWith;
+            client.CreateTransportConsumer(expectedConsumerGroup, expectedPartition, expectedPosition, expectedRetryPolicy, expectedTrackLastEnqueued, expectedOwnerLevel, expectedPrefetch);
+            (var actualConsumerGroup, var actualPartition, EventPosition actualPosition, var actualRetry, var actualTrackLastEnqueued, var actualOwnerLevel, var actualPrefetch) = transportClient.CreateConsumerCalledWith;
 
             Assert.That(actualPartition, Is.EqualTo(expectedPartition), "The partition should have been passed.");
             Assert.That(actualConsumerGroup, Is.EqualTo(expectedConsumerGroup), "The consumer groups should match.");
             Assert.That(actualPosition.Offset, Is.EqualTo(expectedPosition.Offset), "The event position to receive should match.");
-            Assert.That(actualOptions, Is.Not.Null, "The consumer options should have been set.");
-            Assert.That(actualPosition.Offset, Is.EqualTo(expectedPosition.Offset), "The event position to receive should match.");
-            Assert.That(actualOptions.OwnerLevel, Is.EqualTo(expectedOptions.OwnerLevel), "The owner levels should match.");
-            Assert.That(actualOptions.Identifier, Is.EqualTo(expectedOptions.Identifier), "The identifiers should match.");
-            Assert.That(actualOptions.PrefetchCount, Is.EqualTo(expectedOptions.PrefetchCount), "The prefetch counts should match.");
-            Assert.That(actualOptions.MaximumReceiveWaitTimeOrDefault, Is.EqualTo(expectedOptions.MaximumReceiveWaitTimeOrDefault), "The wait times should match.");
+            Assert.That(actualRetry, Is.SameAs(expectedRetryPolicy), "The retryPolicy should match.");
+            Assert.That(actualOwnerLevel, Is.EqualTo(expectedOwnerLevel), "The owner levels should match.");
+            Assert.That(actualPrefetch, Is.EqualTo(expectedPrefetch), "The prefetch counts should match.");
+            Assert.That(actualTrackLastEnqueued, Is.EqualTo(expectedTrackLastEnqueued), "The flag for tracking the last enqueued event should match.");
         }
 
         /// <summary>
@@ -719,7 +639,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var path = "someHub/";
             var transportClient = new ObservableTransportClientMock();
             var client = new InjectableTransportClientMock(transportClient, "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake");
-            var resource = BuildResource(client, TransportType.AmqpWebSockets, fullyQualifiedNamespace, path);
+            var resource = BuildResource(client, EventHubsTransportType.AmqpWebSockets, fullyQualifiedNamespace, path);
 
             Assert.That(resource, Is.Not.Null.Or.Empty, "The resource should have been populated.");
             Assert.That(resource, Is.EqualTo(resource.ToLowerInvariant()), "The resource should have been normalized to lower case.");
@@ -743,7 +663,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var transportClient = new ObservableTransportClientMock();
             var client = new InjectableTransportClientMock(transportClient, "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake");
             var expectedPath = $"/{ path.ToLowerInvariant() }";
-            var resource = BuildResource(client, TransportType.AmqpTcp, fullyQualifiedNamespace, path);
+            var resource = BuildResource(client, EventHubsTransportType.AmqpTcp, fullyQualifiedNamespace, path);
 
             Assert.That(resource, Is.Not.Null.Or.Empty, "The resource should have been populated.");
 
@@ -763,7 +683,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <returns>The credential with which the client was created.</returns>
         ///
         private string BuildResource(EventHubConnection client,
-                                     TransportType transportType,
+                                     EventHubsTransportType transportType,
                                      string fullyQualifiedNamespace,
                                      string eventHubName) =>
              typeof(EventHubConnection)
@@ -796,8 +716,6 @@ namespace Azure.Messaging.EventHubs.Tests
                    .GetValue(this) as EventHubConnectionOptions;
 
             public EventHubConnectionOptions TransportClientOptions;
-            public EventHubProducerClientOptions ProducerOptions => _transportClient.CreateProducerCalledWith;
-            public EventHubConsumerClientOptions ConsumerOptions => _transportClient.CreateConsumerCalledWith.Options;
 
             private ObservableTransportClientMock _transportClient;
 
@@ -813,7 +731,7 @@ namespace Azure.Messaging.EventHubs.Tests
             {
             }
 
-            internal override TransportClient CreateTransportClient(string fullyQualifiedNamespace, string eventHubName, TokenCredential credential, EventHubConnectionOptions options)
+            internal override TransportClient CreateTransportClient(string fullyQualifiedNamespace, string eventHubName, EventHubTokenCredential credential, EventHubConnectionOptions options)
             {
                 TransportClientOptions = options;
                 _transportClient = new ObservableTransportClientMock();
@@ -878,7 +796,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             internal override TransportClient CreateTransportClient(string fullyQualifiedNamespace,
                                                                    string eventHubName,
-                                                                   TokenCredential credential,
+                                                                   EventHubTokenCredential credential,
                                                                    EventHubConnectionOptions options) => TransportClient;
 
             private void SetTransportClient(TransportClient transportClient) =>
@@ -894,13 +812,13 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         private class ObservableTransportClientMock : TransportClient
         {
-            public (string ConsumerGroup, string Partition, EventPosition Position, EventHubConsumerClientOptions Options) CreateConsumerCalledWith;
-            public EventHubProducerClientOptions CreateProducerCalledWith;
+            public (string ConsumerGroup, string Partition, EventPosition Position, EventHubsRetryPolicy RetryPolicy, bool TrackLastEnqueued, long? OwnerLevel, uint? Prefetch) CreateConsumerCalledWith;
+            public (string PartitionId, EventHubsRetryPolicy RetryPolicy) CreateProducerCalledWith;
             public string GetPartitionPropertiesCalledForId;
             public bool WasGetPropertiesCalled;
             public bool WasCloseCalled;
 
-            public override Task<EventHubProperties> GetPropertiesAsync(EventHubRetryPolicy retryPolicy,
+            public override Task<EventHubProperties> GetPropertiesAsync(EventHubsRetryPolicy retryPolicy,
                                                                         CancellationToken cancellationToken = default)
             {
                 WasGetPropertiesCalled = true;
@@ -908,25 +826,29 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             public override Task<PartitionProperties> GetPartitionPropertiesAsync(string partitionId,
-                                                                                  EventHubRetryPolicy retryPolicy,
+                                                                                  EventHubsRetryPolicy retryPolicy,
                                                                                   CancellationToken cancellationToken = default)
             {
                 GetPartitionPropertiesCalledForId = partitionId;
                 return Task.FromResult(default(PartitionProperties));
             }
 
-            public override TransportProducer CreateProducer(EventHubProducerClientOptions producerOptions)
+            public override TransportProducer CreateProducer(string partitionId,
+                                                             EventHubsRetryPolicy retryPolicy)
             {
-                CreateProducerCalledWith = producerOptions;
+                CreateProducerCalledWith = (partitionId, retryPolicy);
                 return default;
             }
 
             public override TransportConsumer CreateConsumer(string consumerGroup,
                                                              string partitionId,
                                                              EventPosition eventPosition,
-                                                             EventHubConsumerClientOptions consumerOptions)
+                                                             EventHubsRetryPolicy retryPolicy,
+                                                             bool trackLastEnqueuedEventProperties = true,
+                                                             long? ownerLevel = default,
+                                                             uint? prefetchCount = default)
             {
-                CreateConsumerCalledWith = (consumerGroup, partitionId, eventPosition, consumerOptions);
+                CreateConsumerCalledWith = (consumerGroup, partitionId, eventPosition, retryPolicy, trackLastEnqueuedEventProperties, ownerLevel, prefetchCount);
                 return default;
             }
 

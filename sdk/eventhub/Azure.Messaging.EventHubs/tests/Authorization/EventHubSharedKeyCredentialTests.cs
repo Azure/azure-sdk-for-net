@@ -51,12 +51,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var name = "KeyName";
             var value = "KeyValue";
             var credential = new EventHubSharedKeyCredential(name, value);
+            var initializedValue = GetSharedAccessKey(credential);
 
-            var initializedValue = typeof(EventHubSharedKeyCredential)
-                .GetProperty("SharedAccessKey", BindingFlags.Instance | BindingFlags.NonPublic)
-                .GetValue(credential, null);
-
-            Assert.That(credential.SharedAccessKeyName, Is.EqualTo(name), "The shared key name should have been set.");
             Assert.That(initializedValue, Is.EqualTo(value), "The shared key should have been set.");
         }
 
@@ -93,14 +89,44 @@ namespace Azure.Messaging.EventHubs.Tests
             var validSpan = TimeSpan.FromHours(4);
             var signature = new SharedAccessSignature(resource, keyName, keyValue, validSpan);
             var keyCredential = new EventHubSharedKeyCredential(keyName, keyValue);
-            SharedAccessSignatureCredential sasCredential = keyCredential.ConvertToSharedAccessSignatureCredential(resource, validSpan);
+            var sasCredential = keyCredential.ConvertToSharedAccessSignatureCredential(resource, validSpan);
 
             Assert.That(sasCredential, Is.Not.Null, "A shared access signature credential should have been created.");
-            Assert.That(sasCredential.SharedAccessSignature, Is.Not.Null, "The SAS credential should contain a shared access signature.");
-            Assert.That(sasCredential.SharedAccessSignature.Resource, Is.EqualTo(signature.Resource), "The resource should match.");
-            Assert.That(sasCredential.SharedAccessSignature.SharedAccessKeyName, Is.EqualTo(signature.SharedAccessKeyName), "The shared access key name should match.");
-            Assert.That(sasCredential.SharedAccessSignature.SharedAccessKey, Is.EqualTo(signature.SharedAccessKey), "The shared access key should match.");
-            Assert.That(sasCredential.SharedAccessSignature.SignatureExpiration, Is.EqualTo(signature.SignatureExpiration).Within(TimeSpan.FromSeconds(5)), "The expiration should match.");
+
+            var credentialSignature = GetSharedAccessSignature(sasCredential);
+            Assert.That(credentialSignature, Is.Not.Null, "The SAS credential should contain a shared access signature.");
+            Assert.That(credentialSignature.Resource, Is.EqualTo(signature.Resource), "The resource should match.");
+            Assert.That(credentialSignature.SharedAccessKeyName, Is.EqualTo(signature.SharedAccessKeyName), "The shared access key name should match.");
+            Assert.That(credentialSignature.SharedAccessKey, Is.EqualTo(signature.SharedAccessKey), "The shared access key should match.");
+            Assert.That(credentialSignature.SignatureExpiration, Is.EqualTo(signature.SignatureExpiration).Within(TimeSpan.FromSeconds(5)), "The expiration should match.");
         }
+
+        /// <summary>
+        ///   Retrieves the shared access key from the credential using its private accessor.
+        /// </summary>
+        ///
+        /// <param name="instance">The instance to retrieve the key from.</param>
+        ///
+        /// <returns>The shared access key.</returns>
+        ///
+        private static string GetSharedAccessKey(EventHubSharedKeyCredential instance) =>
+            (string)
+                typeof(EventHubSharedKeyCredential)
+                .GetProperty("SharedAccessKey", BindingFlags.Instance | BindingFlags.NonPublic)
+                .GetValue(instance, null);
+
+        /// <summary>
+        ///   Retrieves the shared access signature from the credential using its private accessor.
+        /// </summary>
+        ///
+        /// <param name="instance">The instance to retrieve the key from.</param>
+        ///
+        /// <returns>The shared access key.</returns>
+        ///
+        private static SharedAccessSignature GetSharedAccessSignature(SharedAccessSignatureCredential instance) =>
+            (SharedAccessSignature)
+                typeof(SharedAccessSignatureCredential)
+                .GetProperty("SharedAccessSignature", BindingFlags.Instance | BindingFlags.NonPublic)
+                .GetValue(instance, null);
     }
 }

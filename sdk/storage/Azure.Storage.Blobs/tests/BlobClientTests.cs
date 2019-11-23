@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
+using Azure.Identity;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
@@ -50,6 +51,22 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(containerName, builder2.BlobContainerName);
             Assert.AreEqual(blobName, builder2.BlobName);
             Assert.AreEqual("accountName", builder2.AccountName);
+        }
+
+        [Test]
+        public void Ctor_Uri()
+        {
+            var accountName = "accountName";
+            var blobEndpoint = new Uri("http://127.0.0.1/" + accountName);
+            BlobClient blob1 = InstrumentClient(new BlobClient(blobEndpoint));
+            BlobClient blob2 = InstrumentClient(new BlobClient(blobEndpoint, new SharedTokenCacheCredential()));
+
+            var builder1 = new BlobUriBuilder(blob1.Uri);
+            var builder2 = new BlobUriBuilder(blob2.Uri);
+
+            Assert.AreEqual(accountName, builder1.AccountName);
+            Assert.AreEqual(accountName, builder2.AccountName);
+
         }
 
         #region Upload
@@ -503,7 +520,6 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(20 * Constants.KB)]
         [TestCase(30 * Constants.KB)]
         [TestCase(50 * Constants.KB)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8354")]
         // [TestCase(501 * Constants.KB)] // TODO: #6781 We don't want to add 500K of random data in the recordings
         public async Task UploadStreamAsync_SmallBlobs(long size) =>
             // Use a 1KB threshold so we get a lot of individual blocks
@@ -518,7 +534,6 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(20 * Constants.KB)]
         [TestCase(30 * Constants.KB)]
         [TestCase(50 * Constants.KB)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8354")]
         // [TestCase(501 * Constants.KB)] // TODO: #6781 We don't want to add 500K of random data in the recordings
         public async Task UploadFileAsync_SmallBlobs(long size) =>
             // Use a 1KB threshold so we get a lot of individual blocks
@@ -541,7 +556,6 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(1 * Constants.GB, 8)]
         [TestCase(1 * Constants.GB, 16)]
         [TestCase(1 * Constants.GB, null)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8354")]
         public async Task UploadStreamAsync_LargeBlobs(long size, int? maximumThreadCount)
         {
             // TODO: #6781 We don't want to add 1GB of random data in the recordings
@@ -565,7 +579,6 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(1 * Constants.GB, 8)]
         [TestCase(1 * Constants.GB, 16)]
         [TestCase(1 * Constants.GB, null)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8354")]
         public async Task UploadFileAsync_LargeBlobs(long size, int? maximumThreadCount)
         {
             // TODO: #6781 We don't want to add 1GB of random data in the recordings

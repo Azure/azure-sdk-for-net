@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Processor;
+using Azure.Messaging.EventHubs.Samples.Infrastructure;
 
 namespace Azure.Messaging.EventHubs.Tests
 {
@@ -24,7 +25,7 @@ namespace Azure.Messaging.EventHubs.Tests
         private string ConsumerGroup { get; }
 
         /// <summary>
-        ///   The <see cref="EventHubConnection" /> connection to use for communication with the Event Hubs service.
+        ///   The <see cref="EventHubConnection" /> to use for communication with the Event Hubs service.
         /// </summary>
         ///
         private EventHubConnection Connection { get; }
@@ -48,55 +49,54 @@ namespace Azure.Messaging.EventHubs.Tests
         private List<EventProcessorClient> EventProcessors { get; }
 
         /// <summary>
-        ///   A callback action to be called on <see cref="EventProcessorClient.InitializeProcessingForPartitionAsync" />.
+        ///   A callback action to be called on <see cref="EventProcessorClient.InitializeProcessingForPartitionAsyncHandler" />.
         /// </summary>
         ///
-        private Action<PartitionContext> OnInitialize { get; }
+        private Action<InitializePartitionProcessingContext> OnInitialize { get; }
 
         /// <summary>
-        ///   A callback action to be called on <see cref="EventProcessorClient.ProcessingForPartitionStoppedAsync" />.
+        ///   A callback action to be called on <see cref="EventProcessorClient.ProcessingForPartitionStoppedAsyncHandler" />.
         /// </summary>
         ///
-        private Action<PartitionContext, PartitionProcessorCloseReason> OnClose { get; }
+        private Action<PartitionProcessingStoppedContext> OnStop { get; }
 
         /// <summary>
-        ///   A callback action to be called on <see cref="EventProcessorClient.ProcessEventsAsync" />.
+        ///   A callback action to be called on <see cref="EventProcessorClient.ProcessEventAsyncHandler" />.
         /// </summary>
         ///
-        private Action<PartitionContext, IEnumerable<EventData>> OnProcessEvents { get; }
+        private Action<EventProcessorEvent> OnProcessEvent { get; }
 
         /// <summary>
-        ///   A callback action to be called on <see cref="EventProcessorClient.ProcessExceptionAsync" />.
+        ///   A callback action to be called on <see cref="EventProcessorClient.ProcessErrorAsyncHandler" />.
         /// </summary>
         ///
-        private Action<PartitionContext, Exception> OnProcessException { get; }
+        private Action<ProcessorErrorContext> OnProcessException { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventProcessorManager"/> class.
         /// </summary>
         ///
         /// <param name="consumerGroup">The name of the consumer group the event processors are associated with.  Events are read in the context of this group.</param>
-        /// <param name="client">The client used to interact with the Azure Event Hubs service.</param>
+        /// <param name="connectionString">TODO.</param>
         /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.</param>
         /// <param name="options">The set of options to use for the event processors.</param>
-        /// <param name="onInitialize">A callback action to be called on <see cref="EventProcessorClient.InitializeProcessingForPartitionAsync" />.</param>
-        /// <param name="onClose">A callback action to be called on <see cref="EventProcessorClient.ProcessingForPartitionStoppedAsync" />.</param>
-        /// <param name="onProcessEvents">A callback action to be called on <see cref="EventProcessorClient.ProcessEventsAsync" />.</param>
-        /// <param name="onProcessException">A callback action to be called on <see cref="EventProcessorClient.ProcessExceptionAsync" />.</param>
+        /// <param name="onInitialize">A callback action to be called on <see cref="EventProcessorClient.InitializeProcessingForPartitionAsyncHandler" />.</param>
+        /// <param name="onStop">A callback action to be called on <see cref="EventProcessorClient.ProcessingForPartitionStoppedAsyncHandler" />.</param>
+        /// <param name="onProcessEvent">A callback action to be called on <see cref="EventProcessorClient.ProcessEventAsyncHandler" />.</param>
+        /// <param name="onProcessException">A callback action to be called on <see cref="EventProcessorClient.ProcessErrorAsyncHandler" />.</param>
         ///
         public EventProcessorManager(string consumerGroup,
-                                     EventHubConnection client,
+                                     string connectionString,
                                      PartitionManager partitionManager = null,
                                      EventProcessorClientOptions options = null,
-                                     Action<PartitionContext> onInitialize = null,
-                                     Action<PartitionContext, PartitionProcessorCloseReason> onClose = null,
-                                     Action<PartitionContext, IEnumerable<EventData>> onProcessEvents = null,
-                                     Action<PartitionContext, Exception> onProcessException = null)
+                                     Action<InitializePartitionProcessingContext> onInitialize = null,
+                                     Action<PartitionProcessingStoppedContext> onStop = null,
+                                     Action<EventProcessorEvent> onProcessEvent = null,
+                                     Action<ProcessorErrorContext> onProcessException = null)
         {
             ConsumerGroup = consumerGroup;
-            Connection = client;
-
-            InnerPartitionManager = partitionManager ?? new InMemoryPartitionManager();
+            Connection = new EventHubConnection(connectionString);
+            InnerPartitionManager = partitionManager ?? new MockCheckPointStorage();
 
             // In case it has not been specified, set the maximum receive wait time to 2 seconds because the default
             // value (1 minute) would take too much time.
@@ -109,8 +109,8 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             OnInitialize = onInitialize;
-            OnClose = onClose;
-            OnProcessEvents = onProcessEvents;
+            OnStop = onStop;
+            OnProcessEvent = onProcessEvent;
             OnProcessException = onProcessException;
 
             EventProcessors = new List<EventProcessorClient>();
@@ -136,32 +136,32 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 if (OnInitialize != null)
                 {
-                    eventProcessor.InitializeProcessingForPartitionAsync = (partitionContext) =>
+                    eventProcessor.InitializeProcessingForPartitionAsyncHandler = initializationContext =>
                     {
-                        OnInitialize(partitionContext);
-                        return Task.CompletedTask;
+                        OnInitialize(initializationContext);
+                        return new ValueTask();
                     };
                 }
 
-                if (OnClose != null)
+                if (OnStop != null)
                 {
-                    eventProcessor.ProcessingForPartitionStoppedAsync = (partitionContext, reason) =>
+                    eventProcessor.ProcessingForPartitionStoppedAsyncHandler = stopContext =>
                     {
-                        OnClose(partitionContext, reason);
-                        return Task.CompletedTask;
+                        OnStop(stopContext);
+                        return new ValueTask();
                     };
                 }
 
-                eventProcessor.ProcessEventsAsync = (partitionContext, events) =>
+                eventProcessor.ProcessEventAsyncHandler = processorEvent =>
                 {
-                    OnProcessEvents?.Invoke(partitionContext, events);
-                    return Task.CompletedTask;
+                    OnProcessEvent?.Invoke(processorEvent);
+                    return new ValueTask();
                 };
 
-                eventProcessor.ProcessExceptionAsync = (partitionContext, exception) =>
+                eventProcessor.ProcessErrorAsyncHandler = errorContext =>
                 {
-                    OnProcessException?.Invoke(partitionContext, exception);
-                    return Task.CompletedTask;
+                    OnProcessException?.Invoke(errorContext);
+                    return new ValueTask();
                 };
 
                 EventProcessors.Add(eventProcessor);

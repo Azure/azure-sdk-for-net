@@ -70,7 +70,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             EventHubsException instance = constructor();
             Assert.That(instance.IsTransient, Is.EqualTo(expectedIsTransient), $"IsTransient should be set for the { constructorDescription }");
-            Assert.That(instance.ResourceName, Is.EqualTo(expectedResourceName), $"EventHubsNamespace should be set for the { constructorDescription }");
+            Assert.That(instance.EventHubName, Is.EqualTo(expectedResourceName), $"EventHubsNamespace should be set for the { constructorDescription }");
         }
 
         /// <summary>

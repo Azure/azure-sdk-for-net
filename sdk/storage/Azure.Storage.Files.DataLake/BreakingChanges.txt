@@ -1,6 +1,6 @@
 Breaking Changes
 ================
 
-Next Preview
+12.0.0-preview.6 (2019-11)
 --------------------------
 - New Azure.Storage.Files.DataLake client library.

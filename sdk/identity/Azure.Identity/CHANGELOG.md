@@ -1,4 +1,14 @@
 # Release History
+## Unreleased
+
+### Fixes and improvements
+- Update `SharedTokenCacheCredential` to filter accounts by tenant id
+  - Added `SharedTokenCacheCredentialOptions` class with properties `TenantId` and `Username`
+  - Added constructor overload to `SharedTokenCacheCredential` which accepts `SharedTokenCacheCredentialOptions` 
+  - Added property `SharedTokenCacheTenantId` to `DefaultAzureCredentialOptions`
+- Support for personal account authentication in `DefaultAzureCredential`, `InteractiveBrowserCredential`, and `SharedTokenCacheCredential`
+- Added `InteractiveBrowserTenantId` to `DefaultAzureCredentialOptions`
+- Fixed issue with `ManagedIdentityCredential` authentication with user assigned identities
 
 ## 1.0.0
 - First stable release of Azure.Identity package.

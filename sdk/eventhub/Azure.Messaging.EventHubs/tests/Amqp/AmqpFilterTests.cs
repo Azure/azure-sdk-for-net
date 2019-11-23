@@ -21,17 +21,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void BuildFilterExpressionValidatesTheEventPosition()
-        {
-            Assert.That(() => AmqpFilter.BuildFilterExpression(null), Throws.ArgumentNullException);
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="AmqpFilter.BuildFilterExpression(EventPosition)" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
         public void BuildFilterExpressionEnsuresAnEventPositionIsFilterable()
         {
             // Unset all properties for the event position.

@@ -16,4 +16,4 @@
 
 To build this project, please follow the instructions [here](https://github.com/Azure/azure-sdk-for-net/blob/psSdkJson6/README.md).
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsrc%2FSDKs%2FCognitiveServices%2FdataPlane%2FLanguage%2FTextAnalytics%2FTextAnalytics%2FReadme.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fcognitiveservices%2FLanguage.TextAnalytics%2Fsrc%2FReadme.png)

@@ -60,23 +60,23 @@ namespace Azure.Messaging.EventHubs.Metadata
         ///   Initializes a new instance of the <see cref="PartitionProperties"/> class.
         /// </summary>
         ///
-        /// <param name="name">The name of the Event Hub that contains the partitions.</param>
+        /// <param name="eventHubName">The name of the Event Hub that contains the partitions.</param>
         /// <param name="partitionId">The identifier of the partition.</param>
+        /// <param name="isEmpty">Indicates whether or not the partition is currently empty.</param>
         /// <param name="beginningSequenceNumber">The first sequence number available for events in the partition.</param>
         /// <param name="lastSequenceNumber">The sequence number observed the last event to be enqueued in the partition.</param>
         /// <param name="lastOffset">The offset of the last event to be enqueued in the partition.</param>
         /// <param name="lastEnqueuedTime">The date and time, in UTC, that the last event was enqueued in the partition.</param>
-        /// <param name="isEmpty">Indicates whether or not the partition is currently empty.</param>
         ///
-        protected internal PartitionProperties(string name,
+        protected internal PartitionProperties(string eventHubName,
                                                string partitionId,
+                                               bool isEmpty,
                                                long beginningSequenceNumber,
                                                long lastSequenceNumber,
                                                long lastOffset,
-                                               DateTimeOffset lastEnqueuedTime,
-                                               bool isEmpty)
+                                               DateTimeOffset lastEnqueuedTime)
         {
-            EventHubName = name;
+            EventHubName = eventHubName;
             Id = partitionId;
             BeginningSequenceNumber = beginningSequenceNumber;
             LastEnqueuedSequenceNumber = lastSequenceNumber;

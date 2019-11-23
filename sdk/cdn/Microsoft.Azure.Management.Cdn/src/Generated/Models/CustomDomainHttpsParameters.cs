@@ -35,9 +35,13 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <param name="protocolType">Defines the TLS extension protocol that
         /// is used for secure delivery. Possible values include:
         /// 'ServerNameIndication', 'IPBased'</param>
-        public CustomDomainHttpsParameters(string protocolType)
+        /// <param name="minimumTlsVersion">TLS protocol version that will be
+        /// used for Https. Possible values include: 'None', 'TLS10',
+        /// 'TLS12'</param>
+        public CustomDomainHttpsParameters(string protocolType, MinimumTlsVersion? minimumTlsVersion = default(MinimumTlsVersion?))
         {
             ProtocolType = protocolType;
+            MinimumTlsVersion = minimumTlsVersion;
             CustomInit();
         }
 
@@ -53,6 +57,13 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         [JsonProperty(PropertyName = "protocolType")]
         public string ProtocolType { get; set; }
+
+        /// <summary>
+        /// Gets or sets TLS protocol version that will be used for Https.
+        /// Possible values include: 'None', 'TLS10', 'TLS12'
+        /// </summary>
+        [JsonProperty(PropertyName = "minimumTlsVersion")]
+        public MinimumTlsVersion? MinimumTlsVersion { get; set; }
 
         /// <summary>
         /// Validate the object.

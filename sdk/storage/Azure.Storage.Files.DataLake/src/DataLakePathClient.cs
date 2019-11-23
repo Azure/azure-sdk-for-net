@@ -112,6 +112,40 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
+        /// <summary>
+        /// The path corresponding to the path client.
+        /// </summary>
+        private string _path;
+
+        /// <summary>
+        /// Gets the path corresponding to the path client.
+        /// </summary>
+        public virtual string Path
+        {
+            get
+            {
+                SetNameFieldsIfNull();
+                return _path;
+            }
+        }
+
+        /// <summary>
+        /// The name of the file or directory.
+        /// </summary>
+        private string _name;
+
+        /// <summary>
+        /// Gets the name of the file or directory.
+        /// </summary>
+        public virtual string Name
+        {
+            get
+            {
+                SetNameFieldsIfNull();
+                return _name;
+            }
+        }
+
         #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="DataLakePathClient"/>
@@ -251,10 +285,11 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         internal DataLakePathClient(Uri pathUri, HttpPipelinePolicy authentication, DataLakeClientOptions options)
         {
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(pathUri);
             options ??= new DataLakeClientOptions();
             _uri = pathUri;
-            _blobUri = GetBlobUri(pathUri);
-            _dfsUri = GetDfsUri(pathUri);
+            _blobUri = uriBuilder.ToBlobUri();
+            _dfsUri = uriBuilder.ToDfsUri();
             _pipeline = options.Build(authentication);
             _clientDiagnostics = new ClientDiagnostics(options);
             _blockBlobClient = new BlockBlobClient(_blobUri, _pipeline, _clientDiagnostics, null);
@@ -280,55 +315,13 @@ namespace Azure.Storage.Files.DataLake
         internal DataLakePathClient(Uri pathUri, HttpPipeline pipeline, DataLakeClientOptions options = default)
         {
             _uri = pathUri;
-            _blobUri = GetBlobUri(pathUri);
-            _dfsUri = GetDfsUri(pathUri);
+            _blobUri = new DataLakeUriBuilder(pathUri).ToBlobUri();
+            _dfsUri = new DataLakeUriBuilder(pathUri).ToDfsUri();
             _pipeline = pipeline;
             _clientDiagnostics = new ClientDiagnostics(options ?? new DataLakeClientOptions());
             _blockBlobClient = new BlockBlobClient(_blobUri, pipeline, _clientDiagnostics, null);
         }
         #endregion
-
-        /// <summary>
-        /// Gets the blob Uri.
-        /// </summary>
-        private static Uri GetBlobUri(Uri uri)
-        {
-            Uri blobUri;
-            if (uri.Host.Contains(Constants.DataLake.DfsUriSuffix))
-            {
-                UriBuilder uriBuilder = new UriBuilder(uri);
-                uriBuilder.Host = uriBuilder.Host.Replace(
-                    Constants.DataLake.DfsUriSuffix,
-                    Constants.DataLake.BlobUriSuffix);
-                blobUri = uriBuilder.Uri;
-            }
-            else
-            {
-                blobUri = uri;
-            }
-            return blobUri;
-        }
-
-        /// <summary>
-        /// Gets the dfs Uri.
-        /// </summary>
-        private static Uri GetDfsUri(Uri uri)
-        {
-            Uri dfsUri;
-            if (uri.Host.Contains(Constants.DataLake.BlobUriSuffix))
-            {
-                UriBuilder uriBuilder = new UriBuilder(uri);
-                uriBuilder.Host = uriBuilder.Host.Replace(
-                    Constants.DataLake.BlobUriSuffix,
-                    Constants.DataLake.DfsUriSuffix);
-                dfsUri = uriBuilder.Uri;
-            }
-            else
-            {
-                dfsUri = uri;
-            }
-            return dfsUri;
-        }
 
         /// <summary>
         /// Converts metadata in DFS metadata string
@@ -357,11 +350,16 @@ namespace Azure.Storage.Files.DataLake
         /// </summary>
         internal virtual void SetNameFieldsIfNull()
         {
-            if (_fileSystemName == null || _accountName == null)
+            if (_fileSystemName == null
+                || _accountName == null
+                || _path == null
+                || _name == null)
             {
                 var builder = new DataLakeUriBuilder(Uri);
                 _fileSystemName = builder.FileSystemName;
                 _accountName = builder.AccountName;
+                _path = builder.DirectoryOrFilePath;
+                _name = builder.LastDirectoryOrFileName;
             }
         }
 
@@ -412,7 +410,6 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         protected virtual Response<PathInfo> Create(
             PathResourceType resourceType,
             PathHttpHeaders httpHeaders = default,
@@ -420,17 +417,35 @@ namespace Azure.Storage.Files.DataLake
             string permissions = default,
             string umask = default,
             DataLakeRequestConditions conditions = default,
-            CancellationToken cancellationToken = default) =>
-            CreateInternal(
-                resourceType,
-                httpHeaders,
-                metadata,
-                permissions,
-                umask,
-                conditions,
-                false, // async
-                cancellationToken)
-                .EnsureCompleted();
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakePathClient)}.{nameof(Create)}");
+
+            try
+            {
+                scope.Start();
+
+                return CreateInternal(
+                    resourceType,
+                    httpHeaders,
+                    metadata,
+                    permissions,
+                    umask,
+                    conditions,
+                    false, // async
+                    cancellationToken)
+                    .EnsureCompleted();
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
 
         /// <summary>
         /// The <see cref="Create"/> operation creates a file or directory.
@@ -478,7 +493,6 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual async Task<Response<PathInfo>> CreateAsync(
             PathResourceType resourceType,
             PathHttpHeaders httpHeaders = default,
@@ -486,17 +500,35 @@ namespace Azure.Storage.Files.DataLake
             string permissions = default,
             string umask = default,
             DataLakeRequestConditions conditions = default,
-            CancellationToken cancellationToken = default) =>
-            await CreateInternal(
-                resourceType,
-                httpHeaders,
-                metadata,
-                permissions,
-                umask,
-                conditions,
-                true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakePathClient)}.{nameof(Create)}");
+
+            try
+            {
+                scope.Start();
+
+                return await CreateInternal(
+                    resourceType,
+                    httpHeaders,
+                    metadata,
+                    permissions,
+                    umask,
+                    conditions,
+                    true, // async
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
 
         /// <summary>
         /// The <see cref="Create"/> operation creates a file or directory.
@@ -643,13 +675,31 @@ namespace Azure.Storage.Files.DataLake
         public virtual Response Delete(
             bool? recursive = default,
             DataLakeRequestConditions conditions = default,
-            CancellationToken cancellationToken = default) =>
-            DeleteInternal(
-                recursive,
-                conditions,
-                false, // async
-                cancellationToken)
-                .EnsureCompleted();
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakePathClient)}.{nameof(Delete)}");
+
+            try
+            {
+                scope.Start();
+
+                return DeleteInternal(
+                    recursive,
+                    conditions,
+                    false, // async
+                    cancellationToken)
+                    .EnsureCompleted();
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
 
         /// <summary>
         /// The <see cref="DeleteAsync"/> operation marks the specified path
@@ -680,13 +730,31 @@ namespace Azure.Storage.Files.DataLake
         public virtual async Task<Response> DeleteAsync(
             bool? recursive = default,
             DataLakeRequestConditions conditions = default,
-            CancellationToken cancellationToken = default) =>
-            await DeleteInternal(
-                recursive,
-                conditions,
-                true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakePathClient)}.{nameof(Delete)}");
+
+            try
+            {
+                scope.Start();
+
+                return await DeleteInternal(
+                    recursive,
+                    conditions,
+                    true, // async
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
 
         /// <summary>
         /// The <see cref="DeleteInternal"/> operation marks the specified path
@@ -726,7 +794,7 @@ namespace Azure.Storage.Files.DataLake
             using (Pipeline.BeginLoggingScope(nameof(DataLakePathClient)))
             {
                 Pipeline.LogMethodEnter(
-                    nameof(BlobBaseClient),
+                    nameof(DataLakePathClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(recursive)}: {recursive}\n" +
@@ -791,19 +859,36 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response<DataLakePathClient> Rename(
             string destinationPath,
             DataLakeRequestConditions sourceConditions = default,
             DataLakeRequestConditions destinationConditions = default,
-            CancellationToken cancellationToken = default) =>
-            RenameInternal(
-                destinationPath,
-                sourceConditions,
-                destinationConditions,
-                false, // async
-                cancellationToken)
-                .EnsureCompleted();
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakePathClient)}.{nameof(Rename)}");
+
+            try
+            {
+                scope.Start();
+
+                return RenameInternal(
+                    destinationPath,
+                    sourceConditions,
+                    destinationConditions,
+                    false, // async
+                    cancellationToken)
+                    .EnsureCompleted();
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
 
         /// <summary>
         /// The <see cref="RenameAsync"/> operation renames a file or directory.
@@ -833,19 +918,36 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual async Task<Response<DataLakePathClient>> RenameAsync(
             string destinationPath,
             DataLakeRequestConditions sourceConditions = default,
             DataLakeRequestConditions destinationConditions = default,
-            CancellationToken cancellationToken = default) =>
-            await RenameInternal(
-                destinationPath,
-                sourceConditions,
-                destinationConditions,
-                true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakePathClient)}.{nameof(Rename)}");
+
+            try
+            {
+                scope.Start();
+
+                return await RenameInternal(
+                    destinationPath,
+                    sourceConditions,
+                    destinationConditions,
+                    true, // async
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
 
         /// <summary>
         /// The <see cref="RenameInternal"/> operation renames a file or directory.
@@ -941,12 +1043,12 @@ namespace Azure.Storage.Files.DataLake
 
         #region Get Access Control
         /// <summary>
-        /// The <see cref="GetAccessControlInternal"/> operation returns the
+        /// The <see cref="GetAccessControl"/> operation returns the
         /// access control data for a path.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/getproperties" />.
         /// </summary>
-        /// <param name="upn">
+        /// <param name="userPrincipalName">
         /// Optional.Valid only when Hierarchical Namespace is enabled for the account.If "true",
         /// the user identity values returned in the x-ms-owner, x-ms-group, and x-ms-acl response
         /// headers will be transformed from Azure Active Directory Object IDs to User Principal Names.
@@ -970,25 +1072,42 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response<PathAccessControl> GetAccessControl(
-            bool? upn = default,
+            bool? userPrincipalName = default,
             DataLakeRequestConditions conditions = default,
-            CancellationToken cancellationToken = default) =>
-            GetAccessControlInternal(
-                upn,
-                conditions,
-                false, // async
-                cancellationToken)
-                .EnsureCompleted();
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakePathClient)}.{nameof(GetAccessControl)}");
+
+            try
+            {
+                scope.Start();
+
+                return GetAccessControlInternal(
+                    userPrincipalName,
+                    conditions,
+                    false, // async
+                    cancellationToken)
+                    .EnsureCompleted();
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
 
         /// <summary>
-        /// The <see cref="GetAccessControlInternal"/> operation returns the
+        /// The <see cref="GetAccessControlAsync"/> operation returns the
         /// access control data for a path.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/getproperties" />.
         /// </summary>
-        /// <param name="upn">
+        /// <param name="userPrincipalName">
         /// Optional.Valid only when Hierarchical Namespace is enabled for the account.If "true",
         /// the user identity values returned in the x-ms-owner, x-ms-group, and x-ms-acl response
         /// headers will be transformed from Azure Active Directory Object IDs to User Principal Names.
@@ -1012,17 +1131,34 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual async Task<Response<PathAccessControl>> GetAccessControlAsync(
-            bool? upn = default,
+            bool? userPrincipalName = default,
             DataLakeRequestConditions conditions = default,
-            CancellationToken cancellationToken = default) =>
-            await GetAccessControlInternal(
-                upn,
-                conditions,
-                true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakePathClient)}.{nameof(GetAccessControl)}");
+
+            try
+            {
+                scope.Start();
+
+                return await GetAccessControlInternal(
+                    userPrincipalName,
+                    conditions,
+                    true, // async
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
 
         /// <summary>
         /// The <see cref="GetAccessControlInternal"/> operation returns the
@@ -1030,7 +1166,7 @@ namespace Azure.Storage.Files.DataLake
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/getproperties" />.
         /// </summary>
-        /// <param name="upn">
+        /// <param name="userPrincipalName">
         /// Optional.Valid only when Hierarchical Namespace is enabled for the account.If "true",
         /// the user identity values returned in the x-ms-owner, x-ms-group, and x-ms-acl response
         /// headers will be transformed from Azure Active Directory Object IDs to User Principal Names.
@@ -1058,7 +1194,7 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<PathAccessControl>> GetAccessControlInternal(
-            bool? upn,
+            bool? userPrincipalName,
             DataLakeRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
@@ -1076,7 +1212,7 @@ namespace Azure.Storage.Files.DataLake
                         pipeline: Pipeline,
                         resourceUri: _dfsUri,
                         action: PathGetPropertiesAction.GetAccessControl,
-                        upn: upn,
+                        upn: userPrincipalName,
                         leaseId: conditions?.LeaseId,
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
@@ -1091,8 +1227,8 @@ namespace Azure.Storage.Files.DataLake
                         {
                             Owner = response.Value.Owner,
                             Group = response.Value.Group,
-                            Permissions = response.Value.Permissions,
-                            Acl = response.Value.ACL
+                            Permissions = PathPermissions.ParseSymbolicPermissions(response.Value.Permissions),
+                            AccessControlList = PathAccessControlExtensions.ParseAccessControlList(response.Value.ACL)
                         },
                         response.GetRawResponse());
                 }
@@ -1111,13 +1247,19 @@ namespace Azure.Storage.Files.DataLake
 
         #region Set Access Control
         /// <summary>
-        /// The <see cref="SetAccessControl"/> operation sets the
+        /// The <see cref="SetAccessControlList"/> operation sets the
         /// Access Control on a path
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
         /// </summary>
-        /// <param name="accessControl">
-        /// The access control to set.
+        /// <param name="accessControlList">
+        /// The POSIX access control list for the file or directory.
+        /// </param>
+        /// <param name="owner">
+        /// The owner of the file or directory.
+        /// </param>
+        /// <param name="group">
+        /// The owning group of the file or directory.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
@@ -1135,26 +1277,53 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
-        public virtual Response<PathInfo> SetAccessControl(
-            PathAccessControl accessControl,
+        public virtual Response<PathInfo> SetAccessControlList(
+            IList<PathAccessControlItem> accessControlList,
+            string owner = default,
+            string group = default,
             DataLakeRequestConditions conditions = default,
-            CancellationToken cancellationToken = default) =>
-            SetAccessControlInternal(
-                accessControl,
-                conditions,
-                false, // async
-                cancellationToken)
-                .EnsureCompleted();
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakePathClient)}.{nameof(SetAccessControlList)}");
+
+            try
+            {
+                scope.Start();
+
+                return SetAccessControlListInternal(
+                    accessControlList,
+                    owner,
+                    group,
+                    conditions,
+                    false, // async
+                    cancellationToken)
+                    .EnsureCompleted();
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
 
         /// <summary>
-        /// The <see cref="SetAccessControlAsync"/> operation sets the
+        /// The <see cref="SetAccessControlListAsync"/> operation sets the
         /// Access Control on a path
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
         /// </summary>
-        /// <param name="accessControl">
-        /// The access control to set.
+        /// <param name="accessControlList">
+        /// The POSIX access control list for the file or directory.
+        /// </param>
+        /// <param name="owner">
+        /// The owner of the file or directory.
+        /// </param>
+        /// <param name="group">
+        /// The owning group of the file or directory.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
@@ -1172,26 +1341,53 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<PathInfo>> SetAccessControlAsync(
-            PathAccessControl accessControl,
+        public virtual async Task<Response<PathInfo>> SetAccessControlListAsync(
+            IList<PathAccessControlItem> accessControlList,
+            string owner = default,
+            string group = default,
             DataLakeRequestConditions conditions = default,
-            CancellationToken cancellationToken = default) =>
-            await SetAccessControlInternal(
-                accessControl,
-                conditions,
-                true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakePathClient)}.{nameof(SetAccessControlList)}");
+
+            try
+            {
+                scope.Start();
+
+                return await SetAccessControlListInternal(
+                    accessControlList,
+                    owner,
+                    group,
+                    conditions,
+                    true, // async
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
 
         /// <summary>
-        /// The <see cref="SetAccessControlInternal"/> operation sets the
+        /// The <see cref="SetAccessControlListInternal"/> operation sets the
         /// Access Control on a path
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
         /// </summary>
-        /// <param name="accessControl">
-        /// The access control to set.
+        /// <param name="accessControlList">
+        /// The POSIX access control list for the file or directory.
+        /// </param>
+        /// <param name="owner">
+        /// The owner of the file or directory.
+        /// </param>
+        /// <param name="group">
+        /// The owning group of the file or directory.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
@@ -1212,8 +1408,10 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<PathInfo>> SetAccessControlInternal(
-            PathAccessControl accessControl,
+        private async Task<Response<PathInfo>> SetAccessControlListInternal(
+            IList<PathAccessControlItem> accessControlList,
+            string owner,
+            string group,
             DataLakeRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
@@ -1224,7 +1422,9 @@ namespace Azure.Storage.Files.DataLake
                     nameof(DataLakePathClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(accessControl)}: {accessControl}\n" +
+                    $"{nameof(accessControlList)}: {accessControlList}\n" +
+                    $"{nameof(owner)}: {owner}\n" +
+                    $"{nameof(group)}: {group}\n" +
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
@@ -1234,10 +1434,9 @@ namespace Azure.Storage.Files.DataLake
                             pipeline: Pipeline,
                             resourceUri: _dfsUri,
                             leaseId: conditions?.LeaseId,
-                            owner: accessControl.Owner,
-                            group: accessControl.Group,
-                            permissions: accessControl.Permissions,
-                            acl: accessControl.Acl,
+                            owner: owner,
+                            group: group,
+                            acl: PathAccessControlExtensions.ToAccessControlListString(accessControlList),
                             ifMatch: conditions?.IfMatch,
                             ifNoneMatch: conditions?.IfNoneMatch,
                             ifModifiedSince: conditions?.IfModifiedSince,
@@ -1267,6 +1466,228 @@ namespace Azure.Storage.Files.DataLake
         }
         #endregion Set Access Control
 
+        #region Set Permissions
+        /// <summary>
+        /// The <see cref="SetPermissions"/> operation sets the
+        /// file permissions on a path.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="permissions">
+        ///  The POSIX access permissions for the file owner, the file owning group, and others.
+        /// </param>
+        /// <param name="owner">
+        /// The owner of the file or directory.
+        /// </param>
+        /// <param name="group">
+        /// The owning group of the file or directory.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
+        /// setting the the path's access control.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the updated
+        /// path.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<PathInfo> SetPermissions(
+            PathPermissions permissions,
+            string owner = default,
+            string group = default,
+            DataLakeRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakePathClient)}.{nameof(SetPermissions)}");
+
+            try
+            {
+                scope.Start();
+
+                return SetPermissionsInternal(
+                    permissions,
+                    owner,
+                    group,
+                    conditions,
+                    false, // async
+                    cancellationToken)
+                    .EnsureCompleted();
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+
+        }
+
+        /// <summary>
+        /// The <see cref="SetPermissionsAsync"/> operation sets the
+        /// file permissions on a path.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="permissions">
+        ///  The POSIX access permissions for the file owner, the file owning group, and others.
+        /// </param>
+        /// <param name="owner">
+        /// The owner of the file or directory.
+        /// </param>
+        /// <param name="group">
+        /// The owning group of the file or directory.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
+        /// setting the the path's access control.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the updated
+        /// path.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<PathInfo>> SetPermissionsAsync(
+            PathPermissions permissions,
+            string owner = default,
+            string group = default,
+            DataLakeRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakePathClient)}.{nameof(SetPermissions)}");
+
+            try
+            {
+                scope.Start();
+
+                return await SetPermissionsInternal(
+                    permissions,
+                    owner,
+                    group,
+                    conditions,
+                    true, // async
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="SetPermissionsInternal"/> operation sets the
+        /// file permissions on a path.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="permissions">
+        ///  The POSIX access permissions for the file owner, the file owning group, and others.
+        /// </param>
+        /// <param name="owner">
+        /// The owner of the file or directory.
+        /// </param>
+        /// <param name="group">
+        /// The owning group of the file or directory.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
+        /// setting the the path's access control.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the updated
+        /// path.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<PathInfo>> SetPermissionsInternal(
+            PathPermissions permissions,
+            string owner,
+            string group,
+            DataLakeRequestConditions conditions,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (Pipeline.BeginLoggingScope(nameof(DataLakePathClient)))
+            {
+                Pipeline.LogMethodEnter(
+                    nameof(DataLakePathClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(permissions)}: {permissions}\n" +
+                    $"{nameof(owner)}: {owner}\n" +
+                    $"{nameof(group)}: {group}\n" +
+                    $"{nameof(conditions)}: {conditions}");
+                try
+                {
+                    Response<PathSetAccessControlResult> response =
+                        await DataLakeRestClient.Path.SetAccessControlAsync(
+                            clientDiagnostics: _clientDiagnostics,
+                            pipeline: Pipeline,
+                            resourceUri: _dfsUri,
+                            leaseId: conditions?.LeaseId,
+                            owner: owner,
+                            group: group,
+                            permissions: permissions.ToSymbolicPermissions(),
+                            ifMatch: conditions?.IfMatch,
+                            ifNoneMatch: conditions?.IfNoneMatch,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            async: async,
+                            cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+
+                    return Response.FromValue(
+                        new PathInfo()
+                        {
+                            ETag = response.Value.ETag,
+                            LastModified = response.Value.LastModified
+                        },
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(DataLakePathClient));
+                }
+            }
+        }
+        #endregion Set Permission
+
         #region Get Properties
         /// <summary>
         /// The <see cref="GetProperties"/> operation returns all
@@ -1292,18 +1713,33 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response<PathProperties> GetProperties(
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            Response<Blobs.Models.BlobProperties> response = _blockBlobClient.GetProperties(
-                conditions.ToBlobRequestConditions(),
-                cancellationToken);
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakePathClient)}.{nameof(GetProperties)}");
 
-            return Response.FromValue(
-                response.Value.ToPathProperties(),
-                response.GetRawResponse());
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobProperties> response = _blockBlobClient.GetProperties(
+                    conditions.ToBlobRequestConditions(),
+                    cancellationToken);
+
+                return Response.FromValue(
+                    response.Value.ToPathProperties(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
         }
 
         /// <summary>
@@ -1330,19 +1766,34 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual async Task<Response<PathProperties>> GetPropertiesAsync(
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            Response<Blobs.Models.BlobProperties> response = await _blockBlobClient.GetPropertiesAsync(
-                conditions.ToBlobRequestConditions(),
-                cancellationToken)
-                .ConfigureAwait(false);
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakePathClient)}.{nameof(GetProperties)}");
 
-            return Response.FromValue(
-                response.Value.ToPathProperties(),
-                response.GetRawResponse());
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobProperties> response = await _blockBlobClient.GetPropertiesAsync(
+                    conditions.ToBlobRequestConditions(),
+                    cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(
+                    response.Value.ToPathProperties(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
         }
         #endregion Get Properties
 
@@ -1372,24 +1823,39 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response<PathInfo> SetHttpHeaders(
             PathHttpHeaders httpHeaders = default,
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            Response<Blobs.Models.BlobInfo> response = _blockBlobClient.SetHttpHeaders(
-                httpHeaders.ToBlobHttpHeaders(),
-                conditions.ToBlobRequestConditions(),
-                cancellationToken);
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakePathClient)}.{nameof(SetHttpHeaders)}");
 
-            return Response.FromValue(
-                new PathInfo()
-                {
-                    ETag = response.Value.ETag,
-                    LastModified = response.Value.LastModified
-                },
-                response.GetRawResponse());
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobInfo> response = _blockBlobClient.SetHttpHeaders(
+                    httpHeaders.ToBlobHttpHeaders(),
+                    conditions.ToBlobRequestConditions(),
+                    cancellationToken);
+
+                return Response.FromValue(
+                    new PathInfo()
+                    {
+                        ETag = response.Value.ETag,
+                        LastModified = response.Value.LastModified
+                    },
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
         }
 
         /// <summary>
@@ -1417,25 +1883,40 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual async Task<Response<PathInfo>> SetHttpHeadersAsync(
             PathHttpHeaders httpHeaders = default,
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            Response<Blobs.Models.BlobInfo> response = await _blockBlobClient.SetHttpHeadersAsync(
-                httpHeaders.ToBlobHttpHeaders(),
-                conditions.ToBlobRequestConditions(),
-                cancellationToken)
-                .ConfigureAwait(false);
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakePathClient)}.{nameof(SetHttpHeaders)}");
 
-            return Response.FromValue(
-                new PathInfo()
-                {
-                    ETag = response.Value.ETag,
-                    LastModified = response.Value.LastModified
-                },
-                response.GetRawResponse());
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobInfo> response = await _blockBlobClient.SetHttpHeadersAsync(
+                    httpHeaders.ToBlobHttpHeaders(),
+                    conditions.ToBlobRequestConditions(),
+                    cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(
+                    new PathInfo()
+                    {
+                        ETag = response.Value.ETag,
+                        LastModified = response.Value.LastModified
+                    },
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
         }
         #endregion Set Http Headers
 
@@ -1465,23 +1946,38 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response<PathInfo> SetMetadata(
             Metadata metadata,
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            Response<Blobs.Models.BlobInfo> response = _blockBlobClient.SetMetadata(
-                metadata,
-                conditions.ToBlobRequestConditions());
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakePathClient)}.{nameof(SetMetadata)}");
 
-            return Response.FromValue(
-                new PathInfo()
-                {
-                    ETag = response.Value.ETag,
-                    LastModified = response.Value.LastModified
-                },
-                response.GetRawResponse());
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobInfo> response = _blockBlobClient.SetMetadata(
+                    metadata,
+                    conditions.ToBlobRequestConditions());
+
+                return Response.FromValue(
+                    new PathInfo()
+                    {
+                        ETag = response.Value.ETag,
+                        LastModified = response.Value.LastModified
+                    },
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
         }
 
         /// <summary>
@@ -1509,24 +2005,39 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual async Task<Response<PathInfo>> SetMetadataAsync(
             Metadata metadata,
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            Response<Blobs.Models.BlobInfo> response = await _blockBlobClient.SetMetadataAsync(
-                metadata,
-                conditions.ToBlobRequestConditions())
-                .ConfigureAwait(false);
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakePathClient)}.{nameof(SetMetadata)}");
 
-            return Response.FromValue(
-                new PathInfo()
-                {
-                    ETag = response.Value.ETag,
-                    LastModified = response.Value.LastModified
-                },
-                response.GetRawResponse());
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobInfo> response = await _blockBlobClient.SetMetadataAsync(
+                    metadata,
+                    conditions.ToBlobRequestConditions())
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(
+                    new PathInfo()
+                    {
+                        ETag = response.Value.ETag,
+                        LastModified = response.Value.LastModified
+                    },
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
         }
         #endregion Set Metadata
     }

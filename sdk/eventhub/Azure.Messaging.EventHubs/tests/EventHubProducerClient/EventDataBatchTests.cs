@@ -23,7 +23,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         public void ConstructorVerifiesTheTransportBatch()
         {
-            Assert.That(() => new EventDataBatch(null, new SendOptions()), Throws.ArgumentNullException);
+            Assert.That(() => new EventDataBatch(null, new SendEventOptions()), Throws.ArgumentNullException);
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         public void ConstructorUpdatesState()
         {
-            var sendOptions = new SendOptions();
+            var sendOptions = new SendEventOptions();
             var mockBatch = new MockTransportBatch();
             var batch = new EventDataBatch(new MockTransportBatch(), null);
 
@@ -59,7 +59,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void PropertyAccessIsDelegatedToTheTransportClient()
         {
             var mockBatch = new MockTransportBatch();
-            var batch = new EventDataBatch(mockBatch, new SendOptions());
+            var batch = new EventDataBatch(mockBatch, new SendEventOptions());
 
             Assert.That(batch.MaximumSizeInBytes, Is.EqualTo(mockBatch.MaximumSizeInBytes), "The maximum size should have been delegated.");
             Assert.That(batch.SizeInBytes, Is.EqualTo(mockBatch.SizeInBytes), "The size should have been delegated.");
@@ -74,7 +74,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void TryAddIsDelegatedToTheTransportClient()
         {
             var mockBatch = new MockTransportBatch();
-            var batch = new EventDataBatch(mockBatch, new SendOptions());
+            var batch = new EventDataBatch(mockBatch, new SendEventOptions());
             var eventData = new EventData(new byte[] { 0x21 });
 
             Assert.That(batch.TryAdd(eventData), Is.True, "The event should have been accepted.");
@@ -89,7 +89,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void AsEnumerableIsDelegatedToTheTransportClient()
         {
             var mockBatch = new MockTransportBatch();
-            var batch = new EventDataBatch(mockBatch, new SendOptions());
+            var batch = new EventDataBatch(mockBatch, new SendEventOptions());
 
             batch.AsEnumerable<string>();
             Assert.That(mockBatch.AsEnumerableCalledWith, Is.EqualTo(typeof(string)), "The enumerable should delegated the requested type parameter.");
@@ -103,7 +103,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void DisposeIsDelegatedToTheTransportClient()
         {
             var mockBatch = new MockTransportBatch();
-            var batch = new EventDataBatch(mockBatch, new SendOptions());
+            var batch = new EventDataBatch(mockBatch, new SendEventOptions());
 
             batch.Dispose();
             Assert.That(mockBatch.DisposeInvoked, Is.True);

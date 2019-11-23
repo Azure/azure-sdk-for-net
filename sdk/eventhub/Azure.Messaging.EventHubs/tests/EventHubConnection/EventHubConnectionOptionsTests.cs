@@ -25,7 +25,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var options = new EventHubConnectionOptions
             {
-                TransportType = TransportType.AmqpWebSockets,
+                TransportType = EventHubsTransportType.AmqpWebSockets,
                 Proxy = Mock.Of<IWebProxy>()
             };
 

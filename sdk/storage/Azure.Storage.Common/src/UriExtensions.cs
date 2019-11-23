@@ -59,5 +59,64 @@ namespace Azure.Storage
             }
             return parameters;
         }
+
+        /// <summary>
+        /// Get the account name from the domain portion of a Uri.
+        /// </summary>
+        /// <param name="uri">The Uri.</param>
+        /// <param name="serviceSubDomain">The service subdomain used to validate that the
+        /// domain is in the expected format. This should be "blob" for blobs, "file" for files,
+        /// "queue" for queues, "blob" and "dfs" for datalake.</param>
+        /// <returns>Account name or null if not able to be parsed.</returns>
+        public static string GetAccountNameFromDomain(this Uri uri, string serviceSubDomain) =>
+            GetAccountNameFromDomain(uri.Host, serviceSubDomain);
+
+        /// <summary>
+        /// Get the account name from the host.
+        /// </summary>
+        /// <param name="host">Host.</param>
+        /// <param name="serviceSubDomain">The service subdomain used to validate that the
+        /// domain is in the expected format. This should be "blob" for blobs, "file" for files,
+        /// "queue" for queues, "blob" and "dfs" for datalake.</param>
+        /// <returns>Account name or null if not able to be parsed.</returns>
+        public static string GetAccountNameFromDomain(string host, string serviceSubDomain)
+        {
+            var accountEndIndex = host.IndexOf(".", StringComparison.InvariantCulture);
+            if (accountEndIndex >= 0)
+            {
+                var serviceStartIndex = accountEndIndex + 1;
+                var serviceEndIndex = host.IndexOf(".", serviceStartIndex, StringComparison.InvariantCulture);
+                if (serviceEndIndex > serviceStartIndex)
+                {
+                    var service = host.Substring(serviceStartIndex, serviceEndIndex - serviceStartIndex);
+                    if (service == serviceSubDomain)
+                    {
+                        return host.Substring(0, accountEndIndex);
+                    }
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// If path starts with a slash, remove it
+        /// </summary>
+        /// <param name="uri">The Uri.</param>
+        /// <returns>Sanitized Uri.</returns>
+        public static string GetPath(this Uri uri) =>
+            (uri.AbsolutePath[0] == '/') ?
+                uri.AbsolutePath.Substring(1) :
+                uri.AbsolutePath;
+
+        // See remarks at https://docs.microsoft.com/en-us/dotnet/api/system.net.ipaddress.tryparse?view=netframework-4.7.2
+        /// <summary>
+        /// Check to see if Uri is using IP Endpoint style.
+        /// </summary>
+        /// <param name="uri">The Uri.</param>
+        /// <returns>True if using IP Endpoint style.</returns>
+        public static bool IsHostIPEndPointStyle(this Uri uri) =>
+           !string.IsNullOrEmpty(uri.Host) &&
+            uri.Host.IndexOf(".", StringComparison.InvariantCulture) >= 0 &&
+            IPAddress.TryParse(uri.Host, out _);
     }
 }

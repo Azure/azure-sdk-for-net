@@ -94,8 +94,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cryptography", "Cryptograph
 		Azure.Storage.Blobs.Cryptography\README.md = Azure.Storage.Blobs.Cryptography\README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Queues.Cryptography", "Azure.Storage.Queues.Cryptography\src\Azure.Storage.Queues.Cryptography.csproj", "{BB8CAAA9-4933-46C2-8E36-9CCE8C73A6AA}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cryptography", "Cryptography", "{9260EB26-0D9A-4D71-B588-7106999C745B}"
 	ProjectSection(SolutionItems) = preProject
 		Azure.Storage.Queues.Cryptography\BreakingChanges.txt = Azure.Storage.Queues.Cryptography\BreakingChanges.txt
@@ -114,7 +112,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Batch", "Batch", "{610DBA57-60FD-4115-8D74-F13A8428973E}"
 	ProjectSection(SolutionItems) = preProject
 		Azure.Storage.Blobs.Batch\BreakingChanges.txt = Azure.Storage.Blobs.Batch\BreakingChanges.txt
-		Azure.Storage.Blobs.Batch\Changelog.txt = Azure.Storage.Blobs.Batch\Changelog.txt
+		Azure.Storage.Blobs.Batch\CHANGELOG.md = Azure.Storage.Blobs.Batch\CHANGELOG.md
 		Azure.Storage.Blobs.Batch\README.md = Azure.Storage.Blobs.Batch\README.md
 	EndProjectSection
 EndProject
@@ -186,10 +184,6 @@ Global
 		{4384B232-1222-44C7-9946-C23FE94DF6A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4384B232-1222-44C7-9946-C23FE94DF6A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4384B232-1222-44C7-9946-C23FE94DF6A9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BB8CAAA9-4933-46C2-8E36-9CCE8C73A6AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BB8CAAA9-4933-46C2-8E36-9CCE8C73A6AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BB8CAAA9-4933-46C2-8E36-9CCE8C73A6AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BB8CAAA9-4933-46C2-8E36-9CCE8C73A6AA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DE6EC5B8-5DBA-4D21-931E-3B042010B3C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DE6EC5B8-5DBA-4D21-931E-3B042010B3C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE6EC5B8-5DBA-4D21-931E-3B042010B3C0}.Release|Any CPU.ActiveCfg = Release|Any CPU

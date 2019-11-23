@@ -33,9 +33,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the TrafficSelectorPolicy class.
         /// </summary>
         /// <param name="localAddressRanges">A collection of local address
-        /// spaces in CIDR format</param>
+        /// spaces in CIDR format.</param>
         /// <param name="remoteAddressRanges">A collection of remote address
-        /// spaces in CIDR format</param>
+        /// spaces in CIDR format.</param>
         public TrafficSelectorPolicy(IList<string> localAddressRanges, IList<string> remoteAddressRanges)
         {
             LocalAddressRanges = localAddressRanges;
@@ -49,13 +49,13 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets a collection of local address spaces in CIDR format
+        /// Gets or sets a collection of local address spaces in CIDR format.
         /// </summary>
         [JsonProperty(PropertyName = "localAddressRanges")]
         public IList<string> LocalAddressRanges { get; set; }
 
         /// <summary>
-        /// Gets or sets a collection of remote address spaces in CIDR format
+        /// Gets or sets a collection of remote address spaces in CIDR format.
         /// </summary>
         [JsonProperty(PropertyName = "remoteAddressRanges")]
         public IList<string> RemoteAddressRanges { get; set; }

@@ -20,7 +20,7 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/operationalinsight/
+    - sdk/operationalinsights/
 
 pr:
   branches:
@@ -31,12 +31,12 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/operationalinsight/
+    - sdk/operationalinsights/
 
 stages:
 - template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: operationalinsight
+    ServiceDirectory: operationalinsights
     ArtifactName: packages
     Artifacts:
     - name: Microsoft.Azure.OperationalInsights

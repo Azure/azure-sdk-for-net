@@ -51,28 +51,26 @@ namespace Azure.Messaging.EventHubs.Samples
                 // Note that there is no means of accurately predicting which partition will be associated with a given partition key;
                 // we can only be assured that it will be a consistent choice of partition.  If you have a need to understand which
                 // exact partition an event is published to, you will need to use an Event Hub producer associated with that partition.
-
+                //
                 // We will publish a small batch of events based on simple sentences.
-
-                var eventBatch = new EventData[]
-                {
-                    new EventData(Encoding.UTF8.GetBytes("Hello, Event Hubs!")),
-                    new EventData(Encoding.UTF8.GetBytes("Goodbye, Event Hubs!"))
-                };
 
                 // To choose a partition key, you will need to create a custom set of send options.
 
-                var sendOptions = new SendOptions
+                var batchOptions = new CreateBatchOptions
                 {
                     PartitionKey = "Any Value Will Do..."
                 };
 
-                await producerClient.SendAsync(eventBatch, sendOptions);
+                using EventDataBatch eventBatch = await producerClient.CreateBatchAsync(batchOptions);
+                eventBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes("Hello, Event Hubs!")));
+                eventBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes("Goodbye, Event Hubs!")));
+
+                await producerClient.SendAsync(eventBatch);
 
                 Console.WriteLine("The event batch has been published.");
             }
 
-            // At this point, our client has passed its "using" scope and have safely been disposed of.  We
+            // At this point, our client has passed its "using" scope and has safely been disposed of.  We
             // have no further obligations.
 
             Console.WriteLine();

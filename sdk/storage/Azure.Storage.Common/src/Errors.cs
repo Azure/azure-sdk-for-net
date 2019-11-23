@@ -27,6 +27,13 @@ namespace Azure.Storage
         public static ArgumentOutOfRangeException MustBeLessThanOrEqualTo(string paramName, long value)
             => new ArgumentOutOfRangeException(paramName, $"Value must be less than or equal to {value}");
 
+        public static ArgumentOutOfRangeException MustBeBetweenInclusive(
+                string paramName,
+                long lower,
+                long upper,
+                long actual)
+            => new ArgumentOutOfRangeException(paramName, $"Value must be between {lower} and {upper} inclusive, not {actual}");
+
         public static ArgumentOutOfRangeException MustBeGreaterThanValueOrEqualToOtherValue(
                 string paramName,
                 long value0,
@@ -50,6 +57,9 @@ namespace Azure.Storage
 
         public static InvalidOperationException SasMissingData(string paramName)
             => new InvalidOperationException($"SAS is missing required parameter: {paramName}");
+
+        public static InvalidOperationException SasDataNotAllowed(string paramName, string paramNameNotAllowed)
+            => new InvalidOperationException($"SAS cannot have the {paramNameNotAllowed} parameter when the {paramName} parameter is present");
 
         public static InvalidOperationException TaskIncomplete()
             => new InvalidOperationException("Task is not completed");

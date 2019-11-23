@@ -45,7 +45,7 @@ namespace Azure.Data.AppConfiguration
         /// If set, all properties of the <see cref="ConfigurationSetting"/> entities in the returned group will be exactly what they
         /// were at this time.
         /// </summary>
-        public DateTimeOffset? AsOf { get; set; }
+        public DateTimeOffset? AcceptDateTime { get; set; }
 
         /// <summary>
         /// Creates a <see cref="SettingSelector"/> that will retrieve all <see cref="ConfigurationSetting"/> entities in the
@@ -58,7 +58,7 @@ namespace Azure.Data.AppConfiguration
         /// the passed-in keys and labels.
         /// </summary>
         /// <param name="key">A key or key filter indicating which <see cref="ConfigurationSetting"/> entities to select.</param>
-        /// <param name="label">A label or label filter indicating which <see cref="ConfigurationSetting"/> entities to select</param>
+        /// <param name="label">A label or label filter indicating which <see cref="ConfigurationSetting"/> entities to select.</param>
         public SettingSelector(string key, string label = default)
         {
             Keys = new List<string>
@@ -80,7 +80,7 @@ namespace Azure.Data.AppConfiguration
         public override bool Equals(object obj) => base.Equals(obj);
 
         /// <summary>
-        /// Get a hash code for the SettingSelector
+        /// Get a hash code for the SettingSelector.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();

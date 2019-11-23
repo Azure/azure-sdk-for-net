@@ -104,7 +104,7 @@ namespace Azure.Identity.Tests
                 SilentAuthFactory = (_) => { return AuthenticationResultFactory.Create(accessToken: Guid.NewGuid().ToString(), expiresOn: DateTimeOffset.UtcNow.AddMinutes(10)); }
             };
 
-            var credential = InstrumentClient(new SharedTokenCacheCredential("mockuser@mockdomain.com", CredentialPipeline.GetInstance(null), mockMsalClient));
+            var credential = InstrumentClient(new SharedTokenCacheCredential(null, "mockuser@mockdomain.com", CredentialPipeline.GetInstance(null), mockMsalClient));
 
             var method = "Azure.Identity.SharedTokenCacheCredential.GetToken";
 
@@ -178,7 +178,7 @@ namespace Azure.Identity.Tests
                 SilentAuthFactory = (_) => throw new MockClientException(expExMessage)
             };
 
-            var credential = InstrumentClient(new SharedTokenCacheCredential("mockuser@mockdomain.com", CredentialPipeline.GetInstance(null), mockMsalClient));
+            var credential = InstrumentClient(new SharedTokenCacheCredential(null, "mockuser@mockdomain.com", CredentialPipeline.GetInstance(null), mockMsalClient));
 
             var method = "Azure.Identity.SharedTokenCacheCredential.GetToken";
 

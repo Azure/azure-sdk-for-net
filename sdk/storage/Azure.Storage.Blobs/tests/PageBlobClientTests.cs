@@ -133,7 +133,7 @@ namespace Azure.Storage.Blobs.Test
             PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(blobName));
             CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
             blob = InstrumentClient(new PageBlobClient(
-                blob.Uri,
+                blob.Uri.ToHttp(),
                 blob.Pipeline,
                 blob.ClientDiagnostics,
                 customerProvidedKey));
@@ -345,7 +345,7 @@ namespace Azure.Storage.Blobs.Test
             PageBlobClient httpBlob = InstrumentClient(test.Container.GetPageBlobClient(blobName));
             CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
             httpBlob = InstrumentClient(new PageBlobClient(
-                httpBlob.Uri,
+                httpBlob.Uri.ToHttp(),
                 httpBlob.Pipeline,
                 httpBlob.ClientDiagnostics,
                 customerProvidedKey));
@@ -477,7 +477,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8354")]
         public async Task UploadPagesAsync_WithUnreliableConnection()
         {
             const int blobSize = 1 * Constants.MB;
@@ -585,7 +584,7 @@ namespace Azure.Storage.Blobs.Test
             PageBlobClient httpBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
             CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
             httpBlob = InstrumentClient(new PageBlobClient(
-                httpBlob.Uri,
+                httpBlob.Uri.ToHttp(),
                 httpBlob.Pipeline,
                 httpBlob.ClientDiagnostics,
                 customerProvidedKey));
@@ -825,7 +824,7 @@ namespace Azure.Storage.Blobs.Test
                     lease: true);
 
                 // Act
-                Assert.CatchAsync<Exception>(
+                await TestHelper.CatchAsync<Exception>(
                     async () =>
                     {
                         var _ = (await blob.GetPageRangesAsync(
@@ -979,7 +978,7 @@ namespace Azure.Storage.Blobs.Test
                     lease: true);
 
                 // Act
-                Assert.CatchAsync<Exception>(
+                await TestHelper.CatchAsync<Exception>(
                     async () =>
                     {
                         var _ = (await blob.GetPageRangesDiffAsync(
@@ -1037,7 +1036,7 @@ namespace Azure.Storage.Blobs.Test
             PageBlobClient httpBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
             CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
             httpBlob = InstrumentClient(new PageBlobClient(
-                httpBlob.Uri,
+                httpBlob.Uri.ToHttp(),
                 httpBlob.Pipeline,
                 httpBlob.ClientDiagnostics,
                 customerProvidedKey));
@@ -1564,7 +1563,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8353")]
         public async Task UploadPagesFromUriAsync_CPK()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1610,7 +1608,7 @@ namespace Azure.Storage.Blobs.Test
             PageBlobClient httpDestBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
             CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
             httpDestBlob = InstrumentClient(new PageBlobClient(
-                httpDestBlob.Uri,
+                httpDestBlob.Uri.ToHttp(),
                 httpDestBlob.Pipeline,
                 httpDestBlob.ClientDiagnostics,
                 customerProvidedKey));
