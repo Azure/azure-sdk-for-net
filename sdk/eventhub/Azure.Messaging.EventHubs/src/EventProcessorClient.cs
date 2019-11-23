@@ -620,6 +620,7 @@ namespace Azure.Messaging.EventHubs
                         // We need to wait until all tasks have stopped before making the load balancing task null.  If we did it sooner, we
                         // would have a race condition where the user could update the processing handlers while some pumps are still running.
 
+                        ActiveLoadBalancingTask.Dispose();
                         ActiveLoadBalancingTask = null;
 
                         if (loadBalancingException != default)
@@ -1056,6 +1057,7 @@ namespace Azure.Messaging.EventHubs
                 }
                 finally
                 {
+                    processingTask.Dispose();
                     tokenSource.Dispose();
                 }
             }
