@@ -592,6 +592,8 @@ namespace Azure.Messaging.EventHubs
                         // Now that a cancellation request has been issued, wait for the running task to finish.  In case something
                         // unexpected happened and it stopped working midway, this is the moment we expect to catch an exception.
 
+                        Exception loadBalancingException = default;
+
                         try
                         {
                             await ActiveLoadBalancingTask.ConfigureAwait(false);
@@ -600,10 +602,9 @@ namespace Azure.Messaging.EventHubs
                         {
                             // Nothing to do here.  These exceptions are expected.
                         }
-                        catch (Exception)
+                        catch (Exception ex)
                         {
-                            // TODO: delegate the exception handling to an Exception Callback.  Instead of delegating it to the handler,
-                            // should we surface it?
+                            loadBalancingException = ex;
                         }
 
                         // Now that the task has finished, clean up what is left.  Stop and remove every partition processing task that is
@@ -620,6 +621,11 @@ namespace Azure.Messaging.EventHubs
                         // would have a race condition where the user could update the processing handlers while some pumps are still running.
 
                         ActiveLoadBalancingTask = null;
+
+                        if (loadBalancingException != default)
+                        {
+                            throw loadBalancingException;
+                        }
                     }
                 }
                 finally
