@@ -62,6 +62,8 @@ namespace Azure.Messaging.EventHubs
         {
             add
             {
+                Argument.AssertNotNull(value, nameof(PartitionInitializingAsync));
+
                 if (_partitionInitializingAsync != default)
                 {
                     throw new NotSupportedException("TODO: no more than one event.");
@@ -72,6 +74,8 @@ namespace Azure.Messaging.EventHubs
 
             remove
             {
+                Argument.AssertNotNull(value, nameof(PartitionInitializingAsync));
+
                 if (_partitionInitializingAsync != value)
                 {
                     throw new ArgumentException("TODO: value does not exist.");
@@ -89,6 +93,8 @@ namespace Azure.Messaging.EventHubs
         {
             add
             {
+                Argument.AssertNotNull(value, nameof(PartitionClosingAsync));
+
                 if (_partitionClosingAsync != default)
                 {
                     throw new NotSupportedException("TODO: no more than one event.");
@@ -99,6 +105,8 @@ namespace Azure.Messaging.EventHubs
 
             remove
             {
+                Argument.AssertNotNull(value, nameof(PartitionClosingAsync));
+
                 if (_partitionClosingAsync != value)
                 {
                     throw new ArgumentException("TODO: value does not exist.");
@@ -117,6 +125,8 @@ namespace Azure.Messaging.EventHubs
         {
             add
             {
+                Argument.AssertNotNull(value, nameof(ProcessEventAsync));
+
                 if (_processEventAsync != default)
                 {
                     throw new NotSupportedException("TODO: no more than one event.");
@@ -127,6 +137,8 @@ namespace Azure.Messaging.EventHubs
 
             remove
             {
+                Argument.AssertNotNull(value, nameof(ProcessEventAsync));
+
                 if (_processEventAsync != value)
                 {
                     throw new ArgumentException("TODO: value does not exist.");
@@ -145,6 +157,8 @@ namespace Azure.Messaging.EventHubs
         {
             add
             {
+                Argument.AssertNotNull(value, nameof(ProcessErrorAsync));
+
                 if (_processErrorAsync != default)
                 {
                     throw new NotSupportedException("TODO: no more than one event.");
@@ -155,6 +169,8 @@ namespace Azure.Messaging.EventHubs
 
             remove
             {
+                Argument.AssertNotNull(value, nameof(ProcessErrorAsync));
+
                 if (_processErrorAsync != value)
                 {
                     throw new ArgumentException("TODO: value does not exist.");
