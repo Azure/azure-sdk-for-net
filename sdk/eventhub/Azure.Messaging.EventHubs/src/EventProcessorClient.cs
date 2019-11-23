@@ -853,7 +853,6 @@ namespace Azure.Messaging.EventHubs
                 FullyQualifiedNamespace,
                 EventHubName,
                 ConsumerGroup,
-                Identifier,
                 context.PartitionId,
                 eventData.Offset.Value,
                 eventData.SequenceNumber.Value
@@ -1005,13 +1004,14 @@ namespace Azure.Messaging.EventHubs
                 var startingPosition = eventArgs.DefaultStartingPosition;
                 var ownership = InstanceOwnership[partitionId];
 
-                if (ownership.Offset.HasValue)
+                var availableCheckpoints = await Manager.ListCheckpointsAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup);
+                foreach (Checkpoint checkpoint in availableCheckpoints)
                 {
-                    startingPosition = EventPosition.FromOffset(ownership.Offset.Value);
-                }
-                else if (ownership.SequenceNumber.HasValue)
-                {
-                    startingPosition = EventPosition.FromSequenceNumber(ownership.SequenceNumber.Value);
+                    if (checkpoint.PartitionId == context.PartitionId)
+                    {
+                        startingPosition = EventPosition.FromOffset(checkpoint.Offset);
+                        break;
+                    }
                 }
 
                 var tokenSource = new CancellationTokenSource();
@@ -1095,8 +1095,6 @@ namespace Azure.Messaging.EventHubs
                     ConsumerGroup,
                     Identifier,
                     partitionId,
-                    oldOwnership?.Offset,
-                    oldOwnership?.SequenceNumber,
                     DateTimeOffset.UtcNow,
                     oldOwnership?.ETag
                 );
@@ -1122,8 +1120,6 @@ namespace Azure.Messaging.EventHubs
                     ownership.ConsumerGroup,
                     ownership.OwnerIdentifier,
                     ownership.PartitionId,
-                    ownership.Offset,
-                    ownership.SequenceNumber,
                     DateTimeOffset.UtcNow,
                     ownership.ETag
                 ));

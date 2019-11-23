@@ -90,7 +90,7 @@ namespace Azure.Messaging.EventHubs
         ///   Event Hub gateway rather than a specific partition; intended to perform delegated operations.
         /// </summary>
         ///
-        private TransportProducer GatewayProducer { get; }
+        private TransportProducer EventHubProducer { get; }
 
         /// <summary>
         ///   The set of active Event Hub transport-specific producers created by this client which are specific to
@@ -181,7 +181,7 @@ namespace Azure.Messaging.EventHubs
             OwnsConnection = true;
             Connection = new EventHubConnection(connectionString, eventHubName, clientOptions.ConnectionOptions);
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
-            GatewayProducer = Connection.CreateTransportProducer(null, RetryPolicy);
+            EventHubProducer = Connection.CreateTransportProducer(null, RetryPolicy);
         }
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace Azure.Messaging.EventHubs
             OwnsConnection = true;
             Connection = new EventHubConnection(fullyQualifiedNamespace, eventHubName, credential, clientOptions.ConnectionOptions);
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
-            GatewayProducer = Connection.CreateTransportProducer(null, RetryPolicy);
+            EventHubProducer = Connection.CreateTransportProducer(null, RetryPolicy);
         }
 
         /// <summary>
@@ -227,7 +227,7 @@ namespace Azure.Messaging.EventHubs
             OwnsConnection = false;
             Connection = connection;
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
-            GatewayProducer = Connection.CreateTransportProducer(null, RetryPolicy);
+            EventHubProducer = Connection.CreateTransportProducer(null, RetryPolicy);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.Messaging.EventHubs
 
             OwnsConnection = false;
             Connection = connection;
-            GatewayProducer = transportProducer;
+            EventHubProducer = transportProducer;
         }
 
         /// <summary>
@@ -409,10 +409,16 @@ namespace Azure.Messaging.EventHubs
 
             if (string.IsNullOrEmpty(options.PartitionId))
             {
-                activeProducer = GatewayProducer;
+                activeProducer = EventHubProducer;
             }
             else
             {
+                // This assertion is intended as an additional check, not as a guarantee.  There still exists a benign
+                // race condition where a transport producer may be created after the client has been closed; in this case
+                // the transport producer will be force-closed with the associated connection or, worst case, will close once
+                // its idle timeout period elapses.
+
+                Argument.AssertNotClosed(IsClosed, nameof(EventHubProducerClient));
                 activeProducer = PartitionProducers.GetOrAdd(options.PartitionId, id => Connection.CreateTransportProducer(id, RetryPolicy));
             }
 
@@ -460,10 +466,16 @@ namespace Azure.Messaging.EventHubs
 
             if (String.IsNullOrEmpty(eventBatch.SendOptions.PartitionId))
             {
-                activeProducer = GatewayProducer;
+                activeProducer = EventHubProducer;
             }
             else
             {
+                // This assertion is intended as an additional check, not as a guarantee.  There still exists a benign
+                // race condition where a transport producer may be created after the client has been closed; in this case
+                // the transport producer will be force-closed with the associated connection or, worst case, will close once
+                // its idle timeout period elapses.
+
+                Argument.AssertNotClosed(IsClosed, nameof(EventHubProducerClient));
                 activeProducer = PartitionProducers.GetOrAdd(eventBatch.SendOptions.PartitionId, id => Connection.CreateTransportProducer(id, RetryPolicy));
             }
 
@@ -519,7 +531,7 @@ namespace Azure.Messaging.EventHubs
             options = options?.Clone() ?? new CreateBatchOptions();
             AssertSinglePartitionReference(options.PartitionId, options.PartitionKey);
 
-            TransportEventBatch transportBatch = await GatewayProducer.CreateBatchAsync(options, cancellationToken).ConfigureAwait(false);
+            TransportEventBatch transportBatch = await EventHubProducer.CreateBatchAsync(options, cancellationToken).ConfigureAwait(false);
             return new EventDataBatch(transportBatch, options.ToSendOptions());
         }
 
@@ -546,7 +558,7 @@ namespace Azure.Messaging.EventHubs
 
             try
             {
-                await GatewayProducer.CloseAsync(cancellationToken).ConfigureAwait(false);
+                await EventHubProducer.CloseAsync(cancellationToken).ConfigureAwait(false);
 
                 var pendingCloses = new List<Task>();
 

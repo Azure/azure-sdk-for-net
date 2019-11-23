@@ -12,6 +12,8 @@ namespace Azure.Messaging.EventHubs.Processor
     ///   the exception that has been thrown.
     /// </summary>
     ///
+    /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor" />
+    ///
     public struct ProcessErrorEventArgs
     {
         /// <summary>
@@ -27,7 +29,7 @@ namespace Azure.Messaging.EventHubs.Processor
         public string Operation { get; }
 
         /// <summary>
-        ///   The exception that was thrown by the <see cref="EventProcessorClient" />.
+        ///   The exception that was thrown by the <c>EventProcessorClient</c>.
         /// </summary>
         ///
         public Exception Exception { get; }
@@ -44,7 +46,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <param name="partitionId">The identifier of the partition whose processing threw an exception.</param>
         /// <param name="operation">A short description of the operation that was being performed when the exception was thrown.</param>
-        /// <param name="exception">The exception that was thrown by the <see cref="EventProcessorClient" />.</param>
+        /// <param name="exception">The exception that was thrown by the <c>EventProcessorClient</c>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         public ProcessErrorEventArgs(string partitionId,

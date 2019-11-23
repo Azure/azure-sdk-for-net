@@ -27,6 +27,12 @@ namespace Azure.Messaging.EventHubs.Samples.Infrastructure
         /// <summary>The set of stored ownership.</summary>
         private readonly Dictionary<(string, string, string, string), PartitionOwnership> _ownership;
 
+        /// <summary>The primitive for synchronizing access during checkpoint update.</summary>
+        private readonly object _checkpointLock = new object();
+
+        /// <summary>The set of stored checkpoints.</summary>
+        private readonly Dictionary<(string, string, string, string), Checkpoint> _checkpoints;
+
         /// <summary>Logs activities performed by this partition manager.</summary>
         private readonly Action<string> _logger;
 
@@ -41,6 +47,7 @@ namespace Azure.Messaging.EventHubs.Samples.Infrastructure
             _logger = logger;
 
             _ownership = new Dictionary<(string, string, string, string), PartitionOwnership>();
+            _checkpoints = new Dictionary<(string, string, string, string), Checkpoint>();
         }
 
         /// <summary>
@@ -120,6 +127,34 @@ namespace Azure.Messaging.EventHubs.Samples.Infrastructure
         }
 
         /// <summary>
+        ///   Retrieves a complete checkpoint list from the in-memory storage service.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the ownership are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
+        /// <param name="consumerGroup">The name of the consumer group the ownership are associated with.</param>
+        ///
+        /// <returns>An enumerable containing all the existing ownership for the associated Event Hub and consumer group.</returns>
+        ///
+        public override Task<IEnumerable<Checkpoint>> ListCheckpointsAsync(string fullyQualifiedNamespace,
+                                                                           string eventHubName,
+                                                                           string consumerGroup)
+        {
+            List<Checkpoint> checkpointList;
+
+            lock (_checkpointLock)
+            {
+                checkpointList = _checkpoints.Values
+                    .Where(checkpoint => checkpoint.FullyQualifiedNamespace == fullyQualifiedNamespace
+                        && checkpoint.EventHubName == eventHubName
+                        && checkpoint.ConsumerGroup == consumerGroup)
+                    .ToList();
+            }
+
+            return Task.FromResult((IEnumerable<Checkpoint>)checkpointList);
+        }
+
+        /// <summary>
         ///   Updates the checkpoint using the given information for the associated partition and consumer group in the in-memory storage service.
         /// </summary>
         ///
@@ -127,30 +162,12 @@ namespace Azure.Messaging.EventHubs.Samples.Infrastructure
         ///
         public override Task UpdateCheckpointAsync(Checkpoint checkpoint)
         {
-            lock (_ownershipLock)
+            lock (_checkpointLock)
             {
                 var key = (checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId);
+                _checkpoints[key] = checkpoint;
 
-                if (_ownership.TryGetValue(key, out PartitionOwnership ownership))
-                {
-                    if (ownership.OwnerIdentifier == checkpoint.OwnerIdentifier)
-                    {
-                        ownership.Offset = checkpoint.Offset;
-                        ownership.SequenceNumber = checkpoint.SequenceNumber;
-                        ownership.LastModifiedTime = DateTimeOffset.UtcNow;
-                        ownership.ETag = Guid.NewGuid().ToString();
-
-                        Log($"Checkpoint with partition id = '{checkpoint.PartitionId}' updated.");
-                    }
-                    else
-                    {
-                        Log($"Checkpoint with partition id = '{checkpoint.PartitionId}' could not be updated because owner has changed.");
-                    }
-                }
-                else
-                {
-                    Log($"Checkpoint with partition id = '{checkpoint.PartitionId}' could not be updated because no associated ownership was found.");
-                }
+                Log($"Checkpoint with partition id = '{checkpoint.PartitionId}' updated successfully.");
             }
 
             return Task.CompletedTask;

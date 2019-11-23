@@ -62,6 +62,19 @@ namespace Azure.Messaging.EventHubs.Amqp
         private string PartitionId { get; }
 
         /// <summary>
+        ///   The current position for the consumer, updated as events are received from the
+        ///   partition.
+        /// </summary>
+        ///
+        /// <remarks>
+        ///   When creating or recovering the associated AMQP link, this value is used
+        ///   to set the position.  It is intended to primarily support recreating links
+        ///   transparently to callers, allowing progress in the stream to be remembered.
+        /// </remarks>
+        ///
+        private EventPosition CurrentEventPosition { get; set; }
+
+        /// <summary>
         ///   Indicates whether or not the consumer should request information on the last enqueued event on the partition
         ///   associated with a given event, and track that information as events are received.
         /// </summary>
@@ -140,6 +153,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             EventHubName = eventHubName;
             ConsumerGroup = consumerGroup;
             PartitionId = partitionId;
+            CurrentEventPosition = eventPosition;
             TrackLastEnqueuedEventProperties = trackLastEnqueuedEventProperties;
             ConnectionScope = connectionScope;
             RetryPolicy = retryPolicy;
@@ -149,7 +163,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                 ConnectionScope.OpenConsumerLinkAsync(
                     consumerGroup,
                     partitionId,
-                    eventPosition,
+                    CurrentEventPosition,
                     timeout,
                     prefetchCount ?? DefaultPrefetchCount,
                     ownerLevel,
@@ -183,6 +197,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             var retryDelay = default(TimeSpan?);
             var amqpMessages = default(IEnumerable<AmqpMessage>);
             var receivedEvents = default(List<EventData>);
+            var lastReceivedEvent = default(EventData);
 
             var stopWatch = Stopwatch.StartNew();
 
@@ -222,9 +237,19 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                             receivedEventCount = receivedEvents.Count;
 
-                            if ((TrackLastEnqueuedEventProperties) && (receivedEventCount > 0))
+                            if (receivedEventCount > 0)
                             {
-                                LastReceivedEvent = receivedEvents[receivedEventCount - 1];
+                                lastReceivedEvent = receivedEvents[receivedEventCount - 1];
+
+                                if (lastReceivedEvent.Offset.HasValue)
+                                {
+                                    CurrentEventPosition = EventPosition.FromOffset(lastReceivedEvent.Offset.Value);
+                                }
+
+                                if (TrackLastEnqueuedEventProperties)
+                                {
+                                    LastReceivedEvent = lastReceivedEvent;
+                                }
                             }
 
                             return receivedEvents;
