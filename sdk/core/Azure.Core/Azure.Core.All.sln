@@ -71,8 +71,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Files.Shares.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Queues", "..\..\storage\Azure.Storage.Queues\src\Azure.Storage.Queues.csproj", "{E01BF9E7-625A-42CA-A50C-AC5464CA30B7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Queues.Cryptography", "..\..\storage\Azure.Storage.Queues.Cryptography\src\Azure.Storage.Queues.Cryptography.csproj", "{3B7B781E-92DA-46CA-A15F-4F9271355F19}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Queues.Samples.Tests", "..\..\storage\Azure.Storage.Queues\samples\Azure.Storage.Queues.Samples.Tests.csproj", "{1B83F9FE-DB1C-4E26-96D3-FC7889B3554A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Queues.Tests", "..\..\storage\Azure.Storage.Queues\tests\Azure.Storage.Queues.Tests.csproj", "{A4E40B39-85DC-43D1-897C-5C5213CFBE6F}"
@@ -505,18 +503,6 @@ Global
 		{E01BF9E7-625A-42CA-A50C-AC5464CA30B7}.Release|x64.Build.0 = Release|Any CPU
 		{E01BF9E7-625A-42CA-A50C-AC5464CA30B7}.Release|x86.ActiveCfg = Release|Any CPU
 		{E01BF9E7-625A-42CA-A50C-AC5464CA30B7}.Release|x86.Build.0 = Release|Any CPU
-		{3B7B781E-92DA-46CA-A15F-4F9271355F19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3B7B781E-92DA-46CA-A15F-4F9271355F19}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3B7B781E-92DA-46CA-A15F-4F9271355F19}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{3B7B781E-92DA-46CA-A15F-4F9271355F19}.Debug|x64.Build.0 = Debug|Any CPU
-		{3B7B781E-92DA-46CA-A15F-4F9271355F19}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{3B7B781E-92DA-46CA-A15F-4F9271355F19}.Debug|x86.Build.0 = Debug|Any CPU
-		{3B7B781E-92DA-46CA-A15F-4F9271355F19}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3B7B781E-92DA-46CA-A15F-4F9271355F19}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3B7B781E-92DA-46CA-A15F-4F9271355F19}.Release|x64.ActiveCfg = Release|Any CPU
-		{3B7B781E-92DA-46CA-A15F-4F9271355F19}.Release|x64.Build.0 = Release|Any CPU
-		{3B7B781E-92DA-46CA-A15F-4F9271355F19}.Release|x86.ActiveCfg = Release|Any CPU
-		{3B7B781E-92DA-46CA-A15F-4F9271355F19}.Release|x86.Build.0 = Release|Any CPU
 		{1B83F9FE-DB1C-4E26-96D3-FC7889B3554A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1B83F9FE-DB1C-4E26-96D3-FC7889B3554A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B83F9FE-DB1C-4E26-96D3-FC7889B3554A}.Debug|x64.ActiveCfg = Debug|Any CPU
