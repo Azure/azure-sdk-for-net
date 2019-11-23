@@ -535,6 +535,7 @@ namespace Azure.Messaging.EventHubs
                             // We expect the token source to be null, but we are playing safe.
 
                             RunningTaskTokenSource?.Cancel();
+                            RunningTaskTokenSource?.Dispose();
                             RunningTaskTokenSource = new CancellationTokenSource();
 
                             // Start the main running task.  It is responsible for managing the active partition processing tasks and
@@ -589,6 +590,7 @@ namespace Azure.Messaging.EventHubs
                         // Cancel the current running task.
 
                         RunningTaskTokenSource.Cancel();
+                        RunningTaskTokenSource.Dispose();
                         RunningTaskTokenSource = null;
 
                         // Now that a cancellation request has been issued, wait for the running task to finish.  In case something
