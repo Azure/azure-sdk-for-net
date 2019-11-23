@@ -1186,7 +1186,7 @@ namespace Azure.Messaging.EventHubs
 
                         try
                         {
-                            var eventArgs = new ProcessEventArgs(partitionEvent.Context, partitionEvent.Data, this, RunningTaskTokenSource.Token);
+                            var eventArgs = new ProcessEventArgs(partitionEvent.Partition, partitionEvent.Data, this, RunningTaskTokenSource.Token);
                             await OnProcessEventAsync(eventArgs).ConfigureAwait(false);
                         }
                         catch (Exception eventProcessingException)
