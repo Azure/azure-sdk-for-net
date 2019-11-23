@@ -754,8 +754,6 @@ namespace Azure.Messaging.EventHubs.Tests
                                 "consumerGroup",
                                 identifier,
                                 partitionId,
-                                null,
-                                null,
                                 DateTimeOffset.UtcNow,
                                 Guid.NewGuid().ToString()
                             )).ToList();
