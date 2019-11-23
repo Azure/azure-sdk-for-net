@@ -54,20 +54,6 @@ namespace Azure.Messaging.EventHubs.Processor
         internal long OwnerLevel { get; }
 
         /// <summary>
-        ///   The offset of the last <see cref="EventData" /> received by the associated <c>EventProcessorClient</c>
-        ///   upon ownership update.
-        /// </summary>
-        ///
-        public long? Offset { get; set; }
-
-        /// <summary>
-        ///   The sequence number of the last <see cref="EventData" /> received by the associated <c>EventProcessorClient</c>
-        ///   upon ownership update.
-        /// </summary>
-        ///
-        public long? SequenceNumber { get; set; }
-
-        /// <summary>
         ///   The date and time, in UTC, that the last update was made to this ownership.
         /// </summary>
         ///
@@ -88,8 +74,6 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="consumerGroup">The name of the consumer group this partition ownership is associated with.</param>
         /// <param name="ownerIdentifier">The identifier of the associated <c>EventProcessorClient</c> instance.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition this partition ownership is associated with.</param>
-        /// <param name="offset">The offset of the last <see cref="EventData" /> received by the associated <c>EventProcessorClient</c>.</param>
-        /// <param name="sequenceNumber">The sequence number of the last <see cref="EventData" /> received by the associated <c>EventProcessorClient</c>.</param>
         /// <param name="lastModifiedTime">The date and time, in UTC, that the last update was made to this ownership.</param>
         /// <param name="eTag">The entity tag needed to update this ownership.</param>
         ///
@@ -98,8 +82,6 @@ namespace Azure.Messaging.EventHubs.Processor
                                               string consumerGroup,
                                               string ownerIdentifier,
                                               string partitionId,
-                                              long? offset = null,
-                                              long? sequenceNumber = null,
                                               DateTimeOffset? lastModifiedTime = null,
                                               string eTag = null)
         {
@@ -109,23 +91,11 @@ namespace Azure.Messaging.EventHubs.Processor
             Argument.AssertNotNullOrEmpty(ownerIdentifier, nameof(ownerIdentifier));
             Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
 
-            if (offset.HasValue)
-            {
-                Argument.AssertAtLeast(offset.Value, 0, nameof(offset));
-            }
-
-            if (sequenceNumber.HasValue)
-            {
-                Argument.AssertAtLeast(sequenceNumber.Value, 0, nameof(sequenceNumber));
-            }
-
             FullyQualifiedNamespace = fullyQualifiedNamespace;
             EventHubName = eventHubName;
             ConsumerGroup = consumerGroup;
             OwnerIdentifier = ownerIdentifier;
             PartitionId = partitionId;
-            Offset = offset;
-            SequenceNumber = sequenceNumber;
             LastModifiedTime = lastModifiedTime;
             ETag = eTag;
         }
