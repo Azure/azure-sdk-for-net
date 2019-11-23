@@ -44,7 +44,7 @@ Use the [Azure CLI][azure_cli] snippet below to create/get client secret credent
 * Use the returned credentials above to set  **AZURE_CLIENT_ID**(appId), **AZURE_CLIENT_SECRET**(password) and **AZURE_TENANT_ID**(tenant) [environment variables](#environment-variables).
 
 ## Key concepts
-## Credentials
+### Credentials
 
 A credential is a class which contains or can obtain the data needed for a service client to authenticate requests. Service clients across Azure SDK accept credentials when they are constructed and use those credentials to authenticate requests to the service. Azure Identity offers a variety of credential classes in the `Azure.Identity` namespace capable of acquiring an AAD token. All of these credential classes are implementations of the `TokenCredential` abstract class in [Azure.Core][azure_core_library], and can be used by any service client which can be constructed with a `TokenCredential`. 
 
@@ -65,7 +65,7 @@ Credentials can be chained together to be tried in turn until one succeeds using
 
 __Note:__ All credential implementations in the Azure Identity library are threadsafe, and a single credential instance can be used to create multiple service clients.
 
-## DefaultAzureCredential
+### DefaultAzureCredential
 `DefaultAzureCredential` is appropriate for most scenarios where the application is intended to run in the Azure Cloud. This is because the `DefaultAzureCredential` determines the appropriate credential type based of the environment it is executing in. It supports authenticating both as a service principal or managed identity, and can be configured so that it will work both in a local development environment or when deployed to the cloud. 
 
 The `DefaultAzureCredential` will first attempt to authenticate using credentials provided in the environment. In a development environment you can authenticate as a service principal with the `DefaultAzureCredential` by providing configuration in environment variables as described in the next section.
@@ -74,7 +74,7 @@ If the environment configuration is not present or incomplete, the `DefaultAzure
 require platform support. See the
 [managed identity documentation](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/services-support-managed-identities) for more details on this.
 
-## Environment variables
+### Environment variables
 
 `DefaultAzureCredential` and `EnvironmentCredential` are configured for service
 principal authentication with these environment variables:
@@ -88,7 +88,7 @@ principal authentication with these environment variables:
 
 ## Examples
 
-## Authenticating with `DefaultAzureCredential`
+### Authenticating with `DefaultAzureCredential`
 
 This example demonstrates authenticating the `SecretClient` from the [Azure.Security.KeyVault.Secrets][secrets_client_library] client library using the `DefaultAzureCredential`.
 ```c#
@@ -100,7 +100,7 @@ var client = new SecretClient(new Uri("https://myvault.azure.vaults.net/"), new 
 ```
 When executing this in a development machine you need to first [configure the environment](#environment-variables) setting the variables `AZURE_CLIENT_ID`, `AZURE_TENANT_ID` and `AZURE_CLIENT_SECRET` to the appropriate values for your service principal.
 
-## Chaining Credentials
+### Chaining Credentials
 
 The `ChainedTokenCredential` class provides the ability to link together multiple credential instances to be tried sequentially when authenticating. The following example demonstrates creating a credential which will attempt to authenticate using managed identity, and fall back to certificate authentication if a managed identity is unavailable in the current environment.  This example authenticates an `EventHubClient` from the [Azure.Messaging.EventHubs][eventhubs_client_library] client library using the `ChainedTokenCredential`.
 ```c#
@@ -117,7 +117,7 @@ var credential = new ChainedTokenCredential(managedCredential, certCredential);
 var eventHubClient = new EventHubClient("myeventhub.eventhubs.windows.net", "myhubpath", credential);
 ```
 
-## Authenticating a service principal with a client secret
+### Authenticating a service principal with a client secret
 This example demonstrates authenticating the `BlobClient` from the [Azure.Storage.Blobs][blobs_client_library] client library using the `ClientSecretCredential`.
 ```c#
 using Azure.Identity;
@@ -129,7 +129,7 @@ var credential = new ClientSecretCredential(tenantId, clientId, clientSecret);
 var blobClient = new BlobClient(new Uri("https://myaccount.blob.core.windows.net/mycontainer/myblob"), credential);
 ```
 
-## Authenticating a service principal with a certificate
+### Authenticating a service principal with a certificate
 This example demonstrates authenticating the `KeyClient` from the [Azure.Security.KeyVault.Keys][keys_client_library] client library using the `CertificateCredential`.
 ```c#
 using Azure.Identity;
@@ -142,7 +142,7 @@ var credential = new CertificateCredential(tenantId, clientId, certificate);
 
 var keyClient = new KeyClient(new Uri("https://myvault.azure.vaults.net/"), credential);
 ```
-## Authenticating a user with the default browser
+### Authenticating a user with the default browser
 The `InteractiveBrowserCredential` allows an application to authenticate a user by launching the system's default browser. This example demonstrates authenticating the `BlobClient` from the [Azure.Storage.Blobs][blobs_client_library] client library using the `InteractiveBrowserCredential`.
 
 ```c#
@@ -155,7 +155,7 @@ var credential = new InteractiveBrowserCredential(clientId);
 var blobClient = new BlobClient(new Uri("https://myaccount.blob.core.windows.net/mycontainer/myblob"), credential);
 ```
 __Note:__ If a default browser is not available in the system, or the current application does not have permissions to create a process authentication with the `DefaultBrowserCredential` will fail with an `AuthenticationFailedException`.
-## Authenticating a user with the device code flow
+### Authenticating a user with the device code flow
 
 The device code authentication flow allows an application to display a device code to a user, and then the user will authenticate using this code through a browser, typically on another client.  This authentication flow is most often used on clients that have limited UI and no available browser, such as terminal clients and certain IoT devices.  
 
