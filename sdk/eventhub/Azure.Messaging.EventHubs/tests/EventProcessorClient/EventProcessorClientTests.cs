@@ -288,36 +288,6 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubConsumerClient.FullyQualifiedNamespace" />
-        ///   property.
-        /// </summary>
-        ///
-        [Test]
-        public void ProcessorDelegatesForTheFullyQualifiedNamespaceName()
-        {
-            var expected = "SomeNamespace";
-            var mockConnection = new MockConnection(expected);
-            var processor = new EventProcessorClient(Mock.Of<PartitionManager>(), EventHubConsumerClient.DefaultConsumerGroupName, mockConnection, default);
-
-            Assert.That(processor.FullyQualifiedNamespace, Is.EqualTo(expected));
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubProducerClient.EventHubName" />
-        ///   property.
-        /// </summary>
-        ///
-        [Test]
-        public void ConsumerDelegatesForTheEventHubName()
-        {
-            var expected = "EventHubName";
-            var mockConnection = new MockConnection(eventHubName: expected);
-            var processor = new EventProcessorClient(Mock.Of<PartitionManager>(), EventHubConsumerClient.DefaultConsumerGroupName, mockConnection, default);
-
-            Assert.That(processor.EventHubName, Is.EqualTo(expected));
-        }
-
-        /// <summary>
         ///    Verifies functionality of the <see cref="EventProcessorClient.StartAsync" />
         ///    method.
         /// </summary>
@@ -325,7 +295,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void StartAsyncValidatesProcessEventsAsync()
         {
-            var processor = new EventProcessorClient(Mock.Of<PartitionManager>(), "consumerGroup", new MockConnection(), default);
+            var processor = new EventProcessorClient(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "eventHub", () => new MockConnection(), default);
             processor.ProcessErrorAsync += eventArgs => Task.CompletedTask;
 
             Assert.That(async () => await processor.StartProcessingAsync(), Throws.InstanceOf<InvalidOperationException>().And.Message.Contains(nameof(EventProcessorClient.ProcessEventAsync)));
@@ -339,7 +309,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void StartAsyncValidatesProcessExceptionAsync()
         {
-            var processor = new EventProcessorClient(Mock.Of<PartitionManager>(), "consumerGroup", new MockConnection(), default);
+            var processor = new EventProcessorClient(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "eventHub", () => new MockConnection(), default);
             processor.ProcessEventAsync += eventArgs => Task.CompletedTask;
 
             Assert.That(async () => await processor.StartProcessingAsync(), Throws.InstanceOf<InvalidOperationException>().And.Message.Contains(nameof(EventProcessorClient.ProcessErrorAsync)));
@@ -353,7 +323,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task StartAsyncStartsTheEventProcessorWhenProcessingHandlerPropertiesAreSet()
         {
-            var processor = new EventProcessorClient(Mock.Of<PartitionManager>(), "consumerGroup", new MockConnection(), default);
+            var processor = new EventProcessorClient(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "eventHub", () => new MockConnection(), default);
 
             processor.ProcessEventAsync += eventArgs => Task.CompletedTask;
             processor.ProcessErrorAsync += eventArgs => Task.CompletedTask;
@@ -371,7 +341,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Ignore("Update to match new event behavior.")]
         public async Task HandlerPropertiesCannotBeSetWhenEventProcessorIsRunning()
         {
-            var processor = new EventProcessorClient(Mock.Of<PartitionManager>(), "consumerGroup", new MockConnection(), default);
+            var processor = new EventProcessorClient(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "eventHub", () => new MockConnection(), default);
 
             processor.ProcessEventAsync += eventArgs => Task.CompletedTask;
             processor.ProcessErrorAsync += eventArgs => Task.CompletedTask;
@@ -394,7 +364,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Ignore("Update to match new event behavior.")]
         public async Task HandlerPropertiesCanBeSetAfterEventProcessorHasStopped()
         {
-            var processor = new EventProcessorClient(Mock.Of<PartitionManager>(), "consumerGroup", new MockConnection(), default);
+            var processor = new EventProcessorClient(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "eventHub", () => new MockConnection(), default);
 
             processor.ProcessEventAsync += eventArgs => Task.CompletedTask;
             processor.ProcessErrorAsync += eventArgs => Task.CompletedTask;

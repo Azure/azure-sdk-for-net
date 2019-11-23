@@ -460,7 +460,9 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.</param>
         /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  Events are read in the context of this group.</param>
-        /// <param name="connection">The <see cref="EventHubConnection" /> connection to use for communication with the Event Hubs service.</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
+        /// <param name="connectionFactory">A factory used to provide new <see cref="EventHubConnection" /> instances.</param>
         /// <param name="clientOptions">The set of options to use for this processor.</param>
         ///
         /// <remarks>
@@ -469,22 +471,20 @@ namespace Azure.Messaging.EventHubs
         ///
         internal EventProcessorClient(PartitionManager partitionManager,
                                       string consumerGroup,
-                                      EventHubConnection connection,
+                                      string fullyQualifiedNamespace,
+                                      string eventHubName,
+                                      Func<EventHubConnection> connectionFactory,
                                       EventProcessorClientOptions clientOptions)
         {
-            // TODO: we probably can remove this constructor because the processor does not have a single connection anymore.
-            // In fact, returning the same connection from the factory might result in undefined behavior.  We could take a
-            // connection factory here instead of a single connection.
-
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
             Argument.AssertNotNull(partitionManager, nameof(partitionManager));
-            Argument.AssertNotNull(connection, nameof(connection));
+            Argument.AssertNotNull(connectionFactory, nameof(connectionFactory));
 
             clientOptions = clientOptions?.Clone() ?? new EventProcessorClientOptions();
 
-            ConnectionFactory = () => connection;
-            FullyQualifiedNamespace = connection.FullyQualifiedNamespace;
-            EventHubName = connection.EventHubName;
+            ConnectionFactory = connectionFactory;
+            FullyQualifiedNamespace = fullyQualifiedNamespace;
+            EventHubName = eventHubName;
             ConsumerGroup = consumerGroup;
             Manager = partitionManager;
             ClientOptions = clientOptions;

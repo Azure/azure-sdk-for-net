@@ -245,11 +245,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var eventHubName = "SomeName";
             var endpoint = new Uri("amqp://some.endpoint.com/path");
-            var fakeConnection = new MockConnection(endpoint, eventHubName);
+            Func<EventHubConnection> fakeFactory = () => new MockConnection(endpoint, eventHubName);
             var context = new PartitionContext("partition");
             var data = new EventData(new byte[0], sequenceNumber: 0, offset: 0);
 
-            var processor = new EventProcessorClient(new MockCheckPointStorage(), "cg", fakeConnection, null);
+            var processor = new EventProcessorClient(new MockCheckPointStorage(), "cg", endpoint.Host, eventHubName, fakeFactory, null);
 
             // TODO: find a way to call UpdateCheckpointAsync.
 
