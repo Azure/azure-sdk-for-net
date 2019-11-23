@@ -281,18 +281,11 @@ namespace Azure.Messaging.EventHubs
         private CancellationTokenSource RunningTaskTokenSource { get; set; }
 
         /// <summary>
-        ///   The set of currently active partition processing tasks issued by this event processor.  Partition ids are
-        ///   used as keys.
+        ///   The set of currently active partition processing tasks issued by this event processor and their associated
+        ///   token sources that can be used to cancel the operation.  Partition ids are used as keys.
         /// </summary>
         ///
-        private ConcurrentDictionary<string, Task> ActivePartitionProcessors { get; set; } = new ConcurrentDictionary<string, Task>();
-
-        /// <summary>
-        ///   The set of token sources that can be used to cancel currently active partition processing tasks.  Partition
-        ///   ids are used as keys.
-        /// </summary>
-        ///
-        private ConcurrentDictionary<string, CancellationTokenSource> ActivePartitionProcessorTokenSources { get; set; } = new ConcurrentDictionary<string, CancellationTokenSource>();
+        private ConcurrentDictionary<string, (Task, CancellationTokenSource)> ActivePartitionProcessors { get; set; } = new ConcurrentDictionary<string, (Task, CancellationTokenSource)>();
 
         /// <summary>
         ///   The set of contexts associated with partitions that are currently being processed.  Partition ids are used
@@ -801,7 +794,7 @@ namespace Azure.Messaging.EventHubs
                 await Task.WhenAll(InstanceOwnership
                     .Select(async kvp =>
                     {
-                        if (!ActivePartitionProcessors.TryGetValue(kvp.Key, out Task processingTask) || processingTask.IsCompleted)
+                        if (!ActivePartitionProcessors.TryGetValue(kvp.Key, out var t) || t.Item1.IsCompleted)
                         {
                             await StopPartitionProcessingIfRunningAsync(kvp.Key, ProcessingStoppedReason.Shutdown).ConfigureAwait(false);
                             await StartPartitionProcessingAsync(kvp.Key).ConfigureAwait(false);
@@ -1028,7 +1021,10 @@ namespace Azure.Messaging.EventHubs
                     startingPosition = EventPosition.FromSequenceNumber(ownership.SequenceNumber.Value);
                 }
 
-                ActivePartitionProcessors[partitionId] = RunPartitionProcessingAsync(partitionId, startingPosition, ClientOptions.MaximumWaitTime, ClientOptions.RetryOptions, ClientOptions.TrackLastEnqueuedEventProperties);
+                var tokenSource = new CancellationTokenSource();
+                var processingTask = RunPartitionProcessingAsync(partitionId, startingPosition, ClientOptions.MaximumWaitTime, ClientOptions.RetryOptions, ClientOptions.TrackLastEnqueuedEventProperties, tokenSource.Token);
+
+                ActivePartitionProcessors[partitionId] = (processingTask, tokenSource);
             }
             catch (Exception)
             {
@@ -1051,9 +1047,10 @@ namespace Azure.Messaging.EventHubs
         private async Task StopPartitionProcessingIfRunningAsync(string partitionId,
                                                                  ProcessingStoppedReason reason)
         {
-            if (ActivePartitionProcessors.TryRemove(partitionId, out var processingTask)
-                && ActivePartitionProcessorTokenSources.TryRemove(partitionId, out var tokenSource))
+            if (ActivePartitionProcessors.TryRemove(partitionId, out var t))
             {
+                var (processingTask, tokenSource) = t;
+
                 try
                 {
                     tokenSource.Cancel();
@@ -1166,13 +1163,8 @@ namespace Azure.Messaging.EventHubs
                                                  TimeSpan? maximumWaitTime,
                                                  EventHubsRetryOptions retryOptions,
                                                  bool trackLastEnqueuedEventProperties,
-                                                 CancellationToken cancellationToken = default) => Task.Run(async () =>
+                                                 CancellationToken cancellationToken) => Task.Run(async () =>
             {
-                var cancellationSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-                var taskCancellationToken = cancellationSource.Token;
-
-                ActivePartitionProcessorTokenSources[partitionId] = cancellationSource;
-
                 // Context is set to default if operation fails.  This shouldn't fail unless the processor tries processing
                 // a partition it doesn't own.
 
@@ -1193,7 +1185,7 @@ namespace Azure.Messaging.EventHubs
 
                 await using (var consumer = new EventHubConsumerClient(ConsumerGroup, connection, clientOptions))
                 {
-                    await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partitionId, startingPosition, readOptions, taskCancellationToken))
+                    await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partitionId, startingPosition, readOptions, cancellationToken))
                     {
                         using DiagnosticScope diagnosticScope = EventDataInstrumentation.ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName);
                         diagnosticScope.AddAttribute("kind", "server");
