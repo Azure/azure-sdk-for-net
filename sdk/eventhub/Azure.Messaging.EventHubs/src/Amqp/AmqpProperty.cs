@@ -84,7 +84,7 @@ namespace Azure.Messaging.EventHubs
         ///   received from the service.
         /// </summary>
         ///
-        public static AmqpSymbol LastPartitionInformationRetrievalTimeUtc { get; } = "runtime_info_retrieval_time_utc";
+        public static AmqpSymbol LastPartitionPropertiesRetrievalTimeUtc { get; } = "runtime_info_retrieval_time_utc";
 
         /// <summary>
         ///   The set of descriptors for well-known <see cref="DescribedType" />
