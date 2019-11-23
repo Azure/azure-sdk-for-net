@@ -12,11 +12,16 @@
 - `subjectAlternativeNames` and `issuerName` constructor parameters have been switched on `CertificatePolicy`.
 - The `SubjectAlternativeNames` class has been rewritten to contain `DnsNames`, `Emails`, and `UserPrincipalNames` collection properties.
 - `CertificateIssuer.Administrators` has been renamed to `CertificateIssuer.AdministratorContacts`.
+- `CertificateKeyType.Oct` has been removed.
+- `CertificateType` and `CertificateTransparency` were added to `CertificateOperationProperties`.
+- `ImportCertificateOptions.Value` has been renamed to `ImportCertificateOptions.Certificate`.
+- `KeyVaultCertificate.ContentType` has been removed.
 
 ### Major changes
 
 - The `SubjectAlternativeNames` class now allows you to add multiple types of subject alternative names using any of the `DnsNames`, `Emails`, and `UserPrincipalNames` collection properties.
 - A new `CertificatePolicy` constructor allows you to both pass in both the `subject` and `subjectAlternativeNames` parameters.
+- `CertificateIssuer.Provider` was added.
 
 ## 4.0.0-preview.6 (2019-11)
 

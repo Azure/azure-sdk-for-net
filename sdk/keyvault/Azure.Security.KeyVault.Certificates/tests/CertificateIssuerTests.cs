@@ -7,13 +7,14 @@ using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Certificates.Tests
 {
-    public class IssuerTests
+    public class CertificateIssuerTests
     {
         [Test]
         public void UninitializedAdministrators()
         {
             CertificateIssuer issuer = new CertificateIssuer("test")
             {
+                Provider = "provider",
                 AccountId = "accountId",
             };
 
@@ -27,7 +28,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 writer.WriteEndObject();
             }
 
-            Assert.AreEqual(@"{""credentials"":{""account_id"":""accountId""}}", json.ToString());
+            Assert.AreEqual(@"{""provider"":""provider"",""credentials"":{""account_id"":""accountId""}}", json.ToString());
         }
 
         [Test]
@@ -35,6 +36,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         {
             CertificateIssuer issuer = new CertificateIssuer("test")
             {
+                Provider = "provider",
                 AccountId = "accountId",
                 AdministratorContacts =
                 {
@@ -55,7 +57,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 writer.WriteEndObject();
             }
 
-            Assert.AreEqual(@"{""credentials"":{""account_id"":""accountId""},""org_details"":{""admin_details"":[{""email"":""email@domain.tld""}]}}", json.ToString());
+            Assert.AreEqual(@"{""provider"":""provider"",""credentials"":{""account_id"":""accountId""},""org_details"":{""admin_details"":[{""email"":""email@domain.tld""}]}}", json.ToString());
         }
     }
 }
