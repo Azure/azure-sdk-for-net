@@ -52,7 +52,7 @@ namespace Azure.Messaging.EventHubs.Processor
                                      Exception exception,
                                      CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(operation, nameof(operation));
+            Argument.AssertNotNull(operation, nameof(operation));
             Argument.AssertNotNull(exception, nameof(exception));
 
             PartitionId = partitionId;
