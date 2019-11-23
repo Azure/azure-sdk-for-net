@@ -1023,7 +1023,7 @@ namespace Azure.Messaging.EventHubs
             {
                 // If processing task creation fails, we'll try again on the next time this method is called.  This should happen
                 // on the next load balancing loop as long as this instance still owns the partition.
-                // TODO: delegate the exception handling to an Exception Callback.  Do we really need a try-catch here?
+                // TODO: delegate the exception handling to an Exception Callback.
             }
         }
 
