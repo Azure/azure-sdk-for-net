@@ -38,7 +38,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNull(policy, nameof(policy));
 
             Name = name;
-            Value = value;
+            Certificate = value;
             Policy = policy;
         }
 
@@ -50,7 +50,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Gets the PFX or PEM formatted value of the certificate containing both the X.509 certificates and the private key.
         /// </summary>
-        public byte[] Value { get; }
+        public byte[] Certificate { get; }
 
         /// <summary>
         /// Gets the policy which governs the lifecycle of the imported certificate and its properties when it is rotated.
@@ -74,9 +74,9 @@ namespace Azure.Security.KeyVault.Certificates
 
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {
-            if (Value != null)
+            if (Certificate != null)
             {
-                string encoded = Base64Url.Encode(Value);
+                string encoded = Base64Url.Encode(Certificate);
                 json.WriteString(s_valuePropertyNameBytes, encoded);
             }
 
