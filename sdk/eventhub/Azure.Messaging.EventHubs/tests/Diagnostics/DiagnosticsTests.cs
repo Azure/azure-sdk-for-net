@@ -245,11 +245,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var eventHubName = "SomeName";
             var endpoint = new Uri("amqp://some.endpoint.com/path");
-            var fakeConnection = new MockConnection(endpoint, eventHubName);
+            Func<EventHubConnection> fakeFactory = () => new MockConnection(endpoint, eventHubName);
             var context = new PartitionContext("partition");
             var data = new EventData(new byte[0], sequenceNumber: 0, offset: 0);
 
-            var processor = new EventProcessorClient("cg", new MockCheckPointStorage(), fakeConnection, null);
+            var processor = new EventProcessorClient(new MockCheckPointStorage(), "cg", endpoint.Host, eventHubName, fakeFactory, null);
 
             // TODO: find a way to call UpdateCheckpointAsync.
 
@@ -305,7 +305,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var connectionMock = new Mock<EventHubConnection>("namespace", "eventHubName", Mock.Of<TokenCredential>(), new EventHubConnectionOptions());
             connectionMock.Setup(c => c.CreateTransportConsumer("cg", "pid", It.IsAny<EventPosition>(), It.IsAny<EventHubsRetryPolicy>(), It.IsAny<bool>(), It.IsAny<long?>(), It.IsAny<uint?>())).Returns(consumerMock.Object);
 
-            Func<EventProcessorEvent, ValueTask> processEventAsync = processorEvent =>
+            Func<ProcessEventArgs, ValueTask> processEventAsync = eventArgs =>
             {
                 processorCalledSource.SetResult(null);
                 return new ValueTask();

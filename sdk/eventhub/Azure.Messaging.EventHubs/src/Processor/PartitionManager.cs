@@ -63,8 +63,6 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <param name="checkpoint">The checkpoint containing the information to be stored.</param>
         ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
         public abstract Task UpdateCheckpointAsync(Checkpoint checkpoint);
     }
 }

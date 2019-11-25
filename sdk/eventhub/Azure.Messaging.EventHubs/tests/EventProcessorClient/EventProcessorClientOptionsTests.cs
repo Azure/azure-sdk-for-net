@@ -24,8 +24,9 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var options = new EventProcessorClientOptions
             {
-                MaximumReceiveWaitTime = TimeSpan.FromMinutes(65),
+                Identifier = Guid.NewGuid().ToString(),
                 TrackLastEnqueuedEventProperties = false,
+                MaximumWaitTime = TimeSpan.FromMinutes(65),
                 RetryOptions = new EventHubsRetryOptions { TryTimeout = TimeSpan.FromMinutes(1), Delay = TimeSpan.FromMinutes(4) },
                 ConnectionOptions = new EventHubConnectionOptions { TransportType = EventHubsTransportType.AmqpWebSockets }
             };
@@ -34,8 +35,9 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(clone, Is.Not.Null, "The clone should not be null.");
             Assert.That(clone, Is.Not.SameAs(options), "The clone should be a different instance.");
 
-            Assert.That(clone.MaximumReceiveWaitTime, Is.EqualTo(options.MaximumReceiveWaitTime), "The maximum receive wait time of the clone should match.");
+            Assert.That(clone.Identifier, Is.EqualTo(options.Identifier), "The identifier of the clone should match.");
             Assert.That(clone.TrackLastEnqueuedEventProperties, Is.EqualTo(options.TrackLastEnqueuedEventProperties), "The tracking of last event information of the clone should match.");
+            Assert.That(clone.MaximumWaitTime, Is.EqualTo(options.MaximumWaitTime), "The maximum wait time of the clone should match.");
             Assert.That(clone.ConnectionOptions.TransportType, Is.EqualTo(options.ConnectionOptions.TransportType), "The connection options of the clone should copy properties.");
             Assert.That(clone.ConnectionOptions, Is.Not.SameAs(options.ConnectionOptions), "The connection options of the clone should be a copy, not the same instance.");
             Assert.That(clone.RetryOptions.IsEquivalentTo(options.RetryOptions), Is.True, "The retry options of the clone should be considered equal.");
@@ -43,7 +45,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///  Verifies that setting the <see cref="EventProcessorClientOptions.MaximumReceiveWaitTime" /> is
+        ///  Verifies that setting the <see cref="EventProcessorClientOptions.MaximumWaitTime" /> is
         ///  validated.
         /// </summary>
         ///
@@ -52,22 +54,22 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(-100)]
         [TestCase(-1000)]
         [TestCase(-10000)]
-        public void MaximumReceiveWaitTimeIsValidated(int timeSpanDelta)
+        public void MaximumWaitTimeIsValidated(int timeSpanDelta)
         {
             var options = new EventProcessorClientOptions();
-            Assert.That(() => options.MaximumReceiveWaitTime = TimeSpan.FromMilliseconds(timeSpanDelta), Throws.InstanceOf<ArgumentOutOfRangeException>());
+            Assert.That(() => options.MaximumWaitTime = TimeSpan.FromMilliseconds(timeSpanDelta), Throws.InstanceOf<ArgumentOutOfRangeException>());
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessorClientOptions.MaximumReceiveWaitTime" />
+        ///   Verifies functionality of the <see cref="EventProcessorClientOptions.MaximumWaitTime" />
         ///   method.
         /// </summary>
         ///
         [Test]
-        public void MaximumReceiveWaitTimeAllowsNull()
+        public void MaximumWaitTimeAllowsNull()
         {
             var options = new EventProcessorClientOptions();
-            Assert.That(() => options.MaximumReceiveWaitTime = null, Throws.Nothing);
+            Assert.That(() => options.MaximumWaitTime = null, Throws.Nothing);
         }
 
         /// <summary>

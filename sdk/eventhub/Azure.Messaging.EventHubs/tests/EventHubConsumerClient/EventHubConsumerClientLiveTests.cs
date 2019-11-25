@@ -821,7 +821,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     {
                         if (partitionEvent.Data != null)
                         {
-                            ++receivedEvents[partitionEvent.Context.PartitionId];
+                            ++receivedEvents[partitionEvent.Partition.PartitionId];
                             consecutiveEmpties = 0;
 
                             if (++readCount >= expectedCount)
@@ -901,7 +901,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     {
                         if (partitionEvent.Data != null)
                         {
-                            ++receivedEvents[partitionEvent.Context.PartitionId];
+                            ++receivedEvents[partitionEvent.Partition.PartitionId];
                             consecutiveEmpties = 0;
 
                             if (++readCount >= expectedCount)
@@ -935,7 +935,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         if (partitionEvent.Data != null)
                         {
-                            ++receivedEvents[partitionEvent.Context.PartitionId];
+                            ++receivedEvents[partitionEvent.Partition.PartitionId];
                             consecutiveEmpties = 0;
 
                             if (++readCount >= expectedCount)
