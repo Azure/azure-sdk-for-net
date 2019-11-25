@@ -45,6 +45,36 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
+        public void CreateSkillsetReturnsCorrectDefinitionCustomEntityLookup()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+                CreateAndValidateSkillset(searchClient, CreateSkillsetWithCustomEntityLookup());
+            });
+        }
+
+        [Fact]
+        public void CreateSkillsetReturnsCorrectDefinitionDocumentExtraction()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+                CreateAndValidateSkillset(searchClient, CreateSkillsetWithDocumentExtraction());
+            });
+        }
+
+        [Fact]
+        public void CreateSkillsetReturnsCorrectDefinitionKnowledgeStore()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+                CreateAndValidateSkillset(searchClient, CreateSkillsetWithKnowledgeStore());
+            });
+        }
+
+        [Fact]
         public void CreateSkillsetReturnsCorrectDefinitionOcrKeyPhrase()
         {
             Run(() =>
@@ -1417,6 +1447,196 @@ namespace Microsoft.Azure.Search.Tests
             skills.Add(skill);
 
             return new Skillset("webapiskillset", "Skillset for testing", skills);
+        }
+
+
+        private static Skillset CreateSkillsetWithCustomEntityLookup()
+        {
+            var skills = new List<Skill>();
+
+            var inputs = new List<InputFieldMappingEntry>()
+            {
+                new InputFieldMappingEntry
+                {
+                    Name = "text",
+                    Source = "/document/mytext"
+                }
+            };
+
+            var outputs = new List<OutputFieldMappingEntry>()
+            {
+                new OutputFieldMappingEntry
+                {
+                    Name = "entities",
+                    TargetName = "myCustomEntities"
+                }
+            };
+
+            skills.Add(new CustomEntityLookupSkill(
+                inputs,
+                outputs,
+                name: "myCustomEntities",
+                description: "Tested Custom Entity Lookup skill",
+                entitiesDefinitionUri: "https://www.myblobstorage.net/myEntityDefinition.json",
+                context: RootPathString));
+
+            return new Skillset("customentitylookupskillset", description: "Skillset with custom entity lookup skill", skills: skills);
+        }
+
+        private static Skillset CreateSkillsetWithDocumentExtraction()
+        {
+            var skills = new List<Skill>();
+
+            var inputs = new List<InputFieldMappingEntry>()
+            {
+                new InputFieldMappingEntry
+                {
+                    Name = "file_data",
+                    Source = "/document/file_data"
+                }
+            };
+
+            var outputs = new List<OutputFieldMappingEntry>()
+            {
+                new OutputFieldMappingEntry
+                {
+                    Name = "content",
+                    TargetName = "myContent"
+                },
+                new OutputFieldMappingEntry
+                {
+                    Name = "normalized_images",
+                    TargetName = "normalized_images"
+                }
+            };
+
+            skills.Add(new DocumentExtractionSkill(
+                inputs,
+                outputs,
+                name: "myDocumentExtraction",
+                description: "Tested DocumentExtraction skill",
+                parsingMode: "default",
+                dataToExtract: "contentAndMetadata",
+                configuration: new Dictionary<string, object>()
+                {
+                    {
+                        "imageAction", "generateNormalizedImages"
+                    },
+                    {
+                        "normalizedImageMaxWidth", 2000
+                    },
+                    {
+                        "normalizedImageMaxHeight", 2000
+                    }
+                },
+                context: RootPathString));
+
+            return new Skillset("documentextractionskillset", description: "Skillset with document extraction skill", skills: skills);
+        }
+
+        private static Skillset CreateSkillsetWithKnowledgeStore()
+        {
+            var skills = new List<Skill>();
+
+            var inputs = new List<InputFieldMappingEntry>()
+            {
+                new InputFieldMappingEntry
+                {
+                    Name = "file_data",
+                    Source = "/document/file_data"
+                }
+            };
+
+            var outputs = new List<OutputFieldMappingEntry>()
+            {
+                new OutputFieldMappingEntry
+                {
+                    Name = "content",
+                    TargetName = "myContent"
+                },
+                new OutputFieldMappingEntry
+                {
+                    Name = "normalized_images",
+                    TargetName = "normalized_images"
+                }
+            };
+
+            skills.Add(new DocumentExtractionSkill(
+                inputs,
+                outputs,
+                name: "myDocumentExtraction",
+                description: "Tested DocumentExtraction skill",
+                parsingMode: "default",
+                dataToExtract: "contentAndMetadata",
+                configuration: new Dictionary<string, object>()
+                {
+                    {
+                        "imageAction", "generateNormalizedImages"
+                    },
+                    {
+                        "normalizedImageMaxWidth", 2000
+                    },
+                    {
+                        "normalizedImageMaxHeight", 2000
+                    }
+                },
+                context: RootPathString));
+
+            var projection1_blobSelector = new KnowledgeStoreObjectProjectionSelector(
+                                            storageContainer: "container1",
+                                            generatedKeyName: "docKey",
+                                            source: "/document/content");
+
+            var projection2_blobSelector = new KnowledgeStoreObjectProjectionSelector(
+                                storageContainer: "container2",
+                                generatedKeyName: "docKey",
+                                sourceContext: "/document",
+                                inputs: new List<InputFieldMappingEntry>()
+                                {
+                                    new InputFieldMappingEntry(
+                                        name: "keyPhrases",
+                                        source: "/document/keyPhrases")
+                                });
+
+            var projection1_tableSelector = new KnowledgeStoreTableProjectionSelector(
+                                tableName: "container11",
+                                generatedKeyName: "docKey",
+                                source: "/document/tableContent");
+
+            var projection2_tableSelector = new KnowledgeStoreTableProjectionSelector(
+                                tableName: "container12",
+                                generatedKeyName: "docKey",
+                                sourceContext: "/document/tableData",
+                                inputs: new List<InputFieldMappingEntry>()
+                                {
+                                    new InputFieldMappingEntry(
+                                        name: "keyPhrases",
+                                        source: "/document/tableData/keyPhrases")
+                                });
+
+            var projection1_fileSelector = new KnowledgeStoreFileProjectionSelector(
+                                storageContainer: "container111",
+                                generatedKeyName: "docKey",
+                                source: "/document/fileContent");
+
+            var knowledgeStore = new KnowledgeStore(
+                storageConnectionString: "DefaultEndpointsProtocol=https;AccountName=NotaRealAccount;AccountKey=fake;", // [SuppressMessage("Microsoft.Security", "CS001:SecretInline", Justification = "This is not a real secret")]
+                projections: new List<KnowledgeStoreProjection>());
+
+            knowledgeStore.Projections.Add(new KnowledgeStoreProjection(
+                objects: new List<KnowledgeStoreObjectProjectionSelector>() { projection1_blobSelector },
+                tables: new List<KnowledgeStoreTableProjectionSelector>() { projection1_tableSelector },
+                files: new List<KnowledgeStoreFileProjectionSelector>() { projection1_fileSelector }));
+
+            knowledgeStore.Projections.Add(new KnowledgeStoreProjection(
+                objects: new List<KnowledgeStoreObjectProjectionSelector>() { projection2_blobSelector },
+                tables: new List<KnowledgeStoreTableProjectionSelector>() { projection2_tableSelector }));
+
+
+            var skillset = new Skillset("knowledgestoreskillset", description: "Skillset with knowledgestore", skills: skills);
+            skillset.KnowledgeStore = knowledgeStore;
+
+            return skillset;
         }
     }
 }

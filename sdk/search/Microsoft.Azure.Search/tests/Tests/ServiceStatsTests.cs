@@ -23,6 +23,7 @@ namespace Microsoft.Azure.Search.Tests
                         DocumentCounter = new ResourceCounter(0, null),
                         IndexCounter = new ResourceCounter(0, 3),
                         IndexerCounter = new ResourceCounter(0, 3),
+                        SkillsetCounter = new ResourceCounter(0,3),
                         DataSourceCounter = new ResourceCounter(0, 3),
                         StorageSizeCounter = new ResourceCounter(0, 52428800),
                         SynonymMapCounter = new ResourceCounter(0, 3)
