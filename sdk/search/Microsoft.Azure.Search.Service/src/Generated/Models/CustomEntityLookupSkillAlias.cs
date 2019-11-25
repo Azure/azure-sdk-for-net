@@ -36,14 +36,14 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="text">An alternative spelling or term to find. Matches
         /// of this text will be associated with its parent entity.</param>
         /// <param name="caseSensitive">An optional field used to determine
-        /// whether this alias's text should be sensitive to character
-        /// casing.</param>
+        /// whether this alias's text should be sensitive to character casing.
+        /// Default value is false.</param>
         /// <param name="accentSensitive">An optional field used to determine
         /// whether this alias's text should be sensitive to character
-        /// diacritics.</param>
+        /// diacritics. Default value is false.</param>
         /// <param name="fuzzyEditDistance">An optional field used to determine
         /// whether this alias's text should be sensitive to small spelling
-        /// alterations.</param>
+        /// alterations. Default value is 0; exact matches only.</param>
         public CustomEntityLookupSkillAlias(string text, bool? caseSensitive = default(bool?), bool? accentSensitive = default(bool?), int? fuzzyEditDistance = default(int?))
         {
             Text = text;
@@ -67,14 +67,16 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets an optional field used to determine whether this
-        /// alias's text should be sensitive to character casing.
+        /// alias's text should be sensitive to character casing. Default value
+        /// is false.
         /// </summary>
         [JsonProperty(PropertyName = "caseSensitive")]
         public bool? CaseSensitive { get; set; }
 
         /// <summary>
         /// Gets or sets an optional field used to determine whether this
-        /// alias's text should be sensitive to character diacritics.
+        /// alias's text should be sensitive to character diacritics. Default
+        /// value is false.
         /// </summary>
         [JsonProperty(PropertyName = "accentSensitive")]
         public bool? AccentSensitive { get; set; }
@@ -82,6 +84,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Gets or sets an optional field used to determine whether this
         /// alias's text should be sensitive to small spelling alterations.
+        /// Default value is 0; exact matches only.
         /// </summary>
         [JsonProperty(PropertyName = "fuzzyEditDistance")]
         public int? FuzzyEditDistance { get; set; }

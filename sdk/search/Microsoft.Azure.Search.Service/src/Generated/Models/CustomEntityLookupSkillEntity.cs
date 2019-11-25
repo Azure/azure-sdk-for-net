@@ -44,23 +44,24 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="id">An optional field to pass through user defined
         /// metadata to matches of this entity.</param>
         /// <param name="caseSensitive">An optional field used to determine
-        /// whether this entity's name should be sensitive to character
-        /// casing.</param>
+        /// whether this entity's name should be sensitive to character casing.
+        /// Default value is false.</param>
         /// <param name="accentSensitive">An optional field used to determine
         /// whether this entity's name should be sensitive to character
-        /// diacritics.</param>
+        /// diacritics. Default value is false.</param>
         /// <param name="fuzzyEditDistance">An optional field used to determine
         /// whether this entity's name should be sensitive to small spelling
-        /// alterations.</param>
+        /// alterations. Default value is 0; exact matches only.</param>
         /// <param name="defaultCaseSensitive">An optional field used to
         /// determine whether this entity's alias's should be sensitive to
-        /// casing by default.</param>
+        /// casing by default. Default value is false.</param>
         /// <param name="defaultAccentSensitive">An optional field used to
         /// determine whether this entity's alias's should be sensitive to
-        /// diacritics by default.</param>
+        /// diacritics by default. Default value is false.</param>
         /// <param name="defaultFuzzyEditDistance">An optional field used to
         /// determine whether this entity's alias's should be sensitive to
-        /// small spelling alterations by default.</param>
+        /// small spelling alterations by default. Default value is 0; exact
+        /// matches only.</param>
         /// <param name="aliases">An array of alternative spellings or lookup
         /// terms for this entity.</param>
         public CustomEntityLookupSkillEntity(string name, string description = default(string), string type = default(string), string subtype = default(string), string id = default(string), bool? caseSensitive = default(bool?), bool? accentSensitive = default(bool?), int? fuzzyEditDistance = default(int?), bool? defaultCaseSensitive = default(bool?), bool? defaultAccentSensitive = default(bool?), int? defaultFuzzyEditDistance = default(int?), IList<CustomEntityLookupSkillAlias> aliases = default(IList<CustomEntityLookupSkillAlias>))
@@ -121,14 +122,16 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets an optional field used to determine whether this
-        /// entity's name should be sensitive to character casing.
+        /// entity's name should be sensitive to character casing. Default
+        /// value is false.
         /// </summary>
         [JsonProperty(PropertyName = "caseSensitive")]
         public bool? CaseSensitive { get; set; }
 
         /// <summary>
         /// Gets or sets an optional field used to determine whether this
-        /// entity's name should be sensitive to character diacritics.
+        /// entity's name should be sensitive to character diacritics. Default
+        /// value is false.
         /// </summary>
         [JsonProperty(PropertyName = "accentSensitive")]
         public bool? AccentSensitive { get; set; }
@@ -136,13 +139,15 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Gets or sets an optional field used to determine whether this
         /// entity's name should be sensitive to small spelling alterations.
+        /// Default value is 0; exact matches only.
         /// </summary>
         [JsonProperty(PropertyName = "fuzzyEditDistance")]
         public int? FuzzyEditDistance { get; set; }
 
         /// <summary>
         /// Gets or sets an optional field used to determine whether this
-        /// entity's alias's should be sensitive to casing by default.
+        /// entity's alias's should be sensitive to casing by default. Default
+        /// value is false.
         /// </summary>
         [JsonProperty(PropertyName = "defaultCaseSensitive")]
         public bool? DefaultCaseSensitive { get; set; }
@@ -150,6 +155,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Gets or sets an optional field used to determine whether this
         /// entity's alias's should be sensitive to diacritics by default.
+        /// Default value is false.
         /// </summary>
         [JsonProperty(PropertyName = "defaultAccentSensitive")]
         public bool? DefaultAccentSensitive { get; set; }
@@ -157,7 +163,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Gets or sets an optional field used to determine whether this
         /// entity's alias's should be sensitive to small spelling alterations
-        /// by default.
+        /// by default. Default value is 0; exact matches only.
         /// </summary>
         [JsonProperty(PropertyName = "defaultFuzzyEditDistance")]
         public int? DefaultFuzzyEditDistance { get; set; }
