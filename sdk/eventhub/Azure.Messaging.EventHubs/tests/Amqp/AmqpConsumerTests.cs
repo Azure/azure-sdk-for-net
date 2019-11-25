@@ -28,8 +28,8 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         public static IEnumerable<object[]> RetryOptionTestCases()
         {
-            yield return new object[] { new RetryOptions { MaximumRetries = 3, Delay = TimeSpan.FromMilliseconds(1), MaximumDelay = TimeSpan.FromMilliseconds(10), Mode = RetryMode.Fixed } };
-            yield return new object[] { new RetryOptions { MaximumRetries = 0, Delay = TimeSpan.FromMilliseconds(1), MaximumDelay = TimeSpan.FromMilliseconds(10), Mode = RetryMode.Fixed } };
+            yield return new object[] { new EventHubsRetryOptions { MaximumRetries = 3, Delay = TimeSpan.FromMilliseconds(1), MaximumDelay = TimeSpan.FromMilliseconds(10), Mode = EventHubsRetryMode.Fixed } };
+            yield return new object[] { new EventHubsRetryOptions { MaximumRetries = 0, Delay = TimeSpan.FromMilliseconds(1), MaximumDelay = TimeSpan.FromMilliseconds(10), Mode = EventHubsRetryMode.Fixed } };
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var consumerGroup = "$DEFAULT";
             var partition = "3";
             var eventPosition = EventPosition.FromOffset(123);
-            var retryPolicy = new BasicRetryPolicy(new RetryOptions());
+            var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
             var retriableException = new EventHubsException(true, "Test");
             var mockConverter = new Mock<AmqpMessageConverter>();
             var mockCredential = new Mock<TokenCredential>();
@@ -168,7 +168,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var consumerGroup = "$DEFAULT";
             var partition = "3";
             var eventPosition = EventPosition.FromOffset(123);
-            var retryPolicy = new BasicRetryPolicy(new RetryOptions());
+            var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
             var retriableException = new EventHubsException(true, "Test");
             var mockConverter = new Mock<AmqpMessageConverter>();
             var mockCredential = new Mock<TokenCredential>();
@@ -189,7 +189,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         [Test]
         [TestCaseSource(nameof(RetryOptionTestCases))]
-        public void ReceiveAsyncRespectsTheRetryPolicy(RetryOptions retryOptions)
+        public void ReceiveAsyncRespectsTheRetryPolicy(EventHubsRetryOptions retryOptions)
         {
             var eventHub = "eventHubName";
             var consumerGroup = "$DEFAULT";
@@ -251,7 +251,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partition = "3";
             var eventPosition = EventPosition.FromOffset(123);
             var options = new EventHubConsumerClientOptions();
-            var retryPolicy = new BasicRetryPolicy(new RetryOptions());
+            var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
             var retriableException = new EventHubsException(true, "Test");
             var mockConverter = new Mock<AmqpMessageConverter>();
             var mockCredential = new Mock<TokenCredential>();

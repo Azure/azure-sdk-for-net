@@ -201,6 +201,7 @@ namespace Azure.Storage.Files.DataLake
         public DataLakeFileSystemClient(Uri fileSystemUri, TokenCredential credential)
             : this(fileSystemUri, credential.AsPolicy(), null)
         {
+            Errors.VerifyHttpsTokenAuth(fileSystemUri);
         }
 
         /// <summary>
@@ -222,6 +223,7 @@ namespace Azure.Storage.Files.DataLake
         public DataLakeFileSystemClient(Uri fileSystemUri, TokenCredential credential, DataLakeClientOptions options)
             : this(fileSystemUri, credential.AsPolicy(), options)
         {
+            Errors.VerifyHttpsTokenAuth(fileSystemUri);
         }
 
         /// <summary>
@@ -1541,5 +1543,270 @@ namespace Azure.Storage.Files.DataLake
             }
         }
         #endregion Delete File
+
+
+        #region GetAccessPolicy
+        /// <summary>
+        /// The <see cref="GetAccessPolicy"/> operation gets the
+        /// permissions for this file system. The permissions indicate whether
+        /// file system data may be accessed publicly.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-container-acl" />.
+        /// </summary>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add
+        /// conditions on getting the file system's access policy.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{FileSystemAccessPolicy}"/> describing
+        /// the filesystems's access policy.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<FileSystemAccessPolicy> GetAccessPolicy(
+            DataLakeRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeFileSystemClient)}.{nameof(GetAccessPolicy)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<BlobContainerAccessPolicy> response = _containerClient.GetAccessPolicy(
+                    conditions.ToBlobRequestConditions(),
+                    cancellationToken);
+
+                return Response.FromValue(
+                    response.Value.ToFileSystemAccessPolicy(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="GetAccessPolicyAsync"/> operation gets the
+        /// permissions for this file system. The permissions indicate whether
+        /// file system data may be accessed publicly.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-container-acl" />.
+        /// </summary>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add
+        /// conditions on getting the file system's access policy.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{FileSystemAccessPolicy}"/> describing
+        /// the file system's access policy.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<FileSystemAccessPolicy>> GetAccessPolicyAsync(
+            DataLakeRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeFileSystemClient)}.{nameof(GetAccessPolicy)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<BlobContainerAccessPolicy> response = await _containerClient.GetAccessPolicyAsync(
+                    conditions.ToBlobRequestConditions(),
+                    cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(
+                    response.Value.ToFileSystemAccessPolicy(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+        #endregion GetAccessPolicy
+
+        #region SetAccessPolicy
+        /// <summary>
+        /// The <see cref="SetAccessPolicy"/> operation sets the
+        /// permissions for the specified file system. The permissions indicate
+        /// whether file system data may be accessed publicly.
+        ///
+        /// For more information, see <see href=" https://docs.microsoft.com/rest/api/storageservices/set-container-acl" />.
+        /// </summary>
+        /// <param name="accessType">
+        /// Optionally specifies whether data in the file system may be accessed
+        /// publicly and the level of access. <see cref="Models.PublicAccessType.FileSystem"/>
+        /// specifies full public read access for file system and path data.
+        /// Clients can enumerate paths within the file system via anonymous
+        /// request, but cannot enumerate file systems within the storage
+        /// account.  <see cref="Models.PublicAccessType.Path"/> specifies public
+        /// read access for paths.  Path data within this file system can be
+        /// read via anonymous request, but file system data is not available.
+        /// Clients cannot enumerate paths within the file system via anonymous
+        /// request.  <see cref="Models.PublicAccessType.None"/> specifies that the
+        /// file system data is private to the account owner.
+        /// </param>
+        /// <param name="permissions">
+        /// Stored access policies that you can use to provide fine grained
+        /// control over file system permissions.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add
+        /// conditions on setting this file systems's access policy.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{FileSystemInfo}"/> describing the
+        /// updated container.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<FileSystemInfo> SetAccessPolicy(
+            Models.PublicAccessType accessType = Models.PublicAccessType.None,
+            IEnumerable<DataLakeSignedIdentifier> permissions = default,
+            DataLakeRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeFileSystemClient)}.{nameof(SetAccessPolicy)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<BlobContainerInfo> containerResponse = _containerClient.SetAccessPolicy(
+                    (Blobs.Models.PublicAccessType)accessType,
+                    permissions.ToBlobSignedIdentifiers(),
+                    conditions.ToBlobRequestConditions(),
+                    cancellationToken);
+
+                return Response.FromValue(
+                    new FileSystemInfo()
+                    {
+                        ETag = containerResponse.Value.ETag,
+                        LastModified = containerResponse.Value.LastModified
+                    },
+                    containerResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="SetAccessPolicyAsync"/> operation sets the
+        /// permissions for the specified file system. The permissions indicate
+        /// whether the file system data may be accessed publicly.
+        ///
+        /// For more information, see <see href=" https://docs.microsoft.com/rest/api/storageservices/set-container-acl" />.
+        /// </summary>
+        /// <param name="accessType">
+        /// Optionally specifies whether data in the file system may be accessed
+        /// publicly and the level of access. <see cref="Models.PublicAccessType.FileSystem"/>
+        /// specifies full public read access for file system and path data.
+        /// Clients can enumerate paths within the file system via anonymous
+        /// request, but cannot enumerate file systems within the storage
+        /// account.  <see cref="Models.PublicAccessType.Path"/> specifies public
+        /// read access for paths.  Path data within this file system can be
+        /// read via anonymous request, but file system data is not available.
+        /// Clients cannot enumerate paths within the file system via anonymous
+        /// request.  <see cref="Models.PublicAccessType.None"/> specifies that the
+        /// file system data is private to the account owner.
+        /// </param>
+        /// <param name="permissions">
+        /// Stored access policies that you can use to provide fine grained
+        /// control over file system permissions.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add
+        /// conditions on setting this file system's access policy.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{FileSystemInfo}"/> describing the
+        /// updated file system.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<FileSystemInfo>> SetAccessPolicyAsync(
+            Models.PublicAccessType accessType = Models.PublicAccessType.None,
+            IEnumerable<DataLakeSignedIdentifier> permissions = default,
+            DataLakeRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeFileSystemClient)}.{nameof(SetAccessPolicy)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<BlobContainerInfo> containerResponse = await _containerClient.SetAccessPolicyAsync(
+                    (Blobs.Models.PublicAccessType)accessType,
+                    permissions.ToBlobSignedIdentifiers(),
+                    conditions.ToBlobRequestConditions(),
+                    cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(
+                    new FileSystemInfo()
+                    {
+                        ETag = containerResponse.Value.ETag,
+                        LastModified = containerResponse.Value.LastModified
+                    },
+                    containerResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+        #endregion SetAccessPolicy
     }
 }

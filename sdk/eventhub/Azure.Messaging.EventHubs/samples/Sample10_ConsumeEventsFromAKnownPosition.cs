@@ -91,7 +91,7 @@ namespace Azure.Messaging.EventHubs.Samples
                     CancellationTokenSource cancellationSource = new CancellationTokenSource();
                     cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
 
-                    ReadOptions readOptions = new ReadOptions
+                    ReadEventOptions readOptions = new ReadEventOptions
                     {
                          MaximumWaitTime = TimeSpan.FromMilliseconds(150)
                     };

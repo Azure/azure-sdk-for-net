@@ -212,20 +212,23 @@ Several App Configuration client library samples are available to you in this Gi
 
 ## Contributing
 
-This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit https://cla.microsoft.com.
+See the [App Configuration CONTRIBUTING.md][azconfig_contrib] for details on building, testing, and contributing to this library.
+
+This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit [cla.microsoft.com][cla].
 
 When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
 
-This project has adopted the Microsoft Open Source Code of Conduct. For more information see the Code of Conduct FAQ or contact opencode@microsoft.com with any additional questions or comments.
+This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][code_of_conduct_faq] or contact [opencode@microsoft.com][email_opencode] with any additional questions or comments.
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fappconfiguration%2FAzure.Data.AppConfiguration%2FREADME.png)
 
 <!-- LINKS -->
 [azconfig_docs]: https://docs.microsoft.com/azure/azure-app-configuration/
+[azconfig_contrib]: ../CONTRIBUTING.md
 [azconfig_setting_concepts]: https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-key-value
 [azconfig_asof_snapshot]: https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-point-time-snapshot
-[source_root]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/appconfiguration/Azure.Data.AppConfiguration
-[source_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/appconfiguration/Azure.Data.AppConfiguration/samples
+[source_root]: ./
+[source_samples]: ./samples
 [reference_docs]: https://azure.github.io/azure-sdk-for-net/appconfiguration.html
 [azconfig_rest]: https://github.com/Azure/AppConfiguration#rest-api-reference
 [azure_cli]: https://docs.microsoft.com/cli/azure
@@ -235,5 +238,9 @@ This project has adopted the Microsoft Open Source Code of Conduct. For more inf
 [label_concept]: https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-key-value#label-keys
 [nuget]: https://www.nuget.org/
 [package]: https://www.nuget.org/packages/Azure.ApplicationModel.Configuration/
-[samples_readme]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/README.md
+[samples_readme]: ./samples/README.md
 [moq]: https://github.com/Moq/moq4/
+[cla]: https://cla.microsoft.com
+[code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
+[code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
+[email_opencode]: mailto:opencode@microsoft.com

@@ -44,12 +44,12 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="PartitionContext.ReadLastEnqueuedEventInformation" />
+        ///   Verifies functionality of the <see cref="PartitionContext.ReadLastEnqueuedEventProperties" />
         ///   method.
         /// </summary>
         ///
         [Test]
-        public void ReadLastEnqueuedEventInformationDelegatesToTheConsumer()
+        public void ReadLastEnqueuedEventPropertiesDelegatesToTheConsumer()
         {
             var lastEvent = new EventData
             (
@@ -57,22 +57,22 @@ namespace Azure.Messaging.EventHubs.Tests
                 lastPartitionSequenceNumber: 1234,
                 lastPartitionOffset: 42,
                 lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T00:00:00Z"),
-                lastPartitionInformationRetrievalTime: DateTimeOffset.Parse("2012-03-04T08:42Z")
+                lastPartitionPropertiesRetrievalTime: DateTimeOffset.Parse("2012-03-04T08:42Z")
             );
 
             var partitionId = "id-value";
             var mockConsumer = new LastEventConsumerMock(lastEvent);
             var context = new PartitionContext(partitionId, mockConsumer);
-            var information = context.ReadLastEnqueuedEventInformation();
+            var information = context.ReadLastEnqueuedEventProperties();
 
             Assert.That(information.SequenceNumber, Is.EqualTo(lastEvent.LastPartitionSequenceNumber), "The sequence number should match.");
             Assert.That(information.Offset, Is.EqualTo(lastEvent.LastPartitionOffset), "The offset should match.");
             Assert.That(information.EnqueuedTime, Is.EqualTo(lastEvent.LastPartitionEnqueuedTime), "The last enqueue time should match.");
-            Assert.That(information.LastReceivedTime, Is.EqualTo(lastEvent.LastPartitionInformationRetrievalTime), "The retrieval time should match.");
+            Assert.That(information.LastReceivedTime, Is.EqualTo(lastEvent.LastPartitionPropertiesRetrievalTime), "The retrieval time should match.");
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="PartitionContext.ReadLastEnqueuedEventInformation" />
+        ///   Verifies functionality of the <see cref="PartitionContext.ReadLastEnqueuedEventProperties" />
         ///   method.
         /// </summary>
         ///
@@ -102,7 +102,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 try
                 {
-                    Assert.That(() => context.ReadLastEnqueuedEventInformation(), Throws.TypeOf<EventHubsClientClosedException>());
+                    Assert.That(() => context.ReadLastEnqueuedEventProperties(), Throws.TypeOf<EventHubsClientClosedException>());
                 }
                 catch (AssertionException)
                 {

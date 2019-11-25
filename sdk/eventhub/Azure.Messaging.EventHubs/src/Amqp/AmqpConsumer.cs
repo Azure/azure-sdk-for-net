@@ -62,13 +62,26 @@ namespace Azure.Messaging.EventHubs.Amqp
         private string PartitionId { get; }
 
         /// <summary>
+        ///   The current position for the consumer, updated as events are received from the
+        ///   partition.
+        /// </summary>
+        ///
+        /// <remarks>
+        ///   When creating or recovering the associated AMQP link, this value is used
+        ///   to set the position.  It is intended to primarily support recreating links
+        ///   transparently to callers, allowing progress in the stream to be remembered.
+        /// </remarks>
+        ///
+        private EventPosition CurrentEventPosition { get; set; }
+
+        /// <summary>
         ///   Indicates whether or not the consumer should request information on the last enqueued event on the partition
         ///   associated with a given event, and track that information as events are received.
         /// </summary>
         ///
         /// <value><c>true</c> if information about a partition's last event should be requested and tracked; otherwise, <c>false</c>.</value>
         ///
-        private bool TrackLastEnqueuedEventInformation { get; }
+        private bool TrackLastEnqueuedEventProperties { get; }
 
         /// <summary>
         ///   The policy to use for determining retry behavior for when an operation fails.
@@ -105,7 +118,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="eventPosition">The position of the event in the partition where the consumer should begin reading.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
         /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
-        /// <param name="trackLastEnqueuedEventInformation">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
+        /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
         /// <param name="connectionScope">The AMQP connection context for operations .</param>
         /// <param name="messageConverter">The converter to use for translating between AMQP messages and client types.</param>
         /// <param name="retryPolicy">The retry policy to consider when an operation fails.</param>
@@ -123,7 +136,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                             string consumerGroup,
                             string partitionId,
                             EventPosition eventPosition,
-                            bool trackLastEnqueuedEventInformation,
+                            bool trackLastEnqueuedEventProperties,
                             long? ownerLevel,
                             uint? prefetchCount,
                             AmqpConnectionScope connectionScope,
@@ -140,7 +153,8 @@ namespace Azure.Messaging.EventHubs.Amqp
             EventHubName = eventHubName;
             ConsumerGroup = consumerGroup;
             PartitionId = partitionId;
-            TrackLastEnqueuedEventInformation = trackLastEnqueuedEventInformation;
+            CurrentEventPosition = eventPosition;
+            TrackLastEnqueuedEventProperties = trackLastEnqueuedEventProperties;
             ConnectionScope = connectionScope;
             RetryPolicy = retryPolicy;
             MessageConverter = messageConverter;
@@ -149,11 +163,11 @@ namespace Azure.Messaging.EventHubs.Amqp
                 ConnectionScope.OpenConsumerLinkAsync(
                     consumerGroup,
                     partitionId,
-                    eventPosition,
+                    CurrentEventPosition,
                     timeout,
                     prefetchCount ?? DefaultPrefetchCount,
                     ownerLevel,
-                    trackLastEnqueuedEventInformation,
+                    trackLastEnqueuedEventProperties,
                     CancellationToken.None),
                 link => link.SafeClose());
         }
@@ -183,6 +197,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             var retryDelay = default(TimeSpan?);
             var amqpMessages = default(IEnumerable<AmqpMessage>);
             var receivedEvents = default(List<EventData>);
+            var lastReceivedEvent = default(EventData);
 
             var stopWatch = Stopwatch.StartNew();
 
@@ -222,9 +237,19 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                             receivedEventCount = receivedEvents.Count;
 
-                            if ((TrackLastEnqueuedEventInformation) && (receivedEventCount > 0))
+                            if (receivedEventCount > 0)
                             {
-                                LastReceivedEvent = receivedEvents[receivedEventCount - 1];
+                                lastReceivedEvent = receivedEvents[receivedEventCount - 1];
+
+                                if (lastReceivedEvent.Offset.HasValue)
+                                {
+                                    CurrentEventPosition = EventPosition.FromOffset(lastReceivedEvent.Offset.Value);
+                                }
+
+                                if (TrackLastEnqueuedEventProperties)
+                                {
+                                    LastReceivedEvent = lastReceivedEvent;
+                                }
                             }
 
                             return receivedEvents;

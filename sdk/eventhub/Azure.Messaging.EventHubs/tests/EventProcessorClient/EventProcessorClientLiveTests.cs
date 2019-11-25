@@ -34,7 +34,7 @@ namespace Azure.Messaging.EventHubs.Tests
         private const int ReceiveRetryLimit = 10;
 
         /// <summary>The default retry policy to use for test operations.</summary>
-        private static readonly EventHubsRetryPolicy DefaultRetryPolicy = new RetryOptions().ToRetryPolicy();
+        private static readonly EventHubsRetryPolicy DefaultRetryPolicy = new EventHubsRetryOptions().ToRetryPolicy();
 
         /// <summary>
         ///   Verifies that the <see cref="EventProcessorClient" /> is able to
@@ -226,7 +226,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         await using (var producer = new EventHubProducerClient(connection))
                         {
-                            await producer.SendAsync(expectedEvents[partitionId], new SendOptions { PartitionId = partitionId });
+                            await producer.SendAsync(expectedEvents[partitionId], new SendEventOptions { PartitionId = partitionId });
                         }
                     }
 
@@ -573,7 +573,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     {
                         new PartitionOwnership(connection.FullyQualifiedNamespace, connection.EventHubName,
                             EventHubConsumerClient.DefaultConsumerGroupName, "ownerIdentifier", partitionId,
-                            sequenceNumber: checkpointedSequenceNumber, lastModifiedTime: DateTimeOffset.UtcNow)
+                            lastModifiedTime: DateTimeOffset.UtcNow)
                     });
 
                     // Create the event processor manager to manage our event processors.
@@ -705,14 +705,6 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     Assert.That(ownershipEnumerable, Is.Not.Null);
                     Assert.That(ownershipEnumerable.Count, Is.EqualTo(1));
-
-                    PartitionOwnership ownership = ownershipEnumerable.Single();
-
-                    Assert.That(ownership.Offset.HasValue, Is.True);
-                    Assert.That(ownership.Offset.Value, Is.EqualTo(lastEvent.Offset));
-
-                    Assert.That(ownership.SequenceNumber.HasValue, Is.True);
-                    Assert.That(ownership.SequenceNumber.Value, Is.EqualTo(lastEvent.SequenceNumber));
                 }
             }
         }
@@ -911,11 +903,11 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             EventHubConsumerClient.DefaultConsumerGroupName,
                             connectionString
-                            // TODO: fix test. OwnerIdentifier is not accessible anymore.
-                            // onInitialize: initializationContext =>
-                            //     ownedPartitionsCount.AddOrUpdate(initializationContext.Context.OwnerIdentifier, 1, (ownerId, value) => value + 1),
-                            // onStop: stopContext =>
-                            //     ownedPartitionsCount.AddOrUpdate(stopContext.Context.OwnerIdentifier, 0, (ownerId, value) => value - 1)
+                        // TODO: fix test. OwnerIdentifier is not accessible anymore.
+                        // onInitialize: initializationContext =>
+                        //     ownedPartitionsCount.AddOrUpdate(initializationContext.Context.OwnerIdentifier, 1, (ownerId, value) => value + 1),
+                        // onStop: stopContext =>
+                        //     ownedPartitionsCount.AddOrUpdate(stopContext.Context.OwnerIdentifier, 0, (ownerId, value) => value - 1)
                         );
 
                     eventProcessorManager.AddEventProcessors(eventProcessors);
@@ -976,11 +968,11 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             EventHubConsumerClient.DefaultConsumerGroupName,
                             connectionString
-                            // TODO: fix test. OwnerIdentifier is not accessible anymore.
-                            // onInitialize: initializationContext =>
-                            //     ownedPartitionsCount.AddOrUpdate(initializationContext.Context.OwnerIdentifier, 1, (ownerId, value) => value + 1),
-                            // onStop: stopContext =>
-                            //     ownedPartitionsCount.AddOrUpdate(stopContext.Context.OwnerIdentifier, 0, (ownerId, value) => value - 1)
+                        // TODO: fix test. OwnerIdentifier is not accessible anymore.
+                        // onInitialize: initializationContext =>
+                        //     ownedPartitionsCount.AddOrUpdate(initializationContext.Context.OwnerIdentifier, 1, (ownerId, value) => value + 1),
+                        // onStop: stopContext =>
+                        //     ownedPartitionsCount.AddOrUpdate(stopContext.Context.OwnerIdentifier, 0, (ownerId, value) => value - 1)
                         );
 
                     eventProcessorManager.AddEventProcessors(1);

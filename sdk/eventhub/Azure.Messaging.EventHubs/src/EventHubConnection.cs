@@ -382,7 +382,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
         /// <param name="eventPosition">The position within the partition where the consumer should begin reading events.</param>
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
-        /// <param name="trackLastEnqueuedEventInformation">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
+        /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
         /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
         ///
@@ -392,7 +392,7 @@ namespace Azure.Messaging.EventHubs
                                                                    string partitionId,
                                                                    EventPosition eventPosition,
                                                                    EventHubsRetryPolicy retryPolicy,
-                                                                   bool trackLastEnqueuedEventInformation = true,
+                                                                   bool trackLastEnqueuedEventProperties = true,
                                                                    long? ownerLevel = default,
                                                                    uint? prefetchCount = default)
         {
@@ -400,7 +400,7 @@ namespace Azure.Messaging.EventHubs
             Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
 
-            return InnerClient.CreateConsumer(consumerGroup, partitionId, eventPosition, retryPolicy, trackLastEnqueuedEventInformation, ownerLevel, prefetchCount);
+            return InnerClient.CreateConsumer(consumerGroup, partitionId, eventPosition, retryPolicy, trackLastEnqueuedEventProperties, ownerLevel, prefetchCount);
         }
 
         /// <summary>
@@ -430,8 +430,8 @@ namespace Azure.Messaging.EventHubs
         {
             switch (options.TransportType)
             {
-                case TransportType.AmqpTcp:
-                case TransportType.AmqpWebSockets:
+                case EventHubsTransportType.AmqpTcp:
+                case EventHubsTransportType.AmqpWebSockets:
                     return new AmqpClient(fullyQualifiedNamespace, eventHubName, credential, options);
 
                 default:
@@ -449,7 +449,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>The value to use as the audience of the signature.</returns>
         ///
-        private static string BuildAudienceResource(TransportType transportType,
+        private static string BuildAudienceResource(EventHubsTransportType transportType,
                                                     string fullyQualifiedNamespace,
                                                     string eventHubName)
         {

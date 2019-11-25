@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Attestation
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IEnumerable<OperationsDefinition>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<OperationList>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -181,7 +181,7 @@ namespace Microsoft.Azure.Management.Attestation
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IEnumerable<OperationsDefinition>>();
+            var _result = new AzureOperationResponse<OperationList>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -194,7 +194,7 @@ namespace Microsoft.Azure.Management.Attestation
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<OperationsDefinition>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<OperationList>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

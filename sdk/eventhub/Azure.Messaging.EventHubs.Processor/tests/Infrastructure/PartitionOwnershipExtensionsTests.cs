@@ -91,38 +91,6 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         /// </summary>
         ///
         [Test]
-        [TestCase(10, 20)]
-        [TestCase(10, null)]
-        public void IsEquivalentToDetectsOffset(long? offset1, long? offset2)
-        {
-            var first = new MockPartitionOwnership("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", offset: offset1);
-            var second = new MockPartitionOwnership("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", offset: offset2);
-
-            Assert.That(first.IsEquivalentTo(second), Is.False);
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="PartitionOwnershipExtensions.IsEquivalentTo" /> test
-        ///   helper.
-        /// </summary>
-        ///
-        [Test]
-        [TestCase(10, 20)]
-        [TestCase(10, null)]
-        public void IsEquivalentToDetectsSequenceNumber(long? sequenceNumber1, long? sequenceNumber2)
-        {
-            var first = new MockPartitionOwnership("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", sequenceNumber: sequenceNumber1);
-            var second = new MockPartitionOwnership("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", sequenceNumber: sequenceNumber2);
-
-            Assert.That(first.IsEquivalentTo(second), Is.False);
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="PartitionOwnershipExtensions.IsEquivalentTo" /> test
-        ///   helper.
-        /// </summary>
-        ///
-        [Test]
         public void IsEquivalentToDetectsLastModifiedTime()
         {
             var first = new MockPartitionOwnership("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", lastModifiedTime: DateTimeOffset.Parse("1975-04-04T00:00:00Z"));
@@ -157,8 +125,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         [Test]
         public void IsEquivalentToDetectsEqualPartitionOwnership()
         {
-            var first = new MockPartitionOwnership("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", 10, 20, DateTimeOffset.Parse("1975-04-04T00:00:00Z"), "eTag");
-            var second = new MockPartitionOwnership("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", 10, 20, DateTimeOffset.Parse("1975-04-04T00:00:00Z"), "eTag");
+            var first = new MockPartitionOwnership("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", DateTimeOffset.Parse("1975-04-04T00:00:00Z"), "eTag");
+            var second = new MockPartitionOwnership("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", DateTimeOffset.Parse("1975-04-04T00:00:00Z"), "eTag");
 
             Assert.That(first.IsEquivalentTo(second), Is.True);
 
@@ -236,8 +204,6 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             /// <param name="consumerGroup">The name of the consumer group this partition ownership is associated with.</param>
             /// <param name="ownerIdentifier">The identifier of the associated <see cref="EventProcessor" /> instance.</param>
             /// <param name="partitionId">The identifier of the Event Hub partition this partition ownership is associated with.</param>
-            /// <param name="offset">The offset of the last <see cref="EventData" /> received by the associated partition processor.</param>
-            /// <param name="sequenceNumber">The sequence number of the last <see cref="EventData" /> received by the associated partition processor.</param>
             /// <param name="lastModifiedTime">The date and time, in UTC, that the last update was made to this ownership.</param>
             /// <param name="eTag">The entity tag needed to update this ownership.</param>
             ///
@@ -246,10 +212,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                                           string consumerGroup,
                                           string ownerIdentifier,
                                           string partitionId,
-                                          long? offset = null,
-                                          long? sequenceNumber = null,
                                           DateTimeOffset? lastModifiedTime = null,
-                                          string eTag = null) : base(fullyQualifiedNamespace, eventHubName, consumerGroup, ownerIdentifier, partitionId, offset, sequenceNumber, lastModifiedTime, eTag)
+                                          string eTag = null) : base(fullyQualifiedNamespace, eventHubName, consumerGroup, ownerIdentifier, partitionId, lastModifiedTime, eTag)
             {
             }
         }
