@@ -66,6 +66,9 @@ namespace Azure.Storage
 
         public const string SnapshotParameterName = "snapshot";
 
+        public const string Https = "https";
+        public const string Http = "http";
+
         /// <summary>
         /// Storage Connection Strings
         /// </summary>
@@ -136,8 +139,6 @@ namespace Azure.Storage
         /// </summary>
         internal static class Blob
         {
-            public const string Https = "https";
-            public const string Http = "http";
             public const int HttpsPort = 443;
             public const string UriSubDomain = "blob";
 

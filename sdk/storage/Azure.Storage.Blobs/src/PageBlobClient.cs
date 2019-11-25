@@ -583,8 +583,6 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(httpHeaders)}: {httpHeaders}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
-
                     return await BlobRestClient.PageBlob.CreateAsync(
                         ClientDiagnostics,
                         Pipeline,
@@ -814,8 +812,6 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
-
                     content = content.WithNoDispose().WithProgress(progressHandler);
                     var range = new HttpRange(offset, content.Length);
                     var uploadAttempt = 0;
@@ -1002,8 +998,6 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
-
                     return await BlobRestClient.PageBlob.ClearPagesAsync(
                         ClientDiagnostics,
                         Pipeline,
@@ -1553,8 +1547,6 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
-
                     return await BlobRestClient.PageBlob.ResizeAsync(
                         ClientDiagnostics,
                         Pipeline,
@@ -2372,8 +2364,6 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(sourceUri)}: {sourceUri}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
-
                     return await BlobRestClient.PageBlob.UploadPagesFromUriAsync(
                         ClientDiagnostics,
                         Pipeline,

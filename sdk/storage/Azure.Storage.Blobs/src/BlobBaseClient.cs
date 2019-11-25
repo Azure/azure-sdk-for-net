@@ -250,6 +250,7 @@ namespace Azure.Storage.Blobs.Specialized
         public BlobBaseClient(Uri blobUri, TokenCredential credential, BlobClientOptions options = default)
             : this(blobUri, credential.AsPolicy(), options)
         {
+            Errors.VerifyHttpsTokenAuth(blobUri);
         }
 
         /// <summary>
@@ -301,6 +302,7 @@ namespace Azure.Storage.Blobs.Specialized
             _pipeline = pipeline;
             _clientDiagnostics = clientDiagnostics;
             _customerProvidedKey = customerProvidedKey;
+            BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
         }
         #endregion ctors
 
@@ -714,8 +716,6 @@ namespace Azure.Storage.Blobs.Specialized
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
-
             var pageRange = new HttpRange(
                 range.Offset + startOffset,
                 range.Length.HasValue ?
@@ -2126,8 +2126,6 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
-
                     return await BlobRestClient.Blob.GetPropertiesAsync(
                         ClientDiagnostics,
                         Pipeline,
@@ -2275,8 +2273,6 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
-
                     Response<SetHttpHeadersOperation> response =
                         await BlobRestClient.Blob.SetHttpHeadersAsync(
                             ClientDiagnostics,
@@ -2434,8 +2430,6 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
-
                     Response<SetMetadataOperation> response =
                         await BlobRestClient.Blob.SetMetadataAsync(
                             ClientDiagnostics,
@@ -2590,8 +2584,6 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
-
                     return await BlobRestClient.Blob.CreateSnapshotAsync(
                         ClientDiagnostics,
                         Pipeline,

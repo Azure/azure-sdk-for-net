@@ -229,6 +229,7 @@ namespace Azure.Storage.Queues
         public QueueClient(Uri queueUri, TokenCredential credential, QueueClientOptions options = default)
             : this(queueUri, credential.AsPolicy(), options)
         {
+            Errors.VerifyHttpsTokenAuth(queueUri);
         }
 
         /// <summary>
