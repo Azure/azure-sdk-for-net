@@ -1,7 +1,7 @@
-Release History
+# Release History
 ===============
 
-Next Preview
---------------------------
-This preview is the first release supporting client-side encryption for Azure
-Storage blobs.
+## 12.0.0-preview.5
+
+- This preview is the first release supporting client-side encryption for Azure
+  Storage blobs.
