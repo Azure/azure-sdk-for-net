@@ -18,10 +18,10 @@ namespace Azure.Messaging.EventHubs.Processor
     public class PartitionInitializingEventArgs
     {
         /// <summary>
-        ///   The context of the Event Hub partition this instance is associated with.
+        ///   The identifier of the partition whose processing is starting.
         /// </summary>
         ///
-        public PartitionContext Partition { get; }
+        public string PartitionId { get; }
 
         /// <summary>
         ///   The position within a partition where the associated <c>EventProcessorClient</c> should
@@ -40,17 +40,17 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Initializes a new instance of the <see cref="PartitionInitializingEventArgs"/> class.
         /// </summary>
         ///
-        /// <param name="partition">The context of the Event Hub partition this instance is associated with.</param>
+        /// <param name="partitionId">The identifier of the partition whose processing is starting.</param>
         /// <param name="defaultStartingPosition">The position within a partition where the associated <c>EventProcessorClient</c> should begin reading events when no checkpoint can be found.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        public PartitionInitializingEventArgs(PartitionContext partition,
+        public PartitionInitializingEventArgs(string partitionId,
                                               EventPosition defaultStartingPosition,
                                               CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(partition, nameof(partition));
+            Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
 
-            Partition = partition;
+            PartitionId = partitionId;
             DefaultStartingPosition = defaultStartingPosition;
             CancellationToken = cancellationToken;
         }

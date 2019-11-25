@@ -81,7 +81,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
                 Interlocked.Increment(ref partitionsBeingProcessedCount);
 
-                Console.WriteLine($"\tPartition '{ eventArgs.Partition.PartitionId }': partition processing has started.");
+                Console.WriteLine($"\tPartition '{ eventArgs.PartitionId }': partition processing has started.");
 
                 // This method is asynchronous, which means it's expected to return a Task.
 

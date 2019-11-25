@@ -59,7 +59,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             EventHubConsumerClient.DefaultConsumerGroupName,
                             connectionString,
                             onInitialize: eventArgs =>
-                                initializeCalls.AddOrUpdate(eventArgs.Partition.PartitionId, 1, (partitionId, value) => value + 1)
+                                initializeCalls.AddOrUpdate(eventArgs.PartitionId, 1, (partitionId, value) => value + 1)
                         );
 
                     eventProcessorManager.AddEventProcessors(1);
@@ -821,7 +821,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             connectionString,
                             clientOptions: new EventProcessorClientOptions { MaximumWaitTime = TimeSpan.FromSeconds(maximumWaitTimeInSecs) },
                             onInitialize: eventArgs =>
-                                timestamps.TryAdd(eventArgs.Partition.PartitionId, new List<DateTimeOffset> { DateTimeOffset.UtcNow }),
+                                timestamps.TryAdd(eventArgs.PartitionId, new List<DateTimeOffset> { DateTimeOffset.UtcNow }),
                             onProcessEvent: eventArgs =>
                                 timestamps.AddOrUpdate
                                     (

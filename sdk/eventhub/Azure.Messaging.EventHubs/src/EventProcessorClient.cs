@@ -994,12 +994,9 @@ namespace Azure.Messaging.EventHubs
         ///
         private async Task StartPartitionProcessingAsync(string partitionId)
         {
-            var context = new PartitionContext(partitionId);
-            PartitionContexts[partitionId] = context;
-
             try
             {
-                var eventArgs = new PartitionInitializingEventArgs(context, EventPosition.Earliest, RunningTaskTokenSource.Token);
+                var eventArgs = new PartitionInitializingEventArgs(partitionId, EventPosition.Earliest, RunningTaskTokenSource.Token);
                 await OnPartitionInitializingAsync(eventArgs).ConfigureAwait(false);
 
                 var startingPosition = eventArgs.DefaultStartingPosition;
@@ -1008,7 +1005,7 @@ namespace Azure.Messaging.EventHubs
                 var availableCheckpoints = await Manager.ListCheckpointsAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup);
                 foreach (Checkpoint checkpoint in availableCheckpoints)
                 {
-                    if (checkpoint.PartitionId == context.PartitionId)
+                    if (checkpoint.PartitionId == partitionId)
                     {
                         startingPosition = EventPosition.FromOffset(checkpoint.Offset);
                         break;
@@ -1065,7 +1062,10 @@ namespace Azure.Messaging.EventHubs
 
             // TODO: if reason = Shutdown or OwnershipLost and we got an exception when closing, what should the final reason be?
 
-            PartitionContexts.TryRemove(partitionId, out var context);
+            if (!PartitionContexts.TryRemove(partitionId, out var context))
+            {
+                context = new PartitionContext(partitionId);
+            }
 
             // The RunningTaskTokenSource may be null if we are cleaning tasks after shutting down.
 
@@ -1152,11 +1152,6 @@ namespace Azure.Messaging.EventHubs
                                                  bool trackLastEnqueuedEventProperties,
                                                  CancellationToken cancellationToken) => Task.Run(async () =>
             {
-                // Context is set to default if operation fails.  This shouldn't fail unless the processor tries processing
-                // a partition it doesn't own.
-
-                PartitionContexts.TryGetValue(partitionId, out var context);
-
                 var clientOptions = new EventHubConsumerClientOptions
                 {
                     RetryOptions = new EventHubsRetryOptions { CustomRetryPolicy = retryPolicy }
@@ -1188,6 +1183,19 @@ namespace Azure.Messaging.EventHubs
 
                         try
                         {
+                            // Small workaround while we don't figure out why partitionEvent.Partition is null some times.
+
+                            var context = partitionEvent.Partition ?? new PartitionContext(partitionId);
+
+                            if (partitionEvent.Partition != null)
+                            {
+                                // We are storing the last received context so we can pass it to OnProcessClosingAsync.
+                                // TODO: make it possible to create a PartitionContext from an EventHubConsumer. This way, we
+                                // can store it a single time in the dictionary.
+
+                                PartitionContexts[partitionId] = partitionEvent.Partition;
+                            }
+
                             var eventArgs = new ProcessEventArgs(context, partitionEvent.Data, this, RunningTaskTokenSource.Token);
                             await OnProcessEventAsync(eventArgs).ConfigureAwait(false);
                         }
