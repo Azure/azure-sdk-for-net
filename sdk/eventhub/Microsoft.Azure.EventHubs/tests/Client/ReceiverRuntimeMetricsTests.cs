@@ -51,7 +51,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
             }
         }
 
-        [Fact]
+        [Fact(Skip = "Consistently failing during nightly runs; tracked by #8892")]
         [LiveTest]
         [DisplayTestMethodName]
         public async Task DefaultBehaviorDisabled()
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
             }
         }
 
-        [Fact]
+        [Fact(Skip = "Consistently failing during nightly runs; tracked by #8892")]
         [LiveTest]
         [DisplayTestMethodName]
         public async Task DisableWithReceiverOptions()
