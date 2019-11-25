@@ -45,7 +45,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
             };
 
-            var results = client.DetectLanguages(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true }).Value;
+            var results = client.DetectLanguages(inputs, new TextAnalysisOptions { IncludeStatistics = true }).Value;
 
             int i = 0;
             Debug.WriteLine($"Results of Azure Text Analytics \"Detect Language\" Model, version: \"{results.ModelVersion}\"");
