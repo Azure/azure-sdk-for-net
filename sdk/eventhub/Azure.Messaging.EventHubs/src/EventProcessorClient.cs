@@ -682,8 +682,40 @@ namespace Azure.Messaging.EventHubs
         /// <param name="eventData">The event containing the information to be stored in the checkpoint.</param>
         /// <param name="context">The context of the partition the checkpoint is associated with.</param>
         ///
-        internal Task InternalUpdateCheckpointAsync(EventData eventData,
-                                                    PartitionContext context) => UpdateCheckpointAsync(eventData, context);
+        internal async Task UpdateCheckpointAsync(EventData eventData,
+                                                  PartitionContext context)
+        {
+            Argument.AssertNotNull(eventData, nameof(eventData));
+            Argument.AssertNotNull(eventData.Offset, nameof(eventData.Offset));
+            Argument.AssertNotNull(eventData.SequenceNumber, nameof(eventData.SequenceNumber));
+            Argument.AssertNotNull(context, nameof(context));
+
+            // Parameter validation is done by Checkpoint constructor.
+
+            var checkpoint = new Checkpoint
+            (
+                FullyQualifiedNamespace,
+                EventHubName,
+                ConsumerGroup,
+                context.PartitionId,
+                eventData.Offset.Value,
+                eventData.SequenceNumber.Value
+            );
+
+            using DiagnosticScope scope =
+                EventDataInstrumentation.ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorCheckpointActivityName);
+            scope.Start();
+
+            try
+            {
+                await Manager.UpdateCheckpointAsync(checkpoint).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
         /// <summary>
         ///   Called when a 'partition initializing' event is triggered.
@@ -830,48 +862,6 @@ namespace Azure.Messaging.EventHubs
             // If cancellation has been requested, throw an exception so we can keep a consistent behavior.
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-        }
-
-        /// <summary>
-        ///   Updates the checkpoint using the given information for the associated partition and consumer group in the chosen storage service.
-        /// </summary>
-        ///
-        /// <param name="eventData">The event containing the information to be stored in the checkpoint.</param>
-        /// <param name="context">The context of the partition the checkpoint is associated with.</param>
-        ///
-        private async Task UpdateCheckpointAsync(EventData eventData,
-                                                 PartitionContext context)
-        {
-            Argument.AssertNotNull(eventData, nameof(eventData));
-            Argument.AssertNotNull(eventData.Offset, nameof(eventData.Offset));
-            Argument.AssertNotNull(eventData.SequenceNumber, nameof(eventData.SequenceNumber));
-            Argument.AssertNotNull(context, nameof(context));
-
-            // Parameter validation is done by Checkpoint constructor.
-
-            var checkpoint = new Checkpoint
-            (
-                FullyQualifiedNamespace,
-                EventHubName,
-                ConsumerGroup,
-                context.PartitionId,
-                eventData.Offset.Value,
-                eventData.SequenceNumber.Value
-            );
-
-            using DiagnosticScope scope =
-                EventDataInstrumentation.ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorCheckpointActivityName);
-            scope.Start();
-
-            try
-            {
-                await Manager.UpdateCheckpointAsync(checkpoint).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// <summary>
