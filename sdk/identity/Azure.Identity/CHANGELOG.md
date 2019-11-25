@@ -1,5 +1,6 @@
 # Release History
-## Unreleased
+
+## 1.1.0
 
 ### Fixes and improvements
 - Update `SharedTokenCacheCredential` to filter accounts by tenant id
