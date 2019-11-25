@@ -29,7 +29,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public static IEnumerable<object[]> SharedAccessSignatureCredentialTestCases()
         {
             TokenCredential credentialMock = Mock.Of<TokenCredential>();
-            var signature = new SharedAccessSignature(string.Empty, "keyName", "key", "TOkEn!", DateTimeOffset.UtcNow.AddHours(4));
+            var signature = new SharedAccessSignature("hub", "keyName", "key", "TOkEn!", DateTimeOffset.UtcNow.AddHours(4));
 
             yield return new object[] { new SharedAccessSignatureCredential(signature), true };
             yield return new object[] { new EventHubSharedKeyCredential("blah", "foo"), true };

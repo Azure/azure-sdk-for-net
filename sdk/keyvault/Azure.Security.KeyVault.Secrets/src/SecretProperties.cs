@@ -50,7 +50,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <summary>
         /// Initializes a new instance of the <see cref="SecretProperties"/> class.
         /// </summary>
-        /// <param name="id">The Id of the secret.</param>
+        /// <param name="id">The identifier of the secret.</param>
         /// <exception cref="ArgumentNullException"><paramref name="id"/> is null.</exception>
         public SecretProperties(Uri id)
         {
@@ -105,31 +105,31 @@ namespace Azure.Security.KeyVault.Secrets
         public bool? Enabled { get => _attributes.Enabled; set => _attributes.Enabled = value; }
 
         /// <summary>
-        /// Gets or sets a <see cref="DateTimeOffset"/> of when the secret will be valid and can be used.
+        /// Gets or sets a <see cref="DateTimeOffset"/> indicating when the secret will be valid and can be used.
         /// </summary>
         public DateTimeOffset? NotBefore { get => _attributes.NotBefore; set => _attributes.NotBefore = value; }
 
         /// <summary>
-        /// Gets or sets a <see cref="DateTimeOffset"/> of when the secret will expire and cannot be used.
+        /// Gets or sets a <see cref="DateTimeOffset"/> indicating when the secret will expire and cannot be used.
         /// </summary>
         public DateTimeOffset? ExpiresOn { get => _attributes.ExpiresOn; set => _attributes.ExpiresOn = value; }
 
         /// <summary>
-        /// Gets a <see cref="DateTimeOffset"/> of when the secret was created.
+        /// Gets a <see cref="DateTimeOffset"/> indicating when the secret was created.
         /// </summary>
         public DateTimeOffset? CreatedOn { get => _attributes.CreatedOn; internal set => _attributes.CreatedOn = value; }
 
         /// <summary>
-        /// Gets a <see cref="DateTimeOffset"/> of when the secret was updated.
+        /// Gets a <see cref="DateTimeOffset"/> indicating when the secret was updated.
         /// </summary>
         public DateTimeOffset? UpdatedOn { get => _attributes.UpdatedOn; internal set => _attributes.UpdatedOn = value; }
 
         /// <summary>
         /// Gets the recovery level currently in effect for secrets in the Key Vault.
-        /// If "Purgeable", the secret can be permanently deleted by an authorized user;
-        /// otherwise, only the service can purge the secret at the end of the retention interval.
+        /// If <c>Purgeable</c>, the secret can be permanently deleted by an authorized user;
+        /// otherwise, only the service can purge the secrets at the end of the retention interval.
         /// </summary>
-        /// <value>Possible values include "Purgeable", "Recoverable+Purgeable", "Recoverable", and "Recoverable+ProtectedSubscription".</value>
+        /// <value>Possible values include <c>Purgeable</c>, <c>Recoverable+Purgeable</c>, <c>Recoverable</c>, and <c>Recoverable+ProtectedSubscription</c>.</value>
         public string RecoveryLevel { get => _attributes.RecoveryLevel; internal set => _attributes.RecoveryLevel = value; }
 
         /// <summary>

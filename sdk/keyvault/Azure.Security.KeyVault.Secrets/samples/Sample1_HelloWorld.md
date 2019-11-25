@@ -74,6 +74,7 @@ If the Key Vault is soft delete-enabled and you want to permanently delete the s
 the deleted secret needs to be purged. Before it can be purged, you need to wait until the secret is fully deleted.
 
 ```C# Snippet:SecretsSample1PurgeSecret
+// You only need to wait for completion if you want to purge or recover the secret.
 while (!operation.HasCompleted)
 {
     Thread.Sleep(2000);
@@ -90,6 +91,7 @@ When writing asynchronous code, you can instead await `WaitForCompletionAsync` t
 You can optionally pass in a `CancellationToken` to cancel waiting after a certain period or time or any other trigger you require.
 
 ```C# Snippet:SecretsSample1PurgeSecretAsync
+// You only need to wait for completion if you want to purge or recover the secret.
 await operation.WaitForCompletionAsync();
 
 await client.PurgeDeletedSecretAsync(secretName);

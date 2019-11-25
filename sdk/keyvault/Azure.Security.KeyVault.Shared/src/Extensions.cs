@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Azure.Security.KeyVault
 {
-    internal static class Extensions
+    internal static partial class Extensions
     {
         public static bool IsNullOrEmpty<T>(this ICollection<T> source) => source is null || source.Count == 0;
     }

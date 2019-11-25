@@ -175,6 +175,7 @@ namespace Azure.Storage.Queues
         /// <param name="queueUri">
         /// A <see cref="Uri"/> referencing the queue that includes the
         /// name of the account, and the name of the queue.
+        /// This is likely to be similar to "https://{account_name}.queue.core.windows.net/{queue_name}".
         /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline
@@ -193,6 +194,7 @@ namespace Azure.Storage.Queues
         /// <param name="queueUri">
         /// A <see cref="Uri"/> referencing the queue that includes the
         /// name of the account, and the name of the queue.
+        /// This is likely to be similar to "https://{account_name}.queue.core.windows.net/{queue_name}".
         /// </param>
         /// <param name="credential">
         /// The shared key credential used to sign requests.
@@ -214,6 +216,7 @@ namespace Azure.Storage.Queues
         /// <param name="queueUri">
         /// A <see cref="Uri"/> referencing the queue that includes the
         /// name of the account, and the name of the queue.
+        /// This is likely to be similar to "https://{account_name}.queue.core.windows.net/{queue_name}".
         /// </param>
         /// <param name="credential">
         /// The token credential used to sign requests.
@@ -226,6 +229,7 @@ namespace Azure.Storage.Queues
         public QueueClient(Uri queueUri, TokenCredential credential, QueueClientOptions options = default)
             : this(queueUri, credential.AsPolicy(), options)
         {
+            Errors.VerifyHttpsTokenAuth(queueUri);
         }
 
         /// <summary>
@@ -235,6 +239,7 @@ namespace Azure.Storage.Queues
         /// <param name="queueUri">
         /// A <see cref="Uri"/> referencing the queue that includes the
         /// name of the account, and the name of the queue.
+        /// This is likely to be similar to "https://{account_name}.queue.core.windows.net/{queue_name}".
         /// </param>
         /// <param name="authentication">
         /// An optional authentication policy used to sign requests.
@@ -260,6 +265,7 @@ namespace Azure.Storage.Queues
         /// <param name="queueUri">
         /// A <see cref="Uri"/> referencing the queue that includes the
         /// name of the account, and the name of the queue.
+        /// This is likely to be similar to "https://{account_name}.queue.core.windows.net/{queue_name}".
         /// </param>
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.

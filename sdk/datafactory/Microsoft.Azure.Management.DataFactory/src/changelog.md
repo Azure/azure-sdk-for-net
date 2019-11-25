@@ -3,6 +3,7 @@
 ## Version 4.5.0
 ###  Feature Additions
 - Added SQL DW Copy Command support in Copy Activity
+- Added report status on callback support for webhook activity
 
 ## Version 4.4.0
 ###  Feature Additions

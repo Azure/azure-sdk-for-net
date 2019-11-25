@@ -57,51 +57,29 @@ namespace Azure.Messaging.EventHubs.Samples
             // Because events are not removed from the partition when consuming, a consumer must specify where in the partition it
             // would like to begin reading events.  For example, this may be starting from the very beginning of the stream, at an
             // offset from the beginning, the next event available after a specific point in time, or at a specific event.
+            //
+            // In this example, we will create our consumer client using the default consumer group that is created with an Event Hub.
+            // Our consumer will begin watching the partition at the very end, reading only new events that we will publish for it.
 
-            // We will start by creating a client using its default set of options.
-
-            // We will start by creating a client to inspect the Event Hub and select a partition to operate against to ensure that
-            // events are being published and read from the same partition.
-
-            string firstPartition;
-
-            await using (var inspectionClient = new EventHubProducerClient(connectionString, eventHubName))
+            await using (var consumerClient = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString, eventHubName))
             {
-                // With our client, we can now inspect the partitions and find the identifier
-                // of the first.
+                // We will start by using the consumer client inspect the Event Hub and select a partition to operate against to ensure that events are being
+                // published and read from the same partition.
 
-                firstPartition = (await inspectionClient.GetPartitionIdsAsync()).First();
-            }
-
-            // In this example, we will create our consumer client for the first partition in the Event Hub, using the default consumer group
-            // that is created with an Event Hub.  Our consumer will begin watching the partition at the very end, reading only new events
-            // that we will publish for it.
-
-            await using (var consumerClient = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, firstPartition, EventPosition.Latest, connectionString, eventHubName))
-            await using (var producerClient = new EventHubProducerClient(connectionString, eventHubName, new EventHubProducerClientOptions { PartitionId = firstPartition }))
-            {
-                EventData[] eventsToPublish = new EventData[]
-                {
-                    new EventData(Encoding.UTF8.GetBytes("Hello, Event Hubs!")),
-                    new EventData(Encoding.UTF8.GetBytes("Goodbye, Event Hubs!"))
-                };
-
-                List<EventData> receivedEvents = new List<EventData>();
-                Stopwatch watch = Stopwatch.StartNew();
-                bool wereEventsPublished = false;
+                string firstPartition = (await consumerClient.GetPartitionIdsAsync()).First();
 
                 // Because our consumer is reading from the latest position, it won't see events that have previously
-                // been published.  Before we can publish the events and have them observed, we will need to ask the
-                // consumer to perform an operation, because it opens its connection only when it needs to.
-                //
-                // We'll begin to iterate on the partition using a small wait time, so that control will return to our loop even when
-                // no event is available.  For the first call, we'll publish so that we can receive them.
+                // been published.  Before we can publish the events and have them observed, we will need to ask the consumer
+                // to perform an operation, because it opens its connection only when it needs to.
                 //
                 // When a maximum wait time is specified, the iteration will ensure that it returns control after that time has elapsed,
                 // whether or not an event is available in the partition.  If no event was available a null value will be emitted instead.
                 // This is intended to return control to the loop and avoid blocking for an indeterminate period of time to allow event
                 // processors to verify that the iterator is still consuming the partition and to make decisions on whether or not to continue
                 // if events are not arriving.
+                //
+                // We'll begin to iterate on the partition using a small wait time, so that control will return to our loop even when
+                // no event is available.  For the first call, we'll publish so that we can receive them.
                 //
                 // For this example, we will specify a maximum wait time, and won't exit the loop until we've received at least one more
                 // event than we published, which is expected to be a null value triggered by exceeding the wait time.
@@ -112,22 +90,40 @@ namespace Azure.Messaging.EventHubs.Samples
                 CancellationTokenSource cancellationSource = new CancellationTokenSource();
                 cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
 
-                TimeSpan maximumWaitTime = TimeSpan.FromMilliseconds(250);
+                ReadEventOptions readOptions = new ReadEventOptions
+                {
+                    MaximumWaitTime = TimeSpan.FromMilliseconds(250)
+                };
 
-                await foreach (PartitionEvent currentEvent in consumerClient.ReadEventsFromPartitionAsync(firstPartition, EventPosition.Latest, maximumWaitTime, cancellationSource.Token))
+                bool wereEventsPublished = false;
+                int eventBatchCount = 0;
+                List<EventData> receivedEvents = new List<EventData>();
+
+                Stopwatch watch = Stopwatch.StartNew();
+
+                await foreach (PartitionEvent currentEvent in consumerClient.ReadEventsFromPartitionAsync(firstPartition, EventPosition.Latest, readOptions, cancellationSource.Token))
                 {
                     if (!wereEventsPublished)
                     {
-                        await producerClient.SendAsync(eventsToPublish);
-                        wereEventsPublished = true;
+                        await using (var producerClient = new EventHubProducerClient(connectionString, eventHubName))
+                        {
+                            using EventDataBatch eventBatch = await producerClient.CreateBatchAsync(new CreateBatchOptions { PartitionId = firstPartition });
+                            eventBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes("Hello, Event Hubs!")));
+                            eventBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes("Goodbye, Event Hubs!")));
 
-                        Console.WriteLine("The event batch has been published.");
+                            await producerClient.SendAsync(eventBatch);
+                            wereEventsPublished = true;
+                            eventBatchCount = eventBatch.Count;
+
+                            await Task.Delay(250);
+                            Console.WriteLine("The event batch has been published.");
+                        }
                     }
                     else
                     {
                         receivedEvents.Add(currentEvent.Data);
 
-                        if (receivedEvents.Count > eventsToPublish.Length)
+                        if (receivedEvents.Count > eventBatchCount)
                         {
                             watch.Stop();
                             break;

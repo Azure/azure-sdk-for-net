@@ -117,10 +117,17 @@ namespace Azure.Core.Samples
             AsyncPageable<SecretProperties> response = client.GetPropertiesOfSecretsAsync();
 
             IAsyncEnumerator<SecretProperties> enumerator = response.GetAsyncEnumerator();
-            while (await enumerator.MoveNextAsync())
+            try
             {
-                SecretProperties secretProperties = enumerator.Current;
-                Console.WriteLine(secretProperties.Name);
+                while (await enumerator.MoveNextAsync())
+                {
+                    SecretProperties secretProperties = enumerator.Current;
+                    Console.WriteLine(secretProperties.Name);
+                }
+            }
+            finally
+            {
+                await enumerator.DisposeAsync();
             }
             #endregion
         }

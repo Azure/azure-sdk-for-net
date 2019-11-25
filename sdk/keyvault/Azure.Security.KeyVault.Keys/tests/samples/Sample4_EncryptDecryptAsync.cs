@@ -59,7 +59,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             // The Cloud RSA Key is no longer needed, need to delete it from the Key Vault.
             DeleteKeyOperation operation = await keyClient.StartDeleteKeyAsync(rsaKeyName);
 
-            // To ensure the key is deleted on server before we try to purge it.
+            // You only need to wait for completion if you want to purge or recover the key.
             await operation.WaitForCompletionAsync();
 
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted key needs to be purged.

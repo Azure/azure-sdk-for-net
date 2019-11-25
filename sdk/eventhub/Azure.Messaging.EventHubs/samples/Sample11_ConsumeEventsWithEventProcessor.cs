@@ -5,7 +5,6 @@ using System;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.EventHubs.Processor;
 using Azure.Messaging.EventHubs.Samples.Infrastructure;
 
 namespace Azure.Messaging.EventHubs.Samples
@@ -49,10 +48,12 @@ namespace Azure.Messaging.EventHubs.Samples
 
             // A partition manager may create checkpoints and list/claim partition ownership.  A developer may implement their
             // own partition manager by creating a subclass from the PartitionManager abstract class.  Here we are creating
-            // a new instance of an InMemoryPartitionManager, provided by the Azure.Messaging.EventHubs.Processor namespace.
+            // a new instance of a MockCheckPointStorage to get started with using the `EventProcessor` but in production,
+            // you should choose an implementation of the PartitionManager interface that will
+            // store the checkpoints and partition ownership to a persistent store instead.
             // This isn't relevant to understanding this sample, but is required by the event processor constructor.
 
-            var partitionManager = new InMemoryPartitionManager();
+            var partitionManager = new MockCheckPointStorage();
 
             // It's also possible to specify custom options upon event processor creation.  We don't want to wait
             // more than 1 second for every set of events.
@@ -71,12 +72,12 @@ namespace Azure.Messaging.EventHubs.Samples
 
                 // TODO: explain callbacks setup once the public API is finished for the next preview.
 
-                eventProcessor.InitializeProcessingForPartitionAsync = (initializationContext) =>
+                eventProcessor.InitializeProcessingForPartitionAsyncHandler = (initializationContext) =>
                 {
                     // This is the last piece of code guaranteed to run before event processing, so all initialization
                     // must be done by the moment this method returns.
 
-                    // We want to receive events from the latest available position so older events don't interefere with our sample.
+                    // We want to receive events from the latest available position so older events don't interfere with our sample.
 
                     initializationContext.DefaultStartingPosition = EventPosition.Latest;
 
@@ -86,10 +87,10 @@ namespace Azure.Messaging.EventHubs.Samples
 
                     // This method is asynchronous, which means it's expected to return a Task.
 
-                    return Task.CompletedTask;
+                    return new ValueTask();
                 };
 
-                eventProcessor.ProcessingForPartitionStoppedAsync = (stopContext) =>
+                eventProcessor.ProcessingForPartitionStoppedAsyncHandler = (stopContext) =>
                 {
                     // The code to be run just before stopping processing events for a partition.  This is the right place to dispose
                     // of objects that will no longer be used.
@@ -100,10 +101,10 @@ namespace Azure.Messaging.EventHubs.Samples
 
                     // This method is asynchronous, which means it's expected to return a Task.
 
-                    return Task.CompletedTask;
+                    return new ValueTask();
                 };
 
-                eventProcessor.ProcessEventAsync = (processorEvent) =>
+                eventProcessor.ProcessEventAsyncHandler = (processorEvent) =>
                 {
                     // Here the user can specify what to do with the event received from the event processor.  We are counting how
                     // many events were received across all partitions so we can check whether all sent events were received.
@@ -119,10 +120,10 @@ namespace Azure.Messaging.EventHubs.Samples
 
                     // This method is asynchronous, which means it's expected to return a Task.
 
-                    return Task.CompletedTask;
+                    return new ValueTask();
                 };
 
-                eventProcessor.ProcessExceptionAsync = (errorContext) =>
+                eventProcessor.ProcessErrorAsyncHandler = (errorContext) =>
                 {
                     // Any exception which occurs as a result of the event processor itself will be passed to
                     // this delegate so it may be handled.  The processor will continue to process events if
@@ -140,7 +141,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
                     // This method is asynchronous, which means it's expected to return a Task.
 
-                    return Task.CompletedTask;
+                    return new ValueTask();
                 };
 
                 // Once started, the event processor will start to claim partitions and receive events from them.
@@ -169,17 +170,17 @@ namespace Azure.Messaging.EventHubs.Samples
                         await Task.Delay(500, cancellationSource.Token);
                     }
 
+                    // The processor may take some time to connect to the Event Hubs service.  Let's wait 1 second before sending
+                    // events so we don't end up missing events.
+
+                    await Task.Delay(1000);
+
                     // To test our event processor, we are publishing 10 sets of events to the Event Hub.  Notice that we are not
                     // specifying a partition to send events to, so these sets may end up in different partitions.
 
-                    EventData[] eventsToPublish = new EventData[]
-                    {
-                        new EventData(Encoding.UTF8.GetBytes("I am not the second event.")),
-                        new EventData(Encoding.UTF8.GetBytes("I am not the first event."))
-                    };
-
                     int amountOfSets = 10;
-                    int expectedAmountOfEvents = amountOfSets * eventsToPublish.Length;
+                    int eventsPerSet = 2;
+                    int expectedAmountOfEvents = amountOfSets * eventsPerSet;
 
                     Console.WriteLine();
                     Console.WriteLine("Sending events to the Event Hub.");
@@ -187,7 +188,11 @@ namespace Azure.Messaging.EventHubs.Samples
 
                     for (int i = 0; i < amountOfSets; i++)
                     {
-                        await producerClient.SendAsync(eventsToPublish);
+                        using EventDataBatch eventBatch = await producerClient.CreateBatchAsync();
+                        eventBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes("I am not the second event.")));
+                        eventBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes("I am not the first event.")));
+
+                        await producerClient.SendAsync(eventBatch);
                     }
 
                     // Because there is some non-determinism in the messaging flow, the sent events may not be immediately

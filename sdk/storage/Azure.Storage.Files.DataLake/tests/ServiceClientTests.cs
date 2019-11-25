@@ -70,6 +70,23 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public void Ctor_TokenCredential_Http()
+        {
+            // Arrange
+            TokenCredential tokenCredential = GetOAuthCredential(TestConfigHierarchicalNamespace);
+            Uri uri = new Uri(TestConfigHierarchicalNamespace.BlobServiceEndpoint).ToHttp();
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new DataLakeServiceClient(uri, tokenCredential),
+                new ArgumentException("Cannot use TokenCredential without HTTPS."));
+
+            TestHelper.AssertExpectedException(
+                () => new DataLakeServiceClient(uri, tokenCredential, new DataLakeClientOptions()),
+                new ArgumentException("Cannot use TokenCredential without HTTPS."));
+        }
+
+        [Test]
         public async Task GetUserDelegationKey()
         {
             // Arrange
@@ -100,7 +117,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             DataLakeServiceClient service = GetServiceClient_SharedKey();
             // Ensure at least one container
-            using (GetNewFileSystem(out _, service: service))
+            using (GetNewFileSystem(service: service))
             {
                 // Act
                 IList<FileSystemItem> fileSystems = await service.GetFileSystemsAsync().ToListAsync();
@@ -117,20 +134,19 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             DataLakeServiceClient service = GetServiceClient_SharedKey();
             // Ensure at least one container
-            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem, service: service))
+            await using DisposingFileSystem test = await GetNewFileSystem(service: service);
+
+            var marker = default(string);
+            var fileSystems = new List<FileSystemItem>();
+
+            await foreach (Page<FileSystemItem> page in service.GetFileSystemsAsync().AsPages(marker))
             {
-                var marker = default(string);
-                var fileSystems = new List<FileSystemItem>();
-
-                await foreach (Page<FileSystemItem> page in service.GetFileSystemsAsync().AsPages(marker))
-                {
-                    fileSystems.AddRange(page.Values);
-                }
-
-                Assert.AreNotEqual(0, fileSystems.Count);
-                Assert.AreEqual(fileSystems.Count, fileSystems.Select(c => c.Name).Distinct().Count());
-                Assert.IsTrue(fileSystems.Any(c => fileSystem.Uri == InstrumentClient(service.GetFileSystemClient(c.Name)).Uri));
+                fileSystems.AddRange(page.Values);
             }
+
+            Assert.AreNotEqual(0, fileSystems.Count);
+            Assert.AreEqual(fileSystems.Count, fileSystems.Select(c => c.Name).Distinct().Count());
+            Assert.IsTrue(fileSystems.Any(c => test.FileSystem.Uri == InstrumentClient(service.GetFileSystemClient(c.Name)).Uri));
         }
 
         [Test]
@@ -139,18 +155,17 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             DataLakeServiceClient service = GetServiceClient_SharedKey();
             // Ensure at least one container
-            using (GetNewFileSystem(out _, service: service))
-            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem, service: service))
-            {
-                // Act
-                Page<FileSystemItem> page = await
-                    service.GetFileSystemsAsync()
-                    .AsPages(pageSizeHint: 1)
-                    .FirstAsync();
+            await GetNewFileSystem(service: service);
+            await using DisposingFileSystem test = await GetNewFileSystem(service: service);
 
-                // Assert
-                Assert.AreEqual(1, page.Values.Count());
-            }
+            // Act
+            Page<FileSystemItem> page = await
+                service.GetFileSystemsAsync()
+                .AsPages(pageSizeHint: 1)
+                .FirstAsync();
+
+            // Assert
+            Assert.AreEqual(1, page.Values.Count());
         }
 
         [Test]
@@ -160,16 +175,15 @@ namespace Azure.Storage.Files.DataLake.Tests
             var prefix = "aaa";
             var fileSystemName = prefix + GetNewFileSystemName();
             // Ensure at least one container
-            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem, service: service, fileSystemName: fileSystemName))
-            {
-                // Act
-                AsyncPageable<FileSystemItem> fileSystems = service.GetFileSystemsAsync(prefix: prefix);
-                IList<FileSystemItem> items = await fileSystems.ToListAsync();
-                // Assert
-                Assert.AreNotEqual(0, items.Count());
-                Assert.IsTrue(items.All(c => c.Name.StartsWith(prefix)));
-                Assert.IsNotNull(items.Single(c => c.Name == fileSystemName));
-            }
+            await using DisposingFileSystem test = await GetNewFileSystem(service: service, fileSystemName: fileSystemName);
+
+            // Act
+            AsyncPageable<FileSystemItem> fileSystems = service.GetFileSystemsAsync(prefix: prefix);
+            IList<FileSystemItem> items = await fileSystems.ToListAsync();
+            // Assert
+            Assert.AreNotEqual(0, items.Count());
+            Assert.IsTrue(items.All(c => c.Name.StartsWith(prefix)));
+            Assert.IsNotNull(items.Single(c => c.Name == fileSystemName));
         }
 
         [Test]
@@ -177,20 +191,19 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             DataLakeServiceClient service = GetServiceClient_SharedKey();
             // Ensure at least one container
-            using (GetNewFileSystem(out DataLakeFileSystemClient fileSystem, service: service))
-            {
-                // Arrange
-                IDictionary<string, string> metadata = BuildMetadata();
-                await fileSystem.SetMetadataAsync(metadata);
+            await using DisposingFileSystem test = await GetNewFileSystem(service: service);
 
-                // Act
-                IList<FileSystemItem> items = await service.GetFileSystemsAsync(FileSystemTraits.Metadata).ToListAsync();
+            // Arrange
+            IDictionary<string, string> metadata = BuildMetadata();
+            await test.FileSystem.SetMetadataAsync(metadata);
 
-                // Assert
-                AssertMetadataEquality(
-                    metadata,
-                    items.Where(i => i.Name == fileSystem.Name).FirstOrDefault().Properties.Metadata);
-            }
+            // Act
+            IList<FileSystemItem> items = await service.GetFileSystemsAsync(FileSystemTraits.Metadata).ToListAsync();
+
+            // Assert
+            AssertMetadataEquality(
+                metadata,
+                items.Where(i => i.Name == test.FileSystem.Name).FirstOrDefault().Properties.Metadata);
         }
 
         [Test]

@@ -12,7 +12,7 @@ namespace Azure.Messaging.EventHubs
     ///   an <see cref="EventHubConsumerClient" />.
     /// </summary>
     ///
-    public sealed class EventPosition
+    public struct EventPosition : IEquatable<EventPosition>
     {
         /// <summary>The token that represents the beginning event in the stream of a partition.</summary>
         private const string StartOfStreamOffset = "-1";
@@ -155,6 +155,28 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   Determines whether the specified <see cref="EventPosition" /> is equal to this instance.
+        /// </summary>
+        ///
+        /// <param name="other">The <see cref="EventPosition" /> to compare with this instance.</param>
+        ///
+        /// <returns><c>true</c> if the specified <see cref="EventPosition" /> is equal to this instance; otherwise, <c>false</c>.</returns>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public bool Equals(EventPosition other)
+        {
+            if (ReferenceEquals(this, other))
+            {
+               return true;
+            }
+
+            return (Offset == other.Offset)
+                && (SequenceNumber == other.SequenceNumber)
+                && (EnqueuedTime == other.EnqueuedTime)
+                && (IsInclusive == other.IsInclusive);
+        }
+
+        /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
         ///
@@ -163,7 +185,12 @@ namespace Azure.Messaging.EventHubs
         /// <returns><c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.</returns>
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => base.Equals(obj);
+        public override bool Equals(object obj) =>
+            obj switch
+            {
+                EventPosition other => Equals(other),
+                _ => ReferenceEquals(this, obj)
+            };
 
         /// <summary>
         ///   Returns a hash code for this instance.
@@ -172,7 +199,16 @@ namespace Azure.Messaging.EventHubs
         /// <returns>A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.</returns>
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => base.GetHashCode();
+        public override int GetHashCode()
+        {
+            var hashCode = new HashCodeBuilder();
+            hashCode.Add(Offset);
+            hashCode.Add(SequenceNumber);
+            hashCode.Add(EnqueuedTime);
+            hashCode.Add(IsInclusive);
+
+            return hashCode.ToHashCode();
+        }
 
         /// <summary>
         ///   Converts the instance to string representation.
@@ -182,5 +218,29 @@ namespace Azure.Messaging.EventHubs
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
+
+        /// <summary>
+        ///   Determines whether the specified <see cref="EventPosition" /> instances are equal to each other.
+        /// </summary>
+        ///
+        /// <param name="first">The first <see cref="EventPosition" /> to consider.</param>
+        /// <param name="second">The second <see cref="EventPosition" /> to consider.</param>
+        ///
+        /// <returns><c>true</c> if the two specified <see cref="EventPosition" /> instances are equal; otherwise, <c>false</c>.</returns>
+        ///
+        public static bool operator ==(EventPosition first,
+                                       EventPosition second) => first.Equals(second);
+
+        /// <summary>
+        ///   Determines whether the specified <see cref="EventPosition" /> instances are not equal to each other.
+        /// </summary>
+        ///
+        /// <param name="first">The first <see cref="EventPosition" /> to consider.</param>
+        /// <param name="second">The second <see cref="EventPosition" /> to consider.</param>
+        ///
+        /// <returns><c>true</c> if the two specified <see cref="EventPosition" /> instances are not equal; otherwise, <c>false</c>.</returns>
+        ///
+        public static bool operator !=(EventPosition first,
+                                       EventPosition second) => (!first.Equals(second));
     }
 }

@@ -223,7 +223,7 @@ namespace Azure.Identity.Tests
 
                 Assert.IsTrue(query.Contains($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
 
-                Assert.IsTrue(query.Contains($"client_id=mock-client-id"));
+                Assert.IsTrue(query.Contains($"clientid=mock-client-id"));
 
                 Assert.IsTrue(request.Headers.TryGetValue("secret", out string actSecretValue));
 

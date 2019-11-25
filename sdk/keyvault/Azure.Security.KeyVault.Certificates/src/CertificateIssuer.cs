@@ -9,7 +9,7 @@ using System.Threading;
 namespace Azure.Security.KeyVault.Certificates
 {
     /// <summary>
-    /// A certificate issuer used to sign certificates managed by Azure Key Vault
+    /// A certificate issuer used to sign certificates managed by Azure Key Vault.
     /// </summary>
     public class CertificateIssuer : IJsonDeserializable, IJsonSerializable
     {
@@ -33,7 +33,7 @@ namespace Azure.Security.KeyVault.Certificates
         private static readonly JsonEncodedText s_organizationIdPropertyNameBytes = JsonEncodedText.Encode(OrganizationIdPropertyName);
         private static readonly JsonEncodedText s_adminDetailsPropertyNameBytes = JsonEncodedText.Encode(AdminDetailsPropertyName);
 
-        private List<AdministratorContact> _administrators;
+        private List<AdministratorContact> _administratorContacts;
 
         internal CertificateIssuer(IssuerProperties properties = null)
         {
@@ -41,7 +41,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CertificateContact"/> class with the given <paramref name="name"/>.
+        /// Initializes a new instance of the <see cref="CertificateIssuer"/> class with the given <paramref name="name"/>.
         /// </summary>
         /// <param name="name">The name of the issuer, including values from <see cref="WellKnownIssuerNames"/>.</param>
         public CertificateIssuer(string name)
@@ -50,42 +50,42 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// The unique identifier of the certificate issuer
+        /// Gets the unique identifier of the certificate issuer.
         /// </summary>
         public Uri Id => Properties.Id;
 
         /// <summary>
-        /// The name of the certificate issuer
+        /// Gets the name of the certificate issuer.
         /// </summary>
         public string Name => Properties.Name;
 
         /// <summary>
-        /// The account identifier or username used to authenticate to the certificate issuer
+        /// Gets or sets the account identifier or username used to authenticate to the certificate issuer.
         /// </summary>
         public string AccountId { get; set; }
 
         /// <summary>
-        /// The password or key used to authenticate to the certificate issuer
+        /// Gets or sets the password or key used to authenticate to the certificate issuer.
         /// </summary>
         public string Password { get; set; }
 
         /// <summary>
-        /// The organizational identifier for the issuer
+        /// Gets or sets the organizational identifier for the issuer.
         /// </summary>
         public string OrganizationId { get; set; }
 
         /// <summary>
-        /// A list of contacts who administrate the certificate issuer account
+        /// Gets a list of contacts who administer the certificate issuer account.
         /// </summary>
-        public IList<AdministratorContact> Administrators => LazyInitializer.EnsureInitialized(ref _administrators);
+        public IList<AdministratorContact> AdministratorContacts => LazyInitializer.EnsureInitialized(ref _administratorContacts);
 
         /// <summary>
-        /// The time the issuer was created in UTC
+        /// Gets a <see cref="DateTimeOffset"/> indicating when the certificate was created.
         /// </summary>
         public DateTimeOffset? CreatedOn { get; internal set; }
 
         /// <summary>
-        /// The last modified time of the issuer in UTC
+        /// Gets a <see cref="DateTimeOffset"/> indicating when the certificate was updated.
         /// </summary>
         public DateTimeOffset? UpdatedOn { get; internal set; }
 
@@ -95,7 +95,7 @@ namespace Azure.Security.KeyVault.Certificates
         public bool? Enabled { get; set; }
 
         /// <summary>
-        /// Gets or sets the attributes of the <see cref="CertificateIssuer"/>.
+        /// Gets the attributes of the <see cref="CertificateIssuer"/>.
         /// </summary>
         public IssuerProperties Properties { get; }
 
@@ -153,7 +153,7 @@ namespace Azure.Security.KeyVault.Certificates
                         {
                             var admin = new AdministratorContact();
                             admin.ReadProperties(elem);
-                            Administrators.Add(admin);
+                            AdministratorContacts.Add(admin);
                         }
                         Password = prop.Value.GetString();
                         break;
@@ -195,7 +195,7 @@ namespace Azure.Security.KeyVault.Certificates
                 json.WriteEndObject();
             }
 
-            if (!string.IsNullOrEmpty(OrganizationId) || !_administrators.IsNullOrEmpty())
+            if (!string.IsNullOrEmpty(OrganizationId) || !_administratorContacts.IsNullOrEmpty())
             {
                 json.WriteStartObject(s_orgDetailsPropertyNameBytes);
 
@@ -234,11 +234,11 @@ namespace Azure.Security.KeyVault.Certificates
                 json.WriteString(s_organizationIdPropertyNameBytes, AccountId);
             }
 
-            if (!_administrators.IsNullOrEmpty())
+            if (!_administratorContacts.IsNullOrEmpty())
             {
                 json.WriteStartArray(s_adminDetailsPropertyNameBytes);
 
-                foreach (AdministratorContact admin in _administrators)
+                foreach (AdministratorContact admin in _administratorContacts)
                 {
                     json.WriteStartObject();
 

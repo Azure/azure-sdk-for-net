@@ -56,6 +56,35 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public void Ctor_TokenAuth_Http()
+        {
+            // Arrange
+            Uri httpUri = new Uri(TestConfigOAuth.BlobServiceEndpoint).ToHttp();
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new PageBlobClient(httpUri, GetOAuthCredential()),
+                 new ArgumentException("Cannot use TokenCredential without HTTPS."));
+        }
+
+        [Test]
+        public void Ctor_CPK_Http()
+        {
+            // Arrange
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            BlobClientOptions blobClientOptions = new BlobClientOptions()
+            {
+                CustomerProvidedKey = customerProvidedKey
+            };
+            Uri httpUri = new Uri(TestConfigDefault.BlobServiceEndpoint).ToHttp();
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new PageBlobClient(httpUri, blobClientOptions),
+                new ArgumentException("Cannot use client-provided key without HTTPS."));
+        }
+
+        [Test]
         public async Task CreateAsync_Min()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -121,29 +150,6 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
-        }
-
-        [Test]
-        public async Task CreateAsync_CpkHttpError()
-        {
-            await using DisposingContainer test = await GetTestContainerAsync();
-
-            // Arrange
-            var blobName = GetNewBlobName();
-            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(blobName));
-            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-            blob = InstrumentClient(new PageBlobClient(
-                blob.Uri,
-                blob.Pipeline,
-                blob.ClientDiagnostics,
-                customerProvidedKey));
-            Assert.AreEqual(Constants.Blob.Http, blob.Uri.Scheme);
-
-
-            // Act
-            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
-                blob.CreateAsync(Constants.KB),
-                actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
         }
 
         /// <summary>
@@ -333,35 +339,6 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
-        }
-
-        [Test]
-        public async Task UploadPagesAsync_CpkHttpError()
-        {
-            await using DisposingContainer test = await GetTestContainerAsync();
-
-            // Arrange
-            var blobName = GetNewBlobName();
-            PageBlobClient httpBlob = InstrumentClient(test.Container.GetPageBlobClient(blobName));
-            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-            httpBlob = InstrumentClient(new PageBlobClient(
-                httpBlob.Uri,
-                httpBlob.Pipeline,
-                httpBlob.ClientDiagnostics,
-                customerProvidedKey));
-            Assert.AreEqual(Constants.Blob.Http, httpBlob.Uri.Scheme);
-            PageBlobClient httpsBlob = InstrumentClient(httpBlob.WithCustomerProvidedKey(customerProvidedKey));
-            var data = GetRandomBuffer(Constants.KB);
-            await httpsBlob.CreateAsync(Constants.KB);
-
-            using var stream = new MemoryStream(data);
-
-            // Act
-            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
-                httpBlob.UploadPagesAsync(
-                    content: stream,
-                    offset: 0),
-                actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
         }
 
         [Test]
@@ -573,36 +550,6 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsNotNull(response.Value.ETag);
-        }
-
-        [Test]
-        public async Task ClearPagesAsync_CpkHttpError()
-        {
-            await using DisposingContainer test = await GetTestContainerAsync();
-
-            // Arrange
-            PageBlobClient httpBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
-            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-            httpBlob = InstrumentClient(new PageBlobClient(
-                httpBlob.Uri,
-                httpBlob.Pipeline,
-                httpBlob.ClientDiagnostics,
-                customerProvidedKey));
-            Assert.AreEqual(Constants.Blob.Http, httpBlob.Uri.Scheme);
-            PageBlobClient httpsBlob = InstrumentClient(httpBlob.WithCustomerProvidedKey(customerProvidedKey));
-
-            await httpsBlob.CreateAsync(4 * Constants.KB);
-            var data = GetRandomBuffer(4 * Constants.KB);
-            using (var stream = new MemoryStream(data))
-            {
-                await httpsBlob.UploadPagesAsync(stream, 0);
-            }
-
-            // Act
-            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
-                httpBlob.ClearPagesAsync(
-                    range: new HttpRange(Constants.KB, Constants.KB)),
-                actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
         }
 
         [Test]
@@ -1024,33 +971,6 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsNotNull(response.Value.ETag);
-
-        }
-
-        [Test]
-        public async Task ResizeAsync_CpkHttpError()
-        {
-            await using DisposingContainer test = await GetTestContainerAsync();
-
-            // Arrange
-            PageBlobClient httpBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
-            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-            httpBlob = InstrumentClient(new PageBlobClient(
-                httpBlob.Uri,
-                httpBlob.Pipeline,
-                httpBlob.ClientDiagnostics,
-                customerProvidedKey));
-
-            Assert.AreEqual(Constants.Blob.Http, httpBlob.Uri.Scheme);
-            PageBlobClient httpsBlob = InstrumentClient(httpBlob.WithCustomerProvidedKey(customerProvidedKey));
-
-            await httpsBlob.CreateAsync(Constants.KB);
-            var newSize = 8 * Constants.KB;
-
-            // Act
-            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
-                httpBlob.ResizeAsync(size: newSize),
-                actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
 
         }
 
@@ -1588,43 +1508,6 @@ namespace Azure.Storage.Blobs.Test
                 sourceUri: sourceBlob.Uri,
                 sourceRange: range,
                 range: range);
-        }
-
-        [Test]
-        public async Task UploadPagesFromUriAsync_CpkHttpError()
-        {
-            await using DisposingContainer test = await GetTestContainerAsync();
-
-            // Arrange
-            await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
-
-            var data = GetRandomBuffer(Constants.KB);
-
-            using var stream = new MemoryStream(data);
-            PageBlobClient sourceBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
-            await sourceBlob.CreateAsync(Constants.KB);
-            await sourceBlob.UploadPagesAsync(stream, 0);
-
-            PageBlobClient httpDestBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
-            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-            httpDestBlob = InstrumentClient(new PageBlobClient(
-                httpDestBlob.Uri,
-                httpDestBlob.Pipeline,
-                httpDestBlob.ClientDiagnostics,
-                customerProvidedKey));
-            Assert.AreEqual(Constants.Blob.Http, httpDestBlob.Uri.Scheme);
-            PageBlobClient httpsDestBlob = InstrumentClient(httpDestBlob.WithCustomerProvidedKey(customerProvidedKey));
-
-            await httpsDestBlob.CreateAsync(Constants.KB);
-            var range = new HttpRange(0, Constants.KB);
-
-            // Act
-            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
-                httpDestBlob.UploadPagesFromUriAsync(
-                    sourceUri: sourceBlob.Uri,
-                    sourceRange: range,
-                    range: range),
-                actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
         }
 
         [Test]

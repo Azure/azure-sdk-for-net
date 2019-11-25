@@ -2219,7 +2219,7 @@ namespace Azure.Storage.Files.Shares
                     $"{nameof(Uri)}: {Uri}");
                 try
                 {
-                    return await FileRestClient.File.GetRangeListAsync(
+                    Response<ShareFileRangeInfoInternal> response = await FileRestClient.File.GetRangeListAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
@@ -2228,6 +2228,7 @@ namespace Azure.Storage.Files.Shares
                         cancellationToken: cancellationToken,
                         operationName: Constants.File.GetRangeListOperationName)
                         .ConfigureAwait(false);
+                    return Response.FromValue(new ShareFileRangeInfo(response.Value), response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {

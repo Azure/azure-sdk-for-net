@@ -23,7 +23,7 @@ namespace Microsoft.Azure.EventHubs
 
         /// <summary>Gets the last sequence number of the event within the partition stream of the Event Hub.</summary>
         /// <value>The logical sequence number of the event.</value>
-        public long LastSequenceNumber { get; internal set; }
+        public long LastSequenceNumber { get; internal set; } = -1L;
 
         /// <summary>Gets the enqueued UTC time of the last event.</summary>
         /// <value>The enqueued time of the last event.</value>

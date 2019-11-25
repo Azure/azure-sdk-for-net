@@ -79,6 +79,7 @@ If the Key Vault is soft delete-enabled and you want to permanently delete the k
 the deleted key needs to be purged. Before it can be purged, you need to wait until the key is fully deleted.
 
 ```C# Snippet:KeysSample1PurgeKey
+// You only need to wait for completion if you want to purge or recover the key.
 while (!operation.HasCompleted)
 {
     Thread.Sleep(2000);
@@ -95,6 +96,7 @@ When writing asynchronous code, you can instead await `WaitForCompletionAsync` t
 You can optionally pass in a `CancellationToken` to cancel waiting after a certain period or time or any other trigger you require.
 
 ```C# Snippet:KeysSample1PurgeKeyAsync
+// You only need to wait for completion if you want to purge or recover the key.
 await operation.WaitForCompletionAsync();
 
 await client.PurgeDeletedKeyAsync(rsaKeyName);

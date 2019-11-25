@@ -308,6 +308,9 @@ namespace Microsoft.Azure.Management.Storage
         /// the request body, all CORS rules will be deleted, and CORS will be disabled
         /// for the File service.
         /// </param>
+        /// <param name='shareDeleteRetentionPolicy'>
+        /// The file service properties for share soft delete.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -329,7 +332,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<FileServiceProperties>> SetServicePropertiesWithHttpMessagesAsync(string resourceGroupName, string accountName, CorsRules cors = default(CorsRules), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<FileServiceProperties>> SetServicePropertiesWithHttpMessagesAsync(string resourceGroupName, string accountName, CorsRules cors = default(CorsRules), DeleteRetentionPolicy shareDeleteRetentionPolicy = default(DeleteRetentionPolicy), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -387,11 +390,16 @@ namespace Microsoft.Azure.Management.Storage
                     throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
                 }
             }
+            if (shareDeleteRetentionPolicy != null)
+            {
+                shareDeleteRetentionPolicy.Validate();
+            }
             string fileServicesName = "default";
             FileServiceProperties parameters = new FileServiceProperties();
-            if (cors != null)
+            if (cors != null || shareDeleteRetentionPolicy != null)
             {
                 parameters.Cors = cors;
+                parameters.ShareDeleteRetentionPolicy = shareDeleteRetentionPolicy;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

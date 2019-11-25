@@ -342,18 +342,24 @@ namespace Azure.Storage.Files.DataLake.Sas
         /// Ensure the <see cref="DataLakeSasBuilder"/>'s properties are in a
         /// consistent state.
         /// </summary>
-        private void EnsureState()
+        internal void EnsureState()
         {
-            if (ExpiresOn == default)
+            // Identifier is not present
+            if (string.IsNullOrEmpty(Identifier))
             {
-                throw Errors.SasMissingData(nameof(ExpiresOn));
+                if (string.IsNullOrEmpty(Permissions))
+                {
+                    throw Errors.SasMissingData(nameof(Permissions));
+                }
+
+                if (ExpiresOn == default)
+                {
+                    throw Errors.SasMissingData(nameof(ExpiresOn));
+                }
             }
-            if (string.IsNullOrEmpty(Permissions))
-            {
-                throw Errors.SasMissingData(nameof(Permissions));
-            }
+
             // File System
-            if (String.IsNullOrEmpty(Path))
+            if (string.IsNullOrEmpty(Path))
             {
                 Resource = Constants.Sas.Resource.Container;
             }
@@ -363,7 +369,7 @@ namespace Azure.Storage.Files.DataLake.Sas
             {
                 Resource = Constants.Sas.Resource.Blob;
             }
-            if (String.IsNullOrEmpty(Version))
+            if (string.IsNullOrEmpty(Version))
             {
                 Version = SasQueryParameters.DefaultSasVersion;
             }
