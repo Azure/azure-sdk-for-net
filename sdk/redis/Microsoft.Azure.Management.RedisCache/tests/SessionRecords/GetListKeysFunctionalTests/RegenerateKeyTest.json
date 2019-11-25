@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisGetList2174/providers/Microsoft.Cache/Redis/RedisGetList460/listKeys?api-version=2018-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzR2V0TGlzdDIxNzQvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9SZWRpc0dldExpc3Q0NjAvbGlzdEtleXM/YXBpLXZlcnNpb249MjAxOC0wMy0wMQ==",
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisGetList5011/providers/Microsoft.Cache/Redis/RedisGetList8041/listKeys?api-version=2019-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzR2V0TGlzdDUwMTEvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9SZWRpc0dldExpc3Q4MDQxL2xpc3RLZXlzP2FwaS12ZXJzaW9uPTIwMTktMDctMDE=",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "89b38c33-7c53-4d14-bf47-8c6a050127f5"
+          "c3503162-199c-43fd-b0e0-10f55546847a"
         ],
         "Accept-Language": [
           "en-US"
@@ -16,7 +16,7 @@
           "FxVersion/4.6.28008.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/5.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -27,10 +27,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "17458689-3906-4cb8-a104-2365b0772a5d"
+          "b1acd3f2-df20-43ce-9bee-54513da6c874"
         ],
         "x-rp-server-mvid": [
-          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+          "d4a16663-d537-49d1-8ba4-e2fdb635702d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -42,16 +42,16 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+          "1199"
         ],
         "x-ms-correlation-request-id": [
-          "9382989b-fbc6-4ad3-af72-150a02cc6b62"
+          "af554786-b19d-45a8-80ef-74f296b6a96c"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20191031T014454Z:9382989b-fbc6-4ad3-af72-150a02cc6b62"
+          "WESTUS:20191125T012436Z:af554786-b19d-45a8-80ef-74f296b6a96c"
         ],
         "Date": [
-          "Thu, 31 Oct 2019 01:44:53 GMT"
+          "Mon, 25 Nov 2019 01:24:35 GMT"
         ],
         "Content-Length": [
           "123"
@@ -63,17 +63,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"KaFkzy9GMpwV3EYJCGRWIYx0k0xYGgZCqW4dHBOHReU=\",\r\n  \"secondaryKey\": \"lfQLk5wvIo3TYPeALdduTcYzRdDr9TxSY9g4qctEdV8=\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryKey\": \"CoqFBpswEXIZcTerPbTe8XhtApW0OGyAvNA4ZdoObtA=\",\r\n  \"secondaryKey\": \"RZSp75LIIhFzpj5YeOyM2einxECWgf2+TSnj45SEky4=\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisGetList2174/providers/Microsoft.Cache/Redis/RedisGetList460/regenerateKey?api-version=2018-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzR2V0TGlzdDIxNzQvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9SZWRpc0dldExpc3Q0NjAvcmVnZW5lcmF0ZUtleT9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisGetList5011/providers/Microsoft.Cache/Redis/RedisGetList8041/regenerateKey?api-version=2019-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzR2V0TGlzdDUwMTEvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9SZWRpc0dldExpc3Q4MDQxL3JlZ2VuZXJhdGVLZXk/YXBpLXZlcnNpb249MjAxOS0wNy0wMQ==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"keyType\": \"Primary\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e7c87598-6d04-4c3f-88e0-8b95f8bfb936"
+          "15116949-6723-4612-b0ab-cbe0527ea6a9"
         ],
         "Accept-Language": [
           "en-US"
@@ -82,7 +82,7 @@
           "FxVersion/4.6.28008.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/5.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -99,10 +99,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "4de0819b-49da-4661-be10-9d8fb79df278"
+          "249b85d0-28ef-4679-ad57-7eff9c20cbb8"
         ],
         "x-rp-server-mvid": [
-          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+          "d4a16663-d537-49d1-8ba4-e2fdb635702d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -114,16 +114,16 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1197"
+          "1198"
         ],
         "x-ms-correlation-request-id": [
-          "a18dec82-5ed6-4b05-a600-86406b6f19d8"
+          "5728f849-e433-4032-bed3-fb8e626f6c99"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20191031T014456Z:a18dec82-5ed6-4b05-a600-86406b6f19d8"
+          "WESTUS:20191125T012437Z:5728f849-e433-4032-bed3-fb8e626f6c99"
         ],
         "Date": [
-          "Thu, 31 Oct 2019 01:44:56 GMT"
+          "Mon, 25 Nov 2019 01:24:36 GMT"
         ],
         "Content-Length": [
           "123"
@@ -135,7 +135,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"H2XrWm85y00CVPRj80NDGHT6D2uktMmD9qFRih7c6yQ=\",\r\n  \"secondaryKey\": \"lfQLk5wvIo3TYPeALdduTcYzRdDr9TxSY9g4qctEdV8=\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryKey\": \"fXqvUHXrT9OJSRS7sZw1Cqg9IBPyRe41ixFRBmOqGuY=\",\r\n  \"secondaryKey\": \"RZSp75LIIhFzpj5YeOyM2einxECWgf2+TSnj45SEky4=\"\r\n}",
       "StatusCode": 200
     }
   ],

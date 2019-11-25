@@ -10,7 +10,7 @@
     <AssemblyName>Microsoft.Azure.Management.Redis</AssemblyName>
     <PackageTags>Microsoft Azure Redis Cache management;Redis Management;</PackageTags>
     <PackageReleaseNotes>Added "ReplicasPerMaster" property for Cache Create, Update operations
-Added "ReplicasPerMaster","instances" property to the output of Cache Create, Update and Get operations</PackageReleaseNotes>
+Added "ReplicasPerMaster" and "instances" property to the output of Cache Create, Update and Get operations</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
