@@ -24,6 +24,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 new Tuple<string, string, string>("PolicyInsights", "PolicyStates", "2019-10-01"),
                 new Tuple<string, string, string>("PolicyInsights", "PolicyTrackedResources", "2018-07-01-preview"),
                 new Tuple<string, string, string>("PolicyInsights", "Remediations", "2019-07-01"),
+                new Tuple<string, string, string>("PolicyInsights", "PolicyMetadata", "2019-10-01"),
               }.AsEnumerable();
           }
       }
