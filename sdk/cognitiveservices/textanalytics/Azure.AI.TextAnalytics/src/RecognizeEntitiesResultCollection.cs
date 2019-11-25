@@ -13,8 +13,12 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// </summary>
         /// <param name="list"></param>
-        internal RecognizeEntitiesResultCollection(IList<RecognizeEntitiesResult> list) : base(list)
+        /// <param name="statistics"></param>
+        /// <param name="modelVersion"></param>
+        internal RecognizeEntitiesResultCollection(IList<RecognizeEntitiesResult> list, TextBatchStatistics statistics, string modelVersion) : base(list)
         {
+            Statistics = statistics;
+            ModelVersion = modelVersion;
         }
 
         /// <summary>

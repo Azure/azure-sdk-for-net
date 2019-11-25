@@ -356,41 +356,38 @@ namespace Azure.AI.TextAnalytics
         /// <returns></returns>
         public virtual async Task<Response<RecognizeEntitiesResult>> RecognizeEntitiesAsync(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
-            await Task.Run(() => { }).ConfigureAwait(false);
-            throw new NotImplementedException();
-
             // TODO: set language from options
 
-            //Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
+            Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
 
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeEntities");
-            //scope.AddAttribute("inputText", inputText);
-            //scope.Start();
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeEntities");
+            scope.AddAttribute("inputText", inputText);
+            scope.Start();
 
-            //try
-            //{
-            //    using Request request = CreateStringCollectionRequest(new string[] { inputText }, language, EntitiesRoute);
-            //    Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+            try
+            {
+                using Request request = CreateStringCollectionRequest(new string[] { inputText }, language, EntitiesRoute);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
-            //    switch (response.Status)
-            //    {
-            //        case 200:
-            //            DocumentResultCollection<NamedEntity> result = await CreateRecognizeEntitiesResponseAsync(response, cancellationToken).ConfigureAwait(false);
-            //            if (result[0].ErrorMessage != default)
-            //            {
-            //                // only one input, so we can ignore the id and grab the first error message.
-            //                throw await response.CreateRequestFailedExceptionAsync(result[0].ErrorMessage).ConfigureAwait(false);
-            //            }
-            //            return CreateRecognizeEntitiesResponseSimple(response, result[0]);
-            //        default:
-            //            throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
-            //    }
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
+                switch (response.Status)
+                {
+                    case 200:
+                        RecognizeEntitiesResultCollection results = await CreateRecognizeEntitiesResponseAsync(response, cancellationToken).ConfigureAwait(false);
+                        if (results[0].ErrorMessage != default)
+                        {
+                            // only one input, so we can ignore the id and grab the first error message.
+                            throw await response.CreateRequestFailedExceptionAsync(results[0].ErrorMessage).ConfigureAwait(false);
+                        }
+                        return Response.FromValue(results[0], response);
+                    default:
+                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -401,39 +398,36 @@ namespace Azure.AI.TextAnalytics
         /// <returns></returns>
         public virtual Response<RecognizeEntitiesResult> RecognizeEntities(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
 
-            throw new NotImplementedException();
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeEntities");
+            scope.AddAttribute("inputText", inputText);
+            scope.Start();
 
-            //Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
+            try
+            {
+                using Request request = CreateStringCollectionRequest(new string[] { inputText }, language, EntitiesRoute);
+                Response response = _pipeline.SendRequest(request, cancellationToken);
 
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeEntities");
-            //scope.AddAttribute("inputText", inputText);
-            //scope.Start();
-
-            //try
-            //{
-            //    using Request request = CreateStringCollectionRequest(new string[] { inputText }, language, EntitiesRoute);
-            //    Response response = _pipeline.SendRequest(request, cancellationToken);
-
-            //    switch (response.Status)
-            //    {
-            //        case 200:
-            //            DocumentResultCollection<NamedEntity> result = CreateRecognizeEntitiesResponse(response);
-            //            if (result[0].ErrorMessage != default)
-            //            {
-            //                // only one input, so we can ignore the id and grab the first error message.
-            //                throw response.CreateRequestFailedException(result[0].ErrorMessage);
-            //            }
-            //            return CreateRecognizeEntitiesResponseSimple(response, result[0]);
-            //        default:
-            //            throw response.CreateRequestFailedException();
-            //    }
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
+                switch (response.Status)
+                {
+                    case 200:
+                        RecognizeEntitiesResultCollection results = CreateRecognizeEntitiesResponse(response);
+                        if (results[0].ErrorMessage != default)
+                        {
+                            // only one input, so we can ignore the id and grab the first error message.
+                            throw response.CreateRequestFailedException(results[0].ErrorMessage);
+                        }
+                        return Response.FromValue(results[0], response);
+                    default:
+                        throw response.CreateRequestFailedException();
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>

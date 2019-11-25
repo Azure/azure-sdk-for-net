@@ -104,59 +104,59 @@ namespace Azure.AI.TextAnalytics
 
         //        #region Deserialize Common
 
-        //        private static string ReadDocumentId(JsonElement documentElement)
-        //        {
-        //            if (documentElement.TryGetProperty("id", out JsonElement idValue))
-        //                return idValue.ToString();
+        private static string ReadDocumentId(JsonElement documentElement)
+        {
+            if (documentElement.TryGetProperty("id", out JsonElement idValue))
+                return idValue.ToString();
 
-        //            return default;
-        //        }
+            return default;
+        }
 
-        //        private static InputStatistics ReadDocumentStatistics(JsonElement documentElement)
-        //        {
-        //            if (documentElement.TryGetProperty("statistics", out JsonElement statisticsValue))
-        //            {
-        //                int characterCount = default;
-        //                int transactionCount = default;
+        private static TextDocumentStatistics ReadDocumentStatistics(JsonElement documentElement)
+        {
+            if (documentElement.TryGetProperty("statistics", out JsonElement statisticsValue))
+            {
+                int characterCount = default;
+                int transactionCount = default;
 
-        //                if (statisticsValue.TryGetProperty("charactersCount", out JsonElement characterCountValue))
-        //                    characterCount = characterCountValue.GetInt32();
-        //                if (statisticsValue.TryGetProperty("transactionsCount", out JsonElement transactionCountValue))
-        //                    transactionCount = transactionCountValue.GetInt32();
+                if (statisticsValue.TryGetProperty("charactersCount", out JsonElement characterCountValue))
+                    characterCount = characterCountValue.GetInt32();
+                if (statisticsValue.TryGetProperty("transactionsCount", out JsonElement transactionCountValue))
+                    transactionCount = transactionCountValue.GetInt32();
 
-        //                return new InputStatistics(characterCount, transactionCount);
-        //            }
+                return new TextDocumentStatistics(characterCount, transactionCount);
+            }
 
-        //            return default;
-        //        }
+            return default;
+        }
 
-        //        private static void ReadDocumentErrors<T>(JsonElement documentElement, ITextDocumentResult<T> results)
-        //        {
-        //            if (documentElement.TryGetProperty("errors", out JsonElement errorsValue))
-        //            {
-        //                foreach (JsonElement errorElement in errorsValue.EnumerateArray())
-        //                {
-        //                    string id = default;
-        //                    string message = default;
+        private static IEnumerable<TextAnalysisResult> ReadDocumentErrors(JsonElement documentElement)
+        {
+            List<TextAnalysisResult> errors = new List<TextAnalysisResult>();
 
-        //                    if (errorElement.TryGetProperty("id", out JsonElement idValue))
-        //                        id = idValue.ToString();
-        //                    if (errorElement.TryGetProperty("error", out JsonElement errorValue))
-        //                    {
-        //                        if (errorsValue.TryGetProperty("message", out JsonElement messageValue))
-        //                        {
-        //                            message = messageValue.ToString();
-        //                        }
-        //                    }
+            if (documentElement.TryGetProperty("errors", out JsonElement errorsValue))
+            {
+                foreach (JsonElement errorElement in errorsValue.EnumerateArray())
+                {
+                    string id = default;
+                    string message = default;
 
-        //                    results.Add(new DocumentResult<T>(id, message));
-        //                }
+                    if (errorElement.TryGetProperty("id", out JsonElement idValue))
+                        id = idValue.ToString();
+                    if (errorElement.TryGetProperty("error", out JsonElement errorValue))
+                    {
+                        if (errorsValue.TryGetProperty("message", out JsonElement messageValue))
+                        {
+                            message = messageValue.ToString();
+                        }
+                    }
 
-        //                // TODO: This makes the assumption that input ids are passed-in in order.
-        //                // Can we make that assumption?
-        //                results.OrderBy(result => result.Id);
-        //            }
-        //        }
+                    errors.Add(new TextAnalysisResult(id, message));
+                }
+            }
+
+            return errors;
+        }
 
         //        private static void ReadSentimentResultErrors(JsonElement documentElement, SentimentResultCollection results)
         //        {
@@ -186,39 +186,39 @@ namespace Azure.AI.TextAnalytics
         //            }
         //        }
 
-        //        private static string ReadModelVersion(JsonElement documentElement)
-        //        {
-        //            if (documentElement.TryGetProperty("modelVersion", out JsonElement modelVersionValue))
-        //            {
-        //                return modelVersionValue.ToString();
-        //            }
+        private static string ReadModelVersion(JsonElement documentElement)
+        {
+            if (documentElement.TryGetProperty("modelVersion", out JsonElement modelVersionValue))
+            {
+                return modelVersionValue.ToString();
+            }
 
-        //            return default;
-        //        }
+            return default;
+        }
 
-        //        private static TextBatchStatistics ReadDocumentBatchStatistics(JsonElement documentElement)
-        //        {
-        //            if (documentElement.TryGetProperty("statistics", out JsonElement statisticsElement))
-        //            {
-        //                int documentCount = default;
-        //                int validDocumentCount = default;
-        //                int invalidDocumentCount = default;
-        //                long transactionCount = default;
+        private static TextBatchStatistics ReadDocumentBatchStatistics(JsonElement documentElement)
+        {
+            if (documentElement.TryGetProperty("statistics", out JsonElement statisticsElement))
+            {
+                int documentCount = default;
+                int validDocumentCount = default;
+                int invalidDocumentCount = default;
+                long transactionCount = default;
 
-        //                if (statisticsElement.TryGetProperty("documentsCount", out JsonElement documentCountValue))
-        //                    documentCount = documentCountValue.GetInt32();
-        //                if (statisticsElement.TryGetProperty("validDocumentsCount", out JsonElement validDocumentCountValue))
-        //                    validDocumentCount = validDocumentCountValue.GetInt32();
-        //                if (statisticsElement.TryGetProperty("erroneousDocumentsCount", out JsonElement erroneousDocumentCountValue))
-        //                    invalidDocumentCount = erroneousDocumentCountValue.GetInt32();
-        //                if (statisticsElement.TryGetProperty("transactionsCount", out JsonElement transactionCountValue))
-        //                    transactionCount = transactionCountValue.GetInt64();
+                if (statisticsElement.TryGetProperty("documentsCount", out JsonElement documentCountValue))
+                    documentCount = documentCountValue.GetInt32();
+                if (statisticsElement.TryGetProperty("validDocumentsCount", out JsonElement validDocumentCountValue))
+                    validDocumentCount = validDocumentCountValue.GetInt32();
+                if (statisticsElement.TryGetProperty("erroneousDocumentsCount", out JsonElement erroneousDocumentCountValue))
+                    invalidDocumentCount = erroneousDocumentCountValue.GetInt32();
+                if (statisticsElement.TryGetProperty("transactionsCount", out JsonElement transactionCountValue))
+                    transactionCount = transactionCountValue.GetInt64();
 
-        //                return new TextBatchStatistics(documentCount, validDocumentCount, invalidDocumentCount, transactionCount);
-        //            }
+                return new TextBatchStatistics(documentCount, validDocumentCount, invalidDocumentCount, transactionCount);
+            }
 
-        //            return default;
-        //        }
+            return default;
+        }
 
         //        #endregion Deserialize Common
 
@@ -326,20 +326,19 @@ namespace Azure.AI.TextAnalytics
 
         //        #region Recognize Entities
 
-        //        public static async Task<ModelBatchResponse<NamedEntityCollection>> DeserializeRecognizeEntitiesResponseAsync(Response response, CancellationToken cancellation)
-        //        {
-        //            Stream content = response.ContentStream;
-        //            using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
-        //            JsonElement root = json.RootElement;
-        //            return ReadNamedEntityCollection(root);
-        //        }
+        public static async Task<RecognizeEntitiesResultCollection> DeserializeRecognizeEntitiesResponseAsync(Stream content, CancellationToken cancellation)
+        {
+            using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
+            JsonElement root = json.RootElement;
+            return ReadRecognizeEntitiesResultCollection(root);
+        }
 
-        //        public static ModelBatchResponse<NamedEntityCollection> DeserializeRecognizeEntitiesResponse(Stream content)
-        //        {
-        //            using JsonDocument json = JsonDocument.Parse(content, default);
-        //            JsonElement root = json.RootElement;
-        //            return ReadNamedEntityCollection(root);
-        //        }
+        public static RecognizeEntitiesResultCollection DeserializeRecognizeEntitiesResponse(Stream content)
+        {
+            using JsonDocument json = JsonDocument.Parse(content, default);
+            JsonElement root = json.RootElement;
+            return ReadRecognizeEntitiesResultCollection(root);
+        }
 
         //        //public static async Task<IEnumerable<IEnumerable<NamedEntity>>> DeserializeEntityCollectionAsync(Stream content, CancellationToken cancellation)
         //        //{
@@ -348,30 +347,34 @@ namespace Azure.AI.TextAnalytics
         //        //    return ReadEntityCollection(root);
         //        //}
 
-        //        //public static IEnumerable<IEnumerable<NamedEntity>> DeserializeEntityCollection(Stream content)
-        //        //{
-        //        //    using JsonDocument json = JsonDocument.Parse(content);
-        //        //    JsonElement root = json.RootElement;
-        //        //    return ReadEntityCollection(root);
-        //        //}
+        ////public static IEnumerable<IEnumerable<NamedEntity>> DeserializeEntityCollection(Stream content)
+        ////{
+        ////    using JsonDocument json = JsonDocument.Parse(content);
+        ////    JsonElement root = json.RootElement;
+        ////    return ReadEntityCollection(root);
+        ////}
 
-        //        private static NamedEntityCollection ReadNamedEntityCollection(JsonElement root, out ModelBatchInfo batchInfo, out string modelVersion)
-        //        {
-        //            var result = new ModelBatchResponse<NamedEntity>();
-        //            if (root.TryGetProperty("documents", out JsonElement documentsValue))
-        //            {
-        //                foreach (JsonElement documentElement in documentsValue.EnumerateArray())
-        //                {
-        //                    result.Add(ReadEntityResult(documentElement));
-        //                }
-        //            }
+        private static RecognizeEntitiesResultCollection ReadRecognizeEntitiesResultCollection(JsonElement root)
+        {
+            var collection = new List<RecognizeEntitiesResult>();
+            if (root.TryGetProperty("documents", out JsonElement documentsValue))
+            {
+                foreach (JsonElement documentElement in documentsValue.EnumerateArray())
+                {
+                    collection.Add(ReadRecognizeEntityResult(documentElement));
+                }
+            }
 
-        //            ReadDocumentErrors(root, result);
-        //            modelVersion = ReadModelVersion(root);
-        //            batchInfo = ReadDocumentBatchStatistics(root);
+            foreach (var error in ReadDocumentErrors(root))
+            {
+                collection.Add(new RecognizeEntitiesResult(error.Id, error.ErrorMessage));
+            }
 
-        //            return result;
-        //        }
+            TextBatchStatistics statistics = ReadDocumentBatchStatistics(root);
+            string modelVersion = ReadModelVersion(root);
+
+            return new RecognizeEntitiesResultCollection(collection, statistics, modelVersion);
+        }
 
         //        private static IEnumerable<IEnumerable<NamedEntity>> ReadEntityCollection(JsonElement root)
         //        {
@@ -387,48 +390,47 @@ namespace Azure.AI.TextAnalytics
         //            return result;
         //        }
 
-        //        private static DocumentResult<NamedEntity> ReadEntityResult(JsonElement documentElement)
-        //        {
-        //            var documentResult = new DocumentResult<NamedEntity>(
-        //                ReadDocumentId(documentElement),
-        //                ReadDocumentStatistics(documentElement)
-        //            );
+        private static RecognizeEntitiesResult ReadRecognizeEntityResult(JsonElement documentElement)
+        {
+            List<NamedEntity> entities = new List<NamedEntity>();
+            if (documentElement.TryGetProperty("entities", out JsonElement entitiesValue))
+            {
+                foreach (JsonElement entityElement in entitiesValue.EnumerateArray())
+                {
+                    entities.Add(ReadNamedEntity(entityElement));
+                }
+            }
 
-        //            if (documentElement.TryGetProperty("entities", out JsonElement entitiesValue))
-        //            {
-        //                foreach (JsonElement entityElement in entitiesValue.EnumerateArray())
-        //                {
-        //                    documentResult.Add(ReadEntity(entityElement));
-        //                }
-        //            }
+            return new RecognizeEntitiesResult(
+                ReadDocumentId(documentElement),
+                ReadDocumentStatistics(documentElement),
+                entities);
+        }
 
-        //            return documentResult;
-        //        }
+        private static NamedEntity ReadNamedEntity(JsonElement entityElement)
+        {
+            string text = default;
+            string type = default;
+            string subType = default;
+            int offset = default;
+            int length = default;
+            double score = default;
 
-        //        private static NamedEntity ReadEntity(JsonElement entityElement)
-        //        {
-        //            string text = default;
-        //            string type = default;
-        //            string subType = default;
-        //            int offset = default;
-        //            int length = default;
-        //            double score = default;
+            if (entityElement.TryGetProperty("text", out JsonElement textValue))
+                text = textValue.GetString();
+            if (entityElement.TryGetProperty("type", out JsonElement typeValue))
+                type = typeValue.ToString();
+            if (entityElement.TryGetProperty("subType", out JsonElement subTypeValue))
+                subType = subTypeValue.ToString();
+            if (entityElement.TryGetProperty("offset", out JsonElement offsetValue))
+                offsetValue.TryGetInt32(out offset);
+            if (entityElement.TryGetProperty("length", out JsonElement lengthValue))
+                lengthValue.TryGetInt32(out length);
+            if (entityElement.TryGetProperty("score", out JsonElement scoreValue))
+                scoreValue.TryGetDouble(out score);
 
-        //            if (entityElement.TryGetProperty("text", out JsonElement textValue))
-        //                text = textValue.GetString();
-        //            if (entityElement.TryGetProperty("type", out JsonElement typeValue))
-        //                type = typeValue.ToString();
-        //            if (entityElement.TryGetProperty("subType", out JsonElement subTypeValue))
-        //                subType = subTypeValue.ToString();
-        //            if (entityElement.TryGetProperty("offset", out JsonElement offsetValue))
-        //                offsetValue.TryGetInt32(out offset);
-        //            if (entityElement.TryGetProperty("length", out JsonElement lengthValue))
-        //                lengthValue.TryGetInt32(out length);
-        //            if (entityElement.TryGetProperty("score", out JsonElement scoreValue))
-        //                scoreValue.TryGetDouble(out score);
-
-        //            return new NamedEntity(text, type, subType, offset, length, score);
-        //        }
+            return new NamedEntity(text, type, subType, offset, length, score);
+        }
 
         //        #endregion Recognize Entities
 
