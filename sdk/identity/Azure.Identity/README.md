@@ -6,7 +6,7 @@
   - [Managed identity authentication](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/overview)
   - [User principal authentication](https://docs.microsoft.com/en-us/azure/active-directory/develop/scenario-web-app-sign-user-overview)
 
-  [Source code][source] | [Package (nuget)][package] | [API reference documentation][identity_api_docs] | [Azure Active Directory documentation][aad_doc] | [Samples][identity_samples]
+  [Source code][source] | [Package (nuget)][package] | [API reference documentation][identity_api_docs] | [Azure Active Directory documentation][aad_doc]
 
 
 
@@ -223,5 +223,4 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [eventhubs_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs
 [azure_core_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core
 [identity_api_docs]: https://azure.github.io/azure-sdk-for-net/identity.html
-[identity_samples]: https://docs.microsoft.com/en-us/azure/active-directory/develop/sample-v2-code
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fidentity%2FAzure.Identity%2FREADME.png)
