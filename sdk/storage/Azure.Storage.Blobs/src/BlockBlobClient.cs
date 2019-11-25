@@ -475,7 +475,6 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken)
         {
             content = content.WithNoDispose().WithProgress(progressHandler);
-            var uploadAttempt = 0;
             using (Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
             {
                 Pipeline.LogMethodEnter(
@@ -486,40 +485,32 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
-                    return await ReliableOperation.DoAsync(
-                        async () =>
-                        {
-                            Pipeline.LogTrace($"Upload attempt {++uploadAttempt}");
-                            return await BlobRestClient.BlockBlob.UploadAsync(
-                                ClientDiagnostics,
-                                Pipeline,
-                                Uri,
-                                body: content,
-                                contentLength: content.Length,
-                                blobContentType: blobHttpHeaders?.ContentType,
-                                blobContentEncoding: blobHttpHeaders?.ContentEncoding,
-                                blobContentLanguage: blobHttpHeaders?.ContentLanguage,
-                                blobContentHash: blobHttpHeaders?.ContentHash,
-                                blobCacheControl: blobHttpHeaders?.CacheControl,
-                                metadata: metadata,
-                                leaseId: conditions?.LeaseId,
-                                blobContentDisposition: blobHttpHeaders?.ContentDisposition,
-                                encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                                encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                                encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
-                                tier: accessTier,
-                                ifModifiedSince: conditions?.IfModifiedSince,
-                                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                                ifMatch: conditions?.IfMatch,
-                                ifNoneMatch: conditions?.IfNoneMatch,
-                                async: async,
-                                operationName: Constants.Blob.Block.UploadOperationName,
-                                cancellationToken: cancellationToken)
-                                .ConfigureAwait(false);
-                        },
-                        new ReliabilityConfiguration(reset: () => content.Seek(0, SeekOrigin.Begin)))
+                    return await BlobRestClient.BlockBlob.UploadAsync(
+                        ClientDiagnostics,
+                        Pipeline,
+                        Uri,
+                        body: content,
+                        contentLength: content.Length,
+                        blobContentType: blobHttpHeaders?.ContentType,
+                        blobContentEncoding: blobHttpHeaders?.ContentEncoding,
+                        blobContentLanguage: blobHttpHeaders?.ContentLanguage,
+                        blobContentHash: blobHttpHeaders?.ContentHash,
+                        blobCacheControl: blobHttpHeaders?.CacheControl,
+                        metadata: metadata,
+                        leaseId: conditions?.LeaseId,
+                        blobContentDisposition: blobHttpHeaders?.ContentDisposition,
+                        encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                        encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                        encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
+                        tier: accessTier,
+                        ifModifiedSince: conditions?.IfModifiedSince,
+                        ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                        ifMatch: conditions?.IfMatch,
+                        ifNoneMatch: conditions?.IfNoneMatch,
+                        async: async,
+                        operationName: Constants.Blob.Block.UploadOperationName,
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
-
                 }
                 catch (Exception ex)
                 {
@@ -736,34 +727,21 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     content = content.WithNoDispose().WithProgress(progressHandler);
-                    var stageBlockAttempt = 0;
-                    return await ReliableOperation.DoSyncOrAsync(
-                        async,
-                        reset: () => content.Seek(0, SeekOrigin.Begin),
-                        predicate: e => true,
-                        maximumRetries: Constants.MaxReliabilityRetries,
-                        operation:
-                            () =>
-                            {
-                                Pipeline.LogTrace($"Stage Block {++stageBlockAttempt}");
-                                return BlobRestClient.BlockBlob.StageBlockAsync(
-                                    ClientDiagnostics,
-                                    Pipeline,
-                                    Uri,
-                                    blockId: base64BlockId,
-                                    body: content,
-                                    contentLength: content.Length,
-                                    transactionalContentHash: transactionalContentHash,
-                                    leaseId: conditions?.LeaseId,
-                                    encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                                    encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                                    encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
-                                    async: async,
-                                    operationName: Constants.Blob.Block.StageBlockOperationName,
-                                    cancellationToken: cancellationToken);
-                            },
-                        cleanup: () => { })
-                        .ConfigureAwait(false);
+                    return await BlobRestClient.BlockBlob.StageBlockAsync(
+                        ClientDiagnostics,
+                        Pipeline,
+                        Uri,
+                        blockId: base64BlockId,
+                        body: content,
+                        contentLength: content.Length,
+                        transactionalContentHash: transactionalContentHash,
+                        leaseId: conditions?.LeaseId,
+                        encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                        encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                        encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
+                        async: async,
+                        operationName: Constants.Blob.Block.StageBlockOperationName,
+                        cancellationToken: cancellationToken);
                 }
                 catch (Exception ex)
                 {
