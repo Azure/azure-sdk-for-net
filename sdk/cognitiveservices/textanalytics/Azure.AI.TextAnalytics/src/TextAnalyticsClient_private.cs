@@ -48,18 +48,6 @@ namespace Azure.AI.TextAnalytics
         private static Response<RecognizeEntitiesResultCollection> CreateRecognizeEntitiesResponse(Response response) =>
             Response.FromValue(TextAnalyticsServiceSerializer.DeserializeRecognizeEntitiesResponse(response.ContentStream), response);
 
-        //private static async Task<Response<IEnumerable<IEnumerable<NamedEntity>>>> CreateRecognizeEntitiesResponseSimpleAsync(Response response, CancellationToken cancellation)
-        //{
-        //    var result = await TextAnalyticsServiceSerializer.DeserializeEntityCollectionAsync(response.ContentStream, cancellation).ConfigureAwait(false);
-        //    return Response.FromValue(result, response);
-        //}
-
-        //private static Response<IEnumerable<IEnumerable<NamedEntity>>> CreateRecognizeEntitiesResponseSimple(Response response) =>
-        //    Response.FromValue(TextAnalyticsServiceSerializer.DeserializeEntityCollection(response.ContentStream), response);
-
-        //private static Response<IEnumerable<NamedEntity>> CreateRecognizeEntitiesResponseSimple(Response response, IEnumerable<NamedEntity> entities) =>
-        //    Response.FromValue(entities, response);
-
         #endregion
 
         #region Analyze Sentiment

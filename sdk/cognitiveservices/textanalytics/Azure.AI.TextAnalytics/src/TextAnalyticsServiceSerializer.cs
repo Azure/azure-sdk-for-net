@@ -324,7 +324,7 @@ namespace Azure.AI.TextAnalytics
 
         //        #endregion Detect Languages
 
-        //        #region Recognize Entities
+        #region Recognize Entities
 
         public static async Task<RecognizeEntitiesResultCollection> DeserializeRecognizeEntitiesResponseAsync(Stream content, CancellationToken cancellation)
         {
@@ -339,20 +339,6 @@ namespace Azure.AI.TextAnalytics
             JsonElement root = json.RootElement;
             return ReadRecognizeEntitiesResultCollection(root);
         }
-
-        //        //public static async Task<IEnumerable<IEnumerable<NamedEntity>>> DeserializeEntityCollectionAsync(Stream content, CancellationToken cancellation)
-        //        //{
-        //        //    using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
-        //        //    JsonElement root = json.RootElement;
-        //        //    return ReadEntityCollection(root);
-        //        //}
-
-        ////public static IEnumerable<IEnumerable<NamedEntity>> DeserializeEntityCollection(Stream content)
-        ////{
-        ////    using JsonDocument json = JsonDocument.Parse(content);
-        ////    JsonElement root = json.RootElement;
-        ////    return ReadEntityCollection(root);
-        ////}
 
         private static RecognizeEntitiesResultCollection ReadRecognizeEntitiesResultCollection(JsonElement root)
         {
@@ -375,20 +361,6 @@ namespace Azure.AI.TextAnalytics
 
             return new RecognizeEntitiesResultCollection(collection, statistics, modelVersion);
         }
-
-        //        private static IEnumerable<IEnumerable<NamedEntity>> ReadEntityCollection(JsonElement root)
-        //        {
-        //            var result = new List<List<NamedEntity>>();
-        //            if (root.TryGetProperty("documents", out JsonElement documentsValue))
-        //            {
-        //                foreach (JsonElement documentElement in documentsValue.EnumerateArray())
-        //                {
-        //                    result.Add(ReadEntityResult(documentElement).ToList());
-        //                }
-        //            }
-
-        //            return result;
-        //        }
 
         private static RecognizeEntitiesResult ReadRecognizeEntityResult(JsonElement documentElement)
         {
@@ -432,7 +404,7 @@ namespace Azure.AI.TextAnalytics
             return new NamedEntity(text, type, subType, offset, length, score);
         }
 
-        //        #endregion Recognize Entities
+        #endregion Recognize Entities
 
         //        #region Analyze Sentiment
 

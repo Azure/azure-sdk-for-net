@@ -20,6 +20,7 @@ namespace Azure.AI.TextAnalytics
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly string _subscriptionKey;
         private readonly string _apiVersion;
+        private readonly TextAnalyticsClientOptions _options;
 
         /// <summary>
         /// Protected constructor to allow mocking.
@@ -76,6 +77,7 @@ namespace Azure.AI.TextAnalytics
             _apiVersion = options.GetVersionString();
             _pipeline = HttpPipelineBuilder.Build(options);
             _clientDiagnostics = new ClientDiagnostics(options);
+            _options = options;
         }
 
         #region Detect Language
@@ -438,33 +440,22 @@ namespace Azure.AI.TextAnalytics
         /// <returns></returns>
         public virtual async Task<Response<RecognizeEntitiesResultCollection>> RecognizeEntitiesAsync(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(inputs, nameof(inputs));
 
-            await Task.Run(() => { }).ConfigureAwait(false);
-            throw new NotImplementedException();
+            language ??= _options.DefaultLanguage;
 
-            //Argument.AssertNotNull(inputs, nameof(inputs));
+            int id = 0;
+            List<TextDocumentInput> documentInputs = new List<TextDocumentInput>();
+            foreach (string input in inputs)
+            {
+                documentInputs.Add(new TextDocumentInput($"{id++}")
+                {
+                    Text = input,
+                    Language = language,
+                });
+            }
 
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeEntities");
-            //scope.Start();
-
-            //try
-            //{
-            //    using Request request = CreateStringCollectionRequest(inputs, language, EntitiesRoute);
-            //    Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
-
-            //    switch (response.Status)
-            //    {
-            //        case 200:
-            //            return await CreateRecognizeEntitiesResponseSimpleAsync(response, cancellationToken).ConfigureAwait(false);
-            //        default:
-            //            throw await response.CreateRequestFailedExceptionAsync();
-            //    }
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
+            return await RecognizeEntitiesAsync(documentInputs, new TextAnalysisOptions(), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -475,31 +466,22 @@ namespace Azure.AI.TextAnalytics
         /// <returns></returns>
         public virtual Response<RecognizeEntitiesResultCollection> RecognizeEntities(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(inputs, nameof(inputs));
 
-            throw new NotImplementedException();
+            language ??= _options.DefaultLanguage;
 
-            //Argument.AssertNotNull(inputs, nameof(inputs));
+            int id = 0;
+            List<TextDocumentInput> documentInputs = new List<TextDocumentInput>();
+            foreach (string input in inputs)
+            {
+                documentInputs.Add(new TextDocumentInput($"{id++}")
+                {
+                    Text = input,
+                    Language = language,
+                });
+            }
 
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeEntities");
-            //scope.Start();
-
-            //try
-            //{
-            //    using Request request = CreateStringCollectionRequest(inputs, language, EntitiesRoute);
-            //    Response response = _pipeline.SendRequest(request, cancellationToken);
-
-            //    return response.Status switch
-            //    {
-            //        // TODO: for this, we'll need to stitch back together the errors, as ids have been stripped.
-            //        200 => CreateRecognizeEntitiesResponseSimple(response),
-            //        _ => throw response.CreateRequestFailedException(),
-            //    };
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
+            return RecognizeEntities(documentInputs, new TextAnalysisOptions(), cancellationToken);
         }
 
         /// <summary>
@@ -510,31 +492,27 @@ namespace Azure.AI.TextAnalytics
         /// <returns></returns>
         public virtual async Task<Response<RecognizeEntitiesResultCollection>> RecognizeEntitiesAsync(IEnumerable<TextDocumentInput> inputs, TextAnalysisOptions options, CancellationToken cancellationToken = default)
         {
-            await Task.Run(() => { }).ConfigureAwait(false);
-            throw new NotImplementedException();
+            Argument.AssertNotNull(inputs, nameof(inputs));
 
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeEntities");
+            scope.Start();
 
-            //Argument.AssertNotNull(inputs, nameof(inputs));
+            try
+            {
+                using Request request = CreateDocumentInputRequest(inputs, options, EntitiesRoute);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
 
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeEntities");
-            //scope.Start();
-
-            //try
-            //{
-            //    using Request request = CreateDocumentInputRequest(inputs, options, EntitiesRoute);
-            //    Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
-
-            //    return response.Status switch
-            //    {
-            //        200 => await CreateRecognizeEntitiesResponseAsync(response, cancellationToken).ConfigureAwait(false),
-            //        _ => throw await response.CreateRequestFailedExceptionAsync(),
-            //    };
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
+                return response.Status switch
+                {
+                    200 => await CreateRecognizeEntitiesResponseAsync(response, cancellationToken).ConfigureAwait(false),
+                    _ => throw await response.CreateRequestFailedExceptionAsync(),
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -545,29 +523,27 @@ namespace Azure.AI.TextAnalytics
         /// <returns></returns>
         public virtual Response<RecognizeEntitiesResultCollection> RecognizeEntities(IEnumerable<TextDocumentInput> inputs, TextAnalysisOptions options, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            Argument.AssertNotNull(inputs, nameof(inputs));
 
-            //Argument.AssertNotNull(inputs, nameof(inputs));
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeEntities");
+            scope.Start();
 
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeEntities");
-            //scope.Start();
+            try
+            {
+                using Request request = CreateDocumentInputRequest(inputs, options, EntitiesRoute);
+                Response response = _pipeline.SendRequest(request, cancellationToken);
 
-            //try
-            //{
-            //    using Request request = CreateDocumentInputRequest(inputs, options, EntitiesRoute);
-            //    Response response = _pipeline.SendRequest(request, cancellationToken);
-
-            //    return response.Status switch
-            //    {
-            //        200 => CreateRecognizeEntitiesResponse(response),
-            //        _ => throw response.CreateRequestFailedException(),
-            //    };
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
+                return response.Status switch
+                {
+                    200 => CreateRecognizeEntitiesResponse(response),
+                    _ => throw response.CreateRequestFailedException(),
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         #endregion
