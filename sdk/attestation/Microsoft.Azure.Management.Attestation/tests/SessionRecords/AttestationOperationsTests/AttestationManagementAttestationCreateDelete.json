@@ -7,15 +7,15 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d66d3046-81f6-4bac-b5ae-8ba774f6833e"
+          "4b275224-2ea6-4125-bf00-eb7761b26691"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27617.04",
+          "FxVersion/4.6.28008.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
           "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.9.1.0"
         ]
       },
@@ -30,13 +30,13 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "bbae8c57-46cc-4fb1-a6ea-e466f69be8d1"
+          "e5ee01e7-787c-4b63-ba12-5226988d1647"
         ],
         "x-ms-correlation-request-id": [
-          "bbae8c57-46cc-4fb1-a6ea-e466f69be8d1"
+          "e5ee01e7-787c-4b63-ba12-5226988d1647"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190621T070251Z:bbae8c57-46cc-4fb1-a6ea-e466f69be8d1"
+          "WESTUS:20191120T191948Z:e5ee01e7-787c-4b63-ba12-5226988d1647"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -45,7 +45,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 21 Jun 2019 07:02:50 GMT"
+          "Wed, 20 Nov 2019 19:19:48 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -61,21 +61,21 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/a724c543-53ce-44a6-b633-e11ef27839b7/resourcegroups/testattestationrg1309?api-version=2018-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcyNGM1NDMtNTNjZS00NGE2LWI2MzMtZTExZWYyNzgzOWI3L3Jlc291cmNlZ3JvdXBzL3Rlc3RhdHRlc3RhdGlvbnJnMTMwOT9hcGktdmVyc2lvbj0yMDE4LTA1LTAx",
+      "RequestUri": "/subscriptions/a724c543-53ce-44a6-b633-e11ef27839b7/resourcegroups/testattestationrg9855?api-version=2018-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcyNGM1NDMtNTNjZS00NGE2LWI2MzMtZTExZWYyNzgzOWI3L3Jlc291cmNlZ3JvdXBzL3Rlc3RhdHRlc3RhdGlvbnJnOTg1NT9hcGktdmVyc2lvbj0yMDE4LTA1LTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"East US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "c199bc32-5517-4c1d-bc79-95357a1b9a18"
+          "83895c0e-72d2-4b35-9c26-15d0ee23f35f"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27617.04",
+          "FxVersion/4.6.28008.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
           "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.9.1.0"
         ],
         "Content-Type": [
@@ -96,13 +96,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "1d25d663-b758-4361-8125-a19d4dfb5996"
+          "b1558e00-daa4-4ce2-aab8-dc04ca59e5fb"
         ],
         "x-ms-correlation-request-id": [
-          "1d25d663-b758-4361-8125-a19d4dfb5996"
+          "b1558e00-daa4-4ce2-aab8-dc04ca59e5fb"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190621T070252Z:1d25d663-b758-4361-8125-a19d4dfb5996"
+          "WESTUS:20191120T191950Z:b1558e00-daa4-4ce2-aab8-dc04ca59e5fb"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -111,7 +111,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 21 Jun 2019 07:02:52 GMT"
+          "Wed, 20 Nov 2019 19:19:50 GMT"
         ],
         "Content-Length": [
           "195"
@@ -123,32 +123,32 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a724c543-53ce-44a6-b633-e11ef27839b7/resourceGroups/testattestationrg1309\",\r\n  \"name\": \"testattestationrg1309\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a724c543-53ce-44a6-b633-e11ef27839b7/resourceGroups/testattestationrg9855\",\r\n  \"name\": \"testattestationrg9855\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/a724c543-53ce-44a6-b633-e11ef27839b7/resourceGroups/testattestationrg1309/providers/Microsoft.Attestation/attestationProviders/testattestation5295?api-version=2018-09-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcyNGM1NDMtNTNjZS00NGE2LWI2MzMtZTExZWYyNzgzOWI3L3Jlc291cmNlR3JvdXBzL3Rlc3RhdHRlc3RhdGlvbnJnMTMwOS9wcm92aWRlcnMvTWljcm9zb2Z0LkF0dGVzdGF0aW9uL2F0dGVzdGF0aW9uUHJvdmlkZXJzL3Rlc3RhdHRlc3RhdGlvbjUyOTU/YXBpLXZlcnNpb249MjAxOC0wOS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/a724c543-53ce-44a6-b633-e11ef27839b7/resourceGroups/testattestationrg9855/providers/Microsoft.Attestation/attestationProviders/testattestation9429?api-version=2018-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcyNGM1NDMtNTNjZS00NGE2LWI2MzMtZTExZWYyNzgzOWI3L3Jlc291cmNlR3JvdXBzL3Rlc3RhdHRlc3RhdGlvbnJnOTg1NS9wcm92aWRlcnMvTWljcm9zb2Z0LkF0dGVzdGF0aW9uL2F0dGVzdGF0aW9uUHJvdmlkZXJzL3Rlc3RhdHRlc3RhdGlvbjk0Mjk/YXBpLXZlcnNpb249MjAxOC0wOS0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
-      "RequestBody": "{}",
+      "RequestBody": "{\r\n  \"policySigningCertificates\": {\r\n    \"keys\": [\r\n      {\r\n        \"kty\": \"RSA\",\r\n        \"x5c\": [\r\n          \"MIICjzCCAjSgAwIBAgIUImUM1lqdNInzg7SVUr9QGzknBqwwCgYIKoZIzj0EAwIwaDEaMBgGA1UEAwwRSW50ZWwgU0dYIFJvb3QgQ0ExGjAYBgNVBAoMEUludGVsIENvcnBvcmF0aW9uMRQwEgYDVQQHDAtTYW50YSBDbGFyYTELMAkGA1UECAwCQ0ExCzAJBgNVBAYTAlVTMB4XDTE4MDUyMTEwNDExMVoXDTMzMDUyMTEwNDExMFowaDEaMBgGA1UEAwwRSW50ZWwgU0dYIFJvb3QgQ0ExGjAYBgNVBAoMEUludGVsIENvcnBvcmF0aW9uMRQwEgYDVQQHDAtTYW50YSBDbGFyYTELMAkGA1UECAwCQ0ExCzAJBgNVBAYTAlVTMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEC6nEwMDIYZOj/iPWsCzaEKi71OiOSLRFhWGjbnBVJfVnkY4u3IjkDYYL0MxO4mqsyYjlBalTVYxFP2sJBK5zlKOBuzCBuDAfBgNVHSMEGDAWgBQiZQzWWp00ifODtJVSv1AbOScGrDBSBgNVHR8ESzBJMEegRaBDhkFodHRwczovL2NlcnRpZmljYXRlcy50cnVzdGVkc2VydmljZXMuaW50ZWwuY29tL0ludGVsU0dYUm9vdENBLmNybDAdBgNVHQ4EFgQUImUM1lqdNInzg7SVUr9QGzknBqwwDgYDVR0PAQH/BAQDAgEGMBIGA1UdEwEB/wQIMAYBAf8CAQAwCgYIKoZIzj0EAwIDSQAwRgIhAIpQ/KlO1XE4hH8cw5Ol/E0yzs8PToJe9Pclt+bhfLUgAiEAss0qf7FlMmAMet+gbpLD97ldYy/wqjjmwN7yHRVr2AM=\"\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "15aadb4c-d2cd-4c74-94df-8a3a9ac9ec84"
+          "63508af1-2d7d-4d68-b7ef-04e269557343"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27617.04",
+          "FxVersion/4.6.28008.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.Attestation.AttestationManagementClient/0.9.5.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Attestation.AttestationManagementClient/0.9.6.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "2"
+          "1029"
         ]
       },
       "ResponseHeaders": {
@@ -159,7 +159,7 @@
           "no-cache"
         ],
         "Location": [
-          "fabric:/AttestationService/Tenant/testattestation5295"
+          "fabric:/AttestationService/Tenant/testattestation9429"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
           "1199"
@@ -167,14 +167,17 @@
         "Server": [
           "Kestrel"
         ],
+        "WWW-Authenticate": [
+          "Bearer authorization_uri=\"https://login.windows.net/72f988bf-86f1-41af-91ab-2d7cd011db47\", resource=\"https://attest.azure.net\""
+        ],
         "x-ms-request-id": [
-          "920a6484-f94b-4d58-b003-fbdecad79da8"
+          "a78c9f29-d2e8-4dfe-8658-923d25a55ab3"
         ],
         "x-ms-correlation-request-id": [
-          "920a6484-f94b-4d58-b003-fbdecad79da8"
+          "a78c9f29-d2e8-4dfe-8658-923d25a55ab3"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190621T070255Z:920a6484-f94b-4d58-b003-fbdecad79da8"
+          "WESTUS:20191120T191952Z:a78c9f29-d2e8-4dfe-8658-923d25a55ab3"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -183,7 +186,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 21 Jun 2019 07:02:54 GMT"
+          "Wed, 20 Nov 2019 19:19:51 GMT"
         ],
         "Content-Length": [
           "347"
@@ -195,26 +198,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"subscriptions/a724c543-53ce-44a6-b633-e11ef27839b7/resourceGroups/testattestationrg1309/providers/Microsoft.Attestation/attestationProviders/testattestation5295\",\r\n  \"name\": \"testattestation5295\",\r\n  \"type\": \"Microsoft.Attestation/attestationProviders\",\r\n  \"properties\": {\r\n    \"status\": \"NotReady\",\r\n    \"attestUri\": \"https://testattestation5295.us.attest.azure.net\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"subscriptions/a724c543-53ce-44a6-b633-e11ef27839b7/resourceGroups/testattestationrg9855/providers/Microsoft.Attestation/attestationProviders/testattestation9429\",\r\n  \"name\": \"testattestation9429\",\r\n  \"type\": \"Microsoft.Attestation/attestationProviders\",\r\n  \"properties\": {\r\n    \"status\": \"NotReady\",\r\n    \"attestUri\": \"https://testattestation9429.us.attest.azure.net\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/a724c543-53ce-44a6-b633-e11ef27839b7/resourceGroups/testattestationrg1309/providers/Microsoft.Attestation/attestationProviders/testattestation5295?api-version=2018-09-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcyNGM1NDMtNTNjZS00NGE2LWI2MzMtZTExZWYyNzgzOWI3L3Jlc291cmNlR3JvdXBzL3Rlc3RhdHRlc3RhdGlvbnJnMTMwOS9wcm92aWRlcnMvTWljcm9zb2Z0LkF0dGVzdGF0aW9uL2F0dGVzdGF0aW9uUHJvdmlkZXJzL3Rlc3RhdHRlc3RhdGlvbjUyOTU/YXBpLXZlcnNpb249MjAxOC0wOS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/a724c543-53ce-44a6-b633-e11ef27839b7/resourceGroups/testattestationrg9855/providers/Microsoft.Attestation/attestationProviders/testattestation9429?api-version=2018-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcyNGM1NDMtNTNjZS00NGE2LWI2MzMtZTExZWYyNzgzOWI3L3Jlc291cmNlR3JvdXBzL3Rlc3RhdHRlc3RhdGlvbnJnOTg1NS9wcm92aWRlcnMvTWljcm9zb2Z0LkF0dGVzdGF0aW9uL2F0dGVzdGF0aW9uUHJvdmlkZXJzL3Rlc3RhdHRlc3RhdGlvbjk0Mjk/YXBpLXZlcnNpb249MjAxOC0wOS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "8210e868-2fdb-46b6-9b32-8fc9f39b2a42"
+          "9c1080ff-787f-4536-9928-13a2258359ae"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27617.04",
+          "FxVersion/4.6.28008.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.Attestation.AttestationManagementClient/0.9.5.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Attestation.AttestationManagementClient/0.9.6.0"
         ]
       },
       "ResponseHeaders": {
@@ -230,14 +233,17 @@
         "Server": [
           "Kestrel"
         ],
+        "WWW-Authenticate": [
+          "Bearer authorization_uri=\"https://login.windows.net/72f988bf-86f1-41af-91ab-2d7cd011db47\", resource=\"https://attest.azure.net\""
+        ],
         "x-ms-request-id": [
-          "8a16c788-c468-40d9-8f36-915f69b9328d"
+          "4653ce09-53e9-47fe-b925-2a84aa6d03e5"
         ],
         "x-ms-correlation-request-id": [
-          "8a16c788-c468-40d9-8f36-915f69b9328d"
+          "4653ce09-53e9-47fe-b925-2a84aa6d03e5"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190621T070255Z:8a16c788-c468-40d9-8f36-915f69b9328d"
+          "WESTUS:20191120T191952Z:4653ce09-53e9-47fe-b925-2a84aa6d03e5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -246,10 +252,10 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 21 Jun 2019 07:02:55 GMT"
+          "Wed, 20 Nov 2019 19:19:52 GMT"
         ],
         "Content-Length": [
-          "83"
+          "347"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -258,26 +264,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": \"NotReady\",\r\n  \"attestUri\": \"https://testattestation5295.us.attest.azure.net\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"subscriptions/a724c543-53ce-44a6-b633-e11ef27839b7/resourceGroups/testattestationrg9855/providers/Microsoft.Attestation/attestationProviders/testattestation9429\",\r\n  \"name\": \"testattestation9429\",\r\n  \"type\": \"Microsoft.Attestation/attestationProviders\",\r\n  \"properties\": {\r\n    \"status\": \"NotReady\",\r\n    \"attestUri\": \"https://testattestation9429.us.attest.azure.net\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/a724c543-53ce-44a6-b633-e11ef27839b7/resourceGroups/testattestationrg1309/providers/Microsoft.Attestation/attestationProviders/testattestation5295?api-version=2018-09-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcyNGM1NDMtNTNjZS00NGE2LWI2MzMtZTExZWYyNzgzOWI3L3Jlc291cmNlR3JvdXBzL3Rlc3RhdHRlc3RhdGlvbnJnMTMwOS9wcm92aWRlcnMvTWljcm9zb2Z0LkF0dGVzdGF0aW9uL2F0dGVzdGF0aW9uUHJvdmlkZXJzL3Rlc3RhdHRlc3RhdGlvbjUyOTU/YXBpLXZlcnNpb249MjAxOC0wOS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/a724c543-53ce-44a6-b633-e11ef27839b7/resourceGroups/testattestationrg9855/providers/Microsoft.Attestation/attestationProviders/testattestation9429?api-version=2018-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcyNGM1NDMtNTNjZS00NGE2LWI2MzMtZTExZWYyNzgzOWI3L3Jlc291cmNlR3JvdXBzL3Rlc3RhdHRlc3RhdGlvbnJnOTg1NS9wcm92aWRlcnMvTWljcm9zb2Z0LkF0dGVzdGF0aW9uL2F0dGVzdGF0aW9uUHJvdmlkZXJzL3Rlc3RhdHRlc3RhdGlvbjk0Mjk/YXBpLXZlcnNpb249MjAxOC0wOS0wMS1wcmV2aWV3",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "5a0d6722-1d84-4ae4-aede-b9af31180dbf"
+          "ca2f3ef9-e5d2-49dc-ab9c-7de65f973103"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27617.04",
+          "FxVersion/4.6.28008.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.Attestation.AttestationManagementClient/0.9.5.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Attestation.AttestationManagementClient/0.9.6.0"
         ]
       },
       "ResponseHeaders": {
@@ -290,17 +296,20 @@
         "Server": [
           "Kestrel"
         ],
+        "WWW-Authenticate": [
+          "Bearer authorization_uri=\"https://login.windows.net/72f988bf-86f1-41af-91ab-2d7cd011db47\", resource=\"https://attest.azure.net\""
+        ],
         "x-ms-ratelimit-remaining-subscription-deletes": [
           "14999"
         ],
         "x-ms-request-id": [
-          "0be6adcd-8030-4460-9c7d-63cc651e742f"
+          "264adb68-de18-45cf-84fe-9dc5b862ffb5"
         ],
         "x-ms-correlation-request-id": [
-          "0be6adcd-8030-4460-9c7d-63cc651e742f"
+          "264adb68-de18-45cf-84fe-9dc5b862ffb5"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190621T070255Z:0be6adcd-8030-4460-9c7d-63cc651e742f"
+          "WESTUS:20191120T191952Z:264adb68-de18-45cf-84fe-9dc5b862ffb5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -309,7 +318,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 21 Jun 2019 07:02:55 GMT"
+          "Wed, 20 Nov 2019 19:19:52 GMT"
         ],
         "Expires": [
           "-1"
@@ -324,9 +333,9 @@
   ],
   "Names": {
     "Initialize": [
-      "testattestationrg1309",
-      "testattestation5295",
-      "attestationpolicynametest2401"
+      "testattestationrg9855",
+      "testattestation9429",
+      "attestationpolicynametest5273"
     ]
   },
   "Variables": {

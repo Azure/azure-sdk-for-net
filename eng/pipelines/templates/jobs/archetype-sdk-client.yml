@@ -85,7 +85,8 @@ jobs:
         condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
       - task: NodeTool@0
         inputs:
-          versionSpec: '12.x'
+          # AutoRest doesn't work with versions 12.x
+          versionSpec: '10.15.0'
         displayName: 'Install NodeJS'
       - task: PowerShell@2
         displayName: "Verify generated code"
@@ -93,7 +94,6 @@ jobs:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
           DOTNET_MULTILEVEL_LOOKUP: 0
-          NODE_OPTIONS: "--max-old-space-size=4096"
         inputs:
           filePath: "eng/CodeChecks.ps1"
           pwsh: true

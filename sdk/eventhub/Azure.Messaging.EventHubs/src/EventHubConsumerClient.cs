@@ -423,7 +423,7 @@ namespace Azure.Messaging.EventHubs
         /// <returns>An <see cref="IAsyncEnumerable{T}"/> to be used for iterating over events in the partition.</returns>
         ///
         /// <remarks>
-        ///   This method is not recommended for production use; the <see cref="EventProcessorClient" /> should be used for reading events from all partitions in a
+        ///   This method is not recommended for production use; the <c>EventProcessorClient</c> should be used for reading events from all partitions in a
         ///   production scenario, as it offers a much more robust experience with higher throughput.
         ///
         ///   It is important to note that this method does not guarantee fairness amongst the partitions during iteration; each of the partitions competes to publish
@@ -434,7 +434,7 @@ namespace Azure.Messaging.EventHubs
         ///   process, rather than competing for them.
         /// </remarks>
         ///
-        /// <seealso cref="EventProcessorClient" />
+        /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor" />
         /// <seealso cref="ReadEventsAsync(ReadEventOptions, CancellationToken)"/>
         ///
         public virtual IAsyncEnumerable<PartitionEvent> ReadEventsAsync(CancellationToken cancellationToken = default) => ReadEventsAsync(null, cancellationToken);
@@ -454,7 +454,7 @@ namespace Azure.Messaging.EventHubs
         /// <returns>An <see cref="IAsyncEnumerable{T}"/> to be used for iterating over events in the partition.</returns>
         ///
         /// <remarks>
-        ///   This method is not recommended for production use; the <see cref="EventProcessorClient" /> should be used for reading events from all partitions in a
+        ///   This method is not recommended for production use; the <c>EventProcessorClient</c> should be used for reading events from all partitions in a
         ///   production scenario, as it offers a much more robust experience with higher throughput.
         ///
         ///   It is important to note that this method does not guarantee fairness amongst the partitions during iteration; each of the partitions competes to publish
@@ -465,7 +465,7 @@ namespace Azure.Messaging.EventHubs
         ///   process, rather than competing for them.
         /// </remarks>
         ///
-        /// <seealso cref="EventProcessorClient" />
+        /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor" />
         /// <seealso cref="ReadEventsAsync(CancellationToken)"/>
         ///
         public virtual IAsyncEnumerable<PartitionEvent> ReadEventsAsync(ReadEventOptions readOptions,
@@ -487,7 +487,7 @@ namespace Azure.Messaging.EventHubs
         /// <returns>An <see cref="IAsyncEnumerable{T}"/> to be used for iterating over events in the partition.</returns>
         ///
         /// <remarks>
-        ///   This method is not recommended for production use; the <see cref="EventProcessorClient" /> should be used for reading events from all partitions in a
+        ///   This method is not recommended for production use; the <c>EventProcessorClient</c> should be used for reading events from all partitions in a
         ///   production scenario, as it offers a much more robust experience with higher throughput.
         ///
         ///   It is important to note that this method does not guarantee fairness amongst the partitions during iteration; each of the partitions competes to publish
@@ -498,7 +498,7 @@ namespace Azure.Messaging.EventHubs
         ///   process, rather than competing for them.
         /// </remarks>
         ///
-        /// <seealso cref="EventProcessorClient" />
+        /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor" />
         /// <seealso cref="ReadEventsAsync(CancellationToken)"/>
         /// <seealso cref="ReadEventsAsync(ReadEventOptions, CancellationToken)"/>
         ///

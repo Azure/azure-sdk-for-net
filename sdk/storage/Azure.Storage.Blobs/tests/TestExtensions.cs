@@ -17,7 +17,7 @@ namespace Azure.Storage
         {
             RequestUriBuilder builder = new RequestUriBuilder();
             builder.Reset(uri);
-            builder.Scheme = Constants.Blob.Https;
+            builder.Scheme = Constants.Https;
             builder.Port = Constants.Blob.HttpsPort;
             return builder.ToUri();
         }

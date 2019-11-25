@@ -89,9 +89,12 @@ namespace Microsoft.Azure.Management.Storage
             /// the request body, all CORS rules will be deleted, and CORS will be disabled
             /// for the File service.
             /// </param>
-            public static FileServiceProperties SetServiceProperties(this IFileServicesOperations operations, string resourceGroupName, string accountName, CorsRules cors = default(CorsRules))
+            /// <param name='shareDeleteRetentionPolicy'>
+            /// The file service properties for share soft delete.
+            /// </param>
+            public static FileServiceProperties SetServiceProperties(this IFileServicesOperations operations, string resourceGroupName, string accountName, CorsRules cors = default(CorsRules), DeleteRetentionPolicy shareDeleteRetentionPolicy = default(DeleteRetentionPolicy))
             {
-                return operations.SetServicePropertiesAsync(resourceGroupName, accountName, cors).GetAwaiter().GetResult();
+                return operations.SetServicePropertiesAsync(resourceGroupName, accountName, cors, shareDeleteRetentionPolicy).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -116,12 +119,15 @@ namespace Microsoft.Azure.Management.Storage
             /// the request body, all CORS rules will be deleted, and CORS will be disabled
             /// for the File service.
             /// </param>
+            /// <param name='shareDeleteRetentionPolicy'>
+            /// The file service properties for share soft delete.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FileServiceProperties> SetServicePropertiesAsync(this IFileServicesOperations operations, string resourceGroupName, string accountName, CorsRules cors = default(CorsRules), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FileServiceProperties> SetServicePropertiesAsync(this IFileServicesOperations operations, string resourceGroupName, string accountName, CorsRules cors = default(CorsRules), DeleteRetentionPolicy shareDeleteRetentionPolicy = default(DeleteRetentionPolicy), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.SetServicePropertiesWithHttpMessagesAsync(resourceGroupName, accountName, cors, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.SetServicePropertiesWithHttpMessagesAsync(resourceGroupName, accountName, cors, shareDeleteRetentionPolicy, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

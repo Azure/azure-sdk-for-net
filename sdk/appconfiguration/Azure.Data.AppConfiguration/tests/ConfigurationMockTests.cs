@@ -320,37 +320,6 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [Test]
-        public async Task SetWithRequestOptions()
-        {
-            // Set with multiple headers is not an expected use case, but verified for completeness.
-
-            var response = new MockResponse(200);
-            response.SetContent(SerializationHelpers.Serialize(s_testSetting, SerializeSetting));
-
-            var mockTransport = new MockTransport(response);
-            ConfigurationClient service = CreateTestService(mockTransport);
-
-            var requestOptions = new MatchConditions
-            {
-                IfNoneMatch = new ETag("v1"),
-                IfMatch = new ETag("v2")
-            };
-
-            ConfigurationSetting setting = await service.SetConfigurationSettingAsync(s_testSetting, requestOptions);
-            MockRequest request = mockTransport.SingleRequest;
-
-            AssertRequestCommon(request);
-            Assert.AreEqual(RequestMethod.Put, request.Method);
-            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?label=test_label&api-version={s_version}", request.Uri.ToString());
-            Assert.True(request.Headers.TryGetValue("If-None-Match", out var ifNoneMatch));
-            Assert.AreEqual("\"v1\"", ifNoneMatch);
-            Assert.True(request.Headers.TryGetValue("If-Match", out var ifMatch));
-            Assert.AreEqual("\"v2\"", ifMatch);
-            AssertContent(SerializationHelpers.Serialize(s_testSetting, SerializeRequestSetting), request);
-            Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(s_testSetting, setting));
-        }
-
-        [Test]
         public async Task Delete()
         {
             var response = new MockResponse(200);
@@ -466,35 +435,6 @@ namespace Azure.Data.AppConfiguration.Tests
             Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?label=test_label&api-version={s_version}", request.Uri.ToString());
             Assert.True(request.Headers.TryGetValue("If-Match", out var ifMatch));
             Assert.AreEqual("\"v1\"", ifMatch);
-        }
-
-        [Test]
-        public async Task DeleteWithRequestOptions()
-        {
-            // Delete with multiple headers is not an expected use case, but verified for completeness.
-
-            var mockResponse = new MockResponse(200);
-            mockResponse.SetContent(SerializationHelpers.Serialize(s_testSetting, SerializeSetting));
-
-            var mockTransport = new MockTransport(mockResponse);
-            ConfigurationClient service = CreateTestService(mockTransport);
-
-            var requestOptions = new MatchConditions
-            {
-                IfNoneMatch = new ETag("v1"),
-                IfMatch = new ETag("v2")
-            };
-
-            Response response = await service.DeleteConfigurationSettingAsync(s_testSetting.Key, s_testSetting.Label, requestOptions);
-            MockRequest request = mockTransport.SingleRequest;
-
-            AssertRequestCommon(request);
-            Assert.AreEqual(RequestMethod.Delete, request.Method);
-            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?label=test_label&api-version={s_version}", request.Uri.ToString());
-            Assert.True(request.Headers.TryGetValue("If-None-Match", out var ifNoneMatch));
-            Assert.AreEqual("\"v1\"", ifNoneMatch);
-            Assert.True(request.Headers.TryGetValue("If-Match", out var ifMatch));
-            Assert.AreEqual("\"v2\"", ifMatch);
         }
 
         [Test]

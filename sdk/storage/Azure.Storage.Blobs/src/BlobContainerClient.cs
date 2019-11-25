@@ -234,6 +234,7 @@ namespace Azure.Storage.Blobs
         public BlobContainerClient(Uri blobContainerUri, TokenCredential credential, BlobClientOptions options = default)
             : this(blobContainerUri, credential.AsPolicy(), options)
         {
+            Errors.VerifyHttpsTokenAuth(blobContainerUri);
         }
 
         /// <summary>
@@ -260,6 +261,7 @@ namespace Azure.Storage.Blobs
             _pipeline = options.Build(authentication);
             _clientDiagnostics = new ClientDiagnostics(options);
             _customerProvidedKey = options.CustomerProvidedKey;
+            BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
         }
 
         /// <summary>
@@ -282,6 +284,7 @@ namespace Azure.Storage.Blobs
             _pipeline = pipeline;
             _clientDiagnostics = clientDiagnostics;
             _customerProvidedKey = customerProvidedKey;
+            BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
         }
         #endregion ctor
 

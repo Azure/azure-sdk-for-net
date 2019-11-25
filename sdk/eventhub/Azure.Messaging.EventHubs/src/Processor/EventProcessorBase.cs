@@ -193,6 +193,20 @@ namespace Azure.Messaging.EventHubs.Processor
         protected abstract Task<IEnumerable<PartitionOwnership>> ClaimOwnershipAsync(IEnumerable<PartitionOwnership> partitionOwnership);
 
         /// <summary>
+        ///   Retrieves a complete checkpoints list from the chosen storage service.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the ownership are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
+        /// <param name="consumerGroup">The name of the consumer group the ownership are associated with.</param>
+        ///
+        /// <returns>An enumerable containing all the existing checkpoints for the associated Event Hub and consumer group.</returns>
+        ///
+        protected abstract Task<IEnumerable<Checkpoint>> ListCheckpointsAsync(string fullyQualifiedNamespace,
+                                                                              string eventHubName,
+                                                                              string consumerGroup);
+
+        /// <summary>
         ///   Updates the checkpoint using the given information for the associated partition and consumer group in the chosen storage service.
         /// </summary>
         ///
@@ -209,16 +223,12 @@ namespace Azure.Messaging.EventHubs.Processor
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the Event Hub partition the partition ownership is associated with.</param>
-        /// <param name="offset">The offset of the last <see cref="EventData" /> checkpointed by the previous owner of the ownership.</param>
-        /// <param name="sequenceNumber">The sequence number of the last <see cref="EventData" /> checkpointed by the previous owner of the ownership.</param>
         /// <param name="lastModifiedTime">The date and time, in UTC, that the ownership is being created at.</param>
         /// <param name="eTag">The entity tag needed to update the ownership.</param>
         ///
         /// <returns>A <see cref="PartitionOwnership" /> instance based on the provided information.</returns>
         ///
         protected abstract PartitionOwnership CreatePartitionOwnership(string partitionId,
-                                                                       long? offset,
-                                                                       long? sequenceNumber,
                                                                        DateTimeOffset? lastModifiedTime,
                                                                        string eTag);
 
@@ -632,7 +642,7 @@ namespace Azure.Messaging.EventHubs.Processor
             // the sequence number as well.
 
             var oldOwnership = completeOwnershipEnumerable.FirstOrDefault(ownership => ownership.PartitionId == partitionId);
-            var newOwnership = CreatePartitionOwnership(partitionId, oldOwnership?.Offset, oldOwnership?.SequenceNumber, DateTimeOffset.UtcNow, oldOwnership?.ETag);
+            var newOwnership = CreatePartitionOwnership(partitionId, DateTimeOffset.UtcNow, oldOwnership?.ETag);
 
             // We are expecting an enumerable with a single element if the claim attempt succeeds.
 
@@ -657,8 +667,6 @@ namespace Azure.Messaging.EventHubs.Processor
                     ownership.ConsumerGroup,
                     ownership.OwnerIdentifier,
                     ownership.PartitionId,
-                    ownership.Offset,
-                    ownership.SequenceNumber,
                     DateTimeOffset.UtcNow,
                     ownership.ETag
                 ));

@@ -43,10 +43,15 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// CorsRule elements are included in the request body, all CORS rules
         /// will be deleted, and CORS will be disabled for the File
         /// service.</param>
-        public FileServiceProperties(string id = default(string), string name = default(string), string type = default(string), CorsRules cors = default(CorsRules))
+        /// <param name="shareDeleteRetentionPolicy">The file service
+        /// properties for share soft delete.</param>
+        /// <param name="sku">Sku name and tier.</param>
+        public FileServiceProperties(string id = default(string), string name = default(string), string type = default(string), CorsRules cors = default(CorsRules), DeleteRetentionPolicy shareDeleteRetentionPolicy = default(DeleteRetentionPolicy), Sku sku = default(Sku))
             : base(id, name, type)
         {
             Cors = cors;
+            ShareDeleteRetentionPolicy = shareDeleteRetentionPolicy;
+            Sku = sku;
             CustomInit();
         }
 
@@ -64,5 +69,34 @@ namespace Microsoft.Azure.Management.Storage.Models
         [JsonProperty(PropertyName = "properties.cors")]
         public CorsRules Cors { get; set; }
 
+        /// <summary>
+        /// Gets or sets the file service properties for share soft delete.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.shareDeleteRetentionPolicy")]
+        public DeleteRetentionPolicy ShareDeleteRetentionPolicy { get; set; }
+
+        /// <summary>
+        /// Gets sku name and tier.
+        /// </summary>
+        [JsonProperty(PropertyName = "sku")]
+        public Sku Sku { get; private set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (ShareDeleteRetentionPolicy != null)
+            {
+                ShareDeleteRetentionPolicy.Validate();
+            }
+            if (Sku != null)
+            {
+                Sku.Validate();
+            }
+        }
     }
 }

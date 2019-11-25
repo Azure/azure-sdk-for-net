@@ -11,6 +11,8 @@ namespace Azure.Messaging.EventHubs.Processor
     ///   the exception that has been thrown.
     /// </summary>
     ///
+    /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor" />
+    ///
     public class ProcessorErrorContext
     {
         /// <summary>
@@ -20,7 +22,7 @@ namespace Azure.Messaging.EventHubs.Processor
         public string PartitionId { get; }
 
         /// <summary>
-        ///   The exception that was thrown by the <see cref="EventProcessorClient" />.
+        ///   The exception that was thrown by the <c>EventProcessorClient</c>.
         /// </summary>
         ///
         public Exception ProcessorException { get; }
@@ -30,7 +32,7 @@ namespace Azure.Messaging.EventHubs.Processor
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the partition whose processing threw an exception.</param>
-        /// <param name="exception">The exception that was thrown by the <see cref="EventProcessorClient" />.</param>
+        /// <param name="exception">The exception that was thrown by the <c>EventProcessorClient</c>.</param>
         ///
         protected internal ProcessorErrorContext(string partitionId,
                                                  Exception exception)

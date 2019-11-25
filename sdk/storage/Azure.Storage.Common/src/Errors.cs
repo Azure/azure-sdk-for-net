@@ -108,5 +108,13 @@ namespace Azure.Storage
 
         public static ArgumentException SeekOutsideBufferRange(long index, long inclusiveRangeStart, long exclusiveRangeEnd)
             => new ArgumentException($"Tried to seek ouside buffer range. Gave index {index}, range is [{inclusiveRangeStart},{exclusiveRangeEnd}).");
+
+        public static void VerifyHttpsTokenAuth(Uri uri)
+        {
+            if (uri.Scheme != Constants.Https)
+            {
+                throw new ArgumentException("Cannot use TokenCredential without HTTPS.");
+            }
+        }
     }
 }
