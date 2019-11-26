@@ -13,6 +13,7 @@ namespace Azure.Security.KeyVault
     {
         private const string BearerChallengePrefix = "Bearer ";
         private readonly TokenCredential _credential;
+        private readonly bool _allowInsecureTransport;
 
         private AuthenticationChallenge _challenge = null;
 
@@ -20,9 +21,10 @@ namespace Azure.Security.KeyVault
 
         private DateTimeOffset _refreshOn;
 
-        public ChallengeBasedAuthenticationPolicy(TokenCredential credential)
+        public ChallengeBasedAuthenticationPolicy(TokenCredential credential, ClientOptions options)
         {
             _credential = credential;
+            _allowInsecureTransport = options?.Security.AllowInsecureConfidentialAuthenticationTransport ?? false;
         }
 
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
@@ -37,6 +39,11 @@ namespace Azure.Security.KeyVault
 
         private async ValueTask ProcessCoreAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
+            if (!_allowInsecureTransport && message.Request.Uri.Scheme != Uri.UriSchemeHttps)
+            {
+                throw new InvalidOperationException("Bearer token authentication is not permitted for non-TLS protected (non-HTTPS) endpoints.");
+            }
+
             RequestContent originalContent = message.Request.Content;
 
             // if this policy doesn't have _challenge cached try to get it from the static challenge cache

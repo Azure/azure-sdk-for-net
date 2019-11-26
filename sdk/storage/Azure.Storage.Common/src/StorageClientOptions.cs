@@ -45,18 +45,20 @@ namespace Azure.Storage
         /// Get an authentication policy to sign Storage requests.
         /// </summary>
         /// <param name="credential">Credential to use.</param>
+        /// <param name="options"><see cref="ClientOptions"/> that allow to configure the authentication policy.</param>
         /// <returns>An authentication policy.</returns>
-        public static HttpPipelinePolicy AsPolicy(this TokenCredential credential) =>
+        public static HttpPipelinePolicy AsPolicy(this TokenCredential credential, ClientOptions options) =>
             new BearerTokenAuthenticationPolicy(
                 credential ?? throw Errors.ArgumentNull(nameof(credential)),
-                StorageScope);
+                StorageScope, options);
 
         /// <summary>
         /// Get an optional authentication policy to sign Storage requests.
         /// </summary>
         /// <param name="credentials">Optional credentials to use.</param>
+        /// <param name="options"><see cref="ClientOptions"/> that allow to configure the authentication policy.</param>
         /// <returns>An optional authentication policy.</returns>
-        public static HttpPipelinePolicy GetAuthenticationPolicy(object credentials = null)
+        public static HttpPipelinePolicy GetAuthenticationPolicy(object credentials = null, ClientOptions options = null)
         {
             // Use the credentials to decide on the authentication policy
             switch (credentials)
@@ -67,7 +69,7 @@ namespace Azure.Storage
                 case StorageSharedKeyCredential sharedKey:
                     return sharedKey.AsPolicy();
                 case TokenCredential token:
-                    return token.AsPolicy();
+                    return token.AsPolicy(options);
                 default:
                     throw Errors.InvalidCredentials(credentials.GetType().FullName);
             }
@@ -108,6 +110,6 @@ namespace Azure.Storage
         /// <param name="geoRedundantSecondaryStorageUri">The secondary URI to be used for retries on failed read requests</param>
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
         public static HttpPipeline Build(this ClientOptions options, object credentials, Uri geoRedundantSecondaryStorageUri = null) =>
-            Build(options, GetAuthenticationPolicy(credentials), geoRedundantSecondaryStorageUri);
+            Build(options, GetAuthenticationPolicy(credentials, options), geoRedundantSecondaryStorageUri);
     }
 }

@@ -199,9 +199,9 @@ namespace Azure.Storage.Files.DataLake
         /// The token credential used to sign requests.
         /// </param>
         public DataLakeFileSystemClient(Uri fileSystemUri, TokenCredential credential)
-            : this(fileSystemUri, credential.AsPolicy(), null)
+            : this(fileSystemUri, credential.AsPolicy(null), null)
         {
-            Errors.VerifyHttpsTokenAuth(fileSystemUri);
+            Errors.VerifyHttpsTokenAuth(fileSystemUri, null);
         }
 
         /// <summary>
@@ -221,9 +221,9 @@ namespace Azure.Storage.Files.DataLake
         /// every request.
         /// </param>
         public DataLakeFileSystemClient(Uri fileSystemUri, TokenCredential credential, DataLakeClientOptions options)
-            : this(fileSystemUri, credential.AsPolicy(), options)
+            : this(fileSystemUri, credential.AsPolicy(options), options)
         {
-            Errors.VerifyHttpsTokenAuth(fileSystemUri);
+            Errors.VerifyHttpsTokenAuth(fileSystemUri, options);
         }
 
         /// <summary>

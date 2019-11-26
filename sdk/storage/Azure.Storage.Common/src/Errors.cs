@@ -4,6 +4,7 @@
 using System;
 using System.Globalization;
 using System.Security.Authentication;
+using Azure.Core;
 
 namespace Azure.Storage
 {
@@ -109,9 +110,9 @@ namespace Azure.Storage
         public static ArgumentException SeekOutsideBufferRange(long index, long inclusiveRangeStart, long exclusiveRangeEnd)
             => new ArgumentException($"Tried to seek ouside buffer range. Gave index {index}, range is [{inclusiveRangeStart},{exclusiveRangeEnd}).");
 
-        public static void VerifyHttpsTokenAuth(Uri uri)
+        public static void VerifyHttpsTokenAuth(Uri uri, ClientOptions options)
         {
-            if (uri.Scheme != Constants.Https)
+            if (uri.Scheme != Constants.Https && (options?.Security.AllowInsecureConfidentialAuthenticationTransport ?? false))
             {
                 throw new ArgumentException("Cannot use TokenCredential without HTTPS.");
             }

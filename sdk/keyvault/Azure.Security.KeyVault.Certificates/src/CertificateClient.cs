@@ -58,7 +58,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             options ??= new CertificateClientOptions();
 
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new ChallengeBasedAuthenticationPolicy(credential));
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new ChallengeBasedAuthenticationPolicy(credential, options));
 
             _pipeline = new KeyVaultPipeline(vaultUri, options.GetVersionString(), pipeline, new ClientDiagnostics(options));
         }

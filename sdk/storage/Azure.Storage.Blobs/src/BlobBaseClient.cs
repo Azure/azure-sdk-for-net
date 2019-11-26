@@ -248,9 +248,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// every request.
         /// </param>
         public BlobBaseClient(Uri blobUri, TokenCredential credential, BlobClientOptions options = default)
-            : this(blobUri, credential.AsPolicy(), options)
+            : this(blobUri, credential.AsPolicy(options), options)
         {
-            Errors.VerifyHttpsTokenAuth(blobUri);
+            Errors.VerifyHttpsTokenAuth(blobUri, options);
         }
 
         /// <summary>

@@ -77,7 +77,7 @@ namespace Azure.Data.AppConfiguration
             Argument.AssertNotNull(credential, nameof(credential));
 
             _endpoint = endpoint;
-            _pipeline = CreatePipeline(options, new BearerTokenAuthenticationPolicy(credential, GetDefaultScope(endpoint)));
+            _pipeline = CreatePipeline(options, new BearerTokenAuthenticationPolicy(credential, GetDefaultScope(endpoint), options));
 
             _clientDiagnostics = new ClientDiagnostics(options);
         }

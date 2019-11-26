@@ -232,9 +232,9 @@ namespace Azure.Storage.Blobs
         /// every request.
         /// </param>
         public BlobContainerClient(Uri blobContainerUri, TokenCredential credential, BlobClientOptions options = default)
-            : this(blobContainerUri, credential.AsPolicy(), options)
+            : this(blobContainerUri, credential.AsPolicy(options), options)
         {
-            Errors.VerifyHttpsTokenAuth(blobContainerUri);
+            Errors.VerifyHttpsTokenAuth(blobContainerUri, options);
         }
 
         /// <summary>
