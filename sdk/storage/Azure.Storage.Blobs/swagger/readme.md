@@ -4,7 +4,7 @@
 ## Configuration
 ``` yaml
 # Generate blob storage
-input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/storage-dataplane-preview/specification/storage/data-plane/Microsoft.BlobStorage/preview/2019-02-02/blob.json
+input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/507724d32aa07f688bb49577cf9bd18c30bb7cc1/specification/storage/data-plane/Microsoft.BlobStorage/preview/2019-02-02/blob.json
 output-folder: ../src/Generated
 clear-output-folder: false
 

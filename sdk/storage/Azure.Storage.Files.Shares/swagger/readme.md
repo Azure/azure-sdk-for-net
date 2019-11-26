@@ -4,7 +4,7 @@
 ## Configuration
 ``` yaml
 # Generate file storage
-input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/storage-dataplane-preview/specification/storage/data-plane/Microsoft.FileStorage/preview/2019-02-02/file.json
+input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/507724d32aa07f688bb49577cf9bd18c30bb7cc1/specification/storage/data-plane/Microsoft.FileStorage/preview/2019-02-02/file.json
 output-folder: ../src/Generated
 clear-output-folder: false
 
