@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<!-- Please do not move/edit code below this line -->
+	<Import Project="$(RepoEngPath)/mgmt/AzSdk.reference.props" />
+	<!-- Please do not move/edit code below this line -->
+
+	<PropertyGroup>
+		<PackageId>Microsoft.Azure.Management.Reservations</PackageId>
+		<Description>Microsoft.Azure.Management.Reservations Library</Description>
+		<AssemblyName>Microsoft.Azure.Management.Reservations</AssemblyName>
+		<Version>1.13.0-preview</Version>
+    <PackageTags>Reservations;</PackageTags>
+		<PackageReleaseNotes>
+			Update billing plan sdk
+		</PackageReleaseNotes>
+	</PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
+	</PropertyGroup>
+
+	<!-- Please do not move/edit code below this line -->
+	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+	<!-- Please do not move/edit code above this line -->
+</Project>

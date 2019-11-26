@@ -1,20 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <AssemblyTitle>Microsoft.Azure.EventHubs.ServiceFabricProcessor</AssemblyTitle>
     <Description>This is the next generation Azure Event Hubs .NET Standard Service Fabric Processor library, which integrates Event Hub event consumption with Service Fabric. For more information about Event Hubs, see https://azure.microsoft.com/en-us/services/event-hubs/</Description>
-    <Version>0.5.3</Version>
-    <AssemblyVersion>0.5.3.0</AssemblyVersion>
-    <FileVersion>0.5.3.0</FileVersion>
-    <VersionPrefix>0.5.3-PREVIEW</VersionPrefix>
-    <PackageId>Microsoft.Azure.EventHubs.ServiceFabricProcessor</PackageId>
+    <VersionPrefix>0.5.6</VersionPrefix>
     <PackageTags>Azure;Event Hubs;EventHubs;.NET;AMQP;IoT</PackageTags>
-    <PackageReleaseNotes>https://github.com/Azure/azure-event-hubs-dotnet/releases</PackageReleaseNotes>
+    <PackageReleaseNotes>https://github.com/Azure/azure-sdk-for-net/releases</PackageReleaseNotes>
     <DocumentationFile>$(OutputPath)$(TargetFramework)Microsoft.Azure.EventHubs.Processor.xml</DocumentationFile>
-  </PropertyGroup>
-
-  <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <RootNamespace>Microsoft.Azure.EventHubs.ServiceFabricProcessor</RootNamespace>
   </PropertyGroup>
 
    <!-- Because Service Fabric is involved, force the platform to x64. -->
@@ -28,8 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.ServiceFabric" Version="6.4.624" />
-    <PackageReference Include="Microsoft.ServiceFabric.Data" Version="3.3.624" />
-    <PackageReference Include="Microsoft.ServiceFabric.Services" Version="3.3.624" />
+    <PackageReference Include="Microsoft.ServiceFabric" />
+    <PackageReference Include="Microsoft.ServiceFabric.Data" />
+    <PackageReference Include="Microsoft.ServiceFabric.Services" />
   </ItemGroup>
 </Project>

@@ -11,47 +11,45 @@ namespace Azure.Core.Testing
 {
     [TestFixture(true)]
     [TestFixture(false)]
-    public class SyncAsyncPolicyTestBase
+    public class SyncAsyncPolicyTestBase : SyncAsyncTestBase
     {
-        public bool IsAsync { get; }
-
-        public SyncAsyncPolicyTestBase(bool isAsync)
+        public SyncAsyncPolicyTestBase(bool isAsync) : base(isAsync)
         {
-            IsAsync = isAsync;
         }
 
-        protected MockTransport CreateMockTransport()
+        protected async Task<Response> SendRequestAsync(HttpPipeline pipeline, Action<Request> requestAction, bool bufferResponse = true, CancellationToken cancellationToken = default)
         {
-            return new MockTransport()
+            HttpMessage message = pipeline.CreateMessage();
+            message.BufferResponse = bufferResponse;
+            requestAction(message.Request);
+
+            if (IsAsync)
             {
-                ExpectSyncPipeline = !IsAsync
-            };
-        }
-
-        protected MockTransport CreateMockTransport(params MockResponse[] responses)
-        {
-            return new MockTransport(responses)
+                await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            }
+            else
             {
-                ExpectSyncPipeline = !IsAsync
-            };
+                pipeline.Send(message, cancellationToken);
+            }
+
+            return message.Response;
         }
 
-        protected Task<Response> SendRequestAsync(HttpPipeline pipeline, Request request, CancellationToken cancellationToken = default)
-        {
-            return IsAsync ? pipeline.SendRequestAsync(request, cancellationToken) : Task.FromResult(pipeline.SendRequest(request, cancellationToken));
-        }
-
-        protected async Task<Response> SendGetRequest(HttpPipelineTransport transport, HttpPipelinePolicy policy, ResponseClassifier responseClassifier = null)
+        protected async Task<Response> SendRequestAsync(HttpPipelineTransport transport, Action<Request> requestAction, HttpPipelinePolicy policy, ResponseClassifier responseClassifier = null, bool bufferResponse = true)
         {
             await Task.Yield();
 
-            using (Request request = transport.CreateRequest(null))
+            var pipeline = new HttpPipeline(transport, new[] { policy }, responseClassifier);
+            return await SendRequestAsync(pipeline, requestAction, bufferResponse, CancellationToken.None);
+        }
+
+        protected async Task<Response> SendGetRequest(HttpPipelineTransport transport, HttpPipelinePolicy policy, ResponseClassifier responseClassifier = null, bool bufferResponse = true, Uri uri = null)
+        {
+            return await SendRequestAsync(transport, request =>
             {
-                request.Method = HttpPipelineMethod.Get;
-                request.UriBuilder.Uri = new Uri("http://example.com");
-                var pipeline = new HttpPipeline(transport, new [] { policy }, responseClassifier);
-                return await SendRequestAsync(pipeline, request, CancellationToken.None);
-            }
+                request.Method = RequestMethod.Get;
+                request.Uri.Reset(uri ?? new Uri("http://example.com"));
+            }, policy, responseClassifier, bufferResponse);
         }
     }
 }

@@ -22,6 +22,31 @@ namespace Microsoft.Azure.EventGrid.Tests.ScenarioTests
             eventGridSubscriber = new EventGridSubscriber();
         }
 
+        // AppConfiguration events
+        [Fact]
+        public void ConsumeAppConfigurationKeyValueDeletedEvent()
+        {
+            string requestContent = "[{  \"id\": \"56afc886-767b-d359-d59e-0da7877166b2\",  \"topic\": \"/SUBSCRIPTIONS/ID/RESOURCEGROUPS/rg/PROVIDERS/MICROSOFT.Maps/test1\",  \"subject\": \"test1\",  \"eventType\": \"Microsoft.AppConfiguration.KeyValueDeleted\",\"eventTime\": \"2018-01-02T19:17:44.4383997Z\",  \"data\": {\"key\":\"key1\",\"label\":\"label1\",\"etag\":\"etag1\"}}]";
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is AppConfigurationKeyValueDeletedEventData);
+            AppConfigurationKeyValueDeletedEventData eventData = (AppConfigurationKeyValueDeletedEventData)events[0].Data;
+            Assert.Equal("key1", eventData.Key);
+        }
+
+        [Fact]
+        public void ConsumeAppConfigurationKeyValueModifiedEvent()
+        {
+            string requestContent = "[{  \"id\": \"56afc886-767b-d359-d59e-0da7877166b2\",  \"topic\": \"/SUBSCRIPTIONS/ID/RESOURCEGROUPS/rg/PROVIDERS/MICROSOFT.Maps/test1\",  \"subject\": \"test1\",  \"eventType\": \"Microsoft.AppConfiguration.KeyValueModified\",\"eventTime\": \"2018-01-02T19:17:44.4383997Z\",  \"data\": {\"key\":\"key1\",\"label\":\"label1\",\"etag\":\"etag1\"}}]";
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is AppConfigurationKeyValueModifiedEventData);
+            AppConfigurationKeyValueModifiedEventData eventData = (AppConfigurationKeyValueModifiedEventData)events[0].Data;
+            Assert.Equal("key1", eventData.Key);
+        }
+
         [Fact]
         public void ConsumeStorageBlobDeletedEventWithExtraProperty()
         {
@@ -237,6 +262,32 @@ namespace Microsoft.Azure.EventGrid.Tests.ScenarioTests
             Assert.Equal("testactor", eventData.Actor.Name);
         }
 
+        [Fact]
+        public void ConsumeContainerRegistryChartDeletedEvent()
+        {
+            string requestContent = "[{  \"id\": \"56afc886-767b-d359-d59e-0da7877166b2\",  \"topic\": \"/SUBSCRIPTIONS/ID/RESOURCEGROUPS/rg/PROVIDERS/MICROSOFT.ContainerRegistry/test1\",  \"subject\": \"test1\",  \"eventType\": \"Microsoft.ContainerRegistry.ChartDeleted\",  \"eventTime\": \"2018-01-02T19:17:44.4383997Z\",  \"data\": {\"id\":\"id\",\"timestamp\":null,\"action\":\"action1\",\"target\":{\"mediaType\":\"mediatype1\",\"size\":null,\"digest\":\"digest1\",\"repository\":null,\"tag\":null,\"name\":\"name1\",\"version\":null}}}]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is ContainerRegistryChartDeletedEventData);
+            ContainerRegistryChartDeletedEventData eventData = (ContainerRegistryChartDeletedEventData)events[0].Data;
+            Assert.Equal("mediatype1", eventData.Target.MediaType);
+        }
+
+        [Fact]
+        public void ConsumeContainerRegistryChartPushedEvent()
+        {
+            string requestContent = "[{  \"id\": \"56afc886-767b-d359-d59e-0da7877166b2\",  \"topic\": \"/SUBSCRIPTIONS/ID/RESOURCEGROUPS/rg/PROVIDERS/MICROSOFT.ContainerRegistry/test1\",  \"subject\": \"test1\",  \"eventType\": \"Microsoft.ContainerRegistry.ChartPushed\",  \"eventTime\": \"2018-01-02T19:17:44.4383997Z\",  \"data\": {\"id\":\"id\",\"timestamp\":null,\"action\":\"action1\",\"target\":{\"mediaType\":\"mediatype1\",\"size\":null,\"digest\":\"digest1\",\"repository\":null,\"tag\":null,\"name\":\"name1\",\"version\":null}}}]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is ContainerRegistryChartPushedEventData);
+            ContainerRegistryChartPushedEventData eventData = (ContainerRegistryChartPushedEventData)events[0].Data;
+            Assert.Equal("mediatype1", eventData.Target.MediaType);
+        }
+
         // IoTHub Device events
         [Fact]
         public void ConsumeIoTHubDeviceCreatedEvent()
@@ -290,6 +341,19 @@ namespace Microsoft.Azure.EventGrid.Tests.ScenarioTests
             Assert.Equal("000000000000000001D4132452F67CE200000002000000000000000000000002", eventData.DeviceConnectionStateEventInfo.SequenceNumber);
         }
 
+        [Fact]
+        public void ConsumeIoTHubDeviceTelemetryEvent()
+        {
+            string requestContent = "[{  \"id\": \"877f0b10-a086-98ec-27b8-6ae2dfbf5f67\",    \"topic\":      \"/SUBSCRIPTIONS/BDF55CDD-8DAB-4CF4-9B2F-C21E8A780472/RESOURCEGROUPS/EGTESTRG/PROVIDERS/MICROSOFT.DEVICES/IOTHUBS/EGTESTHUB1\",    \"subject\": \"devices/48e44e11-1437-4907-83b1-4a8d7e89859e\",    \"eventType\": \"Microsoft.Devices.DeviceTelemetry\",    \"eventTime\": \"2018-07-03T23:20:52.646434+00:00\",    \"data\": { \"body\": { \"Weather\": { \"Temperature\": 900  }, \"Location\": \"USA\"  },  \"properties\": {  \"Status\": \"Active\"  },  \"systemProperties\": { \"iothub-content-type\": \"application/json\", \"iothub-content-encoding\": \"utf-8\"   } } }   ]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is IotHubDeviceTelemetryEventData);
+            IotHubDeviceTelemetryEventData eventData = (IotHubDeviceTelemetryEventData)events[0].Data;
+            Assert.Equal("Active", eventData.Properties["Status"]);
+        }
+
         // EventGrid events
         [Fact]
         public void ConsumeEventGridSubscriptionValidationEvent()
@@ -329,6 +393,43 @@ namespace Microsoft.Azure.EventGrid.Tests.ScenarioTests
             Assert.True(events[0].Data is EventHubCaptureFileCreatedEventData);
             EventHubCaptureFileCreatedEventData eventData = (EventHubCaptureFileCreatedEventData)events[0].Data;
             Assert.Equal("AzureBlockBlob", eventData.FileType);
+        }
+
+        // Maps events
+        [Fact]
+        public void ConsumeMapsGeofenceEnteredEvent()
+        {
+            string requestContent = "[{  \"id\": \"56afc886-767b-d359-d59e-0da7877166b2\",  \"topic\": \"/SUBSCRIPTIONS/ID/RESOURCEGROUPS/rg/PROVIDERS/MICROSOFT.Maps/test1\",  \"subject\": \"test1\",  \"eventType\": \"Microsoft.Maps.GeofenceEntered\",\"eventTime\": \"2018-01-02T19:17:44.4383997Z\",  \"data\": {\"expiredGeofenceGeometryId\":[\"id1\",\"id2\"],\"geometries\":[{\"deviceId\":\"id1\",\"distance\":1.0,\"geometryId\":\"gid1\",\"nearestLat\":72.4,\"nearestLon\":100.4,\"udId\":\"id22\"}],\"invalidPeriodGeofenceGeometryId\":null,\"isEventPublished\":true}}]";
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is MapsGeofenceEnteredEventData);
+            MapsGeofenceEnteredEventData eventData = (MapsGeofenceEnteredEventData)events[0].Data;
+            Assert.Equal(1.0, eventData.Geometries[0].Distance);
+        }
+
+        [Fact]
+        public void ConsumeMapsGeofenceExitedEvent()
+        {
+            string requestContent = "[{  \"id\": \"56afc886-767b-d359-d59e-0da7877166b2\",  \"topic\": \"/SUBSCRIPTIONS/ID/RESOURCEGROUPS/rg/PROVIDERS/MICROSOFT.Maps/test1\",  \"subject\": \"test1\",  \"eventType\": \"Microsoft.Maps.GeofenceExited\",\"eventTime\": \"2018-01-02T19:17:44.4383997Z\",  \"data\": {\"expiredGeofenceGeometryId\":[\"id1\",\"id2\"],\"geometries\":[{\"deviceId\":\"id1\",\"distance\":1.0,\"geometryId\":\"gid1\",\"nearestLat\":72.4,\"nearestLon\":100.4,\"udId\":\"id22\"}],\"invalidPeriodGeofenceGeometryId\":null,\"isEventPublished\":true}}]";
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is MapsGeofenceExitedEventData);
+            MapsGeofenceExitedEventData eventData = (MapsGeofenceExitedEventData)events[0].Data;
+            Assert.Equal(1.0, eventData.Geometries[0].Distance);
+        }
+
+        [Fact]
+        public void ConsumeMapsGeofenceResultEvent()
+        {
+            string requestContent = "[{  \"id\": \"56afc886-767b-d359-d59e-0da7877166b2\",  \"topic\": \"/SUBSCRIPTIONS/ID/RESOURCEGROUPS/rg/PROVIDERS/MICROSOFT.Maps/test1\",  \"subject\": \"test1\",  \"eventType\": \"Microsoft.Maps.GeofenceResult\",\"eventTime\": \"2018-01-02T19:17:44.4383997Z\",  \"data\": {\"expiredGeofenceGeometryId\":[\"id1\",\"id2\"],\"geometries\":[{\"deviceId\":\"id1\",\"distance\":1.0,\"geometryId\":\"gid1\",\"nearestLat\":72.4,\"nearestLon\":100.4,\"udId\":\"id22\"}],\"invalidPeriodGeofenceGeometryId\":null,\"isEventPublished\":true}}]";
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is MapsGeofenceResultEventData);
+            MapsGeofenceResultEventData eventData = (MapsGeofenceResultEventData)events[0].Data;
+            Assert.Equal(1.0, eventData.Geometries[0].Distance);
         }
 
         // Media Services events
@@ -689,9 +790,9 @@ namespace Microsoft.Azure.EventGrid.Tests.ScenarioTests
         }
 
         [Fact]
-        public void ConsumeMediaLiveEventIncomingChunkDroppedEvent()
+        public void ConsumeMediaLiveEventIncomingDataChunkDroppedEvent()
         {
-            string requestContent = "[{  \"topic\": \"/subscriptions/{subscription id}/resourceGroups/{resource group}/providers/Microsoft.Media/mediaservices/{account name}\",  \"subject\": \"liveEvent/liveevent-ec9d26a8\",  \"eventType\": \"Microsoft.Media.LiveEventIncomingChunkDropped\",  \"eventTime\": \"2018-10-12T15:52:37.3710102\",  \"id\": \"d84727e2-d9c0-4a21-a66b-8d23f06b3e06\",  \"data\": {    \"timestamp\": \"8999\",    \"trackType\": \"video\",    \"trackName\": \"video1\",    \"bitrate\": 2500000,    \"timescale\": \"1000\",    \"resultCode\": \"FragmentDrop_OverlapTimestamp\",  },  \"dataVersion\": \"1.0\",  \"metadataVersion\": \"1\"}]";
+            string requestContent = "[{  \"topic\": \"/subscriptions/{subscription id}/resourceGroups/{resource group}/providers/Microsoft.Media/mediaservices/{account name}\",  \"subject\": \"liveEvent/liveevent-ec9d26a8\",  \"eventType\": \"Microsoft.Media.LiveEventIncomingDataChunkDropped\",  \"eventTime\": \"2018-10-12T15:52:37.3710102\",  \"id\": \"d84727e2-d9c0-4a21-a66b-8d23f06b3e06\",  \"data\": {    \"timestamp\": \"8999\",    \"trackType\": \"video\",    \"trackName\": \"video1\",    \"bitrate\": 2500000,    \"timescale\": \"1000\",    \"resultCode\": \"FragmentDrop_OverlapTimestamp\",  },  \"dataVersion\": \"1.0\",  \"metadataVersion\": \"1\"}]";
 
             var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
 
@@ -922,9 +1023,59 @@ namespace Microsoft.Azure.EventGrid.Tests.ScenarioTests
             Assert.Equal("https://example.blob.core.windows.net/testcontainer/testfile.txt", eventData.Url);
         }
 
+        [Fact]
+        public void ConsumeStorageBlobRenamedEvent()
+        {
+            string requestContent = "[ {  \"topic\": \"/subscriptions/319a9601-1ec0-0000-aebc-8fe82724c81e/resourceGroups/testrg/providers/Microsoft.Storage/storageAccounts/myaccount\",  \"subject\": \"/blobServices/default/containers/testcontainer/blobs/testfile.txt\",  \"eventType\": \"Microsoft.Storage.BlobRenamed\",  \"eventTime\": \"2017-08-16T01:57:26.005121Z\",  \"id\": \"602a88ef-0001-00e6-1233-1646070610ea\",  \"data\": {    \"api\": \"RenameFile\",    \"clientRequestId\": \"799304a4-bbc5-45b6-9849-ec2c66be800a\",    \"requestId\": \"602a88ef-0001-00e6-1233-164607000000\",    \"eTag\": \"0x8D4E44A24ABE7F1\",    \"destinationUrl\": \"https://myaccount.blob.core.windows.net/testcontainer/testfile.txt\",    \"sequencer\": \"00000000000000EB000000000000C65A\",  },  \"dataVersion\": \"1\",  \"metadataVersion\": \"1\"}]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is StorageBlobRenamedEventData);
+            StorageBlobRenamedEventData eventData = (StorageBlobRenamedEventData)events[0].Data;
+            Assert.Equal("https://myaccount.blob.core.windows.net/testcontainer/testfile.txt", eventData.DestinationUrl);
+        }
+
+        [Fact]
+        public void ConsumeStorageDirectoryCreatedEvent()
+        {
+            string requestContent = "[ {  \"topic\": \"/subscriptions/319a9601-1ec0-0000-aebc-8fe82724c81e/resourceGroups/testrg/providers/Microsoft.Storage/storageAccounts/myaccount\",  \"subject\": \"/blobServices/default/containers/testcontainer/blobs/testDir\",  \"eventType\": \"Microsoft.Storage.DirectoryCreated\",  \"eventTime\": \"2017-08-16T01:57:26.005121Z\",  \"id\": \"602a88ef-0001-00e6-1233-1646070610ea\",  \"data\": {    \"api\": \"CreateDirectory\",    \"clientRequestId\": \"799304a4-bbc5-45b6-9849-ec2c66be800a\",    \"requestId\": \"602a88ef-0001-00e6-1233-164607000000\",    \"eTag\": \"0x8D4E44A24ABE7F1\",    \"url\": \"https://myaccount.blob.core.windows.net/testcontainer/testDir\",    \"sequencer\": \"00000000000000EB000000000000C65A\",  },  \"dataVersion\": \"2\",  \"metadataVersion\": \"1\"}]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is StorageDirectoryCreatedEventData);
+            StorageDirectoryCreatedEventData eventData = (StorageDirectoryCreatedEventData)events[0].Data;
+            Assert.Equal("https://myaccount.blob.core.windows.net/testcontainer/testDir", eventData.Url);
+        }
+
+        [Fact]
+        public void ConsumeStorageDirectoryDeletedEvent()
+        {
+            string requestContent = "[{   \"topic\": \"/subscriptions/id/resourceGroups/Storage/providers/Microsoft.Storage/storageAccounts/xstoretestaccount\",  \"subject\": \"/blobServices/default/containers/testcontainer/blobs/testDir\",  \"eventType\": \"Microsoft.Storage.DirectoryDeleted\",  \"eventTime\": \"2017-11-07T20:09:22.5674003Z\",  \"id\": \"4c2359fe-001e-00ba-0e04-58586806d298\",  \"data\": {    \"api\": \"DeleteDirectory\",    \"requestId\": \"4c2359fe-001e-00ba-0e04-585868000000\",    \"url\": \"https://example.blob.core.windows.net/testcontainer/testDir\",    \"sequencer\": \"0000000000000281000000000002F5CA\",    \"storageDiagnostics\": {      \"batchId\": \"b68529f3-68cd-4744-baa4-3c0498ec19f0\"    }  },  \"dataVersion\": \"1\",  \"metadataVersion\": \"1\"}]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is StorageDirectoryDeletedEventData);
+            StorageDirectoryDeletedEventData eventData = (StorageDirectoryDeletedEventData)events[0].Data;
+            Assert.Equal("https://example.blob.core.windows.net/testcontainer/testDir", eventData.Url);
+        }
+
+        [Fact]
+        public void ConsumeStorageDirectoryRenamedEvent()
+        {
+            string requestContent = "[{   \"topic\": \"/subscriptions/id/resourceGroups/Storage/providers/Microsoft.Storage/storageAccounts/xstoretestaccount\",  \"subject\": \"/blobServices/default/containers/testcontainer/blobs/testDir\",  \"eventType\": \"Microsoft.Storage.DirectoryRenamed\",  \"eventTime\": \"2017-11-07T20:09:22.5674003Z\",  \"id\": \"4c2359fe-001e-00ba-0e04-58586806d298\",  \"data\": {    \"api\": \"RenameDirectory\",    \"requestId\": \"4c2359fe-001e-00ba-0e04-585868000000\",    \"destinationUrl\": \"https://example.blob.core.windows.net/testcontainer/testDir\",    \"sequencer\": \"0000000000000281000000000002F5CA\",    \"storageDiagnostics\": {      \"batchId\": \"b68529f3-68cd-4744-baa4-3c0498ec19f0\"    }  },  \"dataVersion\": \"1\",  \"metadataVersion\": \"1\"}]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is StorageDirectoryRenamedEventData);
+            StorageDirectoryRenamedEventData eventData = (StorageDirectoryRenamedEventData)events[0].Data;
+            Assert.Equal("https://example.blob.core.windows.net/testcontainer/testDir", eventData.DestinationUrl);
+        }
+        
         // TODO: When new event types are introduced, add one test here for each event type
-
-
 
         static Stream GetStreamFromString(string eventData)
         {

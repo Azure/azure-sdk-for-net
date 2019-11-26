@@ -8,12 +8,13 @@ namespace Microsoft.Azure.EventHubs.Tests
     internal static class TestConstants
     {
         // Environment Variables
-        internal const string EventHubsConnectionStringEnvironmentVariableName = "EVENT_HUBS_CONNECTION_STRING";
-        internal const string StorageConnectionStringEnvironmentVariableName = "EVENT_HUBS_STORAGE_CONNECTION_STRING";
+        internal const string EventHubsSubscriptionEnvironmentVariableName = "EVENT_HUBS_SUBSCRIPTION";
+        internal const string EventHubsResourceGroupEnvironmentVariableName = "EVENT_HUBS_RESOURCEGROUP";
+        internal const string EventHubsTenantEnvironmentVariableName = "EVENT_HUBS_TENANT";
+        internal const string EventHubsClientEnvironmentVariableName = "EVENT_HUBS_CLIENT";
+        internal const string EventHubsSecretEnvironmentVariableName = "EVENT_HUBS_SECRET";
 
         // General
-        internal const string DefultEventHubName = "eventhubs-sdk-test-hub";
-        internal const string AlternateConsumerGroupName = "sdk-test-consumer";
-        internal static readonly TimeSpan DefaultOperationTimeout = TimeSpan.FromSeconds(30);
+        internal static readonly TimeSpan DefaultOperationTimeout = TimeSpan.FromSeconds(180);
     }
 }

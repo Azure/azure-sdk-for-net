@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "Personalizer.Tests": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "Key": "Value",
+        "AZURE_TEST_MODE": "Record"
+      }
+    }
+  }
+}

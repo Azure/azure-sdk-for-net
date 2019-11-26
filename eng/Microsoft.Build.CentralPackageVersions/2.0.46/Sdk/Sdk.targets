@@ -1,0 +1,183 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (c) Microsoft Corporation. All rights reserved.
+  
+  Licensed under the MIT license.
+-->
+<Project InitialTargets="CheckPackageReferences" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!--
+    Import a user extension if specified.
+  -->
+  <Import Project="$(CustomBeforeCentralPackageVersionsTargets)"
+          Condition=" '$(EnableCentralPackageVersions)' != 'false' And '$(CustomBeforeCentralPackageVersionsTargets)' != '' And Exists('$(CustomBeforeCentralPackageVersionsTargets)') " />
+
+  <PropertyGroup Condition=" '$(EnableCentralPackageVersions)' != 'false' ">
+    <!--
+      Walk up the directory tree looking for a Packages.props, unless a user has already specified a path.
+    -->
+    <CentralPackagesFile Condition=" '$(CentralPackagesFile)' == '' ">$([MSBuild]::GetPathOfFileAbove('Packages.props', $(MSBuildProjectDirectory)))</CentralPackagesFile>
+
+    <!--
+      Disable all functionality if:
+      * The central package management file does not exist.
+      * The project is using packages.config.  Visual Studio project systems will get confused if there are any PackageReference
+        items and it won't show the packages in the packages.config.  NuGet does not support using both and so packages.config has to win.
+      * The project is a type that doesn't not support PackageReference in Visual Studio (like vcxproj, ccproj, or nuproj).
+    -->
+    <EnableCentralPackageVersions
+      Condition="'$(EnableCentralPackageVersions)' == '' And (!Exists('$(CentralPackagesFile)') Or Exists('$(MSBuildProjectDirectory)\packages.config') Or '$(MSBuildProjectExtension)' == '.vcxproj' Or '$(MSBuildProjectExtension)' == '.ccproj' Or '$(MSBuildProjectExtension)' == '.nuproj')">false</EnableCentralPackageVersions>
+
+    <!--
+      Include this file and the Packages.props file (if necessary) in MSBuildAllProjects so that rebuilds happen if the Packages.props changes.
+    -->
+    <MSBuildAllProjects Condition="'$(MSBuildToolsVersion)' != 'Current'">$(MSBuildAllProjects);$(MsBuildThisFileFullPath)</MSBuildAllProjects>
+    <MSBuildAllProjects Condition="'$(MSBuildToolsVersion)' != 'Current' And '$(EnableCentralPackageVersions)' != 'false'">$(CentralPackagesFile);$(MSBuildAllProjects)</MSBuildAllProjects>
+  </PropertyGroup>
+
+  <ItemDefinitionGroup Condition=" '$(EnableCentralPackageVersions)' != 'false' ">
+    <GlobalPackageReference Condition=" $([MSBuild]::ValueOrDefault('$(EnableGlobalPackageReferencePrivateAssetsAll)', 'true')) ">
+      <!--
+        Default global package references to only consume the Analyzers and Build logic in a package.
+        This helps ensure that the package assets are not passed to the compiler or copied to the
+        output directory.  Having a compile-time reference to a package for all projects in a tree
+        is not recommended.  You should only have "global" references to packages that are used for
+        build.
+      -->
+      <IncludeAssets>Analyzers;Build</IncludeAssets>
+      <!--
+        Default global package references to have all assets private.  This is because global package
+        references are generally stuff like versioning, signing, etc and should not flow to downstream
+        dependencies.  Also, global package references are already referenced by every project in the
+        tree so we don't need them to be transitive.
+      -->
+      <PrivateAssets>All</PrivateAssets>
+    </GlobalPackageReference>
+  </ItemDefinitionGroup>
+
+  <ItemGroup Condition=" '$(EnableCentralPackageVersions)' != 'false' ">
+    <!--
+      Workaround the issue where FSharp SDK adds implicit PackageReference items but doesn't mark them as such
+      https://github.com/microsoft/MSBuildSdks/issues/90
+    -->
+    <PackageReference Update="FSharp.Core"
+                      Condition="'$(MSBuildProjectExtension)' == '.fsproj' And '$(DisableImplicitFSharpCoreReference)' != 'true' And '$(UpdateImplicitFSharpCoreReference)' != 'false'"
+                      IsImplicitlyDefined="true" />
+
+    <PackageReference Update="System.ValueTuple"
+                      Condition="'$(MSBuildProjectExtension)' == '.fsproj' And '$(DisableImplicitSystemValueTupleReference)' != 'true' And '$(UpdateImplicitSystemValueTupleReference)' != 'false' And '$(TargetFrameworkIdentifier)' == '.NETFramework' And '$(_TargetFrameworkVersionWithoutV)' &gt;= '4.0' And '$(_TargetFrameworkVersionWithoutV)' &lt;= '4.7'"
+                      IsImplicitlyDefined="true" />
+
+    <!--
+      Workaround the issue where Microsoft.AspNet.App and Microsoft.AspNet.All are not marked as implicitly defined
+    -->
+    <PackageReference Update="Microsoft.AspNetCore.App"
+                      Condition="'$(UsingMicrosoftNETSdkWeb)' == 'true'"
+                      IsImplicitlyDefined="true" />
+
+    <PackageReference Update="Microsoft.AspNetCore.All"
+                      Condition="'$(UsingMicrosoftNETSdkWeb)' == 'true'"
+                      IsImplicitlyDefined="true" />
+
+    <!--
+      Store a list of <PackageReference /> items that specified a Version so that an error can be displayed.
+    -->
+    <_PackageReferenceWithVersion Include="@(PackageReference->HasMetadata('Version'))" />
+
+    <!--
+      Store a list of the original <PackageReference /> items so later they can be checked for duplicates in
+      the <GlobalPackageReference /> items.  Clear the metadata to save some memory.
+    -->
+    <_OriginalPackageReference Include="@(PackageReference->ClearMetadata())" />
+  </ItemGroup>
+
+  <Import Project="$(CentralPackagesFile)"
+          Condition=" '$(EnableCentralPackageVersions)' != 'false' " />
+
+  <ItemGroup Condition=" '$(EnableCentralPackageVersions)' != 'false' ">
+    <!--
+      Copy <GlobalPackageReference /> items to the list of <PackageReference /> items.
+    -->
+    <PackageReference Include="@(GlobalPackageReference)"
+                      Condition=" '$(EnableGlobalPackageReferences)' != 'false' " />
+
+    <!--
+      Get a list of <PackageReference /> items that specify the VersionOverride metadata and copy the value
+      to the Version metadata.  All other metadata is also copied.
+      
+      VersionOverride is important because it forces the user to opt-in to overriding a version at the project
+      level.
+    -->
+    <_PackageReferenceWithVersionOverride Include="@(PackageReference->HasMetadata('VersionOverride'))"
+                                          Version="%(VersionOverride)"
+                                          Condition=" '$(EnablePackageVersionOverride)' != 'false' "
+                                          />
+
+    <!--
+      Remove items in the original <PackageReference /> list that have a version override so that they can be
+      added back. The items being added have their Version set to the original VersionOverride.
+    -->
+    <PackageReference Remove="@(_PackageReferenceWithVersionOverride)"
+                      Condition=" '$(EnablePackageVersionOverride)' != 'false' "/>
+
+    <PackageReference Include="@(_PackageReferenceWithVersionOverride)"
+                      Condition=" '$(EnablePackageVersionOverride)' != 'false' "/>
+
+    <!--
+      Clear the temporary list of package references with VersionOverride to free up some memory.
+    -->
+    <_PackageReferenceWithVersionOverride Remove="@(_PackageReferenceWithVersionOverride)" />
+  </ItemGroup>
+
+  <Target Name="CheckPackageReferences"
+          Condition=" '$(EnableCentralPackageVersions)' != 'false' And '$(DesignTimeBuild)' != 'true' And @(PackageReference->Count()) > 0 ">
+
+    <!--
+      Get a list of duplicate <PackageReference /> and <GlobalPackageReference /> items.  Users must be made aware
+      that this could cause strange behavior and they should not include a PackageReference if there's already a 
+      global PackageReference.
+    -->
+    <ItemGroup Condition=" '$(EnableGlobalPackageReferences)' != 'false' ">
+      <_DuplicateGlobalPackageReference Include="@(_OriginalPackageReference)"
+                                        Condition=" '@(GlobalPackageReference)' == '@(_OriginalPackageReference)' and '%(Identity)' != '' " />
+    </ItemGroup>
+
+    <!--
+      Log an error if there are any duplicate <PackageReference /> items where a <GlobalPackageReference /> is already defined.
+    -->
+    <Error
+      Text="The package reference '%(_DuplicateGlobalPackageReference.Identity)' is already defined as a GlobalPackageReference in '$(CentralPackagesFile)'.  Individual projects do not need to include a PackageReference if a GlobalPackageReference is declared."
+      Condition=" '$(EnableGlobalPackageReferences)' != 'false' And @(_DuplicateGlobalPackageReference->Count()) > 0"
+      File="$(MSBuildProjectFullPath)" />
+
+    <!--
+      Generate an error if any explicit PackageReference has a version specified in a project.  Users must specify a version in
+      the central pacakge management file or use VersionOverride.
+    -->
+    <Error
+      Text="The package reference '%(_PackageReferenceWithVersion.Identity)' should not specify a version.  Please specify the version in '$(CentralPackagesFile)' or set VersionOverride to override the centrally defined version."
+      Condition=" @(_PackageReferenceWithVersion->Count()) > 0 And '%(_PackageReferenceWithVersion.IsImplicitlyDefined)' != 'true' And '$(EnablePackageVersionOverride)' != 'false' "
+      File="$(MSBuildProjectFullPath) "/>
+
+    <Error
+      Text="The package reference '%(_PackageReferenceWithVersion.Identity)' should not specify a version.  Please specify the version in '$(CentralPackagesFile)'."
+      Condition=" @(_PackageReferenceWithVersion->Count()) > 0 And '%(_PackageReferenceWithVersion.IsImplicitlyDefined)' != 'true' And '$(EnablePackageVersionOverride)' == 'false'"
+      File="$(MSBuildProjectFullPath) "/>
+
+    <!--
+      Generate an error if any explicit PackageReference did not have Version specified in the central package management file.
+    -->
+    <Error
+      Text="The package reference '%(PackageReference.Identity)' must have a version defined in '$(CentralPackagesFile)'."
+      Condition=" '%(PackageReference.IsImplicitlyDefined)' != 'true' And '%(PackageReference.Version)' == '' "
+      File="$(MSBuildProjectFullPath)" />
+  </Target>
+
+  <!--
+    Import a user extension if specified.
+  -->
+  <Import Project="$(CustomAfterCentralPackageVersionsTargets)"
+          Condition=" '$(EnableCentralPackageVersions)' != 'false' And '$(CustomAfterCentralPackageVersionsTargets)' != '' And Exists('$(CustomAfterCentralPackageVersionsTargets)') " />
+
+
+</Project>

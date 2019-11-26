@@ -48,7 +48,7 @@ if not "%2" == "" (set version="%2")         else (set version="latest")
 if not "%3" == "" (set specsRepoUser="%3")   else (set specsRepoUser="Azure")
 if not "%4" == "" (set specsRepoBranch="%4") else (set specsRepoBranch="master")
 if not "%5" == "" (set specsRepoName="%5")   else (set specsRepoName="azure-rest-api-specs")
-if not "%6" == "" (set sdksFolder="%6")      else (set sdksFolder=%~dp0..\src\SDKS)
+if not "%6" == "" (set sdksFolder="%6")      else (set sdksFolder=%~dp0..\sdk)
 set configFile="https://github.com/%specsRepoUser%/%specsRepoName%/blob/%specsRepoBranch%/specification/%rp%/readme.md"
 
 :: installation

@@ -45,6 +45,11 @@ namespace Microsoft.Azure.ServiceBus
         ServiceBusConnection ServiceBusConnection { get; }
 
         /// <summary>
+        /// Returns true if connection is owned and false if connection is shared.
+        /// </summary>
+        bool OwnsConnection { get; }
+
+        /// <summary>
         /// Gets a list of currently registered plugins for this client.
         /// </summary>
         IList<ServiceBusPlugin> RegisteredPlugins { get; }

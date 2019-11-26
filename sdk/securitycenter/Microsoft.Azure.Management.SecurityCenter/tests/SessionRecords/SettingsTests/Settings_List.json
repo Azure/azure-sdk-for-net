@@ -1,0 +1,71 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/81de6a21-8799-4bb5-a28c-cbc292f8e023/providers/Microsoft.Security/settings?api-version=2019-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODFkZTZhMjEtODc5OS00YmI1LWEyOGMtY2JjMjkyZjhlMDIzL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VjdXJpdHkvc2V0dGluZ3M/YXBpLXZlcnNpb249MjAxOS0wMS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "eebd6e12-3b4a-4fbb-bc81-1dfcefccd538"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 04 Sep 2019 12:01:40 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "df2d4775-9b7a-4961-a243-40b3f480e3fd"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "749"
+        ],
+        "x-ms-correlation-request-id": [
+          "dd97767c-cad7-45cf-86ed-f9cf2b4c3add"
+        ],
+        "x-ms-routing-request-id": [
+          "UKSOUTH2:20190904T120141Z:dd97767c-cad7-45cf-86ed-f9cf2b4c3add"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "439"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/81de6a21-8799-4bb5-a28c-cbc292f8e023/providers/Microsoft.Security/settings/MCAS\",\r\n      \"name\": \"MCAS\",\r\n      \"type\": \"Microsoft.Security/settings\",\r\n      \"kind\": \"DataExportSettings\",\r\n      \"properties\": {\r\n        \"enabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/81de6a21-8799-4bb5-a28c-cbc292f8e023/providers/Microsoft.Security/settings/WDATP\",\r\n      \"name\": \"WDATP\",\r\n      \"type\": \"Microsoft.Security/settings\",\r\n      \"kind\": \"DataExportSettings\",\r\n      \"properties\": {\r\n        \"enabled\": true\r\n      }\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "81de6a21-8799-4bb5-a28c-cbc292f8e023"
+  }
+}

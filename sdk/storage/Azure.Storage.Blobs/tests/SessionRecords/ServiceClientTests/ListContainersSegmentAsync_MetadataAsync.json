@@ -1,0 +1,137 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "http://amandadev2.blob.core.windows.net/test-container-633a7bf7-cfa1-ce9b-bc0d-bcc6992a8383?restype=container",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-057af47779aef345847cd6b5a70fd0c3-2ef86bb6f839394d-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Blobs/12.0.0-dev.20191015.1\u002B57ef4720914a34ab66322af016d927dc4992c5c9",
+          "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-blob-public-access": "container",
+        "x-ms-client-request-id": "fcb47fa2-f410-2d37-9700-21953bb8364b",
+        "x-ms-date": "Tue, 15 Oct 2019 23:47:49 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-02-02"
+      },
+      "RequestBody": null,
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Tue, 15 Oct 2019 23:47:49 GMT",
+        "ETag": "\u00220x8D751CA164C0F62\u0022",
+        "Last-Modified": "Tue, 15 Oct 2019 23:47:49 GMT",
+        "Server": [
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "fcb47fa2-f410-2d37-9700-21953bb8364b",
+        "x-ms-request-id": "71104763-801e-0103-0cb2-83d749000000",
+        "x-ms-version": "2019-02-02"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "http://amandadev2.blob.core.windows.net/test-container-633a7bf7-cfa1-ce9b-bc0d-bcc6992a8383?restype=container\u0026comp=metadata",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-7be576ff0a78674fb2a72bd694d5ce98-05ff467eaba1644d-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Blobs/12.0.0-dev.20191015.1\u002B57ef4720914a34ab66322af016d927dc4992c5c9",
+          "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "1a2481b0-8776-c872-8d2b-2a117b783e29",
+        "x-ms-date": "Tue, 15 Oct 2019 23:47:49 GMT",
+        "x-ms-meta-Capital": "letter",
+        "x-ms-meta-foo": "bar",
+        "x-ms-meta-meta": "data",
+        "x-ms-meta-UPPER": "case",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-02-02"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Tue, 15 Oct 2019 23:47:49 GMT",
+        "ETag": "\u00220x8D751CA16585007\u0022",
+        "Last-Modified": "Tue, 15 Oct 2019 23:47:49 GMT",
+        "Server": [
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "1a2481b0-8776-c872-8d2b-2a117b783e29",
+        "x-ms-request-id": "71104779-801e-0103-1cb2-83d749000000",
+        "x-ms-version": "2019-02-02"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "http://amandadev2.blob.core.windows.net/?comp=list\u0026include=metadata",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Storage.Blobs/12.0.0-dev.20191015.1\u002B57ef4720914a34ab66322af016d927dc4992c5c9",
+          "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "bae4b83d-1c93-b8d5-5624-6b0fdf8cdff5",
+        "x-ms-date": "Tue, 15 Oct 2019 23:47:49 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-02-02"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/xml",
+        "Date": "Tue, 15 Oct 2019 23:47:49 GMT",
+        "Server": [
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "bae4b83d-1c93-b8d5-5624-6b0fdf8cdff5",
+        "x-ms-request-id": "71104793-801e-0103-32b2-83d749000000",
+        "x-ms-version": "2019-02-02"
+      },
+      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022http://amandadev2.blob.core.windows.net/\u0022\u003E\u003CContainers\u003E\u003CContainer\u003E\u003CName\u003Etest-container-1d47dffc-d060-d6c9-b858-ad9202cad6d2\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003ETue, 08 Oct 2019 22:22:38 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D74C3E07227E7E\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CPublicAccess\u003Econtainer\u003C/PublicAccess\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Container\u003E\u003CContainer\u003E\u003CName\u003Etest-container-439f9344-5b00-c462-cc92-62e52ef6dc92\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003ETue, 08 Oct 2019 22:12:23 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D74C3C989220C1\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CPublicAccess\u003Econtainer\u003C/PublicAccess\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Container\u003E\u003CContainer\u003E\u003CName\u003Etest-container-5bb189bc-a486-8746-eb21-f809a4712046\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003ETue, 08 Oct 2019 22:45:34 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D74C413B14902B\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CPublicAccess\u003Econtainer\u003C/PublicAccess\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Container\u003E\u003CContainer\u003E\u003CName\u003Etest-container-633a7bf7-cfa1-ce9b-bc0d-bcc6992a8383\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003ETue, 15 Oct 2019 23:47:49 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D751CA16585007\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CPublicAccess\u003Econtainer\u003C/PublicAccess\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003C/Properties\u003E\u003CMetadata\u003E\u003Cfoo\u003Ebar\u003C/foo\u003E\u003Cmeta\u003Edata\u003C/meta\u003E\u003CCapital\u003Eletter\u003C/Capital\u003E\u003CUPPER\u003Ecase\u003C/UPPER\u003E\u003C/Metadata\u003E\u003C/Container\u003E\u003CContainer\u003E\u003CName\u003Etest-container-6c9a4d17-c773-24ad-dbf2-1da083ef3fff\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003ETue, 08 Oct 2019 22:20:33 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D74C3DBC9374BB\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CPublicAccess\u003Econtainer\u003C/PublicAccess\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Container\u003E\u003CContainer\u003E\u003CName\u003Etest-container-9537f20b-0460-7c1d-29f7-44d6c39e51a8\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003ETue, 08 Oct 2019 22:26:57 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D74C3EA191F645\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CPublicAccess\u003Econtainer\u003C/PublicAccess\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Container\u003E\u003CContainer\u003E\u003CName\u003Etest-container-9fa2fe54-3e4a-953f-16ae-f122ce25a1ff\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003ETue, 08 Oct 2019 00:01:06 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D74B829E25FD9E\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CPublicAccess\u003Econtainer\u003C/PublicAccess\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Container\u003E\u003CContainer\u003E\u003CName\u003Etest-container-ab72110f-5705-ed8c-513f-38df2b69f4a0\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003ETue, 08 Oct 2019 22:19:57 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D74C3DA7109EC0\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CPublicAccess\u003Econtainer\u003C/PublicAccess\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Container\u003E\u003CContainer\u003E\u003CName\u003Etest-container-bae64c41-c919-10a3-7ab3-2a0e8fecb239\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003ETue, 15 Oct 2019 23:11:39 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D751C5089598C5\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CPublicAccess\u003Econtainer\u003C/PublicAccess\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Container\u003E\u003CContainer\u003E\u003CName\u003Etest-container-bd607bc5-c853-d170-c177-07e7c2eacc8c\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003ETue, 08 Oct 2019 00:07:17 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D74B837B436AED\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CPublicAccess\u003Econtainer\u003C/PublicAccess\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Container\u003E\u003CContainer\u003E\u003CName\u003Etest-container-c3cd871d-73aa-9c07-7000-70e414ae3f90\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EMon, 07 Oct 2019 23:56:04 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D74B81EA2335DB\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CPublicAccess\u003Econtainer\u003C/PublicAccess\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Container\u003E\u003C/Containers\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
+    },
+    {
+      "RequestUri": "http://amandadev2.blob.core.windows.net/test-container-633a7bf7-cfa1-ce9b-bc0d-bcc6992a8383?restype=container",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-39c144a3595fe540a8cc8580682dc28c-0d1e88dd9e8d844e-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Blobs/12.0.0-dev.20191015.1\u002B57ef4720914a34ab66322af016d927dc4992c5c9",
+          "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "c2d300ac-8493-2196-0035-eb43f8efb854",
+        "x-ms-date": "Tue, 15 Oct 2019 23:47:49 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-02-02"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Tue, 15 Oct 2019 23:47:49 GMT",
+        "Server": [
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "c2d300ac-8493-2196-0035-eb43f8efb854",
+        "x-ms-request-id": "711047bb-801e-0103-52b2-83d749000000",
+        "x-ms-version": "2019-02-02"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "141517742",
+    "Storage_TestConfigDefault": "ProductionTenant\namandadev2\nU2FuaXRpemVk\nhttp://amandadev2.blob.core.windows.net\nhttp://amandadev2.file.core.windows.net\nhttp://amandadev2.queue.core.windows.net\nhttp://amandadev2.table.core.windows.net\n\n\n\n\nhttp://amandadev2-secondary.blob.core.windows.net\nhttp://amandadev2-secondary.file.core.windows.net\nhttp://amandadev2-secondary.queue.core.windows.net\nhttp://amandadev2-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://amandadev2.blob.core.windows.net/;QueueEndpoint=http://amandadev2.queue.core.windows.net/;TableEndpoint=http://amandadev2.table.core.windows.net/;FileEndpoint=http://amandadev2.file.core.windows.net/;BlobSecondaryEndpoint=http://amandadev2-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://amandadev2-secondary.queue.core.windows.net/;TableSecondaryEndpoint=http://amandadev2-secondary.table.core.windows.net/;FileSecondaryEndpoint=http://amandadev2-secondary.file.core.windows.net/;AccountName=amandadev2;AccountKey=Sanitized"
+  }
+}

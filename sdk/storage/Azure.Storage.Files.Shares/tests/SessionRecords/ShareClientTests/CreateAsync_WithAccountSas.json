@@ -1,0 +1,68 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "http:\u002f\u002fseandevtest.file.core.windows.net\u002ftest-share-3150ec3a-25b4-0782-f289-959a35281154?sv=2019-02-02\u0026ss=f\u0026srt=c\u0026st=2019-09-18T23%3A03%3A53Z\u0026se=2019-09-19T01%3A03%3A53Z\u0026sp=dc\u0026sig=Sanitized\u0026restype=share",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "traceparent": "00-8e9b72513d769045b136babe8cc04558-fccb894c5a741049-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190918.1\u002b4d11b69d11b884a7ac8d0c95d8a535f61880046a",
+          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "34fc0e1d-2c56-0949-7cf6-0a59cffa5ff5",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-share-quota": "1",
+        "x-ms-version": "2019-02-02"
+      },
+      "RequestBody": null,
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Thu, 19 Sep 2019 00:03:53 GMT",
+        "ETag": "\u00220x8D73C94DC05BC35\u0022",
+        "Last-Modified": "Thu, 19 Sep 2019 00:03:54 GMT",
+        "Server": [
+          "Windows-Azure-File\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
+        ],
+        "x-ms-client-request-id": "34fc0e1d-2c56-0949-7cf6-0a59cffa5ff5",
+        "x-ms-request-id": "d0dab236-f01a-0037-5a7d-6ea6a5000000",
+        "x-ms-version": "2019-02-02"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "http:\u002f\u002fseandevtest.file.core.windows.net\u002ftest-share-3150ec3a-25b4-0782-f289-959a35281154?sv=2019-02-02\u0026ss=f\u0026srt=c\u0026st=2019-09-18T23%3A03%3A53Z\u0026se=2019-09-19T01%3A03%3A53Z\u0026sp=dc\u0026sig=Sanitized\u0026restype=share",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "traceparent": "00-5ff50021f8e72747832cf2c1d1811a91-e30601066eca374e-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190918.1\u002b4d11b69d11b884a7ac8d0c95d8a535f61880046a",
+          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "277c0f28-dc2c-40fd-f4bc-9c1cab299846",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-02-02"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Thu, 19 Sep 2019 00:03:53 GMT",
+        "Server": [
+          "Windows-Azure-File\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
+        ],
+        "x-ms-client-request-id": "277c0f28-dc2c-40fd-f4bc-9c1cab299846",
+        "x-ms-request-id": "d0dab239-f01a-0037-5b7d-6ea6a5000000",
+        "x-ms-version": "2019-02-02"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "DateTimeOffsetNow": "2019-09-18T17:03:53.9552428-07:00",
+    "RandomSeed": "1671692810",
+    "Storage_TestConfigDefault": "ProductionTenant\nseandevtest\nU2FuaXRpemVk\nhttp:\u002f\u002fseandevtest.blob.core.windows.net\nhttp:\u002f\u002fseandevtest.file.core.windows.net\nhttp:\u002f\u002fseandevtest.queue.core.windows.net\nhttp:\u002f\u002fseandevtest.table.core.windows.net\n\n\n\n\nhttp:\u002f\u002fseandevtest-secondary.blob.core.windows.net\nhttp:\u002f\u002fseandevtest-secondary.file.core.windows.net\nhttp:\u002f\u002fseandevtest-secondary.queue.core.windows.net\nhttp:\u002f\u002fseandevtest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http:\u002f\u002fseandevtest.blob.core.windows.net\u002f;QueueEndpoint=http:\u002f\u002fseandevtest.queue.core.windows.net\u002f;TableEndpoint=http:\u002f\u002fseandevtest.table.core.windows.net\u002f;FileEndpoint=http:\u002f\u002fseandevtest.file.core.windows.net\u002f;BlobSecondaryEndpoint=http:\u002f\u002fseandevtest-secondary.blob.core.windows.net\u002f;QueueSecondaryEndpoint=http:\u002f\u002fseandevtest-secondary.queue.core.windows.net\u002f;TableSecondaryEndpoint=http:\u002f\u002fseandevtest-secondary.table.core.windows.net\u002f;FileSecondaryEndpoint=http:\u002f\u002fseandevtest-secondary.file.core.windows.net\u002f;AccountName=seandevtest;AccountKey=Sanitized"
+  }
+}

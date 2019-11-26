@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Azure.Core.Pipeline;
 
 namespace Azure.Core.Testing
 {
@@ -14,18 +13,21 @@ namespace Azure.Core.Testing
     {
         private readonly Dictionary<string, List<string>> _headers = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
 
-        public MockResponse(int status)
+        public MockResponse(int status, string reasonPhrase = null)
         {
             Status = status;
+            ReasonPhrase = reasonPhrase;
         }
 
         public override int Status { get; }
+
+        public override string ReasonPhrase { get; }
 
         public override Stream ContentStream { get; set; }
 
         public override string ClientRequestId { get; set; }
 
-        public override string ToString() => $"{Status}";
+        public bool IsDisposed { get; private set; }
 
         public void SetContent(byte[] content)
         {
@@ -39,7 +41,7 @@ namespace Azure.Core.Testing
 
         public void AddHeader(HttpHeader header)
         {
-            if (!_headers.TryGetValue(header.Name, out var values))
+            if (!_headers.TryGetValue(header.Name, out List<string> values))
             {
                 _headers[header.Name] = values = new List<string>();
             }
@@ -48,11 +50,11 @@ namespace Azure.Core.Testing
         }
 
 #if HAS_INTERNALS_VISIBLE_CORE
-internal
+        internal
 #endif
         protected override bool TryGetHeader(string name, out string value)
         {
-            if (_headers.TryGetValue(name, out var values))
+            if (_headers.TryGetValue(name, out List<string> values))
             {
                 value = JoinHeaderValue(values);
                 return true;
@@ -63,17 +65,17 @@ internal
         }
 
 #if HAS_INTERNALS_VISIBLE_CORE
-internal
+        internal
 #endif
         protected override bool TryGetHeaderValues(string name, out IEnumerable<string> values)
         {
-            var result = _headers.TryGetValue(name, out var valuesList);
+            var result = _headers.TryGetValue(name, out List<string> valuesList);
             values = valuesList;
             return result;
         }
 
 #if HAS_INTERNALS_VISIBLE_CORE
-internal
+        internal
 #endif
         protected override bool ContainsHeader(string name)
         {
@@ -81,7 +83,7 @@ internal
         }
 
 #if HAS_INTERNALS_VISIBLE_CORE
-internal
+        internal
 #endif
         protected override IEnumerable<HttpHeader> EnumerateHeaders() => _headers.Select(h => new HttpHeader(h.Key, JoinHeaderValue(h.Value)));
 
@@ -92,6 +94,7 @@ internal
 
         public override void Dispose()
         {
+            IsDisposed = true;
         }
     }
 }

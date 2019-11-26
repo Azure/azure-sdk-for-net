@@ -11,9 +11,12 @@ using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
 
+// Avoid compiling the test class. Disabling just the test methods still causes the fixture to instantiate and dispose, which still breaks live tests.
+// See https://github.com/Azure/azure-sdk-for-net/issues/8420 for status and more information about why these tests are disabled.
+#if !AZURE_KEYVAULT_TEST_MODE_LIVE
+
 namespace Microsoft.Azure.KeyVault.Extensions.Tests
 {
-
     /// <summary>
     /// Verify Symmetric Key.
     /// </summary>
@@ -70,7 +73,7 @@ namespace Microsoft.Azure.KeyVault.Extensions.Tests
         [Fact]
         public void ResolveKey()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 // Arrange
                 var client = GetKeyVaultClient();
@@ -106,7 +109,7 @@ namespace Microsoft.Azure.KeyVault.Extensions.Tests
         [Fact]
         public void ResolveSecret128Base64()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 VerifyResolveSecretBase64(128, VerifyResolver, "ResolveSecret128Base64");
             }
@@ -118,7 +121,7 @@ namespace Microsoft.Azure.KeyVault.Extensions.Tests
         [Fact]
         public void ResolveSecret192Base64()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 VerifyResolveSecretBase64(192, VerifyResolver, "ResolveSecret192Base64");
             }
@@ -130,7 +133,7 @@ namespace Microsoft.Azure.KeyVault.Extensions.Tests
         [Fact]
         public void ResolveSecret256Base64()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 VerifyResolveSecretBase64(256, VerifyResolver, "ResolveSecret256Base64");
             }
@@ -220,3 +223,5 @@ namespace Microsoft.Azure.KeyVault.Extensions.Tests
         }
     }
 }
+
+#endif

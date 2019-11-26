@@ -20,7 +20,7 @@ namespace Microsoft.Azure.EventHubs
         /// <param name="message"></param>
         /// <param name="innerException"></param>
         internal EventHubsTimeoutException(string message, Exception innerException)
-            : base(true, message, innerException)
+            : base(true, message, innerException, ErrorSourceType.ServerError)
         {
         }
     }

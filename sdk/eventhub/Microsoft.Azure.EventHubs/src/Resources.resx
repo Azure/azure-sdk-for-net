@@ -150,7 +150,7 @@
   <data name="ReceiverIdentifierOverMaxValue" xml:space="preserve">
     <value>The 'identifier' parameter exceeds the maximum allowed size of {0} characters.</value>
   </data>
-  <data name="SasTokenShouldBeAlone" xml:space="preserve">
+  <data name="AuthKeyShouldBeAlone" xml:space="preserve">
     <value>{0} cannot be specified along with {1}. {0} alone should be sufficient to Authenticate the request.</value>
   </data>
   <data name="TimeoutMustBeNonNegative" xml:space="preserve">

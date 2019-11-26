@@ -23,6 +23,7 @@ namespace Microsoft.Azure.EventHubs
             this.EventHubClient = eventHubClient;
             this.PartitionId = partitionId;
             this.InnerSender = eventHubClient.CreateEventSender(partitionId);
+            eventHubClient.AddChildEntity(this);
             EventHubsEventSource.Log.ClientCreated(this.ClientId, null);
         }
 
@@ -170,7 +171,7 @@ namespace Microsoft.Azure.EventHubs
                 throw Fx.Exception.InvalidOperation(Resources.PartitionSenderInvalidWithPartitionKeyOnBatch);
             }
 
-            await this.SendAsync(eventDataBatch.ToEnumerable());
+            await this.SendAsync(eventDataBatch.ToEnumerable()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -179,6 +180,8 @@ namespace Microsoft.Azure.EventHubs
         /// <returns>An asynchronous operation</returns>
         public override async Task CloseAsync()
         {
+            this.IsClosed = true;
+
             EventHubsEventSource.Log.ClientCloseStart(this.ClientId);
             try
             {

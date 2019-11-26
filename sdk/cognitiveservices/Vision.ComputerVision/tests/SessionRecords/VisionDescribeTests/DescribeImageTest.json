@@ -1,0 +1,51 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/vision/v2.1/describe?maxCandidates=2",
+      "EncodedRequestUri": "L3Zpc2lvbi92Mi4xL2Rlc2NyaWJlP21heENhbmRpZGF0ZXM9Mg==",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/psSdkJson6/src/SDKs/CognitiveServices/dataPlane/Vision/ComputerVision/ComputerVision.Tests/TestImages/dog.jpg\"\r\n}",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.8.3815.0",
+          "OSName/Windows",
+          "OSVersion/10.0.18362.0",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/5.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "184"
+        ]
+      },
+      "ResponseHeaders": {
+        "apim-request-id": [
+          "0b2b67fd-bc1c-4e7d-a14a-c434cd7ef5d3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Thu, 22 Aug 2019 04:06:42 GMT"
+        ],
+        "Content-Length": [
+          "449"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"description\": {\r\n    \"tags\": [\r\n      \"dog\",\r\n      \"outdoor\",\r\n      \"sitting\",\r\n      \"animal\",\r\n      \"mammal\",\r\n      \"looking\",\r\n      \"brown\",\r\n      \"bench\",\r\n      \"yellow\",\r\n      \"front\",\r\n      \"large\",\r\n      \"wooden\",\r\n      \"small\",\r\n      \"white\",\r\n      \"standing\",\r\n      \"close\",\r\n      \"table\",\r\n      \"orange\",\r\n      \"laying\",\r\n      \"park\",\r\n      \"head\"\r\n    ],\r\n    \"captions\": [\r\n      {\r\n        \"text\": \"a close up of a dog\",\r\n        \"confidence\": 0.96541174218767489\r\n      },\r\n      {\r\n        \"text\": \"close up of a dog\",\r\n        \"confidence\": 0.95799110632449369\r\n      }\r\n    ]\r\n  },\r\n  \"requestId\": \"0b2b67fd-bc1c-4e7d-a14a-c434cd7ef5d3\",\r\n  \"metadata\": {\r\n    \"width\": 455,\r\n    \"height\": 599,\r\n    \"format\": \"Jpeg\"\r\n  }\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

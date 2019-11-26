@@ -1,0 +1,69 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/qnamaker/knowledgebases/8758c6af-fa29-4e03-a517-9c36927f558f/generateAnswer",
+      "EncodedRequestUri": "L3FuYW1ha2VyL2tub3dsZWRnZWJhc2VzLzg3NThjNmFmLWZhMjktNGUwMy1hNTE3LTljMzY5MjdmNTU4Zi9nZW5lcmF0ZUFuc3dlcg==",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"question\": \"good afternoon\"\r\n}",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27617.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.QnAMakerRuntimeClient/1.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "36"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:57fe7dc2-cca1-4cfc-98d1-5f1f2f34f969"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000"
+        ],
+        "Set-Cookie": [
+          "ARRAffinity=7adbf14d8e75f98367e830cf2e4b1f04857993258b74780366c7f67db243f6f5;Path=/;HttpOnly;Domain=paidtestbot.azurewebsites.net"
+        ],
+        "Date": [
+          "Mon, 08 Jul 2019 11:40:27 GMT"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"answers\": [\r\n    {\r\n      \"questions\": [\r\n        \"Good Afternoon !\"\r\n      ],\r\n      \"answer\": \"Good Afternoon! I hope you are doing well\",\r\n      \"score\": 100.0,\r\n      \"id\": 191,\r\n      \"source\": \"out.txt\",\r\n      \"metadata\": [],\r\n      \"context\": {\r\n        \"isContextOnly\": false,\r\n        \"prompts\": []\r\n      }\r\n    }\r\n  ],\r\n  \"debugInfo\": null\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

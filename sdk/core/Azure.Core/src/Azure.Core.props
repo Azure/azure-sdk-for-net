@@ -1,11 +1,21 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <!-- Project references -->
-  <ItemGroup Condition="'$(UseProjectReferenceToAzureBase)'=='true'">
-    <ProjectReference Include="$(MSBuildThisFileDirectory)Azure.Core.csproj" />
+  <PropertyGroup>
+    <AzureCoreSharedSources>$(MSBuildThisFileDirectory)\Shared\</AzureCoreSharedSources>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
   </ItemGroup>
 
-  <!-- Package references -->
-  <ItemGroup Condition="'$(UseProjectReferenceToAzureBase)'!='true'">
-    <PackageReference Include="Azure.Core" Version="1.0.0-preview.5" />
+  <!-- Nullability -->
+  <PropertyGroup>
+    <!-- Visual Studio 2019 version 16.1 shipped a version of .NET Core that used older 'NullableContextOptions' -->
+    <Nullable Condition="'$(Nullable)'==''">$(NullableContextOptions)</Nullable>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Nullable)'=='enable' Or '$(UseAzureCoreNullableAttributes)'=='true'">
+    <DefineConstants>$(DefineConstants);AZURE_NULLABLE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(Nullable)'=='enable' Or '$(UseAzureCoreNullableAttributes)'=='true'">
+    <Compile Include="$(AzureCoreSharedSources)NullableAttributes.cs" />
   </ItemGroup>
 </Project>

@@ -16,15 +16,7 @@ namespace Microsoft.Azure.EventHubs.Amqp
         const string CbsSaslMechanismName = "MSSBCBS";
         readonly Lazy<AmqpServiceClient> managementServiceClient; // serviceClient that handles management calls
 
-        public AmqpEventHubClient(EventHubsConnectionStringBuilder csb)
-            : this(csb,
-                !string.IsNullOrWhiteSpace(csb.SharedAccessSignature)
-                ? TokenProvider.CreateSharedAccessSignatureTokenProvider(csb.SharedAccessSignature)
-                : TokenProvider.CreateSharedAccessSignatureTokenProvider(csb.SasKeyName, csb.SasKey))
-        {
-        }
-
-        public AmqpEventHubClient(
+        internal AmqpEventHubClient(
             Uri endpointAddress,
             string entityPath,
             ITokenProvider tokenProvider,
@@ -34,13 +26,29 @@ namespace Microsoft.Azure.EventHubs.Amqp
         {
         }
 
-        private AmqpEventHubClient(EventHubsConnectionStringBuilder csb, ITokenProvider tokenProvider)
+        internal AmqpEventHubClient(EventHubsConnectionStringBuilder csb, ITokenProvider tokenProvider)
             : base(csb)
         {
             this.ContainerId = Guid.NewGuid().ToString("N");
             this.AmqpVersion = new Version(1, 0, 0, 0);
             this.MaxFrameSize = AmqpConstants.DefaultMaxFrameSize;
-            this.InternalTokenProvider = tokenProvider;
+
+            if (tokenProvider != null)
+            {
+                this.InternalTokenProvider = tokenProvider;
+            }
+            else if (!string.IsNullOrWhiteSpace(csb.SharedAccessSignature))
+            {
+                this.InternalTokenProvider = TokenProvider.CreateSharedAccessSignatureTokenProvider(csb.SharedAccessSignature);
+            }
+            else if (!string.IsNullOrWhiteSpace(csb.SasKey))
+            {
+                this.InternalTokenProvider = TokenProvider.CreateSharedAccessSignatureTokenProvider(csb.SasKeyName, csb.SasKey);
+            }
+            else if (!string.Equals(csb.Authentication, "Managed Identity", StringComparison.OrdinalIgnoreCase))
+            {
+                this.InternalTokenProvider = TokenProvider.CreateManagedIdentityTokenProvider();
+            }
 
             this.CbsTokenProvider = new TokenProviderAdapter(this);
             this.ConnectionManager = new FaultTolerantAmqpObject<AmqpConnection>(this.CreateConnectionAsync, CloseConnection);

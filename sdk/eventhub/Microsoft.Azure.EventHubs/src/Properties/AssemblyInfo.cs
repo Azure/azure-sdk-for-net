@@ -3,7 +3,6 @@
 
 using System.Runtime.CompilerServices;
 
-#if CODESIGN
 [assembly: InternalsVisibleTo("Microsoft.Azure.EventHubs.Tests,PublicKey=0024000004800000940000000602000000240000525341310004000001000100d15ddcb29688295338af4b7686603fe614abd555e09efba8fb88ee09e1f7b1ccaeed2e8f823fa9eef3fdd60217fc012ea67d2479751a0b8c087a4185541b851bd8b16f8d91b840e51b1cb0ba6fe647997e57429265e85ef62d565db50a69ae1647d54d7bd855e4db3d8a91510e5bcbd0edfbbecaa20a7bd9ae74593daa7b11b4")]
 [assembly: InternalsVisibleTo("Microsoft.Azure.EventHubs.Processor,PublicKey=" +
     "0024000004800000940000000602000000240000525341310004000001000100fdf4acac3b2244" +
@@ -11,7 +10,3 @@ using System.Runtime.CompilerServices;
     "4bc51e6f018dca44fdd26a219c27cb2b263956a80620223c8e9c2f8913c3c903e1e453e9e4e840" +
     "98afdad5f4badb8c1ebe0a7b0a4b57a08454646a65886afe3e290a791ff3260099ce0edf0bdbcc" +
     "afadfeb6")]
-#else
-    [assembly: InternalsVisibleTo("Microsoft.Azure.EventHubs.Tests")]
-    [assembly: InternalsVisibleTo("Microsoft.Azure.EventHubs.Processor")]
-#endif

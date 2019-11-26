@@ -1,0 +1,318 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLw==",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"culture\": \"en-us\",\r\n  \"domain\": \"Comics\",\r\n  \"description\": \"New LUIS App\",\r\n  \"usageScenario\": \"IoT\",\r\n  \"name\": \"Examples Test App\"\r\n}",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "120f721e60454544a884022b1bc988a5"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.8.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "142"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://westus.api.cognitive.microsoft.com/luis/api/v3.0-preview/apps/ba5af4dd-d4d9-426f-bba4-d8bb676485ea"
+        ],
+        "Apim-Request-Id": [
+          "0cb7823d-0fb4-4c99-b297-f267aa8ed985"
+        ],
+        "Request-Id": [
+          "0cb7823d-0fb4-4c99-b297-f267aa8ed985"
+        ],
+        "Operation-Location": [
+          "https://westus.api.cognitive.microsoft.com/luis/api/v3.0-preview/apps/ba5af4dd-d4d9-426f-bba4-d8bb676485ea"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "Date": [
+          "Tue, 29 Oct 2019 13:18:51 GMT"
+        ],
+        "Content-Length": [
+          "38"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "\"ba5af4dd-d4d9-426f-bba4-d8bb676485ea\"",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/ba5af4dd-d4d9-426f-bba4-d8bb676485ea/versions/0.1/intents",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzL2JhNWFmNGRkLWQ0ZDktNDI2Zi1iYmE0LWQ4YmI2NzY0ODVlYS92ZXJzaW9ucy8wLjEvaW50ZW50cw==",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"name\": \"WeatherInPlace\"\r\n}",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "120f721e60454544a884022b1bc988a5"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.8.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "32"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://westus.api.cognitive.microsoft.com/luis/api/v3.0-preview/apps/ba5af4dd-d4d9-426f-bba4-d8bb676485ea/versions/0.1/intents/4f2a59b7-44d4-4fa2-aadf-87b87b5b3b77"
+        ],
+        "Apim-Request-Id": [
+          "44f544fc-3708-488b-830a-8d19944adef5"
+        ],
+        "Request-Id": [
+          "44f544fc-3708-488b-830a-8d19944adef5"
+        ],
+        "Operation-Location": [
+          "https://westus.api.cognitive.microsoft.com/luis/api/v3.0-preview/apps/ba5af4dd-d4d9-426f-bba4-d8bb676485ea/versions/0.1/intents/4f2a59b7-44d4-4fa2-aadf-87b87b5b3b77"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "Date": [
+          "Tue, 29 Oct 2019 13:18:51 GMT"
+        ],
+        "Content-Length": [
+          "38"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "\"4f2a59b7-44d4-4fa2-aadf-87b87b5b3b77\"",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/ba5af4dd-d4d9-426f-bba4-d8bb676485ea/versions/0.1/entities",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzL2JhNWFmNGRkLWQ0ZDktNDI2Zi1iYmE0LWQ4YmI2NzY0ODVlYS92ZXJzaW9ucy8wLjEvZW50aXRpZXM=",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"name\": \"Place\"\r\n}",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "120f721e60454544a884022b1bc988a5"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.8.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "23"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://westus.api.cognitive.microsoft.com/luis/api/v3.0-preview/apps/ba5af4dd-d4d9-426f-bba4-d8bb676485ea/versions/0.1/entities/3de75556-483c-47f7-ac0a-93dee084e79b"
+        ],
+        "Apim-Request-Id": [
+          "197ef78d-f6c7-4313-94e5-89d2d104ef27"
+        ],
+        "Request-Id": [
+          "197ef78d-f6c7-4313-94e5-89d2d104ef27"
+        ],
+        "Operation-Location": [
+          "https://westus.api.cognitive.microsoft.com/luis/api/v3.0-preview/apps/ba5af4dd-d4d9-426f-bba4-d8bb676485ea/versions/0.1/entities/3de75556-483c-47f7-ac0a-93dee084e79b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "Date": [
+          "Tue, 29 Oct 2019 13:18:51 GMT"
+        ],
+        "Content-Length": [
+          "38"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "\"3de75556-483c-47f7-ac0a-93dee084e79b\"",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/ba5af4dd-d4d9-426f-bba4-d8bb676485ea/versions/0.1/example",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzL2JhNWFmNGRkLWQ0ZDktNDI2Zi1iYmE0LWQ4YmI2NzY0ODVlYS92ZXJzaW9ucy8wLjEvZXhhbXBsZQ==",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"text\": \"whats the weather in buenos aires?\",\r\n  \"entityLabels\": [\r\n    {\r\n      \"entityName\": \"Place\",\r\n      \"startCharIndex\": 21,\r\n      \"endCharIndex\": 34\r\n    }\r\n  ],\r\n  \"intentName\": \"WeatherInPlace\"\r\n}",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "120f721e60454544a884022b1bc988a5"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.8.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "213"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "3236cfa3-c44b-4421-a97b-18c5e89dfc7f"
+        ],
+        "Request-Id": [
+          "3236cfa3-c44b-4421-a97b-18c5e89dfc7f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "Date": [
+          "Tue, 29 Oct 2019 13:18:52 GMT"
+        ],
+        "Content-Length": [
+          "76"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"ExampleId\": 650505998,\r\n  \"UtteranceText\": \"whats the weather in buenos aires?\"\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/ba5af4dd-d4d9-426f-bba4-d8bb676485ea?force=false",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzL2JhNWFmNGRkLWQ0ZDktNDI2Zi1iYmE0LWQ4YmI2NzY0ODVlYT9mb3JjZT1mYWxzZQ==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "120f721e60454544a884022b1bc988a5"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.8.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "5803d6c5-2f75-49d1-8560-b207275ef116"
+        ],
+        "Request-Id": [
+          "5803d6c5-2f75-49d1-8560-b207275ef116"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "Date": [
+          "Tue, 29 Oct 2019 13:18:52 GMT"
+        ],
+        "Content-Length": [
+          "51"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"code\": \"Success\",\r\n  \"message\": \"Operation Successful\"\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

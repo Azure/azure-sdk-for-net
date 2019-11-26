@@ -1008,6 +1008,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
             await this.ReceiveLinkManager.CloseAsync().ConfigureAwait(false);
             await this.RequestResponseLinkManager.CloseAsync().ConfigureAwait(false);
+            this.requestResponseLockedMessages.Close();
         }
 
         protected virtual async Task<IList<Message>> OnReceiveAsync(int maxMessageCount, TimeSpan serverWaitTime)
@@ -1065,7 +1066,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
             catch (Exception exception)
             {
-                throw AmqpExceptionHelper.GetClientException(exception, receiveLink?.GetTrackingId(), null, receiveLink?.Session.IsClosing() ?? false);
+                throw AmqpExceptionHelper.GetClientException(exception, receiveLink?.GetTrackingId(), null, receiveLink?.IsClosing() ?? false);
             }
         }
 

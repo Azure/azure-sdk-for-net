@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <PropertyGroup>
+    <_BuildNumber>$(OfficialBuildId)</_BuildNumber>
+    <_BuildNumber Condition="'$(OfficialBuildId)' == ''">$([System.DateTime]::Now.ToString(yyyyMMdd)).1</_BuildNumber>
+    <HasReleaseVersion>true</HasReleaseVersion>
+    <HasReleaseVersion Condition="$(Version.Contains('preview'))">false</HasReleaseVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(SkipDevBuildNumber)' != 'true'">
+    <!-- Strip off the prerelease version -->
+    <_PrereleaseIndex>$(Version.IndexOf('-'))</_PrereleaseIndex>
+    <Version Condition="$(_PrereleaseIndex) &gt; 0">$(Version.SubString(0, $(_PrereleaseIndex)))</Version>
+
+    <Version>$(Version)-dev.$(_BuildNumber)</Version>
+  </PropertyGroup>
+
+  <!--
+    Specification: https://github.com/dotnet/arcade/blob/master/Documentation/CoreVersioning.md
+
+    File version has 4 parts and needs to increase every official build. This is especially important when building MSIs.
+    FILEMAJOR.FILEMINOR.FILEPATCH.FILEREVISION
+    FILEMAJOR: Specified in the first part of VersionPrefix property.
+    FILEMINOR: Set to MINOR * 100 + PATCH / 100, where MINOR and PATCH are the 2nd and 3rd parts of VersionPrefix property.
+    FILEPATCH: Set to (PATCH % 100) * 100 + yy.
+    FILEREVISION: Set to (50 * mm + dd) * 100 + r. This algorithm makes it easy to parse the month and date from FILEREVISION while staying in the range of a short which is what a version element uses.
+
+    The versioning scheme defined below imposes the following limits on these version parts:
+    - `MAJOR` version is in range [0-65535]
+    - `MINOR` version is in range [0-654]
+    - `PATCH` version is in range [0-9999]
+  -->
+  <Target Name="_InitializeFileVersion" BeforeTargets="GetAssemblyVersion">
+    <Error Text="Expected _BuildNumber to match OfficialBuildId property!"
+            Condition="'$(OfficialBuildId)' != '' and '$(OfficialBuildId)' != '$(_BuildNumber)'" />
+
+    <Error Text="Invalid format of OfficialBuildId: '$(OfficialBuildId)' should be in form yyyyMMdd.r"
+           Condition="$(OfficialBuildId) != '' and ($(OfficialBuildId.Length) &lt; 10 or '$(OfficialBuildId[8])' != '.')" />
+
+    <!-- Compute an ever increasing build number based on official build id assuming it is passed -->
+    <PropertyGroup Condition="'$(OfficialBuildId)' != ''">
+      <_BuildNumberYY>$(_BuildNumber.Substring(2, 2))</_BuildNumberYY>
+      <_BuildNumberMM>$(_BuildNumber.Substring(4, 2))</_BuildNumberMM>
+      <_BuildNumberDD>$(_BuildNumber.Substring(6, 2))</_BuildNumberDD>
+      <_BuildNumberR>$(_BuildNumber.Substring(9))</_BuildNumberR>
+
+      <_VersionPrefixMajor>$(Version.Split('.')[0])</_VersionPrefixMajor>
+      <_VersionPrefixMinor>$(Version.Split('.')[1])</_VersionPrefixMinor>
+      <_VersionPrefixPatch>$(Version.Split(".-")[2])</_VersionPrefixPatch>
+
+      <_FileMajor>$(_VersionPrefixMajor)</_FileMajor>
+
+      <!-- MINOR * 100 + PATCH / 100 -->
+      <_FileMinor>$([MSBuild]::Add(
+                    $([MSBuild]::Multiply($(_VersionPrefixMinor), 100)),
+                    $([System.Convert]::ToInt32($([MSBuild]::Divide($(_VersionPrefixPatch), 100))))
+                  ))</_FileMinor>
+
+      <!-- (PATCH % 100) * 100 + yy -->
+      <_FilePatch>$([MSBuild]::Add(
+                    $([MSBuild]::Multiply(
+                      $([MSBuild]::Modulo($(_VersionPrefixPatch), 100)),
+                      100)),
+                    $(_BuildNumberYY)
+                  ))</_FilePatch>
+
+      <!-- mm * 5000 + dd * 100 + r -->
+      <_FileRevision>$([MSBuild]::Add(
+                        $([MSBuild]::Add(
+                          $([MSBuild]::Multiply($(_BuildNumberMM), 5000)),
+                          $([MSBuild]::Multiply($(_BuildNumberDD), 100))
+                        )),
+                        $(_BuildNumberR)
+                     ))</_FileRevision>
+
+      <FileVersion>$(_FileMajor).$(_FileMinor).$(_FilePatch).$(_FileRevision)</FileVersion>
+    </PropertyGroup>
+  </Target>
+</Project>

@@ -2,19 +2,19 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.Core.Pipeline.Policies;
+using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class ClientRequestIdPolicyTests: PolicyTestBase
+    public class ClientRequestIdPolicyTests : PolicyTestBase
     {
         [Test]
         public async Task SetsHeaders()
         {
             var mockTransport = new MockTransport();
-            Task<Response> task = SendGetRequest(mockTransport, ClientRequestIdPolicy.Singleton);
+            Task<Response> task = SendGetRequest(mockTransport, ClientRequestIdPolicy.Shared);
             MockRequest request = await mockTransport.RequestGate.Cycle(new MockResponse(200));
             await task;
 

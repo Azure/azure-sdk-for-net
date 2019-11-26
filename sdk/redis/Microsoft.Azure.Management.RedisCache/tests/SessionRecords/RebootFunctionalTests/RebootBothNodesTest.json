@@ -1,0 +1,2152 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/providers/Microsoft.Cache/register?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvcmVnaXN0ZXI/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "e0258e25-8db9-4a29-975f-fe2faa8ad814"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "1e270ad3-bd58-4804-bec4-1986bdd9753f"
+        ],
+        "x-ms-correlation-request-id": [
+          "1e270ad3-bd58-4804-bec4-1986bdd9753f"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T014502Z:1e270ad3-bd58-4804-bec4-1986bdd9753f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:45:02 GMT"
+        ],
+        "Content-Length": [
+          "3694"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/providers/Microsoft.Cache\",\r\n  \"namespace\": \"Microsoft.Cache\",\r\n  \"authorization\": {\r\n    \"applicationId\": \"96231a05-34ce-4eb4-aa6a-70759cbb5e83\",\r\n    \"roleDefinitionId\": \"4f731528-ba85-45c7-acfb-cd0a9b3cf31b\"\r\n  },\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"Redis\",\r\n      \"locations\": [\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"Central US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Brazil South\",\r\n        \"Southeast Asia\",\r\n        \"East Asia\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central India\",\r\n        \"West India\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West US 2\",\r\n        \"West Central US\",\r\n        \"South India\",\r\n        \"Korea Central\",\r\n        \"Korea South\",\r\n        \"France Central\",\r\n        \"Australia Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"Central US EUAP\",\r\n        \"East US 2 EUAP\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-07-01\",\r\n        \"2018-03-01\",\r\n        \"2017-10-01\",\r\n        \"2017-02-01\",\r\n        \"2016-04-01\",\r\n        \"2015-08-01\",\r\n        \"2015-03-01\",\r\n        \"2014-04-01-preview\",\r\n        \"2014-04-01\"\r\n      ],\r\n      \"apiProfiles\": [\r\n        {\r\n          \"profileVersion\": \"2018-06-01-profile\",\r\n          \"apiVersion\": \"2018-03-01\"\r\n        }\r\n      ],\r\n      \"zoneMappings\": [\r\n        {\r\n          \"location\": \"East US 2\",\r\n          \"zones\": []\r\n        },\r\n        {\r\n          \"location\": \"Central US\",\r\n          \"zones\": [\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"West Europe\",\r\n          \"zones\": [\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"East US 2 EUAP\",\r\n          \"zones\": [\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"Central US EUAP\",\r\n          \"zones\": []\r\n        },\r\n        {\r\n          \"location\": \"France Central\",\r\n          \"zones\": [\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"Southeast Asia\",\r\n          \"zones\": [\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"West US 2\",\r\n          \"zones\": [\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"North Europe\",\r\n          \"zones\": [\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"East US\",\r\n          \"zones\": [\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"UK South\",\r\n          \"zones\": [\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"Japan East\",\r\n          \"zones\": [\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"Australia East\",\r\n          \"zones\": []\r\n        },\r\n        {\r\n          \"location\": \"South Africa North\",\r\n          \"zones\": []\r\n        },\r\n        {\r\n          \"location\": \"South Central US\",\r\n          \"zones\": []\r\n        }\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"locations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2019-07-01\",\r\n        \"2018-03-01\",\r\n        \"2017-10-01\",\r\n        \"2017-02-01\",\r\n        \"2016-04-01\",\r\n        \"2015-08-01\",\r\n        \"2015-03-01\",\r\n        \"2014-04-01-preview\",\r\n        \"2014-04-01\"\r\n      ],\r\n      \"apiProfiles\": [\r\n        {\r\n          \"profileVersion\": \"2018-06-01-profile\",\r\n          \"apiVersion\": \"2018-03-01\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operationResults\",\r\n      \"locations\": [\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"Central US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Brazil South\",\r\n        \"Southeast Asia\",\r\n        \"East Asia\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central India\",\r\n        \"West India\",\r\n        \"South India\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West US 2\",\r\n        \"West Central US\",\r\n        \"Korea Central\",\r\n        \"Korea South\",\r\n        \"France Central\",\r\n        \"Australia Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"Central US EUAP\",\r\n        \"East US 2 EUAP\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-07-01\",\r\n        \"2018-03-01\",\r\n        \"2017-10-01\",\r\n        \"2017-02-01\",\r\n        \"2016-04-01\",\r\n        \"2015-08-01\",\r\n        \"2015-03-01\",\r\n        \"2014-04-01-preview\",\r\n        \"2014-04-01\"\r\n      ],\r\n      \"apiProfiles\": [\r\n        {\r\n          \"profileVersion\": \"2018-06-01-profile\",\r\n          \"apiVersion\": \"2018-03-01\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkNameAvailability\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2019-07-01\",\r\n        \"2018-03-01\",\r\n        \"2017-10-01\",\r\n        \"2017-02-01\",\r\n        \"2016-04-01\",\r\n        \"2015-08-01\",\r\n        \"2015-03-01\",\r\n        \"2014-04-01-preview\",\r\n        \"2014-04-01-alpha\",\r\n        \"2014-04-01\"\r\n      ],\r\n      \"apiProfiles\": [\r\n        {\r\n          \"profileVersion\": \"2018-06-01-profile\",\r\n          \"apiVersion\": \"2018-03-01\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2019-07-01\",\r\n        \"2018-03-01\",\r\n        \"2017-10-01\",\r\n        \"2017-02-01\",\r\n        \"2016-04-01\",\r\n        \"2015-08-01\",\r\n        \"2015-03-01\",\r\n        \"2014-04-01-preview\",\r\n        \"2014-04-01-alpha\",\r\n        \"2014-04-01\"\r\n      ],\r\n      \"apiProfiles\": [\r\n        {\r\n          \"profileVersion\": \"2018-06-01-profile\",\r\n          \"apiVersion\": \"2018-03-01\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"RedisConfigDefinition\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2019-07-01\",\r\n        \"2018-03-01\",\r\n        \"2017-10-01\",\r\n        \"2017-02-01\",\r\n        \"2016-04-01\",\r\n        \"2015-08-01\",\r\n        \"2015-03-01\"\r\n      ],\r\n      \"apiProfiles\": [\r\n        {\r\n          \"profileVersion\": \"2018-06-01-profile\",\r\n          \"apiVersion\": \"2018-03-01\"\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/providers/Microsoft.Cache?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGU/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "6138799b-578b-47f9-92a2-5d795249c5bd"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-request-id": [
+          "a171208c-7685-4419-b158-49c66b814b38"
+        ],
+        "x-ms-correlation-request-id": [
+          "a171208c-7685-4419-b158-49c66b814b38"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T014502Z:a171208c-7685-4419-b158-49c66b814b38"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:45:02 GMT"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "3694"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/providers/Microsoft.Cache\",\r\n  \"namespace\": \"Microsoft.Cache\",\r\n  \"authorization\": {\r\n    \"applicationId\": \"96231a05-34ce-4eb4-aa6a-70759cbb5e83\",\r\n    \"roleDefinitionId\": \"4f731528-ba85-45c7-acfb-cd0a9b3cf31b\"\r\n  },\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"Redis\",\r\n      \"locations\": [\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"Central US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Brazil South\",\r\n        \"Southeast Asia\",\r\n        \"East Asia\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central India\",\r\n        \"West India\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West US 2\",\r\n        \"West Central US\",\r\n        \"South India\",\r\n        \"Korea Central\",\r\n        \"Korea South\",\r\n        \"France Central\",\r\n        \"Australia Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"Central US EUAP\",\r\n        \"East US 2 EUAP\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-07-01\",\r\n        \"2018-03-01\",\r\n        \"2017-10-01\",\r\n        \"2017-02-01\",\r\n        \"2016-04-01\",\r\n        \"2015-08-01\",\r\n        \"2015-03-01\",\r\n        \"2014-04-01-preview\",\r\n        \"2014-04-01\"\r\n      ],\r\n      \"apiProfiles\": [\r\n        {\r\n          \"profileVersion\": \"2018-06-01-profile\",\r\n          \"apiVersion\": \"2018-03-01\"\r\n        }\r\n      ],\r\n      \"zoneMappings\": [\r\n        {\r\n          \"location\": \"East US 2\",\r\n          \"zones\": []\r\n        },\r\n        {\r\n          \"location\": \"Central US\",\r\n          \"zones\": [\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"West Europe\",\r\n          \"zones\": [\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"East US 2 EUAP\",\r\n          \"zones\": [\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"Central US EUAP\",\r\n          \"zones\": []\r\n        },\r\n        {\r\n          \"location\": \"France Central\",\r\n          \"zones\": [\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"Southeast Asia\",\r\n          \"zones\": [\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"West US 2\",\r\n          \"zones\": [\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"North Europe\",\r\n          \"zones\": [\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"East US\",\r\n          \"zones\": [\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"UK South\",\r\n          \"zones\": [\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"Japan East\",\r\n          \"zones\": [\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"Australia East\",\r\n          \"zones\": []\r\n        },\r\n        {\r\n          \"location\": \"South Africa North\",\r\n          \"zones\": []\r\n        },\r\n        {\r\n          \"location\": \"South Central US\",\r\n          \"zones\": []\r\n        }\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"locations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2019-07-01\",\r\n        \"2018-03-01\",\r\n        \"2017-10-01\",\r\n        \"2017-02-01\",\r\n        \"2016-04-01\",\r\n        \"2015-08-01\",\r\n        \"2015-03-01\",\r\n        \"2014-04-01-preview\",\r\n        \"2014-04-01\"\r\n      ],\r\n      \"apiProfiles\": [\r\n        {\r\n          \"profileVersion\": \"2018-06-01-profile\",\r\n          \"apiVersion\": \"2018-03-01\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operationResults\",\r\n      \"locations\": [\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"Central US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Brazil South\",\r\n        \"Southeast Asia\",\r\n        \"East Asia\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central India\",\r\n        \"West India\",\r\n        \"South India\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West US 2\",\r\n        \"West Central US\",\r\n        \"Korea Central\",\r\n        \"Korea South\",\r\n        \"France Central\",\r\n        \"Australia Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"Central US EUAP\",\r\n        \"East US 2 EUAP\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-07-01\",\r\n        \"2018-03-01\",\r\n        \"2017-10-01\",\r\n        \"2017-02-01\",\r\n        \"2016-04-01\",\r\n        \"2015-08-01\",\r\n        \"2015-03-01\",\r\n        \"2014-04-01-preview\",\r\n        \"2014-04-01\"\r\n      ],\r\n      \"apiProfiles\": [\r\n        {\r\n          \"profileVersion\": \"2018-06-01-profile\",\r\n          \"apiVersion\": \"2018-03-01\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkNameAvailability\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2019-07-01\",\r\n        \"2018-03-01\",\r\n        \"2017-10-01\",\r\n        \"2017-02-01\",\r\n        \"2016-04-01\",\r\n        \"2015-08-01\",\r\n        \"2015-03-01\",\r\n        \"2014-04-01-preview\",\r\n        \"2014-04-01-alpha\",\r\n        \"2014-04-01\"\r\n      ],\r\n      \"apiProfiles\": [\r\n        {\r\n          \"profileVersion\": \"2018-06-01-profile\",\r\n          \"apiVersion\": \"2018-03-01\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2019-07-01\",\r\n        \"2018-03-01\",\r\n        \"2017-10-01\",\r\n        \"2017-02-01\",\r\n        \"2016-04-01\",\r\n        \"2015-08-01\",\r\n        \"2015-03-01\",\r\n        \"2014-04-01-preview\",\r\n        \"2014-04-01-alpha\",\r\n        \"2014-04-01\"\r\n      ],\r\n      \"apiProfiles\": [\r\n        {\r\n          \"profileVersion\": \"2018-06-01-profile\",\r\n          \"apiVersion\": \"2018-03-01\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"RedisConfigDefinition\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2019-07-01\",\r\n        \"2018-03-01\",\r\n        \"2017-10-01\",\r\n        \"2017-02-01\",\r\n        \"2016-04-01\",\r\n        \"2015-08-01\",\r\n        \"2015-03-01\"\r\n      ],\r\n      \"apiProfiles\": [\r\n        {\r\n          \"profileVersion\": \"2018-06-01-profile\",\r\n          \"apiVersion\": \"2018-03-01\"\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourcegroups/RedisReboot4012?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlZ3JvdXBzL1JlZGlzUmVib290NDAxMj9hcGktdmVyc2lvbj0yMDE3LTA1LTEw",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"West Central US\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "a15698cc-626e-4a86-8cd3-2e539e63bd44"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "37"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "74f6fb5c-d9ca-466a-ac9a-527cfa28563d"
+        ],
+        "x-ms-correlation-request-id": [
+          "74f6fb5c-d9ca-466a-ac9a-527cfa28563d"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T014503Z:74f6fb5c-d9ca-466a-ac9a-527cfa28563d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:45:02 GMT"
+        ],
+        "Content-Length": [
+          "190"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012\",\r\n  \"name\": \"RedisReboot4012\",\r\n  \"location\": \"westcentralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourcegroups/RedisReboot4012?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlZ3JvdXBzL1JlZGlzUmVib290NDAxMj9hcGktdmVyc2lvbj0yMDE3LTA1LTEw",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "1031b053-bef0-4a97-b8a4-57fbb5e292e3"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "x-ms-request-id": [
+          "b7cc7728-af45-4b68-a570-0696bcedb3c1"
+        ],
+        "x-ms-correlation-request-id": [
+          "b7cc7728-af45-4b68-a570-0696bcedb3c1"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T014503Z:b7cc7728-af45-4b68-a570-0696bcedb3c1"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:45:03 GMT"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "190"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012\",\r\n  \"name\": \"RedisReboot4012\",\r\n  \"location\": \"westcentralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/Redis/RedisReboot7648?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzUmVib290NDAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL1JlZGlzL1JlZGlzUmVib290NzY0OD9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    }\r\n  },\r\n  \"location\": \"West Central US\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "e5f82a1a-e1de-4304-b8c6-c6f6b94fd09b"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "152"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/redis/RedisReboot7648?api-version=2018-03-01"
+        ],
+        "x-ms-request-id": [
+          "7893dba4-2f99-411c-a2a5-ab46662a9d86"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "9ce0295b-a3ef-404e-adec-0fa482827ba6"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T014505Z:9ce0295b-a3ef-404e-adec-0fa482827ba6"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:45:04 GMT"
+        ],
+        "Content-Length": [
+          "750"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/Redis/RedisReboot7648\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisReboot7648\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": {\r\n      \"primaryKey\": \"IxKf5Wk015aw9WJ3vmqcEbY8rEA+zkyr2oyMBwRVDRQ=\",\r\n      \"secondaryKey\": \"M2orWaxxwFkMmkEa5AEpy39vuQMl2+otYRY9gjdaJfw=\"\r\n    },\r\n    \"hostName\": \"RedisReboot7648.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/redis/RedisReboot7648?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzUmVib290NDAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzUmVib290NzY0OD9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "bbdb4074-0f0c-4852-bcc6-81ff10eb6c7d"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-correlation-request-id": [
+          "08eac8c1-81b4-4697-b41c-ffac659b848b"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T014535Z:08eac8c1-81b4-4697-b41c-ffac659b848b"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:45:35 GMT"
+        ],
+        "Content-Length": [
+          "631"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/Redis/RedisReboot7648\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisReboot7648\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisReboot7648.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/redis/RedisReboot7648?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzUmVib290NDAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzUmVib290NzY0OD9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "809f4573-0fb0-48b7-83cd-e17db837acb3"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-correlation-request-id": [
+          "b2e4ae62-8f0a-464f-a1bb-8498c338806e"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T014605Z:b2e4ae62-8f0a-464f-a1bb-8498c338806e"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:46:05 GMT"
+        ],
+        "Content-Length": [
+          "631"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/Redis/RedisReboot7648\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisReboot7648\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisReboot7648.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/redis/RedisReboot7648?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzUmVib290NDAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzUmVib290NzY0OD9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "e789b601-49df-4bb0-913d-56d7f7645cd7"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11997"
+        ],
+        "x-ms-correlation-request-id": [
+          "0e9596ff-ad16-445c-8b1a-89349cf13c7a"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T014635Z:0e9596ff-ad16-445c-8b1a-89349cf13c7a"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:46:34 GMT"
+        ],
+        "Content-Length": [
+          "631"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/Redis/RedisReboot7648\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisReboot7648\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisReboot7648.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/redis/RedisReboot7648?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzUmVib290NDAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzUmVib290NzY0OD9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "d3d8251a-2d02-40a8-8c12-26ac948b7ea5"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11996"
+        ],
+        "x-ms-correlation-request-id": [
+          "d7d00517-065b-434f-9b5c-681eec8612d6"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T014705Z:d7d00517-065b-434f-9b5c-681eec8612d6"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:47:05 GMT"
+        ],
+        "Content-Length": [
+          "631"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/Redis/RedisReboot7648\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisReboot7648\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisReboot7648.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/redis/RedisReboot7648?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzUmVib290NDAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzUmVib290NzY0OD9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "deff6d27-fcb6-4461-980a-2fc9e1b5506f"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11995"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-correlation-request-id": [
+          "5f0bb4a0-2419-42e0-b0a1-e4f4e79d6796"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T014735Z:5f0bb4a0-2419-42e0-b0a1-e4f4e79d6796"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:47:35 GMT"
+        ],
+        "Content-Length": [
+          "631"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/Redis/RedisReboot7648\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisReboot7648\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisReboot7648.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/redis/RedisReboot7648?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzUmVib290NDAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzUmVib290NzY0OD9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "a933d9ac-b3ca-47e8-9b8d-636fed2078f0"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11994"
+        ],
+        "x-ms-correlation-request-id": [
+          "78c4d841-d3d8-417e-ab8f-a01fc025b424"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T014806Z:78c4d841-d3d8-417e-ab8f-a01fc025b424"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:48:05 GMT"
+        ],
+        "Content-Length": [
+          "631"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/Redis/RedisReboot7648\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisReboot7648\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisReboot7648.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/redis/RedisReboot7648?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzUmVib290NDAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzUmVib290NzY0OD9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "6b670531-5b75-4e3c-899d-45f49c58a484"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11993"
+        ],
+        "x-ms-correlation-request-id": [
+          "e8ed8316-6026-401d-b1fd-726d3a0898a5"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T014836Z:e8ed8316-6026-401d-b1fd-726d3a0898a5"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:48:35 GMT"
+        ],
+        "Content-Length": [
+          "631"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/Redis/RedisReboot7648\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisReboot7648\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisReboot7648.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/redis/RedisReboot7648?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzUmVib290NDAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzUmVib290NzY0OD9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "a819bdcf-c4ab-4dcd-afa1-01ca1c15ba02"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11992"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-correlation-request-id": [
+          "12796f1b-f087-44dc-a41b-d99a201bded5"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T014906Z:12796f1b-f087-44dc-a41b-d99a201bded5"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:49:05 GMT"
+        ],
+        "Content-Length": [
+          "631"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/Redis/RedisReboot7648\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisReboot7648\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisReboot7648.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/redis/RedisReboot7648?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzUmVib290NDAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzUmVib290NzY0OD9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "1f3623d4-ee82-4291-9f60-93f76afde039"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11991"
+        ],
+        "x-ms-correlation-request-id": [
+          "4ec46e1e-97a8-4eb9-8229-0be9a60c3a23"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T014936Z:4ec46e1e-97a8-4eb9-8229-0be9a60c3a23"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:49:35 GMT"
+        ],
+        "Content-Length": [
+          "631"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/Redis/RedisReboot7648\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisReboot7648\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisReboot7648.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/redis/RedisReboot7648?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzUmVib290NDAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzUmVib290NzY0OD9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "c43b6645-efbb-4807-8b1b-8b31990739b5"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11990"
+        ],
+        "x-ms-correlation-request-id": [
+          "59456e3a-c270-4179-94f0-18fc2150a7c3"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T015006Z:59456e3a-c270-4179-94f0-18fc2150a7c3"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:50:06 GMT"
+        ],
+        "Content-Length": [
+          "631"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/Redis/RedisReboot7648\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisReboot7648\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisReboot7648.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/redis/RedisReboot7648?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzUmVib290NDAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzUmVib290NzY0OD9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "9892a43b-1790-4fa9-8512-0e93b522c356"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11989"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-correlation-request-id": [
+          "ba9027ce-6df8-49ab-bc4a-a9966fc4b35d"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T015036Z:ba9027ce-6df8-49ab-bc4a-a9966fc4b35d"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:50:36 GMT"
+        ],
+        "Content-Length": [
+          "631"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/Redis/RedisReboot7648\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisReboot7648\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisReboot7648.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/redis/RedisReboot7648?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzUmVib290NDAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzUmVib290NzY0OD9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "fff45d8c-571b-4168-9ef7-b9ef732a5fd6"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11988"
+        ],
+        "x-ms-correlation-request-id": [
+          "b8b9567f-1d1c-4b0b-b9f7-0c3c72cc967a"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T015106Z:b8b9567f-1d1c-4b0b-b9f7-0c3c72cc967a"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:51:06 GMT"
+        ],
+        "Content-Length": [
+          "631"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/Redis/RedisReboot7648\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisReboot7648\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisReboot7648.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/redis/RedisReboot7648?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzUmVib290NDAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzUmVib290NzY0OD9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "71b0fb44-cd5c-4b85-8c05-8ac26f596b00"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11987"
+        ],
+        "x-ms-correlation-request-id": [
+          "e49e50a3-08e7-40d2-9b4f-51b958922eb5"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T015136Z:e49e50a3-08e7-40d2-9b4f-51b958922eb5"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:51:35 GMT"
+        ],
+        "Content-Length": [
+          "631"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/Redis/RedisReboot7648\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisReboot7648\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisReboot7648.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/redis/RedisReboot7648?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzUmVib290NDAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzUmVib290NzY0OD9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "558ce427-010a-4568-8a49-71f91eb20330"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11986"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-correlation-request-id": [
+          "a1d9bf7c-10ef-41f8-9d11-ffc55bf09e50"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T015206Z:a1d9bf7c-10ef-41f8-9d11-ffc55bf09e50"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:52:06 GMT"
+        ],
+        "Content-Length": [
+          "631"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/Redis/RedisReboot7648\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisReboot7648\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisReboot7648.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/redis/RedisReboot7648?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzUmVib290NDAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzUmVib290NzY0OD9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "a3b97fda-322f-402d-84a1-02297ebf84d8"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11985"
+        ],
+        "x-ms-correlation-request-id": [
+          "98dd38ef-245b-445e-a2e0-5a14a68ef3f3"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T015237Z:98dd38ef-245b-445e-a2e0-5a14a68ef3f3"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:52:36 GMT"
+        ],
+        "Content-Length": [
+          "631"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/Redis/RedisReboot7648\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisReboot7648\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisReboot7648.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/redis/RedisReboot7648?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzUmVib290NDAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzUmVib290NzY0OD9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "4e98182c-ea84-4ad7-99a3-0ffba194a8db"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11984"
+        ],
+        "x-ms-correlation-request-id": [
+          "4d387978-7394-40ff-b895-c29c97bbf654"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T015307Z:4d387978-7394-40ff-b895-c29c97bbf654"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:53:07 GMT"
+        ],
+        "Content-Length": [
+          "631"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/Redis/RedisReboot7648\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisReboot7648\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisReboot7648.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/redis/RedisReboot7648?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzUmVib290NDAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzUmVib290NzY0OD9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "8f66eef3-6cf2-4737-ac39-1a3a524351f6"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11983"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-correlation-request-id": [
+          "54f559c2-5514-4ee8-8386-1bdbf3fd0fba"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T015337Z:54f559c2-5514-4ee8-8386-1bdbf3fd0fba"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:53:36 GMT"
+        ],
+        "Content-Length": [
+          "631"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/Redis/RedisReboot7648\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisReboot7648\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisReboot7648.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/redis/RedisReboot7648?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzUmVib290NDAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzUmVib290NzY0OD9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "b7d30d6f-e947-4fda-a974-ccfdd4204379"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11982"
+        ],
+        "x-ms-correlation-request-id": [
+          "dde0040b-0a18-4061-94d4-30e9d6d82792"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T015407Z:dde0040b-0a18-4061-94d4-30e9d6d82792"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:54:06 GMT"
+        ],
+        "Content-Length": [
+          "631"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/Redis/RedisReboot7648\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisReboot7648\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisReboot7648.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/redis/RedisReboot7648?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzUmVib290NDAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzUmVib290NzY0OD9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "9e099be0-bb37-4af6-b32d-f3ef33de4703"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11981"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-correlation-request-id": [
+          "b0e3c5ad-96a2-4ecf-b87a-1d1b5beb7a22"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T015437Z:b0e3c5ad-96a2-4ecf-b87a-1d1b5beb7a22"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:54:37 GMT"
+        ],
+        "Content-Length": [
+          "631"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/Redis/RedisReboot7648\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisReboot7648\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisReboot7648.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/redis/RedisReboot7648?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzUmVib290NDAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzUmVib290NzY0OD9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "aef70ab8-4691-4907-95ec-b33921c22301"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11980"
+        ],
+        "x-ms-correlation-request-id": [
+          "ca06dbb1-09f4-4611-8edd-d25df76136ff"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T015507Z:ca06dbb1-09f4-4611-8edd-d25df76136ff"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:55:06 GMT"
+        ],
+        "Content-Length": [
+          "631"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/Redis/RedisReboot7648\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisReboot7648\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisReboot7648.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/redis/RedisReboot7648?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzUmVib290NDAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzUmVib290NzY0OD9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "33730ba1-90b3-4dbc-9b71-15af34073395"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11979"
+        ],
+        "x-ms-correlation-request-id": [
+          "8afc2f78-21fa-433e-8e62-64c9471aeaa1"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T015537Z:8afc2f78-21fa-433e-8e62-64c9471aeaa1"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:55:37 GMT"
+        ],
+        "Content-Length": [
+          "631"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/Redis/RedisReboot7648\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisReboot7648\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisReboot7648.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/redis/RedisReboot7648?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzUmVib290NDAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzUmVib290NzY0OD9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "9c7e32e2-1289-41a6-8994-fad7df7b8190"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11978"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-correlation-request-id": [
+          "c90749d4-45d3-4018-b9a1-4c7fd193a39a"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T015607Z:c90749d4-45d3-4018-b9a1-4c7fd193a39a"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:56:07 GMT"
+        ],
+        "Content-Length": [
+          "631"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/Redis/RedisReboot7648\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisReboot7648\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisReboot7648.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/redis/RedisReboot7648?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzUmVib290NDAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzUmVib290NzY0OD9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "e7ff28c1-597e-47b5-816b-370137e636fd"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11977"
+        ],
+        "x-ms-correlation-request-id": [
+          "17595906-6b56-4e57-bcc6-51db03831843"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T015638Z:17595906-6b56-4e57-bcc6-51db03831843"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:56:38 GMT"
+        ],
+        "Content-Length": [
+          "631"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/Redis/RedisReboot7648\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisReboot7648\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisReboot7648.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/redis/RedisReboot7648?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzUmVib290NDAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzUmVib290NzY0OD9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "d44fd823-29c1-4efa-bd5e-4afe66ce1f23"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11976"
+        ],
+        "x-ms-correlation-request-id": [
+          "243c6142-07c3-4205-a2b0-04059772acb3"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T015708Z:243c6142-07c3-4205-a2b0-04059772acb3"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:57:07 GMT"
+        ],
+        "Content-Length": [
+          "631"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/Redis/RedisReboot7648\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisReboot7648\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisReboot7648.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/redis/RedisReboot7648?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzUmVib290NDAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzUmVib290NzY0OD9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "8349753e-b79d-465a-b677-a0784c92a78e"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11975"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-correlation-request-id": [
+          "1d4955a7-cdcb-40fb-9859-d6d3712be41f"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T015738Z:1d4955a7-cdcb-40fb-9859-d6d3712be41f"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:57:38 GMT"
+        ],
+        "Content-Length": [
+          "631"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/Redis/RedisReboot7648\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisReboot7648\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisReboot7648.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/redis/RedisReboot7648?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzUmVib290NDAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzUmVib290NzY0OD9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "19a6bbc9-14e3-4d94-b14e-07eae967f8d7"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11974"
+        ],
+        "x-ms-correlation-request-id": [
+          "f950784d-7a0b-4ab9-86e3-e0839bd9d695"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T015808Z:f950784d-7a0b-4ab9-86e3-e0839bd9d695"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:58:08 GMT"
+        ],
+        "Content-Length": [
+          "631"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/Redis/RedisReboot7648\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisReboot7648\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisReboot7648.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/redis/RedisReboot7648?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzUmVib290NDAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzUmVib290NzY0OD9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "4796e8ff-7b48-414c-ab1c-914f9c8207c2"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11973"
+        ],
+        "x-ms-correlation-request-id": [
+          "053f1604-d7e0-46ae-87ad-ea7fa1febe21"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T015838Z:053f1604-d7e0-46ae-87ad-ea7fa1febe21"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:58:38 GMT"
+        ],
+        "Content-Length": [
+          "631"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/Redis/RedisReboot7648\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisReboot7648\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisReboot7648.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/redis/RedisReboot7648?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzUmVib290NDAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzUmVib290NzY0OD9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "9ed42cf3-3785-4dc5-b737-521f21b7b1c7"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11972"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-correlation-request-id": [
+          "17535500-62ed-4811-aa8d-3e72ee46365c"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T015908Z:17535500-62ed-4811-aa8d-3e72ee46365c"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:59:07 GMT"
+        ],
+        "Content-Length": [
+          "632"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/Redis/RedisReboot7648\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisReboot7648\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisReboot7648.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/Redis/RedisReboot7648?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzUmVib290NDAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL1JlZGlzL1JlZGlzUmVib290NzY0OD9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "8cf330f9-4546-4b27-9b57-0be58022125a"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "b47469f6-45c0-4d50-a15a-bcdc51d06ac9"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11971"
+        ],
+        "x-ms-correlation-request-id": [
+          "e049cfde-0c9a-4fe3-8088-6c8009b8d53f"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T015909Z:e049cfde-0c9a-4fe3-8088-6c8009b8d53f"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:59:08 GMT"
+        ],
+        "Content-Length": [
+          "632"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/Redis/RedisReboot7648\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisReboot7648\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisReboot7648.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisReboot4012/providers/Microsoft.Cache/Redis/RedisReboot7648/forceReboot?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzUmVib290NDAxMi9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL1JlZGlzL1JlZGlzUmVib290NzY0OC9mb3JjZVJlYm9vdD9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"rebootType\": \"AllNodes\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "c5595e55-790a-4ec1-b3d1-f461485f9bf3"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "32"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "e339128b-408a-4bf8-b7f1-18879b9af2ba"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "84766e7c-9e56-4125-9db0-c972542af9ea"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T015910Z:84766e7c-9e56-4125-9db0-c972542af9ea"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:59:10 GMT"
+        ],
+        "Content-Length": [
+          "130"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"message\": \"The requested reboot operation for 'AllNodes' has been successfully scheduled and should be executed shortly.\"\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "RebootBothNodesTest": [
+      "RedisReboot4012",
+      "RedisReboot7648"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "bc130894-c5b3-4adc-a077-0b51f3714abe"
+  }
+}
