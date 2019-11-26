@@ -90,7 +90,6 @@ namespace Azure.Messaging.EventHubs.Processor
             {
                 throw new RequestFailedException(Resources.ResourceNotFound);
             }
-
         }
 
         /// <summary>

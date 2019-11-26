@@ -52,7 +52,7 @@ namespace Azure.Messaging.EventHubs
         private Func<ProcessErrorEventArgs, Task> _processErrorAsync;
 
         /// <summary>Indicates whether or not this event processor is currently running.  Used only for mocking purposes.</summary>
-        private bool? _isRunningMock;
+        private bool? _isRunningOverride;
 
         /// <summary>
         ///   The event to be raised just before event processing starts for a given partition.
@@ -209,9 +209,9 @@ namespace Azure.Messaging.EventHubs
         {
             get
             {
-                if (_isRunningMock.HasValue)
+                if (_isRunningOverride.HasValue)
                 {
-                    return _isRunningMock.Value;
+                    return _isRunningOverride.Value;
                 }
 
                 // Capture the load balancing task so we don't end up with a race condition.
@@ -221,7 +221,7 @@ namespace Azure.Messaging.EventHubs
                 return loadBalancingTask != null && !loadBalancingTask.IsCompleted;
             }
 
-            protected set => _isRunningMock = value;
+            protected set => _isRunningOverride = value;
         }
 
         /// <summary>
@@ -608,8 +608,8 @@ namespace Azure.Messaging.EventHubs
                         }
 
                         // Now that the task has finished, clean up what is left.  Stop and remove every partition processing task that is
-                        // still running and clear our dictionaries.  ActivePartitionProcessors, ActivePartitionProcessorTokenSources and
-                        // PartitionContexts are already cleared by the StopPartitionProcessingIfRunningAsync method.
+                        // still running and clear our dictionaries.  ActivePartitionProcessors and PartitionContexts are already cleared
+                        // by the StopPartitionProcessingIfRunningAsync method.
 
                         await Task.WhenAll(ActivePartitionProcessors.Keys
                             .Select(partitionId => StopPartitionProcessingIfRunningAsync(partitionId, ProcessingStoppedReason.Shutdown)))
