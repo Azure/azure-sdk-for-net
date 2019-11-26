@@ -58,6 +58,9 @@ namespace Azure.Storage
         public static InvalidOperationException SasMissingData(string paramName)
             => new InvalidOperationException($"SAS is missing required parameter: {paramName}");
 
+        public static InvalidOperationException SasDataNotAllowed(string paramName, string paramNameNotAllowed)
+            => new InvalidOperationException($"SAS cannot have the {paramNameNotAllowed} parameter when the {paramName} parameter is present");
+
         public static InvalidOperationException TaskIncomplete()
             => new InvalidOperationException("Task is not completed");
 
@@ -105,5 +108,13 @@ namespace Azure.Storage
 
         public static ArgumentException SeekOutsideBufferRange(long index, long inclusiveRangeStart, long exclusiveRangeEnd)
             => new ArgumentException($"Tried to seek ouside buffer range. Gave index {index}, range is [{inclusiveRangeStart},{exclusiveRangeEnd}).");
+
+        public static void VerifyHttpsTokenAuth(Uri uri)
+        {
+            if (uri.Scheme != Constants.Https)
+            {
+                throw new ArgumentException("Cannot use TokenCredential without HTTPS.");
+            }
+        }
     }
 }

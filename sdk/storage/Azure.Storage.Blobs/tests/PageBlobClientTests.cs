@@ -976,33 +976,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task ResizeAsync_CpkHttpError()
-        {
-            await using DisposingContainer test = await GetTestContainerAsync();
-
-            // Arrange
-            PageBlobClient httpBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
-            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-            httpBlob = InstrumentClient(new PageBlobClient(
-                httpBlob.Uri.ToHttp(),
-                httpBlob.Pipeline,
-                httpBlob.ClientDiagnostics,
-                customerProvidedKey));
-
-            Assert.AreEqual(Constants.Blob.Http, httpBlob.Uri.Scheme);
-            PageBlobClient httpsBlob = InstrumentClient(httpBlob.WithCustomerProvidedKey(customerProvidedKey));
-
-            await httpsBlob.CreateAsync(Constants.KB);
-            var newSize = 8 * Constants.KB;
-
-            // Act
-            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
-                httpBlob.ResizeAsync(size: newSize),
-                actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
-
-        }
-
-        [Test]
         public async Task ResizeAsync_Error()
         {
             await using DisposingContainer test = await GetTestContainerAsync();

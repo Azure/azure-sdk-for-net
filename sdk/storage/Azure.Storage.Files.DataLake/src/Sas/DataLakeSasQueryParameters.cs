@@ -32,12 +32,12 @@ namespace Azure.Storage.Sas
         /// <summary>
         /// Gets the time at which the key becomes valid.
         /// </summary>
-        public DateTimeOffset KeyStartsOn => (DateTimeOffset)KeyProperties?.StartsOn;
+        public DateTimeOffset KeyStartsOn => KeyProperties == null ? default : KeyProperties.StartsOn;
 
         /// <summary>
         /// Gets the time at which the key becomes expires.
         /// </summary>
-        public DateTimeOffset KeyExpiresOn => (DateTimeOffset)KeyProperties?.ExpiresOn;
+        public DateTimeOffset KeyExpiresOn => KeyProperties == null ? default : KeyProperties.ExpiresOn;
 
         /// <summary>
         /// Gets the Storage service that accepts the key.

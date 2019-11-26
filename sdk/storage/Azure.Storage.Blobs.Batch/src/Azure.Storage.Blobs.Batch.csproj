@@ -7,8 +7,6 @@
     <Version>12.1.0-preview.1</Version>
     <DefineConstants>BlobSDK;$(DefineConstants)</DefineConstants>
     <PackageTags>Microsoft Azure Storage Blobs Batching;Batch blob;Batch operation;BlobBatchClient;BlobBatch;Microsoft;Azure;Blobs;Blob;Storage;StorageScalable;$(PackageCommonTags)</PackageTags>
-    <DefineConstants>BlobSDK;StorageSDK;$(DefineConstants)</DefineConstants>
-    <PackageTags>Microsoft Azure Storage Blobs Batching, Batch blob, Batch operation, BlobBatchClient, BlobBatch, Microsoft, Azure, Blobs, Blob, Storage, StorageScalable, azureofficial</PackageTags>
     <PackageReleaseNotes>
     </PackageReleaseNotes>
     <Description>
