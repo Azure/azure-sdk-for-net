@@ -49,7 +49,7 @@ namespace Azure.Storage
             }
 
             var stringToSign = BuildStringToSign(message);
-            var signature = _credentials.ComputeHMACSHA256(stringToSign);
+            var signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(_credentials, stringToSign);
 
             var key = new AuthenticationHeaderValue(Constants.HeaderNames.SharedKey, _credentials.AccountName + ":" + signature).ToString();
             message.Request.Headers.SetValue(Constants.HeaderNames.Authorization, key);

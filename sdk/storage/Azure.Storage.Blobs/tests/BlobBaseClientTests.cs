@@ -11,13 +11,15 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Testing;
+using Azure.Identity;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Tests;
+using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
-using TestConstants = Azure.Storage.Test.Constants;
+using TestConstants = Azure.Storage.Test.TestConstants;
 
 namespace Azure.Storage.Blobs.Test
 {
@@ -1378,6 +1380,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             Response<BlobProperties> response = await identitySasBlob.GetPropertiesAsync();
+            AssertSasUserDelegationKey(identitySasBlob.Uri, userDelegationKey.Value);
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -1433,12 +1436,25 @@ namespace Azure.Storage.Blobs.Test
                 .GetBlobContainerClient(containerName)
                 .GetBlockBlobClient(blobName));
 
+            AssertSasUserDelegationKey(identitySasBlob.Uri, userDelegationKey.Value);
+
             // Act
             Response<BlobProperties> response = await identitySasBlob.GetPropertiesAsync();
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
 
+        }
+
+        private void AssertSasUserDelegationKey(Uri uri, UserDelegationKey key)
+        {
+            BlobSasQueryParameters sas = new BlobUriBuilder(uri).Sas;
+            Assert.AreEqual(key.SignedObjectId, sas.KeyObjectId);
+            Assert.AreEqual(key.SignedExpiresOn, sas.KeyExpiresOn);
+            Assert.AreEqual(key.SignedService, sas.KeyService);
+            Assert.AreEqual(key.SignedStartsOn, sas.KeyStartsOn);
+            Assert.AreEqual(key.SignedTenantId, sas.KeyTenantId);
+            Assert.AreEqual(key.SignedVersion, sas.Version);
         }
 
         [Test]
@@ -1524,7 +1540,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
-
+            AssertSasUserDelegationKey(identitySasBlob.Uri, userDelegationKey.Value);
         }
 
         [Test]

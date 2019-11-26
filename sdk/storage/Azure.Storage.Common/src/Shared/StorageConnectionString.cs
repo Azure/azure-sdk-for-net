@@ -231,22 +231,22 @@ namespace Azure.Storage
         /// <summary>
         /// Indicates whether this account is a development storage account.
         /// </summary>
-        private bool IsDevStoreAccount { get; set; }
+        internal bool IsDevStoreAccount { get; set; }
 
         /// <summary>
         /// The storage service hostname suffix set by the user, if any.
         /// </summary>
-        private string EndpointSuffix { get; set; }
+        internal string EndpointSuffix { get; set; }
 
         /// <summary>
         /// The connection string parsed into settings.
         /// </summary>
-        private IDictionary<string, string> Settings { get; set; }
+        internal IDictionary<string, string> Settings { get; set; }
 
         /// <summary>
         /// True if the user used a constructor that auto-generates endpoints.
         /// </summary>
-        private bool DefaultEndpoints { get; set; }
+        internal bool DefaultEndpoints { get; set; }
 
         /// <summary>
         /// Gets the primary endpoint for the Blob service, as configured for the storage account.
@@ -305,7 +305,7 @@ namespace Azure.Storage
         /// <summary>
         /// Private record of the account name for use in ToString(bool).
         /// </summary>
-        private string _accountName;
+        internal string _accountName;
 
         /// <summary>
         /// Parses a connection string and returns a <see cref="StorageConnectionString"/> created
@@ -378,95 +378,6 @@ namespace Azure.Storage
         //    UriQueryBuilder builder = SharedAccessSignatureHelper.GetSignature(policy, signature, accountKey.KeyName, Constants.HeaderConstants.TargetStorageVersion);
         //    return builder.ToString();
         //}
-
-        /// <summary>
-        /// Returns a connection string for this storage account, without sensitive data.
-        /// </summary>
-        /// <returns>A connection string.</returns>
-        public override string ToString() => ToString(false);
-
-        /// <summary>
-        /// Returns a connection string for the storage account, optionally with sensitive data.
-        /// </summary>
-        /// <param name="exportSecrets"><c>True</c> to include sensitive data in the string; otherwise, <c>false</c>.</param>
-        /// <returns>A connection string.</returns>
-        public string ToString(bool exportSecrets)
-        {
-            if (Settings == null)
-            {
-                Settings = new Dictionary<string, string>();
-
-                if (DefaultEndpoints)
-                {
-                    Settings.Add(Constants.ConnectionStrings.DefaultEndpointsProtocolSetting, BlobEndpoint.Scheme);
-
-                    if (EndpointSuffix != null)
-                    {
-                        Settings.Add(Constants.ConnectionStrings.EndpointSuffixSetting, EndpointSuffix);
-                    }
-                }
-                else
-                {
-                    if (BlobEndpoint != null)
-                    {
-                        Settings.Add(Constants.ConnectionStrings.BlobEndpointSetting, BlobEndpoint.ToString());
-                    }
-
-                    if (QueueEndpoint != null)
-                    {
-                        Settings.Add(Constants.ConnectionStrings.QueueEndpointSetting, QueueEndpoint.ToString());
-                    }
-
-                    if (TableEndpoint != null)
-                    {
-                        Settings.Add(Constants.ConnectionStrings.TableEndpointSetting, TableEndpoint.ToString());
-                    }
-
-                    if (FileEndpoint != null)
-                    {
-                        Settings.Add(Constants.ConnectionStrings.FileEndpointSetting, FileEndpoint.ToString());
-                    }
-
-                    if (BlobStorageUri.SecondaryUri != null)
-                    {
-                        Settings.Add(Constants.ConnectionStrings.BlobSecondaryEndpointSetting,
-                            BlobStorageUri.SecondaryUri.ToString());
-                    }
-
-                    if (QueueStorageUri.SecondaryUri != null)
-                    {
-                        Settings.Add(Constants.ConnectionStrings.QueueSecondaryEndpointSetting,
-                            QueueStorageUri.SecondaryUri.ToString());
-                    }
-
-                    if (TableStorageUri.SecondaryUri != null)
-                    {
-                        Settings.Add(Constants.ConnectionStrings.TableSecondaryEndpointSetting,
-                            TableStorageUri.SecondaryUri.ToString());
-                    }
-
-                    if (FileStorageUri.SecondaryUri != null)
-                    {
-                        Settings.Add(Constants.ConnectionStrings.FileSecondaryEndpointSetting,
-                            FileStorageUri.SecondaryUri.ToString());
-                    }
-                }
-            }
-
-            var listOfSettings = Settings.Select(pair => string.Format(CultureInfo.InvariantCulture, "{0}={1}", pair.Key, pair.Value)).ToList();
-
-            if (Credentials != null && !IsDevStoreAccount)
-            {
-                listOfSettings.Add(StorageCredentialsExtensions.ToString(Credentials, exportSecrets));
-            }
-
-            if (!string.IsNullOrWhiteSpace(_accountName) && (Credentials is StorageSharedKeyCredential sharedKeyCredentials ? string.IsNullOrWhiteSpace(sharedKeyCredentials.AccountName) : true))
-            {
-                listOfSettings.Add(string.Format(CultureInfo.InvariantCulture, "{0}={1}", Constants.ConnectionStrings.AccountNameSetting, _accountName));
-            }
-
-            return string.Join(";", listOfSettings);
-        }
 
         /// <summary>
         /// Returns a <see cref="StorageConnectionString"/> with development storage credentials using the specified proxy Uri.
@@ -1198,29 +1109,6 @@ namespace Azure.Storage
                 endpointSuffix);
 
             return (new Uri(primaryUri), new Uri(secondaryUri));
-        }
-    }
-
-    internal static class StorageCredentialsExtensions
-    {
-        public static string ToString(object credentials, bool exportSecrets)
-        {
-            if (credentials is StorageSharedKeyCredential sharedKeyCredentials)
-            {
-                return string.Format(
-                    CultureInfo.InvariantCulture,
-                    "{0}={1};{2}={3}",
-                    Constants.ConnectionStrings.AccountNameSetting,
-                    sharedKeyCredentials.AccountName,
-                    Constants.ConnectionStrings.AccountKeySetting,
-                    exportSecrets ? sharedKeyCredentials.ExportBase64EncodedKey() : "Sanitized");
-            }
-            else if (credentials is SharedAccessSignatureCredentials sasCredentials)
-            {
-                return string.Format(CultureInfo.InvariantCulture, "{0}={1}", Constants.ConnectionStrings.SharedAccessSignatureSetting, exportSecrets ? sasCredentials.SasToken : "[signature hidden]");
-            }
-
-            return string.Empty;
         }
     }
 }

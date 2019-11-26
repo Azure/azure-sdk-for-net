@@ -3,8 +3,6 @@
 
 using System;
 using System.Globalization;
-using System.Linq;
-using Azure.Storage.Test;
 using NUnit.Framework;
 
 namespace Azure.Storage.Test
@@ -62,7 +60,7 @@ namespace Azure.Storage.Test
             Assert.AreEqual(a.FileStorageUri, b.FileStorageUri);
 
             // seralized representatons are the same.
-            var aToStringNoSecrets = a.ToString();
+            var aToStringNoSecrets = a.ToString(false);
             var aToStringWithSecrets = a.ToString(true);
             var bToStringNoSecrets = b.ToString(false);
             var bToStringWithSecrets = b.ToString(true);
@@ -712,7 +710,7 @@ namespace Azure.Storage.Test
             var key = accountAndKey.ExportBase64EncodedKey();
             Assert.AreEqual(accountKeyString, key);
 
-            var keyBytes = accountAndKey.AccountKeyValue;
+            var keyBytes = accountAndKey.GetAccountKey();
             var expectedKeyBytes = Convert.FromBase64String(accountKeyString);
 
             TestHelper.AssertSequenceEqual(expectedKeyBytes, keyBytes);

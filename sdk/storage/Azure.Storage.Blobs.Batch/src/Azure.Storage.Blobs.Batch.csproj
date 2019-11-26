@@ -23,4 +23,16 @@
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)NoBodyResponse{T}.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(AzureStorageSharedSources)Constants.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureStorageSharedSources)Errors.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureStorageSharedSources)StorageExceptionExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureStorageSharedSources)TaskExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+  </ItemGroup>
 </Project>

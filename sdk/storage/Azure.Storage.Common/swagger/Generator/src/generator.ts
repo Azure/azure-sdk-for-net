@@ -704,26 +704,28 @@ function generateEnum(w: IndentWriter, model: IServiceModel, type: IEnumType) {
     // Generate the enum
     const regionName = `enum ${naming.type(type.name)}`;
     w.line(`#region ${regionName}`);
-    w.line(`namespace ${naming.namespace(type.namespace)}`);
-    w.scope('{', '}', () => {
-        w.line(`/// <summary>`)
-        w.line(`/// ${type.description || type.name + ' values'}`);
-        w.line(`/// </summary>`)
-        const notReallyPlural = naming.type(type.name).endsWith('Status');
-        if (notReallyPlural) { w.line(`#pragma warning disable CA1717 // Only FlagsAttribute enums should have plural names`); }
-        w.line(`${type.public ? 'public' : 'internal'} enum ${naming.type(type.name)}`);
-        if (notReallyPlural) { w.line(`#pragma warning restore CA1717 // Only FlagsAttribute enums should have plural names`); }
-        const separator = IndentWriter.createFenceposter();
-        w.scope(`{`, `}`, () => {
-            for (const value of type.values) {
-                if (separator()) { w.line(','); w.line(); }
-                w.line(`/// <summary>`);
-                w.line(`/// ${value.description || value.value || value.name}`);
-                w.line(`/// </summary>`);
-                w.write(naming.enumField(value.name || value.value));
-            }
+    if (!type.external) {
+        w.line(`namespace ${naming.namespace(type.namespace)}`);
+        w.scope('{', '}', () => {
+            w.line(`/// <summary>`)
+            w.line(`/// ${type.description || type.name + ' values'}`);
+            w.line(`/// </summary>`)
+            const notReallyPlural = naming.type(type.name).endsWith('Status');
+            if (notReallyPlural) { w.line(`#pragma warning disable CA1717 // Only FlagsAttribute enums should have plural names`); }
+            w.line(`${type.public ? 'public' : 'internal'} enum ${naming.type(type.name)}`);
+            if (notReallyPlural) { w.line(`#pragma warning restore CA1717 // Only FlagsAttribute enums should have plural names`); }
+            const separator = IndentWriter.createFenceposter();
+            w.scope(`{`, `}`, () => {
+                for (const value of type.values) {
+                    if (separator()) { w.line(','); w.line(); }
+                    w.line(`/// <summary>`);
+                    w.line(`/// ${value.description || value.value || value.name}`);
+                    w.line(`/// </summary>`);
+                    w.write(naming.enumField(value.name || value.value));
+                }
+            });
         });
-    });
+    }
 
     // Generate the custom serializers if needed
     if (type.customSerialization) {
@@ -772,6 +774,8 @@ function generateEnum(w: IndentWriter, model: IServiceModel, type: IEnumType) {
 }
 
 function generateEnumStrings(w: IndentWriter, model: IServiceModel, type: IEnumType) {
+    if (type.external) { return; }
+
     const regionName = `enum strings ${naming.type(type.name)}`;
     w.line(`#region ${regionName}`);
     w.line(`namespace ${naming.namespace(type.namespace)}`);
@@ -866,6 +870,7 @@ function generateEnumStrings(w: IndentWriter, model: IServiceModel, type: IEnumT
 function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType) {
     const service = model.service;
     const regionName = type.struct ? `struct ${naming.type(type.name)}` : `class ${naming.type(type.name)}`;
+    let needsModelFactory = false;
     w.line(`#region ${regionName}`);
     w.line(`namespace ${naming.namespace(type.namespace)}`);
     w.scope('{', '}', () => {
@@ -910,8 +915,13 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                 w.line(`/// Creates a new ${naming.type(type.name)} instance`);
                 w.line(`/// </summary>`);
                 if (type.deserialize) {
+                    let visibility = `public`;
+                    if (type.public && readonlyModel) {
+                        visibility = `internal`;
+                        needsModelFactory = true;
+                    }
                     // Add an optional overload that prevents initialization for deserialiation
-                    w.write(`${!type.public || !readonlyModel ? 'public' : 'internal'} ${naming.type(type.name)}()`);
+                    w.write(`${visibility} ${naming.type(type.name)}()`);
                     w.scope(() => w.write(`: this(false)`));
                     w.scope(`{`, `}`, () => null);
                     w.line();
@@ -944,7 +954,8 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                         w.popScope(`}`);
                     }
                 });
-            } else {
+            } else if (readonlyModel) {
+                needsModelFactory = true;
                 const factoryName = naming.type(model.info.modelFactoryName);
                 w.line();
                 w.line(`/// <summary>`)
@@ -1026,14 +1037,20 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                     });
                 }
                 else { w.line(`internal ${naming.type(type.name)}() { }`); }
+            } else {
+                w.line();
+                w.line(`/// <summary>`);
+                w.line(`/// Creates a new ${naming.type(type.name)} instance`);
+                w.line(`/// </summary>`);
+                w.line(`public ${naming.type(type.name)}() { }`);
             }
 
             // Create serializers if necessary
             for (const serializationType of model.info.consumes) {
                 const format =
                     (serializationType === 'application/xml') ? 'Xml' :
-                        (serializationType === 'application/json') ? 'Json' :
-                            serializationType;
+                    (serializationType === 'application/json') ? 'Json' :
+                    serializationType;
 
                 // TODO: JSON, ...
                 if (format !== `Xml`) {
@@ -1054,7 +1071,7 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
 
         // If there are readonly properties, we'll create a model factory
         const props = <IProperty[]>Object.values(type.properties);
-        if (type.public && props.some(p => p.readonly)) {
+        if (type.public && (needsModelFactory || props.some(p => p.readonly))) {
             const factoryName = naming.type(model.info.modelFactoryName);
             const typeName = naming.type(type.name);
             const modelName = `_model`;

@@ -110,7 +110,7 @@ namespace Azure.Storage.Queues.Models
     }
     public partial class QueueAccessPolicy
     {
-        internal QueueAccessPolicy() { }
+        public QueueAccessPolicy() { }
         public System.DateTimeOffset? ExpiresOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
         public string Permissions { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
         public System.DateTimeOffset? StartsOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
@@ -126,7 +126,7 @@ namespace Azure.Storage.Queues.Models
     }
     public partial class QueueCorsRule
     {
-        internal QueueCorsRule() { }
+        public QueueCorsRule() { }
         public string AllowedHeaders { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
         public string AllowedMethods { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
         public string AllowedOrigins { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
@@ -252,7 +252,7 @@ namespace Azure.Storage.Queues.Models
     }
     public partial class QueueRetentionPolicy
     {
-        internal QueueRetentionPolicy() { }
+        public QueueRetentionPolicy() { }
         public int? Days { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
         public bool Enabled { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
     }

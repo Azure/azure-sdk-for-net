@@ -13,7 +13,6 @@ using Azure.Storage.Files.Shares.Tests;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
-using TestConstants = Azure.Storage.Test.Constants;
 
 namespace Azure.Storage.Files.Shares.Test
 {
