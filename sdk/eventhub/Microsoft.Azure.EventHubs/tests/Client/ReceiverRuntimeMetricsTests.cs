@@ -51,7 +51,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
             }
         }
 
-        [Fact(Skip = "Consistently failing during nightly runs; tracked by #8892")]
+        [Fact]
         [LiveTest]
         [DisplayTestMethodName]
         public async Task DefaultBehaviorDisabled()
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
             }
         }
 
-        [Fact(Skip = "Consistently failing during nightly runs; tracked by #8892")]
+        [Fact]
         [LiveTest]
         [DisplayTestMethodName]
         public async Task DisableWithReceiverOptions()
@@ -194,7 +194,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                 $"FAILED partitionReceiver.RuntimeInfo.LastEnqueuedOffset == {partitionReceiver.RuntimeInfo.LastEnqueuedOffset}");
             Assert.True(partitionReceiver.RuntimeInfo.LastEnqueuedTimeUtc == DateTime.MinValue,
                 $"FAILED partitionReceiver.RuntimeInfo.LastEnqueuedTimeUtc == {partitionReceiver.RuntimeInfo.LastEnqueuedTimeUtc}");
-            Assert.True(partitionReceiver.RuntimeInfo.LastSequenceNumber == 0,
+            Assert.True(partitionReceiver.RuntimeInfo.LastSequenceNumber == -1,
                 $"FAILED partitionReceiver.RuntimeInfo.LastSequenceNumber == {partitionReceiver.RuntimeInfo.LastSequenceNumber}");
             Assert.True(partitionReceiver.RuntimeInfo.RetrievalTime == DateTime.MinValue,
                 $"FAILED partitionReceiver.RuntimeInfo.RetrievalTime == {partitionReceiver.RuntimeInfo.RetrievalTime}");
