@@ -17,6 +17,8 @@ namespace Azure.Core.Pipeline
 
         private readonly string[] _scopes;
 
+        private readonly bool _allowInsecureTransport;
+
         private string? _headerValue;
 
         private DateTimeOffset _refreshOn;
@@ -26,7 +28,29 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="credential">The token credential to use for authentication.</param>
         /// <param name="scope">The scope to authenticate for.</param>
-        public BearerTokenAuthenticationPolicy(TokenCredential credential, string scope) : this(credential, new[] { scope })
+        public BearerTokenAuthenticationPolicy(TokenCredential credential, string scope)
+            : this(credential, new[] { scope }, null)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new instance of <see cref="BearerTokenAuthenticationPolicy"/> using provided token credential and scope to authenticate for.
+        /// </summary>
+        /// <param name="credential">The token credential to use for authentication.</param>
+        /// <param name="scope">The scope to authenticate for.</param>
+        /// <param name="options"><see cref="ClientOptions"/> that allow to configure the <see cref="BearerTokenAuthenticationPolicy"/>.</param>
+        public BearerTokenAuthenticationPolicy(TokenCredential credential, string scope, ClientOptions? options)
+            : this(credential, new[] { scope }, options)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new instance of <see cref="BearerTokenAuthenticationPolicy"/> using provided token credential and scopes to authenticate for.
+        /// </summary>
+        /// <param name="credential">The token credential to use for authentication.</param>
+        /// <param name="scopes">Scopes to authenticate for.</param>>
+        public BearerTokenAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes)
+            : this(credential, scopes, null)
         {
         }
 
@@ -35,13 +59,15 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="credential">The token credential to use for authentication.</param>
         /// <param name="scopes">Scopes to authenticate for.</param>
-        public BearerTokenAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes)
+        /// <param name="options"><see cref="ClientOptions"/> that allow to configure the <see cref="BearerTokenAuthenticationPolicy"/>.</param>
+        public BearerTokenAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes, ClientOptions? options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(scopes, nameof(scopes));
 
             _credential = credential;
             _scopes = scopes.ToArray();
+            _allowInsecureTransport = options?.Security.AllowInsecureConfidentialAuthenticationTransport ?? false;
         }
 
         /// <inheritdoc />
@@ -59,9 +85,9 @@ namespace Azure.Core.Pipeline
         /// <inheritdoc />
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
-            if (message.Request.Uri.Scheme != Uri.UriSchemeHttps)
+            if (!_allowInsecureTransport && message.Request.Uri.Scheme != Uri.UriSchemeHttps)
             {
-                throw new InvalidOperationException("Bearer token authentication is not permitted for non TLS protected (https) endpoints.");
+                throw new InvalidOperationException("Bearer token authentication is not permitted for non-TLS protected (non-HTTPS) endpoints.");
             }
 
             if (DateTimeOffset.UtcNow >= _refreshOn)

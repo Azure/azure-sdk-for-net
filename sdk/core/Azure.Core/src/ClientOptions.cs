@@ -22,6 +22,7 @@ namespace Azure.Core
         {
             Retry = new RetryOptions();
             Diagnostics = new DiagnosticsOptions();
+            Security = new SecurityOptions();
         }
 
         /// <summary>
@@ -42,6 +43,11 @@ namespace Azure.Core
         /// Gets the client retry options.
         /// </summary>
         public RetryOptions Retry { get; }
+
+        /// <summary>
+        /// Gets the client security options.
+        /// </summary>
+        public SecurityOptions Security { get; }
 
         /// <summary>
         /// Adds an <see cref="HttpPipeline"/> policy into the client pipeline. The position of policy in the pipeline is controlled by <paramref name="position"/> parameter.
