@@ -23,21 +23,6 @@ namespace Azure.Messaging.EventHubs.Tests
     public class EventProcessorClientTests
     {
         /// <summary>
-        ///   Provides test cases for the constructor tests.
-        /// </summary>
-        ///
-        public static IEnumerable<object[]> ConstructorCreatesDefaultOptionsCases()
-        {
-            var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
-            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
-
-            yield return new object[] { new ReadableOptionsMock(Mock.Of<PartitionManager>(), "consumerGroup", connectionString), "connection string with default options" };
-            yield return new object[] { new ReadableOptionsMock(Mock.Of<PartitionManager>(), "consumerGroup", connectionString, null), "connection string with explicit null options" };
-            yield return new object[] { new ReadableOptionsMock(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "hub", credential.Object), "namespace with default options" };
-            yield return new object[] { new ReadableOptionsMock(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "hub", credential.Object, null), "namespace with explicit null options" };
-        }
-
-        /// <summary>
         ///   Verifies functionality of the <see cref="EventProcessorClient" />
         ///   constructor.
         /// </summary>
@@ -142,91 +127,6 @@ namespace Azure.Messaging.EventHubs.Tests
             var processor = new EventProcessorClient(Mock.Of<PartitionManager>(), EventHubConsumerClient.DefaultConsumerGroupName, "namespace", "hubName", credential.Object, options);
 
             Assert.That(GetRetryPolicy(processor), Is.SameAs(expected));
-        }
-
-        /// <summary>
-        ///    Verifies functionality of the <see cref="EventProcessorClient" />
-        ///    constructor.
-        /// </summary>
-        ///
-        [Test]
-        [TestCaseSource(nameof(ConstructorCreatesDefaultOptionsCases))]
-        public void ConstructorCreatesDefaultOptions(ReadableOptionsMock eventProcessor,
-                                                     string constructorDescription)
-        {
-            var defaultOptions = new EventProcessorClientOptions();
-            EventProcessorClientOptions options = eventProcessor.ClientOptions;
-
-            Assert.That(options, Is.Not.Null, $"The { constructorDescription } constructor should have set default options.");
-            Assert.That(options, Is.Not.SameAs(defaultOptions), $"The { constructorDescription } constructor should not have the same options instance.");
-            Assert.That(options.Identifier, Is.EqualTo(defaultOptions.Identifier), $"The { constructorDescription } constructor should have the correct identifier.");
-            Assert.That(options.TrackLastEnqueuedEventProperties, Is.EqualTo(defaultOptions.TrackLastEnqueuedEventProperties), $"The { constructorDescription } constructor should default tracking of last event information.");
-            Assert.That(options.MaximumWaitTime, Is.EqualTo(defaultOptions.MaximumWaitTime), $"The { constructorDescription } constructor should have the correct maximum wait time.");
-            Assert.That(options.ConnectionOptions.TransportType, Is.EqualTo(defaultOptions.ConnectionOptions.TransportType), $"The { constructorDescription } constructor should have a default set of connection options.");
-            Assert.That(options.RetryOptions.IsEquivalentTo(defaultOptions.RetryOptions), Is.True, $"The { constructorDescription } constructor should have a default set of retry options.");
-        }
-
-        /// <summary>
-        ///    Verifies functionality of the <see cref="EventProcessorClient" />
-        ///    constructor.
-        /// </summary>
-        ///
-        [Test]
-        public void ConnectionStringConstructorClonesOptions()
-        {
-            var options = new EventProcessorClientOptions
-            {
-                Identifier = Guid.NewGuid().ToString(),
-                TrackLastEnqueuedEventProperties = false,
-                MaximumWaitTime = TimeSpan.FromMinutes(65),
-                RetryOptions = new EventHubsRetryOptions { TryTimeout = TimeSpan.FromMinutes(1), Delay = TimeSpan.FromMinutes(4) },
-                ConnectionOptions = new EventHubConnectionOptions { TransportType = EventHubsTransportType.AmqpWebSockets }
-            };
-
-            var eventProcessor = new ReadableOptionsMock(Mock.Of<PartitionManager>(), "consumerGroup", "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub", options);
-            EventProcessorClientOptions clonedOptions = eventProcessor.ClientOptions;
-
-            Assert.That(clonedOptions, Is.Not.Null, "The constructor should have set the options.");
-            Assert.That(clonedOptions, Is.Not.SameAs(options), "The constructor should have cloned the options.");
-            Assert.That(clonedOptions.Identifier, Is.EqualTo(options.Identifier), "The constructor should have the correct identifier.");
-            Assert.That(clonedOptions.TrackLastEnqueuedEventProperties, Is.EqualTo(options.TrackLastEnqueuedEventProperties), "The tracking of last event information of the clone should match.");
-            Assert.That(clonedOptions.MaximumWaitTime, Is.EqualTo(options.MaximumWaitTime), "The constructor should have the correct maximum wait time.");
-            Assert.That(clonedOptions.ConnectionOptions.TransportType, Is.EqualTo(options.ConnectionOptions.TransportType), "The connection options of the clone should copy properties.");
-            Assert.That(clonedOptions.ConnectionOptions, Is.Not.SameAs(options.ConnectionOptions), "The connection options of the clone should be a copy, not the same instance.");
-            Assert.That(clonedOptions.RetryOptions.IsEquivalentTo(options.RetryOptions), Is.True, "The retry options of the clone should be considered equal.");
-            Assert.That(clonedOptions.RetryOptions, Is.Not.SameAs(options.RetryOptions), "The retry options of the clone should be a copy, not the same instance.");
-        }
-
-        /// <summary>
-        ///    Verifies functionality of the <see cref="EventProcessorClient" />
-        ///    constructor.
-        /// </summary>
-        ///
-        [Test]
-        public void NamespaceConstructorClonesOptions()
-        {
-            var options = new EventProcessorClientOptions
-            {
-                Identifier = Guid.NewGuid().ToString(),
-                TrackLastEnqueuedEventProperties = false,
-                MaximumWaitTime = TimeSpan.FromMinutes(65),
-                RetryOptions = new EventHubsRetryOptions { TryTimeout = TimeSpan.FromMinutes(1), Delay = TimeSpan.FromMinutes(4) },
-                ConnectionOptions = new EventHubConnectionOptions { TransportType = EventHubsTransportType.AmqpWebSockets }
-            };
-
-            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
-            var eventProcessor = new ReadableOptionsMock(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "hub", credential.Object, options);
-            EventProcessorClientOptions clonedOptions = eventProcessor.ClientOptions;
-
-            Assert.That(clonedOptions, Is.Not.Null, "The constructor should have set the options.");
-            Assert.That(clonedOptions, Is.Not.SameAs(options), "The constructor should have cloned the options.");
-            Assert.That(clonedOptions.Identifier, Is.EqualTo(options.Identifier), "The constructor should have the correct identifier.");
-            Assert.That(clonedOptions.TrackLastEnqueuedEventProperties, Is.EqualTo(options.TrackLastEnqueuedEventProperties), "The tracking of last event information of the clone should match.");
-            Assert.That(clonedOptions.MaximumWaitTime, Is.EqualTo(options.MaximumWaitTime), "The constructor should have the correct maximum wait time.");
-            Assert.That(clonedOptions.ConnectionOptions.TransportType, Is.EqualTo(options.ConnectionOptions.TransportType), "The connection options of the clone should copy properties.");
-            Assert.That(clonedOptions.ConnectionOptions, Is.Not.SameAs(options.ConnectionOptions), "The connection options of the clone should be a copy, not the same instance.");
-            Assert.That(clonedOptions.RetryOptions.IsEquivalentTo(options.RetryOptions), Is.True, "The retry options of the clone should be considered equal.");
-            Assert.That(clonedOptions.RetryOptions, Is.Not.SameAs(options.RetryOptions), "The retry options of the clone should be a copy, not the same instance.");
         }
 
         /// <summary>
