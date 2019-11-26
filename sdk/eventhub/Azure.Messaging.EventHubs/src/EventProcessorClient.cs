@@ -454,7 +454,7 @@ namespace Azure.Messaging.EventHubs
 
             ProcessingConsumerOptions = new EventHubConsumerClientOptions
             {
-                RetryOptions = clientOptions.RetryOptions
+                RetryOptions = clientOptions.RetryOptions.Clone()
             };
 
             ProcessingReadEventOptions = new ReadEventOptions
