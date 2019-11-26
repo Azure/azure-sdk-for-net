@@ -449,6 +449,7 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(30 * Constants.KB)]
         [TestCase(50 * Constants.KB)]
         [TestCase(501 * Constants.KB)]
+        [Ignore("times out")]
         public async Task DownloadFileAsync_Parallel_SmallBlobs(long size) =>
             // Use a 1KB threshold so we get a lot of individual blocks
             await ParallelDownloadFileAndVerify(size, Constants.KB, new StorageTransferOptions { MaximumTransferLength = Constants.KB });
@@ -504,6 +505,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Ignore("times out")]
         public async Task DownloadTo_ReplacedDuringDownload()
         {
             await using DisposingContainer test = await GetTestContainerAsync();

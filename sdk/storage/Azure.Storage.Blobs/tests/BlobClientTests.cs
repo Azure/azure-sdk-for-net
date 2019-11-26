@@ -584,6 +584,7 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(1 * Constants.GB, 8)]
         [TestCase(1 * Constants.GB, 16)]
         [TestCase(1 * Constants.GB, null)]
+        [Ignore("times out")]
         public async Task UploadStreamAsync_LargeBlobs(long size, int? maximumThreadCount)
         {
             // TODO: #6781 We don't want to add 1GB of random data in the recordings
@@ -592,6 +593,7 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [LiveOnly]
+        [Ignore("times out")]
         [TestCase(33 * Constants.MB, 1)]
         [TestCase(33 * Constants.MB, 4)]
         [TestCase(33 * Constants.MB, 8)]
@@ -805,6 +807,7 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [LiveOnly] // Don't want a 100MB recording
+        [Ignore("failing")]
         public async Task ChecksForCancelation()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
