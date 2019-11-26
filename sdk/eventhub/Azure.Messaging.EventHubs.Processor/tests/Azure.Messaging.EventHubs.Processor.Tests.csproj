@@ -28,8 +28,6 @@
     <ProjectReference Include="..\samples\Azure.Messaging.EventHubs.Processor.Samples.csproj" />
   </ItemGroup>
 
-  <!-- Import the shared infrastructure from the Event Hubs client tests (shared source) -->
-  <ItemGroup>
-    <Compile Include="..\..\Azure.Messaging.EventHubs\tests\Shared\*.cs" Link="SharedSource\%(Filename)%(Extension)" />
-  </ItemGroup>
+  <!-- Import Event Hubs shared source -->
+  <Import Project="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.EventHubs.Shared\src\Azure.Messaging.EventHubs.Shared.Testing.projitems" Label="Testing" />
 </Project>

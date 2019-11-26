@@ -88,7 +88,7 @@ namespace Azure.Messaging.EventHubs.Processor
             }
             catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound)
             {
-                throw new RequestFailedException(Resources.ResourceNotFound);
+                throw new RequestFailedException(Resources.BlobsResourceDoesNotExist);
             }
         }
 
@@ -189,7 +189,7 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
-        ///   List of all the checkpoints in a data store for a given namespace, eventhub and consumer group.
+        ///   List of all the checkpoints in a data store for a given namespace, Event Hub and consumer group.
         /// </summary>
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the ownership are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
@@ -235,7 +235,7 @@ namespace Azure.Messaging.EventHubs.Processor
             }
             catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound)
             {
-                throw new RequestFailedException(Resources.ResourceNotFound);
+                throw new RequestFailedException(Resources.BlobsResourceDoesNotExist);
             }
         }
 
@@ -269,7 +269,7 @@ namespace Azure.Messaging.EventHubs.Processor
             catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound)
             {
                 // TODO: Add log  - "Checkpoint with partition id = '{ checkpoint.PartitionId }' could not be updated because specified container does not exist."
-                throw new RequestFailedException(Resources.ResourceNotFound);
+                throw new RequestFailedException(Resources.BlobsResourceDoesNotExist);
             }
             finally
             {
