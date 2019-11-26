@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.DataShare.Models
     using System.Linq;
 
     /// <summary>
-    /// An Azure storage blob container dataset.
+    /// An Azure storage blob container data set.
     /// </summary>
     [Newtonsoft.Json.JsonObject("Container")]
     [Rest.Serialization.JsonTransformation]

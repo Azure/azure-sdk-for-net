@@ -43,17 +43,24 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// Possible values include: 'Pending', 'Accepted', 'Rejected',
         /// 'Withdrawn'</param>
         /// <param name="location">invitation location</param>
+        /// <param name="providerEmail">Email of the provider who created the
+        /// resource</param>
+        /// <param name="providerName">Name of the provider who created the
+        /// resource</param>
+        /// <param name="providerTenantName">Tenant name of the provider who
+        /// created the resource</param>
         /// <param name="respondedAt">The time the recipient responded to the
         /// invitation.</param>
-        /// <param name="sender">Gets the name of the sender.</param>
-        /// <param name="senderCompanyName">Gets the company name of the
-        /// sender.</param>
         /// <param name="sentAt">Gets the time at which the invitation was
         /// sent.</param>
         /// <param name="shareName">Gets the source share Name.</param>
         /// <param name="termsOfUse">Terms of use shared when the invitation
         /// was created</param>
-        public ConsumerInvitation(string invitationId, string id = default(string), string name = default(string), string type = default(string), int? dataSetCount = default(int?), string description = default(string), string invitationStatus = default(string), string location = default(string), System.DateTime? respondedAt = default(System.DateTime?), string sender = default(string), string senderCompanyName = default(string), System.DateTime? sentAt = default(System.DateTime?), string shareName = default(string), string termsOfUse = default(string))
+        /// <param name="userEmail">Email of the user who created the
+        /// resource</param>
+        /// <param name="userName">Name of the user who created the
+        /// resource</param>
+        public ConsumerInvitation(string invitationId, string id = default(string), string name = default(string), string type = default(string), int? dataSetCount = default(int?), string description = default(string), string invitationStatus = default(string), string location = default(string), string providerEmail = default(string), string providerName = default(string), string providerTenantName = default(string), System.DateTime? respondedAt = default(System.DateTime?), System.DateTime? sentAt = default(System.DateTime?), string shareName = default(string), string termsOfUse = default(string), string userEmail = default(string), string userName = default(string))
             : base(id, name, type)
         {
             DataSetCount = dataSetCount;
@@ -61,12 +68,15 @@ namespace Microsoft.Azure.Management.DataShare.Models
             InvitationId = invitationId;
             InvitationStatus = invitationStatus;
             Location = location;
+            ProviderEmail = providerEmail;
+            ProviderName = providerName;
+            ProviderTenantName = providerTenantName;
             RespondedAt = respondedAt;
-            Sender = sender;
-            SenderCompanyName = senderCompanyName;
             SentAt = sentAt;
             ShareName = shareName;
             TermsOfUse = termsOfUse;
+            UserEmail = userEmail;
+            UserName = userName;
             CustomInit();
         }
 
@@ -107,22 +117,28 @@ namespace Microsoft.Azure.Management.DataShare.Models
         public string Location { get; private set; }
 
         /// <summary>
+        /// Gets email of the provider who created the resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.providerEmail")]
+        public string ProviderEmail { get; private set; }
+
+        /// <summary>
+        /// Gets name of the provider who created the resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.providerName")]
+        public string ProviderName { get; private set; }
+
+        /// <summary>
+        /// Gets tenant name of the provider who created the resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.providerTenantName")]
+        public string ProviderTenantName { get; private set; }
+
+        /// <summary>
         /// Gets the time the recipient responded to the invitation.
         /// </summary>
         [JsonProperty(PropertyName = "properties.respondedAt")]
         public System.DateTime? RespondedAt { get; private set; }
-
-        /// <summary>
-        /// Gets the name of the sender.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.sender")]
-        public string Sender { get; private set; }
-
-        /// <summary>
-        /// Gets the company name of the sender.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.senderCompanyName")]
-        public string SenderCompanyName { get; private set; }
 
         /// <summary>
         /// Gets the time at which the invitation was sent.
@@ -141,6 +157,18 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.termsOfUse")]
         public string TermsOfUse { get; private set; }
+
+        /// <summary>
+        /// Gets email of the user who created the resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.userEmail")]
+        public string UserEmail { get; private set; }
+
+        /// <summary>
+        /// Gets name of the user who created the resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.userName")]
+        public string UserName { get; private set; }
 
         /// <summary>
         /// Validate the object.
