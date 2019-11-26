@@ -79,7 +79,8 @@ try {
 
     Write-Host "Re-generating clients"
     Invoke-Block {
-        & $repoRoot\storage\generate.ps1
+        # https://github.com/Azure/azure-sdk-for-net/issues/8584
+        # & $repoRoot\storage\generate.ps1
     }
 
     Write-Host "git diff"
