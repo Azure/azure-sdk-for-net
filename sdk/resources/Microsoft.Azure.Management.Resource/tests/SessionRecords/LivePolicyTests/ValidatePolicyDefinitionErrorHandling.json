@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/0b40be06-04e8-4f70-abde-a502b2646fe8/providers/Microsoft.Authorization/policyDefinitions/azsmnet4034?api-version=2019-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGI0MGJlMDYtMDRlOC00ZjcwLWFiZGUtYTUwMmIyNjQ2ZmU4L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lEZWZpbml0aW9ucy9henNtbmV0NDAzND9hcGktdmVyc2lvbj0yMDE5LTA2LTAx",
+      "RequestUri": "/subscriptions/f67cc918-f64f-4c3f-aa24-a855465f9d41/providers/Microsoft.Authorization/policyDefinitions/azsmnet3830?api-version=2019-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjY3Y2M5MTgtZjY0Zi00YzNmLWFhMjQtYTg1NTQ2NWY5ZDQxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lEZWZpbml0aW9ucy9henNtbmV0MzgzMD9hcGktdmVyc2lvbj0yMDE5LTA5LTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"ValidatePolicyDefinitionErrorHandling - Missing Rule [Auto Test]\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "c0299526-5970-4e2f-a6de-be96faa78920"
+          "9902e6f5-7325-4f79-92ae-93bf052bf462"
         ],
         "accept-language": [
           "en-US"
@@ -15,8 +15,8 @@
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.Management.ResourceManager.PolicyClient/2.4.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ResourceManager.PolicyClient/2.4.5.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -30,22 +30,22 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 28 Aug 2019 20:44:40 GMT"
+          "Tue, 26 Nov 2019 17:58:39 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "westus:c8a6d7c3-1348-40b0-bc44-c0fc16fe8eb9"
+          "westus:5e7e3a01-c21d-4056-a906-88f7c861d520"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+          "1199"
         ],
         "x-ms-correlation-request-id": [
-          "b2b2cfab-6880-465b-97ea-ad471164f85f"
+          "c57ccc6c-ab82-4e36-9d09-e63764d89c82"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190828T204440Z:b2b2cfab-6880-465b-97ea-ad471164f85f"
+          "WESTUS:20191126T175839Z:c57ccc6c-ab82-4e36-9d09-e63764d89c82"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -67,13 +67,13 @@
       "StatusCode": 400
     },
     {
-      "RequestUri": "/subscriptions/0b40be06-04e8-4f70-abde-a502b2646fe8/providers/Microsoft.Authorization/policyDefinitions/azsmnet4034?api-version=2019-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGI0MGJlMDYtMDRlOC00ZjcwLWFiZGUtYTUwMmIyNjQ2ZmU4L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lEZWZpbml0aW9ucy9henNtbmV0NDAzND9hcGktdmVyc2lvbj0yMDE5LTA2LTAx",
+      "RequestUri": "/subscriptions/f67cc918-f64f-4c3f-aa24-a855465f9d41/providers/Microsoft.Authorization/policyDefinitions/azsmnet3830?api-version=2019-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjY3Y2M5MTgtZjY0Zi00YzNmLWFhMjQtYTg1NTQ2NWY5ZDQxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lEZWZpbml0aW9ucy9henNtbmV0MzgzMD9hcGktdmVyc2lvbj0yMDE5LTA5LTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"mode\": \"Foo\",\r\n    \"displayName\": \"ValidatePolicyDefinitionErrorHandling - Bad Mode $[Auto Test]\",\r\n    \"policyRule\": {\r\n      \"if\": {\r\n        \"source\": \"action\",\r\n        \"equals\": \"ResourceProviderTestHost/TestResourceType/TestResourceTypeNestedOne/write\"\r\n      },\r\n      \"then\": {\r\n        \"effect\": \"deny\"\r\n      }\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e3981176-6bb9-424c-922d-be298346e28b"
+          "88f33a3f-86c3-4306-8148-3d2e7c54a284"
         ],
         "accept-language": [
           "en-US"
@@ -81,8 +81,8 @@
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.Management.ResourceManager.PolicyClient/2.4.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ResourceManager.PolicyClient/2.4.5.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -96,22 +96,22 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 28 Aug 2019 20:44:40 GMT"
+          "Tue, 26 Nov 2019 17:58:40 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "westus:33bbdf66-3ebd-4438-850c-970d960fef60"
+          "westus:0457b3be-2803-45f4-ad9a-677e12a0536b"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1197"
+          "1198"
         ],
         "x-ms-correlation-request-id": [
-          "c0a7a5f9-8a2c-4b53-9f6b-c726fa7bd98c"
+          "4607ca4e-35f2-4bc4-b78a-654c812101f8"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190828T204440Z:c0a7a5f9-8a2c-4b53-9f6b-c726fa7bd98c"
+          "WESTUS:20191126T175840Z:4607ca4e-35f2-4bc4-b78a-654c812101f8"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -120,7 +120,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "284"
+          "351"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -129,17 +129,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"InvalidPolicyDefinitionMode\",\r\n    \"message\": \"The policy mode 'Foo' is invalid for policy with id 'azsmnet4034'. The allowed values are 'All, Indexed, Microsoft.ContainerService.Data, Microsoft.CustomerLockbox.Data, Microsoft.DataCatalog.Data, Microsoft.KeyVault.Data'.\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"InvalidPolicyDefinitionMode\",\r\n    \"message\": \"The policy mode 'Foo' is invalid for policy with id 'azsmnet3830'. The allowed values are 'All, Indexed, Microsoft.ContainerService.Data, Microsoft.CustomerLockbox.Data, Microsoft.DataCatalog.Data, Microsoft.KeyVault.Data, Microsoft.Kubernetes.Data, Microsoft.MachineLearningServices.Data'.\"\r\n  }\r\n}",
       "StatusCode": 400
     },
     {
-      "RequestUri": "/subscriptions/0b40be06-04e8-4f70-abde-a502b2646fe8/providers/Microsoft.Authorization/policyDefinitions/azsmnet4034?api-version=2019-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGI0MGJlMDYtMDRlOC00ZjcwLWFiZGUtYTUwMmIyNjQ2ZmU4L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lEZWZpbml0aW9ucy9henNtbmV0NDAzND9hcGktdmVyc2lvbj0yMDE5LTA2LTAx",
+      "RequestUri": "/subscriptions/f67cc918-f64f-4c3f-aa24-a855465f9d41/providers/Microsoft.Authorization/policyDefinitions/azsmnet3830?api-version=2019-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjY3Y2M5MTgtZjY0Zi00YzNmLWFhMjQtYTg1NTQ2NWY5ZDQxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lEZWZpbml0aW9ucy9henNtbmV0MzgzMD9hcGktdmVyc2lvbj0yMDE5LTA5LTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"ValidatePolicyDefinitionErrorHandling - Unused Parameter $[Auto Test]\",\r\n    \"policyRule\": {\r\n      \"if\": {\r\n        \"source\": \"action\",\r\n        \"equals\": \"ResourceProviderTestHost/TestResourceType/TestResourceTypeNestedOne/write\"\r\n      },\r\n      \"then\": {\r\n        \"effect\": \"deny\"\r\n      }\r\n    },\r\n    \"parameters\": {\r\n      \"foo\": {\r\n        \"type\": \"String\"\r\n      }\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "211b4740-e0c4-4416-9f5e-6116d3732299"
+          "1478bf06-dceb-4121-b3f3-77b870c0586d"
         ],
         "accept-language": [
           "en-US"
@@ -147,8 +147,8 @@
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.Management.ResourceManager.PolicyClient/2.4.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ResourceManager.PolicyClient/2.4.5.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -162,22 +162,22 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 28 Aug 2019 20:44:40 GMT"
+          "Tue, 26 Nov 2019 17:58:40 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "westus:d9f13fc7-33d9-4716-a48a-1ce1a67dc740"
+          "westus:0abbaf36-455e-460a-b2b7-02dfd5ff9778"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1196"
+          "1197"
         ],
         "x-ms-correlation-request-id": [
-          "04c02690-dd27-4223-a01d-04a4b2734249"
+          "dc48519e-be36-4c2e-900b-eebc0318052a"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190828T204441Z:04c02690-dd27-4223-a01d-04a4b2734249"
+          "WESTUS:20191126T175840Z:dc48519e-be36-4c2e-900b-eebc0318052a"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -195,17 +195,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"UnusedPolicyParameters\",\r\n    \"message\": \"The policy 'azsmnet4034' has defined parameters 'foo' which are not used in the policy rule. Please either remove these parameters from the definition or ensure that they are used in the policy rule.\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"UnusedPolicyParameters\",\r\n    \"message\": \"The policy 'azsmnet3830' has defined parameters 'foo' which are not used in the policy rule. Please either remove these parameters from the definition or ensure that they are used in the policy rule.\"\r\n  }\r\n}",
       "StatusCode": 400
     },
     {
-      "RequestUri": "/subscriptions/0b40be06-04e8-4f70-abde-a502b2646fe8/providers/Microsoft.Authorization/policyDefinitions/azsmnet4034?api-version=2019-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGI0MGJlMDYtMDRlOC00ZjcwLWFiZGUtYTUwMmIyNjQ2ZmU4L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lEZWZpbml0aW9ucy9henNtbmV0NDAzND9hcGktdmVyc2lvbj0yMDE5LTA2LTAx",
+      "RequestUri": "/subscriptions/f67cc918-f64f-4c3f-aa24-a855465f9d41/providers/Microsoft.Authorization/policyDefinitions/azsmnet3830?api-version=2019-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjY3Y2M5MTgtZjY0Zi00YzNmLWFhMjQtYTg1NTQ2NWY5ZDQxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lEZWZpbml0aW9ucy9henNtbmV0MzgzMD9hcGktdmVyc2lvbj0yMDE5LTA5LTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"ValidatePolicyDefinitionErrorHandling - Missing Parameter $[Auto Test]\",\r\n    \"policyRule\": {\r\n      \"if\": {\r\n        \"source\": \"action\",\r\n        \"equals\": \"[parameters('foo')]\"\r\n      },\r\n      \"then\": {\r\n        \"effect\": \"deny\"\r\n      }\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "af15dd85-3aad-4b35-a7fc-c5a0eeb37a52"
+          "856f8726-df6b-44a9-b83c-e9aabc448657"
         ],
         "accept-language": [
           "en-US"
@@ -213,8 +213,8 @@
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.Management.ResourceManager.PolicyClient/2.4.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ResourceManager.PolicyClient/2.4.5.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -228,22 +228,22 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 28 Aug 2019 20:44:40 GMT"
+          "Tue, 26 Nov 2019 17:58:40 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "westus:3010b595-9524-4d46-b490-4236dc3fd699"
+          "westus:9fb713e5-2619-463e-9dc1-b0d48467b340"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1195"
+          "1196"
         ],
         "x-ms-correlation-request-id": [
-          "bed7b3db-9d5c-4dc8-a151-eb274a6f5614"
+          "316e8e1c-c3b8-4750-bf01-23ee0715e571"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190828T204441Z:bed7b3db-9d5c-4dc8-a151-eb274a6f5614"
+          "WESTUS:20191126T175840Z:316e8e1c-c3b8-4750-bf01-23ee0715e571"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -261,16 +261,16 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"InvalidPolicyParameters\",\r\n    \"message\": \"A function or parameter in policy 'azsmnet4034' could not be validated. If using template functions, try following the tips in: https://aka.ms/policy-avoiding-template-failures. The inner exception 'The policy 'azsmnet4034' has undefined parameter 'foo' which is used in the policy rule. Please either define it in policy definition or remove the reference in policy rule.'.\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"InvalidPolicyParameters\",\r\n    \"message\": \"A function or parameter in policy 'azsmnet3830' could not be validated. If using template functions, try following the tips in: https://aka.ms/policy-avoiding-template-failures. The inner exception 'The policy 'azsmnet3830' has undefined parameter 'foo' which is used in the policy rule. Please either define it in policy definition or remove the reference in policy rule.'.\"\r\n  }\r\n}",
       "StatusCode": 400
     }
   ],
   "Names": {
     "ValidatePolicyDefinitionErrorHandling": [
-      "azsmnet4034"
+      "azsmnet3830"
     ]
   },
   "Variables": {
-    "SubscriptionId": "0b40be06-04e8-4f70-abde-a502b2646fe8"
+    "SubscriptionId": "f67cc918-f64f-4c3f-aa24-a855465f9d41"
   }
 }
