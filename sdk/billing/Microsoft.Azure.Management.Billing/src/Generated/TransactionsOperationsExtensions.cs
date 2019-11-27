@@ -22,8 +22,7 @@ namespace Microsoft.Azure.Management.Billing
     public static partial class TransactionsOperationsExtensions
     {
             /// <summary>
-            /// Lists the transactions by billing account name for given start and end
-            /// date.
+            /// Lists the transactions by customer id for given start date and end date.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
             /// <param name='operations'>
@@ -32,10 +31,13 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
-            /// <param name='startDate'>
+            /// <param name='customerName'>
+            /// Customer name.
+            /// </param>
+            /// <param name='periodStartDate'>
             /// Start date
             /// </param>
-            /// <param name='endDate'>
+            /// <param name='periodEndDate'>
             /// End date
             /// </param>
             /// <param name='filter'>
@@ -44,14 +46,13 @@ namespace Microsoft.Azure.Management.Billing
             /// 'not'. Tag filter is a key value pair string where key and value is
             /// separated by a colon (:).
             /// </param>
-            public static IPage<TransactionsSummary> ListByBillingAccountName(this ITransactionsOperations operations, string billingAccountName, string startDate, string endDate, string filter = default(string))
+            public static IPage<Transaction> ListByCustomer(this ITransactionsOperations operations, string billingAccountName, string customerName, string periodStartDate, string periodEndDate, string filter = default(string))
             {
-                return operations.ListByBillingAccountNameAsync(billingAccountName, startDate, endDate, filter).GetAwaiter().GetResult();
+                return operations.ListByCustomerAsync(billingAccountName, customerName, periodStartDate, periodEndDate, filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists the transactions by billing account name for given start and end
-            /// date.
+            /// Lists the transactions by customer id for given start date and end date.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
             /// <param name='operations'>
@@ -60,10 +61,13 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
-            /// <param name='startDate'>
+            /// <param name='customerName'>
+            /// Customer name.
+            /// </param>
+            /// <param name='periodStartDate'>
             /// Start date
             /// </param>
-            /// <param name='endDate'>
+            /// <param name='periodEndDate'>
             /// End date
             /// </param>
             /// <param name='filter'>
@@ -75,9 +79,71 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<TransactionsSummary>> ListByBillingAccountNameAsync(this ITransactionsOperations operations, string billingAccountName, string startDate, string endDate, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Transaction>> ListByCustomerAsync(this ITransactionsOperations operations, string billingAccountName, string customerName, string periodStartDate, string periodEndDate, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByBillingAccountNameWithHttpMessagesAsync(billingAccountName, startDate, endDate, filter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByCustomerWithHttpMessagesAsync(billingAccountName, customerName, periodStartDate, periodEndDate, filter, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists the transactions by billing account name for given start and end
+            /// date.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// billing Account Id.
+            /// </param>
+            /// <param name='periodStartDate'>
+            /// Start date
+            /// </param>
+            /// <param name='periodEndDate'>
+            /// End date
+            /// </param>
+            /// <param name='filter'>
+            /// May be used to filter by transaction kind. The filter supports 'eq', 'lt',
+            /// 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or
+            /// 'not'. Tag filter is a key value pair string where key and value is
+            /// separated by a colon (:).
+            /// </param>
+            public static IPage<Transaction> ListByBillingAccount(this ITransactionsOperations operations, string billingAccountName, string periodStartDate, string periodEndDate, string filter = default(string))
+            {
+                return operations.ListByBillingAccountAsync(billingAccountName, periodStartDate, periodEndDate, filter).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists the transactions by billing account name for given start and end
+            /// date.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// billing Account Id.
+            /// </param>
+            /// <param name='periodStartDate'>
+            /// Start date
+            /// </param>
+            /// <param name='periodEndDate'>
+            /// End date
+            /// </param>
+            /// <param name='filter'>
+            /// May be used to filter by transaction kind. The filter supports 'eq', 'lt',
+            /// 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or
+            /// 'not'. Tag filter is a key value pair string where key and value is
+            /// separated by a colon (:).
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Transaction>> ListByBillingAccountAsync(this ITransactionsOperations operations, string billingAccountName, string periodStartDate, string periodEndDate, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByBillingAccountWithHttpMessagesAsync(billingAccountName, periodStartDate, periodEndDate, filter, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -86,7 +152,7 @@ namespace Microsoft.Azure.Management.Billing
             /// <summary>
             /// Lists the transactions by billing profile name for given start date and end
             /// date.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -97,10 +163,10 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='billingProfileName'>
             /// Billing Profile Id.
             /// </param>
-            /// <param name='startDate'>
+            /// <param name='periodStartDate'>
             /// Start date
             /// </param>
-            /// <param name='endDate'>
+            /// <param name='periodEndDate'>
             /// End date
             /// </param>
             /// <param name='filter'>
@@ -109,15 +175,15 @@ namespace Microsoft.Azure.Management.Billing
             /// 'not'. Tag filter is a key value pair string where key and value is
             /// separated by a colon (:).
             /// </param>
-            public static TransactionsListResult ListByBillingProfileName(this ITransactionsOperations operations, string billingAccountName, string billingProfileName, string startDate, string endDate, string filter = default(string))
+            public static TransactionListResult ListByBillingProfile(this ITransactionsOperations operations, string billingAccountName, string billingProfileName, string periodStartDate, string periodEndDate, string filter = default(string))
             {
-                return operations.ListByBillingProfileNameAsync(billingAccountName, billingProfileName, startDate, endDate, filter).GetAwaiter().GetResult();
+                return operations.ListByBillingProfileAsync(billingAccountName, billingProfileName, periodStartDate, periodEndDate, filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Lists the transactions by billing profile name for given start date and end
             /// date.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -128,10 +194,10 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='billingProfileName'>
             /// Billing Profile Id.
             /// </param>
-            /// <param name='startDate'>
+            /// <param name='periodStartDate'>
             /// Start date
             /// </param>
-            /// <param name='endDate'>
+            /// <param name='periodEndDate'>
             /// End date
             /// </param>
             /// <param name='filter'>
@@ -143,9 +209,9 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TransactionsListResult> ListByBillingProfileNameAsync(this ITransactionsOperations operations, string billingAccountName, string billingProfileName, string startDate, string endDate, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TransactionListResult> ListByBillingProfileAsync(this ITransactionsOperations operations, string billingAccountName, string billingProfileName, string periodStartDate, string periodEndDate, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByBillingProfileNameWithHttpMessagesAsync(billingAccountName, billingProfileName, startDate, endDate, filter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByBillingProfileWithHttpMessagesAsync(billingAccountName, billingProfileName, periodStartDate, periodEndDate, filter, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -154,7 +220,7 @@ namespace Microsoft.Azure.Management.Billing
             /// <summary>
             /// Lists the transactions by invoice section name for given start date and end
             /// date.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -162,13 +228,16 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
+            /// <param name='billingProfileName'>
+            /// Billing Profile Id.
+            /// </param>
             /// <param name='invoiceSectionName'>
             /// InvoiceSection Id.
             /// </param>
-            /// <param name='startDate'>
+            /// <param name='periodStartDate'>
             /// Start date
             /// </param>
-            /// <param name='endDate'>
+            /// <param name='periodEndDate'>
             /// End date
             /// </param>
             /// <param name='filter'>
@@ -177,15 +246,15 @@ namespace Microsoft.Azure.Management.Billing
             /// 'not'. Tag filter is a key value pair string where key and value is
             /// separated by a colon (:).
             /// </param>
-            public static TransactionsListResult ListByInvoiceSectionName(this ITransactionsOperations operations, string billingAccountName, string invoiceSectionName, string startDate, string endDate, string filter = default(string))
+            public static TransactionListResult ListByInvoiceSection(this ITransactionsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, string periodStartDate, string periodEndDate, string filter = default(string))
             {
-                return operations.ListByInvoiceSectionNameAsync(billingAccountName, invoiceSectionName, startDate, endDate, filter).GetAwaiter().GetResult();
+                return operations.ListByInvoiceSectionAsync(billingAccountName, billingProfileName, invoiceSectionName, periodStartDate, periodEndDate, filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Lists the transactions by invoice section name for given start date and end
             /// date.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -193,13 +262,16 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
+            /// <param name='billingProfileName'>
+            /// Billing Profile Id.
+            /// </param>
             /// <param name='invoiceSectionName'>
             /// InvoiceSection Id.
             /// </param>
-            /// <param name='startDate'>
+            /// <param name='periodStartDate'>
             /// Start date
             /// </param>
-            /// <param name='endDate'>
+            /// <param name='periodEndDate'>
             /// End date
             /// </param>
             /// <param name='filter'>
@@ -211,9 +283,105 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TransactionsListResult> ListByInvoiceSectionNameAsync(this ITransactionsOperations operations, string billingAccountName, string invoiceSectionName, string startDate, string endDate, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TransactionListResult> ListByInvoiceSectionAsync(this ITransactionsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, string periodStartDate, string periodEndDate, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByInvoiceSectionNameWithHttpMessagesAsync(billingAccountName, invoiceSectionName, startDate, endDate, filter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByInvoiceSectionWithHttpMessagesAsync(billingAccountName, billingProfileName, invoiceSectionName, periodStartDate, periodEndDate, filter, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get the transaction.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// billing Account Id.
+            /// </param>
+            /// <param name='billingProfileName'>
+            /// Billing Profile Id.
+            /// </param>
+            /// <param name='transactionName'>
+            /// Transaction name.
+            /// </param>
+            /// <param name='periodStartDate'>
+            /// Start date
+            /// </param>
+            /// <param name='periodEndDate'>
+            /// End date
+            /// </param>
+            public static Transaction Get(this ITransactionsOperations operations, string billingAccountName, string billingProfileName, string transactionName, string periodStartDate, string periodEndDate)
+            {
+                return operations.GetAsync(billingAccountName, billingProfileName, transactionName, periodStartDate, periodEndDate).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get the transaction.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// billing Account Id.
+            /// </param>
+            /// <param name='billingProfileName'>
+            /// Billing Profile Id.
+            /// </param>
+            /// <param name='transactionName'>
+            /// Transaction name.
+            /// </param>
+            /// <param name='periodStartDate'>
+            /// Start date
+            /// </param>
+            /// <param name='periodEndDate'>
+            /// End date
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Transaction> GetAsync(this ITransactionsOperations operations, string billingAccountName, string billingProfileName, string transactionName, string periodStartDate, string periodEndDate, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetWithHttpMessagesAsync(billingAccountName, billingProfileName, transactionName, periodStartDate, periodEndDate, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists the transactions by customer id for given start date and end date.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<Transaction> ListByCustomerNext(this ITransactionsOperations operations, string nextPageLink)
+            {
+                return operations.ListByCustomerNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists the transactions by customer id for given start date and end date.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Transaction>> ListByCustomerNextAsync(this ITransactionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByCustomerNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -222,7 +390,7 @@ namespace Microsoft.Azure.Management.Billing
             /// <summary>
             /// Lists the transactions by billing account name for given start and end
             /// date.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -230,15 +398,15 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<TransactionsSummary> ListByBillingAccountNameNext(this ITransactionsOperations operations, string nextPageLink)
+            public static IPage<Transaction> ListByBillingAccountNext(this ITransactionsOperations operations, string nextPageLink)
             {
-                return operations.ListByBillingAccountNameNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListByBillingAccountNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Lists the transactions by billing account name for given start and end
             /// date.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -249,9 +417,9 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<TransactionsSummary>> ListByBillingAccountNameNextAsync(this ITransactionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Transaction>> ListByBillingAccountNextAsync(this ITransactionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByBillingAccountNameNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByBillingAccountNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
