@@ -34,9 +34,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the UpdateResource class.
         /// </summary>
         /// <param name="tags">Resource tags</param>
-        public UpdateResource(IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="id">Resource Id</param>
+        /// <param name="name">Resource name</param>
+        /// <param name="type">Resource type</param>
+        public UpdateResource(IDictionary<string, string> tags = default(IDictionary<string, string>), string id = default(string), string name = default(string), string type = default(string))
         {
             Tags = tags;
+            Id = id;
+            Name = name;
+            Type = type;
             CustomInit();
         }
 
@@ -50,6 +56,24 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets resource Id
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
+
+        /// <summary>
+        /// Gets resource name
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets resource type
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
 
     }
 }
