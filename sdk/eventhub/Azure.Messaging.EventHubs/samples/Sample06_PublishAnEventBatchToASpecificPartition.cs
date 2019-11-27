@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Samples.Infrastructure;
@@ -9,22 +10,22 @@ using Azure.Messaging.EventHubs.Samples.Infrastructure;
 namespace Azure.Messaging.EventHubs.Samples
 {
     /// <summary>
-    ///   An introduction to publishing events, using a partition key to group them together.
+    ///   An introduction to publishing events, specifying a specific partition for the batch to be published to.
     /// </summary>
     ///
-    public class Sample04_PublishEventsWithPartitionKey : IEventHubsSample
+    public class Sample06_PublishAnEventBatchToASpecificPartition : IEventHubsSample
     {
         /// <summary>
         ///   The name of the sample.
         /// </summary>
         ///
-        public string Name { get; } = nameof(Sample04_PublishEventsWithPartitionKey);
+        public string Name => nameof(Sample06_PublishAnEventBatchToASpecificPartition);
 
         /// <summary>
         ///   A short description of the sample.
         /// </summary>
         ///
-        public string Description { get; } = "An introduction to publishing events, using a partition key to group them together.";
+        public string Description => "An introduction to publishing events, specifying a specific partition for the batch to be published to.";
 
         /// <summary>
         ///   Runs the sample using the specified Event Hubs connection information.
@@ -40,25 +41,25 @@ namespace Azure.Messaging.EventHubs.Samples
 
             await using (var producerClient = new EventHubProducerClient(connectionString, eventHubName))
             {
-                // When publishing events with a producer client it may be desirable to request that the Event Hubs service keep
-                // different events or batches of events together on the same partition.  This can be accomplished by setting a
-                // partition key when publishing the events.
+                // To ensure that we request a valid partition, we'll need to read the metadata for the Event Hub.  We will
+                // select the first available partition.
+
+                string firstPartition = (await producerClient.GetPartitionIdsAsync()).First();
+
+                // When publishing events, it may be desirable to request that the Event Hubs service place a batch on a specific partition,
+                // for organization and processing.  For example, you may have designated one partition of your Event Hub as being responsible
+                // for all of your telemetry-related events.
                 //
-                // The partition key is NOT the identifier of a specific partition.  Rather, it is an arbitrary piece of string data
-                // that Event Hubs uses as the basis to compute a hash value.  Event Hubs will associate the hash value with a specific
-                // partition, ensuring that any events published with the same partition key are routed to the same partition.
-                //
-                // Note that there is no means of accurately predicting which partition will be associated with a given partition key;
-                // we can only be assured that it will be a consistent choice of partition.  If you have a need to understand which
-                // exact partition an event is published to, you will need to use an Event Hub producer associated with that partition.
+                // This can be accomplished by setting the identifier of the desired partition when creating the batch.  It is important to note
+                // that if you are using a partition identifier, you may not also specify a partition key; they are mutually exclusive.
                 //
                 // We will publish a small batch of events based on simple sentences.
 
-                // To choose a partition key, you will need to create a custom set of send options.
+                // To choose a partition identifier, you will need to create a custom set of batch options.
 
                 var batchOptions = new CreateBatchOptions
                 {
-                    PartitionKey = "Any Value Will Do..."
+                    PartitionId = firstPartition
                 };
 
                 using EventDataBatch eventBatch = await producerClient.CreateBatchAsync(batchOptions);
